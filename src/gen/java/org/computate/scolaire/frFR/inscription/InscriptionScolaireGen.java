@@ -33,7 +33,6 @@ import java.util.List;
 import java.time.LocalDate;
 import org.apache.solr.client.solrj.SolrQuery;
 import java.util.Optional;
-import io.vertx.ext.sql.SQLClient;
 import org.apache.solr.client.solrj.util.ClientUtils;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.computate.scolaire.frFR.bloc.BlocScolaire;
@@ -60,7 +59,6 @@ import org.apache.solr.common.SolrDocument;
 import java.time.temporal.ChronoUnit;
 import org.computate.scolaire.frFR.pere.PereScolaire;
 import java.time.format.DateTimeFormatter;
-import io.vertx.ext.sql.SQLConnection;
 import org.apache.commons.lang3.math.NumberUtils;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
@@ -3679,7 +3677,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public InscriptionScolaire setEnfantDateNaissance(String o) {
-		this.enfantDateNaissance = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.enfantDateNaissance = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
 		this.enfantDateNaissanceCouverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
@@ -3703,11 +3701,11 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strEnfantDateNaissance() {
-		return enfantDateNaissance == null ? "" : enfantDateNaissance.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.FRANCE));
+		return enfantDateNaissance == null ? "" : enfantDateNaissance.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.forLanguageTag("fr-FR")));
 	}
 
 	public String jsonEnfantDateNaissance() {
-		return enfantDateNaissance == null ? "" : enfantDateNaissance.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.FRANCE));
+		return enfantDateNaissance == null ? "" : enfantDateNaissance.format(DateTimeFormatter.ISO_DATE);
 	}
 
 	public String nomAffichageEnfantDateNaissance() {
@@ -3738,8 +3736,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				.a("id", classeApiMethodeMethode, "_enfantDateNaissance")
 				.a("onclick", "enleverLueur($(this)); ")
 				.a("title", "La clé primaire des utilisateurs dans la base de données.  (DD-MM-YYYY)")
-				.a("value", enfantDateNaissance == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(enfantDateNaissance))
-				.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnfantDateNaissance', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_enfantDateNaissance')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_enfantDateNaissance')); }); } ")
+				.a("value", enfantDateNaissance == null ? "" : DateTimeFormatter.ISO_LOCAL_DATE.format(enfantDateNaissance))
+				.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnfantDateNaissance', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_enfantDateNaissance')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_enfantDateNaissance')); }); } ")
 				.fg();
 		} else {
 			sx(htmEnfantDateNaissance());
@@ -4541,7 +4539,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public InscriptionScolaire setSaisonJourDebut(String o) {
-		this.saisonJourDebut = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.saisonJourDebut = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
 		this.saisonJourDebutCouverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
@@ -4565,11 +4563,11 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strSaisonJourDebut() {
-		return saisonJourDebut == null ? "" : saisonJourDebut.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.FRANCE));
+		return saisonJourDebut == null ? "" : saisonJourDebut.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.forLanguageTag("fr-FR")));
 	}
 
 	public String jsonSaisonJourDebut() {
-		return saisonJourDebut == null ? "" : saisonJourDebut.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.FRANCE));
+		return saisonJourDebut == null ? "" : saisonJourDebut.format(DateTimeFormatter.ISO_DATE);
 	}
 
 	public String nomAffichageSaisonJourDebut() {
@@ -4898,7 +4896,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public InscriptionScolaire setSessionJourDebut(String o) {
-		this.sessionJourDebut = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.sessionJourDebut = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
 		this.sessionJourDebutCouverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
@@ -4922,11 +4920,11 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strSessionJourDebut() {
-		return sessionJourDebut == null ? "" : sessionJourDebut.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.FRANCE));
+		return sessionJourDebut == null ? "" : sessionJourDebut.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.forLanguageTag("fr-FR")));
 	}
 
 	public String jsonSessionJourDebut() {
-		return sessionJourDebut == null ? "" : sessionJourDebut.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.FRANCE));
+		return sessionJourDebut == null ? "" : sessionJourDebut.format(DateTimeFormatter.ISO_DATE);
 	}
 
 	public String nomAffichageSessionJourDebut() {
@@ -4979,7 +4977,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public InscriptionScolaire setSessionJourFin(String o) {
-		this.sessionJourFin = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.sessionJourFin = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
 		this.sessionJourFinCouverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
@@ -5003,11 +5001,11 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strSessionJourFin() {
-		return sessionJourFin == null ? "" : sessionJourFin.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.FRANCE));
+		return sessionJourFin == null ? "" : sessionJourFin.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.forLanguageTag("fr-FR")));
 	}
 
 	public String jsonSessionJourFin() {
-		return sessionJourFin == null ? "" : sessionJourFin.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.FRANCE));
+		return sessionJourFin == null ? "" : sessionJourFin.format(DateTimeFormatter.ISO_DATE);
 	}
 
 	public String nomAffichageSessionJourFin() {
@@ -5254,7 +5252,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/** Example: 01:00 **/
 	public InscriptionScolaire setBlocHeureDebut(String o) {
 		try {
-			this.blocHeureDebut = LocalTime.parse(o, DateTimeFormatter.ofPattern("HH mm"));
+			this.blocHeureDebut = LocalTime.parse(o, DateTimeFormatter.ofPattern("HH:mm"));
 			this.blocHeureDebutCouverture.dejaInitialise = true;
 		} catch(Exception e) {
 		}
@@ -5275,11 +5273,11 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strBlocHeureDebut() {
-		return blocHeureDebut == null ? "" : blocHeureDebut.format(DateTimeFormatter.ofPattern("H'h'mm", Locale.FRANCE));
+		return blocHeureDebut == null ? "" : blocHeureDebut.format(DateTimeFormatter.ofPattern("H'h'mm", Locale.forLanguageTag("fr-FR")));
 	}
 
 	public String jsonBlocHeureDebut() {
-		return blocHeureDebut == null ? "" : blocHeureDebut.format(DateTimeFormatter.ofPattern("HH mm", Locale.US));
+		return blocHeureDebut == null ? "" : blocHeureDebut.format(DateTimeFormatter.ISO_TIME);
 	}
 
 	public String nomAffichageBlocHeureDebut() {
@@ -5326,7 +5324,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/** Example: 01:00 **/
 	public InscriptionScolaire setBlocHeureFin(String o) {
 		try {
-			this.blocHeureFin = LocalTime.parse(o, DateTimeFormatter.ofPattern("HH mm"));
+			this.blocHeureFin = LocalTime.parse(o, DateTimeFormatter.ofPattern("HH:mm"));
 			this.blocHeureFinCouverture.dejaInitialise = true;
 		} catch(Exception e) {
 		}
@@ -5347,11 +5345,11 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strBlocHeureFin() {
-		return blocHeureFin == null ? "" : blocHeureFin.format(DateTimeFormatter.ofPattern("H'h'mm", Locale.FRANCE));
+		return blocHeureFin == null ? "" : blocHeureFin.format(DateTimeFormatter.ofPattern("H'h'mm", Locale.forLanguageTag("fr-FR")));
 	}
 
 	public String jsonBlocHeureFin() {
-		return blocHeureFin == null ? "" : blocHeureFin.format(DateTimeFormatter.ofPattern("HH mm", Locale.US));
+		return blocHeureFin == null ? "" : blocHeureFin.format(DateTimeFormatter.ISO_TIME);
 	}
 
 	public String nomAffichageBlocHeureFin() {
@@ -8458,7 +8456,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public InscriptionScolaire setInscriptionDateFrais(String o) {
-		this.inscriptionDateFrais = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.inscriptionDateFrais = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
 		this.inscriptionDateFraisCouverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
@@ -8482,11 +8480,11 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strInscriptionDateFrais() {
-		return inscriptionDateFrais == null ? "" : inscriptionDateFrais.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.FRANCE));
+		return inscriptionDateFrais == null ? "" : inscriptionDateFrais.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.forLanguageTag("fr-FR")));
 	}
 
 	public String jsonInscriptionDateFrais() {
-		return inscriptionDateFrais == null ? "" : inscriptionDateFrais.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.FRANCE));
+		return inscriptionDateFrais == null ? "" : inscriptionDateFrais.format(DateTimeFormatter.ISO_DATE);
 	}
 
 	public String nomAffichageInscriptionDateFrais() {
@@ -8517,8 +8515,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				.a("id", classeApiMethodeMethode, "_inscriptionDateFrais")
 				.a("onclick", "enleverLueur($(this)); ")
 				.a("title", "La clé primaire des utilisateurs dans la base de données.  (DD-MM-YYYY)")
-				.a("value", inscriptionDateFrais == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(inscriptionDateFrais))
-				.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionDateFrais', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_inscriptionDateFrais')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_inscriptionDateFrais')); }); } ")
+				.a("value", inscriptionDateFrais == null ? "" : DateTimeFormatter.ISO_LOCAL_DATE.format(inscriptionDateFrais))
+				.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionDateFrais', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_inscriptionDateFrais')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_inscriptionDateFrais')); }); } ")
 				.fg();
 		} else {
 			sx(htmInscriptionDateFrais());
@@ -10816,7 +10814,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public InscriptionScolaire setInscriptionDate1(String o) {
-		this.inscriptionDate1 = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.inscriptionDate1 = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
 		this.inscriptionDate1Couverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
@@ -10840,11 +10838,11 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strInscriptionDate1() {
-		return inscriptionDate1 == null ? "" : inscriptionDate1.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.FRANCE));
+		return inscriptionDate1 == null ? "" : inscriptionDate1.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.forLanguageTag("fr-FR")));
 	}
 
 	public String jsonInscriptionDate1() {
-		return inscriptionDate1 == null ? "" : inscriptionDate1.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.FRANCE));
+		return inscriptionDate1 == null ? "" : inscriptionDate1.format(DateTimeFormatter.ISO_DATE);
 	}
 
 	public String nomAffichageInscriptionDate1() {
@@ -10875,8 +10873,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				.a("id", classeApiMethodeMethode, "_inscriptionDate1")
 				.a("onclick", "enleverLueur($(this)); ")
 				.a("title", "La clé primaire des utilisateurs dans la base de données.  (DD-MM-YYYY)")
-				.a("value", inscriptionDate1 == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(inscriptionDate1))
-				.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionDate1', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_inscriptionDate1')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_inscriptionDate1')); }); } ")
+				.a("value", inscriptionDate1 == null ? "" : DateTimeFormatter.ISO_LOCAL_DATE.format(inscriptionDate1))
+				.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionDate1', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_inscriptionDate1')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_inscriptionDate1')); }); } ")
 				.fg();
 		} else {
 			sx(htmInscriptionDate1());
@@ -10956,7 +10954,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public InscriptionScolaire setInscriptionDate2(String o) {
-		this.inscriptionDate2 = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.inscriptionDate2 = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
 		this.inscriptionDate2Couverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
@@ -10980,11 +10978,11 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strInscriptionDate2() {
-		return inscriptionDate2 == null ? "" : inscriptionDate2.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.FRANCE));
+		return inscriptionDate2 == null ? "" : inscriptionDate2.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.forLanguageTag("fr-FR")));
 	}
 
 	public String jsonInscriptionDate2() {
-		return inscriptionDate2 == null ? "" : inscriptionDate2.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.FRANCE));
+		return inscriptionDate2 == null ? "" : inscriptionDate2.format(DateTimeFormatter.ISO_DATE);
 	}
 
 	public String nomAffichageInscriptionDate2() {
@@ -11015,8 +11013,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				.a("id", classeApiMethodeMethode, "_inscriptionDate2")
 				.a("onclick", "enleverLueur($(this)); ")
 				.a("title", "La clé primaire des utilisateurs dans la base de données.  (DD-MM-YYYY)")
-				.a("value", inscriptionDate2 == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(inscriptionDate2))
-				.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionDate2', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_inscriptionDate2')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_inscriptionDate2')); }); } ")
+				.a("value", inscriptionDate2 == null ? "" : DateTimeFormatter.ISO_LOCAL_DATE.format(inscriptionDate2))
+				.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionDate2', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_inscriptionDate2')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_inscriptionDate2')); }); } ")
 				.fg();
 		} else {
 			sx(htmInscriptionDate2());
@@ -11096,7 +11094,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public InscriptionScolaire setInscriptionDate3(String o) {
-		this.inscriptionDate3 = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.inscriptionDate3 = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
 		this.inscriptionDate3Couverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
@@ -11120,11 +11118,11 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strInscriptionDate3() {
-		return inscriptionDate3 == null ? "" : inscriptionDate3.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.FRANCE));
+		return inscriptionDate3 == null ? "" : inscriptionDate3.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.forLanguageTag("fr-FR")));
 	}
 
 	public String jsonInscriptionDate3() {
-		return inscriptionDate3 == null ? "" : inscriptionDate3.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.FRANCE));
+		return inscriptionDate3 == null ? "" : inscriptionDate3.format(DateTimeFormatter.ISO_DATE);
 	}
 
 	public String nomAffichageInscriptionDate3() {
@@ -11155,8 +11153,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				.a("id", classeApiMethodeMethode, "_inscriptionDate3")
 				.a("onclick", "enleverLueur($(this)); ")
 				.a("title", "La clé primaire des utilisateurs dans la base de données.  (DD-MM-YYYY)")
-				.a("value", inscriptionDate3 == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(inscriptionDate3))
-				.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionDate3', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_inscriptionDate3')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_inscriptionDate3')); }); } ")
+				.a("value", inscriptionDate3 == null ? "" : DateTimeFormatter.ISO_LOCAL_DATE.format(inscriptionDate3))
+				.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionDate3', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_inscriptionDate3')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_inscriptionDate3')); }); } ")
 				.fg();
 		} else {
 			sx(htmInscriptionDate3());
@@ -11236,7 +11234,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public InscriptionScolaire setInscriptionDate4(String o) {
-		this.inscriptionDate4 = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.inscriptionDate4 = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
 		this.inscriptionDate4Couverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
@@ -11260,11 +11258,11 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strInscriptionDate4() {
-		return inscriptionDate4 == null ? "" : inscriptionDate4.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.FRANCE));
+		return inscriptionDate4 == null ? "" : inscriptionDate4.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.forLanguageTag("fr-FR")));
 	}
 
 	public String jsonInscriptionDate4() {
-		return inscriptionDate4 == null ? "" : inscriptionDate4.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.FRANCE));
+		return inscriptionDate4 == null ? "" : inscriptionDate4.format(DateTimeFormatter.ISO_DATE);
 	}
 
 	public String nomAffichageInscriptionDate4() {
@@ -11295,8 +11293,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				.a("id", classeApiMethodeMethode, "_inscriptionDate4")
 				.a("onclick", "enleverLueur($(this)); ")
 				.a("title", "La clé primaire des utilisateurs dans la base de données.  (DD-MM-YYYY)")
-				.a("value", inscriptionDate4 == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(inscriptionDate4))
-				.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionDate4', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_inscriptionDate4')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_inscriptionDate4')); }); } ")
+				.a("value", inscriptionDate4 == null ? "" : DateTimeFormatter.ISO_LOCAL_DATE.format(inscriptionDate4))
+				.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionDate4', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_inscriptionDate4')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_inscriptionDate4')); }); } ")
 				.fg();
 		} else {
 			sx(htmInscriptionDate4());
@@ -11376,7 +11374,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public InscriptionScolaire setInscriptionDate5(String o) {
-		this.inscriptionDate5 = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.inscriptionDate5 = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
 		this.inscriptionDate5Couverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
@@ -11400,11 +11398,11 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strInscriptionDate5() {
-		return inscriptionDate5 == null ? "" : inscriptionDate5.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.FRANCE));
+		return inscriptionDate5 == null ? "" : inscriptionDate5.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.forLanguageTag("fr-FR")));
 	}
 
 	public String jsonInscriptionDate5() {
-		return inscriptionDate5 == null ? "" : inscriptionDate5.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.FRANCE));
+		return inscriptionDate5 == null ? "" : inscriptionDate5.format(DateTimeFormatter.ISO_DATE);
 	}
 
 	public String nomAffichageInscriptionDate5() {
@@ -11435,8 +11433,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				.a("id", classeApiMethodeMethode, "_inscriptionDate5")
 				.a("onclick", "enleverLueur($(this)); ")
 				.a("title", "La clé primaire des utilisateurs dans la base de données.  (DD-MM-YYYY)")
-				.a("value", inscriptionDate5 == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(inscriptionDate5))
-				.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionDate5', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_inscriptionDate5')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_inscriptionDate5')); }); } ")
+				.a("value", inscriptionDate5 == null ? "" : DateTimeFormatter.ISO_LOCAL_DATE.format(inscriptionDate5))
+				.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionDate5', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_inscriptionDate5')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_inscriptionDate5')); }); } ")
 				.fg();
 		} else {
 			sx(htmInscriptionDate5());
@@ -11516,7 +11514,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public InscriptionScolaire setInscriptionDate6(String o) {
-		this.inscriptionDate6 = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.inscriptionDate6 = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
 		this.inscriptionDate6Couverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
@@ -11540,11 +11538,11 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strInscriptionDate6() {
-		return inscriptionDate6 == null ? "" : inscriptionDate6.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.FRANCE));
+		return inscriptionDate6 == null ? "" : inscriptionDate6.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.forLanguageTag("fr-FR")));
 	}
 
 	public String jsonInscriptionDate6() {
-		return inscriptionDate6 == null ? "" : inscriptionDate6.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.FRANCE));
+		return inscriptionDate6 == null ? "" : inscriptionDate6.format(DateTimeFormatter.ISO_DATE);
 	}
 
 	public String nomAffichageInscriptionDate6() {
@@ -11575,8 +11573,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				.a("id", classeApiMethodeMethode, "_inscriptionDate6")
 				.a("onclick", "enleverLueur($(this)); ")
 				.a("title", "La clé primaire des utilisateurs dans la base de données.  (DD-MM-YYYY)")
-				.a("value", inscriptionDate6 == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(inscriptionDate6))
-				.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionDate6', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_inscriptionDate6')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_inscriptionDate6')); }); } ")
+				.a("value", inscriptionDate6 == null ? "" : DateTimeFormatter.ISO_LOCAL_DATE.format(inscriptionDate6))
+				.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionDate6', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_inscriptionDate6')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_inscriptionDate6')); }); } ")
 				.fg();
 		} else {
 			sx(htmInscriptionDate6());
@@ -11656,7 +11654,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public InscriptionScolaire setInscriptionDate7(String o) {
-		this.inscriptionDate7 = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.inscriptionDate7 = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
 		this.inscriptionDate7Couverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
@@ -11680,11 +11678,11 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strInscriptionDate7() {
-		return inscriptionDate7 == null ? "" : inscriptionDate7.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.FRANCE));
+		return inscriptionDate7 == null ? "" : inscriptionDate7.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.forLanguageTag("fr-FR")));
 	}
 
 	public String jsonInscriptionDate7() {
-		return inscriptionDate7 == null ? "" : inscriptionDate7.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.FRANCE));
+		return inscriptionDate7 == null ? "" : inscriptionDate7.format(DateTimeFormatter.ISO_DATE);
 	}
 
 	public String nomAffichageInscriptionDate7() {
@@ -11715,8 +11713,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				.a("id", classeApiMethodeMethode, "_inscriptionDate7")
 				.a("onclick", "enleverLueur($(this)); ")
 				.a("title", "La clé primaire des utilisateurs dans la base de données.  (DD-MM-YYYY)")
-				.a("value", inscriptionDate7 == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(inscriptionDate7))
-				.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionDate7', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_inscriptionDate7')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_inscriptionDate7')); }); } ")
+				.a("value", inscriptionDate7 == null ? "" : DateTimeFormatter.ISO_LOCAL_DATE.format(inscriptionDate7))
+				.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionDate7', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_inscriptionDate7')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_inscriptionDate7')); }); } ")
 				.fg();
 		} else {
 			sx(htmInscriptionDate7());
@@ -11796,7 +11794,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public InscriptionScolaire setInscriptionDate8(String o) {
-		this.inscriptionDate8 = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.inscriptionDate8 = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
 		this.inscriptionDate8Couverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
@@ -11820,11 +11818,11 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strInscriptionDate8() {
-		return inscriptionDate8 == null ? "" : inscriptionDate8.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.FRANCE));
+		return inscriptionDate8 == null ? "" : inscriptionDate8.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.forLanguageTag("fr-FR")));
 	}
 
 	public String jsonInscriptionDate8() {
-		return inscriptionDate8 == null ? "" : inscriptionDate8.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.FRANCE));
+		return inscriptionDate8 == null ? "" : inscriptionDate8.format(DateTimeFormatter.ISO_DATE);
 	}
 
 	public String nomAffichageInscriptionDate8() {
@@ -11855,8 +11853,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				.a("id", classeApiMethodeMethode, "_inscriptionDate8")
 				.a("onclick", "enleverLueur($(this)); ")
 				.a("title", "La clé primaire des utilisateurs dans la base de données.  (DD-MM-YYYY)")
-				.a("value", inscriptionDate8 == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(inscriptionDate8))
-				.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionDate8', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_inscriptionDate8')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_inscriptionDate8')); }); } ")
+				.a("value", inscriptionDate8 == null ? "" : DateTimeFormatter.ISO_LOCAL_DATE.format(inscriptionDate8))
+				.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionDate8', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_inscriptionDate8')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_inscriptionDate8')); }); } ")
 				.fg();
 		} else {
 			sx(htmInscriptionDate8());
@@ -11936,7 +11934,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public InscriptionScolaire setInscriptionDate9(String o) {
-		this.inscriptionDate9 = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.inscriptionDate9 = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
 		this.inscriptionDate9Couverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
@@ -11960,11 +11958,11 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strInscriptionDate9() {
-		return inscriptionDate9 == null ? "" : inscriptionDate9.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.FRANCE));
+		return inscriptionDate9 == null ? "" : inscriptionDate9.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.forLanguageTag("fr-FR")));
 	}
 
 	public String jsonInscriptionDate9() {
-		return inscriptionDate9 == null ? "" : inscriptionDate9.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.FRANCE));
+		return inscriptionDate9 == null ? "" : inscriptionDate9.format(DateTimeFormatter.ISO_DATE);
 	}
 
 	public String nomAffichageInscriptionDate9() {
@@ -11995,8 +11993,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				.a("id", classeApiMethodeMethode, "_inscriptionDate9")
 				.a("onclick", "enleverLueur($(this)); ")
 				.a("title", "La clé primaire des utilisateurs dans la base de données.  (DD-MM-YYYY)")
-				.a("value", inscriptionDate9 == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(inscriptionDate9))
-				.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionDate9', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_inscriptionDate9')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_inscriptionDate9')); }); } ")
+				.a("value", inscriptionDate9 == null ? "" : DateTimeFormatter.ISO_LOCAL_DATE.format(inscriptionDate9))
+				.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionDate9', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_inscriptionDate9')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_inscriptionDate9')); }); } ")
 				.fg();
 		} else {
 			sx(htmInscriptionDate9());
@@ -12076,7 +12074,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public InscriptionScolaire setInscriptionDate10(String o) {
-		this.inscriptionDate10 = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.inscriptionDate10 = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
 		this.inscriptionDate10Couverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
@@ -12100,11 +12098,11 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strInscriptionDate10() {
-		return inscriptionDate10 == null ? "" : inscriptionDate10.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.FRANCE));
+		return inscriptionDate10 == null ? "" : inscriptionDate10.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.forLanguageTag("fr-FR")));
 	}
 
 	public String jsonInscriptionDate10() {
-		return inscriptionDate10 == null ? "" : inscriptionDate10.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.FRANCE));
+		return inscriptionDate10 == null ? "" : inscriptionDate10.format(DateTimeFormatter.ISO_DATE);
 	}
 
 	public String nomAffichageInscriptionDate10() {
@@ -12135,8 +12133,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				.a("id", classeApiMethodeMethode, "_inscriptionDate10")
 				.a("onclick", "enleverLueur($(this)); ")
 				.a("title", "La clé primaire des utilisateurs dans la base de données.  (DD-MM-YYYY)")
-				.a("value", inscriptionDate10 == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(inscriptionDate10))
-				.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionDate10', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_inscriptionDate10')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_inscriptionDate10')); }); } ")
+				.a("value", inscriptionDate10 == null ? "" : DateTimeFormatter.ISO_LOCAL_DATE.format(inscriptionDate10))
+				.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionDate10', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_inscriptionDate10')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_inscriptionDate10')); }); } ")
 				.fg();
 		} else {
 			sx(htmInscriptionDate10());
@@ -14298,12 +14296,12 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			document.addField("ageFin_stored_int", ageFin);
 		}
 		if(blocHeureDebut != null) {
-			document.addField("blocHeureDebut_indexed_string", DateTimeFormatter.ofPattern("HH mm").format(blocHeureDebut.atOffset(ZoneOffset.UTC)));
-			document.addField("blocHeureDebut_stored_string", DateTimeFormatter.ofPattern("HH mm").format(blocHeureDebut.atOffset(ZoneOffset.UTC)));
+			document.addField("blocHeureDebut_indexed_string", DateTimeFormatter.ofPattern("HH:mm").format(blocHeureDebut.atOffset(ZoneOffset.UTC)));
+			document.addField("blocHeureDebut_stored_string", DateTimeFormatter.ofPattern("HH:mm").format(blocHeureDebut.atOffset(ZoneOffset.UTC)));
 		}
 		if(blocHeureFin != null) {
-			document.addField("blocHeureFin_indexed_string", DateTimeFormatter.ofPattern("HH mm").format(blocHeureFin.atOffset(ZoneOffset.UTC)));
-			document.addField("blocHeureFin_stored_string", DateTimeFormatter.ofPattern("HH mm").format(blocHeureFin.atOffset(ZoneOffset.UTC)));
+			document.addField("blocHeureFin_indexed_string", DateTimeFormatter.ofPattern("HH:mm").format(blocHeureFin.atOffset(ZoneOffset.UTC)));
+			document.addField("blocHeureFin_stored_string", DateTimeFormatter.ofPattern("HH:mm").format(blocHeureFin.atOffset(ZoneOffset.UTC)));
 		}
 		if(blocPrixParMois != null) {
 			document.addField("blocPrixParMois_indexed_double", blocPrixParMois.doubleValue());

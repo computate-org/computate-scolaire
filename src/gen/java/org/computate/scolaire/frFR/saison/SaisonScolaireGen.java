@@ -27,7 +27,6 @@ import java.util.List;
 import java.time.LocalDate;
 import org.apache.solr.client.solrj.SolrQuery;
 import java.util.Optional;
-import io.vertx.ext.sql.SQLClient;
 import org.apache.solr.client.solrj.util.ClientUtils;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.apache.solr.common.SolrInputDocument;
@@ -51,7 +50,6 @@ import io.vertx.core.json.JsonArray;
 import org.apache.solr.common.SolrDocument;
 import java.time.temporal.ChronoUnit;
 import java.time.format.DateTimeFormatter;
-import io.vertx.ext.sql.SQLConnection;
 import org.apache.commons.lang3.math.NumberUtils;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
@@ -1580,7 +1578,7 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SaisonScolaire setSaisonJourDebut(String o) {
-		this.saisonJourDebut = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.saisonJourDebut = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
 		this.saisonJourDebutCouverture.dejaInitialise = true;
 		return (SaisonScolaire)this;
 	}
@@ -1604,11 +1602,11 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strSaisonJourDebut() {
-		return saisonJourDebut == null ? "" : saisonJourDebut.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.FRANCE));
+		return saisonJourDebut == null ? "" : saisonJourDebut.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.forLanguageTag("fr-FR")));
 	}
 
 	public String jsonSaisonJourDebut() {
-		return saisonJourDebut == null ? "" : saisonJourDebut.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.FRANCE));
+		return saisonJourDebut == null ? "" : saisonJourDebut.format(DateTimeFormatter.ISO_DATE);
 	}
 
 	public String nomAffichageSaisonJourDebut() {
@@ -1634,8 +1632,8 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 				.a("id", classeApiMethodeMethode, "_saisonJourDebut")
 				.a("onclick", "enleverLueur($(this)); ")
 				.a("title", "Les sessions scolaires de la saison scolaire.  (DD-MM-YYYY)")
-				.a("value", saisonJourDebut == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(saisonJourDebut))
-				.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSaisonScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSaisonJourDebut', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_saisonJourDebut')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_saisonJourDebut')); }); } ")
+				.a("value", saisonJourDebut == null ? "" : DateTimeFormatter.ISO_LOCAL_DATE.format(saisonJourDebut))
+				.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patchSaisonScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSaisonJourDebut', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_saisonJourDebut')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_saisonJourDebut')); }); } ")
 				.fg();
 		}
 	}

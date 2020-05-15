@@ -1933,66 +1933,197 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return jdbcTempsInactiviteMax == null ? "" : StringEscapeUtils.escapeHtml4(strJdbcTempsInactiviteMax());
 	}
 
-	/////////////
-	// jdbcUrl //
-	/////////////
+	//////////////
+	// jdbcHote //
+	//////////////
 
-	/**	L'entité « jdbcUrl »
+	/**	L'entité « jdbcHote »
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected String jdbcUrl;
+	protected String jdbcHote;
 	@JsonIgnore
-	public Couverture<String> jdbcUrlCouverture = new Couverture<String>().p(this).c(String.class).var("jdbcUrl").o(jdbcUrl);
+	public Couverture<String> jdbcHoteCouverture = new Couverture<String>().p(this).c(String.class).var("jdbcHote").o(jdbcHote);
 
-	/**	<br/>L'entité « jdbcUrl »
+	/**	<br/>L'entité « jdbcHote »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:jdbcUrl">Trouver l'entité jdbcUrl dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:jdbcHote">Trouver l'entité jdbcHote dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _jdbcUrl(Couverture<String> c);
+	protected abstract void _jdbcHote(Couverture<String> c);
 
-	public String getJdbcUrl() {
-		return jdbcUrl;
+	public String getJdbcHote() {
+		return jdbcHote;
 	}
 
-	public void setJdbcUrl(String jdbcUrl) {
-		this.jdbcUrl = jdbcUrl;
-		this.jdbcUrlCouverture.dejaInitialise = true;
+	public void setJdbcHote(String jdbcHote) {
+		this.jdbcHote = jdbcHote;
+		this.jdbcHoteCouverture.dejaInitialise = true;
 	}
-	protected ConfigSite jdbcUrlInit() {
-		if(!jdbcUrlCouverture.dejaInitialise) {
-			_jdbcUrl(jdbcUrlCouverture);
-			if(jdbcUrl == null)
-				setJdbcUrl(jdbcUrlCouverture.o);
+	protected ConfigSite jdbcHoteInit() {
+		if(!jdbcHoteCouverture.dejaInitialise) {
+			_jdbcHote(jdbcHoteCouverture);
+			if(jdbcHote == null)
+				setJdbcHote(jdbcHoteCouverture.o);
 		}
-		jdbcUrlCouverture.dejaInitialise(true);
+		jdbcHoteCouverture.dejaInitialise(true);
 		return (ConfigSite)this;
 	}
 
-	public String solrJdbcUrl() {
-		return jdbcUrl;
+	public String solrJdbcHote() {
+		return jdbcHote;
 	}
 
-	public String strJdbcUrl() {
-		return jdbcUrl == null ? "" : jdbcUrl;
+	public String strJdbcHote() {
+		return jdbcHote == null ? "" : jdbcHote;
 	}
 
-	public String jsonJdbcUrl() {
-		return jdbcUrl == null ? "" : jdbcUrl;
+	public String jsonJdbcHote() {
+		return jdbcHote == null ? "" : jdbcHote;
 	}
 
-	public String nomAffichageJdbcUrl() {
+	public String nomAffichageJdbcHote() {
 		return null;
 	}
 
-	public String htmTooltipJdbcUrl() {
+	public String htmTooltipJdbcHote() {
 		return null;
 	}
 
-	public String htmJdbcUrl() {
-		return jdbcUrl == null ? "" : StringEscapeUtils.escapeHtml4(strJdbcUrl());
+	public String htmJdbcHote() {
+		return jdbcHote == null ? "" : StringEscapeUtils.escapeHtml4(strJdbcHote());
+	}
+
+	//////////////
+	// jdbcPort //
+	//////////////
+
+	/**	L'entité « jdbcPort »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected Integer jdbcPort;
+	@JsonIgnore
+	public Couverture<Integer> jdbcPortCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("jdbcPort").o(jdbcPort);
+
+	/**	<br/>L'entité « jdbcPort »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:jdbcPort">Trouver l'entité jdbcPort dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _jdbcPort(Couverture<Integer> c);
+
+	public Integer getJdbcPort() {
+		return jdbcPort;
+	}
+
+	public void setJdbcPort(Integer jdbcPort) {
+		this.jdbcPort = jdbcPort;
+		this.jdbcPortCouverture.dejaInitialise = true;
+	}
+	public ConfigSite setJdbcPort(String o) {
+		if(NumberUtils.isParsable(o))
+			this.jdbcPort = Integer.parseInt(o);
+		this.jdbcPortCouverture.dejaInitialise = true;
+		return (ConfigSite)this;
+	}
+	protected ConfigSite jdbcPortInit() {
+		if(!jdbcPortCouverture.dejaInitialise) {
+			_jdbcPort(jdbcPortCouverture);
+			if(jdbcPort == null)
+				setJdbcPort(jdbcPortCouverture.o);
+		}
+		jdbcPortCouverture.dejaInitialise(true);
+		return (ConfigSite)this;
+	}
+
+	public Integer solrJdbcPort() {
+		return jdbcPort;
+	}
+
+	public String strJdbcPort() {
+		return jdbcPort == null ? "" : jdbcPort.toString();
+	}
+
+	public String jsonJdbcPort() {
+		return jdbcPort == null ? "" : jdbcPort.toString();
+	}
+
+	public String nomAffichageJdbcPort() {
+		return null;
+	}
+
+	public String htmTooltipJdbcPort() {
+		return null;
+	}
+
+	public String htmJdbcPort() {
+		return jdbcPort == null ? "" : StringEscapeUtils.escapeHtml4(strJdbcPort());
+	}
+
+	///////////////////////
+	// jdbcBaseDeDonnees //
+	///////////////////////
+
+	/**	L'entité « jdbcBaseDeDonnees »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String jdbcBaseDeDonnees;
+	@JsonIgnore
+	public Couverture<String> jdbcBaseDeDonneesCouverture = new Couverture<String>().p(this).c(String.class).var("jdbcBaseDeDonnees").o(jdbcBaseDeDonnees);
+
+	/**	<br/>L'entité « jdbcBaseDeDonnees »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:jdbcBaseDeDonnees">Trouver l'entité jdbcBaseDeDonnees dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _jdbcBaseDeDonnees(Couverture<String> c);
+
+	public String getJdbcBaseDeDonnees() {
+		return jdbcBaseDeDonnees;
+	}
+
+	public void setJdbcBaseDeDonnees(String jdbcBaseDeDonnees) {
+		this.jdbcBaseDeDonnees = jdbcBaseDeDonnees;
+		this.jdbcBaseDeDonneesCouverture.dejaInitialise = true;
+	}
+	protected ConfigSite jdbcBaseDeDonneesInit() {
+		if(!jdbcBaseDeDonneesCouverture.dejaInitialise) {
+			_jdbcBaseDeDonnees(jdbcBaseDeDonneesCouverture);
+			if(jdbcBaseDeDonnees == null)
+				setJdbcBaseDeDonnees(jdbcBaseDeDonneesCouverture.o);
+		}
+		jdbcBaseDeDonneesCouverture.dejaInitialise(true);
+		return (ConfigSite)this;
+	}
+
+	public String solrJdbcBaseDeDonnees() {
+		return jdbcBaseDeDonnees;
+	}
+
+	public String strJdbcBaseDeDonnees() {
+		return jdbcBaseDeDonnees == null ? "" : jdbcBaseDeDonnees;
+	}
+
+	public String jsonJdbcBaseDeDonnees() {
+		return jdbcBaseDeDonnees == null ? "" : jdbcBaseDeDonnees;
+	}
+
+	public String nomAffichageJdbcBaseDeDonnees() {
+		return null;
+	}
+
+	public String htmTooltipJdbcBaseDeDonnees() {
+		return null;
+	}
+
+	public String htmJdbcBaseDeDonnees() {
+		return jdbcBaseDeDonnees == null ? "" : StringEscapeUtils.escapeHtml4(strJdbcBaseDeDonnees());
 	}
 
 	/////////////
@@ -4205,7 +4336,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	 */
 	@JsonDeserialize(using = LocalDateDeserializer.class)
 	@JsonSerialize(using = LocalDateSerializer.class)
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	@JsonInclude(Include.NON_NULL)
 	protected LocalDate paiementProchain;
 	@JsonIgnore
@@ -4321,7 +4452,9 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		jdbcMaxDeclarationsInit();
 		jdbcMaxDeclarationsParConnexionInit();
 		jdbcTempsInactiviteMaxInit();
-		jdbcUrlInit();
+		jdbcHoteInit();
+		jdbcPortInit();
+		jdbcBaseDeDonneesInit();
 		solrUrlInit();
 		solrUrlComputateInit();
 		compteFacebookInit();
@@ -4444,8 +4577,12 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 				return oConfigSite.jdbcMaxDeclarationsParConnexion;
 			case "jdbcTempsInactiviteMax":
 				return oConfigSite.jdbcTempsInactiviteMax;
-			case "jdbcUrl":
-				return oConfigSite.jdbcUrl;
+			case "jdbcHote":
+				return oConfigSite.jdbcHote;
+			case "jdbcPort":
+				return oConfigSite.jdbcPort;
+			case "jdbcBaseDeDonnees":
+				return oConfigSite.jdbcBaseDeDonnees;
 			case "solrUrl":
 				return oConfigSite.solrUrl;
 			case "solrUrlComputate":

@@ -12,15 +12,18 @@ import io.vertx.core.logging.LoggerFactory;
 import java.util.Stack;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.config.SiteConfig;
+import io.vertx.sqlclient.SqlConnection;
 import org.apache.commons.collections.CollectionUtils;
 import java.lang.Long;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.lang.Boolean;
 import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import java.lang.String;
+import io.vertx.sqlclient.Transaction;
 import io.vertx.core.logging.Logger;
 import org.computate.scolaire.enUS.user.SiteUser;
 import io.vertx.core.http.CaseInsensitiveHeaders;
@@ -30,6 +33,7 @@ import org.computate.scolaire.enUS.cluster.Cluster;
 import io.vertx.core.Vertx;
 import org.apache.commons.text.StringEscapeUtils;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import org.apache.solr.common.SolrDocument;
@@ -37,10 +41,11 @@ import java.util.List;
 import io.vertx.ext.web.api.OperationRequest;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.commons.lang3.math.NumberUtils;
-import io.vertx.ext.sql.SQLConnection;
 import java.util.Optional;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import java.lang.Object;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 
 /**	
  * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.request.SiteRequestEnUS&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
@@ -1498,6 +1503,44 @@ The site configuration.
 		return requestPk == null ? "" : StringEscapeUtils.escapeHtml4(strRequestPk());
 	}
 
+	////////
+	// tx //
+	////////
+
+	/**	L'entité « tx »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected Transaction tx;
+	@JsonIgnore
+	public Wrap<Transaction> txWrap = new Wrap<Transaction>().p(this).c(Transaction.class).var("tx").o(tx);
+
+	/**	<br/>L'entité « tx »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.request.SiteRequestEnUS&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:tx">Trouver l'entité tx dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _tx(Wrap<Transaction> c);
+
+	public Transaction getTx() {
+		return tx;
+	}
+
+	public void setTx(Transaction tx) {
+		this.tx = tx;
+		this.txWrap.alreadyInitialized = true;
+	}
+	protected SiteRequestEnUS txInit() {
+		if(!txWrap.alreadyInitialized) {
+			_tx(txWrap);
+			if(tx == null)
+				setTx(txWrap.o);
+		}
+		txWrap.alreadyInitialized(true);
+		return (SiteRequestEnUS)this;
+	}
+
 	///////////////////
 	// sqlConnection //
 	///////////////////
@@ -1506,9 +1549,9 @@ The site configuration.
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected SQLConnection sqlConnection;
+	protected SqlConnection sqlConnection;
 	@JsonIgnore
-	public Wrap<SQLConnection> sqlConnectionWrap = new Wrap<SQLConnection>().p(this).c(SQLConnection.class).var("sqlConnection").o(sqlConnection);
+	public Wrap<SqlConnection> sqlConnectionWrap = new Wrap<SqlConnection>().p(this).c(SqlConnection.class).var("sqlConnection").o(sqlConnection);
 
 	/**	<br/>L'entité « sqlConnection »
 	 *  est défini comme null avant d'être initialisé. 
@@ -1516,13 +1559,13 @@ The site configuration.
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _sqlConnection(Wrap<SQLConnection> c);
+	protected abstract void _sqlConnection(Wrap<SqlConnection> c);
 
-	public SQLConnection getSqlConnection() {
+	public SqlConnection getSqlConnection() {
 		return sqlConnection;
 	}
 
-	public void setSqlConnection(SQLConnection sqlConnection) {
+	public void setSqlConnection(SqlConnection sqlConnection) {
 		this.sqlConnection = sqlConnection;
 		this.sqlConnectionWrap.alreadyInitialized = true;
 	}
@@ -1659,6 +1702,7 @@ The site configuration.
 		solrDocumentInit();
 		pageAdminInit();
 		requestPkInit();
+		txInit();
 		sqlConnectionInit();
 		requestHeadersInit();
 		requestVarsInit();
@@ -1761,6 +1805,8 @@ The site configuration.
 				return oSiteRequestEnUS.pageAdmin;
 			case "requestPk":
 				return oSiteRequestEnUS.requestPk;
+			case "tx":
+				return oSiteRequestEnUS.tx;
 			case "sqlConnection":
 				return oSiteRequestEnUS.sqlConnection;
 			case "requestHeaders":

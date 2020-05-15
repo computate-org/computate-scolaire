@@ -27,7 +27,6 @@ import java.util.List;
 import java.time.LocalDate;
 import org.apache.solr.client.solrj.SolrQuery;
 import java.util.Optional;
-import io.vertx.ext.sql.SQLClient;
 import org.apache.solr.client.solrj.util.ClientUtils;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.apache.solr.common.SolrInputDocument;
@@ -51,7 +50,6 @@ import io.vertx.core.json.JsonArray;
 import org.apache.solr.common.SolrDocument;
 import java.time.temporal.ChronoUnit;
 import java.time.format.DateTimeFormatter;
-import io.vertx.ext.sql.SQLConnection;
 import org.apache.commons.lang3.math.NumberUtils;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
@@ -1760,7 +1758,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolAge setSeasonStartDate(String o) {
-		this.seasonStartDate = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.seasonStartDate = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
 		this.seasonStartDateWrap.alreadyInitialized = true;
 		return (SchoolAge)this;
 	}
@@ -1784,11 +1782,11 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 	}
 
 	public String strSeasonStartDate() {
-		return seasonStartDate == null ? "" : seasonStartDate.format(DateTimeFormatter.ofPattern("EEE MMM d yyyy", Locale.US));
+		return seasonStartDate == null ? "" : seasonStartDate.format(DateTimeFormatter.ofPattern("EEE MMM d, yyyy", Locale.forLanguageTag("en-US")));
 	}
 
 	public String jsonSeasonStartDate() {
-		return seasonStartDate == null ? "" : seasonStartDate.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.US));
+		return seasonStartDate == null ? "" : seasonStartDate.format(DateTimeFormatter.ISO_DATE);
 	}
 
 	public String nomAffichageSeasonStartDate() {
@@ -2179,7 +2177,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolAge setSessionStartDate(String o) {
-		this.sessionStartDate = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.sessionStartDate = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
 		this.sessionStartDateWrap.alreadyInitialized = true;
 		return (SchoolAge)this;
 	}
@@ -2203,11 +2201,11 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 	}
 
 	public String strSessionStartDate() {
-		return sessionStartDate == null ? "" : sessionStartDate.format(DateTimeFormatter.ofPattern("EEE MMM d yyyy", Locale.US));
+		return sessionStartDate == null ? "" : sessionStartDate.format(DateTimeFormatter.ofPattern("EEE MMM d, yyyy", Locale.forLanguageTag("en-US")));
 	}
 
 	public String jsonSessionStartDate() {
-		return sessionStartDate == null ? "" : sessionStartDate.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.US));
+		return sessionStartDate == null ? "" : sessionStartDate.format(DateTimeFormatter.ISO_DATE);
 	}
 
 	public String nomAffichageSessionStartDate() {
@@ -2260,7 +2258,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolAge setSessionEndDate(String o) {
-		this.sessionEndDate = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.sessionEndDate = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
 		this.sessionEndDateWrap.alreadyInitialized = true;
 		return (SchoolAge)this;
 	}
@@ -2284,11 +2282,11 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 	}
 
 	public String strSessionEndDate() {
-		return sessionEndDate == null ? "" : sessionEndDate.format(DateTimeFormatter.ofPattern("EEE MMM d yyyy", Locale.US));
+		return sessionEndDate == null ? "" : sessionEndDate.format(DateTimeFormatter.ofPattern("EEE MMM d, yyyy", Locale.forLanguageTag("en-US")));
 	}
 
 	public String jsonSessionEndDate() {
-		return sessionEndDate == null ? "" : sessionEndDate.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.US));
+		return sessionEndDate == null ? "" : sessionEndDate.format(DateTimeFormatter.ISO_DATE);
 	}
 
 	public String nomAffichageSessionEndDate() {

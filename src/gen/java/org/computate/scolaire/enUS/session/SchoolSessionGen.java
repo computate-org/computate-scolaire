@@ -27,7 +27,6 @@ import java.util.List;
 import java.time.LocalDate;
 import org.apache.solr.client.solrj.SolrQuery;
 import java.util.Optional;
-import io.vertx.ext.sql.SQLClient;
 import org.apache.solr.client.solrj.util.ClientUtils;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.apache.solr.common.SolrInputDocument;
@@ -51,7 +50,6 @@ import io.vertx.core.json.JsonArray;
 import org.apache.solr.common.SolrDocument;
 import java.time.temporal.ChronoUnit;
 import java.time.format.DateTimeFormatter;
-import io.vertx.ext.sql.SQLConnection;
 import org.apache.commons.lang3.math.NumberUtils;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
@@ -1691,7 +1689,7 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolSession setSeasonStartDate(String o) {
-		this.seasonStartDate = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.seasonStartDate = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
 		this.seasonStartDateWrap.alreadyInitialized = true;
 		return (SchoolSession)this;
 	}
@@ -1715,11 +1713,11 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 	}
 
 	public String strSeasonStartDate() {
-		return seasonStartDate == null ? "" : seasonStartDate.format(DateTimeFormatter.ofPattern("EEE MMM d yyyy", Locale.US));
+		return seasonStartDate == null ? "" : seasonStartDate.format(DateTimeFormatter.ofPattern("EEE MMM d, yyyy", Locale.forLanguageTag("en-US")));
 	}
 
 	public String jsonSeasonStartDate() {
-		return seasonStartDate == null ? "" : seasonStartDate.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.US));
+		return seasonStartDate == null ? "" : seasonStartDate.format(DateTimeFormatter.ISO_DATE);
 	}
 
 	public String nomAffichageSeasonStartDate() {
@@ -2110,7 +2108,7 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolSession setSessionStartDate(String o) {
-		this.sessionStartDate = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.sessionStartDate = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
 		this.sessionStartDateWrap.alreadyInitialized = true;
 		return (SchoolSession)this;
 	}
@@ -2134,11 +2132,11 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 	}
 
 	public String strSessionStartDate() {
-		return sessionStartDate == null ? "" : sessionStartDate.format(DateTimeFormatter.ofPattern("EEE MMM d yyyy", Locale.US));
+		return sessionStartDate == null ? "" : sessionStartDate.format(DateTimeFormatter.ofPattern("EEE MMM d, yyyy", Locale.forLanguageTag("en-US")));
 	}
 
 	public String jsonSessionStartDate() {
-		return sessionStartDate == null ? "" : sessionStartDate.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.US));
+		return sessionStartDate == null ? "" : sessionStartDate.format(DateTimeFormatter.ISO_DATE);
 	}
 
 	public String nomAffichageSessionStartDate() {
@@ -2163,8 +2161,8 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 				.a("data-timeformat", "MM/DD/YYYY")
 				.a("id", classApiMethodMethod, "_sessionStartDate")
 				.a("onclick", "removeGlow($(this)); ")
-				.a("value", sessionStartDate == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(sessionStartDate))
-				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolSessionVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSessionStartDate', s, function() { addGlow($('#", classApiMethodMethod, "_sessionStartDate')); }, function() { addError($('#", classApiMethodMethod, "_sessionStartDate')); }); } ")
+				.a("value", sessionStartDate == null ? "" : DateTimeFormatter.ISO_LOCAL_DATE.format(sessionStartDate))
+				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patchSchoolSessionVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSessionStartDate', s, function() { addGlow($('#", classApiMethodMethod, "_sessionStartDate')); }, function() { addError($('#", classApiMethodMethod, "_sessionStartDate')); }); } ")
 				.fg();
 		}
 	}
@@ -2240,7 +2238,7 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolSession setSessionEndDate(String o) {
-		this.sessionEndDate = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.sessionEndDate = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
 		this.sessionEndDateWrap.alreadyInitialized = true;
 		return (SchoolSession)this;
 	}
@@ -2264,11 +2262,11 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 	}
 
 	public String strSessionEndDate() {
-		return sessionEndDate == null ? "" : sessionEndDate.format(DateTimeFormatter.ofPattern("EEE MMM d yyyy", Locale.US));
+		return sessionEndDate == null ? "" : sessionEndDate.format(DateTimeFormatter.ofPattern("EEE MMM d, yyyy", Locale.forLanguageTag("en-US")));
 	}
 
 	public String jsonSessionEndDate() {
-		return sessionEndDate == null ? "" : sessionEndDate.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.US));
+		return sessionEndDate == null ? "" : sessionEndDate.format(DateTimeFormatter.ISO_DATE);
 	}
 
 	public String nomAffichageSessionEndDate() {
@@ -2293,8 +2291,8 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 				.a("data-timeformat", "MM/DD/YYYY")
 				.a("id", classApiMethodMethod, "_sessionEndDate")
 				.a("onclick", "removeGlow($(this)); ")
-				.a("value", sessionEndDate == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(sessionEndDate))
-				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolSessionVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSessionEndDate', s, function() { addGlow($('#", classApiMethodMethod, "_sessionEndDate')); }, function() { addError($('#", classApiMethodMethod, "_sessionEndDate')); }); } ")
+				.a("value", sessionEndDate == null ? "" : DateTimeFormatter.ISO_LOCAL_DATE.format(sessionEndDate))
+				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patchSchoolSessionVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSessionEndDate', s, function() { addGlow($('#", classApiMethodMethod, "_sessionEndDate')); }, function() { addError($('#", classApiMethodMethod, "_sessionEndDate')); }); } ")
 				.fg();
 		}
 	}

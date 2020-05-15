@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.enfant;                                    
+package org.computate.scolaire.frFR.enfant;                        
 
 import java.text.Normalizer;
 import java.time.LocalDate;
@@ -73,7 +73,7 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * Role.enUS: SiteAdmin
  * RoleSession: true
  * RoleUtilisateur: true
-*/   
+*/          
 public class EnfantScolaire extends EnfantScolaireGen<Cluster> {
 
 	/**

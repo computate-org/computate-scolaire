@@ -53,8 +53,11 @@ import io.vertx.ext.web.api.validation.HTTPRequestValidationHandler;
 import io.vertx.ext.web.api.validation.ParameterTypeValidator;
 import io.vertx.ext.web.api.validation.ValidationException;
 import io.vertx.ext.web.api.contract.openapi3.OpenAPI3RouterFactory;
-import io.vertx.ext.sql.SQLClient;
-import io.vertx.ext.sql.SQLConnection;
+import io.vertx.pgclient.PgPool;
+import io.vertx.sqlclient.Transaction;
+import io.vertx.sqlclient.SqlConnection;
+import io.vertx.sqlclient.Tuple;
+import io.vertx.sqlclient.Row;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import java.time.LocalDateTime;
@@ -125,43 +128,36 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 				));
 			}
 
-			sqlSchoolSeason(siteRequest, a -> {
-				if(a.succeeded()) {
-					userSchoolSeason(siteRequest, b -> {
-						if(b.succeeded()) {
-							ApiRequest apiRequest = new ApiRequest();
-							apiRequest.setRows(1);
-							apiRequest.setNumFound(1L);
-							apiRequest.setNumPATCH(0L);
-							apiRequest.initDeepApiRequest(siteRequest);
-							siteRequest.setApiRequest_(apiRequest);
-							siteRequest.getVertx().eventBus().publish("websocketSchoolSeason", JsonObject.mapFrom(apiRequest).toString());
-							postSchoolSeasonFuture(siteRequest, false, c -> {
-								if(c.succeeded()) {
-									SchoolSeason schoolSeason = c.result();
-									apiRequest.setPk(schoolSeason.getPk());
-									postSchoolSeasonResponse(schoolSeason, d -> {
-										if(d.succeeded()) {
-											eventHandler.handle(Future.succeededFuture(d.result()));
-											LOGGER.info(String.format("postSchoolSeason succeeded. "));
-										} else {
-											LOGGER.error(String.format("postSchoolSeason failed. ", d.cause()));
-											errorSchoolSeason(siteRequest, eventHandler, d);
-										}
-									});
+			userSchoolSeason(siteRequest, b -> {
+				if(b.succeeded()) {
+					ApiRequest apiRequest = new ApiRequest();
+					apiRequest.setRows(1);
+					apiRequest.setNumFound(1L);
+					apiRequest.setNumPATCH(0L);
+					apiRequest.initDeepApiRequest(siteRequest);
+					siteRequest.setApiRequest_(apiRequest);
+					siteRequest.getVertx().eventBus().publish("websocketSchoolSeason", JsonObject.mapFrom(apiRequest).toString());
+					postSchoolSeasonFuture(siteRequest, false, c -> {
+						if(c.succeeded()) {
+							SchoolSeason schoolSeason = c.result();
+							apiRequest.setPk(schoolSeason.getPk());
+							postSchoolSeasonResponse(schoolSeason, d -> {
+									if(d.succeeded()) {
+									eventHandler.handle(Future.succeededFuture(d.result()));
+									LOGGER.info(String.format("postSchoolSeason succeeded. "));
 								} else {
-									LOGGER.error(String.format("postSchoolSeason failed. ", c.cause()));
-									errorSchoolSeason(siteRequest, eventHandler, c);
+									LOGGER.error(String.format("postSchoolSeason failed. ", d.cause()));
+									errorSchoolSeason(siteRequest, eventHandler, d);
 								}
 							});
 						} else {
-							LOGGER.error(String.format("postSchoolSeason failed. ", b.cause()));
-							errorSchoolSeason(siteRequest, eventHandler, b);
+							LOGGER.error(String.format("postSchoolSeason failed. ", c.cause()));
+							errorSchoolSeason(siteRequest, eventHandler, c);
 						}
 					});
 				} else {
-					LOGGER.error(String.format("postSchoolSeason failed. ", a.cause()));
-					errorSchoolSeason(siteRequest, eventHandler, a);
+					LOGGER.error(String.format("postSchoolSeason failed. ", b.cause()));
+					errorSchoolSeason(siteRequest, eventHandler, b);
 				}
 			});
 		} catch(Exception ex) {
@@ -174,41 +170,52 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 	public Future<SchoolSeason> postSchoolSeasonFuture(SiteRequestEnUS siteRequest, Boolean inheritPk, Handler<AsyncResult<SchoolSeason>> eventHandler) {
 		Promise<SchoolSeason> promise = Promise.promise();
 		try {
-			createSchoolSeason(siteRequest, a -> {
+			sqlConnectionSchoolSeason(siteRequest, a -> {
 				if(a.succeeded()) {
-					SchoolSeason schoolSeason = a.result();
-					sqlPOSTSchoolSeason(schoolSeason, inheritPk, b -> {
+					sqlTransactionSchoolSeason(siteRequest, b -> {
 						if(b.succeeded()) {
-							defineIndexSchoolSeason(schoolSeason, c -> {
+							createSchoolSeason(siteRequest, c -> {
 								if(c.succeeded()) {
-									ApiRequest apiRequest = siteRequest.getApiRequest_();
-									if(apiRequest != null) {
-										apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
-										schoolSeason.apiRequestSchoolSeason();
-										siteRequest.getVertx().eventBus().publish("websocketSchoolSeason", JsonObject.mapFrom(apiRequest).toString());
-									}
-									SQLConnection sqlConnection = siteRequest.getSqlConnection();
-									sqlConnection.commit(d -> {
+									SchoolSeason schoolSeason = c.result();
+									sqlPOSTSchoolSeason(schoolSeason, inheritPk, d -> {
 										if(d.succeeded()) {
-											eventHandler.handle(Future.succeededFuture(schoolSeason));
-											promise.complete(schoolSeason);
+											defineIndexSchoolSeason(schoolSeason, e -> {
+												if(e.succeeded()) {
+													ApiRequest apiRequest = siteRequest.getApiRequest_();
+													if(apiRequest != null) {
+														apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+														schoolSeason.apiRequestSchoolSeason();
+														siteRequest.getVertx().eventBus().publish("websocketSchoolSeason", JsonObject.mapFrom(apiRequest).toString());
+													}
+													eventHandler.handle(Future.succeededFuture(schoolSeason));
+													promise.complete(schoolSeason);
+												} else {
+													LOGGER.error(String.format("postSchoolSeasonFuture failed. ", e.cause()));
+													eventHandler.handle(Future.failedFuture(e.cause()));
+												}
+											});
 										} else {
+											LOGGER.error(String.format("postSchoolSeasonFuture failed. ", d.cause()));
 											eventHandler.handle(Future.failedFuture(d.cause()));
 										}
 									});
 								} else {
+									LOGGER.error(String.format("postSchoolSeasonFuture failed. ", c.cause()));
 									eventHandler.handle(Future.failedFuture(c.cause()));
 								}
 							});
 						} else {
+							LOGGER.error(String.format("postSchoolSeasonFuture failed. ", b.cause()));
 							eventHandler.handle(Future.failedFuture(b.cause()));
 						}
 					});
 				} else {
+					LOGGER.error(String.format("postSchoolSeasonFuture failed. ", a.cause()));
 					eventHandler.handle(Future.failedFuture(a.cause()));
 				}
 			});
 		} catch(Exception e) {
+			LOGGER.error(String.format("postSchoolSeasonFuture failed. ", e));
 			errorSchoolSeason(siteRequest, null, Future.failedFuture(e));
 		}
 		return promise.future();
@@ -220,23 +227,49 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 			ApiRequest apiRequest = siteRequest.getApiRequest_();
 			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(new ArrayList<>());
 			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(new ArrayList<>());
-			SQLConnection sqlConnection = siteRequest.getSqlConnection();
+			Transaction tx = siteRequest.getTx();
 			Long pk = o.getPk();
 			JsonObject jsonObject = siteRequest.getJsonObject();
-			StringBuilder postSql = new StringBuilder();
-			List<Object> postSqlParams = new ArrayList<Object>();
+			List<Future> futures = new ArrayList<>();
 
 			if(siteRequest.getSessionId() != null) {
-				postSql.append(SiteContextEnUS.SQL_setD);
-				postSqlParams.addAll(Arrays.asList(pk, "sessionId", siteRequest.getSessionId()));
+				futures.add(Future.future(a -> {
+					tx.preparedQuery(SiteContextEnUS.SQL_setD
+				, Tuple.of(pk, "sessionId", siteRequest.getSessionId())
+							, b
+					-> {
+						if(b.succeeded())
+							a.handle(Future.succeededFuture());
+						else
+							a.handle(Future.failedFuture(b.cause()));
+					});
+				}));
 			}
 			if(siteRequest.getUserId() != null) {
-				postSql.append(SiteContextEnUS.SQL_setD);
-				postSqlParams.addAll(Arrays.asList(pk, "userId", siteRequest.getUserId()));
+				futures.add(Future.future(a -> {
+					tx.preparedQuery(SiteContextEnUS.SQL_setD
+				, Tuple.of(pk, "userId", siteRequest.getUserId())
+							, b
+					-> {
+						if(b.succeeded())
+							a.handle(Future.succeededFuture());
+						else
+							a.handle(Future.failedFuture(b.cause()));
+					});
+				}));
 			}
 			if(siteRequest.getUserKey() != null) {
-				postSql.append(SiteContextEnUS.SQL_setD);
-				postSqlParams.addAll(Arrays.asList(pk, "userKey", siteRequest.getUserKey()));
+				futures.add(Future.future(a -> {
+					tx.preparedQuery(SiteContextEnUS.SQL_setD
+				, Tuple.of(pk, "userKey", siteRequest.getUserKey())
+							, b
+					-> {
+						if(b.succeeded())
+							a.handle(Future.succeededFuture());
+						else
+							a.handle(Future.failedFuture(b.cause()));
+					});
+				}));
 			}
 
 			if(jsonObject != null) {
@@ -244,36 +277,108 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 				for(String entityVar : entityVars) {
 					switch(entityVar) {
 					case "inheritPk":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "inheritPk", jsonObject.getString(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "inheritPk", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolSeason.inheritPk failed", b.cause())));
+							});
+						}));
 						break;
 					case "created":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "created", jsonObject.getString(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "created", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolSeason.created failed", b.cause())));
+							});
+						}));
 						break;
 					case "modified":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "modified", jsonObject.getString(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "modified", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolSeason.modified failed", b.cause())));
+							});
+						}));
 						break;
 					case "archived":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "archived", jsonObject.getBoolean(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "archived", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolSeason.archived failed", b.cause())));
+							});
+						}));
 						break;
 					case "deleted":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "deleted", jsonObject.getBoolean(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "deleted", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolSeason.deleted failed", b.cause())));
+							});
+						}));
 						break;
 					case "sessionId":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "sessionId", jsonObject.getString(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "sessionId", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolSeason.sessionId failed", b.cause())));
+							});
+						}));
 						break;
 					case "userId":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "userId", jsonObject.getString(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "userId", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolSeason.userId failed", b.cause())));
+							});
+						}));
 						break;
 					case "userKey":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "userKey", jsonObject.getString(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "userKey", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolSeason.userKey failed", b.cause())));
+							});
+						}));
 						break;
 					case "yearKey":
 						{
@@ -285,12 +390,21 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 								searchList.setC(SchoolYear.class);
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								searchList.initDeepSearchList(siteRequest);
-								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null) {
-									postSql.append(SiteContextEnUS.SQL_addA);
-									postSqlParams.addAll(Arrays.asList(l, "seasonKeys", ", classeVarClePrimaire, yearKey"));
-									if(!pks.contains(l)) {
-										pks.add(l);
+								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_addA
+												, Tuple.of(l2, "seasonKeys", pk, "yearKey")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolSeason.yearKey failed", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
 										classes.add("SchoolYear");
 									}
 								}
@@ -306,12 +420,21 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 								searchList.setC(SchoolSession.class);
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								searchList.initDeepSearchList(siteRequest);
-								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null) {
-									postSql.append(SiteContextEnUS.SQL_addA);
-									postSqlParams.addAll(Arrays.asList(l, "seasonKey", pk, "sessionKeys"));
-									if(!pks.contains(l)) {
-										pks.add(l);
+								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_addA
+												, Tuple.of(l2, "seasonKey", pk, "sessionKeys")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolSeason.sessionKeys failed", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
 										classes.add("SchoolSession");
 									}
 								}
@@ -319,36 +442,70 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 						}
 						break;
 					case "seasonStartDate":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "seasonStartDate", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entityVar)))));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "seasonStartDate", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolSeason.seasonStartDate failed", b.cause())));
+							});
+						}));
 						break;
 					case "seasonSummer":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "seasonSummer", jsonObject.getBoolean(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "seasonSummer", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolSeason.seasonSummer failed", b.cause())));
+							});
+						}));
 						break;
 					case "seasonWinter":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "seasonWinter", jsonObject.getBoolean(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "seasonWinter", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolSeason.seasonWinter failed", b.cause())));
+							});
+						}));
 						break;
 					case "seasonFuture":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "seasonFuture", jsonObject.getBoolean(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "seasonFuture", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolSeason.seasonFuture failed", b.cause())));
+							});
+						}));
 						break;
 					}
 				}
 			}
-			sqlConnection.queryWithParams(
-					postSql.toString()
-					, new JsonArray(postSqlParams)
-					, postAsync
-			-> {
-				if(postAsync.succeeded()) {
+			CompositeFuture.all(futures).setHandler( a -> {
+				if(a.succeeded()) {
 					eventHandler.handle(Future.succeededFuture());
 				} else {
-					eventHandler.handle(Future.failedFuture(new Exception(postAsync.cause())));
+					LOGGER.error(String.format("sqlPOSTSchoolSeason failed. ", a.cause()));
+					eventHandler.handle(Future.failedFuture(a.cause()));
 				}
 			});
 		} catch(Exception e) {
+			LOGGER.error(String.format("sqlPOSTSchoolSeason failed. ", e));
 			eventHandler.handle(Future.failedFuture(e));
 		}
 	}
@@ -358,26 +515,14 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 		try {
 			response200POSTSchoolSeason(schoolSeason, a -> {
 				if(a.succeeded()) {
-					SQLConnection sqlConnection = siteRequest.getSqlConnection();
-					sqlConnection.commit(b -> {
-						if(b.succeeded()) {
-							sqlConnection.close(c -> {
-								if(c.succeeded()) {
-									eventHandler.handle(Future.succeededFuture(a.result()));
-								} else {
-									errorSchoolSeason(siteRequest, eventHandler, c);
-								}
-							});
-						} else {
-							errorSchoolSeason(siteRequest, eventHandler, b);
-						}
-					});
+					eventHandler.handle(Future.succeededFuture(a.result()));
 				} else {
+					LOGGER.error(String.format("postSchoolSeasonResponse failed. ", a.cause()));
 					errorSchoolSeason(siteRequest, eventHandler, a);
 				}
 			});
 		} catch(Exception ex) {
-			LOGGER.error(String.format("postSchoolSeason failed. ", ex));
+			LOGGER.error(String.format("postSchoolSeasonResponse failed. ", ex));
 			errorSchoolSeason(siteRequest, null, Future.failedFuture(ex));
 		}
 	}
@@ -387,6 +532,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 			JsonObject json = JsonObject.mapFrom(o);
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
 		} catch(Exception e) {
+			LOGGER.error(String.format("response200POSTSchoolSeason failed. ", e));
 			eventHandler.handle(Future.failedFuture(e));
 		}
 	}
@@ -416,69 +562,62 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 				));
 			}
 
-			sqlSchoolSeason(siteRequest, a -> {
-				if(a.succeeded()) {
-					userSchoolSeason(siteRequest, b -> {
-						if(b.succeeded()) {
-							putimportSchoolSeasonResponse(siteRequest, c -> {
-								if(c.succeeded()) {
-									eventHandler.handle(Future.succeededFuture(c.result()));
-									WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
-									workerExecutor.executeBlocking(
-										blockingCodeHandler -> {
-											SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolSeason(siteContext, operationRequest, body);
-											try {
-												ApiRequest apiRequest = new ApiRequest();
-												JsonArray jsonArray = Optional.ofNullable(siteRequest2.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
-												apiRequest.setRows(jsonArray.size());
-												apiRequest.setNumFound(new Integer(jsonArray.size()).longValue());
-												apiRequest.setNumPATCH(0L);
-												apiRequest.initDeepApiRequest(siteRequest2);
-												siteRequest2.setApiRequest_(apiRequest);
-												siteRequest2.getVertx().eventBus().publish("websocketSchoolSeason", JsonObject.mapFrom(apiRequest).toString());
-												sqlSchoolSeason(siteRequest2, d -> {
-													if(d.succeeded()) {
-														listPUTImportSchoolSeason(apiRequest, siteRequest2, e -> {
-															if(e.succeeded()) {
-																putimportSchoolSeasonResponse(siteRequest2, f -> {
-																	if(f.succeeded()) {
-																		LOGGER.info(String.format("putimportSchoolSeason succeeded. "));
-																		blockingCodeHandler.handle(Future.succeededFuture(f.result()));
-																	} else {
-																		LOGGER.error(String.format("putimportSchoolSeason failed. ", f.cause()));
-																		errorSchoolSeason(siteRequest2, null, f);
-																	}
-																});
+			userSchoolSeason(siteRequest, b -> {
+				if(b.succeeded()) {
+					putimportSchoolSeasonResponse(siteRequest, c -> {
+						if(c.succeeded()) {
+							eventHandler.handle(Future.succeededFuture(c.result()));
+							WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
+							workerExecutor.executeBlocking(
+								blockingCodeHandler -> {
+									SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolSeason(siteContext, operationRequest, body);
+									try {
+										ApiRequest apiRequest = new ApiRequest();
+										JsonArray jsonArray = Optional.ofNullable(siteRequest2.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+										apiRequest.setRows(jsonArray.size());
+										apiRequest.setNumFound(new Integer(jsonArray.size()).longValue());
+										apiRequest.setNumPATCH(0L);
+										apiRequest.initDeepApiRequest(siteRequest2);
+										siteRequest2.setApiRequest_(apiRequest);
+										siteRequest2.getVertx().eventBus().publish("websocketSchoolSeason", JsonObject.mapFrom(apiRequest).toString());
+										sqlConnectionSchoolSeason(siteRequest2, d -> {
+											if(d.succeeded()) {
+												listPUTImportSchoolSeason(apiRequest, siteRequest2, e -> {
+													if(e.succeeded()) {
+														putimportSchoolSeasonResponse(siteRequest2, f -> {
+															if(f.succeeded()) {
+																LOGGER.info(String.format("putimportSchoolSeason succeeded. "));
+																blockingCodeHandler.handle(Future.succeededFuture(f.result()));
 															} else {
-																LOGGER.error(String.format("putimportSchoolSeason failed. ", e.cause()));
-																errorSchoolSeason(siteRequest2, null, e);
+																LOGGER.error(String.format("putimportSchoolSeason failed. ", f.cause()));
+																errorSchoolSeason(siteRequest2, null, f);
 															}
 														});
 													} else {
-														LOGGER.error(String.format("putimportSchoolSeason failed. ", d.cause()));
-														errorSchoolSeason(siteRequest2, null, d);
+														LOGGER.error(String.format("putimportSchoolSeason failed. ", e.cause()));
+														errorSchoolSeason(siteRequest2, null, e);
 													}
 												});
-											} catch(Exception ex) {
-												LOGGER.error(String.format("putimportSchoolSeason failed. ", ex));
-												errorSchoolSeason(siteRequest2, null, Future.failedFuture(ex));
+											} else {
+												LOGGER.error(String.format("putimportSchoolSeason failed. ", d.cause()));
+												errorSchoolSeason(siteRequest2, null, d);
 											}
-										}, resultHandler -> {
-										}
-									);
-								} else {
-									LOGGER.error(String.format("putimportSchoolSeason failed. ", c.cause()));
-									errorSchoolSeason(siteRequest, eventHandler, c);
+										});
+									} catch(Exception ex) {
+										LOGGER.error(String.format("putimportSchoolSeason failed. ", ex));
+										errorSchoolSeason(siteRequest2, null, Future.failedFuture(ex));
+									}
+								}, resultHandler -> {
 								}
-							});
+							);
 						} else {
-							LOGGER.error(String.format("putimportSchoolSeason failed. ", b.cause()));
-							errorSchoolSeason(siteRequest, eventHandler, b);
+							LOGGER.error(String.format("putimportSchoolSeason failed. ", c.cause()));
+							errorSchoolSeason(siteRequest, eventHandler, c);
 						}
 					});
 				} else {
-					LOGGER.error(String.format("putimportSchoolSeason failed. ", a.cause()));
-					errorSchoolSeason(siteRequest, eventHandler, a);
+					LOGGER.error(String.format("putimportSchoolSeason failed. ", b.cause()));
+					errorSchoolSeason(siteRequest, eventHandler, b);
 				}
 			});
 		} catch(Exception ex) {
@@ -524,6 +663,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 							patchSchoolSeasonFuture(o, true, a -> {
 								if(a.succeeded()) {
 								} else {
+									LOGGER.error(String.format("listPUTImportSchoolSeason failed. ", a.cause()));
 									errorSchoolSeason(siteRequest2, eventHandler, a);
 								}
 							})
@@ -534,6 +674,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 						postSchoolSeasonFuture(siteRequest2, true, a -> {
 							if(a.succeeded()) {
 							} else {
+								LOGGER.error(String.format("listPUTImportSchoolSeason failed. ", a.cause()));
 								errorSchoolSeason(siteRequest2, eventHandler, a);
 							}
 						})
@@ -545,11 +686,12 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 					apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 					response200PUTImportSchoolSeason(siteRequest, eventHandler);
 				} else {
+					LOGGER.error(String.format("listPUTImportSchoolSeason failed. ", a.cause()));
 					errorSchoolSeason(apiRequest.getSiteRequest_(), eventHandler, a);
 				}
 			});
 		} catch(Exception ex) {
-			LOGGER.error(String.format("putimportSchoolSeason failed. ", ex));
+			LOGGER.error(String.format("listPUTImportSchoolSeason failed. ", ex));
 			errorSchoolSeason(siteRequest, null, Future.failedFuture(ex));
 		}
 	}
@@ -558,26 +700,14 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 		try {
 			response200PUTImportSchoolSeason(siteRequest, a -> {
 				if(a.succeeded()) {
-					SQLConnection sqlConnection = siteRequest.getSqlConnection();
-					sqlConnection.commit(b -> {
-						if(b.succeeded()) {
-							sqlConnection.close(c -> {
-								if(c.succeeded()) {
-									eventHandler.handle(Future.succeededFuture(a.result()));
-								} else {
-									errorSchoolSeason(siteRequest, eventHandler, c);
-								}
-							});
-						} else {
-							errorSchoolSeason(siteRequest, eventHandler, b);
-						}
-					});
+					eventHandler.handle(Future.succeededFuture(a.result()));
 				} else {
+					LOGGER.error(String.format("putimportSchoolSeasonResponse failed. ", a.cause()));
 					errorSchoolSeason(siteRequest, eventHandler, a);
 				}
 			});
 		} catch(Exception ex) {
-			LOGGER.error(String.format("putimportSchoolSeason failed. ", ex));
+			LOGGER.error(String.format("putimportSchoolSeasonResponse failed. ", ex));
 			errorSchoolSeason(siteRequest, null, Future.failedFuture(ex));
 		}
 	}
@@ -586,6 +716,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 			JsonObject json = new JsonObject();
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
 		} catch(Exception e) {
+			LOGGER.error(String.format("response200PUTImportSchoolSeason failed. ", e));
 			eventHandler.handle(Future.failedFuture(e));
 		}
 	}
@@ -615,69 +746,62 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 				));
 			}
 
-			sqlSchoolSeason(siteRequest, a -> {
-				if(a.succeeded()) {
-					userSchoolSeason(siteRequest, b -> {
-						if(b.succeeded()) {
-							putmergeSchoolSeasonResponse(siteRequest, c -> {
-								if(c.succeeded()) {
-									eventHandler.handle(Future.succeededFuture(c.result()));
-									WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
-									workerExecutor.executeBlocking(
-										blockingCodeHandler -> {
-											SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolSeason(siteContext, operationRequest, body);
-											try {
-												ApiRequest apiRequest = new ApiRequest();
-												JsonArray jsonArray = Optional.ofNullable(siteRequest2.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
-												apiRequest.setRows(jsonArray.size());
-												apiRequest.setNumFound(new Integer(jsonArray.size()).longValue());
-												apiRequest.setNumPATCH(0L);
-												apiRequest.initDeepApiRequest(siteRequest2);
-												siteRequest2.setApiRequest_(apiRequest);
-												siteRequest2.getVertx().eventBus().publish("websocketSchoolSeason", JsonObject.mapFrom(apiRequest).toString());
-												sqlSchoolSeason(siteRequest2, d -> {
-													if(d.succeeded()) {
-														listPUTMergeSchoolSeason(apiRequest, siteRequest2, e -> {
-															if(e.succeeded()) {
-																putmergeSchoolSeasonResponse(siteRequest2, f -> {
-																	if(f.succeeded()) {
-																		LOGGER.info(String.format("putmergeSchoolSeason succeeded. "));
-																		blockingCodeHandler.handle(Future.succeededFuture(f.result()));
-																	} else {
-																		LOGGER.error(String.format("putmergeSchoolSeason failed. ", f.cause()));
-																		errorSchoolSeason(siteRequest2, null, f);
-																	}
-																});
+			userSchoolSeason(siteRequest, b -> {
+				if(b.succeeded()) {
+					putmergeSchoolSeasonResponse(siteRequest, c -> {
+						if(c.succeeded()) {
+							eventHandler.handle(Future.succeededFuture(c.result()));
+							WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
+							workerExecutor.executeBlocking(
+								blockingCodeHandler -> {
+									SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolSeason(siteContext, operationRequest, body);
+									try {
+										ApiRequest apiRequest = new ApiRequest();
+										JsonArray jsonArray = Optional.ofNullable(siteRequest2.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+										apiRequest.setRows(jsonArray.size());
+										apiRequest.setNumFound(new Integer(jsonArray.size()).longValue());
+										apiRequest.setNumPATCH(0L);
+										apiRequest.initDeepApiRequest(siteRequest2);
+										siteRequest2.setApiRequest_(apiRequest);
+										siteRequest2.getVertx().eventBus().publish("websocketSchoolSeason", JsonObject.mapFrom(apiRequest).toString());
+										sqlConnectionSchoolSeason(siteRequest2, d -> {
+											if(d.succeeded()) {
+												listPUTMergeSchoolSeason(apiRequest, siteRequest2, e -> {
+													if(e.succeeded()) {
+														putmergeSchoolSeasonResponse(siteRequest2, f -> {
+															if(f.succeeded()) {
+																LOGGER.info(String.format("putmergeSchoolSeason succeeded. "));
+																blockingCodeHandler.handle(Future.succeededFuture(f.result()));
 															} else {
-																LOGGER.error(String.format("putmergeSchoolSeason failed. ", e.cause()));
-																errorSchoolSeason(siteRequest2, null, e);
+																LOGGER.error(String.format("putmergeSchoolSeason failed. ", f.cause()));
+																errorSchoolSeason(siteRequest2, null, f);
 															}
 														});
 													} else {
-														LOGGER.error(String.format("putmergeSchoolSeason failed. ", d.cause()));
-														errorSchoolSeason(siteRequest2, null, d);
+														LOGGER.error(String.format("putmergeSchoolSeason failed. ", e.cause()));
+														errorSchoolSeason(siteRequest2, null, e);
 													}
 												});
-											} catch(Exception ex) {
-												LOGGER.error(String.format("putmergeSchoolSeason failed. ", ex));
-												errorSchoolSeason(siteRequest2, null, Future.failedFuture(ex));
+											} else {
+												LOGGER.error(String.format("putmergeSchoolSeason failed. ", d.cause()));
+												errorSchoolSeason(siteRequest2, null, d);
 											}
-										}, resultHandler -> {
-										}
-									);
-								} else {
-									LOGGER.error(String.format("putmergeSchoolSeason failed. ", c.cause()));
-									errorSchoolSeason(siteRequest, eventHandler, c);
+										});
+									} catch(Exception ex) {
+										LOGGER.error(String.format("putmergeSchoolSeason failed. ", ex));
+										errorSchoolSeason(siteRequest2, null, Future.failedFuture(ex));
+									}
+								}, resultHandler -> {
 								}
-							});
+							);
 						} else {
-							LOGGER.error(String.format("putmergeSchoolSeason failed. ", b.cause()));
-							errorSchoolSeason(siteRequest, eventHandler, b);
+							LOGGER.error(String.format("putmergeSchoolSeason failed. ", c.cause()));
+							errorSchoolSeason(siteRequest, eventHandler, c);
 						}
 					});
 				} else {
-					LOGGER.error(String.format("putmergeSchoolSeason failed. ", a.cause()));
-					errorSchoolSeason(siteRequest, eventHandler, a);
+					LOGGER.error(String.format("putmergeSchoolSeason failed. ", b.cause()));
+					errorSchoolSeason(siteRequest, eventHandler, b);
 				}
 			});
 		} catch(Exception ex) {
@@ -723,6 +847,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 							patchSchoolSeasonFuture(o, false, a -> {
 								if(a.succeeded()) {
 								} else {
+									LOGGER.error(String.format("listPUTMergeSchoolSeason failed. ", a.cause()));
 									errorSchoolSeason(siteRequest2, eventHandler, a);
 								}
 							})
@@ -733,6 +858,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 						postSchoolSeasonFuture(siteRequest2, false, a -> {
 							if(a.succeeded()) {
 							} else {
+								LOGGER.error(String.format("listPUTMergeSchoolSeason failed. ", a.cause()));
 								errorSchoolSeason(siteRequest2, eventHandler, a);
 							}
 						})
@@ -744,11 +870,12 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 					apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 					response200PUTMergeSchoolSeason(siteRequest, eventHandler);
 				} else {
+					LOGGER.error(String.format("listPUTMergeSchoolSeason failed. ", a.cause()));
 					errorSchoolSeason(apiRequest.getSiteRequest_(), eventHandler, a);
 				}
 			});
 		} catch(Exception ex) {
-			LOGGER.error(String.format("putmergeSchoolSeason failed. ", ex));
+			LOGGER.error(String.format("listPUTMergeSchoolSeason failed. ", ex));
 			errorSchoolSeason(siteRequest, null, Future.failedFuture(ex));
 		}
 	}
@@ -757,26 +884,14 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 		try {
 			response200PUTMergeSchoolSeason(siteRequest, a -> {
 				if(a.succeeded()) {
-					SQLConnection sqlConnection = siteRequest.getSqlConnection();
-					sqlConnection.commit(b -> {
-						if(b.succeeded()) {
-							sqlConnection.close(c -> {
-								if(c.succeeded()) {
-									eventHandler.handle(Future.succeededFuture(a.result()));
-								} else {
-									errorSchoolSeason(siteRequest, eventHandler, c);
-								}
-							});
-						} else {
-							errorSchoolSeason(siteRequest, eventHandler, b);
-						}
-					});
+					eventHandler.handle(Future.succeededFuture(a.result()));
 				} else {
+					LOGGER.error(String.format("putmergeSchoolSeasonResponse failed. ", a.cause()));
 					errorSchoolSeason(siteRequest, eventHandler, a);
 				}
 			});
 		} catch(Exception ex) {
-			LOGGER.error(String.format("putmergeSchoolSeason failed. ", ex));
+			LOGGER.error(String.format("putmergeSchoolSeasonResponse failed. ", ex));
 			errorSchoolSeason(siteRequest, null, Future.failedFuture(ex));
 		}
 	}
@@ -785,6 +900,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 			JsonObject json = new JsonObject();
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
 		} catch(Exception e) {
+			LOGGER.error(String.format("response200PUTMergeSchoolSeason failed. ", e));
 			eventHandler.handle(Future.failedFuture(e));
 		}
 	}
@@ -814,81 +930,74 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 				));
 			}
 
-			sqlSchoolSeason(siteRequest, a -> {
-				if(a.succeeded()) {
-					userSchoolSeason(siteRequest, b -> {
-						if(b.succeeded()) {
-							putcopySchoolSeasonResponse(siteRequest, c -> {
-								if(c.succeeded()) {
-									eventHandler.handle(Future.succeededFuture(c.result()));
-									WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
-									workerExecutor.executeBlocking(
-										blockingCodeHandler -> {
-											SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolSeason(siteContext, operationRequest, body);
-											try {
-												aSearchSchoolSeason(siteRequest2, false, true, "/api/season/copy", "PUTCopy", d -> {
-													if(d.succeeded()) {
-														SearchList<SchoolSeason> listSchoolSeason = d.result();
-														ApiRequest apiRequest = new ApiRequest();
-														apiRequest.setRows(listSchoolSeason.getRows());
-														apiRequest.setNumFound(listSchoolSeason.getQueryResponse().getResults().getNumFound());
-														apiRequest.setNumPATCH(0L);
-														apiRequest.initDeepApiRequest(siteRequest2);
-														siteRequest2.setApiRequest_(apiRequest);
-														siteRequest2.getVertx().eventBus().publish("websocketSchoolSeason", JsonObject.mapFrom(apiRequest).toString());
-														sqlSchoolSeason(siteRequest2, e -> {
-															if(e.succeeded()) {
-																try {
-																	listPUTCopySchoolSeason(apiRequest, listSchoolSeason, f -> {
-																		if(f.succeeded()) {
-																			putcopySchoolSeasonResponse(siteRequest2, g -> {
-																				if(g.succeeded()) {
-																					LOGGER.info(String.format("putcopySchoolSeason succeeded. "));
-																					blockingCodeHandler.handle(Future.succeededFuture(g.result()));
-																				} else {
-																					LOGGER.error(String.format("putcopySchoolSeason failed. ", g.cause()));
-																					errorSchoolSeason(siteRequest2, null, g);
-																				}
-																			});
+			userSchoolSeason(siteRequest, b -> {
+				if(b.succeeded()) {
+					putcopySchoolSeasonResponse(siteRequest, c -> {
+						if(c.succeeded()) {
+							eventHandler.handle(Future.succeededFuture(c.result()));
+							WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
+							workerExecutor.executeBlocking(
+									blockingCodeHandler -> {
+									SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolSeason(siteContext, operationRequest, body);
+									try {
+										aSearchSchoolSeason(siteRequest2, false, true, "/api/season/copy", "PUTCopy", d -> {
+											if(d.succeeded()) {
+												SearchList<SchoolSeason> listSchoolSeason = d.result();
+												ApiRequest apiRequest = new ApiRequest();
+												apiRequest.setRows(listSchoolSeason.getRows());
+												apiRequest.setNumFound(listSchoolSeason.getQueryResponse().getResults().getNumFound());
+												apiRequest.setNumPATCH(0L);
+												apiRequest.initDeepApiRequest(siteRequest2);
+												siteRequest2.setApiRequest_(apiRequest);
+												siteRequest2.getVertx().eventBus().publish("websocketSchoolSeason", JsonObject.mapFrom(apiRequest).toString());
+												sqlConnectionSchoolSeason(siteRequest2, e -> {
+													if(e.succeeded()) {
+														try {
+															listPUTCopySchoolSeason(apiRequest, listSchoolSeason, f -> {
+																if(f.succeeded()) {
+																	putcopySchoolSeasonResponse(siteRequest2, g -> {
+																		if(g.succeeded()) {
+																			LOGGER.info(String.format("putcopySchoolSeason succeeded. "));
+																			blockingCodeHandler.handle(Future.succeededFuture(g.result()));
 																		} else {
-																			LOGGER.error(String.format("putcopySchoolSeason failed. ", f.cause()));
-																			errorSchoolSeason(siteRequest2, null, f);
+																			LOGGER.error(String.format("putcopySchoolSeason failed. ", g.cause()));
+																			errorSchoolSeason(siteRequest2, null, g);
 																		}
 																	});
-																} catch(Exception ex) {
-																	LOGGER.error(String.format("putcopySchoolSeason failed. ", ex));
-																	errorSchoolSeason(siteRequest2, null, Future.failedFuture(ex));
+																} else {
+																	LOGGER.error(String.format("putcopySchoolSeason failed. ", f.cause()));
+																	errorSchoolSeason(siteRequest2, null, f);
 																}
-															} else {
-																LOGGER.error(String.format("putcopySchoolSeason failed. ", e.cause()));
-																errorSchoolSeason(siteRequest2, null, e);
-															}
-														});
+															});
+														} catch(Exception ex) {
+															LOGGER.error(String.format("putcopySchoolSeason failed. ", ex));
+															errorSchoolSeason(siteRequest2, null, Future.failedFuture(ex));
+														}
 													} else {
-														LOGGER.error(String.format("putcopySchoolSeason failed. ", d.cause()));
-														errorSchoolSeason(siteRequest2, null, d);
+														LOGGER.error(String.format("putcopySchoolSeason failed. ", e.cause()));
+														errorSchoolSeason(siteRequest2, null, e);
 													}
 												});
-											} catch(Exception ex) {
-												LOGGER.error(String.format("putcopySchoolSeason failed. ", ex));
-												errorSchoolSeason(siteRequest2, null, Future.failedFuture(ex));
+											} else {
+												LOGGER.error(String.format("putcopySchoolSeason failed. ", d.cause()));
+												errorSchoolSeason(siteRequest2, null, d);
 											}
-										}, resultHandler -> {
-										}
-									);
-								} else {
-									LOGGER.error(String.format("putcopySchoolSeason failed. ", c.cause()));
-									errorSchoolSeason(siteRequest, eventHandler, c);
+										});
+									} catch(Exception ex) {
+										LOGGER.error(String.format("putcopySchoolSeason failed. ", ex));
+										errorSchoolSeason(siteRequest2, null, Future.failedFuture(ex));
+									}
+								}, resultHandler -> {
 								}
-							});
+							);
 						} else {
-							LOGGER.error(String.format("putcopySchoolSeason failed. ", b.cause()));
-							errorSchoolSeason(siteRequest, eventHandler, b);
+							LOGGER.error(String.format("putcopySchoolSeason failed. ", c.cause()));
+							errorSchoolSeason(siteRequest, eventHandler, c);
 						}
 					});
 				} else {
-					LOGGER.error(String.format("putcopySchoolSeason failed. ", a.cause()));
-					errorSchoolSeason(siteRequest, eventHandler, a);
+					LOGGER.error(String.format("putcopySchoolSeason failed. ", b.cause()));
+					errorSchoolSeason(siteRequest, eventHandler, b);
 				}
 			});
 		} catch(Exception ex) {
@@ -907,6 +1016,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 					if(a.succeeded()) {
 						SchoolSeason schoolSeason = a.result();
 					} else {
+						LOGGER.error(String.format("listPUTCopySchoolSeason failed. ", a.cause()));
 						errorSchoolSeason(siteRequest, eventHandler, a);
 					}
 				})
@@ -921,6 +1031,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 					response200PUTCopySchoolSeason(siteRequest, eventHandler);
 				}
 			} else {
+				LOGGER.error(String.format("listPUTCopySchoolSeason failed. ", a.cause()));
 				errorSchoolSeason(listSchoolSeason.getSiteRequest_(), eventHandler, a);
 			}
 		});
@@ -937,16 +1048,16 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 				jsonObject.getJsonArray("saves").add(o.getKey());
 			});
 
-			createSchoolSeason(siteRequest, a -> {
+			sqlConnectionSchoolSeason(siteRequest, a -> {
 				if(a.succeeded()) {
-					SchoolSeason schoolSeason = a.result();
-					sqlPUTCopySchoolSeason(schoolSeason, jsonObject, b -> {
+					sqlTransactionSchoolSeason(siteRequest, b -> {
 						if(b.succeeded()) {
-							defineSchoolSeason(schoolSeason, c -> {
+							createSchoolSeason(siteRequest, c -> {
 								if(c.succeeded()) {
-									attributeSchoolSeason(schoolSeason, d -> {
+									SchoolSeason schoolSeason = c.result();
+									sqlPUTCopySchoolSeason(schoolSeason, jsonObject, d -> {
 										if(d.succeeded()) {
-											indexSchoolSeason(schoolSeason, e -> {
+											defineIndexSchoolSeason(schoolSeason, e -> {
 												if(e.succeeded()) {
 													ApiRequest apiRequest = siteRequest.getApiRequest_();
 													if(apiRequest != null) {
@@ -956,36 +1067,35 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 														}
 														siteRequest.getVertx().eventBus().publish("websocketSchoolSeason", JsonObject.mapFrom(apiRequest).toString());
 													}
-													SQLConnection sqlConnection = siteRequest.getSqlConnection();
-													sqlConnection.commit(f -> {
-														if(f.succeeded()) {
-															eventHandler.handle(Future.succeededFuture(schoolSeason));
-															promise.complete(schoolSeason);
-														} else {
-															eventHandler.handle(Future.failedFuture(f.cause()));
-														}
-													});
+													eventHandler.handle(Future.succeededFuture(schoolSeason));
+													promise.complete(schoolSeason);
 												} else {
+													LOGGER.error(String.format("putcopySchoolSeasonFuture failed. ", e.cause()));
 													eventHandler.handle(Future.failedFuture(e.cause()));
 												}
 											});
 										} else {
+											LOGGER.error(String.format("putcopySchoolSeasonFuture failed. ", d.cause()));
 											eventHandler.handle(Future.failedFuture(d.cause()));
 										}
 									});
 								} else {
+									LOGGER.error(String.format("putcopySchoolSeasonFuture failed. ", c.cause()));
 									eventHandler.handle(Future.failedFuture(c.cause()));
 								}
 							});
 						} else {
+							LOGGER.error(String.format("putcopySchoolSeasonFuture failed. ", b.cause()));
 							eventHandler.handle(Future.failedFuture(b.cause()));
 						}
 					});
 				} else {
+					LOGGER.error(String.format("putcopySchoolSeasonFuture failed. ", a.cause()));
 					eventHandler.handle(Future.failedFuture(a.cause()));
 				}
 			});
 		} catch(Exception e) {
+			LOGGER.error(String.format("putcopySchoolSeasonFuture failed. ", e));
 			errorSchoolSeason(siteRequest, null, Future.failedFuture(e));
 		}
 		return promise.future();
@@ -997,10 +1107,9 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 			ApiRequest apiRequest = siteRequest.getApiRequest_();
 			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(new ArrayList<>());
 			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(new ArrayList<>());
-			SQLConnection sqlConnection = siteRequest.getSqlConnection();
+			Transaction tx = siteRequest.getTx();
 			Long pk = o.getPk();
-			StringBuilder putSql = new StringBuilder();
-			List<Object> putSqlParams = new ArrayList<Object>();
+			List<Future> futures = new ArrayList<>();
 
 			if(jsonObject != null) {
 				JsonArray entityVars = jsonObject.getJsonArray("saves");
@@ -1008,48 +1117,138 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 					String entityVar = entityVars.getString(i);
 					switch(entityVar) {
 					case "inheritPk":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "inheritPk", jsonObject.getString(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "inheritPk", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolSeason.inheritPk failed", b.cause())));
+							});
+						}));
 						break;
 					case "created":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "created", jsonObject.getString(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "created", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolSeason.created failed", b.cause())));
+							});
+						}));
 						break;
 					case "modified":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "modified", jsonObject.getString(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "modified", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolSeason.modified failed", b.cause())));
+							});
+						}));
 						break;
 					case "archived":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "archived", jsonObject.getBoolean(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "archived", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolSeason.archived failed", b.cause())));
+							});
+						}));
 						break;
 					case "deleted":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "deleted", jsonObject.getBoolean(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "deleted", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolSeason.deleted failed", b.cause())));
+							});
+						}));
 						break;
 					case "sessionId":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "sessionId", jsonObject.getString(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "sessionId", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolSeason.sessionId failed", b.cause())));
+							});
+						}));
 						break;
 					case "userId":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "userId", jsonObject.getString(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "userId", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolSeason.userId failed", b.cause())));
+							});
+						}));
 						break;
 					case "userKey":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "userKey", jsonObject.getString(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "userKey", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolSeason.userKey failed", b.cause())));
+							});
+						}));
 						break;
 					case "yearKey":
 							{
 						Long l = Long.parseLong(jsonObject.getString(entityVar));
-						putSql.append(SiteContextEnUS.SQL_addA);
-						putSqlParams.addAll(Arrays.asList(l, "seasonKeys", pk, "yearKey"));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_addA
+									, Tuple.of(l, "seasonKeys", pk, "yearKey")
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolSeason.yearKey failed", b.cause())));
+							});
+						}));
 						}
 						break;
 					case "sessionKeys":
 						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
-							putSql.append(SiteContextEnUS.SQL_addA);
-							putSqlParams.addAll(Arrays.asList(l, "seasonKey", pk, "sessionKeys"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_addA
+										, Tuple.of(l, "seasonKey", pk, "sessionKeys")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolSeason.sessionKeys failed", b.cause())));
+								});
+							}));
 							if(!pks.contains(l)) {
 								pks.add(l);
 								classes.add("SchoolSession");
@@ -1057,36 +1256,70 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 						}
 						break;
 					case "seasonStartDate":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "seasonStartDate", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entityVar)))));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "seasonStartDate", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolSeason.seasonStartDate failed", b.cause())));
+							});
+						}));
 						break;
 					case "seasonSummer":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "seasonSummer", jsonObject.getBoolean(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "seasonSummer", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolSeason.seasonSummer failed", b.cause())));
+							});
+						}));
 						break;
 					case "seasonWinter":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "seasonWinter", jsonObject.getBoolean(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "seasonWinter", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolSeason.seasonWinter failed", b.cause())));
+							});
+						}));
 						break;
 					case "seasonFuture":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "seasonFuture", jsonObject.getBoolean(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "seasonFuture", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolSeason.seasonFuture failed", b.cause())));
+							});
+						}));
 						break;
 					}
 				}
 			}
-			sqlConnection.queryWithParams(
-					putSql.toString()
-					, new JsonArray(putSqlParams)
-					, postAsync
-			-> {
-				if(postAsync.succeeded()) {
+			CompositeFuture.all(futures).setHandler( a -> {
+				if(a.succeeded()) {
 					eventHandler.handle(Future.succeededFuture());
 				} else {
-					eventHandler.handle(Future.failedFuture(new Exception(postAsync.cause())));
+					LOGGER.error(String.format("sqlPUTCopySchoolSeason failed. ", a.cause()));
+					eventHandler.handle(Future.failedFuture(a.cause()));
 				}
 			});
 		} catch(Exception e) {
+			LOGGER.error(String.format("sqlPUTCopySchoolSeason failed. ", e));
 			eventHandler.handle(Future.failedFuture(e));
 		}
 	}
@@ -1095,26 +1328,14 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 		try {
 			response200PUTCopySchoolSeason(siteRequest, a -> {
 				if(a.succeeded()) {
-					SQLConnection sqlConnection = siteRequest.getSqlConnection();
-					sqlConnection.commit(b -> {
-						if(b.succeeded()) {
-							sqlConnection.close(c -> {
-								if(c.succeeded()) {
-									eventHandler.handle(Future.succeededFuture(a.result()));
-								} else {
-									errorSchoolSeason(siteRequest, eventHandler, c);
-								}
-							});
-						} else {
-							errorSchoolSeason(siteRequest, eventHandler, b);
-						}
-					});
+					eventHandler.handle(Future.succeededFuture(a.result()));
 				} else {
+					LOGGER.error(String.format("putcopySchoolSeasonResponse failed. ", a.cause()));
 					errorSchoolSeason(siteRequest, eventHandler, a);
 				}
 			});
 		} catch(Exception ex) {
-			LOGGER.error(String.format("putcopySchoolSeason failed. ", ex));
+			LOGGER.error(String.format("putcopySchoolSeasonResponse failed. ", ex));
 			errorSchoolSeason(siteRequest, null, Future.failedFuture(ex));
 		}
 	}
@@ -1123,6 +1344,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 			JsonObject json = new JsonObject();
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
 		} catch(Exception e) {
+			LOGGER.error(String.format("response200PUTCopySchoolSeason failed. ", e));
 			eventHandler.handle(Future.failedFuture(e));
 		}
 	}
@@ -1152,93 +1374,86 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 				));
 			}
 
-			sqlSchoolSeason(siteRequest, a -> {
-				if(a.succeeded()) {
-					userSchoolSeason(siteRequest, b -> {
-						if(b.succeeded()) {
-							patchSchoolSeasonResponse(siteRequest, c -> {
-								if(c.succeeded()) {
-									eventHandler.handle(Future.succeededFuture(c.result()));
-									WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
-									workerExecutor.executeBlocking(
-										blockingCodeHandler -> {
-											SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolSeason(siteContext, operationRequest, body);
-											try {
-												aSearchSchoolSeason(siteRequest2, false, true, "/api/season", "PATCH", d -> {
-													if(d.succeeded()) {
-														SearchList<SchoolSeason> listSchoolSeason = d.result();
-														ApiRequest apiRequest = new ApiRequest();
-														apiRequest.setRows(listSchoolSeason.getRows());
-														apiRequest.setNumFound(listSchoolSeason.getQueryResponse().getResults().getNumFound());
-														apiRequest.setNumPATCH(0L);
-														apiRequest.initDeepApiRequest(siteRequest2);
-														siteRequest2.setApiRequest_(apiRequest);
-														siteRequest2.getVertx().eventBus().publish("websocketSchoolSeason", JsonObject.mapFrom(apiRequest).toString());
-														SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listSchoolSeason.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
-														Date date = null;
-														if(facets != null)
-															date = (Date)facets.get("max_modified");
-														String dt;
-														if(date == null)
-															dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
-														else
-															dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
-														listSchoolSeason.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
+			userSchoolSeason(siteRequest, b -> {
+				if(b.succeeded()) {
+					patchSchoolSeasonResponse(siteRequest, c -> {
+						if(c.succeeded()) {
+							eventHandler.handle(Future.succeededFuture(c.result()));
+							WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
+							workerExecutor.executeBlocking(
+								blockingCodeHandler -> {
+									SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolSeason(siteContext, operationRequest, body);
+									try {
+										aSearchSchoolSeason(siteRequest2, false, true, "/api/season", "PATCH", d -> {
+											if(d.succeeded()) {
+												SearchList<SchoolSeason> listSchoolSeason = d.result();
+												ApiRequest apiRequest = new ApiRequest();
+												apiRequest.setRows(listSchoolSeason.getRows());
+												apiRequest.setNumFound(listSchoolSeason.getQueryResponse().getResults().getNumFound());
+												apiRequest.setNumPATCH(0L);
+												apiRequest.initDeepApiRequest(siteRequest2);
+												siteRequest2.setApiRequest_(apiRequest);
+												siteRequest2.getVertx().eventBus().publish("websocketSchoolSeason", JsonObject.mapFrom(apiRequest).toString());
+												SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listSchoolSeason.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
+												Date date = null;
+												if(facets != null)
+													date = (Date)facets.get("max_modified");
+												String dt;
+												if(date == null)
+													dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
+												else
+													dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
+												listSchoolSeason.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
 
-														SchoolSeason o = listSchoolSeason.getList().stream().findFirst().orElse(null);
-														sqlSchoolSeason(siteRequest2, e -> {
-															if(e.succeeded()) {
-																try {
-																	listPATCHSchoolSeason(apiRequest, listSchoolSeason, dt, f -> {
-																		if(f.succeeded()) {
-																			patchSchoolSeasonResponse(siteRequest2, g -> {
-																				if(g.succeeded()) {
-																					LOGGER.info(String.format("patchSchoolSeason succeeded. "));
-																					blockingCodeHandler.handle(Future.succeededFuture(g.result()));
-																				} else {
-																					LOGGER.error(String.format("patchSchoolSeason failed. ", g.cause()));
-																					errorSchoolSeason(siteRequest2, null, g);
-																				}
-																			});
+												SchoolSeason o = listSchoolSeason.getList().stream().findFirst().orElse(null);
+												sqlConnectionSchoolSeason(siteRequest2, e -> {
+													if(e.succeeded()) {
+														try {
+															listPATCHSchoolSeason(apiRequest, listSchoolSeason, dt, f -> {
+																if(f.succeeded()) {
+																	patchSchoolSeasonResponse(siteRequest2, g -> {
+																												if(g.succeeded()) {
+																			LOGGER.info(String.format("patchSchoolSeason succeeded. "));
+																			blockingCodeHandler.handle(Future.succeededFuture(g.result()));
 																		} else {
-																			LOGGER.error(String.format("patchSchoolSeason failed. ", f.cause()));
-																			errorSchoolSeason(siteRequest2, null, f);
+																			LOGGER.error(String.format("patchSchoolSeason failed. ", g.cause()));
+																			errorSchoolSeason(siteRequest2, null, g);
 																		}
 																	});
-																} catch(Exception ex) {
-																	LOGGER.error(String.format("patchSchoolSeason failed. ", ex));
-																	errorSchoolSeason(siteRequest2, null, Future.failedFuture(ex));
+																} else {
+																	LOGGER.error(String.format("patchSchoolSeason failed. ", f.cause()));
+																	errorSchoolSeason(siteRequest2, null, f);
 																}
-															} else {
-																LOGGER.error(String.format("patchSchoolSeason failed. ", e.cause()));
-																errorSchoolSeason(siteRequest2, null, e);
-															}
-														});
+															});
+														} catch(Exception ex) {
+															LOGGER.error(String.format("patchSchoolSeason failed. ", ex));
+															errorSchoolSeason(siteRequest2, null, Future.failedFuture(ex));
+														}
 													} else {
-														LOGGER.error(String.format("patchSchoolSeason failed. ", d.cause()));
-														errorSchoolSeason(siteRequest2, null, d);
+														LOGGER.error(String.format("patchSchoolSeason failed. ", e.cause()));
+														errorSchoolSeason(siteRequest2, null, e);
 													}
 												});
-											} catch(Exception ex) {
-												LOGGER.error(String.format("patchSchoolSeason failed. ", ex));
-												errorSchoolSeason(siteRequest2, null, Future.failedFuture(ex));
+											} else {
+												LOGGER.error(String.format("patchSchoolSeason failed. ", d.cause()));
+												errorSchoolSeason(siteRequest2, null, d);
 											}
-										}, resultHandler -> {
-										}
-									);
-								} else {
-									LOGGER.error(String.format("patchSchoolSeason failed. ", c.cause()));
-									errorSchoolSeason(siteRequest, eventHandler, c);
+										});
+									} catch(Exception ex) {
+										LOGGER.error(String.format("patchSchoolSeason failed. ", ex));
+										errorSchoolSeason(siteRequest2, null, Future.failedFuture(ex));
+									}
+								}, resultHandler -> {
 								}
-							});
+							);
 						} else {
-							LOGGER.error(String.format("patchSchoolSeason failed. ", b.cause()));
-							errorSchoolSeason(siteRequest, eventHandler, b);
+							LOGGER.error(String.format("patchSchoolSeason failed. ", c.cause()));
+							errorSchoolSeason(siteRequest, eventHandler, c);
 						}
 					});
 				} else {
-					LOGGER.error(String.format("patchSchoolSeason failed. ", a.cause()));
-					errorSchoolSeason(siteRequest, eventHandler, a);
+					LOGGER.error(String.format("patchSchoolSeason failed. ", b.cause()));
+					errorSchoolSeason(siteRequest, eventHandler, b);
 				}
 			});
 		} catch(Exception ex) {
@@ -1269,6 +1484,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 					response200PATCHSchoolSeason(siteRequest, eventHandler);
 				}
 			} else {
+				LOGGER.error(String.format("listPATCHSchoolSeason failed. ", a.cause()));
 				errorSchoolSeason(listSchoolSeason.getSiteRequest_(), eventHandler, a);
 			}
 		});
@@ -1283,14 +1499,14 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 				apiRequest.setOriginal(o);
 				apiRequest.setPk(o.getPk());
 			}
-			sqlPATCHSchoolSeason(o, inheritPk, a -> {
+			sqlConnectionSchoolSeason(siteRequest, a -> {
 				if(a.succeeded()) {
-					SchoolSeason schoolSeason = a.result();
-					defineSchoolSeason(schoolSeason, b -> {
+					sqlTransactionSchoolSeason(siteRequest, b -> {
 						if(b.succeeded()) {
-							attributeSchoolSeason(schoolSeason, c -> {
+							sqlPATCHSchoolSeason(o, inheritPk, c -> {
 								if(c.succeeded()) {
-									indexSchoolSeason(schoolSeason, d -> {
+									SchoolSeason schoolSeason = c.result();
+									defineIndexSchoolSeason(schoolSeason, d -> {
 										if(d.succeeded()) {
 											if(apiRequest != null) {
 												apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
@@ -1299,32 +1515,30 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 												}
 												siteRequest.getVertx().eventBus().publish("websocketSchoolSeason", JsonObject.mapFrom(apiRequest).toString());
 											}
-											SQLConnection sqlConnection = siteRequest.getSqlConnection();
-											sqlConnection.commit(e -> {
-												if(e.succeeded()) {
-													eventHandler.handle(Future.succeededFuture(schoolSeason));
-													promise.complete(schoolSeason);
-												} else {
-													eventHandler.handle(Future.failedFuture(e.cause()));
-												}
-											});
+											eventHandler.handle(Future.succeededFuture(schoolSeason));
+											promise.complete(schoolSeason);
 										} else {
+											LOGGER.error(String.format("patchSchoolSeasonFuture failed. ", d.cause()));
 											eventHandler.handle(Future.failedFuture(d.cause()));
 										}
 									});
 								} else {
+									LOGGER.error(String.format("patchSchoolSeasonFuture failed. ", c.cause()));
 									eventHandler.handle(Future.failedFuture(c.cause()));
 								}
 							});
 						} else {
+							LOGGER.error(String.format("patchSchoolSeasonFuture failed. ", b.cause()));
 							eventHandler.handle(Future.failedFuture(b.cause()));
 						}
 					});
 				} else {
+					LOGGER.error(String.format("patchSchoolSeasonFuture failed. ", a.cause()));
 					eventHandler.handle(Future.failedFuture(a.cause()));
 				}
 			});
 		} catch(Exception e) {
+			LOGGER.error(String.format("patchSchoolSeasonFuture failed. ", e));
 			errorSchoolSeason(siteRequest, null, Future.failedFuture(e));
 		}
 		return promise.future();
@@ -1336,103 +1550,264 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 			ApiRequest apiRequest = siteRequest.getApiRequest_();
 			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(new ArrayList<>());
 			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(new ArrayList<>());
-			SQLConnection sqlConnection = siteRequest.getSqlConnection();
+			Transaction tx = siteRequest.getTx();
 			Long pk = o.getPk();
 			JsonObject jsonObject = siteRequest.getJsonObject();
-			StringBuilder patchSql = new StringBuilder();
-			List<Object> patchSqlParams = new ArrayList<Object>();
 			Set<String> methodNames = jsonObject.fieldNames();
 			SchoolSeason o2 = new SchoolSeason();
+			List<Future> futures = new ArrayList<>();
 
 			if(o.getUserId() == null && siteRequest.getUserId() != null) {
-				patchSql.append(SiteContextEnUS.SQL_setD);
-				patchSqlParams.addAll(Arrays.asList(pk, "userId", siteRequest.getUserId()));
+				futures.add(Future.future(a -> {
+					tx.preparedQuery(SiteContextEnUS.SQL_setD
+							, Tuple.of(pk, "userId", siteRequest.getUserId())
+							, b
+					-> {
+						if(b.succeeded())
+							a.handle(Future.succeededFuture());
+						else
+							a.handle(Future.failedFuture(b.cause()));
+					});
+				}));
 			}
 			if(o.getUserKey() == null && siteRequest.getUserKey() != null) {
-				patchSql.append(SiteContextEnUS.SQL_setD);
-				patchSqlParams.addAll(Arrays.asList(pk, "userKey", siteRequest.getUserKey()));
+				futures.add(Future.future(a -> {
+					tx.preparedQuery(SiteContextEnUS.SQL_setD
+				, Tuple.of(pk, "userKey", siteRequest.getUserKey())
+							, b
+					-> {
+						if(b.succeeded())
+							a.handle(Future.succeededFuture());
+						else
+							a.handle(Future.failedFuture(b.cause()));
+					});
+				}));
 			}
 
 			for(String methodName : methodNames) {
 				switch(methodName) {
 					case "setInheritPk":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "inheritPk"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "inheritPk")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolSeason.inheritPk failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setInheritPk(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "inheritPk", o2.jsonInheritPk()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "inheritPk", o2.jsonInheritPk())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolSeason.inheritPk failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setCreated":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "created"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "created")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolSeason.created failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setCreated(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "created", o2.jsonCreated()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "created", o2.jsonCreated())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolSeason.created failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setModified":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "modified"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "modified")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolSeason.modified failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setModified(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "modified", o2.jsonModified()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "modified", o2.jsonModified())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolSeason.modified failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setArchived":
 						if(jsonObject.getBoolean(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "archived"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "archived")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolSeason.archived failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setArchived(jsonObject.getBoolean(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "archived", o2.jsonArchived()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "archived", o2.jsonArchived())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolSeason.archived failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setDeleted":
 						if(jsonObject.getBoolean(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "deleted"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "deleted")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolSeason.deleted failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setDeleted(jsonObject.getBoolean(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "deleted", o2.jsonDeleted()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "deleted", o2.jsonDeleted())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolSeason.deleted failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setSessionId":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "sessionId"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "sessionId")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolSeason.sessionId failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setSessionId(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "sessionId", o2.jsonSessionId()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "sessionId", o2.jsonSessionId())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolSeason.sessionId failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setUserId":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "userId"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "userId")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolSeason.userId failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setUserId(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "userId", o2.jsonUserId()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "userId", o2.jsonUserId())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolSeason.userId failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setUserKey":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "userKey"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "userKey")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolSeason.userKey failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setUserKey(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "userKey", o2.jsonUserKey()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "userKey", o2.jsonUserKey())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolSeason.userKey failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setYearKey":
@@ -1445,13 +1820,22 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 								searchList.setC(SchoolYear.class);
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								searchList.initDeepSearchList(siteRequest);
-								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null) {
+								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null) {
 									o2.setYearKey(jsonObject.getString(methodName));
-									patchSql.append(SiteContextEnUS.SQL_addA);
-									patchSqlParams.addAll(Arrays.asList(l, "seasonKeys", pk, "yearKey"));
-									if(!pks.contains(l)) {
-										pks.add(l);
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_addA
+												, Tuple.of(l2, "seasonKeys", pk, "yearKey")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolSeason.yearKey failed", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
 										classes.add("SchoolYear");
 									}
 								}
@@ -1468,13 +1852,22 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 								searchList.setC(SchoolYear.class);
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								searchList.initDeepSearchList(siteRequest);
-								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null && l.equals(o.getYearKey())) {
+								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null && l2.equals(o.getYearKey())) {
 									o2.setYearKey(jsonObject.getString(methodName));
-									patchSql.append(SiteContextEnUS.SQL_removeA);
-									patchSqlParams.addAll(Arrays.asList("seasonKeys", l, "yearKey", pk));
-									if(!pks.contains(l)) {
-										pks.add(l);
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA
+												, Tuple.of("seasonKeys", l2, "yearKey", pk)
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolSeason.yearKey failed", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
 										classes.add("SchoolYear");
 									}
 								}
@@ -1491,12 +1884,21 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 								searchList.setC(SchoolSession.class);
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								searchList.initDeepSearchList(siteRequest);
-								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null && !o.getSessionKeys().contains(l)) {
-									patchSql.append(SiteContextEnUS.SQL_addA);
-									patchSqlParams.addAll(Arrays.asList(l, "seasonKey", pk, "sessionKeys"));
-									if(!pks.contains(l)) {
-										pks.add(l);
+								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null && !o.getSessionKeys().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_addA
+												, Tuple.of(l2, "seasonKey", pk, "sessionKeys")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolSeason.sessionKeys failed", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
 										classes.add("SchoolSession");
 									}
 								}
@@ -1515,12 +1917,21 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 									searchList.setC(SchoolSession.class);
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									searchList.initDeepSearchList(siteRequest);
-									l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-									if(l != null && !o.getSessionKeys().contains(l)) {
-										patchSql.append(SiteContextEnUS.SQL_addA);
-										patchSqlParams.addAll(Arrays.asList(l, "seasonKey", pk, "sessionKeys"));
-										if(!pks.contains(l)) {
-											pks.add(l);
+									Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l2 != null && !o.getSessionKeys().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_addA
+												, Tuple.of(l2, "seasonKey", pk, "sessionKeys")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolSeason.sessionKeys failed", b.cause())));
+										});
+									}));
+										if(!pks.contains(l2)) {
+											pks.add(l2);
 											classes.add("SchoolSession");
 										}
 									}
@@ -1540,12 +1951,21 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 									searchList.setC(SchoolSession.class);
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									searchList.initDeepSearchList(siteRequest);
-									l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-									if(l != null && !o.getSessionKeys().contains(l)) {
-										patchSql.append(SiteContextEnUS.SQL_addA);
-										patchSqlParams.addAll(Arrays.asList(l, "seasonKey", pk, "sessionKeys"));
-										if(!pks.contains(l)) {
-											pks.add(l);
+									Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l2 != null && !o.getSessionKeys().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_addA
+												, Tuple.of(l2, "seasonKey", pk, "sessionKeys")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolSeason.sessionKeys failed", b.cause())));
+										});
+									}));
+										if(!pks.contains(l2)) {
+											pks.add(l2);
 											classes.add("SchoolSession");
 										}
 									}
@@ -1555,8 +1975,17 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 						if(o.getSessionKeys() != null) {
 							for(Long l :  o.getSessionKeys()) {
 								if(l != null && (setSessionKeysValues == null || !setSessionKeysValues.contains(l))) {
-									patchSql.append(SiteContextEnUS.SQL_removeA);
-									patchSqlParams.addAll(Arrays.asList(l, "seasonKey", pk, "sessionKeys"));
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA
+												, Tuple.of(l, "seasonKey", pk, "sessionKeys")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolSeason.sessionKeys failed", b.cause())));
+										});
+									}));
 								}
 							}
 						}
@@ -1571,12 +2000,21 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 								searchList.setC(SchoolSession.class);
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								searchList.initDeepSearchList(siteRequest);
-								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null && o.getSessionKeys().contains(l)) {
-									patchSql.append(SiteContextEnUS.SQL_removeA);
-									patchSqlParams.addAll(Arrays.asList("seasonKey", l, "sessionKeys", pk));
-									if(!pks.contains(l)) {
-										pks.add(l);
+								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null && o.getSessionKeys().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA
+												, Tuple.of("seasonKey", l2, "sessionKeys", pk)
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolSeason.sessionKeys failed", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
 										classes.add("SchoolSession");
 									}
 								}
@@ -1585,61 +2023,131 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 						break;
 					case "setSeasonStartDate":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "seasonStartDate"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "seasonStartDate")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolSeason.seasonStartDate failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setSeasonStartDate(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "seasonStartDate", o2.jsonSeasonStartDate()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "seasonStartDate", o2.jsonSeasonStartDate())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolSeason.seasonStartDate failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setSeasonSummer":
 						if(jsonObject.getBoolean(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "seasonSummer"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "seasonSummer")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolSeason.seasonSummer failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setSeasonSummer(jsonObject.getBoolean(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "seasonSummer", o2.jsonSeasonSummer()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "seasonSummer", o2.jsonSeasonSummer())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolSeason.seasonSummer failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setSeasonWinter":
 						if(jsonObject.getBoolean(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "seasonWinter"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "seasonWinter")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolSeason.seasonWinter failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setSeasonWinter(jsonObject.getBoolean(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "seasonWinter", o2.jsonSeasonWinter()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "seasonWinter", o2.jsonSeasonWinter())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolSeason.seasonWinter failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setSeasonFuture":
 						if(jsonObject.getBoolean(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "seasonFuture"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "seasonFuture")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolSeason.seasonFuture failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setSeasonFuture(jsonObject.getBoolean(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "seasonFuture", o2.jsonSeasonFuture()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "seasonFuture", o2.jsonSeasonFuture())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolSeason.seasonFuture failed", b.cause())));
+								});
+							}));
 						}
 						break;
 				}
 			}
-			sqlConnection.queryWithParams(
-					patchSql.toString()
-					, new JsonArray(patchSqlParams)
-					, patchAsync
-			-> {
-				if(patchAsync.succeeded()) {
+			CompositeFuture.all(futures).setHandler( a -> {
+				if(a.succeeded()) {
 					SchoolSeason o3 = new SchoolSeason();
 					o3.setSiteRequest_(o.getSiteRequest_());
 					o3.setPk(pk);
 					eventHandler.handle(Future.succeededFuture(o3));
 				} else {
-					eventHandler.handle(Future.failedFuture(new Exception(patchAsync.cause())));
+					LOGGER.error(String.format("sqlPATCHSchoolSeason failed. ", a.cause()));
+					eventHandler.handle(Future.failedFuture(a.cause()));
 				}
 			});
 		} catch(Exception e) {
+			LOGGER.error(String.format("sqlPATCHSchoolSeason failed. ", e));
 			eventHandler.handle(Future.failedFuture(e));
 		}
 	}
@@ -1648,26 +2156,14 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 		try {
 			response200PATCHSchoolSeason(siteRequest, a -> {
 				if(a.succeeded()) {
-					SQLConnection sqlConnection = siteRequest.getSqlConnection();
-					sqlConnection.commit(b -> {
-						if(b.succeeded()) {
-							sqlConnection.close(c -> {
-								if(c.succeeded()) {
-									eventHandler.handle(Future.succeededFuture(a.result()));
-								} else {
-									errorSchoolSeason(siteRequest, eventHandler, c);
-								}
-							});
-						} else {
-							errorSchoolSeason(siteRequest, eventHandler, b);
-						}
-					});
+					eventHandler.handle(Future.succeededFuture(a.result()));
 				} else {
+					LOGGER.error(String.format("patchSchoolSeasonResponse failed. ", a.cause()));
 					errorSchoolSeason(siteRequest, eventHandler, a);
 				}
 			});
 		} catch(Exception ex) {
-			LOGGER.error(String.format("patchSchoolSeason failed. ", ex));
+			LOGGER.error(String.format("patchSchoolSeasonResponse failed. ", ex));
 			errorSchoolSeason(siteRequest, null, Future.failedFuture(ex));
 		}
 	}
@@ -1676,6 +2172,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 			JsonObject json = new JsonObject();
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
 		} catch(Exception e) {
+			LOGGER.error(String.format("response200PATCHSchoolSeason failed. ", e));
 			eventHandler.handle(Future.failedFuture(e));
 		}
 	}
@@ -1707,35 +2204,28 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 				));
 			}
 
-			sqlSchoolSeason(siteRequest, a -> {
-				if(a.succeeded()) {
-					userSchoolSeason(siteRequest, b -> {
-						if(b.succeeded()) {
-							aSearchSchoolSeason(siteRequest, false, true, "/api/season/{id}", "GET", c -> {
-								if(c.succeeded()) {
-									SearchList<SchoolSeason> listSchoolSeason = c.result();
-									getSchoolSeasonResponse(listSchoolSeason, d -> {
-										if(d.succeeded()) {
-											eventHandler.handle(Future.succeededFuture(d.result()));
-											LOGGER.info(String.format("getSchoolSeason succeeded. "));
-										} else {
-											LOGGER.error(String.format("getSchoolSeason failed. ", d.cause()));
-											errorSchoolSeason(siteRequest, eventHandler, d);
-										}
-									});
+			userSchoolSeason(siteRequest, b -> {
+				if(b.succeeded()) {
+					aSearchSchoolSeason(siteRequest, false, true, "/api/season/{id}", "GET", c -> {
+						if(c.succeeded()) {
+							SearchList<SchoolSeason> listSchoolSeason = c.result();
+							getSchoolSeasonResponse(listSchoolSeason, d -> {
+								if(d.succeeded()) {
+									eventHandler.handle(Future.succeededFuture(d.result()));
+									LOGGER.info(String.format("getSchoolSeason succeeded. "));
 								} else {
-									LOGGER.error(String.format("getSchoolSeason failed. ", c.cause()));
-									errorSchoolSeason(siteRequest, eventHandler, c);
+									LOGGER.error(String.format("getSchoolSeason failed. ", d.cause()));
+									errorSchoolSeason(siteRequest, eventHandler, d);
 								}
 							});
 						} else {
-							LOGGER.error(String.format("getSchoolSeason failed. ", b.cause()));
-							errorSchoolSeason(siteRequest, eventHandler, b);
+							LOGGER.error(String.format("getSchoolSeason failed. ", c.cause()));
+							errorSchoolSeason(siteRequest, eventHandler, c);
 						}
 					});
 				} else {
-					LOGGER.error(String.format("getSchoolSeason failed. ", a.cause()));
-					errorSchoolSeason(siteRequest, eventHandler, a);
+					LOGGER.error(String.format("getSchoolSeason failed. ", b.cause()));
+					errorSchoolSeason(siteRequest, eventHandler, b);
 				}
 			});
 		} catch(Exception ex) {
@@ -1750,26 +2240,14 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 		try {
 			response200GETSchoolSeason(listSchoolSeason, a -> {
 				if(a.succeeded()) {
-					SQLConnection sqlConnection = siteRequest.getSqlConnection();
-					sqlConnection.commit(b -> {
-						if(b.succeeded()) {
-							sqlConnection.close(c -> {
-								if(c.succeeded()) {
-									eventHandler.handle(Future.succeededFuture(a.result()));
-								} else {
-									errorSchoolSeason(siteRequest, eventHandler, c);
-								}
-							});
-						} else {
-							errorSchoolSeason(siteRequest, eventHandler, b);
-						}
-					});
+					eventHandler.handle(Future.succeededFuture(a.result()));
 				} else {
+					LOGGER.error(String.format("getSchoolSeasonResponse failed. ", a.cause()));
 					errorSchoolSeason(siteRequest, eventHandler, a);
 				}
 			});
 		} catch(Exception ex) {
-			LOGGER.error(String.format("getSchoolSeason failed. ", ex));
+			LOGGER.error(String.format("getSchoolSeasonResponse failed. ", ex));
 			errorSchoolSeason(siteRequest, null, Future.failedFuture(ex));
 		}
 	}
@@ -1781,6 +2259,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 			JsonObject json = JsonObject.mapFrom(listSchoolSeason.getList().stream().findFirst().orElse(null));
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
 		} catch(Exception e) {
+			LOGGER.error(String.format("response200GETSchoolSeason failed. ", e));
 			eventHandler.handle(Future.failedFuture(e));
 		}
 	}
@@ -1812,35 +2291,28 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 				));
 			}
 
-			sqlSchoolSeason(siteRequest, a -> {
-				if(a.succeeded()) {
-					userSchoolSeason(siteRequest, b -> {
-						if(b.succeeded()) {
-							aSearchSchoolSeason(siteRequest, false, true, "/api/season", "Search", c -> {
-								if(c.succeeded()) {
-									SearchList<SchoolSeason> listSchoolSeason = c.result();
-									searchSchoolSeasonResponse(listSchoolSeason, d -> {
-										if(d.succeeded()) {
-											eventHandler.handle(Future.succeededFuture(d.result()));
-											LOGGER.info(String.format("searchSchoolSeason succeeded. "));
-										} else {
-											LOGGER.error(String.format("searchSchoolSeason failed. ", d.cause()));
-											errorSchoolSeason(siteRequest, eventHandler, d);
-										}
-									});
+			userSchoolSeason(siteRequest, b -> {
+				if(b.succeeded()) {
+					aSearchSchoolSeason(siteRequest, false, true, "/api/season", "Search", c -> {
+						if(c.succeeded()) {
+							SearchList<SchoolSeason> listSchoolSeason = c.result();
+							searchSchoolSeasonResponse(listSchoolSeason, d -> {
+								if(d.succeeded()) {
+									eventHandler.handle(Future.succeededFuture(d.result()));
+									LOGGER.info(String.format("searchSchoolSeason succeeded. "));
 								} else {
-									LOGGER.error(String.format("searchSchoolSeason failed. ", c.cause()));
-									errorSchoolSeason(siteRequest, eventHandler, c);
+									LOGGER.error(String.format("searchSchoolSeason failed. ", d.cause()));
+									errorSchoolSeason(siteRequest, eventHandler, d);
 								}
 							});
 						} else {
-							LOGGER.error(String.format("searchSchoolSeason failed. ", b.cause()));
-							errorSchoolSeason(siteRequest, eventHandler, b);
+							LOGGER.error(String.format("searchSchoolSeason failed. ", c.cause()));
+							errorSchoolSeason(siteRequest, eventHandler, c);
 						}
 					});
 				} else {
-					LOGGER.error(String.format("searchSchoolSeason failed. ", a.cause()));
-					errorSchoolSeason(siteRequest, eventHandler, a);
+					LOGGER.error(String.format("searchSchoolSeason failed. ", b.cause()));
+					errorSchoolSeason(siteRequest, eventHandler, b);
 				}
 			});
 		} catch(Exception ex) {
@@ -1855,26 +2327,14 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 		try {
 			response200SearchSchoolSeason(listSchoolSeason, a -> {
 				if(a.succeeded()) {
-					SQLConnection sqlConnection = siteRequest.getSqlConnection();
-					sqlConnection.commit(b -> {
-						if(b.succeeded()) {
-							sqlConnection.close(c -> {
-								if(c.succeeded()) {
-									eventHandler.handle(Future.succeededFuture(a.result()));
-								} else {
-									errorSchoolSeason(siteRequest, eventHandler, c);
-								}
-							});
-						} else {
-							errorSchoolSeason(siteRequest, eventHandler, b);
-						}
-					});
+					eventHandler.handle(Future.succeededFuture(a.result()));
 				} else {
+					LOGGER.error(String.format("searchSchoolSeasonResponse failed. ", a.cause()));
 					errorSchoolSeason(siteRequest, eventHandler, a);
 				}
 			});
 		} catch(Exception ex) {
-			LOGGER.error(String.format("searchSchoolSeason failed. ", ex));
+			LOGGER.error(String.format("searchSchoolSeasonResponse failed. ", ex));
 			errorSchoolSeason(siteRequest, null, Future.failedFuture(ex));
 		}
 	}
@@ -1925,6 +2385,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 			}
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
 		} catch(Exception e) {
+			LOGGER.error(String.format("response200SearchSchoolSeason failed. ", e));
 			eventHandler.handle(Future.failedFuture(e));
 		}
 	}
@@ -1961,35 +2422,28 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 				));
 			}
 
-			sqlSchoolSeason(siteRequest, a -> {
-				if(a.succeeded()) {
-					userSchoolSeason(siteRequest, b -> {
-						if(b.succeeded()) {
-							aSearchSchoolSeason(siteRequest, false, true, "/season", "SearchPage", c -> {
-								if(c.succeeded()) {
-									SearchList<SchoolSeason> listSchoolSeason = c.result();
-									searchpageSchoolSeasonResponse(listSchoolSeason, d -> {
-										if(d.succeeded()) {
-											eventHandler.handle(Future.succeededFuture(d.result()));
-											LOGGER.info(String.format("searchpageSchoolSeason succeeded. "));
-										} else {
-											LOGGER.error(String.format("searchpageSchoolSeason failed. ", d.cause()));
-											errorSchoolSeason(siteRequest, eventHandler, d);
-										}
-									});
+			userSchoolSeason(siteRequest, b -> {
+				if(b.succeeded()) {
+					aSearchSchoolSeason(siteRequest, false, true, "/season", "SearchPage", c -> {
+						if(c.succeeded()) {
+							SearchList<SchoolSeason> listSchoolSeason = c.result();
+							searchpageSchoolSeasonResponse(listSchoolSeason, d -> {
+								if(d.succeeded()) {
+									eventHandler.handle(Future.succeededFuture(d.result()));
+									LOGGER.info(String.format("searchpageSchoolSeason succeeded. "));
 								} else {
-									LOGGER.error(String.format("searchpageSchoolSeason failed. ", c.cause()));
-									errorSchoolSeason(siteRequest, eventHandler, c);
+									LOGGER.error(String.format("searchpageSchoolSeason failed. ", d.cause()));
+									errorSchoolSeason(siteRequest, eventHandler, d);
 								}
 							});
 						} else {
-							LOGGER.error(String.format("searchpageSchoolSeason failed. ", b.cause()));
-							errorSchoolSeason(siteRequest, eventHandler, b);
+							LOGGER.error(String.format("searchpageSchoolSeason failed. ", c.cause()));
+							errorSchoolSeason(siteRequest, eventHandler, c);
 						}
 					});
 				} else {
-					LOGGER.error(String.format("searchpageSchoolSeason failed. ", a.cause()));
-					errorSchoolSeason(siteRequest, eventHandler, a);
+					LOGGER.error(String.format("searchpageSchoolSeason failed. ", b.cause()));
+					errorSchoolSeason(siteRequest, eventHandler, b);
 				}
 			});
 		} catch(Exception ex) {
@@ -2007,26 +2461,14 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 			siteRequest.setW(w);
 			response200SearchPageSchoolSeason(listSchoolSeason, a -> {
 				if(a.succeeded()) {
-					SQLConnection sqlConnection = siteRequest.getSqlConnection();
-					sqlConnection.commit(b -> {
-						if(b.succeeded()) {
-							sqlConnection.close(c -> {
-								if(c.succeeded()) {
-									eventHandler.handle(Future.succeededFuture(a.result()));
-								} else {
-									errorSchoolSeason(siteRequest, eventHandler, c);
-								}
-							});
-						} else {
-							errorSchoolSeason(siteRequest, eventHandler, b);
-						}
-					});
+					eventHandler.handle(Future.succeededFuture(a.result()));
 				} else {
+					LOGGER.error(String.format("searchpageSchoolSeasonResponse failed. ", a.cause()));
 					errorSchoolSeason(siteRequest, eventHandler, a);
 				}
 			});
 		} catch(Exception ex) {
-			LOGGER.error(String.format("searchpageSchoolSeason failed. ", ex));
+			LOGGER.error(String.format("searchpageSchoolSeasonResponse failed. ", ex));
 			errorSchoolSeason(siteRequest, null, Future.failedFuture(ex));
 		}
 	}
@@ -2052,6 +2494,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 			page.html();
 			eventHandler.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, requestHeaders)));
 		} catch(Exception e) {
+			LOGGER.error(String.format("response200SearchPageSchoolSeason failed. ", e));
 			eventHandler.handle(Future.failedFuture(e));
 		}
 	}
@@ -2067,17 +2510,41 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 					if(d.succeeded()) {
 						indexSchoolSeason(schoolSeason, e -> {
 							if(e.succeeded()) {
-								eventHandler.handle(Future.succeededFuture(schoolSeason));
-								promise.complete(schoolSeason);
+								sqlCommitSchoolSeason(siteRequest, f -> {
+									if(f.succeeded()) {
+										sqlCloseSchoolSeason(siteRequest, g -> {
+											if(g.succeeded()) {
+												refreshSchoolSeason(schoolSeason, h -> {
+													if(h.succeeded()) {
+														eventHandler.handle(Future.succeededFuture(schoolSeason));
+														promise.complete(schoolSeason);
+													} else {
+														LOGGER.error(String.format("refreshSchoolSeason failed. ", h.cause()));
+														errorSchoolSeason(siteRequest, null, h);
+													}
+												});
+											} else {
+												LOGGER.error(String.format("defineIndexSchoolSeason failed. ", g.cause()));
+												errorSchoolSeason(siteRequest, null, g);
+											}
+										});
+									} else {
+										LOGGER.error(String.format("defineIndexSchoolSeason failed. ", f.cause()));
+										errorSchoolSeason(siteRequest, null, f);
+									}
+								});
 							} else {
+								LOGGER.error(String.format("defineIndexSchoolSeason failed. ", e.cause()));
 								errorSchoolSeason(siteRequest, null, e);
 							}
 						});
 					} else {
+						LOGGER.error(String.format("defineIndexSchoolSeason failed. ", d.cause()));
 						errorSchoolSeason(siteRequest, null, d);
 					}
 				});
 			} else {
+				LOGGER.error(String.format("defineIndexSchoolSeason failed. ", c.cause()));
 				errorSchoolSeason(siteRequest, null, c);
 			}
 		});
@@ -2086,15 +2553,16 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 
 	public void createSchoolSeason(SiteRequestEnUS siteRequest, Handler<AsyncResult<SchoolSeason>> eventHandler) {
 		try {
-			SQLConnection sqlConnection = siteRequest.getSqlConnection();
+			Transaction tx = siteRequest.getTx();
 			String userId = siteRequest.getUserId();
 
-			sqlConnection.queryWithParams(
+			tx.preparedQuery(
 					SiteContextEnUS.SQL_create
-					, new JsonArray(Arrays.asList(SchoolSeason.class.getCanonicalName(), userId))
+					, Tuple.of(SchoolSeason.class.getCanonicalName(), userId)
+					, Collectors.toList()
 					, createAsync
 			-> {
-				JsonArray createLine = createAsync.result().getResults().stream().findFirst().orElseGet(() -> null);
+				Row createLine = createAsync.result().value().stream().findFirst().orElseGet(() -> null);
 				Long pk = createLine.getLong(0);
 				SchoolSeason o = new SchoolSeason();
 				o.setPk(pk);
@@ -2102,6 +2570,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 				eventHandler.handle(Future.succeededFuture(o));
 			});
 		} catch(Exception e) {
+			LOGGER.error(String.format("createSchoolSeason failed. ", e));
 			eventHandler.handle(Future.failedFuture(e));
 		}
 	}
@@ -2141,22 +2610,14 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 			}, resultHandler -> {
 			}
 		);
-		if(siteRequest != null) {
-			SQLConnection sqlConnection = siteRequest.getSqlConnection();
-			if(sqlConnection != null) {
-				sqlConnection.rollback(a -> {
-					if(a.succeeded()) {
-						LOGGER.info(String.format("sql rollback. "));
-						sqlConnection.close(b -> {
-							if(a.succeeded()) {
-								LOGGER.info(String.format("sql close. "));
-								if(eventHandler != null)
-									eventHandler.handle(Future.succeededFuture(responseOperation));
-							} else {
-								if(eventHandler != null)
-									eventHandler.handle(Future.succeededFuture(responseOperation));
-							}
-						});
+		sqlRollbackSchoolSeason(siteRequest, a -> {
+			if(a.succeeded()) {
+				LOGGER.info(String.format("sql rollback. "));
+				sqlCloseSchoolSeason(siteRequest, b -> {
+					if(b.succeeded()) {
+						LOGGER.info(String.format("sql close. "));
+						if(eventHandler != null)
+							eventHandler.handle(Future.succeededFuture(responseOperation));
 					} else {
 						if(eventHandler != null)
 							eventHandler.handle(Future.succeededFuture(responseOperation));
@@ -2166,33 +2627,115 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 				if(eventHandler != null)
 					eventHandler.handle(Future.succeededFuture(responseOperation));
 			}
-		}
+		});
 	}
 
-	public void sqlSchoolSeason(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void sqlConnectionSchoolSeason(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SQLClient sqlClient = siteRequest.getSiteContext_().getSqlClient();
+			PgPool pgPool = siteRequest.getSiteContext_().getPgPool();
 
-			if(sqlClient == null) {
+			if(pgPool == null) {
 				eventHandler.handle(Future.succeededFuture());
 			} else {
-				sqlClient.getConnection(sqlAsync -> {
-					if(sqlAsync.succeeded()) {
-						SQLConnection sqlConnection = sqlAsync.result();
-						sqlConnection.setAutoCommit(false, a -> {
-							if(a.succeeded()) {
-								siteRequest.setSqlConnection(sqlConnection);
-								eventHandler.handle(Future.succeededFuture());
-							} else {
-								eventHandler.handle(Future.failedFuture(a.cause()));
-							}
-						});
+				pgPool.getConnection(a -> {
+					if(a.succeeded()) {
+						SqlConnection sqlConnection = a.result();
+						siteRequest.setSqlConnection(sqlConnection);
+						eventHandler.handle(Future.succeededFuture());
 					} else {
-						eventHandler.handle(Future.failedFuture(new Exception(sqlAsync.cause())));
+						LOGGER.error(String.format("sqlConnectionSchoolSeason failed. ", a.cause()));
+						eventHandler.handle(Future.failedFuture(a.cause()));
 					}
 				});
 			}
 		} catch(Exception e) {
+			LOGGER.error(String.format("sqlSchoolSeason failed. ", e));
+			eventHandler.handle(Future.failedFuture(e));
+		}
+	}
+
+	public void sqlTransactionSchoolSeason(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			SqlConnection sqlConnection = siteRequest.getSqlConnection();
+
+			if(sqlConnection == null) {
+				eventHandler.handle(Future.succeededFuture());
+			} else {
+				Transaction tx = sqlConnection.begin();
+				siteRequest.setTx(tx);
+				eventHandler.handle(Future.succeededFuture());
+			}
+		} catch(Exception e) {
+			LOGGER.error(String.format("sqlTransactionSchoolSeason failed. ", e));
+			eventHandler.handle(Future.failedFuture(e));
+		}
+	}
+
+	public void sqlCommitSchoolSeason(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			Transaction tx = siteRequest.getTx();
+
+			if(tx == null) {
+				eventHandler.handle(Future.succeededFuture());
+			} else {
+				tx.commit(a -> {
+					if(a.succeeded()) {
+						siteRequest.setTx(null);
+						eventHandler.handle(Future.succeededFuture());
+					} else if("Transaction already completed".equals(a.cause().getMessage())) {
+						siteRequest.setTx(null);
+						eventHandler.handle(Future.succeededFuture());
+					} else {
+						LOGGER.error(String.format("sqlCommitSchoolSeason failed. ", a.cause()));
+						eventHandler.handle(Future.failedFuture(a.cause()));
+					}
+				});
+			}
+		} catch(Exception e) {
+			LOGGER.error(String.format("sqlSchoolSeason failed. ", e));
+			eventHandler.handle(Future.failedFuture(e));
+		}
+	}
+
+	public void sqlRollbackSchoolSeason(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			Transaction tx = siteRequest.getTx();
+
+			if(tx == null) {
+				eventHandler.handle(Future.succeededFuture());
+			} else {
+				tx.rollback(a -> {
+					if(a.succeeded()) {
+						siteRequest.setTx(null);
+						eventHandler.handle(Future.succeededFuture());
+					} else if("Transaction already completed".equals(a.cause().getMessage())) {
+						siteRequest.setTx(null);
+						eventHandler.handle(Future.succeededFuture());
+					} else {
+						LOGGER.error(String.format("sqlRollbackSchoolSeason failed. ", a.cause()));
+						eventHandler.handle(Future.failedFuture(a.cause()));
+					}
+				});
+			}
+		} catch(Exception e) {
+			LOGGER.error(String.format("sqlSchoolSeason failed. ", e));
+			eventHandler.handle(Future.failedFuture(e));
+		}
+	}
+
+	public void sqlCloseSchoolSeason(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			SqlConnection sqlConnection = siteRequest.getSqlConnection();
+
+			if(sqlConnection == null) {
+				eventHandler.handle(Future.succeededFuture());
+			} else {
+				sqlConnection.close();
+				siteRequest.setSqlConnection(null);
+				eventHandler.handle(Future.succeededFuture());
+			}
+		} catch(Exception e) {
+			LOGGER.error(String.format("sqlCloseSchoolSeason failed. ", e));
 			eventHandler.handle(Future.failedFuture(e));
 		}
 	}
@@ -2216,163 +2759,190 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 
 	public void userSchoolSeason(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SQLConnection sqlConnection = siteRequest.getSqlConnection();
 			String userId = siteRequest.getUserId();
 			if(userId == null) {
 				eventHandler.handle(Future.succeededFuture());
 			} else {
-				sqlConnection.queryWithParams(
-						SiteContextEnUS.SQL_selectC
-						, new JsonArray(Arrays.asList("org.computate.scolaire.enUS.user.SiteUser", userId))
-						, selectCAsync
-				-> {
-					if(selectCAsync.succeeded()) {
-						try {
-							JsonArray userValues = selectCAsync.result().getResults().stream().findFirst().orElse(null);
-							SiteUserEnUSApiServiceImpl userService = new SiteUserEnUSApiServiceImpl(siteContext);
-							if(userValues == null) {
-								JsonObject userVertx = siteRequest.getOperationRequest().getUser();
-								JsonObject jsonPrincipal = KeycloakHelper.parseToken(userVertx.getString("access_token"));
+				sqlConnectionSchoolSeason(siteRequest, a -> {
+					if(a.succeeded()) {
+						sqlTransactionSchoolSeason(siteRequest, b -> {
+							if(b.succeeded()) {
+								Transaction tx = siteRequest.getTx();
+								tx.preparedQuery(
+										SiteContextEnUS.SQL_selectC
+										, Tuple.of("org.computate.scolaire.enUS.user.SiteUser", userId)
+										, Collectors.toList()
+										, selectCAsync
+								-> {
+									if(selectCAsync.succeeded()) {
+										try {
+											Row userValues = selectCAsync.result().value().stream().findFirst().orElse(null);
+											SiteUserEnUSApiServiceImpl userService = new SiteUserEnUSApiServiceImpl(siteContext);
+											if(userValues == null) {
+												JsonObject userVertx = siteRequest.getOperationRequest().getUser();
+												JsonObject jsonPrincipal = KeycloakHelper.parseToken(userVertx.getString("access_token"));
 
-								JsonObject jsonObject = new JsonObject();
-								jsonObject.put("userName", jsonPrincipal.getString("preferred_username"));
-								jsonObject.put("userFirstName", jsonPrincipal.getString("given_name"));
-								jsonObject.put("userLastName", jsonPrincipal.getString("family_name"));
-								jsonObject.put("userId", jsonPrincipal.getString("sub"));
-								userSchoolSeasonDefine(siteRequest, jsonObject, false);
+												JsonObject jsonObject = new JsonObject();
+												jsonObject.put("userName", jsonPrincipal.getString("preferred_username"));
+												jsonObject.put("userFirstName", jsonPrincipal.getString("given_name"));
+												jsonObject.put("userLastName", jsonPrincipal.getString("family_name"));
+												jsonObject.put("userId", jsonPrincipal.getString("sub"));
+												userSchoolSeasonDefine(siteRequest, jsonObject, false);
 
-								SiteRequestEnUS siteRequest2 = new SiteRequestEnUS();
-								siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
-								siteRequest2.setJsonObject(jsonObject);
-								siteRequest2.setVertx(siteRequest.getVertx());
-								siteRequest2.setSiteContext_(siteContext);
-								siteRequest2.setSiteConfig_(siteContext.getSiteConfig());
-								siteRequest2.setUserId(siteRequest.getUserId());
-								siteRequest2.initDeepSiteRequestEnUS(siteRequest);
+												SiteRequestEnUS siteRequest2 = new SiteRequestEnUS();
+												siteRequest2.setTx(siteRequest.getTx());
+												siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
+												siteRequest2.setJsonObject(jsonObject);
+												siteRequest2.setVertx(siteRequest.getVertx());
+												siteRequest2.setSiteContext_(siteContext);
+												siteRequest2.setSiteConfig_(siteContext.getSiteConfig());
+												siteRequest2.setUserId(siteRequest.getUserId());
+												siteRequest2.initDeepSiteRequestEnUS(siteRequest);
 
-								ApiRequest apiRequest = new ApiRequest();
-								apiRequest.setRows(1);
-								apiRequest.setNumFound(1L);
-								apiRequest.setNumPATCH(0L);
-								apiRequest.initDeepApiRequest(siteRequest2);
-								siteRequest2.setApiRequest_(apiRequest);
+												ApiRequest apiRequest = new ApiRequest();
+												apiRequest.setRows(1);
+												apiRequest.setNumFound(1L);
+												apiRequest.setNumPATCH(0L);
+												apiRequest.initDeepApiRequest(siteRequest2);
+												siteRequest2.setApiRequest_(apiRequest);
 
-								userService.createSiteUser(siteRequest2, b -> {
-									if(b.succeeded()) {
-										SiteUser siteUser = b.result();
-										userService.sqlPOSTSiteUser(siteUser, false, c -> {
-											if(c.succeeded()) {
-												userService.defineIndexSiteUser(siteUser, d -> {
-													if(d.succeeded()) {
-														siteRequest.setSiteUser(siteUser);
-														siteRequest.setUserName(jsonPrincipal.getString("preferred_username"));
-														siteRequest.setUserFirstName(jsonPrincipal.getString("given_name"));
-														siteRequest.setUserLastName(jsonPrincipal.getString("family_name"));
-														siteRequest.setUserId(jsonPrincipal.getString("sub"));
-														siteRequest.setUserKey(siteUser.getPk());
-														eventHandler.handle(Future.succeededFuture());
+												userService.createSiteUser(siteRequest2, c -> {
+													if(c.succeeded()) {
+														SiteUser siteUser = c.result();
+														userService.sqlPOSTSiteUser(siteUser, false, d -> {
+															if(d.succeeded()) {
+																userService.defineIndexSiteUser(siteUser, e -> {
+																	if(e.succeeded()) {
+																		siteRequest.setSiteUser(siteUser);
+																		siteRequest.setUserName(jsonPrincipal.getString("preferred_username"));
+																		siteRequest.setUserFirstName(jsonPrincipal.getString("given_name"));
+																		siteRequest.setUserLastName(jsonPrincipal.getString("family_name"));
+																		siteRequest.setUserId(jsonPrincipal.getString("sub"));
+																		siteRequest.setUserKey(siteUser.getPk());
+																		eventHandler.handle(Future.succeededFuture());
+																	} else {
+																		errorSchoolSeason(siteRequest, eventHandler, e);
+																	}
+																});
+															} else {
+																errorSchoolSeason(siteRequest, eventHandler, d);
+															}
+														});
 													} else {
-														errorSchoolSeason(siteRequest, eventHandler, d);
+														errorSchoolSeason(siteRequest, eventHandler, c);
 													}
 												});
 											} else {
-												errorSchoolSeason(siteRequest, eventHandler, c);
+												Long pkUser = userValues.getLong(0);
+												SearchList<SiteUser> searchList = new SearchList<SiteUser>();
+												searchList.setQuery("*:*");
+												searchList.setStore(true);
+												searchList.setC(SiteUser.class);
+												searchList.addFilterQuery("userId_indexed_string:" + ClientUtils.escapeQueryChars(userId));
+												searchList.addFilterQuery("pk_indexed_long:" + pkUser);
+												searchList.initDeepSearchList(siteRequest);
+												SiteUser siteUser1 = searchList.getList().stream().findFirst().orElse(null);
+
+												JsonObject userVertx = siteRequest.getOperationRequest().getUser();
+												JsonObject jsonPrincipal = KeycloakHelper.parseToken(userVertx.getString("access_token"));
+
+												JsonObject jsonObject = new JsonObject();
+												jsonObject.put("setUserName", jsonPrincipal.getString("preferred_username"));
+												jsonObject.put("setUserFirstName", jsonPrincipal.getString("given_name"));
+												jsonObject.put("setUserLastName", jsonPrincipal.getString("family_name"));
+												jsonObject.put("setUserCompleteName", jsonPrincipal.getString("name"));
+												jsonObject.put("setCustomerProfileId", Optional.ofNullable(siteUser1).map(u -> u.getCustomerProfileId()).orElse(null));
+												jsonObject.put("setUserId", jsonPrincipal.getString("sub"));
+												jsonObject.put("setUserEmail", jsonPrincipal.getString("email"));
+												Boolean define = userSchoolSeasonDefine(siteRequest, jsonObject, true);
+												if(define) {
+													SiteUser siteUser;
+													if(siteUser1 == null) {
+														siteUser = new SiteUser();
+														siteUser.setPk(pkUser);
+														siteUser.setSiteRequest_(siteRequest);
+													} else {
+														siteUser = siteUser1;
+													}
+
+													SiteRequestEnUS siteRequest2 = new SiteRequestEnUS();
+													siteRequest2.setTx(siteRequest.getTx());
+													siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
+													siteRequest2.setJsonObject(jsonObject);
+													siteRequest2.setVertx(siteRequest.getVertx());
+													siteRequest2.setSiteContext_(siteContext);
+													siteRequest2.setSiteConfig_(siteContext.getSiteConfig());
+													siteRequest2.setUserId(siteRequest.getUserId());
+													siteRequest2.setUserKey(siteRequest.getUserKey());
+													siteRequest2.initDeepSiteRequestEnUS(siteRequest);
+													siteUser.setSiteRequest_(siteRequest2);
+
+													ApiRequest apiRequest = new ApiRequest();
+													apiRequest.setRows(1);
+													apiRequest.setNumFound(1L);
+													apiRequest.setNumPATCH(0L);
+													apiRequest.initDeepApiRequest(siteRequest2);
+													siteRequest2.setApiRequest_(apiRequest);
+
+													userService.sqlPATCHSiteUser(siteUser, false, d -> {
+														if(d.succeeded()) {
+															SiteUser siteUser2 = d.result();
+															userService.defineIndexSiteUser(siteUser2, e -> {
+																if(e.succeeded()) {
+																	siteRequest.setSiteUser(siteUser2);
+																	siteRequest.setUserName(siteUser2.getUserName());
+																	siteRequest.setUserFirstName(siteUser2.getUserFirstName());
+																	siteRequest.setUserLastName(siteUser2.getUserLastName());
+																	siteRequest.setUserId(siteUser2.getUserId());
+																	siteRequest.setUserKey(siteUser2.getPk());
+																	eventHandler.handle(Future.succeededFuture());
+																} else {
+																	errorSchoolSeason(siteRequest, eventHandler, e);
+																}
+															});
+														} else {
+															errorSchoolSeason(siteRequest, eventHandler, d);
+														}
+													});
+												} else {
+													siteRequest.setSiteUser(siteUser1);
+													siteRequest.setUserName(siteUser1.getUserName());
+													siteRequest.setUserFirstName(siteUser1.getUserFirstName());
+													siteRequest.setUserLastName(siteUser1.getUserLastName());
+													siteRequest.setUserId(siteUser1.getUserId());
+													siteRequest.setUserKey(siteUser1.getPk());
+													sqlRollbackSchoolSeason(siteRequest, c -> {
+														if(c.succeeded()) {
+															eventHandler.handle(Future.succeededFuture());
+														} else {
+															eventHandler.handle(Future.failedFuture(c.cause()));
+															errorSchoolSeason(siteRequest, eventHandler, c);
+														}
+													});
+												}
 											}
-										});
+										} catch(Exception e) {
+											LOGGER.error(String.format("userSchoolSeason failed. ", e));
+											eventHandler.handle(Future.failedFuture(e));
+										}
 									} else {
-										errorSchoolSeason(siteRequest, eventHandler, b);
+										LOGGER.error(String.format("userSchoolSeason failed. ", selectCAsync.cause()));
+										eventHandler.handle(Future.failedFuture(selectCAsync.cause()));
 									}
 								});
 							} else {
-								Long pkUser = userValues.getLong(0);
-								SearchList<SiteUser> searchList = new SearchList<SiteUser>();
-								searchList.setQuery("*:*");
-								searchList.setStore(true);
-								searchList.setC(SiteUser.class);
-								searchList.addFilterQuery("userId_indexed_string:" + ClientUtils.escapeQueryChars(userId));
-								searchList.addFilterQuery("pk_indexed_long:" + pkUser);
-								searchList.initDeepSearchList(siteRequest);
-								SiteUser siteUser1 = searchList.getList().stream().findFirst().orElse(null);
-
-								JsonObject userVertx = siteRequest.getOperationRequest().getUser();
-								JsonObject jsonPrincipal = KeycloakHelper.parseToken(userVertx.getString("access_token"));
-
-								JsonObject jsonObject = new JsonObject();
-								jsonObject.put("setUserName", jsonPrincipal.getString("preferred_username"));
-								jsonObject.put("setUserFirstName", jsonPrincipal.getString("given_name"));
-								jsonObject.put("setUserLastName", jsonPrincipal.getString("family_name"));
-								jsonObject.put("setUserCompleteName", jsonPrincipal.getString("name"));
-								jsonObject.put("setCustomerProfileId", Optional.ofNullable(siteUser1).map(u -> u.getCustomerProfileId()).orElse(null));
-								jsonObject.put("setUserId", jsonPrincipal.getString("sub"));
-								jsonObject.put("setUserEmail", jsonPrincipal.getString("email"));
-								Boolean define = userSchoolSeasonDefine(siteRequest, jsonObject, true);
-								if(define) {
-									SiteUser siteUser;
-									if(siteUser1 == null) {
-										siteUser = new SiteUser();
-										siteUser.setPk(pkUser);
-										siteUser.setSiteRequest_(siteRequest);
-									} else {
-										siteUser = siteUser1;
-									}
-
-									SiteRequestEnUS siteRequest2 = new SiteRequestEnUS();
-									siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
-									siteRequest2.setJsonObject(jsonObject);
-									siteRequest2.setVertx(siteRequest.getVertx());
-									siteRequest2.setSiteContext_(siteContext);
-									siteRequest2.setSiteConfig_(siteContext.getSiteConfig());
-									siteRequest2.setUserId(siteRequest.getUserId());
-									siteRequest2.setUserKey(siteRequest.getUserKey());
-									siteRequest2.initDeepSiteRequestEnUS(siteRequest);
-									siteUser.setSiteRequest_(siteRequest2);
-
-									ApiRequest apiRequest = new ApiRequest();
-									apiRequest.setRows(1);
-									apiRequest.setNumFound(1L);
-									apiRequest.setNumPATCH(0L);
-									apiRequest.initDeepApiRequest(siteRequest2);
-									siteRequest2.setApiRequest_(apiRequest);
-
-									userService.sqlPATCHSiteUser(siteUser, false, c -> {
-										if(c.succeeded()) {
-											SiteUser siteUser2 = c.result();
-											userService.defineIndexSiteUser(siteUser2, d -> {
-												if(d.succeeded()) {
-													siteRequest.setSiteUser(siteUser2);
-													siteRequest.setUserName(siteUser2.getUserName());
-													siteRequest.setUserFirstName(siteUser2.getUserFirstName());
-													siteRequest.setUserLastName(siteUser2.getUserLastName());
-													siteRequest.setUserId(siteUser2.getUserId());
-													siteRequest.setUserKey(siteUser2.getPk());
-													eventHandler.handle(Future.succeededFuture());
-												} else {
-													errorSchoolSeason(siteRequest, eventHandler, d);
-												}
-											});
-										} else {
-											errorSchoolSeason(siteRequest, eventHandler, c);
-										}
-									});
-								} else {
-									siteRequest.setSiteUser(siteUser1);
-									siteRequest.setUserName(siteUser1.getUserName());
-									siteRequest.setUserFirstName(siteUser1.getUserFirstName());
-									siteRequest.setUserLastName(siteUser1.getUserLastName());
-									siteRequest.setUserId(siteUser1.getUserId());
-									siteRequest.setUserKey(siteUser1.getPk());
-									eventHandler.handle(Future.succeededFuture());
-								}
+								LOGGER.error(String.format("userSchoolSeason failed. ", b.cause()));
+								eventHandler.handle(Future.failedFuture(b.cause()));
 							}
-						} catch(Exception e) {
-							eventHandler.handle(Future.failedFuture(e));
-						}
+						});
 					} else {
-						eventHandler.handle(Future.failedFuture(new Exception(selectCAsync.cause())));
+						LOGGER.error(String.format("userSchoolSeason failed. ", a.cause()));
+						eventHandler.handle(Future.failedFuture(a.cause()));
 					}
 				});
 			}
 		} catch(Exception e) {
+			LOGGER.error(String.format("userSchoolSeason failed. ", e));
 			eventHandler.handle(Future.failedFuture(e));
 		}
 	}
@@ -2492,6 +3062,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 					}
 					aSearchSchoolSeasonUri(uri, apiMethod, searchList);
 				} catch(Exception e) {
+					LOGGER.error(String.format("aSearchSchoolSeason failed. ", e));
 					eventHandler.handle(Future.failedFuture(e));
 				}
 			});
@@ -2501,6 +3072,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 			searchList.initDeepForClass(siteRequest);
 			eventHandler.handle(Future.succeededFuture(searchList));
 		} catch(Exception e) {
+			LOGGER.error(String.format("aSearchSchoolSeason failed. ", e));
 			eventHandler.handle(Future.failedFuture(e));
 		}
 	}
@@ -2508,16 +3080,17 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 	public void defineSchoolSeason(SchoolSeason o, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
-			SQLConnection sqlConnection = siteRequest.getSqlConnection();
+			Transaction tx = siteRequest.getTx();
 			Long pk = o.getPk();
-			sqlConnection.queryWithParams(
+			tx.preparedQuery(
 					SiteContextEnUS.SQL_define
-					, new JsonArray(Arrays.asList(pk, pk))
+					, Tuple.of(pk)
+					, Collectors.toList()
 					, defineAsync
 			-> {
 				if(defineAsync.succeeded()) {
 					try {
-						for(JsonArray definition : defineAsync.result().getResults()) {
+						for(Row definition : defineAsync.result().value()) {
 							try {
 								o.defineForClass(definition.getString(0), definition.getString(1));
 							} catch(Exception e) {
@@ -2526,13 +3099,16 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 						}
 						eventHandler.handle(Future.succeededFuture());
 					} catch(Exception e) {
+						LOGGER.error(String.format("defineSchoolSeason failed. ", e));
 						eventHandler.handle(Future.failedFuture(e));
 					}
 				} else {
-					eventHandler.handle(Future.failedFuture(new Exception(defineAsync.cause())));
+					LOGGER.error(String.format("defineSchoolSeason failed. ", defineAsync.cause()));
+					eventHandler.handle(Future.failedFuture(defineAsync.cause()));
 				}
 			});
 		} catch(Exception e) {
+			LOGGER.error(String.format("defineSchoolSeason failed. ", e));
 			eventHandler.handle(Future.failedFuture(e));
 		}
 	}
@@ -2540,17 +3116,18 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 	public void attributeSchoolSeason(SchoolSeason o, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
-			SQLConnection sqlConnection = siteRequest.getSqlConnection();
+			Transaction tx = siteRequest.getTx();
 			Long pk = o.getPk();
-			sqlConnection.queryWithParams(
+			tx.preparedQuery(
 					SiteContextEnUS.SQL_attribute
-					, new JsonArray(Arrays.asList(pk, pk))
+					, Tuple.of(pk, pk)
+					, Collectors.toList()
 					, attributeAsync
 			-> {
 				try {
 					if(attributeAsync.succeeded()) {
 						if(attributeAsync.result() != null) {
-							for(JsonArray definition : attributeAsync.result().getResults()) {
+							for(Row definition : attributeAsync.result().value()) {
 								if(pk.equals(definition.getLong(0)))
 									o.attributeForClass(definition.getString(2), definition.getLong(1));
 								else
@@ -2559,13 +3136,16 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 						}
 						eventHandler.handle(Future.succeededFuture());
 					} else {
-						eventHandler.handle(Future.failedFuture(new Exception(attributeAsync.cause())));
+						LOGGER.error(String.format("attributeSchoolSeason failed. ", attributeAsync.cause()));
+						eventHandler.handle(Future.failedFuture(attributeAsync.cause()));
 					}
 				} catch(Exception e) {
+					LOGGER.error(String.format("attributeSchoolSeason failed. ", e));
 					eventHandler.handle(Future.failedFuture(e));
 				}
 			});
 		} catch(Exception e) {
+			LOGGER.error(String.format("attributeSchoolSeason failed. ", e));
 			eventHandler.handle(Future.failedFuture(e));
 		}
 	}
@@ -2578,9 +3158,20 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			o.initDeepForClass(siteRequest);
 			o.indexForClass();
+			eventHandler.handle(Future.succeededFuture());
+		} catch(Exception e) {
+			LOGGER.error(String.format("indexSchoolSeason failed. ", e));
+			eventHandler.handle(Future.failedFuture(e));
+		}
+	}
+
+	public void refreshSchoolSeason(SchoolSeason o, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = o.getSiteRequest_();
+		try {
+			ApiRequest apiRequest = siteRequest.getApiRequest_();
+			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(new ArrayList<>());
+			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			if(BooleanUtils.isFalse(Optional.ofNullable(siteRequest.getApiRequest_()).map(ApiRequest::getEmpty).orElse(true))) {
-				SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolSeason(siteContext, siteRequest.getOperationRequest(), new JsonObject());
-				siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
 				SearchList<SchoolSeason> searchList = new SearchList<SchoolSeason>();
 				searchList.setStore(true);
 				searchList.setQuery("*:*");
@@ -2589,7 +3180,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 				searchList.add("json.facet", "{yearKey:{terms:{field:yearKey_indexed_longs, limit:1000}}}");
 				searchList.add("json.facet", "{sessionKeys:{terms:{field:sessionKeys_indexed_longs, limit:1000}}}");
 				searchList.setRows(1000);
-				searchList.initDeepSearchList(siteRequest2);
+				searchList.initDeepSearchList(siteRequest);
 				List<Future> futures = new ArrayList<>();
 
 				for(int i=0; i < pks.size(); i++) {
@@ -2603,85 +3194,80 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 						searchList2.setC(SchoolYear.class);
 						searchList2.addFilterQuery("pk_indexed_long:" + pk2);
 						searchList2.setRows(1);
-						searchList2.initDeepSearchList(siteRequest2);
+						searchList2.initDeepSearchList(siteRequest);
 						SchoolYear o2 = searchList2.getList().stream().findFirst().orElse(null);
 
 						if(o2 != null) {
-							SchoolYearEnUSGenApiServiceImpl service = new SchoolYearEnUSGenApiServiceImpl(siteRequest2.getSiteContext_());
-
+							SchoolYearEnUSGenApiServiceImpl service = new SchoolYearEnUSGenApiServiceImpl(siteRequest.getSiteContext_());
+							SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolSeason(siteContext, siteRequest.getOperationRequest(), new JsonObject());
 							ApiRequest apiRequest2 = new ApiRequest();
 							apiRequest2.setRows(1);
-							apiRequest2.setNumFound(1L);
+							apiRequest2.setNumFound(1l);
 							apiRequest2.setNumPATCH(0L);
 							apiRequest2.initDeepApiRequest(siteRequest2);
 							siteRequest2.setApiRequest_(apiRequest2);
 							siteRequest2.getVertx().eventBus().publish("websocketSchoolYear", JsonObject.mapFrom(apiRequest2).toString());
 
-							if(pk2 != null) {
-								o2.setPk(pk2);
-								o2.setSiteRequest_(siteRequest2);
-								futures.add(
-									service.patchSchoolYearFuture(o2, false, a -> {
-										if(a.succeeded()) {
-											LOGGER.info(String.format("SchoolYear %s refreshed. ", pk2));
-										} else {
-											LOGGER.info(String.format("SchoolYear %s failed. ", pk2));
-											eventHandler.handle(Future.failedFuture(a.cause()));
-										}
-									})
-								);
-							}
+							o2.setPk(pk2);
+							o2.setSiteRequest_(siteRequest2);
+							futures.add(
+								service.patchSchoolYearFuture(o2, false, a -> {
+									if(a.succeeded()) {
+									} else {
+										LOGGER.info(String.format("SchoolYear %s failed. ", pk2));
+										eventHandler.handle(Future.failedFuture(a.cause()));
+									}
+								})
+							);
 						}
 					}
 
 					if("SchoolSession".equals(classSimpleName2) && pk2 != null) {
-						SchoolSessionEnUSGenApiServiceImpl service = new SchoolSessionEnUSGenApiServiceImpl(siteRequest2.getSiteContext_());
 						SearchList<SchoolSession> searchList2 = new SearchList<SchoolSession>();
-						if(pk2 != null) {
-							searchList2.setStore(true);
-							searchList2.setQuery("*:*");
-							searchList2.setC(SchoolSession.class);
-							searchList2.addFilterQuery("pk_indexed_long:" + pk2);
-							searchList2.setRows(1);
-							searchList2.initDeepSearchList(siteRequest2);
-							SchoolSession o2 = searchList2.getList().stream().findFirst().orElse(null);
+						searchList2.setStore(true);
+						searchList2.setQuery("*:*");
+						searchList2.setC(SchoolSession.class);
+						searchList2.addFilterQuery("pk_indexed_long:" + pk2);
+						searchList2.setRows(1);
+						searchList2.initDeepSearchList(siteRequest);
+						SchoolSession o2 = searchList2.getList().stream().findFirst().orElse(null);
 
-							if(o2 != null) {
-								ApiRequest apiRequest2 = new ApiRequest();
-								apiRequest2.setRows(1);
-								apiRequest2.setNumFound(1l);
-								apiRequest2.setNumPATCH(0L);
-								apiRequest2.initDeepApiRequest(siteRequest2);
-								siteRequest2.setApiRequest_(apiRequest2);
-								siteRequest2.getVertx().eventBus().publish("websocketSchoolSession", JsonObject.mapFrom(apiRequest2).toString());
+						if(o2 != null) {
+							SchoolSessionEnUSGenApiServiceImpl service = new SchoolSessionEnUSGenApiServiceImpl(siteRequest.getSiteContext_());
+							SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolSeason(siteContext, siteRequest.getOperationRequest(), new JsonObject());
+							ApiRequest apiRequest2 = new ApiRequest();
+							apiRequest2.setRows(1);
+							apiRequest2.setNumFound(1l);
+							apiRequest2.setNumPATCH(0L);
+							apiRequest2.initDeepApiRequest(siteRequest2);
+							siteRequest2.setApiRequest_(apiRequest2);
+							siteRequest2.getVertx().eventBus().publish("websocketSchoolSession", JsonObject.mapFrom(apiRequest2).toString());
 
-								o2.setPk(pk2);
-								o2.setSiteRequest_(siteRequest2);
-								futures.add(
-									service.patchSchoolSessionFuture(o2, false, a -> {
-										if(a.succeeded()) {
-											LOGGER.info(String.format("SchoolSession %s refreshed. ", pk2));
-										} else {
-											LOGGER.info(String.format("SchoolSession %s failed. ", pk2));
-											eventHandler.handle(Future.failedFuture(a.cause()));
-										}
-									})
-								);
-							}
+							o2.setPk(pk2);
+							o2.setSiteRequest_(siteRequest2);
+							futures.add(
+								service.patchSchoolSessionFuture(o2, false, a -> {
+									if(a.succeeded()) {
+									} else {
+										LOGGER.info(String.format("SchoolSession %s failed. ", pk2));
+										eventHandler.handle(Future.failedFuture(a.cause()));
+									}
+								})
+							);
 						}
 					}
 				}
 
 				CompositeFuture.all(futures).setHandler(a -> {
 					if(a.succeeded()) {
-						LOGGER.info("Refresh relations succeeded. ");
-						SchoolSeasonEnUSApiServiceImpl service = new SchoolSeasonEnUSApiServiceImpl(siteRequest2.getSiteContext_());
+						SchoolSeasonEnUSApiServiceImpl service = new SchoolSeasonEnUSApiServiceImpl(siteRequest.getSiteContext_());
 						List<Future> futures2 = new ArrayList<>();
 						for(SchoolSeason o2 : searchList.getList()) {
+							SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolSeason(siteContext, siteRequest.getOperationRequest(), new JsonObject());
+							o2.setSiteRequest_(siteRequest2);
 							futures2.add(
 								service.patchSchoolSeasonFuture(o2, false, b -> {
 									if(b.succeeded()) {
-										LOGGER.info(String.format("SchoolSeason %s refreshed. ", o2.getPk()));
 									} else {
 										LOGGER.info(String.format("SchoolSeason %s failed. ", o2.getPk()));
 										eventHandler.handle(Future.failedFuture(b.cause()));
@@ -2692,22 +3278,22 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 
 						CompositeFuture.all(futures2).setHandler(b -> {
 							if(b.succeeded()) {
-								LOGGER.info("Refresh SchoolSeason succeeded. ");
 								eventHandler.handle(Future.succeededFuture());
 							} else {
 								LOGGER.error("Refresh relations failed. ", b.cause());
-								errorSchoolSeason(siteRequest2, eventHandler, b);
+								errorSchoolSeason(siteRequest, eventHandler, b);
 							}
 						});
 					} else {
 						LOGGER.error("Refresh relations failed. ", a.cause());
-						errorSchoolSeason(siteRequest2, eventHandler, a);
+						errorSchoolSeason(siteRequest, eventHandler, a);
 					}
 				});
 			} else {
 				eventHandler.handle(Future.succeededFuture());
 			}
 		} catch(Exception e) {
+			LOGGER.error(String.format("refreshSchoolSeason failed. ", e));
 			eventHandler.handle(Future.failedFuture(e));
 		}
 	}

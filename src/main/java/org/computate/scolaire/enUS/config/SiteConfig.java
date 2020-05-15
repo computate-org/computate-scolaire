@@ -382,7 +382,31 @@ public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 	/**	
 	 *	The JDBC URL to the database. 
 	 **/
-	protected void _jdbcUrl(Wrap<String> c) {
+	protected void _jdbcHost(Wrap<String> c) {
+		String o;
+		if(config == null)
+			o = System.getenv(c.var);
+		else
+			o = config.getString(prefixEscaped + c.var);
+		c.o(o);
+	}
+
+	/**	
+	 *	The JDBC URL to the database. 
+	 **/
+	protected void _jdbcPort(Wrap<Integer> c) {
+		Integer o;
+		if(config == null)
+			o = Integer.parseInt(ObjectUtils.defaultIfNull(System.getenv(c.var), "5432"));
+		else
+			o = config.getInt(prefixEscaped + c.var, 5432);
+		c.o(o);
+	}
+
+	/**	
+	 *	The JDBC URL to the database. 
+	 **/
+	protected void _jdbcDatabase(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);

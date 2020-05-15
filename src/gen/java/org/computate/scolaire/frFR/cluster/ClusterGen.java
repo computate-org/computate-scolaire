@@ -24,7 +24,6 @@ import java.util.Objects;
 import java.util.List;
 import org.apache.solr.client.solrj.SolrQuery;
 import java.util.Optional;
-import io.vertx.ext.sql.SQLClient;
 import org.apache.solr.client.solrj.util.ClientUtils;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.apache.solr.common.SolrInputDocument;
@@ -49,7 +48,6 @@ import io.vertx.core.json.JsonArray;
 import org.apache.solr.common.SolrDocument;
 import java.time.temporal.ChronoUnit;
 import java.time.format.DateTimeFormatter;
-import io.vertx.ext.sql.SQLConnection;
 import org.apache.commons.lang3.math.NumberUtils;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import java.lang.Object;
@@ -530,11 +528,11 @@ public abstract class ClusterGen<DEV> extends Object {
 	}
 
 	public String strCree() {
-		return cree == null ? "" : cree.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy H'h'mm:ss zz", Locale.FRANCE));
+		return cree == null ? "" : cree.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy H'h'mm:ss zz VV", Locale.forLanguageTag("fr-FR")));
 	}
 
 	public String jsonCree() {
-		return cree == null ? "" : cree.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy H'h'mm:ss.SSS zz VV", Locale.FRANCE));
+		return cree == null ? "" : cree.format(DateTimeFormatter.ISO_DATE_TIME);
 	}
 
 	public String nomAffichageCree() {
@@ -634,11 +632,11 @@ public abstract class ClusterGen<DEV> extends Object {
 	}
 
 	public String strModifie() {
-		return modifie == null ? "" : modifie.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy H'h'mm:ss zz", Locale.FRANCE));
+		return modifie == null ? "" : modifie.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy H'h'mm:ss zz VV", Locale.forLanguageTag("fr-FR")));
 	}
 
 	public String jsonModifie() {
-		return modifie == null ? "" : modifie.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy H'h'mm:ss.SSS zz VV", Locale.FRANCE));
+		return modifie == null ? "" : modifie.format(DateTimeFormatter.ISO_DATE_TIME);
 	}
 
 	public String nomAffichageModifie() {

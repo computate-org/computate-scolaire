@@ -53,8 +53,11 @@ import io.vertx.ext.web.api.validation.HTTPRequestValidationHandler;
 import io.vertx.ext.web.api.validation.ParameterTypeValidator;
 import io.vertx.ext.web.api.validation.ValidationException;
 import io.vertx.ext.web.api.contract.openapi3.OpenAPI3RouterFactory;
-import io.vertx.ext.sql.SQLClient;
-import io.vertx.ext.sql.SQLConnection;
+import io.vertx.pgclient.PgPool;
+import io.vertx.sqlclient.Transaction;
+import io.vertx.sqlclient.SqlConnection;
+import io.vertx.sqlclient.Tuple;
+import io.vertx.sqlclient.Row;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import java.time.LocalDateTime;
@@ -125,43 +128,36 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 				));
 			}
 
-			sqlBlocScolaire(requeteSite, a -> {
-				if(a.succeeded()) {
-					utilisateurBlocScolaire(requeteSite, b -> {
-						if(b.succeeded()) {
-							RequeteApi requeteApi = new RequeteApi();
-							requeteApi.setRows(1);
-							requeteApi.setNumFound(1L);
-							requeteApi.setNumPATCH(0L);
-							requeteApi.initLoinRequeteApi(requeteSite);
-							requeteSite.setRequeteApi_(requeteApi);
-							requeteSite.getVertx().eventBus().publish("websocketBlocScolaire", JsonObject.mapFrom(requeteApi).toString());
-							postBlocScolaireFuture(requeteSite, false, c -> {
-								if(c.succeeded()) {
-									BlocScolaire blocScolaire = c.result();
-									requeteApi.setPk(blocScolaire.getPk());
-									postBlocScolaireReponse(blocScolaire, d -> {
-										if(d.succeeded()) {
-											gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-											LOGGER.info(String.format("postBlocScolaire a réussi. "));
-										} else {
-											LOGGER.error(String.format("postBlocScolaire a échoué. ", d.cause()));
-											erreurBlocScolaire(requeteSite, gestionnaireEvenements, d);
-										}
-									});
+			utilisateurBlocScolaire(requeteSite, b -> {
+				if(b.succeeded()) {
+					RequeteApi requeteApi = new RequeteApi();
+					requeteApi.setRows(1);
+					requeteApi.setNumFound(1L);
+					requeteApi.setNumPATCH(0L);
+					requeteApi.initLoinRequeteApi(requeteSite);
+					requeteSite.setRequeteApi_(requeteApi);
+					requeteSite.getVertx().eventBus().publish("websocketBlocScolaire", JsonObject.mapFrom(requeteApi).toString());
+					postBlocScolaireFuture(requeteSite, false, c -> {
+						if(c.succeeded()) {
+							BlocScolaire blocScolaire = c.result();
+							requeteApi.setPk(blocScolaire.getPk());
+							postBlocScolaireReponse(blocScolaire, d -> {
+									if(d.succeeded()) {
+									gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+									LOGGER.info(String.format("postBlocScolaire a réussi. "));
 								} else {
-									LOGGER.error(String.format("postBlocScolaire a échoué. ", c.cause()));
-									erreurBlocScolaire(requeteSite, gestionnaireEvenements, c);
+									LOGGER.error(String.format("postBlocScolaire a échoué. ", d.cause()));
+									erreurBlocScolaire(requeteSite, gestionnaireEvenements, d);
 								}
 							});
 						} else {
-							LOGGER.error(String.format("postBlocScolaire a échoué. ", b.cause()));
-							erreurBlocScolaire(requeteSite, gestionnaireEvenements, b);
+							LOGGER.error(String.format("postBlocScolaire a échoué. ", c.cause()));
+							erreurBlocScolaire(requeteSite, gestionnaireEvenements, c);
 						}
 					});
 				} else {
-					LOGGER.error(String.format("postBlocScolaire a échoué. ", a.cause()));
-					erreurBlocScolaire(requeteSite, gestionnaireEvenements, a);
+					LOGGER.error(String.format("postBlocScolaire a échoué. ", b.cause()));
+					erreurBlocScolaire(requeteSite, gestionnaireEvenements, b);
 				}
 			});
 		} catch(Exception ex) {
@@ -174,41 +170,52 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 	public Future<BlocScolaire> postBlocScolaireFuture(RequeteSiteFrFR requeteSite, Boolean inheritPk, Handler<AsyncResult<BlocScolaire>> gestionnaireEvenements) {
 		Promise<BlocScolaire> promise = Promise.promise();
 		try {
-			creerBlocScolaire(requeteSite, a -> {
+			sqlConnexionBlocScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
-					BlocScolaire blocScolaire = a.result();
-					sqlPOSTBlocScolaire(blocScolaire, inheritPk, b -> {
+					sqlTransactionBlocScolaire(requeteSite, b -> {
 						if(b.succeeded()) {
-							definirIndexerBlocScolaire(blocScolaire, c -> {
+							creerBlocScolaire(requeteSite, c -> {
 								if(c.succeeded()) {
-									RequeteApi requeteApi = requeteSite.getRequeteApi_();
-									if(requeteApi != null) {
-										requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
-										blocScolaire.requeteApiBlocScolaire();
-										requeteSite.getVertx().eventBus().publish("websocketBlocScolaire", JsonObject.mapFrom(requeteApi).toString());
-									}
-									SQLConnection connexionSql = requeteSite.getConnexionSql();
-									connexionSql.commit(d -> {
+									BlocScolaire blocScolaire = c.result();
+									sqlPOSTBlocScolaire(blocScolaire, inheritPk, d -> {
 										if(d.succeeded()) {
-											gestionnaireEvenements.handle(Future.succeededFuture(blocScolaire));
-											promise.complete(blocScolaire);
+											definirIndexerBlocScolaire(blocScolaire, e -> {
+												if(e.succeeded()) {
+													RequeteApi requeteApi = requeteSite.getRequeteApi_();
+													if(requeteApi != null) {
+														requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+														blocScolaire.requeteApiBlocScolaire();
+														requeteSite.getVertx().eventBus().publish("websocketBlocScolaire", JsonObject.mapFrom(requeteApi).toString());
+													}
+													gestionnaireEvenements.handle(Future.succeededFuture(blocScolaire));
+													promise.complete(blocScolaire);
+												} else {
+													LOGGER.error(String.format("postBlocScolaireFuture a échoué. ", e.cause()));
+													gestionnaireEvenements.handle(Future.failedFuture(e.cause()));
+												}
+											});
 										} else {
+											LOGGER.error(String.format("postBlocScolaireFuture a échoué. ", d.cause()));
 											gestionnaireEvenements.handle(Future.failedFuture(d.cause()));
 										}
 									});
 								} else {
+									LOGGER.error(String.format("postBlocScolaireFuture a échoué. ", c.cause()));
 									gestionnaireEvenements.handle(Future.failedFuture(c.cause()));
 								}
 							});
 						} else {
+							LOGGER.error(String.format("postBlocScolaireFuture a échoué. ", b.cause()));
 							gestionnaireEvenements.handle(Future.failedFuture(b.cause()));
 						}
 					});
 				} else {
+					LOGGER.error(String.format("postBlocScolaireFuture a échoué. ", a.cause()));
 					gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
 				}
 			});
 		} catch(Exception e) {
+			LOGGER.error(String.format("postBlocScolaireFuture a échoué. ", e));
 			erreurBlocScolaire(requeteSite, null, Future.failedFuture(e));
 		}
 		return promise.future();
@@ -220,23 +227,49 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 			RequeteApi requeteApi = requeteSite.getRequeteApi_();
 			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(new ArrayList<>());
 			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(new ArrayList<>());
-			SQLConnection connexionSql = requeteSite.getConnexionSql();
+			Transaction tx = requeteSite.getTx();
 			Long pk = o.getPk();
 			JsonObject jsonObject = requeteSite.getObjetJson();
-			StringBuilder postSql = new StringBuilder();
-			List<Object> postSqlParams = new ArrayList<Object>();
+			List<Future> futures = new ArrayList<>();
 
 			if(requeteSite.getSessionId() != null) {
-				postSql.append(SiteContexteFrFR.SQL_setD);
-				postSqlParams.addAll(Arrays.asList(pk, "sessionId", requeteSite.getSessionId()));
+				futures.add(Future.future(a -> {
+					tx.preparedQuery(SiteContexteFrFR.SQL_setD
+				, Tuple.of(pk, "sessionId", requeteSite.getSessionId())
+							, b
+					-> {
+						if(b.succeeded())
+							a.handle(Future.succeededFuture());
+						else
+							a.handle(Future.failedFuture(b.cause()));
+					});
+				}));
 			}
 			if(requeteSite.getUtilisateurId() != null) {
-				postSql.append(SiteContexteFrFR.SQL_setD);
-				postSqlParams.addAll(Arrays.asList(pk, "utilisateurId", requeteSite.getUtilisateurId()));
+				futures.add(Future.future(a -> {
+					tx.preparedQuery(SiteContexteFrFR.SQL_setD
+				, Tuple.of(pk, "utilisateurId", requeteSite.getUtilisateurId())
+							, b
+					-> {
+						if(b.succeeded())
+							a.handle(Future.succeededFuture());
+						else
+							a.handle(Future.failedFuture(b.cause()));
+					});
+				}));
 			}
 			if(requeteSite.getUtilisateurCle() != null) {
-				postSql.append(SiteContexteFrFR.SQL_setD);
-				postSqlParams.addAll(Arrays.asList(pk, "utilisateurCle", requeteSite.getUtilisateurCle()));
+				futures.add(Future.future(a -> {
+					tx.preparedQuery(SiteContexteFrFR.SQL_setD
+				, Tuple.of(pk, "utilisateurCle", requeteSite.getUtilisateurCle())
+							, b
+					-> {
+						if(b.succeeded())
+							a.handle(Future.succeededFuture());
+						else
+							a.handle(Future.failedFuture(b.cause()));
+					});
+				}));
 			}
 
 			if(jsonObject != null) {
@@ -244,36 +277,108 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 				for(String entiteVar : entiteVars) {
 					switch(entiteVar) {
 					case "inheritPk":
-						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "inheritPk", jsonObject.getString(entiteVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "inheritPk", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.inheritPk a échoué", b.cause())));
+							});
+						}));
 						break;
 					case "cree":
-						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "cree", jsonObject.getString(entiteVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "cree", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.cree a échoué", b.cause())));
+							});
+						}));
 						break;
 					case "modifie":
-						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "modifie", jsonObject.getString(entiteVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "modifie", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.modifie a échoué", b.cause())));
+							});
+						}));
 						break;
 					case "archive":
-						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "archive", jsonObject.getBoolean(entiteVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "archive", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.archive a échoué", b.cause())));
+							});
+						}));
 						break;
 					case "supprime":
-						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "supprime", jsonObject.getBoolean(entiteVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "supprime", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.supprime a échoué", b.cause())));
+							});
+						}));
 						break;
 					case "sessionId":
-						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "sessionId", jsonObject.getString(entiteVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "sessionId", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.sessionId a échoué", b.cause())));
+							});
+						}));
 						break;
 					case "utilisateurId":
-						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "utilisateurId", jsonObject.getString(entiteVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "utilisateurId", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.utilisateurId a échoué", b.cause())));
+							});
+						}));
 						break;
 					case "utilisateurCle":
-						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "utilisateurCle", jsonObject.getString(entiteVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "utilisateurCle", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.utilisateurCle a échoué", b.cause())));
+							});
+						}));
 						break;
 					case "inscriptionCles":
 						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
@@ -284,12 +389,21 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 								listeRecherche.setC(InscriptionScolaire.class);
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
-								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null) {
-									postSql.append(SiteContexteFrFR.SQL_addA);
-									postSqlParams.addAll(Arrays.asList(l, "blocCles", pk, "inscriptionCles"));
-									if(!pks.contains(l)) {
-										pks.add(l);
+								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA
+												, Tuple.of(l2, "blocCles", pk, "inscriptionCles")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.inscriptionCles a échoué", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
 										classes.add("InscriptionScolaire");
 									}
 								}
@@ -306,12 +420,21 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 								listeRecherche.setC(AgeScolaire.class);
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
-								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null) {
-									postSql.append(SiteContexteFrFR.SQL_addA);
-									postSqlParams.addAll(Arrays.asList(pk, "ageCle", l, "blocCles"));
-									if(!pks.contains(l)) {
-										pks.add(l);
+								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA
+												, Tuple.of(pk, "ageCle", l2, "blocCles")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.ageCle a échoué", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
 										classes.add("AgeScolaire");
 									}
 								}
@@ -319,56 +442,135 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 						}
 						break;
 					case "ecoleAddresse":
-						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "ecoleAddresse", jsonObject.getString(entiteVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "ecoleAddresse", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.ecoleAddresse a échoué", b.cause())));
+							});
+						}));
 						break;
 					case "blocHeureDebut":
-						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "blocHeureDebut", jsonObject.getString(entiteVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "blocHeureDebut", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.blocHeureDebut a échoué", b.cause())));
+							});
+						}));
 						break;
 					case "blocHeureFin":
-						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "blocHeureFin", jsonObject.getString(entiteVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "blocHeureFin", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.blocHeureFin a échoué", b.cause())));
+							});
+						}));
 						break;
 					case "blocPrixParMois":
-						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "blocPrixParMois", jsonObject.getString(entiteVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "blocPrixParMois", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.blocPrixParMois a échoué", b.cause())));
+							});
+						}));
 						break;
 					case "blocLundi":
-						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "blocLundi", jsonObject.getBoolean(entiteVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "blocLundi", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.blocLundi a échoué", b.cause())));
+							});
+						}));
 						break;
 					case "blocMardi":
-						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "blocMardi", jsonObject.getBoolean(entiteVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "blocMardi", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.blocMardi a échoué", b.cause())));
+							});
+						}));
 						break;
 					case "blocMercredi":
-						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "blocMercredi", jsonObject.getBoolean(entiteVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "blocMercredi", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.blocMercredi a échoué", b.cause())));
+							});
+						}));
 						break;
 					case "blocJeudi":
-						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "blocJeudi", jsonObject.getBoolean(entiteVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "blocJeudi", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.blocJeudi a échoué", b.cause())));
+							});
+						}));
 						break;
 					case "blocVendredi":
-						postSql.append(SiteContexteFrFR.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "blocVendredi", jsonObject.getBoolean(entiteVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "blocVendredi", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.blocVendredi a échoué", b.cause())));
+							});
+						}));
 						break;
 					}
 				}
 			}
-			connexionSql.queryWithParams(
-					postSql.toString()
-					, new JsonArray(postSqlParams)
-					, postAsync
-			-> {
-				if(postAsync.succeeded()) {
+			CompositeFuture.all(futures).setHandler( a -> {
+				if(a.succeeded()) {
 					gestionnaireEvenements.handle(Future.succeededFuture());
 				} else {
-					gestionnaireEvenements.handle(Future.failedFuture(new Exception(postAsync.cause())));
+					LOGGER.error(String.format("sqlPOSTBlocScolaire a échoué. ", a.cause()));
+					gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
 				}
 			});
 		} catch(Exception e) {
+			LOGGER.error(String.format("sqlPOSTBlocScolaire a échoué. ", e));
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
 	}
@@ -378,26 +580,14 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 		try {
 			reponse200POSTBlocScolaire(blocScolaire, a -> {
 				if(a.succeeded()) {
-					SQLConnection connexionSql = requeteSite.getConnexionSql();
-					connexionSql.commit(b -> {
-						if(b.succeeded()) {
-							connexionSql.close(c -> {
-								if(c.succeeded()) {
-									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
-								} else {
-									erreurBlocScolaire(requeteSite, gestionnaireEvenements, c);
-								}
-							});
-						} else {
-							erreurBlocScolaire(requeteSite, gestionnaireEvenements, b);
-						}
-					});
+					gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 				} else {
+					LOGGER.error(String.format("postBlocScolaireReponse a échoué. ", a.cause()));
 					erreurBlocScolaire(requeteSite, gestionnaireEvenements, a);
 				}
 			});
 		} catch(Exception ex) {
-			LOGGER.error(String.format("postBlocScolaire a échoué. ", ex));
+			LOGGER.error(String.format("postBlocScolaireReponse a échoué. ", ex));
 			erreurBlocScolaire(requeteSite, null, Future.failedFuture(ex));
 		}
 	}
@@ -407,6 +597,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 			JsonObject json = JsonObject.mapFrom(o);
 			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
 		} catch(Exception e) {
+			LOGGER.error(String.format("reponse200POSTBlocScolaire a échoué. ", e));
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
 	}
@@ -436,69 +627,62 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 				));
 			}
 
-			sqlBlocScolaire(requeteSite, a -> {
-				if(a.succeeded()) {
-					utilisateurBlocScolaire(requeteSite, b -> {
-						if(b.succeeded()) {
-							putimportBlocScolaireReponse(requeteSite, c -> {
-								if(c.succeeded()) {
-									gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
-									WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
-									executeurTravailleur.executeBlocking(
-										blockingCodeHandler -> {
-											RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourBlocScolaire(siteContexte, operationRequete, body);
-											try {
-												RequeteApi requeteApi = new RequeteApi();
-												JsonArray jsonArray = Optional.ofNullable(requeteSite2.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
-												requeteApi.setRows(jsonArray.size());
-												requeteApi.setNumFound(new Integer(jsonArray.size()).longValue());
-												requeteApi.setNumPATCH(0L);
-												requeteApi.initLoinRequeteApi(requeteSite2);
-												requeteSite2.setRequeteApi_(requeteApi);
-												requeteSite2.getVertx().eventBus().publish("websocketBlocScolaire", JsonObject.mapFrom(requeteApi).toString());
-												sqlBlocScolaire(requeteSite2, d -> {
-													if(d.succeeded()) {
-														listePUTImportBlocScolaire(requeteApi, requeteSite2, e -> {
-															if(e.succeeded()) {
-																putimportBlocScolaireReponse(requeteSite2, f -> {
-																	if(f.succeeded()) {
-																		LOGGER.info(String.format("putimportBlocScolaire a réussi. "));
-																		blockingCodeHandler.handle(Future.succeededFuture(f.result()));
-																	} else {
-																		LOGGER.error(String.format("putimportBlocScolaire a échoué. ", f.cause()));
-																		erreurBlocScolaire(requeteSite2, null, f);
-																	}
-																});
+			utilisateurBlocScolaire(requeteSite, b -> {
+				if(b.succeeded()) {
+					putimportBlocScolaireReponse(requeteSite, c -> {
+						if(c.succeeded()) {
+							gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
+							WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
+							executeurTravailleur.executeBlocking(
+								blockingCodeHandler -> {
+									RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourBlocScolaire(siteContexte, operationRequete, body);
+									try {
+										RequeteApi requeteApi = new RequeteApi();
+										JsonArray jsonArray = Optional.ofNullable(requeteSite2.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+										requeteApi.setRows(jsonArray.size());
+										requeteApi.setNumFound(new Integer(jsonArray.size()).longValue());
+										requeteApi.setNumPATCH(0L);
+										requeteApi.initLoinRequeteApi(requeteSite2);
+										requeteSite2.setRequeteApi_(requeteApi);
+										requeteSite2.getVertx().eventBus().publish("websocketBlocScolaire", JsonObject.mapFrom(requeteApi).toString());
+										sqlConnexionBlocScolaire(requeteSite2, d -> {
+											if(d.succeeded()) {
+												listePUTImportBlocScolaire(requeteApi, requeteSite2, e -> {
+													if(e.succeeded()) {
+														putimportBlocScolaireReponse(requeteSite2, f -> {
+															if(f.succeeded()) {
+																LOGGER.info(String.format("putimportBlocScolaire a réussi. "));
+																blockingCodeHandler.handle(Future.succeededFuture(f.result()));
 															} else {
-																LOGGER.error(String.format("putimportBlocScolaire a échoué. ", e.cause()));
-																erreurBlocScolaire(requeteSite2, null, e);
+																LOGGER.error(String.format("putimportBlocScolaire a échoué. ", f.cause()));
+																erreurBlocScolaire(requeteSite2, null, f);
 															}
 														});
 													} else {
-														LOGGER.error(String.format("putimportBlocScolaire a échoué. ", d.cause()));
-														erreurBlocScolaire(requeteSite2, null, d);
+														LOGGER.error(String.format("putimportBlocScolaire a échoué. ", e.cause()));
+														erreurBlocScolaire(requeteSite2, null, e);
 													}
 												});
-											} catch(Exception ex) {
-												LOGGER.error(String.format("putimportBlocScolaire a échoué. ", ex));
-												erreurBlocScolaire(requeteSite2, null, Future.failedFuture(ex));
+											} else {
+												LOGGER.error(String.format("putimportBlocScolaire a échoué. ", d.cause()));
+												erreurBlocScolaire(requeteSite2, null, d);
 											}
-										}, resultHandler -> {
-										}
-									);
-								} else {
-									LOGGER.error(String.format("putimportBlocScolaire a échoué. ", c.cause()));
-									erreurBlocScolaire(requeteSite, gestionnaireEvenements, c);
+										});
+									} catch(Exception ex) {
+										LOGGER.error(String.format("putimportBlocScolaire a échoué. ", ex));
+										erreurBlocScolaire(requeteSite2, null, Future.failedFuture(ex));
+									}
+								}, resultHandler -> {
 								}
-							});
+							);
 						} else {
-							LOGGER.error(String.format("putimportBlocScolaire a échoué. ", b.cause()));
-							erreurBlocScolaire(requeteSite, gestionnaireEvenements, b);
+							LOGGER.error(String.format("putimportBlocScolaire a échoué. ", c.cause()));
+							erreurBlocScolaire(requeteSite, gestionnaireEvenements, c);
 						}
 					});
 				} else {
-					LOGGER.error(String.format("putimportBlocScolaire a échoué. ", a.cause()));
-					erreurBlocScolaire(requeteSite, gestionnaireEvenements, a);
+					LOGGER.error(String.format("putimportBlocScolaire a échoué. ", b.cause()));
+					erreurBlocScolaire(requeteSite, gestionnaireEvenements, b);
 				}
 			});
 		} catch(Exception ex) {
@@ -544,6 +728,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 							patchBlocScolaireFuture(o, true, a -> {
 								if(a.succeeded()) {
 								} else {
+									LOGGER.error(String.format("listePUTImportBlocScolaire a échoué. ", a.cause()));
 									erreurBlocScolaire(requeteSite2, gestionnaireEvenements, a);
 								}
 							})
@@ -554,6 +739,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 						postBlocScolaireFuture(requeteSite2, true, a -> {
 							if(a.succeeded()) {
 							} else {
+								LOGGER.error(String.format("listePUTImportBlocScolaire a échoué. ", a.cause()));
 								erreurBlocScolaire(requeteSite2, gestionnaireEvenements, a);
 							}
 						})
@@ -565,11 +751,12 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 					requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
 					reponse200PUTImportBlocScolaire(requeteSite, gestionnaireEvenements);
 				} else {
+					LOGGER.error(String.format("listePUTImportBlocScolaire a échoué. ", a.cause()));
 					erreurBlocScolaire(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
 				}
 			});
 		} catch(Exception ex) {
-			LOGGER.error(String.format("putimportBlocScolaire a échoué. ", ex));
+			LOGGER.error(String.format("listePUTImportBlocScolaire a échoué. ", ex));
 			erreurBlocScolaire(requeteSite, null, Future.failedFuture(ex));
 		}
 	}
@@ -578,26 +765,14 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 		try {
 			reponse200PUTImportBlocScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
-					SQLConnection connexionSql = requeteSite.getConnexionSql();
-					connexionSql.commit(b -> {
-						if(b.succeeded()) {
-							connexionSql.close(c -> {
-								if(c.succeeded()) {
-									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
-								} else {
-									erreurBlocScolaire(requeteSite, gestionnaireEvenements, c);
-								}
-							});
-						} else {
-							erreurBlocScolaire(requeteSite, gestionnaireEvenements, b);
-						}
-					});
+					gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 				} else {
+					LOGGER.error(String.format("putimportBlocScolaireReponse a échoué. ", a.cause()));
 					erreurBlocScolaire(requeteSite, gestionnaireEvenements, a);
 				}
 			});
 		} catch(Exception ex) {
-			LOGGER.error(String.format("putimportBlocScolaire a échoué. ", ex));
+			LOGGER.error(String.format("putimportBlocScolaireReponse a échoué. ", ex));
 			erreurBlocScolaire(requeteSite, null, Future.failedFuture(ex));
 		}
 	}
@@ -606,6 +781,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 			JsonObject json = new JsonObject();
 			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
 		} catch(Exception e) {
+			LOGGER.error(String.format("reponse200PUTImportBlocScolaire a échoué. ", e));
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
 	}
@@ -635,69 +811,62 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 				));
 			}
 
-			sqlBlocScolaire(requeteSite, a -> {
-				if(a.succeeded()) {
-					utilisateurBlocScolaire(requeteSite, b -> {
-						if(b.succeeded()) {
-							putfusionBlocScolaireReponse(requeteSite, c -> {
-								if(c.succeeded()) {
-									gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
-									WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
-									executeurTravailleur.executeBlocking(
-										blockingCodeHandler -> {
-											RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourBlocScolaire(siteContexte, operationRequete, body);
-											try {
-												RequeteApi requeteApi = new RequeteApi();
-												JsonArray jsonArray = Optional.ofNullable(requeteSite2.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
-												requeteApi.setRows(jsonArray.size());
-												requeteApi.setNumFound(new Integer(jsonArray.size()).longValue());
-												requeteApi.setNumPATCH(0L);
-												requeteApi.initLoinRequeteApi(requeteSite2);
-												requeteSite2.setRequeteApi_(requeteApi);
-												requeteSite2.getVertx().eventBus().publish("websocketBlocScolaire", JsonObject.mapFrom(requeteApi).toString());
-												sqlBlocScolaire(requeteSite2, d -> {
-													if(d.succeeded()) {
-														listePUTFusionBlocScolaire(requeteApi, requeteSite2, e -> {
-															if(e.succeeded()) {
-																putfusionBlocScolaireReponse(requeteSite2, f -> {
-																	if(f.succeeded()) {
-																		LOGGER.info(String.format("putfusionBlocScolaire a réussi. "));
-																		blockingCodeHandler.handle(Future.succeededFuture(f.result()));
-																	} else {
-																		LOGGER.error(String.format("putfusionBlocScolaire a échoué. ", f.cause()));
-																		erreurBlocScolaire(requeteSite2, null, f);
-																	}
-																});
+			utilisateurBlocScolaire(requeteSite, b -> {
+				if(b.succeeded()) {
+					putfusionBlocScolaireReponse(requeteSite, c -> {
+						if(c.succeeded()) {
+							gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
+							WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
+							executeurTravailleur.executeBlocking(
+								blockingCodeHandler -> {
+									RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourBlocScolaire(siteContexte, operationRequete, body);
+									try {
+										RequeteApi requeteApi = new RequeteApi();
+										JsonArray jsonArray = Optional.ofNullable(requeteSite2.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+										requeteApi.setRows(jsonArray.size());
+										requeteApi.setNumFound(new Integer(jsonArray.size()).longValue());
+										requeteApi.setNumPATCH(0L);
+										requeteApi.initLoinRequeteApi(requeteSite2);
+										requeteSite2.setRequeteApi_(requeteApi);
+										requeteSite2.getVertx().eventBus().publish("websocketBlocScolaire", JsonObject.mapFrom(requeteApi).toString());
+										sqlConnexionBlocScolaire(requeteSite2, d -> {
+											if(d.succeeded()) {
+												listePUTFusionBlocScolaire(requeteApi, requeteSite2, e -> {
+													if(e.succeeded()) {
+														putfusionBlocScolaireReponse(requeteSite2, f -> {
+															if(f.succeeded()) {
+																LOGGER.info(String.format("putfusionBlocScolaire a réussi. "));
+																blockingCodeHandler.handle(Future.succeededFuture(f.result()));
 															} else {
-																LOGGER.error(String.format("putfusionBlocScolaire a échoué. ", e.cause()));
-																erreurBlocScolaire(requeteSite2, null, e);
+																LOGGER.error(String.format("putfusionBlocScolaire a échoué. ", f.cause()));
+																erreurBlocScolaire(requeteSite2, null, f);
 															}
 														});
 													} else {
-														LOGGER.error(String.format("putfusionBlocScolaire a échoué. ", d.cause()));
-														erreurBlocScolaire(requeteSite2, null, d);
+														LOGGER.error(String.format("putfusionBlocScolaire a échoué. ", e.cause()));
+														erreurBlocScolaire(requeteSite2, null, e);
 													}
 												});
-											} catch(Exception ex) {
-												LOGGER.error(String.format("putfusionBlocScolaire a échoué. ", ex));
-												erreurBlocScolaire(requeteSite2, null, Future.failedFuture(ex));
+											} else {
+												LOGGER.error(String.format("putfusionBlocScolaire a échoué. ", d.cause()));
+												erreurBlocScolaire(requeteSite2, null, d);
 											}
-										}, resultHandler -> {
-										}
-									);
-								} else {
-									LOGGER.error(String.format("putfusionBlocScolaire a échoué. ", c.cause()));
-									erreurBlocScolaire(requeteSite, gestionnaireEvenements, c);
+										});
+									} catch(Exception ex) {
+										LOGGER.error(String.format("putfusionBlocScolaire a échoué. ", ex));
+										erreurBlocScolaire(requeteSite2, null, Future.failedFuture(ex));
+									}
+								}, resultHandler -> {
 								}
-							});
+							);
 						} else {
-							LOGGER.error(String.format("putfusionBlocScolaire a échoué. ", b.cause()));
-							erreurBlocScolaire(requeteSite, gestionnaireEvenements, b);
+							LOGGER.error(String.format("putfusionBlocScolaire a échoué. ", c.cause()));
+							erreurBlocScolaire(requeteSite, gestionnaireEvenements, c);
 						}
 					});
 				} else {
-					LOGGER.error(String.format("putfusionBlocScolaire a échoué. ", a.cause()));
-					erreurBlocScolaire(requeteSite, gestionnaireEvenements, a);
+					LOGGER.error(String.format("putfusionBlocScolaire a échoué. ", b.cause()));
+					erreurBlocScolaire(requeteSite, gestionnaireEvenements, b);
 				}
 			});
 		} catch(Exception ex) {
@@ -743,6 +912,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 							patchBlocScolaireFuture(o, false, a -> {
 								if(a.succeeded()) {
 								} else {
+									LOGGER.error(String.format("listePUTFusionBlocScolaire a échoué. ", a.cause()));
 									erreurBlocScolaire(requeteSite2, gestionnaireEvenements, a);
 								}
 							})
@@ -753,6 +923,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 						postBlocScolaireFuture(requeteSite2, false, a -> {
 							if(a.succeeded()) {
 							} else {
+								LOGGER.error(String.format("listePUTFusionBlocScolaire a échoué. ", a.cause()));
 								erreurBlocScolaire(requeteSite2, gestionnaireEvenements, a);
 							}
 						})
@@ -764,11 +935,12 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 					requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
 					reponse200PUTFusionBlocScolaire(requeteSite, gestionnaireEvenements);
 				} else {
+					LOGGER.error(String.format("listePUTFusionBlocScolaire a échoué. ", a.cause()));
 					erreurBlocScolaire(requeteApi.getRequeteSite_(), gestionnaireEvenements, a);
 				}
 			});
 		} catch(Exception ex) {
-			LOGGER.error(String.format("putfusionBlocScolaire a échoué. ", ex));
+			LOGGER.error(String.format("listePUTFusionBlocScolaire a échoué. ", ex));
 			erreurBlocScolaire(requeteSite, null, Future.failedFuture(ex));
 		}
 	}
@@ -777,26 +949,14 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 		try {
 			reponse200PUTFusionBlocScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
-					SQLConnection connexionSql = requeteSite.getConnexionSql();
-					connexionSql.commit(b -> {
-						if(b.succeeded()) {
-							connexionSql.close(c -> {
-								if(c.succeeded()) {
-									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
-								} else {
-									erreurBlocScolaire(requeteSite, gestionnaireEvenements, c);
-								}
-							});
-						} else {
-							erreurBlocScolaire(requeteSite, gestionnaireEvenements, b);
-						}
-					});
+					gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 				} else {
+					LOGGER.error(String.format("putfusionBlocScolaireReponse a échoué. ", a.cause()));
 					erreurBlocScolaire(requeteSite, gestionnaireEvenements, a);
 				}
 			});
 		} catch(Exception ex) {
-			LOGGER.error(String.format("putfusionBlocScolaire a échoué. ", ex));
+			LOGGER.error(String.format("putfusionBlocScolaireReponse a échoué. ", ex));
 			erreurBlocScolaire(requeteSite, null, Future.failedFuture(ex));
 		}
 	}
@@ -805,6 +965,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 			JsonObject json = new JsonObject();
 			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
 		} catch(Exception e) {
+			LOGGER.error(String.format("reponse200PUTFusionBlocScolaire a échoué. ", e));
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
 	}
@@ -834,81 +995,74 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 				));
 			}
 
-			sqlBlocScolaire(requeteSite, a -> {
-				if(a.succeeded()) {
-					utilisateurBlocScolaire(requeteSite, b -> {
-						if(b.succeeded()) {
-							putcopieBlocScolaireReponse(requeteSite, c -> {
-								if(c.succeeded()) {
-									gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
-									WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
-									executeurTravailleur.executeBlocking(
-										blockingCodeHandler -> {
-											RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourBlocScolaire(siteContexte, operationRequete, body);
-											try {
-												rechercheBlocScolaire(requeteSite2, false, true, "/api/bloc/copie", "PUTCopie", d -> {
-													if(d.succeeded()) {
-														ListeRecherche<BlocScolaire> listeBlocScolaire = d.result();
-														RequeteApi requeteApi = new RequeteApi();
-														requeteApi.setRows(listeBlocScolaire.getRows());
-														requeteApi.setNumFound(listeBlocScolaire.getQueryResponse().getResults().getNumFound());
-														requeteApi.setNumPATCH(0L);
-														requeteApi.initLoinRequeteApi(requeteSite2);
-														requeteSite2.setRequeteApi_(requeteApi);
-														requeteSite2.getVertx().eventBus().publish("websocketBlocScolaire", JsonObject.mapFrom(requeteApi).toString());
-														sqlBlocScolaire(requeteSite2, e -> {
-															if(e.succeeded()) {
-																try {
-																	listePUTCopieBlocScolaire(requeteApi, listeBlocScolaire, f -> {
-																		if(f.succeeded()) {
-																			putcopieBlocScolaireReponse(requeteSite2, g -> {
-																				if(g.succeeded()) {
-																					LOGGER.info(String.format("putcopieBlocScolaire a réussi. "));
-																					blockingCodeHandler.handle(Future.succeededFuture(g.result()));
-																				} else {
-																					LOGGER.error(String.format("putcopieBlocScolaire a échoué. ", g.cause()));
-																					erreurBlocScolaire(requeteSite2, null, g);
-																				}
-																			});
+			utilisateurBlocScolaire(requeteSite, b -> {
+				if(b.succeeded()) {
+					putcopieBlocScolaireReponse(requeteSite, c -> {
+						if(c.succeeded()) {
+							gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
+							WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
+							executeurTravailleur.executeBlocking(
+									blockingCodeHandler -> {
+									RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourBlocScolaire(siteContexte, operationRequete, body);
+									try {
+										rechercheBlocScolaire(requeteSite2, false, true, "/api/bloc/copie", "PUTCopie", d -> {
+											if(d.succeeded()) {
+												ListeRecherche<BlocScolaire> listeBlocScolaire = d.result();
+												RequeteApi requeteApi = new RequeteApi();
+												requeteApi.setRows(listeBlocScolaire.getRows());
+												requeteApi.setNumFound(listeBlocScolaire.getQueryResponse().getResults().getNumFound());
+												requeteApi.setNumPATCH(0L);
+												requeteApi.initLoinRequeteApi(requeteSite2);
+												requeteSite2.setRequeteApi_(requeteApi);
+												requeteSite2.getVertx().eventBus().publish("websocketBlocScolaire", JsonObject.mapFrom(requeteApi).toString());
+												sqlConnexionBlocScolaire(requeteSite2, e -> {
+													if(e.succeeded()) {
+														try {
+															listePUTCopieBlocScolaire(requeteApi, listeBlocScolaire, f -> {
+																if(f.succeeded()) {
+																	putcopieBlocScolaireReponse(requeteSite2, g -> {
+																		if(g.succeeded()) {
+																			LOGGER.info(String.format("putcopieBlocScolaire a réussi. "));
+																			blockingCodeHandler.handle(Future.succeededFuture(g.result()));
 																		} else {
-																			LOGGER.error(String.format("putcopieBlocScolaire a échoué. ", f.cause()));
-																			erreurBlocScolaire(requeteSite2, null, f);
+																			LOGGER.error(String.format("putcopieBlocScolaire a échoué. ", g.cause()));
+																			erreurBlocScolaire(requeteSite2, null, g);
 																		}
 																	});
-																} catch(Exception ex) {
-																	LOGGER.error(String.format("putcopieBlocScolaire a échoué. ", ex));
-																	erreurBlocScolaire(requeteSite2, null, Future.failedFuture(ex));
+																} else {
+																	LOGGER.error(String.format("putcopieBlocScolaire a échoué. ", f.cause()));
+																	erreurBlocScolaire(requeteSite2, null, f);
 																}
-															} else {
-																LOGGER.error(String.format("putcopieBlocScolaire a échoué. ", e.cause()));
-																erreurBlocScolaire(requeteSite2, null, e);
-															}
-														});
+															});
+														} catch(Exception ex) {
+															LOGGER.error(String.format("putcopieBlocScolaire a échoué. ", ex));
+															erreurBlocScolaire(requeteSite2, null, Future.failedFuture(ex));
+														}
 													} else {
-														LOGGER.error(String.format("putcopieBlocScolaire a échoué. ", d.cause()));
-														erreurBlocScolaire(requeteSite2, null, d);
+														LOGGER.error(String.format("putcopieBlocScolaire a échoué. ", e.cause()));
+														erreurBlocScolaire(requeteSite2, null, e);
 													}
 												});
-											} catch(Exception ex) {
-												LOGGER.error(String.format("putcopieBlocScolaire a échoué. ", ex));
-												erreurBlocScolaire(requeteSite2, null, Future.failedFuture(ex));
+											} else {
+												LOGGER.error(String.format("putcopieBlocScolaire a échoué. ", d.cause()));
+												erreurBlocScolaire(requeteSite2, null, d);
 											}
-										}, resultHandler -> {
-										}
-									);
-								} else {
-									LOGGER.error(String.format("putcopieBlocScolaire a échoué. ", c.cause()));
-									erreurBlocScolaire(requeteSite, gestionnaireEvenements, c);
+										});
+									} catch(Exception ex) {
+										LOGGER.error(String.format("putcopieBlocScolaire a échoué. ", ex));
+										erreurBlocScolaire(requeteSite2, null, Future.failedFuture(ex));
+									}
+								}, resultHandler -> {
 								}
-							});
+							);
 						} else {
-							LOGGER.error(String.format("putcopieBlocScolaire a échoué. ", b.cause()));
-							erreurBlocScolaire(requeteSite, gestionnaireEvenements, b);
+							LOGGER.error(String.format("putcopieBlocScolaire a échoué. ", c.cause()));
+							erreurBlocScolaire(requeteSite, gestionnaireEvenements, c);
 						}
 					});
 				} else {
-					LOGGER.error(String.format("putcopieBlocScolaire a échoué. ", a.cause()));
-					erreurBlocScolaire(requeteSite, gestionnaireEvenements, a);
+					LOGGER.error(String.format("putcopieBlocScolaire a échoué. ", b.cause()));
+					erreurBlocScolaire(requeteSite, gestionnaireEvenements, b);
 				}
 			});
 		} catch(Exception ex) {
@@ -927,6 +1081,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 					if(a.succeeded()) {
 						BlocScolaire blocScolaire = a.result();
 					} else {
+						LOGGER.error(String.format("listePUTCopieBlocScolaire a échoué. ", a.cause()));
 						erreurBlocScolaire(requeteSite, gestionnaireEvenements, a);
 					}
 				})
@@ -941,6 +1096,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 					reponse200PUTCopieBlocScolaire(requeteSite, gestionnaireEvenements);
 				}
 			} else {
+				LOGGER.error(String.format("listePUTCopieBlocScolaire a échoué. ", a.cause()));
 				erreurBlocScolaire(listeBlocScolaire.getRequeteSite_(), gestionnaireEvenements, a);
 			}
 		});
@@ -957,16 +1113,16 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 				jsonObject.getJsonArray("sauvegardes").add(o.getKey());
 			});
 
-			creerBlocScolaire(requeteSite, a -> {
+			sqlConnexionBlocScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
-					BlocScolaire blocScolaire = a.result();
-					sqlPUTCopieBlocScolaire(blocScolaire, jsonObject, b -> {
+					sqlTransactionBlocScolaire(requeteSite, b -> {
 						if(b.succeeded()) {
-							definirBlocScolaire(blocScolaire, c -> {
+							creerBlocScolaire(requeteSite, c -> {
 								if(c.succeeded()) {
-									attribuerBlocScolaire(blocScolaire, d -> {
+									BlocScolaire blocScolaire = c.result();
+									sqlPUTCopieBlocScolaire(blocScolaire, jsonObject, d -> {
 										if(d.succeeded()) {
-											indexerBlocScolaire(blocScolaire, e -> {
+											definirIndexerBlocScolaire(blocScolaire, e -> {
 												if(e.succeeded()) {
 													RequeteApi requeteApi = requeteSite.getRequeteApi_();
 													if(requeteApi != null) {
@@ -976,36 +1132,35 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 														}
 														requeteSite.getVertx().eventBus().publish("websocketBlocScolaire", JsonObject.mapFrom(requeteApi).toString());
 													}
-													SQLConnection connexionSql = requeteSite.getConnexionSql();
-													connexionSql.commit(f -> {
-														if(f.succeeded()) {
-															gestionnaireEvenements.handle(Future.succeededFuture(blocScolaire));
-															promise.complete(blocScolaire);
-														} else {
-															gestionnaireEvenements.handle(Future.failedFuture(f.cause()));
-														}
-													});
+													gestionnaireEvenements.handle(Future.succeededFuture(blocScolaire));
+													promise.complete(blocScolaire);
 												} else {
+													LOGGER.error(String.format("putcopieBlocScolaireFuture a échoué. ", e.cause()));
 													gestionnaireEvenements.handle(Future.failedFuture(e.cause()));
 												}
 											});
 										} else {
+											LOGGER.error(String.format("putcopieBlocScolaireFuture a échoué. ", d.cause()));
 											gestionnaireEvenements.handle(Future.failedFuture(d.cause()));
 										}
 									});
 								} else {
+									LOGGER.error(String.format("putcopieBlocScolaireFuture a échoué. ", c.cause()));
 									gestionnaireEvenements.handle(Future.failedFuture(c.cause()));
 								}
 							});
 						} else {
+							LOGGER.error(String.format("putcopieBlocScolaireFuture a échoué. ", b.cause()));
 							gestionnaireEvenements.handle(Future.failedFuture(b.cause()));
 						}
 					});
 				} else {
+					LOGGER.error(String.format("putcopieBlocScolaireFuture a échoué. ", a.cause()));
 					gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
 				}
 			});
 		} catch(Exception e) {
+			LOGGER.error(String.format("putcopieBlocScolaireFuture a échoué. ", e));
 			erreurBlocScolaire(requeteSite, null, Future.failedFuture(e));
 		}
 		return promise.future();
@@ -1017,10 +1172,9 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 			RequeteApi requeteApi = requeteSite.getRequeteApi_();
 			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(new ArrayList<>());
 			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(new ArrayList<>());
-			SQLConnection connexionSql = requeteSite.getConnexionSql();
+			Transaction tx = requeteSite.getTx();
 			Long pk = o.getPk();
-			StringBuilder putSql = new StringBuilder();
-			List<Object> putSqlParams = new ArrayList<Object>();
+			List<Future> futures = new ArrayList<>();
 
 			if(jsonObject != null) {
 				JsonArray entiteVars = jsonObject.getJsonArray("sauvegardes");
@@ -1028,41 +1182,122 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 					String entiteVar = entiteVars.getString(i);
 					switch(entiteVar) {
 					case "inheritPk":
-						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "inheritPk", jsonObject.getString(entiteVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "inheritPk", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.inheritPk a échoué", b.cause())));
+							});
+						}));
 						break;
 					case "cree":
-						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "cree", jsonObject.getString(entiteVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "cree", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.cree a échoué", b.cause())));
+							});
+						}));
 						break;
 					case "modifie":
-						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "modifie", jsonObject.getString(entiteVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "modifie", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.modifie a échoué", b.cause())));
+							});
+						}));
 						break;
 					case "archive":
-						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "archive", jsonObject.getBoolean(entiteVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "archive", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.archive a échoué", b.cause())));
+							});
+						}));
 						break;
 					case "supprime":
-						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "supprime", jsonObject.getBoolean(entiteVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "supprime", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.supprime a échoué", b.cause())));
+							});
+						}));
 						break;
 					case "sessionId":
-						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "sessionId", jsonObject.getString(entiteVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "sessionId", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.sessionId a échoué", b.cause())));
+							});
+						}));
 						break;
 					case "utilisateurId":
-						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "utilisateurId", jsonObject.getString(entiteVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "utilisateurId", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.utilisateurId a échoué", b.cause())));
+							});
+						}));
 						break;
 					case "utilisateurCle":
-						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "utilisateurCle", jsonObject.getString(entiteVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "utilisateurCle", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.utilisateurCle a échoué", b.cause())));
+							});
+						}));
 						break;
 					case "inscriptionCles":
 						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
-							putSql.append(SiteContexteFrFR.SQL_addA);
-							putSqlParams.addAll(Arrays.asList(l, "blocCles", pk, "inscriptionCles"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_addA
+										, Tuple.of(l, "blocCles", pk, "inscriptionCles")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.inscriptionCles a échoué", b.cause())));
+								});
+							}));
 							if(!pks.contains(l)) {
 								pks.add(l);
 								classes.add("InscriptionScolaire");
@@ -1072,61 +1307,149 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 					case "ageCle":
 							{
 						Long l = Long.parseLong(jsonObject.getString(entiteVar));
-						putSql.append(SiteContexteFrFR.SQL_addA);
-						putSqlParams.addAll(Arrays.asList(pk, "ageCle", l, "blocCles"));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_addA
+									, Tuple.of(pk, "ageCle", l, "blocCles")
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.ageCle a échoué", b.cause())));
+							});
+						}));
 						}
 						break;
 					case "ecoleAddresse":
-						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "ecoleAddresse", jsonObject.getString(entiteVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "ecoleAddresse", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.ecoleAddresse a échoué", b.cause())));
+							});
+						}));
 						break;
 					case "blocHeureDebut":
-						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "blocHeureDebut", jsonObject.getString(entiteVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "blocHeureDebut", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.blocHeureDebut a échoué", b.cause())));
+							});
+						}));
 						break;
 					case "blocHeureFin":
-						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "blocHeureFin", jsonObject.getString(entiteVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "blocHeureFin", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.blocHeureFin a échoué", b.cause())));
+							});
+						}));
 						break;
 					case "blocPrixParMois":
-						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "blocPrixParMois", jsonObject.getString(entiteVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "blocPrixParMois", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.blocPrixParMois a échoué", b.cause())));
+							});
+						}));
 						break;
 					case "blocLundi":
-						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "blocLundi", jsonObject.getBoolean(entiteVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "blocLundi", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.blocLundi a échoué", b.cause())));
+							});
+						}));
 						break;
 					case "blocMardi":
-						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "blocMardi", jsonObject.getBoolean(entiteVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "blocMardi", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.blocMardi a échoué", b.cause())));
+							});
+						}));
 						break;
 					case "blocMercredi":
-						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "blocMercredi", jsonObject.getBoolean(entiteVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "blocMercredi", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.blocMercredi a échoué", b.cause())));
+							});
+						}));
 						break;
 					case "blocJeudi":
-						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "blocJeudi", jsonObject.getBoolean(entiteVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "blocJeudi", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.blocJeudi a échoué", b.cause())));
+							});
+						}));
 						break;
 					case "blocVendredi":
-						putSql.append(SiteContexteFrFR.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "blocVendredi", jsonObject.getBoolean(entiteVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "blocVendredi", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.blocVendredi a échoué", b.cause())));
+							});
+						}));
 						break;
 					}
 				}
 			}
-			connexionSql.queryWithParams(
-					putSql.toString()
-					, new JsonArray(putSqlParams)
-					, postAsync
-			-> {
-				if(postAsync.succeeded()) {
+			CompositeFuture.all(futures).setHandler( a -> {
+				if(a.succeeded()) {
 					gestionnaireEvenements.handle(Future.succeededFuture());
 				} else {
-					gestionnaireEvenements.handle(Future.failedFuture(new Exception(postAsync.cause())));
+					LOGGER.error(String.format("sqlPUTCopieBlocScolaire a échoué. ", a.cause()));
+					gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
 				}
 			});
 		} catch(Exception e) {
+			LOGGER.error(String.format("sqlPUTCopieBlocScolaire a échoué. ", e));
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
 	}
@@ -1135,26 +1458,14 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 		try {
 			reponse200PUTCopieBlocScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
-					SQLConnection connexionSql = requeteSite.getConnexionSql();
-					connexionSql.commit(b -> {
-						if(b.succeeded()) {
-							connexionSql.close(c -> {
-								if(c.succeeded()) {
-									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
-								} else {
-									erreurBlocScolaire(requeteSite, gestionnaireEvenements, c);
-								}
-							});
-						} else {
-							erreurBlocScolaire(requeteSite, gestionnaireEvenements, b);
-						}
-					});
+					gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 				} else {
+					LOGGER.error(String.format("putcopieBlocScolaireReponse a échoué. ", a.cause()));
 					erreurBlocScolaire(requeteSite, gestionnaireEvenements, a);
 				}
 			});
 		} catch(Exception ex) {
-			LOGGER.error(String.format("putcopieBlocScolaire a échoué. ", ex));
+			LOGGER.error(String.format("putcopieBlocScolaireReponse a échoué. ", ex));
 			erreurBlocScolaire(requeteSite, null, Future.failedFuture(ex));
 		}
 	}
@@ -1163,6 +1474,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 			JsonObject json = new JsonObject();
 			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
 		} catch(Exception e) {
+			LOGGER.error(String.format("reponse200PUTCopieBlocScolaire a échoué. ", e));
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
 	}
@@ -1192,93 +1504,86 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 				));
 			}
 
-			sqlBlocScolaire(requeteSite, a -> {
-				if(a.succeeded()) {
-					utilisateurBlocScolaire(requeteSite, b -> {
-						if(b.succeeded()) {
-							patchBlocScolaireReponse(requeteSite, c -> {
-								if(c.succeeded()) {
-									gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
-									WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
-									executeurTravailleur.executeBlocking(
-										blockingCodeHandler -> {
-											RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourBlocScolaire(siteContexte, operationRequete, body);
-											try {
-												rechercheBlocScolaire(requeteSite2, false, true, "/api/bloc", "PATCH", d -> {
-													if(d.succeeded()) {
-														ListeRecherche<BlocScolaire> listeBlocScolaire = d.result();
-														RequeteApi requeteApi = new RequeteApi();
-														requeteApi.setRows(listeBlocScolaire.getRows());
-														requeteApi.setNumFound(listeBlocScolaire.getQueryResponse().getResults().getNumFound());
-														requeteApi.setNumPATCH(0L);
-														requeteApi.initLoinRequeteApi(requeteSite2);
-														requeteSite2.setRequeteApi_(requeteApi);
-														requeteSite2.getVertx().eventBus().publish("websocketBlocScolaire", JsonObject.mapFrom(requeteApi).toString());
-														SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listeBlocScolaire.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
-														Date date = null;
-														if(facets != null)
-															date = (Date)facets.get("max_modifie");
-														String dt;
-														if(date == null)
-															dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
-														else
-															dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
-														listeBlocScolaire.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
+			utilisateurBlocScolaire(requeteSite, b -> {
+				if(b.succeeded()) {
+					patchBlocScolaireReponse(requeteSite, c -> {
+						if(c.succeeded()) {
+							gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
+							WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
+							executeurTravailleur.executeBlocking(
+								blockingCodeHandler -> {
+									RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourBlocScolaire(siteContexte, operationRequete, body);
+									try {
+										rechercheBlocScolaire(requeteSite2, false, true, "/api/bloc", "PATCH", d -> {
+											if(d.succeeded()) {
+												ListeRecherche<BlocScolaire> listeBlocScolaire = d.result();
+												RequeteApi requeteApi = new RequeteApi();
+												requeteApi.setRows(listeBlocScolaire.getRows());
+												requeteApi.setNumFound(listeBlocScolaire.getQueryResponse().getResults().getNumFound());
+												requeteApi.setNumPATCH(0L);
+												requeteApi.initLoinRequeteApi(requeteSite2);
+												requeteSite2.setRequeteApi_(requeteApi);
+												requeteSite2.getVertx().eventBus().publish("websocketBlocScolaire", JsonObject.mapFrom(requeteApi).toString());
+												SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listeBlocScolaire.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
+												Date date = null;
+												if(facets != null)
+													date = (Date)facets.get("max_modifie");
+												String dt;
+												if(date == null)
+													dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
+												else
+													dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
+												listeBlocScolaire.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
 
-														BlocScolaire o = listeBlocScolaire.getList().stream().findFirst().orElse(null);
-														sqlBlocScolaire(requeteSite2, e -> {
-															if(e.succeeded()) {
-																try {
-																	listePATCHBlocScolaire(requeteApi, listeBlocScolaire, dt, f -> {
-																		if(f.succeeded()) {
-																			patchBlocScolaireReponse(requeteSite2, g -> {
-																				if(g.succeeded()) {
-																					LOGGER.info(String.format("patchBlocScolaire a réussi. "));
-																					blockingCodeHandler.handle(Future.succeededFuture(g.result()));
-																				} else {
-																					LOGGER.error(String.format("patchBlocScolaire a échoué. ", g.cause()));
-																					erreurBlocScolaire(requeteSite2, null, g);
-																				}
-																			});
+												BlocScolaire o = listeBlocScolaire.getList().stream().findFirst().orElse(null);
+												sqlConnexionBlocScolaire(requeteSite2, e -> {
+													if(e.succeeded()) {
+														try {
+															listePATCHBlocScolaire(requeteApi, listeBlocScolaire, dt, f -> {
+																if(f.succeeded()) {
+																	patchBlocScolaireReponse(requeteSite2, g -> {
+																												if(g.succeeded()) {
+																			LOGGER.info(String.format("patchBlocScolaire a réussi. "));
+																			blockingCodeHandler.handle(Future.succeededFuture(g.result()));
 																		} else {
-																			LOGGER.error(String.format("patchBlocScolaire a échoué. ", f.cause()));
-																			erreurBlocScolaire(requeteSite2, null, f);
+																			LOGGER.error(String.format("patchBlocScolaire a échoué. ", g.cause()));
+																			erreurBlocScolaire(requeteSite2, null, g);
 																		}
 																	});
-																} catch(Exception ex) {
-																	LOGGER.error(String.format("patchBlocScolaire a échoué. ", ex));
-																	erreurBlocScolaire(requeteSite2, null, Future.failedFuture(ex));
+																} else {
+																	LOGGER.error(String.format("patchBlocScolaire a échoué. ", f.cause()));
+																	erreurBlocScolaire(requeteSite2, null, f);
 																}
-															} else {
-																LOGGER.error(String.format("patchBlocScolaire a échoué. ", e.cause()));
-																erreurBlocScolaire(requeteSite2, null, e);
-															}
-														});
+															});
+														} catch(Exception ex) {
+															LOGGER.error(String.format("patchBlocScolaire a échoué. ", ex));
+															erreurBlocScolaire(requeteSite2, null, Future.failedFuture(ex));
+														}
 													} else {
-														LOGGER.error(String.format("patchBlocScolaire a échoué. ", d.cause()));
-														erreurBlocScolaire(requeteSite2, null, d);
+														LOGGER.error(String.format("patchBlocScolaire a échoué. ", e.cause()));
+														erreurBlocScolaire(requeteSite2, null, e);
 													}
 												});
-											} catch(Exception ex) {
-												LOGGER.error(String.format("patchBlocScolaire a échoué. ", ex));
-												erreurBlocScolaire(requeteSite2, null, Future.failedFuture(ex));
+											} else {
+												LOGGER.error(String.format("patchBlocScolaire a échoué. ", d.cause()));
+												erreurBlocScolaire(requeteSite2, null, d);
 											}
-										}, resultHandler -> {
-										}
-									);
-								} else {
-									LOGGER.error(String.format("patchBlocScolaire a échoué. ", c.cause()));
-									erreurBlocScolaire(requeteSite, gestionnaireEvenements, c);
+										});
+									} catch(Exception ex) {
+										LOGGER.error(String.format("patchBlocScolaire a échoué. ", ex));
+										erreurBlocScolaire(requeteSite2, null, Future.failedFuture(ex));
+									}
+								}, resultHandler -> {
 								}
-							});
+							);
 						} else {
-							LOGGER.error(String.format("patchBlocScolaire a échoué. ", b.cause()));
-							erreurBlocScolaire(requeteSite, gestionnaireEvenements, b);
+							LOGGER.error(String.format("patchBlocScolaire a échoué. ", c.cause()));
+							erreurBlocScolaire(requeteSite, gestionnaireEvenements, c);
 						}
 					});
 				} else {
-					LOGGER.error(String.format("patchBlocScolaire a échoué. ", a.cause()));
-					erreurBlocScolaire(requeteSite, gestionnaireEvenements, a);
+					LOGGER.error(String.format("patchBlocScolaire a échoué. ", b.cause()));
+					erreurBlocScolaire(requeteSite, gestionnaireEvenements, b);
 				}
 			});
 		} catch(Exception ex) {
@@ -1309,6 +1614,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 					reponse200PATCHBlocScolaire(requeteSite, gestionnaireEvenements);
 				}
 			} else {
+				LOGGER.error(String.format("listePATCHBlocScolaire a échoué. ", a.cause()));
 				erreurBlocScolaire(listeBlocScolaire.getRequeteSite_(), gestionnaireEvenements, a);
 			}
 		});
@@ -1323,14 +1629,14 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 				requeteApi.setOriginal(o);
 				requeteApi.setPk(o.getPk());
 			}
-			sqlPATCHBlocScolaire(o, inheritPk, a -> {
+			sqlConnexionBlocScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
-					BlocScolaire blocScolaire = a.result();
-					definirBlocScolaire(blocScolaire, b -> {
+					sqlTransactionBlocScolaire(requeteSite, b -> {
 						if(b.succeeded()) {
-							attribuerBlocScolaire(blocScolaire, c -> {
+							sqlPATCHBlocScolaire(o, inheritPk, c -> {
 								if(c.succeeded()) {
-									indexerBlocScolaire(blocScolaire, d -> {
+									BlocScolaire blocScolaire = c.result();
+									definirIndexerBlocScolaire(blocScolaire, d -> {
 										if(d.succeeded()) {
 											if(requeteApi != null) {
 												requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
@@ -1339,32 +1645,30 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 												}
 												requeteSite.getVertx().eventBus().publish("websocketBlocScolaire", JsonObject.mapFrom(requeteApi).toString());
 											}
-											SQLConnection connexionSql = requeteSite.getConnexionSql();
-											connexionSql.commit(e -> {
-												if(e.succeeded()) {
-													gestionnaireEvenements.handle(Future.succeededFuture(blocScolaire));
-													promise.complete(blocScolaire);
-												} else {
-													gestionnaireEvenements.handle(Future.failedFuture(e.cause()));
-												}
-											});
+											gestionnaireEvenements.handle(Future.succeededFuture(blocScolaire));
+											promise.complete(blocScolaire);
 										} else {
+											LOGGER.error(String.format("patchBlocScolaireFuture a échoué. ", d.cause()));
 											gestionnaireEvenements.handle(Future.failedFuture(d.cause()));
 										}
 									});
 								} else {
+									LOGGER.error(String.format("patchBlocScolaireFuture a échoué. ", c.cause()));
 									gestionnaireEvenements.handle(Future.failedFuture(c.cause()));
 								}
 							});
 						} else {
+							LOGGER.error(String.format("patchBlocScolaireFuture a échoué. ", b.cause()));
 							gestionnaireEvenements.handle(Future.failedFuture(b.cause()));
 						}
 					});
 				} else {
+					LOGGER.error(String.format("patchBlocScolaireFuture a échoué. ", a.cause()));
 					gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
 				}
 			});
 		} catch(Exception e) {
+			LOGGER.error(String.format("patchBlocScolaireFuture a échoué. ", e));
 			erreurBlocScolaire(requeteSite, null, Future.failedFuture(e));
 		}
 		return promise.future();
@@ -1376,103 +1680,264 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 			RequeteApi requeteApi = requeteSite.getRequeteApi_();
 			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(new ArrayList<>());
 			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(new ArrayList<>());
-			SQLConnection connexionSql = requeteSite.getConnexionSql();
+			Transaction tx = requeteSite.getTx();
 			Long pk = o.getPk();
 			JsonObject jsonObject = requeteSite.getObjetJson();
-			StringBuilder patchSql = new StringBuilder();
-			List<Object> patchSqlParams = new ArrayList<Object>();
 			Set<String> methodeNoms = jsonObject.fieldNames();
 			BlocScolaire o2 = new BlocScolaire();
+			List<Future> futures = new ArrayList<>();
 
 			if(o.getUtilisateurId() == null && requeteSite.getUtilisateurId() != null) {
-				patchSql.append(SiteContexteFrFR.SQL_setD);
-				patchSqlParams.addAll(Arrays.asList(pk, "utilisateurId", requeteSite.getUtilisateurId()));
+				futures.add(Future.future(a -> {
+					tx.preparedQuery(SiteContexteFrFR.SQL_setD
+							, Tuple.of(pk, "utilisateurId", requeteSite.getUtilisateurId())
+							, b
+					-> {
+						if(b.succeeded())
+							a.handle(Future.succeededFuture());
+						else
+							a.handle(Future.failedFuture(b.cause()));
+					});
+				}));
 			}
 			if(o.getUtilisateurCle() == null && requeteSite.getUtilisateurCle() != null) {
-				patchSql.append(SiteContexteFrFR.SQL_setD);
-				patchSqlParams.addAll(Arrays.asList(pk, "utilisateurCle", requeteSite.getUtilisateurCle()));
+				futures.add(Future.future(a -> {
+					tx.preparedQuery(SiteContexteFrFR.SQL_setD
+				, Tuple.of(pk, "utilisateurCle", requeteSite.getUtilisateurCle())
+							, b
+					-> {
+						if(b.succeeded())
+							a.handle(Future.succeededFuture());
+						else
+							a.handle(Future.failedFuture(b.cause()));
+					});
+				}));
 			}
 
 			for(String methodeNom : methodeNoms) {
 				switch(methodeNom) {
 					case "setInheritPk":
 						if(jsonObject.getString(methodeNom) == null) {
-							patchSql.append(SiteContexteFrFR.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "inheritPk"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "inheritPk")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.inheritPk a échoué", b.cause())));
+								});
+							}));
 						} else {
 							o2.setInheritPk(jsonObject.getString(methodeNom));
-							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "inheritPk", o2.jsonInheritPk()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "inheritPk", o2.jsonInheritPk())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.inheritPk a échoué", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setCree":
 						if(jsonObject.getString(methodeNom) == null) {
-							patchSql.append(SiteContexteFrFR.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "cree"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "cree")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.cree a échoué", b.cause())));
+								});
+							}));
 						} else {
 							o2.setCree(jsonObject.getString(methodeNom));
-							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "cree", o2.jsonCree()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "cree", o2.jsonCree())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.cree a échoué", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setModifie":
 						if(jsonObject.getString(methodeNom) == null) {
-							patchSql.append(SiteContexteFrFR.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "modifie"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "modifie")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.modifie a échoué", b.cause())));
+								});
+							}));
 						} else {
 							o2.setModifie(jsonObject.getString(methodeNom));
-							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "modifie", o2.jsonModifie()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "modifie", o2.jsonModifie())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.modifie a échoué", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setArchive":
 						if(jsonObject.getBoolean(methodeNom) == null) {
-							patchSql.append(SiteContexteFrFR.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "archive"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "archive")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.archive a échoué", b.cause())));
+								});
+							}));
 						} else {
 							o2.setArchive(jsonObject.getBoolean(methodeNom));
-							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "archive", o2.jsonArchive()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "archive", o2.jsonArchive())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.archive a échoué", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setSupprime":
 						if(jsonObject.getBoolean(methodeNom) == null) {
-							patchSql.append(SiteContexteFrFR.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "supprime"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "supprime")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.supprime a échoué", b.cause())));
+								});
+							}));
 						} else {
 							o2.setSupprime(jsonObject.getBoolean(methodeNom));
-							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "supprime", o2.jsonSupprime()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "supprime", o2.jsonSupprime())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.supprime a échoué", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setSessionId":
 						if(jsonObject.getString(methodeNom) == null) {
-							patchSql.append(SiteContexteFrFR.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "sessionId"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "sessionId")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.sessionId a échoué", b.cause())));
+								});
+							}));
 						} else {
 							o2.setSessionId(jsonObject.getString(methodeNom));
-							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "sessionId", o2.jsonSessionId()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "sessionId", o2.jsonSessionId())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.sessionId a échoué", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setUtilisateurId":
 						if(jsonObject.getString(methodeNom) == null) {
-							patchSql.append(SiteContexteFrFR.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "utilisateurId"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "utilisateurId")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.utilisateurId a échoué", b.cause())));
+								});
+							}));
 						} else {
 							o2.setUtilisateurId(jsonObject.getString(methodeNom));
-							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "utilisateurId", o2.jsonUtilisateurId()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "utilisateurId", o2.jsonUtilisateurId())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.utilisateurId a échoué", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setUtilisateurCle":
 						if(jsonObject.getString(methodeNom) == null) {
-							patchSql.append(SiteContexteFrFR.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "utilisateurCle"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "utilisateurCle")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.utilisateurCle a échoué", b.cause())));
+								});
+							}));
 						} else {
 							o2.setUtilisateurCle(jsonObject.getString(methodeNom));
-							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "utilisateurCle", o2.jsonUtilisateurCle()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "utilisateurCle", o2.jsonUtilisateurCle())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.utilisateurCle a échoué", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "addInscriptionCles":
@@ -1485,12 +1950,21 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 								listeRecherche.setC(InscriptionScolaire.class);
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
-								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null && !o.getInscriptionCles().contains(l)) {
-									patchSql.append(SiteContexteFrFR.SQL_addA);
-									patchSqlParams.addAll(Arrays.asList(l, "blocCles", pk, "inscriptionCles"));
-									if(!pks.contains(l)) {
-										pks.add(l);
+								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null && !o.getInscriptionCles().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA
+												, Tuple.of(l2, "blocCles", pk, "inscriptionCles")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.inscriptionCles a échoué", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
 										classes.add("InscriptionScolaire");
 									}
 								}
@@ -1509,12 +1983,21 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 									listeRecherche.setC(InscriptionScolaire.class);
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									listeRecherche.initLoinListeRecherche(requeteSite);
-									l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-									if(l != null && !o.getInscriptionCles().contains(l)) {
-										patchSql.append(SiteContexteFrFR.SQL_addA);
-										patchSqlParams.addAll(Arrays.asList(l, "blocCles", pk, "inscriptionCles"));
-										if(!pks.contains(l)) {
-											pks.add(l);
+									Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l2 != null && !o.getInscriptionCles().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA
+												, Tuple.of(l2, "blocCles", pk, "inscriptionCles")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.inscriptionCles a échoué", b.cause())));
+										});
+									}));
+										if(!pks.contains(l2)) {
+											pks.add(l2);
 											classes.add("InscriptionScolaire");
 										}
 									}
@@ -1534,12 +2017,21 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 									listeRecherche.setC(InscriptionScolaire.class);
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									listeRecherche.initLoinListeRecherche(requeteSite);
-									l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-									if(l != null && !o.getInscriptionCles().contains(l)) {
-										patchSql.append(SiteContexteFrFR.SQL_addA);
-										patchSqlParams.addAll(Arrays.asList(l, "blocCles", pk, "inscriptionCles"));
-										if(!pks.contains(l)) {
-											pks.add(l);
+									Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l2 != null && !o.getInscriptionCles().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA
+												, Tuple.of(l2, "blocCles", pk, "inscriptionCles")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.inscriptionCles a échoué", b.cause())));
+										});
+									}));
+										if(!pks.contains(l2)) {
+											pks.add(l2);
 											classes.add("InscriptionScolaire");
 										}
 									}
@@ -1549,8 +2041,17 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 						if(o.getInscriptionCles() != null) {
 							for(Long l :  o.getInscriptionCles()) {
 								if(l != null && (setInscriptionClesValeurs == null || !setInscriptionClesValeurs.contains(l))) {
-									patchSql.append(SiteContexteFrFR.SQL_removeA);
-									patchSqlParams.addAll(Arrays.asList(l, "blocCles", pk, "inscriptionCles"));
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
+												, Tuple.of(l, "blocCles", pk, "inscriptionCles")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.inscriptionCles a échoué", b.cause())));
+										});
+									}));
 								}
 							}
 						}
@@ -1565,12 +2066,21 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 								listeRecherche.setC(InscriptionScolaire.class);
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
-								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null && o.getInscriptionCles().contains(l)) {
-									patchSql.append(SiteContexteFrFR.SQL_removeA);
-									patchSqlParams.addAll(Arrays.asList("blocCles", l, "inscriptionCles", pk));
-									if(!pks.contains(l)) {
-										pks.add(l);
+								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null && o.getInscriptionCles().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
+												, Tuple.of("blocCles", l2, "inscriptionCles", pk)
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.inscriptionCles a échoué", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
 										classes.add("InscriptionScolaire");
 									}
 								}
@@ -1587,13 +2097,22 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 								listeRecherche.setC(AgeScolaire.class);
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
-								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null && !l.equals(o.getAgeCle())) {
+								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null && !l2.equals(o.getAgeCle())) {
 									o2.setAgeCle(jsonObject.getString(methodeNom));
-									patchSql.append(SiteContexteFrFR.SQL_addA);
-									patchSqlParams.addAll(Arrays.asList(pk, "ageCle", l, "blocCles"));
-									if(!pks.contains(l)) {
-										pks.add(l);
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA
+												, Tuple.of(pk, "ageCle", l2, "blocCles")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.ageCle a échoué", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
 										classes.add("AgeScolaire");
 									}
 								}
@@ -1610,13 +2129,22 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 								listeRecherche.setC(AgeScolaire.class);
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
-								l = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null && l.equals(o.getAgeCle())) {
+								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null && l2.equals(o.getAgeCle())) {
 									o2.setAgeCle(jsonObject.getString(methodeNom));
-									patchSql.append(SiteContexteFrFR.SQL_removeA);
-									patchSqlParams.addAll(Arrays.asList("ageCle", pk, "blocCles", l));
-									if(!pks.contains(l)) {
-										pks.add(l);
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
+												, Tuple.of("ageCle", pk, "blocCles", l2)
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.ageCle a échoué", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
 										classes.add("AgeScolaire");
 									}
 								}
@@ -1625,111 +2153,271 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 						break;
 					case "setEcoleAddresse":
 						if(jsonObject.getString(methodeNom) == null) {
-							patchSql.append(SiteContexteFrFR.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "ecoleAddresse"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "ecoleAddresse")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.ecoleAddresse a échoué", b.cause())));
+								});
+							}));
 						} else {
 							o2.setEcoleAddresse(jsonObject.getString(methodeNom));
-							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "ecoleAddresse", o2.jsonEcoleAddresse()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "ecoleAddresse", o2.jsonEcoleAddresse())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.ecoleAddresse a échoué", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setBlocHeureDebut":
 						if(jsonObject.getString(methodeNom) == null) {
-							patchSql.append(SiteContexteFrFR.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "blocHeureDebut"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "blocHeureDebut")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.blocHeureDebut a échoué", b.cause())));
+								});
+							}));
 						} else {
 							o2.setBlocHeureDebut(jsonObject.getString(methodeNom));
-							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "blocHeureDebut", o2.jsonBlocHeureDebut()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "blocHeureDebut", o2.jsonBlocHeureDebut())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.blocHeureDebut a échoué", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setBlocHeureFin":
 						if(jsonObject.getString(methodeNom) == null) {
-							patchSql.append(SiteContexteFrFR.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "blocHeureFin"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "blocHeureFin")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.blocHeureFin a échoué", b.cause())));
+								});
+							}));
 						} else {
 							o2.setBlocHeureFin(jsonObject.getString(methodeNom));
-							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "blocHeureFin", o2.jsonBlocHeureFin()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "blocHeureFin", o2.jsonBlocHeureFin())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.blocHeureFin a échoué", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setBlocPrixParMois":
 						if(jsonObject.getString(methodeNom) == null) {
-							patchSql.append(SiteContexteFrFR.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "blocPrixParMois"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "blocPrixParMois")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.blocPrixParMois a échoué", b.cause())));
+								});
+							}));
 						} else {
 							o2.setBlocPrixParMois(jsonObject.getString(methodeNom));
-							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "blocPrixParMois", o2.jsonBlocPrixParMois()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "blocPrixParMois", o2.jsonBlocPrixParMois())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.blocPrixParMois a échoué", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setBlocLundi":
 						if(jsonObject.getBoolean(methodeNom) == null) {
-							patchSql.append(SiteContexteFrFR.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "blocLundi"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "blocLundi")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.blocLundi a échoué", b.cause())));
+								});
+							}));
 						} else {
 							o2.setBlocLundi(jsonObject.getBoolean(methodeNom));
-							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "blocLundi", o2.jsonBlocLundi()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "blocLundi", o2.jsonBlocLundi())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.blocLundi a échoué", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setBlocMardi":
 						if(jsonObject.getBoolean(methodeNom) == null) {
-							patchSql.append(SiteContexteFrFR.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "blocMardi"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "blocMardi")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.blocMardi a échoué", b.cause())));
+								});
+							}));
 						} else {
 							o2.setBlocMardi(jsonObject.getBoolean(methodeNom));
-							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "blocMardi", o2.jsonBlocMardi()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "blocMardi", o2.jsonBlocMardi())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.blocMardi a échoué", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setBlocMercredi":
 						if(jsonObject.getBoolean(methodeNom) == null) {
-							patchSql.append(SiteContexteFrFR.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "blocMercredi"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "blocMercredi")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.blocMercredi a échoué", b.cause())));
+								});
+							}));
 						} else {
 							o2.setBlocMercredi(jsonObject.getBoolean(methodeNom));
-							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "blocMercredi", o2.jsonBlocMercredi()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "blocMercredi", o2.jsonBlocMercredi())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.blocMercredi a échoué", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setBlocJeudi":
 						if(jsonObject.getBoolean(methodeNom) == null) {
-							patchSql.append(SiteContexteFrFR.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "blocJeudi"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "blocJeudi")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.blocJeudi a échoué", b.cause())));
+								});
+							}));
 						} else {
 							o2.setBlocJeudi(jsonObject.getBoolean(methodeNom));
-							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "blocJeudi", o2.jsonBlocJeudi()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "blocJeudi", o2.jsonBlocJeudi())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.blocJeudi a échoué", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setBlocVendredi":
 						if(jsonObject.getBoolean(methodeNom) == null) {
-							patchSql.append(SiteContexteFrFR.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "blocVendredi"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "blocVendredi")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.blocVendredi a échoué", b.cause())));
+								});
+							}));
 						} else {
 							o2.setBlocVendredi(jsonObject.getBoolean(methodeNom));
-							patchSql.append(SiteContexteFrFR.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "blocVendredi", o2.jsonBlocVendredi()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "blocVendredi", o2.jsonBlocVendredi())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur BlocScolaire.blocVendredi a échoué", b.cause())));
+								});
+							}));
 						}
 						break;
 				}
 			}
-			connexionSql.queryWithParams(
-					patchSql.toString()
-					, new JsonArray(patchSqlParams)
-					, patchAsync
-			-> {
-				if(patchAsync.succeeded()) {
+			CompositeFuture.all(futures).setHandler( a -> {
+				if(a.succeeded()) {
 					BlocScolaire o3 = new BlocScolaire();
 					o3.setRequeteSite_(o.getRequeteSite_());
 					o3.setPk(pk);
 					gestionnaireEvenements.handle(Future.succeededFuture(o3));
 				} else {
-					gestionnaireEvenements.handle(Future.failedFuture(new Exception(patchAsync.cause())));
+					LOGGER.error(String.format("sqlPATCHBlocScolaire a échoué. ", a.cause()));
+					gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
 				}
 			});
 		} catch(Exception e) {
+			LOGGER.error(String.format("sqlPATCHBlocScolaire a échoué. ", e));
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
 	}
@@ -1738,26 +2426,14 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 		try {
 			reponse200PATCHBlocScolaire(requeteSite, a -> {
 				if(a.succeeded()) {
-					SQLConnection connexionSql = requeteSite.getConnexionSql();
-					connexionSql.commit(b -> {
-						if(b.succeeded()) {
-							connexionSql.close(c -> {
-								if(c.succeeded()) {
-									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
-								} else {
-									erreurBlocScolaire(requeteSite, gestionnaireEvenements, c);
-								}
-							});
-						} else {
-							erreurBlocScolaire(requeteSite, gestionnaireEvenements, b);
-						}
-					});
+					gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 				} else {
+					LOGGER.error(String.format("patchBlocScolaireReponse a échoué. ", a.cause()));
 					erreurBlocScolaire(requeteSite, gestionnaireEvenements, a);
 				}
 			});
 		} catch(Exception ex) {
-			LOGGER.error(String.format("patchBlocScolaire a échoué. ", ex));
+			LOGGER.error(String.format("patchBlocScolaireReponse a échoué. ", ex));
 			erreurBlocScolaire(requeteSite, null, Future.failedFuture(ex));
 		}
 	}
@@ -1766,6 +2442,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 			JsonObject json = new JsonObject();
 			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
 		} catch(Exception e) {
+			LOGGER.error(String.format("reponse200PATCHBlocScolaire a échoué. ", e));
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
 	}
@@ -1797,35 +2474,28 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 				));
 			}
 
-			sqlBlocScolaire(requeteSite, a -> {
-				if(a.succeeded()) {
-					utilisateurBlocScolaire(requeteSite, b -> {
-						if(b.succeeded()) {
-							rechercheBlocScolaire(requeteSite, false, true, "/api/bloc/{id}", "GET", c -> {
-								if(c.succeeded()) {
-									ListeRecherche<BlocScolaire> listeBlocScolaire = c.result();
-									getBlocScolaireReponse(listeBlocScolaire, d -> {
-										if(d.succeeded()) {
-											gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-											LOGGER.info(String.format("getBlocScolaire a réussi. "));
-										} else {
-											LOGGER.error(String.format("getBlocScolaire a échoué. ", d.cause()));
-											erreurBlocScolaire(requeteSite, gestionnaireEvenements, d);
-										}
-									});
+			utilisateurBlocScolaire(requeteSite, b -> {
+				if(b.succeeded()) {
+					rechercheBlocScolaire(requeteSite, false, true, "/api/bloc/{id}", "GET", c -> {
+						if(c.succeeded()) {
+							ListeRecherche<BlocScolaire> listeBlocScolaire = c.result();
+							getBlocScolaireReponse(listeBlocScolaire, d -> {
+								if(d.succeeded()) {
+									gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+									LOGGER.info(String.format("getBlocScolaire a réussi. "));
 								} else {
-									LOGGER.error(String.format("getBlocScolaire a échoué. ", c.cause()));
-									erreurBlocScolaire(requeteSite, gestionnaireEvenements, c);
+									LOGGER.error(String.format("getBlocScolaire a échoué. ", d.cause()));
+									erreurBlocScolaire(requeteSite, gestionnaireEvenements, d);
 								}
 							});
 						} else {
-							LOGGER.error(String.format("getBlocScolaire a échoué. ", b.cause()));
-							erreurBlocScolaire(requeteSite, gestionnaireEvenements, b);
+							LOGGER.error(String.format("getBlocScolaire a échoué. ", c.cause()));
+							erreurBlocScolaire(requeteSite, gestionnaireEvenements, c);
 						}
 					});
 				} else {
-					LOGGER.error(String.format("getBlocScolaire a échoué. ", a.cause()));
-					erreurBlocScolaire(requeteSite, gestionnaireEvenements, a);
+					LOGGER.error(String.format("getBlocScolaire a échoué. ", b.cause()));
+					erreurBlocScolaire(requeteSite, gestionnaireEvenements, b);
 				}
 			});
 		} catch(Exception ex) {
@@ -1840,26 +2510,14 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 		try {
 			reponse200GETBlocScolaire(listeBlocScolaire, a -> {
 				if(a.succeeded()) {
-					SQLConnection connexionSql = requeteSite.getConnexionSql();
-					connexionSql.commit(b -> {
-						if(b.succeeded()) {
-							connexionSql.close(c -> {
-								if(c.succeeded()) {
-									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
-								} else {
-									erreurBlocScolaire(requeteSite, gestionnaireEvenements, c);
-								}
-							});
-						} else {
-							erreurBlocScolaire(requeteSite, gestionnaireEvenements, b);
-						}
-					});
+					gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 				} else {
+					LOGGER.error(String.format("getBlocScolaireReponse a échoué. ", a.cause()));
 					erreurBlocScolaire(requeteSite, gestionnaireEvenements, a);
 				}
 			});
 		} catch(Exception ex) {
-			LOGGER.error(String.format("getBlocScolaire a échoué. ", ex));
+			LOGGER.error(String.format("getBlocScolaireReponse a échoué. ", ex));
 			erreurBlocScolaire(requeteSite, null, Future.failedFuture(ex));
 		}
 	}
@@ -1871,6 +2529,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 			JsonObject json = JsonObject.mapFrom(listeBlocScolaire.getList().stream().findFirst().orElse(null));
 			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
 		} catch(Exception e) {
+			LOGGER.error(String.format("reponse200GETBlocScolaire a échoué. ", e));
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
 	}
@@ -1902,35 +2561,28 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 				));
 			}
 
-			sqlBlocScolaire(requeteSite, a -> {
-				if(a.succeeded()) {
-					utilisateurBlocScolaire(requeteSite, b -> {
-						if(b.succeeded()) {
-							rechercheBlocScolaire(requeteSite, false, true, "/api/bloc", "Recherche", c -> {
-								if(c.succeeded()) {
-									ListeRecherche<BlocScolaire> listeBlocScolaire = c.result();
-									rechercheBlocScolaireReponse(listeBlocScolaire, d -> {
-										if(d.succeeded()) {
-											gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-											LOGGER.info(String.format("rechercheBlocScolaire a réussi. "));
-										} else {
-											LOGGER.error(String.format("rechercheBlocScolaire a échoué. ", d.cause()));
-											erreurBlocScolaire(requeteSite, gestionnaireEvenements, d);
-										}
-									});
+			utilisateurBlocScolaire(requeteSite, b -> {
+				if(b.succeeded()) {
+					rechercheBlocScolaire(requeteSite, false, true, "/api/bloc", "Recherche", c -> {
+						if(c.succeeded()) {
+							ListeRecherche<BlocScolaire> listeBlocScolaire = c.result();
+							rechercheBlocScolaireReponse(listeBlocScolaire, d -> {
+								if(d.succeeded()) {
+									gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+									LOGGER.info(String.format("rechercheBlocScolaire a réussi. "));
 								} else {
-									LOGGER.error(String.format("rechercheBlocScolaire a échoué. ", c.cause()));
-									erreurBlocScolaire(requeteSite, gestionnaireEvenements, c);
+									LOGGER.error(String.format("rechercheBlocScolaire a échoué. ", d.cause()));
+									erreurBlocScolaire(requeteSite, gestionnaireEvenements, d);
 								}
 							});
 						} else {
-							LOGGER.error(String.format("rechercheBlocScolaire a échoué. ", b.cause()));
-							erreurBlocScolaire(requeteSite, gestionnaireEvenements, b);
+							LOGGER.error(String.format("rechercheBlocScolaire a échoué. ", c.cause()));
+							erreurBlocScolaire(requeteSite, gestionnaireEvenements, c);
 						}
 					});
 				} else {
-					LOGGER.error(String.format("rechercheBlocScolaire a échoué. ", a.cause()));
-					erreurBlocScolaire(requeteSite, gestionnaireEvenements, a);
+					LOGGER.error(String.format("rechercheBlocScolaire a échoué. ", b.cause()));
+					erreurBlocScolaire(requeteSite, gestionnaireEvenements, b);
 				}
 			});
 		} catch(Exception ex) {
@@ -1945,26 +2597,14 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 		try {
 			reponse200RechercheBlocScolaire(listeBlocScolaire, a -> {
 				if(a.succeeded()) {
-					SQLConnection connexionSql = requeteSite.getConnexionSql();
-					connexionSql.commit(b -> {
-						if(b.succeeded()) {
-							connexionSql.close(c -> {
-								if(c.succeeded()) {
-									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
-								} else {
-									erreurBlocScolaire(requeteSite, gestionnaireEvenements, c);
-								}
-							});
-						} else {
-							erreurBlocScolaire(requeteSite, gestionnaireEvenements, b);
-						}
-					});
+					gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 				} else {
+					LOGGER.error(String.format("rechercheBlocScolaireReponse a échoué. ", a.cause()));
 					erreurBlocScolaire(requeteSite, gestionnaireEvenements, a);
 				}
 			});
 		} catch(Exception ex) {
-			LOGGER.error(String.format("rechercheBlocScolaire a échoué. ", ex));
+			LOGGER.error(String.format("rechercheBlocScolaireReponse a échoué. ", ex));
 			erreurBlocScolaire(requeteSite, null, Future.failedFuture(ex));
 		}
 	}
@@ -2015,6 +2655,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 			}
 			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
 		} catch(Exception e) {
+			LOGGER.error(String.format("reponse200RechercheBlocScolaire a échoué. ", e));
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
 	}
@@ -2051,35 +2692,28 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 				));
 			}
 
-			sqlBlocScolaire(requeteSite, a -> {
-				if(a.succeeded()) {
-					utilisateurBlocScolaire(requeteSite, b -> {
-						if(b.succeeded()) {
-							rechercheBlocScolaire(requeteSite, false, true, "/bloc", "PageRecherche", c -> {
-								if(c.succeeded()) {
-									ListeRecherche<BlocScolaire> listeBlocScolaire = c.result();
-									pagerechercheBlocScolaireReponse(listeBlocScolaire, d -> {
-										if(d.succeeded()) {
-											gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-											LOGGER.info(String.format("pagerechercheBlocScolaire a réussi. "));
-										} else {
-											LOGGER.error(String.format("pagerechercheBlocScolaire a échoué. ", d.cause()));
-											erreurBlocScolaire(requeteSite, gestionnaireEvenements, d);
-										}
-									});
+			utilisateurBlocScolaire(requeteSite, b -> {
+				if(b.succeeded()) {
+					rechercheBlocScolaire(requeteSite, false, true, "/bloc", "PageRecherche", c -> {
+						if(c.succeeded()) {
+							ListeRecherche<BlocScolaire> listeBlocScolaire = c.result();
+							pagerechercheBlocScolaireReponse(listeBlocScolaire, d -> {
+								if(d.succeeded()) {
+									gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+									LOGGER.info(String.format("pagerechercheBlocScolaire a réussi. "));
 								} else {
-									LOGGER.error(String.format("pagerechercheBlocScolaire a échoué. ", c.cause()));
-									erreurBlocScolaire(requeteSite, gestionnaireEvenements, c);
+									LOGGER.error(String.format("pagerechercheBlocScolaire a échoué. ", d.cause()));
+									erreurBlocScolaire(requeteSite, gestionnaireEvenements, d);
 								}
 							});
 						} else {
-							LOGGER.error(String.format("pagerechercheBlocScolaire a échoué. ", b.cause()));
-							erreurBlocScolaire(requeteSite, gestionnaireEvenements, b);
+							LOGGER.error(String.format("pagerechercheBlocScolaire a échoué. ", c.cause()));
+							erreurBlocScolaire(requeteSite, gestionnaireEvenements, c);
 						}
 					});
 				} else {
-					LOGGER.error(String.format("pagerechercheBlocScolaire a échoué. ", a.cause()));
-					erreurBlocScolaire(requeteSite, gestionnaireEvenements, a);
+					LOGGER.error(String.format("pagerechercheBlocScolaire a échoué. ", b.cause()));
+					erreurBlocScolaire(requeteSite, gestionnaireEvenements, b);
 				}
 			});
 		} catch(Exception ex) {
@@ -2097,26 +2731,14 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 			requeteSite.setW(w);
 			reponse200PageRechercheBlocScolaire(listeBlocScolaire, a -> {
 				if(a.succeeded()) {
-					SQLConnection connexionSql = requeteSite.getConnexionSql();
-					connexionSql.commit(b -> {
-						if(b.succeeded()) {
-							connexionSql.close(c -> {
-								if(c.succeeded()) {
-									gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
-								} else {
-									erreurBlocScolaire(requeteSite, gestionnaireEvenements, c);
-								}
-							});
-						} else {
-							erreurBlocScolaire(requeteSite, gestionnaireEvenements, b);
-						}
-					});
+					gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
 				} else {
+					LOGGER.error(String.format("pagerechercheBlocScolaireReponse a échoué. ", a.cause()));
 					erreurBlocScolaire(requeteSite, gestionnaireEvenements, a);
 				}
 			});
 		} catch(Exception ex) {
-			LOGGER.error(String.format("pagerechercheBlocScolaire a échoué. ", ex));
+			LOGGER.error(String.format("pagerechercheBlocScolaireReponse a échoué. ", ex));
 			erreurBlocScolaire(requeteSite, null, Future.failedFuture(ex));
 		}
 	}
@@ -2142,6 +2764,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 			page.html();
 			gestionnaireEvenements.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, requeteEnTetes)));
 		} catch(Exception e) {
+			LOGGER.error(String.format("reponse200PageRechercheBlocScolaire a échoué. ", e));
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
 	}
@@ -2157,17 +2780,41 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 					if(d.succeeded()) {
 						indexerBlocScolaire(blocScolaire, e -> {
 							if(e.succeeded()) {
-								gestionnaireEvenements.handle(Future.succeededFuture(blocScolaire));
-								promise.complete(blocScolaire);
+								sqlCommitBlocScolaire(requeteSite, f -> {
+									if(f.succeeded()) {
+										sqlFermerBlocScolaire(requeteSite, g -> {
+											if(g.succeeded()) {
+												rechargerBlocScolaire(blocScolaire, h -> {
+													if(h.succeeded()) {
+														gestionnaireEvenements.handle(Future.succeededFuture(blocScolaire));
+														promise.complete(blocScolaire);
+													} else {
+														LOGGER.error(String.format("rechargerBlocScolaire a échoué. ", h.cause()));
+														erreurBlocScolaire(requeteSite, null, h);
+													}
+												});
+											} else {
+												LOGGER.error(String.format("definirIndexerBlocScolaire a échoué. ", g.cause()));
+												erreurBlocScolaire(requeteSite, null, g);
+											}
+										});
+									} else {
+										LOGGER.error(String.format("definirIndexerBlocScolaire a échoué. ", f.cause()));
+										erreurBlocScolaire(requeteSite, null, f);
+									}
+								});
 							} else {
+								LOGGER.error(String.format("definirIndexerBlocScolaire a échoué. ", e.cause()));
 								erreurBlocScolaire(requeteSite, null, e);
 							}
 						});
 					} else {
+						LOGGER.error(String.format("definirIndexerBlocScolaire a échoué. ", d.cause()));
 						erreurBlocScolaire(requeteSite, null, d);
 					}
 				});
 			} else {
+				LOGGER.error(String.format("definirIndexerBlocScolaire a échoué. ", c.cause()));
 				erreurBlocScolaire(requeteSite, null, c);
 			}
 		});
@@ -2176,15 +2823,16 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 
 	public void creerBlocScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<BlocScolaire>> gestionnaireEvenements) {
 		try {
-			SQLConnection connexionSql = requeteSite.getConnexionSql();
+			Transaction tx = requeteSite.getTx();
 			String utilisateurId = requeteSite.getUtilisateurId();
 
-			connexionSql.queryWithParams(
+			tx.preparedQuery(
 					SiteContexteFrFR.SQL_creer
-					, new JsonArray(Arrays.asList(BlocScolaire.class.getCanonicalName(), utilisateurId))
+					, Tuple.of(BlocScolaire.class.getCanonicalName(), utilisateurId)
+					, Collectors.toList()
 					, creerAsync
 			-> {
-				JsonArray creerLigne = creerAsync.result().getResults().stream().findFirst().orElseGet(() -> null);
+				Row creerLigne = creerAsync.result().value().stream().findFirst().orElseGet(() -> null);
 				Long pk = creerLigne.getLong(0);
 				BlocScolaire o = new BlocScolaire();
 				o.setPk(pk);
@@ -2192,6 +2840,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 				gestionnaireEvenements.handle(Future.succeededFuture(o));
 			});
 		} catch(Exception e) {
+			LOGGER.error(String.format("creerBlocScolaire a échoué. ", e));
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
 	}
@@ -2231,22 +2880,14 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 			}, resultHandler -> {
 			}
 		);
-		if(requeteSite != null) {
-			SQLConnection connexionSql = requeteSite.getConnexionSql();
-			if(connexionSql != null) {
-				connexionSql.rollback(a -> {
-					if(a.succeeded()) {
-						LOGGER.info(String.format("sql rollback. "));
-						connexionSql.close(b -> {
-							if(a.succeeded()) {
-								LOGGER.info(String.format("sql close. "));
-								if(gestionnaireEvenements != null)
-									gestionnaireEvenements.handle(Future.succeededFuture(reponseOperation));
-							} else {
-								if(gestionnaireEvenements != null)
-									gestionnaireEvenements.handle(Future.succeededFuture(reponseOperation));
-							}
-						});
+		sqlRollbackBlocScolaire(requeteSite, a -> {
+			if(a.succeeded()) {
+				LOGGER.info(String.format("sql rollback. "));
+				sqlFermerBlocScolaire(requeteSite, b -> {
+					if(b.succeeded()) {
+						LOGGER.info(String.format("sql close. "));
+						if(gestionnaireEvenements != null)
+							gestionnaireEvenements.handle(Future.succeededFuture(reponseOperation));
 					} else {
 						if(gestionnaireEvenements != null)
 							gestionnaireEvenements.handle(Future.succeededFuture(reponseOperation));
@@ -2256,33 +2897,115 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 				if(gestionnaireEvenements != null)
 					gestionnaireEvenements.handle(Future.succeededFuture(reponseOperation));
 			}
-		}
+		});
 	}
 
-	public void sqlBlocScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+	public void sqlConnexionBlocScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			SQLClient clientSql = requeteSite.getSiteContexte_().getClientSql();
+			PgPool pgPool = requeteSite.getSiteContexte_().getPgPool();
 
-			if(clientSql == null) {
+			if(pgPool == null) {
 				gestionnaireEvenements.handle(Future.succeededFuture());
 			} else {
-				clientSql.getConnection(sqlAsync -> {
-					if(sqlAsync.succeeded()) {
-						SQLConnection connexionSql = sqlAsync.result();
-						connexionSql.setAutoCommit(false, a -> {
-							if(a.succeeded()) {
-								requeteSite.setConnexionSql(connexionSql);
-								gestionnaireEvenements.handle(Future.succeededFuture());
-							} else {
-								gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
-							}
-						});
+				pgPool.getConnection(a -> {
+					if(a.succeeded()) {
+						SqlConnection connexionSql = a.result();
+						requeteSite.setConnexionSql(connexionSql);
+						gestionnaireEvenements.handle(Future.succeededFuture());
 					} else {
-						gestionnaireEvenements.handle(Future.failedFuture(new Exception(sqlAsync.cause())));
+						LOGGER.error(String.format("sqlConnexionBlocScolaire a échoué. ", a.cause()));
+						gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
 					}
 				});
 			}
 		} catch(Exception e) {
+			LOGGER.error(String.format("sqlBlocScolaire a échoué. ", e));
+			gestionnaireEvenements.handle(Future.failedFuture(e));
+		}
+	}
+
+	public void sqlTransactionBlocScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		try {
+			SqlConnection connexionSql = requeteSite.getConnexionSql();
+
+			if(connexionSql == null) {
+				gestionnaireEvenements.handle(Future.succeededFuture());
+			} else {
+				Transaction tx = connexionSql.begin();
+				requeteSite.setTx(tx);
+				gestionnaireEvenements.handle(Future.succeededFuture());
+			}
+		} catch(Exception e) {
+			LOGGER.error(String.format("sqlTransactionBlocScolaire a échoué. ", e));
+			gestionnaireEvenements.handle(Future.failedFuture(e));
+		}
+	}
+
+	public void sqlCommitBlocScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		try {
+			Transaction tx = requeteSite.getTx();
+
+			if(tx == null) {
+				gestionnaireEvenements.handle(Future.succeededFuture());
+			} else {
+				tx.commit(a -> {
+					if(a.succeeded()) {
+						requeteSite.setTx(null);
+						gestionnaireEvenements.handle(Future.succeededFuture());
+					} else if("Transaction already completed".equals(a.cause().getMessage())) {
+						requeteSite.setTx(null);
+						gestionnaireEvenements.handle(Future.succeededFuture());
+					} else {
+						LOGGER.error(String.format("sqlCommitBlocScolaire a échoué. ", a.cause()));
+						gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
+					}
+				});
+			}
+		} catch(Exception e) {
+			LOGGER.error(String.format("sqlBlocScolaire a échoué. ", e));
+			gestionnaireEvenements.handle(Future.failedFuture(e));
+		}
+	}
+
+	public void sqlRollbackBlocScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		try {
+			Transaction tx = requeteSite.getTx();
+
+			if(tx == null) {
+				gestionnaireEvenements.handle(Future.succeededFuture());
+			} else {
+				tx.rollback(a -> {
+					if(a.succeeded()) {
+						requeteSite.setTx(null);
+						gestionnaireEvenements.handle(Future.succeededFuture());
+					} else if("Transaction already completed".equals(a.cause().getMessage())) {
+						requeteSite.setTx(null);
+						gestionnaireEvenements.handle(Future.succeededFuture());
+					} else {
+						LOGGER.error(String.format("sqlRollbackBlocScolaire a échoué. ", a.cause()));
+						gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
+					}
+				});
+			}
+		} catch(Exception e) {
+			LOGGER.error(String.format("sqlBlocScolaire a échoué. ", e));
+			gestionnaireEvenements.handle(Future.failedFuture(e));
+		}
+	}
+
+	public void sqlFermerBlocScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		try {
+			SqlConnection connexionSql = requeteSite.getConnexionSql();
+
+			if(connexionSql == null) {
+				gestionnaireEvenements.handle(Future.succeededFuture());
+			} else {
+				connexionSql.close();
+				requeteSite.setConnexionSql(null);
+				gestionnaireEvenements.handle(Future.succeededFuture());
+			}
+		} catch(Exception e) {
+			LOGGER.error(String.format("sqlFermerBlocScolaire a échoué. ", e));
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
 	}
@@ -2306,163 +3029,190 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 
 	public void utilisateurBlocScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
-			SQLConnection connexionSql = requeteSite.getConnexionSql();
 			String utilisateurId = requeteSite.getUtilisateurId();
 			if(utilisateurId == null) {
 				gestionnaireEvenements.handle(Future.succeededFuture());
 			} else {
-				connexionSql.queryWithParams(
-						SiteContexteFrFR.SQL_selectC
-						, new JsonArray(Arrays.asList("org.computate.scolaire.frFR.utilisateur.UtilisateurSite", utilisateurId))
-						, selectCAsync
-				-> {
-					if(selectCAsync.succeeded()) {
-						try {
-							JsonArray utilisateurValeurs = selectCAsync.result().getResults().stream().findFirst().orElse(null);
-							UtilisateurSiteFrFRApiServiceImpl utilisateurService = new UtilisateurSiteFrFRApiServiceImpl(siteContexte);
-							if(utilisateurValeurs == null) {
-								JsonObject utilisateurVertx = requeteSite.getOperationRequete().getUser();
-								JsonObject principalJson = KeycloakHelper.parseToken(utilisateurVertx.getString("access_token"));
+				sqlConnexionBlocScolaire(requeteSite, a -> {
+					if(a.succeeded()) {
+						sqlTransactionBlocScolaire(requeteSite, b -> {
+							if(b.succeeded()) {
+								Transaction tx = requeteSite.getTx();
+								tx.preparedQuery(
+										SiteContexteFrFR.SQL_selectC
+										, Tuple.of("org.computate.scolaire.frFR.utilisateur.UtilisateurSite", utilisateurId)
+										, Collectors.toList()
+										, selectCAsync
+								-> {
+									if(selectCAsync.succeeded()) {
+										try {
+											Row utilisateurValeurs = selectCAsync.result().value().stream().findFirst().orElse(null);
+											UtilisateurSiteFrFRApiServiceImpl utilisateurService = new UtilisateurSiteFrFRApiServiceImpl(siteContexte);
+											if(utilisateurValeurs == null) {
+												JsonObject utilisateurVertx = requeteSite.getOperationRequete().getUser();
+												JsonObject principalJson = KeycloakHelper.parseToken(utilisateurVertx.getString("access_token"));
 
-								JsonObject jsonObject = new JsonObject();
-								jsonObject.put("utilisateurNom", principalJson.getString("preferred_username"));
-								jsonObject.put("utilisateurPrenom", principalJson.getString("given_name"));
-								jsonObject.put("utilisateurNomFamille", principalJson.getString("family_name"));
-								jsonObject.put("utilisateurId", principalJson.getString("sub"));
-								utilisateurBlocScolaireDefinir(requeteSite, jsonObject, false);
+												JsonObject jsonObject = new JsonObject();
+												jsonObject.put("utilisateurNom", principalJson.getString("preferred_username"));
+												jsonObject.put("utilisateurPrenom", principalJson.getString("given_name"));
+												jsonObject.put("utilisateurNomFamille", principalJson.getString("family_name"));
+												jsonObject.put("utilisateurId", principalJson.getString("sub"));
+												utilisateurBlocScolaireDefinir(requeteSite, jsonObject, false);
 
-								RequeteSiteFrFR requeteSite2 = new RequeteSiteFrFR();
-								requeteSite2.setConnexionSql(requeteSite.getConnexionSql());
-								requeteSite2.setObjetJson(jsonObject);
-								requeteSite2.setVertx(requeteSite.getVertx());
-								requeteSite2.setSiteContexte_(siteContexte);
-								requeteSite2.setConfigSite_(siteContexte.getConfigSite());
-								requeteSite2.setUtilisateurId(requeteSite.getUtilisateurId());
-								requeteSite2.initLoinRequeteSiteFrFR(requeteSite);
+												RequeteSiteFrFR requeteSite2 = new RequeteSiteFrFR();
+												requeteSite2.setTx(requeteSite.getTx());
+												requeteSite2.setConnexionSql(requeteSite.getConnexionSql());
+												requeteSite2.setObjetJson(jsonObject);
+												requeteSite2.setVertx(requeteSite.getVertx());
+												requeteSite2.setSiteContexte_(siteContexte);
+												requeteSite2.setConfigSite_(siteContexte.getConfigSite());
+												requeteSite2.setUtilisateurId(requeteSite.getUtilisateurId());
+												requeteSite2.initLoinRequeteSiteFrFR(requeteSite);
 
-								RequeteApi requeteApi = new RequeteApi();
-								requeteApi.setRows(1);
-								requeteApi.setNumFound(1L);
-								requeteApi.setNumPATCH(0L);
-								requeteApi.initLoinRequeteApi(requeteSite2);
-								requeteSite2.setRequeteApi_(requeteApi);
+												RequeteApi requeteApi = new RequeteApi();
+												requeteApi.setRows(1);
+												requeteApi.setNumFound(1L);
+												requeteApi.setNumPATCH(0L);
+												requeteApi.initLoinRequeteApi(requeteSite2);
+												requeteSite2.setRequeteApi_(requeteApi);
 
-								utilisateurService.creerUtilisateurSite(requeteSite2, b -> {
-									if(b.succeeded()) {
-										UtilisateurSite utilisateurSite = b.result();
-										utilisateurService.sqlPOSTUtilisateurSite(utilisateurSite, false, c -> {
-											if(c.succeeded()) {
-												utilisateurService.definirIndexerUtilisateurSite(utilisateurSite, d -> {
-													if(d.succeeded()) {
-														requeteSite.setUtilisateurSite(utilisateurSite);
-														requeteSite.setUtilisateurNom(principalJson.getString("preferred_username"));
-														requeteSite.setUtilisateurPrenom(principalJson.getString("given_name"));
-														requeteSite.setUtilisateurNomFamille(principalJson.getString("family_name"));
-														requeteSite.setUtilisateurId(principalJson.getString("sub"));
-														requeteSite.setUtilisateurCle(utilisateurSite.getPk());
-														gestionnaireEvenements.handle(Future.succeededFuture());
+												utilisateurService.creerUtilisateurSite(requeteSite2, c -> {
+													if(c.succeeded()) {
+														UtilisateurSite utilisateurSite = c.result();
+														utilisateurService.sqlPOSTUtilisateurSite(utilisateurSite, false, d -> {
+															if(d.succeeded()) {
+																utilisateurService.definirIndexerUtilisateurSite(utilisateurSite, e -> {
+																	if(e.succeeded()) {
+																		requeteSite.setUtilisateurSite(utilisateurSite);
+																		requeteSite.setUtilisateurNom(principalJson.getString("preferred_username"));
+																		requeteSite.setUtilisateurPrenom(principalJson.getString("given_name"));
+																		requeteSite.setUtilisateurNomFamille(principalJson.getString("family_name"));
+																		requeteSite.setUtilisateurId(principalJson.getString("sub"));
+																		requeteSite.setUtilisateurCle(utilisateurSite.getPk());
+																		gestionnaireEvenements.handle(Future.succeededFuture());
+																	} else {
+																		erreurBlocScolaire(requeteSite, gestionnaireEvenements, e);
+																	}
+																});
+															} else {
+																erreurBlocScolaire(requeteSite, gestionnaireEvenements, d);
+															}
+														});
 													} else {
-														erreurBlocScolaire(requeteSite, gestionnaireEvenements, d);
+														erreurBlocScolaire(requeteSite, gestionnaireEvenements, c);
 													}
 												});
 											} else {
-												erreurBlocScolaire(requeteSite, gestionnaireEvenements, c);
+												Long pkUtilisateur = utilisateurValeurs.getLong(0);
+												ListeRecherche<UtilisateurSite> listeRecherche = new ListeRecherche<UtilisateurSite>();
+												listeRecherche.setQuery("*:*");
+												listeRecherche.setStocker(true);
+												listeRecherche.setC(UtilisateurSite.class);
+												listeRecherche.addFilterQuery("utilisateurId_indexed_string:" + ClientUtils.escapeQueryChars(utilisateurId));
+												listeRecherche.addFilterQuery("pk_indexed_long:" + pkUtilisateur);
+												listeRecherche.initLoinListeRecherche(requeteSite);
+												UtilisateurSite utilisateurSite1 = listeRecherche.getList().stream().findFirst().orElse(null);
+
+												JsonObject utilisateurVertx = requeteSite.getOperationRequete().getUser();
+												JsonObject principalJson = KeycloakHelper.parseToken(utilisateurVertx.getString("access_token"));
+
+												JsonObject jsonObject = new JsonObject();
+												jsonObject.put("setUtilisateurNom", principalJson.getString("preferred_username"));
+												jsonObject.put("setUtilisateurPrenom", principalJson.getString("given_name"));
+												jsonObject.put("setUtilisateurNomFamille", principalJson.getString("family_name"));
+												jsonObject.put("setUtilisateurNomComplet", principalJson.getString("name"));
+												jsonObject.put("setCustomerProfileId", Optional.ofNullable(utilisateurSite1).map(u -> u.getCustomerProfileId()).orElse(null));
+												jsonObject.put("setUtilisateurId", principalJson.getString("sub"));
+												jsonObject.put("setUtilisateurMail", principalJson.getString("email"));
+												Boolean definir = utilisateurBlocScolaireDefinir(requeteSite, jsonObject, true);
+												if(definir) {
+													UtilisateurSite utilisateurSite;
+													if(utilisateurSite1 == null) {
+														utilisateurSite = new UtilisateurSite();
+														utilisateurSite.setPk(pkUtilisateur);
+														utilisateurSite.setRequeteSite_(requeteSite);
+													} else {
+														utilisateurSite = utilisateurSite1;
+													}
+
+													RequeteSiteFrFR requeteSite2 = new RequeteSiteFrFR();
+													requeteSite2.setTx(requeteSite.getTx());
+													requeteSite2.setConnexionSql(requeteSite.getConnexionSql());
+													requeteSite2.setObjetJson(jsonObject);
+													requeteSite2.setVertx(requeteSite.getVertx());
+													requeteSite2.setSiteContexte_(siteContexte);
+													requeteSite2.setConfigSite_(siteContexte.getConfigSite());
+													requeteSite2.setUtilisateurId(requeteSite.getUtilisateurId());
+													requeteSite2.setUtilisateurCle(requeteSite.getUtilisateurCle());
+													requeteSite2.initLoinRequeteSiteFrFR(requeteSite);
+													utilisateurSite.setRequeteSite_(requeteSite2);
+
+													RequeteApi requeteApi = new RequeteApi();
+													requeteApi.setRows(1);
+													requeteApi.setNumFound(1L);
+													requeteApi.setNumPATCH(0L);
+													requeteApi.initLoinRequeteApi(requeteSite2);
+													requeteSite2.setRequeteApi_(requeteApi);
+
+													utilisateurService.sqlPATCHUtilisateurSite(utilisateurSite, false, d -> {
+														if(d.succeeded()) {
+															UtilisateurSite utilisateurSite2 = d.result();
+															utilisateurService.definirIndexerUtilisateurSite(utilisateurSite2, e -> {
+																if(e.succeeded()) {
+																	requeteSite.setUtilisateurSite(utilisateurSite2);
+																	requeteSite.setUtilisateurNom(utilisateurSite2.getUtilisateurNom());
+																	requeteSite.setUtilisateurPrenom(utilisateurSite2.getUtilisateurPrenom());
+																	requeteSite.setUtilisateurNomFamille(utilisateurSite2.getUtilisateurNomFamille());
+																	requeteSite.setUtilisateurId(utilisateurSite2.getUtilisateurId());
+																	requeteSite.setUtilisateurCle(utilisateurSite2.getPk());
+																	gestionnaireEvenements.handle(Future.succeededFuture());
+																} else {
+																	erreurBlocScolaire(requeteSite, gestionnaireEvenements, e);
+																}
+															});
+														} else {
+															erreurBlocScolaire(requeteSite, gestionnaireEvenements, d);
+														}
+													});
+												} else {
+													requeteSite.setUtilisateurSite(utilisateurSite1);
+													requeteSite.setUtilisateurNom(utilisateurSite1.getUtilisateurNom());
+													requeteSite.setUtilisateurPrenom(utilisateurSite1.getUtilisateurPrenom());
+													requeteSite.setUtilisateurNomFamille(utilisateurSite1.getUtilisateurNomFamille());
+													requeteSite.setUtilisateurId(utilisateurSite1.getUtilisateurId());
+													requeteSite.setUtilisateurCle(utilisateurSite1.getPk());
+													sqlRollbackBlocScolaire(requeteSite, c -> {
+														if(c.succeeded()) {
+															gestionnaireEvenements.handle(Future.succeededFuture());
+														} else {
+															gestionnaireEvenements.handle(Future.failedFuture(c.cause()));
+															erreurBlocScolaire(requeteSite, gestionnaireEvenements, c);
+														}
+													});
+												}
 											}
-										});
+										} catch(Exception e) {
+											LOGGER.error(String.format("utilisateurBlocScolaire a échoué. ", e));
+											gestionnaireEvenements.handle(Future.failedFuture(e));
+										}
 									} else {
-										erreurBlocScolaire(requeteSite, gestionnaireEvenements, b);
+										LOGGER.error(String.format("utilisateurBlocScolaire a échoué. ", selectCAsync.cause()));
+										gestionnaireEvenements.handle(Future.failedFuture(selectCAsync.cause()));
 									}
 								});
 							} else {
-								Long pkUtilisateur = utilisateurValeurs.getLong(0);
-								ListeRecherche<UtilisateurSite> listeRecherche = new ListeRecherche<UtilisateurSite>();
-								listeRecherche.setQuery("*:*");
-								listeRecherche.setStocker(true);
-								listeRecherche.setC(UtilisateurSite.class);
-								listeRecherche.addFilterQuery("utilisateurId_indexed_string:" + ClientUtils.escapeQueryChars(utilisateurId));
-								listeRecherche.addFilterQuery("pk_indexed_long:" + pkUtilisateur);
-								listeRecherche.initLoinListeRecherche(requeteSite);
-								UtilisateurSite utilisateurSite1 = listeRecherche.getList().stream().findFirst().orElse(null);
-
-								JsonObject utilisateurVertx = requeteSite.getOperationRequete().getUser();
-								JsonObject principalJson = KeycloakHelper.parseToken(utilisateurVertx.getString("access_token"));
-
-								JsonObject jsonObject = new JsonObject();
-								jsonObject.put("setUtilisateurNom", principalJson.getString("preferred_username"));
-								jsonObject.put("setUtilisateurPrenom", principalJson.getString("given_name"));
-								jsonObject.put("setUtilisateurNomFamille", principalJson.getString("family_name"));
-								jsonObject.put("setUtilisateurNomComplet", principalJson.getString("name"));
-								jsonObject.put("setCustomerProfileId", Optional.ofNullable(utilisateurSite1).map(u -> u.getCustomerProfileId()).orElse(null));
-								jsonObject.put("setUtilisateurId", principalJson.getString("sub"));
-								jsonObject.put("setUtilisateurMail", principalJson.getString("email"));
-								Boolean definir = utilisateurBlocScolaireDefinir(requeteSite, jsonObject, true);
-								if(definir) {
-									UtilisateurSite utilisateurSite;
-									if(utilisateurSite1 == null) {
-										utilisateurSite = new UtilisateurSite();
-										utilisateurSite.setPk(pkUtilisateur);
-										utilisateurSite.setRequeteSite_(requeteSite);
-									} else {
-										utilisateurSite = utilisateurSite1;
-									}
-
-									RequeteSiteFrFR requeteSite2 = new RequeteSiteFrFR();
-									requeteSite2.setConnexionSql(requeteSite.getConnexionSql());
-									requeteSite2.setObjetJson(jsonObject);
-									requeteSite2.setVertx(requeteSite.getVertx());
-									requeteSite2.setSiteContexte_(siteContexte);
-									requeteSite2.setConfigSite_(siteContexte.getConfigSite());
-									requeteSite2.setUtilisateurId(requeteSite.getUtilisateurId());
-									requeteSite2.setUtilisateurCle(requeteSite.getUtilisateurCle());
-									requeteSite2.initLoinRequeteSiteFrFR(requeteSite);
-									utilisateurSite.setRequeteSite_(requeteSite2);
-
-									RequeteApi requeteApi = new RequeteApi();
-									requeteApi.setRows(1);
-									requeteApi.setNumFound(1L);
-									requeteApi.setNumPATCH(0L);
-									requeteApi.initLoinRequeteApi(requeteSite2);
-									requeteSite2.setRequeteApi_(requeteApi);
-
-									utilisateurService.sqlPATCHUtilisateurSite(utilisateurSite, false, c -> {
-										if(c.succeeded()) {
-											UtilisateurSite utilisateurSite2 = c.result();
-											utilisateurService.definirIndexerUtilisateurSite(utilisateurSite2, d -> {
-												if(d.succeeded()) {
-													requeteSite.setUtilisateurSite(utilisateurSite2);
-													requeteSite.setUtilisateurNom(utilisateurSite2.getUtilisateurNom());
-													requeteSite.setUtilisateurPrenom(utilisateurSite2.getUtilisateurPrenom());
-													requeteSite.setUtilisateurNomFamille(utilisateurSite2.getUtilisateurNomFamille());
-													requeteSite.setUtilisateurId(utilisateurSite2.getUtilisateurId());
-													requeteSite.setUtilisateurCle(utilisateurSite2.getPk());
-													gestionnaireEvenements.handle(Future.succeededFuture());
-												} else {
-													erreurBlocScolaire(requeteSite, gestionnaireEvenements, d);
-												}
-											});
-										} else {
-											erreurBlocScolaire(requeteSite, gestionnaireEvenements, c);
-										}
-									});
-								} else {
-									requeteSite.setUtilisateurSite(utilisateurSite1);
-									requeteSite.setUtilisateurNom(utilisateurSite1.getUtilisateurNom());
-									requeteSite.setUtilisateurPrenom(utilisateurSite1.getUtilisateurPrenom());
-									requeteSite.setUtilisateurNomFamille(utilisateurSite1.getUtilisateurNomFamille());
-									requeteSite.setUtilisateurId(utilisateurSite1.getUtilisateurId());
-									requeteSite.setUtilisateurCle(utilisateurSite1.getPk());
-									gestionnaireEvenements.handle(Future.succeededFuture());
-								}
+								LOGGER.error(String.format("utilisateurBlocScolaire a échoué. ", b.cause()));
+								gestionnaireEvenements.handle(Future.failedFuture(b.cause()));
 							}
-						} catch(Exception e) {
-							gestionnaireEvenements.handle(Future.failedFuture(e));
-						}
+						});
 					} else {
-						gestionnaireEvenements.handle(Future.failedFuture(new Exception(selectCAsync.cause())));
+						LOGGER.error(String.format("utilisateurBlocScolaire a échoué. ", a.cause()));
+						gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
 					}
 				});
 			}
 		} catch(Exception e) {
+			LOGGER.error(String.format("utilisateurBlocScolaire a échoué. ", e));
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
 	}
@@ -2582,6 +3332,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 					}
 					rechercheBlocScolaireUri(uri, apiMethode, listeRecherche);
 				} catch(Exception e) {
+					LOGGER.error(String.format("rechercheBlocScolaire a échoué. ", e));
 					gestionnaireEvenements.handle(Future.failedFuture(e));
 				}
 			});
@@ -2591,6 +3342,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 			listeRecherche.initLoinPourClasse(requeteSite);
 			gestionnaireEvenements.handle(Future.succeededFuture(listeRecherche));
 		} catch(Exception e) {
+			LOGGER.error(String.format("rechercheBlocScolaire a échoué. ", e));
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
 	}
@@ -2598,16 +3350,17 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 	public void definirBlocScolaire(BlocScolaire o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
-			SQLConnection connexionSql = requeteSite.getConnexionSql();
+			Transaction tx = requeteSite.getTx();
 			Long pk = o.getPk();
-			connexionSql.queryWithParams(
+			tx.preparedQuery(
 					SiteContexteFrFR.SQL_definir
-					, new JsonArray(Arrays.asList(pk, pk))
+					, Tuple.of(pk)
+					, Collectors.toList()
 					, definirAsync
 			-> {
 				if(definirAsync.succeeded()) {
 					try {
-						for(JsonArray definition : definirAsync.result().getResults()) {
+						for(Row definition : definirAsync.result().value()) {
 							try {
 								o.definirPourClasse(definition.getString(0), definition.getString(1));
 							} catch(Exception e) {
@@ -2616,13 +3369,16 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 						}
 						gestionnaireEvenements.handle(Future.succeededFuture());
 					} catch(Exception e) {
+						LOGGER.error(String.format("definirBlocScolaire a échoué. ", e));
 						gestionnaireEvenements.handle(Future.failedFuture(e));
 					}
 				} else {
-					gestionnaireEvenements.handle(Future.failedFuture(new Exception(definirAsync.cause())));
+					LOGGER.error(String.format("definirBlocScolaire a échoué. ", definirAsync.cause()));
+					gestionnaireEvenements.handle(Future.failedFuture(definirAsync.cause()));
 				}
 			});
 		} catch(Exception e) {
+			LOGGER.error(String.format("definirBlocScolaire a échoué. ", e));
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
 	}
@@ -2630,17 +3386,18 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 	public void attribuerBlocScolaire(BlocScolaire o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
-			SQLConnection connexionSql = requeteSite.getConnexionSql();
+			Transaction tx = requeteSite.getTx();
 			Long pk = o.getPk();
-			connexionSql.queryWithParams(
+			tx.preparedQuery(
 					SiteContexteFrFR.SQL_attribuer
-					, new JsonArray(Arrays.asList(pk, pk))
+					, Tuple.of(pk, pk)
+					, Collectors.toList()
 					, attribuerAsync
 			-> {
 				try {
 					if(attribuerAsync.succeeded()) {
 						if(attribuerAsync.result() != null) {
-							for(JsonArray definition : attribuerAsync.result().getResults()) {
+							for(Row definition : attribuerAsync.result().value()) {
 								if(pk.equals(definition.getLong(0)))
 									o.attribuerPourClasse(definition.getString(2), definition.getLong(1));
 								else
@@ -2649,13 +3406,16 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 						}
 						gestionnaireEvenements.handle(Future.succeededFuture());
 					} else {
-						gestionnaireEvenements.handle(Future.failedFuture(new Exception(attribuerAsync.cause())));
+						LOGGER.error(String.format("attribuerBlocScolaire a échoué. ", attribuerAsync.cause()));
+						gestionnaireEvenements.handle(Future.failedFuture(attribuerAsync.cause()));
 					}
 				} catch(Exception e) {
+					LOGGER.error(String.format("attribuerBlocScolaire a échoué. ", e));
 					gestionnaireEvenements.handle(Future.failedFuture(e));
 				}
 			});
 		} catch(Exception e) {
+			LOGGER.error(String.format("attribuerBlocScolaire a échoué. ", e));
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
 	}
@@ -2668,9 +3428,20 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			o.initLoinPourClasse(requeteSite);
 			o.indexerPourClasse();
+			gestionnaireEvenements.handle(Future.succeededFuture());
+		} catch(Exception e) {
+			LOGGER.error(String.format("indexerBlocScolaire a échoué. ", e));
+			gestionnaireEvenements.handle(Future.failedFuture(e));
+		}
+	}
+
+	public void rechargerBlocScolaire(BlocScolaire o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		RequeteSiteFrFR requeteSite = o.getRequeteSite_();
+		try {
+			RequeteApi requeteApi = requeteSite.getRequeteApi_();
+			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(new ArrayList<>());
+			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			if(BooleanUtils.isFalse(Optional.ofNullable(requeteSite.getRequeteApi_()).map(RequeteApi::getEmpty).orElse(true))) {
-				RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourBlocScolaire(siteContexte, requeteSite.getOperationRequete(), new JsonObject());
-				requeteSite2.setConnexionSql(requeteSite.getConnexionSql());
 				ListeRecherche<BlocScolaire> listeRecherche = new ListeRecherche<BlocScolaire>();
 				listeRecherche.setStocker(true);
 				listeRecherche.setQuery("*:*");
@@ -2679,7 +3450,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 				listeRecherche.add("json.facet", "{inscriptionCles:{terms:{field:inscriptionCles_indexed_longs, limit:1000}}}");
 				listeRecherche.add("json.facet", "{ageCle:{terms:{field:ageCle_indexed_longs, limit:1000}}}");
 				listeRecherche.setRows(1000);
-				listeRecherche.initLoinListeRecherche(requeteSite2);
+				listeRecherche.initLoinListeRecherche(requeteSite);
 				List<Future> futures = new ArrayList<>();
 
 				for(int i=0; i < pks.size(); i++) {
@@ -2687,39 +3458,37 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 					String classeNomSimple2 = classes.get(i);
 
 					if("InscriptionScolaire".equals(classeNomSimple2) && pk2 != null) {
-						InscriptionScolaireFrFRGenApiServiceImpl service = new InscriptionScolaireFrFRGenApiServiceImpl(requeteSite2.getSiteContexte_());
 						ListeRecherche<InscriptionScolaire> listeRecherche2 = new ListeRecherche<InscriptionScolaire>();
-						if(pk2 != null) {
-							listeRecherche2.setStocker(true);
-							listeRecherche2.setQuery("*:*");
-							listeRecherche2.setC(InscriptionScolaire.class);
-							listeRecherche2.addFilterQuery("pk_indexed_long:" + pk2);
-							listeRecherche2.setRows(1);
-							listeRecherche2.initLoinListeRecherche(requeteSite2);
-							InscriptionScolaire o2 = listeRecherche2.getList().stream().findFirst().orElse(null);
+						listeRecherche2.setStocker(true);
+						listeRecherche2.setQuery("*:*");
+						listeRecherche2.setC(InscriptionScolaire.class);
+						listeRecherche2.addFilterQuery("pk_indexed_long:" + pk2);
+						listeRecherche2.setRows(1);
+						listeRecherche2.initLoinListeRecherche(requeteSite);
+						InscriptionScolaire o2 = listeRecherche2.getList().stream().findFirst().orElse(null);
 
-							if(o2 != null) {
-								RequeteApi requeteApi2 = new RequeteApi();
-								requeteApi2.setRows(1);
-								requeteApi2.setNumFound(1l);
-								requeteApi2.setNumPATCH(0L);
-								requeteApi2.initLoinRequeteApi(requeteSite2);
-								requeteSite2.setRequeteApi_(requeteApi2);
-								requeteSite2.getVertx().eventBus().publish("websocketInscriptionScolaire", JsonObject.mapFrom(requeteApi2).toString());
+						if(o2 != null) {
+							InscriptionScolaireFrFRGenApiServiceImpl service = new InscriptionScolaireFrFRGenApiServiceImpl(requeteSite.getSiteContexte_());
+							RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourBlocScolaire(siteContexte, requeteSite.getOperationRequete(), new JsonObject());
+							RequeteApi requeteApi2 = new RequeteApi();
+							requeteApi2.setRows(1);
+							requeteApi2.setNumFound(1l);
+							requeteApi2.setNumPATCH(0L);
+							requeteApi2.initLoinRequeteApi(requeteSite2);
+							requeteSite2.setRequeteApi_(requeteApi2);
+							requeteSite2.getVertx().eventBus().publish("websocketInscriptionScolaire", JsonObject.mapFrom(requeteApi2).toString());
 
-								o2.setPk(pk2);
-								o2.setRequeteSite_(requeteSite2);
-								futures.add(
-									service.patchInscriptionScolaireFuture(o2, false, a -> {
-										if(a.succeeded()) {
-											LOGGER.info(String.format("InscriptionScolaire %s rechargé. ", pk2));
-										} else {
-											LOGGER.info(String.format("InscriptionScolaire %s a échoué. ", pk2));
-											gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
-										}
-									})
-								);
-							}
+							o2.setPk(pk2);
+							o2.setRequeteSite_(requeteSite2);
+							futures.add(
+								service.patchInscriptionScolaireFuture(o2, false, a -> {
+									if(a.succeeded()) {
+									} else {
+										LOGGER.info(String.format("InscriptionScolaire %s a échoué. ", pk2));
+										gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
+									}
+								})
+							);
 						}
 					}
 
@@ -2730,48 +3499,45 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 						listeRecherche2.setC(AgeScolaire.class);
 						listeRecherche2.addFilterQuery("pk_indexed_long:" + pk2);
 						listeRecherche2.setRows(1);
-						listeRecherche2.initLoinListeRecherche(requeteSite2);
+						listeRecherche2.initLoinListeRecherche(requeteSite);
 						AgeScolaire o2 = listeRecherche2.getList().stream().findFirst().orElse(null);
 
 						if(o2 != null) {
-							AgeScolaireFrFRGenApiServiceImpl service = new AgeScolaireFrFRGenApiServiceImpl(requeteSite2.getSiteContexte_());
-
+							AgeScolaireFrFRGenApiServiceImpl service = new AgeScolaireFrFRGenApiServiceImpl(requeteSite.getSiteContexte_());
+							RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourBlocScolaire(siteContexte, requeteSite.getOperationRequete(), new JsonObject());
 							RequeteApi requeteApi2 = new RequeteApi();
 							requeteApi2.setRows(1);
-							requeteApi2.setNumFound(1L);
+							requeteApi2.setNumFound(1l);
 							requeteApi2.setNumPATCH(0L);
 							requeteApi2.initLoinRequeteApi(requeteSite2);
 							requeteSite2.setRequeteApi_(requeteApi2);
 							requeteSite2.getVertx().eventBus().publish("websocketAgeScolaire", JsonObject.mapFrom(requeteApi2).toString());
 
-							if(pk2 != null) {
-								o2.setPk(pk2);
-								o2.setRequeteSite_(requeteSite2);
-								futures.add(
-									service.patchAgeScolaireFuture(o2, false, a -> {
-										if(a.succeeded()) {
-											LOGGER.info(String.format("AgeScolaire %s rechargé. ", pk2));
-										} else {
-											LOGGER.info(String.format("AgeScolaire %s a échoué. ", pk2));
-											gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
-										}
-									})
-								);
-							}
+							o2.setPk(pk2);
+							o2.setRequeteSite_(requeteSite2);
+							futures.add(
+								service.patchAgeScolaireFuture(o2, false, a -> {
+									if(a.succeeded()) {
+									} else {
+										LOGGER.info(String.format("AgeScolaire %s a échoué. ", pk2));
+										gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
+									}
+								})
+							);
 						}
 					}
 				}
 
 				CompositeFuture.all(futures).setHandler(a -> {
 					if(a.succeeded()) {
-						LOGGER.info("Recharger relations a réussi. ");
-						BlocScolaireFrFRApiServiceImpl service = new BlocScolaireFrFRApiServiceImpl(requeteSite2.getSiteContexte_());
+						BlocScolaireFrFRApiServiceImpl service = new BlocScolaireFrFRApiServiceImpl(requeteSite.getSiteContexte_());
 						List<Future> futures2 = new ArrayList<>();
 						for(BlocScolaire o2 : listeRecherche.getList()) {
+							RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourBlocScolaire(siteContexte, requeteSite.getOperationRequete(), new JsonObject());
+							o2.setRequeteSite_(requeteSite2);
 							futures2.add(
 								service.patchBlocScolaireFuture(o2, false, b -> {
 									if(b.succeeded()) {
-										LOGGER.info(String.format("BlocScolaire %s rechargé. ", o2.getPk()));
 									} else {
 										LOGGER.info(String.format("BlocScolaire %s a échoué. ", o2.getPk()));
 										gestionnaireEvenements.handle(Future.failedFuture(b.cause()));
@@ -2782,22 +3548,22 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 
 						CompositeFuture.all(futures2).setHandler(b -> {
 							if(b.succeeded()) {
-								LOGGER.info("Recharger BlocScolaire a réussi. ");
 								gestionnaireEvenements.handle(Future.succeededFuture());
 							} else {
 								LOGGER.error("Recharger relations a échoué. ", b.cause());
-								erreurBlocScolaire(requeteSite2, gestionnaireEvenements, b);
+								erreurBlocScolaire(requeteSite, gestionnaireEvenements, b);
 							}
 						});
 					} else {
 						LOGGER.error("Recharger relations a échoué. ", a.cause());
-						erreurBlocScolaire(requeteSite2, gestionnaireEvenements, a);
+						erreurBlocScolaire(requeteSite, gestionnaireEvenements, a);
 					}
 				});
 			} else {
 				gestionnaireEvenements.handle(Future.succeededFuture());
 			}
 		} catch(Exception e) {
+			LOGGER.error(String.format("rechargerBlocScolaire a échoué. ", e));
 			gestionnaireEvenements.handle(Future.failedFuture(e));
 		}
 	}

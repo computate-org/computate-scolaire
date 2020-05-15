@@ -65,8 +65,11 @@ import io.vertx.ext.web.api.validation.HTTPRequestValidationHandler;
 import io.vertx.ext.web.api.validation.ParameterTypeValidator;
 import io.vertx.ext.web.api.validation.ValidationException;
 import io.vertx.ext.web.api.contract.openapi3.OpenAPI3RouterFactory;
-import io.vertx.ext.sql.SQLClient;
-import io.vertx.ext.sql.SQLConnection;
+import io.vertx.pgclient.PgPool;
+import io.vertx.sqlclient.Transaction;
+import io.vertx.sqlclient.SqlConnection;
+import io.vertx.sqlclient.Tuple;
+import io.vertx.sqlclient.Row;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import java.time.LocalDateTime;
@@ -119,43 +122,36 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest, body);
 		try {
 			LOGGER.info(String.format("postSchoolEnrollment started. "));
-			sqlSchoolEnrollment(siteRequest, a -> {
-				if(a.succeeded()) {
-					userSchoolEnrollment(siteRequest, b -> {
-						if(b.succeeded()) {
-							ApiRequest apiRequest = new ApiRequest();
-							apiRequest.setRows(1);
-							apiRequest.setNumFound(1L);
-							apiRequest.setNumPATCH(0L);
-							apiRequest.initDeepApiRequest(siteRequest);
-							siteRequest.setApiRequest_(apiRequest);
-							siteRequest.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest).toString());
-							postSchoolEnrollmentFuture(siteRequest, false, c -> {
-								if(c.succeeded()) {
-									SchoolEnrollment schoolEnrollment = c.result();
-									apiRequest.setPk(schoolEnrollment.getPk());
-									postSchoolEnrollmentResponse(schoolEnrollment, d -> {
-										if(d.succeeded()) {
-											eventHandler.handle(Future.succeededFuture(d.result()));
-											LOGGER.info(String.format("postSchoolEnrollment succeeded. "));
-										} else {
-											LOGGER.error(String.format("postSchoolEnrollment failed. ", d.cause()));
-											errorSchoolEnrollment(siteRequest, eventHandler, d);
-										}
-									});
+			userSchoolEnrollment(siteRequest, b -> {
+				if(b.succeeded()) {
+					ApiRequest apiRequest = new ApiRequest();
+					apiRequest.setRows(1);
+					apiRequest.setNumFound(1L);
+					apiRequest.setNumPATCH(0L);
+					apiRequest.initDeepApiRequest(siteRequest);
+					siteRequest.setApiRequest_(apiRequest);
+					siteRequest.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest).toString());
+					postSchoolEnrollmentFuture(siteRequest, false, c -> {
+						if(c.succeeded()) {
+							SchoolEnrollment schoolEnrollment = c.result();
+							apiRequest.setPk(schoolEnrollment.getPk());
+							postSchoolEnrollmentResponse(schoolEnrollment, d -> {
+									if(d.succeeded()) {
+									eventHandler.handle(Future.succeededFuture(d.result()));
+									LOGGER.info(String.format("postSchoolEnrollment succeeded. "));
 								} else {
-									LOGGER.error(String.format("postSchoolEnrollment failed. ", c.cause()));
-									errorSchoolEnrollment(siteRequest, eventHandler, c);
+									LOGGER.error(String.format("postSchoolEnrollment failed. ", d.cause()));
+									errorSchoolEnrollment(siteRequest, eventHandler, d);
 								}
 							});
 						} else {
-							LOGGER.error(String.format("postSchoolEnrollment failed. ", b.cause()));
-							errorSchoolEnrollment(siteRequest, eventHandler, b);
+							LOGGER.error(String.format("postSchoolEnrollment failed. ", c.cause()));
+							errorSchoolEnrollment(siteRequest, eventHandler, c);
 						}
 					});
 				} else {
-					LOGGER.error(String.format("postSchoolEnrollment failed. ", a.cause()));
-					errorSchoolEnrollment(siteRequest, eventHandler, a);
+					LOGGER.error(String.format("postSchoolEnrollment failed. ", b.cause()));
+					errorSchoolEnrollment(siteRequest, eventHandler, b);
 				}
 			});
 		} catch(Exception ex) {
@@ -168,41 +164,52 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 	public Future<SchoolEnrollment> postSchoolEnrollmentFuture(SiteRequestEnUS siteRequest, Boolean inheritPk, Handler<AsyncResult<SchoolEnrollment>> eventHandler) {
 		Promise<SchoolEnrollment> promise = Promise.promise();
 		try {
-			createSchoolEnrollment(siteRequest, a -> {
+			sqlConnectionSchoolEnrollment(siteRequest, a -> {
 				if(a.succeeded()) {
-					SchoolEnrollment schoolEnrollment = a.result();
-					sqlPOSTSchoolEnrollment(schoolEnrollment, inheritPk, b -> {
+					sqlTransactionSchoolEnrollment(siteRequest, b -> {
 						if(b.succeeded()) {
-							defineIndexSchoolEnrollment(schoolEnrollment, c -> {
+							createSchoolEnrollment(siteRequest, c -> {
 								if(c.succeeded()) {
-									ApiRequest apiRequest = siteRequest.getApiRequest_();
-									if(apiRequest != null) {
-										apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
-										schoolEnrollment.apiRequestSchoolEnrollment();
-										siteRequest.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest).toString());
-									}
-									SQLConnection sqlConnection = siteRequest.getSqlConnection();
-									sqlConnection.commit(d -> {
+									SchoolEnrollment schoolEnrollment = c.result();
+									sqlPOSTSchoolEnrollment(schoolEnrollment, inheritPk, d -> {
 										if(d.succeeded()) {
-											eventHandler.handle(Future.succeededFuture(schoolEnrollment));
-											promise.complete(schoolEnrollment);
+											defineIndexSchoolEnrollment(schoolEnrollment, e -> {
+												if(e.succeeded()) {
+													ApiRequest apiRequest = siteRequest.getApiRequest_();
+													if(apiRequest != null) {
+														apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+														schoolEnrollment.apiRequestSchoolEnrollment();
+														siteRequest.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest).toString());
+													}
+													eventHandler.handle(Future.succeededFuture(schoolEnrollment));
+													promise.complete(schoolEnrollment);
+												} else {
+													LOGGER.error(String.format("postSchoolEnrollmentFuture failed. ", e.cause()));
+													eventHandler.handle(Future.failedFuture(e.cause()));
+												}
+											});
 										} else {
+											LOGGER.error(String.format("postSchoolEnrollmentFuture failed. ", d.cause()));
 											eventHandler.handle(Future.failedFuture(d.cause()));
 										}
 									});
 								} else {
+									LOGGER.error(String.format("postSchoolEnrollmentFuture failed. ", c.cause()));
 									eventHandler.handle(Future.failedFuture(c.cause()));
 								}
 							});
 						} else {
+							LOGGER.error(String.format("postSchoolEnrollmentFuture failed. ", b.cause()));
 							eventHandler.handle(Future.failedFuture(b.cause()));
 						}
 					});
 				} else {
+					LOGGER.error(String.format("postSchoolEnrollmentFuture failed. ", a.cause()));
 					eventHandler.handle(Future.failedFuture(a.cause()));
 				}
 			});
 		} catch(Exception e) {
+			LOGGER.error(String.format("postSchoolEnrollmentFuture failed. ", e));
 			errorSchoolEnrollment(siteRequest, null, Future.failedFuture(e));
 		}
 		return promise.future();
@@ -214,23 +221,49 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 			ApiRequest apiRequest = siteRequest.getApiRequest_();
 			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(new ArrayList<>());
 			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(new ArrayList<>());
-			SQLConnection sqlConnection = siteRequest.getSqlConnection();
+			Transaction tx = siteRequest.getTx();
 			Long pk = o.getPk();
 			JsonObject jsonObject = siteRequest.getJsonObject();
-			StringBuilder postSql = new StringBuilder();
-			List<Object> postSqlParams = new ArrayList<Object>();
+			List<Future> futures = new ArrayList<>();
 
 			if(siteRequest.getSessionId() != null) {
-				postSql.append(SiteContextEnUS.SQL_setD);
-				postSqlParams.addAll(Arrays.asList(pk, "sessionId", siteRequest.getSessionId()));
+				futures.add(Future.future(a -> {
+					tx.preparedQuery(SiteContextEnUS.SQL_setD
+				, Tuple.of(pk, "sessionId", siteRequest.getSessionId())
+							, b
+					-> {
+						if(b.succeeded())
+							a.handle(Future.succeededFuture());
+						else
+							a.handle(Future.failedFuture(b.cause()));
+					});
+				}));
 			}
 			if(siteRequest.getUserId() != null) {
-				postSql.append(SiteContextEnUS.SQL_setD);
-				postSqlParams.addAll(Arrays.asList(pk, "userId", siteRequest.getUserId()));
+				futures.add(Future.future(a -> {
+					tx.preparedQuery(SiteContextEnUS.SQL_setD
+				, Tuple.of(pk, "userId", siteRequest.getUserId())
+							, b
+					-> {
+						if(b.succeeded())
+							a.handle(Future.succeededFuture());
+						else
+							a.handle(Future.failedFuture(b.cause()));
+					});
+				}));
 			}
 			if(siteRequest.getUserKey() != null) {
-				postSql.append(SiteContextEnUS.SQL_setD);
-				postSqlParams.addAll(Arrays.asList(pk, "userKey", siteRequest.getUserKey()));
+				futures.add(Future.future(a -> {
+					tx.preparedQuery(SiteContextEnUS.SQL_setD
+				, Tuple.of(pk, "userKey", siteRequest.getUserKey())
+							, b
+					-> {
+						if(b.succeeded())
+							a.handle(Future.succeededFuture());
+						else
+							a.handle(Future.failedFuture(b.cause()));
+					});
+				}));
 
 				JsonArray userKeys = Optional.ofNullable(jsonObject.getJsonArray("userKeys")).orElse(null);
 				if(userKeys != null && !userKeys.contains(siteRequest.getUserKey()))
@@ -244,36 +277,108 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 				for(String entityVar : entityVars) {
 					switch(entityVar) {
 					case "inheritPk":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "inheritPk", jsonObject.getString(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "inheritPk", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.inheritPk failed", b.cause())));
+							});
+						}));
 						break;
 					case "created":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "created", jsonObject.getString(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "created", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.created failed", b.cause())));
+							});
+						}));
 						break;
 					case "modified":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "modified", jsonObject.getString(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "modified", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.modified failed", b.cause())));
+							});
+						}));
 						break;
 					case "archived":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "archived", jsonObject.getBoolean(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "archived", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.archived failed", b.cause())));
+							});
+						}));
 						break;
 					case "deleted":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "deleted", jsonObject.getBoolean(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "deleted", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.deleted failed", b.cause())));
+							});
+						}));
 						break;
 					case "sessionId":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "sessionId", jsonObject.getString(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "sessionId", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.sessionId failed", b.cause())));
+							});
+						}));
 						break;
 					case "userId":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "userId", jsonObject.getString(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "userId", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.userId failed", b.cause())));
+							});
+						}));
 						break;
 					case "userKey":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "userKey", jsonObject.getString(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "userKey", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.userKey failed", b.cause())));
+							});
+						}));
 						break;
 					case "yearKey":
 						{
@@ -285,12 +390,21 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								searchList.setC(SchoolYear.class);
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								searchList.initDeepSearchList(siteRequest);
-								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null) {
-									postSql.append(SiteContextEnUS.SQL_addA);
-									postSqlParams.addAll(Arrays.asList(l, "enrollmentKeys", ", classeVarClePrimaire, yearKey"));
-									if(!pks.contains(l)) {
-										pks.add(l);
+								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_addA
+												, Tuple.of(l2, "enrollmentKeys", pk, "yearKey")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.yearKey failed", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
 										classes.add("SchoolYear");
 									}
 								}
@@ -306,12 +420,21 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								searchList.setC(SchoolBlock.class);
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								searchList.initDeepSearchList(siteRequest);
-								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null) {
-									postSql.append(SiteContextEnUS.SQL_addA);
-									postSqlParams.addAll(Arrays.asList(pk, "blockKeys", l, "enrollmentKeys"));
-									if(!pks.contains(l)) {
-										pks.add(l);
+								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_addA
+												, Tuple.of(pk, "blockKeys", l2, "enrollmentKeys")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.blockKeys failed", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
 										classes.add("SchoolBlock");
 									}
 								}
@@ -328,12 +451,21 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								searchList.setC(SchoolChild.class);
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								searchList.initDeepSearchList(siteRequest);
-								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null) {
-									postSql.append(SiteContextEnUS.SQL_addA);
-									postSqlParams.addAll(Arrays.asList(pk, "childKey", l, "enrollmentKeys"));
-									if(!pks.contains(l)) {
-										pks.add(l);
+								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_addA
+												, Tuple.of(pk, "childKey", l2, "enrollmentKeys")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.childKey failed", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
 										classes.add("SchoolChild");
 									}
 								}
@@ -349,12 +481,21 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								searchList.setC(SchoolMom.class);
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								searchList.initDeepSearchList(siteRequest);
-								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null) {
-									postSql.append(SiteContextEnUS.SQL_addA);
-									postSqlParams.addAll(Arrays.asList(l, "enrollmentKeys", pk, "momKeys"));
-									if(!pks.contains(l)) {
-										pks.add(l);
+								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_addA
+												, Tuple.of(l2, "enrollmentKeys", pk, "momKeys")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.momKeys failed", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
 										classes.add("SchoolMom");
 									}
 								}
@@ -370,12 +511,21 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								searchList.setC(SchoolDad.class);
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								searchList.initDeepSearchList(siteRequest);
-								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null) {
-									postSql.append(SiteContextEnUS.SQL_addA);
-									postSqlParams.addAll(Arrays.asList(pk, "dadKeys", l, "enrollmentKeys"));
-									if(!pks.contains(l)) {
-										pks.add(l);
+								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_addA
+												, Tuple.of(pk, "dadKeys", l2, "enrollmentKeys")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.dadKeys failed", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
 										classes.add("SchoolDad");
 									}
 								}
@@ -391,12 +541,21 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								searchList.setC(SchoolGuardian.class);
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								searchList.initDeepSearchList(siteRequest);
-								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null) {
-									postSql.append(SiteContextEnUS.SQL_addA);
-									postSqlParams.addAll(Arrays.asList(l, "enrollmentKeys", pk, "guardianKeys"));
-									if(!pks.contains(l)) {
-										pks.add(l);
+								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_addA
+												, Tuple.of(l2, "enrollmentKeys", pk, "guardianKeys")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.guardianKeys failed", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
 										classes.add("SchoolGuardian");
 									}
 								}
@@ -412,12 +571,21 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								searchList.setC(SchoolPayment.class);
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								searchList.initDeepSearchList(siteRequest);
-								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null) {
-									postSql.append(SiteContextEnUS.SQL_addA);
-									postSqlParams.addAll(Arrays.asList(l, "enrollmentKey", pk, "paymentKeys"));
-									if(!pks.contains(l)) {
-										pks.add(l);
+								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_addA
+												, Tuple.of(l2, "enrollmentKey", pk, "paymentKeys")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.paymentKeys failed", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
 										classes.add("SchoolPayment");
 									}
 								}
@@ -433,12 +601,21 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								searchList.setC(SiteUser.class);
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								searchList.initDeepSearchList(siteRequest);
-								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null) {
-									postSql.append(SiteContextEnUS.SQL_addA);
-									postSqlParams.addAll(Arrays.asList(l, "enrollmentKeys", pk, "userKeys"));
-									if(!pks.contains(l)) {
-										pks.add(l);
+								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_addA
+												, Tuple.of(l2, "enrollmentKeys", pk, "userKeys")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.userKeys failed", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
 										classes.add("SiteUser");
 									}
 								}
@@ -446,188 +623,564 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						}
 						break;
 					case "childCompleteName":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "childCompleteName", jsonObject.getString(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "childCompleteName", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.childCompleteName failed", b.cause())));
+							});
+						}));
 						break;
 					case "childCompleteNamePreferred":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "childCompleteNamePreferred", jsonObject.getString(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "childCompleteNamePreferred", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.childCompleteNamePreferred failed", b.cause())));
+							});
+						}));
 						break;
 					case "childBirthDate":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "childBirthDate", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entityVar)))));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "childBirthDate", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.childBirthDate failed", b.cause())));
+							});
+						}));
 						break;
 					case "schoolAddress":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "schoolAddress", jsonObject.getString(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "schoolAddress", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.schoolAddress failed", b.cause())));
+							});
+						}));
 						break;
 					case "enrollmentApproved":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "enrollmentApproved", jsonObject.getBoolean(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "enrollmentApproved", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentApproved failed", b.cause())));
+							});
+						}));
 						break;
 					case "enrollmentImmunizations":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "enrollmentImmunizations", jsonObject.getBoolean(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "enrollmentImmunizations", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentImmunizations failed", b.cause())));
+							});
+						}));
 						break;
 					case "familyMarried":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "familyMarried", jsonObject.getBoolean(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "familyMarried", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.familyMarried failed", b.cause())));
+							});
+						}));
 						break;
 					case "familySeparated":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "familySeparated", jsonObject.getBoolean(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "familySeparated", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.familySeparated failed", b.cause())));
+							});
+						}));
 						break;
 					case "familyDivorced":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "familyDivorced", jsonObject.getBoolean(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "familyDivorced", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.familyDivorced failed", b.cause())));
+							});
+						}));
 						break;
 					case "familyAddress":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "familyAddress", jsonObject.getString(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "familyAddress", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.familyAddress failed", b.cause())));
+							});
+						}));
 						break;
 					case "familyHowDoYouKnowTheSchool":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "familyHowDoYouKnowTheSchool", jsonObject.getString(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "familyHowDoYouKnowTheSchool", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.familyHowDoYouKnowTheSchool failed", b.cause())));
+							});
+						}));
 						break;
 					case "enrollmentSpecialConsiderations":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "enrollmentSpecialConsiderations", jsonObject.getString(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "enrollmentSpecialConsiderations", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentSpecialConsiderations failed", b.cause())));
+							});
+						}));
 						break;
 					case "childMedicalConditions":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "childMedicalConditions", jsonObject.getString(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "childMedicalConditions", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.childMedicalConditions failed", b.cause())));
+							});
+						}));
 						break;
 					case "childPreviousSchoolsAttended":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "childPreviousSchoolsAttended", jsonObject.getString(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "childPreviousSchoolsAttended", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.childPreviousSchoolsAttended failed", b.cause())));
+							});
+						}));
 						break;
 					case "childDescription":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "childDescription", jsonObject.getString(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "childDescription", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.childDescription failed", b.cause())));
+							});
+						}));
 						break;
 					case "childObjectives":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "childObjectives", jsonObject.getString(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "childObjectives", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.childObjectives failed", b.cause())));
+							});
+						}));
 						break;
 					case "childPottyTrained":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "childPottyTrained", jsonObject.getBoolean(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "childPottyTrained", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.childPottyTrained failed", b.cause())));
+							});
+						}));
 						break;
 					case "enrollmentGroupName":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "enrollmentGroupName", jsonObject.getString(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "enrollmentGroupName", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentGroupName failed", b.cause())));
+							});
+						}));
 						break;
 					case "enrollmentPaymentEachMonth":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "enrollmentPaymentEachMonth", jsonObject.getBoolean(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "enrollmentPaymentEachMonth", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentPaymentEachMonth failed", b.cause())));
+							});
+						}));
 						break;
 					case "enrollmentPaymentComplete":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "enrollmentPaymentComplete", jsonObject.getBoolean(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "enrollmentPaymentComplete", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentPaymentComplete failed", b.cause())));
+							});
+						}));
 						break;
 					case "customerProfileId":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "customerProfileId", jsonObject.getString(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "customerProfileId", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.customerProfileId failed", b.cause())));
+							});
+						}));
 						break;
 					case "enrollmentChargeDate":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "enrollmentChargeDate", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entityVar)))));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "enrollmentChargeDate", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentChargeDate failed", b.cause())));
+							});
+						}));
 						break;
 					case "enrollmentSignature1":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature1", jsonObject.getString(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "enrollmentSignature1", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentSignature1 failed", b.cause())));
+							});
+						}));
 						break;
 					case "enrollmentSignature2":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature2", jsonObject.getString(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "enrollmentSignature2", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentSignature2 failed", b.cause())));
+							});
+						}));
 						break;
 					case "enrollmentSignature3":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature3", jsonObject.getString(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "enrollmentSignature3", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentSignature3 failed", b.cause())));
+							});
+						}));
 						break;
 					case "enrollmentSignature4":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature4", jsonObject.getString(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "enrollmentSignature4", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentSignature4 failed", b.cause())));
+							});
+						}));
 						break;
 					case "enrollmentSignature5":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature5", jsonObject.getString(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "enrollmentSignature5", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentSignature5 failed", b.cause())));
+							});
+						}));
 						break;
 					case "enrollmentSignature6":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature6", jsonObject.getString(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "enrollmentSignature6", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentSignature6 failed", b.cause())));
+							});
+						}));
 						break;
 					case "enrollmentSignature7":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature7", jsonObject.getString(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "enrollmentSignature7", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentSignature7 failed", b.cause())));
+							});
+						}));
 						break;
 					case "enrollmentSignature8":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature8", jsonObject.getString(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "enrollmentSignature8", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentSignature8 failed", b.cause())));
+							});
+						}));
 						break;
 					case "enrollmentSignature9":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature9", jsonObject.getString(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "enrollmentSignature9", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentSignature9 failed", b.cause())));
+							});
+						}));
 						break;
 					case "enrollmentSignature10":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature10", jsonObject.getString(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "enrollmentSignature10", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentSignature10 failed", b.cause())));
+							});
+						}));
 						break;
 					case "enrollmentDate1":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "enrollmentDate1", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entityVar)))));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "enrollmentDate1", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentDate1 failed", b.cause())));
+							});
+						}));
 						break;
 					case "enrollmentDate2":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "enrollmentDate2", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entityVar)))));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "enrollmentDate2", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentDate2 failed", b.cause())));
+							});
+						}));
 						break;
 					case "enrollmentDate3":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "enrollmentDate3", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entityVar)))));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "enrollmentDate3", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentDate3 failed", b.cause())));
+							});
+						}));
 						break;
 					case "enrollmentDate4":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "enrollmentDate4", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entityVar)))));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "enrollmentDate4", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentDate4 failed", b.cause())));
+							});
+						}));
 						break;
 					case "enrollmentDate5":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "enrollmentDate5", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entityVar)))));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "enrollmentDate5", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentDate5 failed", b.cause())));
+							});
+						}));
 						break;
 					case "enrollmentDate6":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "enrollmentDate6", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entityVar)))));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "enrollmentDate6", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentDate6 failed", b.cause())));
+							});
+						}));
 						break;
 					case "enrollmentDate7":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "enrollmentDate7", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entityVar)))));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "enrollmentDate7", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentDate7 failed", b.cause())));
+							});
+						}));
 						break;
 					case "enrollmentDate8":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "enrollmentDate8", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entityVar)))));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "enrollmentDate8", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentDate8 failed", b.cause())));
+							});
+						}));
 						break;
 					case "enrollmentDate9":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "enrollmentDate9", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entityVar)))));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "enrollmentDate9", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentDate9 failed", b.cause())));
+							});
+						}));
 						break;
 					case "enrollmentDate10":
-						postSql.append(SiteContextEnUS.SQL_setD);
-						postSqlParams.addAll(Arrays.asList(pk, "enrollmentDate10", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entityVar)))));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "enrollmentDate10", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentDate10 failed", b.cause())));
+							});
+						}));
 						break;
 					}
 				}
 			}
-			sqlConnection.queryWithParams(
-					postSql.toString()
-					, new JsonArray(postSqlParams)
-					, postAsync
-			-> {
-				if(postAsync.succeeded()) {
+			CompositeFuture.all(futures).setHandler( a -> {
+				if(a.succeeded()) {
 					eventHandler.handle(Future.succeededFuture());
 				} else {
-					eventHandler.handle(Future.failedFuture(new Exception(postAsync.cause())));
+					LOGGER.error(String.format("sqlPOSTSchoolEnrollment failed. ", a.cause()));
+					eventHandler.handle(Future.failedFuture(a.cause()));
 				}
 			});
 		} catch(Exception e) {
+			LOGGER.error(String.format("sqlPOSTSchoolEnrollment failed. ", e));
 			eventHandler.handle(Future.failedFuture(e));
 		}
 	}
@@ -637,26 +1190,14 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 		try {
 			response200POSTSchoolEnrollment(schoolEnrollment, a -> {
 				if(a.succeeded()) {
-					SQLConnection sqlConnection = siteRequest.getSqlConnection();
-					sqlConnection.commit(b -> {
-						if(b.succeeded()) {
-							sqlConnection.close(c -> {
-								if(c.succeeded()) {
-									eventHandler.handle(Future.succeededFuture(a.result()));
-								} else {
-									errorSchoolEnrollment(siteRequest, eventHandler, c);
-								}
-							});
-						} else {
-							errorSchoolEnrollment(siteRequest, eventHandler, b);
-						}
-					});
+					eventHandler.handle(Future.succeededFuture(a.result()));
 				} else {
+					LOGGER.error(String.format("postSchoolEnrollmentResponse failed. ", a.cause()));
 					errorSchoolEnrollment(siteRequest, eventHandler, a);
 				}
 			});
 		} catch(Exception ex) {
-			LOGGER.error(String.format("postSchoolEnrollment failed. ", ex));
+			LOGGER.error(String.format("postSchoolEnrollmentResponse failed. ", ex));
 			errorSchoolEnrollment(siteRequest, null, Future.failedFuture(ex));
 		}
 	}
@@ -666,6 +1207,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 			JsonObject json = JsonObject.mapFrom(o);
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
 		} catch(Exception e) {
+			LOGGER.error(String.format("response200POSTSchoolEnrollment failed. ", e));
 			eventHandler.handle(Future.failedFuture(e));
 		}
 	}
@@ -677,69 +1219,62 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest, body);
 		try {
 			LOGGER.info(String.format("putimportSchoolEnrollment started. "));
-			sqlSchoolEnrollment(siteRequest, a -> {
-				if(a.succeeded()) {
-					userSchoolEnrollment(siteRequest, b -> {
-						if(b.succeeded()) {
-							putimportSchoolEnrollmentResponse(siteRequest, c -> {
-								if(c.succeeded()) {
-									eventHandler.handle(Future.succeededFuture(c.result()));
-									WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
-									workerExecutor.executeBlocking(
-										blockingCodeHandler -> {
-											SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest, body);
-											try {
-												ApiRequest apiRequest = new ApiRequest();
-												JsonArray jsonArray = Optional.ofNullable(siteRequest2.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
-												apiRequest.setRows(jsonArray.size());
-												apiRequest.setNumFound(new Integer(jsonArray.size()).longValue());
-												apiRequest.setNumPATCH(0L);
-												apiRequest.initDeepApiRequest(siteRequest2);
-												siteRequest2.setApiRequest_(apiRequest);
-												siteRequest2.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest).toString());
-												sqlSchoolEnrollment(siteRequest2, d -> {
-													if(d.succeeded()) {
-														listPUTImportSchoolEnrollment(apiRequest, siteRequest2, e -> {
-															if(e.succeeded()) {
-																putimportSchoolEnrollmentResponse(siteRequest2, f -> {
-																	if(f.succeeded()) {
-																		LOGGER.info(String.format("putimportSchoolEnrollment succeeded. "));
-																		blockingCodeHandler.handle(Future.succeededFuture(f.result()));
-																	} else {
-																		LOGGER.error(String.format("putimportSchoolEnrollment failed. ", f.cause()));
-																		errorSchoolEnrollment(siteRequest2, null, f);
-																	}
-																});
+			userSchoolEnrollment(siteRequest, b -> {
+				if(b.succeeded()) {
+					putimportSchoolEnrollmentResponse(siteRequest, c -> {
+						if(c.succeeded()) {
+							eventHandler.handle(Future.succeededFuture(c.result()));
+							WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
+							workerExecutor.executeBlocking(
+								blockingCodeHandler -> {
+									SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest, body);
+									try {
+										ApiRequest apiRequest = new ApiRequest();
+										JsonArray jsonArray = Optional.ofNullable(siteRequest2.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+										apiRequest.setRows(jsonArray.size());
+										apiRequest.setNumFound(new Integer(jsonArray.size()).longValue());
+										apiRequest.setNumPATCH(0L);
+										apiRequest.initDeepApiRequest(siteRequest2);
+										siteRequest2.setApiRequest_(apiRequest);
+										siteRequest2.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest).toString());
+										sqlConnectionSchoolEnrollment(siteRequest2, d -> {
+											if(d.succeeded()) {
+												listPUTImportSchoolEnrollment(apiRequest, siteRequest2, e -> {
+													if(e.succeeded()) {
+														putimportSchoolEnrollmentResponse(siteRequest2, f -> {
+															if(f.succeeded()) {
+																LOGGER.info(String.format("putimportSchoolEnrollment succeeded. "));
+																blockingCodeHandler.handle(Future.succeededFuture(f.result()));
 															} else {
-																LOGGER.error(String.format("putimportSchoolEnrollment failed. ", e.cause()));
-																errorSchoolEnrollment(siteRequest2, null, e);
+																LOGGER.error(String.format("putimportSchoolEnrollment failed. ", f.cause()));
+																errorSchoolEnrollment(siteRequest2, null, f);
 															}
 														});
 													} else {
-														LOGGER.error(String.format("putimportSchoolEnrollment failed. ", d.cause()));
-														errorSchoolEnrollment(siteRequest2, null, d);
+														LOGGER.error(String.format("putimportSchoolEnrollment failed. ", e.cause()));
+														errorSchoolEnrollment(siteRequest2, null, e);
 													}
 												});
-											} catch(Exception ex) {
-												LOGGER.error(String.format("putimportSchoolEnrollment failed. ", ex));
-												errorSchoolEnrollment(siteRequest2, null, Future.failedFuture(ex));
+											} else {
+												LOGGER.error(String.format("putimportSchoolEnrollment failed. ", d.cause()));
+												errorSchoolEnrollment(siteRequest2, null, d);
 											}
-										}, resultHandler -> {
-										}
-									);
-								} else {
-									LOGGER.error(String.format("putimportSchoolEnrollment failed. ", c.cause()));
-									errorSchoolEnrollment(siteRequest, eventHandler, c);
+										});
+									} catch(Exception ex) {
+										LOGGER.error(String.format("putimportSchoolEnrollment failed. ", ex));
+										errorSchoolEnrollment(siteRequest2, null, Future.failedFuture(ex));
+									}
+								}, resultHandler -> {
 								}
-							});
+							);
 						} else {
-							LOGGER.error(String.format("putimportSchoolEnrollment failed. ", b.cause()));
-							errorSchoolEnrollment(siteRequest, eventHandler, b);
+							LOGGER.error(String.format("putimportSchoolEnrollment failed. ", c.cause()));
+							errorSchoolEnrollment(siteRequest, eventHandler, c);
 						}
 					});
 				} else {
-					LOGGER.error(String.format("putimportSchoolEnrollment failed. ", a.cause()));
-					errorSchoolEnrollment(siteRequest, eventHandler, a);
+					LOGGER.error(String.format("putimportSchoolEnrollment failed. ", b.cause()));
+					errorSchoolEnrollment(siteRequest, eventHandler, b);
 				}
 			});
 		} catch(Exception ex) {
@@ -785,6 +1320,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							patchSchoolEnrollmentFuture(o, true, a -> {
 								if(a.succeeded()) {
 								} else {
+									LOGGER.error(String.format("listPUTImportSchoolEnrollment failed. ", a.cause()));
 									errorSchoolEnrollment(siteRequest2, eventHandler, a);
 								}
 							})
@@ -795,6 +1331,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						postSchoolEnrollmentFuture(siteRequest2, true, a -> {
 							if(a.succeeded()) {
 							} else {
+								LOGGER.error(String.format("listPUTImportSchoolEnrollment failed. ", a.cause()));
 								errorSchoolEnrollment(siteRequest2, eventHandler, a);
 							}
 						})
@@ -806,11 +1343,12 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 					response200PUTImportSchoolEnrollment(siteRequest, eventHandler);
 				} else {
+					LOGGER.error(String.format("listPUTImportSchoolEnrollment failed. ", a.cause()));
 					errorSchoolEnrollment(apiRequest.getSiteRequest_(), eventHandler, a);
 				}
 			});
 		} catch(Exception ex) {
-			LOGGER.error(String.format("putimportSchoolEnrollment failed. ", ex));
+			LOGGER.error(String.format("listPUTImportSchoolEnrollment failed. ", ex));
 			errorSchoolEnrollment(siteRequest, null, Future.failedFuture(ex));
 		}
 	}
@@ -819,26 +1357,14 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 		try {
 			response200PUTImportSchoolEnrollment(siteRequest, a -> {
 				if(a.succeeded()) {
-					SQLConnection sqlConnection = siteRequest.getSqlConnection();
-					sqlConnection.commit(b -> {
-						if(b.succeeded()) {
-							sqlConnection.close(c -> {
-								if(c.succeeded()) {
-									eventHandler.handle(Future.succeededFuture(a.result()));
-								} else {
-									errorSchoolEnrollment(siteRequest, eventHandler, c);
-								}
-							});
-						} else {
-							errorSchoolEnrollment(siteRequest, eventHandler, b);
-						}
-					});
+					eventHandler.handle(Future.succeededFuture(a.result()));
 				} else {
+					LOGGER.error(String.format("putimportSchoolEnrollmentResponse failed. ", a.cause()));
 					errorSchoolEnrollment(siteRequest, eventHandler, a);
 				}
 			});
 		} catch(Exception ex) {
-			LOGGER.error(String.format("putimportSchoolEnrollment failed. ", ex));
+			LOGGER.error(String.format("putimportSchoolEnrollmentResponse failed. ", ex));
 			errorSchoolEnrollment(siteRequest, null, Future.failedFuture(ex));
 		}
 	}
@@ -847,6 +1373,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 			JsonObject json = new JsonObject();
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
 		} catch(Exception e) {
+			LOGGER.error(String.format("response200PUTImportSchoolEnrollment failed. ", e));
 			eventHandler.handle(Future.failedFuture(e));
 		}
 	}
@@ -858,69 +1385,62 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest, body);
 		try {
 			LOGGER.info(String.format("putmergeSchoolEnrollment started. "));
-			sqlSchoolEnrollment(siteRequest, a -> {
-				if(a.succeeded()) {
-					userSchoolEnrollment(siteRequest, b -> {
-						if(b.succeeded()) {
-							putmergeSchoolEnrollmentResponse(siteRequest, c -> {
-								if(c.succeeded()) {
-									eventHandler.handle(Future.succeededFuture(c.result()));
-									WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
-									workerExecutor.executeBlocking(
-										blockingCodeHandler -> {
-											SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest, body);
-											try {
-												ApiRequest apiRequest = new ApiRequest();
-												JsonArray jsonArray = Optional.ofNullable(siteRequest2.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
-												apiRequest.setRows(jsonArray.size());
-												apiRequest.setNumFound(new Integer(jsonArray.size()).longValue());
-												apiRequest.setNumPATCH(0L);
-												apiRequest.initDeepApiRequest(siteRequest2);
-												siteRequest2.setApiRequest_(apiRequest);
-												siteRequest2.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest).toString());
-												sqlSchoolEnrollment(siteRequest2, d -> {
-													if(d.succeeded()) {
-														listPUTMergeSchoolEnrollment(apiRequest, siteRequest2, e -> {
-															if(e.succeeded()) {
-																putmergeSchoolEnrollmentResponse(siteRequest2, f -> {
-																	if(f.succeeded()) {
-																		LOGGER.info(String.format("putmergeSchoolEnrollment succeeded. "));
-																		blockingCodeHandler.handle(Future.succeededFuture(f.result()));
-																	} else {
-																		LOGGER.error(String.format("putmergeSchoolEnrollment failed. ", f.cause()));
-																		errorSchoolEnrollment(siteRequest2, null, f);
-																	}
-																});
+			userSchoolEnrollment(siteRequest, b -> {
+				if(b.succeeded()) {
+					putmergeSchoolEnrollmentResponse(siteRequest, c -> {
+						if(c.succeeded()) {
+							eventHandler.handle(Future.succeededFuture(c.result()));
+							WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
+							workerExecutor.executeBlocking(
+								blockingCodeHandler -> {
+									SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest, body);
+									try {
+										ApiRequest apiRequest = new ApiRequest();
+										JsonArray jsonArray = Optional.ofNullable(siteRequest2.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+										apiRequest.setRows(jsonArray.size());
+										apiRequest.setNumFound(new Integer(jsonArray.size()).longValue());
+										apiRequest.setNumPATCH(0L);
+										apiRequest.initDeepApiRequest(siteRequest2);
+										siteRequest2.setApiRequest_(apiRequest);
+										siteRequest2.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest).toString());
+										sqlConnectionSchoolEnrollment(siteRequest2, d -> {
+											if(d.succeeded()) {
+												listPUTMergeSchoolEnrollment(apiRequest, siteRequest2, e -> {
+													if(e.succeeded()) {
+														putmergeSchoolEnrollmentResponse(siteRequest2, f -> {
+															if(f.succeeded()) {
+																LOGGER.info(String.format("putmergeSchoolEnrollment succeeded. "));
+																blockingCodeHandler.handle(Future.succeededFuture(f.result()));
 															} else {
-																LOGGER.error(String.format("putmergeSchoolEnrollment failed. ", e.cause()));
-																errorSchoolEnrollment(siteRequest2, null, e);
+																LOGGER.error(String.format("putmergeSchoolEnrollment failed. ", f.cause()));
+																errorSchoolEnrollment(siteRequest2, null, f);
 															}
 														});
 													} else {
-														LOGGER.error(String.format("putmergeSchoolEnrollment failed. ", d.cause()));
-														errorSchoolEnrollment(siteRequest2, null, d);
+														LOGGER.error(String.format("putmergeSchoolEnrollment failed. ", e.cause()));
+														errorSchoolEnrollment(siteRequest2, null, e);
 													}
 												});
-											} catch(Exception ex) {
-												LOGGER.error(String.format("putmergeSchoolEnrollment failed. ", ex));
-												errorSchoolEnrollment(siteRequest2, null, Future.failedFuture(ex));
+											} else {
+												LOGGER.error(String.format("putmergeSchoolEnrollment failed. ", d.cause()));
+												errorSchoolEnrollment(siteRequest2, null, d);
 											}
-										}, resultHandler -> {
-										}
-									);
-								} else {
-									LOGGER.error(String.format("putmergeSchoolEnrollment failed. ", c.cause()));
-									errorSchoolEnrollment(siteRequest, eventHandler, c);
+										});
+									} catch(Exception ex) {
+										LOGGER.error(String.format("putmergeSchoolEnrollment failed. ", ex));
+										errorSchoolEnrollment(siteRequest2, null, Future.failedFuture(ex));
+									}
+								}, resultHandler -> {
 								}
-							});
+							);
 						} else {
-							LOGGER.error(String.format("putmergeSchoolEnrollment failed. ", b.cause()));
-							errorSchoolEnrollment(siteRequest, eventHandler, b);
+							LOGGER.error(String.format("putmergeSchoolEnrollment failed. ", c.cause()));
+							errorSchoolEnrollment(siteRequest, eventHandler, c);
 						}
 					});
 				} else {
-					LOGGER.error(String.format("putmergeSchoolEnrollment failed. ", a.cause()));
-					errorSchoolEnrollment(siteRequest, eventHandler, a);
+					LOGGER.error(String.format("putmergeSchoolEnrollment failed. ", b.cause()));
+					errorSchoolEnrollment(siteRequest, eventHandler, b);
 				}
 			});
 		} catch(Exception ex) {
@@ -966,6 +1486,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							patchSchoolEnrollmentFuture(o, false, a -> {
 								if(a.succeeded()) {
 								} else {
+									LOGGER.error(String.format("listPUTMergeSchoolEnrollment failed. ", a.cause()));
 									errorSchoolEnrollment(siteRequest2, eventHandler, a);
 								}
 							})
@@ -976,6 +1497,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						postSchoolEnrollmentFuture(siteRequest2, false, a -> {
 							if(a.succeeded()) {
 							} else {
+								LOGGER.error(String.format("listPUTMergeSchoolEnrollment failed. ", a.cause()));
 								errorSchoolEnrollment(siteRequest2, eventHandler, a);
 							}
 						})
@@ -987,11 +1509,12 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 					response200PUTMergeSchoolEnrollment(siteRequest, eventHandler);
 				} else {
+					LOGGER.error(String.format("listPUTMergeSchoolEnrollment failed. ", a.cause()));
 					errorSchoolEnrollment(apiRequest.getSiteRequest_(), eventHandler, a);
 				}
 			});
 		} catch(Exception ex) {
-			LOGGER.error(String.format("putmergeSchoolEnrollment failed. ", ex));
+			LOGGER.error(String.format("listPUTMergeSchoolEnrollment failed. ", ex));
 			errorSchoolEnrollment(siteRequest, null, Future.failedFuture(ex));
 		}
 	}
@@ -1000,26 +1523,14 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 		try {
 			response200PUTMergeSchoolEnrollment(siteRequest, a -> {
 				if(a.succeeded()) {
-					SQLConnection sqlConnection = siteRequest.getSqlConnection();
-					sqlConnection.commit(b -> {
-						if(b.succeeded()) {
-							sqlConnection.close(c -> {
-								if(c.succeeded()) {
-									eventHandler.handle(Future.succeededFuture(a.result()));
-								} else {
-									errorSchoolEnrollment(siteRequest, eventHandler, c);
-								}
-							});
-						} else {
-							errorSchoolEnrollment(siteRequest, eventHandler, b);
-						}
-					});
+					eventHandler.handle(Future.succeededFuture(a.result()));
 				} else {
+					LOGGER.error(String.format("putmergeSchoolEnrollmentResponse failed. ", a.cause()));
 					errorSchoolEnrollment(siteRequest, eventHandler, a);
 				}
 			});
 		} catch(Exception ex) {
-			LOGGER.error(String.format("putmergeSchoolEnrollment failed. ", ex));
+			LOGGER.error(String.format("putmergeSchoolEnrollmentResponse failed. ", ex));
 			errorSchoolEnrollment(siteRequest, null, Future.failedFuture(ex));
 		}
 	}
@@ -1028,6 +1539,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 			JsonObject json = new JsonObject();
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
 		} catch(Exception e) {
+			LOGGER.error(String.format("response200PUTMergeSchoolEnrollment failed. ", e));
 			eventHandler.handle(Future.failedFuture(e));
 		}
 	}
@@ -1039,81 +1551,74 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest, body);
 		try {
 			LOGGER.info(String.format("putcopySchoolEnrollment started. "));
-			sqlSchoolEnrollment(siteRequest, a -> {
-				if(a.succeeded()) {
-					userSchoolEnrollment(siteRequest, b -> {
-						if(b.succeeded()) {
-							putcopySchoolEnrollmentResponse(siteRequest, c -> {
-								if(c.succeeded()) {
-									eventHandler.handle(Future.succeededFuture(c.result()));
-									WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
-									workerExecutor.executeBlocking(
-										blockingCodeHandler -> {
-											SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest, body);
-											try {
-												aSearchSchoolEnrollment(siteRequest2, false, true, "/api/enrollment/copy", "PUTCopy", d -> {
-													if(d.succeeded()) {
-														SearchList<SchoolEnrollment> listSchoolEnrollment = d.result();
-														ApiRequest apiRequest = new ApiRequest();
-														apiRequest.setRows(listSchoolEnrollment.getRows());
-														apiRequest.setNumFound(listSchoolEnrollment.getQueryResponse().getResults().getNumFound());
-														apiRequest.setNumPATCH(0L);
-														apiRequest.initDeepApiRequest(siteRequest2);
-														siteRequest2.setApiRequest_(apiRequest);
-														siteRequest2.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest).toString());
-														sqlSchoolEnrollment(siteRequest2, e -> {
-															if(e.succeeded()) {
-																try {
-																	listPUTCopySchoolEnrollment(apiRequest, listSchoolEnrollment, f -> {
-																		if(f.succeeded()) {
-																			putcopySchoolEnrollmentResponse(siteRequest2, g -> {
-																				if(g.succeeded()) {
-																					LOGGER.info(String.format("putcopySchoolEnrollment succeeded. "));
-																					blockingCodeHandler.handle(Future.succeededFuture(g.result()));
-																				} else {
-																					LOGGER.error(String.format("putcopySchoolEnrollment failed. ", g.cause()));
-																					errorSchoolEnrollment(siteRequest2, null, g);
-																				}
-																			});
+			userSchoolEnrollment(siteRequest, b -> {
+				if(b.succeeded()) {
+					putcopySchoolEnrollmentResponse(siteRequest, c -> {
+						if(c.succeeded()) {
+							eventHandler.handle(Future.succeededFuture(c.result()));
+							WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
+							workerExecutor.executeBlocking(
+									blockingCodeHandler -> {
+									SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest, body);
+									try {
+										aSearchSchoolEnrollment(siteRequest2, false, true, "/api/enrollment/copy", "PUTCopy", d -> {
+											if(d.succeeded()) {
+												SearchList<SchoolEnrollment> listSchoolEnrollment = d.result();
+												ApiRequest apiRequest = new ApiRequest();
+												apiRequest.setRows(listSchoolEnrollment.getRows());
+												apiRequest.setNumFound(listSchoolEnrollment.getQueryResponse().getResults().getNumFound());
+												apiRequest.setNumPATCH(0L);
+												apiRequest.initDeepApiRequest(siteRequest2);
+												siteRequest2.setApiRequest_(apiRequest);
+												siteRequest2.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest).toString());
+												sqlConnectionSchoolEnrollment(siteRequest2, e -> {
+													if(e.succeeded()) {
+														try {
+															listPUTCopySchoolEnrollment(apiRequest, listSchoolEnrollment, f -> {
+																if(f.succeeded()) {
+																	putcopySchoolEnrollmentResponse(siteRequest2, g -> {
+																		if(g.succeeded()) {
+																			LOGGER.info(String.format("putcopySchoolEnrollment succeeded. "));
+																			blockingCodeHandler.handle(Future.succeededFuture(g.result()));
 																		} else {
-																			LOGGER.error(String.format("putcopySchoolEnrollment failed. ", f.cause()));
-																			errorSchoolEnrollment(siteRequest2, null, f);
+																			LOGGER.error(String.format("putcopySchoolEnrollment failed. ", g.cause()));
+																			errorSchoolEnrollment(siteRequest2, null, g);
 																		}
 																	});
-																} catch(Exception ex) {
-																	LOGGER.error(String.format("putcopySchoolEnrollment failed. ", ex));
-																	errorSchoolEnrollment(siteRequest2, null, Future.failedFuture(ex));
+																} else {
+																	LOGGER.error(String.format("putcopySchoolEnrollment failed. ", f.cause()));
+																	errorSchoolEnrollment(siteRequest2, null, f);
 																}
-															} else {
-																LOGGER.error(String.format("putcopySchoolEnrollment failed. ", e.cause()));
-																errorSchoolEnrollment(siteRequest2, null, e);
-															}
-														});
+															});
+														} catch(Exception ex) {
+															LOGGER.error(String.format("putcopySchoolEnrollment failed. ", ex));
+															errorSchoolEnrollment(siteRequest2, null, Future.failedFuture(ex));
+														}
 													} else {
-														LOGGER.error(String.format("putcopySchoolEnrollment failed. ", d.cause()));
-														errorSchoolEnrollment(siteRequest2, null, d);
+														LOGGER.error(String.format("putcopySchoolEnrollment failed. ", e.cause()));
+														errorSchoolEnrollment(siteRequest2, null, e);
 													}
 												});
-											} catch(Exception ex) {
-												LOGGER.error(String.format("putcopySchoolEnrollment failed. ", ex));
-												errorSchoolEnrollment(siteRequest2, null, Future.failedFuture(ex));
+											} else {
+												LOGGER.error(String.format("putcopySchoolEnrollment failed. ", d.cause()));
+												errorSchoolEnrollment(siteRequest2, null, d);
 											}
-										}, resultHandler -> {
-										}
-									);
-								} else {
-									LOGGER.error(String.format("putcopySchoolEnrollment failed. ", c.cause()));
-									errorSchoolEnrollment(siteRequest, eventHandler, c);
+										});
+									} catch(Exception ex) {
+										LOGGER.error(String.format("putcopySchoolEnrollment failed. ", ex));
+										errorSchoolEnrollment(siteRequest2, null, Future.failedFuture(ex));
+									}
+								}, resultHandler -> {
 								}
-							});
+							);
 						} else {
-							LOGGER.error(String.format("putcopySchoolEnrollment failed. ", b.cause()));
-							errorSchoolEnrollment(siteRequest, eventHandler, b);
+							LOGGER.error(String.format("putcopySchoolEnrollment failed. ", c.cause()));
+							errorSchoolEnrollment(siteRequest, eventHandler, c);
 						}
 					});
 				} else {
-					LOGGER.error(String.format("putcopySchoolEnrollment failed. ", a.cause()));
-					errorSchoolEnrollment(siteRequest, eventHandler, a);
+					LOGGER.error(String.format("putcopySchoolEnrollment failed. ", b.cause()));
+					errorSchoolEnrollment(siteRequest, eventHandler, b);
 				}
 			});
 		} catch(Exception ex) {
@@ -1132,6 +1637,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					if(a.succeeded()) {
 						SchoolEnrollment schoolEnrollment = a.result();
 					} else {
+						LOGGER.error(String.format("listPUTCopySchoolEnrollment failed. ", a.cause()));
 						errorSchoolEnrollment(siteRequest, eventHandler, a);
 					}
 				})
@@ -1146,6 +1652,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					response200PUTCopySchoolEnrollment(siteRequest, eventHandler);
 				}
 			} else {
+				LOGGER.error(String.format("listPUTCopySchoolEnrollment failed. ", a.cause()));
 				errorSchoolEnrollment(listSchoolEnrollment.getSiteRequest_(), eventHandler, a);
 			}
 		});
@@ -1162,16 +1669,16 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 				jsonObject.getJsonArray("saves").add(o.getKey());
 			});
 
-			createSchoolEnrollment(siteRequest, a -> {
+			sqlConnectionSchoolEnrollment(siteRequest, a -> {
 				if(a.succeeded()) {
-					SchoolEnrollment schoolEnrollment = a.result();
-					sqlPUTCopySchoolEnrollment(schoolEnrollment, jsonObject, b -> {
+					sqlTransactionSchoolEnrollment(siteRequest, b -> {
 						if(b.succeeded()) {
-							defineSchoolEnrollment(schoolEnrollment, c -> {
+							createSchoolEnrollment(siteRequest, c -> {
 								if(c.succeeded()) {
-									attributeSchoolEnrollment(schoolEnrollment, d -> {
+									SchoolEnrollment schoolEnrollment = c.result();
+									sqlPUTCopySchoolEnrollment(schoolEnrollment, jsonObject, d -> {
 										if(d.succeeded()) {
-											indexSchoolEnrollment(schoolEnrollment, e -> {
+											defineIndexSchoolEnrollment(schoolEnrollment, e -> {
 												if(e.succeeded()) {
 													ApiRequest apiRequest = siteRequest.getApiRequest_();
 													if(apiRequest != null) {
@@ -1181,36 +1688,35 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 														}
 														siteRequest.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest).toString());
 													}
-													SQLConnection sqlConnection = siteRequest.getSqlConnection();
-													sqlConnection.commit(f -> {
-														if(f.succeeded()) {
-															eventHandler.handle(Future.succeededFuture(schoolEnrollment));
-															promise.complete(schoolEnrollment);
-														} else {
-															eventHandler.handle(Future.failedFuture(f.cause()));
-														}
-													});
+													eventHandler.handle(Future.succeededFuture(schoolEnrollment));
+													promise.complete(schoolEnrollment);
 												} else {
+													LOGGER.error(String.format("putcopySchoolEnrollmentFuture failed. ", e.cause()));
 													eventHandler.handle(Future.failedFuture(e.cause()));
 												}
 											});
 										} else {
+											LOGGER.error(String.format("putcopySchoolEnrollmentFuture failed. ", d.cause()));
 											eventHandler.handle(Future.failedFuture(d.cause()));
 										}
 									});
 								} else {
+									LOGGER.error(String.format("putcopySchoolEnrollmentFuture failed. ", c.cause()));
 									eventHandler.handle(Future.failedFuture(c.cause()));
 								}
 							});
 						} else {
+							LOGGER.error(String.format("putcopySchoolEnrollmentFuture failed. ", b.cause()));
 							eventHandler.handle(Future.failedFuture(b.cause()));
 						}
 					});
 				} else {
+					LOGGER.error(String.format("putcopySchoolEnrollmentFuture failed. ", a.cause()));
 					eventHandler.handle(Future.failedFuture(a.cause()));
 				}
 			});
 		} catch(Exception e) {
+			LOGGER.error(String.format("putcopySchoolEnrollmentFuture failed. ", e));
 			errorSchoolEnrollment(siteRequest, null, Future.failedFuture(e));
 		}
 		return promise.future();
@@ -1222,10 +1728,9 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 			ApiRequest apiRequest = siteRequest.getApiRequest_();
 			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(new ArrayList<>());
 			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(new ArrayList<>());
-			SQLConnection sqlConnection = siteRequest.getSqlConnection();
+			Transaction tx = siteRequest.getTx();
 			Long pk = o.getPk();
-			StringBuilder putSql = new StringBuilder();
-			List<Object> putSqlParams = new ArrayList<Object>();
+			List<Future> futures = new ArrayList<>();
 
 			if(jsonObject != null) {
 				JsonArray entityVars = jsonObject.getJsonArray("saves");
@@ -1233,48 +1738,138 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					String entityVar = entityVars.getString(i);
 					switch(entityVar) {
 					case "inheritPk":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "inheritPk", jsonObject.getString(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "inheritPk", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.inheritPk failed", b.cause())));
+							});
+						}));
 						break;
 					case "created":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "created", jsonObject.getString(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "created", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.created failed", b.cause())));
+							});
+						}));
 						break;
 					case "modified":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "modified", jsonObject.getString(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "modified", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.modified failed", b.cause())));
+							});
+						}));
 						break;
 					case "archived":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "archived", jsonObject.getBoolean(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "archived", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.archived failed", b.cause())));
+							});
+						}));
 						break;
 					case "deleted":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "deleted", jsonObject.getBoolean(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "deleted", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.deleted failed", b.cause())));
+							});
+						}));
 						break;
 					case "sessionId":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "sessionId", jsonObject.getString(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "sessionId", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.sessionId failed", b.cause())));
+							});
+						}));
 						break;
 					case "userId":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "userId", jsonObject.getString(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "userId", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.userId failed", b.cause())));
+							});
+						}));
 						break;
 					case "userKey":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "userKey", jsonObject.getString(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "userKey", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.userKey failed", b.cause())));
+							});
+						}));
 						break;
 					case "yearKey":
 							{
 						Long l = Long.parseLong(jsonObject.getString(entityVar));
-						putSql.append(SiteContextEnUS.SQL_addA);
-						putSqlParams.addAll(Arrays.asList(l, "enrollmentKeys", pk, "yearKey"));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_addA
+									, Tuple.of(l, "enrollmentKeys", pk, "yearKey")
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.yearKey failed", b.cause())));
+							});
+						}));
 						}
 						break;
 					case "blockKeys":
 						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
-							putSql.append(SiteContextEnUS.SQL_addA);
-							putSqlParams.addAll(Arrays.asList(pk, "blockKeys", l, "enrollmentKeys"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_addA
+										, Tuple.of(pk, "blockKeys", l, "enrollmentKeys")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.blockKeys failed", b.cause())));
+								});
+							}));
 							if(!pks.contains(l)) {
 								pks.add(l);
 								classes.add("SchoolBlock");
@@ -1284,14 +1879,32 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "childKey":
 							{
 						Long l = Long.parseLong(jsonObject.getString(entityVar));
-						putSql.append(SiteContextEnUS.SQL_addA);
-						putSqlParams.addAll(Arrays.asList(pk, "childKey", l, "enrollmentKeys"));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_addA
+									, Tuple.of(pk, "childKey", l, "enrollmentKeys")
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.childKey failed", b.cause())));
+							});
+						}));
 						}
 						break;
 					case "momKeys":
 						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
-							putSql.append(SiteContextEnUS.SQL_addA);
-							putSqlParams.addAll(Arrays.asList(l, "enrollmentKeys", pk, "momKeys"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_addA
+										, Tuple.of(l, "enrollmentKeys", pk, "momKeys")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.momKeys failed", b.cause())));
+								});
+							}));
 							if(!pks.contains(l)) {
 								pks.add(l);
 								classes.add("SchoolMom");
@@ -1300,8 +1913,17 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "dadKeys":
 						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
-							putSql.append(SiteContextEnUS.SQL_addA);
-							putSqlParams.addAll(Arrays.asList(pk, "dadKeys", l, "enrollmentKeys"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_addA
+										, Tuple.of(pk, "dadKeys", l, "enrollmentKeys")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.dadKeys failed", b.cause())));
+								});
+							}));
 							if(!pks.contains(l)) {
 								pks.add(l);
 								classes.add("SchoolDad");
@@ -1310,8 +1932,17 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "guardianKeys":
 						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
-							putSql.append(SiteContextEnUS.SQL_addA);
-							putSqlParams.addAll(Arrays.asList(l, "enrollmentKeys", pk, "guardianKeys"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_addA
+										, Tuple.of(l, "enrollmentKeys", pk, "guardianKeys")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.guardianKeys failed", b.cause())));
+								});
+							}));
 							if(!pks.contains(l)) {
 								pks.add(l);
 								classes.add("SchoolGuardian");
@@ -1320,8 +1951,17 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "paymentKeys":
 						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
-							putSql.append(SiteContextEnUS.SQL_addA);
-							putSqlParams.addAll(Arrays.asList(l, "enrollmentKey", pk, "paymentKeys"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_addA
+										, Tuple.of(l, "enrollmentKey", pk, "paymentKeys")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.paymentKeys failed", b.cause())));
+								});
+							}));
 							if(!pks.contains(l)) {
 								pks.add(l);
 								classes.add("SchoolPayment");
@@ -1330,8 +1970,17 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "userKeys":
 						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
-							putSql.append(SiteContextEnUS.SQL_addA);
-							putSqlParams.addAll(Arrays.asList(l, "enrollmentKeys", pk, "userKeys"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_addA
+										, Tuple.of(l, "enrollmentKeys", pk, "userKeys")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.userKeys failed", b.cause())));
+								});
+							}));
 							if(!pks.contains(l)) {
 								pks.add(l);
 								classes.add("SiteUser");
@@ -1339,188 +1988,564 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						}
 						break;
 					case "childCompleteName":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "childCompleteName", jsonObject.getString(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "childCompleteName", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.childCompleteName failed", b.cause())));
+							});
+						}));
 						break;
 					case "childCompleteNamePreferred":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "childCompleteNamePreferred", jsonObject.getString(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "childCompleteNamePreferred", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.childCompleteNamePreferred failed", b.cause())));
+							});
+						}));
 						break;
 					case "childBirthDate":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "childBirthDate", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entityVar)))));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "childBirthDate", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.childBirthDate failed", b.cause())));
+							});
+						}));
 						break;
 					case "schoolAddress":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "schoolAddress", jsonObject.getString(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "schoolAddress", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.schoolAddress failed", b.cause())));
+							});
+						}));
 						break;
 					case "enrollmentApproved":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "enrollmentApproved", jsonObject.getBoolean(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "enrollmentApproved", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentApproved failed", b.cause())));
+							});
+						}));
 						break;
 					case "enrollmentImmunizations":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "enrollmentImmunizations", jsonObject.getBoolean(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "enrollmentImmunizations", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentImmunizations failed", b.cause())));
+							});
+						}));
 						break;
 					case "familyMarried":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "familyMarried", jsonObject.getBoolean(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "familyMarried", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.familyMarried failed", b.cause())));
+							});
+						}));
 						break;
 					case "familySeparated":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "familySeparated", jsonObject.getBoolean(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "familySeparated", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.familySeparated failed", b.cause())));
+							});
+						}));
 						break;
 					case "familyDivorced":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "familyDivorced", jsonObject.getBoolean(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "familyDivorced", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.familyDivorced failed", b.cause())));
+							});
+						}));
 						break;
 					case "familyAddress":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "familyAddress", jsonObject.getString(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "familyAddress", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.familyAddress failed", b.cause())));
+							});
+						}));
 						break;
 					case "familyHowDoYouKnowTheSchool":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "familyHowDoYouKnowTheSchool", jsonObject.getString(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "familyHowDoYouKnowTheSchool", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.familyHowDoYouKnowTheSchool failed", b.cause())));
+							});
+						}));
 						break;
 					case "enrollmentSpecialConsiderations":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "enrollmentSpecialConsiderations", jsonObject.getString(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "enrollmentSpecialConsiderations", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentSpecialConsiderations failed", b.cause())));
+							});
+						}));
 						break;
 					case "childMedicalConditions":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "childMedicalConditions", jsonObject.getString(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "childMedicalConditions", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.childMedicalConditions failed", b.cause())));
+							});
+						}));
 						break;
 					case "childPreviousSchoolsAttended":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "childPreviousSchoolsAttended", jsonObject.getString(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "childPreviousSchoolsAttended", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.childPreviousSchoolsAttended failed", b.cause())));
+							});
+						}));
 						break;
 					case "childDescription":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "childDescription", jsonObject.getString(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "childDescription", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.childDescription failed", b.cause())));
+							});
+						}));
 						break;
 					case "childObjectives":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "childObjectives", jsonObject.getString(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "childObjectives", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.childObjectives failed", b.cause())));
+							});
+						}));
 						break;
 					case "childPottyTrained":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "childPottyTrained", jsonObject.getBoolean(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "childPottyTrained", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.childPottyTrained failed", b.cause())));
+							});
+						}));
 						break;
 					case "enrollmentGroupName":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "enrollmentGroupName", jsonObject.getString(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "enrollmentGroupName", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentGroupName failed", b.cause())));
+							});
+						}));
 						break;
 					case "enrollmentPaymentEachMonth":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "enrollmentPaymentEachMonth", jsonObject.getBoolean(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "enrollmentPaymentEachMonth", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentPaymentEachMonth failed", b.cause())));
+							});
+						}));
 						break;
 					case "enrollmentPaymentComplete":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "enrollmentPaymentComplete", jsonObject.getBoolean(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "enrollmentPaymentComplete", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentPaymentComplete failed", b.cause())));
+							});
+						}));
 						break;
 					case "customerProfileId":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "customerProfileId", jsonObject.getString(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "customerProfileId", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.customerProfileId failed", b.cause())));
+							});
+						}));
 						break;
 					case "enrollmentChargeDate":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "enrollmentChargeDate", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entityVar)))));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "enrollmentChargeDate", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentChargeDate failed", b.cause())));
+							});
+						}));
 						break;
 					case "enrollmentSignature1":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature1", jsonObject.getString(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "enrollmentSignature1", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentSignature1 failed", b.cause())));
+							});
+						}));
 						break;
 					case "enrollmentSignature2":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature2", jsonObject.getString(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "enrollmentSignature2", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentSignature2 failed", b.cause())));
+							});
+						}));
 						break;
 					case "enrollmentSignature3":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature3", jsonObject.getString(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "enrollmentSignature3", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentSignature3 failed", b.cause())));
+							});
+						}));
 						break;
 					case "enrollmentSignature4":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature4", jsonObject.getString(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "enrollmentSignature4", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentSignature4 failed", b.cause())));
+							});
+						}));
 						break;
 					case "enrollmentSignature5":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature5", jsonObject.getString(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "enrollmentSignature5", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentSignature5 failed", b.cause())));
+							});
+						}));
 						break;
 					case "enrollmentSignature6":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature6", jsonObject.getString(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "enrollmentSignature6", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentSignature6 failed", b.cause())));
+							});
+						}));
 						break;
 					case "enrollmentSignature7":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature7", jsonObject.getString(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "enrollmentSignature7", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentSignature7 failed", b.cause())));
+							});
+						}));
 						break;
 					case "enrollmentSignature8":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature8", jsonObject.getString(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "enrollmentSignature8", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentSignature8 failed", b.cause())));
+							});
+						}));
 						break;
 					case "enrollmentSignature9":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature9", jsonObject.getString(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "enrollmentSignature9", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentSignature9 failed", b.cause())));
+							});
+						}));
 						break;
 					case "enrollmentSignature10":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature10", jsonObject.getString(entityVar)));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "enrollmentSignature10", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentSignature10 failed", b.cause())));
+							});
+						}));
 						break;
 					case "enrollmentDate1":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "enrollmentDate1", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entityVar)))));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "enrollmentDate1", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentDate1 failed", b.cause())));
+							});
+						}));
 						break;
 					case "enrollmentDate2":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "enrollmentDate2", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entityVar)))));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "enrollmentDate2", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentDate2 failed", b.cause())));
+							});
+						}));
 						break;
 					case "enrollmentDate3":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "enrollmentDate3", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entityVar)))));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "enrollmentDate3", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentDate3 failed", b.cause())));
+							});
+						}));
 						break;
 					case "enrollmentDate4":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "enrollmentDate4", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entityVar)))));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "enrollmentDate4", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentDate4 failed", b.cause())));
+							});
+						}));
 						break;
 					case "enrollmentDate5":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "enrollmentDate5", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entityVar)))));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "enrollmentDate5", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentDate5 failed", b.cause())));
+							});
+						}));
 						break;
 					case "enrollmentDate6":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "enrollmentDate6", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entityVar)))));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "enrollmentDate6", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentDate6 failed", b.cause())));
+							});
+						}));
 						break;
 					case "enrollmentDate7":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "enrollmentDate7", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entityVar)))));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "enrollmentDate7", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentDate7 failed", b.cause())));
+							});
+						}));
 						break;
 					case "enrollmentDate8":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "enrollmentDate8", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entityVar)))));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "enrollmentDate8", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentDate8 failed", b.cause())));
+							});
+						}));
 						break;
 					case "enrollmentDate9":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "enrollmentDate9", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entityVar)))));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "enrollmentDate9", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentDate9 failed", b.cause())));
+							});
+						}));
 						break;
 					case "enrollmentDate10":
-						putSql.append(SiteContextEnUS.SQL_setD);
-						putSqlParams.addAll(Arrays.asList(pk, "enrollmentDate10", DateTimeFormatter.ofPattern("MM/dd/yyyy").format(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(jsonObject.getString(entityVar)))));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "enrollmentDate10", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentDate10 failed", b.cause())));
+							});
+						}));
 						break;
 					}
 				}
 			}
-			sqlConnection.queryWithParams(
-					putSql.toString()
-					, new JsonArray(putSqlParams)
-					, postAsync
-			-> {
-				if(postAsync.succeeded()) {
+			CompositeFuture.all(futures).setHandler( a -> {
+				if(a.succeeded()) {
 					eventHandler.handle(Future.succeededFuture());
 				} else {
-					eventHandler.handle(Future.failedFuture(new Exception(postAsync.cause())));
+					LOGGER.error(String.format("sqlPUTCopySchoolEnrollment failed. ", a.cause()));
+					eventHandler.handle(Future.failedFuture(a.cause()));
 				}
 			});
 		} catch(Exception e) {
+			LOGGER.error(String.format("sqlPUTCopySchoolEnrollment failed. ", e));
 			eventHandler.handle(Future.failedFuture(e));
 		}
 	}
@@ -1529,26 +2554,14 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 		try {
 			response200PUTCopySchoolEnrollment(siteRequest, a -> {
 				if(a.succeeded()) {
-					SQLConnection sqlConnection = siteRequest.getSqlConnection();
-					sqlConnection.commit(b -> {
-						if(b.succeeded()) {
-							sqlConnection.close(c -> {
-								if(c.succeeded()) {
-									eventHandler.handle(Future.succeededFuture(a.result()));
-								} else {
-									errorSchoolEnrollment(siteRequest, eventHandler, c);
-								}
-							});
-						} else {
-							errorSchoolEnrollment(siteRequest, eventHandler, b);
-						}
-					});
+					eventHandler.handle(Future.succeededFuture(a.result()));
 				} else {
+					LOGGER.error(String.format("putcopySchoolEnrollmentResponse failed. ", a.cause()));
 					errorSchoolEnrollment(siteRequest, eventHandler, a);
 				}
 			});
 		} catch(Exception ex) {
-			LOGGER.error(String.format("putcopySchoolEnrollment failed. ", ex));
+			LOGGER.error(String.format("putcopySchoolEnrollmentResponse failed. ", ex));
 			errorSchoolEnrollment(siteRequest, null, Future.failedFuture(ex));
 		}
 	}
@@ -1557,6 +2570,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 			JsonObject json = new JsonObject();
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
 		} catch(Exception e) {
+			LOGGER.error(String.format("response200PUTCopySchoolEnrollment failed. ", e));
 			eventHandler.handle(Future.failedFuture(e));
 		}
 	}
@@ -1568,93 +2582,86 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest, body);
 		try {
 			LOGGER.info(String.format("patchSchoolEnrollment started. "));
-			sqlSchoolEnrollment(siteRequest, a -> {
-				if(a.succeeded()) {
-					userSchoolEnrollment(siteRequest, b -> {
-						if(b.succeeded()) {
-							patchSchoolEnrollmentResponse(siteRequest, c -> {
-								if(c.succeeded()) {
-									eventHandler.handle(Future.succeededFuture(c.result()));
-									WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
-									workerExecutor.executeBlocking(
-										blockingCodeHandler -> {
-											SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest, body);
-											try {
-												aSearchSchoolEnrollment(siteRequest2, false, true, "/api/enrollment", "PATCH", d -> {
-													if(d.succeeded()) {
-														SearchList<SchoolEnrollment> listSchoolEnrollment = d.result();
-														ApiRequest apiRequest = new ApiRequest();
-														apiRequest.setRows(listSchoolEnrollment.getRows());
-														apiRequest.setNumFound(listSchoolEnrollment.getQueryResponse().getResults().getNumFound());
-														apiRequest.setNumPATCH(0L);
-														apiRequest.initDeepApiRequest(siteRequest2);
-														siteRequest2.setApiRequest_(apiRequest);
-														siteRequest2.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest).toString());
-														SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listSchoolEnrollment.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
-														Date date = null;
-														if(facets != null)
-															date = (Date)facets.get("max_modified");
-														String dt;
-														if(date == null)
-															dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
-														else
-															dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
-														listSchoolEnrollment.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
+			userSchoolEnrollment(siteRequest, b -> {
+				if(b.succeeded()) {
+					patchSchoolEnrollmentResponse(siteRequest, c -> {
+						if(c.succeeded()) {
+							eventHandler.handle(Future.succeededFuture(c.result()));
+							WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
+							workerExecutor.executeBlocking(
+								blockingCodeHandler -> {
+									SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest, body);
+									try {
+										aSearchSchoolEnrollment(siteRequest2, false, true, "/api/enrollment", "PATCH", d -> {
+											if(d.succeeded()) {
+												SearchList<SchoolEnrollment> listSchoolEnrollment = d.result();
+												ApiRequest apiRequest = new ApiRequest();
+												apiRequest.setRows(listSchoolEnrollment.getRows());
+												apiRequest.setNumFound(listSchoolEnrollment.getQueryResponse().getResults().getNumFound());
+												apiRequest.setNumPATCH(0L);
+												apiRequest.initDeepApiRequest(siteRequest2);
+												siteRequest2.setApiRequest_(apiRequest);
+												siteRequest2.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest).toString());
+												SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listSchoolEnrollment.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
+												Date date = null;
+												if(facets != null)
+													date = (Date)facets.get("max_modified");
+												String dt;
+												if(date == null)
+													dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
+												else
+													dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
+												listSchoolEnrollment.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
 
-														SchoolEnrollment o = listSchoolEnrollment.getList().stream().findFirst().orElse(null);
-														sqlSchoolEnrollment(siteRequest2, e -> {
-															if(e.succeeded()) {
-																try {
-																	listPATCHSchoolEnrollment(apiRequest, listSchoolEnrollment, dt, f -> {
-																		if(f.succeeded()) {
-																			patchSchoolEnrollmentResponse(siteRequest2, g -> {
-																				if(g.succeeded()) {
-																					LOGGER.info(String.format("patchSchoolEnrollment succeeded. "));
-																					blockingCodeHandler.handle(Future.succeededFuture(g.result()));
-																				} else {
-																					LOGGER.error(String.format("patchSchoolEnrollment failed. ", g.cause()));
-																					errorSchoolEnrollment(siteRequest2, null, g);
-																				}
-																			});
+												SchoolEnrollment o = listSchoolEnrollment.getList().stream().findFirst().orElse(null);
+												sqlConnectionSchoolEnrollment(siteRequest2, e -> {
+													if(e.succeeded()) {
+														try {
+															listPATCHSchoolEnrollment(apiRequest, listSchoolEnrollment, dt, f -> {
+																if(f.succeeded()) {
+																	patchSchoolEnrollmentResponse(siteRequest2, g -> {
+																												if(g.succeeded()) {
+																			LOGGER.info(String.format("patchSchoolEnrollment succeeded. "));
+																			blockingCodeHandler.handle(Future.succeededFuture(g.result()));
 																		} else {
-																			LOGGER.error(String.format("patchSchoolEnrollment failed. ", f.cause()));
-																			errorSchoolEnrollment(siteRequest2, null, f);
+																			LOGGER.error(String.format("patchSchoolEnrollment failed. ", g.cause()));
+																			errorSchoolEnrollment(siteRequest2, null, g);
 																		}
 																	});
-																} catch(Exception ex) {
-																	LOGGER.error(String.format("patchSchoolEnrollment failed. ", ex));
-																	errorSchoolEnrollment(siteRequest2, null, Future.failedFuture(ex));
+																} else {
+																	LOGGER.error(String.format("patchSchoolEnrollment failed. ", f.cause()));
+																	errorSchoolEnrollment(siteRequest2, null, f);
 																}
-															} else {
-																LOGGER.error(String.format("patchSchoolEnrollment failed. ", e.cause()));
-																errorSchoolEnrollment(siteRequest2, null, e);
-															}
-														});
+															});
+														} catch(Exception ex) {
+															LOGGER.error(String.format("patchSchoolEnrollment failed. ", ex));
+															errorSchoolEnrollment(siteRequest2, null, Future.failedFuture(ex));
+														}
 													} else {
-														LOGGER.error(String.format("patchSchoolEnrollment failed. ", d.cause()));
-														errorSchoolEnrollment(siteRequest2, null, d);
+														LOGGER.error(String.format("patchSchoolEnrollment failed. ", e.cause()));
+														errorSchoolEnrollment(siteRequest2, null, e);
 													}
 												});
-											} catch(Exception ex) {
-												LOGGER.error(String.format("patchSchoolEnrollment failed. ", ex));
-												errorSchoolEnrollment(siteRequest2, null, Future.failedFuture(ex));
+											} else {
+												LOGGER.error(String.format("patchSchoolEnrollment failed. ", d.cause()));
+												errorSchoolEnrollment(siteRequest2, null, d);
 											}
-										}, resultHandler -> {
-										}
-									);
-								} else {
-									LOGGER.error(String.format("patchSchoolEnrollment failed. ", c.cause()));
-									errorSchoolEnrollment(siteRequest, eventHandler, c);
+										});
+									} catch(Exception ex) {
+										LOGGER.error(String.format("patchSchoolEnrollment failed. ", ex));
+										errorSchoolEnrollment(siteRequest2, null, Future.failedFuture(ex));
+									}
+								}, resultHandler -> {
 								}
-							});
+							);
 						} else {
-							LOGGER.error(String.format("patchSchoolEnrollment failed. ", b.cause()));
-							errorSchoolEnrollment(siteRequest, eventHandler, b);
+							LOGGER.error(String.format("patchSchoolEnrollment failed. ", c.cause()));
+							errorSchoolEnrollment(siteRequest, eventHandler, c);
 						}
 					});
 				} else {
-					LOGGER.error(String.format("patchSchoolEnrollment failed. ", a.cause()));
-					errorSchoolEnrollment(siteRequest, eventHandler, a);
+					LOGGER.error(String.format("patchSchoolEnrollment failed. ", b.cause()));
+					errorSchoolEnrollment(siteRequest, eventHandler, b);
 				}
 			});
 		} catch(Exception ex) {
@@ -1685,6 +2692,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					response200PATCHSchoolEnrollment(siteRequest, eventHandler);
 				}
 			} else {
+				LOGGER.error(String.format("listPATCHSchoolEnrollment failed. ", a.cause()));
 				errorSchoolEnrollment(listSchoolEnrollment.getSiteRequest_(), eventHandler, a);
 			}
 		});
@@ -1699,14 +2707,14 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 				apiRequest.setOriginal(o);
 				apiRequest.setPk(o.getPk());
 			}
-			sqlPATCHSchoolEnrollment(o, inheritPk, a -> {
+			sqlConnectionSchoolEnrollment(siteRequest, a -> {
 				if(a.succeeded()) {
-					SchoolEnrollment schoolEnrollment = a.result();
-					defineSchoolEnrollment(schoolEnrollment, b -> {
+					sqlTransactionSchoolEnrollment(siteRequest, b -> {
 						if(b.succeeded()) {
-							attributeSchoolEnrollment(schoolEnrollment, c -> {
+							sqlPATCHSchoolEnrollment(o, inheritPk, c -> {
 								if(c.succeeded()) {
-									indexSchoolEnrollment(schoolEnrollment, d -> {
+									SchoolEnrollment schoolEnrollment = c.result();
+									defineIndexSchoolEnrollment(schoolEnrollment, d -> {
 										if(d.succeeded()) {
 											if(apiRequest != null) {
 												apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
@@ -1715,32 +2723,30 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 												}
 												siteRequest.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest).toString());
 											}
-											SQLConnection sqlConnection = siteRequest.getSqlConnection();
-											sqlConnection.commit(e -> {
-												if(e.succeeded()) {
-													eventHandler.handle(Future.succeededFuture(schoolEnrollment));
-													promise.complete(schoolEnrollment);
-												} else {
-													eventHandler.handle(Future.failedFuture(e.cause()));
-												}
-											});
+											eventHandler.handle(Future.succeededFuture(schoolEnrollment));
+											promise.complete(schoolEnrollment);
 										} else {
+											LOGGER.error(String.format("patchSchoolEnrollmentFuture failed. ", d.cause()));
 											eventHandler.handle(Future.failedFuture(d.cause()));
 										}
 									});
 								} else {
+									LOGGER.error(String.format("patchSchoolEnrollmentFuture failed. ", c.cause()));
 									eventHandler.handle(Future.failedFuture(c.cause()));
 								}
 							});
 						} else {
+							LOGGER.error(String.format("patchSchoolEnrollmentFuture failed. ", b.cause()));
 							eventHandler.handle(Future.failedFuture(b.cause()));
 						}
 					});
 				} else {
+					LOGGER.error(String.format("patchSchoolEnrollmentFuture failed. ", a.cause()));
 					eventHandler.handle(Future.failedFuture(a.cause()));
 				}
 			});
 		} catch(Exception e) {
+			LOGGER.error(String.format("patchSchoolEnrollmentFuture failed. ", e));
 			errorSchoolEnrollment(siteRequest, null, Future.failedFuture(e));
 		}
 		return promise.future();
@@ -1752,21 +2758,38 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 			ApiRequest apiRequest = siteRequest.getApiRequest_();
 			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(new ArrayList<>());
 			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(new ArrayList<>());
-			SQLConnection sqlConnection = siteRequest.getSqlConnection();
+			Transaction tx = siteRequest.getTx();
 			Long pk = o.getPk();
 			JsonObject jsonObject = siteRequest.getJsonObject();
-			StringBuilder patchSql = new StringBuilder();
-			List<Object> patchSqlParams = new ArrayList<Object>();
 			Set<String> methodNames = jsonObject.fieldNames();
 			SchoolEnrollment o2 = new SchoolEnrollment();
+			List<Future> futures = new ArrayList<>();
 
 			if(o.getUserId() == null && siteRequest.getUserId() != null) {
-				patchSql.append(SiteContextEnUS.SQL_setD);
-				patchSqlParams.addAll(Arrays.asList(pk, "userId", siteRequest.getUserId()));
+				futures.add(Future.future(a -> {
+					tx.preparedQuery(SiteContextEnUS.SQL_setD
+							, Tuple.of(pk, "userId", siteRequest.getUserId())
+							, b
+					-> {
+						if(b.succeeded())
+							a.handle(Future.succeededFuture());
+						else
+							a.handle(Future.failedFuture(b.cause()));
+					});
+				}));
 			}
 			if(o.getUserKey() == null && siteRequest.getUserKey() != null) {
-				patchSql.append(SiteContextEnUS.SQL_setD);
-				patchSqlParams.addAll(Arrays.asList(pk, "userKey", siteRequest.getUserKey()));
+				futures.add(Future.future(a -> {
+					tx.preparedQuery(SiteContextEnUS.SQL_setD
+				, Tuple.of(pk, "userKey", siteRequest.getUserKey())
+							, b
+					-> {
+						if(b.succeeded())
+							a.handle(Future.succeededFuture());
+						else
+							a.handle(Future.failedFuture(b.cause()));
+					});
+				}));
 
 				JsonArray userKeys = Optional.ofNullable(jsonObject.getJsonArray("addUserKeys")).orElse(null);
 				if(userKeys != null && !userKeys.contains(siteRequest.getUserKey()))
@@ -1779,82 +2802,226 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 				switch(methodName) {
 					case "setInheritPk":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "inheritPk"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "inheritPk")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.inheritPk failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setInheritPk(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "inheritPk", o2.jsonInheritPk()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "inheritPk", o2.jsonInheritPk())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.inheritPk failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setCreated":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "created"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "created")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.created failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setCreated(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "created", o2.jsonCreated()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "created", o2.jsonCreated())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.created failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setModified":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "modified"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "modified")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.modified failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setModified(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "modified", o2.jsonModified()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "modified", o2.jsonModified())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.modified failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setArchived":
 						if(jsonObject.getBoolean(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "archived"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "archived")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.archived failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setArchived(jsonObject.getBoolean(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "archived", o2.jsonArchived()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "archived", o2.jsonArchived())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.archived failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setDeleted":
 						if(jsonObject.getBoolean(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "deleted"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "deleted")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.deleted failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setDeleted(jsonObject.getBoolean(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "deleted", o2.jsonDeleted()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "deleted", o2.jsonDeleted())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.deleted failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setSessionId":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "sessionId"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "sessionId")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.sessionId failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setSessionId(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "sessionId", o2.jsonSessionId()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "sessionId", o2.jsonSessionId())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.sessionId failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setUserId":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "userId"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "userId")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.userId failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setUserId(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "userId", o2.jsonUserId()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "userId", o2.jsonUserId())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.userId failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setUserKey":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "userKey"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "userKey")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.userKey failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setUserKey(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "userKey", o2.jsonUserKey()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "userKey", o2.jsonUserKey())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.userKey failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setYearKey":
@@ -1867,13 +3034,22 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								searchList.setC(SchoolYear.class);
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								searchList.initDeepSearchList(siteRequest);
-								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null) {
+								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null) {
 									o2.setYearKey(jsonObject.getString(methodName));
-									patchSql.append(SiteContextEnUS.SQL_addA);
-									patchSqlParams.addAll(Arrays.asList(l, "enrollmentKeys", pk, "yearKey"));
-									if(!pks.contains(l)) {
-										pks.add(l);
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_addA
+												, Tuple.of(l2, "enrollmentKeys", pk, "yearKey")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.yearKey failed", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
 										classes.add("SchoolYear");
 									}
 								}
@@ -1890,13 +3066,22 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								searchList.setC(SchoolYear.class);
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								searchList.initDeepSearchList(siteRequest);
-								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null && l.equals(o.getYearKey())) {
+								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null && l2.equals(o.getYearKey())) {
 									o2.setYearKey(jsonObject.getString(methodName));
-									patchSql.append(SiteContextEnUS.SQL_removeA);
-									patchSqlParams.addAll(Arrays.asList("enrollmentKeys", l, "yearKey", pk));
-									if(!pks.contains(l)) {
-										pks.add(l);
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA
+												, Tuple.of("enrollmentKeys", l2, "yearKey", pk)
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.yearKey failed", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
 										classes.add("SchoolYear");
 									}
 								}
@@ -1913,12 +3098,21 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								searchList.setC(SchoolBlock.class);
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								searchList.initDeepSearchList(siteRequest);
-								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null && !o.getBlockKeys().contains(l)) {
-									patchSql.append(SiteContextEnUS.SQL_addA);
-									patchSqlParams.addAll(Arrays.asList(pk, "blockKeys", l, "enrollmentKeys"));
-									if(!pks.contains(l)) {
-										pks.add(l);
+								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null && !o.getBlockKeys().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_addA
+												, Tuple.of(pk, "blockKeys", l2, "enrollmentKeys")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.blockKeys failed", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
 										classes.add("SchoolBlock");
 									}
 								}
@@ -1937,12 +3131,21 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 									searchList.setC(SchoolBlock.class);
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									searchList.initDeepSearchList(siteRequest);
-									l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-									if(l != null && !o.getBlockKeys().contains(l)) {
-										patchSql.append(SiteContextEnUS.SQL_addA);
-										patchSqlParams.addAll(Arrays.asList(pk, "blockKeys", l, "enrollmentKeys"));
-										if(!pks.contains(l)) {
-											pks.add(l);
+									Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l2 != null && !o.getBlockKeys().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_addA
+												, Tuple.of(pk, "blockKeys", l2, "enrollmentKeys")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.blockKeys failed", b.cause())));
+										});
+									}));
+										if(!pks.contains(l2)) {
+											pks.add(l2);
 											classes.add("SchoolBlock");
 										}
 									}
@@ -1962,12 +3165,21 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 									searchList.setC(SchoolBlock.class);
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									searchList.initDeepSearchList(siteRequest);
-									l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-									if(l != null && !o.getBlockKeys().contains(l)) {
-										patchSql.append(SiteContextEnUS.SQL_addA);
-										patchSqlParams.addAll(Arrays.asList(pk, "blockKeys", l, "enrollmentKeys"));
-										if(!pks.contains(l)) {
-											pks.add(l);
+									Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l2 != null && !o.getBlockKeys().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_addA
+												, Tuple.of(pk, "blockKeys", l2, "enrollmentKeys")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.blockKeys failed", b.cause())));
+										});
+									}));
+										if(!pks.contains(l2)) {
+											pks.add(l2);
 											classes.add("SchoolBlock");
 										}
 									}
@@ -1977,8 +3189,17 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						if(o.getBlockKeys() != null) {
 							for(Long l :  o.getBlockKeys()) {
 								if(l != null && (setBlockKeysValues == null || !setBlockKeysValues.contains(l))) {
-									patchSql.append(SiteContextEnUS.SQL_removeA);
-									patchSqlParams.addAll(Arrays.asList(pk, "blockKeys", l, "enrollmentKeys"));
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA
+												, Tuple.of(pk, "blockKeys", l, "enrollmentKeys")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.blockKeys failed", b.cause())));
+										});
+									}));
 								}
 							}
 						}
@@ -1993,12 +3214,21 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								searchList.setC(SchoolBlock.class);
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								searchList.initDeepSearchList(siteRequest);
-								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null && o.getBlockKeys().contains(l)) {
-									patchSql.append(SiteContextEnUS.SQL_removeA);
-									patchSqlParams.addAll(Arrays.asList(pk, "blockKeys", "enrollmentKeys", l));
-									if(!pks.contains(l)) {
-										pks.add(l);
+								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null && o.getBlockKeys().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA
+												, Tuple.of(pk, "blockKeys", "enrollmentKeys", l2)
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.blockKeys failed", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
 										classes.add("SchoolBlock");
 									}
 								}
@@ -2015,13 +3245,22 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								searchList.setC(SchoolChild.class);
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								searchList.initDeepSearchList(siteRequest);
-								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null && !l.equals(o.getChildKey())) {
+								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null && !l2.equals(o.getChildKey())) {
 									o2.setChildKey(jsonObject.getString(methodName));
-									patchSql.append(SiteContextEnUS.SQL_addA);
-									patchSqlParams.addAll(Arrays.asList(pk, "childKey", l, "enrollmentKeys"));
-									if(!pks.contains(l)) {
-										pks.add(l);
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_addA
+												, Tuple.of(pk, "childKey", l2, "enrollmentKeys")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.childKey failed", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
 										classes.add("SchoolChild");
 									}
 								}
@@ -2038,13 +3277,22 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								searchList.setC(SchoolChild.class);
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								searchList.initDeepSearchList(siteRequest);
-								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null && l.equals(o.getChildKey())) {
+								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null && l2.equals(o.getChildKey())) {
 									o2.setChildKey(jsonObject.getString(methodName));
-									patchSql.append(SiteContextEnUS.SQL_removeA);
-									patchSqlParams.addAll(Arrays.asList("childKey", pk, "enrollmentKeys", l));
-									if(!pks.contains(l)) {
-										pks.add(l);
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA
+												, Tuple.of("childKey", pk, "enrollmentKeys", l2)
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.childKey failed", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
 										classes.add("SchoolChild");
 									}
 								}
@@ -2061,12 +3309,21 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								searchList.setC(SchoolMom.class);
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								searchList.initDeepSearchList(siteRequest);
-								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null && !o.getMomKeys().contains(l)) {
-									patchSql.append(SiteContextEnUS.SQL_addA);
-									patchSqlParams.addAll(Arrays.asList(l, "enrollmentKeys", pk, "momKeys"));
-									if(!pks.contains(l)) {
-										pks.add(l);
+								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null && !o.getMomKeys().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_addA
+												, Tuple.of(l2, "enrollmentKeys", pk, "momKeys")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.momKeys failed", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
 										classes.add("SchoolMom");
 									}
 								}
@@ -2085,12 +3342,21 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 									searchList.setC(SchoolMom.class);
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									searchList.initDeepSearchList(siteRequest);
-									l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-									if(l != null && !o.getMomKeys().contains(l)) {
-										patchSql.append(SiteContextEnUS.SQL_addA);
-										patchSqlParams.addAll(Arrays.asList(l, "enrollmentKeys", pk, "momKeys"));
-										if(!pks.contains(l)) {
-											pks.add(l);
+									Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l2 != null && !o.getMomKeys().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_addA
+												, Tuple.of(l2, "enrollmentKeys", pk, "momKeys")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.momKeys failed", b.cause())));
+										});
+									}));
+										if(!pks.contains(l2)) {
+											pks.add(l2);
 											classes.add("SchoolMom");
 										}
 									}
@@ -2110,12 +3376,21 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 									searchList.setC(SchoolMom.class);
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									searchList.initDeepSearchList(siteRequest);
-									l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-									if(l != null && !o.getMomKeys().contains(l)) {
-										patchSql.append(SiteContextEnUS.SQL_addA);
-										patchSqlParams.addAll(Arrays.asList(l, "enrollmentKeys", pk, "momKeys"));
-										if(!pks.contains(l)) {
-											pks.add(l);
+									Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l2 != null && !o.getMomKeys().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_addA
+												, Tuple.of(l2, "enrollmentKeys", pk, "momKeys")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.momKeys failed", b.cause())));
+										});
+									}));
+										if(!pks.contains(l2)) {
+											pks.add(l2);
 											classes.add("SchoolMom");
 										}
 									}
@@ -2125,8 +3400,17 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						if(o.getMomKeys() != null) {
 							for(Long l :  o.getMomKeys()) {
 								if(l != null && (setMomKeysValues == null || !setMomKeysValues.contains(l))) {
-									patchSql.append(SiteContextEnUS.SQL_removeA);
-									patchSqlParams.addAll(Arrays.asList(l, "enrollmentKeys", pk, "momKeys"));
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA
+												, Tuple.of(l, "enrollmentKeys", pk, "momKeys")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.momKeys failed", b.cause())));
+										});
+									}));
 								}
 							}
 						}
@@ -2141,12 +3425,21 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								searchList.setC(SchoolMom.class);
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								searchList.initDeepSearchList(siteRequest);
-								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null && o.getMomKeys().contains(l)) {
-									patchSql.append(SiteContextEnUS.SQL_removeA);
-									patchSqlParams.addAll(Arrays.asList("enrollmentKeys", l, "momKeys", pk));
-									if(!pks.contains(l)) {
-										pks.add(l);
+								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null && o.getMomKeys().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA
+												, Tuple.of("enrollmentKeys", l2, "momKeys", pk)
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.momKeys failed", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
 										classes.add("SchoolMom");
 									}
 								}
@@ -2163,12 +3456,21 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								searchList.setC(SchoolDad.class);
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								searchList.initDeepSearchList(siteRequest);
-								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null && !o.getDadKeys().contains(l)) {
-									patchSql.append(SiteContextEnUS.SQL_addA);
-									patchSqlParams.addAll(Arrays.asList(pk, "dadKeys", l, "enrollmentKeys"));
-									if(!pks.contains(l)) {
-										pks.add(l);
+								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null && !o.getDadKeys().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_addA
+												, Tuple.of(pk, "dadKeys", l2, "enrollmentKeys")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.dadKeys failed", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
 										classes.add("SchoolDad");
 									}
 								}
@@ -2187,12 +3489,21 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 									searchList.setC(SchoolDad.class);
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									searchList.initDeepSearchList(siteRequest);
-									l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-									if(l != null && !o.getDadKeys().contains(l)) {
-										patchSql.append(SiteContextEnUS.SQL_addA);
-										patchSqlParams.addAll(Arrays.asList(pk, "dadKeys", l, "enrollmentKeys"));
-										if(!pks.contains(l)) {
-											pks.add(l);
+									Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l2 != null && !o.getDadKeys().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_addA
+												, Tuple.of(pk, "dadKeys", l2, "enrollmentKeys")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.dadKeys failed", b.cause())));
+										});
+									}));
+										if(!pks.contains(l2)) {
+											pks.add(l2);
 											classes.add("SchoolDad");
 										}
 									}
@@ -2212,12 +3523,21 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 									searchList.setC(SchoolDad.class);
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									searchList.initDeepSearchList(siteRequest);
-									l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-									if(l != null && !o.getDadKeys().contains(l)) {
-										patchSql.append(SiteContextEnUS.SQL_addA);
-										patchSqlParams.addAll(Arrays.asList(pk, "dadKeys", l, "enrollmentKeys"));
-										if(!pks.contains(l)) {
-											pks.add(l);
+									Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l2 != null && !o.getDadKeys().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_addA
+												, Tuple.of(pk, "dadKeys", l2, "enrollmentKeys")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.dadKeys failed", b.cause())));
+										});
+									}));
+										if(!pks.contains(l2)) {
+											pks.add(l2);
 											classes.add("SchoolDad");
 										}
 									}
@@ -2227,8 +3547,17 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						if(o.getDadKeys() != null) {
 							for(Long l :  o.getDadKeys()) {
 								if(l != null && (setDadKeysValues == null || !setDadKeysValues.contains(l))) {
-									patchSql.append(SiteContextEnUS.SQL_removeA);
-									patchSqlParams.addAll(Arrays.asList(pk, "dadKeys", l, "enrollmentKeys"));
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA
+												, Tuple.of(pk, "dadKeys", l, "enrollmentKeys")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.dadKeys failed", b.cause())));
+										});
+									}));
 								}
 							}
 						}
@@ -2243,12 +3572,21 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								searchList.setC(SchoolDad.class);
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								searchList.initDeepSearchList(siteRequest);
-								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null && o.getDadKeys().contains(l)) {
-									patchSql.append(SiteContextEnUS.SQL_removeA);
-									patchSqlParams.addAll(Arrays.asList(pk, "dadKeys", "enrollmentKeys", l));
-									if(!pks.contains(l)) {
-										pks.add(l);
+								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null && o.getDadKeys().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA
+												, Tuple.of(pk, "dadKeys", "enrollmentKeys", l2)
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.dadKeys failed", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
 										classes.add("SchoolDad");
 									}
 								}
@@ -2265,12 +3603,21 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								searchList.setC(SchoolGuardian.class);
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								searchList.initDeepSearchList(siteRequest);
-								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null && !o.getGuardianKeys().contains(l)) {
-									patchSql.append(SiteContextEnUS.SQL_addA);
-									patchSqlParams.addAll(Arrays.asList(l, "enrollmentKeys", pk, "guardianKeys"));
-									if(!pks.contains(l)) {
-										pks.add(l);
+								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null && !o.getGuardianKeys().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_addA
+												, Tuple.of(l2, "enrollmentKeys", pk, "guardianKeys")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.guardianKeys failed", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
 										classes.add("SchoolGuardian");
 									}
 								}
@@ -2289,12 +3636,21 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 									searchList.setC(SchoolGuardian.class);
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									searchList.initDeepSearchList(siteRequest);
-									l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-									if(l != null && !o.getGuardianKeys().contains(l)) {
-										patchSql.append(SiteContextEnUS.SQL_addA);
-										patchSqlParams.addAll(Arrays.asList(l, "enrollmentKeys", pk, "guardianKeys"));
-										if(!pks.contains(l)) {
-											pks.add(l);
+									Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l2 != null && !o.getGuardianKeys().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_addA
+												, Tuple.of(l2, "enrollmentKeys", pk, "guardianKeys")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.guardianKeys failed", b.cause())));
+										});
+									}));
+										if(!pks.contains(l2)) {
+											pks.add(l2);
 											classes.add("SchoolGuardian");
 										}
 									}
@@ -2314,12 +3670,21 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 									searchList.setC(SchoolGuardian.class);
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									searchList.initDeepSearchList(siteRequest);
-									l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-									if(l != null && !o.getGuardianKeys().contains(l)) {
-										patchSql.append(SiteContextEnUS.SQL_addA);
-										patchSqlParams.addAll(Arrays.asList(l, "enrollmentKeys", pk, "guardianKeys"));
-										if(!pks.contains(l)) {
-											pks.add(l);
+									Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l2 != null && !o.getGuardianKeys().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_addA
+												, Tuple.of(l2, "enrollmentKeys", pk, "guardianKeys")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.guardianKeys failed", b.cause())));
+										});
+									}));
+										if(!pks.contains(l2)) {
+											pks.add(l2);
 											classes.add("SchoolGuardian");
 										}
 									}
@@ -2329,8 +3694,17 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						if(o.getGuardianKeys() != null) {
 							for(Long l :  o.getGuardianKeys()) {
 								if(l != null && (setGuardianKeysValues == null || !setGuardianKeysValues.contains(l))) {
-									patchSql.append(SiteContextEnUS.SQL_removeA);
-									patchSqlParams.addAll(Arrays.asList(l, "enrollmentKeys", pk, "guardianKeys"));
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA
+												, Tuple.of(l, "enrollmentKeys", pk, "guardianKeys")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.guardianKeys failed", b.cause())));
+										});
+									}));
 								}
 							}
 						}
@@ -2345,12 +3719,21 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								searchList.setC(SchoolGuardian.class);
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								searchList.initDeepSearchList(siteRequest);
-								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null && o.getGuardianKeys().contains(l)) {
-									patchSql.append(SiteContextEnUS.SQL_removeA);
-									patchSqlParams.addAll(Arrays.asList("enrollmentKeys", l, "guardianKeys", pk));
-									if(!pks.contains(l)) {
-										pks.add(l);
+								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null && o.getGuardianKeys().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA
+												, Tuple.of("enrollmentKeys", l2, "guardianKeys", pk)
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.guardianKeys failed", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
 										classes.add("SchoolGuardian");
 									}
 								}
@@ -2367,12 +3750,21 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								searchList.setC(SchoolPayment.class);
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								searchList.initDeepSearchList(siteRequest);
-								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null && !o.getPaymentKeys().contains(l)) {
-									patchSql.append(SiteContextEnUS.SQL_addA);
-									patchSqlParams.addAll(Arrays.asList(l, "enrollmentKey", pk, "paymentKeys"));
-									if(!pks.contains(l)) {
-										pks.add(l);
+								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null && !o.getPaymentKeys().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_addA
+												, Tuple.of(l2, "enrollmentKey", pk, "paymentKeys")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.paymentKeys failed", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
 										classes.add("SchoolPayment");
 									}
 								}
@@ -2391,12 +3783,21 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 									searchList.setC(SchoolPayment.class);
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									searchList.initDeepSearchList(siteRequest);
-									l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-									if(l != null && !o.getPaymentKeys().contains(l)) {
-										patchSql.append(SiteContextEnUS.SQL_addA);
-										patchSqlParams.addAll(Arrays.asList(l, "enrollmentKey", pk, "paymentKeys"));
-										if(!pks.contains(l)) {
-											pks.add(l);
+									Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l2 != null && !o.getPaymentKeys().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_addA
+												, Tuple.of(l2, "enrollmentKey", pk, "paymentKeys")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.paymentKeys failed", b.cause())));
+										});
+									}));
+										if(!pks.contains(l2)) {
+											pks.add(l2);
 											classes.add("SchoolPayment");
 										}
 									}
@@ -2416,12 +3817,21 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 									searchList.setC(SchoolPayment.class);
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									searchList.initDeepSearchList(siteRequest);
-									l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-									if(l != null && !o.getPaymentKeys().contains(l)) {
-										patchSql.append(SiteContextEnUS.SQL_addA);
-										patchSqlParams.addAll(Arrays.asList(l, "enrollmentKey", pk, "paymentKeys"));
-										if(!pks.contains(l)) {
-											pks.add(l);
+									Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l2 != null && !o.getPaymentKeys().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_addA
+												, Tuple.of(l2, "enrollmentKey", pk, "paymentKeys")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.paymentKeys failed", b.cause())));
+										});
+									}));
+										if(!pks.contains(l2)) {
+											pks.add(l2);
 											classes.add("SchoolPayment");
 										}
 									}
@@ -2431,8 +3841,17 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						if(o.getPaymentKeys() != null) {
 							for(Long l :  o.getPaymentKeys()) {
 								if(l != null && (setPaymentKeysValues == null || !setPaymentKeysValues.contains(l))) {
-									patchSql.append(SiteContextEnUS.SQL_removeA);
-									patchSqlParams.addAll(Arrays.asList(l, "enrollmentKey", pk, "paymentKeys"));
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA
+												, Tuple.of(l, "enrollmentKey", pk, "paymentKeys")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.paymentKeys failed", b.cause())));
+										});
+									}));
 								}
 							}
 						}
@@ -2447,12 +3866,21 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								searchList.setC(SchoolPayment.class);
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								searchList.initDeepSearchList(siteRequest);
-								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null && o.getPaymentKeys().contains(l)) {
-									patchSql.append(SiteContextEnUS.SQL_removeA);
-									patchSqlParams.addAll(Arrays.asList("enrollmentKey", l, "paymentKeys", pk));
-									if(!pks.contains(l)) {
-										pks.add(l);
+								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null && o.getPaymentKeys().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA
+												, Tuple.of("enrollmentKey", l2, "paymentKeys", pk)
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.paymentKeys failed", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
 										classes.add("SchoolPayment");
 									}
 								}
@@ -2469,12 +3897,21 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								searchList.setC(SiteUser.class);
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								searchList.initDeepSearchList(siteRequest);
-								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null && !o.getUserKeys().contains(l)) {
-									patchSql.append(SiteContextEnUS.SQL_addA);
-									patchSqlParams.addAll(Arrays.asList(l, "enrollmentKeys", pk, "userKeys"));
-									if(!pks.contains(l)) {
-										pks.add(l);
+								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null && !o.getUserKeys().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_addA
+												, Tuple.of(l2, "enrollmentKeys", pk, "userKeys")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.userKeys failed", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
 										classes.add("SiteUser");
 									}
 								}
@@ -2493,12 +3930,21 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 									searchList.setC(SiteUser.class);
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									searchList.initDeepSearchList(siteRequest);
-									l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-									if(l != null && !o.getUserKeys().contains(l)) {
-										patchSql.append(SiteContextEnUS.SQL_addA);
-										patchSqlParams.addAll(Arrays.asList(l, "enrollmentKeys", pk, "userKeys"));
-										if(!pks.contains(l)) {
-											pks.add(l);
+									Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l2 != null && !o.getUserKeys().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_addA
+												, Tuple.of(l2, "enrollmentKeys", pk, "userKeys")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.userKeys failed", b.cause())));
+										});
+									}));
+										if(!pks.contains(l2)) {
+											pks.add(l2);
 											classes.add("SiteUser");
 										}
 									}
@@ -2518,12 +3964,21 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 									searchList.setC(SiteUser.class);
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									searchList.initDeepSearchList(siteRequest);
-									l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-									if(l != null && !o.getUserKeys().contains(l)) {
-										patchSql.append(SiteContextEnUS.SQL_addA);
-										patchSqlParams.addAll(Arrays.asList(l, "enrollmentKeys", pk, "userKeys"));
-										if(!pks.contains(l)) {
-											pks.add(l);
+									Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l2 != null && !o.getUserKeys().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_addA
+												, Tuple.of(l2, "enrollmentKeys", pk, "userKeys")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.userKeys failed", b.cause())));
+										});
+									}));
+										if(!pks.contains(l2)) {
+											pks.add(l2);
 											classes.add("SiteUser");
 										}
 									}
@@ -2533,8 +3988,17 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						if(o.getUserKeys() != null) {
 							for(Long l :  o.getUserKeys()) {
 								if(l != null && (setUserKeysValues == null || !setUserKeysValues.contains(l))) {
-									patchSql.append(SiteContextEnUS.SQL_removeA);
-									patchSqlParams.addAll(Arrays.asList(l, "enrollmentKeys", pk, "userKeys"));
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA
+												, Tuple.of(l, "enrollmentKeys", pk, "userKeys")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.userKeys failed", b.cause())));
+										});
+									}));
 								}
 							}
 						}
@@ -2549,12 +4013,21 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								searchList.setC(SiteUser.class);
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								searchList.initDeepSearchList(siteRequest);
-								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null && o.getUserKeys().contains(l)) {
-									patchSql.append(SiteContextEnUS.SQL_removeA);
-									patchSqlParams.addAll(Arrays.asList("enrollmentKeys", l, "userKeys", pk));
-									if(!pks.contains(l)) {
-										pks.add(l);
+								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null && o.getUserKeys().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA
+												, Tuple.of("enrollmentKeys", l2, "userKeys", pk)
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.userKeys failed", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
 										classes.add("SiteUser");
 									}
 								}
@@ -2563,441 +4036,1195 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "setChildCompleteName":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "childCompleteName"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "childCompleteName")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.childCompleteName failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setChildCompleteName(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "childCompleteName", o2.jsonChildCompleteName()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "childCompleteName", o2.jsonChildCompleteName())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.childCompleteName failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setChildCompleteNamePreferred":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "childCompleteNamePreferred"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "childCompleteNamePreferred")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.childCompleteNamePreferred failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setChildCompleteNamePreferred(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "childCompleteNamePreferred", o2.jsonChildCompleteNamePreferred()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "childCompleteNamePreferred", o2.jsonChildCompleteNamePreferred())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.childCompleteNamePreferred failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setChildBirthDate":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "childBirthDate"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "childBirthDate")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.childBirthDate failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setChildBirthDate(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "childBirthDate", o2.jsonChildBirthDate()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "childBirthDate", o2.jsonChildBirthDate())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.childBirthDate failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setSchoolAddress":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "schoolAddress"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "schoolAddress")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.schoolAddress failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setSchoolAddress(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "schoolAddress", o2.jsonSchoolAddress()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "schoolAddress", o2.jsonSchoolAddress())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.schoolAddress failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setEnrollmentApproved":
 						if(jsonObject.getBoolean(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentApproved"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "enrollmentApproved")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentApproved failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setEnrollmentApproved(jsonObject.getBoolean(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentApproved", o2.jsonEnrollmentApproved()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "enrollmentApproved", o2.jsonEnrollmentApproved())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentApproved failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setEnrollmentImmunizations":
 						if(jsonObject.getBoolean(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentImmunizations"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "enrollmentImmunizations")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentImmunizations failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setEnrollmentImmunizations(jsonObject.getBoolean(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentImmunizations", o2.jsonEnrollmentImmunizations()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "enrollmentImmunizations", o2.jsonEnrollmentImmunizations())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentImmunizations failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setFamilyMarried":
 						if(jsonObject.getBoolean(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "familyMarried"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "familyMarried")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.familyMarried failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setFamilyMarried(jsonObject.getBoolean(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "familyMarried", o2.jsonFamilyMarried()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "familyMarried", o2.jsonFamilyMarried())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.familyMarried failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setFamilySeparated":
 						if(jsonObject.getBoolean(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "familySeparated"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "familySeparated")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.familySeparated failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setFamilySeparated(jsonObject.getBoolean(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "familySeparated", o2.jsonFamilySeparated()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "familySeparated", o2.jsonFamilySeparated())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.familySeparated failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setFamilyDivorced":
 						if(jsonObject.getBoolean(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "familyDivorced"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "familyDivorced")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.familyDivorced failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setFamilyDivorced(jsonObject.getBoolean(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "familyDivorced", o2.jsonFamilyDivorced()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "familyDivorced", o2.jsonFamilyDivorced())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.familyDivorced failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setFamilyAddress":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "familyAddress"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "familyAddress")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.familyAddress failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setFamilyAddress(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "familyAddress", o2.jsonFamilyAddress()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "familyAddress", o2.jsonFamilyAddress())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.familyAddress failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setFamilyHowDoYouKnowTheSchool":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "familyHowDoYouKnowTheSchool"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "familyHowDoYouKnowTheSchool")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.familyHowDoYouKnowTheSchool failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setFamilyHowDoYouKnowTheSchool(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "familyHowDoYouKnowTheSchool", o2.jsonFamilyHowDoYouKnowTheSchool()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "familyHowDoYouKnowTheSchool", o2.jsonFamilyHowDoYouKnowTheSchool())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.familyHowDoYouKnowTheSchool failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setEnrollmentSpecialConsiderations":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentSpecialConsiderations"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "enrollmentSpecialConsiderations")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentSpecialConsiderations failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setEnrollmentSpecialConsiderations(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentSpecialConsiderations", o2.jsonEnrollmentSpecialConsiderations()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "enrollmentSpecialConsiderations", o2.jsonEnrollmentSpecialConsiderations())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentSpecialConsiderations failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setChildMedicalConditions":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "childMedicalConditions"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "childMedicalConditions")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.childMedicalConditions failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setChildMedicalConditions(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "childMedicalConditions", o2.jsonChildMedicalConditions()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "childMedicalConditions", o2.jsonChildMedicalConditions())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.childMedicalConditions failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setChildPreviousSchoolsAttended":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "childPreviousSchoolsAttended"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "childPreviousSchoolsAttended")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.childPreviousSchoolsAttended failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setChildPreviousSchoolsAttended(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "childPreviousSchoolsAttended", o2.jsonChildPreviousSchoolsAttended()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "childPreviousSchoolsAttended", o2.jsonChildPreviousSchoolsAttended())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.childPreviousSchoolsAttended failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setChildDescription":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "childDescription"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "childDescription")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.childDescription failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setChildDescription(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "childDescription", o2.jsonChildDescription()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "childDescription", o2.jsonChildDescription())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.childDescription failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setChildObjectives":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "childObjectives"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "childObjectives")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.childObjectives failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setChildObjectives(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "childObjectives", o2.jsonChildObjectives()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "childObjectives", o2.jsonChildObjectives())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.childObjectives failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setChildPottyTrained":
 						if(jsonObject.getBoolean(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "childPottyTrained"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "childPottyTrained")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.childPottyTrained failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setChildPottyTrained(jsonObject.getBoolean(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "childPottyTrained", o2.jsonChildPottyTrained()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "childPottyTrained", o2.jsonChildPottyTrained())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.childPottyTrained failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setEnrollmentGroupName":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentGroupName"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "enrollmentGroupName")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentGroupName failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setEnrollmentGroupName(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentGroupName", o2.jsonEnrollmentGroupName()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "enrollmentGroupName", o2.jsonEnrollmentGroupName())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentGroupName failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setEnrollmentPaymentEachMonth":
 						if(jsonObject.getBoolean(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentPaymentEachMonth"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "enrollmentPaymentEachMonth")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentPaymentEachMonth failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setEnrollmentPaymentEachMonth(jsonObject.getBoolean(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentPaymentEachMonth", o2.jsonEnrollmentPaymentEachMonth()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "enrollmentPaymentEachMonth", o2.jsonEnrollmentPaymentEachMonth())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentPaymentEachMonth failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setEnrollmentPaymentComplete":
 						if(jsonObject.getBoolean(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentPaymentComplete"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "enrollmentPaymentComplete")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentPaymentComplete failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setEnrollmentPaymentComplete(jsonObject.getBoolean(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentPaymentComplete", o2.jsonEnrollmentPaymentComplete()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "enrollmentPaymentComplete", o2.jsonEnrollmentPaymentComplete())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentPaymentComplete failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setCustomerProfileId":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "customerProfileId"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "customerProfileId")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.customerProfileId failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setCustomerProfileId(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "customerProfileId", o2.jsonCustomerProfileId()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "customerProfileId", o2.jsonCustomerProfileId())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.customerProfileId failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setEnrollmentChargeDate":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentChargeDate"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "enrollmentChargeDate")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentChargeDate failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setEnrollmentChargeDate(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentChargeDate", o2.jsonEnrollmentChargeDate()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "enrollmentChargeDate", o2.jsonEnrollmentChargeDate())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentChargeDate failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setEnrollmentSignature1":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature1"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "enrollmentSignature1")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentSignature1 failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setEnrollmentSignature1(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature1", o2.jsonEnrollmentSignature1()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "enrollmentSignature1", o2.jsonEnrollmentSignature1())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentSignature1 failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setEnrollmentSignature2":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature2"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "enrollmentSignature2")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentSignature2 failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setEnrollmentSignature2(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature2", o2.jsonEnrollmentSignature2()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "enrollmentSignature2", o2.jsonEnrollmentSignature2())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentSignature2 failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setEnrollmentSignature3":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature3"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "enrollmentSignature3")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentSignature3 failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setEnrollmentSignature3(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature3", o2.jsonEnrollmentSignature3()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "enrollmentSignature3", o2.jsonEnrollmentSignature3())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentSignature3 failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setEnrollmentSignature4":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature4"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "enrollmentSignature4")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentSignature4 failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setEnrollmentSignature4(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature4", o2.jsonEnrollmentSignature4()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "enrollmentSignature4", o2.jsonEnrollmentSignature4())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentSignature4 failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setEnrollmentSignature5":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature5"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "enrollmentSignature5")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentSignature5 failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setEnrollmentSignature5(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature5", o2.jsonEnrollmentSignature5()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "enrollmentSignature5", o2.jsonEnrollmentSignature5())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentSignature5 failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setEnrollmentSignature6":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature6"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "enrollmentSignature6")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentSignature6 failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setEnrollmentSignature6(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature6", o2.jsonEnrollmentSignature6()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "enrollmentSignature6", o2.jsonEnrollmentSignature6())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentSignature6 failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setEnrollmentSignature7":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature7"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "enrollmentSignature7")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentSignature7 failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setEnrollmentSignature7(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature7", o2.jsonEnrollmentSignature7()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "enrollmentSignature7", o2.jsonEnrollmentSignature7())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentSignature7 failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setEnrollmentSignature8":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature8"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "enrollmentSignature8")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentSignature8 failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setEnrollmentSignature8(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature8", o2.jsonEnrollmentSignature8()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "enrollmentSignature8", o2.jsonEnrollmentSignature8())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentSignature8 failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setEnrollmentSignature9":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature9"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "enrollmentSignature9")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentSignature9 failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setEnrollmentSignature9(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature9", o2.jsonEnrollmentSignature9()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "enrollmentSignature9", o2.jsonEnrollmentSignature9())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentSignature9 failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setEnrollmentSignature10":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature10"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "enrollmentSignature10")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentSignature10 failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setEnrollmentSignature10(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature10", o2.jsonEnrollmentSignature10()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "enrollmentSignature10", o2.jsonEnrollmentSignature10())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentSignature10 failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setEnrollmentDate1":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentDate1"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "enrollmentDate1")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentDate1 failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setEnrollmentDate1(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentDate1", o2.jsonEnrollmentDate1()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "enrollmentDate1", o2.jsonEnrollmentDate1())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentDate1 failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setEnrollmentDate2":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentDate2"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "enrollmentDate2")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentDate2 failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setEnrollmentDate2(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentDate2", o2.jsonEnrollmentDate2()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "enrollmentDate2", o2.jsonEnrollmentDate2())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentDate2 failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setEnrollmentDate3":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentDate3"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "enrollmentDate3")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentDate3 failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setEnrollmentDate3(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentDate3", o2.jsonEnrollmentDate3()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "enrollmentDate3", o2.jsonEnrollmentDate3())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentDate3 failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setEnrollmentDate4":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentDate4"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "enrollmentDate4")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentDate4 failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setEnrollmentDate4(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentDate4", o2.jsonEnrollmentDate4()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "enrollmentDate4", o2.jsonEnrollmentDate4())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentDate4 failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setEnrollmentDate5":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentDate5"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "enrollmentDate5")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentDate5 failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setEnrollmentDate5(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentDate5", o2.jsonEnrollmentDate5()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "enrollmentDate5", o2.jsonEnrollmentDate5())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentDate5 failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setEnrollmentDate6":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentDate6"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "enrollmentDate6")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentDate6 failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setEnrollmentDate6(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentDate6", o2.jsonEnrollmentDate6()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "enrollmentDate6", o2.jsonEnrollmentDate6())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentDate6 failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setEnrollmentDate7":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentDate7"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "enrollmentDate7")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentDate7 failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setEnrollmentDate7(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentDate7", o2.jsonEnrollmentDate7()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "enrollmentDate7", o2.jsonEnrollmentDate7())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentDate7 failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setEnrollmentDate8":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentDate8"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "enrollmentDate8")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentDate8 failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setEnrollmentDate8(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentDate8", o2.jsonEnrollmentDate8()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "enrollmentDate8", o2.jsonEnrollmentDate8())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentDate8 failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setEnrollmentDate9":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentDate9"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "enrollmentDate9")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentDate9 failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setEnrollmentDate9(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentDate9", o2.jsonEnrollmentDate9()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "enrollmentDate9", o2.jsonEnrollmentDate9())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentDate9 failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setEnrollmentDate10":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentDate10"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "enrollmentDate10")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentDate10 failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setEnrollmentDate10(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentDate10", o2.jsonEnrollmentDate10()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "enrollmentDate10", o2.jsonEnrollmentDate10())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentDate10 failed", b.cause())));
+								});
+							}));
 						}
 						break;
 				}
 			}
-			sqlConnection.queryWithParams(
-					patchSql.toString()
-					, new JsonArray(patchSqlParams)
-					, patchAsync
-			-> {
-				if(patchAsync.succeeded()) {
+			CompositeFuture.all(futures).setHandler( a -> {
+				if(a.succeeded()) {
 					SchoolEnrollment o3 = new SchoolEnrollment();
 					o3.setSiteRequest_(o.getSiteRequest_());
 					o3.setPk(pk);
 					eventHandler.handle(Future.succeededFuture(o3));
 				} else {
-					eventHandler.handle(Future.failedFuture(new Exception(patchAsync.cause())));
+					LOGGER.error(String.format("sqlPATCHSchoolEnrollment failed. ", a.cause()));
+					eventHandler.handle(Future.failedFuture(a.cause()));
 				}
 			});
 		} catch(Exception e) {
+			LOGGER.error(String.format("sqlPATCHSchoolEnrollment failed. ", e));
 			eventHandler.handle(Future.failedFuture(e));
 		}
 	}
@@ -3006,26 +5233,14 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 		try {
 			response200PATCHSchoolEnrollment(siteRequest, a -> {
 				if(a.succeeded()) {
-					SQLConnection sqlConnection = siteRequest.getSqlConnection();
-					sqlConnection.commit(b -> {
-						if(b.succeeded()) {
-							sqlConnection.close(c -> {
-								if(c.succeeded()) {
-									eventHandler.handle(Future.succeededFuture(a.result()));
-								} else {
-									errorSchoolEnrollment(siteRequest, eventHandler, c);
-								}
-							});
-						} else {
-							errorSchoolEnrollment(siteRequest, eventHandler, b);
-						}
-					});
+					eventHandler.handle(Future.succeededFuture(a.result()));
 				} else {
+					LOGGER.error(String.format("patchSchoolEnrollmentResponse failed. ", a.cause()));
 					errorSchoolEnrollment(siteRequest, eventHandler, a);
 				}
 			});
 		} catch(Exception ex) {
-			LOGGER.error(String.format("patchSchoolEnrollment failed. ", ex));
+			LOGGER.error(String.format("patchSchoolEnrollmentResponse failed. ", ex));
 			errorSchoolEnrollment(siteRequest, null, Future.failedFuture(ex));
 		}
 	}
@@ -3034,6 +5249,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 			JsonObject json = new JsonObject();
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
 		} catch(Exception e) {
+			LOGGER.error(String.format("response200PATCHSchoolEnrollment failed. ", e));
 			eventHandler.handle(Future.failedFuture(e));
 		}
 	}
@@ -3044,35 +5260,28 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 	public void getSchoolEnrollment(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest);
 		try {
-			sqlSchoolEnrollment(siteRequest, a -> {
-				if(a.succeeded()) {
-					userSchoolEnrollment(siteRequest, b -> {
-						if(b.succeeded()) {
-							aSearchSchoolEnrollment(siteRequest, false, true, "/api/enrollment/{id}", "GET", c -> {
-								if(c.succeeded()) {
-									SearchList<SchoolEnrollment> listSchoolEnrollment = c.result();
-									getSchoolEnrollmentResponse(listSchoolEnrollment, d -> {
-										if(d.succeeded()) {
-											eventHandler.handle(Future.succeededFuture(d.result()));
-											LOGGER.info(String.format("getSchoolEnrollment succeeded. "));
-										} else {
-											LOGGER.error(String.format("getSchoolEnrollment failed. ", d.cause()));
-											errorSchoolEnrollment(siteRequest, eventHandler, d);
-										}
-									});
+			userSchoolEnrollment(siteRequest, b -> {
+				if(b.succeeded()) {
+					aSearchSchoolEnrollment(siteRequest, false, true, "/api/enrollment/{id}", "GET", c -> {
+						if(c.succeeded()) {
+							SearchList<SchoolEnrollment> listSchoolEnrollment = c.result();
+							getSchoolEnrollmentResponse(listSchoolEnrollment, d -> {
+								if(d.succeeded()) {
+									eventHandler.handle(Future.succeededFuture(d.result()));
+									LOGGER.info(String.format("getSchoolEnrollment succeeded. "));
 								} else {
-									LOGGER.error(String.format("getSchoolEnrollment failed. ", c.cause()));
-									errorSchoolEnrollment(siteRequest, eventHandler, c);
+									LOGGER.error(String.format("getSchoolEnrollment failed. ", d.cause()));
+									errorSchoolEnrollment(siteRequest, eventHandler, d);
 								}
 							});
 						} else {
-							LOGGER.error(String.format("getSchoolEnrollment failed. ", b.cause()));
-							errorSchoolEnrollment(siteRequest, eventHandler, b);
+							LOGGER.error(String.format("getSchoolEnrollment failed. ", c.cause()));
+							errorSchoolEnrollment(siteRequest, eventHandler, c);
 						}
 					});
 				} else {
-					LOGGER.error(String.format("getSchoolEnrollment failed. ", a.cause()));
-					errorSchoolEnrollment(siteRequest, eventHandler, a);
+					LOGGER.error(String.format("getSchoolEnrollment failed. ", b.cause()));
+					errorSchoolEnrollment(siteRequest, eventHandler, b);
 				}
 			});
 		} catch(Exception ex) {
@@ -3087,26 +5296,14 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 		try {
 			response200GETSchoolEnrollment(listSchoolEnrollment, a -> {
 				if(a.succeeded()) {
-					SQLConnection sqlConnection = siteRequest.getSqlConnection();
-					sqlConnection.commit(b -> {
-						if(b.succeeded()) {
-							sqlConnection.close(c -> {
-								if(c.succeeded()) {
-									eventHandler.handle(Future.succeededFuture(a.result()));
-								} else {
-									errorSchoolEnrollment(siteRequest, eventHandler, c);
-								}
-							});
-						} else {
-							errorSchoolEnrollment(siteRequest, eventHandler, b);
-						}
-					});
+					eventHandler.handle(Future.succeededFuture(a.result()));
 				} else {
+					LOGGER.error(String.format("getSchoolEnrollmentResponse failed. ", a.cause()));
 					errorSchoolEnrollment(siteRequest, eventHandler, a);
 				}
 			});
 		} catch(Exception ex) {
-			LOGGER.error(String.format("getSchoolEnrollment failed. ", ex));
+			LOGGER.error(String.format("getSchoolEnrollmentResponse failed. ", ex));
 			errorSchoolEnrollment(siteRequest, null, Future.failedFuture(ex));
 		}
 	}
@@ -3118,6 +5315,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 			JsonObject json = JsonObject.mapFrom(listSchoolEnrollment.getList().stream().findFirst().orElse(null));
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
 		} catch(Exception e) {
+			LOGGER.error(String.format("response200GETSchoolEnrollment failed. ", e));
 			eventHandler.handle(Future.failedFuture(e));
 		}
 	}
@@ -3128,35 +5326,28 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 	public void searchSchoolEnrollment(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest);
 		try {
-			sqlSchoolEnrollment(siteRequest, a -> {
-				if(a.succeeded()) {
-					userSchoolEnrollment(siteRequest, b -> {
-						if(b.succeeded()) {
-							aSearchSchoolEnrollment(siteRequest, false, true, "/api/enrollment", "Search", c -> {
-								if(c.succeeded()) {
-									SearchList<SchoolEnrollment> listSchoolEnrollment = c.result();
-									searchSchoolEnrollmentResponse(listSchoolEnrollment, d -> {
-										if(d.succeeded()) {
-											eventHandler.handle(Future.succeededFuture(d.result()));
-											LOGGER.info(String.format("searchSchoolEnrollment succeeded. "));
-										} else {
-											LOGGER.error(String.format("searchSchoolEnrollment failed. ", d.cause()));
-											errorSchoolEnrollment(siteRequest, eventHandler, d);
-										}
-									});
+			userSchoolEnrollment(siteRequest, b -> {
+				if(b.succeeded()) {
+					aSearchSchoolEnrollment(siteRequest, false, true, "/api/enrollment", "Search", c -> {
+						if(c.succeeded()) {
+							SearchList<SchoolEnrollment> listSchoolEnrollment = c.result();
+							searchSchoolEnrollmentResponse(listSchoolEnrollment, d -> {
+								if(d.succeeded()) {
+									eventHandler.handle(Future.succeededFuture(d.result()));
+									LOGGER.info(String.format("searchSchoolEnrollment succeeded. "));
 								} else {
-									LOGGER.error(String.format("searchSchoolEnrollment failed. ", c.cause()));
-									errorSchoolEnrollment(siteRequest, eventHandler, c);
+									LOGGER.error(String.format("searchSchoolEnrollment failed. ", d.cause()));
+									errorSchoolEnrollment(siteRequest, eventHandler, d);
 								}
 							});
 						} else {
-							LOGGER.error(String.format("searchSchoolEnrollment failed. ", b.cause()));
-							errorSchoolEnrollment(siteRequest, eventHandler, b);
+							LOGGER.error(String.format("searchSchoolEnrollment failed. ", c.cause()));
+							errorSchoolEnrollment(siteRequest, eventHandler, c);
 						}
 					});
 				} else {
-					LOGGER.error(String.format("searchSchoolEnrollment failed. ", a.cause()));
-					errorSchoolEnrollment(siteRequest, eventHandler, a);
+					LOGGER.error(String.format("searchSchoolEnrollment failed. ", b.cause()));
+					errorSchoolEnrollment(siteRequest, eventHandler, b);
 				}
 			});
 		} catch(Exception ex) {
@@ -3171,26 +5362,14 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 		try {
 			response200SearchSchoolEnrollment(listSchoolEnrollment, a -> {
 				if(a.succeeded()) {
-					SQLConnection sqlConnection = siteRequest.getSqlConnection();
-					sqlConnection.commit(b -> {
-						if(b.succeeded()) {
-							sqlConnection.close(c -> {
-								if(c.succeeded()) {
-									eventHandler.handle(Future.succeededFuture(a.result()));
-								} else {
-									errorSchoolEnrollment(siteRequest, eventHandler, c);
-								}
-							});
-						} else {
-							errorSchoolEnrollment(siteRequest, eventHandler, b);
-						}
-					});
+					eventHandler.handle(Future.succeededFuture(a.result()));
 				} else {
+					LOGGER.error(String.format("searchSchoolEnrollmentResponse failed. ", a.cause()));
 					errorSchoolEnrollment(siteRequest, eventHandler, a);
 				}
 			});
 		} catch(Exception ex) {
-			LOGGER.error(String.format("searchSchoolEnrollment failed. ", ex));
+			LOGGER.error(String.format("searchSchoolEnrollmentResponse failed. ", ex));
 			errorSchoolEnrollment(siteRequest, null, Future.failedFuture(ex));
 		}
 	}
@@ -3241,6 +5420,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 			}
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
 		} catch(Exception e) {
+			LOGGER.error(String.format("response200SearchSchoolEnrollment failed. ", e));
 			eventHandler.handle(Future.failedFuture(e));
 		}
 	}
@@ -3251,35 +5431,28 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 	public void adminsearchSchoolEnrollment(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest);
 		try {
-			sqlSchoolEnrollment(siteRequest, a -> {
-				if(a.succeeded()) {
-					userSchoolEnrollment(siteRequest, b -> {
-						if(b.succeeded()) {
-							aSearchSchoolEnrollment(siteRequest, false, true, "/api/admin/enrollment", "AdminSearch", c -> {
-								if(c.succeeded()) {
-									SearchList<SchoolEnrollment> listSchoolEnrollment = c.result();
-									adminsearchSchoolEnrollmentResponse(listSchoolEnrollment, d -> {
-										if(d.succeeded()) {
-											eventHandler.handle(Future.succeededFuture(d.result()));
-											LOGGER.info(String.format("adminsearchSchoolEnrollment succeeded. "));
-										} else {
-											LOGGER.error(String.format("adminsearchSchoolEnrollment failed. ", d.cause()));
-											errorSchoolEnrollment(siteRequest, eventHandler, d);
-										}
-									});
+			userSchoolEnrollment(siteRequest, b -> {
+				if(b.succeeded()) {
+					aSearchSchoolEnrollment(siteRequest, false, true, "/api/admin/enrollment", "AdminSearch", c -> {
+						if(c.succeeded()) {
+							SearchList<SchoolEnrollment> listSchoolEnrollment = c.result();
+							adminsearchSchoolEnrollmentResponse(listSchoolEnrollment, d -> {
+								if(d.succeeded()) {
+									eventHandler.handle(Future.succeededFuture(d.result()));
+									LOGGER.info(String.format("adminsearchSchoolEnrollment succeeded. "));
 								} else {
-									LOGGER.error(String.format("adminsearchSchoolEnrollment failed. ", c.cause()));
-									errorSchoolEnrollment(siteRequest, eventHandler, c);
+									LOGGER.error(String.format("adminsearchSchoolEnrollment failed. ", d.cause()));
+									errorSchoolEnrollment(siteRequest, eventHandler, d);
 								}
 							});
 						} else {
-							LOGGER.error(String.format("adminsearchSchoolEnrollment failed. ", b.cause()));
-							errorSchoolEnrollment(siteRequest, eventHandler, b);
+							LOGGER.error(String.format("adminsearchSchoolEnrollment failed. ", c.cause()));
+							errorSchoolEnrollment(siteRequest, eventHandler, c);
 						}
 					});
 				} else {
-					LOGGER.error(String.format("adminsearchSchoolEnrollment failed. ", a.cause()));
-					errorSchoolEnrollment(siteRequest, eventHandler, a);
+					LOGGER.error(String.format("adminsearchSchoolEnrollment failed. ", b.cause()));
+					errorSchoolEnrollment(siteRequest, eventHandler, b);
 				}
 			});
 		} catch(Exception ex) {
@@ -3294,26 +5467,14 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 		try {
 			response200AdminSearchSchoolEnrollment(listSchoolEnrollment, a -> {
 				if(a.succeeded()) {
-					SQLConnection sqlConnection = siteRequest.getSqlConnection();
-					sqlConnection.commit(b -> {
-						if(b.succeeded()) {
-							sqlConnection.close(c -> {
-								if(c.succeeded()) {
-									eventHandler.handle(Future.succeededFuture(a.result()));
-								} else {
-									errorSchoolEnrollment(siteRequest, eventHandler, c);
-								}
-							});
-						} else {
-							errorSchoolEnrollment(siteRequest, eventHandler, b);
-						}
-					});
+					eventHandler.handle(Future.succeededFuture(a.result()));
 				} else {
+					LOGGER.error(String.format("adminsearchSchoolEnrollmentResponse failed. ", a.cause()));
 					errorSchoolEnrollment(siteRequest, eventHandler, a);
 				}
 			});
 		} catch(Exception ex) {
-			LOGGER.error(String.format("adminsearchSchoolEnrollment failed. ", ex));
+			LOGGER.error(String.format("adminsearchSchoolEnrollmentResponse failed. ", ex));
 			errorSchoolEnrollment(siteRequest, null, Future.failedFuture(ex));
 		}
 	}
@@ -3364,6 +5525,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 			}
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
 		} catch(Exception e) {
+			LOGGER.error(String.format("response200AdminSearchSchoolEnrollment failed. ", e));
 			eventHandler.handle(Future.failedFuture(e));
 		}
 	}
@@ -3375,93 +5537,86 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest, body);
 		try {
 			LOGGER.info(String.format("patchpaymentsSchoolEnrollment started. "));
-			sqlSchoolEnrollment(siteRequest, a -> {
-				if(a.succeeded()) {
-					userSchoolEnrollment(siteRequest, b -> {
-						if(b.succeeded()) {
-							patchpaymentsSchoolEnrollmentResponse(siteRequest, c -> {
-								if(c.succeeded()) {
-									eventHandler.handle(Future.succeededFuture(c.result()));
-									WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
-									workerExecutor.executeBlocking(
-										blockingCodeHandler -> {
-											SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest, body);
-											try {
-												aSearchSchoolEnrollment(siteRequest2, false, true, "/enrollment/payments", "PATCHPayments", d -> {
-													if(d.succeeded()) {
-														SearchList<SchoolEnrollment> listSchoolEnrollment = d.result();
-														ApiRequest apiRequest = new ApiRequest();
-														apiRequest.setRows(listSchoolEnrollment.getRows());
-														apiRequest.setNumFound(listSchoolEnrollment.getQueryResponse().getResults().getNumFound());
-														apiRequest.setNumPATCH(0L);
-														apiRequest.initDeepApiRequest(siteRequest2);
-														siteRequest2.setApiRequest_(apiRequest);
-														siteRequest2.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest).toString());
-														SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listSchoolEnrollment.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
-														Date date = null;
-														if(facets != null)
-															date = (Date)facets.get("max_modified");
-														String dt;
-														if(date == null)
-															dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
-														else
-															dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
-														listSchoolEnrollment.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
+			userSchoolEnrollment(siteRequest, b -> {
+				if(b.succeeded()) {
+					patchpaymentsSchoolEnrollmentResponse(siteRequest, c -> {
+						if(c.succeeded()) {
+							eventHandler.handle(Future.succeededFuture(c.result()));
+							WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
+							workerExecutor.executeBlocking(
+								blockingCodeHandler -> {
+									SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest, body);
+									try {
+										aSearchSchoolEnrollment(siteRequest2, false, true, "/enrollment/payments", "PATCHPayments", d -> {
+											if(d.succeeded()) {
+												SearchList<SchoolEnrollment> listSchoolEnrollment = d.result();
+												ApiRequest apiRequest = new ApiRequest();
+												apiRequest.setRows(listSchoolEnrollment.getRows());
+												apiRequest.setNumFound(listSchoolEnrollment.getQueryResponse().getResults().getNumFound());
+												apiRequest.setNumPATCH(0L);
+												apiRequest.initDeepApiRequest(siteRequest2);
+												siteRequest2.setApiRequest_(apiRequest);
+												siteRequest2.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest).toString());
+												SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listSchoolEnrollment.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
+												Date date = null;
+												if(facets != null)
+													date = (Date)facets.get("max_modified");
+												String dt;
+												if(date == null)
+													dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
+												else
+													dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
+												listSchoolEnrollment.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
 
-														SchoolEnrollment o = listSchoolEnrollment.getList().stream().findFirst().orElse(null);
-														sqlSchoolEnrollment(siteRequest2, e -> {
-															if(e.succeeded()) {
-																try {
-																	listPATCHPaymentsSchoolEnrollment(apiRequest, listSchoolEnrollment, dt, f -> {
-																		if(f.succeeded()) {
-																			patchpaymentsSchoolEnrollmentResponse(siteRequest2, g -> {
-																				if(g.succeeded()) {
-																					LOGGER.info(String.format("patchpaymentsSchoolEnrollment succeeded. "));
-																					blockingCodeHandler.handle(Future.succeededFuture(g.result()));
-																				} else {
-																					LOGGER.error(String.format("patchpaymentsSchoolEnrollment failed. ", g.cause()));
-																					errorSchoolEnrollment(siteRequest2, null, g);
-																				}
-																			});
+												SchoolEnrollment o = listSchoolEnrollment.getList().stream().findFirst().orElse(null);
+												sqlConnectionSchoolEnrollment(siteRequest2, e -> {
+													if(e.succeeded()) {
+														try {
+															listPATCHPaymentsSchoolEnrollment(apiRequest, listSchoolEnrollment, dt, f -> {
+																if(f.succeeded()) {
+																	patchpaymentsSchoolEnrollmentResponse(siteRequest2, g -> {
+																												if(g.succeeded()) {
+																			LOGGER.info(String.format("patchpaymentsSchoolEnrollment succeeded. "));
+																			blockingCodeHandler.handle(Future.succeededFuture(g.result()));
 																		} else {
-																			LOGGER.error(String.format("patchpaymentsSchoolEnrollment failed. ", f.cause()));
-																			errorSchoolEnrollment(siteRequest2, null, f);
+																			LOGGER.error(String.format("patchpaymentsSchoolEnrollment failed. ", g.cause()));
+																			errorSchoolEnrollment(siteRequest2, null, g);
 																		}
 																	});
-																} catch(Exception ex) {
-																	LOGGER.error(String.format("patchpaymentsSchoolEnrollment failed. ", ex));
-																	errorSchoolEnrollment(siteRequest2, null, Future.failedFuture(ex));
+																} else {
+																	LOGGER.error(String.format("patchpaymentsSchoolEnrollment failed. ", f.cause()));
+																	errorSchoolEnrollment(siteRequest2, null, f);
 																}
-															} else {
-																LOGGER.error(String.format("patchpaymentsSchoolEnrollment failed. ", e.cause()));
-																errorSchoolEnrollment(siteRequest2, null, e);
-															}
-														});
+															});
+														} catch(Exception ex) {
+															LOGGER.error(String.format("patchpaymentsSchoolEnrollment failed. ", ex));
+															errorSchoolEnrollment(siteRequest2, null, Future.failedFuture(ex));
+														}
 													} else {
-														LOGGER.error(String.format("patchpaymentsSchoolEnrollment failed. ", d.cause()));
-														errorSchoolEnrollment(siteRequest2, null, d);
+														LOGGER.error(String.format("patchpaymentsSchoolEnrollment failed. ", e.cause()));
+														errorSchoolEnrollment(siteRequest2, null, e);
 													}
 												});
-											} catch(Exception ex) {
-												LOGGER.error(String.format("patchpaymentsSchoolEnrollment failed. ", ex));
-												errorSchoolEnrollment(siteRequest2, null, Future.failedFuture(ex));
+											} else {
+												LOGGER.error(String.format("patchpaymentsSchoolEnrollment failed. ", d.cause()));
+												errorSchoolEnrollment(siteRequest2, null, d);
 											}
-										}, resultHandler -> {
-										}
-									);
-								} else {
-									LOGGER.error(String.format("patchpaymentsSchoolEnrollment failed. ", c.cause()));
-									errorSchoolEnrollment(siteRequest, eventHandler, c);
+										});
+									} catch(Exception ex) {
+										LOGGER.error(String.format("patchpaymentsSchoolEnrollment failed. ", ex));
+										errorSchoolEnrollment(siteRequest2, null, Future.failedFuture(ex));
+									}
+								}, resultHandler -> {
 								}
-							});
+							);
 						} else {
-							LOGGER.error(String.format("patchpaymentsSchoolEnrollment failed. ", b.cause()));
-							errorSchoolEnrollment(siteRequest, eventHandler, b);
+							LOGGER.error(String.format("patchpaymentsSchoolEnrollment failed. ", c.cause()));
+							errorSchoolEnrollment(siteRequest, eventHandler, c);
 						}
 					});
 				} else {
-					LOGGER.error(String.format("patchpaymentsSchoolEnrollment failed. ", a.cause()));
-					errorSchoolEnrollment(siteRequest, eventHandler, a);
+					LOGGER.error(String.format("patchpaymentsSchoolEnrollment failed. ", b.cause()));
+					errorSchoolEnrollment(siteRequest, eventHandler, b);
 				}
 			});
 		} catch(Exception ex) {
@@ -3492,6 +5647,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					response200PATCHPaymentsSchoolEnrollment(siteRequest, eventHandler);
 				}
 			} else {
+				LOGGER.error(String.format("listPATCHPaymentsSchoolEnrollment failed. ", a.cause()));
 				errorSchoolEnrollment(listSchoolEnrollment.getSiteRequest_(), eventHandler, a);
 			}
 		});
@@ -3506,14 +5662,14 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 				apiRequest.setOriginal(o);
 				apiRequest.setPk(o.getPk());
 			}
-			sqlPATCHPaymentsSchoolEnrollment(o, inheritPk, a -> {
+			sqlConnectionSchoolEnrollment(siteRequest, a -> {
 				if(a.succeeded()) {
-					SchoolEnrollment schoolEnrollment = a.result();
-					defineSchoolEnrollment(schoolEnrollment, b -> {
+					sqlTransactionSchoolEnrollment(siteRequest, b -> {
 						if(b.succeeded()) {
-							attributeSchoolEnrollment(schoolEnrollment, c -> {
+							sqlPATCHPaymentsSchoolEnrollment(o, inheritPk, c -> {
 								if(c.succeeded()) {
-									indexSchoolEnrollment(schoolEnrollment, d -> {
+									SchoolEnrollment schoolEnrollment = c.result();
+									defineIndexSchoolEnrollment(schoolEnrollment, d -> {
 										if(d.succeeded()) {
 											if(apiRequest != null) {
 												apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
@@ -3522,32 +5678,30 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 												}
 												siteRequest.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest).toString());
 											}
-											SQLConnection sqlConnection = siteRequest.getSqlConnection();
-											sqlConnection.commit(e -> {
-												if(e.succeeded()) {
-													eventHandler.handle(Future.succeededFuture(schoolEnrollment));
-													promise.complete(schoolEnrollment);
-												} else {
-													eventHandler.handle(Future.failedFuture(e.cause()));
-												}
-											});
+											eventHandler.handle(Future.succeededFuture(schoolEnrollment));
+											promise.complete(schoolEnrollment);
 										} else {
+											LOGGER.error(String.format("patchpaymentsSchoolEnrollmentFuture failed. ", d.cause()));
 											eventHandler.handle(Future.failedFuture(d.cause()));
 										}
 									});
 								} else {
+									LOGGER.error(String.format("patchpaymentsSchoolEnrollmentFuture failed. ", c.cause()));
 									eventHandler.handle(Future.failedFuture(c.cause()));
 								}
 							});
 						} else {
+							LOGGER.error(String.format("patchpaymentsSchoolEnrollmentFuture failed. ", b.cause()));
 							eventHandler.handle(Future.failedFuture(b.cause()));
 						}
 					});
 				} else {
+					LOGGER.error(String.format("patchpaymentsSchoolEnrollmentFuture failed. ", a.cause()));
 					eventHandler.handle(Future.failedFuture(a.cause()));
 				}
 			});
 		} catch(Exception e) {
+			LOGGER.error(String.format("patchpaymentsSchoolEnrollmentFuture failed. ", e));
 			errorSchoolEnrollment(siteRequest, null, Future.failedFuture(e));
 		}
 		return promise.future();
@@ -3559,21 +5713,38 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 			ApiRequest apiRequest = siteRequest.getApiRequest_();
 			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(new ArrayList<>());
 			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(new ArrayList<>());
-			SQLConnection sqlConnection = siteRequest.getSqlConnection();
+			Transaction tx = siteRequest.getTx();
 			Long pk = o.getPk();
 			JsonObject jsonObject = siteRequest.getJsonObject();
-			StringBuilder patchSql = new StringBuilder();
-			List<Object> patchSqlParams = new ArrayList<Object>();
 			Set<String> methodNames = jsonObject.fieldNames();
 			SchoolEnrollment o2 = new SchoolEnrollment();
+			List<Future> futures = new ArrayList<>();
 
 			if(o.getUserId() == null && siteRequest.getUserId() != null) {
-				patchSql.append(SiteContextEnUS.SQL_setD);
-				patchSqlParams.addAll(Arrays.asList(pk, "userId", siteRequest.getUserId()));
+				futures.add(Future.future(a -> {
+					tx.preparedQuery(SiteContextEnUS.SQL_setD
+							, Tuple.of(pk, "userId", siteRequest.getUserId())
+							, b
+					-> {
+						if(b.succeeded())
+							a.handle(Future.succeededFuture());
+						else
+							a.handle(Future.failedFuture(b.cause()));
+					});
+				}));
 			}
 			if(o.getUserKey() == null && siteRequest.getUserKey() != null) {
-				patchSql.append(SiteContextEnUS.SQL_setD);
-				patchSqlParams.addAll(Arrays.asList(pk, "userKey", siteRequest.getUserKey()));
+				futures.add(Future.future(a -> {
+					tx.preparedQuery(SiteContextEnUS.SQL_setD
+				, Tuple.of(pk, "userKey", siteRequest.getUserKey())
+							, b
+					-> {
+						if(b.succeeded())
+							a.handle(Future.succeededFuture());
+						else
+							a.handle(Future.failedFuture(b.cause()));
+					});
+				}));
 
 				JsonArray userKeys = Optional.ofNullable(jsonObject.getJsonArray("addUserKeys")).orElse(null);
 				if(userKeys != null && !userKeys.contains(siteRequest.getUserKey()))
@@ -3586,82 +5757,226 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 				switch(methodName) {
 					case "setInheritPk":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "inheritPk"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "inheritPk")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.inheritPk failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setInheritPk(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "inheritPk", o2.jsonInheritPk()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "inheritPk", o2.jsonInheritPk())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.inheritPk failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setCreated":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "created"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "created")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.created failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setCreated(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "created", o2.jsonCreated()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "created", o2.jsonCreated())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.created failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setModified":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "modified"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "modified")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.modified failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setModified(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "modified", o2.jsonModified()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "modified", o2.jsonModified())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.modified failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setArchived":
 						if(jsonObject.getBoolean(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "archived"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "archived")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.archived failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setArchived(jsonObject.getBoolean(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "archived", o2.jsonArchived()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "archived", o2.jsonArchived())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.archived failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setDeleted":
 						if(jsonObject.getBoolean(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "deleted"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "deleted")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.deleted failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setDeleted(jsonObject.getBoolean(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "deleted", o2.jsonDeleted()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "deleted", o2.jsonDeleted())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.deleted failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setSessionId":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "sessionId"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "sessionId")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.sessionId failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setSessionId(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "sessionId", o2.jsonSessionId()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "sessionId", o2.jsonSessionId())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.sessionId failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setUserId":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "userId"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "userId")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.userId failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setUserId(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "userId", o2.jsonUserId()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "userId", o2.jsonUserId())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.userId failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setUserKey":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "userKey"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "userKey")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.userKey failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setUserKey(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "userKey", o2.jsonUserKey()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "userKey", o2.jsonUserKey())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.userKey failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setYearKey":
@@ -3674,13 +5989,22 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								searchList.setC(SchoolYear.class);
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								searchList.initDeepSearchList(siteRequest);
-								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null) {
+								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null) {
 									o2.setYearKey(jsonObject.getString(methodName));
-									patchSql.append(SiteContextEnUS.SQL_addA);
-									patchSqlParams.addAll(Arrays.asList(l, "enrollmentKeys", pk, "yearKey"));
-									if(!pks.contains(l)) {
-										pks.add(l);
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_addA
+												, Tuple.of(l2, "enrollmentKeys", pk, "yearKey")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.yearKey failed", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
 										classes.add("SchoolYear");
 									}
 								}
@@ -3697,13 +6021,22 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								searchList.setC(SchoolYear.class);
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								searchList.initDeepSearchList(siteRequest);
-								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null && l.equals(o.getYearKey())) {
+								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null && l2.equals(o.getYearKey())) {
 									o2.setYearKey(jsonObject.getString(methodName));
-									patchSql.append(SiteContextEnUS.SQL_removeA);
-									patchSqlParams.addAll(Arrays.asList("enrollmentKeys", l, "yearKey", pk));
-									if(!pks.contains(l)) {
-										pks.add(l);
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA
+												, Tuple.of("enrollmentKeys", l2, "yearKey", pk)
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.yearKey failed", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
 										classes.add("SchoolYear");
 									}
 								}
@@ -3720,12 +6053,21 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								searchList.setC(SchoolBlock.class);
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								searchList.initDeepSearchList(siteRequest);
-								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null && !o.getBlockKeys().contains(l)) {
-									patchSql.append(SiteContextEnUS.SQL_addA);
-									patchSqlParams.addAll(Arrays.asList(pk, "blockKeys", l, "enrollmentKeys"));
-									if(!pks.contains(l)) {
-										pks.add(l);
+								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null && !o.getBlockKeys().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_addA
+												, Tuple.of(pk, "blockKeys", l2, "enrollmentKeys")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.blockKeys failed", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
 										classes.add("SchoolBlock");
 									}
 								}
@@ -3744,12 +6086,21 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 									searchList.setC(SchoolBlock.class);
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									searchList.initDeepSearchList(siteRequest);
-									l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-									if(l != null && !o.getBlockKeys().contains(l)) {
-										patchSql.append(SiteContextEnUS.SQL_addA);
-										patchSqlParams.addAll(Arrays.asList(pk, "blockKeys", l, "enrollmentKeys"));
-										if(!pks.contains(l)) {
-											pks.add(l);
+									Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l2 != null && !o.getBlockKeys().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_addA
+												, Tuple.of(pk, "blockKeys", l2, "enrollmentKeys")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.blockKeys failed", b.cause())));
+										});
+									}));
+										if(!pks.contains(l2)) {
+											pks.add(l2);
 											classes.add("SchoolBlock");
 										}
 									}
@@ -3769,12 +6120,21 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 									searchList.setC(SchoolBlock.class);
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									searchList.initDeepSearchList(siteRequest);
-									l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-									if(l != null && !o.getBlockKeys().contains(l)) {
-										patchSql.append(SiteContextEnUS.SQL_addA);
-										patchSqlParams.addAll(Arrays.asList(pk, "blockKeys", l, "enrollmentKeys"));
-										if(!pks.contains(l)) {
-											pks.add(l);
+									Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l2 != null && !o.getBlockKeys().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_addA
+												, Tuple.of(pk, "blockKeys", l2, "enrollmentKeys")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.blockKeys failed", b.cause())));
+										});
+									}));
+										if(!pks.contains(l2)) {
+											pks.add(l2);
 											classes.add("SchoolBlock");
 										}
 									}
@@ -3784,8 +6144,17 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						if(o.getBlockKeys() != null) {
 							for(Long l :  o.getBlockKeys()) {
 								if(l != null && (setBlockKeysValues == null || !setBlockKeysValues.contains(l))) {
-									patchSql.append(SiteContextEnUS.SQL_removeA);
-									patchSqlParams.addAll(Arrays.asList(pk, "blockKeys", l, "enrollmentKeys"));
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA
+												, Tuple.of(pk, "blockKeys", l, "enrollmentKeys")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.blockKeys failed", b.cause())));
+										});
+									}));
 								}
 							}
 						}
@@ -3800,12 +6169,21 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								searchList.setC(SchoolBlock.class);
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								searchList.initDeepSearchList(siteRequest);
-								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null && o.getBlockKeys().contains(l)) {
-									patchSql.append(SiteContextEnUS.SQL_removeA);
-									patchSqlParams.addAll(Arrays.asList(pk, "blockKeys", "enrollmentKeys", l));
-									if(!pks.contains(l)) {
-										pks.add(l);
+								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null && o.getBlockKeys().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA
+												, Tuple.of(pk, "blockKeys", "enrollmentKeys", l2)
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.blockKeys failed", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
 										classes.add("SchoolBlock");
 									}
 								}
@@ -3822,13 +6200,22 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								searchList.setC(SchoolChild.class);
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								searchList.initDeepSearchList(siteRequest);
-								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null && !l.equals(o.getChildKey())) {
+								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null && !l2.equals(o.getChildKey())) {
 									o2.setChildKey(jsonObject.getString(methodName));
-									patchSql.append(SiteContextEnUS.SQL_addA);
-									patchSqlParams.addAll(Arrays.asList(pk, "childKey", l, "enrollmentKeys"));
-									if(!pks.contains(l)) {
-										pks.add(l);
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_addA
+												, Tuple.of(pk, "childKey", l2, "enrollmentKeys")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.childKey failed", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
 										classes.add("SchoolChild");
 									}
 								}
@@ -3845,13 +6232,22 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								searchList.setC(SchoolChild.class);
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								searchList.initDeepSearchList(siteRequest);
-								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null && l.equals(o.getChildKey())) {
+								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null && l2.equals(o.getChildKey())) {
 									o2.setChildKey(jsonObject.getString(methodName));
-									patchSql.append(SiteContextEnUS.SQL_removeA);
-									patchSqlParams.addAll(Arrays.asList("childKey", pk, "enrollmentKeys", l));
-									if(!pks.contains(l)) {
-										pks.add(l);
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA
+												, Tuple.of("childKey", pk, "enrollmentKeys", l2)
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.childKey failed", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
 										classes.add("SchoolChild");
 									}
 								}
@@ -3868,12 +6264,21 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								searchList.setC(SchoolMom.class);
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								searchList.initDeepSearchList(siteRequest);
-								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null && !o.getMomKeys().contains(l)) {
-									patchSql.append(SiteContextEnUS.SQL_addA);
-									patchSqlParams.addAll(Arrays.asList(l, "enrollmentKeys", pk, "momKeys"));
-									if(!pks.contains(l)) {
-										pks.add(l);
+								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null && !o.getMomKeys().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_addA
+												, Tuple.of(l2, "enrollmentKeys", pk, "momKeys")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.momKeys failed", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
 										classes.add("SchoolMom");
 									}
 								}
@@ -3892,12 +6297,21 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 									searchList.setC(SchoolMom.class);
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									searchList.initDeepSearchList(siteRequest);
-									l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-									if(l != null && !o.getMomKeys().contains(l)) {
-										patchSql.append(SiteContextEnUS.SQL_addA);
-										patchSqlParams.addAll(Arrays.asList(l, "enrollmentKeys", pk, "momKeys"));
-										if(!pks.contains(l)) {
-											pks.add(l);
+									Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l2 != null && !o.getMomKeys().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_addA
+												, Tuple.of(l2, "enrollmentKeys", pk, "momKeys")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.momKeys failed", b.cause())));
+										});
+									}));
+										if(!pks.contains(l2)) {
+											pks.add(l2);
 											classes.add("SchoolMom");
 										}
 									}
@@ -3917,12 +6331,21 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 									searchList.setC(SchoolMom.class);
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									searchList.initDeepSearchList(siteRequest);
-									l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-									if(l != null && !o.getMomKeys().contains(l)) {
-										patchSql.append(SiteContextEnUS.SQL_addA);
-										patchSqlParams.addAll(Arrays.asList(l, "enrollmentKeys", pk, "momKeys"));
-										if(!pks.contains(l)) {
-											pks.add(l);
+									Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l2 != null && !o.getMomKeys().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_addA
+												, Tuple.of(l2, "enrollmentKeys", pk, "momKeys")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.momKeys failed", b.cause())));
+										});
+									}));
+										if(!pks.contains(l2)) {
+											pks.add(l2);
 											classes.add("SchoolMom");
 										}
 									}
@@ -3932,8 +6355,17 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						if(o.getMomKeys() != null) {
 							for(Long l :  o.getMomKeys()) {
 								if(l != null && (setMomKeysValues == null || !setMomKeysValues.contains(l))) {
-									patchSql.append(SiteContextEnUS.SQL_removeA);
-									patchSqlParams.addAll(Arrays.asList(l, "enrollmentKeys", pk, "momKeys"));
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA
+												, Tuple.of(l, "enrollmentKeys", pk, "momKeys")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.momKeys failed", b.cause())));
+										});
+									}));
 								}
 							}
 						}
@@ -3948,12 +6380,21 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								searchList.setC(SchoolMom.class);
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								searchList.initDeepSearchList(siteRequest);
-								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null && o.getMomKeys().contains(l)) {
-									patchSql.append(SiteContextEnUS.SQL_removeA);
-									patchSqlParams.addAll(Arrays.asList("enrollmentKeys", l, "momKeys", pk));
-									if(!pks.contains(l)) {
-										pks.add(l);
+								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null && o.getMomKeys().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA
+												, Tuple.of("enrollmentKeys", l2, "momKeys", pk)
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.momKeys failed", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
 										classes.add("SchoolMom");
 									}
 								}
@@ -3970,12 +6411,21 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								searchList.setC(SchoolDad.class);
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								searchList.initDeepSearchList(siteRequest);
-								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null && !o.getDadKeys().contains(l)) {
-									patchSql.append(SiteContextEnUS.SQL_addA);
-									patchSqlParams.addAll(Arrays.asList(pk, "dadKeys", l, "enrollmentKeys"));
-									if(!pks.contains(l)) {
-										pks.add(l);
+								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null && !o.getDadKeys().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_addA
+												, Tuple.of(pk, "dadKeys", l2, "enrollmentKeys")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.dadKeys failed", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
 										classes.add("SchoolDad");
 									}
 								}
@@ -3994,12 +6444,21 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 									searchList.setC(SchoolDad.class);
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									searchList.initDeepSearchList(siteRequest);
-									l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-									if(l != null && !o.getDadKeys().contains(l)) {
-										patchSql.append(SiteContextEnUS.SQL_addA);
-										patchSqlParams.addAll(Arrays.asList(pk, "dadKeys", l, "enrollmentKeys"));
-										if(!pks.contains(l)) {
-											pks.add(l);
+									Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l2 != null && !o.getDadKeys().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_addA
+												, Tuple.of(pk, "dadKeys", l2, "enrollmentKeys")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.dadKeys failed", b.cause())));
+										});
+									}));
+										if(!pks.contains(l2)) {
+											pks.add(l2);
 											classes.add("SchoolDad");
 										}
 									}
@@ -4019,12 +6478,21 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 									searchList.setC(SchoolDad.class);
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									searchList.initDeepSearchList(siteRequest);
-									l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-									if(l != null && !o.getDadKeys().contains(l)) {
-										patchSql.append(SiteContextEnUS.SQL_addA);
-										patchSqlParams.addAll(Arrays.asList(pk, "dadKeys", l, "enrollmentKeys"));
-										if(!pks.contains(l)) {
-											pks.add(l);
+									Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l2 != null && !o.getDadKeys().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_addA
+												, Tuple.of(pk, "dadKeys", l2, "enrollmentKeys")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.dadKeys failed", b.cause())));
+										});
+									}));
+										if(!pks.contains(l2)) {
+											pks.add(l2);
 											classes.add("SchoolDad");
 										}
 									}
@@ -4034,8 +6502,17 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						if(o.getDadKeys() != null) {
 							for(Long l :  o.getDadKeys()) {
 								if(l != null && (setDadKeysValues == null || !setDadKeysValues.contains(l))) {
-									patchSql.append(SiteContextEnUS.SQL_removeA);
-									patchSqlParams.addAll(Arrays.asList(pk, "dadKeys", l, "enrollmentKeys"));
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA
+												, Tuple.of(pk, "dadKeys", l, "enrollmentKeys")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.dadKeys failed", b.cause())));
+										});
+									}));
 								}
 							}
 						}
@@ -4050,12 +6527,21 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								searchList.setC(SchoolDad.class);
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								searchList.initDeepSearchList(siteRequest);
-								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null && o.getDadKeys().contains(l)) {
-									patchSql.append(SiteContextEnUS.SQL_removeA);
-									patchSqlParams.addAll(Arrays.asList(pk, "dadKeys", "enrollmentKeys", l));
-									if(!pks.contains(l)) {
-										pks.add(l);
+								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null && o.getDadKeys().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA
+												, Tuple.of(pk, "dadKeys", "enrollmentKeys", l2)
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.dadKeys failed", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
 										classes.add("SchoolDad");
 									}
 								}
@@ -4072,12 +6558,21 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								searchList.setC(SchoolGuardian.class);
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								searchList.initDeepSearchList(siteRequest);
-								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null && !o.getGuardianKeys().contains(l)) {
-									patchSql.append(SiteContextEnUS.SQL_addA);
-									patchSqlParams.addAll(Arrays.asList(l, "enrollmentKeys", pk, "guardianKeys"));
-									if(!pks.contains(l)) {
-										pks.add(l);
+								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null && !o.getGuardianKeys().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_addA
+												, Tuple.of(l2, "enrollmentKeys", pk, "guardianKeys")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.guardianKeys failed", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
 										classes.add("SchoolGuardian");
 									}
 								}
@@ -4096,12 +6591,21 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 									searchList.setC(SchoolGuardian.class);
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									searchList.initDeepSearchList(siteRequest);
-									l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-									if(l != null && !o.getGuardianKeys().contains(l)) {
-										patchSql.append(SiteContextEnUS.SQL_addA);
-										patchSqlParams.addAll(Arrays.asList(l, "enrollmentKeys", pk, "guardianKeys"));
-										if(!pks.contains(l)) {
-											pks.add(l);
+									Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l2 != null && !o.getGuardianKeys().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_addA
+												, Tuple.of(l2, "enrollmentKeys", pk, "guardianKeys")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.guardianKeys failed", b.cause())));
+										});
+									}));
+										if(!pks.contains(l2)) {
+											pks.add(l2);
 											classes.add("SchoolGuardian");
 										}
 									}
@@ -4121,12 +6625,21 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 									searchList.setC(SchoolGuardian.class);
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									searchList.initDeepSearchList(siteRequest);
-									l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-									if(l != null && !o.getGuardianKeys().contains(l)) {
-										patchSql.append(SiteContextEnUS.SQL_addA);
-										patchSqlParams.addAll(Arrays.asList(l, "enrollmentKeys", pk, "guardianKeys"));
-										if(!pks.contains(l)) {
-											pks.add(l);
+									Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l2 != null && !o.getGuardianKeys().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_addA
+												, Tuple.of(l2, "enrollmentKeys", pk, "guardianKeys")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.guardianKeys failed", b.cause())));
+										});
+									}));
+										if(!pks.contains(l2)) {
+											pks.add(l2);
 											classes.add("SchoolGuardian");
 										}
 									}
@@ -4136,8 +6649,17 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						if(o.getGuardianKeys() != null) {
 							for(Long l :  o.getGuardianKeys()) {
 								if(l != null && (setGuardianKeysValues == null || !setGuardianKeysValues.contains(l))) {
-									patchSql.append(SiteContextEnUS.SQL_removeA);
-									patchSqlParams.addAll(Arrays.asList(l, "enrollmentKeys", pk, "guardianKeys"));
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA
+												, Tuple.of(l, "enrollmentKeys", pk, "guardianKeys")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.guardianKeys failed", b.cause())));
+										});
+									}));
 								}
 							}
 						}
@@ -4152,12 +6674,21 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								searchList.setC(SchoolGuardian.class);
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								searchList.initDeepSearchList(siteRequest);
-								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null && o.getGuardianKeys().contains(l)) {
-									patchSql.append(SiteContextEnUS.SQL_removeA);
-									patchSqlParams.addAll(Arrays.asList("enrollmentKeys", l, "guardianKeys", pk));
-									if(!pks.contains(l)) {
-										pks.add(l);
+								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null && o.getGuardianKeys().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA
+												, Tuple.of("enrollmentKeys", l2, "guardianKeys", pk)
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.guardianKeys failed", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
 										classes.add("SchoolGuardian");
 									}
 								}
@@ -4174,12 +6705,21 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								searchList.setC(SchoolPayment.class);
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								searchList.initDeepSearchList(siteRequest);
-								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null && !o.getPaymentKeys().contains(l)) {
-									patchSql.append(SiteContextEnUS.SQL_addA);
-									patchSqlParams.addAll(Arrays.asList(l, "enrollmentKey", pk, "paymentKeys"));
-									if(!pks.contains(l)) {
-										pks.add(l);
+								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null && !o.getPaymentKeys().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_addA
+												, Tuple.of(l2, "enrollmentKey", pk, "paymentKeys")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.paymentKeys failed", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
 										classes.add("SchoolPayment");
 									}
 								}
@@ -4198,12 +6738,21 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 									searchList.setC(SchoolPayment.class);
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									searchList.initDeepSearchList(siteRequest);
-									l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-									if(l != null && !o.getPaymentKeys().contains(l)) {
-										patchSql.append(SiteContextEnUS.SQL_addA);
-										patchSqlParams.addAll(Arrays.asList(l, "enrollmentKey", pk, "paymentKeys"));
-										if(!pks.contains(l)) {
-											pks.add(l);
+									Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l2 != null && !o.getPaymentKeys().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_addA
+												, Tuple.of(l2, "enrollmentKey", pk, "paymentKeys")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.paymentKeys failed", b.cause())));
+										});
+									}));
+										if(!pks.contains(l2)) {
+											pks.add(l2);
 											classes.add("SchoolPayment");
 										}
 									}
@@ -4223,12 +6772,21 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 									searchList.setC(SchoolPayment.class);
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									searchList.initDeepSearchList(siteRequest);
-									l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-									if(l != null && !o.getPaymentKeys().contains(l)) {
-										patchSql.append(SiteContextEnUS.SQL_addA);
-										patchSqlParams.addAll(Arrays.asList(l, "enrollmentKey", pk, "paymentKeys"));
-										if(!pks.contains(l)) {
-											pks.add(l);
+									Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l2 != null && !o.getPaymentKeys().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_addA
+												, Tuple.of(l2, "enrollmentKey", pk, "paymentKeys")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.paymentKeys failed", b.cause())));
+										});
+									}));
+										if(!pks.contains(l2)) {
+											pks.add(l2);
 											classes.add("SchoolPayment");
 										}
 									}
@@ -4238,8 +6796,17 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						if(o.getPaymentKeys() != null) {
 							for(Long l :  o.getPaymentKeys()) {
 								if(l != null && (setPaymentKeysValues == null || !setPaymentKeysValues.contains(l))) {
-									patchSql.append(SiteContextEnUS.SQL_removeA);
-									patchSqlParams.addAll(Arrays.asList(l, "enrollmentKey", pk, "paymentKeys"));
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA
+												, Tuple.of(l, "enrollmentKey", pk, "paymentKeys")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.paymentKeys failed", b.cause())));
+										});
+									}));
 								}
 							}
 						}
@@ -4254,12 +6821,21 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								searchList.setC(SchoolPayment.class);
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								searchList.initDeepSearchList(siteRequest);
-								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null && o.getPaymentKeys().contains(l)) {
-									patchSql.append(SiteContextEnUS.SQL_removeA);
-									patchSqlParams.addAll(Arrays.asList("enrollmentKey", l, "paymentKeys", pk));
-									if(!pks.contains(l)) {
-										pks.add(l);
+								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null && o.getPaymentKeys().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA
+												, Tuple.of("enrollmentKey", l2, "paymentKeys", pk)
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.paymentKeys failed", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
 										classes.add("SchoolPayment");
 									}
 								}
@@ -4276,12 +6852,21 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								searchList.setC(SiteUser.class);
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								searchList.initDeepSearchList(siteRequest);
-								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null && !o.getUserKeys().contains(l)) {
-									patchSql.append(SiteContextEnUS.SQL_addA);
-									patchSqlParams.addAll(Arrays.asList(l, "enrollmentKeys", pk, "userKeys"));
-									if(!pks.contains(l)) {
-										pks.add(l);
+								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null && !o.getUserKeys().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_addA
+												, Tuple.of(l2, "enrollmentKeys", pk, "userKeys")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.userKeys failed", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
 										classes.add("SiteUser");
 									}
 								}
@@ -4300,12 +6885,21 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 									searchList.setC(SiteUser.class);
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									searchList.initDeepSearchList(siteRequest);
-									l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-									if(l != null && !o.getUserKeys().contains(l)) {
-										patchSql.append(SiteContextEnUS.SQL_addA);
-										patchSqlParams.addAll(Arrays.asList(l, "enrollmentKeys", pk, "userKeys"));
-										if(!pks.contains(l)) {
-											pks.add(l);
+									Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l2 != null && !o.getUserKeys().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_addA
+												, Tuple.of(l2, "enrollmentKeys", pk, "userKeys")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.userKeys failed", b.cause())));
+										});
+									}));
+										if(!pks.contains(l2)) {
+											pks.add(l2);
 											classes.add("SiteUser");
 										}
 									}
@@ -4325,12 +6919,21 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 									searchList.setC(SiteUser.class);
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									searchList.initDeepSearchList(siteRequest);
-									l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-									if(l != null && !o.getUserKeys().contains(l)) {
-										patchSql.append(SiteContextEnUS.SQL_addA);
-										patchSqlParams.addAll(Arrays.asList(l, "enrollmentKeys", pk, "userKeys"));
-										if(!pks.contains(l)) {
-											pks.add(l);
+									Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l2 != null && !o.getUserKeys().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_addA
+												, Tuple.of(l2, "enrollmentKeys", pk, "userKeys")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.userKeys failed", b.cause())));
+										});
+									}));
+										if(!pks.contains(l2)) {
+											pks.add(l2);
 											classes.add("SiteUser");
 										}
 									}
@@ -4340,8 +6943,17 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						if(o.getUserKeys() != null) {
 							for(Long l :  o.getUserKeys()) {
 								if(l != null && (setUserKeysValues == null || !setUserKeysValues.contains(l))) {
-									patchSql.append(SiteContextEnUS.SQL_removeA);
-									patchSqlParams.addAll(Arrays.asList(l, "enrollmentKeys", pk, "userKeys"));
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA
+												, Tuple.of(l, "enrollmentKeys", pk, "userKeys")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.userKeys failed", b.cause())));
+										});
+									}));
 								}
 							}
 						}
@@ -4356,12 +6968,21 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								searchList.setC(SiteUser.class);
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								searchList.initDeepSearchList(siteRequest);
-								l = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l != null && o.getUserKeys().contains(l)) {
-									patchSql.append(SiteContextEnUS.SQL_removeA);
-									patchSqlParams.addAll(Arrays.asList("enrollmentKeys", l, "userKeys", pk));
-									if(!pks.contains(l)) {
-										pks.add(l);
+								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null && o.getUserKeys().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA
+												, Tuple.of("enrollmentKeys", l2, "userKeys", pk)
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.userKeys failed", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
 										classes.add("SiteUser");
 									}
 								}
@@ -4370,441 +6991,1195 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "setChildCompleteName":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "childCompleteName"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "childCompleteName")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.childCompleteName failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setChildCompleteName(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "childCompleteName", o2.jsonChildCompleteName()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "childCompleteName", o2.jsonChildCompleteName())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.childCompleteName failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setChildCompleteNamePreferred":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "childCompleteNamePreferred"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "childCompleteNamePreferred")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.childCompleteNamePreferred failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setChildCompleteNamePreferred(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "childCompleteNamePreferred", o2.jsonChildCompleteNamePreferred()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "childCompleteNamePreferred", o2.jsonChildCompleteNamePreferred())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.childCompleteNamePreferred failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setChildBirthDate":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "childBirthDate"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "childBirthDate")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.childBirthDate failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setChildBirthDate(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "childBirthDate", o2.jsonChildBirthDate()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "childBirthDate", o2.jsonChildBirthDate())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.childBirthDate failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setSchoolAddress":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "schoolAddress"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "schoolAddress")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.schoolAddress failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setSchoolAddress(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "schoolAddress", o2.jsonSchoolAddress()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "schoolAddress", o2.jsonSchoolAddress())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.schoolAddress failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setEnrollmentApproved":
 						if(jsonObject.getBoolean(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentApproved"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "enrollmentApproved")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentApproved failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setEnrollmentApproved(jsonObject.getBoolean(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentApproved", o2.jsonEnrollmentApproved()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "enrollmentApproved", o2.jsonEnrollmentApproved())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentApproved failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setEnrollmentImmunizations":
 						if(jsonObject.getBoolean(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentImmunizations"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "enrollmentImmunizations")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentImmunizations failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setEnrollmentImmunizations(jsonObject.getBoolean(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentImmunizations", o2.jsonEnrollmentImmunizations()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "enrollmentImmunizations", o2.jsonEnrollmentImmunizations())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentImmunizations failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setFamilyMarried":
 						if(jsonObject.getBoolean(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "familyMarried"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "familyMarried")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.familyMarried failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setFamilyMarried(jsonObject.getBoolean(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "familyMarried", o2.jsonFamilyMarried()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "familyMarried", o2.jsonFamilyMarried())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.familyMarried failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setFamilySeparated":
 						if(jsonObject.getBoolean(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "familySeparated"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "familySeparated")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.familySeparated failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setFamilySeparated(jsonObject.getBoolean(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "familySeparated", o2.jsonFamilySeparated()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "familySeparated", o2.jsonFamilySeparated())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.familySeparated failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setFamilyDivorced":
 						if(jsonObject.getBoolean(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "familyDivorced"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "familyDivorced")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.familyDivorced failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setFamilyDivorced(jsonObject.getBoolean(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "familyDivorced", o2.jsonFamilyDivorced()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "familyDivorced", o2.jsonFamilyDivorced())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.familyDivorced failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setFamilyAddress":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "familyAddress"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "familyAddress")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.familyAddress failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setFamilyAddress(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "familyAddress", o2.jsonFamilyAddress()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "familyAddress", o2.jsonFamilyAddress())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.familyAddress failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setFamilyHowDoYouKnowTheSchool":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "familyHowDoYouKnowTheSchool"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "familyHowDoYouKnowTheSchool")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.familyHowDoYouKnowTheSchool failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setFamilyHowDoYouKnowTheSchool(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "familyHowDoYouKnowTheSchool", o2.jsonFamilyHowDoYouKnowTheSchool()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "familyHowDoYouKnowTheSchool", o2.jsonFamilyHowDoYouKnowTheSchool())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.familyHowDoYouKnowTheSchool failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setEnrollmentSpecialConsiderations":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentSpecialConsiderations"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "enrollmentSpecialConsiderations")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentSpecialConsiderations failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setEnrollmentSpecialConsiderations(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentSpecialConsiderations", o2.jsonEnrollmentSpecialConsiderations()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "enrollmentSpecialConsiderations", o2.jsonEnrollmentSpecialConsiderations())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentSpecialConsiderations failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setChildMedicalConditions":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "childMedicalConditions"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "childMedicalConditions")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.childMedicalConditions failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setChildMedicalConditions(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "childMedicalConditions", o2.jsonChildMedicalConditions()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "childMedicalConditions", o2.jsonChildMedicalConditions())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.childMedicalConditions failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setChildPreviousSchoolsAttended":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "childPreviousSchoolsAttended"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "childPreviousSchoolsAttended")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.childPreviousSchoolsAttended failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setChildPreviousSchoolsAttended(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "childPreviousSchoolsAttended", o2.jsonChildPreviousSchoolsAttended()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "childPreviousSchoolsAttended", o2.jsonChildPreviousSchoolsAttended())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.childPreviousSchoolsAttended failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setChildDescription":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "childDescription"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "childDescription")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.childDescription failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setChildDescription(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "childDescription", o2.jsonChildDescription()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "childDescription", o2.jsonChildDescription())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.childDescription failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setChildObjectives":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "childObjectives"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "childObjectives")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.childObjectives failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setChildObjectives(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "childObjectives", o2.jsonChildObjectives()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "childObjectives", o2.jsonChildObjectives())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.childObjectives failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setChildPottyTrained":
 						if(jsonObject.getBoolean(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "childPottyTrained"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "childPottyTrained")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.childPottyTrained failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setChildPottyTrained(jsonObject.getBoolean(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "childPottyTrained", o2.jsonChildPottyTrained()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "childPottyTrained", o2.jsonChildPottyTrained())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.childPottyTrained failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setEnrollmentGroupName":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentGroupName"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "enrollmentGroupName")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentGroupName failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setEnrollmentGroupName(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentGroupName", o2.jsonEnrollmentGroupName()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "enrollmentGroupName", o2.jsonEnrollmentGroupName())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentGroupName failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setEnrollmentPaymentEachMonth":
 						if(jsonObject.getBoolean(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentPaymentEachMonth"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "enrollmentPaymentEachMonth")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentPaymentEachMonth failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setEnrollmentPaymentEachMonth(jsonObject.getBoolean(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentPaymentEachMonth", o2.jsonEnrollmentPaymentEachMonth()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "enrollmentPaymentEachMonth", o2.jsonEnrollmentPaymentEachMonth())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentPaymentEachMonth failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setEnrollmentPaymentComplete":
 						if(jsonObject.getBoolean(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentPaymentComplete"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "enrollmentPaymentComplete")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentPaymentComplete failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setEnrollmentPaymentComplete(jsonObject.getBoolean(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentPaymentComplete", o2.jsonEnrollmentPaymentComplete()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "enrollmentPaymentComplete", o2.jsonEnrollmentPaymentComplete())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentPaymentComplete failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setCustomerProfileId":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "customerProfileId"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "customerProfileId")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.customerProfileId failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setCustomerProfileId(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "customerProfileId", o2.jsonCustomerProfileId()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "customerProfileId", o2.jsonCustomerProfileId())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.customerProfileId failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setEnrollmentChargeDate":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentChargeDate"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "enrollmentChargeDate")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentChargeDate failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setEnrollmentChargeDate(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentChargeDate", o2.jsonEnrollmentChargeDate()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "enrollmentChargeDate", o2.jsonEnrollmentChargeDate())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentChargeDate failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setEnrollmentSignature1":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature1"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "enrollmentSignature1")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentSignature1 failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setEnrollmentSignature1(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature1", o2.jsonEnrollmentSignature1()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "enrollmentSignature1", o2.jsonEnrollmentSignature1())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentSignature1 failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setEnrollmentSignature2":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature2"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "enrollmentSignature2")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentSignature2 failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setEnrollmentSignature2(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature2", o2.jsonEnrollmentSignature2()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "enrollmentSignature2", o2.jsonEnrollmentSignature2())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentSignature2 failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setEnrollmentSignature3":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature3"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "enrollmentSignature3")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentSignature3 failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setEnrollmentSignature3(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature3", o2.jsonEnrollmentSignature3()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "enrollmentSignature3", o2.jsonEnrollmentSignature3())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentSignature3 failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setEnrollmentSignature4":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature4"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "enrollmentSignature4")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentSignature4 failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setEnrollmentSignature4(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature4", o2.jsonEnrollmentSignature4()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "enrollmentSignature4", o2.jsonEnrollmentSignature4())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentSignature4 failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setEnrollmentSignature5":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature5"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "enrollmentSignature5")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentSignature5 failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setEnrollmentSignature5(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature5", o2.jsonEnrollmentSignature5()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "enrollmentSignature5", o2.jsonEnrollmentSignature5())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentSignature5 failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setEnrollmentSignature6":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature6"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "enrollmentSignature6")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentSignature6 failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setEnrollmentSignature6(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature6", o2.jsonEnrollmentSignature6()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "enrollmentSignature6", o2.jsonEnrollmentSignature6())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentSignature6 failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setEnrollmentSignature7":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature7"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "enrollmentSignature7")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentSignature7 failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setEnrollmentSignature7(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature7", o2.jsonEnrollmentSignature7()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "enrollmentSignature7", o2.jsonEnrollmentSignature7())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentSignature7 failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setEnrollmentSignature8":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature8"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "enrollmentSignature8")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentSignature8 failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setEnrollmentSignature8(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature8", o2.jsonEnrollmentSignature8()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "enrollmentSignature8", o2.jsonEnrollmentSignature8())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentSignature8 failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setEnrollmentSignature9":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature9"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "enrollmentSignature9")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentSignature9 failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setEnrollmentSignature9(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature9", o2.jsonEnrollmentSignature9()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "enrollmentSignature9", o2.jsonEnrollmentSignature9())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentSignature9 failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setEnrollmentSignature10":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature10"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "enrollmentSignature10")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentSignature10 failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setEnrollmentSignature10(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentSignature10", o2.jsonEnrollmentSignature10()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "enrollmentSignature10", o2.jsonEnrollmentSignature10())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentSignature10 failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setEnrollmentDate1":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentDate1"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "enrollmentDate1")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentDate1 failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setEnrollmentDate1(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentDate1", o2.jsonEnrollmentDate1()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "enrollmentDate1", o2.jsonEnrollmentDate1())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentDate1 failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setEnrollmentDate2":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentDate2"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "enrollmentDate2")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentDate2 failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setEnrollmentDate2(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentDate2", o2.jsonEnrollmentDate2()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "enrollmentDate2", o2.jsonEnrollmentDate2())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentDate2 failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setEnrollmentDate3":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentDate3"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "enrollmentDate3")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentDate3 failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setEnrollmentDate3(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentDate3", o2.jsonEnrollmentDate3()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "enrollmentDate3", o2.jsonEnrollmentDate3())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentDate3 failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setEnrollmentDate4":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentDate4"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "enrollmentDate4")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentDate4 failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setEnrollmentDate4(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentDate4", o2.jsonEnrollmentDate4()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "enrollmentDate4", o2.jsonEnrollmentDate4())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentDate4 failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setEnrollmentDate5":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentDate5"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "enrollmentDate5")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentDate5 failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setEnrollmentDate5(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentDate5", o2.jsonEnrollmentDate5()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "enrollmentDate5", o2.jsonEnrollmentDate5())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentDate5 failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setEnrollmentDate6":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentDate6"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "enrollmentDate6")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentDate6 failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setEnrollmentDate6(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentDate6", o2.jsonEnrollmentDate6()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "enrollmentDate6", o2.jsonEnrollmentDate6())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentDate6 failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setEnrollmentDate7":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentDate7"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "enrollmentDate7")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentDate7 failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setEnrollmentDate7(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentDate7", o2.jsonEnrollmentDate7()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "enrollmentDate7", o2.jsonEnrollmentDate7())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentDate7 failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setEnrollmentDate8":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentDate8"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "enrollmentDate8")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentDate8 failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setEnrollmentDate8(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentDate8", o2.jsonEnrollmentDate8()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "enrollmentDate8", o2.jsonEnrollmentDate8())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentDate8 failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setEnrollmentDate9":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentDate9"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "enrollmentDate9")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentDate9 failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setEnrollmentDate9(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentDate9", o2.jsonEnrollmentDate9()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "enrollmentDate9", o2.jsonEnrollmentDate9())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentDate9 failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setEnrollmentDate10":
 						if(jsonObject.getString(methodName) == null) {
-							patchSql.append(SiteContextEnUS.SQL_removeD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentDate10"));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "enrollmentDate10")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentDate10 failed", b.cause())));
+								});
+							}));
 						} else {
 							o2.setEnrollmentDate10(jsonObject.getString(methodName));
-							patchSql.append(SiteContextEnUS.SQL_setD);
-							patchSqlParams.addAll(Arrays.asList(pk, "enrollmentDate10", o2.jsonEnrollmentDate10()));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "enrollmentDate10", o2.jsonEnrollmentDate10())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentDate10 failed", b.cause())));
+								});
+							}));
 						}
 						break;
 				}
 			}
-			sqlConnection.queryWithParams(
-					patchSql.toString()
-					, new JsonArray(patchSqlParams)
-					, patchAsync
-			-> {
-				if(patchAsync.succeeded()) {
+			CompositeFuture.all(futures).setHandler( a -> {
+				if(a.succeeded()) {
 					SchoolEnrollment o3 = new SchoolEnrollment();
 					o3.setSiteRequest_(o.getSiteRequest_());
 					o3.setPk(pk);
 					eventHandler.handle(Future.succeededFuture(o3));
 				} else {
-					eventHandler.handle(Future.failedFuture(new Exception(patchAsync.cause())));
+					LOGGER.error(String.format("sqlPATCHPaymentsSchoolEnrollment failed. ", a.cause()));
+					eventHandler.handle(Future.failedFuture(a.cause()));
 				}
 			});
 		} catch(Exception e) {
+			LOGGER.error(String.format("sqlPATCHPaymentsSchoolEnrollment failed. ", e));
 			eventHandler.handle(Future.failedFuture(e));
 		}
 	}
@@ -4813,26 +8188,14 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 		try {
 			response200PATCHPaymentsSchoolEnrollment(siteRequest, a -> {
 				if(a.succeeded()) {
-					SQLConnection sqlConnection = siteRequest.getSqlConnection();
-					sqlConnection.commit(b -> {
-						if(b.succeeded()) {
-							sqlConnection.close(c -> {
-								if(c.succeeded()) {
-									eventHandler.handle(Future.succeededFuture(a.result()));
-								} else {
-									errorSchoolEnrollment(siteRequest, eventHandler, c);
-								}
-							});
-						} else {
-							errorSchoolEnrollment(siteRequest, eventHandler, b);
-						}
-					});
+					eventHandler.handle(Future.succeededFuture(a.result()));
 				} else {
+					LOGGER.error(String.format("patchpaymentsSchoolEnrollmentResponse failed. ", a.cause()));
 					errorSchoolEnrollment(siteRequest, eventHandler, a);
 				}
 			});
 		} catch(Exception ex) {
-			LOGGER.error(String.format("patchpaymentsSchoolEnrollment failed. ", ex));
+			LOGGER.error(String.format("patchpaymentsSchoolEnrollmentResponse failed. ", ex));
 			errorSchoolEnrollment(siteRequest, null, Future.failedFuture(ex));
 		}
 	}
@@ -4841,6 +8204,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 			JsonObject json = new JsonObject();
 			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
 		} catch(Exception e) {
+			LOGGER.error(String.format("response200PATCHPaymentsSchoolEnrollment failed. ", e));
 			eventHandler.handle(Future.failedFuture(e));
 		}
 	}
@@ -4856,35 +8220,28 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 	public void searchpageSchoolEnrollment(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest);
 		try {
-			sqlSchoolEnrollment(siteRequest, a -> {
-				if(a.succeeded()) {
-					userSchoolEnrollment(siteRequest, b -> {
-						if(b.succeeded()) {
-							aSearchSchoolEnrollment(siteRequest, false, true, "/enrollment", "SearchPage", c -> {
-								if(c.succeeded()) {
-									SearchList<SchoolEnrollment> listSchoolEnrollment = c.result();
-									searchpageSchoolEnrollmentResponse(listSchoolEnrollment, d -> {
-										if(d.succeeded()) {
-											eventHandler.handle(Future.succeededFuture(d.result()));
-											LOGGER.info(String.format("searchpageSchoolEnrollment succeeded. "));
-										} else {
-											LOGGER.error(String.format("searchpageSchoolEnrollment failed. ", d.cause()));
-											errorSchoolEnrollment(siteRequest, eventHandler, d);
-										}
-									});
+			userSchoolEnrollment(siteRequest, b -> {
+				if(b.succeeded()) {
+					aSearchSchoolEnrollment(siteRequest, false, true, "/enrollment", "SearchPage", c -> {
+						if(c.succeeded()) {
+							SearchList<SchoolEnrollment> listSchoolEnrollment = c.result();
+							searchpageSchoolEnrollmentResponse(listSchoolEnrollment, d -> {
+								if(d.succeeded()) {
+									eventHandler.handle(Future.succeededFuture(d.result()));
+									LOGGER.info(String.format("searchpageSchoolEnrollment succeeded. "));
 								} else {
-									LOGGER.error(String.format("searchpageSchoolEnrollment failed. ", c.cause()));
-									errorSchoolEnrollment(siteRequest, eventHandler, c);
+									LOGGER.error(String.format("searchpageSchoolEnrollment failed. ", d.cause()));
+									errorSchoolEnrollment(siteRequest, eventHandler, d);
 								}
 							});
 						} else {
-							LOGGER.error(String.format("searchpageSchoolEnrollment failed. ", b.cause()));
-							errorSchoolEnrollment(siteRequest, eventHandler, b);
+							LOGGER.error(String.format("searchpageSchoolEnrollment failed. ", c.cause()));
+							errorSchoolEnrollment(siteRequest, eventHandler, c);
 						}
 					});
 				} else {
-					LOGGER.error(String.format("searchpageSchoolEnrollment failed. ", a.cause()));
-					errorSchoolEnrollment(siteRequest, eventHandler, a);
+					LOGGER.error(String.format("searchpageSchoolEnrollment failed. ", b.cause()));
+					errorSchoolEnrollment(siteRequest, eventHandler, b);
 				}
 			});
 		} catch(Exception ex) {
@@ -4902,26 +8259,14 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 			siteRequest.setW(w);
 			response200SearchPageSchoolEnrollment(listSchoolEnrollment, a -> {
 				if(a.succeeded()) {
-					SQLConnection sqlConnection = siteRequest.getSqlConnection();
-					sqlConnection.commit(b -> {
-						if(b.succeeded()) {
-							sqlConnection.close(c -> {
-								if(c.succeeded()) {
-									eventHandler.handle(Future.succeededFuture(a.result()));
-								} else {
-									errorSchoolEnrollment(siteRequest, eventHandler, c);
-								}
-							});
-						} else {
-							errorSchoolEnrollment(siteRequest, eventHandler, b);
-						}
-					});
+					eventHandler.handle(Future.succeededFuture(a.result()));
 				} else {
+					LOGGER.error(String.format("searchpageSchoolEnrollmentResponse failed. ", a.cause()));
 					errorSchoolEnrollment(siteRequest, eventHandler, a);
 				}
 			});
 		} catch(Exception ex) {
-			LOGGER.error(String.format("searchpageSchoolEnrollment failed. ", ex));
+			LOGGER.error(String.format("searchpageSchoolEnrollmentResponse failed. ", ex));
 			errorSchoolEnrollment(siteRequest, null, Future.failedFuture(ex));
 		}
 	}
@@ -4947,6 +8292,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 			page.html();
 			eventHandler.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, requestHeaders)));
 		} catch(Exception e) {
+			LOGGER.error(String.format("response200SearchPageSchoolEnrollment failed. ", e));
 			eventHandler.handle(Future.failedFuture(e));
 		}
 	}
@@ -4962,35 +8308,28 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 	public void refreshsearchpageSchoolEnrollment(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest);
 		try {
-			sqlSchoolEnrollment(siteRequest, a -> {
-				if(a.succeeded()) {
-					userSchoolEnrollment(siteRequest, b -> {
-						if(b.succeeded()) {
-							aSearchSchoolEnrollment(siteRequest, false, true, "/refresh-enrollment", "RefreshSearchPage", c -> {
-								if(c.succeeded()) {
-									SearchList<SchoolEnrollment> listSchoolEnrollment = c.result();
-									refreshsearchpageSchoolEnrollmentResponse(listSchoolEnrollment, d -> {
-										if(d.succeeded()) {
-											eventHandler.handle(Future.succeededFuture(d.result()));
-											LOGGER.info(String.format("refreshsearchpageSchoolEnrollment succeeded. "));
-										} else {
-											LOGGER.error(String.format("refreshsearchpageSchoolEnrollment failed. ", d.cause()));
-											errorSchoolEnrollment(siteRequest, eventHandler, d);
-										}
-									});
+			userSchoolEnrollment(siteRequest, b -> {
+				if(b.succeeded()) {
+					aSearchSchoolEnrollment(siteRequest, false, true, "/refresh-enrollment", "RefreshSearchPage", c -> {
+						if(c.succeeded()) {
+							SearchList<SchoolEnrollment> listSchoolEnrollment = c.result();
+							refreshsearchpageSchoolEnrollmentResponse(listSchoolEnrollment, d -> {
+								if(d.succeeded()) {
+									eventHandler.handle(Future.succeededFuture(d.result()));
+									LOGGER.info(String.format("refreshsearchpageSchoolEnrollment succeeded. "));
 								} else {
-									LOGGER.error(String.format("refreshsearchpageSchoolEnrollment failed. ", c.cause()));
-									errorSchoolEnrollment(siteRequest, eventHandler, c);
+									LOGGER.error(String.format("refreshsearchpageSchoolEnrollment failed. ", d.cause()));
+									errorSchoolEnrollment(siteRequest, eventHandler, d);
 								}
 							});
 						} else {
-							LOGGER.error(String.format("refreshsearchpageSchoolEnrollment failed. ", b.cause()));
-							errorSchoolEnrollment(siteRequest, eventHandler, b);
+							LOGGER.error(String.format("refreshsearchpageSchoolEnrollment failed. ", c.cause()));
+							errorSchoolEnrollment(siteRequest, eventHandler, c);
 						}
 					});
 				} else {
-					LOGGER.error(String.format("refreshsearchpageSchoolEnrollment failed. ", a.cause()));
-					errorSchoolEnrollment(siteRequest, eventHandler, a);
+					LOGGER.error(String.format("refreshsearchpageSchoolEnrollment failed. ", b.cause()));
+					errorSchoolEnrollment(siteRequest, eventHandler, b);
 				}
 			});
 		} catch(Exception ex) {
@@ -5008,26 +8347,14 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 			siteRequest.setW(w);
 			response200RefreshSearchPageSchoolEnrollment(listSchoolEnrollment, a -> {
 				if(a.succeeded()) {
-					SQLConnection sqlConnection = siteRequest.getSqlConnection();
-					sqlConnection.commit(b -> {
-						if(b.succeeded()) {
-							sqlConnection.close(c -> {
-								if(c.succeeded()) {
-									eventHandler.handle(Future.succeededFuture(a.result()));
-								} else {
-									errorSchoolEnrollment(siteRequest, eventHandler, c);
-								}
-							});
-						} else {
-							errorSchoolEnrollment(siteRequest, eventHandler, b);
-						}
-					});
+					eventHandler.handle(Future.succeededFuture(a.result()));
 				} else {
+					LOGGER.error(String.format("refreshsearchpageSchoolEnrollmentResponse failed. ", a.cause()));
 					errorSchoolEnrollment(siteRequest, eventHandler, a);
 				}
 			});
 		} catch(Exception ex) {
-			LOGGER.error(String.format("refreshsearchpageSchoolEnrollment failed. ", ex));
+			LOGGER.error(String.format("refreshsearchpageSchoolEnrollmentResponse failed. ", ex));
 			errorSchoolEnrollment(siteRequest, null, Future.failedFuture(ex));
 		}
 	}
@@ -5053,6 +8380,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 			page.html();
 			eventHandler.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, requestHeaders)));
 		} catch(Exception e) {
+			LOGGER.error(String.format("response200RefreshSearchPageSchoolEnrollment failed. ", e));
 			eventHandler.handle(Future.failedFuture(e));
 		}
 	}
@@ -5068,17 +8396,41 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					if(d.succeeded()) {
 						indexSchoolEnrollment(schoolEnrollment, e -> {
 							if(e.succeeded()) {
-								eventHandler.handle(Future.succeededFuture(schoolEnrollment));
-								promise.complete(schoolEnrollment);
+								sqlCommitSchoolEnrollment(siteRequest, f -> {
+									if(f.succeeded()) {
+										sqlCloseSchoolEnrollment(siteRequest, g -> {
+											if(g.succeeded()) {
+												refreshSchoolEnrollment(schoolEnrollment, h -> {
+													if(h.succeeded()) {
+														eventHandler.handle(Future.succeededFuture(schoolEnrollment));
+														promise.complete(schoolEnrollment);
+													} else {
+														LOGGER.error(String.format("refreshSchoolEnrollment failed. ", h.cause()));
+														errorSchoolEnrollment(siteRequest, null, h);
+													}
+												});
+											} else {
+												LOGGER.error(String.format("defineIndexSchoolEnrollment failed. ", g.cause()));
+												errorSchoolEnrollment(siteRequest, null, g);
+											}
+										});
+									} else {
+										LOGGER.error(String.format("defineIndexSchoolEnrollment failed. ", f.cause()));
+										errorSchoolEnrollment(siteRequest, null, f);
+									}
+								});
 							} else {
+								LOGGER.error(String.format("defineIndexSchoolEnrollment failed. ", e.cause()));
 								errorSchoolEnrollment(siteRequest, null, e);
 							}
 						});
 					} else {
+						LOGGER.error(String.format("defineIndexSchoolEnrollment failed. ", d.cause()));
 						errorSchoolEnrollment(siteRequest, null, d);
 					}
 				});
 			} else {
+				LOGGER.error(String.format("defineIndexSchoolEnrollment failed. ", c.cause()));
 				errorSchoolEnrollment(siteRequest, null, c);
 			}
 		});
@@ -5087,15 +8439,16 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 
 	public void createSchoolEnrollment(SiteRequestEnUS siteRequest, Handler<AsyncResult<SchoolEnrollment>> eventHandler) {
 		try {
-			SQLConnection sqlConnection = siteRequest.getSqlConnection();
+			Transaction tx = siteRequest.getTx();
 			String userId = siteRequest.getUserId();
 
-			sqlConnection.queryWithParams(
+			tx.preparedQuery(
 					SiteContextEnUS.SQL_create
-					, new JsonArray(Arrays.asList(SchoolEnrollment.class.getCanonicalName(), userId))
+					, Tuple.of(SchoolEnrollment.class.getCanonicalName(), userId)
+					, Collectors.toList()
 					, createAsync
 			-> {
-				JsonArray createLine = createAsync.result().getResults().stream().findFirst().orElseGet(() -> null);
+				Row createLine = createAsync.result().value().stream().findFirst().orElseGet(() -> null);
 				Long pk = createLine.getLong(0);
 				SchoolEnrollment o = new SchoolEnrollment();
 				o.setPk(pk);
@@ -5103,6 +8456,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 				eventHandler.handle(Future.succeededFuture(o));
 			});
 		} catch(Exception e) {
+			LOGGER.error(String.format("createSchoolEnrollment failed. ", e));
 			eventHandler.handle(Future.failedFuture(e));
 		}
 	}
@@ -5142,22 +8496,14 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 			}, resultHandler -> {
 			}
 		);
-		if(siteRequest != null) {
-			SQLConnection sqlConnection = siteRequest.getSqlConnection();
-			if(sqlConnection != null) {
-				sqlConnection.rollback(a -> {
-					if(a.succeeded()) {
-						LOGGER.info(String.format("sql rollback. "));
-						sqlConnection.close(b -> {
-							if(a.succeeded()) {
-								LOGGER.info(String.format("sql close. "));
-								if(eventHandler != null)
-									eventHandler.handle(Future.succeededFuture(responseOperation));
-							} else {
-								if(eventHandler != null)
-									eventHandler.handle(Future.succeededFuture(responseOperation));
-							}
-						});
+		sqlRollbackSchoolEnrollment(siteRequest, a -> {
+			if(a.succeeded()) {
+				LOGGER.info(String.format("sql rollback. "));
+				sqlCloseSchoolEnrollment(siteRequest, b -> {
+					if(b.succeeded()) {
+						LOGGER.info(String.format("sql close. "));
+						if(eventHandler != null)
+							eventHandler.handle(Future.succeededFuture(responseOperation));
 					} else {
 						if(eventHandler != null)
 							eventHandler.handle(Future.succeededFuture(responseOperation));
@@ -5167,33 +8513,115 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 				if(eventHandler != null)
 					eventHandler.handle(Future.succeededFuture(responseOperation));
 			}
-		}
+		});
 	}
 
-	public void sqlSchoolEnrollment(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+	public void sqlConnectionSchoolEnrollment(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SQLClient sqlClient = siteRequest.getSiteContext_().getSqlClient();
+			PgPool pgPool = siteRequest.getSiteContext_().getPgPool();
 
-			if(sqlClient == null) {
+			if(pgPool == null) {
 				eventHandler.handle(Future.succeededFuture());
 			} else {
-				sqlClient.getConnection(sqlAsync -> {
-					if(sqlAsync.succeeded()) {
-						SQLConnection sqlConnection = sqlAsync.result();
-						sqlConnection.setAutoCommit(false, a -> {
-							if(a.succeeded()) {
-								siteRequest.setSqlConnection(sqlConnection);
-								eventHandler.handle(Future.succeededFuture());
-							} else {
-								eventHandler.handle(Future.failedFuture(a.cause()));
-							}
-						});
+				pgPool.getConnection(a -> {
+					if(a.succeeded()) {
+						SqlConnection sqlConnection = a.result();
+						siteRequest.setSqlConnection(sqlConnection);
+						eventHandler.handle(Future.succeededFuture());
 					} else {
-						eventHandler.handle(Future.failedFuture(new Exception(sqlAsync.cause())));
+						LOGGER.error(String.format("sqlConnectionSchoolEnrollment failed. ", a.cause()));
+						eventHandler.handle(Future.failedFuture(a.cause()));
 					}
 				});
 			}
 		} catch(Exception e) {
+			LOGGER.error(String.format("sqlSchoolEnrollment failed. ", e));
+			eventHandler.handle(Future.failedFuture(e));
+		}
+	}
+
+	public void sqlTransactionSchoolEnrollment(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			SqlConnection sqlConnection = siteRequest.getSqlConnection();
+
+			if(sqlConnection == null) {
+				eventHandler.handle(Future.succeededFuture());
+			} else {
+				Transaction tx = sqlConnection.begin();
+				siteRequest.setTx(tx);
+				eventHandler.handle(Future.succeededFuture());
+			}
+		} catch(Exception e) {
+			LOGGER.error(String.format("sqlTransactionSchoolEnrollment failed. ", e));
+			eventHandler.handle(Future.failedFuture(e));
+		}
+	}
+
+	public void sqlCommitSchoolEnrollment(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			Transaction tx = siteRequest.getTx();
+
+			if(tx == null) {
+				eventHandler.handle(Future.succeededFuture());
+			} else {
+				tx.commit(a -> {
+					if(a.succeeded()) {
+						siteRequest.setTx(null);
+						eventHandler.handle(Future.succeededFuture());
+					} else if("Transaction already completed".equals(a.cause().getMessage())) {
+						siteRequest.setTx(null);
+						eventHandler.handle(Future.succeededFuture());
+					} else {
+						LOGGER.error(String.format("sqlCommitSchoolEnrollment failed. ", a.cause()));
+						eventHandler.handle(Future.failedFuture(a.cause()));
+					}
+				});
+			}
+		} catch(Exception e) {
+			LOGGER.error(String.format("sqlSchoolEnrollment failed. ", e));
+			eventHandler.handle(Future.failedFuture(e));
+		}
+	}
+
+	public void sqlRollbackSchoolEnrollment(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			Transaction tx = siteRequest.getTx();
+
+			if(tx == null) {
+				eventHandler.handle(Future.succeededFuture());
+			} else {
+				tx.rollback(a -> {
+					if(a.succeeded()) {
+						siteRequest.setTx(null);
+						eventHandler.handle(Future.succeededFuture());
+					} else if("Transaction already completed".equals(a.cause().getMessage())) {
+						siteRequest.setTx(null);
+						eventHandler.handle(Future.succeededFuture());
+					} else {
+						LOGGER.error(String.format("sqlRollbackSchoolEnrollment failed. ", a.cause()));
+						eventHandler.handle(Future.failedFuture(a.cause()));
+					}
+				});
+			}
+		} catch(Exception e) {
+			LOGGER.error(String.format("sqlSchoolEnrollment failed. ", e));
+			eventHandler.handle(Future.failedFuture(e));
+		}
+	}
+
+	public void sqlCloseSchoolEnrollment(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			SqlConnection sqlConnection = siteRequest.getSqlConnection();
+
+			if(sqlConnection == null) {
+				eventHandler.handle(Future.succeededFuture());
+			} else {
+				sqlConnection.close();
+				siteRequest.setSqlConnection(null);
+				eventHandler.handle(Future.succeededFuture());
+			}
+		} catch(Exception e) {
+			LOGGER.error(String.format("sqlCloseSchoolEnrollment failed. ", e));
 			eventHandler.handle(Future.failedFuture(e));
 		}
 	}
@@ -5217,163 +8645,190 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 
 	public void userSchoolEnrollment(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SQLConnection sqlConnection = siteRequest.getSqlConnection();
 			String userId = siteRequest.getUserId();
 			if(userId == null) {
 				eventHandler.handle(Future.succeededFuture());
 			} else {
-				sqlConnection.queryWithParams(
-						SiteContextEnUS.SQL_selectC
-						, new JsonArray(Arrays.asList("org.computate.scolaire.enUS.user.SiteUser", userId))
-						, selectCAsync
-				-> {
-					if(selectCAsync.succeeded()) {
-						try {
-							JsonArray userValues = selectCAsync.result().getResults().stream().findFirst().orElse(null);
-							SiteUserEnUSApiServiceImpl userService = new SiteUserEnUSApiServiceImpl(siteContext);
-							if(userValues == null) {
-								JsonObject userVertx = siteRequest.getOperationRequest().getUser();
-								JsonObject jsonPrincipal = KeycloakHelper.parseToken(userVertx.getString("access_token"));
+				sqlConnectionSchoolEnrollment(siteRequest, a -> {
+					if(a.succeeded()) {
+						sqlTransactionSchoolEnrollment(siteRequest, b -> {
+							if(b.succeeded()) {
+								Transaction tx = siteRequest.getTx();
+								tx.preparedQuery(
+										SiteContextEnUS.SQL_selectC
+										, Tuple.of("org.computate.scolaire.enUS.user.SiteUser", userId)
+										, Collectors.toList()
+										, selectCAsync
+								-> {
+									if(selectCAsync.succeeded()) {
+										try {
+											Row userValues = selectCAsync.result().value().stream().findFirst().orElse(null);
+											SiteUserEnUSApiServiceImpl userService = new SiteUserEnUSApiServiceImpl(siteContext);
+											if(userValues == null) {
+												JsonObject userVertx = siteRequest.getOperationRequest().getUser();
+												JsonObject jsonPrincipal = KeycloakHelper.parseToken(userVertx.getString("access_token"));
 
-								JsonObject jsonObject = new JsonObject();
-								jsonObject.put("userName", jsonPrincipal.getString("preferred_username"));
-								jsonObject.put("userFirstName", jsonPrincipal.getString("given_name"));
-								jsonObject.put("userLastName", jsonPrincipal.getString("family_name"));
-								jsonObject.put("userId", jsonPrincipal.getString("sub"));
-								userSchoolEnrollmentDefine(siteRequest, jsonObject, false);
+												JsonObject jsonObject = new JsonObject();
+												jsonObject.put("userName", jsonPrincipal.getString("preferred_username"));
+												jsonObject.put("userFirstName", jsonPrincipal.getString("given_name"));
+												jsonObject.put("userLastName", jsonPrincipal.getString("family_name"));
+												jsonObject.put("userId", jsonPrincipal.getString("sub"));
+												userSchoolEnrollmentDefine(siteRequest, jsonObject, false);
 
-								SiteRequestEnUS siteRequest2 = new SiteRequestEnUS();
-								siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
-								siteRequest2.setJsonObject(jsonObject);
-								siteRequest2.setVertx(siteRequest.getVertx());
-								siteRequest2.setSiteContext_(siteContext);
-								siteRequest2.setSiteConfig_(siteContext.getSiteConfig());
-								siteRequest2.setUserId(siteRequest.getUserId());
-								siteRequest2.initDeepSiteRequestEnUS(siteRequest);
+												SiteRequestEnUS siteRequest2 = new SiteRequestEnUS();
+												siteRequest2.setTx(siteRequest.getTx());
+												siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
+												siteRequest2.setJsonObject(jsonObject);
+												siteRequest2.setVertx(siteRequest.getVertx());
+												siteRequest2.setSiteContext_(siteContext);
+												siteRequest2.setSiteConfig_(siteContext.getSiteConfig());
+												siteRequest2.setUserId(siteRequest.getUserId());
+												siteRequest2.initDeepSiteRequestEnUS(siteRequest);
 
-								ApiRequest apiRequest = new ApiRequest();
-								apiRequest.setRows(1);
-								apiRequest.setNumFound(1L);
-								apiRequest.setNumPATCH(0L);
-								apiRequest.initDeepApiRequest(siteRequest2);
-								siteRequest2.setApiRequest_(apiRequest);
+												ApiRequest apiRequest = new ApiRequest();
+												apiRequest.setRows(1);
+												apiRequest.setNumFound(1L);
+												apiRequest.setNumPATCH(0L);
+												apiRequest.initDeepApiRequest(siteRequest2);
+												siteRequest2.setApiRequest_(apiRequest);
 
-								userService.createSiteUser(siteRequest2, b -> {
-									if(b.succeeded()) {
-										SiteUser siteUser = b.result();
-										userService.sqlPOSTSiteUser(siteUser, false, c -> {
-											if(c.succeeded()) {
-												userService.defineIndexSiteUser(siteUser, d -> {
-													if(d.succeeded()) {
-														siteRequest.setSiteUser(siteUser);
-														siteRequest.setUserName(jsonPrincipal.getString("preferred_username"));
-														siteRequest.setUserFirstName(jsonPrincipal.getString("given_name"));
-														siteRequest.setUserLastName(jsonPrincipal.getString("family_name"));
-														siteRequest.setUserId(jsonPrincipal.getString("sub"));
-														siteRequest.setUserKey(siteUser.getPk());
-														eventHandler.handle(Future.succeededFuture());
+												userService.createSiteUser(siteRequest2, c -> {
+													if(c.succeeded()) {
+														SiteUser siteUser = c.result();
+														userService.sqlPOSTSiteUser(siteUser, false, d -> {
+															if(d.succeeded()) {
+																userService.defineIndexSiteUser(siteUser, e -> {
+																	if(e.succeeded()) {
+																		siteRequest.setSiteUser(siteUser);
+																		siteRequest.setUserName(jsonPrincipal.getString("preferred_username"));
+																		siteRequest.setUserFirstName(jsonPrincipal.getString("given_name"));
+																		siteRequest.setUserLastName(jsonPrincipal.getString("family_name"));
+																		siteRequest.setUserId(jsonPrincipal.getString("sub"));
+																		siteRequest.setUserKey(siteUser.getPk());
+																		eventHandler.handle(Future.succeededFuture());
+																	} else {
+																		errorSchoolEnrollment(siteRequest, eventHandler, e);
+																	}
+																});
+															} else {
+																errorSchoolEnrollment(siteRequest, eventHandler, d);
+															}
+														});
 													} else {
-														errorSchoolEnrollment(siteRequest, eventHandler, d);
+														errorSchoolEnrollment(siteRequest, eventHandler, c);
 													}
 												});
 											} else {
-												errorSchoolEnrollment(siteRequest, eventHandler, c);
+												Long pkUser = userValues.getLong(0);
+												SearchList<SiteUser> searchList = new SearchList<SiteUser>();
+												searchList.setQuery("*:*");
+												searchList.setStore(true);
+												searchList.setC(SiteUser.class);
+												searchList.addFilterQuery("userId_indexed_string:" + ClientUtils.escapeQueryChars(userId));
+												searchList.addFilterQuery("pk_indexed_long:" + pkUser);
+												searchList.initDeepSearchList(siteRequest);
+												SiteUser siteUser1 = searchList.getList().stream().findFirst().orElse(null);
+
+												JsonObject userVertx = siteRequest.getOperationRequest().getUser();
+												JsonObject jsonPrincipal = KeycloakHelper.parseToken(userVertx.getString("access_token"));
+
+												JsonObject jsonObject = new JsonObject();
+												jsonObject.put("setUserName", jsonPrincipal.getString("preferred_username"));
+												jsonObject.put("setUserFirstName", jsonPrincipal.getString("given_name"));
+												jsonObject.put("setUserLastName", jsonPrincipal.getString("family_name"));
+												jsonObject.put("setUserCompleteName", jsonPrincipal.getString("name"));
+												jsonObject.put("setCustomerProfileId", Optional.ofNullable(siteUser1).map(u -> u.getCustomerProfileId()).orElse(null));
+												jsonObject.put("setUserId", jsonPrincipal.getString("sub"));
+												jsonObject.put("setUserEmail", jsonPrincipal.getString("email"));
+												Boolean define = userSchoolEnrollmentDefine(siteRequest, jsonObject, true);
+												if(define) {
+													SiteUser siteUser;
+													if(siteUser1 == null) {
+														siteUser = new SiteUser();
+														siteUser.setPk(pkUser);
+														siteUser.setSiteRequest_(siteRequest);
+													} else {
+														siteUser = siteUser1;
+													}
+
+													SiteRequestEnUS siteRequest2 = new SiteRequestEnUS();
+													siteRequest2.setTx(siteRequest.getTx());
+													siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
+													siteRequest2.setJsonObject(jsonObject);
+													siteRequest2.setVertx(siteRequest.getVertx());
+													siteRequest2.setSiteContext_(siteContext);
+													siteRequest2.setSiteConfig_(siteContext.getSiteConfig());
+													siteRequest2.setUserId(siteRequest.getUserId());
+													siteRequest2.setUserKey(siteRequest.getUserKey());
+													siteRequest2.initDeepSiteRequestEnUS(siteRequest);
+													siteUser.setSiteRequest_(siteRequest2);
+
+													ApiRequest apiRequest = new ApiRequest();
+													apiRequest.setRows(1);
+													apiRequest.setNumFound(1L);
+													apiRequest.setNumPATCH(0L);
+													apiRequest.initDeepApiRequest(siteRequest2);
+													siteRequest2.setApiRequest_(apiRequest);
+
+													userService.sqlPATCHSiteUser(siteUser, false, d -> {
+														if(d.succeeded()) {
+															SiteUser siteUser2 = d.result();
+															userService.defineIndexSiteUser(siteUser2, e -> {
+																if(e.succeeded()) {
+																	siteRequest.setSiteUser(siteUser2);
+																	siteRequest.setUserName(siteUser2.getUserName());
+																	siteRequest.setUserFirstName(siteUser2.getUserFirstName());
+																	siteRequest.setUserLastName(siteUser2.getUserLastName());
+																	siteRequest.setUserId(siteUser2.getUserId());
+																	siteRequest.setUserKey(siteUser2.getPk());
+																	eventHandler.handle(Future.succeededFuture());
+																} else {
+																	errorSchoolEnrollment(siteRequest, eventHandler, e);
+																}
+															});
+														} else {
+															errorSchoolEnrollment(siteRequest, eventHandler, d);
+														}
+													});
+												} else {
+													siteRequest.setSiteUser(siteUser1);
+													siteRequest.setUserName(siteUser1.getUserName());
+													siteRequest.setUserFirstName(siteUser1.getUserFirstName());
+													siteRequest.setUserLastName(siteUser1.getUserLastName());
+													siteRequest.setUserId(siteUser1.getUserId());
+													siteRequest.setUserKey(siteUser1.getPk());
+													sqlRollbackSchoolEnrollment(siteRequest, c -> {
+														if(c.succeeded()) {
+															eventHandler.handle(Future.succeededFuture());
+														} else {
+															eventHandler.handle(Future.failedFuture(c.cause()));
+															errorSchoolEnrollment(siteRequest, eventHandler, c);
+														}
+													});
+												}
 											}
-										});
+										} catch(Exception e) {
+											LOGGER.error(String.format("userSchoolEnrollment failed. ", e));
+											eventHandler.handle(Future.failedFuture(e));
+										}
 									} else {
-										errorSchoolEnrollment(siteRequest, eventHandler, b);
+										LOGGER.error(String.format("userSchoolEnrollment failed. ", selectCAsync.cause()));
+										eventHandler.handle(Future.failedFuture(selectCAsync.cause()));
 									}
 								});
 							} else {
-								Long pkUser = userValues.getLong(0);
-								SearchList<SiteUser> searchList = new SearchList<SiteUser>();
-								searchList.setQuery("*:*");
-								searchList.setStore(true);
-								searchList.setC(SiteUser.class);
-								searchList.addFilterQuery("userId_indexed_string:" + ClientUtils.escapeQueryChars(userId));
-								searchList.addFilterQuery("pk_indexed_long:" + pkUser);
-								searchList.initDeepSearchList(siteRequest);
-								SiteUser siteUser1 = searchList.getList().stream().findFirst().orElse(null);
-
-								JsonObject userVertx = siteRequest.getOperationRequest().getUser();
-								JsonObject jsonPrincipal = KeycloakHelper.parseToken(userVertx.getString("access_token"));
-
-								JsonObject jsonObject = new JsonObject();
-								jsonObject.put("setUserName", jsonPrincipal.getString("preferred_username"));
-								jsonObject.put("setUserFirstName", jsonPrincipal.getString("given_name"));
-								jsonObject.put("setUserLastName", jsonPrincipal.getString("family_name"));
-								jsonObject.put("setUserCompleteName", jsonPrincipal.getString("name"));
-								jsonObject.put("setCustomerProfileId", Optional.ofNullable(siteUser1).map(u -> u.getCustomerProfileId()).orElse(null));
-								jsonObject.put("setUserId", jsonPrincipal.getString("sub"));
-								jsonObject.put("setUserEmail", jsonPrincipal.getString("email"));
-								Boolean define = userSchoolEnrollmentDefine(siteRequest, jsonObject, true);
-								if(define) {
-									SiteUser siteUser;
-									if(siteUser1 == null) {
-										siteUser = new SiteUser();
-										siteUser.setPk(pkUser);
-										siteUser.setSiteRequest_(siteRequest);
-									} else {
-										siteUser = siteUser1;
-									}
-
-									SiteRequestEnUS siteRequest2 = new SiteRequestEnUS();
-									siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
-									siteRequest2.setJsonObject(jsonObject);
-									siteRequest2.setVertx(siteRequest.getVertx());
-									siteRequest2.setSiteContext_(siteContext);
-									siteRequest2.setSiteConfig_(siteContext.getSiteConfig());
-									siteRequest2.setUserId(siteRequest.getUserId());
-									siteRequest2.setUserKey(siteRequest.getUserKey());
-									siteRequest2.initDeepSiteRequestEnUS(siteRequest);
-									siteUser.setSiteRequest_(siteRequest2);
-
-									ApiRequest apiRequest = new ApiRequest();
-									apiRequest.setRows(1);
-									apiRequest.setNumFound(1L);
-									apiRequest.setNumPATCH(0L);
-									apiRequest.initDeepApiRequest(siteRequest2);
-									siteRequest2.setApiRequest_(apiRequest);
-
-									userService.sqlPATCHSiteUser(siteUser, false, c -> {
-										if(c.succeeded()) {
-											SiteUser siteUser2 = c.result();
-											userService.defineIndexSiteUser(siteUser2, d -> {
-												if(d.succeeded()) {
-													siteRequest.setSiteUser(siteUser2);
-													siteRequest.setUserName(siteUser2.getUserName());
-													siteRequest.setUserFirstName(siteUser2.getUserFirstName());
-													siteRequest.setUserLastName(siteUser2.getUserLastName());
-													siteRequest.setUserId(siteUser2.getUserId());
-													siteRequest.setUserKey(siteUser2.getPk());
-													eventHandler.handle(Future.succeededFuture());
-												} else {
-													errorSchoolEnrollment(siteRequest, eventHandler, d);
-												}
-											});
-										} else {
-											errorSchoolEnrollment(siteRequest, eventHandler, c);
-										}
-									});
-								} else {
-									siteRequest.setSiteUser(siteUser1);
-									siteRequest.setUserName(siteUser1.getUserName());
-									siteRequest.setUserFirstName(siteUser1.getUserFirstName());
-									siteRequest.setUserLastName(siteUser1.getUserLastName());
-									siteRequest.setUserId(siteUser1.getUserId());
-									siteRequest.setUserKey(siteUser1.getPk());
-									eventHandler.handle(Future.succeededFuture());
-								}
+								LOGGER.error(String.format("userSchoolEnrollment failed. ", b.cause()));
+								eventHandler.handle(Future.failedFuture(b.cause()));
 							}
-						} catch(Exception e) {
-							eventHandler.handle(Future.failedFuture(e));
-						}
+						});
 					} else {
-						eventHandler.handle(Future.failedFuture(new Exception(selectCAsync.cause())));
+						LOGGER.error(String.format("userSchoolEnrollment failed. ", a.cause()));
+						eventHandler.handle(Future.failedFuture(a.cause()));
 					}
 				});
 			}
 		} catch(Exception e) {
+			LOGGER.error(String.format("userSchoolEnrollment failed. ", e));
 			eventHandler.handle(Future.failedFuture(e));
 		}
 	}
@@ -5502,6 +8957,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					}
 					aSearchSchoolEnrollmentUri(uri, apiMethod, searchList);
 				} catch(Exception e) {
+					LOGGER.error(String.format("aSearchSchoolEnrollment failed. ", e));
 					eventHandler.handle(Future.failedFuture(e));
 				}
 			});
@@ -5511,6 +8967,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 			searchList.initDeepForClass(siteRequest);
 			eventHandler.handle(Future.succeededFuture(searchList));
 		} catch(Exception e) {
+			LOGGER.error(String.format("aSearchSchoolEnrollment failed. ", e));
 			eventHandler.handle(Future.failedFuture(e));
 		}
 	}
@@ -5518,16 +8975,17 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 	public void defineSchoolEnrollment(SchoolEnrollment o, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
-			SQLConnection sqlConnection = siteRequest.getSqlConnection();
+			Transaction tx = siteRequest.getTx();
 			Long pk = o.getPk();
-			sqlConnection.queryWithParams(
+			tx.preparedQuery(
 					SiteContextEnUS.SQL_define
-					, new JsonArray(Arrays.asList(pk, pk))
+					, Tuple.of(pk)
+					, Collectors.toList()
 					, defineAsync
 			-> {
 				if(defineAsync.succeeded()) {
 					try {
-						for(JsonArray definition : defineAsync.result().getResults()) {
+						for(Row definition : defineAsync.result().value()) {
 							try {
 								o.defineForClass(definition.getString(0), definition.getString(1));
 							} catch(Exception e) {
@@ -5536,13 +8994,16 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						}
 						eventHandler.handle(Future.succeededFuture());
 					} catch(Exception e) {
+						LOGGER.error(String.format("defineSchoolEnrollment failed. ", e));
 						eventHandler.handle(Future.failedFuture(e));
 					}
 				} else {
-					eventHandler.handle(Future.failedFuture(new Exception(defineAsync.cause())));
+					LOGGER.error(String.format("defineSchoolEnrollment failed. ", defineAsync.cause()));
+					eventHandler.handle(Future.failedFuture(defineAsync.cause()));
 				}
 			});
 		} catch(Exception e) {
+			LOGGER.error(String.format("defineSchoolEnrollment failed. ", e));
 			eventHandler.handle(Future.failedFuture(e));
 		}
 	}
@@ -5550,17 +9011,18 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 	public void attributeSchoolEnrollment(SchoolEnrollment o, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
-			SQLConnection sqlConnection = siteRequest.getSqlConnection();
+			Transaction tx = siteRequest.getTx();
 			Long pk = o.getPk();
-			sqlConnection.queryWithParams(
+			tx.preparedQuery(
 					SiteContextEnUS.SQL_attribute
-					, new JsonArray(Arrays.asList(pk, pk))
+					, Tuple.of(pk, pk)
+					, Collectors.toList()
 					, attributeAsync
 			-> {
 				try {
 					if(attributeAsync.succeeded()) {
 						if(attributeAsync.result() != null) {
-							for(JsonArray definition : attributeAsync.result().getResults()) {
+							for(Row definition : attributeAsync.result().value()) {
 								if(pk.equals(definition.getLong(0)))
 									o.attributeForClass(definition.getString(2), definition.getLong(1));
 								else
@@ -5569,13 +9031,16 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						}
 						eventHandler.handle(Future.succeededFuture());
 					} else {
-						eventHandler.handle(Future.failedFuture(new Exception(attributeAsync.cause())));
+						LOGGER.error(String.format("attributeSchoolEnrollment failed. ", attributeAsync.cause()));
+						eventHandler.handle(Future.failedFuture(attributeAsync.cause()));
 					}
 				} catch(Exception e) {
+					LOGGER.error(String.format("attributeSchoolEnrollment failed. ", e));
 					eventHandler.handle(Future.failedFuture(e));
 				}
 			});
 		} catch(Exception e) {
+			LOGGER.error(String.format("attributeSchoolEnrollment failed. ", e));
 			eventHandler.handle(Future.failedFuture(e));
 		}
 	}
@@ -5588,9 +9053,20 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			o.initDeepForClass(siteRequest);
 			o.indexForClass();
+			eventHandler.handle(Future.succeededFuture());
+		} catch(Exception e) {
+			LOGGER.error(String.format("indexSchoolEnrollment failed. ", e));
+			eventHandler.handle(Future.failedFuture(e));
+		}
+	}
+
+	public void refreshSchoolEnrollment(SchoolEnrollment o, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = o.getSiteRequest_();
+		try {
+			ApiRequest apiRequest = siteRequest.getApiRequest_();
+			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(new ArrayList<>());
+			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			if(BooleanUtils.isFalse(Optional.ofNullable(siteRequest.getApiRequest_()).map(ApiRequest::getEmpty).orElse(true))) {
-				SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolEnrollment(siteContext, siteRequest.getOperationRequest(), new JsonObject());
-				siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
 				SearchList<SchoolEnrollment> searchList = new SearchList<SchoolEnrollment>();
 				searchList.setStore(true);
 				searchList.setQuery("*:*");
@@ -5605,7 +9081,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 				searchList.add("json.facet", "{paymentKeys:{terms:{field:paymentKeys_indexed_longs, limit:1000}}}");
 				searchList.add("json.facet", "{userKeys:{terms:{field:userKeys_indexed_longs, limit:1000}}}");
 				searchList.setRows(1000);
-				searchList.initDeepSearchList(siteRequest2);
+				searchList.initDeepSearchList(siteRequest);
 				List<Future> futures = new ArrayList<>();
 
 				for(int i=0; i < pks.size(); i++) {
@@ -5619,71 +9095,66 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						searchList2.setC(SchoolYear.class);
 						searchList2.addFilterQuery("pk_indexed_long:" + pk2);
 						searchList2.setRows(1);
-						searchList2.initDeepSearchList(siteRequest2);
+						searchList2.initDeepSearchList(siteRequest);
 						SchoolYear o2 = searchList2.getList().stream().findFirst().orElse(null);
 
 						if(o2 != null) {
-							SchoolYearEnUSGenApiServiceImpl service = new SchoolYearEnUSGenApiServiceImpl(siteRequest2.getSiteContext_());
-
+							SchoolYearEnUSGenApiServiceImpl service = new SchoolYearEnUSGenApiServiceImpl(siteRequest.getSiteContext_());
+							SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolEnrollment(siteContext, siteRequest.getOperationRequest(), new JsonObject());
 							ApiRequest apiRequest2 = new ApiRequest();
 							apiRequest2.setRows(1);
-							apiRequest2.setNumFound(1L);
+							apiRequest2.setNumFound(1l);
 							apiRequest2.setNumPATCH(0L);
 							apiRequest2.initDeepApiRequest(siteRequest2);
 							siteRequest2.setApiRequest_(apiRequest2);
 							siteRequest2.getVertx().eventBus().publish("websocketSchoolYear", JsonObject.mapFrom(apiRequest2).toString());
 
-							if(pk2 != null) {
-								o2.setPk(pk2);
-								o2.setSiteRequest_(siteRequest2);
-								futures.add(
-									service.patchSchoolYearFuture(o2, false, a -> {
-										if(a.succeeded()) {
-											LOGGER.info(String.format("SchoolYear %s refreshed. ", pk2));
-										} else {
-											LOGGER.info(String.format("SchoolYear %s failed. ", pk2));
-											eventHandler.handle(Future.failedFuture(a.cause()));
-										}
-									})
-								);
-							}
+							o2.setPk(pk2);
+							o2.setSiteRequest_(siteRequest2);
+							futures.add(
+								service.patchSchoolYearFuture(o2, false, a -> {
+									if(a.succeeded()) {
+									} else {
+										LOGGER.info(String.format("SchoolYear %s failed. ", pk2));
+										eventHandler.handle(Future.failedFuture(a.cause()));
+									}
+								})
+							);
 						}
 					}
 
 					if("SchoolBlock".equals(classSimpleName2) && pk2 != null) {
-						SchoolBlockEnUSGenApiServiceImpl service = new SchoolBlockEnUSGenApiServiceImpl(siteRequest2.getSiteContext_());
 						SearchList<SchoolBlock> searchList2 = new SearchList<SchoolBlock>();
-						if(pk2 != null) {
-							searchList2.setStore(true);
-							searchList2.setQuery("*:*");
-							searchList2.setC(SchoolBlock.class);
-							searchList2.addFilterQuery("pk_indexed_long:" + pk2);
-							searchList2.setRows(1);
-							searchList2.initDeepSearchList(siteRequest2);
-							SchoolBlock o2 = searchList2.getList().stream().findFirst().orElse(null);
+						searchList2.setStore(true);
+						searchList2.setQuery("*:*");
+						searchList2.setC(SchoolBlock.class);
+						searchList2.addFilterQuery("pk_indexed_long:" + pk2);
+						searchList2.setRows(1);
+						searchList2.initDeepSearchList(siteRequest);
+						SchoolBlock o2 = searchList2.getList().stream().findFirst().orElse(null);
 
-							if(o2 != null) {
-								ApiRequest apiRequest2 = new ApiRequest();
-								apiRequest2.setRows(1);
-								apiRequest2.setNumFound(1l);
-								apiRequest2.setNumPATCH(0L);
-								apiRequest2.initDeepApiRequest(siteRequest2);
-								siteRequest2.setApiRequest_(apiRequest2);
-								siteRequest2.getVertx().eventBus().publish("websocketSchoolBlock", JsonObject.mapFrom(apiRequest2).toString());
+						if(o2 != null) {
+							SchoolBlockEnUSGenApiServiceImpl service = new SchoolBlockEnUSGenApiServiceImpl(siteRequest.getSiteContext_());
+							SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolEnrollment(siteContext, siteRequest.getOperationRequest(), new JsonObject());
+							ApiRequest apiRequest2 = new ApiRequest();
+							apiRequest2.setRows(1);
+							apiRequest2.setNumFound(1l);
+							apiRequest2.setNumPATCH(0L);
+							apiRequest2.initDeepApiRequest(siteRequest2);
+							siteRequest2.setApiRequest_(apiRequest2);
+							siteRequest2.getVertx().eventBus().publish("websocketSchoolBlock", JsonObject.mapFrom(apiRequest2).toString());
 
-								o2.setPk(pk2);
-								o2.setSiteRequest_(siteRequest2);
-								futures.add(
-									service.patchSchoolBlockFuture(o2, false, a -> {
-										if(a.succeeded()) {
-											LOGGER.info(String.format("SchoolBlock %s refreshed. ", pk2));
-										} else {
-											LOGGER.info(String.format("SchoolBlock %s failed. ", pk2));
-											eventHandler.handle(Future.failedFuture(a.cause()));
-										}
-									})
-								);
-							}
+							o2.setPk(pk2);
+							o2.setSiteRequest_(siteRequest2);
+							futures.add(
+								service.patchSchoolBlockFuture(o2, false, a -> {
+									if(a.succeeded()) {
+									} else {
+										LOGGER.info(String.format("SchoolBlock %s failed. ", pk2));
+										eventHandler.handle(Future.failedFuture(a.cause()));
+									}
+								})
+							);
 						}
 					}
 
@@ -5694,233 +9165,220 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						searchList2.setC(SchoolChild.class);
 						searchList2.addFilterQuery("pk_indexed_long:" + pk2);
 						searchList2.setRows(1);
-						searchList2.initDeepSearchList(siteRequest2);
+						searchList2.initDeepSearchList(siteRequest);
 						SchoolChild o2 = searchList2.getList().stream().findFirst().orElse(null);
 
 						if(o2 != null) {
-							SchoolChildEnUSGenApiServiceImpl service = new SchoolChildEnUSGenApiServiceImpl(siteRequest2.getSiteContext_());
-
+							SchoolChildEnUSGenApiServiceImpl service = new SchoolChildEnUSGenApiServiceImpl(siteRequest.getSiteContext_());
+							SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolEnrollment(siteContext, siteRequest.getOperationRequest(), new JsonObject());
 							ApiRequest apiRequest2 = new ApiRequest();
 							apiRequest2.setRows(1);
-							apiRequest2.setNumFound(1L);
+							apiRequest2.setNumFound(1l);
 							apiRequest2.setNumPATCH(0L);
 							apiRequest2.initDeepApiRequest(siteRequest2);
 							siteRequest2.setApiRequest_(apiRequest2);
 							siteRequest2.getVertx().eventBus().publish("websocketSchoolChild", JsonObject.mapFrom(apiRequest2).toString());
 
-							if(pk2 != null) {
-								o2.setPk(pk2);
-								o2.setSiteRequest_(siteRequest2);
-								futures.add(
-									service.patchSchoolChildFuture(o2, false, a -> {
-										if(a.succeeded()) {
-											LOGGER.info(String.format("SchoolChild %s refreshed. ", pk2));
-										} else {
-											LOGGER.info(String.format("SchoolChild %s failed. ", pk2));
-											eventHandler.handle(Future.failedFuture(a.cause()));
-										}
-									})
-								);
-							}
+							o2.setPk(pk2);
+							o2.setSiteRequest_(siteRequest2);
+							futures.add(
+								service.patchSchoolChildFuture(o2, false, a -> {
+									if(a.succeeded()) {
+									} else {
+										LOGGER.info(String.format("SchoolChild %s failed. ", pk2));
+										eventHandler.handle(Future.failedFuture(a.cause()));
+									}
+								})
+							);
 						}
 					}
 
 					if("SchoolMom".equals(classSimpleName2) && pk2 != null) {
-						SchoolMomEnUSGenApiServiceImpl service = new SchoolMomEnUSGenApiServiceImpl(siteRequest2.getSiteContext_());
 						SearchList<SchoolMom> searchList2 = new SearchList<SchoolMom>();
-						if(pk2 != null) {
-							searchList2.setStore(true);
-							searchList2.setQuery("*:*");
-							searchList2.setC(SchoolMom.class);
-							searchList2.addFilterQuery("pk_indexed_long:" + pk2);
-							searchList2.setRows(1);
-							searchList2.initDeepSearchList(siteRequest2);
-							SchoolMom o2 = searchList2.getList().stream().findFirst().orElse(null);
+						searchList2.setStore(true);
+						searchList2.setQuery("*:*");
+						searchList2.setC(SchoolMom.class);
+						searchList2.addFilterQuery("pk_indexed_long:" + pk2);
+						searchList2.setRows(1);
+						searchList2.initDeepSearchList(siteRequest);
+						SchoolMom o2 = searchList2.getList().stream().findFirst().orElse(null);
 
-							if(o2 != null) {
-								ApiRequest apiRequest2 = new ApiRequest();
-								apiRequest2.setRows(1);
-								apiRequest2.setNumFound(1l);
-								apiRequest2.setNumPATCH(0L);
-								apiRequest2.initDeepApiRequest(siteRequest2);
-								siteRequest2.setApiRequest_(apiRequest2);
-								siteRequest2.getVertx().eventBus().publish("websocketSchoolMom", JsonObject.mapFrom(apiRequest2).toString());
+						if(o2 != null) {
+							SchoolMomEnUSGenApiServiceImpl service = new SchoolMomEnUSGenApiServiceImpl(siteRequest.getSiteContext_());
+							SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolEnrollment(siteContext, siteRequest.getOperationRequest(), new JsonObject());
+							ApiRequest apiRequest2 = new ApiRequest();
+							apiRequest2.setRows(1);
+							apiRequest2.setNumFound(1l);
+							apiRequest2.setNumPATCH(0L);
+							apiRequest2.initDeepApiRequest(siteRequest2);
+							siteRequest2.setApiRequest_(apiRequest2);
+							siteRequest2.getVertx().eventBus().publish("websocketSchoolMom", JsonObject.mapFrom(apiRequest2).toString());
 
-								o2.setPk(pk2);
-								o2.setSiteRequest_(siteRequest2);
-								futures.add(
-									service.patchSchoolMomFuture(o2, false, a -> {
-										if(a.succeeded()) {
-											LOGGER.info(String.format("SchoolMom %s refreshed. ", pk2));
-										} else {
-											LOGGER.info(String.format("SchoolMom %s failed. ", pk2));
-											eventHandler.handle(Future.failedFuture(a.cause()));
-										}
-									})
-								);
-							}
+							o2.setPk(pk2);
+							o2.setSiteRequest_(siteRequest2);
+							futures.add(
+								service.patchSchoolMomFuture(o2, false, a -> {
+									if(a.succeeded()) {
+									} else {
+										LOGGER.info(String.format("SchoolMom %s failed. ", pk2));
+										eventHandler.handle(Future.failedFuture(a.cause()));
+									}
+								})
+							);
 						}
 					}
 
 					if("SchoolDad".equals(classSimpleName2) && pk2 != null) {
-						SchoolDadEnUSGenApiServiceImpl service = new SchoolDadEnUSGenApiServiceImpl(siteRequest2.getSiteContext_());
 						SearchList<SchoolDad> searchList2 = new SearchList<SchoolDad>();
-						if(pk2 != null) {
-							searchList2.setStore(true);
-							searchList2.setQuery("*:*");
-							searchList2.setC(SchoolDad.class);
-							searchList2.addFilterQuery("pk_indexed_long:" + pk2);
-							searchList2.setRows(1);
-							searchList2.initDeepSearchList(siteRequest2);
-							SchoolDad o2 = searchList2.getList().stream().findFirst().orElse(null);
+						searchList2.setStore(true);
+						searchList2.setQuery("*:*");
+						searchList2.setC(SchoolDad.class);
+						searchList2.addFilterQuery("pk_indexed_long:" + pk2);
+						searchList2.setRows(1);
+						searchList2.initDeepSearchList(siteRequest);
+						SchoolDad o2 = searchList2.getList().stream().findFirst().orElse(null);
 
-							if(o2 != null) {
-								ApiRequest apiRequest2 = new ApiRequest();
-								apiRequest2.setRows(1);
-								apiRequest2.setNumFound(1l);
-								apiRequest2.setNumPATCH(0L);
-								apiRequest2.initDeepApiRequest(siteRequest2);
-								siteRequest2.setApiRequest_(apiRequest2);
-								siteRequest2.getVertx().eventBus().publish("websocketSchoolDad", JsonObject.mapFrom(apiRequest2).toString());
+						if(o2 != null) {
+							SchoolDadEnUSGenApiServiceImpl service = new SchoolDadEnUSGenApiServiceImpl(siteRequest.getSiteContext_());
+							SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolEnrollment(siteContext, siteRequest.getOperationRequest(), new JsonObject());
+							ApiRequest apiRequest2 = new ApiRequest();
+							apiRequest2.setRows(1);
+							apiRequest2.setNumFound(1l);
+							apiRequest2.setNumPATCH(0L);
+							apiRequest2.initDeepApiRequest(siteRequest2);
+							siteRequest2.setApiRequest_(apiRequest2);
+							siteRequest2.getVertx().eventBus().publish("websocketSchoolDad", JsonObject.mapFrom(apiRequest2).toString());
 
-								o2.setPk(pk2);
-								o2.setSiteRequest_(siteRequest2);
-								futures.add(
-									service.patchSchoolDadFuture(o2, false, a -> {
-										if(a.succeeded()) {
-											LOGGER.info(String.format("SchoolDad %s refreshed. ", pk2));
-										} else {
-											LOGGER.info(String.format("SchoolDad %s failed. ", pk2));
-											eventHandler.handle(Future.failedFuture(a.cause()));
-										}
-									})
-								);
-							}
+							o2.setPk(pk2);
+							o2.setSiteRequest_(siteRequest2);
+							futures.add(
+								service.patchSchoolDadFuture(o2, false, a -> {
+									if(a.succeeded()) {
+									} else {
+										LOGGER.info(String.format("SchoolDad %s failed. ", pk2));
+										eventHandler.handle(Future.failedFuture(a.cause()));
+									}
+								})
+							);
 						}
 					}
 
 					if("SchoolGuardian".equals(classSimpleName2) && pk2 != null) {
-						SchoolGuardianEnUSGenApiServiceImpl service = new SchoolGuardianEnUSGenApiServiceImpl(siteRequest2.getSiteContext_());
 						SearchList<SchoolGuardian> searchList2 = new SearchList<SchoolGuardian>();
-						if(pk2 != null) {
-							searchList2.setStore(true);
-							searchList2.setQuery("*:*");
-							searchList2.setC(SchoolGuardian.class);
-							searchList2.addFilterQuery("pk_indexed_long:" + pk2);
-							searchList2.setRows(1);
-							searchList2.initDeepSearchList(siteRequest2);
-							SchoolGuardian o2 = searchList2.getList().stream().findFirst().orElse(null);
+						searchList2.setStore(true);
+						searchList2.setQuery("*:*");
+						searchList2.setC(SchoolGuardian.class);
+						searchList2.addFilterQuery("pk_indexed_long:" + pk2);
+						searchList2.setRows(1);
+						searchList2.initDeepSearchList(siteRequest);
+						SchoolGuardian o2 = searchList2.getList().stream().findFirst().orElse(null);
 
-							if(o2 != null) {
-								ApiRequest apiRequest2 = new ApiRequest();
-								apiRequest2.setRows(1);
-								apiRequest2.setNumFound(1l);
-								apiRequest2.setNumPATCH(0L);
-								apiRequest2.initDeepApiRequest(siteRequest2);
-								siteRequest2.setApiRequest_(apiRequest2);
-								siteRequest2.getVertx().eventBus().publish("websocketSchoolGuardian", JsonObject.mapFrom(apiRequest2).toString());
+						if(o2 != null) {
+							SchoolGuardianEnUSGenApiServiceImpl service = new SchoolGuardianEnUSGenApiServiceImpl(siteRequest.getSiteContext_());
+							SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolEnrollment(siteContext, siteRequest.getOperationRequest(), new JsonObject());
+							ApiRequest apiRequest2 = new ApiRequest();
+							apiRequest2.setRows(1);
+							apiRequest2.setNumFound(1l);
+							apiRequest2.setNumPATCH(0L);
+							apiRequest2.initDeepApiRequest(siteRequest2);
+							siteRequest2.setApiRequest_(apiRequest2);
+							siteRequest2.getVertx().eventBus().publish("websocketSchoolGuardian", JsonObject.mapFrom(apiRequest2).toString());
 
-								o2.setPk(pk2);
-								o2.setSiteRequest_(siteRequest2);
-								futures.add(
-									service.patchSchoolGuardianFuture(o2, false, a -> {
-										if(a.succeeded()) {
-											LOGGER.info(String.format("SchoolGuardian %s refreshed. ", pk2));
-										} else {
-											LOGGER.info(String.format("SchoolGuardian %s failed. ", pk2));
-											eventHandler.handle(Future.failedFuture(a.cause()));
-										}
-									})
-								);
-							}
+							o2.setPk(pk2);
+							o2.setSiteRequest_(siteRequest2);
+							futures.add(
+								service.patchSchoolGuardianFuture(o2, false, a -> {
+									if(a.succeeded()) {
+									} else {
+										LOGGER.info(String.format("SchoolGuardian %s failed. ", pk2));
+										eventHandler.handle(Future.failedFuture(a.cause()));
+									}
+								})
+							);
 						}
 					}
 
 					if("SchoolPayment".equals(classSimpleName2) && pk2 != null) {
-						SchoolPaymentEnUSGenApiServiceImpl service = new SchoolPaymentEnUSGenApiServiceImpl(siteRequest2.getSiteContext_());
 						SearchList<SchoolPayment> searchList2 = new SearchList<SchoolPayment>();
-						if(pk2 != null) {
-							searchList2.setStore(true);
-							searchList2.setQuery("*:*");
-							searchList2.setC(SchoolPayment.class);
-							searchList2.addFilterQuery("pk_indexed_long:" + pk2);
-							searchList2.setRows(1);
-							searchList2.initDeepSearchList(siteRequest2);
-							SchoolPayment o2 = searchList2.getList().stream().findFirst().orElse(null);
+						searchList2.setStore(true);
+						searchList2.setQuery("*:*");
+						searchList2.setC(SchoolPayment.class);
+						searchList2.addFilterQuery("pk_indexed_long:" + pk2);
+						searchList2.setRows(1);
+						searchList2.initDeepSearchList(siteRequest);
+						SchoolPayment o2 = searchList2.getList().stream().findFirst().orElse(null);
 
-							if(o2 != null) {
-								ApiRequest apiRequest2 = new ApiRequest();
-								apiRequest2.setRows(1);
-								apiRequest2.setNumFound(1l);
-								apiRequest2.setNumPATCH(0L);
-								apiRequest2.initDeepApiRequest(siteRequest2);
-								siteRequest2.setApiRequest_(apiRequest2);
-								siteRequest2.getVertx().eventBus().publish("websocketSchoolPayment", JsonObject.mapFrom(apiRequest2).toString());
+						if(o2 != null) {
+							SchoolPaymentEnUSGenApiServiceImpl service = new SchoolPaymentEnUSGenApiServiceImpl(siteRequest.getSiteContext_());
+							SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolEnrollment(siteContext, siteRequest.getOperationRequest(), new JsonObject());
+							ApiRequest apiRequest2 = new ApiRequest();
+							apiRequest2.setRows(1);
+							apiRequest2.setNumFound(1l);
+							apiRequest2.setNumPATCH(0L);
+							apiRequest2.initDeepApiRequest(siteRequest2);
+							siteRequest2.setApiRequest_(apiRequest2);
+							siteRequest2.getVertx().eventBus().publish("websocketSchoolPayment", JsonObject.mapFrom(apiRequest2).toString());
 
-								o2.setPk(pk2);
-								o2.setSiteRequest_(siteRequest2);
-								futures.add(
-									service.patchSchoolPaymentFuture(o2, false, a -> {
-										if(a.succeeded()) {
-											LOGGER.info(String.format("SchoolPayment %s refreshed. ", pk2));
-										} else {
-											LOGGER.info(String.format("SchoolPayment %s failed. ", pk2));
-											eventHandler.handle(Future.failedFuture(a.cause()));
-										}
-									})
-								);
-							}
+							o2.setPk(pk2);
+							o2.setSiteRequest_(siteRequest2);
+							futures.add(
+								service.patchSchoolPaymentFuture(o2, false, a -> {
+									if(a.succeeded()) {
+									} else {
+										LOGGER.info(String.format("SchoolPayment %s failed. ", pk2));
+										eventHandler.handle(Future.failedFuture(a.cause()));
+									}
+								})
+							);
 						}
 					}
 
 					if("SiteUser".equals(classSimpleName2) && pk2 != null) {
-						SiteUserEnUSGenApiServiceImpl service = new SiteUserEnUSGenApiServiceImpl(siteRequest2.getSiteContext_());
 						SearchList<SiteUser> searchList2 = new SearchList<SiteUser>();
-						if(pk2 != null) {
-							searchList2.setStore(true);
-							searchList2.setQuery("*:*");
-							searchList2.setC(SiteUser.class);
-							searchList2.addFilterQuery("pk_indexed_long:" + pk2);
-							searchList2.setRows(1);
-							searchList2.initDeepSearchList(siteRequest2);
-							SiteUser o2 = searchList2.getList().stream().findFirst().orElse(null);
+						searchList2.setStore(true);
+						searchList2.setQuery("*:*");
+						searchList2.setC(SiteUser.class);
+						searchList2.addFilterQuery("pk_indexed_long:" + pk2);
+						searchList2.setRows(1);
+						searchList2.initDeepSearchList(siteRequest);
+						SiteUser o2 = searchList2.getList().stream().findFirst().orElse(null);
 
-							if(o2 != null) {
-								ApiRequest apiRequest2 = new ApiRequest();
-								apiRequest2.setRows(1);
-								apiRequest2.setNumFound(1l);
-								apiRequest2.setNumPATCH(0L);
-								apiRequest2.initDeepApiRequest(siteRequest2);
-								siteRequest2.setApiRequest_(apiRequest2);
-								siteRequest2.getVertx().eventBus().publish("websocketSiteUser", JsonObject.mapFrom(apiRequest2).toString());
+						if(o2 != null) {
+							SiteUserEnUSGenApiServiceImpl service = new SiteUserEnUSGenApiServiceImpl(siteRequest.getSiteContext_());
+							SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolEnrollment(siteContext, siteRequest.getOperationRequest(), new JsonObject());
+							ApiRequest apiRequest2 = new ApiRequest();
+							apiRequest2.setRows(1);
+							apiRequest2.setNumFound(1l);
+							apiRequest2.setNumPATCH(0L);
+							apiRequest2.initDeepApiRequest(siteRequest2);
+							siteRequest2.setApiRequest_(apiRequest2);
+							siteRequest2.getVertx().eventBus().publish("websocketSiteUser", JsonObject.mapFrom(apiRequest2).toString());
 
-								o2.setPk(pk2);
-								o2.setSiteRequest_(siteRequest2);
-								futures.add(
-									service.patchSiteUserFuture(o2, false, a -> {
-										if(a.succeeded()) {
-											LOGGER.info(String.format("SiteUser %s refreshed. ", pk2));
-										} else {
-											LOGGER.info(String.format("SiteUser %s failed. ", pk2));
-											eventHandler.handle(Future.failedFuture(a.cause()));
-										}
-									})
-								);
-							}
+							o2.setPk(pk2);
+							o2.setSiteRequest_(siteRequest2);
+							futures.add(
+								service.patchSiteUserFuture(o2, false, a -> {
+									if(a.succeeded()) {
+									} else {
+										LOGGER.info(String.format("SiteUser %s failed. ", pk2));
+										eventHandler.handle(Future.failedFuture(a.cause()));
+									}
+								})
+							);
 						}
 					}
 				}
 
 				CompositeFuture.all(futures).setHandler(a -> {
 					if(a.succeeded()) {
-						LOGGER.info("Refresh relations succeeded. ");
-						SchoolEnrollmentEnUSApiServiceImpl service = new SchoolEnrollmentEnUSApiServiceImpl(siteRequest2.getSiteContext_());
+						SchoolEnrollmentEnUSApiServiceImpl service = new SchoolEnrollmentEnUSApiServiceImpl(siteRequest.getSiteContext_());
 						List<Future> futures2 = new ArrayList<>();
 						for(SchoolEnrollment o2 : searchList.getList()) {
+							SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolEnrollment(siteContext, siteRequest.getOperationRequest(), new JsonObject());
+							o2.setSiteRequest_(siteRequest2);
 							futures2.add(
 								service.patchSchoolEnrollmentFuture(o2, false, b -> {
 									if(b.succeeded()) {
-										LOGGER.info(String.format("SchoolEnrollment %s refreshed. ", o2.getPk()));
 									} else {
 										LOGGER.info(String.format("SchoolEnrollment %s failed. ", o2.getPk()));
 										eventHandler.handle(Future.failedFuture(b.cause()));
@@ -5931,22 +9389,22 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 
 						CompositeFuture.all(futures2).setHandler(b -> {
 							if(b.succeeded()) {
-								LOGGER.info("Refresh SchoolEnrollment succeeded. ");
 								eventHandler.handle(Future.succeededFuture());
 							} else {
 								LOGGER.error("Refresh relations failed. ", b.cause());
-								errorSchoolEnrollment(siteRequest2, eventHandler, b);
+								errorSchoolEnrollment(siteRequest, eventHandler, b);
 							}
 						});
 					} else {
 						LOGGER.error("Refresh relations failed. ", a.cause());
-						errorSchoolEnrollment(siteRequest2, eventHandler, a);
+						errorSchoolEnrollment(siteRequest, eventHandler, a);
 					}
 				});
 			} else {
 				eventHandler.handle(Future.succeededFuture());
 			}
 		} catch(Exception e) {
+			LOGGER.error(String.format("refreshSchoolEnrollment failed. ", e));
 			eventHandler.handle(Future.failedFuture(e));
 		}
 	}

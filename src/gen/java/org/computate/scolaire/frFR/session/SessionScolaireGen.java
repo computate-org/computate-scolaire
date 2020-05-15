@@ -27,7 +27,6 @@ import java.util.List;
 import java.time.LocalDate;
 import org.apache.solr.client.solrj.SolrQuery;
 import java.util.Optional;
-import io.vertx.ext.sql.SQLClient;
 import org.apache.solr.client.solrj.util.ClientUtils;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.apache.solr.common.SolrInputDocument;
@@ -51,7 +50,6 @@ import io.vertx.core.json.JsonArray;
 import org.apache.solr.common.SolrDocument;
 import java.time.temporal.ChronoUnit;
 import java.time.format.DateTimeFormatter;
-import io.vertx.ext.sql.SQLConnection;
 import org.apache.commons.lang3.math.NumberUtils;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
@@ -1695,7 +1693,7 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SessionScolaire setSaisonJourDebut(String o) {
-		this.saisonJourDebut = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.saisonJourDebut = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
 		this.saisonJourDebutCouverture.dejaInitialise = true;
 		return (SessionScolaire)this;
 	}
@@ -1719,11 +1717,11 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strSaisonJourDebut() {
-		return saisonJourDebut == null ? "" : saisonJourDebut.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.FRANCE));
+		return saisonJourDebut == null ? "" : saisonJourDebut.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.forLanguageTag("fr-FR")));
 	}
 
 	public String jsonSaisonJourDebut() {
-		return saisonJourDebut == null ? "" : saisonJourDebut.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.FRANCE));
+		return saisonJourDebut == null ? "" : saisonJourDebut.format(DateTimeFormatter.ISO_DATE);
 	}
 
 	public String nomAffichageSaisonJourDebut() {
@@ -2114,7 +2112,7 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SessionScolaire setSessionJourDebut(String o) {
-		this.sessionJourDebut = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.sessionJourDebut = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
 		this.sessionJourDebutCouverture.dejaInitialise = true;
 		return (SessionScolaire)this;
 	}
@@ -2138,11 +2136,11 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strSessionJourDebut() {
-		return sessionJourDebut == null ? "" : sessionJourDebut.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.FRANCE));
+		return sessionJourDebut == null ? "" : sessionJourDebut.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.forLanguageTag("fr-FR")));
 	}
 
 	public String jsonSessionJourDebut() {
-		return sessionJourDebut == null ? "" : sessionJourDebut.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.FRANCE));
+		return sessionJourDebut == null ? "" : sessionJourDebut.format(DateTimeFormatter.ISO_DATE);
 	}
 
 	public String nomAffichageSessionJourDebut() {
@@ -2168,8 +2166,8 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 				.a("id", classeApiMethodeMethode, "_sessionJourDebut")
 				.a("onclick", "enleverLueur($(this)); ")
 				.a("title", "L'année scolaire de la saison scolaire.  (DD-MM-YYYY)")
-				.a("value", sessionJourDebut == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(sessionJourDebut))
-				.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSessionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSessionJourDebut', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_sessionJourDebut')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_sessionJourDebut')); }); } ")
+				.a("value", sessionJourDebut == null ? "" : DateTimeFormatter.ISO_LOCAL_DATE.format(sessionJourDebut))
+				.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patchSessionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSessionJourDebut', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_sessionJourDebut')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_sessionJourDebut')); }); } ")
 				.fg();
 		}
 	}
@@ -2245,7 +2243,7 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SessionScolaire setSessionJourFin(String o) {
-		this.sessionJourFin = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.sessionJourFin = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
 		this.sessionJourFinCouverture.dejaInitialise = true;
 		return (SessionScolaire)this;
 	}
@@ -2269,11 +2267,11 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strSessionJourFin() {
-		return sessionJourFin == null ? "" : sessionJourFin.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.FRANCE));
+		return sessionJourFin == null ? "" : sessionJourFin.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.forLanguageTag("fr-FR")));
 	}
 
 	public String jsonSessionJourFin() {
-		return sessionJourFin == null ? "" : sessionJourFin.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.FRANCE));
+		return sessionJourFin == null ? "" : sessionJourFin.format(DateTimeFormatter.ISO_DATE);
 	}
 
 	public String nomAffichageSessionJourFin() {
@@ -2299,8 +2297,8 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 				.a("id", classeApiMethodeMethode, "_sessionJourFin")
 				.a("onclick", "enleverLueur($(this)); ")
 				.a("title", "L'année scolaire de la saison scolaire.  (DD-MM-YYYY)")
-				.a("value", sessionJourFin == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(sessionJourFin))
-				.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSessionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSessionJourFin', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_sessionJourFin')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_sessionJourFin')); }); } ")
+				.a("value", sessionJourFin == null ? "" : DateTimeFormatter.ISO_LOCAL_DATE.format(sessionJourFin))
+				.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patchSessionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSessionJourFin', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_sessionJourFin')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_sessionJourFin')); }); } ")
 				.fg();
 		}
 	}

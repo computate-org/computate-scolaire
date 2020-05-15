@@ -26,8 +26,9 @@ import io.vertx.core.http.CaseInsensitiveHeaders;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.auth.oauth2.KeycloakHelper;
-import io.vertx.ext.sql.SQLConnection;
 import io.vertx.ext.web.api.OperationRequest;
+import io.vertx.sqlclient.SqlConnection;
+import io.vertx.sqlclient.Transaction;
 
 public class SiteRequestEnUS extends SiteRequestEnUSGen<Object> implements Serializable {
 
@@ -208,7 +209,10 @@ public class SiteRequestEnUS extends SiteRequestEnUSGen<Object> implements Seria
 			c.o(operationRequest.getParams().getLong("pk"));
 	}
 
-	protected void _sqlConnection(Wrap<SQLConnection> c) {
+	protected void _tx(Wrap<Transaction> c) {
+	}
+
+	protected void _sqlConnection(Wrap<SqlConnection> c) {
 	}
 
 	protected void _requestHeaders(Wrap<CaseInsensitiveHeaders> c) {
@@ -226,7 +230,7 @@ public class SiteRequestEnUS extends SiteRequestEnUSGen<Object> implements Seria
 		o.setUserKey(userKey);
 		o.setSolrDocument(solrDocument);
 		o.setPageAdmin(pageAdmin);
-		o.setSqlConnection(sqlConnection);
+		o.setTx(tx);
 		o.setRequestHeaders(requestHeaders);
 		o.setRequestVars(requestVars);
 		return o;

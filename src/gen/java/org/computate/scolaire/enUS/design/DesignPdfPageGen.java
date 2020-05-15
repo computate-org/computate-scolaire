@@ -1252,7 +1252,7 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public DesignPdfPage setSeasonStartDate(String o) {
-		this.seasonStartDate = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.seasonStartDate = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
 		this.seasonStartDateWrap.alreadyInitialized = true;
 		return (DesignPdfPage)this;
 	}
@@ -1276,11 +1276,11 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 	}
 
 	public String strSeasonStartDate() {
-		return seasonStartDate == null ? "" : seasonStartDate.format(DateTimeFormatter.ofPattern("EEE MMM d yyyy", Locale.US));
+		return seasonStartDate == null ? "" : seasonStartDate.format(DateTimeFormatter.ofPattern("EEE MMM d, yyyy", Locale.forLanguageTag("en-US")));
 	}
 
 	public String jsonSeasonStartDate() {
-		return seasonStartDate == null ? "" : seasonStartDate.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.US));
+		return seasonStartDate == null ? "" : seasonStartDate.format(DateTimeFormatter.ISO_DATE);
 	}
 
 	public String nomAffichageSeasonStartDate() {

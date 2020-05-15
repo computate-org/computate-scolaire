@@ -35,10 +35,15 @@ import io.vertx.core.buffer.Buffer;
 import io.vertx.core.http.CaseInsensitiveHeaders;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
-import io.vertx.ext.jdbc.JDBCClient;
 import io.vertx.ext.sql.SQLClient;
 import io.vertx.ext.sql.SQLConnection;
 import io.vertx.ext.web.api.OperationResponse;
+import io.vertx.pgclient.PgConnectOptions;
+import io.vertx.pgclient.PgPool;
+import io.vertx.sqlclient.PoolOptions;
+import io.vertx.sqlclient.Row;
+import io.vertx.sqlclient.Transaction;
+import io.vertx.sqlclient.Tuple;
 
 public class AppRestore extends AbstractVerticle {
 
@@ -99,7 +104,7 @@ public class AppRestore extends AbstractVerticle {
 				if(a.succeeded()) {
 					nextDefinitions(siteRequest, dateTime, b -> {
 						if(b.succeeded()) {
-							List<JsonArray> rows = b.result();
+							List<Row> rows = b.result();
 							listDefinitions(siteRequest, rows, dateTime, d -> {
 								if(d.succeeded()) {
 									nextClusters(siteRequest, dateTime, e -> {
@@ -107,23 +112,15 @@ public class AppRestore extends AbstractVerticle {
 											SearchList<Cluster> clusters = e.result();
 											listPATCHCluster(clusters, dateTime, f -> {
 												if(f.succeeded()) {
-													SQLConnection sqlConnection = siteRequest.getSqlConnection();
-													if(sqlConnection == null) {
+													Transaction tx = siteRequest.getTx();
+													if(tx == null) {
 														startPromise.complete();
 				//										eventHandler.handle(Future.succeededFuture(d.result()));
 													} else {
-														sqlConnection.commit(g -> {
+														tx.commit(g -> {
 															if(g.succeeded()) {
-																sqlConnection.close(h -> {
-																	if(h.succeeded()) {
-																		System.out.println("Completed!!!");
-																		startPromise.complete();
-				//														eventHandler.handle(Future.succeededFuture(d.result()));
-																	} else {
-																		startPromise.fail(h.cause());
-				//														errorCluster(siteRequest, eventHandler, f);
-																	}
-																});
+																System.out.println("Completed!!!");
+																startPromise.complete();
 															} else {
 																startPromise.fail(g.cause());
 				//												eventHandler.handle(Future.succeededFuture(d.result()));
@@ -172,49 +169,36 @@ public class AppRestore extends AbstractVerticle {
 		SiteConfig siteConfig = siteContextEnUS.getSiteConfig();
 		Promise<Void> promise = Promise.promise();
 
-		JsonObject jdbcConfig = new JsonObject();
-		if (StringUtils.isNotEmpty(siteConfig.getJdbcUrl()))
-			jdbcConfig.put("url", siteConfig.getJdbcUrl());
-		if (StringUtils.isNotEmpty(siteConfig.getJdbcDriverClass()))
-			jdbcConfig.put("driver_class", siteConfig.getJdbcDriverClass());
-		if (StringUtils.isNotEmpty(siteConfig.getJdbcUsername()))
-			jdbcConfig.put("user", siteConfig.getJdbcUsername());
-		if (StringUtils.isNotEmpty(siteConfig.getJdbcPassword()))
-			jdbcConfig.put("password", siteConfig.getJdbcPassword());
-		if (siteConfig.getJdbcMaxPoolSize() != null)
-			jdbcConfig.put("max_pool_size", siteConfig.getJdbcMaxPoolSize());
-		if (siteConfig.getJdbcInitialPoolSize() != null)
-			jdbcConfig.put("initial_pool_size", siteConfig.getJdbcInitialPoolSize());
-		if (siteConfig.getJdbcMinPoolSize() != null)
-			jdbcConfig.put("min_pool_size", siteConfig.getJdbcMinPoolSize());
-		if (siteConfig.getJdbcMaxStatements() != null)
-			jdbcConfig.put("max_statements", siteConfig.getJdbcMaxStatements());
-		if (siteConfig.getJdbcMaxStatementsPerConnection() != null)
-			jdbcConfig.put("max_statements_per_connection", siteConfig.getJdbcMaxStatementsPerConnection());
-		if (siteConfig.getJdbcMaxIdleTime() != null)
-			jdbcConfig.put("max_idle_time", siteConfig.getJdbcMaxIdleTime());
-		jdbcConfig.put("castUUID", false);
-		jdbcConfig.put("castDateTime", false);
-		jdbcConfig.put("castTime", false);
-		jdbcConfig.put("castDate", false);
-		JDBCClient jdbcClient = JDBCClient.createShared(vertx, jdbcConfig);
+		PgConnectOptions pgOptions = new PgConnectOptions();
+		pgOptions.setPort(siteConfig.getJdbcPort());
+		pgOptions.setHost(siteConfig.getJdbcHost());
+		pgOptions.setDatabase(siteConfig.getJdbcDatabase());
+		pgOptions.setUser(siteConfig.getJdbcUsername());
+		pgOptions.setPassword(siteConfig.getJdbcPassword());
+		pgOptions.setIdleTimeout(siteConfig.getJdbcMaxIdleTime());
 
-		siteContextEnUS.setSqlClient(jdbcClient);
+		PoolOptions poolOptions = new PoolOptions();
+		poolOptions.setMaxSize(siteConfig.getJdbcMaxPoolSize());
+
+		PgPool pgPool = PgPool.pool(vertx, pgOptions, poolOptions);
+
+		siteContextEnUS.setPgPool(pgPool);
 		promise.complete();
 
 		return promise.future();
 	}
 
-	public void nextDefinitions(SiteRequestEnUS siteRequest, ZonedDateTime dateTime, Handler<AsyncResult<List<JsonArray>>> eventHandler) {
+	public void nextDefinitions(SiteRequestEnUS siteRequest, ZonedDateTime dateTime, Handler<AsyncResult<List<Row>>> eventHandler) {
 		try {
-			SQLConnection sqlConnection = siteRequest.getSqlConnection();
-			sqlConnection.queryWithParams(
+			Transaction tx = siteRequest.getTx();
+			tx.preparedQuery(
 					"update d set modified=now() where pk in (select pk from d where not current and modified < ? order by pk limit 10) returning pk, pk_c, path, value, current, created, modified;"
-					, new JsonArray(Arrays.asList(Timestamp.from(dateTime.toInstant())))
+					, Tuple.of(dateTime)
+					, Collectors.toList()
 					, updateDAsync
 			-> {
 				if(updateDAsync.succeeded()) {
-					List<JsonArray> rows = updateDAsync.result().getResults();
+					List<Row> rows = updateDAsync.result().value();
 					System.out.println("d " + rows.stream().map(row -> row.getLong(0)).collect(Collectors.toList()));
 					eventHandler.handle(Future.succeededFuture(rows));
 				} else {
@@ -228,24 +212,24 @@ public class AppRestore extends AbstractVerticle {
 
 	public void nextClusters(SiteRequestEnUS siteRequest, ZonedDateTime dateTime, Handler<AsyncResult<SearchList<Cluster>>> eventHandler) {
 		try {
-			SQLConnection sqlConnection = siteRequest.getSqlConnection();
-			sqlConnection.queryWithParams(
+			Transaction tx = siteRequest.getTx();
+			tx.preparedQuery(
 					"update c set modified=now() where pk in (select pk from c where canonical_name is not null and modified < ? order by pk limit 10) returning pk, current, canonical_name, created, modified, user_id;"
-					, new JsonArray(Arrays.asList(Timestamp.from(dateTime.toInstant())))
+					, Tuple.of(dateTime)
+					, Collectors.toList()
 					, selectCAsync
 			-> {
 				if(selectCAsync.succeeded()) {
 					SearchList<Cluster> searchList = new SearchList<Cluster>();
 					searchList.setSiteRequest_(siteRequest);
-					System.out.println("c " + selectCAsync.result().getResults().stream().map(row -> row.getLong(0)).collect(Collectors.toList()));
-					selectCAsync.result().getResults().forEach(clusterValues -> {
+					System.out.println("c " + selectCAsync.result().value().stream().map(row -> row.getLong(0)).collect(Collectors.toList()));
+					selectCAsync.result().value().forEach(clusterValues -> {
 						try {
 							Long pk = clusterValues.getLong(0);
 							String canonicalName = clusterValues.getString(2);
 							Cluster cluster = (Cluster)Class.forName(canonicalName).newInstance();
 							cluster.setPk(pk);
-							cluster.setCreated(ZonedDateTime.ofInstant(clusterValues.getInstant(3), ZoneId.systemDefault()));
-							cluster.setModified(ZonedDateTime.ofInstant(clusterValues.getInstant(4), ZoneId.systemDefault()));
+							cluster.setCreated(clusterValues.getLocalDateTime(3).atZone(ZoneId.systemDefault()));
 							cluster.setSiteRequest_(siteRequest);
 							searchList.getList().add(cluster);
 						} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
@@ -264,22 +248,16 @@ public class AppRestore extends AbstractVerticle {
 
 	public void sqlCluster(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
-			SQLClient sqlClient = siteRequest.getSiteContext_().getSqlClient();
+			PgPool pgPool = siteRequest.getSiteContext_().getPgPool();
 
-			if(sqlClient == null) {
+			if(pgPool == null) {
 				eventHandler.handle(Future.succeededFuture());
 			} else {
-				sqlClient.getConnection(sqlAsync -> {
+				pgPool.begin(sqlAsync -> {
 					if(sqlAsync.succeeded()) {
-						SQLConnection sqlConnection = sqlAsync.result();
-						sqlConnection.setAutoCommit(false, a -> {
-							if(a.succeeded()) {
-								siteRequest.setSqlConnection(sqlConnection);
-								eventHandler.handle(Future.succeededFuture());
-							} else {
-								eventHandler.handle(Future.failedFuture(a.cause()));
-							}
-						});
+						Transaction tx = sqlAsync.result();
+						siteRequest.setTx(tx);
+						eventHandler.handle(Future.succeededFuture());
 					} else {
 						eventHandler.handle(Future.failedFuture(new Exception(sqlAsync.cause())));
 					}
@@ -290,7 +268,7 @@ public class AppRestore extends AbstractVerticle {
 		}
 	}
 
-	public void listDefinitions(SiteRequestEnUS siteRequest, List<JsonArray> rows, ZonedDateTime dateTime, Handler<AsyncResult<List<JsonArray>>> eventHandler) {
+	public void listDefinitions(SiteRequestEnUS siteRequest, List<Row> rows, ZonedDateTime dateTime, Handler<AsyncResult<List<Row>>> eventHandler) {
 		List<Future> futures = new ArrayList<>();
 		if(rows.size() == 0) {
 			eventHandler.handle(Future.succeededFuture(rows));
@@ -311,7 +289,7 @@ public class AppRestore extends AbstractVerticle {
 				if(a.succeeded()) {
 					nextDefinitions(siteRequest, dateTime, b -> {
 						if(b.succeeded()) {
-							List<JsonArray> clusters = b.result();
+							List<Row> clusters = b.result();
 							listDefinitions(siteRequest, clusters, dateTime, eventHandler);
 						} else {
 							eventHandler.handle(Future.failedFuture(b.cause()));
@@ -324,9 +302,9 @@ public class AppRestore extends AbstractVerticle {
 		}
 	}
 
-	public Future<List<JsonArray>> futureDefinition(SiteRequestEnUS siteRequest, List<JsonArray> rows, ZonedDateTime dateTime, JsonArray o,  Handler<AsyncResult<List<JsonArray>>> eventHandler) {
+	public Future<List<Row>> futureDefinition(SiteRequestEnUS siteRequest, List<Row> rows, ZonedDateTime dateTime, Row o,  Handler<AsyncResult<List<Row>>> eventHandler) {
 
-		Promise<List<JsonArray>> promise = Promise.promise();
+		Promise<List<Row>> promise = Promise.promise();
 		try {
 			Long pk = o.getLong(0);
 			String path = o.getString(2);
@@ -340,27 +318,27 @@ public class AppRestore extends AbstractVerticle {
 			if(scramble && StringUtils.equalsAny(path, "personEmail", "childMedicalConditions", "childPreviousSchoolsAttended", "childDescription", "childObjectives"))
 //				value = getScrambledWord(value);
 				value = "";
-			if(StringUtils.equalsAny(path, "yearStart", "yearEnd", "seasonStartDate", "sessionStartDate", "sessionEndDate", "personBirthDate", "paymentDate", "enrollmentDate1", "enrollmentDate2", "enrollmentDate3", "enrollmentDate4", "enrollmentDate5", "enrollmentDate6", "enrollmentDate7", "enrollmentDate8", "enrollmentDate9", "enrollmentDate10")) {
-				try {
-					value = DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.US).format(DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.US).parse(value));
-				} catch (Exception e) {
-					System.err.println(o);
-					e.printStackTrace();
-				}
-			}
-			else if(StringUtils.equalsAny(path, "blockStartTime", "blockEndTime")) {
-				try {
-					value = DateTimeFormatter.ofPattern("HH mm", Locale.US).format(DateTimeFormatter.ofPattern("HH:mm", Locale.US).parse(value));
-				} catch (Exception e) {
-					System.err.println(o);
-					e.printStackTrace();
-				}
-			}
-			SQLConnection sqlConnection = siteRequest.getSqlConnection();
+//			if(StringUtils.equalsAny(path, "yearStart", "yearEnd", "seasonStartDate", "sessionStartDate", "sessionEndDate", "personBirthDate", "paymentDate", "enrollmentDate1", "enrollmentDate2", "enrollmentDate3", "enrollmentDate4", "enrollmentDate5", "enrollmentDate6", "enrollmentDate7", "enrollmentDate8", "enrollmentDate9", "enrollmentDate10")) {
+//				try {
+//					value = DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.US).format(DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.US).parse(value));
+//				} catch (Exception e) {
+//					System.err.println(o);
+//					e.printStackTrace();
+//				}
+//			}
+//			else if(StringUtils.equalsAny(path, "blockStartTime", "blockEndTime")) {
+//				try {
+//					value = DateTimeFormatter.ofPattern("HH mm", Locale.US).format(DateTimeFormatter.ofPattern("HH:mm", Locale.US).parse(value));
+//				} catch (Exception e) {
+//					System.err.println(o);
+//					e.printStackTrace();
+//				}
+//			}
+			Transaction tx = siteRequest.getTx();
 //			if(scramble && StringUtils.equals(path, "personFirstName"))
-			sqlConnection.queryWithParams(
+			tx.preparedQuery(
 					"update d set modified=now(), value=?, current=true where pk=?;"
-					, new JsonArray(Arrays.asList(value, pk))
+					, Tuple.of(value, pk)
 					, selectCAsync
 			-> {
 				if(selectCAsync.succeeded()) {
@@ -442,16 +420,17 @@ public class AppRestore extends AbstractVerticle {
 	public void defineCluster(Cluster o, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
-			SQLConnection sqlConnection = siteRequest.getSqlConnection();
+			Transaction tx = siteRequest.getTx();
 			Long pk = o.getPk();
-			sqlConnection.queryWithParams(
+			tx.preparedQuery(
 					SiteContextEnUS.SQL_define
-					, new JsonArray(Arrays.asList(pk, pk, pk))
+					, Tuple.of(pk, pk, pk)
+					, Collectors.toList()
 					, defineAsync
 			-> {
 				if(defineAsync.succeeded()) {
 					try {
-						for(JsonArray definition : defineAsync.result().getResults()) {
+						for(Row definition : defineAsync.result().value()) {
 							try {
 								o.defineForClass(definition.getString(0), definition.getString(1));
 							} catch (Exception e) {
@@ -476,17 +455,18 @@ public class AppRestore extends AbstractVerticle {
 	public void attributeCluster(Cluster o, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
-			SQLConnection sqlConnection = siteRequest.getSqlConnection();
+			Transaction tx = siteRequest.getTx();
 			Long pk = o.getPk();
-			sqlConnection.queryWithParams(
+			tx.preparedQuery(
 					SiteContextEnUS.SQL_attribute
-					, new JsonArray(Arrays.asList(pk, pk))
+					, Tuple.of(pk, pk)
+					, Collectors.toList()
 					, attributeAsync
 			-> {
 				try {
 					if(attributeAsync.succeeded()) {
 						if(attributeAsync.result() != null) {
-							for(JsonArray definition : attributeAsync.result().getResults()) {
+							for(Row definition : attributeAsync.result().value()) {
 								if(pk.equals(definition.getLong(0)))
 									o.attributeForClass(definition.getString(2), definition.getLong(1));
 								else
@@ -547,17 +527,11 @@ public class AppRestore extends AbstractVerticle {
 			, new CaseInsensitiveHeaders()
 		);
 		if(siteRequest != null) {
-			SQLConnection sqlConnection = siteRequest.getSqlConnection();
-			if(sqlConnection != null) {
-				sqlConnection.rollback(a -> {
+			Transaction tx = siteRequest.getTx();
+			if(tx != null) {
+				tx.rollback(a -> {
 					if(a.succeeded()) {
-						sqlConnection.close(b -> {
-							if(a.succeeded()) {
-								eventHandler.handle(Future.succeededFuture(responseOperation));
-							} else {
-								eventHandler.handle(Future.succeededFuture(responseOperation));
-							}
-						});
+						eventHandler.handle(Future.succeededFuture(responseOperation));
 					} else {
 						eventHandler.handle(Future.succeededFuture(responseOperation));
 					}

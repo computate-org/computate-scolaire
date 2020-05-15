@@ -22,6 +22,7 @@ import java.math.MathContext;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import io.vertx.core.Vertx;
 import io.vertx.ext.web.handler.OAuth2AuthHandler;
+import io.vertx.pgclient.PgPool;
 import org.apache.commons.text.StringEscapeUtils;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -34,7 +35,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import java.lang.Object;
 import io.vertx.ext.auth.oauth2.OAuth2Auth;
 import io.vertx.ext.mail.MailClient;
-import io.vertx.ext.sql.SQLClient;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 
@@ -310,41 +310,41 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 		return (SiteContexteFrFR)this;
 	}
 
-	///////////////
-	// clientSql //
-	///////////////
+	////////////
+	// pgPool //
+	////////////
 
-	/**	L'entité « clientSql »
+	/**	L'entité « pgPool »
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected SQLClient clientSql;
+	protected PgPool pgPool;
 	@JsonIgnore
-	public Couverture<SQLClient> clientSqlCouverture = new Couverture<SQLClient>().p(this).c(SQLClient.class).var("clientSql").o(clientSql);
+	public Couverture<PgPool> pgPoolCouverture = new Couverture<PgPool>().p(this).c(PgPool.class).var("pgPool").o(pgPool);
 
-	/**	<br/>L'entité « clientSql »
+	/**	<br/>L'entité « pgPool »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.contexte.SiteContexteFrFR&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:clientSql">Trouver l'entité clientSql dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.contexte.SiteContexteFrFR&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pgPool">Trouver l'entité pgPool dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _clientSql(Couverture<SQLClient> c);
+	protected abstract void _pgPool(Couverture<PgPool> c);
 
-	public SQLClient getClientSql() {
-		return clientSql;
+	public PgPool getPgPool() {
+		return pgPool;
 	}
 
-	public void setClientSql(SQLClient clientSql) {
-		this.clientSql = clientSql;
-		this.clientSqlCouverture.dejaInitialise = true;
+	public void setPgPool(PgPool pgPool) {
+		this.pgPool = pgPool;
+		this.pgPoolCouverture.dejaInitialise = true;
 	}
-	protected SiteContexteFrFR clientSqlInit() {
-		if(!clientSqlCouverture.dejaInitialise) {
-			_clientSql(clientSqlCouverture);
-			if(clientSql == null)
-				setClientSql(clientSqlCouverture.o);
+	protected SiteContexteFrFR pgPoolInit() {
+		if(!pgPoolCouverture.dejaInitialise) {
+			_pgPool(pgPoolCouverture);
+			if(pgPool == null)
+				setPgPool(pgPoolCouverture.o);
 		}
-		clientSqlCouverture.dejaInitialise(true);
+		pgPoolCouverture.dejaInitialise(true);
 		return (SiteContexteFrFR)this;
 	}
 
@@ -488,7 +488,7 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 		authFournisseurInit();
 		executeurTravailleurInit();
 		configSiteInit();
-		clientSqlInit();
+		pgPoolInit();
 		clientSolrInit();
 		mailClientInit();
 		clientSolrComputateInit();
@@ -532,8 +532,8 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 				return oSiteContexteFrFR.executeurTravailleur;
 			case "configSite":
 				return oSiteContexteFrFR.configSite;
-			case "clientSql":
-				return oSiteContexteFrFR.clientSql;
+			case "pgPool":
+				return oSiteContexteFrFR.pgPool;
 			case "clientSolr":
 				return oSiteContexteFrFR.clientSolr;
 			case "mailClient":

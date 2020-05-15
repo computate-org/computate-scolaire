@@ -522,12 +522,44 @@ public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {
 	}
 
 	/**	
+	 * Var.enUS: jdbcHost
 	 * frFR: L'URL JDBC vers la base de données. 
 	 * enUS: The JDBC URL to the database. 
 	 * r: prefixeEchappe
 	 * r.enUS: prefixEscaped
 	 * **/ 
-	protected void _jdbcUrl(Couverture<String> c) {
+	protected void _jdbcHote(Couverture<String> c) {
+		String o;
+		if(config == null)
+			o = System.getenv(c.var);
+		else
+			o = config.getString(prefixeEchappe + c.var);
+		c.o(o);
+	}
+
+	/**	
+	 * frFR: L'URL JDBC vers la base de données. 
+	 * enUS: The JDBC URL to the database. 
+	 * r: prefixeEchappe
+	 * r.enUS: prefixEscaped
+	 * **/ 
+	protected void _jdbcPort(Couverture<Integer> c) {
+		Integer o;
+		if(config == null)
+			o = Integer.parseInt(ObjectUtils.defaultIfNull(System.getenv(c.var), "5432"));
+		else
+			o = config.getInt(prefixeEchappe + c.var, 5432);
+		c.o(o);
+	}
+
+	/**	
+	 * Var.enUS: jdbcDatabase
+	 * frFR: L'URL JDBC vers la base de données. 
+	 * enUS: The JDBC URL to the database. 
+	 * r: prefixeEchappe
+	 * r.enUS: prefixEscaped
+	 * **/ 
+	protected void _jdbcBaseDeDonnees(Couverture<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);

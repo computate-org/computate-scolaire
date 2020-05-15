@@ -24,7 +24,6 @@ import java.util.Objects;
 import java.util.List;
 import org.apache.solr.client.solrj.SolrQuery;
 import java.util.Optional;
-import io.vertx.ext.sql.SQLClient;
 import org.apache.solr.client.solrj.util.ClientUtils;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.apache.solr.common.SolrInputDocument;
@@ -49,7 +48,6 @@ import io.vertx.core.json.JsonArray;
 import org.apache.solr.common.SolrDocument;
 import java.time.temporal.ChronoUnit;
 import java.time.format.DateTimeFormatter;
-import io.vertx.ext.sql.SQLConnection;
 import org.apache.commons.lang3.math.NumberUtils;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import java.lang.Object;
@@ -529,11 +527,11 @@ public abstract class ClusterGen<DEV> extends Object {
 	}
 
 	public String strCreated() {
-		return created == null ? "" : created.format(DateTimeFormatter.ofPattern("EEE MMM d, yyyy h:mm:ss a zz", Locale.US));
+		return created == null ? "" : created.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy H:mm:ss a zz", Locale.forLanguageTag("en-US")));
 	}
 
 	public String jsonCreated() {
-		return created == null ? "" : created.format(DateTimeFormatter.ofPattern("EEE MMM d yyyy h:mm:ss.SSS a zz VV", Locale.US));
+		return created == null ? "" : created.format(DateTimeFormatter.ISO_DATE_TIME);
 	}
 
 	public String nomAffichageCreated() {
@@ -633,11 +631,11 @@ public abstract class ClusterGen<DEV> extends Object {
 	}
 
 	public String strModified() {
-		return modified == null ? "" : modified.format(DateTimeFormatter.ofPattern("EEE MMM d, yyyy h:mm:ss a zz", Locale.US));
+		return modified == null ? "" : modified.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy H:mm:ss a zz", Locale.forLanguageTag("en-US")));
 	}
 
 	public String jsonModified() {
-		return modified == null ? "" : modified.format(DateTimeFormatter.ofPattern("EEE MMM d yyyy h:mm:ss.SSS a zz VV", Locale.US));
+		return modified == null ? "" : modified.format(DateTimeFormatter.ISO_DATE_TIME);
 	}
 
 	public String nomAffichageModified() {

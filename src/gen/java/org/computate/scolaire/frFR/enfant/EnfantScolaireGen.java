@@ -25,7 +25,6 @@ import java.util.List;
 import java.time.LocalDate;
 import org.apache.solr.client.solrj.SolrQuery;
 import java.util.Optional;
-import io.vertx.ext.sql.SQLClient;
 import org.apache.solr.client.solrj.util.ClientUtils;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.apache.solr.common.SolrInputDocument;
@@ -49,7 +48,6 @@ import io.vertx.core.json.JsonArray;
 import org.apache.solr.common.SolrDocument;
 import java.time.temporal.ChronoUnit;
 import java.time.format.DateTimeFormatter;
-import io.vertx.ext.sql.SQLConnection;
 import org.apache.commons.lang3.math.NumberUtils;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
@@ -1683,7 +1681,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public EnfantScolaire setPersonneDateNaissance(String o) {
-		this.personneDateNaissance = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.personneDateNaissance = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
 		this.personneDateNaissanceCouverture.dejaInitialise = true;
 		return (EnfantScolaire)this;
 	}
@@ -1707,11 +1705,11 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strPersonneDateNaissance() {
-		return personneDateNaissance == null ? "" : personneDateNaissance.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.FRANCE));
+		return personneDateNaissance == null ? "" : personneDateNaissance.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.forLanguageTag("fr-FR")));
 	}
 
 	public String jsonPersonneDateNaissance() {
-		return personneDateNaissance == null ? "" : personneDateNaissance.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.FRANCE));
+		return personneDateNaissance == null ? "" : personneDateNaissance.format(DateTimeFormatter.ISO_DATE);
 	}
 
 	public String nomAffichagePersonneDateNaissance() {
@@ -1741,8 +1739,8 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 				.a("data-timeformat", "DD-MM-YYYY")
 				.a("id", classeApiMethodeMethode, "_personneDateNaissance")
 				.a("onclick", "enleverLueur($(this)); ")
-				.a("value", personneDateNaissance == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(personneDateNaissance))
-				.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchEnfantScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonneDateNaissance', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneDateNaissance')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneDateNaissance')); }); } ")
+				.a("value", personneDateNaissance == null ? "" : DateTimeFormatter.ISO_LOCAL_DATE.format(personneDateNaissance))
+				.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patchEnfantScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonneDateNaissance', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneDateNaissance')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneDateNaissance')); }); } ")
 				.fg();
 		} else {
 			sx(htmPersonneDateNaissance());

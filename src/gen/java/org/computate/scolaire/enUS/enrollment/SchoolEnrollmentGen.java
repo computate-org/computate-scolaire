@@ -33,7 +33,6 @@ import java.util.List;
 import java.time.LocalDate;
 import org.apache.solr.client.solrj.SolrQuery;
 import java.util.Optional;
-import io.vertx.ext.sql.SQLClient;
 import org.apache.solr.client.solrj.util.ClientUtils;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.computate.scolaire.enUS.block.SchoolBlock;
@@ -60,7 +59,6 @@ import org.apache.solr.common.SolrDocument;
 import java.time.temporal.ChronoUnit;
 import org.computate.scolaire.enUS.dad.SchoolDad;
 import java.time.format.DateTimeFormatter;
-import io.vertx.ext.sql.SQLConnection;
 import org.apache.commons.lang3.math.NumberUtils;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
@@ -3669,7 +3667,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolEnrollment setChildBirthDate(String o) {
-		this.childBirthDate = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.childBirthDate = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
 		this.childBirthDateWrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
@@ -3693,11 +3691,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	}
 
 	public String strChildBirthDate() {
-		return childBirthDate == null ? "" : childBirthDate.format(DateTimeFormatter.ofPattern("EEE MMM d yyyy", Locale.US));
+		return childBirthDate == null ? "" : childBirthDate.format(DateTimeFormatter.ofPattern("EEE MMM d, yyyy", Locale.forLanguageTag("en-US")));
 	}
 
 	public String jsonChildBirthDate() {
-		return childBirthDate == null ? "" : childBirthDate.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.US));
+		return childBirthDate == null ? "" : childBirthDate.format(DateTimeFormatter.ISO_DATE);
 	}
 
 	public String nomAffichageChildBirthDate() {
@@ -3727,8 +3725,8 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				.a("data-timeformat", "MM/DD/YYYY")
 				.a("id", classApiMethodMethod, "_childBirthDate")
 				.a("onclick", "removeGlow($(this)); ")
-				.a("value", childBirthDate == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(childBirthDate))
-				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setChildBirthDate', s, function() { addGlow($('#", classApiMethodMethod, "_childBirthDate')); }, function() { addError($('#", classApiMethodMethod, "_childBirthDate')); }); } ")
+				.a("value", childBirthDate == null ? "" : DateTimeFormatter.ISO_LOCAL_DATE.format(childBirthDate))
+				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setChildBirthDate', s, function() { addGlow($('#", classApiMethodMethod, "_childBirthDate')); }, function() { addError($('#", classApiMethodMethod, "_childBirthDate')); }); } ")
 				.fg();
 		} else {
 			sx(htmChildBirthDate());
@@ -4529,7 +4527,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolEnrollment setSeasonStartDate(String o) {
-		this.seasonStartDate = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.seasonStartDate = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
 		this.seasonStartDateWrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
@@ -4553,11 +4551,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	}
 
 	public String strSeasonStartDate() {
-		return seasonStartDate == null ? "" : seasonStartDate.format(DateTimeFormatter.ofPattern("EEE MMM d yyyy", Locale.US));
+		return seasonStartDate == null ? "" : seasonStartDate.format(DateTimeFormatter.ofPattern("EEE MMM d, yyyy", Locale.forLanguageTag("en-US")));
 	}
 
 	public String jsonSeasonStartDate() {
-		return seasonStartDate == null ? "" : seasonStartDate.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.US));
+		return seasonStartDate == null ? "" : seasonStartDate.format(DateTimeFormatter.ISO_DATE);
 	}
 
 	public String nomAffichageSeasonStartDate() {
@@ -4886,7 +4884,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolEnrollment setSessionStartDate(String o) {
-		this.sessionStartDate = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.sessionStartDate = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
 		this.sessionStartDateWrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
@@ -4910,11 +4908,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	}
 
 	public String strSessionStartDate() {
-		return sessionStartDate == null ? "" : sessionStartDate.format(DateTimeFormatter.ofPattern("EEE MMM d yyyy", Locale.US));
+		return sessionStartDate == null ? "" : sessionStartDate.format(DateTimeFormatter.ofPattern("EEE MMM d, yyyy", Locale.forLanguageTag("en-US")));
 	}
 
 	public String jsonSessionStartDate() {
-		return sessionStartDate == null ? "" : sessionStartDate.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.US));
+		return sessionStartDate == null ? "" : sessionStartDate.format(DateTimeFormatter.ISO_DATE);
 	}
 
 	public String nomAffichageSessionStartDate() {
@@ -4967,7 +4965,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolEnrollment setSessionEndDate(String o) {
-		this.sessionEndDate = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.sessionEndDate = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
 		this.sessionEndDateWrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
@@ -4991,11 +4989,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	}
 
 	public String strSessionEndDate() {
-		return sessionEndDate == null ? "" : sessionEndDate.format(DateTimeFormatter.ofPattern("EEE MMM d yyyy", Locale.US));
+		return sessionEndDate == null ? "" : sessionEndDate.format(DateTimeFormatter.ofPattern("EEE MMM d, yyyy", Locale.forLanguageTag("en-US")));
 	}
 
 	public String jsonSessionEndDate() {
-		return sessionEndDate == null ? "" : sessionEndDate.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.US));
+		return sessionEndDate == null ? "" : sessionEndDate.format(DateTimeFormatter.ISO_DATE);
 	}
 
 	public String nomAffichageSessionEndDate() {
@@ -5242,7 +5240,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/** Example: 01:00 **/
 	public SchoolEnrollment setBlockStartTime(String o) {
 		try {
-			this.blockStartTime = LocalTime.parse(o, DateTimeFormatter.ofPattern("HH mm"));
+			this.blockStartTime = LocalTime.parse(o, DateTimeFormatter.ofPattern("HH:mm"));
 			this.blockStartTimeWrap.alreadyInitialized = true;
 		} catch(Exception e) {
 		}
@@ -5263,11 +5261,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	}
 
 	public String strBlockStartTime() {
-		return blockStartTime == null ? "" : blockStartTime.format(DateTimeFormatter.ofPattern("h:mm a", Locale.US));
+		return blockStartTime == null ? "" : blockStartTime.format(DateTimeFormatter.ofPattern("h:mm a", Locale.forLanguageTag("en-US")));
 	}
 
 	public String jsonBlockStartTime() {
-		return blockStartTime == null ? "" : blockStartTime.format(DateTimeFormatter.ofPattern("HH mm", Locale.US));
+		return blockStartTime == null ? "" : blockStartTime.format(DateTimeFormatter.ISO_TIME);
 	}
 
 	public String nomAffichageBlockStartTime() {
@@ -5314,7 +5312,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/** Example: 01:00 **/
 	public SchoolEnrollment setBlockEndTime(String o) {
 		try {
-			this.blockEndTime = LocalTime.parse(o, DateTimeFormatter.ofPattern("HH mm"));
+			this.blockEndTime = LocalTime.parse(o, DateTimeFormatter.ofPattern("HH:mm"));
 			this.blockEndTimeWrap.alreadyInitialized = true;
 		} catch(Exception e) {
 		}
@@ -5335,11 +5333,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	}
 
 	public String strBlockEndTime() {
-		return blockEndTime == null ? "" : blockEndTime.format(DateTimeFormatter.ofPattern("h:mm a", Locale.US));
+		return blockEndTime == null ? "" : blockEndTime.format(DateTimeFormatter.ofPattern("h:mm a", Locale.forLanguageTag("en-US")));
 	}
 
 	public String jsonBlockEndTime() {
-		return blockEndTime == null ? "" : blockEndTime.format(DateTimeFormatter.ofPattern("HH mm", Locale.US));
+		return blockEndTime == null ? "" : blockEndTime.format(DateTimeFormatter.ISO_TIME);
 	}
 
 	public String nomAffichageBlockEndTime() {
@@ -8437,7 +8435,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolEnrollment setEnrollmentChargeDate(String o) {
-		this.enrollmentChargeDate = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.enrollmentChargeDate = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
 		this.enrollmentChargeDateWrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
@@ -8461,11 +8459,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	}
 
 	public String strEnrollmentChargeDate() {
-		return enrollmentChargeDate == null ? "" : enrollmentChargeDate.format(DateTimeFormatter.ofPattern("EEE MMM d yyyy", Locale.US));
+		return enrollmentChargeDate == null ? "" : enrollmentChargeDate.format(DateTimeFormatter.ofPattern("EEE MMM d, yyyy", Locale.forLanguageTag("en-US")));
 	}
 
 	public String jsonEnrollmentChargeDate() {
-		return enrollmentChargeDate == null ? "" : enrollmentChargeDate.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.US));
+		return enrollmentChargeDate == null ? "" : enrollmentChargeDate.format(DateTimeFormatter.ISO_DATE);
 	}
 
 	public String nomAffichageEnrollmentChargeDate() {
@@ -8495,8 +8493,8 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				.a("data-timeformat", "MM/DD/YYYY")
 				.a("id", classApiMethodMethod, "_enrollmentChargeDate")
 				.a("onclick", "removeGlow($(this)); ")
-				.a("value", enrollmentChargeDate == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(enrollmentChargeDate))
-				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentChargeDate', s, function() { addGlow($('#", classApiMethodMethod, "_enrollmentChargeDate')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentChargeDate')); }); } ")
+				.a("value", enrollmentChargeDate == null ? "" : DateTimeFormatter.ISO_LOCAL_DATE.format(enrollmentChargeDate))
+				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentChargeDate', s, function() { addGlow($('#", classApiMethodMethod, "_enrollmentChargeDate')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentChargeDate')); }); } ")
 				.fg();
 		} else {
 			sx(htmEnrollmentChargeDate());
@@ -10794,7 +10792,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolEnrollment setEnrollmentDate1(String o) {
-		this.enrollmentDate1 = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.enrollmentDate1 = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
 		this.enrollmentDate1Wrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
@@ -10818,11 +10816,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	}
 
 	public String strEnrollmentDate1() {
-		return enrollmentDate1 == null ? "" : enrollmentDate1.format(DateTimeFormatter.ofPattern("EEE MMM d yyyy", Locale.US));
+		return enrollmentDate1 == null ? "" : enrollmentDate1.format(DateTimeFormatter.ofPattern("EEE MMM d, yyyy", Locale.forLanguageTag("en-US")));
 	}
 
 	public String jsonEnrollmentDate1() {
-		return enrollmentDate1 == null ? "" : enrollmentDate1.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.US));
+		return enrollmentDate1 == null ? "" : enrollmentDate1.format(DateTimeFormatter.ISO_DATE);
 	}
 
 	public String nomAffichageEnrollmentDate1() {
@@ -10852,8 +10850,8 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				.a("data-timeformat", "MM/DD/YYYY")
 				.a("id", classApiMethodMethod, "_enrollmentDate1")
 				.a("onclick", "removeGlow($(this)); ")
-				.a("value", enrollmentDate1 == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(enrollmentDate1))
-				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentDate1', s, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate1')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate1')); }); } ")
+				.a("value", enrollmentDate1 == null ? "" : DateTimeFormatter.ISO_LOCAL_DATE.format(enrollmentDate1))
+				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentDate1', s, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate1')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate1')); }); } ")
 				.fg();
 		} else {
 			sx(htmEnrollmentDate1());
@@ -10933,7 +10931,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolEnrollment setEnrollmentDate2(String o) {
-		this.enrollmentDate2 = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.enrollmentDate2 = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
 		this.enrollmentDate2Wrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
@@ -10957,11 +10955,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	}
 
 	public String strEnrollmentDate2() {
-		return enrollmentDate2 == null ? "" : enrollmentDate2.format(DateTimeFormatter.ofPattern("EEE MMM d yyyy", Locale.US));
+		return enrollmentDate2 == null ? "" : enrollmentDate2.format(DateTimeFormatter.ofPattern("EEE MMM d, yyyy", Locale.forLanguageTag("en-US")));
 	}
 
 	public String jsonEnrollmentDate2() {
-		return enrollmentDate2 == null ? "" : enrollmentDate2.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.US));
+		return enrollmentDate2 == null ? "" : enrollmentDate2.format(DateTimeFormatter.ISO_DATE);
 	}
 
 	public String nomAffichageEnrollmentDate2() {
@@ -10991,8 +10989,8 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				.a("data-timeformat", "MM/DD/YYYY")
 				.a("id", classApiMethodMethod, "_enrollmentDate2")
 				.a("onclick", "removeGlow($(this)); ")
-				.a("value", enrollmentDate2 == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(enrollmentDate2))
-				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentDate2', s, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate2')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate2')); }); } ")
+				.a("value", enrollmentDate2 == null ? "" : DateTimeFormatter.ISO_LOCAL_DATE.format(enrollmentDate2))
+				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentDate2', s, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate2')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate2')); }); } ")
 				.fg();
 		} else {
 			sx(htmEnrollmentDate2());
@@ -11072,7 +11070,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolEnrollment setEnrollmentDate3(String o) {
-		this.enrollmentDate3 = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.enrollmentDate3 = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
 		this.enrollmentDate3Wrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
@@ -11096,11 +11094,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	}
 
 	public String strEnrollmentDate3() {
-		return enrollmentDate3 == null ? "" : enrollmentDate3.format(DateTimeFormatter.ofPattern("EEE MMM d yyyy", Locale.US));
+		return enrollmentDate3 == null ? "" : enrollmentDate3.format(DateTimeFormatter.ofPattern("EEE MMM d, yyyy", Locale.forLanguageTag("en-US")));
 	}
 
 	public String jsonEnrollmentDate3() {
-		return enrollmentDate3 == null ? "" : enrollmentDate3.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.US));
+		return enrollmentDate3 == null ? "" : enrollmentDate3.format(DateTimeFormatter.ISO_DATE);
 	}
 
 	public String nomAffichageEnrollmentDate3() {
@@ -11130,8 +11128,8 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				.a("data-timeformat", "MM/DD/YYYY")
 				.a("id", classApiMethodMethod, "_enrollmentDate3")
 				.a("onclick", "removeGlow($(this)); ")
-				.a("value", enrollmentDate3 == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(enrollmentDate3))
-				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentDate3', s, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate3')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate3')); }); } ")
+				.a("value", enrollmentDate3 == null ? "" : DateTimeFormatter.ISO_LOCAL_DATE.format(enrollmentDate3))
+				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentDate3', s, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate3')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate3')); }); } ")
 				.fg();
 		} else {
 			sx(htmEnrollmentDate3());
@@ -11211,7 +11209,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolEnrollment setEnrollmentDate4(String o) {
-		this.enrollmentDate4 = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.enrollmentDate4 = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
 		this.enrollmentDate4Wrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
@@ -11235,11 +11233,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	}
 
 	public String strEnrollmentDate4() {
-		return enrollmentDate4 == null ? "" : enrollmentDate4.format(DateTimeFormatter.ofPattern("EEE MMM d yyyy", Locale.US));
+		return enrollmentDate4 == null ? "" : enrollmentDate4.format(DateTimeFormatter.ofPattern("EEE MMM d, yyyy", Locale.forLanguageTag("en-US")));
 	}
 
 	public String jsonEnrollmentDate4() {
-		return enrollmentDate4 == null ? "" : enrollmentDate4.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.US));
+		return enrollmentDate4 == null ? "" : enrollmentDate4.format(DateTimeFormatter.ISO_DATE);
 	}
 
 	public String nomAffichageEnrollmentDate4() {
@@ -11269,8 +11267,8 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				.a("data-timeformat", "MM/DD/YYYY")
 				.a("id", classApiMethodMethod, "_enrollmentDate4")
 				.a("onclick", "removeGlow($(this)); ")
-				.a("value", enrollmentDate4 == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(enrollmentDate4))
-				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentDate4', s, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate4')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate4')); }); } ")
+				.a("value", enrollmentDate4 == null ? "" : DateTimeFormatter.ISO_LOCAL_DATE.format(enrollmentDate4))
+				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentDate4', s, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate4')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate4')); }); } ")
 				.fg();
 		} else {
 			sx(htmEnrollmentDate4());
@@ -11350,7 +11348,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolEnrollment setEnrollmentDate5(String o) {
-		this.enrollmentDate5 = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.enrollmentDate5 = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
 		this.enrollmentDate5Wrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
@@ -11374,11 +11372,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	}
 
 	public String strEnrollmentDate5() {
-		return enrollmentDate5 == null ? "" : enrollmentDate5.format(DateTimeFormatter.ofPattern("EEE MMM d yyyy", Locale.US));
+		return enrollmentDate5 == null ? "" : enrollmentDate5.format(DateTimeFormatter.ofPattern("EEE MMM d, yyyy", Locale.forLanguageTag("en-US")));
 	}
 
 	public String jsonEnrollmentDate5() {
-		return enrollmentDate5 == null ? "" : enrollmentDate5.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.US));
+		return enrollmentDate5 == null ? "" : enrollmentDate5.format(DateTimeFormatter.ISO_DATE);
 	}
 
 	public String nomAffichageEnrollmentDate5() {
@@ -11408,8 +11406,8 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				.a("data-timeformat", "MM/DD/YYYY")
 				.a("id", classApiMethodMethod, "_enrollmentDate5")
 				.a("onclick", "removeGlow($(this)); ")
-				.a("value", enrollmentDate5 == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(enrollmentDate5))
-				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentDate5', s, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate5')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate5')); }); } ")
+				.a("value", enrollmentDate5 == null ? "" : DateTimeFormatter.ISO_LOCAL_DATE.format(enrollmentDate5))
+				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentDate5', s, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate5')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate5')); }); } ")
 				.fg();
 		} else {
 			sx(htmEnrollmentDate5());
@@ -11489,7 +11487,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolEnrollment setEnrollmentDate6(String o) {
-		this.enrollmentDate6 = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.enrollmentDate6 = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
 		this.enrollmentDate6Wrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
@@ -11513,11 +11511,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	}
 
 	public String strEnrollmentDate6() {
-		return enrollmentDate6 == null ? "" : enrollmentDate6.format(DateTimeFormatter.ofPattern("EEE MMM d yyyy", Locale.US));
+		return enrollmentDate6 == null ? "" : enrollmentDate6.format(DateTimeFormatter.ofPattern("EEE MMM d, yyyy", Locale.forLanguageTag("en-US")));
 	}
 
 	public String jsonEnrollmentDate6() {
-		return enrollmentDate6 == null ? "" : enrollmentDate6.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.US));
+		return enrollmentDate6 == null ? "" : enrollmentDate6.format(DateTimeFormatter.ISO_DATE);
 	}
 
 	public String nomAffichageEnrollmentDate6() {
@@ -11547,8 +11545,8 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				.a("data-timeformat", "MM/DD/YYYY")
 				.a("id", classApiMethodMethod, "_enrollmentDate6")
 				.a("onclick", "removeGlow($(this)); ")
-				.a("value", enrollmentDate6 == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(enrollmentDate6))
-				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentDate6', s, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate6')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate6')); }); } ")
+				.a("value", enrollmentDate6 == null ? "" : DateTimeFormatter.ISO_LOCAL_DATE.format(enrollmentDate6))
+				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentDate6', s, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate6')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate6')); }); } ")
 				.fg();
 		} else {
 			sx(htmEnrollmentDate6());
@@ -11628,7 +11626,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolEnrollment setEnrollmentDate7(String o) {
-		this.enrollmentDate7 = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.enrollmentDate7 = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
 		this.enrollmentDate7Wrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
@@ -11652,11 +11650,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	}
 
 	public String strEnrollmentDate7() {
-		return enrollmentDate7 == null ? "" : enrollmentDate7.format(DateTimeFormatter.ofPattern("EEE MMM d yyyy", Locale.US));
+		return enrollmentDate7 == null ? "" : enrollmentDate7.format(DateTimeFormatter.ofPattern("EEE MMM d, yyyy", Locale.forLanguageTag("en-US")));
 	}
 
 	public String jsonEnrollmentDate7() {
-		return enrollmentDate7 == null ? "" : enrollmentDate7.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.US));
+		return enrollmentDate7 == null ? "" : enrollmentDate7.format(DateTimeFormatter.ISO_DATE);
 	}
 
 	public String nomAffichageEnrollmentDate7() {
@@ -11686,8 +11684,8 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				.a("data-timeformat", "MM/DD/YYYY")
 				.a("id", classApiMethodMethod, "_enrollmentDate7")
 				.a("onclick", "removeGlow($(this)); ")
-				.a("value", enrollmentDate7 == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(enrollmentDate7))
-				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentDate7', s, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate7')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate7')); }); } ")
+				.a("value", enrollmentDate7 == null ? "" : DateTimeFormatter.ISO_LOCAL_DATE.format(enrollmentDate7))
+				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentDate7', s, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate7')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate7')); }); } ")
 				.fg();
 		} else {
 			sx(htmEnrollmentDate7());
@@ -11767,7 +11765,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolEnrollment setEnrollmentDate8(String o) {
-		this.enrollmentDate8 = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.enrollmentDate8 = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
 		this.enrollmentDate8Wrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
@@ -11791,11 +11789,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	}
 
 	public String strEnrollmentDate8() {
-		return enrollmentDate8 == null ? "" : enrollmentDate8.format(DateTimeFormatter.ofPattern("EEE MMM d yyyy", Locale.US));
+		return enrollmentDate8 == null ? "" : enrollmentDate8.format(DateTimeFormatter.ofPattern("EEE MMM d, yyyy", Locale.forLanguageTag("en-US")));
 	}
 
 	public String jsonEnrollmentDate8() {
-		return enrollmentDate8 == null ? "" : enrollmentDate8.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.US));
+		return enrollmentDate8 == null ? "" : enrollmentDate8.format(DateTimeFormatter.ISO_DATE);
 	}
 
 	public String nomAffichageEnrollmentDate8() {
@@ -11825,8 +11823,8 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				.a("data-timeformat", "MM/DD/YYYY")
 				.a("id", classApiMethodMethod, "_enrollmentDate8")
 				.a("onclick", "removeGlow($(this)); ")
-				.a("value", enrollmentDate8 == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(enrollmentDate8))
-				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentDate8', s, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate8')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate8')); }); } ")
+				.a("value", enrollmentDate8 == null ? "" : DateTimeFormatter.ISO_LOCAL_DATE.format(enrollmentDate8))
+				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentDate8', s, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate8')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate8')); }); } ")
 				.fg();
 		} else {
 			sx(htmEnrollmentDate8());
@@ -11906,7 +11904,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolEnrollment setEnrollmentDate9(String o) {
-		this.enrollmentDate9 = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.enrollmentDate9 = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
 		this.enrollmentDate9Wrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
@@ -11930,11 +11928,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	}
 
 	public String strEnrollmentDate9() {
-		return enrollmentDate9 == null ? "" : enrollmentDate9.format(DateTimeFormatter.ofPattern("EEE MMM d yyyy", Locale.US));
+		return enrollmentDate9 == null ? "" : enrollmentDate9.format(DateTimeFormatter.ofPattern("EEE MMM d, yyyy", Locale.forLanguageTag("en-US")));
 	}
 
 	public String jsonEnrollmentDate9() {
-		return enrollmentDate9 == null ? "" : enrollmentDate9.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.US));
+		return enrollmentDate9 == null ? "" : enrollmentDate9.format(DateTimeFormatter.ISO_DATE);
 	}
 
 	public String nomAffichageEnrollmentDate9() {
@@ -11964,8 +11962,8 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				.a("data-timeformat", "MM/DD/YYYY")
 				.a("id", classApiMethodMethod, "_enrollmentDate9")
 				.a("onclick", "removeGlow($(this)); ")
-				.a("value", enrollmentDate9 == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(enrollmentDate9))
-				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentDate9', s, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate9')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate9')); }); } ")
+				.a("value", enrollmentDate9 == null ? "" : DateTimeFormatter.ISO_LOCAL_DATE.format(enrollmentDate9))
+				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentDate9', s, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate9')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate9')); }); } ")
 				.fg();
 		} else {
 			sx(htmEnrollmentDate9());
@@ -12045,7 +12043,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolEnrollment setEnrollmentDate10(String o) {
-		this.enrollmentDate10 = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.enrollmentDate10 = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
 		this.enrollmentDate10Wrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
@@ -12069,11 +12067,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	}
 
 	public String strEnrollmentDate10() {
-		return enrollmentDate10 == null ? "" : enrollmentDate10.format(DateTimeFormatter.ofPattern("EEE MMM d yyyy", Locale.US));
+		return enrollmentDate10 == null ? "" : enrollmentDate10.format(DateTimeFormatter.ofPattern("EEE MMM d, yyyy", Locale.forLanguageTag("en-US")));
 	}
 
 	public String jsonEnrollmentDate10() {
-		return enrollmentDate10 == null ? "" : enrollmentDate10.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.US));
+		return enrollmentDate10 == null ? "" : enrollmentDate10.format(DateTimeFormatter.ISO_DATE);
 	}
 
 	public String nomAffichageEnrollmentDate10() {
@@ -12103,8 +12101,8 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				.a("data-timeformat", "MM/DD/YYYY")
 				.a("id", classApiMethodMethod, "_enrollmentDate10")
 				.a("onclick", "removeGlow($(this)); ")
-				.a("value", enrollmentDate10 == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(enrollmentDate10))
-				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentDate10', s, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate10')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate10')); }); } ")
+				.a("value", enrollmentDate10 == null ? "" : DateTimeFormatter.ISO_LOCAL_DATE.format(enrollmentDate10))
+				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentDate10', s, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate10')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate10')); }); } ")
 				.fg();
 		} else {
 			sx(htmEnrollmentDate10());
@@ -14266,12 +14264,12 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 			document.addField("ageEnd_stored_int", ageEnd);
 		}
 		if(blockStartTime != null) {
-			document.addField("blockStartTime_indexed_string", DateTimeFormatter.ofPattern("HH mm").format(blockStartTime.atOffset(ZoneOffset.UTC)));
-			document.addField("blockStartTime_stored_string", DateTimeFormatter.ofPattern("HH mm").format(blockStartTime.atOffset(ZoneOffset.UTC)));
+			document.addField("blockStartTime_indexed_string", DateTimeFormatter.ofPattern("HH:mm").format(blockStartTime.atOffset(ZoneOffset.UTC)));
+			document.addField("blockStartTime_stored_string", DateTimeFormatter.ofPattern("HH:mm").format(blockStartTime.atOffset(ZoneOffset.UTC)));
 		}
 		if(blockEndTime != null) {
-			document.addField("blockEndTime_indexed_string", DateTimeFormatter.ofPattern("HH mm").format(blockEndTime.atOffset(ZoneOffset.UTC)));
-			document.addField("blockEndTime_stored_string", DateTimeFormatter.ofPattern("HH mm").format(blockEndTime.atOffset(ZoneOffset.UTC)));
+			document.addField("blockEndTime_indexed_string", DateTimeFormatter.ofPattern("HH:mm").format(blockEndTime.atOffset(ZoneOffset.UTC)));
+			document.addField("blockEndTime_stored_string", DateTimeFormatter.ofPattern("HH:mm").format(blockEndTime.atOffset(ZoneOffset.UTC)));
 		}
 		if(blockPricePerMonth != null) {
 			document.addField("blockPricePerMonth_indexed_double", blockPricePerMonth.doubleValue());

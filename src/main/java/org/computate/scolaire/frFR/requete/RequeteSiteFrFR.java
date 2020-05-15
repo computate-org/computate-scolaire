@@ -28,8 +28,9 @@ import io.vertx.core.http.CaseInsensitiveHeaders;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.auth.oauth2.KeycloakHelper;
-import io.vertx.ext.sql.SQLConnection;
-import io.vertx.ext.web.api.OperationRequest; 
+import io.vertx.ext.web.api.OperationRequest;
+import io.vertx.sqlclient.SqlConnection;
+import io.vertx.sqlclient.Transaction; 
 
 /**
  * MotCle: classeNomSimpleRequeteSite
@@ -405,9 +406,15 @@ public class RequeteSiteFrFR extends RequeteSiteFrFRGen<Object> implements Seria
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: sqlConnection
 	 **/
-	protected void _connexionSql(Couverture<SQLConnection> c) {
+	protected void _tx(Couverture<Transaction> c) {
+	}
+
+	/**
+	 * Var.enUS: sqlConnection
+	 * {@inheritDoc}
+	 **/
+	protected void _connexionSql(Couverture<SqlConnection> c) {
 	}
 	
 	/**
@@ -476,7 +483,7 @@ public class RequeteSiteFrFR extends RequeteSiteFrFRGen<Object> implements Seria
 		o.setUtilisateurCle(utilisateurCle);
 		o.setDocumentSolr(documentSolr);
 		o.setPageAdmin(pageAdmin);
-		o.setConnexionSql(connexionSql);
+		o.setTx(tx);
 		o.setRequeteEnTetes(requeteEnTetes);
 		o.setRequeteVars(requeteVars);
 		return o;

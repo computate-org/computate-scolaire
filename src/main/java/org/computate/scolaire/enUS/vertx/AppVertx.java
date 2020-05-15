@@ -81,7 +81,6 @@ import io.vertx.ext.auth.oauth2.providers.OpenIDConnectAuth;
 import io.vertx.ext.bridge.PermittedOptions;
 import io.vertx.ext.healthchecks.HealthCheckHandler;
 import io.vertx.ext.healthchecks.Status;
-import io.vertx.ext.jdbc.JDBCClient;
 import io.vertx.ext.mail.MailClient;
 import io.vertx.ext.mail.MailConfig;
 import io.vertx.ext.sql.SQLClient;
@@ -95,6 +94,11 @@ import io.vertx.ext.web.handler.StaticHandler;
 import io.vertx.ext.web.handler.sockjs.BridgeOptions;
 import io.vertx.ext.web.handler.sockjs.SockJSHandler;
 import io.vertx.ext.web.sstore.LocalSessionStore;
+import io.vertx.pgclient.PgConnectOptions;
+import io.vertx.pgclient.PgPool;
+import io.vertx.sqlclient.PoolOptions;
+import io.vertx.sqlclient.SqlConnection;
+import io.vertx.sqlclient.Transaction;
 import net.authorize.Environment;
 import net.authorize.api.contract.v1.ArrayOfBatchDetailsType;
 import net.authorize.api.contract.v1.ArrayOfTransactionSummaryType;
@@ -156,14 +160,9 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 	public static final String SQL_uniqueIndexD = "create index if not exists d_index on d(pk_c, current); ";
 
 	/**	
-	 *	Concatenate all of the SQL together to execute when the server starts. 
-	 **/
-	public static final String SQL_initAll = SQL_createTableC + SQL_uniqueIndexC + SQL_createTableA + SQL_uniqueIndexA + SQL_createTableD + SQL_uniqueIndexD;
-
-	/**	
 	 *	A io.vertx.ext.jdbc.JDBCClient for connecting to the relational database PostgreSQL. 
 	 **/
-	private JDBCClient jdbcClient;
+	private PgPool pgPool;
 
 	/**	
 	 *	A site context object for storing information about the entire site in English. 
@@ -227,52 +226,64 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 		SiteConfig siteConfig = siteContextEnUS.getSiteConfig();
 		Promise<Void> promise = Promise.promise();
 
-		JsonObject jdbcConfig = new JsonObject();
-		if (StringUtils.isNotEmpty(siteConfig.getJdbcUrl()))
-			jdbcConfig.put("url", siteConfig.getJdbcUrl());
-		if (StringUtils.isNotEmpty(siteConfig.getJdbcDriverClass()))
-			jdbcConfig.put("driver_class", siteConfig.getJdbcDriverClass());
-		if (StringUtils.isNotEmpty(siteConfig.getJdbcUsername()))
-			jdbcConfig.put("user", siteConfig.getJdbcUsername());
-		if (StringUtils.isNotEmpty(siteConfig.getJdbcPassword()))
-			jdbcConfig.put("password", siteConfig.getJdbcPassword());
-		if (siteConfig.getJdbcMaxPoolSize() != null)
-			jdbcConfig.put("max_pool_size", siteConfig.getJdbcMaxPoolSize());
-		if (siteConfig.getJdbcInitialPoolSize() != null)
-			jdbcConfig.put("initial_pool_size", siteConfig.getJdbcInitialPoolSize());
-		if (siteConfig.getJdbcMinPoolSize() != null)
-			jdbcConfig.put("min_pool_size", siteConfig.getJdbcMinPoolSize());
-		if (siteConfig.getJdbcMaxStatements() != null)
-			jdbcConfig.put("max_statements", siteConfig.getJdbcMaxStatements());
-		if (siteConfig.getJdbcMaxStatementsPerConnection() != null)
-			jdbcConfig.put("max_statements_per_connection", siteConfig.getJdbcMaxStatementsPerConnection());
-		if (siteConfig.getJdbcMaxIdleTime() != null)
-			jdbcConfig.put("max_idle_time", siteConfig.getJdbcMaxIdleTime());
-		jdbcConfig.put("castUUID", false);
-		jdbcConfig.put("castDateTime", false);
-		jdbcConfig.put("castTime", false);
-		jdbcConfig.put("castDate", false);
-		jdbcClient = JDBCClient.createShared(vertx, jdbcConfig);
+		PgConnectOptions pgOptions = new PgConnectOptions();
+		pgOptions.setPort(siteConfig.getJdbcPort());
+		pgOptions.setHost(siteConfig.getJdbcHost());
+		pgOptions.setDatabase(siteConfig.getJdbcDatabase());
+		pgOptions.setUser(siteConfig.getJdbcUsername());
+		pgOptions.setPassword(siteConfig.getJdbcPassword());
+		pgOptions.setIdleTimeout(siteConfig.getJdbcMaxIdleTime());
 
-		siteContextEnUS.setSqlClient(jdbcClient);
+		PoolOptions poolOptions = new PoolOptions();
+		poolOptions.setMaxSize(siteConfig.getJdbcMaxPoolSize());
 
-		jdbcClient.getConnection(a -> {
-			if (a.failed()) {
-				LOGGER.error(configureDataConnectionError, a.cause());
-				promise.fail(a.cause());
-			} else {
-				LOGGER.info(configureDataConnectionSuccess);
-				SQLConnection connection = a.result();
-				connection.execute(SQL_initAll, create -> {
-					connection.close();
-					if (create.failed()) {
-						LOGGER.error(configureDataInitError, create.cause());
-						promise.fail(create.cause());
+		pgPool = PgPool.pool(vertx, pgOptions, poolOptions);
+
+		siteContextEnUS.setPgPool(pgPool);
+
+
+		pgPool.preparedQuery(SQL_createTableC, a -> {
+			if (a.succeeded()) {
+				pgPool.preparedQuery(SQL_uniqueIndexC, b -> {
+					if (b.succeeded()) {
+						pgPool.preparedQuery(SQL_createTableA, c -> {
+							if (c.succeeded()) {
+								pgPool.preparedQuery(SQL_uniqueIndexA, d -> {
+									if (d.succeeded()) {
+										pgPool.preparedQuery(SQL_createTableD, e -> {
+											if (e.succeeded()) {
+												pgPool.preparedQuery(SQL_uniqueIndexD, f -> {
+													if (f.succeeded()) {
+														LOGGER.info(configureDataInitSuccess);
+														promise.complete();
+													} else {
+														LOGGER.error(configureDataInitError, f.cause());
+														promise.fail(f.cause());
+													}
+												});
+											} else {
+												LOGGER.error(configureDataInitError, e.cause());
+												promise.fail(e.cause());
+											}
+										});
+									} else {
+										LOGGER.error(configureDataInitError, d.cause());
+										promise.fail(d.cause());
+									}
+								});
+							} else {
+								LOGGER.error(configureDataInitError, c.cause());
+								promise.fail(c.cause());
+							}
+						});
 					} else {
-						LOGGER.info(configureDataInitSuccess);
-						promise.complete();
+						LOGGER.error(configureDataInitError, b.cause());
+						promise.fail(b.cause());
 					}
 				});
+			} else {
+				LOGGER.error(configureDataInitError, a.cause());
+				promise.fail(a.cause());
 			}
 		});
 
@@ -466,10 +477,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 		HealthCheckHandler healthCheckHandler = HealthCheckHandler.create(vertx);
 
 		healthCheckHandler.register("database", 2000, a -> {
-			siteContextEnUS.getSqlClient().queryWithParams("select current_timestamp"
-					, new JsonArray(Arrays.asList())
-					, selectCAsync
-			-> {
+			siteContextEnUS.getPgPool().preparedQuery("select current_timestamp" , selectCAsync -> {
 				if(selectCAsync.succeeded()) {
 					a.complete(Status.OK());
 				} else {
@@ -553,7 +561,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 					siteRequest.initDeepSiteRequestEnUS(siteRequest);
 					siteRequest.setJsonObject(new JsonObject());
 		
-					sqlInit(siteRequest, b -> {
+					siteContextEnUS.getPgPool().begin(b -> {
 						if(b.succeeded()) {
 							LOGGER.info("Init SQL succeeded. ");
 							try {
@@ -618,20 +626,12 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 											CompositeFuture.all(futures).setHandler(d -> {
 												if(d.succeeded()) {
 													LOGGER.info("Refreshing the enrollments has succeeded. ");
-													SQLConnection connexionSql = siteRequest.getSqlConnection();
-													connexionSql.commit(f -> {
+													Transaction tx = siteRequest.getTx();
+													tx.commit(f -> {
 														if(f.succeeded()) {
 															LOGGER.info("Commit the SQL connection succeeded. ");
-															connexionSql.close(g -> {
-																if(f.succeeded()) {
-																	LOGGER.info("Close the SQL connection has succeeded. ");
-																	LOGGER.info("Finish populating the new transactions. ");
-																	blockingCodeHandler.handle(Future.succeededFuture(g.result()));
-																} else {
-																	LOGGER.error("Close the SQL connection has failed. ", g.cause());
-																	errorAppVertx(siteRequest, g);
-																}
-															});
+															LOGGER.info("Finish populating the new transactions. ");
+															blockingCodeHandler.handle(Future.succeededFuture(f.result()));
 														} else {
 															LOGGER.error("Commit the SQL connection has failed. ", f.cause());
 															errorAppVertx(siteRequest, f);
@@ -744,7 +744,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 				siteRequest2.setVertx(vertx);
 				siteRequest2.setSiteContext_(siteContextEnUS);
 				siteRequest2.setSiteConfig_(siteContextEnUS.getSiteConfig());
-				siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
+				siteRequest2.setTx(siteRequest.getTx());
 				siteRequest2.initDeepSiteRequestEnUS(siteRequest);
 				siteRequest2.setJsonObject(JsonObject.mapFrom(o));
 
@@ -771,7 +771,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 				siteRequest2.setVertx(vertx);
 				siteRequest2.setSiteContext_(siteContextEnUS);
 				siteRequest2.setSiteConfig_(siteContextEnUS.getSiteConfig());
-				siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
+				siteRequest2.setTx(siteRequest.getTx());
 				siteRequest2.initDeepSiteRequestEnUS(siteRequest);
 				siteRequest2.setJsonObject(JsonObject.mapFrom(o));
 
@@ -800,7 +800,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 					siteRequest2.setVertx(vertx);
 					siteRequest2.setSiteContext_(siteContextEnUS);
 					siteRequest2.setSiteConfig_(siteContextEnUS.getSiteConfig());
-					siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
+					siteRequest2.setTx(siteRequest.getTx());
 					siteRequest2.initDeepSiteRequestEnUS(siteRequest);
 					siteRequest2.setJsonObject(JsonObject.mapFrom(o));
 
@@ -931,7 +931,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 					siteRequest.initDeepSiteRequestEnUS(siteRequest);
 					siteRequest.setJsonObject(new JsonObject());
 		
-					sqlInit(siteRequest, b -> {
+					siteContextEnUS.getPgPool().begin(b -> {
 						if(b.succeeded()) {
 							LOGGER.info("Init SQL succeeded. ");
 							try {
@@ -1032,20 +1032,12 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 													CompositeFuture.all(futuresPayment).setHandler(e -> {
 														if(e.succeeded()) {
 															LOGGER.info("Refreshing the enrollments has succeeded. ");
-															SQLConnection connexionSql = siteRequest.getSqlConnection();
-															connexionSql.commit(f -> {
+															Transaction tx = siteRequest.getTx();
+															tx.commit(f -> {
 																if(f.succeeded()) {
 																	LOGGER.info("Commit the SQL connection succeeded. ");
-																	connexionSql.close(g -> {
-																		if(f.succeeded()) {
-																			LOGGER.info("Close the SQL connection has succeeded. ");
-																			LOGGER.info("Finish populating the new transactions. ");
-																			blockingCodeHandler.handle(Future.succeededFuture(g.result()));
-																		} else {
-																			LOGGER.error("Close the SQL connection has failed. ", g.cause());
-																			errorAppVertx(siteRequest, g);
-																		}
-																	});
+																	LOGGER.info("Finish populating the new transactions. ");
+																	blockingCodeHandler.handle(Future.succeededFuture(f.result()));
 																} else {
 																	LOGGER.error("Commit the SQL connection has failed. ", f.cause());
 																	errorAppVertx(siteRequest, f);
@@ -1098,18 +1090,12 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 		if(e != null)
 			LOGGER.error(ExceptionUtils.getStackTrace(e));
 		if(siteRequest != null) {
-			SQLConnection connexionSql = siteRequest.getSqlConnection();
-			if(connexionSql != null) {
-				connexionSql.rollback(b -> {
+			Transaction tx = siteRequest.getTx();
+			if(tx != null) {
+				tx.rollback(b -> {
 					if(b.succeeded()) {
 						LOGGER.info("Rollback the SQL connection succeded. ");
-						connexionSql.close(c -> {
-							if(c.succeeded()) {
-								LOGGER.info("Close the SQL connection succeded. ");
-							} else {
-								LOGGER.error("Close the SQL connection failed. ", c.cause());
-							}
-						});
+						LOGGER.info("Close the SQL connection succeded. ");
 					} else {
 						LOGGER.error("Rollback the SQL connection failed. ", b.cause());
 					}
@@ -1268,34 +1254,6 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 		}
 	}
 
-	public void  sqlInit(SiteRequestEnUS siteRequest, Handler<AsyncResult<Void>> eventHandler) {
-		try {
-			SQLClient sqlClient = siteRequest.getSiteContext_().getSqlClient();
-
-			if(sqlClient == null) {
-				eventHandler.handle(Future.succeededFuture());
-			} else {
-				sqlClient.getConnection(sqlAsync -> {
-					if(sqlAsync.succeeded()) {
-						SQLConnection sqlConnection = sqlAsync.result();
-						sqlConnection.setAutoCommit(false, a -> {
-							if(a.succeeded()) {
-								siteRequest.setSqlConnection(sqlConnection);
-								eventHandler.handle(Future.succeededFuture());
-							} else {
-								eventHandler.handle(Future.failedFuture(a.cause()));
-							}
-						});
-					} else {
-						eventHandler.handle(Future.failedFuture(new Exception(sqlAsync.cause())));
-					}
-				});
-			}
-		} catch(Exception e) {
-			eventHandler.handle(Future.failedFuture(e));
-		}
-	}
-
 	/**	
 	 *	Start the Vert.x server. 
 	 *	Démarrer le serveur Vert.x. 
@@ -1376,18 +1334,12 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 	 **/
 	private Promise<Void> closeData() {
 		Promise<Void> promise = Promise.promise();
-		SQLClient clientSql = siteContextEnUS.getSqlClient();
+		PgPool pgPool = siteContextEnUS.getPgPool();
 
-		if(clientSql != null) {
-			clientSql.close(a -> {
-				if (a.failed()) {
-					LOGGER.error(closeDataError, a.cause());
-					promise.fail(a.cause());
-				} else {
-					LOGGER.error(closeDataSuccess, a.cause());
-					promise.complete();
-				}
-			});
+		if(pgPool != null) {
+			pgPool.close();
+			LOGGER.info(closeDataSuccess);
+			promise.complete();
 		}
 		return promise;
 	}

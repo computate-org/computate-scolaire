@@ -12,15 +12,18 @@ import io.vertx.core.logging.LoggerFactory;
 import java.util.Stack;
 import org.computate.scolaire.frFR.couverture.Couverture;
 import org.computate.scolaire.frFR.config.ConfigSite;
+import io.vertx.sqlclient.SqlConnection;
 import org.apache.commons.collections.CollectionUtils;
 import java.lang.Long;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.lang.Boolean;
 import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import java.lang.String;
+import io.vertx.sqlclient.Transaction;
 import io.vertx.core.logging.Logger;
 import org.computate.scolaire.frFR.utilisateur.UtilisateurSite;
 import io.vertx.core.http.CaseInsensitiveHeaders;
@@ -30,6 +33,7 @@ import org.computate.scolaire.frFR.cluster.Cluster;
 import io.vertx.core.Vertx;
 import org.apache.commons.text.StringEscapeUtils;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import org.apache.solr.common.SolrDocument;
@@ -37,10 +41,11 @@ import java.util.List;
 import io.vertx.ext.web.api.OperationRequest;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.commons.lang3.math.NumberUtils;
-import io.vertx.ext.sql.SQLConnection;
 import java.util.Optional;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import java.lang.Object;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 
 /**	
  * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.requete.RequeteSiteFrFR&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
@@ -1494,6 +1499,44 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		return requetePk == null ? "" : StringEscapeUtils.escapeHtml4(strRequetePk());
 	}
 
+	////////
+	// tx //
+	////////
+
+	/**	L'entité « tx »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected Transaction tx;
+	@JsonIgnore
+	public Couverture<Transaction> txCouverture = new Couverture<Transaction>().p(this).c(Transaction.class).var("tx").o(tx);
+
+	/**	<br/>L'entité « tx »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.requete.RequeteSiteFrFR&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:tx">Trouver l'entité tx dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _tx(Couverture<Transaction> c);
+
+	public Transaction getTx() {
+		return tx;
+	}
+
+	public void setTx(Transaction tx) {
+		this.tx = tx;
+		this.txCouverture.dejaInitialise = true;
+	}
+	protected RequeteSiteFrFR txInit() {
+		if(!txCouverture.dejaInitialise) {
+			_tx(txCouverture);
+			if(tx == null)
+				setTx(txCouverture.o);
+		}
+		txCouverture.dejaInitialise(true);
+		return (RequeteSiteFrFR)this;
+	}
+
 	//////////////////
 	// connexionSql //
 	//////////////////
@@ -1502,9 +1545,9 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected SQLConnection connexionSql;
+	protected SqlConnection connexionSql;
 	@JsonIgnore
-	public Couverture<SQLConnection> connexionSqlCouverture = new Couverture<SQLConnection>().p(this).c(SQLConnection.class).var("connexionSql").o(connexionSql);
+	public Couverture<SqlConnection> connexionSqlCouverture = new Couverture<SqlConnection>().p(this).c(SqlConnection.class).var("connexionSql").o(connexionSql);
 
 	/**	<br/>L'entité « connexionSql »
 	 *  est défini comme null avant d'être initialisé. 
@@ -1512,13 +1555,13 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _connexionSql(Couverture<SQLConnection> c);
+	protected abstract void _connexionSql(Couverture<SqlConnection> c);
 
-	public SQLConnection getConnexionSql() {
+	public SqlConnection getConnexionSql() {
 		return connexionSql;
 	}
 
-	public void setConnexionSql(SQLConnection connexionSql) {
+	public void setConnexionSql(SqlConnection connexionSql) {
 		this.connexionSql = connexionSql;
 		this.connexionSqlCouverture.dejaInitialise = true;
 	}
@@ -1655,6 +1698,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		documentSolrInit();
 		pageAdminInit();
 		requetePkInit();
+		txInit();
 		connexionSqlInit();
 		requeteEnTetesInit();
 		requeteVarsInit();
@@ -1757,6 +1801,8 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 				return oRequeteSiteFrFR.pageAdmin;
 			case "requetePk":
 				return oRequeteSiteFrFR.requetePk;
+			case "tx":
+				return oRequeteSiteFrFR.tx;
 			case "connexionSql":
 				return oRequeteSiteFrFR.connexionSql;
 			case "requeteEnTetes":

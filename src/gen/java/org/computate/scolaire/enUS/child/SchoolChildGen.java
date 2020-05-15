@@ -25,7 +25,6 @@ import java.util.List;
 import java.time.LocalDate;
 import org.apache.solr.client.solrj.SolrQuery;
 import java.util.Optional;
-import io.vertx.ext.sql.SQLClient;
 import org.apache.solr.client.solrj.util.ClientUtils;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.apache.solr.common.SolrInputDocument;
@@ -49,7 +48,6 @@ import io.vertx.core.json.JsonArray;
 import org.apache.solr.common.SolrDocument;
 import java.time.temporal.ChronoUnit;
 import java.time.format.DateTimeFormatter;
-import io.vertx.ext.sql.SQLConnection;
 import org.apache.commons.lang3.math.NumberUtils;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
@@ -1682,7 +1680,7 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolChild setPersonBirthDate(String o) {
-		this.personBirthDate = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.personBirthDate = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
 		this.personBirthDateWrap.alreadyInitialized = true;
 		return (SchoolChild)this;
 	}
@@ -1706,11 +1704,11 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 	}
 
 	public String strPersonBirthDate() {
-		return personBirthDate == null ? "" : personBirthDate.format(DateTimeFormatter.ofPattern("EEE MMM d yyyy", Locale.US));
+		return personBirthDate == null ? "" : personBirthDate.format(DateTimeFormatter.ofPattern("EEE MMM d, yyyy", Locale.forLanguageTag("en-US")));
 	}
 
 	public String jsonPersonBirthDate() {
-		return personBirthDate == null ? "" : personBirthDate.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.US));
+		return personBirthDate == null ? "" : personBirthDate.format(DateTimeFormatter.ISO_DATE);
 	}
 
 	public String nomAffichagePersonBirthDate() {
@@ -1740,8 +1738,8 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 				.a("data-timeformat", "MM/DD/YYYY")
 				.a("id", classApiMethodMethod, "_personBirthDate")
 				.a("onclick", "removeGlow($(this)); ")
-				.a("value", personBirthDate == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.forLanguageTag("en-US")).format(personBirthDate))
-				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchSchoolChildVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonBirthDate', s, function() { addGlow($('#", classApiMethodMethod, "_personBirthDate')); }, function() { addError($('#", classApiMethodMethod, "_personBirthDate')); }); } ")
+				.a("value", personBirthDate == null ? "" : DateTimeFormatter.ISO_LOCAL_DATE.format(personBirthDate))
+				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patchSchoolChildVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonBirthDate', s, function() { addGlow($('#", classApiMethodMethod, "_personBirthDate')); }, function() { addError($('#", classApiMethodMethod, "_personBirthDate')); }); } ")
 				.fg();
 		} else {
 			sx(htmPersonBirthDate());

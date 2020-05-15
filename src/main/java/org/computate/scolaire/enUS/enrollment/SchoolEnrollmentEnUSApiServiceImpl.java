@@ -73,7 +73,7 @@ public class SchoolEnrollmentEnUSApiServiceImpl extends SchoolEnrollmentEnUSGenA
 	public void refreshsearchpageSchoolEnrollment(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest);
 		try {
-			sqlSchoolEnrollment(siteRequest, a -> {
+			sqlConnectionSchoolEnrollment(siteRequest, a -> {
 				if(a.succeeded()) {
 					userSchoolEnrollment(siteRequest, b -> {
 						if(b.succeeded()) {
@@ -105,8 +105,15 @@ public class SchoolEnrollmentEnUSApiServiceImpl extends SchoolEnrollmentEnUSGenA
 														LOGGER.info("Creating payments for customer %s succeeded. ");
 														refreshsearchpageSchoolEnrollmentResponse(listSchoolEnrollment, f -> {
 															if(e.succeeded()) {
-																eventHandler.handle(Future.succeededFuture(f.result()));
-																LOGGER.info(String.format("refreshsearchpageSchoolEnrollment succeeded. "));
+																sqlCloseSchoolEnrollment(siteRequest, g -> {
+																	if(e.succeeded()) {
+																		eventHandler.handle(Future.succeededFuture(g.result()));
+																		LOGGER.info(String.format("refreshsearchpageSchoolEnrollment succeeded. "));
+																	} else {
+																		LOGGER.error(String.format("refreshsearchpageSchoolEnrollment failed. ", g.cause()));
+																		errorSchoolEnrollment(siteRequest, eventHandler, g);
+																	}
+																});
 															} else {
 																LOGGER.error(String.format("refreshsearchpageSchoolEnrollment failed. ", f.cause()));
 																errorSchoolEnrollment(siteRequest, eventHandler, f);
@@ -691,7 +698,7 @@ public class SchoolEnrollmentEnUSApiServiceImpl extends SchoolEnrollmentEnUSGenA
 					payment.setEnrollmentKey(enrollmentKey);
 
 					SiteRequestEnUS siteRequest2 = paymentService.generateSiteRequestEnUSForSchoolPayment(siteContext, null, JsonObject.mapFrom(payment));
-					siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
+					siteRequest2.setTx(siteRequest.getTx());
 					paymentService.postSchoolPaymentFuture(siteRequest2, false, c -> {
 						SchoolPayment payment2 = c.result();
 						if(c.succeeded()) {

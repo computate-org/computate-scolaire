@@ -27,7 +27,6 @@ import java.util.List;
 import java.time.LocalDate;
 import org.apache.solr.client.solrj.SolrQuery;
 import java.util.Optional;
-import io.vertx.ext.sql.SQLClient;
 import org.apache.solr.client.solrj.util.ClientUtils;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.apache.solr.common.SolrInputDocument;
@@ -52,7 +51,6 @@ import io.vertx.core.json.JsonArray;
 import org.apache.solr.common.SolrDocument;
 import java.time.temporal.ChronoUnit;
 import java.time.format.DateTimeFormatter;
-import io.vertx.ext.sql.SQLConnection;
 import org.apache.commons.lang3.math.NumberUtils;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
@@ -1389,7 +1387,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public PaiementScolaire setEnfantDateNaissance(String o) {
-		this.enfantDateNaissance = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.enfantDateNaissance = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
 		this.enfantDateNaissanceCouverture.dejaInitialise = true;
 		return (PaiementScolaire)this;
 	}
@@ -1413,11 +1411,11 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strEnfantDateNaissance() {
-		return enfantDateNaissance == null ? "" : enfantDateNaissance.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.FRANCE));
+		return enfantDateNaissance == null ? "" : enfantDateNaissance.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.forLanguageTag("fr-FR")));
 	}
 
 	public String jsonEnfantDateNaissance() {
-		return enfantDateNaissance == null ? "" : enfantDateNaissance.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.FRANCE));
+		return enfantDateNaissance == null ? "" : enfantDateNaissance.format(DateTimeFormatter.ISO_DATE);
 	}
 
 	public String nomAffichageEnfantDateNaissance() {
@@ -1446,8 +1444,8 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				.a("id", classeApiMethodeMethode, "_enfantDateNaissance")
 				.a("onclick", "enleverLueur($(this)); ")
 				.a("title", "La clé primaire des enfants dans la base de données.  (DD-MM-YYYY)")
-				.a("value", enfantDateNaissance == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(enfantDateNaissance))
-				.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnfantDateNaissance', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_enfantDateNaissance')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_enfantDateNaissance')); }); } ")
+				.a("value", enfantDateNaissance == null ? "" : DateTimeFormatter.ISO_LOCAL_DATE.format(enfantDateNaissance))
+				.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnfantDateNaissance', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_enfantDateNaissance')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_enfantDateNaissance')); }); } ")
 				.fg();
 		} else {
 			if(
@@ -2131,7 +2129,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public PaiementScolaire setSaisonJourDebut(String o) {
-		this.saisonJourDebut = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.saisonJourDebut = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
 		this.saisonJourDebutCouverture.dejaInitialise = true;
 		return (PaiementScolaire)this;
 	}
@@ -2155,11 +2153,11 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strSaisonJourDebut() {
-		return saisonJourDebut == null ? "" : saisonJourDebut.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.FRANCE));
+		return saisonJourDebut == null ? "" : saisonJourDebut.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.forLanguageTag("fr-FR")));
 	}
 
 	public String jsonSaisonJourDebut() {
-		return saisonJourDebut == null ? "" : saisonJourDebut.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.FRANCE));
+		return saisonJourDebut == null ? "" : saisonJourDebut.format(DateTimeFormatter.ISO_DATE);
 	}
 
 	public String nomAffichageSaisonJourDebut() {
@@ -2426,7 +2424,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public PaiementScolaire setSessionJourDebut(String o) {
-		this.sessionJourDebut = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.sessionJourDebut = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
 		this.sessionJourDebutCouverture.dejaInitialise = true;
 		return (PaiementScolaire)this;
 	}
@@ -2450,11 +2448,11 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strSessionJourDebut() {
-		return sessionJourDebut == null ? "" : sessionJourDebut.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.FRANCE));
+		return sessionJourDebut == null ? "" : sessionJourDebut.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.forLanguageTag("fr-FR")));
 	}
 
 	public String jsonSessionJourDebut() {
-		return sessionJourDebut == null ? "" : sessionJourDebut.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.FRANCE));
+		return sessionJourDebut == null ? "" : sessionJourDebut.format(DateTimeFormatter.ISO_DATE);
 	}
 
 	public String nomAffichageSessionJourDebut() {
@@ -2507,7 +2505,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public PaiementScolaire setSessionJourFin(String o) {
-		this.sessionJourFin = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.sessionJourFin = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
 		this.sessionJourFinCouverture.dejaInitialise = true;
 		return (PaiementScolaire)this;
 	}
@@ -2531,11 +2529,11 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strSessionJourFin() {
-		return sessionJourFin == null ? "" : sessionJourFin.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.FRANCE));
+		return sessionJourFin == null ? "" : sessionJourFin.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.forLanguageTag("fr-FR")));
 	}
 
 	public String jsonSessionJourFin() {
-		return sessionJourFin == null ? "" : sessionJourFin.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.FRANCE));
+		return sessionJourFin == null ? "" : sessionJourFin.format(DateTimeFormatter.ISO_DATE);
 	}
 
 	public String nomAffichageSessionJourFin() {
@@ -2720,7 +2718,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	/** Example: 01:00 **/
 	public PaiementScolaire setBlocHeureDebut(String o) {
 		try {
-			this.blocHeureDebut = LocalTime.parse(o, DateTimeFormatter.ofPattern("HH mm"));
+			this.blocHeureDebut = LocalTime.parse(o, DateTimeFormatter.ofPattern("HH:mm"));
 			this.blocHeureDebutCouverture.dejaInitialise = true;
 		} catch(Exception e) {
 		}
@@ -2741,11 +2739,11 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strBlocHeureDebut() {
-		return blocHeureDebut == null ? "" : blocHeureDebut.format(DateTimeFormatter.ofPattern("H'h'mm", Locale.FRANCE));
+		return blocHeureDebut == null ? "" : blocHeureDebut.format(DateTimeFormatter.ofPattern("H'h'mm", Locale.forLanguageTag("fr-FR")));
 	}
 
 	public String jsonBlocHeureDebut() {
-		return blocHeureDebut == null ? "" : blocHeureDebut.format(DateTimeFormatter.ofPattern("HH mm", Locale.US));
+		return blocHeureDebut == null ? "" : blocHeureDebut.format(DateTimeFormatter.ISO_TIME);
 	}
 
 	public String nomAffichageBlocHeureDebut() {
@@ -2792,7 +2790,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	/** Example: 01:00 **/
 	public PaiementScolaire setBlocHeureFin(String o) {
 		try {
-			this.blocHeureFin = LocalTime.parse(o, DateTimeFormatter.ofPattern("HH mm"));
+			this.blocHeureFin = LocalTime.parse(o, DateTimeFormatter.ofPattern("HH:mm"));
 			this.blocHeureFinCouverture.dejaInitialise = true;
 		} catch(Exception e) {
 		}
@@ -2813,11 +2811,11 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strBlocHeureFin() {
-		return blocHeureFin == null ? "" : blocHeureFin.format(DateTimeFormatter.ofPattern("H'h'mm", Locale.FRANCE));
+		return blocHeureFin == null ? "" : blocHeureFin.format(DateTimeFormatter.ofPattern("H'h'mm", Locale.forLanguageTag("fr-FR")));
 	}
 
 	public String jsonBlocHeureFin() {
-		return blocHeureFin == null ? "" : blocHeureFin.format(DateTimeFormatter.ofPattern("HH mm", Locale.US));
+		return blocHeureFin == null ? "" : blocHeureFin.format(DateTimeFormatter.ISO_TIME);
 	}
 
 	public String nomAffichageBlocHeureFin() {
@@ -3440,7 +3438,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public PaiementScolaire setPaiementDate(String o) {
-		this.paiementDate = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.paiementDate = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
 		this.paiementDateCouverture.dejaInitialise = true;
 		return (PaiementScolaire)this;
 	}
@@ -3464,11 +3462,11 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strPaiementDate() {
-		return paiementDate == null ? "" : paiementDate.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.FRANCE));
+		return paiementDate == null ? "" : paiementDate.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.forLanguageTag("fr-FR")));
 	}
 
 	public String jsonPaiementDate() {
-		return paiementDate == null ? "" : paiementDate.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.FRANCE));
+		return paiementDate == null ? "" : paiementDate.format(DateTimeFormatter.ISO_DATE);
 	}
 
 	public String nomAffichagePaiementDate() {
@@ -3497,8 +3495,8 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				.a("id", classeApiMethodeMethode, "_paiementDate")
 				.a("onclick", "enleverLueur($(this)); ")
 				.a("title", "La clé primaire des enfants dans la base de données.  (DD-MM-YYYY)")
-				.a("value", paiementDate == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.forLanguageTag("fr-FR")).format(paiementDate))
-				.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('MM/DD/YYYY'); patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPaiementDate', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_paiementDate')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_paiementDate')); }); } ")
+				.a("value", paiementDate == null ? "" : DateTimeFormatter.ISO_LOCAL_DATE.format(paiementDate))
+				.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPaiementDate', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_paiementDate')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_paiementDate')); }); } ")
 				.fg();
 		} else {
 			if(
@@ -6885,12 +6883,12 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			document.addField("ageFin_stored_int", ageFin);
 		}
 		if(blocHeureDebut != null) {
-			document.addField("blocHeureDebut_indexed_string", DateTimeFormatter.ofPattern("HH mm").format(blocHeureDebut.atOffset(ZoneOffset.UTC)));
-			document.addField("blocHeureDebut_stored_string", DateTimeFormatter.ofPattern("HH mm").format(blocHeureDebut.atOffset(ZoneOffset.UTC)));
+			document.addField("blocHeureDebut_indexed_string", DateTimeFormatter.ofPattern("HH:mm").format(blocHeureDebut.atOffset(ZoneOffset.UTC)));
+			document.addField("blocHeureDebut_stored_string", DateTimeFormatter.ofPattern("HH:mm").format(blocHeureDebut.atOffset(ZoneOffset.UTC)));
 		}
 		if(blocHeureFin != null) {
-			document.addField("blocHeureFin_indexed_string", DateTimeFormatter.ofPattern("HH mm").format(blocHeureFin.atOffset(ZoneOffset.UTC)));
-			document.addField("blocHeureFin_stored_string", DateTimeFormatter.ofPattern("HH mm").format(blocHeureFin.atOffset(ZoneOffset.UTC)));
+			document.addField("blocHeureFin_indexed_string", DateTimeFormatter.ofPattern("HH:mm").format(blocHeureFin.atOffset(ZoneOffset.UTC)));
+			document.addField("blocHeureFin_stored_string", DateTimeFormatter.ofPattern("HH:mm").format(blocHeureFin.atOffset(ZoneOffset.UTC)));
 		}
 		if(blocPrixParMois != null) {
 			document.addField("blocPrixParMois_indexed_double", blocPrixParMois.doubleValue());

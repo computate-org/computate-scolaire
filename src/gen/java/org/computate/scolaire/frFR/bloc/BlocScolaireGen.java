@@ -28,7 +28,6 @@ import org.computate.scolaire.frFR.age.AgeScolaire;
 import java.time.LocalDate;
 import org.apache.solr.client.solrj.SolrQuery;
 import java.util.Optional;
-import io.vertx.ext.sql.SQLClient;
 import org.apache.solr.client.solrj.util.ClientUtils;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.computate.scolaire.frFR.bloc.BlocScolaire;
@@ -53,7 +52,6 @@ import io.vertx.core.json.JsonArray;
 import org.apache.solr.common.SolrDocument;
 import java.time.temporal.ChronoUnit;
 import java.time.format.DateTimeFormatter;
-import io.vertx.ext.sql.SQLConnection;
 import org.apache.commons.lang3.math.NumberUtils;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
@@ -2022,7 +2020,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public BlocScolaire setSaisonJourDebut(String o) {
-		this.saisonJourDebut = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.saisonJourDebut = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
 		this.saisonJourDebutCouverture.dejaInitialise = true;
 		return (BlocScolaire)this;
 	}
@@ -2046,11 +2044,11 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strSaisonJourDebut() {
-		return saisonJourDebut == null ? "" : saisonJourDebut.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.FRANCE));
+		return saisonJourDebut == null ? "" : saisonJourDebut.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.forLanguageTag("fr-FR")));
 	}
 
 	public String jsonSaisonJourDebut() {
-		return saisonJourDebut == null ? "" : saisonJourDebut.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.FRANCE));
+		return saisonJourDebut == null ? "" : saisonJourDebut.format(DateTimeFormatter.ISO_DATE);
 	}
 
 	public String nomAffichageSaisonJourDebut() {
@@ -2441,7 +2439,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public BlocScolaire setSessionJourDebut(String o) {
-		this.sessionJourDebut = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.sessionJourDebut = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
 		this.sessionJourDebutCouverture.dejaInitialise = true;
 		return (BlocScolaire)this;
 	}
@@ -2465,11 +2463,11 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strSessionJourDebut() {
-		return sessionJourDebut == null ? "" : sessionJourDebut.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.FRANCE));
+		return sessionJourDebut == null ? "" : sessionJourDebut.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.forLanguageTag("fr-FR")));
 	}
 
 	public String jsonSessionJourDebut() {
-		return sessionJourDebut == null ? "" : sessionJourDebut.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.FRANCE));
+		return sessionJourDebut == null ? "" : sessionJourDebut.format(DateTimeFormatter.ISO_DATE);
 	}
 
 	public String nomAffichageSessionJourDebut() {
@@ -2522,7 +2520,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public BlocScolaire setSessionJourFin(String o) {
-		this.sessionJourFin = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.sessionJourFin = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
 		this.sessionJourFinCouverture.dejaInitialise = true;
 		return (BlocScolaire)this;
 	}
@@ -2546,11 +2544,11 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strSessionJourFin() {
-		return sessionJourFin == null ? "" : sessionJourFin.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.FRANCE));
+		return sessionJourFin == null ? "" : sessionJourFin.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.forLanguageTag("fr-FR")));
 	}
 
 	public String jsonSessionJourFin() {
-		return sessionJourFin == null ? "" : sessionJourFin.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.FRANCE));
+		return sessionJourFin == null ? "" : sessionJourFin.format(DateTimeFormatter.ISO_DATE);
 	}
 
 	public String nomAffichageSessionJourFin() {
@@ -2859,7 +2857,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 	/** Example: 01:00 **/
 	public BlocScolaire setBlocHeureDebut(String o) {
 		try {
-			this.blocHeureDebut = LocalTime.parse(o, DateTimeFormatter.ofPattern("HH mm"));
+			this.blocHeureDebut = LocalTime.parse(o, DateTimeFormatter.ofPattern("HH:mm"));
 			this.blocHeureDebutCouverture.dejaInitialise = true;
 		} catch(Exception e) {
 		}
@@ -2880,11 +2878,11 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strBlocHeureDebut() {
-		return blocHeureDebut == null ? "" : blocHeureDebut.format(DateTimeFormatter.ofPattern("H'h'mm", Locale.FRANCE));
+		return blocHeureDebut == null ? "" : blocHeureDebut.format(DateTimeFormatter.ofPattern("H'h'mm", Locale.forLanguageTag("fr-FR")));
 	}
 
 	public String jsonBlocHeureDebut() {
-		return blocHeureDebut == null ? "" : blocHeureDebut.format(DateTimeFormatter.ofPattern("HH mm", Locale.US));
+		return blocHeureDebut == null ? "" : blocHeureDebut.format(DateTimeFormatter.ISO_TIME);
 	}
 
 	public String nomAffichageBlocHeureDebut() {
@@ -2905,11 +2903,11 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 			e("input")
 				.a("type", "text")
 				.a("class", "w3-input w3-border timepicker setBlocHeureDebut inputBlocScolaire", pk, "BlocHeureDebut w3-input w3-border ")
-				.a("placeholder", "HH:MM AM")
+				.a("placeholder", "HH:MM")
 				.a("id", classeApiMethodeMethode, "_blocHeureDebut")
 				.a("onclick", "enleverLueur($(this)); ")
-				.a("title", "L'année scolaire de la saison scolaire.  (h'h'mm)")				.a("value", blocHeureDebut == null ? "" : DateTimeFormatter.ofPattern("h:mm a", Locale.forLanguageTag("fr-FR")).format(blocHeureDebut))
-				.a("onchange", "var t = parseTime(this.value); if(t) { var s = dateFormat(t, 'HH MM'); patchBlocScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlocHeureDebut', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_blocHeureDebut')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_blocHeureDebut')); }); } ")
+				.a("title", "L'année scolaire de la saison scolaire.  (H'h'mm)")				.a("value", blocHeureDebut == null ? "" : DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(blocHeureDebut))
+				.a("onchange", "var t = parseTime(this.value); if(t) { var s = dateFormat(t, 'HH:MM'); patchBlocScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlocHeureDebut', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_blocHeureDebut')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_blocHeureDebut')); }); } ")
 				.fg();
 		}
 	}
@@ -2979,7 +2977,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 	/** Example: 01:00 **/
 	public BlocScolaire setBlocHeureFin(String o) {
 		try {
-			this.blocHeureFin = LocalTime.parse(o, DateTimeFormatter.ofPattern("HH mm"));
+			this.blocHeureFin = LocalTime.parse(o, DateTimeFormatter.ofPattern("HH:mm"));
 			this.blocHeureFinCouverture.dejaInitialise = true;
 		} catch(Exception e) {
 		}
@@ -3000,11 +2998,11 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strBlocHeureFin() {
-		return blocHeureFin == null ? "" : blocHeureFin.format(DateTimeFormatter.ofPattern("H'h'mm", Locale.FRANCE));
+		return blocHeureFin == null ? "" : blocHeureFin.format(DateTimeFormatter.ofPattern("H'h'mm", Locale.forLanguageTag("fr-FR")));
 	}
 
 	public String jsonBlocHeureFin() {
-		return blocHeureFin == null ? "" : blocHeureFin.format(DateTimeFormatter.ofPattern("HH mm", Locale.US));
+		return blocHeureFin == null ? "" : blocHeureFin.format(DateTimeFormatter.ISO_TIME);
 	}
 
 	public String nomAffichageBlocHeureFin() {
@@ -3025,11 +3023,11 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 			e("input")
 				.a("type", "text")
 				.a("class", "w3-input w3-border timepicker setBlocHeureFin inputBlocScolaire", pk, "BlocHeureFin w3-input w3-border ")
-				.a("placeholder", "HH:MM AM")
+				.a("placeholder", "HH:MM")
 				.a("id", classeApiMethodeMethode, "_blocHeureFin")
 				.a("onclick", "enleverLueur($(this)); ")
-				.a("title", "L'année scolaire de la saison scolaire.  (h'h'mm)")				.a("value", blocHeureFin == null ? "" : DateTimeFormatter.ofPattern("h:mm a", Locale.forLanguageTag("fr-FR")).format(blocHeureFin))
-				.a("onchange", "var t = parseTime(this.value); if(t) { var s = dateFormat(t, 'HH MM'); patchBlocScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlocHeureFin', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_blocHeureFin')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_blocHeureFin')); }); } ")
+				.a("title", "L'année scolaire de la saison scolaire.  (H'h'mm)")				.a("value", blocHeureFin == null ? "" : DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(blocHeureFin))
+				.a("onchange", "var t = parseTime(this.value); if(t) { var s = dateFormat(t, 'HH:MM'); patchBlocScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlocHeureFin', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_blocHeureFin')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_blocHeureFin')); }); } ")
 				.fg();
 		}
 	}
@@ -5221,12 +5219,12 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 			document.addField("ageFin_stored_int", ageFin);
 		}
 		if(blocHeureDebut != null) {
-			document.addField("blocHeureDebut_indexed_string", DateTimeFormatter.ofPattern("HH mm").format(blocHeureDebut.atOffset(ZoneOffset.UTC)));
-			document.addField("blocHeureDebut_stored_string", DateTimeFormatter.ofPattern("HH mm").format(blocHeureDebut.atOffset(ZoneOffset.UTC)));
+			document.addField("blocHeureDebut_indexed_string", DateTimeFormatter.ofPattern("HH:mm").format(blocHeureDebut.atOffset(ZoneOffset.UTC)));
+			document.addField("blocHeureDebut_stored_string", DateTimeFormatter.ofPattern("HH:mm").format(blocHeureDebut.atOffset(ZoneOffset.UTC)));
 		}
 		if(blocHeureFin != null) {
-			document.addField("blocHeureFin_indexed_string", DateTimeFormatter.ofPattern("HH mm").format(blocHeureFin.atOffset(ZoneOffset.UTC)));
-			document.addField("blocHeureFin_stored_string", DateTimeFormatter.ofPattern("HH mm").format(blocHeureFin.atOffset(ZoneOffset.UTC)));
+			document.addField("blocHeureFin_indexed_string", DateTimeFormatter.ofPattern("HH:mm").format(blocHeureFin.atOffset(ZoneOffset.UTC)));
+			document.addField("blocHeureFin_stored_string", DateTimeFormatter.ofPattern("HH:mm").format(blocHeureFin.atOffset(ZoneOffset.UTC)));
 		}
 		if(blocPrixParMois != null) {
 			document.addField("blocPrixParMois_indexed_double", blocPrixParMois.doubleValue());
