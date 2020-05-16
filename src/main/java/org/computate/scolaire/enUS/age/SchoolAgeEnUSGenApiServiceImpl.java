@@ -557,42 +557,41 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 							WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 							workerExecutor.executeBlocking(
 								blockingCodeHandler -> {
-									SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolAge(siteContext, operationRequest, body);
 									try {
 										ApiRequest apiRequest = new ApiRequest();
-										JsonArray jsonArray = Optional.ofNullable(siteRequest2.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+										JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
 										apiRequest.setRows(jsonArray.size());
 										apiRequest.setNumFound(new Integer(jsonArray.size()).longValue());
 										apiRequest.setNumPATCH(0L);
-										apiRequest.initDeepApiRequest(siteRequest2);
-										siteRequest2.setApiRequest_(apiRequest);
-										siteRequest2.getVertx().eventBus().publish("websocketSchoolAge", JsonObject.mapFrom(apiRequest).toString());
-										sqlConnectionSchoolAge(siteRequest2, d -> {
+										apiRequest.initDeepApiRequest(siteRequest);
+										siteRequest.setApiRequest_(apiRequest);
+										siteRequest.getVertx().eventBus().publish("websocketSchoolAge", JsonObject.mapFrom(apiRequest).toString());
+										varsSchoolAge(siteRequest, d -> {
 											if(d.succeeded()) {
-												listPUTImportSchoolAge(apiRequest, siteRequest2, e -> {
+												listPUTImportSchoolAge(apiRequest, siteRequest, e -> {
 													if(e.succeeded()) {
-														putimportSchoolAgeResponse(siteRequest2, f -> {
-															if(f.succeeded()) {
+														putimportSchoolAgeResponse(siteRequest, f -> {
+															if(e.succeeded()) {
 																LOGGER.info(String.format("putimportSchoolAge succeeded. "));
-																blockingCodeHandler.handle(Future.succeededFuture(f.result()));
+																blockingCodeHandler.handle(Future.succeededFuture(e.result()));
 															} else {
 																LOGGER.error(String.format("putimportSchoolAge failed. ", f.cause()));
-																errorSchoolAge(siteRequest2, null, f);
+																errorSchoolAge(siteRequest, null, f);
 															}
 														});
 													} else {
 														LOGGER.error(String.format("putimportSchoolAge failed. ", e.cause()));
-														errorSchoolAge(siteRequest2, null, e);
+														errorSchoolAge(siteRequest, null, e);
 													}
 												});
 											} else {
 												LOGGER.error(String.format("putimportSchoolAge failed. ", d.cause()));
-												errorSchoolAge(siteRequest2, null, d);
+												errorSchoolAge(siteRequest, null, d);
 											}
 										});
 									} catch(Exception ex) {
 										LOGGER.error(String.format("putimportSchoolAge failed. ", ex));
-										errorSchoolAge(siteRequest2, null, Future.failedFuture(ex));
+										errorSchoolAge(siteRequest, null, Future.failedFuture(ex));
 									}
 								}, resultHandler -> {
 								}
@@ -624,8 +623,8 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 				json.put("inheritPk", json.getValue("pk"));
 
 				SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolAge(siteContext, siteRequest.getOperationRequest(), json);
-				siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
 				siteRequest2.setApiRequest_(apiRequest);
+				siteRequest2.setRequestVars(siteRequest.getRequestVars());
 
 				SearchList<SchoolAge> searchList = new SearchList<SchoolAge>();
 				searchList.setStore(true);
@@ -741,42 +740,41 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 							WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 							workerExecutor.executeBlocking(
 								blockingCodeHandler -> {
-									SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolAge(siteContext, operationRequest, body);
 									try {
 										ApiRequest apiRequest = new ApiRequest();
-										JsonArray jsonArray = Optional.ofNullable(siteRequest2.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+										JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
 										apiRequest.setRows(jsonArray.size());
 										apiRequest.setNumFound(new Integer(jsonArray.size()).longValue());
 										apiRequest.setNumPATCH(0L);
-										apiRequest.initDeepApiRequest(siteRequest2);
-										siteRequest2.setApiRequest_(apiRequest);
-										siteRequest2.getVertx().eventBus().publish("websocketSchoolAge", JsonObject.mapFrom(apiRequest).toString());
-										sqlConnectionSchoolAge(siteRequest2, d -> {
+										apiRequest.initDeepApiRequest(siteRequest);
+										siteRequest.setApiRequest_(apiRequest);
+										siteRequest.getVertx().eventBus().publish("websocketSchoolAge", JsonObject.mapFrom(apiRequest).toString());
+										varsSchoolAge(siteRequest, d -> {
 											if(d.succeeded()) {
-												listPUTMergeSchoolAge(apiRequest, siteRequest2, e -> {
+												listPUTMergeSchoolAge(apiRequest, siteRequest, e -> {
 													if(e.succeeded()) {
-														putmergeSchoolAgeResponse(siteRequest2, f -> {
-															if(f.succeeded()) {
+														putmergeSchoolAgeResponse(siteRequest, f -> {
+															if(e.succeeded()) {
 																LOGGER.info(String.format("putmergeSchoolAge succeeded. "));
-																blockingCodeHandler.handle(Future.succeededFuture(f.result()));
+																blockingCodeHandler.handle(Future.succeededFuture(e.result()));
 															} else {
 																LOGGER.error(String.format("putmergeSchoolAge failed. ", f.cause()));
-																errorSchoolAge(siteRequest2, null, f);
+																errorSchoolAge(siteRequest, null, f);
 															}
 														});
 													} else {
 														LOGGER.error(String.format("putmergeSchoolAge failed. ", e.cause()));
-														errorSchoolAge(siteRequest2, null, e);
+														errorSchoolAge(siteRequest, null, e);
 													}
 												});
 											} else {
 												LOGGER.error(String.format("putmergeSchoolAge failed. ", d.cause()));
-												errorSchoolAge(siteRequest2, null, d);
+												errorSchoolAge(siteRequest, null, d);
 											}
 										});
 									} catch(Exception ex) {
 										LOGGER.error(String.format("putmergeSchoolAge failed. ", ex));
-										errorSchoolAge(siteRequest2, null, Future.failedFuture(ex));
+										errorSchoolAge(siteRequest, null, Future.failedFuture(ex));
 									}
 								}, resultHandler -> {
 								}
@@ -808,8 +806,8 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 				json.put("inheritPk", json.getValue("pk"));
 
 				SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolAge(siteContext, siteRequest.getOperationRequest(), json);
-				siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
 				siteRequest2.setApiRequest_(apiRequest);
+				siteRequest2.setRequestVars(siteRequest.getRequestVars());
 
 				SearchList<SchoolAge> searchList = new SearchList<SchoolAge>();
 				searchList.setStore(true);
@@ -924,55 +922,47 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 							eventHandler.handle(Future.succeededFuture(c.result()));
 							WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 							workerExecutor.executeBlocking(
-									blockingCodeHandler -> {
-									SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolAge(siteContext, operationRequest, body);
+								blockingCodeHandler -> {
 									try {
-										aSearchSchoolAge(siteRequest2, false, true, "/api/age/copy", "PUTCopy", d -> {
+										aSearchSchoolAge(siteRequest, false, true, "/api/age/copy", "PUTCopy", d -> {
 											if(d.succeeded()) {
 												SearchList<SchoolAge> listSchoolAge = d.result();
 												ApiRequest apiRequest = new ApiRequest();
 												apiRequest.setRows(listSchoolAge.getRows());
 												apiRequest.setNumFound(listSchoolAge.getQueryResponse().getResults().getNumFound());
 												apiRequest.setNumPATCH(0L);
-												apiRequest.initDeepApiRequest(siteRequest2);
-												siteRequest2.setApiRequest_(apiRequest);
-												siteRequest2.getVertx().eventBus().publish("websocketSchoolAge", JsonObject.mapFrom(apiRequest).toString());
-												sqlConnectionSchoolAge(siteRequest2, e -> {
-													if(e.succeeded()) {
-														try {
-															listPUTCopySchoolAge(apiRequest, listSchoolAge, f -> {
+												apiRequest.initDeepApiRequest(siteRequest);
+												siteRequest.setApiRequest_(apiRequest);
+												siteRequest.getVertx().eventBus().publish("websocketSchoolAge", JsonObject.mapFrom(apiRequest).toString());
+												try {
+													listPUTCopySchoolAge(apiRequest, listSchoolAge, e -> {
+														if(e.succeeded()) {
+															putcopySchoolAgeResponse(siteRequest, f -> {
 																if(f.succeeded()) {
-																	putcopySchoolAgeResponse(siteRequest2, g -> {
-																		if(g.succeeded()) {
-																			LOGGER.info(String.format("putcopySchoolAge succeeded. "));
-																			blockingCodeHandler.handle(Future.succeededFuture(g.result()));
-																		} else {
-																			LOGGER.error(String.format("putcopySchoolAge failed. ", g.cause()));
-																			errorSchoolAge(siteRequest2, null, g);
-																		}
-																	});
+																	LOGGER.info(String.format("putcopySchoolAge succeeded. "));
+																	blockingCodeHandler.handle(Future.succeededFuture(f.result()));
 																} else {
 																	LOGGER.error(String.format("putcopySchoolAge failed. ", f.cause()));
-																	errorSchoolAge(siteRequest2, null, f);
+																	errorSchoolAge(siteRequest, null, f);
 																}
 															});
-														} catch(Exception ex) {
-															LOGGER.error(String.format("putcopySchoolAge failed. ", ex));
-															errorSchoolAge(siteRequest2, null, Future.failedFuture(ex));
+														} else {
+															LOGGER.error(String.format("putcopySchoolAge failed. ", e.cause()));
+															errorSchoolAge(siteRequest, null, e);
 														}
-													} else {
-														LOGGER.error(String.format("putcopySchoolAge failed. ", e.cause()));
-														errorSchoolAge(siteRequest2, null, e);
-													}
-												});
+													});
+												} catch(Exception ex) {
+													LOGGER.error(String.format("putcopySchoolAge failed. ", ex));
+													errorSchoolAge(siteRequest, null, Future.failedFuture(ex));
+												}
 											} else {
 												LOGGER.error(String.format("putcopySchoolAge failed. ", d.cause()));
-												errorSchoolAge(siteRequest2, null, d);
+												errorSchoolAge(siteRequest, null, d);
 											}
 										});
 									} catch(Exception ex) {
 										LOGGER.error(String.format("putcopySchoolAge failed. ", ex));
-										errorSchoolAge(siteRequest2, null, Future.failedFuture(ex));
+										errorSchoolAge(siteRequest, null, Future.failedFuture(ex));
 									}
 								}, resultHandler -> {
 								}
@@ -998,10 +988,12 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 		List<Future> futures = new ArrayList<>();
 		SiteRequestEnUS siteRequest = listSchoolAge.getSiteRequest_();
 		listSchoolAge.getList().forEach(o -> {
+			SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolAge(siteContext, siteRequest.getOperationRequest(), siteRequest.getJsonObject());
+			siteRequest2.setApiRequest_(siteRequest.getApiRequest_());
+			o.setSiteRequest_(siteRequest2);
 			futures.add(
 				putcopySchoolAgeFuture(siteRequest, JsonObject.mapFrom(o), a -> {
 					if(a.succeeded()) {
-						SchoolAge schoolAge = a.result();
 					} else {
 						LOGGER.error(String.format("listPUTCopySchoolAge failed. ", a.cause()));
 						errorSchoolAge(siteRequest, eventHandler, a);
@@ -1356,18 +1348,17 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 							WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 							workerExecutor.executeBlocking(
 								blockingCodeHandler -> {
-									SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolAge(siteContext, operationRequest, body);
 									try {
-										aSearchSchoolAge(siteRequest2, false, true, "/api/age", "PATCH", d -> {
+										aSearchSchoolAge(siteRequest, false, true, "/api/age", "PATCH", d -> {
 											if(d.succeeded()) {
 												SearchList<SchoolAge> listSchoolAge = d.result();
 												ApiRequest apiRequest = new ApiRequest();
 												apiRequest.setRows(listSchoolAge.getRows());
 												apiRequest.setNumFound(listSchoolAge.getQueryResponse().getResults().getNumFound());
 												apiRequest.setNumPATCH(0L);
-												apiRequest.initDeepApiRequest(siteRequest2);
-												siteRequest2.setApiRequest_(apiRequest);
-												siteRequest2.getVertx().eventBus().publish("websocketSchoolAge", JsonObject.mapFrom(apiRequest).toString());
+												apiRequest.initDeepApiRequest(siteRequest);
+												siteRequest.setApiRequest_(apiRequest);
+												siteRequest.getVertx().eventBus().publish("websocketSchoolAge", JsonObject.mapFrom(apiRequest).toString());
 												SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listSchoolAge.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
 												Date date = null;
 												if(facets != null)
@@ -1379,43 +1370,35 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 													dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
 												listSchoolAge.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
 
-												SchoolAge o = listSchoolAge.getList().stream().findFirst().orElse(null);
-												sqlConnectionSchoolAge(siteRequest2, e -> {
-													if(e.succeeded()) {
-														try {
-															listPATCHSchoolAge(apiRequest, listSchoolAge, dt, f -> {
+												try {
+													listPATCHSchoolAge(apiRequest, listSchoolAge, dt, e -> {
+														if(e.succeeded()) {
+															patchSchoolAgeResponse(siteRequest, f -> {
 																if(f.succeeded()) {
-																	patchSchoolAgeResponse(siteRequest2, g -> {
-																												if(g.succeeded()) {
-																			LOGGER.info(String.format("patchSchoolAge succeeded. "));
-																			blockingCodeHandler.handle(Future.succeededFuture(g.result()));
-																		} else {
-																			LOGGER.error(String.format("patchSchoolAge failed. ", g.cause()));
-																			errorSchoolAge(siteRequest2, null, g);
-																		}
-																	});
+																	LOGGER.info(String.format("patchSchoolAge succeeded. "));
+																	blockingCodeHandler.handle(Future.succeededFuture(f.result()));
 																} else {
 																	LOGGER.error(String.format("patchSchoolAge failed. ", f.cause()));
-																	errorSchoolAge(siteRequest2, null, f);
+																	errorSchoolAge(siteRequest, null, f);
 																}
 															});
-														} catch(Exception ex) {
-															LOGGER.error(String.format("patchSchoolAge failed. ", ex));
-															errorSchoolAge(siteRequest2, null, Future.failedFuture(ex));
+														} else {
+															LOGGER.error(String.format("patchSchoolAge failed. ", e.cause()));
+															errorSchoolAge(siteRequest, null, e);
 														}
-													} else {
-														LOGGER.error(String.format("patchSchoolAge failed. ", e.cause()));
-														errorSchoolAge(siteRequest2, null, e);
-													}
-												});
+													});
+												} catch(Exception ex) {
+													LOGGER.error(String.format("patchSchoolAge failed. ", ex));
+													errorSchoolAge(siteRequest, null, Future.failedFuture(ex));
+												}
 											} else {
 												LOGGER.error(String.format("patchSchoolAge failed. ", d.cause()));
-												errorSchoolAge(siteRequest2, null, d);
+												errorSchoolAge(siteRequest, null, d);
 											}
 										});
 									} catch(Exception ex) {
 										LOGGER.error(String.format("patchSchoolAge failed. ", ex));
-										errorSchoolAge(siteRequest2, null, Future.failedFuture(ex));
+										errorSchoolAge(siteRequest, null, Future.failedFuture(ex));
 									}
 								}, resultHandler -> {
 								}
@@ -1441,11 +1424,14 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 		List<Future> futures = new ArrayList<>();
 		SiteRequestEnUS siteRequest = listSchoolAge.getSiteRequest_();
 		listSchoolAge.getList().forEach(o -> {
+			SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolAge(siteContext, siteRequest.getOperationRequest(), siteRequest.getJsonObject());
+			siteRequest2.setApiRequest_(siteRequest.getApiRequest_());
+			o.setSiteRequest_(siteRequest2);
 			futures.add(
 				patchSchoolAgeFuture(o, false, a -> {
 					if(a.succeeded()) {
 					} else {
-						errorSchoolAge(siteRequest, eventHandler, a);
+						errorSchoolAge(siteRequest2, eventHandler, a);
 					}
 				})
 			);
@@ -2938,6 +2924,39 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 	public void aSearchSchoolAgeUri(String uri, String apiMethod, SearchList<SchoolAge> searchList) {
 	}
 
+	public void varsSchoolAge(SiteRequestEnUS siteRequest, Handler<AsyncResult<SearchList<OperationResponse>>> eventHandler) {
+		try {
+			OperationRequest operationRequest = siteRequest.getOperationRequest();
+
+			operationRequest.getParams().getJsonObject("query").forEach(paramRequest -> {
+				String entityVar = null;
+				String valueIndexed = null;
+				String paramName = paramRequest.getKey();
+				Object paramValuesObject = paramRequest.getValue();
+				JsonArray paramObjects = paramValuesObject instanceof JsonArray ? (JsonArray)paramValuesObject : new JsonArray().add(paramValuesObject);
+
+				try {
+					for(Object paramObject : paramObjects) {
+						switch(paramName) {
+							case "var":
+								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
+								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
+								siteRequest.getRequestVars().put(entityVar, valueIndexed);
+								break;
+						}
+					}
+				} catch(Exception e) {
+					LOGGER.error(String.format("aSearchSchoolAge failed. ", e));
+					eventHandler.handle(Future.failedFuture(e));
+				}
+			});
+			eventHandler.handle(Future.succeededFuture());
+		} catch(Exception e) {
+			LOGGER.error(String.format("aSearchSchoolAge failed. ", e));
+			eventHandler.handle(Future.failedFuture(e));
+		}
+	}
+
 	public void aSearchSchoolAge(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, String uri, String apiMethod, Handler<AsyncResult<SearchList<SchoolAge>>> eventHandler) {
 		try {
 			OperationRequest operationRequest = siteRequest.getOperationRequest();
@@ -3117,7 +3136,8 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 			ApiRequest apiRequest = siteRequest.getApiRequest_();
 			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(new ArrayList<>());
 			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(new ArrayList<>());
-			if(BooleanUtils.isFalse(Optional.ofNullable(siteRequest.getApiRequest_()).map(ApiRequest::getEmpty).orElse(true))) {
+			Boolean refresh = !"false".equals(siteRequest.getRequestVars().get("refresh"));
+			if(refresh && BooleanUtils.isFalse(Optional.ofNullable(siteRequest.getApiRequest_()).map(ApiRequest::getEmpty).orElse(true))) {
 				SearchList<SchoolAge> searchList = new SearchList<SchoolAge>();
 				searchList.setStore(true);
 				searchList.setQuery("*:*");

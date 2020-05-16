@@ -585,42 +585,41 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 							WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
 							executeurTravailleur.executeBlocking(
 								blockingCodeHandler -> {
-									RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourPereScolaire(siteContexte, operationRequete, body);
 									try {
 										RequeteApi requeteApi = new RequeteApi();
-										JsonArray jsonArray = Optional.ofNullable(requeteSite2.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+										JsonArray jsonArray = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
 										requeteApi.setRows(jsonArray.size());
 										requeteApi.setNumFound(new Integer(jsonArray.size()).longValue());
 										requeteApi.setNumPATCH(0L);
-										requeteApi.initLoinRequeteApi(requeteSite2);
-										requeteSite2.setRequeteApi_(requeteApi);
-										requeteSite2.getVertx().eventBus().publish("websocketPereScolaire", JsonObject.mapFrom(requeteApi).toString());
-										sqlConnexionPereScolaire(requeteSite2, d -> {
+										requeteApi.initLoinRequeteApi(requeteSite);
+										requeteSite.setRequeteApi_(requeteApi);
+										requeteSite.getVertx().eventBus().publish("websocketPereScolaire", JsonObject.mapFrom(requeteApi).toString());
+										varsPereScolaire(requeteSite, d -> {
 											if(d.succeeded()) {
-												listePUTImportPereScolaire(requeteApi, requeteSite2, e -> {
+												listePUTImportPereScolaire(requeteApi, requeteSite, e -> {
 													if(e.succeeded()) {
-														putimportPereScolaireReponse(requeteSite2, f -> {
-															if(f.succeeded()) {
+														putimportPereScolaireReponse(requeteSite, f -> {
+															if(e.succeeded()) {
 																LOGGER.info(String.format("putimportPereScolaire a réussi. "));
-																blockingCodeHandler.handle(Future.succeededFuture(f.result()));
+																blockingCodeHandler.handle(Future.succeededFuture(e.result()));
 															} else {
 																LOGGER.error(String.format("putimportPereScolaire a échoué. ", f.cause()));
-																erreurPereScolaire(requeteSite2, null, f);
+																erreurPereScolaire(requeteSite, null, f);
 															}
 														});
 													} else {
 														LOGGER.error(String.format("putimportPereScolaire a échoué. ", e.cause()));
-														erreurPereScolaire(requeteSite2, null, e);
+														erreurPereScolaire(requeteSite, null, e);
 													}
 												});
 											} else {
 												LOGGER.error(String.format("putimportPereScolaire a échoué. ", d.cause()));
-												erreurPereScolaire(requeteSite2, null, d);
+												erreurPereScolaire(requeteSite, null, d);
 											}
 										});
 									} catch(Exception ex) {
 										LOGGER.error(String.format("putimportPereScolaire a échoué. ", ex));
-										erreurPereScolaire(requeteSite2, null, Future.failedFuture(ex));
+										erreurPereScolaire(requeteSite, null, Future.failedFuture(ex));
 									}
 								}, resultHandler -> {
 								}
@@ -652,8 +651,8 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 				json.put("inheritPk", json.getValue("pk"));
 
 				RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourPereScolaire(siteContexte, requeteSite.getOperationRequete(), json);
-				requeteSite2.setConnexionSql(requeteSite.getConnexionSql());
 				requeteSite2.setRequeteApi_(requeteApi);
+				requeteSite2.setRequeteVars(requeteSite.getRequeteVars());
 
 				ListeRecherche<PereScolaire> listeRecherche = new ListeRecherche<PereScolaire>();
 				listeRecherche.setStocker(true);
@@ -751,42 +750,41 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 							WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
 							executeurTravailleur.executeBlocking(
 								blockingCodeHandler -> {
-									RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourPereScolaire(siteContexte, operationRequete, body);
 									try {
 										RequeteApi requeteApi = new RequeteApi();
-										JsonArray jsonArray = Optional.ofNullable(requeteSite2.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+										JsonArray jsonArray = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
 										requeteApi.setRows(jsonArray.size());
 										requeteApi.setNumFound(new Integer(jsonArray.size()).longValue());
 										requeteApi.setNumPATCH(0L);
-										requeteApi.initLoinRequeteApi(requeteSite2);
-										requeteSite2.setRequeteApi_(requeteApi);
-										requeteSite2.getVertx().eventBus().publish("websocketPereScolaire", JsonObject.mapFrom(requeteApi).toString());
-										sqlConnexionPereScolaire(requeteSite2, d -> {
+										requeteApi.initLoinRequeteApi(requeteSite);
+										requeteSite.setRequeteApi_(requeteApi);
+										requeteSite.getVertx().eventBus().publish("websocketPereScolaire", JsonObject.mapFrom(requeteApi).toString());
+										varsPereScolaire(requeteSite, d -> {
 											if(d.succeeded()) {
-												listePUTFusionPereScolaire(requeteApi, requeteSite2, e -> {
+												listePUTFusionPereScolaire(requeteApi, requeteSite, e -> {
 													if(e.succeeded()) {
-														putfusionPereScolaireReponse(requeteSite2, f -> {
-															if(f.succeeded()) {
+														putfusionPereScolaireReponse(requeteSite, f -> {
+															if(e.succeeded()) {
 																LOGGER.info(String.format("putfusionPereScolaire a réussi. "));
-																blockingCodeHandler.handle(Future.succeededFuture(f.result()));
+																blockingCodeHandler.handle(Future.succeededFuture(e.result()));
 															} else {
 																LOGGER.error(String.format("putfusionPereScolaire a échoué. ", f.cause()));
-																erreurPereScolaire(requeteSite2, null, f);
+																erreurPereScolaire(requeteSite, null, f);
 															}
 														});
 													} else {
 														LOGGER.error(String.format("putfusionPereScolaire a échoué. ", e.cause()));
-														erreurPereScolaire(requeteSite2, null, e);
+														erreurPereScolaire(requeteSite, null, e);
 													}
 												});
 											} else {
 												LOGGER.error(String.format("putfusionPereScolaire a échoué. ", d.cause()));
-												erreurPereScolaire(requeteSite2, null, d);
+												erreurPereScolaire(requeteSite, null, d);
 											}
 										});
 									} catch(Exception ex) {
 										LOGGER.error(String.format("putfusionPereScolaire a échoué. ", ex));
-										erreurPereScolaire(requeteSite2, null, Future.failedFuture(ex));
+										erreurPereScolaire(requeteSite, null, Future.failedFuture(ex));
 									}
 								}, resultHandler -> {
 								}
@@ -818,8 +816,8 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 				json.put("inheritPk", json.getValue("pk"));
 
 				RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourPereScolaire(siteContexte, requeteSite.getOperationRequete(), json);
-				requeteSite2.setConnexionSql(requeteSite.getConnexionSql());
 				requeteSite2.setRequeteApi_(requeteApi);
+				requeteSite2.setRequeteVars(requeteSite.getRequeteVars());
 
 				ListeRecherche<PereScolaire> listeRecherche = new ListeRecherche<PereScolaire>();
 				listeRecherche.setStocker(true);
@@ -916,55 +914,47 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 							gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
 							WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
 							executeurTravailleur.executeBlocking(
-									blockingCodeHandler -> {
-									RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourPereScolaire(siteContexte, operationRequete, body);
+								blockingCodeHandler -> {
 									try {
-										recherchePereScolaire(requeteSite2, false, true, "/api/pere/copie", "PUTCopie", d -> {
+										recherchePereScolaire(requeteSite, false, true, "/api/pere/copie", "PUTCopie", d -> {
 											if(d.succeeded()) {
 												ListeRecherche<PereScolaire> listePereScolaire = d.result();
 												RequeteApi requeteApi = new RequeteApi();
 												requeteApi.setRows(listePereScolaire.getRows());
 												requeteApi.setNumFound(listePereScolaire.getQueryResponse().getResults().getNumFound());
 												requeteApi.setNumPATCH(0L);
-												requeteApi.initLoinRequeteApi(requeteSite2);
-												requeteSite2.setRequeteApi_(requeteApi);
-												requeteSite2.getVertx().eventBus().publish("websocketPereScolaire", JsonObject.mapFrom(requeteApi).toString());
-												sqlConnexionPereScolaire(requeteSite2, e -> {
-													if(e.succeeded()) {
-														try {
-															listePUTCopiePereScolaire(requeteApi, listePereScolaire, f -> {
+												requeteApi.initLoinRequeteApi(requeteSite);
+												requeteSite.setRequeteApi_(requeteApi);
+												requeteSite.getVertx().eventBus().publish("websocketPereScolaire", JsonObject.mapFrom(requeteApi).toString());
+												try {
+													listePUTCopiePereScolaire(requeteApi, listePereScolaire, e -> {
+														if(e.succeeded()) {
+															putcopiePereScolaireReponse(requeteSite, f -> {
 																if(f.succeeded()) {
-																	putcopiePereScolaireReponse(requeteSite2, g -> {
-																		if(g.succeeded()) {
-																			LOGGER.info(String.format("putcopiePereScolaire a réussi. "));
-																			blockingCodeHandler.handle(Future.succeededFuture(g.result()));
-																		} else {
-																			LOGGER.error(String.format("putcopiePereScolaire a échoué. ", g.cause()));
-																			erreurPereScolaire(requeteSite2, null, g);
-																		}
-																	});
+																	LOGGER.info(String.format("putcopiePereScolaire a réussi. "));
+																	blockingCodeHandler.handle(Future.succeededFuture(f.result()));
 																} else {
 																	LOGGER.error(String.format("putcopiePereScolaire a échoué. ", f.cause()));
-																	erreurPereScolaire(requeteSite2, null, f);
+																	erreurPereScolaire(requeteSite, null, f);
 																}
 															});
-														} catch(Exception ex) {
-															LOGGER.error(String.format("putcopiePereScolaire a échoué. ", ex));
-															erreurPereScolaire(requeteSite2, null, Future.failedFuture(ex));
+														} else {
+															LOGGER.error(String.format("putcopiePereScolaire a échoué. ", e.cause()));
+															erreurPereScolaire(requeteSite, null, e);
 														}
-													} else {
-														LOGGER.error(String.format("putcopiePereScolaire a échoué. ", e.cause()));
-														erreurPereScolaire(requeteSite2, null, e);
-													}
-												});
+													});
+												} catch(Exception ex) {
+													LOGGER.error(String.format("putcopiePereScolaire a échoué. ", ex));
+													erreurPereScolaire(requeteSite, null, Future.failedFuture(ex));
+												}
 											} else {
 												LOGGER.error(String.format("putcopiePereScolaire a échoué. ", d.cause()));
-												erreurPereScolaire(requeteSite2, null, d);
+												erreurPereScolaire(requeteSite, null, d);
 											}
 										});
 									} catch(Exception ex) {
 										LOGGER.error(String.format("putcopiePereScolaire a échoué. ", ex));
-										erreurPereScolaire(requeteSite2, null, Future.failedFuture(ex));
+										erreurPereScolaire(requeteSite, null, Future.failedFuture(ex));
 									}
 								}, resultHandler -> {
 								}
@@ -990,10 +980,12 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 		List<Future> futures = new ArrayList<>();
 		RequeteSiteFrFR requeteSite = listePereScolaire.getRequeteSite_();
 		listePereScolaire.getList().forEach(o -> {
+			RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourPereScolaire(siteContexte, requeteSite.getOperationRequete(), requeteSite.getObjetJson());
+			requeteSite2.setRequeteApi_(requeteSite.getRequeteApi_());
+			o.setRequeteSite_(requeteSite2);
 			futures.add(
 				putcopiePereScolaireFuture(requeteSite, JsonObject.mapFrom(o), a -> {
 					if(a.succeeded()) {
-						PereScolaire pereScolaire = a.result();
 					} else {
 						LOGGER.error(String.format("listePUTCopiePereScolaire a échoué. ", a.cause()));
 						erreurPereScolaire(requeteSite, gestionnaireEvenements, a);
@@ -1405,18 +1397,17 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 							WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
 							executeurTravailleur.executeBlocking(
 								blockingCodeHandler -> {
-									RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourPereScolaire(siteContexte, operationRequete, body);
 									try {
-										recherchePereScolaire(requeteSite2, false, true, "/api/pere", "PATCH", d -> {
+										recherchePereScolaire(requeteSite, false, true, "/api/pere", "PATCH", d -> {
 											if(d.succeeded()) {
 												ListeRecherche<PereScolaire> listePereScolaire = d.result();
 												RequeteApi requeteApi = new RequeteApi();
 												requeteApi.setRows(listePereScolaire.getRows());
 												requeteApi.setNumFound(listePereScolaire.getQueryResponse().getResults().getNumFound());
 												requeteApi.setNumPATCH(0L);
-												requeteApi.initLoinRequeteApi(requeteSite2);
-												requeteSite2.setRequeteApi_(requeteApi);
-												requeteSite2.getVertx().eventBus().publish("websocketPereScolaire", JsonObject.mapFrom(requeteApi).toString());
+												requeteApi.initLoinRequeteApi(requeteSite);
+												requeteSite.setRequeteApi_(requeteApi);
+												requeteSite.getVertx().eventBus().publish("websocketPereScolaire", JsonObject.mapFrom(requeteApi).toString());
 												SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listePereScolaire.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
 												Date date = null;
 												if(facets != null)
@@ -1428,43 +1419,35 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 													dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
 												listePereScolaire.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
 
-												PereScolaire o = listePereScolaire.getList().stream().findFirst().orElse(null);
-												sqlConnexionPereScolaire(requeteSite2, e -> {
-													if(e.succeeded()) {
-														try {
-															listePATCHPereScolaire(requeteApi, listePereScolaire, dt, f -> {
+												try {
+													listePATCHPereScolaire(requeteApi, listePereScolaire, dt, e -> {
+														if(e.succeeded()) {
+															patchPereScolaireReponse(requeteSite, f -> {
 																if(f.succeeded()) {
-																	patchPereScolaireReponse(requeteSite2, g -> {
-																												if(g.succeeded()) {
-																			LOGGER.info(String.format("patchPereScolaire a réussi. "));
-																			blockingCodeHandler.handle(Future.succeededFuture(g.result()));
-																		} else {
-																			LOGGER.error(String.format("patchPereScolaire a échoué. ", g.cause()));
-																			erreurPereScolaire(requeteSite2, null, g);
-																		}
-																	});
+																	LOGGER.info(String.format("patchPereScolaire a réussi. "));
+																	blockingCodeHandler.handle(Future.succeededFuture(f.result()));
 																} else {
 																	LOGGER.error(String.format("patchPereScolaire a échoué. ", f.cause()));
-																	erreurPereScolaire(requeteSite2, null, f);
+																	erreurPereScolaire(requeteSite, null, f);
 																}
 															});
-														} catch(Exception ex) {
-															LOGGER.error(String.format("patchPereScolaire a échoué. ", ex));
-															erreurPereScolaire(requeteSite2, null, Future.failedFuture(ex));
+														} else {
+															LOGGER.error(String.format("patchPereScolaire a échoué. ", e.cause()));
+															erreurPereScolaire(requeteSite, null, e);
 														}
-													} else {
-														LOGGER.error(String.format("patchPereScolaire a échoué. ", e.cause()));
-														erreurPereScolaire(requeteSite2, null, e);
-													}
-												});
+													});
+												} catch(Exception ex) {
+													LOGGER.error(String.format("patchPereScolaire a échoué. ", ex));
+													erreurPereScolaire(requeteSite, null, Future.failedFuture(ex));
+												}
 											} else {
 												LOGGER.error(String.format("patchPereScolaire a échoué. ", d.cause()));
-												erreurPereScolaire(requeteSite2, null, d);
+												erreurPereScolaire(requeteSite, null, d);
 											}
 										});
 									} catch(Exception ex) {
 										LOGGER.error(String.format("patchPereScolaire a échoué. ", ex));
-										erreurPereScolaire(requeteSite2, null, Future.failedFuture(ex));
+										erreurPereScolaire(requeteSite, null, Future.failedFuture(ex));
 									}
 								}, resultHandler -> {
 								}
@@ -1490,11 +1473,14 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 		List<Future> futures = new ArrayList<>();
 		RequeteSiteFrFR requeteSite = listePereScolaire.getRequeteSite_();
 		listePereScolaire.getList().forEach(o -> {
+			RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourPereScolaire(siteContexte, requeteSite.getOperationRequete(), requeteSite.getObjetJson());
+			requeteSite2.setRequeteApi_(requeteSite.getRequeteApi_());
+			o.setRequeteSite_(requeteSite2);
 			futures.add(
 				patchPereScolaireFuture(o, false, a -> {
 					if(a.succeeded()) {
 					} else {
-						erreurPereScolaire(requeteSite, gestionnaireEvenements, a);
+						erreurPereScolaire(requeteSite2, gestionnaireEvenements, a);
 					}
 				})
 			);
@@ -3167,6 +3153,39 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 	public void recherchePereScolaireUri(String uri, String apiMethode, ListeRecherche<PereScolaire> listeRecherche) {
 	}
 
+	public void varsPereScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<ListeRecherche<OperationResponse>>> gestionnaireEvenements) {
+		try {
+			OperationRequest operationRequete = requeteSite.getOperationRequete();
+
+			operationRequete.getParams().getJsonObject("query").forEach(paramRequete -> {
+				String entiteVar = null;
+				String valeurIndexe = null;
+				String paramNom = paramRequete.getKey();
+				Object paramValeursObjet = paramRequete.getValue();
+				JsonArray paramObjets = paramValeursObjet instanceof JsonArray ? (JsonArray)paramValeursObjet : new JsonArray().add(paramValeursObjet);
+
+				try {
+					for(Object paramObjet : paramObjets) {
+						switch(paramNom) {
+							case "var":
+								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
+								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
+								requeteSite.getRequeteVars().put(entiteVar, valeurIndexe);
+								break;
+						}
+					}
+				} catch(Exception e) {
+					LOGGER.error(String.format("recherchePereScolaire a échoué. ", e));
+					gestionnaireEvenements.handle(Future.failedFuture(e));
+				}
+			});
+			gestionnaireEvenements.handle(Future.succeededFuture());
+		} catch(Exception e) {
+			LOGGER.error(String.format("recherchePereScolaire a échoué. ", e));
+			gestionnaireEvenements.handle(Future.failedFuture(e));
+		}
+	}
+
 	public void recherchePereScolaire(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, String uri, String apiMethode, Handler<AsyncResult<ListeRecherche<PereScolaire>>> gestionnaireEvenements) {
 		try {
 			OperationRequest operationRequete = requeteSite.getOperationRequete();
@@ -3355,7 +3374,8 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 			RequeteApi requeteApi = requeteSite.getRequeteApi_();
 			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(new ArrayList<>());
 			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(new ArrayList<>());
-			if(BooleanUtils.isFalse(Optional.ofNullable(requeteSite.getRequeteApi_()).map(RequeteApi::getEmpty).orElse(true))) {
+			Boolean recharger = !"false".equals(requeteSite.getRequeteVars().get("recharger"));
+			if(recharger && BooleanUtils.isFalse(Optional.ofNullable(requeteSite.getRequeteApi_()).map(RequeteApi::getEmpty).orElse(true))) {
 				ListeRecherche<PereScolaire> listeRecherche = new ListeRecherche<PereScolaire>();
 				listeRecherche.setStocker(true);
 				listeRecherche.setQuery("*:*");

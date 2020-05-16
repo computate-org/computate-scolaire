@@ -575,42 +575,41 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 							WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 							workerExecutor.executeBlocking(
 								blockingCodeHandler -> {
-									SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForPageDesign(siteContext, operationRequest, body);
 									try {
 										ApiRequest apiRequest = new ApiRequest();
-										JsonArray jsonArray = Optional.ofNullable(siteRequest2.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+										JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
 										apiRequest.setRows(jsonArray.size());
 										apiRequest.setNumFound(new Integer(jsonArray.size()).longValue());
 										apiRequest.setNumPATCH(0L);
-										apiRequest.initDeepApiRequest(siteRequest2);
-										siteRequest2.setApiRequest_(apiRequest);
-										siteRequest2.getVertx().eventBus().publish("websocketPageDesign", JsonObject.mapFrom(apiRequest).toString());
-										sqlConnectionPageDesign(siteRequest2, d -> {
+										apiRequest.initDeepApiRequest(siteRequest);
+										siteRequest.setApiRequest_(apiRequest);
+										siteRequest.getVertx().eventBus().publish("websocketPageDesign", JsonObject.mapFrom(apiRequest).toString());
+										varsPageDesign(siteRequest, d -> {
 											if(d.succeeded()) {
-												listPUTImportPageDesign(apiRequest, siteRequest2, e -> {
+												listPUTImportPageDesign(apiRequest, siteRequest, e -> {
 													if(e.succeeded()) {
-														putimportPageDesignResponse(siteRequest2, f -> {
-															if(f.succeeded()) {
+														putimportPageDesignResponse(siteRequest, f -> {
+															if(e.succeeded()) {
 																LOGGER.info(String.format("putimportPageDesign succeeded. "));
-																blockingCodeHandler.handle(Future.succeededFuture(f.result()));
+																blockingCodeHandler.handle(Future.succeededFuture(e.result()));
 															} else {
 																LOGGER.error(String.format("putimportPageDesign failed. ", f.cause()));
-																errorPageDesign(siteRequest2, null, f);
+																errorPageDesign(siteRequest, null, f);
 															}
 														});
 													} else {
 														LOGGER.error(String.format("putimportPageDesign failed. ", e.cause()));
-														errorPageDesign(siteRequest2, null, e);
+														errorPageDesign(siteRequest, null, e);
 													}
 												});
 											} else {
 												LOGGER.error(String.format("putimportPageDesign failed. ", d.cause()));
-												errorPageDesign(siteRequest2, null, d);
+												errorPageDesign(siteRequest, null, d);
 											}
 										});
 									} catch(Exception ex) {
 										LOGGER.error(String.format("putimportPageDesign failed. ", ex));
-										errorPageDesign(siteRequest2, null, Future.failedFuture(ex));
+										errorPageDesign(siteRequest, null, Future.failedFuture(ex));
 									}
 								}, resultHandler -> {
 								}
@@ -642,8 +641,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 				json.put("inheritPk", json.getValue("pk"));
 
 				SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForPageDesign(siteContext, siteRequest.getOperationRequest(), json);
-				siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
 				siteRequest2.setApiRequest_(apiRequest);
+				siteRequest2.setRequestVars(siteRequest.getRequestVars());
 
 				SearchList<PageDesign> searchList = new SearchList<PageDesign>();
 				searchList.setStore(true);
@@ -759,42 +758,41 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 							WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 							workerExecutor.executeBlocking(
 								blockingCodeHandler -> {
-									SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForPageDesign(siteContext, operationRequest, body);
 									try {
 										ApiRequest apiRequest = new ApiRequest();
-										JsonArray jsonArray = Optional.ofNullable(siteRequest2.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+										JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
 										apiRequest.setRows(jsonArray.size());
 										apiRequest.setNumFound(new Integer(jsonArray.size()).longValue());
 										apiRequest.setNumPATCH(0L);
-										apiRequest.initDeepApiRequest(siteRequest2);
-										siteRequest2.setApiRequest_(apiRequest);
-										siteRequest2.getVertx().eventBus().publish("websocketPageDesign", JsonObject.mapFrom(apiRequest).toString());
-										sqlConnectionPageDesign(siteRequest2, d -> {
+										apiRequest.initDeepApiRequest(siteRequest);
+										siteRequest.setApiRequest_(apiRequest);
+										siteRequest.getVertx().eventBus().publish("websocketPageDesign", JsonObject.mapFrom(apiRequest).toString());
+										varsPageDesign(siteRequest, d -> {
 											if(d.succeeded()) {
-												listPUTMergePageDesign(apiRequest, siteRequest2, e -> {
+												listPUTMergePageDesign(apiRequest, siteRequest, e -> {
 													if(e.succeeded()) {
-														putmergePageDesignResponse(siteRequest2, f -> {
-															if(f.succeeded()) {
+														putmergePageDesignResponse(siteRequest, f -> {
+															if(e.succeeded()) {
 																LOGGER.info(String.format("putmergePageDesign succeeded. "));
-																blockingCodeHandler.handle(Future.succeededFuture(f.result()));
+																blockingCodeHandler.handle(Future.succeededFuture(e.result()));
 															} else {
 																LOGGER.error(String.format("putmergePageDesign failed. ", f.cause()));
-																errorPageDesign(siteRequest2, null, f);
+																errorPageDesign(siteRequest, null, f);
 															}
 														});
 													} else {
 														LOGGER.error(String.format("putmergePageDesign failed. ", e.cause()));
-														errorPageDesign(siteRequest2, null, e);
+														errorPageDesign(siteRequest, null, e);
 													}
 												});
 											} else {
 												LOGGER.error(String.format("putmergePageDesign failed. ", d.cause()));
-												errorPageDesign(siteRequest2, null, d);
+												errorPageDesign(siteRequest, null, d);
 											}
 										});
 									} catch(Exception ex) {
 										LOGGER.error(String.format("putmergePageDesign failed. ", ex));
-										errorPageDesign(siteRequest2, null, Future.failedFuture(ex));
+										errorPageDesign(siteRequest, null, Future.failedFuture(ex));
 									}
 								}, resultHandler -> {
 								}
@@ -826,8 +824,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 				json.put("inheritPk", json.getValue("pk"));
 
 				SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForPageDesign(siteContext, siteRequest.getOperationRequest(), json);
-				siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
 				siteRequest2.setApiRequest_(apiRequest);
+				siteRequest2.setRequestVars(siteRequest.getRequestVars());
 
 				SearchList<PageDesign> searchList = new SearchList<PageDesign>();
 				searchList.setStore(true);
@@ -942,55 +940,47 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 							eventHandler.handle(Future.succeededFuture(c.result()));
 							WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 							workerExecutor.executeBlocking(
-									blockingCodeHandler -> {
-									SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForPageDesign(siteContext, operationRequest, body);
+								blockingCodeHandler -> {
 									try {
-										aSearchPageDesign(siteRequest2, false, true, "/api/page-design/copy", "PUTCopy", d -> {
+										aSearchPageDesign(siteRequest, false, true, "/api/page-design/copy", "PUTCopy", d -> {
 											if(d.succeeded()) {
 												SearchList<PageDesign> listPageDesign = d.result();
 												ApiRequest apiRequest = new ApiRequest();
 												apiRequest.setRows(listPageDesign.getRows());
 												apiRequest.setNumFound(listPageDesign.getQueryResponse().getResults().getNumFound());
 												apiRequest.setNumPATCH(0L);
-												apiRequest.initDeepApiRequest(siteRequest2);
-												siteRequest2.setApiRequest_(apiRequest);
-												siteRequest2.getVertx().eventBus().publish("websocketPageDesign", JsonObject.mapFrom(apiRequest).toString());
-												sqlConnectionPageDesign(siteRequest2, e -> {
-													if(e.succeeded()) {
-														try {
-															listPUTCopyPageDesign(apiRequest, listPageDesign, f -> {
+												apiRequest.initDeepApiRequest(siteRequest);
+												siteRequest.setApiRequest_(apiRequest);
+												siteRequest.getVertx().eventBus().publish("websocketPageDesign", JsonObject.mapFrom(apiRequest).toString());
+												try {
+													listPUTCopyPageDesign(apiRequest, listPageDesign, e -> {
+														if(e.succeeded()) {
+															putcopyPageDesignResponse(siteRequest, f -> {
 																if(f.succeeded()) {
-																	putcopyPageDesignResponse(siteRequest2, g -> {
-																		if(g.succeeded()) {
-																			LOGGER.info(String.format("putcopyPageDesign succeeded. "));
-																			blockingCodeHandler.handle(Future.succeededFuture(g.result()));
-																		} else {
-																			LOGGER.error(String.format("putcopyPageDesign failed. ", g.cause()));
-																			errorPageDesign(siteRequest2, null, g);
-																		}
-																	});
+																	LOGGER.info(String.format("putcopyPageDesign succeeded. "));
+																	blockingCodeHandler.handle(Future.succeededFuture(f.result()));
 																} else {
 																	LOGGER.error(String.format("putcopyPageDesign failed. ", f.cause()));
-																	errorPageDesign(siteRequest2, null, f);
+																	errorPageDesign(siteRequest, null, f);
 																}
 															});
-														} catch(Exception ex) {
-															LOGGER.error(String.format("putcopyPageDesign failed. ", ex));
-															errorPageDesign(siteRequest2, null, Future.failedFuture(ex));
+														} else {
+															LOGGER.error(String.format("putcopyPageDesign failed. ", e.cause()));
+															errorPageDesign(siteRequest, null, e);
 														}
-													} else {
-														LOGGER.error(String.format("putcopyPageDesign failed. ", e.cause()));
-														errorPageDesign(siteRequest2, null, e);
-													}
-												});
+													});
+												} catch(Exception ex) {
+													LOGGER.error(String.format("putcopyPageDesign failed. ", ex));
+													errorPageDesign(siteRequest, null, Future.failedFuture(ex));
+												}
 											} else {
 												LOGGER.error(String.format("putcopyPageDesign failed. ", d.cause()));
-												errorPageDesign(siteRequest2, null, d);
+												errorPageDesign(siteRequest, null, d);
 											}
 										});
 									} catch(Exception ex) {
 										LOGGER.error(String.format("putcopyPageDesign failed. ", ex));
-										errorPageDesign(siteRequest2, null, Future.failedFuture(ex));
+										errorPageDesign(siteRequest, null, Future.failedFuture(ex));
 									}
 								}, resultHandler -> {
 								}
@@ -1016,10 +1006,12 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 		List<Future> futures = new ArrayList<>();
 		SiteRequestEnUS siteRequest = listPageDesign.getSiteRequest_();
 		listPageDesign.getList().forEach(o -> {
+			SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForPageDesign(siteContext, siteRequest.getOperationRequest(), siteRequest.getJsonObject());
+			siteRequest2.setApiRequest_(siteRequest.getApiRequest_());
+			o.setSiteRequest_(siteRequest2);
 			futures.add(
 				putcopyPageDesignFuture(siteRequest, JsonObject.mapFrom(o), a -> {
 					if(a.succeeded()) {
-						PageDesign pageDesign = a.result();
 					} else {
 						LOGGER.error(String.format("listPUTCopyPageDesign failed. ", a.cause()));
 						errorPageDesign(siteRequest, eventHandler, a);
@@ -1383,18 +1375,17 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 							WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 							workerExecutor.executeBlocking(
 								blockingCodeHandler -> {
-									SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForPageDesign(siteContext, operationRequest, body);
 									try {
-										aSearchPageDesign(siteRequest2, false, true, "/api/page-design", "PATCH", d -> {
+										aSearchPageDesign(siteRequest, false, true, "/api/page-design", "PATCH", d -> {
 											if(d.succeeded()) {
 												SearchList<PageDesign> listPageDesign = d.result();
 												ApiRequest apiRequest = new ApiRequest();
 												apiRequest.setRows(listPageDesign.getRows());
 												apiRequest.setNumFound(listPageDesign.getQueryResponse().getResults().getNumFound());
 												apiRequest.setNumPATCH(0L);
-												apiRequest.initDeepApiRequest(siteRequest2);
-												siteRequest2.setApiRequest_(apiRequest);
-												siteRequest2.getVertx().eventBus().publish("websocketPageDesign", JsonObject.mapFrom(apiRequest).toString());
+												apiRequest.initDeepApiRequest(siteRequest);
+												siteRequest.setApiRequest_(apiRequest);
+												siteRequest.getVertx().eventBus().publish("websocketPageDesign", JsonObject.mapFrom(apiRequest).toString());
 												SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listPageDesign.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
 												Date date = null;
 												if(facets != null)
@@ -1406,43 +1397,35 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 													dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
 												listPageDesign.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
 
-												PageDesign o = listPageDesign.getList().stream().findFirst().orElse(null);
-												sqlConnectionPageDesign(siteRequest2, e -> {
-													if(e.succeeded()) {
-														try {
-															listPATCHPageDesign(apiRequest, listPageDesign, dt, f -> {
+												try {
+													listPATCHPageDesign(apiRequest, listPageDesign, dt, e -> {
+														if(e.succeeded()) {
+															patchPageDesignResponse(siteRequest, f -> {
 																if(f.succeeded()) {
-																	patchPageDesignResponse(siteRequest2, g -> {
-																												if(g.succeeded()) {
-																			LOGGER.info(String.format("patchPageDesign succeeded. "));
-																			blockingCodeHandler.handle(Future.succeededFuture(g.result()));
-																		} else {
-																			LOGGER.error(String.format("patchPageDesign failed. ", g.cause()));
-																			errorPageDesign(siteRequest2, null, g);
-																		}
-																	});
+																	LOGGER.info(String.format("patchPageDesign succeeded. "));
+																	blockingCodeHandler.handle(Future.succeededFuture(f.result()));
 																} else {
 																	LOGGER.error(String.format("patchPageDesign failed. ", f.cause()));
-																	errorPageDesign(siteRequest2, null, f);
+																	errorPageDesign(siteRequest, null, f);
 																}
 															});
-														} catch(Exception ex) {
-															LOGGER.error(String.format("patchPageDesign failed. ", ex));
-															errorPageDesign(siteRequest2, null, Future.failedFuture(ex));
+														} else {
+															LOGGER.error(String.format("patchPageDesign failed. ", e.cause()));
+															errorPageDesign(siteRequest, null, e);
 														}
-													} else {
-														LOGGER.error(String.format("patchPageDesign failed. ", e.cause()));
-														errorPageDesign(siteRequest2, null, e);
-													}
-												});
+													});
+												} catch(Exception ex) {
+													LOGGER.error(String.format("patchPageDesign failed. ", ex));
+													errorPageDesign(siteRequest, null, Future.failedFuture(ex));
+												}
 											} else {
 												LOGGER.error(String.format("patchPageDesign failed. ", d.cause()));
-												errorPageDesign(siteRequest2, null, d);
+												errorPageDesign(siteRequest, null, d);
 											}
 										});
 									} catch(Exception ex) {
 										LOGGER.error(String.format("patchPageDesign failed. ", ex));
-										errorPageDesign(siteRequest2, null, Future.failedFuture(ex));
+										errorPageDesign(siteRequest, null, Future.failedFuture(ex));
 									}
 								}, resultHandler -> {
 								}
@@ -1468,11 +1451,14 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 		List<Future> futures = new ArrayList<>();
 		SiteRequestEnUS siteRequest = listPageDesign.getSiteRequest_();
 		listPageDesign.getList().forEach(o -> {
+			SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForPageDesign(siteContext, siteRequest.getOperationRequest(), siteRequest.getJsonObject());
+			siteRequest2.setApiRequest_(siteRequest.getApiRequest_());
+			o.setSiteRequest_(siteRequest2);
 			futures.add(
 				patchPageDesignFuture(o, false, a -> {
 					if(a.succeeded()) {
 					} else {
-						errorPageDesign(siteRequest, eventHandler, a);
+						errorPageDesign(siteRequest2, eventHandler, a);
 					}
 				})
 			);
@@ -3558,6 +3544,39 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 	public void aSearchPageDesignUri(String uri, String apiMethod, SearchList<PageDesign> searchList) {
 	}
 
+	public void varsPageDesign(SiteRequestEnUS siteRequest, Handler<AsyncResult<SearchList<OperationResponse>>> eventHandler) {
+		try {
+			OperationRequest operationRequest = siteRequest.getOperationRequest();
+
+			operationRequest.getParams().getJsonObject("query").forEach(paramRequest -> {
+				String entityVar = null;
+				String valueIndexed = null;
+				String paramName = paramRequest.getKey();
+				Object paramValuesObject = paramRequest.getValue();
+				JsonArray paramObjects = paramValuesObject instanceof JsonArray ? (JsonArray)paramValuesObject : new JsonArray().add(paramValuesObject);
+
+				try {
+					for(Object paramObject : paramObjects) {
+						switch(paramName) {
+							case "var":
+								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
+								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
+								siteRequest.getRequestVars().put(entityVar, valueIndexed);
+								break;
+						}
+					}
+				} catch(Exception e) {
+					LOGGER.error(String.format("aSearchPageDesign failed. ", e));
+					eventHandler.handle(Future.failedFuture(e));
+				}
+			});
+			eventHandler.handle(Future.succeededFuture());
+		} catch(Exception e) {
+			LOGGER.error(String.format("aSearchPageDesign failed. ", e));
+			eventHandler.handle(Future.failedFuture(e));
+		}
+	}
+
 	public void aSearchPageDesign(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, String uri, String apiMethod, Handler<AsyncResult<SearchList<PageDesign>>> eventHandler) {
 		try {
 			OperationRequest operationRequest = siteRequest.getOperationRequest();
@@ -3737,7 +3756,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 			ApiRequest apiRequest = siteRequest.getApiRequest_();
 			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(new ArrayList<>());
 			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(new ArrayList<>());
-			if(BooleanUtils.isFalse(Optional.ofNullable(siteRequest.getApiRequest_()).map(ApiRequest::getEmpty).orElse(true))) {
+			Boolean refresh = !"false".equals(siteRequest.getRequestVars().get("refresh"));
+			if(refresh && BooleanUtils.isFalse(Optional.ofNullable(siteRequest.getApiRequest_()).map(ApiRequest::getEmpty).orElse(true))) {
 				SearchList<PageDesign> searchList = new SearchList<PageDesign>();
 				searchList.setStore(true);
 				searchList.setQuery("*:*");

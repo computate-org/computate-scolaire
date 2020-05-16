@@ -570,42 +570,41 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 							WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 							workerExecutor.executeBlocking(
 								blockingCodeHandler -> {
-									SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolSeason(siteContext, operationRequest, body);
 									try {
 										ApiRequest apiRequest = new ApiRequest();
-										JsonArray jsonArray = Optional.ofNullable(siteRequest2.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+										JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
 										apiRequest.setRows(jsonArray.size());
 										apiRequest.setNumFound(new Integer(jsonArray.size()).longValue());
 										apiRequest.setNumPATCH(0L);
-										apiRequest.initDeepApiRequest(siteRequest2);
-										siteRequest2.setApiRequest_(apiRequest);
-										siteRequest2.getVertx().eventBus().publish("websocketSchoolSeason", JsonObject.mapFrom(apiRequest).toString());
-										sqlConnectionSchoolSeason(siteRequest2, d -> {
+										apiRequest.initDeepApiRequest(siteRequest);
+										siteRequest.setApiRequest_(apiRequest);
+										siteRequest.getVertx().eventBus().publish("websocketSchoolSeason", JsonObject.mapFrom(apiRequest).toString());
+										varsSchoolSeason(siteRequest, d -> {
 											if(d.succeeded()) {
-												listPUTImportSchoolSeason(apiRequest, siteRequest2, e -> {
+												listPUTImportSchoolSeason(apiRequest, siteRequest, e -> {
 													if(e.succeeded()) {
-														putimportSchoolSeasonResponse(siteRequest2, f -> {
-															if(f.succeeded()) {
+														putimportSchoolSeasonResponse(siteRequest, f -> {
+															if(e.succeeded()) {
 																LOGGER.info(String.format("putimportSchoolSeason succeeded. "));
-																blockingCodeHandler.handle(Future.succeededFuture(f.result()));
+																blockingCodeHandler.handle(Future.succeededFuture(e.result()));
 															} else {
 																LOGGER.error(String.format("putimportSchoolSeason failed. ", f.cause()));
-																errorSchoolSeason(siteRequest2, null, f);
+																errorSchoolSeason(siteRequest, null, f);
 															}
 														});
 													} else {
 														LOGGER.error(String.format("putimportSchoolSeason failed. ", e.cause()));
-														errorSchoolSeason(siteRequest2, null, e);
+														errorSchoolSeason(siteRequest, null, e);
 													}
 												});
 											} else {
 												LOGGER.error(String.format("putimportSchoolSeason failed. ", d.cause()));
-												errorSchoolSeason(siteRequest2, null, d);
+												errorSchoolSeason(siteRequest, null, d);
 											}
 										});
 									} catch(Exception ex) {
 										LOGGER.error(String.format("putimportSchoolSeason failed. ", ex));
-										errorSchoolSeason(siteRequest2, null, Future.failedFuture(ex));
+										errorSchoolSeason(siteRequest, null, Future.failedFuture(ex));
 									}
 								}, resultHandler -> {
 								}
@@ -637,8 +636,8 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 				json.put("inheritPk", json.getValue("pk"));
 
 				SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolSeason(siteContext, siteRequest.getOperationRequest(), json);
-				siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
 				siteRequest2.setApiRequest_(apiRequest);
+				siteRequest2.setRequestVars(siteRequest.getRequestVars());
 
 				SearchList<SchoolSeason> searchList = new SearchList<SchoolSeason>();
 				searchList.setStore(true);
@@ -754,42 +753,41 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 							WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 							workerExecutor.executeBlocking(
 								blockingCodeHandler -> {
-									SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolSeason(siteContext, operationRequest, body);
 									try {
 										ApiRequest apiRequest = new ApiRequest();
-										JsonArray jsonArray = Optional.ofNullable(siteRequest2.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+										JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
 										apiRequest.setRows(jsonArray.size());
 										apiRequest.setNumFound(new Integer(jsonArray.size()).longValue());
 										apiRequest.setNumPATCH(0L);
-										apiRequest.initDeepApiRequest(siteRequest2);
-										siteRequest2.setApiRequest_(apiRequest);
-										siteRequest2.getVertx().eventBus().publish("websocketSchoolSeason", JsonObject.mapFrom(apiRequest).toString());
-										sqlConnectionSchoolSeason(siteRequest2, d -> {
+										apiRequest.initDeepApiRequest(siteRequest);
+										siteRequest.setApiRequest_(apiRequest);
+										siteRequest.getVertx().eventBus().publish("websocketSchoolSeason", JsonObject.mapFrom(apiRequest).toString());
+										varsSchoolSeason(siteRequest, d -> {
 											if(d.succeeded()) {
-												listPUTMergeSchoolSeason(apiRequest, siteRequest2, e -> {
+												listPUTMergeSchoolSeason(apiRequest, siteRequest, e -> {
 													if(e.succeeded()) {
-														putmergeSchoolSeasonResponse(siteRequest2, f -> {
-															if(f.succeeded()) {
+														putmergeSchoolSeasonResponse(siteRequest, f -> {
+															if(e.succeeded()) {
 																LOGGER.info(String.format("putmergeSchoolSeason succeeded. "));
-																blockingCodeHandler.handle(Future.succeededFuture(f.result()));
+																blockingCodeHandler.handle(Future.succeededFuture(e.result()));
 															} else {
 																LOGGER.error(String.format("putmergeSchoolSeason failed. ", f.cause()));
-																errorSchoolSeason(siteRequest2, null, f);
+																errorSchoolSeason(siteRequest, null, f);
 															}
 														});
 													} else {
 														LOGGER.error(String.format("putmergeSchoolSeason failed. ", e.cause()));
-														errorSchoolSeason(siteRequest2, null, e);
+														errorSchoolSeason(siteRequest, null, e);
 													}
 												});
 											} else {
 												LOGGER.error(String.format("putmergeSchoolSeason failed. ", d.cause()));
-												errorSchoolSeason(siteRequest2, null, d);
+												errorSchoolSeason(siteRequest, null, d);
 											}
 										});
 									} catch(Exception ex) {
 										LOGGER.error(String.format("putmergeSchoolSeason failed. ", ex));
-										errorSchoolSeason(siteRequest2, null, Future.failedFuture(ex));
+										errorSchoolSeason(siteRequest, null, Future.failedFuture(ex));
 									}
 								}, resultHandler -> {
 								}
@@ -821,8 +819,8 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 				json.put("inheritPk", json.getValue("pk"));
 
 				SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolSeason(siteContext, siteRequest.getOperationRequest(), json);
-				siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
 				siteRequest2.setApiRequest_(apiRequest);
+				siteRequest2.setRequestVars(siteRequest.getRequestVars());
 
 				SearchList<SchoolSeason> searchList = new SearchList<SchoolSeason>();
 				searchList.setStore(true);
@@ -937,55 +935,47 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 							eventHandler.handle(Future.succeededFuture(c.result()));
 							WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 							workerExecutor.executeBlocking(
-									blockingCodeHandler -> {
-									SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolSeason(siteContext, operationRequest, body);
+								blockingCodeHandler -> {
 									try {
-										aSearchSchoolSeason(siteRequest2, false, true, "/api/season/copy", "PUTCopy", d -> {
+										aSearchSchoolSeason(siteRequest, false, true, "/api/season/copy", "PUTCopy", d -> {
 											if(d.succeeded()) {
 												SearchList<SchoolSeason> listSchoolSeason = d.result();
 												ApiRequest apiRequest = new ApiRequest();
 												apiRequest.setRows(listSchoolSeason.getRows());
 												apiRequest.setNumFound(listSchoolSeason.getQueryResponse().getResults().getNumFound());
 												apiRequest.setNumPATCH(0L);
-												apiRequest.initDeepApiRequest(siteRequest2);
-												siteRequest2.setApiRequest_(apiRequest);
-												siteRequest2.getVertx().eventBus().publish("websocketSchoolSeason", JsonObject.mapFrom(apiRequest).toString());
-												sqlConnectionSchoolSeason(siteRequest2, e -> {
-													if(e.succeeded()) {
-														try {
-															listPUTCopySchoolSeason(apiRequest, listSchoolSeason, f -> {
+												apiRequest.initDeepApiRequest(siteRequest);
+												siteRequest.setApiRequest_(apiRequest);
+												siteRequest.getVertx().eventBus().publish("websocketSchoolSeason", JsonObject.mapFrom(apiRequest).toString());
+												try {
+													listPUTCopySchoolSeason(apiRequest, listSchoolSeason, e -> {
+														if(e.succeeded()) {
+															putcopySchoolSeasonResponse(siteRequest, f -> {
 																if(f.succeeded()) {
-																	putcopySchoolSeasonResponse(siteRequest2, g -> {
-																		if(g.succeeded()) {
-																			LOGGER.info(String.format("putcopySchoolSeason succeeded. "));
-																			blockingCodeHandler.handle(Future.succeededFuture(g.result()));
-																		} else {
-																			LOGGER.error(String.format("putcopySchoolSeason failed. ", g.cause()));
-																			errorSchoolSeason(siteRequest2, null, g);
-																		}
-																	});
+																	LOGGER.info(String.format("putcopySchoolSeason succeeded. "));
+																	blockingCodeHandler.handle(Future.succeededFuture(f.result()));
 																} else {
 																	LOGGER.error(String.format("putcopySchoolSeason failed. ", f.cause()));
-																	errorSchoolSeason(siteRequest2, null, f);
+																	errorSchoolSeason(siteRequest, null, f);
 																}
 															});
-														} catch(Exception ex) {
-															LOGGER.error(String.format("putcopySchoolSeason failed. ", ex));
-															errorSchoolSeason(siteRequest2, null, Future.failedFuture(ex));
+														} else {
+															LOGGER.error(String.format("putcopySchoolSeason failed. ", e.cause()));
+															errorSchoolSeason(siteRequest, null, e);
 														}
-													} else {
-														LOGGER.error(String.format("putcopySchoolSeason failed. ", e.cause()));
-														errorSchoolSeason(siteRequest2, null, e);
-													}
-												});
+													});
+												} catch(Exception ex) {
+													LOGGER.error(String.format("putcopySchoolSeason failed. ", ex));
+													errorSchoolSeason(siteRequest, null, Future.failedFuture(ex));
+												}
 											} else {
 												LOGGER.error(String.format("putcopySchoolSeason failed. ", d.cause()));
-												errorSchoolSeason(siteRequest2, null, d);
+												errorSchoolSeason(siteRequest, null, d);
 											}
 										});
 									} catch(Exception ex) {
 										LOGGER.error(String.format("putcopySchoolSeason failed. ", ex));
-										errorSchoolSeason(siteRequest2, null, Future.failedFuture(ex));
+										errorSchoolSeason(siteRequest, null, Future.failedFuture(ex));
 									}
 								}, resultHandler -> {
 								}
@@ -1011,10 +1001,12 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 		List<Future> futures = new ArrayList<>();
 		SiteRequestEnUS siteRequest = listSchoolSeason.getSiteRequest_();
 		listSchoolSeason.getList().forEach(o -> {
+			SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolSeason(siteContext, siteRequest.getOperationRequest(), siteRequest.getJsonObject());
+			siteRequest2.setApiRequest_(siteRequest.getApiRequest_());
+			o.setSiteRequest_(siteRequest2);
 			futures.add(
 				putcopySchoolSeasonFuture(siteRequest, JsonObject.mapFrom(o), a -> {
 					if(a.succeeded()) {
-						SchoolSeason schoolSeason = a.result();
 					} else {
 						LOGGER.error(String.format("listPUTCopySchoolSeason failed. ", a.cause()));
 						errorSchoolSeason(siteRequest, eventHandler, a);
@@ -1382,18 +1374,17 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 							WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 							workerExecutor.executeBlocking(
 								blockingCodeHandler -> {
-									SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolSeason(siteContext, operationRequest, body);
 									try {
-										aSearchSchoolSeason(siteRequest2, false, true, "/api/season", "PATCH", d -> {
+										aSearchSchoolSeason(siteRequest, false, true, "/api/season", "PATCH", d -> {
 											if(d.succeeded()) {
 												SearchList<SchoolSeason> listSchoolSeason = d.result();
 												ApiRequest apiRequest = new ApiRequest();
 												apiRequest.setRows(listSchoolSeason.getRows());
 												apiRequest.setNumFound(listSchoolSeason.getQueryResponse().getResults().getNumFound());
 												apiRequest.setNumPATCH(0L);
-												apiRequest.initDeepApiRequest(siteRequest2);
-												siteRequest2.setApiRequest_(apiRequest);
-												siteRequest2.getVertx().eventBus().publish("websocketSchoolSeason", JsonObject.mapFrom(apiRequest).toString());
+												apiRequest.initDeepApiRequest(siteRequest);
+												siteRequest.setApiRequest_(apiRequest);
+												siteRequest.getVertx().eventBus().publish("websocketSchoolSeason", JsonObject.mapFrom(apiRequest).toString());
 												SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listSchoolSeason.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
 												Date date = null;
 												if(facets != null)
@@ -1405,43 +1396,35 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 													dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
 												listSchoolSeason.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
 
-												SchoolSeason o = listSchoolSeason.getList().stream().findFirst().orElse(null);
-												sqlConnectionSchoolSeason(siteRequest2, e -> {
-													if(e.succeeded()) {
-														try {
-															listPATCHSchoolSeason(apiRequest, listSchoolSeason, dt, f -> {
+												try {
+													listPATCHSchoolSeason(apiRequest, listSchoolSeason, dt, e -> {
+														if(e.succeeded()) {
+															patchSchoolSeasonResponse(siteRequest, f -> {
 																if(f.succeeded()) {
-																	patchSchoolSeasonResponse(siteRequest2, g -> {
-																												if(g.succeeded()) {
-																			LOGGER.info(String.format("patchSchoolSeason succeeded. "));
-																			blockingCodeHandler.handle(Future.succeededFuture(g.result()));
-																		} else {
-																			LOGGER.error(String.format("patchSchoolSeason failed. ", g.cause()));
-																			errorSchoolSeason(siteRequest2, null, g);
-																		}
-																	});
+																	LOGGER.info(String.format("patchSchoolSeason succeeded. "));
+																	blockingCodeHandler.handle(Future.succeededFuture(f.result()));
 																} else {
 																	LOGGER.error(String.format("patchSchoolSeason failed. ", f.cause()));
-																	errorSchoolSeason(siteRequest2, null, f);
+																	errorSchoolSeason(siteRequest, null, f);
 																}
 															});
-														} catch(Exception ex) {
-															LOGGER.error(String.format("patchSchoolSeason failed. ", ex));
-															errorSchoolSeason(siteRequest2, null, Future.failedFuture(ex));
+														} else {
+															LOGGER.error(String.format("patchSchoolSeason failed. ", e.cause()));
+															errorSchoolSeason(siteRequest, null, e);
 														}
-													} else {
-														LOGGER.error(String.format("patchSchoolSeason failed. ", e.cause()));
-														errorSchoolSeason(siteRequest2, null, e);
-													}
-												});
+													});
+												} catch(Exception ex) {
+													LOGGER.error(String.format("patchSchoolSeason failed. ", ex));
+													errorSchoolSeason(siteRequest, null, Future.failedFuture(ex));
+												}
 											} else {
 												LOGGER.error(String.format("patchSchoolSeason failed. ", d.cause()));
-												errorSchoolSeason(siteRequest2, null, d);
+												errorSchoolSeason(siteRequest, null, d);
 											}
 										});
 									} catch(Exception ex) {
 										LOGGER.error(String.format("patchSchoolSeason failed. ", ex));
-										errorSchoolSeason(siteRequest2, null, Future.failedFuture(ex));
+										errorSchoolSeason(siteRequest, null, Future.failedFuture(ex));
 									}
 								}, resultHandler -> {
 								}
@@ -1467,11 +1450,14 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 		List<Future> futures = new ArrayList<>();
 		SiteRequestEnUS siteRequest = listSchoolSeason.getSiteRequest_();
 		listSchoolSeason.getList().forEach(o -> {
+			SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolSeason(siteContext, siteRequest.getOperationRequest(), siteRequest.getJsonObject());
+			siteRequest2.setApiRequest_(siteRequest.getApiRequest_());
+			o.setSiteRequest_(siteRequest2);
 			futures.add(
 				patchSchoolSeasonFuture(o, false, a -> {
 					if(a.succeeded()) {
 					} else {
-						errorSchoolSeason(siteRequest, eventHandler, a);
+						errorSchoolSeason(siteRequest2, eventHandler, a);
 					}
 				})
 			);
@@ -2992,6 +2978,39 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 	public void aSearchSchoolSeasonUri(String uri, String apiMethod, SearchList<SchoolSeason> searchList) {
 	}
 
+	public void varsSchoolSeason(SiteRequestEnUS siteRequest, Handler<AsyncResult<SearchList<OperationResponse>>> eventHandler) {
+		try {
+			OperationRequest operationRequest = siteRequest.getOperationRequest();
+
+			operationRequest.getParams().getJsonObject("query").forEach(paramRequest -> {
+				String entityVar = null;
+				String valueIndexed = null;
+				String paramName = paramRequest.getKey();
+				Object paramValuesObject = paramRequest.getValue();
+				JsonArray paramObjects = paramValuesObject instanceof JsonArray ? (JsonArray)paramValuesObject : new JsonArray().add(paramValuesObject);
+
+				try {
+					for(Object paramObject : paramObjects) {
+						switch(paramName) {
+							case "var":
+								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
+								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
+								siteRequest.getRequestVars().put(entityVar, valueIndexed);
+								break;
+						}
+					}
+				} catch(Exception e) {
+					LOGGER.error(String.format("aSearchSchoolSeason failed. ", e));
+					eventHandler.handle(Future.failedFuture(e));
+				}
+			});
+			eventHandler.handle(Future.succeededFuture());
+		} catch(Exception e) {
+			LOGGER.error(String.format("aSearchSchoolSeason failed. ", e));
+			eventHandler.handle(Future.failedFuture(e));
+		}
+	}
+
 	public void aSearchSchoolSeason(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, String uri, String apiMethod, Handler<AsyncResult<SearchList<SchoolSeason>>> eventHandler) {
 		try {
 			OperationRequest operationRequest = siteRequest.getOperationRequest();
@@ -3171,7 +3190,8 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 			ApiRequest apiRequest = siteRequest.getApiRequest_();
 			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(new ArrayList<>());
 			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(new ArrayList<>());
-			if(BooleanUtils.isFalse(Optional.ofNullable(siteRequest.getApiRequest_()).map(ApiRequest::getEmpty).orElse(true))) {
+			Boolean refresh = !"false".equals(siteRequest.getRequestVars().get("refresh"));
+			if(refresh && BooleanUtils.isFalse(Optional.ofNullable(siteRequest.getApiRequest_()).map(ApiRequest::getEmpty).orElse(true))) {
 				SearchList<SchoolSeason> searchList = new SearchList<SchoolSeason>();
 				searchList.setStore(true);
 				searchList.setQuery("*:*");

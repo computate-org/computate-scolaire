@@ -223,18 +223,17 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 							WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
 							executeurTravailleur.executeBlocking(
 								blockingCodeHandler -> {
-									RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourUtilisateurSite(siteContexte, operationRequete, body);
 									try {
-										rechercheUtilisateurSite(requeteSite2, false, true, "/api/utilisateur", "PATCH", d -> {
+										rechercheUtilisateurSite(requeteSite, false, true, "/api/utilisateur", "PATCH", d -> {
 											if(d.succeeded()) {
 												ListeRecherche<UtilisateurSite> listeUtilisateurSite = d.result();
 												RequeteApi requeteApi = new RequeteApi();
 												requeteApi.setRows(listeUtilisateurSite.getRows());
 												requeteApi.setNumFound(listeUtilisateurSite.getQueryResponse().getResults().getNumFound());
 												requeteApi.setNumPATCH(0L);
-												requeteApi.initLoinRequeteApi(requeteSite2);
-												requeteSite2.setRequeteApi_(requeteApi);
-												requeteSite2.getVertx().eventBus().publish("websocketUtilisateurSite", JsonObject.mapFrom(requeteApi).toString());
+												requeteApi.initLoinRequeteApi(requeteSite);
+												requeteSite.setRequeteApi_(requeteApi);
+												requeteSite.getVertx().eventBus().publish("websocketUtilisateurSite", JsonObject.mapFrom(requeteApi).toString());
 												SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listeUtilisateurSite.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
 												Date date = null;
 												if(facets != null)
@@ -246,43 +245,35 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 													dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
 												listeUtilisateurSite.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
 
-												UtilisateurSite o = listeUtilisateurSite.getList().stream().findFirst().orElse(null);
-												sqlConnexionUtilisateurSite(requeteSite2, e -> {
-													if(e.succeeded()) {
-														try {
-															listePATCHUtilisateurSite(requeteApi, listeUtilisateurSite, dt, f -> {
+												try {
+													listePATCHUtilisateurSite(requeteApi, listeUtilisateurSite, dt, e -> {
+														if(e.succeeded()) {
+															patchUtilisateurSiteReponse(requeteSite, f -> {
 																if(f.succeeded()) {
-																	patchUtilisateurSiteReponse(requeteSite2, g -> {
-																												if(g.succeeded()) {
-																			LOGGER.info(String.format("patchUtilisateurSite a réussi. "));
-																			blockingCodeHandler.handle(Future.succeededFuture(g.result()));
-																		} else {
-																			LOGGER.error(String.format("patchUtilisateurSite a échoué. ", g.cause()));
-																			erreurUtilisateurSite(requeteSite2, null, g);
-																		}
-																	});
+																	LOGGER.info(String.format("patchUtilisateurSite a réussi. "));
+																	blockingCodeHandler.handle(Future.succeededFuture(f.result()));
 																} else {
 																	LOGGER.error(String.format("patchUtilisateurSite a échoué. ", f.cause()));
-																	erreurUtilisateurSite(requeteSite2, null, f);
+																	erreurUtilisateurSite(requeteSite, null, f);
 																}
 															});
-														} catch(Exception ex) {
-															LOGGER.error(String.format("patchUtilisateurSite a échoué. ", ex));
-															erreurUtilisateurSite(requeteSite2, null, Future.failedFuture(ex));
+														} else {
+															LOGGER.error(String.format("patchUtilisateurSite a échoué. ", e.cause()));
+															erreurUtilisateurSite(requeteSite, null, e);
 														}
-													} else {
-														LOGGER.error(String.format("patchUtilisateurSite a échoué. ", e.cause()));
-														erreurUtilisateurSite(requeteSite2, null, e);
-													}
-												});
+													});
+												} catch(Exception ex) {
+													LOGGER.error(String.format("patchUtilisateurSite a échoué. ", ex));
+													erreurUtilisateurSite(requeteSite, null, Future.failedFuture(ex));
+												}
 											} else {
 												LOGGER.error(String.format("patchUtilisateurSite a échoué. ", d.cause()));
-												erreurUtilisateurSite(requeteSite2, null, d);
+												erreurUtilisateurSite(requeteSite, null, d);
 											}
 										});
 									} catch(Exception ex) {
 										LOGGER.error(String.format("patchUtilisateurSite a échoué. ", ex));
-										erreurUtilisateurSite(requeteSite2, null, Future.failedFuture(ex));
+										erreurUtilisateurSite(requeteSite, null, Future.failedFuture(ex));
 									}
 								}, resultHandler -> {
 								}
@@ -308,11 +299,14 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 		List<Future> futures = new ArrayList<>();
 		RequeteSiteFrFR requeteSite = listeUtilisateurSite.getRequeteSite_();
 		listeUtilisateurSite.getList().forEach(o -> {
+			RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourUtilisateurSite(siteContexte, requeteSite.getOperationRequete(), requeteSite.getObjetJson());
+			requeteSite2.setRequeteApi_(requeteSite.getRequeteApi_());
+			o.setRequeteSite_(requeteSite2);
 			futures.add(
 				patchUtilisateurSiteFuture(o, false, a -> {
 					if(a.succeeded()) {
 					} else {
-						erreurUtilisateurSite(requeteSite, gestionnaireEvenements, a);
+						erreurUtilisateurSite(requeteSite2, gestionnaireEvenements, a);
 					}
 				})
 			);
@@ -2191,6 +2185,39 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 	public void rechercheUtilisateurSiteUri(String uri, String apiMethode, ListeRecherche<UtilisateurSite> listeRecherche) {
 	}
 
+	public void varsUtilisateurSite(RequeteSiteFrFR requeteSite, Handler<AsyncResult<ListeRecherche<OperationResponse>>> gestionnaireEvenements) {
+		try {
+			OperationRequest operationRequete = requeteSite.getOperationRequete();
+
+			operationRequete.getParams().getJsonObject("query").forEach(paramRequete -> {
+				String entiteVar = null;
+				String valeurIndexe = null;
+				String paramNom = paramRequete.getKey();
+				Object paramValeursObjet = paramRequete.getValue();
+				JsonArray paramObjets = paramValeursObjet instanceof JsonArray ? (JsonArray)paramValeursObjet : new JsonArray().add(paramValeursObjet);
+
+				try {
+					for(Object paramObjet : paramObjets) {
+						switch(paramNom) {
+							case "var":
+								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
+								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
+								requeteSite.getRequeteVars().put(entiteVar, valeurIndexe);
+								break;
+						}
+					}
+				} catch(Exception e) {
+					LOGGER.error(String.format("rechercheUtilisateurSite a échoué. ", e));
+					gestionnaireEvenements.handle(Future.failedFuture(e));
+				}
+			});
+			gestionnaireEvenements.handle(Future.succeededFuture());
+		} catch(Exception e) {
+			LOGGER.error(String.format("rechercheUtilisateurSite a échoué. ", e));
+			gestionnaireEvenements.handle(Future.failedFuture(e));
+		}
+	}
+
 	public void rechercheUtilisateurSite(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, String uri, String apiMethode, Handler<AsyncResult<ListeRecherche<UtilisateurSite>>> gestionnaireEvenements) {
 		try {
 			OperationRequest operationRequete = requeteSite.getOperationRequete();
@@ -2379,7 +2406,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 			RequeteApi requeteApi = requeteSite.getRequeteApi_();
 			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(new ArrayList<>());
 			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(new ArrayList<>());
-			if(BooleanUtils.isFalse(Optional.ofNullable(requeteSite.getRequeteApi_()).map(RequeteApi::getEmpty).orElse(true))) {
+			Boolean recharger = !"false".equals(requeteSite.getRequeteVars().get("recharger"));
+			if(recharger && BooleanUtils.isFalse(Optional.ofNullable(requeteSite.getRequeteApi_()).map(RequeteApi::getEmpty).orElse(true))) {
 				ListeRecherche<UtilisateurSite> listeRecherche = new ListeRecherche<UtilisateurSite>();
 				listeRecherche.setStocker(true);
 				listeRecherche.setQuery("*:*");

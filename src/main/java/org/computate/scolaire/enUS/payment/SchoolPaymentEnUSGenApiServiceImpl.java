@@ -781,42 +781,41 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 							WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 							workerExecutor.executeBlocking(
 								blockingCodeHandler -> {
-									SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolPayment(siteContext, operationRequest, body);
 									try {
 										ApiRequest apiRequest = new ApiRequest();
-										JsonArray jsonArray = Optional.ofNullable(siteRequest2.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+										JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
 										apiRequest.setRows(jsonArray.size());
 										apiRequest.setNumFound(new Integer(jsonArray.size()).longValue());
 										apiRequest.setNumPATCH(0L);
-										apiRequest.initDeepApiRequest(siteRequest2);
-										siteRequest2.setApiRequest_(apiRequest);
-										siteRequest2.getVertx().eventBus().publish("websocketSchoolPayment", JsonObject.mapFrom(apiRequest).toString());
-										sqlConnectionSchoolPayment(siteRequest2, d -> {
+										apiRequest.initDeepApiRequest(siteRequest);
+										siteRequest.setApiRequest_(apiRequest);
+										siteRequest.getVertx().eventBus().publish("websocketSchoolPayment", JsonObject.mapFrom(apiRequest).toString());
+										varsSchoolPayment(siteRequest, d -> {
 											if(d.succeeded()) {
-												listPUTImportSchoolPayment(apiRequest, siteRequest2, e -> {
+												listPUTImportSchoolPayment(apiRequest, siteRequest, e -> {
 													if(e.succeeded()) {
-														putimportSchoolPaymentResponse(siteRequest2, f -> {
-															if(f.succeeded()) {
+														putimportSchoolPaymentResponse(siteRequest, f -> {
+															if(e.succeeded()) {
 																LOGGER.info(String.format("putimportSchoolPayment succeeded. "));
-																blockingCodeHandler.handle(Future.succeededFuture(f.result()));
+																blockingCodeHandler.handle(Future.succeededFuture(e.result()));
 															} else {
 																LOGGER.error(String.format("putimportSchoolPayment failed. ", f.cause()));
-																errorSchoolPayment(siteRequest2, null, f);
+																errorSchoolPayment(siteRequest, null, f);
 															}
 														});
 													} else {
 														LOGGER.error(String.format("putimportSchoolPayment failed. ", e.cause()));
-														errorSchoolPayment(siteRequest2, null, e);
+														errorSchoolPayment(siteRequest, null, e);
 													}
 												});
 											} else {
 												LOGGER.error(String.format("putimportSchoolPayment failed. ", d.cause()));
-												errorSchoolPayment(siteRequest2, null, d);
+												errorSchoolPayment(siteRequest, null, d);
 											}
 										});
 									} catch(Exception ex) {
 										LOGGER.error(String.format("putimportSchoolPayment failed. ", ex));
-										errorSchoolPayment(siteRequest2, null, Future.failedFuture(ex));
+										errorSchoolPayment(siteRequest, null, Future.failedFuture(ex));
 									}
 								}, resultHandler -> {
 								}
@@ -848,8 +847,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 				json.put("inheritPk", json.getValue("pk"));
 
 				SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolPayment(siteContext, siteRequest.getOperationRequest(), json);
-				siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
 				siteRequest2.setApiRequest_(apiRequest);
+				siteRequest2.setRequestVars(siteRequest.getRequestVars());
 
 				SearchList<SchoolPayment> searchList = new SearchList<SchoolPayment>();
 				searchList.setStore(true);
@@ -947,42 +946,41 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 							WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 							workerExecutor.executeBlocking(
 								blockingCodeHandler -> {
-									SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolPayment(siteContext, operationRequest, body);
 									try {
 										ApiRequest apiRequest = new ApiRequest();
-										JsonArray jsonArray = Optional.ofNullable(siteRequest2.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+										JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
 										apiRequest.setRows(jsonArray.size());
 										apiRequest.setNumFound(new Integer(jsonArray.size()).longValue());
 										apiRequest.setNumPATCH(0L);
-										apiRequest.initDeepApiRequest(siteRequest2);
-										siteRequest2.setApiRequest_(apiRequest);
-										siteRequest2.getVertx().eventBus().publish("websocketSchoolPayment", JsonObject.mapFrom(apiRequest).toString());
-										sqlConnectionSchoolPayment(siteRequest2, d -> {
+										apiRequest.initDeepApiRequest(siteRequest);
+										siteRequest.setApiRequest_(apiRequest);
+										siteRequest.getVertx().eventBus().publish("websocketSchoolPayment", JsonObject.mapFrom(apiRequest).toString());
+										varsSchoolPayment(siteRequest, d -> {
 											if(d.succeeded()) {
-												listPUTMergeSchoolPayment(apiRequest, siteRequest2, e -> {
+												listPUTMergeSchoolPayment(apiRequest, siteRequest, e -> {
 													if(e.succeeded()) {
-														putmergeSchoolPaymentResponse(siteRequest2, f -> {
-															if(f.succeeded()) {
+														putmergeSchoolPaymentResponse(siteRequest, f -> {
+															if(e.succeeded()) {
 																LOGGER.info(String.format("putmergeSchoolPayment succeeded. "));
-																blockingCodeHandler.handle(Future.succeededFuture(f.result()));
+																blockingCodeHandler.handle(Future.succeededFuture(e.result()));
 															} else {
 																LOGGER.error(String.format("putmergeSchoolPayment failed. ", f.cause()));
-																errorSchoolPayment(siteRequest2, null, f);
+																errorSchoolPayment(siteRequest, null, f);
 															}
 														});
 													} else {
 														LOGGER.error(String.format("putmergeSchoolPayment failed. ", e.cause()));
-														errorSchoolPayment(siteRequest2, null, e);
+														errorSchoolPayment(siteRequest, null, e);
 													}
 												});
 											} else {
 												LOGGER.error(String.format("putmergeSchoolPayment failed. ", d.cause()));
-												errorSchoolPayment(siteRequest2, null, d);
+												errorSchoolPayment(siteRequest, null, d);
 											}
 										});
 									} catch(Exception ex) {
 										LOGGER.error(String.format("putmergeSchoolPayment failed. ", ex));
-										errorSchoolPayment(siteRequest2, null, Future.failedFuture(ex));
+										errorSchoolPayment(siteRequest, null, Future.failedFuture(ex));
 									}
 								}, resultHandler -> {
 								}
@@ -1014,8 +1012,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 				json.put("inheritPk", json.getValue("pk"));
 
 				SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolPayment(siteContext, siteRequest.getOperationRequest(), json);
-				siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
 				siteRequest2.setApiRequest_(apiRequest);
+				siteRequest2.setRequestVars(siteRequest.getRequestVars());
 
 				SearchList<SchoolPayment> searchList = new SearchList<SchoolPayment>();
 				searchList.setStore(true);
@@ -1112,55 +1110,47 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 							eventHandler.handle(Future.succeededFuture(c.result()));
 							WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 							workerExecutor.executeBlocking(
-									blockingCodeHandler -> {
-									SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolPayment(siteContext, operationRequest, body);
+								blockingCodeHandler -> {
 									try {
-										aSearchSchoolPayment(siteRequest2, false, true, "/api/payment/copy", "PUTCopy", d -> {
+										aSearchSchoolPayment(siteRequest, false, true, "/api/payment/copy", "PUTCopy", d -> {
 											if(d.succeeded()) {
 												SearchList<SchoolPayment> listSchoolPayment = d.result();
 												ApiRequest apiRequest = new ApiRequest();
 												apiRequest.setRows(listSchoolPayment.getRows());
 												apiRequest.setNumFound(listSchoolPayment.getQueryResponse().getResults().getNumFound());
 												apiRequest.setNumPATCH(0L);
-												apiRequest.initDeepApiRequest(siteRequest2);
-												siteRequest2.setApiRequest_(apiRequest);
-												siteRequest2.getVertx().eventBus().publish("websocketSchoolPayment", JsonObject.mapFrom(apiRequest).toString());
-												sqlConnectionSchoolPayment(siteRequest2, e -> {
-													if(e.succeeded()) {
-														try {
-															listPUTCopySchoolPayment(apiRequest, listSchoolPayment, f -> {
+												apiRequest.initDeepApiRequest(siteRequest);
+												siteRequest.setApiRequest_(apiRequest);
+												siteRequest.getVertx().eventBus().publish("websocketSchoolPayment", JsonObject.mapFrom(apiRequest).toString());
+												try {
+													listPUTCopySchoolPayment(apiRequest, listSchoolPayment, e -> {
+														if(e.succeeded()) {
+															putcopySchoolPaymentResponse(siteRequest, f -> {
 																if(f.succeeded()) {
-																	putcopySchoolPaymentResponse(siteRequest2, g -> {
-																		if(g.succeeded()) {
-																			LOGGER.info(String.format("putcopySchoolPayment succeeded. "));
-																			blockingCodeHandler.handle(Future.succeededFuture(g.result()));
-																		} else {
-																			LOGGER.error(String.format("putcopySchoolPayment failed. ", g.cause()));
-																			errorSchoolPayment(siteRequest2, null, g);
-																		}
-																	});
+																	LOGGER.info(String.format("putcopySchoolPayment succeeded. "));
+																	blockingCodeHandler.handle(Future.succeededFuture(f.result()));
 																} else {
 																	LOGGER.error(String.format("putcopySchoolPayment failed. ", f.cause()));
-																	errorSchoolPayment(siteRequest2, null, f);
+																	errorSchoolPayment(siteRequest, null, f);
 																}
 															});
-														} catch(Exception ex) {
-															LOGGER.error(String.format("putcopySchoolPayment failed. ", ex));
-															errorSchoolPayment(siteRequest2, null, Future.failedFuture(ex));
+														} else {
+															LOGGER.error(String.format("putcopySchoolPayment failed. ", e.cause()));
+															errorSchoolPayment(siteRequest, null, e);
 														}
-													} else {
-														LOGGER.error(String.format("putcopySchoolPayment failed. ", e.cause()));
-														errorSchoolPayment(siteRequest2, null, e);
-													}
-												});
+													});
+												} catch(Exception ex) {
+													LOGGER.error(String.format("putcopySchoolPayment failed. ", ex));
+													errorSchoolPayment(siteRequest, null, Future.failedFuture(ex));
+												}
 											} else {
 												LOGGER.error(String.format("putcopySchoolPayment failed. ", d.cause()));
-												errorSchoolPayment(siteRequest2, null, d);
+												errorSchoolPayment(siteRequest, null, d);
 											}
 										});
 									} catch(Exception ex) {
 										LOGGER.error(String.format("putcopySchoolPayment failed. ", ex));
-										errorSchoolPayment(siteRequest2, null, Future.failedFuture(ex));
+										errorSchoolPayment(siteRequest, null, Future.failedFuture(ex));
 									}
 								}, resultHandler -> {
 								}
@@ -1186,10 +1176,12 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 		List<Future> futures = new ArrayList<>();
 		SiteRequestEnUS siteRequest = listSchoolPayment.getSiteRequest_();
 		listSchoolPayment.getList().forEach(o -> {
+			SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolPayment(siteContext, siteRequest.getOperationRequest(), siteRequest.getJsonObject());
+			siteRequest2.setApiRequest_(siteRequest.getApiRequest_());
+			o.setSiteRequest_(siteRequest2);
 			futures.add(
 				putcopySchoolPaymentFuture(siteRequest, JsonObject.mapFrom(o), a -> {
 					if(a.succeeded()) {
-						SchoolPayment schoolPayment = a.result();
 					} else {
 						LOGGER.error(String.format("listPUTCopySchoolPayment failed. ", a.cause()));
 						errorSchoolPayment(siteRequest, eventHandler, a);
@@ -1793,18 +1785,17 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 							WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 							workerExecutor.executeBlocking(
 								blockingCodeHandler -> {
-									SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolPayment(siteContext, operationRequest, body);
 									try {
-										aSearchSchoolPayment(siteRequest2, false, true, "/api/payment", "PATCH", d -> {
+										aSearchSchoolPayment(siteRequest, false, true, "/api/payment", "PATCH", d -> {
 											if(d.succeeded()) {
 												SearchList<SchoolPayment> listSchoolPayment = d.result();
 												ApiRequest apiRequest = new ApiRequest();
 												apiRequest.setRows(listSchoolPayment.getRows());
 												apiRequest.setNumFound(listSchoolPayment.getQueryResponse().getResults().getNumFound());
 												apiRequest.setNumPATCH(0L);
-												apiRequest.initDeepApiRequest(siteRequest2);
-												siteRequest2.setApiRequest_(apiRequest);
-												siteRequest2.getVertx().eventBus().publish("websocketSchoolPayment", JsonObject.mapFrom(apiRequest).toString());
+												apiRequest.initDeepApiRequest(siteRequest);
+												siteRequest.setApiRequest_(apiRequest);
+												siteRequest.getVertx().eventBus().publish("websocketSchoolPayment", JsonObject.mapFrom(apiRequest).toString());
 												SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listSchoolPayment.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
 												Date date = null;
 												if(facets != null)
@@ -1816,43 +1807,35 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 													dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
 												listSchoolPayment.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
 
-												SchoolPayment o = listSchoolPayment.getList().stream().findFirst().orElse(null);
-												sqlConnectionSchoolPayment(siteRequest2, e -> {
-													if(e.succeeded()) {
-														try {
-															listPATCHSchoolPayment(apiRequest, listSchoolPayment, dt, f -> {
+												try {
+													listPATCHSchoolPayment(apiRequest, listSchoolPayment, dt, e -> {
+														if(e.succeeded()) {
+															patchSchoolPaymentResponse(siteRequest, f -> {
 																if(f.succeeded()) {
-																	patchSchoolPaymentResponse(siteRequest2, g -> {
-																												if(g.succeeded()) {
-																			LOGGER.info(String.format("patchSchoolPayment succeeded. "));
-																			blockingCodeHandler.handle(Future.succeededFuture(g.result()));
-																		} else {
-																			LOGGER.error(String.format("patchSchoolPayment failed. ", g.cause()));
-																			errorSchoolPayment(siteRequest2, null, g);
-																		}
-																	});
+																	LOGGER.info(String.format("patchSchoolPayment succeeded. "));
+																	blockingCodeHandler.handle(Future.succeededFuture(f.result()));
 																} else {
 																	LOGGER.error(String.format("patchSchoolPayment failed. ", f.cause()));
-																	errorSchoolPayment(siteRequest2, null, f);
+																	errorSchoolPayment(siteRequest, null, f);
 																}
 															});
-														} catch(Exception ex) {
-															LOGGER.error(String.format("patchSchoolPayment failed. ", ex));
-															errorSchoolPayment(siteRequest2, null, Future.failedFuture(ex));
+														} else {
+															LOGGER.error(String.format("patchSchoolPayment failed. ", e.cause()));
+															errorSchoolPayment(siteRequest, null, e);
 														}
-													} else {
-														LOGGER.error(String.format("patchSchoolPayment failed. ", e.cause()));
-														errorSchoolPayment(siteRequest2, null, e);
-													}
-												});
+													});
+												} catch(Exception ex) {
+													LOGGER.error(String.format("patchSchoolPayment failed. ", ex));
+													errorSchoolPayment(siteRequest, null, Future.failedFuture(ex));
+												}
 											} else {
 												LOGGER.error(String.format("patchSchoolPayment failed. ", d.cause()));
-												errorSchoolPayment(siteRequest2, null, d);
+												errorSchoolPayment(siteRequest, null, d);
 											}
 										});
 									} catch(Exception ex) {
 										LOGGER.error(String.format("patchSchoolPayment failed. ", ex));
-										errorSchoolPayment(siteRequest2, null, Future.failedFuture(ex));
+										errorSchoolPayment(siteRequest, null, Future.failedFuture(ex));
 									}
 								}, resultHandler -> {
 								}
@@ -1878,11 +1861,14 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 		List<Future> futures = new ArrayList<>();
 		SiteRequestEnUS siteRequest = listSchoolPayment.getSiteRequest_();
 		listSchoolPayment.getList().forEach(o -> {
+			SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolPayment(siteContext, siteRequest.getOperationRequest(), siteRequest.getJsonObject());
+			siteRequest2.setApiRequest_(siteRequest.getApiRequest_());
+			o.setSiteRequest_(siteRequest2);
 			futures.add(
 				patchSchoolPaymentFuture(o, false, a -> {
 					if(a.succeeded()) {
 					} else {
-						errorSchoolPayment(siteRequest, eventHandler, a);
+						errorSchoolPayment(siteRequest2, eventHandler, a);
 					}
 				})
 			);
@@ -3787,6 +3773,39 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 	public void aSearchSchoolPaymentUri(String uri, String apiMethod, SearchList<SchoolPayment> searchList) {
 	}
 
+	public void varsSchoolPayment(SiteRequestEnUS siteRequest, Handler<AsyncResult<SearchList<OperationResponse>>> eventHandler) {
+		try {
+			OperationRequest operationRequest = siteRequest.getOperationRequest();
+
+			operationRequest.getParams().getJsonObject("query").forEach(paramRequest -> {
+				String entityVar = null;
+				String valueIndexed = null;
+				String paramName = paramRequest.getKey();
+				Object paramValuesObject = paramRequest.getValue();
+				JsonArray paramObjects = paramValuesObject instanceof JsonArray ? (JsonArray)paramValuesObject : new JsonArray().add(paramValuesObject);
+
+				try {
+					for(Object paramObject : paramObjects) {
+						switch(paramName) {
+							case "var":
+								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
+								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
+								siteRequest.getRequestVars().put(entityVar, valueIndexed);
+								break;
+						}
+					}
+				} catch(Exception e) {
+					LOGGER.error(String.format("aSearchSchoolPayment failed. ", e));
+					eventHandler.handle(Future.failedFuture(e));
+				}
+			});
+			eventHandler.handle(Future.succeededFuture());
+		} catch(Exception e) {
+			LOGGER.error(String.format("aSearchSchoolPayment failed. ", e));
+			eventHandler.handle(Future.failedFuture(e));
+		}
+	}
+
 	public void aSearchSchoolPayment(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, String uri, String apiMethod, Handler<AsyncResult<SearchList<SchoolPayment>>> eventHandler) {
 		try {
 			OperationRequest operationRequest = siteRequest.getOperationRequest();
@@ -3981,7 +4000,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 			ApiRequest apiRequest = siteRequest.getApiRequest_();
 			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(new ArrayList<>());
 			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(new ArrayList<>());
-			if(BooleanUtils.isFalse(Optional.ofNullable(siteRequest.getApiRequest_()).map(ApiRequest::getEmpty).orElse(true))) {
+			Boolean refresh = !"false".equals(siteRequest.getRequestVars().get("refresh"));
+			if(refresh && BooleanUtils.isFalse(Optional.ofNullable(siteRequest.getApiRequest_()).map(ApiRequest::getEmpty).orElse(true))) {
 				SearchList<SchoolPayment> searchList = new SearchList<SchoolPayment>();
 				searchList.setStore(true);
 				searchList.setQuery("*:*");
