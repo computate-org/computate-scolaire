@@ -1758,7 +1758,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolAge setSeasonStartDate(String o) {
-		this.seasonStartDate = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
+		this.seasonStartDate = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.seasonStartDateWrap.alreadyInitialized = true;
 		return (SchoolAge)this;
 	}
@@ -2177,7 +2177,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolAge setSessionStartDate(String o) {
-		this.sessionStartDate = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
+		this.sessionStartDate = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.sessionStartDateWrap.alreadyInitialized = true;
 		return (SchoolAge)this;
 	}
@@ -2258,7 +2258,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolAge setSessionEndDate(String o) {
-		this.sessionEndDate = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
+		this.sessionEndDate = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.sessionEndDateWrap.alreadyInitialized = true;
 		return (SchoolAge)this;
 	}

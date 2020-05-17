@@ -2068,7 +2068,7 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public DesignEmailPage setSeasonStartDate(String o) {
-		this.seasonStartDate = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
+		this.seasonStartDate = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.seasonStartDateWrap.alreadyInitialized = true;
 		return (DesignEmailPage)this;
 	}

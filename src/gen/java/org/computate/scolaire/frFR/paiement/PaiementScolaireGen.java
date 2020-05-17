@@ -1387,7 +1387,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public PaiementScolaire setEnfantDateNaissance(String o) {
-		this.enfantDateNaissance = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
+		this.enfantDateNaissance = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.enfantDateNaissanceCouverture.dejaInitialise = true;
 		return (PaiementScolaire)this;
 	}
@@ -2129,7 +2129,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public PaiementScolaire setSaisonJourDebut(String o) {
-		this.saisonJourDebut = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
+		this.saisonJourDebut = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.saisonJourDebutCouverture.dejaInitialise = true;
 		return (PaiementScolaire)this;
 	}
@@ -2424,7 +2424,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public PaiementScolaire setSessionJourDebut(String o) {
-		this.sessionJourDebut = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
+		this.sessionJourDebut = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.sessionJourDebutCouverture.dejaInitialise = true;
 		return (PaiementScolaire)this;
 	}
@@ -2505,7 +2505,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public PaiementScolaire setSessionJourFin(String o) {
-		this.sessionJourFin = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
+		this.sessionJourFin = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.sessionJourFinCouverture.dejaInitialise = true;
 		return (PaiementScolaire)this;
 	}
@@ -3438,7 +3438,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public PaiementScolaire setPaiementDate(String o) {
-		this.paiementDate = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
+		this.paiementDate = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.paiementDateCouverture.dejaInitialise = true;
 		return (PaiementScolaire)this;
 	}

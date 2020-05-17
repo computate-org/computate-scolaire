@@ -503,7 +503,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	}
 	/** Example: 2011-12-03T10:15:30+01:00 **/
 	public Cluster setCreated(String o) {
-		this.created = ZonedDateTime.parse(o, DateTimeFormatter.ISO_OFFSET_DATE_TIME.withZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone()))).truncatedTo(ChronoUnit.MILLIS);
+		this.created = ZonedDateTime.parse(o, DateTimeFormatter.ISO_DATE_TIME.withZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone()))).truncatedTo(ChronoUnit.MILLIS);
 		this.createdWrap.alreadyInitialized = true;
 		return (Cluster)this;
 	}
@@ -607,7 +607,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	}
 	/** Example: 2011-12-03T10:15:30+01:00 **/
 	public Cluster setModified(String o) {
-		this.modified = ZonedDateTime.parse(o, DateTimeFormatter.ISO_OFFSET_DATE_TIME.withZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone()))).truncatedTo(ChronoUnit.MILLIS);
+		this.modified = ZonedDateTime.parse(o, DateTimeFormatter.ISO_DATE_TIME.withZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone()))).truncatedTo(ChronoUnit.MILLIS);
 		this.modifiedWrap.alreadyInitialized = true;
 		return (Cluster)this;
 	}

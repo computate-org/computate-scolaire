@@ -1762,7 +1762,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public AgeScolaire setSaisonJourDebut(String o) {
-		this.saisonJourDebut = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
+		this.saisonJourDebut = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.saisonJourDebutCouverture.dejaInitialise = true;
 		return (AgeScolaire)this;
 	}
@@ -2181,7 +2181,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public AgeScolaire setSessionJourDebut(String o) {
-		this.sessionJourDebut = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
+		this.sessionJourDebut = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.sessionJourDebutCouverture.dejaInitialise = true;
 		return (AgeScolaire)this;
 	}
@@ -2262,7 +2262,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public AgeScolaire setSessionJourFin(String o) {
-		this.sessionJourFin = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
+		this.sessionJourFin = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.sessionJourFinCouverture.dejaInitialise = true;
 		return (AgeScolaire)this;
 	}

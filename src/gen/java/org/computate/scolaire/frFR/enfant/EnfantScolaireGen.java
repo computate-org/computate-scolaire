@@ -1681,7 +1681,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public EnfantScolaire setPersonneDateNaissance(String o) {
-		this.personneDateNaissance = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
+		this.personneDateNaissance = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.personneDateNaissanceCouverture.dejaInitialise = true;
 		return (EnfantScolaire)this;
 	}

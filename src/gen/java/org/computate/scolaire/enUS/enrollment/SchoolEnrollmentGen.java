@@ -3667,7 +3667,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolEnrollment setChildBirthDate(String o) {
-		this.childBirthDate = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
+		this.childBirthDate = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.childBirthDateWrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
@@ -4527,7 +4527,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolEnrollment setSeasonStartDate(String o) {
-		this.seasonStartDate = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
+		this.seasonStartDate = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.seasonStartDateWrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
@@ -4884,7 +4884,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolEnrollment setSessionStartDate(String o) {
-		this.sessionStartDate = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
+		this.sessionStartDate = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.sessionStartDateWrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
@@ -4965,7 +4965,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolEnrollment setSessionEndDate(String o) {
-		this.sessionEndDate = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
+		this.sessionEndDate = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.sessionEndDateWrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
@@ -8435,7 +8435,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolEnrollment setEnrollmentChargeDate(String o) {
-		this.enrollmentChargeDate = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
+		this.enrollmentChargeDate = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.enrollmentChargeDateWrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
@@ -10792,7 +10792,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolEnrollment setEnrollmentDate1(String o) {
-		this.enrollmentDate1 = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
+		this.enrollmentDate1 = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.enrollmentDate1Wrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
@@ -10931,7 +10931,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolEnrollment setEnrollmentDate2(String o) {
-		this.enrollmentDate2 = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
+		this.enrollmentDate2 = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.enrollmentDate2Wrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
@@ -11070,7 +11070,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolEnrollment setEnrollmentDate3(String o) {
-		this.enrollmentDate3 = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
+		this.enrollmentDate3 = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.enrollmentDate3Wrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
@@ -11209,7 +11209,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolEnrollment setEnrollmentDate4(String o) {
-		this.enrollmentDate4 = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
+		this.enrollmentDate4 = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.enrollmentDate4Wrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
@@ -11348,7 +11348,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolEnrollment setEnrollmentDate5(String o) {
-		this.enrollmentDate5 = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
+		this.enrollmentDate5 = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.enrollmentDate5Wrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
@@ -11487,7 +11487,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolEnrollment setEnrollmentDate6(String o) {
-		this.enrollmentDate6 = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
+		this.enrollmentDate6 = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.enrollmentDate6Wrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
@@ -11626,7 +11626,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolEnrollment setEnrollmentDate7(String o) {
-		this.enrollmentDate7 = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
+		this.enrollmentDate7 = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.enrollmentDate7Wrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
@@ -11765,7 +11765,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolEnrollment setEnrollmentDate8(String o) {
-		this.enrollmentDate8 = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
+		this.enrollmentDate8 = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.enrollmentDate8Wrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
@@ -11904,7 +11904,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolEnrollment setEnrollmentDate9(String o) {
-		this.enrollmentDate9 = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
+		this.enrollmentDate9 = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.enrollmentDate9Wrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
@@ -12043,7 +12043,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolEnrollment setEnrollmentDate10(String o) {
-		this.enrollmentDate10 = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
+		this.enrollmentDate10 = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.enrollmentDate10Wrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}

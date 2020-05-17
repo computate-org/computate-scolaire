@@ -1578,7 +1578,7 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SaisonScolaire setSaisonJourDebut(String o) {
-		this.saisonJourDebut = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
+		this.saisonJourDebut = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.saisonJourDebutCouverture.dejaInitialise = true;
 		return (SaisonScolaire)this;
 	}

@@ -112,21 +112,7 @@ public class AppRestore extends AbstractVerticle {
 											SearchList<Cluster> clusters = e.result();
 											listPATCHCluster(clusters, dateTime, f -> {
 												if(f.succeeded()) {
-													Transaction tx = siteRequest.getTx();
-													if(tx == null) {
-														startPromise.complete();
-				//										eventHandler.handle(Future.succeededFuture(d.result()));
-													} else {
-														tx.commit(g -> {
-															if(g.succeeded()) {
-																System.out.println("Completed!!!");
-																startPromise.complete();
-															} else {
-																startPromise.fail(g.cause());
-				//												eventHandler.handle(Future.succeededFuture(d.result()));
-															}
-														});
-													}
+													startPromise.complete();
 												} else {
 													startPromise.fail(f.cause());
 				//									errorCluster(siteRequest, eventHandler, d);
@@ -190,10 +176,11 @@ public class AppRestore extends AbstractVerticle {
 
 	public void nextDefinitions(SiteRequestEnUS siteRequest, ZonedDateTime dateTime, Handler<AsyncResult<List<Row>>> eventHandler) {
 		try {
-			Transaction tx = siteRequest.getTx();
-			tx.preparedQuery(
-					"update d set modified=now() where pk in (select pk from d where not current and modified < ? order by pk limit 10) returning pk, pk_c, path, value, current, created, modified;"
-					, Tuple.of(dateTime)
+			PgPool pgPool = siteRequest.getSiteContext_().getPgPool();
+			pgPool.preparedQuery(
+					"update d set modified=now() where pk in (select pk from d where not current and modified < $1 order by pk limit 10) returning pk, pk_c, path, value, current, created, modified;"
+//					"update d set modified=now() where pk in (select pk from d where not current and modified < $1 order by pk limit 0) returning pk, pk_c, path, value, current, created, modified;"
+					, Tuple.of(dateTime.toOffsetDateTime())
 					, Collectors.toList()
 					, updateDAsync
 			-> {
@@ -212,10 +199,10 @@ public class AppRestore extends AbstractVerticle {
 
 	public void nextClusters(SiteRequestEnUS siteRequest, ZonedDateTime dateTime, Handler<AsyncResult<SearchList<Cluster>>> eventHandler) {
 		try {
-			Transaction tx = siteRequest.getTx();
-			tx.preparedQuery(
-					"update c set modified=now() where pk in (select pk from c where canonical_name is not null and modified < ? order by pk limit 10) returning pk, current, canonical_name, created, modified, user_id;"
-					, Tuple.of(dateTime)
+			PgPool pgPool = siteRequest.getSiteContext_().getPgPool();
+			pgPool.preparedQuery(
+					"update c set modified=now() where pk in (select pk from c where canonical_name is not null and modified < $1 order by pk limit 10) returning pk, current, canonical_name, created, modified, user_id;"
+					, Tuple.of(dateTime.toOffsetDateTime())
 					, Collectors.toList()
 					, selectCAsync
 			-> {
@@ -229,7 +216,7 @@ public class AppRestore extends AbstractVerticle {
 							String canonicalName = clusterValues.getString(2);
 							Cluster cluster = (Cluster)Class.forName(canonicalName).newInstance();
 							cluster.setPk(pk);
-							cluster.setCreated(clusterValues.getLocalDateTime(3).atZone(ZoneId.systemDefault()));
+							cluster.setCreated(clusterValues.getOffsetDateTime(3).atZoneSameInstant(ZoneId.systemDefault()));
 							cluster.setSiteRequest_(siteRequest);
 							searchList.getList().add(cluster);
 						} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
@@ -253,15 +240,7 @@ public class AppRestore extends AbstractVerticle {
 			if(pgPool == null) {
 				eventHandler.handle(Future.succeededFuture());
 			} else {
-				pgPool.begin(sqlAsync -> {
-					if(sqlAsync.succeeded()) {
-						Transaction tx = sqlAsync.result();
-						siteRequest.setTx(tx);
-						eventHandler.handle(Future.succeededFuture());
-					} else {
-						eventHandler.handle(Future.failedFuture(new Exception(sqlAsync.cause())));
-					}
-				});
+				eventHandler.handle(Future.succeededFuture());
 			}
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
@@ -334,10 +313,10 @@ public class AppRestore extends AbstractVerticle {
 //					e.printStackTrace();
 //				}
 //			}
-			Transaction tx = siteRequest.getTx();
+			PgPool pgPool = siteRequest.getSiteContext_().getPgPool();
 //			if(scramble && StringUtils.equals(path, "personFirstName"))
-			tx.preparedQuery(
-					"update d set modified=now(), value=?, current=true where pk=?;"
+			pgPool.preparedQuery(
+					"update d set modified=now(), value=$1, current=true where pk=$2;"
 					, Tuple.of(value, pk)
 					, selectCAsync
 			-> {
@@ -420,11 +399,11 @@ public class AppRestore extends AbstractVerticle {
 	public void defineCluster(Cluster o, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
-			Transaction tx = siteRequest.getTx();
+			PgPool pgPool = siteRequest.getSiteContext_().getPgPool();
 			Long pk = o.getPk();
-			tx.preparedQuery(
+			pgPool.preparedQuery(
 					SiteContextEnUS.SQL_define
-					, Tuple.of(pk, pk, pk)
+					, Tuple.of(pk)
 					, Collectors.toList()
 					, defineAsync
 			-> {
@@ -455,9 +434,9 @@ public class AppRestore extends AbstractVerticle {
 	public void attributeCluster(Cluster o, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
-			Transaction tx = siteRequest.getTx();
+			PgPool pgPool = siteRequest.getSiteContext_().getPgPool();
 			Long pk = o.getPk();
-			tx.preparedQuery(
+			pgPool.preparedQuery(
 					SiteContextEnUS.SQL_attribute
 					, Tuple.of(pk, pk)
 					, Collectors.toList()
@@ -527,18 +506,8 @@ public class AppRestore extends AbstractVerticle {
 			, new CaseInsensitiveHeaders()
 		);
 		if(siteRequest != null) {
-			Transaction tx = siteRequest.getTx();
-			if(tx != null) {
-				tx.rollback(a -> {
-					if(a.succeeded()) {
-						eventHandler.handle(Future.succeededFuture(responseOperation));
-					} else {
-						eventHandler.handle(Future.succeededFuture(responseOperation));
-					}
-				});
-			} else {
-				eventHandler.handle(Future.succeededFuture(responseOperation));
-			}
+			PgPool pgPool = siteRequest.getSiteContext_().getPgPool();
+			eventHandler.handle(Future.succeededFuture(responseOperation));
 		} else {
 			eventHandler.handle(Future.succeededFuture(responseOperation));
 		}

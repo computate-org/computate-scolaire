@@ -3677,7 +3677,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public InscriptionScolaire setEnfantDateNaissance(String o) {
-		this.enfantDateNaissance = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
+		this.enfantDateNaissance = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.enfantDateNaissanceCouverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
@@ -4539,7 +4539,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public InscriptionScolaire setSaisonJourDebut(String o) {
-		this.saisonJourDebut = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
+		this.saisonJourDebut = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.saisonJourDebutCouverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
@@ -4896,7 +4896,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public InscriptionScolaire setSessionJourDebut(String o) {
-		this.sessionJourDebut = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
+		this.sessionJourDebut = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.sessionJourDebutCouverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
@@ -4977,7 +4977,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public InscriptionScolaire setSessionJourFin(String o) {
-		this.sessionJourFin = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
+		this.sessionJourFin = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.sessionJourFinCouverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
@@ -8456,7 +8456,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public InscriptionScolaire setInscriptionDateFrais(String o) {
-		this.inscriptionDateFrais = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
+		this.inscriptionDateFrais = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.inscriptionDateFraisCouverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
@@ -10814,7 +10814,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public InscriptionScolaire setInscriptionDate1(String o) {
-		this.inscriptionDate1 = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
+		this.inscriptionDate1 = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.inscriptionDate1Couverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
@@ -10954,7 +10954,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public InscriptionScolaire setInscriptionDate2(String o) {
-		this.inscriptionDate2 = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
+		this.inscriptionDate2 = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.inscriptionDate2Couverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
@@ -11094,7 +11094,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public InscriptionScolaire setInscriptionDate3(String o) {
-		this.inscriptionDate3 = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
+		this.inscriptionDate3 = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.inscriptionDate3Couverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
@@ -11234,7 +11234,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public InscriptionScolaire setInscriptionDate4(String o) {
-		this.inscriptionDate4 = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
+		this.inscriptionDate4 = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.inscriptionDate4Couverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
@@ -11374,7 +11374,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public InscriptionScolaire setInscriptionDate5(String o) {
-		this.inscriptionDate5 = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
+		this.inscriptionDate5 = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.inscriptionDate5Couverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
@@ -11514,7 +11514,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public InscriptionScolaire setInscriptionDate6(String o) {
-		this.inscriptionDate6 = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
+		this.inscriptionDate6 = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.inscriptionDate6Couverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
@@ -11654,7 +11654,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public InscriptionScolaire setInscriptionDate7(String o) {
-		this.inscriptionDate7 = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
+		this.inscriptionDate7 = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.inscriptionDate7Couverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
@@ -11794,7 +11794,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public InscriptionScolaire setInscriptionDate8(String o) {
-		this.inscriptionDate8 = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
+		this.inscriptionDate8 = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.inscriptionDate8Couverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
@@ -11934,7 +11934,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public InscriptionScolaire setInscriptionDate9(String o) {
-		this.inscriptionDate9 = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
+		this.inscriptionDate9 = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.inscriptionDate9Couverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
@@ -12074,7 +12074,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public InscriptionScolaire setInscriptionDate10(String o) {
-		this.inscriptionDate10 = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
+		this.inscriptionDate10 = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.inscriptionDate10Couverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}

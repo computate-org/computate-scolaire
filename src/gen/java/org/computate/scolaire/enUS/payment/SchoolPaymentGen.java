@@ -1384,7 +1384,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolPayment setChildBirthDate(String o) {
-		this.childBirthDate = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
+		this.childBirthDate = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.childBirthDateWrap.alreadyInitialized = true;
 		return (SchoolPayment)this;
 	}
@@ -2123,7 +2123,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolPayment setSeasonStartDate(String o) {
-		this.seasonStartDate = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
+		this.seasonStartDate = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.seasonStartDateWrap.alreadyInitialized = true;
 		return (SchoolPayment)this;
 	}
@@ -2418,7 +2418,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolPayment setSessionStartDate(String o) {
-		this.sessionStartDate = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
+		this.sessionStartDate = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.sessionStartDateWrap.alreadyInitialized = true;
 		return (SchoolPayment)this;
 	}
@@ -2499,7 +2499,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolPayment setSessionEndDate(String o) {
-		this.sessionEndDate = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
+		this.sessionEndDate = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.sessionEndDateWrap.alreadyInitialized = true;
 		return (SchoolPayment)this;
 	}
@@ -3431,7 +3431,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolPayment setPaymentDate(String o) {
-		this.paymentDate = LocalDate.parse(o, DateTimeFormatter.ISO_OFFSET_DATE);
+		this.paymentDate = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.paymentDateWrap.alreadyInitialized = true;
 		return (SchoolPayment)this;
 	}
