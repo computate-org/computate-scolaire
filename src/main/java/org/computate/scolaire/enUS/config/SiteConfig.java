@@ -320,14 +320,16 @@ public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 	}
 
 	/**	
-	 *	The max pool size for the database. 
+	 *	Set the maximum connection request allowed in the wait queue, 
+	 *	any requests beyond the max size will result in an failure. 
+	 *	If the value is set to a negative number then the queue will be unbounded. 
 	 **/
-	protected void _jdbcInitialPoolSize(Wrap<Integer> c) {
+	protected void _jdbcMaxWaitQueueSize(Wrap<Integer> c) {
 		Integer o;
 		if(config == null)
-			o = NumberUtils.toInt(System.getenv(c.var), 3);
+			o = NumberUtils.toInt(System.getenv(c.var), -1);
 		else
-			o = config.getInt(prefixEscaped + c.var, 3);
+			o = config.getInt(prefixEscaped + c.var, -1);
 		c.o(o);
 	}
 
@@ -373,9 +375,21 @@ public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 	protected void _jdbcMaxIdleTime(Wrap<Integer> c) {
 		Integer o;
 		if(config == null)
-			o = NumberUtils.toInt(System.getenv(c.var), 0);
+			o = NumberUtils.toInt(System.getenv(c.var), 10);
 		else
-			o = config.getInt(prefixEscaped + c.var, 0);
+			o = config.getInt(prefixEscaped + c.var, 10);
+		c.o(o);
+	}
+
+	/**	
+	 *	The max idle time for the connection to the database. 
+	 **/
+	protected void _jdbcConnectTimeout(Wrap<Integer> c) {
+		Integer o;
+		if(config == null)
+			o = NumberUtils.toInt(System.getenv(c.var), 10);
+		else
+			o = config.getInt(prefixEscaped + c.var, 10);
 		c.o(o);
 	}
 

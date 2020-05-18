@@ -2853,7 +2853,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 	/** Example: 01:00 **/
 	public SchoolBlock setBlockStartTime(String o) {
 		try {
-			this.blockStartTime = LocalTime.parse(o, DateTimeFormatter.ofPattern("HH:mm"));
+			this.blockStartTime = LocalTime.parse(o, DateTimeFormatter.ISO_TIME);
 			this.blockStartTimeWrap.alreadyInitialized = true;
 		} catch(Exception e) {
 		}
@@ -2899,10 +2899,10 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 			e("input")
 				.a("type", "text")
 				.a("class", "w3-input w3-border timepicker setBlockStartTime inputSchoolBlock", pk, "BlockStartTime w3-input w3-border ")
-				.a("placeholder", "HH:MM AM")
+				.a("placeholder", "HH:MM A")
 				.a("id", classApiMethodMethod, "_blockStartTime")
 				.a("onclick", "removeGlow($(this)); ")
-				.a("value", blockStartTime == null ? "" : DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(blockStartTime))
+				.a("value", blockStartTime == null ? "" : DateTimeFormatter.ofPattern("h:mm a").format(blockStartTime))
 				.a("onchange", "var t = parseTime(this.value); if(t) { var s = dateFormat(t, 'HH:MM'); patchSchoolBlockVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlockStartTime', s, function() { addGlow($('#", classApiMethodMethod, "_blockStartTime')); }, function() { addError($('#", classApiMethodMethod, "_blockStartTime')); }); } ")
 				.fg();
 		}
@@ -2973,7 +2973,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 	/** Example: 01:00 **/
 	public SchoolBlock setBlockEndTime(String o) {
 		try {
-			this.blockEndTime = LocalTime.parse(o, DateTimeFormatter.ofPattern("HH:mm"));
+			this.blockEndTime = LocalTime.parse(o, DateTimeFormatter.ISO_TIME);
 			this.blockEndTimeWrap.alreadyInitialized = true;
 		} catch(Exception e) {
 		}
@@ -3019,10 +3019,10 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 			e("input")
 				.a("type", "text")
 				.a("class", "w3-input w3-border timepicker setBlockEndTime inputSchoolBlock", pk, "BlockEndTime w3-input w3-border ")
-				.a("placeholder", "HH:MM AM")
+				.a("placeholder", "HH:MM A")
 				.a("id", classApiMethodMethod, "_blockEndTime")
 				.a("onclick", "removeGlow($(this)); ")
-				.a("value", blockEndTime == null ? "" : DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(blockEndTime))
+				.a("value", blockEndTime == null ? "" : DateTimeFormatter.ofPattern("h:mm a").format(blockEndTime))
 				.a("onchange", "var t = parseTime(this.value); if(t) { var s = dateFormat(t, 'HH:MM'); patchSchoolBlockVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlockEndTime', s, function() { addGlow($('#", classApiMethodMethod, "_blockEndTime')); }, function() { addError($('#", classApiMethodMethod, "_blockEndTime')); }); } ")
 				.fg();
 		}

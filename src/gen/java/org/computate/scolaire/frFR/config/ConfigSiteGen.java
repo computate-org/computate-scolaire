@@ -1588,73 +1588,73 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return jdbcTailleMaxPiscine == null ? "" : StringEscapeUtils.escapeHtml4(strJdbcTailleMaxPiscine());
 	}
 
-	///////////////////////////////
-	// jdbcTailleInitialePiscine //
-	///////////////////////////////
+	////////////////////////
+	// jdbcMaxFileAttente //
+	////////////////////////
 
-	/**	L'entité « jdbcTailleInitialePiscine »
+	/**	L'entité « jdbcMaxFileAttente »
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected Integer jdbcTailleInitialePiscine;
+	protected Integer jdbcMaxFileAttente;
 	@JsonIgnore
-	public Couverture<Integer> jdbcTailleInitialePiscineCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("jdbcTailleInitialePiscine").o(jdbcTailleInitialePiscine);
+	public Couverture<Integer> jdbcMaxFileAttenteCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("jdbcMaxFileAttente").o(jdbcMaxFileAttente);
 
-	/**	<br/>L'entité « jdbcTailleInitialePiscine »
+	/**	<br/>L'entité « jdbcMaxFileAttente »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:jdbcTailleInitialePiscine">Trouver l'entité jdbcTailleInitialePiscine dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:jdbcMaxFileAttente">Trouver l'entité jdbcMaxFileAttente dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _jdbcTailleInitialePiscine(Couverture<Integer> c);
+	protected abstract void _jdbcMaxFileAttente(Couverture<Integer> c);
 
-	public Integer getJdbcTailleInitialePiscine() {
-		return jdbcTailleInitialePiscine;
+	public Integer getJdbcMaxFileAttente() {
+		return jdbcMaxFileAttente;
 	}
 
-	public void setJdbcTailleInitialePiscine(Integer jdbcTailleInitialePiscine) {
-		this.jdbcTailleInitialePiscine = jdbcTailleInitialePiscine;
-		this.jdbcTailleInitialePiscineCouverture.dejaInitialise = true;
+	public void setJdbcMaxFileAttente(Integer jdbcMaxFileAttente) {
+		this.jdbcMaxFileAttente = jdbcMaxFileAttente;
+		this.jdbcMaxFileAttenteCouverture.dejaInitialise = true;
 	}
-	public ConfigSite setJdbcTailleInitialePiscine(String o) {
+	public ConfigSite setJdbcMaxFileAttente(String o) {
 		if(NumberUtils.isParsable(o))
-			this.jdbcTailleInitialePiscine = Integer.parseInt(o);
-		this.jdbcTailleInitialePiscineCouverture.dejaInitialise = true;
+			this.jdbcMaxFileAttente = Integer.parseInt(o);
+		this.jdbcMaxFileAttenteCouverture.dejaInitialise = true;
 		return (ConfigSite)this;
 	}
-	protected ConfigSite jdbcTailleInitialePiscineInit() {
-		if(!jdbcTailleInitialePiscineCouverture.dejaInitialise) {
-			_jdbcTailleInitialePiscine(jdbcTailleInitialePiscineCouverture);
-			if(jdbcTailleInitialePiscine == null)
-				setJdbcTailleInitialePiscine(jdbcTailleInitialePiscineCouverture.o);
+	protected ConfigSite jdbcMaxFileAttenteInit() {
+		if(!jdbcMaxFileAttenteCouverture.dejaInitialise) {
+			_jdbcMaxFileAttente(jdbcMaxFileAttenteCouverture);
+			if(jdbcMaxFileAttente == null)
+				setJdbcMaxFileAttente(jdbcMaxFileAttenteCouverture.o);
 		}
-		jdbcTailleInitialePiscineCouverture.dejaInitialise(true);
+		jdbcMaxFileAttenteCouverture.dejaInitialise(true);
 		return (ConfigSite)this;
 	}
 
-	public Integer solrJdbcTailleInitialePiscine() {
-		return jdbcTailleInitialePiscine;
+	public Integer solrJdbcMaxFileAttente() {
+		return jdbcMaxFileAttente;
 	}
 
-	public String strJdbcTailleInitialePiscine() {
-		return jdbcTailleInitialePiscine == null ? "" : jdbcTailleInitialePiscine.toString();
+	public String strJdbcMaxFileAttente() {
+		return jdbcMaxFileAttente == null ? "" : jdbcMaxFileAttente.toString();
 	}
 
-	public String jsonJdbcTailleInitialePiscine() {
-		return jdbcTailleInitialePiscine == null ? "" : jdbcTailleInitialePiscine.toString();
+	public String jsonJdbcMaxFileAttente() {
+		return jdbcMaxFileAttente == null ? "" : jdbcMaxFileAttente.toString();
 	}
 
-	public String nomAffichageJdbcTailleInitialePiscine() {
+	public String nomAffichageJdbcMaxFileAttente() {
 		return null;
 	}
 
-	public String htmTooltipJdbcTailleInitialePiscine() {
+	public String htmTooltipJdbcMaxFileAttente() {
 		return null;
 	}
 
-	public String htmJdbcTailleInitialePiscine() {
-		return jdbcTailleInitialePiscine == null ? "" : StringEscapeUtils.escapeHtml4(strJdbcTailleInitialePiscine());
+	public String htmJdbcMaxFileAttente() {
+		return jdbcMaxFileAttente == null ? "" : StringEscapeUtils.escapeHtml4(strJdbcMaxFileAttente());
 	}
 
 	//////////////////////////
@@ -1931,6 +1931,75 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 
 	public String htmJdbcTempsInactiviteMax() {
 		return jdbcTempsInactiviteMax == null ? "" : StringEscapeUtils.escapeHtml4(strJdbcTempsInactiviteMax());
+	}
+
+	////////////////////////
+	// jdbcDelaiConnexion //
+	////////////////////////
+
+	/**	L'entité « jdbcDelaiConnexion »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected Integer jdbcDelaiConnexion;
+	@JsonIgnore
+	public Couverture<Integer> jdbcDelaiConnexionCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("jdbcDelaiConnexion").o(jdbcDelaiConnexion);
+
+	/**	<br/>L'entité « jdbcDelaiConnexion »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:jdbcDelaiConnexion">Trouver l'entité jdbcDelaiConnexion dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _jdbcDelaiConnexion(Couverture<Integer> c);
+
+	public Integer getJdbcDelaiConnexion() {
+		return jdbcDelaiConnexion;
+	}
+
+	public void setJdbcDelaiConnexion(Integer jdbcDelaiConnexion) {
+		this.jdbcDelaiConnexion = jdbcDelaiConnexion;
+		this.jdbcDelaiConnexionCouverture.dejaInitialise = true;
+	}
+	public ConfigSite setJdbcDelaiConnexion(String o) {
+		if(NumberUtils.isParsable(o))
+			this.jdbcDelaiConnexion = Integer.parseInt(o);
+		this.jdbcDelaiConnexionCouverture.dejaInitialise = true;
+		return (ConfigSite)this;
+	}
+	protected ConfigSite jdbcDelaiConnexionInit() {
+		if(!jdbcDelaiConnexionCouverture.dejaInitialise) {
+			_jdbcDelaiConnexion(jdbcDelaiConnexionCouverture);
+			if(jdbcDelaiConnexion == null)
+				setJdbcDelaiConnexion(jdbcDelaiConnexionCouverture.o);
+		}
+		jdbcDelaiConnexionCouverture.dejaInitialise(true);
+		return (ConfigSite)this;
+	}
+
+	public Integer solrJdbcDelaiConnexion() {
+		return jdbcDelaiConnexion;
+	}
+
+	public String strJdbcDelaiConnexion() {
+		return jdbcDelaiConnexion == null ? "" : jdbcDelaiConnexion.toString();
+	}
+
+	public String jsonJdbcDelaiConnexion() {
+		return jdbcDelaiConnexion == null ? "" : jdbcDelaiConnexion.toString();
+	}
+
+	public String nomAffichageJdbcDelaiConnexion() {
+		return null;
+	}
+
+	public String htmTooltipJdbcDelaiConnexion() {
+		return null;
+	}
+
+	public String htmJdbcDelaiConnexion() {
+		return jdbcDelaiConnexion == null ? "" : StringEscapeUtils.escapeHtml4(strJdbcDelaiConnexion());
 	}
 
 	//////////////
@@ -4365,7 +4434,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public ConfigSite setPaiementProchain(String o) {
-		this.paiementProchain = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.paiementProchain = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.paiementProchainCouverture.dejaInitialise = true;
 		return (ConfigSite)this;
 	}
@@ -4384,11 +4453,11 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 	}
 
 	public String strPaiementProchain() {
-		return paiementProchain == null ? "" : paiementProchain.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.FRANCE));
+		return paiementProchain == null ? "" : paiementProchain.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.forLanguageTag("fr-FR")));
 	}
 
 	public String jsonPaiementProchain() {
-		return paiementProchain == null ? "" : paiementProchain.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.FRANCE));
+		return paiementProchain == null ? "" : paiementProchain.format(DateTimeFormatter.ISO_DATE);
 	}
 
 	public String nomAffichagePaiementProchain() {
@@ -4447,11 +4516,12 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		jdbcUtilisateurInit();
 		jdbcMotDePasseInit();
 		jdbcTailleMaxPiscineInit();
-		jdbcTailleInitialePiscineInit();
+		jdbcMaxFileAttenteInit();
 		jdbcTailleMinPiscineInit();
 		jdbcMaxDeclarationsInit();
 		jdbcMaxDeclarationsParConnexionInit();
 		jdbcTempsInactiviteMaxInit();
+		jdbcDelaiConnexionInit();
 		jdbcHoteInit();
 		jdbcPortInit();
 		jdbcBaseDeDonneesInit();
@@ -4567,8 +4637,8 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 				return oConfigSite.jdbcMotDePasse;
 			case "jdbcTailleMaxPiscine":
 				return oConfigSite.jdbcTailleMaxPiscine;
-			case "jdbcTailleInitialePiscine":
-				return oConfigSite.jdbcTailleInitialePiscine;
+			case "jdbcMaxFileAttente":
+				return oConfigSite.jdbcMaxFileAttente;
 			case "jdbcTailleMinPiscine":
 				return oConfigSite.jdbcTailleMinPiscine;
 			case "jdbcMaxDeclarations":
@@ -4577,6 +4647,8 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 				return oConfigSite.jdbcMaxDeclarationsParConnexion;
 			case "jdbcTempsInactiviteMax":
 				return oConfigSite.jdbcTempsInactiviteMax;
+			case "jdbcDelaiConnexion":
+				return oConfigSite.jdbcDelaiConnexion;
 			case "jdbcHote":
 				return oConfigSite.jdbcHote;
 			case "jdbcPort":

@@ -15,6 +15,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
@@ -233,9 +234,12 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 		pgOptions.setUser(siteConfig.getJdbcUsername());
 		pgOptions.setPassword(siteConfig.getJdbcPassword());
 		pgOptions.setIdleTimeout(siteConfig.getJdbcMaxIdleTime());
+		pgOptions.setIdleTimeoutUnit(TimeUnit.SECONDS);
+		pgOptions.setConnectTimeout(siteConfig.getJdbcConnectTimeout());
 
 		PoolOptions poolOptions = new PoolOptions();
 		poolOptions.setMaxSize(siteConfig.getJdbcMaxPoolSize());
+		poolOptions.setMaxWaitQueueSize(siteConfig.getJdbcMaxWaitQueueSize());
 
 		pgPool = PgPool.pool(vertx, pgOptions, poolOptions);
 

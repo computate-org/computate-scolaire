@@ -1739,7 +1739,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 				.a("data-timeformat", "DD-MM-YYYY")
 				.a("id", classeApiMethodeMethode, "_personneDateNaissance")
 				.a("onclick", "enleverLueur($(this)); ")
-				.a("value", personneDateNaissance == null ? "" : DateTimeFormatter.ISO_LOCAL_DATE.format(personneDateNaissance))
+				.a("value", personneDateNaissance == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy").format(personneDateNaissance))
 				.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patchEnfantScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonneDateNaissance', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneDateNaissance')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneDateNaissance')); }); } ")
 				.fg();
 		} else {

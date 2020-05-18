@@ -1738,7 +1738,7 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 				.a("data-timeformat", "MM/DD/YYYY")
 				.a("id", classApiMethodMethod, "_personBirthDate")
 				.a("onclick", "removeGlow($(this)); ")
-				.a("value", personBirthDate == null ? "" : DateTimeFormatter.ISO_LOCAL_DATE.format(personBirthDate))
+				.a("value", personBirthDate == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy").format(personBirthDate))
 				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patchSchoolChildVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonBirthDate', s, function() { addGlow($('#", classApiMethodMethod, "_personBirthDate')); }, function() { addError($('#", classApiMethodMethod, "_personBirthDate')); }); } ")
 				.fg();
 		} else {

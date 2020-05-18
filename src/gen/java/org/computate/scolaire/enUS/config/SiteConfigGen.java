@@ -1638,75 +1638,79 @@ The max pool size for the database.
 		return jdbcMaxPoolSize == null ? "" : StringEscapeUtils.escapeHtml4(strJdbcMaxPoolSize());
 	}
 
-	/////////////////////////
-	// jdbcInitialPoolSize //
-	/////////////////////////
+	//////////////////////////
+	// jdbcMaxWaitQueueSize //
+	//////////////////////////
 
-	/**	L'entité « jdbcInitialPoolSize »
-The max pool size for the database. 
+	/**	L'entité « jdbcMaxWaitQueueSize »
+Set the maximum connection request allowed in the wait queue, 
+	 *	any requests beyond the max size will result in an failure. 
+	 *	If the value is set to a negative number then the queue will be unbounded. 
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected Integer jdbcInitialPoolSize;
+	protected Integer jdbcMaxWaitQueueSize;
 	@JsonIgnore
-	public Wrap<Integer> jdbcInitialPoolSizeWrap = new Wrap<Integer>().p(this).c(Integer.class).var("jdbcInitialPoolSize").o(jdbcInitialPoolSize);
+	public Wrap<Integer> jdbcMaxWaitQueueSizeWrap = new Wrap<Integer>().p(this).c(Integer.class).var("jdbcMaxWaitQueueSize").o(jdbcMaxWaitQueueSize);
 
-	/**	<br/>L'entité « jdbcInitialPoolSize »
-The max pool size for the database. 
+	/**	<br/>L'entité « jdbcMaxWaitQueueSize »
+Set the maximum connection request allowed in the wait queue, 
+	 *	any requests beyond the max size will result in an failure. 
+	 *	If the value is set to a negative number then the queue will be unbounded. 
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:jdbcInitialPoolSize">Trouver l'entité jdbcInitialPoolSize dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:jdbcMaxWaitQueueSize">Trouver l'entité jdbcMaxWaitQueueSize dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _jdbcInitialPoolSize(Wrap<Integer> c);
+	protected abstract void _jdbcMaxWaitQueueSize(Wrap<Integer> c);
 
-	public Integer getJdbcInitialPoolSize() {
-		return jdbcInitialPoolSize;
+	public Integer getJdbcMaxWaitQueueSize() {
+		return jdbcMaxWaitQueueSize;
 	}
 
-	public void setJdbcInitialPoolSize(Integer jdbcInitialPoolSize) {
-		this.jdbcInitialPoolSize = jdbcInitialPoolSize;
-		this.jdbcInitialPoolSizeWrap.alreadyInitialized = true;
+	public void setJdbcMaxWaitQueueSize(Integer jdbcMaxWaitQueueSize) {
+		this.jdbcMaxWaitQueueSize = jdbcMaxWaitQueueSize;
+		this.jdbcMaxWaitQueueSizeWrap.alreadyInitialized = true;
 	}
-	public SiteConfig setJdbcInitialPoolSize(String o) {
+	public SiteConfig setJdbcMaxWaitQueueSize(String o) {
 		if(NumberUtils.isParsable(o))
-			this.jdbcInitialPoolSize = Integer.parseInt(o);
-		this.jdbcInitialPoolSizeWrap.alreadyInitialized = true;
+			this.jdbcMaxWaitQueueSize = Integer.parseInt(o);
+		this.jdbcMaxWaitQueueSizeWrap.alreadyInitialized = true;
 		return (SiteConfig)this;
 	}
-	protected SiteConfig jdbcInitialPoolSizeInit() {
-		if(!jdbcInitialPoolSizeWrap.alreadyInitialized) {
-			_jdbcInitialPoolSize(jdbcInitialPoolSizeWrap);
-			if(jdbcInitialPoolSize == null)
-				setJdbcInitialPoolSize(jdbcInitialPoolSizeWrap.o);
+	protected SiteConfig jdbcMaxWaitQueueSizeInit() {
+		if(!jdbcMaxWaitQueueSizeWrap.alreadyInitialized) {
+			_jdbcMaxWaitQueueSize(jdbcMaxWaitQueueSizeWrap);
+			if(jdbcMaxWaitQueueSize == null)
+				setJdbcMaxWaitQueueSize(jdbcMaxWaitQueueSizeWrap.o);
 		}
-		jdbcInitialPoolSizeWrap.alreadyInitialized(true);
+		jdbcMaxWaitQueueSizeWrap.alreadyInitialized(true);
 		return (SiteConfig)this;
 	}
 
-	public Integer solrJdbcInitialPoolSize() {
-		return jdbcInitialPoolSize;
+	public Integer solrJdbcMaxWaitQueueSize() {
+		return jdbcMaxWaitQueueSize;
 	}
 
-	public String strJdbcInitialPoolSize() {
-		return jdbcInitialPoolSize == null ? "" : jdbcInitialPoolSize.toString();
+	public String strJdbcMaxWaitQueueSize() {
+		return jdbcMaxWaitQueueSize == null ? "" : jdbcMaxWaitQueueSize.toString();
 	}
 
-	public String jsonJdbcInitialPoolSize() {
-		return jdbcInitialPoolSize == null ? "" : jdbcInitialPoolSize.toString();
+	public String jsonJdbcMaxWaitQueueSize() {
+		return jdbcMaxWaitQueueSize == null ? "" : jdbcMaxWaitQueueSize.toString();
 	}
 
-	public String nomAffichageJdbcInitialPoolSize() {
+	public String nomAffichageJdbcMaxWaitQueueSize() {
 		return null;
 	}
 
-	public String htmTooltipJdbcInitialPoolSize() {
+	public String htmTooltipJdbcMaxWaitQueueSize() {
 		return null;
 	}
 
-	public String htmJdbcInitialPoolSize() {
-		return jdbcInitialPoolSize == null ? "" : StringEscapeUtils.escapeHtml4(strJdbcInitialPoolSize());
+	public String htmJdbcMaxWaitQueueSize() {
+		return jdbcMaxWaitQueueSize == null ? "" : StringEscapeUtils.escapeHtml4(strJdbcMaxWaitQueueSize());
 	}
 
 	/////////////////////
@@ -1991,6 +1995,77 @@ The max idle time for the database.
 
 	public String htmJdbcMaxIdleTime() {
 		return jdbcMaxIdleTime == null ? "" : StringEscapeUtils.escapeHtml4(strJdbcMaxIdleTime());
+	}
+
+	////////////////////////
+	// jdbcConnectTimeout //
+	////////////////////////
+
+	/**	L'entité « jdbcConnectTimeout »
+The max idle time for the connection to the database. 
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected Integer jdbcConnectTimeout;
+	@JsonIgnore
+	public Wrap<Integer> jdbcConnectTimeoutWrap = new Wrap<Integer>().p(this).c(Integer.class).var("jdbcConnectTimeout").o(jdbcConnectTimeout);
+
+	/**	<br/>L'entité « jdbcConnectTimeout »
+The max idle time for the connection to the database. 
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:jdbcConnectTimeout">Trouver l'entité jdbcConnectTimeout dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _jdbcConnectTimeout(Wrap<Integer> c);
+
+	public Integer getJdbcConnectTimeout() {
+		return jdbcConnectTimeout;
+	}
+
+	public void setJdbcConnectTimeout(Integer jdbcConnectTimeout) {
+		this.jdbcConnectTimeout = jdbcConnectTimeout;
+		this.jdbcConnectTimeoutWrap.alreadyInitialized = true;
+	}
+	public SiteConfig setJdbcConnectTimeout(String o) {
+		if(NumberUtils.isParsable(o))
+			this.jdbcConnectTimeout = Integer.parseInt(o);
+		this.jdbcConnectTimeoutWrap.alreadyInitialized = true;
+		return (SiteConfig)this;
+	}
+	protected SiteConfig jdbcConnectTimeoutInit() {
+		if(!jdbcConnectTimeoutWrap.alreadyInitialized) {
+			_jdbcConnectTimeout(jdbcConnectTimeoutWrap);
+			if(jdbcConnectTimeout == null)
+				setJdbcConnectTimeout(jdbcConnectTimeoutWrap.o);
+		}
+		jdbcConnectTimeoutWrap.alreadyInitialized(true);
+		return (SiteConfig)this;
+	}
+
+	public Integer solrJdbcConnectTimeout() {
+		return jdbcConnectTimeout;
+	}
+
+	public String strJdbcConnectTimeout() {
+		return jdbcConnectTimeout == null ? "" : jdbcConnectTimeout.toString();
+	}
+
+	public String jsonJdbcConnectTimeout() {
+		return jdbcConnectTimeout == null ? "" : jdbcConnectTimeout.toString();
+	}
+
+	public String nomAffichageJdbcConnectTimeout() {
+		return null;
+	}
+
+	public String htmTooltipJdbcConnectTimeout() {
+		return null;
+	}
+
+	public String htmJdbcConnectTimeout() {
+		return jdbcConnectTimeout == null ? "" : StringEscapeUtils.escapeHtml4(strJdbcConnectTimeout());
 	}
 
 	//////////////
@@ -4477,7 +4552,7 @@ The default timezone of the site.
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SiteConfig setPaymentNext(String o) {
-		this.paymentNext = LocalDate.parse(o, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.paymentNext = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.paymentNextWrap.alreadyInitialized = true;
 		return (SiteConfig)this;
 	}
@@ -4496,11 +4571,11 @@ The default timezone of the site.
 	}
 
 	public String strPaymentNext() {
-		return paymentNext == null ? "" : paymentNext.format(DateTimeFormatter.ofPattern("EEE MMM d yyyy", Locale.US));
+		return paymentNext == null ? "" : paymentNext.format(DateTimeFormatter.ofPattern("EEE MMM d, yyyy", Locale.forLanguageTag("en-US")));
 	}
 
 	public String jsonPaymentNext() {
-		return paymentNext == null ? "" : paymentNext.format(DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.US));
+		return paymentNext == null ? "" : paymentNext.format(DateTimeFormatter.ISO_DATE);
 	}
 
 	public String nomAffichagePaymentNext() {
@@ -4559,11 +4634,12 @@ The default timezone of the site.
 		jdbcUsernameInit();
 		jdbcPasswordInit();
 		jdbcMaxPoolSizeInit();
-		jdbcInitialPoolSizeInit();
+		jdbcMaxWaitQueueSizeInit();
 		jdbcMinPoolSizeInit();
 		jdbcMaxStatementsInit();
 		jdbcMaxStatementsPerConnectionInit();
 		jdbcMaxIdleTimeInit();
+		jdbcConnectTimeoutInit();
 		jdbcHostInit();
 		jdbcPortInit();
 		jdbcDatabaseInit();
@@ -4679,8 +4755,8 @@ The default timezone of the site.
 				return oSiteConfig.jdbcPassword;
 			case "jdbcMaxPoolSize":
 				return oSiteConfig.jdbcMaxPoolSize;
-			case "jdbcInitialPoolSize":
-				return oSiteConfig.jdbcInitialPoolSize;
+			case "jdbcMaxWaitQueueSize":
+				return oSiteConfig.jdbcMaxWaitQueueSize;
 			case "jdbcMinPoolSize":
 				return oSiteConfig.jdbcMinPoolSize;
 			case "jdbcMaxStatements":
@@ -4689,6 +4765,8 @@ The default timezone of the site.
 				return oSiteConfig.jdbcMaxStatementsPerConnection;
 			case "jdbcMaxIdleTime":
 				return oSiteConfig.jdbcMaxIdleTime;
+			case "jdbcConnectTimeout":
+				return oSiteConfig.jdbcConnectTimeout;
 			case "jdbcHost":
 				return oSiteConfig.jdbcHost;
 			case "jdbcPort":

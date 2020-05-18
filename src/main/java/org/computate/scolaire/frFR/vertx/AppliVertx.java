@@ -15,6 +15,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import javax.xml.datatype.DatatypeFactory;
@@ -368,6 +369,10 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r.enUS: getJdbcHost
 	 * r: getJdbcBaseDeDonnees
 	 * r.enUS: getJdbcDatabase
+	 * r: JdbcDelaiConnexion
+	 * r.enUS: JdbcConnectTimeout
+	 * r: JdbcMaxFileAttente
+	 * r.enUS: JdbcMaxWaitQueueSize
 	 */
 	private Promise<Void> configurerDonnees() {
 		ConfigSite configSite = siteContexteFrFR.getConfigSite();
@@ -380,9 +385,12 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 		pgOptions.setUser(configSite.getJdbcUtilisateur());
 		pgOptions.setPassword(configSite.getJdbcMotDePasse());
 		pgOptions.setIdleTimeout(configSite.getJdbcTempsInactiviteMax());
+		pgOptions.setIdleTimeoutUnit(TimeUnit.SECONDS);
+		pgOptions.setConnectTimeout(configSite.getJdbcDelaiConnexion());
 
 		PoolOptions poolOptions = new PoolOptions();
 		poolOptions.setMaxSize(configSite.getJdbcTailleMaxPiscine());
+		poolOptions.setMaxWaitQueueSize(configSite.getJdbcMaxFileAttente());
 
 		pgPool = PgPool.pool(vertx, pgOptions, poolOptions);
 

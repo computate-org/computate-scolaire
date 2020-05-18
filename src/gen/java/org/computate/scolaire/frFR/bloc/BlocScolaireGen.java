@@ -2857,7 +2857,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 	/** Example: 01:00 **/
 	public BlocScolaire setBlocHeureDebut(String o) {
 		try {
-			this.blocHeureDebut = LocalTime.parse(o, DateTimeFormatter.ofPattern("HH:mm"));
+			this.blocHeureDebut = LocalTime.parse(o, DateTimeFormatter.ISO_TIME);
 			this.blocHeureDebutCouverture.dejaInitialise = true;
 		} catch(Exception e) {
 		}
@@ -2906,7 +2906,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 				.a("placeholder", "HH:MM")
 				.a("id", classeApiMethodeMethode, "_blocHeureDebut")
 				.a("onclick", "enleverLueur($(this)); ")
-				.a("title", "L'année scolaire de la saison scolaire.  (H'h'mm)")				.a("value", blocHeureDebut == null ? "" : DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(blocHeureDebut))
+				.a("title", "L'année scolaire de la saison scolaire.  (H'h'mm)")				.a("value", blocHeureDebut == null ? "" : DateTimeFormatter.ofPattern("H'h'mm").format(blocHeureDebut))
 				.a("onchange", "var t = parseTime(this.value); if(t) { var s = dateFormat(t, 'HH:MM'); patchBlocScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlocHeureDebut', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_blocHeureDebut')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_blocHeureDebut')); }); } ")
 				.fg();
 		}
@@ -2977,7 +2977,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 	/** Example: 01:00 **/
 	public BlocScolaire setBlocHeureFin(String o) {
 		try {
-			this.blocHeureFin = LocalTime.parse(o, DateTimeFormatter.ofPattern("HH:mm"));
+			this.blocHeureFin = LocalTime.parse(o, DateTimeFormatter.ISO_TIME);
 			this.blocHeureFinCouverture.dejaInitialise = true;
 		} catch(Exception e) {
 		}
@@ -3026,7 +3026,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 				.a("placeholder", "HH:MM")
 				.a("id", classeApiMethodeMethode, "_blocHeureFin")
 				.a("onclick", "enleverLueur($(this)); ")
-				.a("title", "L'année scolaire de la saison scolaire.  (H'h'mm)")				.a("value", blocHeureFin == null ? "" : DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(blocHeureFin))
+				.a("title", "L'année scolaire de la saison scolaire.  (H'h'mm)")				.a("value", blocHeureFin == null ? "" : DateTimeFormatter.ofPattern("H'h'mm").format(blocHeureFin))
 				.a("onchange", "var t = parseTime(this.value); if(t) { var s = dateFormat(t, 'HH:MM'); patchBlocScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlocHeureFin', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_blocHeureFin')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_blocHeureFin')); }); } ")
 				.fg();
 		}

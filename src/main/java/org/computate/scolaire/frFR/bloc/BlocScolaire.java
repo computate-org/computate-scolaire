@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.bloc;                         
+package org.computate.scolaire.frFR.bloc;                        
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -58,7 +58,7 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * 
  * Role.frFR: SiteAdmin
  * Role.enUS: SiteAdmin
-*/         
+*/           
 public class BlocScolaire extends BlocScolaireGen<Cluster> {
 
 	/**
