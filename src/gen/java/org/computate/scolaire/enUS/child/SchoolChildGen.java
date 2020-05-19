@@ -1680,7 +1680,10 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolChild setPersonBirthDate(String o) {
+		LOGGER.info("o: " + o);
 		this.personBirthDate = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		LOGGER.info("personBirthDate: " + personBirthDate);
+		LOGGER.info("Zone: " + ZoneId.systemDefault());
 		this.personBirthDateWrap.alreadyInitialized = true;
 		return (SchoolChild)this;
 	}
