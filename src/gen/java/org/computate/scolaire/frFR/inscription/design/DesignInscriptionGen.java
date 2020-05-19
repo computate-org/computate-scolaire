@@ -1107,10 +1107,10 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 				.a("placeholder", "nom")
 				.a("id", classeApiMethodeMethode, "_designInscriptionNomComplet");
 				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-					a("class", "setDesignInscriptionNomComplet inputDesignInscription", pk, "DesignInscriptionNomComplet w3-input w3-border ");
+					a("class", "setDesignInscriptionNomComplet classDesignInscription inputDesignInscription", pk, "DesignInscriptionNomComplet w3-input w3-border ");
 					a("name", "setDesignInscriptionNomComplet");
 				} else {
-					a("class", "valeurDesignInscriptionNomComplet w3-input w3-border inputDesignInscription", pk, "DesignInscriptionNomComplet w3-input w3-border ");
+					a("class", "valeurDesignInscriptionNomComplet w3-input w3-border classDesignInscription inputDesignInscription", pk, "DesignInscriptionNomComplet w3-input w3-border ");
 					a("name", "designInscriptionNomComplet");
 				}
 				if("Page".equals(classeApiMethodeMethode)) {
@@ -1237,10 +1237,10 @@ public abstract class DesignInscriptionGen<DEV> extends Cluster {
 					.a("id", classeApiMethodeMethode, "_designCache");
 			}
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setDesignCache inputDesignInscription", pk, "DesignCache w3-input w3-border ");
+				a("class", "setDesignCache classDesignInscription inputDesignInscription", pk, "DesignCache w3-input w3-border ");
 				a("name", "setDesignCache");
 			} else {
-				a("class", "valeurDesignCache inputDesignInscription", pk, "DesignCache w3-input w3-border ");
+				a("class", "valeurDesignCache classDesignInscription inputDesignInscription", pk, "DesignCache w3-input w3-border ");
 				a("name", "designCache");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {

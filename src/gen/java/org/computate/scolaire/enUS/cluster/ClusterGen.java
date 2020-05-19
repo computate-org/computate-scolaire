@@ -346,10 +346,10 @@ public abstract class ClusterGen<DEV> extends Object {
 				.a("type", "text")
 				.a("id", classApiMethodMethod, "_inheritPk");
 				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-					s.a("class", "setInheritPk inputCluster", pk, "InheritPk w3-input w3-border ");
+					s.a("class", "setInheritPk classCluster inputCluster", pk, "InheritPk w3-input w3-border ");
 					s.a("name", "setInheritPk");
 				} else {
-					s.a("class", "valueInheritPk w3-input w3-border inputCluster", pk, "InheritPk w3-input w3-border ");
+					s.a("class", "valueInheritPk w3-input w3-border classCluster inputCluster", pk, "InheritPk w3-input w3-border ");
 					s.a("name", "inheritPk");
 				}
 				if("Page".equals(classApiMethodMethod)) {
@@ -758,10 +758,10 @@ public abstract class ClusterGen<DEV> extends Object {
 					.a("id", classApiMethodMethod, "_archived");
 			}
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				s.a("class", "setArchived inputCluster", pk, "Archived w3-input w3-border ");
+				s.a("class", "setArchived classCluster inputCluster", pk, "Archived w3-input w3-border ");
 				s.a("name", "setArchived");
 			} else {
-				s.a("class", "valueArchived inputCluster", pk, "Archived w3-input w3-border ");
+				s.a("class", "valueArchived classCluster inputCluster", pk, "Archived w3-input w3-border ");
 				s.a("name", "archived");
 			}
 			if("Page".equals(classApiMethodMethod)) {
@@ -895,10 +895,10 @@ public abstract class ClusterGen<DEV> extends Object {
 					.a("id", classApiMethodMethod, "_deleted");
 			}
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				s.a("class", "setDeleted inputCluster", pk, "Deleted w3-input w3-border ");
+				s.a("class", "setDeleted classCluster inputCluster", pk, "Deleted w3-input w3-border ");
 				s.a("name", "setDeleted");
 			} else {
-				s.a("class", "valueDeleted inputCluster", pk, "Deleted w3-input w3-border ");
+				s.a("class", "valueDeleted classCluster inputCluster", pk, "Deleted w3-input w3-border ");
 				s.a("name", "deleted");
 			}
 			if("Page".equals(classApiMethodMethod)) {

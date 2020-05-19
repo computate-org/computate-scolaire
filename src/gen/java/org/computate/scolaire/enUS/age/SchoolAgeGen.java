@@ -378,7 +378,8 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
-											.a("onclick", "postSchoolBlockVals({ ageKey: [ \"", pk, "\" ] }, function() { patchSchoolAgeVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "blockKeys')); });")
+											.a("id", classApiMethodMethod, "_blockKeys_add")
+											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Sending…'; postSchoolBlockVals({ ageKey: [ \"", pk, "\" ] }, function() {}, function() { addError($('#", classApiMethodMethod, "blockKeys')); });")
 											.f().sx("add a block")
 										.g("button");
 									} g("div");
@@ -855,7 +856,8 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-											.a("onclick", "postSchoolSessionVals({ ageKeys: [ \"", pk, "\" ] }, function() { patchSchoolAgeVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "sessionKey')); });")
+											.a("id", classApiMethodMethod, "_sessionKey_add")
+											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Sending…'; postSchoolSessionVals({ ageKeys: [ \"", pk, "\" ] }, function() {}, function() { addError($('#", classApiMethodMethod, "sessionKey')); });")
 											.f().sx("add a session")
 										.g("button");
 									} g("div");
@@ -1408,10 +1410,10 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 				.a("placeholder", "address")
 				.a("id", classApiMethodMethod, "_schoolAddress");
 				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-					a("class", "setSchoolAddress inputSchoolAge", pk, "SchoolAddress w3-input w3-border ");
+					a("class", "setSchoolAddress classSchoolAge inputSchoolAge", pk, "SchoolAddress w3-input w3-border ");
 					a("name", "setSchoolAddress");
 				} else {
-					a("class", "valueSchoolAddress w3-input w3-border inputSchoolAge", pk, "SchoolAddress w3-input w3-border ");
+					a("class", "valueSchoolAddress w3-input w3-border classSchoolAge inputSchoolAge", pk, "SchoolAddress w3-input w3-border ");
 					a("name", "schoolAddress");
 				}
 				if("Page".equals(classApiMethodMethod)) {
@@ -2440,10 +2442,10 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 				.a("placeholder", "start of the age group")
 				.a("id", classApiMethodMethod, "_ageStart");
 				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-					a("class", "setAgeStart inputSchoolAge", pk, "AgeStart w3-input w3-border ");
+					a("class", "setAgeStart classSchoolAge inputSchoolAge", pk, "AgeStart w3-input w3-border ");
 					a("name", "setAgeStart");
 				} else {
-					a("class", "valueAgeStart w3-input w3-border inputSchoolAge", pk, "AgeStart w3-input w3-border ");
+					a("class", "valueAgeStart w3-input w3-border classSchoolAge inputSchoolAge", pk, "AgeStart w3-input w3-border ");
 					a("name", "ageStart");
 				}
 				if("Page".equals(classApiMethodMethod)) {
@@ -2567,10 +2569,10 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 				.a("placeholder", "end of the age group")
 				.a("id", classApiMethodMethod, "_ageEnd");
 				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-					a("class", "setAgeEnd inputSchoolAge", pk, "AgeEnd w3-input w3-border ");
+					a("class", "setAgeEnd classSchoolAge inputSchoolAge", pk, "AgeEnd w3-input w3-border ");
 					a("name", "setAgeEnd");
 				} else {
-					a("class", "valueAgeEnd w3-input w3-border inputSchoolAge", pk, "AgeEnd w3-input w3-border ");
+					a("class", "valueAgeEnd w3-input w3-border classSchoolAge inputSchoolAge", pk, "AgeEnd w3-input w3-border ");
 					a("name", "ageEnd");
 				}
 				if("Page".equals(classApiMethodMethod)) {

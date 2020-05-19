@@ -378,7 +378,8 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue ")
-											.a("onclick", "postSchoolAgeVals({ sessionKey: [ \"", pk, "\" ] }, function() { patchSchoolSessionVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "ageKeys')); });")
+											.a("id", classApiMethodMethod, "_ageKeys_add")
+											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Sending…'; postSchoolAgeVals({ sessionKey: [ \"", pk, "\" ] }, function() {}, function() { addError($('#", classApiMethodMethod, "ageKeys')); });")
 											.f().sx("add an age")
 										.g("button");
 									} g("div");
@@ -855,7 +856,8 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
-											.a("onclick", "postSchoolSeasonVals({ sessionKeys: [ \"", pk, "\" ] }, function() { patchSchoolSessionVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "seasonKey')); });")
+											.a("id", classApiMethodMethod, "_seasonKey_add")
+											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Sending…'; postSchoolSeasonVals({ sessionKeys: [ \"", pk, "\" ] }, function() {}, function() { addError($('#", classApiMethodMethod, "seasonKey')); });")
 											.f().sx("add a season")
 										.g("button");
 									} g("div");
@@ -1339,10 +1341,10 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 				.a("placeholder", "address")
 				.a("id", classApiMethodMethod, "_schoolAddress");
 				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-					a("class", "setSchoolAddress inputSchoolSession", pk, "SchoolAddress w3-input w3-border ");
+					a("class", "setSchoolAddress classSchoolSession inputSchoolSession", pk, "SchoolAddress w3-input w3-border ");
 					a("name", "setSchoolAddress");
 				} else {
-					a("class", "valueSchoolAddress w3-input w3-border inputSchoolSession", pk, "SchoolAddress w3-input w3-border ");
+					a("class", "valueSchoolAddress w3-input w3-border classSchoolSession inputSchoolSession", pk, "SchoolAddress w3-input w3-border ");
 					a("name", "schoolAddress");
 				}
 				if("Page".equals(classApiMethodMethod)) {
@@ -2156,7 +2158,7 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 		{
 			e("input")
 				.a("type", "text")
-				.a("class", "w3-input w3-border datepicker setSessionStartDate inputSchoolSession", pk, "SessionStartDate w3-input w3-border ")
+				.a("class", "w3-input w3-border datepicker setSessionStartDate classSchoolSession inputSchoolSession", pk, "SessionStartDate w3-input w3-border ")
 				.a("placeholder", "MM/DD/YYYY")
 				.a("data-timeformat", "MM/dd/yyyy")
 				.a("id", classApiMethodMethod, "_sessionStartDate")
@@ -2286,7 +2288,7 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 		{
 			e("input")
 				.a("type", "text")
-				.a("class", "w3-input w3-border datepicker setSessionEndDate inputSchoolSession", pk, "SessionEndDate w3-input w3-border ")
+				.a("class", "w3-input w3-border datepicker setSessionEndDate classSchoolSession inputSchoolSession", pk, "SessionEndDate w3-input w3-border ")
 				.a("placeholder", "MM/DD/YYYY")
 				.a("data-timeformat", "MM/dd/yyyy")
 				.a("id", classApiMethodMethod, "_sessionEndDate")

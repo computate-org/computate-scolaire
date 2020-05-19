@@ -228,16 +228,16 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 		} else {
 			tl(2, "suggestSchoolEnrollmentYearKey([{'name':'fq','value':'enrollmentKeys:' + pk}], $('#listSchoolEnrollmentYearKey_Page'), pk, false); ");
 		}
-		tl(2, "$('#inputSchoolEnrollment' + pk + 'enrollmentSignature1').jSignature({'height':200}); ");
-		tl(2, "$('#inputSchoolEnrollment' + pk + 'enrollmentSignature2').jSignature({'height':200}); ");
-		tl(2, "$('#inputSchoolEnrollment' + pk + 'enrollmentSignature3').jSignature({'height':200}); ");
-		tl(2, "$('#inputSchoolEnrollment' + pk + 'enrollmentSignature4').jSignature({'height':200}); ");
-		tl(2, "$('#inputSchoolEnrollment' + pk + 'enrollmentSignature5').jSignature({'height':200}); ");
-		tl(2, "$('#inputSchoolEnrollment' + pk + 'enrollmentSignature6').jSignature({'height':200}); ");
-		tl(2, "$('#inputSchoolEnrollment' + pk + 'enrollmentSignature7').jSignature({'height':200}); ");
-		tl(2, "$('#inputSchoolEnrollment' + pk + 'enrollmentSignature8').jSignature({'height':200}); ");
-		tl(2, "$('#inputSchoolEnrollment' + pk + 'enrollmentSignature9').jSignature({'height':200}); ");
-		tl(2, "$('#inputSchoolEnrollment' + pk + 'enrollmentSignature10').jSignature({'height':200}); ");
+		tl(2, "$('#signatureInputSchoolEnrollment' + pk + 'enrollmentSignature1').jSignature({'height':200}); ").bind('change', function(e){ patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + pk }], 'setEnrollmentSignature1', $('#signatureInputSchoolEnrollment' + pk + 'enrollmentSignature1').jSignature('getData', 'default')); });
+		tl(2, "$('#signatureInputSchoolEnrollment' + pk + 'enrollmentSignature2').jSignature({'height':200}); ").bind('change', function(e){ patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + pk }], 'setEnrollmentSignature2', $('#signatureInputSchoolEnrollment' + pk + 'enrollmentSignature2').jSignature('getData', 'default')); });
+		tl(2, "$('#signatureInputSchoolEnrollment' + pk + 'enrollmentSignature3').jSignature({'height':200}); ").bind('change', function(e){ patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + pk }], 'setEnrollmentSignature3', $('#signatureInputSchoolEnrollment' + pk + 'enrollmentSignature3').jSignature('getData', 'default')); });
+		tl(2, "$('#signatureInputSchoolEnrollment' + pk + 'enrollmentSignature4').jSignature({'height':200}); ").bind('change', function(e){ patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + pk }], 'setEnrollmentSignature4', $('#signatureInputSchoolEnrollment' + pk + 'enrollmentSignature4').jSignature('getData', 'default')); });
+		tl(2, "$('#signatureInputSchoolEnrollment' + pk + 'enrollmentSignature5').jSignature({'height':200}); ").bind('change', function(e){ patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + pk }], 'setEnrollmentSignature5', $('#signatureInputSchoolEnrollment' + pk + 'enrollmentSignature5').jSignature('getData', 'default')); });
+		tl(2, "$('#signatureInputSchoolEnrollment' + pk + 'enrollmentSignature6').jSignature({'height':200}); ").bind('change', function(e){ patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + pk }], 'setEnrollmentSignature6', $('#signatureInputSchoolEnrollment' + pk + 'enrollmentSignature6').jSignature('getData', 'default')); });
+		tl(2, "$('#signatureInputSchoolEnrollment' + pk + 'enrollmentSignature7').jSignature({'height':200}); ").bind('change', function(e){ patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + pk }], 'setEnrollmentSignature7', $('#signatureInputSchoolEnrollment' + pk + 'enrollmentSignature7').jSignature('getData', 'default')); });
+		tl(2, "$('#signatureInputSchoolEnrollment' + pk + 'enrollmentSignature8').jSignature({'height':200}); ").bind('change', function(e){ patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + pk }], 'setEnrollmentSignature8', $('#signatureInputSchoolEnrollment' + pk + 'enrollmentSignature8').jSignature('getData', 'default')); });
+		tl(2, "$('#signatureInputSchoolEnrollment' + pk + 'enrollmentSignature9').jSignature({'height':200}); ").bind('change', function(e){ patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + pk }], 'setEnrollmentSignature9', $('#signatureInputSchoolEnrollment' + pk + 'enrollmentSignature9').jSignature('getData', 'default')); });
+		tl(2, "$('#signatureInputSchoolEnrollment' + pk + 'enrollmentSignature10').jSignature({'height':200}); ").bind('change', function(e){ patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + pk }], 'setEnrollmentSignature10', $('#signatureInputSchoolEnrollment' + pk + 'enrollmentSignature10').jSignature('getData', 'default')); });
 		tl(1, "}");
 		tl(1, "websocketSchoolEnrollment(websocketSchoolEnrollmentInner);");
 		l("});");

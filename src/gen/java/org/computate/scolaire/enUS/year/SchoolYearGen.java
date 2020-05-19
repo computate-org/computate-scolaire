@@ -197,7 +197,8 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
-											.a("onclick", "postSchoolVals({ yearKeys: \"", pk, "\" }, function() { patchSchoolYearVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "schoolKey')); });")
+											.a("id", classApiMethodMethod, "_schoolKey_add")
+											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Sending…'; postSchoolVals({ yearKeys: \"", pk, "\" }, function() {}, function() { addError($('#", classApiMethodMethod, "schoolKey')); });")
 											.f().sx("add a school")
 										.g("button");
 									} g("div");
@@ -503,7 +504,8 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
-											.a("onclick", "postSchoolSeasonVals({ yearKey: \"", pk, "\" }, function() { patchSchoolYearVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "seasonKeys')); });")
+											.a("id", classApiMethodMethod, "_seasonKeys_add")
+											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Sending…'; postSchoolSeasonVals({ yearKey: \"", pk, "\" }, function() {}, function() { addError($('#", classApiMethodMethod, "seasonKeys')); });")
 											.f().sx("add a season")
 										.g("button");
 									} g("div");
@@ -1318,10 +1320,10 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 				.a("placeholder", "start of year")
 				.a("id", classApiMethodMethod, "_yearStart");
 				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-					a("class", "setYearStart inputSchoolYear", pk, "YearStart w3-input w3-border ");
+					a("class", "setYearStart classSchoolYear inputSchoolYear", pk, "YearStart w3-input w3-border ");
 					a("name", "setYearStart");
 				} else {
-					a("class", "valueYearStart w3-input w3-border inputSchoolYear", pk, "YearStart w3-input w3-border ");
+					a("class", "valueYearStart w3-input w3-border classSchoolYear inputSchoolYear", pk, "YearStart w3-input w3-border ");
 					a("name", "yearStart");
 				}
 				if("Page".equals(classApiMethodMethod)) {
@@ -1445,10 +1447,10 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 				.a("placeholder", "end of year")
 				.a("id", classApiMethodMethod, "_yearEnd");
 				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-					a("class", "setYearEnd inputSchoolYear", pk, "YearEnd w3-input w3-border ");
+					a("class", "setYearEnd classSchoolYear inputSchoolYear", pk, "YearEnd w3-input w3-border ");
 					a("name", "setYearEnd");
 				} else {
-					a("class", "valueYearEnd w3-input w3-border inputSchoolYear", pk, "YearEnd w3-input w3-border ");
+					a("class", "valueYearEnd w3-input w3-border classSchoolYear inputSchoolYear", pk, "YearEnd w3-input w3-border ");
 					a("name", "yearEnd");
 				}
 				if("Page".equals(classApiMethodMethod)) {
@@ -1583,10 +1585,10 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 				.a("placeholder", "enrollment fee")
 				.a("id", classApiMethodMethod, "_yearEnrollmentFee");
 				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-					a("class", "setYearEnrollmentFee inputSchoolYear", pk, "YearEnrollmentFee w3-input w3-border ");
+					a("class", "setYearEnrollmentFee classSchoolYear inputSchoolYear", pk, "YearEnrollmentFee w3-input w3-border ");
 					a("name", "setYearEnrollmentFee");
 				} else {
-					a("class", "valueYearEnrollmentFee w3-input w3-border inputSchoolYear", pk, "YearEnrollmentFee w3-input w3-border ");
+					a("class", "valueYearEnrollmentFee w3-input w3-border classSchoolYear inputSchoolYear", pk, "YearEnrollmentFee w3-input w3-border ");
 					a("name", "yearEnrollmentFee");
 				}
 				if("Page".equals(classApiMethodMethod)) {

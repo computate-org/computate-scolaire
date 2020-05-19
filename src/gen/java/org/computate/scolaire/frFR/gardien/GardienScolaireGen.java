@@ -296,7 +296,8 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ")
-											.a("onclick", "postInscriptionScolaireVals({ gardienCles: [ \"", pk, "\" ] }, function() { patchGardienScolaireVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "inscriptionCles')); });")
+											.a("id", classeApiMethodeMethode, "_inscriptionCles_ajouter")
+											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Envoi…'; postInscriptionScolaireVals({ gardienCles: [ \"", pk, "\" ] }, function() {}, function() { ajouterErreur($('#", classeApiMethodeMethode, "inscriptionCles')); });")
 											.f().sx("ajouter une inscription")
 										.g("button");
 									} g("div");
@@ -1130,10 +1131,10 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 				.a("placeholder", "prénom")
 				.a("id", classeApiMethodeMethode, "_personnePrenom");
 				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-					a("class", "setPersonnePrenom inputGardienScolaire", pk, "PersonnePrenom w3-input w3-border ");
+					a("class", "setPersonnePrenom classGardienScolaire inputGardienScolaire", pk, "PersonnePrenom w3-input w3-border ");
 					a("name", "setPersonnePrenom");
 				} else {
-					a("class", "valeurPersonnePrenom w3-input w3-border inputGardienScolaire", pk, "PersonnePrenom w3-input w3-border ");
+					a("class", "valeurPersonnePrenom w3-input w3-border classGardienScolaire inputGardienScolaire", pk, "PersonnePrenom w3-input w3-border ");
 					a("name", "personnePrenom");
 				}
 				if("Page".equals(classeApiMethodeMethode)) {
@@ -1262,10 +1263,10 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 				.a("placeholder", "prénom préferé")
 				.a("id", classeApiMethodeMethode, "_personnePrenomPrefere");
 				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-					a("class", "setPersonnePrenomPrefere inputGardienScolaire", pk, "PersonnePrenomPrefere w3-input w3-border ");
+					a("class", "setPersonnePrenomPrefere classGardienScolaire inputGardienScolaire", pk, "PersonnePrenomPrefere w3-input w3-border ");
 					a("name", "setPersonnePrenomPrefere");
 				} else {
-					a("class", "valeurPersonnePrenomPrefere w3-input w3-border inputGardienScolaire", pk, "PersonnePrenomPrefere w3-input w3-border ");
+					a("class", "valeurPersonnePrenomPrefere w3-input w3-border classGardienScolaire inputGardienScolaire", pk, "PersonnePrenomPrefere w3-input w3-border ");
 					a("name", "personnePrenomPrefere");
 				}
 				if("Page".equals(classeApiMethodeMethode)) {
@@ -1394,10 +1395,10 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 				.a("placeholder", "nom de famille")
 				.a("id", classeApiMethodeMethode, "_familleNom");
 				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-					a("class", "setFamilleNom inputGardienScolaire", pk, "FamilleNom w3-input w3-border ");
+					a("class", "setFamilleNom classGardienScolaire inputGardienScolaire", pk, "FamilleNom w3-input w3-border ");
 					a("name", "setFamilleNom");
 				} else {
-					a("class", "valeurFamilleNom w3-input w3-border inputGardienScolaire", pk, "FamilleNom w3-input w3-border ");
+					a("class", "valeurFamilleNom w3-input w3-border classGardienScolaire inputGardienScolaire", pk, "FamilleNom w3-input w3-border ");
 					a("name", "familleNom");
 				}
 				if("Page".equals(classeApiMethodeMethode)) {
@@ -1774,10 +1775,10 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 				.a("placeholder", "numéro de téléphone")
 				.a("id", classeApiMethodeMethode, "_personneNumeroTelephone");
 				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-					a("class", "setPersonneNumeroTelephone inputGardienScolaire", pk, "PersonneNumeroTelephone w3-input w3-border ");
+					a("class", "setPersonneNumeroTelephone classGardienScolaire inputGardienScolaire", pk, "PersonneNumeroTelephone w3-input w3-border ");
 					a("name", "setPersonneNumeroTelephone");
 				} else {
-					a("class", "valeurPersonneNumeroTelephone w3-input w3-border inputGardienScolaire", pk, "PersonneNumeroTelephone w3-input w3-border ");
+					a("class", "valeurPersonneNumeroTelephone w3-input w3-border classGardienScolaire inputGardienScolaire", pk, "PersonneNumeroTelephone w3-input w3-border ");
 					a("name", "personneNumeroTelephone");
 				}
 				if("Page".equals(classeApiMethodeMethode)) {
@@ -1968,10 +1969,10 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 				.a("placeholder", "relation")
 				.a("id", classeApiMethodeMethode, "_personneRelation");
 				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-					a("class", "setPersonneRelation inputGardienScolaire", pk, "PersonneRelation w3-input w3-border ");
+					a("class", "setPersonneRelation classGardienScolaire inputGardienScolaire", pk, "PersonneRelation w3-input w3-border ");
 					a("name", "setPersonneRelation");
 				} else {
-					a("class", "valeurPersonneRelation w3-input w3-border inputGardienScolaire", pk, "PersonneRelation w3-input w3-border ");
+					a("class", "valeurPersonneRelation w3-input w3-border classGardienScolaire inputGardienScolaire", pk, "PersonneRelation w3-input w3-border ");
 					a("name", "personneRelation");
 				}
 				if("Page".equals(classeApiMethodeMethode)) {
@@ -2244,10 +2245,10 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 					.a("id", classeApiMethodeMethode, "_personneContactUrgence");
 			}
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setPersonneContactUrgence inputGardienScolaire", pk, "PersonneContactUrgence w3-input w3-border ");
+				a("class", "setPersonneContactUrgence classGardienScolaire inputGardienScolaire", pk, "PersonneContactUrgence w3-input w3-border ");
 				a("name", "setPersonneContactUrgence");
 			} else {
-				a("class", "valeurPersonneContactUrgence inputGardienScolaire", pk, "PersonneContactUrgence w3-input w3-border ");
+				a("class", "valeurPersonneContactUrgence classGardienScolaire inputGardienScolaire", pk, "PersonneContactUrgence w3-input w3-border ");
 				a("name", "personneContactUrgence");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
@@ -2376,10 +2377,10 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 					.a("id", classeApiMethodeMethode, "_personneChercher");
 			}
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setPersonneChercher inputGardienScolaire", pk, "PersonneChercher w3-input w3-border ");
+				a("class", "setPersonneChercher classGardienScolaire inputGardienScolaire", pk, "PersonneChercher w3-input w3-border ");
 				a("name", "setPersonneChercher");
 			} else {
-				a("class", "valeurPersonneChercher inputGardienScolaire", pk, "PersonneChercher w3-input w3-border ");
+				a("class", "valeurPersonneChercher classGardienScolaire inputGardienScolaire", pk, "PersonneChercher w3-input w3-border ");
 				a("name", "personneChercher");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {

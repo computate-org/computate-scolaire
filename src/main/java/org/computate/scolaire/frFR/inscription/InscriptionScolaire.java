@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.inscription;                             
+package org.computate.scolaire.frFR.inscription;                       
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -441,7 +441,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * r.enUS: siteRequest
 	 * r: utilisateurCle
 	 * r.enUS: userKey
-	 */             
+	 */          
 	protected void _utilisateurCles(List<Long> l) {
 	}
 

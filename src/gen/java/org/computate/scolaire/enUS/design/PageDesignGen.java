@@ -376,7 +376,8 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-khaki ")
-											.a("onclick", "postPageDesignVals({ childDesignKeys: [ \"", pk, "\" ] }, function() { patchPageDesignVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "parentDesignKeys')); });")
+											.a("id", classApiMethodMethod, "_parentDesignKeys_add")
+											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Sending…'; postPageDesignVals({ childDesignKeys: [ \"", pk, "\" ] }, function() {}, function() { addError($('#", classApiMethodMethod, "parentDesignKeys')); });")
 											.f().sx("add a page design")
 										.g("button");
 									} g("div");
@@ -534,7 +535,8 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
-											.a("onclick", "postHtmlPartVals({ pageDesignKeys: [ \"", pk, "\" ] }, function() { patchPageDesignVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "htmlPartKeys')); });")
+											.a("id", classApiMethodMethod, "_htmlPartKeys_add")
+											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Sending…'; postHtmlPartVals({ pageDesignKeys: [ \"", pk, "\" ] }, function() {}, function() { addError($('#", classApiMethodMethod, "htmlPartKeys')); });")
 											.f().sx("add an HTML part")
 										.g("button");
 									} g("div");
@@ -620,10 +622,10 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 				.a("placeholder", "name")
 				.a("id", classApiMethodMethod, "_pageDesignCompleteName");
 				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-					a("class", "setPageDesignCompleteName inputPageDesign", pk, "PageDesignCompleteName w3-input w3-border ");
+					a("class", "setPageDesignCompleteName classPageDesign inputPageDesign", pk, "PageDesignCompleteName w3-input w3-border ");
 					a("name", "setPageDesignCompleteName");
 				} else {
-					a("class", "valuePageDesignCompleteName w3-input w3-border inputPageDesign", pk, "PageDesignCompleteName w3-input w3-border ");
+					a("class", "valuePageDesignCompleteName w3-input w3-border classPageDesign inputPageDesign", pk, "PageDesignCompleteName w3-input w3-border ");
 					a("name", "pageDesignCompleteName");
 				}
 				if("Page".equals(classApiMethodMethod)) {
@@ -758,10 +760,10 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 					.a("id", classApiMethodMethod, "_designHidden");
 			}
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setDesignHidden inputPageDesign", pk, "DesignHidden w3-input w3-border ");
+				a("class", "setDesignHidden classPageDesign inputPageDesign", pk, "DesignHidden w3-input w3-border ");
 				a("name", "setDesignHidden");
 			} else {
-				a("class", "valueDesignHidden inputPageDesign", pk, "DesignHidden w3-input w3-border ");
+				a("class", "valueDesignHidden classPageDesign inputPageDesign", pk, "DesignHidden w3-input w3-border ");
 				a("name", "designHidden");
 			}
 			if("Page".equals(classApiMethodMethod)) {

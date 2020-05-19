@@ -311,7 +311,8 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ")
-											.a("onclick", "postSchoolEnrollmentVals({ userKeys: [ \"", pk, "\" ] }, function() { patchSiteUserVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "enrollmentKeys')); });")
+											.a("id", classApiMethodMethod, "_enrollmentKeys_add")
+											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Sending…'; postSchoolEnrollmentVals({ userKeys: [ \"", pk, "\" ] }, function() {}, function() { addError($('#", classApiMethodMethod, "enrollmentKeys')); });")
 											.f().sx("add an enrollment")
 										.g("button");
 									} g("div");
@@ -474,7 +475,8 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-											.a("onclick", "postSchoolPaymentVals({ userKeys: [ \"", pk, "\" ] }, function() { patchSiteUserVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "paymentKeys')); });")
+											.a("id", classApiMethodMethod, "_paymentKeys_add")
+											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Sending…'; postSchoolPaymentVals({ userKeys: [ \"", pk, "\" ] }, function() {}, function() { addError($('#", classApiMethodMethod, "paymentKeys')); });")
 											.f().sx("add a payment")
 										.g("button");
 									} g("div");
@@ -559,10 +561,10 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 				.a("type", "text")
 				.a("id", classApiMethodMethod, "_userName");
 				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-					a("class", "setUserName inputSiteUser", pk, "UserName w3-input w3-border ");
+					a("class", "setUserName classSiteUser inputSiteUser", pk, "UserName w3-input w3-border ");
 					a("name", "setUserName");
 				} else {
-					a("class", "valueUserName w3-input w3-border inputSiteUser", pk, "UserName w3-input w3-border ");
+					a("class", "valueUserName w3-input w3-border classSiteUser inputSiteUser", pk, "UserName w3-input w3-border ");
 					a("name", "userName");
 				}
 				if("Page".equals(classApiMethodMethod)) {
@@ -688,10 +690,10 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 				.a("type", "text")
 				.a("id", classApiMethodMethod, "_userEmail");
 				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-					a("class", "setUserEmail inputSiteUser", pk, "UserEmail w3-input w3-border ");
+					a("class", "setUserEmail classSiteUser inputSiteUser", pk, "UserEmail w3-input w3-border ");
 					a("name", "setUserEmail");
 				} else {
-					a("class", "valueUserEmail w3-input w3-border inputSiteUser", pk, "UserEmail w3-input w3-border ");
+					a("class", "valueUserEmail w3-input w3-border classSiteUser inputSiteUser", pk, "UserEmail w3-input w3-border ");
 					a("name", "userEmail");
 				}
 				if("Page".equals(classApiMethodMethod)) {
@@ -1066,10 +1068,10 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 				.a("placeholder", "customer profile ID")
 				.a("id", classApiMethodMethod, "_customerProfileId");
 				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-					a("class", "setCustomerProfileId inputSiteUser", pk, "CustomerProfileId w3-input w3-border ");
+					a("class", "setCustomerProfileId classSiteUser inputSiteUser", pk, "CustomerProfileId w3-input w3-border ");
 					a("name", "setCustomerProfileId");
 				} else {
-					a("class", "valueCustomerProfileId w3-input w3-border inputSiteUser", pk, "CustomerProfileId w3-input w3-border ");
+					a("class", "valueCustomerProfileId w3-input w3-border classSiteUser inputSiteUser", pk, "CustomerProfileId w3-input w3-border ");
 					a("name", "customerProfileId");
 				}
 				if("Page".equals(classApiMethodMethod)) {
@@ -1209,10 +1211,10 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 					.a("id", classApiMethodMethod, "_userReceiveEmails");
 			}
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setUserReceiveEmails inputSiteUser", pk, "UserReceiveEmails w3-input w3-border ");
+				a("class", "setUserReceiveEmails classSiteUser inputSiteUser", pk, "UserReceiveEmails w3-input w3-border ");
 				a("name", "setUserReceiveEmails");
 			} else {
-				a("class", "valueUserReceiveEmails inputSiteUser", pk, "UserReceiveEmails w3-input w3-border ");
+				a("class", "valueUserReceiveEmails classSiteUser inputSiteUser", pk, "UserReceiveEmails w3-input w3-border ");
 				a("name", "userReceiveEmails");
 			}
 			if("Page".equals(classApiMethodMethod)) {
@@ -1344,10 +1346,10 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 					.a("id", classApiMethodMethod, "_seeArchived");
 			}
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setSeeArchived inputSiteUser", pk, "SeeArchived w3-input w3-border ");
+				a("class", "setSeeArchived classSiteUser inputSiteUser", pk, "SeeArchived w3-input w3-border ");
 				a("name", "setSeeArchived");
 			} else {
-				a("class", "valueSeeArchived inputSiteUser", pk, "SeeArchived w3-input w3-border ");
+				a("class", "valueSeeArchived classSiteUser inputSiteUser", pk, "SeeArchived w3-input w3-border ");
 				a("name", "seeArchived");
 			}
 			if("Page".equals(classApiMethodMethod)) {
@@ -1479,10 +1481,10 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 					.a("id", classApiMethodMethod, "_seeDeleted");
 			}
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setSeeDeleted inputSiteUser", pk, "SeeDeleted w3-input w3-border ");
+				a("class", "setSeeDeleted classSiteUser inputSiteUser", pk, "SeeDeleted w3-input w3-border ");
 				a("name", "setSeeDeleted");
 			} else {
-				a("class", "valueSeeDeleted inputSiteUser", pk, "SeeDeleted w3-input w3-border ");
+				a("class", "valueSeeDeleted classSiteUser inputSiteUser", pk, "SeeDeleted w3-input w3-border ");
 				a("name", "seeDeleted");
 			}
 			if("Page".equals(classApiMethodMethod)) {

@@ -458,7 +458,8 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
-											.a("onclick", "postSchoolBlockVals({ enrollmentKeys: [ \"", pk, "\" ] }, function() { patchSchoolEnrollmentVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "blockKeys')); });")
+											.a("id", classApiMethodMethod, "_blockKeys_add")
+											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Sending…'; postSchoolBlockVals({ enrollmentKeys: [ \"", pk, "\" ] }, function() {}, function() { addError($('#", classApiMethodMethod, "blockKeys')); });")
 											.f().sx("add a block")
 										.g("button");
 									} g("div");
@@ -1122,7 +1123,8 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
-											.a("onclick", "postSchoolChildVals({ enrollmentKeys: [ \"", pk, "\" ] }, function() { patchSchoolEnrollmentVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "childKey')); });")
+											.a("id", classApiMethodMethod, "_childKey_add")
+											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Sending…'; postSchoolChildVals({ enrollmentKeys: [ \"", pk, "\" ] }, function() {}, function() { addError($('#", classApiMethodMethod, "childKey')); });")
 											.f().sx("add a child")
 										.g("button");
 									} g("div");
@@ -1284,7 +1286,8 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
-											.a("onclick", "postSchoolMomVals({ enrollmentKeys: [ \"", pk, "\" ] }, function() { patchSchoolEnrollmentVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "momKeys')); });")
+											.a("id", classApiMethodMethod, "_momKeys_add")
+											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Sending…'; postSchoolMomVals({ enrollmentKeys: [ \"", pk, "\" ] }, function() {}, function() { addError($('#", classApiMethodMethod, "momKeys')); });")
 											.f().sx("add a mom")
 										.g("button");
 									} g("div");
@@ -1446,7 +1449,8 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-light-blue ")
-											.a("onclick", "postSchoolDadVals({ enrollmentKeys: [ \"", pk, "\" ] }, function() { patchSchoolEnrollmentVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "dadKeys')); });")
+											.a("id", classApiMethodMethod, "_dadKeys_add")
+											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Sending…'; postSchoolDadVals({ enrollmentKeys: [ \"", pk, "\" ] }, function() {}, function() { addError($('#", classApiMethodMethod, "dadKeys')); });")
 											.f().sx("add a dad")
 										.g("button");
 									} g("div");
@@ -1608,7 +1612,8 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
-											.a("onclick", "postSchoolGuardianVals({ enrollmentKeys: [ \"", pk, "\" ] }, function() { patchSchoolEnrollmentVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "guardianKeys')); });")
+											.a("id", classApiMethodMethod, "_guardianKeys_add")
+											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Sending…'; postSchoolGuardianVals({ enrollmentKeys: [ \"", pk, "\" ] }, function() {}, function() { addError($('#", classApiMethodMethod, "guardianKeys')); });")
 											.f().sx("add a guardian")
 										.g("button");
 									} g("div");
@@ -1770,7 +1775,8 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-											.a("onclick", "postSchoolPaymentVals({ enrollmentKey: [ \"", pk, "\" ] }, function() { patchSchoolEnrollmentVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "paymentKeys')); });")
+											.a("id", classApiMethodMethod, "_paymentKeys_add")
+											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Sending…'; postSchoolPaymentVals({ enrollmentKey: [ \"", pk, "\" ] }, function() {}, function() { addError($('#", classApiMethodMethod, "paymentKeys')); });")
 											.f().sx("add a payment")
 										.g("button");
 									} g("div");
@@ -2001,7 +2007,8 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-gray ")
-											.a("onclick", "postSiteUserVals({ enrollmentKeys: [ \"", pk, "\" ] }, function() { patchSchoolEnrollmentVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "userKeys')); });")
+											.a("id", classApiMethodMethod, "_userKeys_add")
+											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Sending…'; postSiteUserVals({ enrollmentKeys: [ \"", pk, "\" ] }, function() {}, function() { addError($('#", classApiMethodMethod, "userKeys')); });")
 											.f().sx("add a site user")
 										.g("button");
 									} g("div");
@@ -3440,10 +3447,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				.a("placeholder", "r: EnfantNomComplet")
 				.a("id", classApiMethodMethod, "_childCompleteName");
 				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-					a("class", "setChildCompleteName inputSchoolEnrollment", pk, "ChildCompleteName w3-input w3-border ");
+					a("class", "setChildCompleteName classSchoolEnrollment inputSchoolEnrollment", pk, "ChildCompleteName w3-input w3-border ");
 					a("name", "setChildCompleteName");
 				} else {
-					a("class", "valueChildCompleteName w3-input w3-border inputSchoolEnrollment", pk, "ChildCompleteName w3-input w3-border ");
+					a("class", "valueChildCompleteName w3-input w3-border classSchoolEnrollment inputSchoolEnrollment", pk, "ChildCompleteName w3-input w3-border ");
 					a("name", "childCompleteName");
 				}
 				if("Page".equals(classApiMethodMethod)) {
@@ -3572,10 +3579,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				.a("placeholder", "r: enfant_")
 				.a("id", classApiMethodMethod, "_childCompleteNamePreferred");
 				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-					a("class", "setChildCompleteNamePreferred inputSchoolEnrollment", pk, "ChildCompleteNamePreferred w3-input w3-border ");
+					a("class", "setChildCompleteNamePreferred classSchoolEnrollment inputSchoolEnrollment", pk, "ChildCompleteNamePreferred w3-input w3-border ");
 					a("name", "setChildCompleteNamePreferred");
 				} else {
-					a("class", "valueChildCompleteNamePreferred w3-input w3-border inputSchoolEnrollment", pk, "ChildCompleteNamePreferred w3-input w3-border ");
+					a("class", "valueChildCompleteNamePreferred w3-input w3-border classSchoolEnrollment inputSchoolEnrollment", pk, "ChildCompleteNamePreferred w3-input w3-border ");
 					a("name", "childCompleteNamePreferred");
 				}
 				if("Page".equals(classApiMethodMethod)) {
@@ -3720,7 +3727,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		) {
 			e("input")
 				.a("type", "text")
-				.a("class", "w3-input w3-border datepicker setChildBirthDate inputSchoolEnrollment", pk, "ChildBirthDate w3-input w3-border ")
+				.a("class", "w3-input w3-border datepicker setChildBirthDate classSchoolEnrollment inputSchoolEnrollment", pk, "ChildBirthDate w3-input w3-border ")
 				.a("placeholder", "MM/DD/YYYY")
 				.a("data-timeformat", "MM/dd/yyyy")
 				.a("id", classApiMethodMethod, "_childBirthDate")
@@ -4170,10 +4177,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				.a("placeholder", "address")
 				.a("id", classApiMethodMethod, "_schoolAddress");
 				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-					a("class", "setSchoolAddress inputSchoolEnrollment", pk, "SchoolAddress w3-input w3-border ");
+					a("class", "setSchoolAddress classSchoolEnrollment inputSchoolEnrollment", pk, "SchoolAddress w3-input w3-border ");
 					a("name", "setSchoolAddress");
 				} else {
-					a("class", "valueSchoolAddress w3-input w3-border inputSchoolEnrollment", pk, "SchoolAddress w3-input w3-border ");
+					a("class", "valueSchoolAddress w3-input w3-border classSchoolEnrollment inputSchoolEnrollment", pk, "SchoolAddress w3-input w3-border ");
 					a("name", "schoolAddress");
 				}
 				if("Page".equals(classApiMethodMethod)) {
@@ -6252,10 +6259,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 					.a("id", classApiMethodMethod, "_enrollmentApproved");
 			}
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setEnrollmentApproved inputSchoolEnrollment", pk, "EnrollmentApproved w3-input w3-border ");
+				a("class", "setEnrollmentApproved classSchoolEnrollment inputSchoolEnrollment", pk, "EnrollmentApproved w3-input w3-border ");
 				a("name", "setEnrollmentApproved");
 			} else {
-				a("class", "valueEnrollmentApproved inputSchoolEnrollment", pk, "EnrollmentApproved w3-input w3-border ");
+				a("class", "valueEnrollmentApproved classSchoolEnrollment inputSchoolEnrollment", pk, "EnrollmentApproved w3-input w3-border ");
 				a("name", "enrollmentApproved");
 			}
 			if("Page".equals(classApiMethodMethod)) {
@@ -6384,10 +6391,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 					.a("id", classApiMethodMethod, "_enrollmentImmunizations");
 			}
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setEnrollmentImmunizations inputSchoolEnrollment", pk, "EnrollmentImmunizations w3-input w3-border ");
+				a("class", "setEnrollmentImmunizations classSchoolEnrollment inputSchoolEnrollment", pk, "EnrollmentImmunizations w3-input w3-border ");
 				a("name", "setEnrollmentImmunizations");
 			} else {
-				a("class", "valueEnrollmentImmunizations inputSchoolEnrollment", pk, "EnrollmentImmunizations w3-input w3-border ");
+				a("class", "valueEnrollmentImmunizations classSchoolEnrollment inputSchoolEnrollment", pk, "EnrollmentImmunizations w3-input w3-border ");
 				a("name", "enrollmentImmunizations");
 			}
 			if("Page".equals(classApiMethodMethod)) {
@@ -6516,10 +6523,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 					.a("id", classApiMethodMethod, "_familyMarried");
 			}
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setFamilyMarried inputSchoolEnrollment", pk, "FamilyMarried w3-input w3-border ");
+				a("class", "setFamilyMarried classSchoolEnrollment inputSchoolEnrollment", pk, "FamilyMarried w3-input w3-border ");
 				a("name", "setFamilyMarried");
 			} else {
-				a("class", "valueFamilyMarried inputSchoolEnrollment", pk, "FamilyMarried w3-input w3-border ");
+				a("class", "valueFamilyMarried classSchoolEnrollment inputSchoolEnrollment", pk, "FamilyMarried w3-input w3-border ");
 				a("name", "familyMarried");
 			}
 			if("Page".equals(classApiMethodMethod)) {
@@ -6648,10 +6655,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 					.a("id", classApiMethodMethod, "_familySeparated");
 			}
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setFamilySeparated inputSchoolEnrollment", pk, "FamilySeparated w3-input w3-border ");
+				a("class", "setFamilySeparated classSchoolEnrollment inputSchoolEnrollment", pk, "FamilySeparated w3-input w3-border ");
 				a("name", "setFamilySeparated");
 			} else {
-				a("class", "valueFamilySeparated inputSchoolEnrollment", pk, "FamilySeparated w3-input w3-border ");
+				a("class", "valueFamilySeparated classSchoolEnrollment inputSchoolEnrollment", pk, "FamilySeparated w3-input w3-border ");
 				a("name", "familySeparated");
 			}
 			if("Page".equals(classApiMethodMethod)) {
@@ -6780,10 +6787,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 					.a("id", classApiMethodMethod, "_familyDivorced");
 			}
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setFamilyDivorced inputSchoolEnrollment", pk, "FamilyDivorced w3-input w3-border ");
+				a("class", "setFamilyDivorced classSchoolEnrollment inputSchoolEnrollment", pk, "FamilyDivorced w3-input w3-border ");
 				a("name", "setFamilyDivorced");
 			} else {
-				a("class", "valueFamilyDivorced inputSchoolEnrollment", pk, "FamilyDivorced w3-input w3-border ");
+				a("class", "valueFamilyDivorced classSchoolEnrollment inputSchoolEnrollment", pk, "FamilyDivorced w3-input w3-border ");
 				a("name", "familyDivorced");
 			}
 			if("Page".equals(classApiMethodMethod)) {
@@ -6901,10 +6908,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				.a("placeholder", "family address")
 				.a("id", classApiMethodMethod, "_familyAddress");
 				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-					a("class", "setFamilyAddress inputSchoolEnrollment", pk, "FamilyAddress w3-input w3-border ");
+					a("class", "setFamilyAddress classSchoolEnrollment inputSchoolEnrollment", pk, "FamilyAddress w3-input w3-border ");
 					a("name", "setFamilyAddress");
 				} else {
-					a("class", "valueFamilyAddress w3-input w3-border inputSchoolEnrollment", pk, "FamilyAddress w3-input w3-border ");
+					a("class", "valueFamilyAddress w3-input w3-border classSchoolEnrollment inputSchoolEnrollment", pk, "FamilyAddress w3-input w3-border ");
 					a("name", "familyAddress");
 				}
 				if("Page".equals(classApiMethodMethod)) {
@@ -7031,10 +7038,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				.a("placeholder", "how do you know the school? ")
 				.a("id", classApiMethodMethod, "_familyHowDoYouKnowTheSchool");
 				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-					a("class", "setFamilyHowDoYouKnowTheSchool inputSchoolEnrollment", pk, "FamilyHowDoYouKnowTheSchool w3-input w3-border ");
+					a("class", "setFamilyHowDoYouKnowTheSchool classSchoolEnrollment inputSchoolEnrollment", pk, "FamilyHowDoYouKnowTheSchool w3-input w3-border ");
 					a("name", "setFamilyHowDoYouKnowTheSchool");
 				} else {
-					a("class", "valueFamilyHowDoYouKnowTheSchool w3-input w3-border inputSchoolEnrollment", pk, "FamilyHowDoYouKnowTheSchool w3-input w3-border ");
+					a("class", "valueFamilyHowDoYouKnowTheSchool w3-input w3-border classSchoolEnrollment inputSchoolEnrollment", pk, "FamilyHowDoYouKnowTheSchool w3-input w3-border ");
 					a("name", "familyHowDoYouKnowTheSchool");
 				}
 				if("Page".equals(classApiMethodMethod)) {
@@ -7161,10 +7168,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				.a("placeholder", "special considerations")
 				.a("id", classApiMethodMethod, "_enrollmentSpecialConsiderations");
 				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-					a("class", "setEnrollmentSpecialConsiderations inputSchoolEnrollment", pk, "EnrollmentSpecialConsiderations w3-input w3-border ");
+					a("class", "setEnrollmentSpecialConsiderations classSchoolEnrollment inputSchoolEnrollment", pk, "EnrollmentSpecialConsiderations w3-input w3-border ");
 					a("name", "setEnrollmentSpecialConsiderations");
 				} else {
-					a("class", "valueEnrollmentSpecialConsiderations w3-input w3-border inputSchoolEnrollment", pk, "EnrollmentSpecialConsiderations w3-input w3-border ");
+					a("class", "valueEnrollmentSpecialConsiderations w3-input w3-border classSchoolEnrollment inputSchoolEnrollment", pk, "EnrollmentSpecialConsiderations w3-input w3-border ");
 					a("name", "enrollmentSpecialConsiderations");
 				}
 				if("Page".equals(classApiMethodMethod)) {
@@ -7291,10 +7298,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				.a("placeholder", "medical conditions")
 				.a("id", classApiMethodMethod, "_childMedicalConditions");
 				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-					a("class", "setChildMedicalConditions inputSchoolEnrollment", pk, "ChildMedicalConditions w3-input w3-border ");
+					a("class", "setChildMedicalConditions classSchoolEnrollment inputSchoolEnrollment", pk, "ChildMedicalConditions w3-input w3-border ");
 					a("name", "setChildMedicalConditions");
 				} else {
-					a("class", "valueChildMedicalConditions w3-input w3-border inputSchoolEnrollment", pk, "ChildMedicalConditions w3-input w3-border ");
+					a("class", "valueChildMedicalConditions w3-input w3-border classSchoolEnrollment inputSchoolEnrollment", pk, "ChildMedicalConditions w3-input w3-border ");
 					a("name", "childMedicalConditions");
 				}
 				if("Page".equals(classApiMethodMethod)) {
@@ -7421,10 +7428,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				.a("placeholder", "schools previously attended")
 				.a("id", classApiMethodMethod, "_childPreviousSchoolsAttended");
 				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-					a("class", "setChildPreviousSchoolsAttended inputSchoolEnrollment", pk, "ChildPreviousSchoolsAttended w3-input w3-border ");
+					a("class", "setChildPreviousSchoolsAttended classSchoolEnrollment inputSchoolEnrollment", pk, "ChildPreviousSchoolsAttended w3-input w3-border ");
 					a("name", "setChildPreviousSchoolsAttended");
 				} else {
-					a("class", "valueChildPreviousSchoolsAttended w3-input w3-border inputSchoolEnrollment", pk, "ChildPreviousSchoolsAttended w3-input w3-border ");
+					a("class", "valueChildPreviousSchoolsAttended w3-input w3-border classSchoolEnrollment inputSchoolEnrollment", pk, "ChildPreviousSchoolsAttended w3-input w3-border ");
 					a("name", "childPreviousSchoolsAttended");
 				}
 				if("Page".equals(classApiMethodMethod)) {
@@ -7551,10 +7558,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				.a("placeholder", "description")
 				.a("id", classApiMethodMethod, "_childDescription");
 				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-					a("class", "setChildDescription inputSchoolEnrollment", pk, "ChildDescription w3-input w3-border ");
+					a("class", "setChildDescription classSchoolEnrollment inputSchoolEnrollment", pk, "ChildDescription w3-input w3-border ");
 					a("name", "setChildDescription");
 				} else {
-					a("class", "valueChildDescription w3-input w3-border inputSchoolEnrollment", pk, "ChildDescription w3-input w3-border ");
+					a("class", "valueChildDescription w3-input w3-border classSchoolEnrollment inputSchoolEnrollment", pk, "ChildDescription w3-input w3-border ");
 					a("name", "childDescription");
 				}
 				if("Page".equals(classApiMethodMethod)) {
@@ -7681,10 +7688,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				.a("placeholder", "objectives")
 				.a("id", classApiMethodMethod, "_childObjectives");
 				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-					a("class", "setChildObjectives inputSchoolEnrollment", pk, "ChildObjectives w3-input w3-border ");
+					a("class", "setChildObjectives classSchoolEnrollment inputSchoolEnrollment", pk, "ChildObjectives w3-input w3-border ");
 					a("name", "setChildObjectives");
 				} else {
-					a("class", "valueChildObjectives w3-input w3-border inputSchoolEnrollment", pk, "ChildObjectives w3-input w3-border ");
+					a("class", "valueChildObjectives w3-input w3-border classSchoolEnrollment inputSchoolEnrollment", pk, "ChildObjectives w3-input w3-border ");
 					a("name", "childObjectives");
 				}
 				if("Page".equals(classApiMethodMethod)) {
@@ -7822,10 +7829,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 					.a("id", classApiMethodMethod, "_childPottyTrained");
 			}
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setChildPottyTrained inputSchoolEnrollment", pk, "ChildPottyTrained w3-input w3-border ");
+				a("class", "setChildPottyTrained classSchoolEnrollment inputSchoolEnrollment", pk, "ChildPottyTrained w3-input w3-border ");
 				a("name", "setChildPottyTrained");
 			} else {
-				a("class", "valueChildPottyTrained inputSchoolEnrollment", pk, "ChildPottyTrained w3-input w3-border ");
+				a("class", "valueChildPottyTrained classSchoolEnrollment inputSchoolEnrollment", pk, "ChildPottyTrained w3-input w3-border ");
 				a("name", "childPottyTrained");
 			}
 			if("Page".equals(classApiMethodMethod)) {
@@ -7944,10 +7951,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				.a("placeholder", "group name")
 				.a("id", classApiMethodMethod, "_enrollmentGroupName");
 				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-					a("class", "setEnrollmentGroupName inputSchoolEnrollment", pk, "EnrollmentGroupName w3-input w3-border ");
+					a("class", "setEnrollmentGroupName classSchoolEnrollment inputSchoolEnrollment", pk, "EnrollmentGroupName w3-input w3-border ");
 					a("name", "setEnrollmentGroupName");
 				} else {
-					a("class", "valueEnrollmentGroupName w3-input w3-border inputSchoolEnrollment", pk, "EnrollmentGroupName w3-input w3-border ");
+					a("class", "valueEnrollmentGroupName w3-input w3-border classSchoolEnrollment inputSchoolEnrollment", pk, "EnrollmentGroupName w3-input w3-border ");
 					a("name", "enrollmentGroupName");
 				}
 				if("Page".equals(classApiMethodMethod)) {
@@ -8086,10 +8093,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 					.a("id", classApiMethodMethod, "_enrollmentPaymentEachMonth");
 			}
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setEnrollmentPaymentEachMonth inputSchoolEnrollment", pk, "EnrollmentPaymentEachMonth w3-input w3-border ");
+				a("class", "setEnrollmentPaymentEachMonth classSchoolEnrollment inputSchoolEnrollment", pk, "EnrollmentPaymentEachMonth w3-input w3-border ");
 				a("name", "setEnrollmentPaymentEachMonth");
 			} else {
-				a("class", "valueEnrollmentPaymentEachMonth inputSchoolEnrollment", pk, "EnrollmentPaymentEachMonth w3-input w3-border ");
+				a("class", "valueEnrollmentPaymentEachMonth classSchoolEnrollment inputSchoolEnrollment", pk, "EnrollmentPaymentEachMonth w3-input w3-border ");
 				a("name", "enrollmentPaymentEachMonth");
 			}
 			if("Page".equals(classApiMethodMethod)) {
@@ -8218,10 +8225,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 					.a("id", classApiMethodMethod, "_enrollmentPaymentComplete");
 			}
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setEnrollmentPaymentComplete inputSchoolEnrollment", pk, "EnrollmentPaymentComplete w3-input w3-border ");
+				a("class", "setEnrollmentPaymentComplete classSchoolEnrollment inputSchoolEnrollment", pk, "EnrollmentPaymentComplete w3-input w3-border ");
 				a("name", "setEnrollmentPaymentComplete");
 			} else {
-				a("class", "valueEnrollmentPaymentComplete inputSchoolEnrollment", pk, "EnrollmentPaymentComplete w3-input w3-border ");
+				a("class", "valueEnrollmentPaymentComplete classSchoolEnrollment inputSchoolEnrollment", pk, "EnrollmentPaymentComplete w3-input w3-border ");
 				a("name", "enrollmentPaymentComplete");
 			}
 			if("Page".equals(classApiMethodMethod)) {
@@ -8340,10 +8347,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				.a("placeholder", "customer profile ID")
 				.a("id", classApiMethodMethod, "_customerProfileId");
 				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-					a("class", "setCustomerProfileId inputSchoolEnrollment", pk, "CustomerProfileId w3-input w3-border ");
+					a("class", "setCustomerProfileId classSchoolEnrollment inputSchoolEnrollment", pk, "CustomerProfileId w3-input w3-border ");
 					a("name", "setCustomerProfileId");
 				} else {
-					a("class", "valueCustomerProfileId w3-input w3-border inputSchoolEnrollment", pk, "CustomerProfileId w3-input w3-border ");
+					a("class", "valueCustomerProfileId w3-input w3-border classSchoolEnrollment inputSchoolEnrollment", pk, "CustomerProfileId w3-input w3-border ");
 					a("name", "customerProfileId");
 				}
 				if("Page".equals(classApiMethodMethod)) {
@@ -8488,7 +8495,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		) {
 			e("input")
 				.a("type", "text")
-				.a("class", "w3-input w3-border datepicker setEnrollmentChargeDate inputSchoolEnrollment", pk, "EnrollmentChargeDate w3-input w3-border ")
+				.a("class", "w3-input w3-border datepicker setEnrollmentChargeDate classSchoolEnrollment inputSchoolEnrollment", pk, "EnrollmentChargeDate w3-input w3-border ")
 				.a("placeholder", "MM/DD/YYYY")
 				.a("data-timeformat", "MM/dd/yyyy")
 				.a("id", classApiMethodMethod, "_enrollmentChargeDate")
@@ -9374,7 +9381,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 		) {
-			e("div").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature1").f();
+			e("div").a("class", "signatureDiv1SchoolEnrollment_enrollmentSignature1").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature1").f();
 				e("div").a("id", "signatureInputSchoolEnrollment", pk, "enrollmentSignature1");
 					a("style", "display: ", StringUtils.isBlank(enrollmentSignature1) ? "block" : "none", "; ");
 				f().g("div");
@@ -9398,14 +9405,6 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 						s(" } ");
 					s("\"");
 					f().sx("Clear");
-				g("button");
-				e("button").a("id", "signatureButtonAcceptSchoolEnrollment", pk, "enrollmentSignature1");
-					a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
-					s(" onclick=", "\"");
-						s("var src = $('#signatureInputSchoolEnrollment", pk, "enrollmentSignature1').jSignature('getData', 'default'); "); 
-						s("patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentSignature1', src); ");
-					s("\"");
-					f().sx("Accept the signature");
 				g("button");
 			g("div");
 		} else {
@@ -9519,7 +9518,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 		) {
-			e("div").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature2").f();
+			e("div").a("class", "signatureDiv1SchoolEnrollment_enrollmentSignature2").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature2").f();
 				e("div").a("id", "signatureInputSchoolEnrollment", pk, "enrollmentSignature2");
 					a("style", "display: ", StringUtils.isBlank(enrollmentSignature2) ? "block" : "none", "; ");
 				f().g("div");
@@ -9543,14 +9542,6 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 						s(" } ");
 					s("\"");
 					f().sx("Clear");
-				g("button");
-				e("button").a("id", "signatureButtonAcceptSchoolEnrollment", pk, "enrollmentSignature2");
-					a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
-					s(" onclick=", "\"");
-						s("var src = $('#signatureInputSchoolEnrollment", pk, "enrollmentSignature2').jSignature('getData', 'default'); "); 
-						s("patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentSignature2', src); ");
-					s("\"");
-					f().sx("Accept the signature");
 				g("button");
 			g("div");
 		} else {
@@ -9664,7 +9655,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 		) {
-			e("div").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature3").f();
+			e("div").a("class", "signatureDiv1SchoolEnrollment_enrollmentSignature3").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature3").f();
 				e("div").a("id", "signatureInputSchoolEnrollment", pk, "enrollmentSignature3");
 					a("style", "display: ", StringUtils.isBlank(enrollmentSignature3) ? "block" : "none", "; ");
 				f().g("div");
@@ -9688,14 +9679,6 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 						s(" } ");
 					s("\"");
 					f().sx("Clear");
-				g("button");
-				e("button").a("id", "signatureButtonAcceptSchoolEnrollment", pk, "enrollmentSignature3");
-					a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
-					s(" onclick=", "\"");
-						s("var src = $('#signatureInputSchoolEnrollment", pk, "enrollmentSignature3').jSignature('getData', 'default'); "); 
-						s("patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentSignature3', src); ");
-					s("\"");
-					f().sx("Accept the signature");
 				g("button");
 			g("div");
 		} else {
@@ -9809,7 +9792,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 		) {
-			e("div").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature4").f();
+			e("div").a("class", "signatureDiv1SchoolEnrollment_enrollmentSignature4").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature4").f();
 				e("div").a("id", "signatureInputSchoolEnrollment", pk, "enrollmentSignature4");
 					a("style", "display: ", StringUtils.isBlank(enrollmentSignature4) ? "block" : "none", "; ");
 				f().g("div");
@@ -9833,14 +9816,6 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 						s(" } ");
 					s("\"");
 					f().sx("Clear");
-				g("button");
-				e("button").a("id", "signatureButtonAcceptSchoolEnrollment", pk, "enrollmentSignature4");
-					a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
-					s(" onclick=", "\"");
-						s("var src = $('#signatureInputSchoolEnrollment", pk, "enrollmentSignature4').jSignature('getData', 'default'); "); 
-						s("patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentSignature4', src); ");
-					s("\"");
-					f().sx("Accept the signature");
 				g("button");
 			g("div");
 		} else {
@@ -9954,7 +9929,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 		) {
-			e("div").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature5").f();
+			e("div").a("class", "signatureDiv1SchoolEnrollment_enrollmentSignature5").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature5").f();
 				e("div").a("id", "signatureInputSchoolEnrollment", pk, "enrollmentSignature5");
 					a("style", "display: ", StringUtils.isBlank(enrollmentSignature5) ? "block" : "none", "; ");
 				f().g("div");
@@ -9978,14 +9953,6 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 						s(" } ");
 					s("\"");
 					f().sx("Clear");
-				g("button");
-				e("button").a("id", "signatureButtonAcceptSchoolEnrollment", pk, "enrollmentSignature5");
-					a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
-					s(" onclick=", "\"");
-						s("var src = $('#signatureInputSchoolEnrollment", pk, "enrollmentSignature5').jSignature('getData', 'default'); "); 
-						s("patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentSignature5', src); ");
-					s("\"");
-					f().sx("Accept the signature");
 				g("button");
 			g("div");
 		} else {
@@ -10099,7 +10066,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 		) {
-			e("div").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature6").f();
+			e("div").a("class", "signatureDiv1SchoolEnrollment_enrollmentSignature6").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature6").f();
 				e("div").a("id", "signatureInputSchoolEnrollment", pk, "enrollmentSignature6");
 					a("style", "display: ", StringUtils.isBlank(enrollmentSignature6) ? "block" : "none", "; ");
 				f().g("div");
@@ -10123,14 +10090,6 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 						s(" } ");
 					s("\"");
 					f().sx("Clear");
-				g("button");
-				e("button").a("id", "signatureButtonAcceptSchoolEnrollment", pk, "enrollmentSignature6");
-					a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
-					s(" onclick=", "\"");
-						s("var src = $('#signatureInputSchoolEnrollment", pk, "enrollmentSignature6').jSignature('getData', 'default'); "); 
-						s("patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentSignature6', src); ");
-					s("\"");
-					f().sx("Accept the signature");
 				g("button");
 			g("div");
 		} else {
@@ -10244,7 +10203,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 		) {
-			e("div").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature7").f();
+			e("div").a("class", "signatureDiv1SchoolEnrollment_enrollmentSignature7").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature7").f();
 				e("div").a("id", "signatureInputSchoolEnrollment", pk, "enrollmentSignature7");
 					a("style", "display: ", StringUtils.isBlank(enrollmentSignature7) ? "block" : "none", "; ");
 				f().g("div");
@@ -10268,14 +10227,6 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 						s(" } ");
 					s("\"");
 					f().sx("Clear");
-				g("button");
-				e("button").a("id", "signatureButtonAcceptSchoolEnrollment", pk, "enrollmentSignature7");
-					a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
-					s(" onclick=", "\"");
-						s("var src = $('#signatureInputSchoolEnrollment", pk, "enrollmentSignature7').jSignature('getData', 'default'); "); 
-						s("patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentSignature7', src); ");
-					s("\"");
-					f().sx("Accept the signature");
 				g("button");
 			g("div");
 		} else {
@@ -10389,7 +10340,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 		) {
-			e("div").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature8").f();
+			e("div").a("class", "signatureDiv1SchoolEnrollment_enrollmentSignature8").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature8").f();
 				e("div").a("id", "signatureInputSchoolEnrollment", pk, "enrollmentSignature8");
 					a("style", "display: ", StringUtils.isBlank(enrollmentSignature8) ? "block" : "none", "; ");
 				f().g("div");
@@ -10413,14 +10364,6 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 						s(" } ");
 					s("\"");
 					f().sx("Clear");
-				g("button");
-				e("button").a("id", "signatureButtonAcceptSchoolEnrollment", pk, "enrollmentSignature8");
-					a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
-					s(" onclick=", "\"");
-						s("var src = $('#signatureInputSchoolEnrollment", pk, "enrollmentSignature8').jSignature('getData', 'default'); "); 
-						s("patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentSignature8', src); ");
-					s("\"");
-					f().sx("Accept the signature");
 				g("button");
 			g("div");
 		} else {
@@ -10534,7 +10477,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 		) {
-			e("div").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature9").f();
+			e("div").a("class", "signatureDiv1SchoolEnrollment_enrollmentSignature9").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature9").f();
 				e("div").a("id", "signatureInputSchoolEnrollment", pk, "enrollmentSignature9");
 					a("style", "display: ", StringUtils.isBlank(enrollmentSignature9) ? "block" : "none", "; ");
 				f().g("div");
@@ -10558,14 +10501,6 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 						s(" } ");
 					s("\"");
 					f().sx("Clear");
-				g("button");
-				e("button").a("id", "signatureButtonAcceptSchoolEnrollment", pk, "enrollmentSignature9");
-					a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
-					s(" onclick=", "\"");
-						s("var src = $('#signatureInputSchoolEnrollment", pk, "enrollmentSignature9').jSignature('getData', 'default'); "); 
-						s("patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentSignature9', src); ");
-					s("\"");
-					f().sx("Accept the signature");
 				g("button");
 			g("div");
 		} else {
@@ -10679,7 +10614,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 		) {
-			e("div").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature10").f();
+			e("div").a("class", "signatureDiv1SchoolEnrollment_enrollmentSignature10").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature10").f();
 				e("div").a("id", "signatureInputSchoolEnrollment", pk, "enrollmentSignature10");
 					a("style", "display: ", StringUtils.isBlank(enrollmentSignature10) ? "block" : "none", "; ");
 				f().g("div");
@@ -10703,14 +10638,6 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 						s(" } ");
 					s("\"");
 					f().sx("Clear");
-				g("button");
-				e("button").a("id", "signatureButtonAcceptSchoolEnrollment", pk, "enrollmentSignature10");
-					a("class", "w3-btn w3-round w3-border w3-border-black w3-section w3-ripple w3-padding w3-margin ");
-					s(" onclick=", "\"");
-						s("var src = $('#signatureInputSchoolEnrollment", pk, "enrollmentSignature10').jSignature('getData', 'default'); "); 
-						s("patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentSignature10', src); ");
-					s("\"");
-					f().sx("Accept the signature");
 				g("button");
 			g("div");
 		} else {
@@ -10845,7 +10772,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		) {
 			e("input")
 				.a("type", "text")
-				.a("class", "w3-input w3-border datepicker setEnrollmentDate1 inputSchoolEnrollment", pk, "EnrollmentDate1 w3-input w3-border ")
+				.a("class", "w3-input w3-border datepicker setEnrollmentDate1 classSchoolEnrollment inputSchoolEnrollment", pk, "EnrollmentDate1 w3-input w3-border ")
 				.a("placeholder", "MM/DD/YYYY")
 				.a("data-timeformat", "MM/dd/yyyy")
 				.a("id", classApiMethodMethod, "_enrollmentDate1")
@@ -10984,7 +10911,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		) {
 			e("input")
 				.a("type", "text")
-				.a("class", "w3-input w3-border datepicker setEnrollmentDate2 inputSchoolEnrollment", pk, "EnrollmentDate2 w3-input w3-border ")
+				.a("class", "w3-input w3-border datepicker setEnrollmentDate2 classSchoolEnrollment inputSchoolEnrollment", pk, "EnrollmentDate2 w3-input w3-border ")
 				.a("placeholder", "MM/DD/YYYY")
 				.a("data-timeformat", "MM/dd/yyyy")
 				.a("id", classApiMethodMethod, "_enrollmentDate2")
@@ -11123,7 +11050,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		) {
 			e("input")
 				.a("type", "text")
-				.a("class", "w3-input w3-border datepicker setEnrollmentDate3 inputSchoolEnrollment", pk, "EnrollmentDate3 w3-input w3-border ")
+				.a("class", "w3-input w3-border datepicker setEnrollmentDate3 classSchoolEnrollment inputSchoolEnrollment", pk, "EnrollmentDate3 w3-input w3-border ")
 				.a("placeholder", "MM/DD/YYYY")
 				.a("data-timeformat", "MM/dd/yyyy")
 				.a("id", classApiMethodMethod, "_enrollmentDate3")
@@ -11262,7 +11189,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		) {
 			e("input")
 				.a("type", "text")
-				.a("class", "w3-input w3-border datepicker setEnrollmentDate4 inputSchoolEnrollment", pk, "EnrollmentDate4 w3-input w3-border ")
+				.a("class", "w3-input w3-border datepicker setEnrollmentDate4 classSchoolEnrollment inputSchoolEnrollment", pk, "EnrollmentDate4 w3-input w3-border ")
 				.a("placeholder", "MM/DD/YYYY")
 				.a("data-timeformat", "MM/dd/yyyy")
 				.a("id", classApiMethodMethod, "_enrollmentDate4")
@@ -11401,7 +11328,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		) {
 			e("input")
 				.a("type", "text")
-				.a("class", "w3-input w3-border datepicker setEnrollmentDate5 inputSchoolEnrollment", pk, "EnrollmentDate5 w3-input w3-border ")
+				.a("class", "w3-input w3-border datepicker setEnrollmentDate5 classSchoolEnrollment inputSchoolEnrollment", pk, "EnrollmentDate5 w3-input w3-border ")
 				.a("placeholder", "MM/DD/YYYY")
 				.a("data-timeformat", "MM/dd/yyyy")
 				.a("id", classApiMethodMethod, "_enrollmentDate5")
@@ -11540,7 +11467,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		) {
 			e("input")
 				.a("type", "text")
-				.a("class", "w3-input w3-border datepicker setEnrollmentDate6 inputSchoolEnrollment", pk, "EnrollmentDate6 w3-input w3-border ")
+				.a("class", "w3-input w3-border datepicker setEnrollmentDate6 classSchoolEnrollment inputSchoolEnrollment", pk, "EnrollmentDate6 w3-input w3-border ")
 				.a("placeholder", "MM/DD/YYYY")
 				.a("data-timeformat", "MM/dd/yyyy")
 				.a("id", classApiMethodMethod, "_enrollmentDate6")
@@ -11679,7 +11606,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		) {
 			e("input")
 				.a("type", "text")
-				.a("class", "w3-input w3-border datepicker setEnrollmentDate7 inputSchoolEnrollment", pk, "EnrollmentDate7 w3-input w3-border ")
+				.a("class", "w3-input w3-border datepicker setEnrollmentDate7 classSchoolEnrollment inputSchoolEnrollment", pk, "EnrollmentDate7 w3-input w3-border ")
 				.a("placeholder", "MM/DD/YYYY")
 				.a("data-timeformat", "MM/dd/yyyy")
 				.a("id", classApiMethodMethod, "_enrollmentDate7")
@@ -11818,7 +11745,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		) {
 			e("input")
 				.a("type", "text")
-				.a("class", "w3-input w3-border datepicker setEnrollmentDate8 inputSchoolEnrollment", pk, "EnrollmentDate8 w3-input w3-border ")
+				.a("class", "w3-input w3-border datepicker setEnrollmentDate8 classSchoolEnrollment inputSchoolEnrollment", pk, "EnrollmentDate8 w3-input w3-border ")
 				.a("placeholder", "MM/DD/YYYY")
 				.a("data-timeformat", "MM/dd/yyyy")
 				.a("id", classApiMethodMethod, "_enrollmentDate8")
@@ -11957,7 +11884,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		) {
 			e("input")
 				.a("type", "text")
-				.a("class", "w3-input w3-border datepicker setEnrollmentDate9 inputSchoolEnrollment", pk, "EnrollmentDate9 w3-input w3-border ")
+				.a("class", "w3-input w3-border datepicker setEnrollmentDate9 classSchoolEnrollment inputSchoolEnrollment", pk, "EnrollmentDate9 w3-input w3-border ")
 				.a("placeholder", "MM/DD/YYYY")
 				.a("data-timeformat", "MM/dd/yyyy")
 				.a("id", classApiMethodMethod, "_enrollmentDate9")
@@ -12096,7 +12023,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		) {
 			e("input")
 				.a("type", "text")
-				.a("class", "w3-input w3-border datepicker setEnrollmentDate10 inputSchoolEnrollment", pk, "EnrollmentDate10 w3-input w3-border ")
+				.a("class", "w3-input w3-border datepicker setEnrollmentDate10 classSchoolEnrollment inputSchoolEnrollment", pk, "EnrollmentDate10 w3-input w3-border ")
 				.a("placeholder", "MM/DD/YYYY")
 				.a("data-timeformat", "MM/dd/yyyy")
 				.a("id", classApiMethodMethod, "_enrollmentDate10")

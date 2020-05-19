@@ -380,7 +380,8 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
-											.a("onclick", "postBlocScolaireVals({ ageCle: [ \"", pk, "\" ] }, function() { patchAgeScolaireVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "blocCles')); });")
+											.a("id", classeApiMethodeMethode, "_blocCles_ajouter")
+											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Envoi…'; postBlocScolaireVals({ ageCle: [ \"", pk, "\" ] }, function() {}, function() { ajouterErreur($('#", classeApiMethodeMethode, "blocCles')); });")
 											.f().sx("ajouter un bloc")
 										.g("button");
 									} g("div");
@@ -858,7 +859,8 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-											.a("onclick", "postSessionScolaireVals({ ageCles: [ \"", pk, "\" ] }, function() { patchAgeScolaireVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "sessionCle')); });")
+											.a("id", classeApiMethodeMethode, "_sessionCle_ajouter")
+											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Envoi…'; postSessionScolaireVals({ ageCles: [ \"", pk, "\" ] }, function() {}, function() { ajouterErreur($('#", classeApiMethodeMethode, "sessionCle')); });")
 											.f().sx("ajouter une session")
 										.g("button");
 									} g("div");
@@ -1412,10 +1414,10 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 				.a("title", "L'année scolaire de la saison scolaire. ")
 				.a("id", classeApiMethodeMethode, "_ecoleAddresse");
 				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-					a("class", "setEcoleAddresse inputAgeScolaire", pk, "EcoleAddresse w3-input w3-border ");
+					a("class", "setEcoleAddresse classAgeScolaire inputAgeScolaire", pk, "EcoleAddresse w3-input w3-border ");
 					a("name", "setEcoleAddresse");
 				} else {
-					a("class", "valeurEcoleAddresse w3-input w3-border inputAgeScolaire", pk, "EcoleAddresse w3-input w3-border ");
+					a("class", "valeurEcoleAddresse w3-input w3-border classAgeScolaire inputAgeScolaire", pk, "EcoleAddresse w3-input w3-border ");
 					a("name", "ecoleAddresse");
 				}
 				if("Page".equals(classeApiMethodeMethode)) {
@@ -2445,10 +2447,10 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 				.a("title", "L'année scolaire de la saison scolaire. ")
 				.a("id", classeApiMethodeMethode, "_ageDebut");
 				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-					a("class", "setAgeDebut inputAgeScolaire", pk, "AgeDebut w3-input w3-border ");
+					a("class", "setAgeDebut classAgeScolaire inputAgeScolaire", pk, "AgeDebut w3-input w3-border ");
 					a("name", "setAgeDebut");
 				} else {
-					a("class", "valeurAgeDebut w3-input w3-border inputAgeScolaire", pk, "AgeDebut w3-input w3-border ");
+					a("class", "valeurAgeDebut w3-input w3-border classAgeScolaire inputAgeScolaire", pk, "AgeDebut w3-input w3-border ");
 					a("name", "ageDebut");
 				}
 				if("Page".equals(classeApiMethodeMethode)) {
@@ -2573,10 +2575,10 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 				.a("title", "L'année scolaire de la saison scolaire. ")
 				.a("id", classeApiMethodeMethode, "_ageFin");
 				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-					a("class", "setAgeFin inputAgeScolaire", pk, "AgeFin w3-input w3-border ");
+					a("class", "setAgeFin classAgeScolaire inputAgeScolaire", pk, "AgeFin w3-input w3-border ");
 					a("name", "setAgeFin");
 				} else {
-					a("class", "valeurAgeFin w3-input w3-border inputAgeScolaire", pk, "AgeFin w3-input w3-border ");
+					a("class", "valeurAgeFin w3-input w3-border classAgeScolaire inputAgeScolaire", pk, "AgeFin w3-input w3-border ");
 					a("name", "ageFin");
 				}
 				if("Page".equals(classeApiMethodeMethode)) {

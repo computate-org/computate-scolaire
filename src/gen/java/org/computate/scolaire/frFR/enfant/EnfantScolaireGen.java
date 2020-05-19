@@ -302,7 +302,8 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ")
-											.a("onclick", "postInscriptionScolaireVals({ enfantCle: \"", pk, "\" }, function() { patchEnfantScolaireVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "inscriptionCles')); });")
+											.a("id", classeApiMethodeMethode, "_inscriptionCles_ajouter")
+											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Envoi…'; postInscriptionScolaireVals({ enfantCle: \"", pk, "\" }, function() {}, function() { ajouterErreur($('#", classeApiMethodeMethode, "inscriptionCles')); });")
 											.f().sx("ajouter une inscription")
 										.g("button");
 									} g("div");
@@ -1136,10 +1137,10 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 				.a("placeholder", "prénom")
 				.a("id", classeApiMethodeMethode, "_personnePrenom");
 				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-					a("class", "setPersonnePrenom inputEnfantScolaire", pk, "PersonnePrenom w3-input w3-border ");
+					a("class", "setPersonnePrenom classEnfantScolaire inputEnfantScolaire", pk, "PersonnePrenom w3-input w3-border ");
 					a("name", "setPersonnePrenom");
 				} else {
-					a("class", "valeurPersonnePrenom w3-input w3-border inputEnfantScolaire", pk, "PersonnePrenom w3-input w3-border ");
+					a("class", "valeurPersonnePrenom w3-input w3-border classEnfantScolaire inputEnfantScolaire", pk, "PersonnePrenom w3-input w3-border ");
 					a("name", "personnePrenom");
 				}
 				if("Page".equals(classeApiMethodeMethode)) {
@@ -1268,10 +1269,10 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 				.a("placeholder", "prénom préferé")
 				.a("id", classeApiMethodeMethode, "_personnePrenomPrefere");
 				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-					a("class", "setPersonnePrenomPrefere inputEnfantScolaire", pk, "PersonnePrenomPrefere w3-input w3-border ");
+					a("class", "setPersonnePrenomPrefere classEnfantScolaire inputEnfantScolaire", pk, "PersonnePrenomPrefere w3-input w3-border ");
 					a("name", "setPersonnePrenomPrefere");
 				} else {
-					a("class", "valeurPersonnePrenomPrefere w3-input w3-border inputEnfantScolaire", pk, "PersonnePrenomPrefere w3-input w3-border ");
+					a("class", "valeurPersonnePrenomPrefere w3-input w3-border classEnfantScolaire inputEnfantScolaire", pk, "PersonnePrenomPrefere w3-input w3-border ");
 					a("name", "personnePrenomPrefere");
 				}
 				if("Page".equals(classeApiMethodeMethode)) {
@@ -1400,10 +1401,10 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 				.a("placeholder", "nom de famille")
 				.a("id", classeApiMethodeMethode, "_familleNom");
 				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-					a("class", "setFamilleNom inputEnfantScolaire", pk, "FamilleNom w3-input w3-border ");
+					a("class", "setFamilleNom classEnfantScolaire inputEnfantScolaire", pk, "FamilleNom w3-input w3-border ");
 					a("name", "setFamilleNom");
 				} else {
-					a("class", "valeurFamilleNom w3-input w3-border inputEnfantScolaire", pk, "FamilleNom w3-input w3-border ");
+					a("class", "valeurFamilleNom w3-input w3-border classEnfantScolaire inputEnfantScolaire", pk, "FamilleNom w3-input w3-border ");
 					a("name", "familleNom");
 				}
 				if("Page".equals(classeApiMethodeMethode)) {
@@ -1734,7 +1735,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 		) {
 			e("input")
 				.a("type", "text")
-				.a("class", "w3-input w3-border datepicker setPersonneDateNaissance inputEnfantScolaire", pk, "PersonneDateNaissance w3-input w3-border ")
+				.a("class", "w3-input w3-border datepicker setPersonneDateNaissance classEnfantScolaire inputEnfantScolaire", pk, "PersonneDateNaissance w3-input w3-border ")
 				.a("placeholder", "DD-MM-YYYY")
 				.a("data-timeformat", "dd-MM-yyyy")
 				.a("id", classeApiMethodeMethode, "_personneDateNaissance")

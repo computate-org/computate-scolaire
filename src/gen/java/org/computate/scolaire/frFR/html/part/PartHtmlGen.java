@@ -283,7 +283,8 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-khaki ")
-											.a("onclick", "postDesignPageVals({ partHtmlCles: [ \"", pk, "\" ] }, function() { patchPartHtmlVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "designPageCles')); });")
+											.a("id", classeApiMethodeMethode, "_designPageCles_ajouter")
+											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Envoi…'; postDesignPageVals({ partHtmlCles: [ \"", pk, "\" ] }, function() {}, function() { ajouterErreur($('#", classeApiMethodeMethode, "designPageCles')); });")
 											.f().sx("ajouter un design de page")
 										.g("button");
 									} g("div");
@@ -366,10 +367,10 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				.a("placeholder", "lien")
 				.a("id", classeApiMethodeMethode, "_htmlLien");
 				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-					a("class", "setHtmlLien inputPartHtml", pk, "HtmlLien w3-input w3-border ");
+					a("class", "setHtmlLien classPartHtml inputPartHtml", pk, "HtmlLien w3-input w3-border ");
 					a("name", "setHtmlLien");
 				} else {
-					a("class", "valeurHtmlLien w3-input w3-border inputPartHtml", pk, "HtmlLien w3-input w3-border ");
+					a("class", "valeurHtmlLien w3-input w3-border classPartHtml inputPartHtml", pk, "HtmlLien w3-input w3-border ");
 					a("name", "htmlLien");
 				}
 				if("Page".equals(classeApiMethodeMethode)) {
@@ -486,10 +487,10 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				.a("placeholder", "HTML élément")
 				.a("id", classeApiMethodeMethode, "_htmlElement");
 				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-					a("class", "setHtmlElement inputPartHtml", pk, "HtmlElement w3-input w3-border ");
+					a("class", "setHtmlElement classPartHtml inputPartHtml", pk, "HtmlElement w3-input w3-border ");
 					a("name", "setHtmlElement");
 				} else {
-					a("class", "valeurHtmlElement w3-input w3-border inputPartHtml", pk, "HtmlElement w3-input w3-border ");
+					a("class", "valeurHtmlElement w3-input w3-border classPartHtml inputPartHtml", pk, "HtmlElement w3-input w3-border ");
 					a("name", "htmlElement");
 				}
 				if("Page".equals(classeApiMethodeMethode)) {
@@ -606,10 +607,10 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				.a("placeholder", "HTML ID")
 				.a("id", classeApiMethodeMethode, "_htmlId");
 				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-					a("class", "setHtmlId inputPartHtml", pk, "HtmlId w3-input w3-border ");
+					a("class", "setHtmlId classPartHtml inputPartHtml", pk, "HtmlId w3-input w3-border ");
 					a("name", "setHtmlId");
 				} else {
-					a("class", "valeurHtmlId w3-input w3-border inputPartHtml", pk, "HtmlId w3-input w3-border ");
+					a("class", "valeurHtmlId w3-input w3-border classPartHtml inputPartHtml", pk, "HtmlId w3-input w3-border ");
 					a("name", "htmlId");
 				}
 				if("Page".equals(classeApiMethodeMethode)) {
@@ -726,10 +727,10 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				.a("placeholder", "HTML classes")
 				.a("id", classeApiMethodeMethode, "_htmlClasses");
 				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-					a("class", "setHtmlClasses inputPartHtml", pk, "HtmlClasses w3-input w3-border ");
+					a("class", "setHtmlClasses classPartHtml inputPartHtml", pk, "HtmlClasses w3-input w3-border ");
 					a("name", "setHtmlClasses");
 				} else {
-					a("class", "valeurHtmlClasses w3-input w3-border inputPartHtml", pk, "HtmlClasses w3-input w3-border ");
+					a("class", "valeurHtmlClasses w3-input w3-border classPartHtml inputPartHtml", pk, "HtmlClasses w3-input w3-border ");
 					a("name", "htmlClasses");
 				}
 				if("Page".equals(classeApiMethodeMethode)) {
@@ -846,10 +847,10 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				.a("placeholder", "HTML style")
 				.a("id", classeApiMethodeMethode, "_htmlStyle");
 				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-					a("class", "setHtmlStyle inputPartHtml", pk, "HtmlStyle w3-input w3-border ");
+					a("class", "setHtmlStyle classPartHtml inputPartHtml", pk, "HtmlStyle w3-input w3-border ");
 					a("name", "setHtmlStyle");
 				} else {
-					a("class", "valeurHtmlStyle w3-input w3-border inputPartHtml", pk, "HtmlStyle w3-input w3-border ");
+					a("class", "valeurHtmlStyle w3-input w3-border classPartHtml inputPartHtml", pk, "HtmlStyle w3-input w3-border ");
 					a("name", "htmlStyle");
 				}
 				if("Page".equals(classeApiMethodeMethode)) {
@@ -965,10 +966,10 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				.a("placeholder", "HTML avant")
 				.a("id", classeApiMethodeMethode, "_htmlAvant");
 				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-					a("class", "setHtmlAvant inputPartHtml", pk, "HtmlAvant w3-input w3-border ");
+					a("class", "setHtmlAvant classPartHtml inputPartHtml", pk, "HtmlAvant w3-input w3-border ");
 					a("name", "setHtmlAvant");
 				} else {
-					a("class", "valeurHtmlAvant w3-input w3-border inputPartHtml", pk, "HtmlAvant w3-input w3-border ");
+					a("class", "valeurHtmlAvant w3-input w3-border classPartHtml inputPartHtml", pk, "HtmlAvant w3-input w3-border ");
 					a("name", "htmlAvant");
 				}
 				if("Page".equals(classeApiMethodeMethode)) {
@@ -1083,10 +1084,10 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				.a("placeholder", "HTML après")
 				.a("id", classeApiMethodeMethode, "_htmlApres");
 				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-					a("class", "setHtmlApres inputPartHtml", pk, "HtmlApres w3-input w3-border ");
+					a("class", "setHtmlApres classPartHtml inputPartHtml", pk, "HtmlApres w3-input w3-border ");
 					a("name", "setHtmlApres");
 				} else {
-					a("class", "valeurHtmlApres w3-input w3-border inputPartHtml", pk, "HtmlApres w3-input w3-border ");
+					a("class", "valeurHtmlApres w3-input w3-border classPartHtml inputPartHtml", pk, "HtmlApres w3-input w3-border ");
 					a("name", "htmlApres");
 				}
 				if("Page".equals(classeApiMethodeMethode)) {
@@ -1201,10 +1202,10 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				.a("placeholder", "texte")
 				.a("id", classeApiMethodeMethode, "_htmlTexte");
 				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-					a("class", "setHtmlTexte inputPartHtml", pk, "HtmlTexte w3-input w3-border ");
+					a("class", "setHtmlTexte classPartHtml inputPartHtml", pk, "HtmlTexte w3-input w3-border ");
 					a("name", "setHtmlTexte");
 				} else {
-					a("class", "valeurHtmlTexte w3-input w3-border inputPartHtml", pk, "HtmlTexte w3-input w3-border ");
+					a("class", "valeurHtmlTexte w3-input w3-border classPartHtml inputPartHtml", pk, "HtmlTexte w3-input w3-border ");
 					a("name", "htmlTexte");
 				}
 				if("Page".equals(classeApiMethodeMethode)) {
@@ -1320,10 +1321,10 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				.a("placeholder", "var")
 				.a("id", classeApiMethodeMethode, "_htmlVar");
 				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-					a("class", "setHtmlVar inputPartHtml", pk, "HtmlVar w3-input w3-border ");
+					a("class", "setHtmlVar classPartHtml inputPartHtml", pk, "HtmlVar w3-input w3-border ");
 					a("name", "setHtmlVar");
 				} else {
-					a("class", "valeurHtmlVar w3-input w3-border inputPartHtml", pk, "HtmlVar w3-input w3-border ");
+					a("class", "valeurHtmlVar w3-input w3-border classPartHtml inputPartHtml", pk, "HtmlVar w3-input w3-border ");
 					a("name", "htmlVar");
 				}
 				if("Page".equals(classeApiMethodeMethode)) {
@@ -1440,10 +1441,10 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				.a("placeholder", "var span")
 				.a("id", classeApiMethodeMethode, "_htmlVarSpan");
 				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-					a("class", "setHtmlVarSpan inputPartHtml", pk, "HtmlVarSpan w3-input w3-border ");
+					a("class", "setHtmlVarSpan classPartHtml inputPartHtml", pk, "HtmlVarSpan w3-input w3-border ");
 					a("name", "setHtmlVarSpan");
 				} else {
-					a("class", "valeurHtmlVarSpan w3-input w3-border inputPartHtml", pk, "HtmlVarSpan w3-input w3-border ");
+					a("class", "valeurHtmlVarSpan w3-input w3-border classPartHtml inputPartHtml", pk, "HtmlVarSpan w3-input w3-border ");
 					a("name", "htmlVarSpan");
 				}
 				if("Page".equals(classeApiMethodeMethode)) {
@@ -1560,10 +1561,10 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				.a("placeholder", "var form")
 				.a("id", classeApiMethodeMethode, "_htmlVarForm");
 				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-					a("class", "setHtmlVarForm inputPartHtml", pk, "HtmlVarForm w3-input w3-border ");
+					a("class", "setHtmlVarForm classPartHtml inputPartHtml", pk, "HtmlVarForm w3-input w3-border ");
 					a("name", "setHtmlVarForm");
 				} else {
-					a("class", "valeurHtmlVarForm w3-input w3-border inputPartHtml", pk, "HtmlVarForm w3-input w3-border ");
+					a("class", "valeurHtmlVarForm w3-input w3-border classPartHtml inputPartHtml", pk, "HtmlVarForm w3-input w3-border ");
 					a("name", "htmlVarForm");
 				}
 				if("Page".equals(classeApiMethodeMethode)) {
@@ -1680,10 +1681,10 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				.a("placeholder", "var input")
 				.a("id", classeApiMethodeMethode, "_htmlVarInput");
 				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-					a("class", "setHtmlVarInput inputPartHtml", pk, "HtmlVarInput w3-input w3-border ");
+					a("class", "setHtmlVarInput classPartHtml inputPartHtml", pk, "HtmlVarInput w3-input w3-border ");
 					a("name", "setHtmlVarInput");
 				} else {
-					a("class", "valeurHtmlVarInput w3-input w3-border inputPartHtml", pk, "HtmlVarInput w3-input w3-border ");
+					a("class", "valeurHtmlVarInput w3-input w3-border classPartHtml inputPartHtml", pk, "HtmlVarInput w3-input w3-border ");
 					a("name", "htmlVarInput");
 				}
 				if("Page".equals(classeApiMethodeMethode)) {
@@ -1800,10 +1801,10 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				.a("placeholder", "var for each")
 				.a("id", classeApiMethodeMethode, "_htmlVarForEach");
 				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-					a("class", "setHtmlVarForEach inputPartHtml", pk, "HtmlVarForEach w3-input w3-border ");
+					a("class", "setHtmlVarForEach classPartHtml inputPartHtml", pk, "HtmlVarForEach w3-input w3-border ");
 					a("name", "setHtmlVarForEach");
 				} else {
-					a("class", "valeurHtmlVarForEach w3-input w3-border inputPartHtml", pk, "HtmlVarForEach w3-input w3-border ");
+					a("class", "valeurHtmlVarForEach w3-input w3-border classPartHtml inputPartHtml", pk, "HtmlVarForEach w3-input w3-border ");
 					a("name", "htmlVarForEach");
 				}
 				if("Page".equals(classeApiMethodeMethode)) {
@@ -1930,10 +1931,10 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 					.a("id", classeApiMethodeMethode, "_htmlExclure");
 			}
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setHtmlExclure inputPartHtml", pk, "HtmlExclure w3-input w3-border ");
+				a("class", "setHtmlExclure classPartHtml inputPartHtml", pk, "HtmlExclure w3-input w3-border ");
 				a("name", "setHtmlExclure");
 			} else {
-				a("class", "valeurHtmlExclure inputPartHtml", pk, "HtmlExclure w3-input w3-border ");
+				a("class", "valeurHtmlExclure classPartHtml inputPartHtml", pk, "HtmlExclure w3-input w3-border ");
 				a("name", "htmlExclure");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
@@ -2055,10 +2056,10 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 					.a("id", classeApiMethodeMethode, "_pdfExclure");
 			}
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setPdfExclure inputPartHtml", pk, "PdfExclure w3-input w3-border ");
+				a("class", "setPdfExclure classPartHtml inputPartHtml", pk, "PdfExclure w3-input w3-border ");
 				a("name", "setPdfExclure");
 			} else {
-				a("class", "valeurPdfExclure inputPartHtml", pk, "PdfExclure w3-input w3-border ");
+				a("class", "valeurPdfExclure classPartHtml inputPartHtml", pk, "PdfExclure w3-input w3-border ");
 				a("name", "pdfExclure");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
@@ -2180,10 +2181,10 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 					.a("id", classeApiMethodeMethode, "_connecterDeconnecter");
 			}
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setConnecterDeconnecter inputPartHtml", pk, "ConnecterDeconnecter w3-input w3-border ");
+				a("class", "setConnecterDeconnecter classPartHtml inputPartHtml", pk, "ConnecterDeconnecter w3-input w3-border ");
 				a("name", "setConnecterDeconnecter");
 			} else {
-				a("class", "valeurConnecterDeconnecter inputPartHtml", pk, "ConnecterDeconnecter w3-input w3-border ");
+				a("class", "valeurConnecterDeconnecter classPartHtml inputPartHtml", pk, "ConnecterDeconnecter w3-input w3-border ");
 				a("name", "connecterDeconnecter");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
@@ -2302,10 +2303,10 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				.a("placeholder", "tri1")
 				.a("id", classeApiMethodeMethode, "_tri1");
 				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-					a("class", "setTri1 inputPartHtml", pk, "Tri1 w3-input w3-border ");
+					a("class", "setTri1 classPartHtml inputPartHtml", pk, "Tri1 w3-input w3-border ");
 					a("name", "setTri1");
 				} else {
-					a("class", "valeurTri1 w3-input w3-border inputPartHtml", pk, "Tri1 w3-input w3-border ");
+					a("class", "valeurTri1 w3-input w3-border classPartHtml inputPartHtml", pk, "Tri1 w3-input w3-border ");
 					a("name", "tri1");
 				}
 				if("Page".equals(classeApiMethodeMethode)) {
@@ -2429,10 +2430,10 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				.a("placeholder", "tri2")
 				.a("id", classeApiMethodeMethode, "_tri2");
 				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-					a("class", "setTri2 inputPartHtml", pk, "Tri2 w3-input w3-border ");
+					a("class", "setTri2 classPartHtml inputPartHtml", pk, "Tri2 w3-input w3-border ");
 					a("name", "setTri2");
 				} else {
-					a("class", "valeurTri2 w3-input w3-border inputPartHtml", pk, "Tri2 w3-input w3-border ");
+					a("class", "valeurTri2 w3-input w3-border classPartHtml inputPartHtml", pk, "Tri2 w3-input w3-border ");
 					a("name", "tri2");
 				}
 				if("Page".equals(classeApiMethodeMethode)) {
@@ -2556,10 +2557,10 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				.a("placeholder", "tri3")
 				.a("id", classeApiMethodeMethode, "_tri3");
 				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-					a("class", "setTri3 inputPartHtml", pk, "Tri3 w3-input w3-border ");
+					a("class", "setTri3 classPartHtml inputPartHtml", pk, "Tri3 w3-input w3-border ");
 					a("name", "setTri3");
 				} else {
-					a("class", "valeurTri3 w3-input w3-border inputPartHtml", pk, "Tri3 w3-input w3-border ");
+					a("class", "valeurTri3 w3-input w3-border classPartHtml inputPartHtml", pk, "Tri3 w3-input w3-border ");
 					a("name", "tri3");
 				}
 				if("Page".equals(classeApiMethodeMethode)) {
@@ -2683,10 +2684,10 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				.a("placeholder", "tri4")
 				.a("id", classeApiMethodeMethode, "_tri4");
 				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-					a("class", "setTri4 inputPartHtml", pk, "Tri4 w3-input w3-border ");
+					a("class", "setTri4 classPartHtml inputPartHtml", pk, "Tri4 w3-input w3-border ");
 					a("name", "setTri4");
 				} else {
-					a("class", "valeurTri4 w3-input w3-border inputPartHtml", pk, "Tri4 w3-input w3-border ");
+					a("class", "valeurTri4 w3-input w3-border classPartHtml inputPartHtml", pk, "Tri4 w3-input w3-border ");
 					a("name", "tri4");
 				}
 				if("Page".equals(classeApiMethodeMethode)) {
@@ -2810,10 +2811,10 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				.a("placeholder", "tri5")
 				.a("id", classeApiMethodeMethode, "_tri5");
 				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-					a("class", "setTri5 inputPartHtml", pk, "Tri5 w3-input w3-border ");
+					a("class", "setTri5 classPartHtml inputPartHtml", pk, "Tri5 w3-input w3-border ");
 					a("name", "setTri5");
 				} else {
-					a("class", "valeurTri5 w3-input w3-border inputPartHtml", pk, "Tri5 w3-input w3-border ");
+					a("class", "valeurTri5 w3-input w3-border classPartHtml inputPartHtml", pk, "Tri5 w3-input w3-border ");
 					a("name", "tri5");
 				}
 				if("Page".equals(classeApiMethodeMethode)) {
@@ -2937,10 +2938,10 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				.a("placeholder", "tri6")
 				.a("id", classeApiMethodeMethode, "_tri6");
 				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-					a("class", "setTri6 inputPartHtml", pk, "Tri6 w3-input w3-border ");
+					a("class", "setTri6 classPartHtml inputPartHtml", pk, "Tri6 w3-input w3-border ");
 					a("name", "setTri6");
 				} else {
-					a("class", "valeurTri6 w3-input w3-border inputPartHtml", pk, "Tri6 w3-input w3-border ");
+					a("class", "valeurTri6 w3-input w3-border classPartHtml inputPartHtml", pk, "Tri6 w3-input w3-border ");
 					a("name", "tri6");
 				}
 				if("Page".equals(classeApiMethodeMethode)) {
@@ -3064,10 +3065,10 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				.a("placeholder", "tri7")
 				.a("id", classeApiMethodeMethode, "_tri7");
 				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-					a("class", "setTri7 inputPartHtml", pk, "Tri7 w3-input w3-border ");
+					a("class", "setTri7 classPartHtml inputPartHtml", pk, "Tri7 w3-input w3-border ");
 					a("name", "setTri7");
 				} else {
-					a("class", "valeurTri7 w3-input w3-border inputPartHtml", pk, "Tri7 w3-input w3-border ");
+					a("class", "valeurTri7 w3-input w3-border classPartHtml inputPartHtml", pk, "Tri7 w3-input w3-border ");
 					a("name", "tri7");
 				}
 				if("Page".equals(classeApiMethodeMethode)) {
@@ -3191,10 +3192,10 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				.a("placeholder", "tri8")
 				.a("id", classeApiMethodeMethode, "_tri8");
 				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-					a("class", "setTri8 inputPartHtml", pk, "Tri8 w3-input w3-border ");
+					a("class", "setTri8 classPartHtml inputPartHtml", pk, "Tri8 w3-input w3-border ");
 					a("name", "setTri8");
 				} else {
-					a("class", "valeurTri8 w3-input w3-border inputPartHtml", pk, "Tri8 w3-input w3-border ");
+					a("class", "valeurTri8 w3-input w3-border classPartHtml inputPartHtml", pk, "Tri8 w3-input w3-border ");
 					a("name", "tri8");
 				}
 				if("Page".equals(classeApiMethodeMethode)) {
@@ -3318,10 +3319,10 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				.a("placeholder", "tri9")
 				.a("id", classeApiMethodeMethode, "_tri9");
 				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-					a("class", "setTri9 inputPartHtml", pk, "Tri9 w3-input w3-border ");
+					a("class", "setTri9 classPartHtml inputPartHtml", pk, "Tri9 w3-input w3-border ");
 					a("name", "setTri9");
 				} else {
-					a("class", "valeurTri9 w3-input w3-border inputPartHtml", pk, "Tri9 w3-input w3-border ");
+					a("class", "valeurTri9 w3-input w3-border classPartHtml inputPartHtml", pk, "Tri9 w3-input w3-border ");
 					a("name", "tri9");
 				}
 				if("Page".equals(classeApiMethodeMethode)) {
@@ -3445,10 +3446,10 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				.a("placeholder", "tri10")
 				.a("id", classeApiMethodeMethode, "_tri10");
 				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-					a("class", "setTri10 inputPartHtml", pk, "Tri10 w3-input w3-border ");
+					a("class", "setTri10 classPartHtml inputPartHtml", pk, "Tri10 w3-input w3-border ");
 					a("name", "setTri10");
 				} else {
-					a("class", "valeurTri10 w3-input w3-border inputPartHtml", pk, "Tri10 w3-input w3-border ");
+					a("class", "valeurTri10 w3-input w3-border classPartHtml inputPartHtml", pk, "Tri10 w3-input w3-border ");
 					a("name", "tri10");
 				}
 				if("Page".equals(classeApiMethodeMethode)) {

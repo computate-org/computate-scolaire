@@ -364,7 +364,8 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ")
-											.a("onclick", "postInscriptionScolaireVals({ blocCles: [ \"", pk, "\" ] }, function() { patchBlocScolaireVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "inscriptionCles')); });")
+											.a("id", classeApiMethodeMethode, "_inscriptionCles_ajouter")
+											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Envoi…'; postInscriptionScolaireVals({ blocCles: [ \"", pk, "\" ] }, function() {}, function() { ajouterErreur($('#", classeApiMethodeMethode, "inscriptionCles')); });")
 											.f().sx("ajouter une inscription")
 										.g("button");
 									} g("div");
@@ -1047,7 +1048,8 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue ")
-											.a("onclick", "postAgeScolaireVals({ blocCles: [ \"", pk, "\" ] }, function() { patchBlocScolaireVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "ageCle')); });")
+											.a("id", classeApiMethodeMethode, "_ageCle_ajouter")
+											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Envoi…'; postAgeScolaireVals({ blocCles: [ \"", pk, "\" ] }, function() {}, function() { ajouterErreur($('#", classeApiMethodeMethode, "ageCle')); });")
 											.f().sx("ajouter un âge")
 										.g("button");
 									} g("div");
@@ -1670,10 +1672,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 				.a("title", "L'année scolaire de la saison scolaire. ")
 				.a("id", classeApiMethodeMethode, "_ecoleAddresse");
 				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-					a("class", "setEcoleAddresse inputBlocScolaire", pk, "EcoleAddresse w3-input w3-border ");
+					a("class", "setEcoleAddresse classBlocScolaire inputBlocScolaire", pk, "EcoleAddresse w3-input w3-border ");
 					a("name", "setEcoleAddresse");
 				} else {
-					a("class", "valeurEcoleAddresse w3-input w3-border inputBlocScolaire", pk, "EcoleAddresse w3-input w3-border ");
+					a("class", "valeurEcoleAddresse w3-input w3-border classBlocScolaire inputBlocScolaire", pk, "EcoleAddresse w3-input w3-border ");
 					a("name", "ecoleAddresse");
 				}
 				if("Page".equals(classeApiMethodeMethode)) {
@@ -2902,7 +2904,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		{
 			e("input")
 				.a("type", "text")
-				.a("class", "w3-input w3-border timepicker setBlocHeureDebut inputBlocScolaire", pk, "BlocHeureDebut w3-input w3-border ")
+				.a("class", "w3-input w3-border timepicker setBlocHeureDebut classBlocScolaire inputBlocScolaire", pk, "BlocHeureDebut w3-input w3-border ")
 				.a("placeholder", "HH:MM")
 				.a("id", classeApiMethodeMethode, "_blocHeureDebut")
 				.a("onclick", "enleverLueur($(this)); ")
@@ -3022,7 +3024,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		{
 			e("input")
 				.a("type", "text")
-				.a("class", "w3-input w3-border timepicker setBlocHeureFin inputBlocScolaire", pk, "BlocHeureFin w3-input w3-border ")
+				.a("class", "w3-input w3-border timepicker setBlocHeureFin classBlocScolaire inputBlocScolaire", pk, "BlocHeureFin w3-input w3-border ")
 				.a("placeholder", "HH:MM")
 				.a("id", classeApiMethodeMethode, "_blocHeureFin")
 				.a("onclick", "enleverLueur($(this)); ")
@@ -3154,10 +3156,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 				.a("title", "L'année scolaire de la saison scolaire. ")
 				.a("id", classeApiMethodeMethode, "_blocPrixParMois");
 				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-					a("class", "setBlocPrixParMois inputBlocScolaire", pk, "BlocPrixParMois w3-input w3-border ");
+					a("class", "setBlocPrixParMois classBlocScolaire inputBlocScolaire", pk, "BlocPrixParMois w3-input w3-border ");
 					a("name", "setBlocPrixParMois");
 				} else {
-					a("class", "valeurBlocPrixParMois w3-input w3-border inputBlocScolaire", pk, "BlocPrixParMois w3-input w3-border ");
+					a("class", "valeurBlocPrixParMois w3-input w3-border classBlocScolaire inputBlocScolaire", pk, "BlocPrixParMois w3-input w3-border ");
 					a("name", "blocPrixParMois");
 				}
 				if("Page".equals(classeApiMethodeMethode)) {
@@ -3351,10 +3353,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 					.a("id", classeApiMethodeMethode, "_blocLundi");
 			}
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setBlocLundi inputBlocScolaire", pk, "BlocLundi w3-input w3-border ");
+				a("class", "setBlocLundi classBlocScolaire inputBlocScolaire", pk, "BlocLundi w3-input w3-border ");
 				a("name", "setBlocLundi");
 			} else {
-				a("class", "valeurBlocLundi inputBlocScolaire", pk, "BlocLundi w3-input w3-border ");
+				a("class", "valeurBlocLundi classBlocScolaire inputBlocScolaire", pk, "BlocLundi w3-input w3-border ");
 				a("name", "blocLundi");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
@@ -3476,10 +3478,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 					.a("id", classeApiMethodeMethode, "_blocMardi");
 			}
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setBlocMardi inputBlocScolaire", pk, "BlocMardi w3-input w3-border ");
+				a("class", "setBlocMardi classBlocScolaire inputBlocScolaire", pk, "BlocMardi w3-input w3-border ");
 				a("name", "setBlocMardi");
 			} else {
-				a("class", "valeurBlocMardi inputBlocScolaire", pk, "BlocMardi w3-input w3-border ");
+				a("class", "valeurBlocMardi classBlocScolaire inputBlocScolaire", pk, "BlocMardi w3-input w3-border ");
 				a("name", "blocMardi");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
@@ -3601,10 +3603,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 					.a("id", classeApiMethodeMethode, "_blocMercredi");
 			}
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setBlocMercredi inputBlocScolaire", pk, "BlocMercredi w3-input w3-border ");
+				a("class", "setBlocMercredi classBlocScolaire inputBlocScolaire", pk, "BlocMercredi w3-input w3-border ");
 				a("name", "setBlocMercredi");
 			} else {
-				a("class", "valeurBlocMercredi inputBlocScolaire", pk, "BlocMercredi w3-input w3-border ");
+				a("class", "valeurBlocMercredi classBlocScolaire inputBlocScolaire", pk, "BlocMercredi w3-input w3-border ");
 				a("name", "blocMercredi");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
@@ -3726,10 +3728,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 					.a("id", classeApiMethodeMethode, "_blocJeudi");
 			}
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setBlocJeudi inputBlocScolaire", pk, "BlocJeudi w3-input w3-border ");
+				a("class", "setBlocJeudi classBlocScolaire inputBlocScolaire", pk, "BlocJeudi w3-input w3-border ");
 				a("name", "setBlocJeudi");
 			} else {
-				a("class", "valeurBlocJeudi inputBlocScolaire", pk, "BlocJeudi w3-input w3-border ");
+				a("class", "valeurBlocJeudi classBlocScolaire inputBlocScolaire", pk, "BlocJeudi w3-input w3-border ");
 				a("name", "blocJeudi");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
@@ -3851,10 +3853,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 					.a("id", classeApiMethodeMethode, "_blocVendredi");
 			}
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setBlocVendredi inputBlocScolaire", pk, "BlocVendredi w3-input w3-border ");
+				a("class", "setBlocVendredi classBlocScolaire inputBlocScolaire", pk, "BlocVendredi w3-input w3-border ");
 				a("name", "setBlocVendredi");
 			} else {
-				a("class", "valeurBlocVendredi inputBlocScolaire", pk, "BlocVendredi w3-input w3-border ");
+				a("class", "valeurBlocVendredi classBlocScolaire inputBlocScolaire", pk, "BlocVendredi w3-input w3-border ");
 				a("name", "blocVendredi");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {

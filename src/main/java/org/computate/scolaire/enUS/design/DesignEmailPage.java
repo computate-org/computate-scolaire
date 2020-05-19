@@ -186,8 +186,8 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 			l.setQuery("*:*");
 
 			StringBuilder fq = new StringBuilder();
-			fq.append("pageDesignKeys_indexed_longs:").append(pageDesign.getPk());
-			for(Long k : pageDesign.getParentDesignKeys())
+			fq.append("pageDesignKeys_indexed_longs:").append(emailDesign.getPk());
+			for(Long k : emailDesign.getParentDesignKeys())
 				fq.append(" OR pageDesignKeys_indexed_longs:").append(k);
 
 			l.addFilterQuery(fq.toString());
@@ -268,8 +268,8 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 			l.setQuery("*:*");
 
 			StringBuilder fq = new StringBuilder();
-			fq.append("pageDesignKeys_indexed_longs:").append(pageDesign.getPk());
-			for(Long k : pageDesign.getParentDesignKeys())
+			fq.append("pageDesignKeys_indexed_longs:").append(attachmentDesign.getPk());
+			for(Long k : attachmentDesign.getParentDesignKeys())
 				fq.append(" OR pageDesignKeys_indexed_longs:").append(k);
 
 			l.addFilterQuery(fq.toString());

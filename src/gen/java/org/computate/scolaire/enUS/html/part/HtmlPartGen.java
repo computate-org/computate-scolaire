@@ -282,7 +282,8 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-khaki ")
-											.a("onclick", "postPageDesignVals({ htmlPartKeys: [ \"", pk, "\" ] }, function() { patchHtmlPartVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "pageDesignKeys')); });")
+											.a("id", classApiMethodMethod, "_pageDesignKeys_add")
+											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Sending…'; postPageDesignVals({ htmlPartKeys: [ \"", pk, "\" ] }, function() {}, function() { addError($('#", classApiMethodMethod, "pageDesignKeys')); });")
 											.f().sx("add a page design")
 										.g("button");
 									} g("div");
@@ -365,10 +366,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				.a("placeholder", "link")
 				.a("id", classApiMethodMethod, "_htmlLink");
 				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-					a("class", "setHtmlLink inputHtmlPart", pk, "HtmlLink w3-input w3-border ");
+					a("class", "setHtmlLink classHtmlPart inputHtmlPart", pk, "HtmlLink w3-input w3-border ");
 					a("name", "setHtmlLink");
 				} else {
-					a("class", "valueHtmlLink w3-input w3-border inputHtmlPart", pk, "HtmlLink w3-input w3-border ");
+					a("class", "valueHtmlLink w3-input w3-border classHtmlPart inputHtmlPart", pk, "HtmlLink w3-input w3-border ");
 					a("name", "htmlLink");
 				}
 				if("Page".equals(classApiMethodMethod)) {
@@ -485,10 +486,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				.a("placeholder", "HTML element")
 				.a("id", classApiMethodMethod, "_htmlElement");
 				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-					a("class", "setHtmlElement inputHtmlPart", pk, "HtmlElement w3-input w3-border ");
+					a("class", "setHtmlElement classHtmlPart inputHtmlPart", pk, "HtmlElement w3-input w3-border ");
 					a("name", "setHtmlElement");
 				} else {
-					a("class", "valueHtmlElement w3-input w3-border inputHtmlPart", pk, "HtmlElement w3-input w3-border ");
+					a("class", "valueHtmlElement w3-input w3-border classHtmlPart inputHtmlPart", pk, "HtmlElement w3-input w3-border ");
 					a("name", "htmlElement");
 				}
 				if("Page".equals(classApiMethodMethod)) {
@@ -605,10 +606,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				.a("placeholder", "HTML ID")
 				.a("id", classApiMethodMethod, "_htmlId");
 				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-					a("class", "setHtmlId inputHtmlPart", pk, "HtmlId w3-input w3-border ");
+					a("class", "setHtmlId classHtmlPart inputHtmlPart", pk, "HtmlId w3-input w3-border ");
 					a("name", "setHtmlId");
 				} else {
-					a("class", "valueHtmlId w3-input w3-border inputHtmlPart", pk, "HtmlId w3-input w3-border ");
+					a("class", "valueHtmlId w3-input w3-border classHtmlPart inputHtmlPart", pk, "HtmlId w3-input w3-border ");
 					a("name", "htmlId");
 				}
 				if("Page".equals(classApiMethodMethod)) {
@@ -725,10 +726,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				.a("placeholder", "HTML classes")
 				.a("id", classApiMethodMethod, "_htmlClasses");
 				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-					a("class", "setHtmlClasses inputHtmlPart", pk, "HtmlClasses w3-input w3-border ");
+					a("class", "setHtmlClasses classHtmlPart inputHtmlPart", pk, "HtmlClasses w3-input w3-border ");
 					a("name", "setHtmlClasses");
 				} else {
-					a("class", "valueHtmlClasses w3-input w3-border inputHtmlPart", pk, "HtmlClasses w3-input w3-border ");
+					a("class", "valueHtmlClasses w3-input w3-border classHtmlPart inputHtmlPart", pk, "HtmlClasses w3-input w3-border ");
 					a("name", "htmlClasses");
 				}
 				if("Page".equals(classApiMethodMethod)) {
@@ -845,10 +846,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				.a("placeholder", "HTML style")
 				.a("id", classApiMethodMethod, "_htmlStyle");
 				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-					a("class", "setHtmlStyle inputHtmlPart", pk, "HtmlStyle w3-input w3-border ");
+					a("class", "setHtmlStyle classHtmlPart inputHtmlPart", pk, "HtmlStyle w3-input w3-border ");
 					a("name", "setHtmlStyle");
 				} else {
-					a("class", "valueHtmlStyle w3-input w3-border inputHtmlPart", pk, "HtmlStyle w3-input w3-border ");
+					a("class", "valueHtmlStyle w3-input w3-border classHtmlPart inputHtmlPart", pk, "HtmlStyle w3-input w3-border ");
 					a("name", "htmlStyle");
 				}
 				if("Page".equals(classApiMethodMethod)) {
@@ -964,10 +965,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				.a("placeholder", "HTML before")
 				.a("id", classApiMethodMethod, "_htmlBefore");
 				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-					a("class", "setHtmlBefore inputHtmlPart", pk, "HtmlBefore w3-input w3-border ");
+					a("class", "setHtmlBefore classHtmlPart inputHtmlPart", pk, "HtmlBefore w3-input w3-border ");
 					a("name", "setHtmlBefore");
 				} else {
-					a("class", "valueHtmlBefore w3-input w3-border inputHtmlPart", pk, "HtmlBefore w3-input w3-border ");
+					a("class", "valueHtmlBefore w3-input w3-border classHtmlPart inputHtmlPart", pk, "HtmlBefore w3-input w3-border ");
 					a("name", "htmlBefore");
 				}
 				if("Page".equals(classApiMethodMethod)) {
@@ -1082,10 +1083,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				.a("placeholder", "HTML after")
 				.a("id", classApiMethodMethod, "_htmlAfter");
 				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-					a("class", "setHtmlAfter inputHtmlPart", pk, "HtmlAfter w3-input w3-border ");
+					a("class", "setHtmlAfter classHtmlPart inputHtmlPart", pk, "HtmlAfter w3-input w3-border ");
 					a("name", "setHtmlAfter");
 				} else {
-					a("class", "valueHtmlAfter w3-input w3-border inputHtmlPart", pk, "HtmlAfter w3-input w3-border ");
+					a("class", "valueHtmlAfter w3-input w3-border classHtmlPart inputHtmlPart", pk, "HtmlAfter w3-input w3-border ");
 					a("name", "htmlAfter");
 				}
 				if("Page".equals(classApiMethodMethod)) {
@@ -1200,10 +1201,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				.a("placeholder", "text")
 				.a("id", classApiMethodMethod, "_htmlText");
 				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-					a("class", "setHtmlText inputHtmlPart", pk, "HtmlText w3-input w3-border ");
+					a("class", "setHtmlText classHtmlPart inputHtmlPart", pk, "HtmlText w3-input w3-border ");
 					a("name", "setHtmlText");
 				} else {
-					a("class", "valueHtmlText w3-input w3-border inputHtmlPart", pk, "HtmlText w3-input w3-border ");
+					a("class", "valueHtmlText w3-input w3-border classHtmlPart inputHtmlPart", pk, "HtmlText w3-input w3-border ");
 					a("name", "htmlText");
 				}
 				if("Page".equals(classApiMethodMethod)) {
@@ -1319,10 +1320,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				.a("placeholder", "var")
 				.a("id", classApiMethodMethod, "_htmlVar");
 				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-					a("class", "setHtmlVar inputHtmlPart", pk, "HtmlVar w3-input w3-border ");
+					a("class", "setHtmlVar classHtmlPart inputHtmlPart", pk, "HtmlVar w3-input w3-border ");
 					a("name", "setHtmlVar");
 				} else {
-					a("class", "valueHtmlVar w3-input w3-border inputHtmlPart", pk, "HtmlVar w3-input w3-border ");
+					a("class", "valueHtmlVar w3-input w3-border classHtmlPart inputHtmlPart", pk, "HtmlVar w3-input w3-border ");
 					a("name", "htmlVar");
 				}
 				if("Page".equals(classApiMethodMethod)) {
@@ -1439,10 +1440,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				.a("placeholder", "var span")
 				.a("id", classApiMethodMethod, "_htmlVarSpan");
 				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-					a("class", "setHtmlVarSpan inputHtmlPart", pk, "HtmlVarSpan w3-input w3-border ");
+					a("class", "setHtmlVarSpan classHtmlPart inputHtmlPart", pk, "HtmlVarSpan w3-input w3-border ");
 					a("name", "setHtmlVarSpan");
 				} else {
-					a("class", "valueHtmlVarSpan w3-input w3-border inputHtmlPart", pk, "HtmlVarSpan w3-input w3-border ");
+					a("class", "valueHtmlVarSpan w3-input w3-border classHtmlPart inputHtmlPart", pk, "HtmlVarSpan w3-input w3-border ");
 					a("name", "htmlVarSpan");
 				}
 				if("Page".equals(classApiMethodMethod)) {
@@ -1559,10 +1560,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				.a("placeholder", "var form")
 				.a("id", classApiMethodMethod, "_htmlVarForm");
 				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-					a("class", "setHtmlVarForm inputHtmlPart", pk, "HtmlVarForm w3-input w3-border ");
+					a("class", "setHtmlVarForm classHtmlPart inputHtmlPart", pk, "HtmlVarForm w3-input w3-border ");
 					a("name", "setHtmlVarForm");
 				} else {
-					a("class", "valueHtmlVarForm w3-input w3-border inputHtmlPart", pk, "HtmlVarForm w3-input w3-border ");
+					a("class", "valueHtmlVarForm w3-input w3-border classHtmlPart inputHtmlPart", pk, "HtmlVarForm w3-input w3-border ");
 					a("name", "htmlVarForm");
 				}
 				if("Page".equals(classApiMethodMethod)) {
@@ -1679,10 +1680,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				.a("placeholder", "var input")
 				.a("id", classApiMethodMethod, "_htmlVarInput");
 				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-					a("class", "setHtmlVarInput inputHtmlPart", pk, "HtmlVarInput w3-input w3-border ");
+					a("class", "setHtmlVarInput classHtmlPart inputHtmlPart", pk, "HtmlVarInput w3-input w3-border ");
 					a("name", "setHtmlVarInput");
 				} else {
-					a("class", "valueHtmlVarInput w3-input w3-border inputHtmlPart", pk, "HtmlVarInput w3-input w3-border ");
+					a("class", "valueHtmlVarInput w3-input w3-border classHtmlPart inputHtmlPart", pk, "HtmlVarInput w3-input w3-border ");
 					a("name", "htmlVarInput");
 				}
 				if("Page".equals(classApiMethodMethod)) {
@@ -1799,10 +1800,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				.a("placeholder", "var for each")
 				.a("id", classApiMethodMethod, "_htmlVarForEach");
 				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-					a("class", "setHtmlVarForEach inputHtmlPart", pk, "HtmlVarForEach w3-input w3-border ");
+					a("class", "setHtmlVarForEach classHtmlPart inputHtmlPart", pk, "HtmlVarForEach w3-input w3-border ");
 					a("name", "setHtmlVarForEach");
 				} else {
-					a("class", "valueHtmlVarForEach w3-input w3-border inputHtmlPart", pk, "HtmlVarForEach w3-input w3-border ");
+					a("class", "valueHtmlVarForEach w3-input w3-border classHtmlPart inputHtmlPart", pk, "HtmlVarForEach w3-input w3-border ");
 					a("name", "htmlVarForEach");
 				}
 				if("Page".equals(classApiMethodMethod)) {
@@ -1929,10 +1930,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 					.a("id", classApiMethodMethod, "_htmlExclude");
 			}
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setHtmlExclude inputHtmlPart", pk, "HtmlExclude w3-input w3-border ");
+				a("class", "setHtmlExclude classHtmlPart inputHtmlPart", pk, "HtmlExclude w3-input w3-border ");
 				a("name", "setHtmlExclude");
 			} else {
-				a("class", "valueHtmlExclude inputHtmlPart", pk, "HtmlExclude w3-input w3-border ");
+				a("class", "valueHtmlExclude classHtmlPart inputHtmlPart", pk, "HtmlExclude w3-input w3-border ");
 				a("name", "htmlExclude");
 			}
 			if("Page".equals(classApiMethodMethod)) {
@@ -2054,10 +2055,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 					.a("id", classApiMethodMethod, "_pdfExclude");
 			}
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setPdfExclude inputHtmlPart", pk, "PdfExclude w3-input w3-border ");
+				a("class", "setPdfExclude classHtmlPart inputHtmlPart", pk, "PdfExclude w3-input w3-border ");
 				a("name", "setPdfExclude");
 			} else {
-				a("class", "valuePdfExclude inputHtmlPart", pk, "PdfExclude w3-input w3-border ");
+				a("class", "valuePdfExclude classHtmlPart inputHtmlPart", pk, "PdfExclude w3-input w3-border ");
 				a("name", "pdfExclude");
 			}
 			if("Page".equals(classApiMethodMethod)) {
@@ -2179,10 +2180,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 					.a("id", classApiMethodMethod, "_loginLogout");
 			}
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setLoginLogout inputHtmlPart", pk, "LoginLogout w3-input w3-border ");
+				a("class", "setLoginLogout classHtmlPart inputHtmlPart", pk, "LoginLogout w3-input w3-border ");
 				a("name", "setLoginLogout");
 			} else {
-				a("class", "valueLoginLogout inputHtmlPart", pk, "LoginLogout w3-input w3-border ");
+				a("class", "valueLoginLogout classHtmlPart inputHtmlPart", pk, "LoginLogout w3-input w3-border ");
 				a("name", "loginLogout");
 			}
 			if("Page".equals(classApiMethodMethod)) {
@@ -2301,10 +2302,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				.a("placeholder", "sort1")
 				.a("id", classApiMethodMethod, "_sort1");
 				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-					a("class", "setSort1 inputHtmlPart", pk, "Sort1 w3-input w3-border ");
+					a("class", "setSort1 classHtmlPart inputHtmlPart", pk, "Sort1 w3-input w3-border ");
 					a("name", "setSort1");
 				} else {
-					a("class", "valueSort1 w3-input w3-border inputHtmlPart", pk, "Sort1 w3-input w3-border ");
+					a("class", "valueSort1 w3-input w3-border classHtmlPart inputHtmlPart", pk, "Sort1 w3-input w3-border ");
 					a("name", "sort1");
 				}
 				if("Page".equals(classApiMethodMethod)) {
@@ -2428,10 +2429,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				.a("placeholder", "sort2")
 				.a("id", classApiMethodMethod, "_sort2");
 				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-					a("class", "setSort2 inputHtmlPart", pk, "Sort2 w3-input w3-border ");
+					a("class", "setSort2 classHtmlPart inputHtmlPart", pk, "Sort2 w3-input w3-border ");
 					a("name", "setSort2");
 				} else {
-					a("class", "valueSort2 w3-input w3-border inputHtmlPart", pk, "Sort2 w3-input w3-border ");
+					a("class", "valueSort2 w3-input w3-border classHtmlPart inputHtmlPart", pk, "Sort2 w3-input w3-border ");
 					a("name", "sort2");
 				}
 				if("Page".equals(classApiMethodMethod)) {
@@ -2555,10 +2556,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				.a("placeholder", "sort3")
 				.a("id", classApiMethodMethod, "_sort3");
 				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-					a("class", "setSort3 inputHtmlPart", pk, "Sort3 w3-input w3-border ");
+					a("class", "setSort3 classHtmlPart inputHtmlPart", pk, "Sort3 w3-input w3-border ");
 					a("name", "setSort3");
 				} else {
-					a("class", "valueSort3 w3-input w3-border inputHtmlPart", pk, "Sort3 w3-input w3-border ");
+					a("class", "valueSort3 w3-input w3-border classHtmlPart inputHtmlPart", pk, "Sort3 w3-input w3-border ");
 					a("name", "sort3");
 				}
 				if("Page".equals(classApiMethodMethod)) {
@@ -2682,10 +2683,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				.a("placeholder", "sort4")
 				.a("id", classApiMethodMethod, "_sort4");
 				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-					a("class", "setSort4 inputHtmlPart", pk, "Sort4 w3-input w3-border ");
+					a("class", "setSort4 classHtmlPart inputHtmlPart", pk, "Sort4 w3-input w3-border ");
 					a("name", "setSort4");
 				} else {
-					a("class", "valueSort4 w3-input w3-border inputHtmlPart", pk, "Sort4 w3-input w3-border ");
+					a("class", "valueSort4 w3-input w3-border classHtmlPart inputHtmlPart", pk, "Sort4 w3-input w3-border ");
 					a("name", "sort4");
 				}
 				if("Page".equals(classApiMethodMethod)) {
@@ -2809,10 +2810,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				.a("placeholder", "sort5")
 				.a("id", classApiMethodMethod, "_sort5");
 				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-					a("class", "setSort5 inputHtmlPart", pk, "Sort5 w3-input w3-border ");
+					a("class", "setSort5 classHtmlPart inputHtmlPart", pk, "Sort5 w3-input w3-border ");
 					a("name", "setSort5");
 				} else {
-					a("class", "valueSort5 w3-input w3-border inputHtmlPart", pk, "Sort5 w3-input w3-border ");
+					a("class", "valueSort5 w3-input w3-border classHtmlPart inputHtmlPart", pk, "Sort5 w3-input w3-border ");
 					a("name", "sort5");
 				}
 				if("Page".equals(classApiMethodMethod)) {
@@ -2936,10 +2937,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				.a("placeholder", "sort6")
 				.a("id", classApiMethodMethod, "_sort6");
 				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-					a("class", "setSort6 inputHtmlPart", pk, "Sort6 w3-input w3-border ");
+					a("class", "setSort6 classHtmlPart inputHtmlPart", pk, "Sort6 w3-input w3-border ");
 					a("name", "setSort6");
 				} else {
-					a("class", "valueSort6 w3-input w3-border inputHtmlPart", pk, "Sort6 w3-input w3-border ");
+					a("class", "valueSort6 w3-input w3-border classHtmlPart inputHtmlPart", pk, "Sort6 w3-input w3-border ");
 					a("name", "sort6");
 				}
 				if("Page".equals(classApiMethodMethod)) {
@@ -3063,10 +3064,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				.a("placeholder", "sort7")
 				.a("id", classApiMethodMethod, "_sort7");
 				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-					a("class", "setSort7 inputHtmlPart", pk, "Sort7 w3-input w3-border ");
+					a("class", "setSort7 classHtmlPart inputHtmlPart", pk, "Sort7 w3-input w3-border ");
 					a("name", "setSort7");
 				} else {
-					a("class", "valueSort7 w3-input w3-border inputHtmlPart", pk, "Sort7 w3-input w3-border ");
+					a("class", "valueSort7 w3-input w3-border classHtmlPart inputHtmlPart", pk, "Sort7 w3-input w3-border ");
 					a("name", "sort7");
 				}
 				if("Page".equals(classApiMethodMethod)) {
@@ -3190,10 +3191,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				.a("placeholder", "sort8")
 				.a("id", classApiMethodMethod, "_sort8");
 				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-					a("class", "setSort8 inputHtmlPart", pk, "Sort8 w3-input w3-border ");
+					a("class", "setSort8 classHtmlPart inputHtmlPart", pk, "Sort8 w3-input w3-border ");
 					a("name", "setSort8");
 				} else {
-					a("class", "valueSort8 w3-input w3-border inputHtmlPart", pk, "Sort8 w3-input w3-border ");
+					a("class", "valueSort8 w3-input w3-border classHtmlPart inputHtmlPart", pk, "Sort8 w3-input w3-border ");
 					a("name", "sort8");
 				}
 				if("Page".equals(classApiMethodMethod)) {
@@ -3317,10 +3318,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				.a("placeholder", "sort9")
 				.a("id", classApiMethodMethod, "_sort9");
 				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-					a("class", "setSort9 inputHtmlPart", pk, "Sort9 w3-input w3-border ");
+					a("class", "setSort9 classHtmlPart inputHtmlPart", pk, "Sort9 w3-input w3-border ");
 					a("name", "setSort9");
 				} else {
-					a("class", "valueSort9 w3-input w3-border inputHtmlPart", pk, "Sort9 w3-input w3-border ");
+					a("class", "valueSort9 w3-input w3-border classHtmlPart inputHtmlPart", pk, "Sort9 w3-input w3-border ");
 					a("name", "sort9");
 				}
 				if("Page".equals(classApiMethodMethod)) {
@@ -3444,10 +3445,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				.a("placeholder", "sort10")
 				.a("id", classApiMethodMethod, "_sort10");
 				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-					a("class", "setSort10 inputHtmlPart", pk, "Sort10 w3-input w3-border ");
+					a("class", "setSort10 classHtmlPart inputHtmlPart", pk, "Sort10 w3-input w3-border ");
 					a("name", "setSort10");
 				} else {
-					a("class", "valueSort10 w3-input w3-border inputHtmlPart", pk, "Sort10 w3-input w3-border ");
+					a("class", "valueSort10 w3-input w3-border classHtmlPart inputHtmlPart", pk, "Sort10 w3-input w3-border ");
 					a("name", "sort10");
 				}
 				if("Page".equals(classApiMethodMethod)) {

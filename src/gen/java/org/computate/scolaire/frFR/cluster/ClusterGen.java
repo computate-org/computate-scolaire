@@ -347,10 +347,10 @@ public abstract class ClusterGen<DEV> extends Object {
 				.a("type", "text")
 				.a("id", classeApiMethodeMethode, "_inheritPk");
 				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-					s.a("class", "setInheritPk inputCluster", pk, "InheritPk w3-input w3-border ");
+					s.a("class", "setInheritPk classCluster inputCluster", pk, "InheritPk w3-input w3-border ");
 					s.a("name", "setInheritPk");
 				} else {
-					s.a("class", "valeurInheritPk w3-input w3-border inputCluster", pk, "InheritPk w3-input w3-border ");
+					s.a("class", "valeurInheritPk w3-input w3-border classCluster inputCluster", pk, "InheritPk w3-input w3-border ");
 					s.a("name", "inheritPk");
 				}
 				if("Page".equals(classeApiMethodeMethode)) {
@@ -759,10 +759,10 @@ public abstract class ClusterGen<DEV> extends Object {
 					.a("id", classeApiMethodeMethode, "_archive");
 			}
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				s.a("class", "setArchive inputCluster", pk, "Archive w3-input w3-border ");
+				s.a("class", "setArchive classCluster inputCluster", pk, "Archive w3-input w3-border ");
 				s.a("name", "setArchive");
 			} else {
-				s.a("class", "valeurArchive inputCluster", pk, "Archive w3-input w3-border ");
+				s.a("class", "valeurArchive classCluster inputCluster", pk, "Archive w3-input w3-border ");
 				s.a("name", "archive");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
@@ -896,10 +896,10 @@ public abstract class ClusterGen<DEV> extends Object {
 					.a("id", classeApiMethodeMethode, "_supprime");
 			}
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				s.a("class", "setSupprime inputCluster", pk, "Supprime w3-input w3-border ");
+				s.a("class", "setSupprime classCluster inputCluster", pk, "Supprime w3-input w3-border ");
 				s.a("name", "setSupprime");
 			} else {
-				s.a("class", "valeurSupprime inputCluster", pk, "Supprime w3-input w3-border ");
+				s.a("class", "valeurSupprime classCluster inputCluster", pk, "Supprime w3-input w3-border ");
 				s.a("name", "supprime");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {

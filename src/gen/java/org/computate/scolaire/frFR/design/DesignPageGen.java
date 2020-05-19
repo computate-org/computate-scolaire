@@ -377,7 +377,8 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-khaki ")
-											.a("onclick", "postDesignPageVals({ designEnfantCles: [ \"", pk, "\" ] }, function() { patchDesignPageVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "designParentCles')); });")
+											.a("id", classeApiMethodeMethode, "_designParentCles_ajouter")
+											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Envoi…'; postDesignPageVals({ designEnfantCles: [ \"", pk, "\" ] }, function() {}, function() { ajouterErreur($('#", classeApiMethodeMethode, "designParentCles')); });")
 											.f().sx("ajouter un design de page")
 										.g("button");
 									} g("div");
@@ -535,7 +536,8 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
-											.a("onclick", "postPartHtmlVals({ designPageCles: [ \"", pk, "\" ] }, function() { patchDesignPageVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "partHtmlCles')); });")
+											.a("id", classeApiMethodeMethode, "_partHtmlCles_ajouter")
+											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Envoi…'; postPartHtmlVals({ designPageCles: [ \"", pk, "\" ] }, function() {}, function() { ajouterErreur($('#", classeApiMethodeMethode, "partHtmlCles')); });")
 											.f().sx("ajouter un part de HTML")
 										.g("button");
 									} g("div");
@@ -621,10 +623,10 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 				.a("placeholder", "nom")
 				.a("id", classeApiMethodeMethode, "_designPageNomComplet");
 				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-					a("class", "setDesignPageNomComplet inputDesignPage", pk, "DesignPageNomComplet w3-input w3-border ");
+					a("class", "setDesignPageNomComplet classDesignPage inputDesignPage", pk, "DesignPageNomComplet w3-input w3-border ");
 					a("name", "setDesignPageNomComplet");
 				} else {
-					a("class", "valeurDesignPageNomComplet w3-input w3-border inputDesignPage", pk, "DesignPageNomComplet w3-input w3-border ");
+					a("class", "valeurDesignPageNomComplet w3-input w3-border classDesignPage inputDesignPage", pk, "DesignPageNomComplet w3-input w3-border ");
 					a("name", "designPageNomComplet");
 				}
 				if("Page".equals(classeApiMethodeMethode)) {
@@ -759,10 +761,10 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 					.a("id", classeApiMethodeMethode, "_designCache");
 			}
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setDesignCache inputDesignPage", pk, "DesignCache w3-input w3-border ");
+				a("class", "setDesignCache classDesignPage inputDesignPage", pk, "DesignCache w3-input w3-border ");
 				a("name", "setDesignCache");
 			} else {
-				a("class", "valeurDesignCache inputDesignPage", pk, "DesignCache w3-input w3-border ");
+				a("class", "valeurDesignCache classDesignPage inputDesignPage", pk, "DesignCache w3-input w3-border ");
 				a("name", "designCache");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {

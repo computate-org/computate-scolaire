@@ -201,11 +201,10 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 							configureWebsockets().future().compose(f -> 
 								configureEmail().future().compose(g -> 
 									configureAuthorizeNetCharges().future().compose(h -> 
-										startServer().future()
+										configureAuthorizeNetPayments().future().compose(i -> 
+											startServer().future()
+										)
 									)
-//									configureAuthorizeNetPayments().future().compose(h -> 
-//										startServer().future()
-//									)
 								)
 							)
 						)
@@ -567,14 +566,6 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 					try {
 						SchoolPaymentEnUSApiServiceImpl paymentService = new SchoolPaymentEnUSApiServiceImpl(siteContextEnUS);
 						SchoolEnrollmentEnUSApiServiceImpl enrollmentService = new SchoolEnrollmentEnUSApiServiceImpl(siteContextEnUS);
-		
-						MerchantAuthenticationType merchantAuthenticationType = new MerchantAuthenticationType();
-						String authorizeApiLoginId = siteConfig.getAuthorizeApiLoginId();
-						String authorizeTransactionKey = siteConfig.getAuthorizeTransactionKey();
-						merchantAuthenticationType.setName(authorizeApiLoginId);
-						merchantAuthenticationType.setTransactionKey(authorizeTransactionKey);
-						ApiOperationBase.setMerchantAuthentication(merchantAuthenticationType);
-						DatatypeFactory datatypeFactory = DatatypeFactory.newInstance();
 
 						ZonedDateTime sessionStartDate = ZonedDateTime.now().plusMonths(1);
 						// Mar 26 is last late fee. 
@@ -592,7 +583,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 						searchListEnrollment.initDeepSearchList(siteRequest);
 		
 
-						futureAuthorizeNetEnrollmentCharges(merchantAuthenticationType, searchListEnrollment, paymentService, enrollmentService, c -> {
+						futureAuthorizeNetEnrollmentCharges(searchListEnrollment, paymentService, enrollmentService, c -> {
 							if(c.succeeded()) {
 								try {
 									SearchList<SchoolPayment> searchList = new SearchList<SchoolPayment>();
@@ -660,7 +651,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 		return promise;
 	}
 
-	public void  futureAuthorizeNetEnrollmentCharges(MerchantAuthenticationType merchantAuthenticationType, SearchList<SchoolEnrollment> listSchoolEnrollment, SchoolPaymentEnUSApiServiceImpl paymentService, SchoolEnrollmentEnUSApiServiceImpl enrollmentService, Handler<AsyncResult<Void>> eventHandler) {
+	public void  futureAuthorizeNetEnrollmentCharges(SearchList<SchoolEnrollment> listSchoolEnrollment, SchoolPaymentEnUSApiServiceImpl paymentService, SchoolEnrollmentEnUSApiServiceImpl enrollmentService, Handler<AsyncResult<Void>> eventHandler) {
 		List<Future> futures = new ArrayList<>();
 		SiteRequestEnUS siteRequest = listSchoolEnrollment.getSiteRequest_();
 		listSchoolEnrollment.getList().forEach(o -> {
@@ -677,7 +668,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
 				if(listSchoolEnrollment.next()) {
-					futureAuthorizeNetEnrollmentCharges(merchantAuthenticationType, listSchoolEnrollment, paymentService, enrollmentService, eventHandler);
+					futureAuthorizeNetEnrollmentCharges(listSchoolEnrollment, paymentService, enrollmentService, eventHandler);
 					LOGGER.info("Create a list of charges has succeeded. ");
 				} else {
 					eventHandler.handle(Future.succeededFuture());
@@ -686,73 +677,6 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 				errorAppVertx(listSchoolEnrollment.getSiteRequest_(), a);
 			}
 		});
-	}
-
-	public Future<Void> futureAuthorizeNetPayments(MerchantAuthenticationType merchantAuthenticationType, SchoolEnrollment schoolEnrollment, Handler<AsyncResult<Void>> a) {
-		Promise<Void> promise = Promise.promise();
-		try {
-			SiteConfig siteConfig = schoolEnrollment.getSiteRequest_().getSiteConfig_();
-			Paging paging = new Paging();
-			paging.setLimit(1000);
-			paging.setOffset(1);
-			
-			GetTransactionListForCustomerRequest getRequest = new GetTransactionListForCustomerRequest();
-			getRequest.setMerchantAuthentication(merchantAuthenticationType);
-			getRequest.setCustomerProfileId(schoolEnrollment.getCustomerProfileId());
-
-			getRequest.setPaging(paging);
-
-			TransactionListSorting sorting = new TransactionListSorting();
-			sorting.setOrderBy(TransactionListOrderFieldEnum.SUBMIT_TIME_UTC);
-			sorting.setOrderDescending(true);
-
-			getRequest.setSorting(sorting);
-
-			GetTransactionListForCustomerController controller = new GetTransactionListForCustomerController(getRequest);
-			GetTransactionListForCustomerController.setEnvironment(Environment.valueOf(siteConfig.getAuthorizeEnvironment()));
-			controller.execute();
-			if(controller.getErrorResponse() != null)
-				throw new RuntimeException(controller.getResults().toString());
-
-			SchoolPaymentEnUSApiServiceImpl paymentService = new SchoolPaymentEnUSApiServiceImpl(siteContextEnUS);
-			SchoolEnrollmentEnUSApiServiceImpl enrollmentService = new SchoolEnrollmentEnUSApiServiceImpl(siteContextEnUS);
-
-			List<Future> futures = new ArrayList<>();
-
-			GetTransactionListResponse getResponse = controller.getApiResponse();
-			if (getResponse != null) {
-
-				if (getResponse.getMessages().getResultCode() == MessageTypeEnum.OK) {
-					List<TransactionSummaryType> transactions = Optional.ofNullable(getResponse).map(GetTransactionListResponse::getTransactions).map(ArrayOfTransactionSummaryType::getTransaction).orElse(Arrays.asList());
-					LOGGER.info(String.format("There are %s transactions for client %s to load. ", transactions.size(), schoolEnrollment.getCustomerProfileId()));
-					for(TransactionSummaryType transaction : transactions) {
-						futures.add(
-							enrollmentService.futureAuthorizeNetPayment(merchantAuthenticationType, paymentService, schoolEnrollment.getSiteRequest_(), transaction, schoolEnrollment, b -> {
-								if(b.succeeded()) {
-									LOGGER.info(String.format("transaction %s loaded. ", transaction.getTransId()));
-								} else {
-									LOGGER.error(String.format("payment future for transaction %s failed. ", transaction.getTransId()), b.cause());
-								}
-							})
-						);
-					}
-					CompositeFuture.all(futures).setHandler(b -> {
-						if(b.succeeded()) {
-							a.handle(Future.succeededFuture());
-							promise.complete();
-							LOGGER.info(String.format("transactions for customer %s loaded. ", schoolEnrollment.getCustomerProfileId()));
-						} else {
-							LOGGER.error(String.format("transactions for customer %s failed. ", schoolEnrollment.getCustomerProfileId()));
-							promise.fail(b.cause());
-						}
-					});
-				}
-			}
-			return promise.future();
-		} catch(Exception e) {
-			a.handle(Future.failedFuture(e));
-			return Future.failedFuture(e);
-		}
 	}
 
 	/**	
@@ -776,8 +700,8 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 					siteRequest.setJsonObject(new JsonObject());
 		
 					try {
-						SchoolPaymentEnUSGenApiServiceImpl paymentService = new SchoolPaymentEnUSGenApiServiceImpl(siteContextEnUS);
-						SchoolEnrollmentEnUSGenApiServiceImpl enrollmentService = new SchoolEnrollmentEnUSGenApiServiceImpl(siteContextEnUS);
+						SchoolPaymentEnUSApiServiceImpl paymentService = new SchoolPaymentEnUSApiServiceImpl(siteContextEnUS);
+						SchoolEnrollmentEnUSApiServiceImpl enrollmentService = new SchoolEnrollmentEnUSApiServiceImpl(siteContextEnUS);
 					
 						ApiOperationBase.setEnvironment(Environment.valueOf(siteConfig.getAuthorizeEnvironment()));
 		
@@ -809,7 +733,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 						LOGGER.info(String.format("There are %s batches to load. ", batches.size()));
 						for(BatchDetailsType batch : batches) {
 							futuresBatch.add(
-								futureAuthorizeNetBatch(merchantAuthenticationType, batchController, batch, siteRequest, c -> {
+								futureAuthorizeNetBatch(merchantAuthenticationType, batchController, batch, paymentService, enrollmentService, siteRequest, c -> {
 									if(c.succeeded()) {
 										LOGGER.info(String.format("batch %s loaded. ", batch.getBatchId()));
 									} else {
@@ -912,6 +836,70 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 		return promise;
 	}
 
+	public Future<Void> futureAuthorizeNetBatch(MerchantAuthenticationType merchantAuthenticationType, GetSettledBatchListController batchController, BatchDetailsType batch, SchoolPaymentEnUSApiServiceImpl paymentService, SchoolEnrollmentEnUSApiServiceImpl enrollmentService, SiteRequestEnUS siteRequest, Handler<AsyncResult<Void>> a) {
+		Promise<Void> promise = Promise.promise();
+		try {
+			SiteConfig configSite = siteRequest.getSiteConfig_();
+			Paging paging = new Paging();
+			paging.setLimit(100);
+			paging.setOffset(1);
+			
+			GetTransactionListRequest getRequest = new GetTransactionListRequest();
+			getRequest.setMerchantAuthentication(merchantAuthenticationType);
+			getRequest.setBatchId(batch.getBatchId());
+
+			getRequest.setPaging(paging);
+
+			TransactionListSorting sorting = new TransactionListSorting();
+			sorting.setOrderBy(TransactionListOrderFieldEnum.SUBMIT_TIME_UTC);
+			sorting.setOrderDescending(true);
+
+			getRequest.setSorting(sorting);
+
+			GetTransactionListController controller = new GetTransactionListController(getRequest);
+			GetTransactionListController.setEnvironment(Environment.valueOf(configSite.getAuthorizeEnvironment()));
+			controller.execute();
+			if(controller.getErrorResponse() != null)
+				throw new RuntimeException(batchController.getResults().toString());
+
+			List<Future> futures = new ArrayList<>();
+
+			GetTransactionListResponse getResponse = controller.getApiResponse();
+			if (getResponse != null) {
+
+				if (getResponse.getMessages().getResultCode() == MessageTypeEnum.OK) {
+					List<TransactionSummaryType> transactions = Optional.ofNullable(getResponse).map(GetTransactionListResponse::getTransactions).map(ArrayOfTransactionSummaryType::getTransaction).orElse(Arrays.asList());
+					LOGGER.info(String.format("There are %s transactions in batch %s to load. ", transactions.size(), batch.getBatchId()));
+					for(TransactionSummaryType transaction : transactions) {
+						futures.add(
+							enrollmentService.futureAuthorizeNetPayment(merchantAuthenticationType, paymentService, siteRequest, transaction, null, b -> {
+								if(b.succeeded()) {
+									LOGGER.info(String.format("transaction %s loaded. ", transaction.getTransId()));
+								} else {
+									LOGGER.error(String.format("payment future for transaction %s failed. ", transaction.getTransId()), b.cause());
+								}
+							})
+						);
+					}
+					CompositeFuture.all(futures).setHandler(b -> {
+						if(b.succeeded()) {
+							a.handle(Future.succeededFuture());
+							promise.complete();
+							LOGGER.info(String.format("transactions for batch %s loaded. ", batch.getBatchId()));
+						} else {
+							LOGGER.error(String.format("transactions for batch %s failed. ", batch.getBatchId()));
+							promise.fail(b.cause());
+						}
+					});
+				}
+			}
+			return promise.future();
+		} catch(Exception e) {
+			a.handle(Future.failedFuture(e));
+			return Future.failedFuture(e);
+		}
+	}
+
 	public void  errorAppVertx(SiteRequestEnUS siteRequest, AsyncResult<?> a) {
 		Throwable e = a.cause();
 		if(e != null)
@@ -940,156 +928,6 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 					}
 				});
 			}
-		}
-	}
-
-	public Future<Void> futureAuthorizeNetBatch(MerchantAuthenticationType merchantAuthenticationType, GetSettledBatchListController batchController, BatchDetailsType batch, SiteRequestEnUS siteRequest, Handler<AsyncResult<Void>> a) {
-		Promise<Void> promise = Promise.promise();
-		try {
-			SiteConfig configSite = siteRequest.getSiteConfig_();
-			Paging paging = new Paging();
-			paging.setLimit(100);
-			paging.setOffset(1);
-			
-			GetTransactionListRequest getRequest = new GetTransactionListRequest();
-			getRequest.setMerchantAuthentication(merchantAuthenticationType);
-			getRequest.setBatchId(batch.getBatchId());
-
-			getRequest.setPaging(paging);
-
-			TransactionListSorting sorting = new TransactionListSorting();
-			sorting.setOrderBy(TransactionListOrderFieldEnum.SUBMIT_TIME_UTC);
-			sorting.setOrderDescending(true);
-
-			getRequest.setSorting(sorting);
-
-			GetTransactionListController controller = new GetTransactionListController(getRequest);
-			GetTransactionListController.setEnvironment(Environment.valueOf(configSite.getAuthorizeEnvironment()));
-			controller.execute();
-			if(controller.getErrorResponse() != null)
-				throw new RuntimeException(batchController.getResults().toString());
-
-			SchoolPaymentEnUSGenApiServiceImpl paymentService = new SchoolPaymentEnUSGenApiServiceImpl(siteContextEnUS);
-
-			List<Future> futures = new ArrayList<>();
-
-			GetTransactionListResponse getResponse = controller.getApiResponse();
-			if (getResponse != null) {
-
-				if (getResponse.getMessages().getResultCode() == MessageTypeEnum.OK) {
-					List<TransactionSummaryType> transactions = Optional.ofNullable(getResponse).map(GetTransactionListResponse::getTransactions).map(ArrayOfTransactionSummaryType::getTransaction).orElse(Arrays.asList());
-					LOGGER.info(String.format("There are %s transactions in batch %s to load. ", transactions.size(), batch.getBatchId()));
-					for(TransactionSummaryType transaction : transactions) {
-						futures.add(
-							futureAuthorizeNetPayment(paymentService, siteRequest, transaction, null, b -> {
-								if(b.succeeded()) {
-									LOGGER.info(String.format("transaction %s loaded. ", transaction.getTransId()));
-								} else {
-									LOGGER.error(String.format("payment future for transaction %s failed. ", transaction.getTransId()), b.cause());
-								}
-							})
-						);
-					}
-					CompositeFuture.all(futures).setHandler(b -> {
-						if(b.succeeded()) {
-							a.handle(Future.succeededFuture());
-							promise.complete();
-							LOGGER.info(String.format("transactions for batch %s loaded. ", batch.getBatchId()));
-						} else {
-							LOGGER.error(String.format("transactions for batch %s failed. ", batch.getBatchId()));
-							promise.fail(b.cause());
-						}
-					});
-				}
-			}
-			return promise.future();
-		} catch(Exception e) {
-			a.handle(Future.failedFuture(e));
-			return Future.failedFuture(e);
-		}
-	}
-
-	public Future<Void> futureAuthorizeNetPayment(SchoolPaymentEnUSGenApiServiceImpl paymentService, SiteRequestEnUS siteRequest, TransactionSummaryType transaction, SchoolEnrollment schoolEnrollment, Handler<AsyncResult<Void>> a) {
-		Promise<Void> promise = Promise.promise();
-		try {
-
-			XMLGregorianCalendar submitTimeLocal = transaction.getSubmitTimeLocal();
-			SchoolPayment payment = new SchoolPayment();
-			payment.setSiteRequest_(siteRequest);
-			payment.setPaymentAmount(transaction.getSettleAmount());
-			payment.setPaymentDate(submitTimeLocal.toGregorianCalendar().getTime());
-			payment.setPaymentSystem(true);
-			payment.setTransactionId(transaction.getTransId());
-			payment.setCustomerProfileId(Optional.ofNullable(transaction.getProfile()).map(CustomerProfileIdType::getCustomerProfileId).orElse(null));
-			payment.setTransactionStatus(transaction.getTransactionStatus());
-			payment.setPaymentBy(String.format("%s %s", transaction.getFirstName(), transaction.getLastName()).trim());
-
-			// TODO: TEMP
-			GetTransactionDetailsResponse getTransactionDetailsResponse = new GetTransactionDetailsResponse();
-			TransactionDetailsType transactionDetails = getTransactionDetailsResponse.getTransaction();
-
-			if(schoolEnrollment != null) {
-				payment.setEnrollmentKey(schoolEnrollment.getPk());
-				paymentService.postSchoolPayment(JsonObject.mapFrom(payment), null, c -> {
-					if(c.succeeded()) {
-						a.handle(Future.succeededFuture());
-						promise.complete();
-						LOGGER.info(String.format("payment %s created for transaction %s. ", c.result().getPayload().toJsonObject().getString("pk"), transaction.getTransId()));
-					} else {
-						LOGGER.error("creating payment %s failed for transaction %s. ", c.cause());
-						promise.fail(c.cause());
-					}
-				});
-			} else if(transaction.getTransId() != null) {
-				SearchList<SchoolPayment> searchList = new SearchList<SchoolPayment>();
-				searchList.setStore(true);
-				searchList.setQuery("*:*");
-				searchList.setC(SchoolPayment.class);
-				searchList.addFilterQuery("transactionId_indexed_string:" + ClientUtils.escapeQueryChars(transaction.getTransId()));
-				searchList.initDeepSearchList(siteRequest);
-
-				if(searchList.size() == 0) {
-					String firstName = StringUtils.substringBefore(transaction.getFirstName(), " ");
-					String lastName = transaction.getLastName();
-					SearchList<SchoolEnrollment> searchListEnrollment = new SearchList<SchoolEnrollment>();
-					searchListEnrollment.setStore(true);
-					searchListEnrollment.setQuery("*:*");
-					searchListEnrollment.setC(SchoolEnrollment.class);
-					searchListEnrollment.addFilterQuery(
-							"(childFirstName_indexed_string:" + ClientUtils.escapeQueryChars(firstName) 
-							+ " OR childFirstNamePreferred_indexed_string:" + ClientUtils.escapeQueryChars(firstName) 
-							+ " OR momFirstName_indexed_string:" + ClientUtils.escapeQueryChars(firstName) 
-							+ " OR momFirstNamePreferred_indexed_string:" + ClientUtils.escapeQueryChars(firstName) 
-							+ " OR dadFirstName_indexed_string:" + ClientUtils.escapeQueryChars(firstName) 
-							+ " OR dadFirstNamePreferred_indexed_string:" + ClientUtils.escapeQueryChars(firstName) 
-							+ ")");
-					searchListEnrollment.addFilterQuery("childFamilyName_indexed_string:" + ClientUtils.escapeQueryChars(lastName));
-					searchListEnrollment.initDeepSearchList(siteRequest);
-
-					if(searchListEnrollment.getList().size() == 1) {
-						Long enrollmentKey = searchListEnrollment.getList().get(0).getPk();
-						payment.setEnrollmentKey(enrollmentKey);
-					}
-					paymentService.postSchoolPayment(JsonObject.mapFrom(payment), null, c -> {
-						if(c.succeeded()) {
-							a.handle(Future.succeededFuture());
-							promise.complete();
-							LOGGER.info(String.format("payment %s created for transaction %s. ", c.result().getPayload().toJsonObject().getString("pk"), transaction.getTransId()));
-						} else {
-							LOGGER.error("creating payment %s failed for transaction %s. ", c.cause());
-							promise.fail(c.cause());
-						}
-					});
-				}
-				else {
-					promise.complete();
-				}
-			}
-
-			return promise.future();
-		} catch(Exception e) {
-			a.handle(Future.failedFuture(e));
-			return Future.failedFuture(e);
 		}
 	}
 

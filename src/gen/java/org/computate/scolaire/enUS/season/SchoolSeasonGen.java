@@ -362,7 +362,8 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
-											.a("onclick", "postSchoolYearVals({ seasonKeys: \"", pk, "\" }, function() { patchSchoolSeasonVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "yearKey')); });")
+											.a("id", classApiMethodMethod, "_yearKey_add")
+											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Sending…'; postSchoolYearVals({ seasonKeys: \"", pk, "\" }, function() {}, function() { addError($('#", classApiMethodMethod, "yearKey')); });")
 											.f().sx("add a year")
 										.g("button");
 									} g("div");
@@ -512,7 +513,8 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-											.a("onclick", "postSchoolSessionVals({ seasonKey: \"", pk, "\" }, function() { patchSchoolSeasonVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "sessionKeys')); });")
+											.a("id", classApiMethodMethod, "_sessionKeys_add")
+											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Sending…'; postSchoolSessionVals({ seasonKey: \"", pk, "\" }, function() {}, function() { addError($('#", classApiMethodMethod, "sessionKeys')); });")
 											.f().sx("add a session")
 										.g("button");
 									} g("div");
@@ -1623,7 +1625,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 		{
 			e("input")
 				.a("type", "text")
-				.a("class", "w3-input w3-border datepicker setSeasonStartDate inputSchoolSeason", pk, "SeasonStartDate w3-input w3-border ")
+				.a("class", "w3-input w3-border datepicker setSeasonStartDate classSchoolSeason inputSchoolSeason", pk, "SeasonStartDate w3-input w3-border ")
 				.a("placeholder", "MM/DD/YYYY")
 				.a("data-timeformat", "MM/dd/yyyy")
 				.a("id", classApiMethodMethod, "_seasonStartDate")
@@ -1747,10 +1749,10 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 					.a("id", classApiMethodMethod, "_seasonSummer");
 			}
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setSeasonSummer inputSchoolSeason", pk, "SeasonSummer w3-input w3-border ");
+				a("class", "setSeasonSummer classSchoolSeason inputSchoolSeason", pk, "SeasonSummer w3-input w3-border ");
 				a("name", "setSeasonSummer");
 			} else {
-				a("class", "valueSeasonSummer inputSchoolSeason", pk, "SeasonSummer w3-input w3-border ");
+				a("class", "valueSeasonSummer classSchoolSeason inputSchoolSeason", pk, "SeasonSummer w3-input w3-border ");
 				a("name", "seasonSummer");
 			}
 			if("Page".equals(classApiMethodMethod)) {
@@ -1872,10 +1874,10 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 					.a("id", classApiMethodMethod, "_seasonWinter");
 			}
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setSeasonWinter inputSchoolSeason", pk, "SeasonWinter w3-input w3-border ");
+				a("class", "setSeasonWinter classSchoolSeason inputSchoolSeason", pk, "SeasonWinter w3-input w3-border ");
 				a("name", "setSeasonWinter");
 			} else {
-				a("class", "valueSeasonWinter inputSchoolSeason", pk, "SeasonWinter w3-input w3-border ");
+				a("class", "valueSeasonWinter classSchoolSeason inputSchoolSeason", pk, "SeasonWinter w3-input w3-border ");
 				a("name", "seasonWinter");
 			}
 			if("Page".equals(classApiMethodMethod)) {
@@ -1997,10 +1999,10 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 					.a("id", classApiMethodMethod, "_seasonFuture");
 			}
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setSeasonFuture inputSchoolSeason", pk, "SeasonFuture w3-input w3-border ");
+				a("class", "setSeasonFuture classSchoolSeason inputSchoolSeason", pk, "SeasonFuture w3-input w3-border ");
 				a("name", "setSeasonFuture");
 			} else {
-				a("class", "valueSeasonFuture inputSchoolSeason", pk, "SeasonFuture w3-input w3-border ");
+				a("class", "valueSeasonFuture classSchoolSeason inputSchoolSeason", pk, "SeasonFuture w3-input w3-border ");
 				a("name", "seasonFuture");
 			}
 			if("Page".equals(classApiMethodMethod)) {

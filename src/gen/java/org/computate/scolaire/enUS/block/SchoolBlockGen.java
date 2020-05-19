@@ -362,7 +362,8 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ")
-											.a("onclick", "postSchoolEnrollmentVals({ blockKeys: [ \"", pk, "\" ] }, function() { patchSchoolBlockVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "enrollmentKeys')); });")
+											.a("id", classApiMethodMethod, "_enrollmentKeys_add")
+											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Sending…'; postSchoolEnrollmentVals({ blockKeys: [ \"", pk, "\" ] }, function() {}, function() { addError($('#", classApiMethodMethod, "enrollmentKeys')); });")
 											.f().sx("add an enrollment")
 										.g("button");
 									} g("div");
@@ -1044,7 +1045,8 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue ")
-											.a("onclick", "postSchoolAgeVals({ blockKeys: [ \"", pk, "\" ] }, function() { patchSchoolBlockVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "ageKey')); });")
+											.a("id", classApiMethodMethod, "_ageKey_add")
+											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Sending…'; postSchoolAgeVals({ blockKeys: [ \"", pk, "\" ] }, function() {}, function() { addError($('#", classApiMethodMethod, "ageKey')); });")
 											.f().sx("add an age")
 										.g("button");
 									} g("div");
@@ -1666,10 +1668,10 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 				.a("placeholder", "address")
 				.a("id", classApiMethodMethod, "_schoolAddress");
 				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-					a("class", "setSchoolAddress inputSchoolBlock", pk, "SchoolAddress w3-input w3-border ");
+					a("class", "setSchoolAddress classSchoolBlock inputSchoolBlock", pk, "SchoolAddress w3-input w3-border ");
 					a("name", "setSchoolAddress");
 				} else {
-					a("class", "valueSchoolAddress w3-input w3-border inputSchoolBlock", pk, "SchoolAddress w3-input w3-border ");
+					a("class", "valueSchoolAddress w3-input w3-border classSchoolBlock inputSchoolBlock", pk, "SchoolAddress w3-input w3-border ");
 					a("name", "schoolAddress");
 				}
 				if("Page".equals(classApiMethodMethod)) {
@@ -2898,7 +2900,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 		{
 			e("input")
 				.a("type", "text")
-				.a("class", "w3-input w3-border timepicker setBlockStartTime inputSchoolBlock", pk, "BlockStartTime w3-input w3-border ")
+				.a("class", "w3-input w3-border timepicker setBlockStartTime classSchoolBlock inputSchoolBlock", pk, "BlockStartTime w3-input w3-border ")
 				.a("placeholder", "HH:MM A")
 				.a("id", classApiMethodMethod, "_blockStartTime")
 				.a("onclick", "removeGlow($(this)); ")
@@ -3018,7 +3020,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 		{
 			e("input")
 				.a("type", "text")
-				.a("class", "w3-input w3-border timepicker setBlockEndTime inputSchoolBlock", pk, "BlockEndTime w3-input w3-border ")
+				.a("class", "w3-input w3-border timepicker setBlockEndTime classSchoolBlock inputSchoolBlock", pk, "BlockEndTime w3-input w3-border ")
 				.a("placeholder", "HH:MM A")
 				.a("id", classApiMethodMethod, "_blockEndTime")
 				.a("onclick", "removeGlow($(this)); ")
@@ -3149,10 +3151,10 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 				.a("placeholder", "price per month")
 				.a("id", classApiMethodMethod, "_blockPricePerMonth");
 				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-					a("class", "setBlockPricePerMonth inputSchoolBlock", pk, "BlockPricePerMonth w3-input w3-border ");
+					a("class", "setBlockPricePerMonth classSchoolBlock inputSchoolBlock", pk, "BlockPricePerMonth w3-input w3-border ");
 					a("name", "setBlockPricePerMonth");
 				} else {
-					a("class", "valueBlockPricePerMonth w3-input w3-border inputSchoolBlock", pk, "BlockPricePerMonth w3-input w3-border ");
+					a("class", "valueBlockPricePerMonth w3-input w3-border classSchoolBlock inputSchoolBlock", pk, "BlockPricePerMonth w3-input w3-border ");
 					a("name", "blockPricePerMonth");
 				}
 				if("Page".equals(classApiMethodMethod)) {
@@ -3346,10 +3348,10 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 					.a("id", classApiMethodMethod, "_blockMonday");
 			}
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setBlockMonday inputSchoolBlock", pk, "BlockMonday w3-input w3-border ");
+				a("class", "setBlockMonday classSchoolBlock inputSchoolBlock", pk, "BlockMonday w3-input w3-border ");
 				a("name", "setBlockMonday");
 			} else {
-				a("class", "valueBlockMonday inputSchoolBlock", pk, "BlockMonday w3-input w3-border ");
+				a("class", "valueBlockMonday classSchoolBlock inputSchoolBlock", pk, "BlockMonday w3-input w3-border ");
 				a("name", "blockMonday");
 			}
 			if("Page".equals(classApiMethodMethod)) {
@@ -3471,10 +3473,10 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 					.a("id", classApiMethodMethod, "_blockTuesday");
 			}
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setBlockTuesday inputSchoolBlock", pk, "BlockTuesday w3-input w3-border ");
+				a("class", "setBlockTuesday classSchoolBlock inputSchoolBlock", pk, "BlockTuesday w3-input w3-border ");
 				a("name", "setBlockTuesday");
 			} else {
-				a("class", "valueBlockTuesday inputSchoolBlock", pk, "BlockTuesday w3-input w3-border ");
+				a("class", "valueBlockTuesday classSchoolBlock inputSchoolBlock", pk, "BlockTuesday w3-input w3-border ");
 				a("name", "blockTuesday");
 			}
 			if("Page".equals(classApiMethodMethod)) {
@@ -3596,10 +3598,10 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 					.a("id", classApiMethodMethod, "_blockWednesday");
 			}
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setBlockWednesday inputSchoolBlock", pk, "BlockWednesday w3-input w3-border ");
+				a("class", "setBlockWednesday classSchoolBlock inputSchoolBlock", pk, "BlockWednesday w3-input w3-border ");
 				a("name", "setBlockWednesday");
 			} else {
-				a("class", "valueBlockWednesday inputSchoolBlock", pk, "BlockWednesday w3-input w3-border ");
+				a("class", "valueBlockWednesday classSchoolBlock inputSchoolBlock", pk, "BlockWednesday w3-input w3-border ");
 				a("name", "blockWednesday");
 			}
 			if("Page".equals(classApiMethodMethod)) {
@@ -3721,10 +3723,10 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 					.a("id", classApiMethodMethod, "_blockThursday");
 			}
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setBlockThursday inputSchoolBlock", pk, "BlockThursday w3-input w3-border ");
+				a("class", "setBlockThursday classSchoolBlock inputSchoolBlock", pk, "BlockThursday w3-input w3-border ");
 				a("name", "setBlockThursday");
 			} else {
-				a("class", "valueBlockThursday inputSchoolBlock", pk, "BlockThursday w3-input w3-border ");
+				a("class", "valueBlockThursday classSchoolBlock inputSchoolBlock", pk, "BlockThursday w3-input w3-border ");
 				a("name", "blockThursday");
 			}
 			if("Page".equals(classApiMethodMethod)) {
@@ -3846,10 +3848,10 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 					.a("id", classApiMethodMethod, "_blockFriday");
 			}
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setBlockFriday inputSchoolBlock", pk, "BlockFriday w3-input w3-border ");
+				a("class", "setBlockFriday classSchoolBlock inputSchoolBlock", pk, "BlockFriday w3-input w3-border ");
 				a("name", "setBlockFriday");
 			} else {
-				a("class", "valueBlockFriday inputSchoolBlock", pk, "BlockFriday w3-input w3-border ");
+				a("class", "valueBlockFriday classSchoolBlock inputSchoolBlock", pk, "BlockFriday w3-input w3-border ");
 				a("name", "blockFriday");
 			}
 			if("Page".equals(classApiMethodMethod)) {

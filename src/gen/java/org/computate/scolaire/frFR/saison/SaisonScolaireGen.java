@@ -364,7 +364,8 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
-											.a("onclick", "postAnneeScolaireVals({ saisonCles: \"", pk, "\" }, function() { patchSaisonScolaireVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "anneeCle')); });")
+											.a("id", classeApiMethodeMethode, "_anneeCle_ajouter")
+											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Envoi…'; postAnneeScolaireVals({ saisonCles: \"", pk, "\" }, function() {}, function() { ajouterErreur($('#", classeApiMethodeMethode, "anneeCle')); });")
 											.f().sx("ajouter une année")
 										.g("button");
 									} g("div");
@@ -515,7 +516,8 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-											.a("onclick", "postSessionScolaireVals({ saisonCle: \"", pk, "\" }, function() { patchSaisonScolaireVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "sessionCles')); });")
+											.a("id", classeApiMethodeMethode, "_sessionCles_ajouter")
+											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Envoi…'; postSessionScolaireVals({ saisonCle: \"", pk, "\" }, function() {}, function() { ajouterErreur($('#", classeApiMethodeMethode, "sessionCles')); });")
 											.f().sx("ajouter une session")
 										.g("button");
 									} g("div");
@@ -1626,7 +1628,7 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 		{
 			e("input")
 				.a("type", "text")
-				.a("class", "w3-input w3-border datepicker setSaisonDateDebut inputSaisonScolaire", pk, "SaisonDateDebut w3-input w3-border ")
+				.a("class", "w3-input w3-border datepicker setSaisonDateDebut classSaisonScolaire inputSaisonScolaire", pk, "SaisonDateDebut w3-input w3-border ")
 				.a("placeholder", "DD-MM-YYYY")
 				.a("data-timeformat", "dd-MM-yyyy")
 				.a("id", classeApiMethodeMethode, "_saisonDateDebut")
@@ -1751,10 +1753,10 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 					.a("id", classeApiMethodeMethode, "_saisonEte");
 			}
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setSaisonEte inputSaisonScolaire", pk, "SaisonEte w3-input w3-border ");
+				a("class", "setSaisonEte classSaisonScolaire inputSaisonScolaire", pk, "SaisonEte w3-input w3-border ");
 				a("name", "setSaisonEte");
 			} else {
-				a("class", "valeurSaisonEte inputSaisonScolaire", pk, "SaisonEte w3-input w3-border ");
+				a("class", "valeurSaisonEte classSaisonScolaire inputSaisonScolaire", pk, "SaisonEte w3-input w3-border ");
 				a("name", "saisonEte");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
@@ -1876,10 +1878,10 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 					.a("id", classeApiMethodeMethode, "_saisonHiver");
 			}
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setSaisonHiver inputSaisonScolaire", pk, "SaisonHiver w3-input w3-border ");
+				a("class", "setSaisonHiver classSaisonScolaire inputSaisonScolaire", pk, "SaisonHiver w3-input w3-border ");
 				a("name", "setSaisonHiver");
 			} else {
-				a("class", "valeurSaisonHiver inputSaisonScolaire", pk, "SaisonHiver w3-input w3-border ");
+				a("class", "valeurSaisonHiver classSaisonScolaire inputSaisonScolaire", pk, "SaisonHiver w3-input w3-border ");
 				a("name", "saisonHiver");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
@@ -2001,10 +2003,10 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 					.a("id", classeApiMethodeMethode, "_saisonFuture");
 			}
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setSaisonFuture inputSaisonScolaire", pk, "SaisonFuture w3-input w3-border ");
+				a("class", "setSaisonFuture classSaisonScolaire inputSaisonScolaire", pk, "SaisonFuture w3-input w3-border ");
 				a("name", "setSaisonFuture");
 			} else {
-				a("class", "valeurSaisonFuture inputSaisonScolaire", pk, "SaisonFuture w3-input w3-border ");
+				a("class", "valeurSaisonFuture classSaisonScolaire inputSaisonScolaire", pk, "SaisonFuture w3-input w3-border ");
 				a("name", "saisonFuture");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {

@@ -301,7 +301,8 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ")
-											.a("onclick", "postSchoolEnrollmentVals({ childKey: \"", pk, "\" }, function() { patchSchoolChildVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { addError($('#", classApiMethodMethod, "enrollmentKeys')); });")
+											.a("id", classApiMethodMethod, "_enrollmentKeys_add")
+											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Sending…'; postSchoolEnrollmentVals({ childKey: \"", pk, "\" }, function() {}, function() { addError($('#", classApiMethodMethod, "enrollmentKeys')); });")
 											.f().sx("add an enrollment")
 										.g("button");
 									} g("div");
@@ -1135,10 +1136,10 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 				.a("placeholder", "first name")
 				.a("id", classApiMethodMethod, "_personFirstName");
 				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-					a("class", "setPersonFirstName inputSchoolChild", pk, "PersonFirstName w3-input w3-border ");
+					a("class", "setPersonFirstName classSchoolChild inputSchoolChild", pk, "PersonFirstName w3-input w3-border ");
 					a("name", "setPersonFirstName");
 				} else {
-					a("class", "valuePersonFirstName w3-input w3-border inputSchoolChild", pk, "PersonFirstName w3-input w3-border ");
+					a("class", "valuePersonFirstName w3-input w3-border classSchoolChild inputSchoolChild", pk, "PersonFirstName w3-input w3-border ");
 					a("name", "personFirstName");
 				}
 				if("Page".equals(classApiMethodMethod)) {
@@ -1267,10 +1268,10 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 				.a("placeholder", "preferred first name")
 				.a("id", classApiMethodMethod, "_personFirstNamePreferred");
 				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-					a("class", "setPersonFirstNamePreferred inputSchoolChild", pk, "PersonFirstNamePreferred w3-input w3-border ");
+					a("class", "setPersonFirstNamePreferred classSchoolChild inputSchoolChild", pk, "PersonFirstNamePreferred w3-input w3-border ");
 					a("name", "setPersonFirstNamePreferred");
 				} else {
-					a("class", "valuePersonFirstNamePreferred w3-input w3-border inputSchoolChild", pk, "PersonFirstNamePreferred w3-input w3-border ");
+					a("class", "valuePersonFirstNamePreferred w3-input w3-border classSchoolChild inputSchoolChild", pk, "PersonFirstNamePreferred w3-input w3-border ");
 					a("name", "personFirstNamePreferred");
 				}
 				if("Page".equals(classApiMethodMethod)) {
@@ -1399,10 +1400,10 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 				.a("placeholder", "last name")
 				.a("id", classApiMethodMethod, "_familyName");
 				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-					a("class", "setFamilyName inputSchoolChild", pk, "FamilyName w3-input w3-border ");
+					a("class", "setFamilyName classSchoolChild inputSchoolChild", pk, "FamilyName w3-input w3-border ");
 					a("name", "setFamilyName");
 				} else {
-					a("class", "valueFamilyName w3-input w3-border inputSchoolChild", pk, "FamilyName w3-input w3-border ");
+					a("class", "valueFamilyName w3-input w3-border classSchoolChild inputSchoolChild", pk, "FamilyName w3-input w3-border ");
 					a("name", "familyName");
 				}
 				if("Page".equals(classApiMethodMethod)) {
@@ -1680,10 +1681,7 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolChild setPersonBirthDate(String o) {
-		LOGGER.info("o: " + o);
 		this.personBirthDate = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
-		LOGGER.info("personBirthDate: " + personBirthDate);
-		LOGGER.info("Zone: " + ZoneId.systemDefault());
 		this.personBirthDateWrap.alreadyInitialized = true;
 		return (SchoolChild)this;
 	}
@@ -1736,7 +1734,7 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		) {
 			e("input")
 				.a("type", "text")
-				.a("class", "w3-input w3-border datepicker setPersonBirthDate inputSchoolChild", pk, "PersonBirthDate w3-input w3-border ")
+				.a("class", "w3-input w3-border datepicker setPersonBirthDate classSchoolChild inputSchoolChild", pk, "PersonBirthDate w3-input w3-border ")
 				.a("placeholder", "MM/DD/YYYY")
 				.a("data-timeformat", "MM/dd/yyyy")
 				.a("id", classApiMethodMethod, "_personBirthDate")

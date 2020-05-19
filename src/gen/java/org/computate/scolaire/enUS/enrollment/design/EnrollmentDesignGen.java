@@ -1106,10 +1106,10 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 				.a("placeholder", "name")
 				.a("id", classApiMethodMethod, "_enrollmentDesignCompleteName");
 				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-					a("class", "setEnrollmentDesignCompleteName inputEnrollmentDesign", pk, "EnrollmentDesignCompleteName w3-input w3-border ");
+					a("class", "setEnrollmentDesignCompleteName classEnrollmentDesign inputEnrollmentDesign", pk, "EnrollmentDesignCompleteName w3-input w3-border ");
 					a("name", "setEnrollmentDesignCompleteName");
 				} else {
-					a("class", "valueEnrollmentDesignCompleteName w3-input w3-border inputEnrollmentDesign", pk, "EnrollmentDesignCompleteName w3-input w3-border ");
+					a("class", "valueEnrollmentDesignCompleteName w3-input w3-border classEnrollmentDesign inputEnrollmentDesign", pk, "EnrollmentDesignCompleteName w3-input w3-border ");
 					a("name", "enrollmentDesignCompleteName");
 				}
 				if("Page".equals(classApiMethodMethod)) {
@@ -1236,10 +1236,10 @@ public abstract class EnrollmentDesignGen<DEV> extends Cluster {
 					.a("id", classApiMethodMethod, "_designHidden");
 			}
 			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setDesignHidden inputEnrollmentDesign", pk, "DesignHidden w3-input w3-border ");
+				a("class", "setDesignHidden classEnrollmentDesign inputEnrollmentDesign", pk, "DesignHidden w3-input w3-border ");
 				a("name", "setDesignHidden");
 			} else {
-				a("class", "valueDesignHidden inputEnrollmentDesign", pk, "DesignHidden w3-input w3-border ");
+				a("class", "valueDesignHidden classEnrollmentDesign inputEnrollmentDesign", pk, "DesignHidden w3-input w3-border ");
 				a("name", "designHidden");
 			}
 			if("Page".equals(classApiMethodMethod)) {

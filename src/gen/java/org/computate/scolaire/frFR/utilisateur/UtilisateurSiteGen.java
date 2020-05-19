@@ -313,7 +313,8 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ")
-											.a("onclick", "postInscriptionScolaireVals({ utilisateurCles: [ \"", pk, "\" ] }, function() { patchUtilisateurSiteVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "inscriptionCles')); });")
+											.a("id", classeApiMethodeMethode, "_inscriptionCles_ajouter")
+											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Envoi…'; postInscriptionScolaireVals({ utilisateurCles: [ \"", pk, "\" ] }, function() {}, function() { ajouterErreur($('#", classeApiMethodeMethode, "inscriptionCles')); });")
 											.f().sx("ajouter une inscription")
 										.g("button");
 									} g("div");
@@ -477,7 +478,8 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-											.a("onclick", "postPaiementScolaireVals({ utilisateurCles: [ \"", pk, "\" ] }, function() { patchUtilisateurSiteVals([{ name: 'fq', value: 'pk:", pk, "' }], {}); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "paiementCles')); });")
+											.a("id", classeApiMethodeMethode, "_paiementCles_ajouter")
+											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Envoi…'; postPaiementScolaireVals({ utilisateurCles: [ \"", pk, "\" ] }, function() {}, function() { ajouterErreur($('#", classeApiMethodeMethode, "paiementCles')); });")
 											.f().sx("ajouter un paiement")
 										.g("button");
 									} g("div");
@@ -563,10 +565,10 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 				.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
 				.a("id", classeApiMethodeMethode, "_utilisateurNom");
 				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-					a("class", "setUtilisateurNom inputUtilisateurSite", pk, "UtilisateurNom w3-input w3-border ");
+					a("class", "setUtilisateurNom classUtilisateurSite inputUtilisateurSite", pk, "UtilisateurNom w3-input w3-border ");
 					a("name", "setUtilisateurNom");
 				} else {
-					a("class", "valeurUtilisateurNom w3-input w3-border inputUtilisateurSite", pk, "UtilisateurNom w3-input w3-border ");
+					a("class", "valeurUtilisateurNom w3-input w3-border classUtilisateurSite inputUtilisateurSite", pk, "UtilisateurNom w3-input w3-border ");
 					a("name", "utilisateurNom");
 				}
 				if("Page".equals(classeApiMethodeMethode)) {
@@ -693,10 +695,10 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 				.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
 				.a("id", classeApiMethodeMethode, "_utilisateurMail");
 				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-					a("class", "setUtilisateurMail inputUtilisateurSite", pk, "UtilisateurMail w3-input w3-border ");
+					a("class", "setUtilisateurMail classUtilisateurSite inputUtilisateurSite", pk, "UtilisateurMail w3-input w3-border ");
 					a("name", "setUtilisateurMail");
 				} else {
-					a("class", "valeurUtilisateurMail w3-input w3-border inputUtilisateurSite", pk, "UtilisateurMail w3-input w3-border ");
+					a("class", "valeurUtilisateurMail w3-input w3-border classUtilisateurSite inputUtilisateurSite", pk, "UtilisateurMail w3-input w3-border ");
 					a("name", "utilisateurMail");
 				}
 				if("Page".equals(classeApiMethodeMethode)) {
@@ -1072,10 +1074,10 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 				.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
 				.a("id", classeApiMethodeMethode, "_customerProfileId");
 				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-					a("class", "setCustomerProfileId inputUtilisateurSite", pk, "CustomerProfileId w3-input w3-border ");
+					a("class", "setCustomerProfileId classUtilisateurSite inputUtilisateurSite", pk, "CustomerProfileId w3-input w3-border ");
 					a("name", "setCustomerProfileId");
 				} else {
-					a("class", "valeurCustomerProfileId w3-input w3-border inputUtilisateurSite", pk, "CustomerProfileId w3-input w3-border ");
+					a("class", "valeurCustomerProfileId w3-input w3-border classUtilisateurSite inputUtilisateurSite", pk, "CustomerProfileId w3-input w3-border ");
 					a("name", "customerProfileId");
 				}
 				if("Page".equals(classeApiMethodeMethode)) {
@@ -1215,10 +1217,10 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 					.a("id", classeApiMethodeMethode, "_utilisateurRecevoirCourriels");
 			}
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setUtilisateurRecevoirCourriels inputUtilisateurSite", pk, "UtilisateurRecevoirCourriels w3-input w3-border ");
+				a("class", "setUtilisateurRecevoirCourriels classUtilisateurSite inputUtilisateurSite", pk, "UtilisateurRecevoirCourriels w3-input w3-border ");
 				a("name", "setUtilisateurRecevoirCourriels");
 			} else {
-				a("class", "valeurUtilisateurRecevoirCourriels inputUtilisateurSite", pk, "UtilisateurRecevoirCourriels w3-input w3-border ");
+				a("class", "valeurUtilisateurRecevoirCourriels classUtilisateurSite inputUtilisateurSite", pk, "UtilisateurRecevoirCourriels w3-input w3-border ");
 				a("name", "utilisateurRecevoirCourriels");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
@@ -1350,10 +1352,10 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 					.a("id", classeApiMethodeMethode, "_voirArchive");
 			}
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setVoirArchive inputUtilisateurSite", pk, "VoirArchive w3-input w3-border ");
+				a("class", "setVoirArchive classUtilisateurSite inputUtilisateurSite", pk, "VoirArchive w3-input w3-border ");
 				a("name", "setVoirArchive");
 			} else {
-				a("class", "valeurVoirArchive inputUtilisateurSite", pk, "VoirArchive w3-input w3-border ");
+				a("class", "valeurVoirArchive classUtilisateurSite inputUtilisateurSite", pk, "VoirArchive w3-input w3-border ");
 				a("name", "voirArchive");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
@@ -1485,10 +1487,10 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 					.a("id", classeApiMethodeMethode, "_voirSupprime");
 			}
 			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setVoirSupprime inputUtilisateurSite", pk, "VoirSupprime w3-input w3-border ");
+				a("class", "setVoirSupprime classUtilisateurSite inputUtilisateurSite", pk, "VoirSupprime w3-input w3-border ");
 				a("name", "setVoirSupprime");
 			} else {
-				a("class", "valeurVoirSupprime inputUtilisateurSite", pk, "VoirSupprime w3-input w3-border ");
+				a("class", "valeurVoirSupprime classUtilisateurSite inputUtilisateurSite", pk, "VoirSupprime w3-input w3-border ");
 				a("name", "voirSupprime");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {

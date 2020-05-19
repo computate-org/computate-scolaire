@@ -162,7 +162,7 @@ public class PereScolaire extends PereScolaireGen<Cluster> {
 	 * r: inscriptions
 	 * r.enUS: enrollments
 	 * Ignorer: true
-	 */   
+	 */  
 	protected void _inscriptions(List<InscriptionScolaire> l) {
 		l.addAll(inscriptionRecherche.getList());
 	}
@@ -178,7 +178,7 @@ public class PereScolaire extends PereScolaireGen<Cluster> {
 	 * r.enUS: userKeys
 	 * r: inscriptionRecherche
 	 * r.enUS: enrollmentSearch
-	 */                 
+	 */                
 	protected void _utilisateurCles(List<Long> l) {
 		l.addAll(inscriptionRecherche.getQueryResponse().getFacetField("utilisateurCles_indexed_longs").getValues().stream().map(o -> Long.parseLong(o.getName())).collect(Collectors.toList()));
 	}
