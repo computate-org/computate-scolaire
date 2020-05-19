@@ -1625,10 +1625,10 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 				.a("type", "text")
 				.a("class", "w3-input w3-border datepicker setSeasonStartDate inputSchoolSeason", pk, "SeasonStartDate w3-input w3-border ")
 				.a("placeholder", "MM/DD/YYYY")
-				.a("data-timeformat", "MM/DD/YYYY")
+				.a("data-timeformat", "MM/dd/yyyy")
 				.a("id", classApiMethodMethod, "_seasonStartDate")
 				.a("onclick", "removeGlow($(this)); ")
-				.a("value", seasonStartDate == null ? "" : DateTimeFormatter.ISO_LOCAL_DATE.format(seasonStartDate))
+				.a("value", seasonStartDate == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy").format(seasonStartDate))
 				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patchSchoolSeasonVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSeasonStartDate', s, function() { addGlow($('#", classApiMethodMethod, "_seasonStartDate')); }, function() { addError($('#", classApiMethodMethod, "_seasonStartDate')); }); } ")
 				.fg();
 		}

@@ -380,14 +380,14 @@ public class SessionScolaire extends SessionScolaireGen<Cluster> {
 	 * Stocke: true
 	 * NomAffichage.frFR: début de l'année
 	 * NomAffichage.enUS: start of season
-	 * r: SaisonJourDebut
+	 * r: SaisonDateDebut
 	 * r.enUS: SeasonStartDate
 	 * r: saison
 	 * r.enUS: season
 	 */                   
-	protected void _saisonJourDebut(Couverture<LocalDate> c) {
+	protected void _saisonDateDebut(Couverture<LocalDate> c) {
 		if(saison_ != null)
-			c.o(saison_.getSaisonJourDebut());
+			c.o(saison_.getSaisonDateDebut());
 	}
 
 	/**
@@ -482,36 +482,36 @@ public class SessionScolaire extends SessionScolaireGen<Cluster> {
 	 * NomAffichage.frFR: début de la session
 	 * NomAffichage.enUS: start of the session
 	 */                   
-	protected void _sessionJourDebut(Couverture<LocalDate> c) {}
+	protected void _sessionDateDebut(Couverture<LocalDate> c) {}
 
 	/**
 	 * Var.enUS: setSessionStartDate
-	 * r: SessionJourDebut
+	 * r: SessionDateDebut
 	 * r.enUS: SessionStartDate
 	 */
-	@Override public SessionScolaire setSessionJourDebut(String o) {
+	@Override public SessionScolaire setSessionDateDebut(String o) {
 		if(StringUtils.contains(o, " "))
 			o = StringUtils.substringBefore(o, " ");
 		try {
-			return super.setSessionJourDebut(o);
+			return super.setSessionDateDebut(o);
 		} catch (Exception e) {
-			setSessionJourDebut(LocalDate.from(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(o)));
+			setSessionDateDebut(LocalDate.from(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(o)));
 			return this;
 		}
 	}
 
 	/**
 	 * Var.enUS: setSessionEndDate
-	 * r: SessionJourFin
+	 * r: SessionDateFin
 	 * r.enUS: SessionEndDate
 	 */
-	@Override public SessionScolaire setSessionJourFin(String o) {
+	@Override public SessionScolaire setSessionDateFin(String o) {
 		if(StringUtils.contains(o, " "))
 			o = StringUtils.substringBefore(o, " ");
 		try {
-			return super.setSessionJourFin(o);
+			return super.setSessionDateFin(o);
 		} catch (Exception e) {
-			setSessionJourFin(LocalDate.from(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(o)));
+			setSessionDateFin(LocalDate.from(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(o)));
 			return this;
 		}
 	}
@@ -527,7 +527,7 @@ public class SessionScolaire extends SessionScolaireGen<Cluster> {
 	 * NomAffichage.frFR: fin de la session
 	 * NomAffichage.enUS: end of the session
 	 */                   
-	protected void _sessionJourFin(Couverture<LocalDate> c) {}
+	protected void _sessionDateFin(Couverture<LocalDate> c) {}
 
 	/**   
 	 * {@inheritDoc}
@@ -536,9 +536,9 @@ public class SessionScolaire extends SessionScolaireGen<Cluster> {
 	 * Stocke: true
 	 * r: sessionEte
 	 * r.enUS: sessionSummer
-	 * r: strSessionJourDebut
+	 * r: strSessionDateDebut
 	 * r.enUS: strSessionStartDate
-	 * r: strSessionJourFin
+	 * r: strSessionDateFin
 	 * r.enUS: strSessionEndDate
 	 * r: saisonNomComplet
 	 * r.enUS: seasonCompleteName
@@ -559,11 +559,11 @@ public class SessionScolaire extends SessionScolaireGen<Cluster> {
 		String o;
 
 		if(BooleanUtils.isTrue(saisonEte))
-			o = String.format("%s - %s session d'été à %s", strSessionJourDebut(), strSessionJourFin(), ecoleNomComplet);
+			o = String.format("%s - %s session d'été à %s", strSessionDateDebut(), strSessionDateFin(), ecoleNomComplet);
 		if(BooleanUtils.isTrue(saisonHiver))
-			o = String.format("%s - %s session scolaire à %s", strSessionJourDebut(), strSessionJourFin(), ecoleNomComplet);
+			o = String.format("%s - %s session scolaire à %s", strSessionDateDebut(), strSessionDateFin(), ecoleNomComplet);
 		else
-			o = String.format("%s - %s session à %s", strSessionJourDebut(), strSessionJourFin(), ecoleNomComplet);
+			o = String.format("%s - %s session à %s", strSessionDateDebut(), strSessionDateFin(), ecoleNomComplet);
 
 		c.o(o);
 	}
@@ -579,9 +579,9 @@ public class SessionScolaire extends SessionScolaireGen<Cluster> {
 	 * NomAffichage.enUS: name
 	 * r: sessionEte
 	 * r.enUS: sessionSummer
-	 * r: strSessionJourDebut
+	 * r: strSessionDateDebut
 	 * r.enUS: strSessionStartDate
-	 * r: strSessionJourFin
+	 * r: strSessionDateFin
 	 * r.enUS: strSessionEndDate
 	 * r: saisonNomComplet
 	 * r.enUS: seasonCompleteName
@@ -602,11 +602,11 @@ public class SessionScolaire extends SessionScolaireGen<Cluster> {
 		String o;
 
 		if(BooleanUtils.isTrue(saisonEte))
-			o = String.format("%s - %s session d'été à %s", strSessionJourDebut(), strSessionJourFin(), ecoleNomComplet);
+			o = String.format("%s - %s session d'été à %s", strSessionDateDebut(), strSessionDateFin(), ecoleNomComplet);
 		if(BooleanUtils.isTrue(saisonHiver))
-			o = String.format("%s - %s session scolaire à %s", strSessionJourDebut(), strSessionJourFin(), ecoleNomComplet);
+			o = String.format("%s - %s session scolaire à %s", strSessionDateDebut(), strSessionDateFin(), ecoleNomComplet);
 		else
-			o = String.format("%s - %s session à %s", strSessionJourDebut(), strSessionJourFin(), ecoleNomComplet);
+			o = String.format("%s - %s session à %s", strSessionDateDebut(), strSessionDateFin(), ecoleNomComplet);
 
 		c.o(o);
 	}

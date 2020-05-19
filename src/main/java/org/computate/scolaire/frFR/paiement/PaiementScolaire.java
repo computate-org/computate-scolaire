@@ -522,14 +522,14 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * Stocke: true
 	 * NomAffichage.frFR: début de l'année
 	 * NomAffichage.enUS: start of season
-	 * r: SaisonJourDebut
+	 * r: SaisonDateDebut
 	 * r.enUS: SeasonStartDate
 	 * r: inscription
 	 * r.enUS: enrollment
 	 */                  
-	protected void _saisonJourDebut(Couverture<LocalDate> c) {
+	protected void _saisonDateDebut(Couverture<LocalDate> c) {
 		if(inscription_ != null)
-			c.o(inscription_.getSaisonJourDebut());
+			c.o(inscription_.getSaisonDateDebut());
 	}
 
 	/**
@@ -590,14 +590,14 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * Stocke: true
 	 * NomAffichage.frFR: début de la session
 	 * NomAffichage.enUS: start of the session
-	 * r: SessionJourDebut
+	 * r: SessionDateDebut
 	 * r.enUS: SessionStartDate
 	 * r: inscription
 	 * r.enUS: enrollment
 	 */                   
-	protected void _sessionJourDebut(Couverture<LocalDate> c) {
+	protected void _sessionDateDebut(Couverture<LocalDate> c) {
 		if(inscription_ != null)
-			c.o((LocalDate)inscription_.getSessionJourDebut());
+			c.o((LocalDate)inscription_.getSessionDateDebut());
 	}
 
 	/**
@@ -607,14 +607,14 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * Stocke: true
 	 * NomAffichage.frFR: fin de la session
 	 * NomAffichage.enUS: end of the session
-	 * r: SessionJourFin
+	 * r: SessionDateFin
 	 * r.enUS: SessionEndDate
 	 * r: inscription
 	 * r.enUS: enrollment
 	 */                   
-	protected void _sessionJourFin(Couverture<LocalDate> c) {
+	protected void _sessionDateFin(Couverture<LocalDate> c) {
 		if(inscription_ != null)
-			c.o((LocalDate)inscription_.getSessionJourFin());
+			c.o((LocalDate)inscription_.getSessionDateFin());
 	}
 
 	/**
@@ -956,8 +956,8 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * r.enUS: PaymentNext
 	 */                   
 	protected void _fraisMontantDu(Couverture<BigDecimal> c) {
-		LocalDate paiementProchaine = requeteSite_.getConfigSite_().getPaiementProchain();
-		if(fraisMontant != null && paiementDate != null && paiementDate.compareTo(paiementProchaine.minusMonths(1)) >= 0 && paiementDate.compareTo(paiementProchaine) < 0)
+		LocalDate paiementProchain = requeteSite_.getConfigSite_().getPaiementProchain();
+		if(fraisMontant != null && paiementDate != null && paiementDate.compareTo(paiementProchain.minusMonths(1)) >= 0 && paiementDate.compareTo(paiementProchain) < 0)
 			c.o(fraisMontant);
 	}
 
@@ -985,8 +985,8 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * r.enUS: PaymentNext
 	 */                   
 	protected void _fraisMontantFuture(Couverture<BigDecimal> c) {
-		LocalDate paiementProchaine = requeteSite_.getConfigSite_().getPaiementProchain();
-		if(fraisMontant != null && paiementDate != null && paiementDate.compareTo(paiementProchaine) > 0)
+		LocalDate paiementProchain = requeteSite_.getConfigSite_().getPaiementProchain();
+		if(fraisMontant != null && paiementDate != null && paiementDate.compareTo(paiementProchain) > 0)
 			c.o(fraisMontant);
 	}
 
@@ -1095,9 +1095,9 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * r.enUS: chargeFirstLast
 	 * r: fraisInscription
 	 * r.enUS: chargeEnrollment
-	 * r: SessionJourDebut
+	 * r: SessionDateDebut
 	 * r.enUS: SessionStartDate
-	 * r: SessionJourFin
+	 * r: SessionDateFin
 	 * r.enUS: SessionEndDate
 	 * r: FRANCE
 	 * r.enUS: US
@@ -1122,9 +1122,9 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 		StringBuilder o = new StringBuilder();
 		if(fraisMontant != null) {
 			if(inscription_ != null && fraisPremierDernier)
-				o.append(String.format("Frais de %s + %s", fd.format(inscription_.getSessionJourDebut().plusWeeks(1)), fd.format(inscription_.getSessionJourFin())));
+				o.append(String.format("Frais de %s + %s", fd.format(inscription_.getSessionDateDebut().plusWeeks(1)), fd.format(inscription_.getSessionDateFin())));
 			else if(inscription_ != null && fraisInscription)
-				o.append(String.format("Frais d'inscription %s-%s", inscription_.getSessionJourDebut().getYear(), inscription_.getSessionJourFin().getYear()));
+				o.append(String.format("Frais d'inscription %s-%s", inscription_.getSessionDateDebut().getYear(), inscription_.getSessionDateFin().getYear()));
 			else if(inscription_ != null && fraisRetard)
 				o.append("");
 			else if(paiementDate != null)
@@ -1189,9 +1189,9 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * r.enUS: chargeFirstLast
 	 * r: fraisInscription
 	 * r.enUS: chargeEnrollment
-	 * r: SessionJourDebut
+	 * r: SessionDateDebut
 	 * r.enUS: SessionStartDate
-	 * r: SessionJourFin
+	 * r: SessionDateFin
 	 * r.enUS: SessionEndDate
 	 * r: FRANCE
 	 * r.enUS: US
@@ -1216,9 +1216,9 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 
 		if(fraisMontant != null) {
 			if(inscription_ != null && fraisPremierDernier)
-				o.append(String.format("%s frais de %s + %s", fn.format(fraisMontant), fd.format(inscription_.getSessionJourDebut()), fd.format(inscription_.getSessionJourFin())));
+				o.append(String.format("%s frais de %s + %s", fn.format(fraisMontant), fd.format(inscription_.getSessionDateDebut()), fd.format(inscription_.getSessionDateFin())));
 			else if(inscription_ != null && fraisInscription)
-				o.append(String.format("%s frais d'inscription %s-%s", fn.format(fraisMontant), fd.format(inscription_.getSessionJourDebut()), fd.format(inscription_.getSessionJourFin())));
+				o.append(String.format("%s frais d'inscription %s-%s", fn.format(fraisMontant), fd.format(inscription_.getSessionDateDebut()), fd.format(inscription_.getSessionDateFin())));
 			else if(inscription_ != null && fraisRetard)
 				o.append(String.format("%s", fn.format(fraisMontant)));
 			else
@@ -1287,9 +1287,9 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * r.enUS: chargeFirstLast
 	 * r: fraisInscription
 	 * r.enUS: chargeEnrollment
-	 * r: SessionJourDebut
+	 * r: SessionDateDebut
 	 * r.enUS: SessionStartDate
-	 * r: SessionJourFin
+	 * r: SessionDateFin
 	 * r.enUS: SessionEndDate
 	 * r: FRANCE
 	 * r.enUS: US
@@ -1318,9 +1318,9 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 			if(paiementDate != null)
 				o.append(" ").append(paiementDate.format(fd2));
 			if(inscription_ != null && fraisPremierDernier)
-				o.append(String.format("%s frais de %s + %s", fn.format(fraisMontant), fd.format(inscription_.getSessionJourDebut()), fd.format(inscription_.getSessionJourFin())));
+				o.append(String.format("%s frais de %s + %s", fn.format(fraisMontant), fd.format(inscription_.getSessionDateDebut()), fd.format(inscription_.getSessionDateFin())));
 			else if(inscription_ != null && fraisInscription)
-				o.append(String.format("%s frais d'inscription %s-%s", fn.format(fraisMontant), fd.format(inscription_.getSessionJourDebut()), fd.format(inscription_.getSessionJourFin())));
+				o.append(String.format("%s frais d'inscription %s-%s", fn.format(fraisMontant), fd.format(inscription_.getSessionDateDebut()), fd.format(inscription_.getSessionDateFin())));
 			else if(inscription_ != null && fraisRetard)
 				o.append(String.format("%s", fn.format(fraisMontant)));
 			else

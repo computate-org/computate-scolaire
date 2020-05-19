@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.bloc;                        
+package org.computate.scolaire.frFR.bloc;                          
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -447,14 +447,14 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * Stocke: true
 	 * NomAffichage.frFR: début de l'année
 	 * NomAffichage.enUS: start of season
-	 * r: SaisonJourDebut
+	 * r: SaisonDateDebut
 	 * r.enUS: SeasonStartDate
 	 * r: age
 	 * r.enUS: age
 	 */                  
-	protected void _saisonJourDebut(Couverture<LocalDate> c) {
+	protected void _saisonDateDebut(Couverture<LocalDate> c) {
 		if(age_ != null)
-			c.o(age_.getSaisonJourDebut());
+			c.o(age_.getSaisonDateDebut());
 	}
 
 	/**
@@ -545,14 +545,14 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * Stocke: true
 	 * NomAffichage.frFR: début de la session
 	 * NomAffichage.enUS: start of the session
-	 * r: SessionJourDebut
+	 * r: SessionDateDebut
 	 * r.enUS: SessionStartDate
 	 * r: age
 	 * r.enUS: age
 	 */                   
-	protected void _sessionJourDebut(Couverture<LocalDate> c) {
+	protected void _sessionDateDebut(Couverture<LocalDate> c) {
 		if(age_ != null)
-			c.o((LocalDate)age_.getSessionJourDebut());
+			c.o((LocalDate)age_.getSessionDateDebut());
 	}
 
 	/**
@@ -562,14 +562,14 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * Stocke: true
 	 * NomAffichage.frFR: fin de la session
 	 * NomAffichage.enUS: end of the session
-	 * r: SessionJourFin
+	 * r: SessionDateFin
 	 * r.enUS: SessionEndDate
 	 * r: age
 	 * r.enUS: age
 	 */                   
-	protected void _sessionJourFin(Couverture<LocalDate> c) {
+	protected void _sessionDateFin(Couverture<LocalDate> c) {
 		if(age_ != null)
-			c.o((LocalDate)age_.getSessionJourFin());
+			c.o((LocalDate)age_.getSessionDateFin());
 	}
 
 	/**
@@ -786,14 +786,14 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * NomAffichage.enUS: total price
 	 * r: blocPrixParMois
 	 * r.enUS: blockPricePerMonth
-	 * r: sessionJourDebut
+	 * r: sessionDateDebut
 	 * r.enUS: sessionStartDate
-	 * r: sessionJourFin
+	 * r: sessionDateFin
 	 * r.enUS: sessionEndDate
 	 */                   
 	protected void _blocPrixTotal(Couverture<BigDecimal> c) {
-		if(blocPrixParMois != null && sessionJourDebut != null && sessionJourFin != null) {
-			c.o(blocPrixParMois.multiply(new BigDecimal(ChronoUnit.MONTHS.between(sessionJourDebut, sessionJourFin))));
+		if(blocPrixParMois != null && sessionDateDebut != null && sessionDateFin != null) {
+			c.o(blocPrixParMois.multiply(new BigDecimal(ChronoUnit.MONTHS.between(sessionDateDebut, sessionDateFin))));
 		}
 	}
 

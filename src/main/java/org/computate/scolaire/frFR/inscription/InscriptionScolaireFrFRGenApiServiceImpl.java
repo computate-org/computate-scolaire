@@ -8277,6 +8277,94 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 		}
 	}
 
+	// RechargerPageRecherche //
+
+	@Override
+	public void rechargerpagerechercheInscriptionScolaireId(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		rechargerpagerechercheInscriptionScolaire(operationRequete, gestionnaireEvenements);
+	}
+
+	@Override
+	public void rechargerpagerechercheInscriptionScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourInscriptionScolaire(siteContexte, operationRequete);
+		try {
+			utilisateurInscriptionScolaire(requeteSite, b -> {
+				if(b.succeeded()) {
+					rechercheInscriptionScolaire(requeteSite, false, true, "/recharger-inscription", "RechargerPageRecherche", c -> {
+						if(c.succeeded()) {
+							ListeRecherche<InscriptionScolaire> listeInscriptionScolaire = c.result();
+							rechargerpagerechercheInscriptionScolaireReponse(listeInscriptionScolaire, d -> {
+								if(d.succeeded()) {
+									gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+									LOGGER.info(String.format("rechargerpagerechercheInscriptionScolaire a réussi. "));
+								} else {
+									LOGGER.error(String.format("rechargerpagerechercheInscriptionScolaire a échoué. ", d.cause()));
+									erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, d);
+								}
+							});
+						} else {
+							LOGGER.error(String.format("rechargerpagerechercheInscriptionScolaire a échoué. ", c.cause()));
+							erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, c);
+						}
+					});
+				} else {
+					LOGGER.error(String.format("rechargerpagerechercheInscriptionScolaire a échoué. ", b.cause()));
+					erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, b);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("rechargerpagerechercheInscriptionScolaire a échoué. ", ex));
+			erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
+		}
+	}
+
+
+	public void rechargerpagerechercheInscriptionScolaireReponse(ListeRecherche<InscriptionScolaire> listeInscriptionScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		RequeteSiteFrFR requeteSite = listeInscriptionScolaire.getRequeteSite_();
+		try {
+			Buffer buffer = Buffer.buffer();
+			ToutEcrivain w = ToutEcrivain.creer(requeteSite, buffer);
+			requeteSite.setW(w);
+			reponse200RechargerPageRechercheInscriptionScolaire(listeInscriptionScolaire, a -> {
+				if(a.succeeded()) {
+					gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
+				} else {
+					LOGGER.error(String.format("rechargerpagerechercheInscriptionScolaireReponse a échoué. ", a.cause()));
+					erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("rechargerpagerechercheInscriptionScolaireReponse a échoué. ", ex));
+			erreurInscriptionScolaire(requeteSite, null, Future.failedFuture(ex));
+		}
+	}
+	public void reponse200RechargerPageRechercheInscriptionScolaire(ListeRecherche<InscriptionScolaire> listeInscriptionScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		try {
+			RequeteSiteFrFR requeteSite = listeInscriptionScolaire.getRequeteSite_();
+			Buffer buffer = Buffer.buffer();
+			ToutEcrivain w = ToutEcrivain.creer(listeInscriptionScolaire.getRequeteSite_(), buffer);
+			PageInscription page = new PageInscription();
+			SolrDocument pageDocumentSolr = new SolrDocument();
+			CaseInsensitiveHeaders requeteEnTetes = new CaseInsensitiveHeaders();
+			requeteSite.setRequeteEnTetes(requeteEnTetes);
+
+			pageDocumentSolr.setField("pageUri_frFR_stored_string", "/recharger-inscription");
+			page.setPageDocumentSolr(pageDocumentSolr);
+			page.setW(w);
+			if(listeInscriptionScolaire.size() == 1)
+				requeteSite.setRequetePk(listeInscriptionScolaire.get(0).getPk());
+			requeteSite.setW(w);
+			page.setListeInscriptionScolaire(listeInscriptionScolaire);
+			page.setRequeteSite_(requeteSite);
+			page.initLoinPageInscription(requeteSite);
+			page.html();
+			gestionnaireEvenements.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, requeteEnTetes)));
+		} catch(Exception e) {
+			LOGGER.error(String.format("reponse200RechargerPageRechercheInscriptionScolaire a échoué. ", e));
+			gestionnaireEvenements.handle(Future.failedFuture(e));
+		}
+	}
+
 	// General //
 
 	public Future<InscriptionScolaire> definirIndexerInscriptionScolaire(InscriptionScolaire inscriptionScolaire, Handler<AsyncResult<InscriptionScolaire>> gestionnaireEvenements) {

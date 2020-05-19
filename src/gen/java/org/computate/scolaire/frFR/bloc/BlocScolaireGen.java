@@ -1983,84 +1983,84 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 	}
 
 	/////////////////////
-	// saisonJourDebut //
+	// saisonDateDebut //
 	/////////////////////
 
-	/**	L'entité « saisonJourDebut »
+	/**	L'entité « saisonDateDebut »
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonDeserialize(using = LocalDateDeserializer.class)
 	@JsonSerialize(using = LocalDateSerializer.class)
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	@JsonInclude(Include.NON_NULL)
-	protected LocalDate saisonJourDebut;
+	protected LocalDate saisonDateDebut;
 	@JsonIgnore
-	public Couverture<LocalDate> saisonJourDebutCouverture = new Couverture<LocalDate>().p(this).c(LocalDate.class).var("saisonJourDebut").o(saisonJourDebut);
+	public Couverture<LocalDate> saisonDateDebutCouverture = new Couverture<LocalDate>().p(this).c(LocalDate.class).var("saisonDateDebut").o(saisonDateDebut);
 
-	/**	<br/>L'entité « saisonJourDebut »
+	/**	<br/>L'entité « saisonDateDebut »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.bloc.BlocScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:saisonJourDebut">Trouver l'entité saisonJourDebut dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.bloc.BlocScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:saisonDateDebut">Trouver l'entité saisonDateDebut dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _saisonJourDebut(Couverture<LocalDate> c);
+	protected abstract void _saisonDateDebut(Couverture<LocalDate> c);
 
-	public LocalDate getSaisonJourDebut() {
-		return saisonJourDebut;
+	public LocalDate getSaisonDateDebut() {
+		return saisonDateDebut;
 	}
 
-	public void setSaisonJourDebut(LocalDate saisonJourDebut) {
-		this.saisonJourDebut = saisonJourDebut;
-		this.saisonJourDebutCouverture.dejaInitialise = true;
+	public void setSaisonDateDebut(LocalDate saisonDateDebut) {
+		this.saisonDateDebut = saisonDateDebut;
+		this.saisonDateDebutCouverture.dejaInitialise = true;
 	}
-	public BlocScolaire setSaisonJourDebut(Instant o) {
-		this.saisonJourDebut = LocalDate.from(o);
-		this.saisonJourDebutCouverture.dejaInitialise = true;
+	public BlocScolaire setSaisonDateDebut(Instant o) {
+		this.saisonDateDebut = LocalDate.from(o);
+		this.saisonDateDebutCouverture.dejaInitialise = true;
 		return (BlocScolaire)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
-	public BlocScolaire setSaisonJourDebut(String o) {
-		this.saisonJourDebut = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
-		this.saisonJourDebutCouverture.dejaInitialise = true;
+	public BlocScolaire setSaisonDateDebut(String o) {
+		this.saisonDateDebut = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		this.saisonDateDebutCouverture.dejaInitialise = true;
 		return (BlocScolaire)this;
 	}
-	public BlocScolaire setSaisonJourDebut(Date o) {
-		this.saisonJourDebut = o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
-		this.saisonJourDebutCouverture.dejaInitialise = true;
+	public BlocScolaire setSaisonDateDebut(Date o) {
+		this.saisonDateDebut = o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
+		this.saisonDateDebutCouverture.dejaInitialise = true;
 		return (BlocScolaire)this;
 	}
-	protected BlocScolaire saisonJourDebutInit() {
-		if(!saisonJourDebutCouverture.dejaInitialise) {
-			_saisonJourDebut(saisonJourDebutCouverture);
-			if(saisonJourDebut == null)
-				setSaisonJourDebut(saisonJourDebutCouverture.o);
+	protected BlocScolaire saisonDateDebutInit() {
+		if(!saisonDateDebutCouverture.dejaInitialise) {
+			_saisonDateDebut(saisonDateDebutCouverture);
+			if(saisonDateDebut == null)
+				setSaisonDateDebut(saisonDateDebutCouverture.o);
 		}
-		saisonJourDebutCouverture.dejaInitialise(true);
+		saisonDateDebutCouverture.dejaInitialise(true);
 		return (BlocScolaire)this;
 	}
 
-	public Date solrSaisonJourDebut() {
-		return saisonJourDebut == null ? null : Date.from(saisonJourDebut.atStartOfDay(ZoneId.systemDefault()).toInstant());
+	public Date solrSaisonDateDebut() {
+		return saisonDateDebut == null ? null : Date.from(saisonDateDebut.atStartOfDay(ZoneId.systemDefault()).toInstant());
 	}
 
-	public String strSaisonJourDebut() {
-		return saisonJourDebut == null ? "" : saisonJourDebut.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.forLanguageTag("fr-FR")));
+	public String strSaisonDateDebut() {
+		return saisonDateDebut == null ? "" : saisonDateDebut.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.forLanguageTag("fr-FR")));
 	}
 
-	public String jsonSaisonJourDebut() {
-		return saisonJourDebut == null ? "" : saisonJourDebut.format(DateTimeFormatter.ISO_DATE);
+	public String jsonSaisonDateDebut() {
+		return saisonDateDebut == null ? "" : saisonDateDebut.format(DateTimeFormatter.ISO_DATE);
 	}
 
-	public String nomAffichageSaisonJourDebut() {
+	public String nomAffichageSaisonDateDebut() {
 		return "début de l'année";
 	}
 
-	public String htmTooltipSaisonJourDebut() {
+	public String htmTooltipSaisonDateDebut() {
 		return null;
 	}
 
-	public String htmSaisonJourDebut() {
-		return saisonJourDebut == null ? "" : StringEscapeUtils.escapeHtml4(strSaisonJourDebut());
+	public String htmSaisonDateDebut() {
+		return saisonDateDebut == null ? "" : StringEscapeUtils.escapeHtml4(strSaisonDateDebut());
 	}
 
 	///////////////
@@ -2402,165 +2402,165 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 	}
 
 	//////////////////////
-	// sessionJourDebut //
+	// sessionDateDebut //
 	//////////////////////
 
-	/**	L'entité « sessionJourDebut »
+	/**	L'entité « sessionDateDebut »
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonDeserialize(using = LocalDateDeserializer.class)
 	@JsonSerialize(using = LocalDateSerializer.class)
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	@JsonInclude(Include.NON_NULL)
-	protected LocalDate sessionJourDebut;
+	protected LocalDate sessionDateDebut;
 	@JsonIgnore
-	public Couverture<LocalDate> sessionJourDebutCouverture = new Couverture<LocalDate>().p(this).c(LocalDate.class).var("sessionJourDebut").o(sessionJourDebut);
+	public Couverture<LocalDate> sessionDateDebutCouverture = new Couverture<LocalDate>().p(this).c(LocalDate.class).var("sessionDateDebut").o(sessionDateDebut);
 
-	/**	<br/>L'entité « sessionJourDebut »
+	/**	<br/>L'entité « sessionDateDebut »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.bloc.BlocScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:sessionJourDebut">Trouver l'entité sessionJourDebut dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.bloc.BlocScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:sessionDateDebut">Trouver l'entité sessionDateDebut dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _sessionJourDebut(Couverture<LocalDate> c);
+	protected abstract void _sessionDateDebut(Couverture<LocalDate> c);
 
-	public LocalDate getSessionJourDebut() {
-		return sessionJourDebut;
+	public LocalDate getSessionDateDebut() {
+		return sessionDateDebut;
 	}
 
-	public void setSessionJourDebut(LocalDate sessionJourDebut) {
-		this.sessionJourDebut = sessionJourDebut;
-		this.sessionJourDebutCouverture.dejaInitialise = true;
+	public void setSessionDateDebut(LocalDate sessionDateDebut) {
+		this.sessionDateDebut = sessionDateDebut;
+		this.sessionDateDebutCouverture.dejaInitialise = true;
 	}
-	public BlocScolaire setSessionJourDebut(Instant o) {
-		this.sessionJourDebut = LocalDate.from(o);
-		this.sessionJourDebutCouverture.dejaInitialise = true;
+	public BlocScolaire setSessionDateDebut(Instant o) {
+		this.sessionDateDebut = LocalDate.from(o);
+		this.sessionDateDebutCouverture.dejaInitialise = true;
 		return (BlocScolaire)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
-	public BlocScolaire setSessionJourDebut(String o) {
-		this.sessionJourDebut = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
-		this.sessionJourDebutCouverture.dejaInitialise = true;
+	public BlocScolaire setSessionDateDebut(String o) {
+		this.sessionDateDebut = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		this.sessionDateDebutCouverture.dejaInitialise = true;
 		return (BlocScolaire)this;
 	}
-	public BlocScolaire setSessionJourDebut(Date o) {
-		this.sessionJourDebut = o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
-		this.sessionJourDebutCouverture.dejaInitialise = true;
+	public BlocScolaire setSessionDateDebut(Date o) {
+		this.sessionDateDebut = o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
+		this.sessionDateDebutCouverture.dejaInitialise = true;
 		return (BlocScolaire)this;
 	}
-	protected BlocScolaire sessionJourDebutInit() {
-		if(!sessionJourDebutCouverture.dejaInitialise) {
-			_sessionJourDebut(sessionJourDebutCouverture);
-			if(sessionJourDebut == null)
-				setSessionJourDebut(sessionJourDebutCouverture.o);
+	protected BlocScolaire sessionDateDebutInit() {
+		if(!sessionDateDebutCouverture.dejaInitialise) {
+			_sessionDateDebut(sessionDateDebutCouverture);
+			if(sessionDateDebut == null)
+				setSessionDateDebut(sessionDateDebutCouverture.o);
 		}
-		sessionJourDebutCouverture.dejaInitialise(true);
+		sessionDateDebutCouverture.dejaInitialise(true);
 		return (BlocScolaire)this;
 	}
 
-	public Date solrSessionJourDebut() {
-		return sessionJourDebut == null ? null : Date.from(sessionJourDebut.atStartOfDay(ZoneId.systemDefault()).toInstant());
+	public Date solrSessionDateDebut() {
+		return sessionDateDebut == null ? null : Date.from(sessionDateDebut.atStartOfDay(ZoneId.systemDefault()).toInstant());
 	}
 
-	public String strSessionJourDebut() {
-		return sessionJourDebut == null ? "" : sessionJourDebut.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.forLanguageTag("fr-FR")));
+	public String strSessionDateDebut() {
+		return sessionDateDebut == null ? "" : sessionDateDebut.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.forLanguageTag("fr-FR")));
 	}
 
-	public String jsonSessionJourDebut() {
-		return sessionJourDebut == null ? "" : sessionJourDebut.format(DateTimeFormatter.ISO_DATE);
+	public String jsonSessionDateDebut() {
+		return sessionDateDebut == null ? "" : sessionDateDebut.format(DateTimeFormatter.ISO_DATE);
 	}
 
-	public String nomAffichageSessionJourDebut() {
+	public String nomAffichageSessionDateDebut() {
 		return "début de la session";
 	}
 
-	public String htmTooltipSessionJourDebut() {
+	public String htmTooltipSessionDateDebut() {
 		return null;
 	}
 
-	public String htmSessionJourDebut() {
-		return sessionJourDebut == null ? "" : StringEscapeUtils.escapeHtml4(strSessionJourDebut());
+	public String htmSessionDateDebut() {
+		return sessionDateDebut == null ? "" : StringEscapeUtils.escapeHtml4(strSessionDateDebut());
 	}
 
 	////////////////////
-	// sessionJourFin //
+	// sessionDateFin //
 	////////////////////
 
-	/**	L'entité « sessionJourFin »
+	/**	L'entité « sessionDateFin »
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonDeserialize(using = LocalDateDeserializer.class)
 	@JsonSerialize(using = LocalDateSerializer.class)
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	@JsonInclude(Include.NON_NULL)
-	protected LocalDate sessionJourFin;
+	protected LocalDate sessionDateFin;
 	@JsonIgnore
-	public Couverture<LocalDate> sessionJourFinCouverture = new Couverture<LocalDate>().p(this).c(LocalDate.class).var("sessionJourFin").o(sessionJourFin);
+	public Couverture<LocalDate> sessionDateFinCouverture = new Couverture<LocalDate>().p(this).c(LocalDate.class).var("sessionDateFin").o(sessionDateFin);
 
-	/**	<br/>L'entité « sessionJourFin »
+	/**	<br/>L'entité « sessionDateFin »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.bloc.BlocScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:sessionJourFin">Trouver l'entité sessionJourFin dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.bloc.BlocScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:sessionDateFin">Trouver l'entité sessionDateFin dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _sessionJourFin(Couverture<LocalDate> c);
+	protected abstract void _sessionDateFin(Couverture<LocalDate> c);
 
-	public LocalDate getSessionJourFin() {
-		return sessionJourFin;
+	public LocalDate getSessionDateFin() {
+		return sessionDateFin;
 	}
 
-	public void setSessionJourFin(LocalDate sessionJourFin) {
-		this.sessionJourFin = sessionJourFin;
-		this.sessionJourFinCouverture.dejaInitialise = true;
+	public void setSessionDateFin(LocalDate sessionDateFin) {
+		this.sessionDateFin = sessionDateFin;
+		this.sessionDateFinCouverture.dejaInitialise = true;
 	}
-	public BlocScolaire setSessionJourFin(Instant o) {
-		this.sessionJourFin = LocalDate.from(o);
-		this.sessionJourFinCouverture.dejaInitialise = true;
+	public BlocScolaire setSessionDateFin(Instant o) {
+		this.sessionDateFin = LocalDate.from(o);
+		this.sessionDateFinCouverture.dejaInitialise = true;
 		return (BlocScolaire)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
-	public BlocScolaire setSessionJourFin(String o) {
-		this.sessionJourFin = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
-		this.sessionJourFinCouverture.dejaInitialise = true;
+	public BlocScolaire setSessionDateFin(String o) {
+		this.sessionDateFin = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		this.sessionDateFinCouverture.dejaInitialise = true;
 		return (BlocScolaire)this;
 	}
-	public BlocScolaire setSessionJourFin(Date o) {
-		this.sessionJourFin = o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
-		this.sessionJourFinCouverture.dejaInitialise = true;
+	public BlocScolaire setSessionDateFin(Date o) {
+		this.sessionDateFin = o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
+		this.sessionDateFinCouverture.dejaInitialise = true;
 		return (BlocScolaire)this;
 	}
-	protected BlocScolaire sessionJourFinInit() {
-		if(!sessionJourFinCouverture.dejaInitialise) {
-			_sessionJourFin(sessionJourFinCouverture);
-			if(sessionJourFin == null)
-				setSessionJourFin(sessionJourFinCouverture.o);
+	protected BlocScolaire sessionDateFinInit() {
+		if(!sessionDateFinCouverture.dejaInitialise) {
+			_sessionDateFin(sessionDateFinCouverture);
+			if(sessionDateFin == null)
+				setSessionDateFin(sessionDateFinCouverture.o);
 		}
-		sessionJourFinCouverture.dejaInitialise(true);
+		sessionDateFinCouverture.dejaInitialise(true);
 		return (BlocScolaire)this;
 	}
 
-	public Date solrSessionJourFin() {
-		return sessionJourFin == null ? null : Date.from(sessionJourFin.atStartOfDay(ZoneId.systemDefault()).toInstant());
+	public Date solrSessionDateFin() {
+		return sessionDateFin == null ? null : Date.from(sessionDateFin.atStartOfDay(ZoneId.systemDefault()).toInstant());
 	}
 
-	public String strSessionJourFin() {
-		return sessionJourFin == null ? "" : sessionJourFin.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.forLanguageTag("fr-FR")));
+	public String strSessionDateFin() {
+		return sessionDateFin == null ? "" : sessionDateFin.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.forLanguageTag("fr-FR")));
 	}
 
-	public String jsonSessionJourFin() {
-		return sessionJourFin == null ? "" : sessionJourFin.format(DateTimeFormatter.ISO_DATE);
+	public String jsonSessionDateFin() {
+		return sessionDateFin == null ? "" : sessionDateFin.format(DateTimeFormatter.ISO_DATE);
 	}
 
-	public String nomAffichageSessionJourFin() {
+	public String nomAffichageSessionDateFin() {
 		return "fin de la session";
 	}
 
-	public String htmTooltipSessionJourFin() {
+	public String htmTooltipSessionDateFin() {
 		return null;
 	}
 
-	public String htmSessionJourFin() {
-		return sessionJourFin == null ? "" : StringEscapeUtils.escapeHtml4(strSessionJourFin());
+	public String htmSessionDateFin() {
+		return sessionDateFin == null ? "" : StringEscapeUtils.escapeHtml4(strSessionDateFin());
 	}
 
 	/////////////////
@@ -2907,7 +2907,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 				.a("id", classeApiMethodeMethode, "_blocHeureDebut")
 				.a("onclick", "enleverLueur($(this)); ")
 				.a("title", "L'année scolaire de la saison scolaire.  (H'h'mm)")				.a("value", blocHeureDebut == null ? "" : DateTimeFormatter.ofPattern("H'h'mm").format(blocHeureDebut))
-				.a("onchange", "var t = parseTime(this.value); if(t) { var s = dateFormat(t, 'HH:MM'); patchBlocScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlocHeureDebut', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_blocHeureDebut')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_blocHeureDebut')); }); } ")
+				.a("onchange", "var t = moment(this.value, 'H'h'mm'); if(t) { var s = t.format('HH:mm'); patchBlocScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlocHeureDebut', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_blocHeureDebut')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_blocHeureDebut')); }); } ")
 				.fg();
 		}
 	}
@@ -3027,7 +3027,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 				.a("id", classeApiMethodeMethode, "_blocHeureFin")
 				.a("onclick", "enleverLueur($(this)); ")
 				.a("title", "L'année scolaire de la saison scolaire.  (H'h'mm)")				.a("value", blocHeureFin == null ? "" : DateTimeFormatter.ofPattern("H'h'mm").format(blocHeureFin))
-				.a("onchange", "var t = parseTime(this.value); if(t) { var s = dateFormat(t, 'HH:MM'); patchBlocScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlocHeureFin', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_blocHeureFin')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_blocHeureFin')); }); } ")
+				.a("onchange", "var t = moment(this.value, 'H'h'mm'); if(t) { var s = t.format('HH:mm'); patchBlocScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlocHeureFin', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_blocHeureFin')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_blocHeureFin')); }); } ")
 				.fg();
 		}
 	}
@@ -4417,14 +4417,14 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		ecoleAdministrateurNomInit();
 		anneeDebutInit();
 		anneeFinInit();
-		saisonJourDebutInit();
+		saisonDateDebutInit();
 		saisonEteInit();
 		saisonHiverInit();
 		anneeFraisInscriptionInit();
 		saisonNomCourtInit();
 		saisonNomCompletInit();
-		sessionJourDebutInit();
-		sessionJourFinInit();
+		sessionDateDebutInit();
+		sessionDateFinInit();
 		ageNomCourtInit();
 		ageNomCompletInit();
 		ageDebutInit();
@@ -4538,8 +4538,8 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 				return oBlocScolaire.anneeDebut;
 			case "anneeFin":
 				return oBlocScolaire.anneeFin;
-			case "saisonJourDebut":
-				return oBlocScolaire.saisonJourDebut;
+			case "saisonDateDebut":
+				return oBlocScolaire.saisonDateDebut;
 			case "saisonEte":
 				return oBlocScolaire.saisonEte;
 			case "saisonHiver":
@@ -4550,10 +4550,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 				return oBlocScolaire.saisonNomCourt;
 			case "saisonNomComplet":
 				return oBlocScolaire.saisonNomComplet;
-			case "sessionJourDebut":
-				return oBlocScolaire.sessionJourDebut;
-			case "sessionJourFin":
-				return oBlocScolaire.sessionJourFin;
+			case "sessionDateDebut":
+				return oBlocScolaire.sessionDateDebut;
+			case "sessionDateFin":
+				return oBlocScolaire.sessionDateFin;
 			case "ageNomCourt":
 				return oBlocScolaire.ageNomCourt;
 			case "ageNomComplet":
@@ -4853,10 +4853,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 					oBlocScolaire.setAnneeFin(anneeFin);
 			}
 
-			if(sauvegardesBlocScolaire.contains("saisonJourDebut")) {
-				Date saisonJourDebut = (Date)solrDocument.get("saisonJourDebut_stored_date");
-				if(saisonJourDebut != null)
-					oBlocScolaire.setSaisonJourDebut(saisonJourDebut);
+			if(sauvegardesBlocScolaire.contains("saisonDateDebut")) {
+				Date saisonDateDebut = (Date)solrDocument.get("saisonDateDebut_stored_date");
+				if(saisonDateDebut != null)
+					oBlocScolaire.setSaisonDateDebut(saisonDateDebut);
 			}
 
 			if(sauvegardesBlocScolaire.contains("saisonEte")) {
@@ -4889,16 +4889,16 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 					oBlocScolaire.setSaisonNomComplet(saisonNomComplet);
 			}
 
-			if(sauvegardesBlocScolaire.contains("sessionJourDebut")) {
-				Date sessionJourDebut = (Date)solrDocument.get("sessionJourDebut_stored_date");
-				if(sessionJourDebut != null)
-					oBlocScolaire.setSessionJourDebut(sessionJourDebut);
+			if(sauvegardesBlocScolaire.contains("sessionDateDebut")) {
+				Date sessionDateDebut = (Date)solrDocument.get("sessionDateDebut_stored_date");
+				if(sessionDateDebut != null)
+					oBlocScolaire.setSessionDateDebut(sessionDateDebut);
 			}
 
-			if(sauvegardesBlocScolaire.contains("sessionJourFin")) {
-				Date sessionJourFin = (Date)solrDocument.get("sessionJourFin_stored_date");
-				if(sessionJourFin != null)
-					oBlocScolaire.setSessionJourFin(sessionJourFin);
+			if(sauvegardesBlocScolaire.contains("sessionDateFin")) {
+				Date sessionDateFin = (Date)solrDocument.get("sessionDateFin_stored_date");
+				if(sessionDateFin != null)
+					oBlocScolaire.setSessionDateFin(sessionDateFin);
 			}
 
 			if(sauvegardesBlocScolaire.contains("ageNomCourt")) {
@@ -5170,9 +5170,9 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 			document.addField("anneeFin_indexed_int", anneeFin);
 			document.addField("anneeFin_stored_int", anneeFin);
 		}
-		if(saisonJourDebut != null) {
-			document.addField("saisonJourDebut_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(saisonJourDebut.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
-			document.addField("saisonJourDebut_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(saisonJourDebut.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
+		if(saisonDateDebut != null) {
+			document.addField("saisonDateDebut_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(saisonDateDebut.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
+			document.addField("saisonDateDebut_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(saisonDateDebut.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
 		}
 		if(saisonEte != null) {
 			document.addField("saisonEte_indexed_boolean", saisonEte);
@@ -5194,13 +5194,13 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 			document.addField("saisonNomComplet_indexed_string", saisonNomComplet);
 			document.addField("saisonNomComplet_stored_string", saisonNomComplet);
 		}
-		if(sessionJourDebut != null) {
-			document.addField("sessionJourDebut_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(sessionJourDebut.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
-			document.addField("sessionJourDebut_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(sessionJourDebut.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
+		if(sessionDateDebut != null) {
+			document.addField("sessionDateDebut_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(sessionDateDebut.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
+			document.addField("sessionDateDebut_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(sessionDateDebut.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
 		}
-		if(sessionJourFin != null) {
-			document.addField("sessionJourFin_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(sessionJourFin.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
-			document.addField("sessionJourFin_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(sessionJourFin.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
+		if(sessionDateFin != null) {
+			document.addField("sessionDateFin_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(sessionDateFin.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
+			document.addField("sessionDateFin_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(sessionDateFin.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
 		}
 		if(ageNomCourt != null) {
 			document.addField("ageNomCourt_indexed_string", ageNomCourt);
@@ -5341,8 +5341,8 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 				return "anneeDebut_indexed_int";
 			case "anneeFin":
 				return "anneeFin_indexed_int";
-			case "saisonJourDebut":
-				return "saisonJourDebut_indexed_date";
+			case "saisonDateDebut":
+				return "saisonDateDebut_indexed_date";
 			case "saisonEte":
 				return "saisonEte_indexed_boolean";
 			case "saisonHiver":
@@ -5353,10 +5353,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 				return "saisonNomCourt_indexed_string";
 			case "saisonNomComplet":
 				return "saisonNomComplet_indexed_string";
-			case "sessionJourDebut":
-				return "sessionJourDebut_indexed_date";
-			case "sessionJourFin":
-				return "sessionJourFin_indexed_date";
+			case "sessionDateDebut":
+				return "sessionDateDebut_indexed_date";
+			case "sessionDateFin":
+				return "sessionDateFin_indexed_date";
 			case "ageNomCourt":
 				return "ageNomCourt_indexed_string";
 			case "ageNomComplet":
@@ -5510,9 +5510,9 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		if(anneeFin != null)
 			oBlocScolaire.setAnneeFin(anneeFin);
 
-		Date saisonJourDebut = (Date)solrDocument.get("saisonJourDebut_stored_date");
-		if(saisonJourDebut != null)
-			oBlocScolaire.setSaisonJourDebut(saisonJourDebut);
+		Date saisonDateDebut = (Date)solrDocument.get("saisonDateDebut_stored_date");
+		if(saisonDateDebut != null)
+			oBlocScolaire.setSaisonDateDebut(saisonDateDebut);
 
 		Boolean saisonEte = (Boolean)solrDocument.get("saisonEte_stored_boolean");
 		if(saisonEte != null)
@@ -5534,13 +5534,13 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		if(saisonNomComplet != null)
 			oBlocScolaire.setSaisonNomComplet(saisonNomComplet);
 
-		Date sessionJourDebut = (Date)solrDocument.get("sessionJourDebut_stored_date");
-		if(sessionJourDebut != null)
-			oBlocScolaire.setSessionJourDebut(sessionJourDebut);
+		Date sessionDateDebut = (Date)solrDocument.get("sessionDateDebut_stored_date");
+		if(sessionDateDebut != null)
+			oBlocScolaire.setSessionDateDebut(sessionDateDebut);
 
-		Date sessionJourFin = (Date)solrDocument.get("sessionJourFin_stored_date");
-		if(sessionJourFin != null)
-			oBlocScolaire.setSessionJourFin(sessionJourFin);
+		Date sessionDateFin = (Date)solrDocument.get("sessionDateFin_stored_date");
+		if(sessionDateFin != null)
+			oBlocScolaire.setSessionDateFin(sessionDateFin);
 
 		String ageNomCourt = (String)solrDocument.get("ageNomCourt_stored_string");
 		if(ageNomCourt != null)

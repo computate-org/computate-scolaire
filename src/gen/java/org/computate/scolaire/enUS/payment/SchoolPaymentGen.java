@@ -1437,10 +1437,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				.a("type", "text")
 				.a("class", "w3-input w3-border datepicker setChildBirthDate inputSchoolPayment", pk, "ChildBirthDate w3-input w3-border ")
 				.a("placeholder", "MM/DD/YYYY")
-				.a("data-timeformat", "MM/DD/YYYY")
+				.a("data-timeformat", "MM/dd/yyyy")
 				.a("id", classApiMethodMethod, "_childBirthDate")
 				.a("onclick", "removeGlow($(this)); ")
-				.a("value", childBirthDate == null ? "" : DateTimeFormatter.ISO_LOCAL_DATE.format(childBirthDate))
+				.a("value", childBirthDate == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy").format(childBirthDate))
 				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setChildBirthDate', s, function() { addGlow($('#", classApiMethodMethod, "_childBirthDate')); }, function() { addError($('#", classApiMethodMethod, "_childBirthDate')); }); } ")
 				.fg();
 		} else {
@@ -2712,7 +2712,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 	/** Example: 01:00 **/
 	public SchoolPayment setBlockStartTime(String o) {
 		try {
-			this.blockStartTime = LocalTime.parse(o, DateTimeFormatter.ofPattern("HH:mm"));
+			this.blockStartTime = LocalTime.parse(o, DateTimeFormatter.ISO_TIME);
 			this.blockStartTimeWrap.alreadyInitialized = true;
 		} catch(Exception e) {
 		}
@@ -2784,7 +2784,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 	/** Example: 01:00 **/
 	public SchoolPayment setBlockEndTime(String o) {
 		try {
-			this.blockEndTime = LocalTime.parse(o, DateTimeFormatter.ofPattern("HH:mm"));
+			this.blockEndTime = LocalTime.parse(o, DateTimeFormatter.ISO_TIME);
 			this.blockEndTimeWrap.alreadyInitialized = true;
 		} catch(Exception e) {
 		}
@@ -3484,10 +3484,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				.a("type", "text")
 				.a("class", "w3-input w3-border datepicker setPaymentDate inputSchoolPayment", pk, "PaymentDate w3-input w3-border ")
 				.a("placeholder", "MM/DD/YYYY")
-				.a("data-timeformat", "MM/DD/YYYY")
+				.a("data-timeformat", "MM/dd/yyyy")
 				.a("id", classApiMethodMethod, "_paymentDate")
 				.a("onclick", "removeGlow($(this)); ")
-				.a("value", paymentDate == null ? "" : DateTimeFormatter.ISO_LOCAL_DATE.format(paymentDate))
+				.a("value", paymentDate == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy").format(paymentDate))
 				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patchSchoolPaymentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPaymentDate', s, function() { addGlow($('#", classApiMethodMethod, "_paymentDate')); }, function() { addError($('#", classApiMethodMethod, "_paymentDate')); }); } ")
 				.fg();
 		} else {

@@ -82,6 +82,12 @@ import org.computate.scolaire.frFR.saison.SaisonScolaire;
  * PageSuperSearchPage.enUS: ClusterPage
  * ApiUriSearchPage.enUS: /enrollment
  * 
+ * ApiMethode.frFR: RechargerPageRecherche
+ * PageRechargerPageRecherche.frFR: PageInscription
+ * PageSuperRechargerPageRecherche.frFR: ClusterPage
+ * ApiUriRechargerPageRecherche.frFR: /recharger-inscription
+ * RoleUtilisateurRechargerPageRecherche.frFR: true
+ * 
  * ApiMethode.enUS: RefreshSearchPage
  * PageRefreshSearchPage.enUS: EnrollmentPage
  * PageSuperRefreshSearchPage.enUS: ClusterPage
@@ -1035,14 +1041,14 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Stocke: true
 	 * NomAffichage.frFR: début de l'année
 	 * NomAffichage.enUS: start of season
-	 * r: SaisonJourDebut
+	 * r: SaisonDateDebut
 	 * r.enUS: SeasonStartDate
 	 * r: bloc
 	 * r.enUS: block
 	 */                  
-	protected void _saisonJourDebut(Couverture<LocalDate> c) {
+	protected void _saisonDateDebut(Couverture<LocalDate> c) {
 		if(bloc_ != null)
-			c.o(bloc_.getSaisonJourDebut());
+			c.o(bloc_.getSaisonDateDebut());
 	}
 
 	/**
@@ -1118,14 +1124,14 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Stocke: true
 	 * NomAffichage.frFR: début de la session
 	 * NomAffichage.enUS: start of the session
-	 * r: SessionJourDebut
+	 * r: SessionDateDebut
 	 * r.enUS: SessionStartDate
 	 * r: bloc
 	 * r.enUS: block
 	 */                   
-	protected void _sessionJourDebut(Couverture<LocalDate> c) {
+	protected void _sessionDateDebut(Couverture<LocalDate> c) {
 		if(bloc_ != null)
-			c.o((LocalDate)bloc_.getSessionJourDebut());
+			c.o((LocalDate)bloc_.getSessionDateDebut());
 	}
 
 	/**
@@ -1135,14 +1141,14 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Stocke: true
 	 * NomAffichage.frFR: fin de la session
 	 * NomAffichage.enUS: end of the session
-	 * r: SessionJourFin
+	 * r: SessionDateFin
 	 * r.enUS: SessionEndDate
 	 * r: bloc
 	 * r.enUS: block
 	 */                   
-	protected void _sessionJourFin(Couverture<LocalDate> c) {
+	protected void _sessionDateFin(Couverture<LocalDate> c) {
 		if(bloc_ != null)
-			c.o((LocalDate)bloc_.getSessionJourFin());
+			c.o((LocalDate)bloc_.getSessionDateFin());
 	}
 
 	/**

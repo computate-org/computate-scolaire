@@ -1440,11 +1440,11 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				.a("type", "text")
 				.a("class", "w3-input w3-border datepicker setEnfantDateNaissance inputPaiementScolaire", pk, "EnfantDateNaissance w3-input w3-border ")
 				.a("placeholder", "DD-MM-YYYY")
-				.a("data-timeformat", "DD-MM-YYYY")
+				.a("data-timeformat", "dd-MM-yyyy")
 				.a("id", classeApiMethodeMethode, "_enfantDateNaissance")
 				.a("onclick", "enleverLueur($(this)); ")
 				.a("title", "La clé primaire des enfants dans la base de données.  (DD-MM-YYYY)")
-				.a("value", enfantDateNaissance == null ? "" : DateTimeFormatter.ISO_LOCAL_DATE.format(enfantDateNaissance))
+				.a("value", enfantDateNaissance == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy").format(enfantDateNaissance))
 				.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnfantDateNaissance', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_enfantDateNaissance')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_enfantDateNaissance')); }); } ")
 				.fg();
 		} else {
@@ -2092,84 +2092,84 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	/////////////////////
-	// saisonJourDebut //
+	// saisonDateDebut //
 	/////////////////////
 
-	/**	L'entité « saisonJourDebut »
+	/**	L'entité « saisonDateDebut »
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonDeserialize(using = LocalDateDeserializer.class)
 	@JsonSerialize(using = LocalDateSerializer.class)
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	@JsonInclude(Include.NON_NULL)
-	protected LocalDate saisonJourDebut;
+	protected LocalDate saisonDateDebut;
 	@JsonIgnore
-	public Couverture<LocalDate> saisonJourDebutCouverture = new Couverture<LocalDate>().p(this).c(LocalDate.class).var("saisonJourDebut").o(saisonJourDebut);
+	public Couverture<LocalDate> saisonDateDebutCouverture = new Couverture<LocalDate>().p(this).c(LocalDate.class).var("saisonDateDebut").o(saisonDateDebut);
 
-	/**	<br/>L'entité « saisonJourDebut »
+	/**	<br/>L'entité « saisonDateDebut »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:saisonJourDebut">Trouver l'entité saisonJourDebut dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:saisonDateDebut">Trouver l'entité saisonDateDebut dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _saisonJourDebut(Couverture<LocalDate> c);
+	protected abstract void _saisonDateDebut(Couverture<LocalDate> c);
 
-	public LocalDate getSaisonJourDebut() {
-		return saisonJourDebut;
+	public LocalDate getSaisonDateDebut() {
+		return saisonDateDebut;
 	}
 
-	public void setSaisonJourDebut(LocalDate saisonJourDebut) {
-		this.saisonJourDebut = saisonJourDebut;
-		this.saisonJourDebutCouverture.dejaInitialise = true;
+	public void setSaisonDateDebut(LocalDate saisonDateDebut) {
+		this.saisonDateDebut = saisonDateDebut;
+		this.saisonDateDebutCouverture.dejaInitialise = true;
 	}
-	public PaiementScolaire setSaisonJourDebut(Instant o) {
-		this.saisonJourDebut = LocalDate.from(o);
-		this.saisonJourDebutCouverture.dejaInitialise = true;
+	public PaiementScolaire setSaisonDateDebut(Instant o) {
+		this.saisonDateDebut = LocalDate.from(o);
+		this.saisonDateDebutCouverture.dejaInitialise = true;
 		return (PaiementScolaire)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
-	public PaiementScolaire setSaisonJourDebut(String o) {
-		this.saisonJourDebut = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
-		this.saisonJourDebutCouverture.dejaInitialise = true;
+	public PaiementScolaire setSaisonDateDebut(String o) {
+		this.saisonDateDebut = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		this.saisonDateDebutCouverture.dejaInitialise = true;
 		return (PaiementScolaire)this;
 	}
-	public PaiementScolaire setSaisonJourDebut(Date o) {
-		this.saisonJourDebut = o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
-		this.saisonJourDebutCouverture.dejaInitialise = true;
+	public PaiementScolaire setSaisonDateDebut(Date o) {
+		this.saisonDateDebut = o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
+		this.saisonDateDebutCouverture.dejaInitialise = true;
 		return (PaiementScolaire)this;
 	}
-	protected PaiementScolaire saisonJourDebutInit() {
-		if(!saisonJourDebutCouverture.dejaInitialise) {
-			_saisonJourDebut(saisonJourDebutCouverture);
-			if(saisonJourDebut == null)
-				setSaisonJourDebut(saisonJourDebutCouverture.o);
+	protected PaiementScolaire saisonDateDebutInit() {
+		if(!saisonDateDebutCouverture.dejaInitialise) {
+			_saisonDateDebut(saisonDateDebutCouverture);
+			if(saisonDateDebut == null)
+				setSaisonDateDebut(saisonDateDebutCouverture.o);
 		}
-		saisonJourDebutCouverture.dejaInitialise(true);
+		saisonDateDebutCouverture.dejaInitialise(true);
 		return (PaiementScolaire)this;
 	}
 
-	public Date solrSaisonJourDebut() {
-		return saisonJourDebut == null ? null : Date.from(saisonJourDebut.atStartOfDay(ZoneId.systemDefault()).toInstant());
+	public Date solrSaisonDateDebut() {
+		return saisonDateDebut == null ? null : Date.from(saisonDateDebut.atStartOfDay(ZoneId.systemDefault()).toInstant());
 	}
 
-	public String strSaisonJourDebut() {
-		return saisonJourDebut == null ? "" : saisonJourDebut.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.forLanguageTag("fr-FR")));
+	public String strSaisonDateDebut() {
+		return saisonDateDebut == null ? "" : saisonDateDebut.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.forLanguageTag("fr-FR")));
 	}
 
-	public String jsonSaisonJourDebut() {
-		return saisonJourDebut == null ? "" : saisonJourDebut.format(DateTimeFormatter.ISO_DATE);
+	public String jsonSaisonDateDebut() {
+		return saisonDateDebut == null ? "" : saisonDateDebut.format(DateTimeFormatter.ISO_DATE);
 	}
 
-	public String nomAffichageSaisonJourDebut() {
+	public String nomAffichageSaisonDateDebut() {
 		return "début de l'année";
 	}
 
-	public String htmTooltipSaisonJourDebut() {
+	public String htmTooltipSaisonDateDebut() {
 		return null;
 	}
 
-	public String htmSaisonJourDebut() {
-		return saisonJourDebut == null ? "" : StringEscapeUtils.escapeHtml4(strSaisonJourDebut());
+	public String htmSaisonDateDebut() {
+		return saisonDateDebut == null ? "" : StringEscapeUtils.escapeHtml4(strSaisonDateDebut());
 	}
 
 	///////////////
@@ -2387,165 +2387,165 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	//////////////////////
-	// sessionJourDebut //
+	// sessionDateDebut //
 	//////////////////////
 
-	/**	L'entité « sessionJourDebut »
+	/**	L'entité « sessionDateDebut »
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonDeserialize(using = LocalDateDeserializer.class)
 	@JsonSerialize(using = LocalDateSerializer.class)
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	@JsonInclude(Include.NON_NULL)
-	protected LocalDate sessionJourDebut;
+	protected LocalDate sessionDateDebut;
 	@JsonIgnore
-	public Couverture<LocalDate> sessionJourDebutCouverture = new Couverture<LocalDate>().p(this).c(LocalDate.class).var("sessionJourDebut").o(sessionJourDebut);
+	public Couverture<LocalDate> sessionDateDebutCouverture = new Couverture<LocalDate>().p(this).c(LocalDate.class).var("sessionDateDebut").o(sessionDateDebut);
 
-	/**	<br/>L'entité « sessionJourDebut »
+	/**	<br/>L'entité « sessionDateDebut »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:sessionJourDebut">Trouver l'entité sessionJourDebut dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:sessionDateDebut">Trouver l'entité sessionDateDebut dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _sessionJourDebut(Couverture<LocalDate> c);
+	protected abstract void _sessionDateDebut(Couverture<LocalDate> c);
 
-	public LocalDate getSessionJourDebut() {
-		return sessionJourDebut;
+	public LocalDate getSessionDateDebut() {
+		return sessionDateDebut;
 	}
 
-	public void setSessionJourDebut(LocalDate sessionJourDebut) {
-		this.sessionJourDebut = sessionJourDebut;
-		this.sessionJourDebutCouverture.dejaInitialise = true;
+	public void setSessionDateDebut(LocalDate sessionDateDebut) {
+		this.sessionDateDebut = sessionDateDebut;
+		this.sessionDateDebutCouverture.dejaInitialise = true;
 	}
-	public PaiementScolaire setSessionJourDebut(Instant o) {
-		this.sessionJourDebut = LocalDate.from(o);
-		this.sessionJourDebutCouverture.dejaInitialise = true;
+	public PaiementScolaire setSessionDateDebut(Instant o) {
+		this.sessionDateDebut = LocalDate.from(o);
+		this.sessionDateDebutCouverture.dejaInitialise = true;
 		return (PaiementScolaire)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
-	public PaiementScolaire setSessionJourDebut(String o) {
-		this.sessionJourDebut = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
-		this.sessionJourDebutCouverture.dejaInitialise = true;
+	public PaiementScolaire setSessionDateDebut(String o) {
+		this.sessionDateDebut = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		this.sessionDateDebutCouverture.dejaInitialise = true;
 		return (PaiementScolaire)this;
 	}
-	public PaiementScolaire setSessionJourDebut(Date o) {
-		this.sessionJourDebut = o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
-		this.sessionJourDebutCouverture.dejaInitialise = true;
+	public PaiementScolaire setSessionDateDebut(Date o) {
+		this.sessionDateDebut = o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
+		this.sessionDateDebutCouverture.dejaInitialise = true;
 		return (PaiementScolaire)this;
 	}
-	protected PaiementScolaire sessionJourDebutInit() {
-		if(!sessionJourDebutCouverture.dejaInitialise) {
-			_sessionJourDebut(sessionJourDebutCouverture);
-			if(sessionJourDebut == null)
-				setSessionJourDebut(sessionJourDebutCouverture.o);
+	protected PaiementScolaire sessionDateDebutInit() {
+		if(!sessionDateDebutCouverture.dejaInitialise) {
+			_sessionDateDebut(sessionDateDebutCouverture);
+			if(sessionDateDebut == null)
+				setSessionDateDebut(sessionDateDebutCouverture.o);
 		}
-		sessionJourDebutCouverture.dejaInitialise(true);
+		sessionDateDebutCouverture.dejaInitialise(true);
 		return (PaiementScolaire)this;
 	}
 
-	public Date solrSessionJourDebut() {
-		return sessionJourDebut == null ? null : Date.from(sessionJourDebut.atStartOfDay(ZoneId.systemDefault()).toInstant());
+	public Date solrSessionDateDebut() {
+		return sessionDateDebut == null ? null : Date.from(sessionDateDebut.atStartOfDay(ZoneId.systemDefault()).toInstant());
 	}
 
-	public String strSessionJourDebut() {
-		return sessionJourDebut == null ? "" : sessionJourDebut.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.forLanguageTag("fr-FR")));
+	public String strSessionDateDebut() {
+		return sessionDateDebut == null ? "" : sessionDateDebut.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.forLanguageTag("fr-FR")));
 	}
 
-	public String jsonSessionJourDebut() {
-		return sessionJourDebut == null ? "" : sessionJourDebut.format(DateTimeFormatter.ISO_DATE);
+	public String jsonSessionDateDebut() {
+		return sessionDateDebut == null ? "" : sessionDateDebut.format(DateTimeFormatter.ISO_DATE);
 	}
 
-	public String nomAffichageSessionJourDebut() {
+	public String nomAffichageSessionDateDebut() {
 		return "début de la session";
 	}
 
-	public String htmTooltipSessionJourDebut() {
+	public String htmTooltipSessionDateDebut() {
 		return null;
 	}
 
-	public String htmSessionJourDebut() {
-		return sessionJourDebut == null ? "" : StringEscapeUtils.escapeHtml4(strSessionJourDebut());
+	public String htmSessionDateDebut() {
+		return sessionDateDebut == null ? "" : StringEscapeUtils.escapeHtml4(strSessionDateDebut());
 	}
 
 	////////////////////
-	// sessionJourFin //
+	// sessionDateFin //
 	////////////////////
 
-	/**	L'entité « sessionJourFin »
+	/**	L'entité « sessionDateFin »
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonDeserialize(using = LocalDateDeserializer.class)
 	@JsonSerialize(using = LocalDateSerializer.class)
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	@JsonInclude(Include.NON_NULL)
-	protected LocalDate sessionJourFin;
+	protected LocalDate sessionDateFin;
 	@JsonIgnore
-	public Couverture<LocalDate> sessionJourFinCouverture = new Couverture<LocalDate>().p(this).c(LocalDate.class).var("sessionJourFin").o(sessionJourFin);
+	public Couverture<LocalDate> sessionDateFinCouverture = new Couverture<LocalDate>().p(this).c(LocalDate.class).var("sessionDateFin").o(sessionDateFin);
 
-	/**	<br/>L'entité « sessionJourFin »
+	/**	<br/>L'entité « sessionDateFin »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:sessionJourFin">Trouver l'entité sessionJourFin dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:sessionDateFin">Trouver l'entité sessionDateFin dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _sessionJourFin(Couverture<LocalDate> c);
+	protected abstract void _sessionDateFin(Couverture<LocalDate> c);
 
-	public LocalDate getSessionJourFin() {
-		return sessionJourFin;
+	public LocalDate getSessionDateFin() {
+		return sessionDateFin;
 	}
 
-	public void setSessionJourFin(LocalDate sessionJourFin) {
-		this.sessionJourFin = sessionJourFin;
-		this.sessionJourFinCouverture.dejaInitialise = true;
+	public void setSessionDateFin(LocalDate sessionDateFin) {
+		this.sessionDateFin = sessionDateFin;
+		this.sessionDateFinCouverture.dejaInitialise = true;
 	}
-	public PaiementScolaire setSessionJourFin(Instant o) {
-		this.sessionJourFin = LocalDate.from(o);
-		this.sessionJourFinCouverture.dejaInitialise = true;
+	public PaiementScolaire setSessionDateFin(Instant o) {
+		this.sessionDateFin = LocalDate.from(o);
+		this.sessionDateFinCouverture.dejaInitialise = true;
 		return (PaiementScolaire)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
-	public PaiementScolaire setSessionJourFin(String o) {
-		this.sessionJourFin = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
-		this.sessionJourFinCouverture.dejaInitialise = true;
+	public PaiementScolaire setSessionDateFin(String o) {
+		this.sessionDateFin = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		this.sessionDateFinCouverture.dejaInitialise = true;
 		return (PaiementScolaire)this;
 	}
-	public PaiementScolaire setSessionJourFin(Date o) {
-		this.sessionJourFin = o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
-		this.sessionJourFinCouverture.dejaInitialise = true;
+	public PaiementScolaire setSessionDateFin(Date o) {
+		this.sessionDateFin = o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
+		this.sessionDateFinCouverture.dejaInitialise = true;
 		return (PaiementScolaire)this;
 	}
-	protected PaiementScolaire sessionJourFinInit() {
-		if(!sessionJourFinCouverture.dejaInitialise) {
-			_sessionJourFin(sessionJourFinCouverture);
-			if(sessionJourFin == null)
-				setSessionJourFin(sessionJourFinCouverture.o);
+	protected PaiementScolaire sessionDateFinInit() {
+		if(!sessionDateFinCouverture.dejaInitialise) {
+			_sessionDateFin(sessionDateFinCouverture);
+			if(sessionDateFin == null)
+				setSessionDateFin(sessionDateFinCouverture.o);
 		}
-		sessionJourFinCouverture.dejaInitialise(true);
+		sessionDateFinCouverture.dejaInitialise(true);
 		return (PaiementScolaire)this;
 	}
 
-	public Date solrSessionJourFin() {
-		return sessionJourFin == null ? null : Date.from(sessionJourFin.atStartOfDay(ZoneId.systemDefault()).toInstant());
+	public Date solrSessionDateFin() {
+		return sessionDateFin == null ? null : Date.from(sessionDateFin.atStartOfDay(ZoneId.systemDefault()).toInstant());
 	}
 
-	public String strSessionJourFin() {
-		return sessionJourFin == null ? "" : sessionJourFin.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.forLanguageTag("fr-FR")));
+	public String strSessionDateFin() {
+		return sessionDateFin == null ? "" : sessionDateFin.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.forLanguageTag("fr-FR")));
 	}
 
-	public String jsonSessionJourFin() {
-		return sessionJourFin == null ? "" : sessionJourFin.format(DateTimeFormatter.ISO_DATE);
+	public String jsonSessionDateFin() {
+		return sessionDateFin == null ? "" : sessionDateFin.format(DateTimeFormatter.ISO_DATE);
 	}
 
-	public String nomAffichageSessionJourFin() {
+	public String nomAffichageSessionDateFin() {
 		return "fin de la session";
 	}
 
-	public String htmTooltipSessionJourFin() {
+	public String htmTooltipSessionDateFin() {
 		return null;
 	}
 
-	public String htmSessionJourFin() {
-		return sessionJourFin == null ? "" : StringEscapeUtils.escapeHtml4(strSessionJourFin());
+	public String htmSessionDateFin() {
+		return sessionDateFin == null ? "" : StringEscapeUtils.escapeHtml4(strSessionDateFin());
 	}
 
 	//////////////
@@ -2718,7 +2718,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	/** Example: 01:00 **/
 	public PaiementScolaire setBlocHeureDebut(String o) {
 		try {
-			this.blocHeureDebut = LocalTime.parse(o, DateTimeFormatter.ofPattern("HH:mm"));
+			this.blocHeureDebut = LocalTime.parse(o, DateTimeFormatter.ISO_TIME);
 			this.blocHeureDebutCouverture.dejaInitialise = true;
 		} catch(Exception e) {
 		}
@@ -2790,7 +2790,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	/** Example: 01:00 **/
 	public PaiementScolaire setBlocHeureFin(String o) {
 		try {
-			this.blocHeureFin = LocalTime.parse(o, DateTimeFormatter.ofPattern("HH:mm"));
+			this.blocHeureFin = LocalTime.parse(o, DateTimeFormatter.ISO_TIME);
 			this.blocHeureFinCouverture.dejaInitialise = true;
 		} catch(Exception e) {
 		}
@@ -3491,11 +3491,11 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				.a("type", "text")
 				.a("class", "w3-input w3-border datepicker setPaiementDate inputPaiementScolaire", pk, "PaiementDate w3-input w3-border ")
 				.a("placeholder", "DD-MM-YYYY")
-				.a("data-timeformat", "DD-MM-YYYY")
+				.a("data-timeformat", "dd-MM-yyyy")
 				.a("id", classeApiMethodeMethode, "_paiementDate")
 				.a("onclick", "enleverLueur($(this)); ")
 				.a("title", "La clé primaire des enfants dans la base de données.  (DD-MM-YYYY)")
-				.a("value", paiementDate == null ? "" : DateTimeFormatter.ISO_LOCAL_DATE.format(paiementDate))
+				.a("value", paiementDate == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy").format(paiementDate))
 				.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patchPaiementScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPaiementDate', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_paiementDate')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_paiementDate')); }); } ")
 				.fg();
 		} else {
@@ -5949,12 +5949,12 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		ecoleEmplacementInit();
 		anneeDebutInit();
 		anneeFinInit();
-		saisonJourDebutInit();
+		saisonDateDebutInit();
 		saisonEteInit();
 		saisonHiverInit();
 		anneeFraisInscriptionInit();
-		sessionJourDebutInit();
-		sessionJourFinInit();
+		sessionDateDebutInit();
+		sessionDateFinInit();
 		ageDebutInit();
 		ageFinInit();
 		blocHeureDebutInit();
@@ -6071,18 +6071,18 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				return oPaiementScolaire.anneeDebut;
 			case "anneeFin":
 				return oPaiementScolaire.anneeFin;
-			case "saisonJourDebut":
-				return oPaiementScolaire.saisonJourDebut;
+			case "saisonDateDebut":
+				return oPaiementScolaire.saisonDateDebut;
 			case "saisonEte":
 				return oPaiementScolaire.saisonEte;
 			case "saisonHiver":
 				return oPaiementScolaire.saisonHiver;
 			case "anneeFraisInscription":
 				return oPaiementScolaire.anneeFraisInscription;
-			case "sessionJourDebut":
-				return oPaiementScolaire.sessionJourDebut;
-			case "sessionJourFin":
-				return oPaiementScolaire.sessionJourFin;
+			case "sessionDateDebut":
+				return oPaiementScolaire.sessionDateDebut;
+			case "sessionDateFin":
+				return oPaiementScolaire.sessionDateFin;
 			case "ageDebut":
 				return oPaiementScolaire.ageDebut;
 			case "ageFin":
@@ -6473,10 +6473,10 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 					oPaiementScolaire.setAnneeFin(anneeFin);
 			}
 
-			if(sauvegardesPaiementScolaire.contains("saisonJourDebut")) {
-				Date saisonJourDebut = (Date)solrDocument.get("saisonJourDebut_stored_date");
-				if(saisonJourDebut != null)
-					oPaiementScolaire.setSaisonJourDebut(saisonJourDebut);
+			if(sauvegardesPaiementScolaire.contains("saisonDateDebut")) {
+				Date saisonDateDebut = (Date)solrDocument.get("saisonDateDebut_stored_date");
+				if(saisonDateDebut != null)
+					oPaiementScolaire.setSaisonDateDebut(saisonDateDebut);
 			}
 
 			if(sauvegardesPaiementScolaire.contains("saisonEte")) {
@@ -6497,16 +6497,16 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 					oPaiementScolaire.setAnneeFraisInscription(anneeFraisInscription);
 			}
 
-			if(sauvegardesPaiementScolaire.contains("sessionJourDebut")) {
-				Date sessionJourDebut = (Date)solrDocument.get("sessionJourDebut_stored_date");
-				if(sessionJourDebut != null)
-					oPaiementScolaire.setSessionJourDebut(sessionJourDebut);
+			if(sauvegardesPaiementScolaire.contains("sessionDateDebut")) {
+				Date sessionDateDebut = (Date)solrDocument.get("sessionDateDebut_stored_date");
+				if(sessionDateDebut != null)
+					oPaiementScolaire.setSessionDateDebut(sessionDateDebut);
 			}
 
-			if(sauvegardesPaiementScolaire.contains("sessionJourFin")) {
-				Date sessionJourFin = (Date)solrDocument.get("sessionJourFin_stored_date");
-				if(sessionJourFin != null)
-					oPaiementScolaire.setSessionJourFin(sessionJourFin);
+			if(sauvegardesPaiementScolaire.contains("sessionDateFin")) {
+				Date sessionDateFin = (Date)solrDocument.get("sessionDateFin_stored_date");
+				if(sessionDateFin != null)
+					oPaiementScolaire.setSessionDateFin(sessionDateFin);
 			}
 
 			if(sauvegardesPaiementScolaire.contains("ageDebut")) {
@@ -6850,9 +6850,9 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			document.addField("anneeFin_indexed_int", anneeFin);
 			document.addField("anneeFin_stored_int", anneeFin);
 		}
-		if(saisonJourDebut != null) {
-			document.addField("saisonJourDebut_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(saisonJourDebut.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
-			document.addField("saisonJourDebut_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(saisonJourDebut.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
+		if(saisonDateDebut != null) {
+			document.addField("saisonDateDebut_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(saisonDateDebut.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
+			document.addField("saisonDateDebut_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(saisonDateDebut.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
 		}
 		if(saisonEte != null) {
 			document.addField("saisonEte_indexed_boolean", saisonEte);
@@ -6866,13 +6866,13 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			document.addField("anneeFraisInscription_indexed_double", anneeFraisInscription.doubleValue());
 			document.addField("anneeFraisInscription_stored_double", anneeFraisInscription.doubleValue());
 		}
-		if(sessionJourDebut != null) {
-			document.addField("sessionJourDebut_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(sessionJourDebut.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
-			document.addField("sessionJourDebut_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(sessionJourDebut.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
+		if(sessionDateDebut != null) {
+			document.addField("sessionDateDebut_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(sessionDateDebut.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
+			document.addField("sessionDateDebut_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(sessionDateDebut.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
 		}
-		if(sessionJourFin != null) {
-			document.addField("sessionJourFin_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(sessionJourFin.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
-			document.addField("sessionJourFin_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(sessionJourFin.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
+		if(sessionDateFin != null) {
+			document.addField("sessionDateFin_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(sessionDateFin.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
+			document.addField("sessionDateFin_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(sessionDateFin.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
 		}
 		if(ageDebut != null) {
 			document.addField("ageDebut_indexed_int", ageDebut);
@@ -7053,18 +7053,18 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				return "anneeDebut_indexed_int";
 			case "anneeFin":
 				return "anneeFin_indexed_int";
-			case "saisonJourDebut":
-				return "saisonJourDebut_indexed_date";
+			case "saisonDateDebut":
+				return "saisonDateDebut_indexed_date";
 			case "saisonEte":
 				return "saisonEte_indexed_boolean";
 			case "saisonHiver":
 				return "saisonHiver_indexed_boolean";
 			case "anneeFraisInscription":
 				return "anneeFraisInscription_indexed_double";
-			case "sessionJourDebut":
-				return "sessionJourDebut_indexed_date";
-			case "sessionJourFin":
-				return "sessionJourFin_indexed_date";
+			case "sessionDateDebut":
+				return "sessionDateDebut_indexed_date";
+			case "sessionDateFin":
+				return "sessionDateFin_indexed_date";
 			case "ageDebut":
 				return "ageDebut_indexed_int";
 			case "ageFin":
@@ -7238,9 +7238,9 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		if(anneeFin != null)
 			oPaiementScolaire.setAnneeFin(anneeFin);
 
-		Date saisonJourDebut = (Date)solrDocument.get("saisonJourDebut_stored_date");
-		if(saisonJourDebut != null)
-			oPaiementScolaire.setSaisonJourDebut(saisonJourDebut);
+		Date saisonDateDebut = (Date)solrDocument.get("saisonDateDebut_stored_date");
+		if(saisonDateDebut != null)
+			oPaiementScolaire.setSaisonDateDebut(saisonDateDebut);
 
 		Boolean saisonEte = (Boolean)solrDocument.get("saisonEte_stored_boolean");
 		if(saisonEte != null)
@@ -7254,13 +7254,13 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		if(anneeFraisInscription != null)
 			oPaiementScolaire.setAnneeFraisInscription(anneeFraisInscription);
 
-		Date sessionJourDebut = (Date)solrDocument.get("sessionJourDebut_stored_date");
-		if(sessionJourDebut != null)
-			oPaiementScolaire.setSessionJourDebut(sessionJourDebut);
+		Date sessionDateDebut = (Date)solrDocument.get("sessionDateDebut_stored_date");
+		if(sessionDateDebut != null)
+			oPaiementScolaire.setSessionDateDebut(sessionDateDebut);
 
-		Date sessionJourFin = (Date)solrDocument.get("sessionJourFin_stored_date");
-		if(sessionJourFin != null)
-			oPaiementScolaire.setSessionJourFin(sessionJourFin);
+		Date sessionDateFin = (Date)solrDocument.get("sessionDateFin_stored_date");
+		if(sessionDateFin != null)
+			oPaiementScolaire.setSessionDateFin(sessionDateFin);
 
 		Integer ageDebut = (Integer)solrDocument.get("ageDebut_stored_int");
 		if(ageDebut != null)

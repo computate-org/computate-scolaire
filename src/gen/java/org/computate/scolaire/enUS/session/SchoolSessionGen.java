@@ -2158,10 +2158,10 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 				.a("type", "text")
 				.a("class", "w3-input w3-border datepicker setSessionStartDate inputSchoolSession", pk, "SessionStartDate w3-input w3-border ")
 				.a("placeholder", "MM/DD/YYYY")
-				.a("data-timeformat", "MM/DD/YYYY")
+				.a("data-timeformat", "MM/dd/yyyy")
 				.a("id", classApiMethodMethod, "_sessionStartDate")
 				.a("onclick", "removeGlow($(this)); ")
-				.a("value", sessionStartDate == null ? "" : DateTimeFormatter.ISO_LOCAL_DATE.format(sessionStartDate))
+				.a("value", sessionStartDate == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy").format(sessionStartDate))
 				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patchSchoolSessionVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSessionStartDate', s, function() { addGlow($('#", classApiMethodMethod, "_sessionStartDate')); }, function() { addError($('#", classApiMethodMethod, "_sessionStartDate')); }); } ")
 				.fg();
 		}
@@ -2288,10 +2288,10 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 				.a("type", "text")
 				.a("class", "w3-input w3-border datepicker setSessionEndDate inputSchoolSession", pk, "SessionEndDate w3-input w3-border ")
 				.a("placeholder", "MM/DD/YYYY")
-				.a("data-timeformat", "MM/DD/YYYY")
+				.a("data-timeformat", "MM/dd/yyyy")
 				.a("id", classApiMethodMethod, "_sessionEndDate")
 				.a("onclick", "removeGlow($(this)); ")
-				.a("value", sessionEndDate == null ? "" : DateTimeFormatter.ISO_LOCAL_DATE.format(sessionEndDate))
+				.a("value", sessionEndDate == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy").format(sessionEndDate))
 				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patchSchoolSessionVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSessionEndDate', s, function() { addGlow($('#", classApiMethodMethod, "_sessionEndDate')); }, function() { addError($('#", classApiMethodMethod, "_sessionEndDate')); }); } ")
 				.fg();
 		}

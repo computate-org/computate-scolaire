@@ -1736,7 +1736,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 				.a("type", "text")
 				.a("class", "w3-input w3-border datepicker setPersonneDateNaissance inputEnfantScolaire", pk, "PersonneDateNaissance w3-input w3-border ")
 				.a("placeholder", "DD-MM-YYYY")
-				.a("data-timeformat", "DD-MM-YYYY")
+				.a("data-timeformat", "dd-MM-yyyy")
 				.a("id", classeApiMethodeMethode, "_personneDateNaissance")
 				.a("onclick", "enleverLueur($(this)); ")
 				.a("value", personneDateNaissance == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy").format(personneDateNaissance))

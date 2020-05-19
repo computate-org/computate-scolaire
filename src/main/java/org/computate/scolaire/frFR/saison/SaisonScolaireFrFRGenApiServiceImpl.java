@@ -441,16 +441,16 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 							}
 						}
 						break;
-					case "saisonJourDebut":
+					case "saisonDateDebut":
 						futures.add(Future.future(a -> {
 							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "saisonJourDebut", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, Tuple.of(pk, "saisonDateDebut", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
 									a.handle(Future.succeededFuture());
 								else
-									a.handle(Future.failedFuture(new Exception("valeur SaisonScolaire.saisonJourDebut a échoué", b.cause())));
+									a.handle(Future.failedFuture(new Exception("valeur SaisonScolaire.saisonDateDebut a échoué", b.cause())));
 							});
 						}));
 						break;
@@ -1247,16 +1247,16 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 							}
 						}
 						break;
-					case "saisonJourDebut":
+					case "saisonDateDebut":
 						futures.add(Future.future(a -> {
 							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "saisonJourDebut", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, Tuple.of(pk, "saisonDateDebut", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
 									a.handle(Future.succeededFuture());
 								else
-									a.handle(Future.failedFuture(new Exception("valeur SaisonScolaire.saisonJourDebut a échoué", b.cause())));
+									a.handle(Future.failedFuture(new Exception("valeur SaisonScolaire.saisonDateDebut a échoué", b.cause())));
 							});
 						}));
 						break;
@@ -2007,30 +2007,30 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 							}
 						}
 						break;
-					case "setSaisonJourDebut":
+					case "setSaisonDateDebut":
 						if(jsonObject.getString(methodeNom) == null) {
 							futures.add(Future.future(a -> {
 								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "saisonJourDebut")
+										, Tuple.of(pk, "saisonDateDebut")
 										, b
 								-> {
 									if(b.succeeded())
 										a.handle(Future.succeededFuture());
 									else
-										a.handle(Future.failedFuture(new Exception("valeur SaisonScolaire.saisonJourDebut a échoué", b.cause())));
+										a.handle(Future.failedFuture(new Exception("valeur SaisonScolaire.saisonDateDebut a échoué", b.cause())));
 								});
 							}));
 						} else {
-							o2.setSaisonJourDebut(jsonObject.getString(methodeNom));
+							o2.setSaisonDateDebut(jsonObject.getString(methodeNom));
 							futures.add(Future.future(a -> {
 								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "saisonJourDebut", o2.jsonSaisonJourDebut())
+										, Tuple.of(pk, "saisonDateDebut", o2.jsonSaisonDateDebut())
 										, b
 								-> {
 									if(b.succeeded())
 										a.handle(Future.succeededFuture());
 									else
-										a.handle(Future.failedFuture(new Exception("valeur SaisonScolaire.saisonJourDebut a échoué", b.cause())));
+										a.handle(Future.failedFuture(new Exception("valeur SaisonScolaire.saisonDateDebut a échoué", b.cause())));
 								});
 							}));
 						}

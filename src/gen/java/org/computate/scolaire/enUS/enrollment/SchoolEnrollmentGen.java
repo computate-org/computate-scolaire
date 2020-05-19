@@ -3722,10 +3722,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				.a("type", "text")
 				.a("class", "w3-input w3-border datepicker setChildBirthDate inputSchoolEnrollment", pk, "ChildBirthDate w3-input w3-border ")
 				.a("placeholder", "MM/DD/YYYY")
-				.a("data-timeformat", "MM/DD/YYYY")
+				.a("data-timeformat", "MM/dd/yyyy")
 				.a("id", classApiMethodMethod, "_childBirthDate")
 				.a("onclick", "removeGlow($(this)); ")
-				.a("value", childBirthDate == null ? "" : DateTimeFormatter.ISO_LOCAL_DATE.format(childBirthDate))
+				.a("value", childBirthDate == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy").format(childBirthDate))
 				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setChildBirthDate', s, function() { addGlow($('#", classApiMethodMethod, "_childBirthDate')); }, function() { addError($('#", classApiMethodMethod, "_childBirthDate')); }); } ")
 				.fg();
 		} else {
@@ -5240,7 +5240,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/** Example: 01:00 **/
 	public SchoolEnrollment setBlockStartTime(String o) {
 		try {
-			this.blockStartTime = LocalTime.parse(o, DateTimeFormatter.ofPattern("HH:mm"));
+			this.blockStartTime = LocalTime.parse(o, DateTimeFormatter.ISO_TIME);
 			this.blockStartTimeWrap.alreadyInitialized = true;
 		} catch(Exception e) {
 		}
@@ -5312,7 +5312,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/** Example: 01:00 **/
 	public SchoolEnrollment setBlockEndTime(String o) {
 		try {
-			this.blockEndTime = LocalTime.parse(o, DateTimeFormatter.ofPattern("HH:mm"));
+			this.blockEndTime = LocalTime.parse(o, DateTimeFormatter.ISO_TIME);
 			this.blockEndTimeWrap.alreadyInitialized = true;
 		} catch(Exception e) {
 		}
@@ -8490,10 +8490,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				.a("type", "text")
 				.a("class", "w3-input w3-border datepicker setEnrollmentChargeDate inputSchoolEnrollment", pk, "EnrollmentChargeDate w3-input w3-border ")
 				.a("placeholder", "MM/DD/YYYY")
-				.a("data-timeformat", "MM/DD/YYYY")
+				.a("data-timeformat", "MM/dd/yyyy")
 				.a("id", classApiMethodMethod, "_enrollmentChargeDate")
 				.a("onclick", "removeGlow($(this)); ")
-				.a("value", enrollmentChargeDate == null ? "" : DateTimeFormatter.ISO_LOCAL_DATE.format(enrollmentChargeDate))
+				.a("value", enrollmentChargeDate == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy").format(enrollmentChargeDate))
 				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentChargeDate', s, function() { addGlow($('#", classApiMethodMethod, "_enrollmentChargeDate')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentChargeDate')); }); } ")
 				.fg();
 		} else {
@@ -10847,10 +10847,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				.a("type", "text")
 				.a("class", "w3-input w3-border datepicker setEnrollmentDate1 inputSchoolEnrollment", pk, "EnrollmentDate1 w3-input w3-border ")
 				.a("placeholder", "MM/DD/YYYY")
-				.a("data-timeformat", "MM/DD/YYYY")
+				.a("data-timeformat", "MM/dd/yyyy")
 				.a("id", classApiMethodMethod, "_enrollmentDate1")
 				.a("onclick", "removeGlow($(this)); ")
-				.a("value", enrollmentDate1 == null ? "" : DateTimeFormatter.ISO_LOCAL_DATE.format(enrollmentDate1))
+				.a("value", enrollmentDate1 == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy").format(enrollmentDate1))
 				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentDate1', s, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate1')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate1')); }); } ")
 				.fg();
 		} else {
@@ -10986,10 +10986,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				.a("type", "text")
 				.a("class", "w3-input w3-border datepicker setEnrollmentDate2 inputSchoolEnrollment", pk, "EnrollmentDate2 w3-input w3-border ")
 				.a("placeholder", "MM/DD/YYYY")
-				.a("data-timeformat", "MM/DD/YYYY")
+				.a("data-timeformat", "MM/dd/yyyy")
 				.a("id", classApiMethodMethod, "_enrollmentDate2")
 				.a("onclick", "removeGlow($(this)); ")
-				.a("value", enrollmentDate2 == null ? "" : DateTimeFormatter.ISO_LOCAL_DATE.format(enrollmentDate2))
+				.a("value", enrollmentDate2 == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy").format(enrollmentDate2))
 				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentDate2', s, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate2')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate2')); }); } ")
 				.fg();
 		} else {
@@ -11125,10 +11125,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				.a("type", "text")
 				.a("class", "w3-input w3-border datepicker setEnrollmentDate3 inputSchoolEnrollment", pk, "EnrollmentDate3 w3-input w3-border ")
 				.a("placeholder", "MM/DD/YYYY")
-				.a("data-timeformat", "MM/DD/YYYY")
+				.a("data-timeformat", "MM/dd/yyyy")
 				.a("id", classApiMethodMethod, "_enrollmentDate3")
 				.a("onclick", "removeGlow($(this)); ")
-				.a("value", enrollmentDate3 == null ? "" : DateTimeFormatter.ISO_LOCAL_DATE.format(enrollmentDate3))
+				.a("value", enrollmentDate3 == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy").format(enrollmentDate3))
 				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentDate3', s, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate3')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate3')); }); } ")
 				.fg();
 		} else {
@@ -11264,10 +11264,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				.a("type", "text")
 				.a("class", "w3-input w3-border datepicker setEnrollmentDate4 inputSchoolEnrollment", pk, "EnrollmentDate4 w3-input w3-border ")
 				.a("placeholder", "MM/DD/YYYY")
-				.a("data-timeformat", "MM/DD/YYYY")
+				.a("data-timeformat", "MM/dd/yyyy")
 				.a("id", classApiMethodMethod, "_enrollmentDate4")
 				.a("onclick", "removeGlow($(this)); ")
-				.a("value", enrollmentDate4 == null ? "" : DateTimeFormatter.ISO_LOCAL_DATE.format(enrollmentDate4))
+				.a("value", enrollmentDate4 == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy").format(enrollmentDate4))
 				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentDate4', s, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate4')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate4')); }); } ")
 				.fg();
 		} else {
@@ -11403,10 +11403,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				.a("type", "text")
 				.a("class", "w3-input w3-border datepicker setEnrollmentDate5 inputSchoolEnrollment", pk, "EnrollmentDate5 w3-input w3-border ")
 				.a("placeholder", "MM/DD/YYYY")
-				.a("data-timeformat", "MM/DD/YYYY")
+				.a("data-timeformat", "MM/dd/yyyy")
 				.a("id", classApiMethodMethod, "_enrollmentDate5")
 				.a("onclick", "removeGlow($(this)); ")
-				.a("value", enrollmentDate5 == null ? "" : DateTimeFormatter.ISO_LOCAL_DATE.format(enrollmentDate5))
+				.a("value", enrollmentDate5 == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy").format(enrollmentDate5))
 				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentDate5', s, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate5')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate5')); }); } ")
 				.fg();
 		} else {
@@ -11542,10 +11542,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				.a("type", "text")
 				.a("class", "w3-input w3-border datepicker setEnrollmentDate6 inputSchoolEnrollment", pk, "EnrollmentDate6 w3-input w3-border ")
 				.a("placeholder", "MM/DD/YYYY")
-				.a("data-timeformat", "MM/DD/YYYY")
+				.a("data-timeformat", "MM/dd/yyyy")
 				.a("id", classApiMethodMethod, "_enrollmentDate6")
 				.a("onclick", "removeGlow($(this)); ")
-				.a("value", enrollmentDate6 == null ? "" : DateTimeFormatter.ISO_LOCAL_DATE.format(enrollmentDate6))
+				.a("value", enrollmentDate6 == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy").format(enrollmentDate6))
 				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentDate6', s, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate6')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate6')); }); } ")
 				.fg();
 		} else {
@@ -11681,10 +11681,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				.a("type", "text")
 				.a("class", "w3-input w3-border datepicker setEnrollmentDate7 inputSchoolEnrollment", pk, "EnrollmentDate7 w3-input w3-border ")
 				.a("placeholder", "MM/DD/YYYY")
-				.a("data-timeformat", "MM/DD/YYYY")
+				.a("data-timeformat", "MM/dd/yyyy")
 				.a("id", classApiMethodMethod, "_enrollmentDate7")
 				.a("onclick", "removeGlow($(this)); ")
-				.a("value", enrollmentDate7 == null ? "" : DateTimeFormatter.ISO_LOCAL_DATE.format(enrollmentDate7))
+				.a("value", enrollmentDate7 == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy").format(enrollmentDate7))
 				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentDate7', s, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate7')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate7')); }); } ")
 				.fg();
 		} else {
@@ -11820,10 +11820,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				.a("type", "text")
 				.a("class", "w3-input w3-border datepicker setEnrollmentDate8 inputSchoolEnrollment", pk, "EnrollmentDate8 w3-input w3-border ")
 				.a("placeholder", "MM/DD/YYYY")
-				.a("data-timeformat", "MM/DD/YYYY")
+				.a("data-timeformat", "MM/dd/yyyy")
 				.a("id", classApiMethodMethod, "_enrollmentDate8")
 				.a("onclick", "removeGlow($(this)); ")
-				.a("value", enrollmentDate8 == null ? "" : DateTimeFormatter.ISO_LOCAL_DATE.format(enrollmentDate8))
+				.a("value", enrollmentDate8 == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy").format(enrollmentDate8))
 				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentDate8', s, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate8')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate8')); }); } ")
 				.fg();
 		} else {
@@ -11959,10 +11959,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				.a("type", "text")
 				.a("class", "w3-input w3-border datepicker setEnrollmentDate9 inputSchoolEnrollment", pk, "EnrollmentDate9 w3-input w3-border ")
 				.a("placeholder", "MM/DD/YYYY")
-				.a("data-timeformat", "MM/DD/YYYY")
+				.a("data-timeformat", "MM/dd/yyyy")
 				.a("id", classApiMethodMethod, "_enrollmentDate9")
 				.a("onclick", "removeGlow($(this)); ")
-				.a("value", enrollmentDate9 == null ? "" : DateTimeFormatter.ISO_LOCAL_DATE.format(enrollmentDate9))
+				.a("value", enrollmentDate9 == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy").format(enrollmentDate9))
 				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentDate9', s, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate9')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate9')); }); } ")
 				.fg();
 		} else {
@@ -12098,10 +12098,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				.a("type", "text")
 				.a("class", "w3-input w3-border datepicker setEnrollmentDate10 inputSchoolEnrollment", pk, "EnrollmentDate10 w3-input w3-border ")
 				.a("placeholder", "MM/DD/YYYY")
-				.a("data-timeformat", "MM/DD/YYYY")
+				.a("data-timeformat", "MM/dd/yyyy")
 				.a("id", classApiMethodMethod, "_enrollmentDate10")
 				.a("onclick", "removeGlow($(this)); ")
-				.a("value", enrollmentDate10 == null ? "" : DateTimeFormatter.ISO_LOCAL_DATE.format(enrollmentDate10))
+				.a("value", enrollmentDate10 == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy").format(enrollmentDate10))
 				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentDate10', s, function() { addGlow($('#", classApiMethodMethod, "_enrollmentDate10')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentDate10')); }); } ")
 				.fg();
 		} else {

@@ -396,14 +396,14 @@ public class AgeScolaire extends AgeScolaireGen<Cluster> {
 	 * Stocke: true
 	 * NomAffichage.frFR: début de l'année
 	 * NomAffichage.enUS: start of season
-	 * r: SaisonJourDebut
+	 * r: SaisonDateDebut
 	 * r.enUS: SeasonStartDate
 	 * r: session
 	 * r.enUS: session
 	 */                   
-	protected void _saisonJourDebut(Couverture<LocalDate> c) {
+	protected void _saisonDateDebut(Couverture<LocalDate> c) {
 		if(session_ != null)
-			c.o(session_.getSaisonJourDebut());
+			c.o(session_.getSaisonDateDebut());
 	}
 
 	/**
@@ -494,14 +494,14 @@ public class AgeScolaire extends AgeScolaireGen<Cluster> {
 	 * Stocke: true
 	 * NomAffichage.frFR: début de la session
 	 * NomAffichage.enUS: start of the session
-	 * r: SessionJourDebut
+	 * r: SessionDateDebut
 	 * r.enUS: SessionStartDate
 	 * r: session
 	 * r.enUS: session
 	 */                   
-	protected void _sessionJourDebut(Couverture<LocalDate> c) {
+	protected void _sessionDateDebut(Couverture<LocalDate> c) {
 		if(session_ != null)
-			c.o((LocalDate)session_.getSessionJourDebut());
+			c.o((LocalDate)session_.getSessionDateDebut());
 	}
 
 	/**
@@ -511,14 +511,14 @@ public class AgeScolaire extends AgeScolaireGen<Cluster> {
 	 * Stocke: true
 	 * NomAffichage.frFR: fin de la session
 	 * NomAffichage.enUS: end of the session
-	 * r: SessionJourFin
+	 * r: SessionDateFin
 	 * r.enUS: SessionEndDate
 	 * r: session
 	 * r.enUS: session
 	 */                   
-	protected void _sessionJourFin(Couverture<LocalDate> c) {
+	protected void _sessionDateFin(Couverture<LocalDate> c) {
 		if(session_ != null)
-			c.o((LocalDate)session_.getSessionJourFin());
+			c.o((LocalDate)session_.getSessionDateFin());
 	}
 
 	/**
@@ -581,16 +581,16 @@ public class AgeScolaire extends AgeScolaireGen<Cluster> {
 	 * r.enUS: sessionCompleteName
 	 * r: MiseEnPage
 	 * r.enUS: PageLayout
-	 * r: sessionJourDebut
+	 * r: sessionDateDebut
 	 * r.enUS: sessionStartDate
-	 * r: sessionJourFin
+	 * r: sessionDateFin
 	 * r.enUS: sessionEndDate
 	 * r: FORMATMoisAnnee
 	 * r.enUS: FORMATMonthYear
 	 */ 
 	protected void _ageNomCourt(Couverture<String> c) {
 		String o;
-		o = String.format("âges %s-%s %s - %s", strAgeDebut(), strAgeFin(), sessionJourDebut == null ? "" : MiseEnPage.FORMATMoisAnnee.format(sessionJourDebut), sessionJourFin == null ? "" : MiseEnPage.FORMATMoisAnnee.format(sessionJourFin));
+		o = String.format("âges %s-%s %s - %s", strAgeDebut(), strAgeFin(), sessionDateDebut == null ? "" : MiseEnPage.FORMATMoisAnnee.format(sessionDateDebut), sessionDateFin == null ? "" : MiseEnPage.FORMATMoisAnnee.format(sessionDateFin));
 		c.o(o);
 	}
 

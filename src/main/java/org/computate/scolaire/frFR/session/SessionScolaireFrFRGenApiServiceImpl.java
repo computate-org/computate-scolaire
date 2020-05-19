@@ -454,29 +454,29 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 							});
 						}));
 						break;
-					case "sessionJourDebut":
+					case "sessionDateDebut":
 						futures.add(Future.future(a -> {
 							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "sessionJourDebut", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, Tuple.of(pk, "sessionDateDebut", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
 									a.handle(Future.succeededFuture());
 								else
-									a.handle(Future.failedFuture(new Exception("valeur SessionScolaire.sessionJourDebut a échoué", b.cause())));
+									a.handle(Future.failedFuture(new Exception("valeur SessionScolaire.sessionDateDebut a échoué", b.cause())));
 							});
 						}));
 						break;
-					case "sessionJourFin":
+					case "sessionDateFin":
 						futures.add(Future.future(a -> {
 							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "sessionJourFin", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, Tuple.of(pk, "sessionDateFin", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
 									a.handle(Future.succeededFuture());
 								else
-									a.handle(Future.failedFuture(new Exception("valeur SessionScolaire.sessionJourFin a échoué", b.cause())));
+									a.handle(Future.failedFuture(new Exception("valeur SessionScolaire.sessionDateFin a échoué", b.cause())));
 							});
 						}));
 						break;
@@ -1247,29 +1247,29 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 							});
 						}));
 						break;
-					case "sessionJourDebut":
+					case "sessionDateDebut":
 						futures.add(Future.future(a -> {
 							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "sessionJourDebut", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, Tuple.of(pk, "sessionDateDebut", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
 									a.handle(Future.succeededFuture());
 								else
-									a.handle(Future.failedFuture(new Exception("valeur SessionScolaire.sessionJourDebut a échoué", b.cause())));
+									a.handle(Future.failedFuture(new Exception("valeur SessionScolaire.sessionDateDebut a échoué", b.cause())));
 							});
 						}));
 						break;
-					case "sessionJourFin":
+					case "sessionDateFin":
 						futures.add(Future.future(a -> {
 							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "sessionJourFin", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, Tuple.of(pk, "sessionDateFin", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
 									a.handle(Future.succeededFuture());
 								else
-									a.handle(Future.failedFuture(new Exception("valeur SessionScolaire.sessionJourFin a échoué", b.cause())));
+									a.handle(Future.failedFuture(new Exception("valeur SessionScolaire.sessionDateFin a échoué", b.cause())));
 							});
 						}));
 						break;
@@ -2009,58 +2009,58 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 							}));
 						}
 						break;
-					case "setSessionJourDebut":
+					case "setSessionDateDebut":
 						if(jsonObject.getString(methodeNom) == null) {
 							futures.add(Future.future(a -> {
 								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "sessionJourDebut")
+										, Tuple.of(pk, "sessionDateDebut")
 										, b
 								-> {
 									if(b.succeeded())
 										a.handle(Future.succeededFuture());
 									else
-										a.handle(Future.failedFuture(new Exception("valeur SessionScolaire.sessionJourDebut a échoué", b.cause())));
+										a.handle(Future.failedFuture(new Exception("valeur SessionScolaire.sessionDateDebut a échoué", b.cause())));
 								});
 							}));
 						} else {
-							o2.setSessionJourDebut(jsonObject.getString(methodeNom));
+							o2.setSessionDateDebut(jsonObject.getString(methodeNom));
 							futures.add(Future.future(a -> {
 								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "sessionJourDebut", o2.jsonSessionJourDebut())
+										, Tuple.of(pk, "sessionDateDebut", o2.jsonSessionDateDebut())
 										, b
 								-> {
 									if(b.succeeded())
 										a.handle(Future.succeededFuture());
 									else
-										a.handle(Future.failedFuture(new Exception("valeur SessionScolaire.sessionJourDebut a échoué", b.cause())));
+										a.handle(Future.failedFuture(new Exception("valeur SessionScolaire.sessionDateDebut a échoué", b.cause())));
 								});
 							}));
 						}
 						break;
-					case "setSessionJourFin":
+					case "setSessionDateFin":
 						if(jsonObject.getString(methodeNom) == null) {
 							futures.add(Future.future(a -> {
 								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "sessionJourFin")
+										, Tuple.of(pk, "sessionDateFin")
 										, b
 								-> {
 									if(b.succeeded())
 										a.handle(Future.succeededFuture());
 									else
-										a.handle(Future.failedFuture(new Exception("valeur SessionScolaire.sessionJourFin a échoué", b.cause())));
+										a.handle(Future.failedFuture(new Exception("valeur SessionScolaire.sessionDateFin a échoué", b.cause())));
 								});
 							}));
 						} else {
-							o2.setSessionJourFin(jsonObject.getString(methodeNom));
+							o2.setSessionDateFin(jsonObject.getString(methodeNom));
 							futures.add(Future.future(a -> {
 								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "sessionJourFin", o2.jsonSessionJourFin())
+										, Tuple.of(pk, "sessionDateFin", o2.jsonSessionDateFin())
 										, b
 								-> {
 									if(b.succeeded())
 										a.handle(Future.succeededFuture());
 									else
-										a.handle(Future.failedFuture(new Exception("valeur SessionScolaire.sessionJourFin a échoué", b.cause())));
+										a.handle(Future.failedFuture(new Exception("valeur SessionScolaire.sessionDateFin a échoué", b.cause())));
 								});
 							}));
 						}

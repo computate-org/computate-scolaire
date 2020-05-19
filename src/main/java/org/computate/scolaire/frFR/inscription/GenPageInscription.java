@@ -74,9 +74,8 @@ import org.apache.solr.client.solrj.SolrQuery.SortClause;
 
 /**
  * Traduire: false
- * NomCanonique.enUS: org.computate.scolaire.enUS.enrollment.EnrollmentGenPage
  **/
-public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
+public class GenPageInscription extends GenPageInscriptionGen<ClusterPage> {
 
 	public static final List<String> ROLES = Arrays.asList("SiteAdmin");
 	public static final List<String> ROLE_READS = Arrays.asList("");
@@ -116,11 +115,11 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageUri(Couverture<String> c) {
-		c.o("/inscription");
+		c.o("/recharger-inscription");
 	}
 
 	@Override protected void _pageImageUri(Couverture<String> c) {
-			c.o("/png/inscription-999.png");
+			c.o("/png/recharger-inscription-999.png");
 	}
 
 	@Override protected void _contexteIconeGroupe(Couverture<String> c) {
@@ -131,13 +130,13 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 			c.o("edit");
 	}
 
-	@Override public void initLoinInscriptionGenPage() {
-		initInscriptionGenPage();
+	@Override public void initLoinGenPageInscription() {
+		initGenPageInscription();
 		super.initLoinMiseEnPage();
 	}
 
-	@Override public void htmlScriptsInscriptionGenPage() {
-		e("script").a("src", statiqueUrlBase, "/js/frFR/InscriptionPage.js").f().g("script");
+	@Override public void htmlScriptsGenPageInscription() {
+		e("script").a("src", statiqueUrlBase, "/js/frFR/PageInscription.js").f().g("script");
 		e("script").a("src", statiqueUrlBase, "/js/frFR/AnneePage.js").f().g("script");
 		e("script").a("src", statiqueUrlBase, "/js/frFR/BlocPage.js").f().g("script");
 		e("script").a("src", statiqueUrlBase, "/js/frFR/EnfantPage.js").f().g("script");
@@ -148,7 +147,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 		e("script").a("src", statiqueUrlBase, "/js/frFR/UtilisateurSitePage.js").f().g("script");
 	}
 
-	@Override public void htmlScriptInscriptionGenPage() {
+	@Override public void htmlScriptGenPageInscription() {
 		l("$(document).ready(function() {");
 		tl(1, "document.onkeydown = function(evt) {");
 		tl(2, "evt = evt || window.event;");
@@ -633,14 +632,14 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 		} g("div");
 	}
 
-	@Override public void htmlBodyInscriptionGenPage() {
+	@Override public void htmlBodyGenPageInscription() {
 
 		OperationRequest operationRequete = requeteSite_.getOperationRequete();
 		JsonObject params = operationRequete.getParams();
 		if(listeInscriptionScolaire == null || listeInscriptionScolaire.size() == 0) {
 
 			{ e("h1").f();
-				{ e("a").a("href", "/inscription").a("class", "w3-bar-item w3-btn w3-center w3-block w3-blue-gray w3-hover-blue-gray ").f();
+				{ e("a").a("href", "/recharger-inscription").a("class", "w3-bar-item w3-btn w3-center w3-block w3-blue-gray w3-hover-blue-gray ").f();
 					if(contexteIconeClassesCss != null)
 						e("i").a("class", contexteIconeClassesCss + " site-menu-icon ").f().g("i");
 					e("span").a("class", " ").f().sx("inscriptions").g("span");
@@ -659,7 +658,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 			requeteSite_.setRequetePk(o.getPk());
 			if(StringUtils.isNotEmpty(pageH1)) {
 				{ e("h1").f();
-					{ e("a").a("href", "/inscription").a("class", "w3-bar-item w3-btn w3-center w3-block w3-blue-gray w3-hover-blue-gray ").f();
+					{ e("a").a("href", "/recharger-inscription").a("class", "w3-bar-item w3-btn w3-center w3-block w3-blue-gray w3-hover-blue-gray ").f();
 						if(contexteIconeClassesCss != null)
 							e("i").a("class", contexteIconeClassesCss + " site-menu-icon ").f().g("i");
 						e("span").a("class", " ").f().sx(pageH1).g("span");
@@ -684,7 +683,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 		} else {
 
 			{ e("h1").f();
-				{ e("a").a("href", "/inscription").a("class", "w3-bar-item w3-btn w3-center w3-block w3-blue-gray w3-hover-blue-gray ").f();
+				{ e("a").a("href", "/recharger-inscription").a("class", "w3-bar-item w3-btn w3-center w3-block w3-blue-gray w3-hover-blue-gray ").f();
 					if(contexteIconeClassesCss != null)
 						e("i").a("class", contexteIconeClassesCss + " site-menu-icon ").f().g("i");
 					e("span").a("class", " ").f().sx(pageH1).g("span");
@@ -745,7 +744,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 					if(start1 == 0) {
 						e("i").a("class", "fas fa-arrow-square-left w3-opacity ").f().g("i");
 					} else {
-						{ e("a").a("href", "/inscription?q=", query, fqs, sorts, "&start=", start2, "&rows=", rows1).f();
+						{ e("a").a("href", "/recharger-inscription?q=", query, fqs, sorts, "&start=", start2, "&rows=", rows1).f();
 							e("i").a("class", "fas fa-arrow-square-left ").f().g("i");
 						} g("a");
 					}
@@ -753,25 +752,25 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 					if(rows1 <= 1) {
 						e("i").a("class", "fas fa-minus-square w3-opacity ").f().g("i");
 					} else {
-						{ e("a").a("href", "/inscription?q=", query, fqs, sorts, "&start=", start1, "&rows=", rows2).f();
+						{ e("a").a("href", "/recharger-inscription?q=", query, fqs, sorts, "&start=", start1, "&rows=", rows2).f();
 							e("i").a("class", "fas fa-minus-square ").f().g("i");
 						} g("a");
 					}
 
-					{ e("a").a("href", "/inscription?q=", query, fqs, sorts, "&start=", start1, "&rows=", rows3).f();
+					{ e("a").a("href", "/recharger-inscription?q=", query, fqs, sorts, "&start=", start1, "&rows=", rows3).f();
 						e("i").a("class", "fas fa-plus-square ").f().g("i");
 					} g("a");
 
 					if(start3 >= num) {
 						e("i").a("class", "fas fa-arrow-square-right w3-opacity ").f().g("i");
 					} else {
-						{ e("a").a("href", "/inscription?q=", query, fqs, sorts, "&start=", start3, "&rows=", rows1).f();
+						{ e("a").a("href", "/recharger-inscription?q=", query, fqs, sorts, "&start=", start3, "&rows=", rows1).f();
 							e("i").a("class", "fas fa-arrow-square-right ").f().g("i");
 						} g("a");
 					}
 						e("span").f().sx((start1 + 1), " - ", (start1 + rows1), " de ", num).g("span");
 				} g("div");
-				table1InscriptionGenPage();
+				table1GenPageInscription();
 		}
 
 		if(listeInscriptionScolaire != null && listeInscriptionScolaire.size() == 1 && params.getJsonObject("query").getString("q").equals("*:*")) {
@@ -798,29 +797,29 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 			} g("div");
 
 		}
-		htmlBodyFormsInscriptionGenPage();
+		htmlBodyFormsGenPageInscription();
 		g("div");
 	}
 
-	public void table1InscriptionGenPage() {
+	public void table1GenPageInscription() {
 		{ e("table").a("class", "w3-table w3-bordered w3-striped w3-border w3-hoverable ").f();
-			table2InscriptionGenPage();
+			table2GenPageInscription();
 		} g("table");
 	}
 
-	public void table2InscriptionGenPage() {
-		thead1InscriptionGenPage();
-		tbody1InscriptionGenPage();
-		tfoot1InscriptionGenPage();
+	public void table2GenPageInscription() {
+		thead1GenPageInscription();
+		tbody1GenPageInscription();
+		tfoot1GenPageInscription();
 	}
 
-	public void thead1InscriptionGenPage() {
+	public void thead1GenPageInscription() {
 		{ e("thead").a("class", "w3-blue-gray w3-hover-blue-gray ").f();
-			thead2InscriptionGenPage();
+			thead2GenPageInscription();
 		} g("thead");
 	}
 
-	public void thead2InscriptionGenPage() {
+	public void thead2GenPageInscription() {
 			{ e("tr").f();
 			if(getColonneCree()) {
 				e("th").f().sx("crée").g("th");
@@ -831,19 +830,19 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 			} g("tr");
 	}
 
-	public void tbody1InscriptionGenPage() {
+	public void tbody1GenPageInscription() {
 		{ e("tbody").f();
-			tbody2InscriptionGenPage();
+			tbody2GenPageInscription();
 		} g("tbody");
 	}
 
-	public void tbody2InscriptionGenPage() {
+	public void tbody2GenPageInscription() {
 		Map<String, Map<String, List<String>>> highlighting = listeInscriptionScolaire.getQueryResponse().getHighlighting();
 		for(int i = 0; i < listeInscriptionScolaire.size(); i++) {
 			InscriptionScolaire o = listeInscriptionScolaire.getList().get(i);
 			Map<String, List<String>> highlights = highlighting == null ? null : highlighting.get(o.getId());
 			List<String> highlightList = highlights == null ? null : highlights.get(highlights.keySet().stream().findFirst().orElse(null));
-			String uri = "/inscription/" + o.getPk();
+			String uri = "/recharger-inscription/" + o.getPk();
 			{ e("tr").f();
 				if(getColonneCree()) {
 					{ e("td").f();
@@ -868,13 +867,13 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 		}
 	}
 
-	public void tfoot1InscriptionGenPage() {
+	public void tfoot1GenPageInscription() {
 		{ e("tfoot").a("class", "w3-blue-gray w3-hover-blue-gray ").f();
-			tfoot2InscriptionGenPage();
+			tfoot2GenPageInscription();
 		} g("tfoot");
 	}
 
-	public void tfoot2InscriptionGenPage() {
+	public void tfoot2GenPageInscription() {
 		{ e("tr").f();
 			SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listeInscriptionScolaire.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(new SimpleOrderedMap());
 			if(getColonneCree()) {
@@ -896,7 +895,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 		return true;
 	}
 
-	public void htmlBodyFormsInscriptionGenPage() {
+	public void htmlBodyFormsGenPageInscription() {
 		if(
 				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
 				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
@@ -906,8 +905,8 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 			if(listeInscriptionScolaire != null && listeInscriptionScolaire.size() == 1) {
 				{ e("button")
 					.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ")
-						.a("id", "rechargerCetteInscriptionGenPage")
-						.a("onclick", "patchInscriptionScolaireVals( [ {name: 'fq', value: 'pk:' + " + requeteSite_.getRequetePk() + " } ], {}, function() { ajouterLueur($('#rechargerCetteInscriptionGenPage')); }, function() { ajouterErreur($('#rechargerCetteInscriptionGenPage')); }); return false; ").f();
+						.a("id", "rechargerCetteGenPageInscription")
+						.a("onclick", "patchInscriptionScolaireVals( [ {name: 'fq', value: 'pk:' + " + requeteSite_.getRequetePk() + " } ], {}, function() { ajouterLueur($('#rechargerCetteGenPageInscription')); }, function() { ajouterErreur($('#rechargerCetteGenPageInscription')); }); return false; ").f();
 						e("i").a("class", "fas fa-sync-alt ").f().g("i");
 					sx("recharger cette inscription");
 				} g("button");
@@ -1084,51 +1083,12 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 
 			g("div");
 		}
-		htmlSuggereInscriptionGenPage(this, null, listeInscriptionScolaire);
+		htmlSuggereGenPageInscription(this, null, listeInscriptionScolaire);
 	}
 
 	/**
-	 * Var.enUS: htmlSuggestedEnrollmentGenPage
-	 * r: "/inscription"
-	 * r.enUS: "/enrollment"
-	 * r: "voir toutes les inscriptions"
-	 * r.enUS: "see all the enrollments"
-	 * r: "rechargerInscriptionGenPage"
-	 * r.enUS: "refreshEnrollmentGenPage"
-	 * r: "recharger toutes les inscriptions"
-	 * r.enUS: "refresh all the enrollments"
-	 * r: "rechercher inscriptions : "
-	 * r.enUS: "search enrollments: "
-	 * r: "suggereFormInscriptionScolaire"
-	 * r.enUS: "suggestFormSchoolEnrollment"
-	 * r: "rechercher inscriptions"
-	 * r.enUS: "search enrollments"
-	 * r: "suggereInscriptionScolaire w3-input w3-border w3-cell w3-cell-middle "
-	 * r.enUS: "suggestSchoolEnrollment w3-input w3-border w3-cell w3-cell-middle "
-	 * r: "suggereInscriptionScolaire"
-	 * r.enUS: "suggestSchoolEnrollment"
-	 * r: patchInscriptionScolaireVals
-	 * r.enUS: patchSchoolEnrollmentVals
-	 * r: ajouterLueur
-	 * r.enUS: addGlow
-	 * r: rechargerInscriptionGenPage
-	 * r.enUS: refreshEnrollmentGenPage
-	 * r: ajouterErreur
-	 * r.enUS: addError
-	 * r: suggereInscriptionScolaireObjetSuggere
-	 * r.enUS: suggestSchoolEnrollmentObjectSuggest
-	 * r: texteInscriptionScolaireObjetTexte
-	 * r.enUS: textSchoolEnrollmentObjectText
-	 * r: 'objetSuggere:'
-	 * r.enUS: 'objectSuggest:'
-	 * r: 'objetTexte:'
-	 * r.enUS: 'objectText:'
-	 * r: '#suggereListInscriptionScolaire'
-	 * r.enUS: '#suggestListSchoolEnrollment'
-	 * r: "suggereListInscriptionScolaire"
-	 * r.enUS: "suggestListSchoolEnrollment"
 	**/
-	public static void htmlSuggereInscriptionGenPage(MiseEnPage p, String id, ListeRecherche<InscriptionScolaire> listeInscriptionScolaire) {
+	public static void htmlSuggereGenPageInscription(MiseEnPage p, String id, ListeRecherche<InscriptionScolaire> listeInscriptionScolaire) {
 		RequeteSiteFrFR requeteSite_ = p.getRequeteSite_();
 		try {
 			OperationRequest operationRequete = requeteSite_.getOperationRequete();
@@ -1180,11 +1140,11 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 			}
 
 			if(
-					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), InscriptionGenPage.ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), InscriptionGenPage.ROLES)
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), GenPageInscription.ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), GenPageInscription.ROLES)
 					) {
 					{ p.e("div").a("class", "").f();
-						{ p.e("button").a("id", "rechargerToutesInscriptionGenPage", id).a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ").a("onclick", "patchInscriptionScolaireVals([], {}, function() { ajouterLueur($('#rechargerToutesInscriptionGenPage", id, "')); }, function() { ajouterErreur($('#rechargerToutesInscriptionGenPage", id, "')); }); ").f();
+						{ p.e("button").a("id", "rechargerToutesGenPageInscription", id).a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ").a("onclick", "patchInscriptionScolaireVals([], {}, function() { ajouterLueur($('#rechargerToutesGenPageInscription", id, "')); }, function() { ajouterErreur($('#rechargerToutesGenPageInscription", id, "')); }); ").f();
 							p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
 							p.sx("recharger toutes les inscriptions");
 						} p.g("button");
@@ -1207,13 +1167,13 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 					.a("id", "suggereInscriptionScolaire", id)
 					.a("autocomplete", "off")
 					.a("oninput", "suggereInscriptionScolaireObjetSuggere( [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() } ], $('#suggereListInscriptionScolaire", id, "'), ", p.getRequeteSite_().getRequetePk(), "); ")
-					.a("onkeyup", "if (event.keyCode === 13) { event.preventDefault(); window.location.href = '/inscription?q=", query1, ":' + encodeURIComponent(this.value) + '", fqs, sorts, "&start=", start2, "&rows=", rows1, "'; }"); 
+					.a("onkeyup", "if (event.keyCode === 13) { event.preventDefault(); window.location.href = '/recharger-inscription?q=", query1, ":' + encodeURIComponent(this.value) + '", fqs, sorts, "&start=", start2, "&rows=", rows1, "'; }"); 
 				if(listeInscriptionScolaire != null)
 					p.a("value", query2);
 				p.fg();
 				{ p.e("button")
 					.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-blue-gray ")
-					.a("onclick", "window.location.href = '/inscription?q=", query1, ":' + encodeURIComponent(this.previousElementSibling.value) + '", fqs, sorts, "&start=", start2, "&rows=", rows1, "'; ") 
+					.a("onclick", "window.location.href = '/recharger-inscription?q=", query1, ":' + encodeURIComponent(this.previousElementSibling.value) + '", fqs, sorts, "&start=", start2, "&rows=", rows1, "'; ") 
 					.f();
 					p.e("i").a("class", "fas fa-search ").f().g("i");
 				} p.g("button");
@@ -1226,7 +1186,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 				} p.g("div");
 			} p.g("div");
 			{ p.e("div").a("class", "").f();
-				{ p.e("a").a("href", "/inscription").a("class", "").f();
+				{ p.e("a").a("href", "/recharger-inscription").a("class", "").f();
 					p.e("i").a("class", "fas fa-edit ").f().g("i");
 					p.sx("voir toutes les inscriptions");
 				} p.g("a");

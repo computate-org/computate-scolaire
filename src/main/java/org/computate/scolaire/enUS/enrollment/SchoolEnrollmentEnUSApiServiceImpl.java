@@ -73,79 +73,65 @@ public class SchoolEnrollmentEnUSApiServiceImpl extends SchoolEnrollmentEnUSGenA
 	public void refreshsearchpageSchoolEnrollment(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest);
 		try {
-			sqlConnectionSchoolEnrollment(siteRequest, a -> {
-				if(a.succeeded()) {
-					userSchoolEnrollment(siteRequest, b -> {
-						if(b.succeeded()) {
-							aSearchSchoolEnrollment(siteRequest, false, true, "/refresh-enrollment", "RefreshSearchPage", c -> {
-								if(c.succeeded()) {
-									try {
-										SearchList<SchoolEnrollment> listSchoolEnrollment = c.result();
-	
-										if(listSchoolEnrollment.size() > 1) {
-											throw new RuntimeException("The enrollment refresh page search returned more than one enrollment. ");
-										}
-										if(listSchoolEnrollment.size() == 0) {
-											throw new RuntimeException("The enrollment refresh page search did not find any enrollment. ");
-										}
-	
-										SchoolEnrollment schoolEnrollment = listSchoolEnrollment.first();
-										SiteConfig siteConfig = siteRequest.getSiteConfig_();
-										MerchantAuthenticationType merchantAuthenticationType = new MerchantAuthenticationType();
-										String authorizeApiLoginId = siteConfig.getAuthorizeApiLoginId();
-										String authorizeTransactionKey = siteConfig.getAuthorizeTransactionKey();
-										merchantAuthenticationType.setName(authorizeApiLoginId);
-										merchantAuthenticationType.setTransactionKey(authorizeTransactionKey);
-										ApiOperationBase.setMerchantAuthentication(merchantAuthenticationType);
-	
-										enrollmentChargesFuture(schoolEnrollment, false, d -> {
-											if(d.succeeded()) {
-												authorizeNetEnrollmentPaymentsFuture(merchantAuthenticationType, schoolEnrollment, e -> {
+			userSchoolEnrollment(siteRequest, b -> {
+				if(b.succeeded()) {
+					aSearchSchoolEnrollment(siteRequest, false, true, "/refresh-enrollment", "RefreshSearchPage", c -> {
+						if(c.succeeded()) {
+							try {
+								SearchList<SchoolEnrollment> listSchoolEnrollment = c.result();
+
+								if(listSchoolEnrollment.size() > 1) {
+									throw new RuntimeException("The enrollment refresh page search returned more than one enrollment. ");
+								}
+								if(listSchoolEnrollment.size() == 0) {
+									throw new RuntimeException("The enrollment refresh page search did not find any enrollment. ");
+								}
+
+								SchoolEnrollment schoolEnrollment = listSchoolEnrollment.first();
+								SiteConfig siteConfig = siteRequest.getSiteConfig_();
+								MerchantAuthenticationType merchantAuthenticationType = new MerchantAuthenticationType();
+								String authorizeApiLoginId = siteConfig.getAuthorizeApiLoginId();
+								String authorizeTransactionKey = siteConfig.getAuthorizeTransactionKey();
+								merchantAuthenticationType.setName(authorizeApiLoginId);
+								merchantAuthenticationType.setTransactionKey(authorizeTransactionKey);
+								ApiOperationBase.setMerchantAuthentication(merchantAuthenticationType);
+
+								enrollmentChargesFuture(schoolEnrollment, d -> {
+									if(d.succeeded()) {
+										authorizeNetEnrollmentPaymentsFuture(merchantAuthenticationType, schoolEnrollment, e -> {
+											if(e.succeeded()) {
+												LOGGER.info("Creating payments for customer %s succeeded. ");
+												refreshsearchpageSchoolEnrollmentResponse(listSchoolEnrollment, f -> {
 													if(e.succeeded()) {
-														LOGGER.info("Creating payments for customer %s succeeded. ");
-														refreshsearchpageSchoolEnrollmentResponse(listSchoolEnrollment, f -> {
-															if(e.succeeded()) {
-																sqlCloseSchoolEnrollment(siteRequest, g -> {
-																	if(e.succeeded()) {
-																		eventHandler.handle(Future.succeededFuture(g.result()));
-																		LOGGER.info(String.format("refreshsearchpageSchoolEnrollment succeeded. "));
-																	} else {
-																		LOGGER.error(String.format("refreshsearchpageSchoolEnrollment failed. ", g.cause()));
-																		errorSchoolEnrollment(siteRequest, eventHandler, g);
-																	}
-																});
-															} else {
-																LOGGER.error(String.format("refreshsearchpageSchoolEnrollment failed. ", f.cause()));
-																errorSchoolEnrollment(siteRequest, eventHandler, f);
-															}
-														});
+														eventHandler.handle(Future.succeededFuture(f.result()));
+														LOGGER.info(String.format("refreshsearchpageSchoolEnrollment succeeded. "));
 													} else {
-														LOGGER.error(String.format("refreshsearchpageSchoolEnrollment failed. ", e.cause()));
-														errorSchoolEnrollment(siteRequest, eventHandler, e);
+														LOGGER.error(String.format("refreshsearchpageSchoolEnrollment failed. ", f.cause()));
+														errorSchoolEnrollment(siteRequest, eventHandler, f);
 													}
 												});
 											} else {
-												LOGGER.error(String.format("refreshsearchpageSchoolEnrollment failed. ", d.cause()));
-												errorSchoolEnrollment(siteRequest, eventHandler, d);
+												LOGGER.error(String.format("refreshsearchpageSchoolEnrollment failed. ", e.cause()));
+												errorSchoolEnrollment(siteRequest, eventHandler, e);
 											}
 										});
-									} catch(Exception e) {
-										LOGGER.error(String.format("refreshsearchpageSchoolEnrollment failed. ", e));
-										errorSchoolEnrollment(siteRequest, eventHandler, Future.failedFuture(e));
+									} else {
+										LOGGER.error(String.format("refreshsearchpageSchoolEnrollment failed. ", d.cause()));
+										errorSchoolEnrollment(siteRequest, eventHandler, d);
 									}
-								} else {
-									LOGGER.error(String.format("refreshsearchpageSchoolEnrollment failed. ", c.cause()));
-									errorSchoolEnrollment(siteRequest, eventHandler, c);
-								}
-							});
+								});
+							} catch(Exception e) {
+								LOGGER.error(String.format("refreshsearchpageSchoolEnrollment failed. ", e));
+								errorSchoolEnrollment(siteRequest, eventHandler, Future.failedFuture(e));
+							}
 						} else {
-							LOGGER.error(String.format("refreshsearchpageSchoolEnrollment failed. ", b.cause()));
-							errorSchoolEnrollment(siteRequest, eventHandler, b);
+							LOGGER.error(String.format("refreshsearchpageSchoolEnrollment failed. ", c.cause()));
+							errorSchoolEnrollment(siteRequest, eventHandler, c);
 						}
 					});
 				} else {
-					LOGGER.error(String.format("refreshsearchpageSchoolEnrollment failed. ", a.cause()));
-					errorSchoolEnrollment(siteRequest, eventHandler, a);
+					LOGGER.error(String.format("refreshsearchpageSchoolEnrollment failed. ", b.cause()));
+					errorSchoolEnrollment(siteRequest, eventHandler, b);
 				}
 			});
 		} catch(Exception ex) {
@@ -167,7 +153,7 @@ public class SchoolEnrollmentEnUSApiServiceImpl extends SchoolEnrollmentEnUSGenA
 
 		listSchoolEnrollment.getList().forEach(o -> {
 			futures.add(
-					enrollmentChargesFuture(o, false, a -> {
+					enrollmentChargesFuture(o, a -> {
 					if(a.succeeded()) {
 						authorizeNetEnrollmentPaymentsFuture(merchantAuthenticationType, o, c -> {
 							if(a.succeeded()) {
@@ -191,10 +177,11 @@ public class SchoolEnrollmentEnUSApiServiceImpl extends SchoolEnrollmentEnUSGenA
 		});
 	}
 
-	public Future<SchoolEnrollment> enrollmentChargesFuture(SchoolEnrollment schoolEnrollment, Boolean inheritPk, Handler<AsyncResult<SchoolEnrollment>> eventHandler) {
+	public Future<SchoolEnrollment> enrollmentChargesFuture(SchoolEnrollment schoolEnrollment, Handler<AsyncResult<SchoolEnrollment>> eventHandler) {
 		SiteRequestEnUS siteRequest = schoolEnrollment.getSiteRequest_();
 		SiteContextEnUS siteContextEnUS = siteRequest.getSiteContext_();
 		SiteConfig siteConfig = siteRequest.getSiteConfig_();
+		Integer paymentDay = siteConfig.getPaymentDay();
 		Vertx vertx = siteRequest.getVertx();
 		SchoolPaymentEnUSApiServiceImpl paymentService = new SchoolPaymentEnUSApiServiceImpl(siteContextEnUS);
 		Promise<SchoolEnrollment> promise = Promise.promise();
@@ -218,8 +205,8 @@ public class SchoolEnrollmentEnUSApiServiceImpl extends SchoolEnrollmentEnUSGenA
 			List<LocalDate> paymentsDue = Optional.ofNullable((SimpleOrderedMap)facets.get("paymentDate")).map(m -> ((List<SimpleOrderedMap>)m.get("buckets"))).orElse(Arrays.asList()).stream().collect(Collectors.mapping(m -> ((Date)m.get("val")).toInstant().atZone(ZoneId.of(configSite.getSiteZone())).toLocalDate(), Collectors.toList()));
 			LocalDate sessionStartDate = schoolEnrollment.getSessionStartDate();
 			LocalDate sessionEndDate = schoolEnrollment.getSessionEndDate();
-			LocalDate chargeStartDate = sessionStartDate == null ? null : sessionStartDate.withDayOfMonth(25);
-			LocalDate chargeEndDate = sessionStartDate == null ? null : sessionEndDate.minusMonths(1).withDayOfMonth(25);
+			LocalDate chargeStartDate = sessionStartDate == null ? null : (sessionStartDate.getDayOfMonth() < paymentDay ? sessionStartDate.withDayOfMonth(paymentDay).minusMonths(1) : sessionStartDate.withDayOfMonth(paymentDay));
+			LocalDate chargeEndDate = sessionEndDate == null ? null : (sessionEndDate.getDayOfMonth() < paymentDay ? sessionEndDate.withDayOfMonth(paymentDay).minusMonths(1) : sessionEndDate.withDayOfMonth(paymentDay));
 			BigDecimal blockPricePerMonth = schoolEnrollment.getBlockPricePerMonth();
 			BigDecimal yearEnrollmentFee = schoolEnrollment.getYearEnrollmentFee();
 			Long enrollmentKey = schoolEnrollment.getPk();
@@ -339,217 +326,6 @@ public class SchoolEnrollmentEnUSApiServiceImpl extends SchoolEnrollmentEnUSGenA
 			return Future.failedFuture(e);
 		}
 	}
-//
-//	@Override public Future<SchoolEnrollment> patchpaymentsSchoolEnrollmentFuture(SchoolEnrollment schoolEnrollment, Boolean inheritPk, Handler<AsyncResult<SchoolEnrollment>> eventHandler) {
-//		SiteRequestEnUS siteRequest = schoolEnrollment.getSiteRequest_();
-//		SiteContextEnUS siteContextEnUS = siteRequest.getSiteContext_();
-//		SiteConfig siteConfig = siteRequest.getSiteConfig_();
-//		Vertx vertx = siteRequest.getVertx();
-//		SchoolPaymentEnUSApiServiceImpl paymentService = new SchoolPaymentEnUSApiServiceImpl(siteContextEnUS);
-//		Promise<SchoolEnrollment> promise = Promise.promise();
-//		try {
-//			MerchantAuthenticationType merchantAuthenticationType = new MerchantAuthenticationType();
-//			String authorizeApiLoginId = siteConfig.getAuthorizeApiLoginId();
-//			String authorizeTransactionKey = siteConfig.getAuthorizeTransactionKey();
-//			merchantAuthenticationType.setName(authorizeApiLoginId);
-//			merchantAuthenticationType.setTransactionKey(authorizeTransactionKey);
-//			ApiOperationBase.setMerchantAuthentication(merchantAuthenticationType);
-//
-//			SearchList<SchoolPayment> searchList = new SearchList<SchoolPayment>();
-//			searchList.setStore(true);
-//			searchList.setQuery("*:*");
-//			searchList.setC(SchoolPayment.class);
-//			searchList.addFilterQuery("enrollmentKey_indexed_long:" + schoolEnrollment.getPk());
-//			searchList.add("json.facet", "{paymentDate:{terms:{field:paymentDate_indexed_date, limit:1000}}}");
-//			searchList.add("json.facet", "{chargeEnrollment:{terms:{field:chargeEnrollment_indexed_boolean, limit:1000}}}");
-//			searchList.add("json.facet", "{chargeFirstLast:{terms:{field:chargeFirstLast_indexed_boolean, limit:1000}}}");
-//			searchList.setRows(0);
-//			searchList.initDeepSearchList(siteRequest);
-//
-//			SiteConfig configSite = siteContextEnUS.getSiteConfig();
-//			SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(searchList.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(new SimpleOrderedMap());
-//			Integer chargeEnrollment = Optional.ofNullable((SimpleOrderedMap)facets.get("chargeEnrollment")).map(m -> ((List<SimpleOrderedMap>)m.get("buckets"))).orElse(Arrays.asList()).stream().filter(m -> BooleanUtils.isTrue((Boolean)m.get("val"))).findFirst().map(m -> (Integer)m.get("count")).orElse(0);
-//			Integer chargeFirstLast = Optional.ofNullable((SimpleOrderedMap)facets.get("chargeFirstLast")).map(m -> ((List<SimpleOrderedMap>)m.get("buckets"))).orElse(Arrays.asList()).stream().filter(m -> BooleanUtils.isTrue((Boolean)m.get("val"))).findFirst().map(m -> (Integer)m.get("count")).orElse(0);
-//			List<LocalDate> paymentsDue = Optional.ofNullable((SimpleOrderedMap)facets.get("paymentDate")).map(m -> ((List<SimpleOrderedMap>)m.get("buckets"))).orElse(Arrays.asList()).stream().collect(Collectors.mapping(m -> ((Date)m.get("val")).toInstant().atZone(ZoneId.of(configSite.getSiteZone())).toLocalDate(), Collectors.toList()));
-//			LocalDate sessionStartDate = schoolEnrollment.getSessionStartDate();
-//			LocalDate sessionEndDate = schoolEnrollment.getSessionEndDate();
-//			LocalDate chargeStartDate = sessionStartDate == null ? null : sessionStartDate.withDayOfMonth(25);
-//			LocalDate chargeEndDate = sessionStartDate == null ? null : sessionEndDate.minusMonths(1).withDayOfMonth(25);
-//			BigDecimal blockPricePerMonth = schoolEnrollment.getBlockPricePerMonth();
-//			BigDecimal yearEnrollmentFee = schoolEnrollment.getYearEnrollmentFee();
-//			Long enrollmentKey = schoolEnrollment.getPk();
-//			Long numMonths = chargeStartDate == null ? null : ChronoUnit.MONTHS.between(chargeStartDate, chargeEndDate);
-//			List<Future> futures = new ArrayList<>();
-//
-//			if(sessionStartDate != null && yearEnrollmentFee != null && chargeEnrollment == 0) {
-//				SchoolPayment o = new SchoolPayment();
-//				o.setSiteRequest_(siteRequest);
-//				o.setChargeAmount(yearEnrollmentFee);
-//				o.setPaymentDate(sessionStartDate);
-//				o.setCustomerProfileId(schoolEnrollment.getCustomerProfileId());
-//				o.setChargeEnrollment(true);
-//				o.setEnrollmentKey(schoolEnrollment.getPk());
-//				o.setEnrollment_(schoolEnrollment);
-//
-//				SiteRequestEnUS siteRequest2 = siteRequest.copy();
-//				siteRequest2.setJsonObject(JsonObject.mapFrom(o));
-//				siteRequest2.initDeepSiteRequestEnUS(siteRequest);
-//
-//				ApiRequest apiRequest2 = new ApiRequest();
-//				apiRequest2.setRows(1);
-//				apiRequest2.setNumFound(1L);
-//				apiRequest2.setNumPATCH(0L);
-//				apiRequest2.initDeepApiRequest(siteRequest2);
-//				siteRequest2.setApiRequest_(apiRequest2);
-//
-//				futures.add(paymentService.postSchoolPaymentFuture(siteRequest2, false, b -> {
-//					if(b.succeeded()) {
-//						LOGGER.info(String.format("charge %s created for enrollment %s. ", sessionStartDate, enrollmentKey));
-//					} else {
-//						LOGGER.error(String.format("create fee %s failed for enrollment %s. ", sessionStartDate, enrollmentKey), b.cause());
-//						promise.fail(b.cause());
-//					}
-//				}));
-//			}
-//			if(blockPricePerMonth != null && chargeFirstLast == 0) {
-//				SchoolPayment o = new SchoolPayment();
-//				o.setSiteRequest_(siteRequest);
-//				o.setChargeAmount(blockPricePerMonth.multiply(BigDecimal.valueOf(2)));
-//				o.setPaymentDate(sessionStartDate);
-//				o.setCustomerProfileId(schoolEnrollment.getCustomerProfileId());
-//				o.setChargeFirstLast(true);
-//				o.setEnrollmentKey(schoolEnrollment.getPk());
-//				o.setEnrollment_(schoolEnrollment);
-//
-//				SiteRequestEnUS siteRequest2 = siteRequest.copy();
-//				siteRequest2.setJsonObject(JsonObject.mapFrom(o));
-//				siteRequest2.initDeepSiteRequestEnUS(siteRequest);
-//
-//				ApiRequest apiRequest2 = new ApiRequest();
-//				apiRequest2.setRows(1);
-//				apiRequest2.setNumFound(1L);
-//				apiRequest2.setNumPATCH(0L);
-//				apiRequest2.initDeepApiRequest(siteRequest2);
-//				siteRequest2.setApiRequest_(apiRequest2);
-//
-//				futures.add(paymentService.postSchoolPaymentFuture(siteRequest2, false, b -> {
-//					if(b.succeeded()) {
-//						LOGGER.info(String.format("charge %s created for enrollment %s. ", sessionStartDate, enrollmentKey));
-//					} else {
-//						LOGGER.error(String.format("create fee %s failed for enrollment %s. ", sessionStartDate, enrollmentKey), b.cause());
-//						promise.fail(b.cause());
-//					}
-//				}));
-//			}
-//			if(numMonths != null) {
-//				for(long i = 0; i < numMonths; i++) {
-//					LocalDate paymentDate = chargeStartDate.plusMonths(i);
-//					if(!paymentsDue.contains(paymentDate)) {
-//						SchoolPayment o = new SchoolPayment();
-//						o.setSiteRequest_(siteRequest);
-//						o.setChargeAmount(schoolEnrollment.getBlockPricePerMonth());
-//						o.setPaymentDate(paymentDate);
-//						o.setCustomerProfileId(schoolEnrollment.getCustomerProfileId());
-//						o.setChargeMonth(true);
-//						o.setEnrollmentKey(schoolEnrollment.getPk());
-//						o.setEnrollment_(schoolEnrollment);
-//	
-//						SiteRequestEnUS siteRequest2 = siteRequest.copy();
-//						siteRequest2.setJsonObject(JsonObject.mapFrom(o));
-//						siteRequest2.initDeepSiteRequestEnUS(siteRequest);
-//
-//						ApiRequest apiRequest2 = new ApiRequest();
-//						apiRequest2.setRows(1);
-//						apiRequest2.setNumFound(1L);
-//						apiRequest2.setNumPATCH(0L);
-//						apiRequest2.initDeepApiRequest(siteRequest2);
-//						siteRequest2.setApiRequest_(apiRequest2);
-//	
-//						futures.add(paymentService.postSchoolPaymentFuture(siteRequest2, false, b -> {
-//							if(b.succeeded()) {
-//								LOGGER.info(String.format("charge %s created for enrollment %s. ", paymentDate, enrollmentKey));
-//							} else {
-//								LOGGER.error(String.format("create fee %s failed for enrollment %s. ", paymentDate, enrollmentKey), b.cause());
-//								promise.fail(b.cause());
-//							}
-//						}));
-//					}
-//				}
-//			}
-//			CompositeFuture.all(futures).setHandler(b -> {
-//				if(b.succeeded()) {
-//					LOGGER.info(String.format("Charges created for enrollment %s. ", enrollmentKey));
-//					futureAuthorizeNetEnrollmentPayments(merchantAuthenticationType, schoolEnrollment, c -> {
-//						if(c.succeeded()) {
-//							LOGGER.info("Creating payments for customer %s succeeded. ");
-//
-//							apiRequestSchoolEnrollment(schoolEnrollment);
-//			
-//							{
-//								SiteRequestEnUS siteRequest2 = paymentService.generateSiteRequestEnUSForSchoolPayment(siteContext, siteRequest.getOperationRequest(), new JsonObject());
-//	
-//								SearchList<SchoolPayment> searchList2 = new SearchList<SchoolPayment>();
-//								searchList2.setStore(true);
-//								searchList2.setQuery("*:*");
-//								searchList2.setC(SchoolPayment.class);
-//								searchList2.addFilterQuery("enrollmentKey_indexed_long:" + schoolEnrollment.getPk());
-//								searchList2.setRows(100);
-//								searchList2.initDeepSearchList(siteRequest2);
-//			
-//								for(SchoolPayment o2 : searchList2.getList()) {
-//									ApiRequest apiRequest2 = new ApiRequest();
-//									apiRequest2.setRows(1);
-//									apiRequest2.setNumFound(1l);
-//									apiRequest2.setNumPATCH(0L);
-//									apiRequest2.initDeepApiRequest(siteRequest2);
-//									siteRequest2.setApiRequest_(apiRequest2);
-//									siteRequest2.getVertx().eventBus().publish("websocketSchoolPayment", JsonObject.mapFrom(apiRequest2).toString());
-//									siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
-//		
-//									futures.add(
-//											paymentService.patchSchoolPaymentFuture(o2, false, d -> {
-//											if(d.succeeded()) {
-//												LOGGER.info(String.format("SchoolPayment %s refreshed. ", o2.getPk()));
-//											} else {
-//												LOGGER.info(String.format("SchoolPayment %s failed. ", o2.getPk()));
-//												eventHandler.handle(Future.failedFuture(d.cause()));
-//											}
-//										})
-//									);
-//								}
-//							}
-//	
-//							CompositeFuture.all(futures).setHandler(d -> {
-//								if(d.succeeded()) {
-//									eventHandler.handle(Future.succeededFuture(schoolEnrollment));
-//									promise.complete();
-//									LOGGER.info("Refresh enrollment payments succeeded. ");
-//								} else {
-//									LOGGER.error("Refresh relations failed. ", d.cause());
-//									eventHandler.handle(Future.failedFuture(d.cause()));
-//								}
-//							});
-//						} else {
-//							LOGGER.error("Generating enrollment payments failed. ", c.cause());
-//							eventHandler.handle(Future.failedFuture(c.cause()));
-//							promise.fail(c.cause());
-//						}
-//					});
-//				} else {
-//					LOGGER.error(String.format("Creating charges has failed for enrollment %s. ", enrollmentKey), b.cause());
-//					eventHandler.handle(Future.failedFuture(b.cause()));
-//					promise.fail(b.cause());
-//				}
-//			});
-//
-//			return promise.future();
-//		} catch(Exception e) {
-//			eventHandler.handle(Future.failedFuture(e));
-//			return Future.failedFuture(e);
-//		}
-//
-////		return super.patchpaymentsSchoolEnrollmentFuture(schoolEnrollment, eventHandler);
-//	}
 
 	public Future<Void> authorizeNetEnrollmentPaymentsFuture(MerchantAuthenticationType merchantAuthenticationType, SchoolEnrollment schoolEnrollment, Handler<AsyncResult<Void>> eventHandler) {
 		SiteRequestEnUS siteRequest = schoolEnrollment.getSiteRequest_();
@@ -666,7 +442,22 @@ public class SchoolEnrollmentEnUSApiServiceImpl extends SchoolEnrollmentEnUSGenA
 				String enrollmentKeyStr = enrollmentKeyMatcher.group(1);
 				if(NumberUtils.isCreatable(enrollmentKeyStr)) {
 					enrollmentKey = Long.parseLong(enrollmentKeyStr);
-					if(!enrollmentKey.equals(schoolEnrollment.getPk()))
+					if(schoolEnrollment == null) {
+						SearchList<SchoolEnrollment> searchListEnrollment = new SearchList<SchoolEnrollment>();
+						searchListEnrollment.setStore(true);
+						searchListEnrollment.setQuery("*:*");
+						searchListEnrollment.setC(SchoolEnrollment.class);
+						searchListEnrollment.addFilterQuery("pk_indexed_long:" + enrollmentKey);
+						searchListEnrollment.initDeepSearchList(siteRequest);
+	
+						if(searchListEnrollment.getList().size() == 1) {
+							schoolEnrollment = searchListEnrollment.first();
+						}
+						else {
+							enrollmentKey = null;
+						}
+					}
+					else if(!enrollmentKey.equals(schoolEnrollment.getPk()))
 						enrollmentKey = null;
 				}
 			}
@@ -698,7 +489,6 @@ public class SchoolEnrollmentEnUSApiServiceImpl extends SchoolEnrollmentEnUSGenA
 					payment.setEnrollmentKey(enrollmentKey);
 
 					SiteRequestEnUS siteRequest2 = paymentService.generateSiteRequestEnUSForSchoolPayment(siteContext, null, JsonObject.mapFrom(payment));
-					siteRequest2.setTx(siteRequest.getTx());
 					paymentService.postSchoolPaymentFuture(siteRequest2, false, c -> {
 						SchoolPayment payment2 = c.result();
 						if(c.succeeded()) {

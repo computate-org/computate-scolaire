@@ -2903,7 +2903,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 				.a("id", classApiMethodMethod, "_blockStartTime")
 				.a("onclick", "removeGlow($(this)); ")
 				.a("value", blockStartTime == null ? "" : DateTimeFormatter.ofPattern("h:mm a").format(blockStartTime))
-				.a("onchange", "var t = parseTime(this.value); if(t) { var s = dateFormat(t, 'HH:MM'); patchSchoolBlockVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlockStartTime', s, function() { addGlow($('#", classApiMethodMethod, "_blockStartTime')); }, function() { addError($('#", classApiMethodMethod, "_blockStartTime')); }); } ")
+				.a("onchange", "var t = moment(this.value, 'h:mm a'); if(t) { var s = t.format('HH:mm'); patchSchoolBlockVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlockStartTime', s, function() { addGlow($('#", classApiMethodMethod, "_blockStartTime')); }, function() { addError($('#", classApiMethodMethod, "_blockStartTime')); }); } ")
 				.fg();
 		}
 	}
@@ -3023,7 +3023,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 				.a("id", classApiMethodMethod, "_blockEndTime")
 				.a("onclick", "removeGlow($(this)); ")
 				.a("value", blockEndTime == null ? "" : DateTimeFormatter.ofPattern("h:mm a").format(blockEndTime))
-				.a("onchange", "var t = parseTime(this.value); if(t) { var s = dateFormat(t, 'HH:MM'); patchSchoolBlockVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlockEndTime', s, function() { addGlow($('#", classApiMethodMethod, "_blockEndTime')); }, function() { addError($('#", classApiMethodMethod, "_blockEndTime')); }); } ")
+				.a("onchange", "var t = moment(this.value, 'h:mm a'); if(t) { var s = t.format('HH:mm'); patchSchoolBlockVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlockEndTime', s, function() { addGlow($('#", classApiMethodMethod, "_blockEndTime')); }, function() { addError($('#", classApiMethodMethod, "_blockEndTime')); }); } ")
 				.fg();
 		}
 	}

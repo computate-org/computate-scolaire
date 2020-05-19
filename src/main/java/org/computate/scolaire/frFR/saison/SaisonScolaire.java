@@ -373,20 +373,20 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 	 * NomAffichage.frFR: début de la saison
 	 * NomAffichage.enUS: start of the season
 	 */                  
-	protected void _saisonJourDebut(Couverture<LocalDate> c) {}
+	protected void _saisonDateDebut(Couverture<LocalDate> c) {}
 
 	/**
 	 * Var.enUS: setSeasonStartDate
-	 * r: SaisonJourDebut
+	 * r: SaisonDateDebut
 	 * r.enUS: SeasonStartDate
 	 */
-	@Override public SaisonScolaire setSaisonJourDebut(String o) {
+	@Override public SaisonScolaire setSaisonDateDebut(String o) {
 		if(StringUtils.contains(o, " "))
 			o = StringUtils.substringBefore(o, " ");
 		try {
-			return super.setSaisonJourDebut(o);
+			return super.setSaisonDateDebut(o);
 		} catch (Exception e) {
-			setSaisonJourDebut(LocalDate.from(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(o)));
+			setSaisonDateDebut(LocalDate.from(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(o)));
 			return this;
 		}
 	}
@@ -443,7 +443,7 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 	 * r.enUS: "Additional classes coming during the %s-%s school year at %s"
 	 * r: "%s saison à %s"
 	 * r.enUS: "%s season at %s"
-	 * r: strSaisonJourDebut
+	 * r: strSaisonDateDebut
 	 * r.enUS: strSeasonStartDate
 	 * r: ecoleNomComplet
 	 * r.enUS: schoolCompleteName
@@ -468,7 +468,7 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 		else if(BooleanUtils.isTrue(saisonHiver))
 			o = String.format("Classes de la saison scolaire (frais d'inscription singulaire $%s)", strAnneeFraisInscription());
 		else
-			o = String.format("%s saison à %s", strSaisonJourDebut(), ecoleNomComplet);
+			o = String.format("%s saison à %s", strSaisonDateDebut(), ecoleNomComplet);
 		
 		c.o(o);
 	}
@@ -496,7 +496,7 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 	 * r.enUS: "Additional classes coming during the %s-%s school year at %s"
 	 * r: saisonFuture
 	 * r.enUS: seasonFuture
-	 * r: strSaisonJourDebut
+	 * r: strSaisonDateDebut
 	 * r.enUS: strSeasonStartDate
 	 * r: ecoleNomComplet
 	 * r.enUS: schoolCompleteName
@@ -515,7 +515,7 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 		else if(BooleanUtils.isTrue(saisonHiver))
 			o = String.format("%s-%s saison scolaire à %s", anneeDebut, anneeFin, ecoleNomComplet);
 		else
-			o = String.format("%s saison à %s", strSaisonJourDebut(), ecoleNomComplet);
+			o = String.format("%s saison à %s", strSaisonDateDebut(), ecoleNomComplet);
 		
 		c.o(o);
 	}

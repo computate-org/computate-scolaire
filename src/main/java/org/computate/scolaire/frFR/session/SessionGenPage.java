@@ -157,8 +157,8 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 			o.htmSupprime("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmSessionJourDebut("Page");
-			o.htmSessionJourFin("Page");
+			o.htmSessionDateDebut("Page");
+			o.htmSessionDateFin("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSaisonCle("Page");
@@ -178,8 +178,8 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 			o.htmSupprime("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmSessionJourDebut("POST");
-			o.htmSessionJourFin("POST");
+			o.htmSessionDateDebut("POST");
+			o.htmSessionDateFin("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSaisonCle("POST");
@@ -221,8 +221,8 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 			o.htmSupprime("PUTCopie");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmSessionJourDebut("PUTCopie");
-			o.htmSessionJourFin("PUTCopie");
+			o.htmSessionDateDebut("PUTCopie");
+			o.htmSessionDateFin("PUTCopie");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSaisonCle("PUTCopie");
@@ -247,8 +247,8 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 			o.htmSupprime("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmSessionJourDebut("PATCH");
-			o.htmSessionJourFin("PATCH");
+			o.htmSessionDateDebut("PATCH");
+			o.htmSessionDateFin("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSaisonCle("PATCH");
@@ -275,8 +275,8 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 			o.htmSupprime("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmSessionJourDebut("Recherche");
-			o.htmSessionJourFin("Recherche");
+			o.htmSessionDateDebut("Recherche");
+			o.htmSessionDateFin("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSaisonCle("Recherche");

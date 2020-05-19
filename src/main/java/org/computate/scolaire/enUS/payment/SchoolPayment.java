@@ -249,14 +249,14 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 	}
 
 	protected void _chargeAmountDue(Wrap<BigDecimal> c) {
-		LocalDate paymentNexte = siteRequest_.getSiteConfig_().getPaymentNext();
-		if(chargeAmount != null && paymentDate != null && paymentDate.compareTo(paymentNexte.minusMonths(1)) >= 0 && paymentDate.compareTo(paymentNexte) < 0)
+		LocalDate paymentNext = siteRequest_.getSiteConfig_().getPaymentNext();
+		if(chargeAmount != null && paymentDate != null && paymentDate.compareTo(paymentNext.minusMonths(1)) >= 0 && paymentDate.compareTo(paymentNext) < 0)
 			c.o(chargeAmount);
 	}
 
 	protected void _chargeAmountFuture(Wrap<BigDecimal> c) {
-		LocalDate paymentNexte = siteRequest_.getSiteConfig_().getPaymentNext();
-		if(chargeAmount != null && paymentDate != null && paymentDate.compareTo(paymentNexte) > 0)
+		LocalDate paymentNext = siteRequest_.getSiteConfig_().getPaymentNext();
+		if(chargeAmount != null && paymentDate != null && paymentDate.compareTo(paymentNext) > 0)
 			c.o(chargeAmount);
 	}
 
