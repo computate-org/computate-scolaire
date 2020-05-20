@@ -296,7 +296,7 @@ public class DesignPdfPage extends DesignPdfPageGen<DesignPdfGenPage> {
 
 	protected void _blockSearch(SearchList<SchoolBlock> l) {
 		l.setQuery("*:*");
-//		l.addFilterQuery("yearKey_indexed_long:" + year_.getPk());
+		l.addFilterQuery("yearKey_indexed_long:" + year_.getPk());
 		l.setC(SchoolBlock.class);
 		l.setStore(true);
 		l.addSort("seasonStartDate_indexed_date", ORDER.asc);
