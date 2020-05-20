@@ -1578,7 +1578,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	}
 
 	public Date solrSeasonStartDate() {
-		return seasonStartDate == null ? null : Date.from(seasonStartDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+		return seasonStartDate == null ? null : Date.from(seasonStartDate.atStartOfDay(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toInstant().atZone(ZoneId.of("Z")).toInstant());
 	}
 
 	public String strSeasonStartDate() {
