@@ -410,7 +410,7 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 		l.setC(SchoolYear.class);
 
 		Long yearKey = Optional.ofNullable(enrollmentSearch.first()).map(SchoolEnrollment::getYearKey).orElse(null);
-		if(yearKey != null) {
+		if("main-enrollment-form".equals(attachmentDesignId) && yearKey != null) {
 			l.addFilterQuery("pk_indexed_long:" + yearKey);
 		} else {
 			for(String var : siteRequest_.getRequestVars().keySet()) {
@@ -463,7 +463,7 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 		l.setC(School.class);
 
 		Long schoolKey = Optional.ofNullable(enrollmentSearch.first()).map(SchoolEnrollment::getSchoolKey).orElse(null);
-		if(schoolKey != null) {
+		if("main-enrollment-form".equals(attachmentDesignId) && schoolKey != null) {
 			l.addFilterQuery("pk_indexed_long:" + schoolKey);
 		} else {
 			for(String var : siteRequest_.getRequestVars().keySet()) {

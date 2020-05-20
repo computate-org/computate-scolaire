@@ -3,7 +3,6 @@ package org.computate.scolaire.enUS.design;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.net.URLDecoder;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
@@ -15,7 +14,6 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.ObjectUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.solr.client.solrj.SolrQuery.ORDER;
 import org.apache.solr.client.solrj.util.ClientUtils;
@@ -26,6 +24,7 @@ import org.computate.scolaire.enUS.enrollment.SchoolEnrollment;
 import org.computate.scolaire.enUS.guardian.SchoolGuardian;
 import org.computate.scolaire.enUS.html.part.HtmlPart;
 import org.computate.scolaire.enUS.mom.SchoolMom;
+import org.computate.scolaire.enUS.school.School;
 import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.writer.AllWriter;
@@ -37,7 +36,6 @@ import org.xml.sax.SAXException;
 
 import com.itextpdf.text.DocumentException;
 
-import io.vertx.core.json.JsonArray;
 import io.vertx.ext.web.api.OperationRequest;
 
 /**
@@ -187,13 +185,12 @@ public class DesignPdfPage extends DesignPdfPageGen<DesignPdfGenPage> {
 	}
 
 	protected void _yearSearch(SearchList<SchoolYear> l) {
-		OperationRequest operationRequest = siteRequest_.getOperationRequest();
 		l.setStore(true);
 		l.setQuery("*:*");
 		l.setC(SchoolYear.class);
 
 		Long yearKey = Optional.ofNullable(enrollmentSearch.first()).map(SchoolEnrollment::getYearKey).orElse(null);
-		if(yearKey != null) {
+		if("main-enrollment-form".equals(designId) && yearKey != null) {
 			l.addFilterQuery("pk_indexed_long:" + yearKey);
 		} else {
 			for(String var : siteRequest_.getRequestVars().keySet()) {
@@ -224,6 +221,82 @@ public class DesignPdfPage extends DesignPdfPageGen<DesignPdfGenPage> {
 	protected void _yearKey(Wrap<Long> c) {
 		if(year_ != null)
 			c.o(year_.getPk());
+	}
+
+	protected void _schoolSearch(SearchList<School> l) {
+		l.setStore(true);
+		l.setQuery("*:*");
+		l.setC(School.class);
+
+		Long schoolKey = Optional.ofNullable(enrollmentSearch.first()).map(SchoolEnrollment::getSchoolKey).orElse(null);
+		if("main-enrollment-form".equals(designId) && schoolKey != null) {
+			l.addFilterQuery("pk_indexed_long:" + schoolKey);
+		} else {
+			for(String var : siteRequest_.getRequestVars().keySet()) {
+				String val = siteRequest_.getRequestVars().get(var);
+				if(!"design".equals(var)) {
+					String varIndexed = School.varIndexedSchool(var);
+					if(varIndexed != null)
+						l.addFilterQuery(varIndexed + ":" + ClientUtils.escapeQueryChars(val));
+				}
+			}
+		}
+	}
+
+	protected void _school_(Wrap<School> c) {
+		if("main-enrollment-form".equals(designId)) {
+			if(schoolSearch.size() == 0) {
+				throw new RuntimeException("No school was found for the query: " + siteRequest_.getOperationRequest().getParams().getJsonObject("query").encode());
+			}
+			else if(schoolSearch.size() == 1) {
+				c.o(schoolSearch.get(0));
+			}
+			else  {
+				throw new RuntimeException("More than one school was found for the query: " + siteRequest_.getOperationRequest().getParams().getJsonObject("query").encode());
+			}
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 **/
+	protected void _emailFrom(Wrap<String> c) {
+		if(school_ != null)
+			c.o(school_.getSchoolEmailFrom());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 **/
+	protected void _emailToSchool(Wrap<String> c) {
+		if(school_ != null)
+			c.o(school_.getSchoolEmailTo());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 **/
+	protected void _emailToAddress(Wrap<String> c) {
+		c.o(siteRequest_.getRequestVars().get("emailToAddress"));
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 **/
+	protected void _emailToName(Wrap<String> c) {
+		c.o(siteRequest_.getRequestVars().get("emailToName"));
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 **/
+	protected void _emailMessage(Wrap<String> c) {
+		c.o(siteRequest_.getRequestVars().get("emailMessage"));
 	}
 
 	protected void _schoolKey(Wrap<Long> c) {
