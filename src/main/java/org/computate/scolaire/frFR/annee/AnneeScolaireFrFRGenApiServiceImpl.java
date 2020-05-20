@@ -1817,7 +1817,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 									o2.setEcoleCle(jsonObject.getString(methodeNom));
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
-												, Tuple.of("anneeCles", l2, "ecoleCle", pk)
+												, Tuple.of(l2, "anneeCles", pk, "ecoleCle")
 												, b
 										-> {
 											if(b.succeeded())
@@ -1964,7 +1964,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 								if(l2 != null && o.getSaisonCles().contains(l2)) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
-												, Tuple.of("anneeCle", l2, "saisonCles", pk)
+												, Tuple.of(l2, "anneeCle", pk, "saisonCles")
 												, b
 										-> {
 											if(b.succeeded())

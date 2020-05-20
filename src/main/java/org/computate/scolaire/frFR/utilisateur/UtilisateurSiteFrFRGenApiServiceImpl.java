@@ -781,7 +781,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 								if(l2 != null && o.getInscriptionCles().contains(l2)) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
-												, Tuple.of(pk, "inscriptionCles", "utilisateurCles", l2)
+												, Tuple.of(pk, "inscriptionCles", l2, "utilisateurCles")
 												, b
 										-> {
 											if(b.succeeded())
@@ -928,7 +928,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 								if(l2 != null && o.getPaiementCles().contains(l2)) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
-												, Tuple.of(pk, "paiementCles", "utilisateurCles", l2)
+												, Tuple.of(pk, "paiementCles", l2, "utilisateurCles")
 												, b
 										-> {
 											if(b.succeeded())

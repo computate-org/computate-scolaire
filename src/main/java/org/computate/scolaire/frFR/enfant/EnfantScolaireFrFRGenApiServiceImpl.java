@@ -1799,7 +1799,7 @@ public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGe
 								if(l2 != null && o.getInscriptionCles().contains(l2)) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
-												, Tuple.of("enfantCle", l2, "inscriptionCles", pk)
+												, Tuple.of(l2, "enfantCle", pk, "inscriptionCles")
 												, b
 										-> {
 											if(b.succeeded())

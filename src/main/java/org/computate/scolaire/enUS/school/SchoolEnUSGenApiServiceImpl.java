@@ -1128,7 +1128,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 								if(l2 != null && o.getYearKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of("schoolKey", l2, "yearKeys", pk)
+												, Tuple.of(l2, "schoolKey", pk, "yearKeys")
 												, b
 										-> {
 											if(b.succeeded())

@@ -2056,7 +2056,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 								if(l2 != null && o.getEnrollmentKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of("blockKeys", l2, "enrollmentKeys", pk)
+												, Tuple.of(l2, "blockKeys", pk, "enrollmentKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -2120,7 +2120,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 									o2.setAgeKey(jsonObject.getString(methodName));
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of("ageKey", pk, "blockKeys", l2)
+												, Tuple.of(pk, "ageKey", l2, "blockKeys")
 												, b
 										-> {
 											if(b.succeeded())

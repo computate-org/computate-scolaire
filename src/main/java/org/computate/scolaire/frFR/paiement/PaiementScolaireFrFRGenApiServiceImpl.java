@@ -2260,7 +2260,7 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 									o2.setInscriptionCle(jsonObject.getString(methodeNom));
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
-												, Tuple.of("inscriptionCle", pk, "paiementCles", l2)
+												, Tuple.of(pk, "inscriptionCle", l2, "paiementCles")
 												, b
 										-> {
 											if(b.succeeded())

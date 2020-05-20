@@ -1799,7 +1799,7 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 								if(l2 != null && o.getEnrollmentKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of("childKey", l2, "enrollmentKeys", pk)
+												, Tuple.of(l2, "childKey", pk, "enrollmentKeys")
 												, b
 										-> {
 											if(b.succeeded())

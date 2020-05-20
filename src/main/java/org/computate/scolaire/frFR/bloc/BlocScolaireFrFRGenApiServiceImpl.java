@@ -2056,7 +2056,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 								if(l2 != null && o.getInscriptionCles().contains(l2)) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
-												, Tuple.of("blocCles", l2, "inscriptionCles", pk)
+												, Tuple.of(l2, "blocCles", pk, "inscriptionCles")
 												, b
 										-> {
 											if(b.succeeded())
@@ -2120,7 +2120,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 									o2.setAgeCle(jsonObject.getString(methodeNom));
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
-												, Tuple.of("ageCle", pk, "blocCles", l2)
+												, Tuple.of(pk, "ageCle", l2, "blocCles")
 												, b
 										-> {
 											if(b.succeeded())

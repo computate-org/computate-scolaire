@@ -1042,6 +1042,8 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * r.enUS: BlockKeys
 	 * r: inscriptionAttribuer
 	 * r.enUS: enrollmentAttribute
+	 * r: InscriptionApprouve
+	 * r.enUS: EnrollmentApproved
 	 */
 	public void inputInscriptionAttribuer(String classeApiMethodeMethode) {
 		e("input")

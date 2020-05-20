@@ -1843,7 +1843,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 									o2.setYearKey(jsonObject.getString(methodName));
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of("seasonKeys", l2, "yearKey", pk)
+												, Tuple.of(l2, "seasonKeys", pk, "yearKey")
 												, b
 										-> {
 											if(b.succeeded())
@@ -1990,7 +1990,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 								if(l2 != null && o.getSessionKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of("seasonKey", l2, "sessionKeys", pk)
+												, Tuple.of(l2, "seasonKey", pk, "sessionKeys")
 												, b
 										-> {
 											if(b.succeeded())

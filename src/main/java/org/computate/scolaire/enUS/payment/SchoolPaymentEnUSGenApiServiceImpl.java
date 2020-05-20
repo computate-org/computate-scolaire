@@ -2260,7 +2260,7 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 									o2.setEnrollmentKey(jsonObject.getString(methodName));
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of("enrollmentKey", pk, "paymentKeys", l2)
+												, Tuple.of(pk, "enrollmentKey", l2, "paymentKeys")
 												, b
 										-> {
 											if(b.succeeded())

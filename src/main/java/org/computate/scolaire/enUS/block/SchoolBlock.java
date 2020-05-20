@@ -301,8 +301,8 @@ public class SchoolBlock extends SchoolBlockGen<Cluster> {
 		e("input")
 			.a("type", "checkbox")
 //			.a("id", classeApiMethodeMethode, "_inscriptionApprouve")
-			.a("class", "setInscriptionApprouve")
-			.a("name", "setInscriptionApprouve")
+			.a("class", "setEnrollmentApproved")
+			.a("name", "setEnrollmentApproved")
 			.a("onchange", "patchSchoolEnrollmentVals([{ name: 'fq', value: 'pk:", enrollmentKey, "' }], { [($(this).prop('checked') ? 'add' : 'remove') + 'BlockKeys']: '", pk, "' } ); ");
 			if(enrollmentAttribute)
 				a("checked", "checked");

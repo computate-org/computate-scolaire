@@ -1955,7 +1955,7 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 								if(l2 != null && o.getEnrollmentKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of("dadKeys", l2, "enrollmentKeys", pk)
+												, Tuple.of(l2, "dadKeys", pk, "enrollmentKeys")
 												, b
 										-> {
 											if(b.succeeded())

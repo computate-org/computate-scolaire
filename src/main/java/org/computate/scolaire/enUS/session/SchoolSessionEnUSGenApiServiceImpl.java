@@ -1900,7 +1900,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 								if(l2 != null && o.getAgeKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(pk, "ageKeys", "sessionKey", l2)
+												, Tuple.of(pk, "ageKeys", l2, "sessionKey")
 												, b
 										-> {
 											if(b.succeeded())
@@ -1964,7 +1964,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 									o2.setSeasonKey(jsonObject.getString(methodName));
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of("seasonKey", pk, "sessionKeys", l2)
+												, Tuple.of(pk, "seasonKey", l2, "sessionKeys")
 												, b
 										-> {
 											if(b.succeeded())

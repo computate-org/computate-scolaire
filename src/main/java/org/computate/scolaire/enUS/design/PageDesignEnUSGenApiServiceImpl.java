@@ -1927,7 +1927,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 								if(l2 != null && o.getChildDesignKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(pk, "childDesignKeys", "parentDesignKeys", l2)
+												, Tuple.of(pk, "childDesignKeys", l2, "parentDesignKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -2074,7 +2074,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 								if(l2 != null && o.getParentDesignKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of("childDesignKeys", l2, "parentDesignKeys", pk)
+												, Tuple.of(l2, "childDesignKeys", pk, "parentDesignKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -2221,7 +2221,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 								if(l2 != null && o.getHtmlPartKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(pk, "htmlPartKeys", "pageDesignKeys", l2)
+												, Tuple.of(pk, "htmlPartKeys", l2, "pageDesignKeys")
 												, b
 										-> {
 											if(b.succeeded())

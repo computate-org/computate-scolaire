@@ -1900,7 +1900,7 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 								if(l2 != null && o.getBlockKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of("ageKey", l2, "blockKeys", pk)
+												, Tuple.of(l2, "ageKey", pk, "blockKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -1964,7 +1964,7 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 									o2.setSessionKey(jsonObject.getString(methodName));
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of("ageKeys", l2, "sessionKey", pk)
+												, Tuple.of(l2, "ageKeys", pk, "sessionKey")
 												, b
 										-> {
 											if(b.succeeded())

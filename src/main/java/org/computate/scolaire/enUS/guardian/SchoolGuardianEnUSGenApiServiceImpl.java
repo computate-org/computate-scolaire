@@ -1877,7 +1877,7 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 								if(l2 != null && o.getEnrollmentKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(pk, "enrollmentKeys", "guardianKeys", l2)
+												, Tuple.of(pk, "enrollmentKeys", l2, "guardianKeys")
 												, b
 										-> {
 											if(b.succeeded())

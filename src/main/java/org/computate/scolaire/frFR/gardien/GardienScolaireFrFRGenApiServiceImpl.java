@@ -1877,7 +1877,7 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 								if(l2 != null && o.getInscriptionCles().contains(l2)) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
-												, Tuple.of("gardienCles", l2, "inscriptionCles", pk)
+												, Tuple.of(l2, "gardienCles", pk, "inscriptionCles")
 												, b
 										-> {
 											if(b.succeeded())

@@ -1955,7 +1955,7 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 								if(l2 != null && o.getInscriptionCles().contains(l2)) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
-												, Tuple.of(pk, "inscriptionCles", "mereCles", l2)
+												, Tuple.of(pk, "inscriptionCles", l2, "mereCles")
 												, b
 										-> {
 											if(b.succeeded())

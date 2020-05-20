@@ -1927,7 +1927,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 								if(l2 != null && o.getDesignEnfantCles().contains(l2)) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
-												, Tuple.of(pk, "designEnfantCles", "designParentCles", l2)
+												, Tuple.of(pk, "designEnfantCles", l2, "designParentCles")
 												, b
 										-> {
 											if(b.succeeded())
@@ -2074,7 +2074,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 								if(l2 != null && o.getDesignParentCles().contains(l2)) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
-												, Tuple.of("designEnfantCles", l2, "designParentCles", pk)
+												, Tuple.of(l2, "designEnfantCles", pk, "designParentCles")
 												, b
 										-> {
 											if(b.succeeded())
@@ -2221,7 +2221,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 								if(l2 != null && o.getPartHtmlCles().contains(l2)) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
-												, Tuple.of("designPageCles", l2, "partHtmlCles", pk)
+												, Tuple.of(l2, "designPageCles", pk, "partHtmlCles")
 												, b
 										-> {
 											if(b.succeeded())

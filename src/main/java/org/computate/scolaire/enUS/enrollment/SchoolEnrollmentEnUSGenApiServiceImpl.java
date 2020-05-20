@@ -3057,7 +3057,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 									o2.setYearKey(jsonObject.getString(methodName));
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of("enrollmentKeys", l2, "yearKey", pk)
+												, Tuple.of(l2, "enrollmentKeys", pk, "yearKey")
 												, b
 										-> {
 											if(b.succeeded())
@@ -3204,7 +3204,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								if(l2 != null && o.getBlockKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(pk, "blockKeys", "enrollmentKeys", l2)
+												, Tuple.of(pk, "blockKeys", l2, "enrollmentKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -3268,7 +3268,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 									o2.setChildKey(jsonObject.getString(methodName));
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of("childKey", pk, "enrollmentKeys", l2)
+												, Tuple.of(pk, "childKey", l2, "enrollmentKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -3415,7 +3415,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								if(l2 != null && o.getMomKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of("enrollmentKeys", l2, "momKeys", pk)
+												, Tuple.of(l2, "enrollmentKeys", pk, "momKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -3562,7 +3562,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								if(l2 != null && o.getDadKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(pk, "dadKeys", "enrollmentKeys", l2)
+												, Tuple.of(pk, "dadKeys", l2, "enrollmentKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -3709,7 +3709,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								if(l2 != null && o.getGuardianKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of("enrollmentKeys", l2, "guardianKeys", pk)
+												, Tuple.of(l2, "enrollmentKeys", pk, "guardianKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -3856,7 +3856,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								if(l2 != null && o.getPaymentKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of("enrollmentKey", l2, "paymentKeys", pk)
+												, Tuple.of(l2, "enrollmentKey", pk, "paymentKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -4003,7 +4003,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								if(l2 != null && o.getUserKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of("enrollmentKeys", l2, "userKeys", pk)
+												, Tuple.of(l2, "enrollmentKeys", pk, "userKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -6006,7 +6006,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 									o2.setYearKey(jsonObject.getString(methodName));
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of("enrollmentKeys", l2, "yearKey", pk)
+												, Tuple.of(l2, "enrollmentKeys", pk, "yearKey")
 												, b
 										-> {
 											if(b.succeeded())
@@ -6153,7 +6153,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								if(l2 != null && o.getBlockKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(pk, "blockKeys", "enrollmentKeys", l2)
+												, Tuple.of(pk, "blockKeys", l2, "enrollmentKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -6217,7 +6217,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 									o2.setChildKey(jsonObject.getString(methodName));
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of("childKey", pk, "enrollmentKeys", l2)
+												, Tuple.of(pk, "childKey", l2, "enrollmentKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -6364,7 +6364,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								if(l2 != null && o.getMomKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of("enrollmentKeys", l2, "momKeys", pk)
+												, Tuple.of(l2, "enrollmentKeys", pk, "momKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -6511,7 +6511,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								if(l2 != null && o.getDadKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(pk, "dadKeys", "enrollmentKeys", l2)
+												, Tuple.of(pk, "dadKeys", l2, "enrollmentKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -6658,7 +6658,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								if(l2 != null && o.getGuardianKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of("enrollmentKeys", l2, "guardianKeys", pk)
+												, Tuple.of(l2, "enrollmentKeys", pk, "guardianKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -6805,7 +6805,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								if(l2 != null && o.getPaymentKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of("enrollmentKey", l2, "paymentKeys", pk)
+												, Tuple.of(l2, "enrollmentKey", pk, "paymentKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -6952,7 +6952,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								if(l2 != null && o.getUserKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of("enrollmentKeys", l2, "userKeys", pk)
+												, Tuple.of(l2, "enrollmentKeys", pk, "userKeys")
 												, b
 										-> {
 											if(b.succeeded())

@@ -1900,7 +1900,7 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 								if(l2 != null && o.getBlocCles().contains(l2)) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
-												, Tuple.of("ageCle", l2, "blocCles", pk)
+												, Tuple.of(l2, "ageCle", pk, "blocCles")
 												, b
 										-> {
 											if(b.succeeded())
@@ -1964,7 +1964,7 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 									o2.setSessionCle(jsonObject.getString(methodeNom));
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
-												, Tuple.of("ageCles", l2, "sessionCle", pk)
+												, Tuple.of(l2, "ageCles", pk, "sessionCle")
 												, b
 										-> {
 											if(b.succeeded())

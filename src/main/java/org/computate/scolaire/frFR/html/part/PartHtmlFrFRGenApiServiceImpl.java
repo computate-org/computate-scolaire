@@ -2449,7 +2449,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 								if(l2 != null && o.getDesignPageCles().contains(l2)) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
-												, Tuple.of(pk, "designPageCles", "partHtmlCles", l2)
+												, Tuple.of(pk, "designPageCles", l2, "partHtmlCles")
 												, b
 										-> {
 											if(b.succeeded())

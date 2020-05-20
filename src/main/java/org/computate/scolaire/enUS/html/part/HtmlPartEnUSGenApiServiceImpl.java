@@ -2449,7 +2449,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 								if(l2 != null && o.getPageDesignKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of("htmlPartKeys", l2, "pageDesignKeys", pk)
+												, Tuple.of(l2, "htmlPartKeys", pk, "pageDesignKeys")
 												, b
 										-> {
 											if(b.succeeded())

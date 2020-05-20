@@ -781,7 +781,7 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 								if(l2 != null && o.getEnrollmentKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(pk, "enrollmentKeys", "userKeys", l2)
+												, Tuple.of(pk, "enrollmentKeys", l2, "userKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -928,7 +928,7 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 								if(l2 != null && o.getPaymentKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(pk, "paymentKeys", "userKeys", l2)
+												, Tuple.of(pk, "paymentKeys", l2, "userKeys")
 												, b
 										-> {
 											if(b.succeeded())

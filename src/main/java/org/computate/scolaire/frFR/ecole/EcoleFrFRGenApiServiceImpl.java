@@ -1128,7 +1128,7 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 								if(l2 != null && o.getAnneeCles().contains(l2)) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
-												, Tuple.of(pk, "anneeCles", "ecoleCle", l2)
+												, Tuple.of(pk, "anneeCles", l2, "ecoleCle")
 												, b
 										-> {
 											if(b.succeeded())
