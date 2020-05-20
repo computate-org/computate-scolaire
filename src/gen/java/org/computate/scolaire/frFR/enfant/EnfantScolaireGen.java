@@ -1702,7 +1702,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	}
 
 	public Date solrPersonneDateNaissance() {
-		return personneDateNaissance == null ? null : Date.from(personneDateNaissance.atStartOfDay(ZoneId.systemDefault()).toInstant());
+		return personneDateNaissance == null ? null : Date.from(personneDateNaissance.atStartOfDay(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toInstant().atZone(ZoneId.of("Z")).toInstant());
 	}
 
 	public String strPersonneDateNaissance() {
@@ -2433,8 +2433,8 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 			document.addField("personneNomFormel_stored_string", personneNomFormel);
 		}
 		if(personneDateNaissance != null) {
-			document.addField("personneDateNaissance_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(personneDateNaissance.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
-			document.addField("personneDateNaissance_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(personneDateNaissance.atStartOfDay(ZoneId.systemDefault()).toInstant().atZone(ZoneId.of("Z"))));
+			document.addField("personneDateNaissance_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(personneDateNaissance.atStartOfDay(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toInstant().atZone(ZoneId.of("Z"))));
+			document.addField("personneDateNaissance_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(personneDateNaissance.atStartOfDay(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toInstant().atZone(ZoneId.of("Z"))));
 		}
 		if(personneAgeEnSeptembre != null) {
 			document.addField("personneAgeEnSeptembre_indexed_string", personneAgeEnSeptembre);
