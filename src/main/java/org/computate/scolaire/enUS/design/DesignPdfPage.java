@@ -295,22 +295,24 @@ public class DesignPdfPage extends DesignPdfPageGen<DesignPdfGenPage> {
 	}
 
 	protected void _blockSearch(SearchList<SchoolBlock> l) {
-		l.setQuery("*:*");
-		l.addFilterQuery("yearKey_indexed_long:" + year_.getPk());
-		l.setC(SchoolBlock.class);
-		l.setStore(true);
-		l.addSort("seasonStartDate_indexed_date", ORDER.asc);
-		l.addSort("sessionEndDate_indexed_date", ORDER.asc);
-		l.addSort("ageStart_indexed_int", ORDER.asc);
-		l.addSort("blockPricePerMonth_indexed_double", ORDER.asc);
-		l.addSort("blockStartTime_indexed_string", ORDER.asc);
-
-		for(String var : siteRequest_.getRequestVars().keySet()) {
-			String val = siteRequest_.getRequestVars().get(var);
-			if(!"design".equals(var)) {
-				String varIndexed = SchoolEnrollment.varIndexedSchoolEnrollment(var);
-				if(varIndexed != null)
-					l.addFilterQuery(varIndexed + ":" + ClientUtils.escapeQueryChars(val));
+		if(year_ != null) {
+			l.setQuery("*:*");
+			l.addFilterQuery("yearKey_indexed_long:" + year_.getPk());
+			l.setC(SchoolBlock.class);
+			l.setStore(true);
+			l.addSort("seasonStartDate_indexed_date", ORDER.asc);
+			l.addSort("sessionEndDate_indexed_date", ORDER.asc);
+			l.addSort("ageStart_indexed_int", ORDER.asc);
+			l.addSort("blockPricePerMonth_indexed_double", ORDER.asc);
+			l.addSort("blockStartTime_indexed_string", ORDER.asc);
+	
+			for(String var : siteRequest_.getRequestVars().keySet()) {
+				String val = siteRequest_.getRequestVars().get(var);
+				if(!"design".equals(var)) {
+					String varIndexed = SchoolYear.varIndexedSchoolYear(var);
+					if(varIndexed != null)
+						l.addFilterQuery(varIndexed + ":" + ClientUtils.escapeQueryChars(val));
+				}
 			}
 		}
 	}
