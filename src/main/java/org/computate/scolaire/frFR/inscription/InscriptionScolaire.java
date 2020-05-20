@@ -1837,7 +1837,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 			l.add("samedi");
 	}
 
-	/**       
+	/**     
 	 * {@inheritDoc}
 	 * Var.enUS: enrollmentParentNames
 	 * Stocke: true

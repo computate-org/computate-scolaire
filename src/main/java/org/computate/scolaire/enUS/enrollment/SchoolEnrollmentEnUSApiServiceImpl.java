@@ -16,7 +16,6 @@ import java.util.stream.Collectors;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.apache.commons.lang3.BooleanUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.client.solrj.util.ClientUtils;
@@ -37,12 +36,16 @@ import io.vertx.core.Future;
 import io.vertx.core.Handler;
 import io.vertx.core.Promise;
 import io.vertx.core.Vertx;
+import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.api.OperationRequest;
 import io.vertx.ext.web.api.OperationResponse;
 import net.authorize.Environment;
 import net.authorize.api.contract.v1.ArrayOfTransactionSummaryType;
+import net.authorize.api.contract.v1.CreateCustomerProfileRequest;
+import net.authorize.api.contract.v1.CreateCustomerProfileResponse;
 import net.authorize.api.contract.v1.CustomerProfileIdType;
+import net.authorize.api.contract.v1.CustomerProfileType;
 import net.authorize.api.contract.v1.GetTransactionDetailsRequest;
 import net.authorize.api.contract.v1.GetTransactionDetailsResponse;
 import net.authorize.api.contract.v1.GetTransactionListForCustomerRequest;
@@ -55,6 +58,7 @@ import net.authorize.api.contract.v1.TransactionDetailsType;
 import net.authorize.api.contract.v1.TransactionListOrderFieldEnum;
 import net.authorize.api.contract.v1.TransactionListSorting;
 import net.authorize.api.contract.v1.TransactionSummaryType;
+import net.authorize.api.controller.CreateCustomerProfileController;
 import net.authorize.api.controller.GetTransactionDetailsController;
 import net.authorize.api.controller.GetTransactionListForCustomerController;
 import net.authorize.api.controller.base.ApiOperationBase;
@@ -67,6 +71,84 @@ public class SchoolEnrollmentEnUSApiServiceImpl extends SchoolEnrollmentEnUSGenA
 
 	public SchoolEnrollmentEnUSApiServiceImpl(SiteContextEnUS siteContext) {
 		super(siteContext);
+	}
+
+	@Override public Boolean userSchoolEnrollmentDefine(SiteRequestEnUS siteRequest, JsonObject jsonObject, Boolean patch) {
+		String sessionIdBefore = siteRequest.getSessionIdBefore();
+		String sessionId = siteRequest.getSessionId();
+		String customerProfileId;
+		if(patch)
+			customerProfileId = jsonObject.getString("setCustomerProfileId");
+		else
+			customerProfileId = jsonObject.getString("customerProfileId");
+
+		SearchList<SchoolEnrollment> enrollmentList = new SearchList<SchoolEnrollment>();
+		if(sessionIdBefore != null) {
+			enrollmentList.setStore(true);
+			enrollmentList.setQuery("*:*");
+			enrollmentList.setC(SchoolEnrollment.class);
+			enrollmentList.setSiteRequest_(siteRequest);
+			enrollmentList.addFilterQuery("(sessionId_indexed_string:" + ClientUtils.escapeQueryChars(sessionIdBefore) + " OR sessionId_indexed_string:" + ClientUtils.escapeQueryChars(sessionId) + ")");
+			enrollmentList.addFilterQuery("!userId_indexed_string:[* TO *]");
+			enrollmentList.initDeepForClass(siteRequest);
+			for(SchoolEnrollment enrollment : enrollmentList.getList()) {
+				if(patch)
+					jsonObject.put("addEnrollmentKeys", enrollment.getPk().toString());
+				else
+					jsonObject.put("enrollmentKeys", new JsonArray().add(enrollment.getPk().toString()));
+			}
+		}
+
+		if(customerProfileId == null) {
+			SiteConfig siteConfig = siteRequest.getSiteConfig_();
+			MerchantAuthenticationType merchantAuthenticationType = new MerchantAuthenticationType();
+			merchantAuthenticationType.setName(siteConfig.getAuthorizeApiLoginId());
+			merchantAuthenticationType.setTransactionKey(siteConfig.getAuthorizeTransactionKey());
+			ApiOperationBase.setMerchantAuthentication(merchantAuthenticationType);
+			
+			CreateCustomerProfileRequest createCustomerProfileRequest = new CreateCustomerProfileRequest();
+			createCustomerProfileRequest.setMerchantAuthentication(merchantAuthenticationType);
+			CustomerProfileType profile = new CustomerProfileType();
+			if(patch) {
+				profile.setEmail(jsonObject.getString("setUserEmail"));
+				profile.setDescription(jsonObject.getString("setUserId"));
+				profile.setMerchantCustomerId(jsonObject.getString("setUserCompleteName"));
+			}
+			else {
+				profile.setEmail(jsonObject.getString("userEmail"));
+				profile.setDescription(jsonObject.getString("userId"));
+				profile.setMerchantCustomerId(jsonObject.getString("userCompleteName"));
+			}
+			createCustomerProfileRequest.setProfile(profile);
+	
+			CreateCustomerProfileController controller = new CreateCustomerProfileController(createCustomerProfileRequest);
+			GetTransactionListForCustomerController.setEnvironment(Environment.valueOf(siteConfig.getAuthorizeEnvironment()));
+			controller.execute();
+			if(controller.getErrorResponse() != null)
+				throw new RuntimeException(controller.getResults().toString());
+			CreateCustomerProfileResponse response = controller.getApiResponse();
+			if(MessageTypeEnum.ERROR.equals(response.getMessages().getResultCode())) {
+				String message = response.getMessages().getMessage().stream().findFirst().map(m -> m.getText()).orElse("");
+				Matcher matcher = Pattern.compile("A duplicate record with ID (\\d+) already exists.").matcher(message);
+				if(matcher.find()) {
+					customerProfileId = matcher.group(1);
+				}
+				else {
+//					throw new RuntimeException(response.getMessages().getMessage().stream().findFirst().map(m -> String.format("%s %s", m.getCode(), m.getText())).orElse("CreateCustomerProfileRequest failed. "));
+					LOGGER.error(response.getMessages().getMessage().stream().findFirst().map(m -> String.format("%s %s", m.getCode(), m.getText())).orElse("CreateCustomerProfileRequest failed. "));
+				}
+			}
+			else {
+				customerProfileId = response.getCustomerProfileId();
+			}
+			if(patch)
+				jsonObject.put("setCustomerProfileId", customerProfileId);
+			else
+				jsonObject.put("customerProfileId", customerProfileId);
+			return true;
+		}
+		else 
+			return enrollmentList.size() > 0;
 	}
 
 	@Override

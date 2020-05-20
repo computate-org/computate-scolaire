@@ -34,6 +34,7 @@ public class SiteUserEnUSApiServiceImpl extends SiteUserEnUSGenApiServiceImpl {
 
 	@Override public Boolean userSiteUserDefine(SiteRequestEnUS siteRequest, JsonObject jsonObject, Boolean patch) {
 		String sessionIdBefore = siteRequest.getSessionIdBefore();
+		String sessionId = siteRequest.getSessionId();
 		String customerProfileId;
 		if(patch)
 			customerProfileId = jsonObject.getString("setCustomerProfileId");
@@ -46,7 +47,7 @@ public class SiteUserEnUSApiServiceImpl extends SiteUserEnUSGenApiServiceImpl {
 			enrollmentList.setQuery("*:*");
 			enrollmentList.setC(SchoolEnrollment.class);
 			enrollmentList.setSiteRequest_(siteRequest);
-			enrollmentList.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(sessionIdBefore));
+			enrollmentList.addFilterQuery("(sessionId_indexed_string:" + ClientUtils.escapeQueryChars(sessionIdBefore) + " OR sessionId_indexed_string:" + ClientUtils.escapeQueryChars(sessionId) + ")");
 			enrollmentList.addFilterQuery("!userId_indexed_string:[* TO *]");
 			enrollmentList.initDeepForClass(siteRequest);
 			for(SchoolEnrollment enrollment : enrollmentList.getList()) {
