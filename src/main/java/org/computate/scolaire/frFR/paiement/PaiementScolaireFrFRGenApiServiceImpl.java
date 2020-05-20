@@ -631,32 +631,6 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 							});
 						}));
 						break;
-					case "fraisMontantDu":
-						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "fraisMontantDu", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
-									, b
-							-> {
-								if(b.succeeded())
-									a.handle(Future.succeededFuture());
-								else
-									a.handle(Future.failedFuture(new Exception("valeur PaiementScolaire.fraisMontantDu a échoué", b.cause())));
-							});
-						}));
-						break;
-					case "fraisMontantFuture":
-						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "fraisMontantFuture", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
-									, b
-							-> {
-								if(b.succeeded())
-									a.handle(Future.succeededFuture());
-								else
-									a.handle(Future.failedFuture(new Exception("valeur PaiementScolaire.fraisMontantFuture a échoué", b.cause())));
-							});
-						}));
-						break;
 					case "fraisPremierDernier":
 						futures.add(Future.future(a -> {
 							tx.preparedQuery(SiteContexteFrFR.SQL_setD
@@ -706,6 +680,32 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 									a.handle(Future.succeededFuture());
 								else
 									a.handle(Future.failedFuture(new Exception("valeur PaiementScolaire.fraisRetard a échoué", b.cause())));
+							});
+						}));
+						break;
+					case "fraisMontantDu":
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "fraisMontantDu", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur PaiementScolaire.fraisMontantDu a échoué", b.cause())));
+							});
+						}));
+						break;
+					case "fraisMontantFuture":
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "fraisMontantFuture", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur PaiementScolaire.fraisMontantFuture a échoué", b.cause())));
 							});
 						}));
 						break;
@@ -1637,32 +1637,6 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 							});
 						}));
 						break;
-					case "fraisMontantDu":
-						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "fraisMontantDu", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
-									, b
-							-> {
-								if(b.succeeded())
-									a.handle(Future.succeededFuture());
-								else
-									a.handle(Future.failedFuture(new Exception("valeur PaiementScolaire.fraisMontantDu a échoué", b.cause())));
-							});
-						}));
-						break;
-					case "fraisMontantFuture":
-						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "fraisMontantFuture", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
-									, b
-							-> {
-								if(b.succeeded())
-									a.handle(Future.succeededFuture());
-								else
-									a.handle(Future.failedFuture(new Exception("valeur PaiementScolaire.fraisMontantFuture a échoué", b.cause())));
-							});
-						}));
-						break;
 					case "fraisPremierDernier":
 						futures.add(Future.future(a -> {
 							tx.preparedQuery(SiteContexteFrFR.SQL_setD
@@ -1712,6 +1686,32 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 									a.handle(Future.succeededFuture());
 								else
 									a.handle(Future.failedFuture(new Exception("valeur PaiementScolaire.fraisRetard a échoué", b.cause())));
+							});
+						}));
+						break;
+					case "fraisMontantDu":
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "fraisMontantDu", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur PaiementScolaire.fraisMontantDu a échoué", b.cause())));
+							});
+						}));
+						break;
+					case "fraisMontantFuture":
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "fraisMontantFuture", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur PaiementScolaire.fraisMontantFuture a échoué", b.cause())));
 							});
 						}));
 						break;
@@ -2781,62 +2781,6 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 							}));
 						}
 						break;
-					case "setFraisMontantDu":
-						if(jsonObject.getString(methodeNom) == null) {
-							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "fraisMontantDu")
-										, b
-								-> {
-									if(b.succeeded())
-										a.handle(Future.succeededFuture());
-									else
-										a.handle(Future.failedFuture(new Exception("valeur PaiementScolaire.fraisMontantDu a échoué", b.cause())));
-								});
-							}));
-						} else {
-							o2.setFraisMontantDu(jsonObject.getString(methodeNom));
-							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "fraisMontantDu", o2.jsonFraisMontantDu())
-										, b
-								-> {
-									if(b.succeeded())
-										a.handle(Future.succeededFuture());
-									else
-										a.handle(Future.failedFuture(new Exception("valeur PaiementScolaire.fraisMontantDu a échoué", b.cause())));
-								});
-							}));
-						}
-						break;
-					case "setFraisMontantFuture":
-						if(jsonObject.getString(methodeNom) == null) {
-							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "fraisMontantFuture")
-										, b
-								-> {
-									if(b.succeeded())
-										a.handle(Future.succeededFuture());
-									else
-										a.handle(Future.failedFuture(new Exception("valeur PaiementScolaire.fraisMontantFuture a échoué", b.cause())));
-								});
-							}));
-						} else {
-							o2.setFraisMontantFuture(jsonObject.getString(methodeNom));
-							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "fraisMontantFuture", o2.jsonFraisMontantFuture())
-										, b
-								-> {
-									if(b.succeeded())
-										a.handle(Future.succeededFuture());
-									else
-										a.handle(Future.failedFuture(new Exception("valeur PaiementScolaire.fraisMontantFuture a échoué", b.cause())));
-								});
-							}));
-						}
-						break;
 					case "setFraisPremierDernier":
 						if(jsonObject.getBoolean(methodeNom) == null) {
 							futures.add(Future.future(a -> {
@@ -2945,6 +2889,62 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 										a.handle(Future.succeededFuture());
 									else
 										a.handle(Future.failedFuture(new Exception("valeur PaiementScolaire.fraisRetard a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setFraisMontantDu":
+						if(jsonObject.getString(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "fraisMontantDu")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur PaiementScolaire.fraisMontantDu a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setFraisMontantDu(jsonObject.getString(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "fraisMontantDu", o2.jsonFraisMontantDu())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur PaiementScolaire.fraisMontantDu a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setFraisMontantFuture":
+						if(jsonObject.getString(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "fraisMontantFuture")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur PaiementScolaire.fraisMontantFuture a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setFraisMontantFuture(jsonObject.getString(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "fraisMontantFuture", o2.jsonFraisMontantFuture())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur PaiementScolaire.fraisMontantFuture a échoué", b.cause())));
 								});
 							}));
 						}

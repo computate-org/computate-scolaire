@@ -41,7 +41,7 @@ public class PaymentPage extends PaymentPageGen<PaymentGenPage> {
 				sx(String.format("You are late on payments for $%s. ", amount));
 				g("div");
 			}
-			BigDecimal amount = sum_chargeAmount.subtract(sum_paymentAmount);
+			BigDecimal amount = sum_chargeAmount.subtract(sum_paymentAmount).subtract(sum_chargeAmountFuture);
 			e("div").a("class", "w3-panel w3-blue ").f();
 			sx(String.format("Please pay the upcoming charges of $%s by the payment date to avoid any late fees. ", amount));
 			g("div");

@@ -930,68 +930,6 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: chargeAmountDue
-	 * Indexe: true
-	 * Stocke: true
-	 * Definir: true
-	 * Facet: sum
-	 * Modifier: false
-	 * NomAffichage.frFR: frais montant dû
-	 * NomAffichage.enUS: charge amount due
-	 * r: requeteSite
-	 * r.enUS: siteRequest
-	 * r: ConfigSite
-	 * r.enUS: SiteConfig
-	 * r: fraisMontant
-	 * r.enUS: chargeAmount
-	 * r: paiementDate
-	 * r.enUS: paymentDate
-	 * r: PaiementJour
-	 * r.enUS: PaymentDay
-	 * r: paiementJour
-	 * r.enUS: paymentDay
-	 * r: paiementProchain
-	 * r.enUS: paymentNext
-	 * r: PaiementProchain
-	 * r.enUS: PaymentNext
-	 */                   
-	protected void _fraisMontantDu(Couverture<BigDecimal> c) {
-		LocalDate paiementProchain = requeteSite_.getConfigSite_().getPaiementProchain();
-		if(fraisMontant != null && paiementDate != null && paiementDate.compareTo(paiementProchain.minusMonths(1)) >= 0 && paiementDate.compareTo(paiementProchain) < 0)
-			c.o(fraisMontant);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * Var.enUS: chargeAmountFuture
-	 * Indexe: true
-	 * Stocke: true
-	 * Definir: true
-	 * Facet: sum
-	 * Modifier: false
-	 * NomAffichage.frFR: frais montant future
-	 * NomAffichage.enUS: future charge amount
-	 * r: requeteSite
-	 * r.enUS: siteRequest
-	 * r: ConfigSite
-	 * r.enUS: SiteConfig
-	 * r: fraisMontant
-	 * r.enUS: chargeAmount
-	 * r: paiementDate
-	 * r.enUS: paymentDate
-	 * r: paiementProchain
-	 * r.enUS: paymentNext
-	 * r: PaiementProchain
-	 * r.enUS: PaymentNext
-	 */                   
-	protected void _fraisMontantFuture(Couverture<BigDecimal> c) {
-		LocalDate paiementProchain = requeteSite_.getConfigSite_().getPaiementProchain();
-		if(fraisMontant != null && paiementDate != null && paiementDate.compareTo(paiementProchain) > 0)
-			c.o(fraisMontant);
-	}
-
-	/**
-	 * {@inheritDoc}
 	 * Var.enUS: chargeFirstLast
 	 * Indexe: true
 	 * Stocke: true
@@ -1048,6 +986,76 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 */                    
 	protected void _fraisRetard(Couverture<Boolean> c) {
 		c.o(false);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: chargeAmountDue
+	 * Indexe: true
+	 * Stocke: true
+	 * Definir: true
+	 * Facet: sum
+	 * Modifier: false
+	 * NomAffichage.frFR: frais montant dû
+	 * NomAffichage.enUS: charge amount due
+	 * r: requeteSite
+	 * r.enUS: siteRequest
+	 * r: ConfigSite
+	 * r.enUS: SiteConfig
+	 * r: fraisMontant
+	 * r.enUS: chargeAmount
+	 * r: paiementDate
+	 * r.enUS: paymentDate
+	 * r: PaiementJour
+	 * r.enUS: PaymentDay
+	 * r: paiementJour
+	 * r.enUS: paymentDay
+	 * r: paiementProchain
+	 * r.enUS: paymentNext
+	 * r: PaiementProchain
+	 * r.enUS: PaymentNext
+	 * r: fraisPremierDernier
+	 * r.enUS: chargeFirstLast
+	 * r: fraisInscription
+	 * r.enUS: chargeEnrollment
+	 */                   
+	protected void _fraisMontantDu(Couverture<BigDecimal> c) {
+		LocalDate paiementProchain = requeteSite_.getConfigSite_().getPaiementProchain();
+		if(fraisMontant != null && (fraisPremierDernier || fraisInscription || paiementDate != null && paiementDate.compareTo(paiementProchain.minusMonths(1)) >= 0 && paiementDate.compareTo(paiementProchain) < 0))
+			c.o(fraisMontant);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: chargeAmountFuture
+	 * Indexe: true
+	 * Stocke: true
+	 * Definir: true
+	 * Facet: sum
+	 * Modifier: false
+	 * NomAffichage.frFR: frais montant future
+	 * NomAffichage.enUS: future charge amount
+	 * r: requeteSite
+	 * r.enUS: siteRequest
+	 * r: ConfigSite
+	 * r.enUS: SiteConfig
+	 * r: fraisMontant
+	 * r.enUS: chargeAmount
+	 * r: paiementDate
+	 * r.enUS: paymentDate
+	 * r: paiementProchain
+	 * r.enUS: paymentNext
+	 * r: PaiementProchain
+	 * r.enUS: PaymentNext
+	 * r: fraisPremierDernier
+	 * r.enUS: chargeFirstLast
+	 * r: fraisInscription
+	 * r.enUS: chargeEnrollment
+	 */                   
+	protected void _fraisMontantFuture(Couverture<BigDecimal> c) {
+		LocalDate paiementProchain = requeteSite_.getConfigSite_().getPaiementProchain();
+		if(fraisMontant != null && paiementDate != null && !fraisPremierDernier && !fraisInscription && paiementDate.compareTo(paiementProchain) > 0)
+			c.o(fraisMontant);
 	}
 
 	/**    

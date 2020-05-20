@@ -248,18 +248,6 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 	protected void _chargeAmount(Wrap<BigDecimal> c) {
 	}
 
-	protected void _chargeAmountDue(Wrap<BigDecimal> c) {
-		LocalDate paymentNext = siteRequest_.getSiteConfig_().getPaymentNext();
-		if(chargeAmount != null && paymentDate != null && paymentDate.compareTo(paymentNext.minusMonths(1)) >= 0 && paymentDate.compareTo(paymentNext) < 0)
-			c.o(chargeAmount);
-	}
-
-	protected void _chargeAmountFuture(Wrap<BigDecimal> c) {
-		LocalDate paymentNext = siteRequest_.getSiteConfig_().getPaymentNext();
-		if(chargeAmount != null && paymentDate != null && paymentDate.compareTo(paymentNext) > 0)
-			c.o(chargeAmount);
-	}
-
 	protected void _chargeFirstLast(Wrap<Boolean> c) {
 		c.o(false);
 	}
@@ -274,6 +262,18 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 
 	protected void _chargeLateFee(Wrap<Boolean> c) {
 		c.o(false);
+	}
+
+	protected void _chargeAmountDue(Wrap<BigDecimal> c) {
+		LocalDate paymentNext = siteRequest_.getSiteConfig_().getPaymentNext();
+		if(chargeAmount != null && (chargeFirstLast || chargeEnrollment || paymentDate != null && paymentDate.compareTo(paymentNext.minusMonths(1)) >= 0 && paymentDate.compareTo(paymentNext) < 0))
+			c.o(chargeAmount);
+	}
+
+	protected void _chargeAmountFuture(Wrap<BigDecimal> c) {
+		LocalDate paymentNext = siteRequest_.getSiteConfig_().getPaymentNext();
+		if(chargeAmount != null && paymentDate != null && !chargeFirstLast && !chargeEnrollment && paymentDate.compareTo(paymentNext) > 0)
+			c.o(chargeAmount);
 	}
 
 	protected void _paymentShortName(Wrap<String> c) {

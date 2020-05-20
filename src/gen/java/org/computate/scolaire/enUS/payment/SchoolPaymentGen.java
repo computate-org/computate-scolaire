@@ -4934,218 +4934,6 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 	}
 
 	/////////////////////
-	// chargeAmountDue //
-	/////////////////////
-
-	/**	L'entité « chargeAmountDue »
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonSerialize(using = ToStringSerializer.class)
-	@JsonInclude(Include.NON_NULL)
-	protected BigDecimal chargeAmountDue;
-	@JsonIgnore
-	public Wrap<BigDecimal> chargeAmountDueWrap = new Wrap<BigDecimal>().p(this).c(BigDecimal.class).var("chargeAmountDue").o(chargeAmountDue);
-
-	/**	<br/>L'entité « chargeAmountDue »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.payment.SchoolPayment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:chargeAmountDue">Trouver l'entité chargeAmountDue dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _chargeAmountDue(Wrap<BigDecimal> c);
-
-	public BigDecimal getChargeAmountDue() {
-		return chargeAmountDue;
-	}
-
-	public void setChargeAmountDue(BigDecimal chargeAmountDue) {
-		this.chargeAmountDue = chargeAmountDue;
-		this.chargeAmountDueWrap.alreadyInitialized = true;
-	}
-	public SchoolPayment setChargeAmountDue(String o) {
-		o = StringUtils.removeAll(o, "[^\\d\\.]");
-		if(NumberUtils.isParsable(o))
-			this.chargeAmountDue = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
-		this.chargeAmountDueWrap.alreadyInitialized = true;
-		return (SchoolPayment)this;
-	}
-	public SchoolPayment setChargeAmountDue(Double o) {
-			this.chargeAmountDue = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
-		this.chargeAmountDueWrap.alreadyInitialized = true;
-		return (SchoolPayment)this;
-	}
-	public SchoolPayment setChargeAmountDue(Integer o) {
-			this.chargeAmountDue = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
-		this.chargeAmountDueWrap.alreadyInitialized = true;
-		return (SchoolPayment)this;
-	}
-	protected SchoolPayment chargeAmountDueInit() {
-		if(!chargeAmountDueWrap.alreadyInitialized) {
-			_chargeAmountDue(chargeAmountDueWrap);
-			if(chargeAmountDue == null)
-				setChargeAmountDue(chargeAmountDueWrap.o);
-		}
-		chargeAmountDueWrap.alreadyInitialized(true);
-		return (SchoolPayment)this;
-	}
-
-	public Double solrChargeAmountDue() {
-		return chargeAmountDue == null ? null : chargeAmountDue.doubleValue();
-	}
-
-	public String strChargeAmountDue() {
-		return chargeAmountDue == null ? "" : chargeAmountDue.setScale(2).toString();
-	}
-
-	public String jsonChargeAmountDue() {
-		return chargeAmountDue == null ? "" : chargeAmountDue.toString();
-	}
-
-	public String nomAffichageChargeAmountDue() {
-		return "charge amount due";
-	}
-
-	public String htmTooltipChargeAmountDue() {
-		return null;
-	}
-
-	public String htmChargeAmountDue() {
-		return chargeAmountDue == null ? "" : StringEscapeUtils.escapeHtml4(strChargeAmountDue());
-	}
-
-	public void inputChargeAmountDue(String classApiMethodMethod) {
-		SchoolPayment s = (SchoolPayment)this;
-		sx(htmChargeAmountDue());
-	}
-
-	public void htmChargeAmountDue(String classApiMethodMethod) {
-		SchoolPayment s = (SchoolPayment)this;
-		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
-			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolPaymentChargeAmountDue").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-green ").f();
-							e("label").a("for", classApiMethodMethod, "_chargeAmountDue").a("class", "").f().sx("charge amount due").g("label");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
-							{ e("div").a("class", "w3-cell ").f();
-
-								inputChargeAmountDue(classApiMethodMethod);
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("div");
-			} g("div");
-		} g("div");
-	}
-
-	////////////////////////
-	// chargeAmountFuture //
-	////////////////////////
-
-	/**	L'entité « chargeAmountFuture »
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonSerialize(using = ToStringSerializer.class)
-	@JsonInclude(Include.NON_NULL)
-	protected BigDecimal chargeAmountFuture;
-	@JsonIgnore
-	public Wrap<BigDecimal> chargeAmountFutureWrap = new Wrap<BigDecimal>().p(this).c(BigDecimal.class).var("chargeAmountFuture").o(chargeAmountFuture);
-
-	/**	<br/>L'entité « chargeAmountFuture »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.payment.SchoolPayment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:chargeAmountFuture">Trouver l'entité chargeAmountFuture dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _chargeAmountFuture(Wrap<BigDecimal> c);
-
-	public BigDecimal getChargeAmountFuture() {
-		return chargeAmountFuture;
-	}
-
-	public void setChargeAmountFuture(BigDecimal chargeAmountFuture) {
-		this.chargeAmountFuture = chargeAmountFuture;
-		this.chargeAmountFutureWrap.alreadyInitialized = true;
-	}
-	public SchoolPayment setChargeAmountFuture(String o) {
-		o = StringUtils.removeAll(o, "[^\\d\\.]");
-		if(NumberUtils.isParsable(o))
-			this.chargeAmountFuture = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
-		this.chargeAmountFutureWrap.alreadyInitialized = true;
-		return (SchoolPayment)this;
-	}
-	public SchoolPayment setChargeAmountFuture(Double o) {
-			this.chargeAmountFuture = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
-		this.chargeAmountFutureWrap.alreadyInitialized = true;
-		return (SchoolPayment)this;
-	}
-	public SchoolPayment setChargeAmountFuture(Integer o) {
-			this.chargeAmountFuture = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
-		this.chargeAmountFutureWrap.alreadyInitialized = true;
-		return (SchoolPayment)this;
-	}
-	protected SchoolPayment chargeAmountFutureInit() {
-		if(!chargeAmountFutureWrap.alreadyInitialized) {
-			_chargeAmountFuture(chargeAmountFutureWrap);
-			if(chargeAmountFuture == null)
-				setChargeAmountFuture(chargeAmountFutureWrap.o);
-		}
-		chargeAmountFutureWrap.alreadyInitialized(true);
-		return (SchoolPayment)this;
-	}
-
-	public Double solrChargeAmountFuture() {
-		return chargeAmountFuture == null ? null : chargeAmountFuture.doubleValue();
-	}
-
-	public String strChargeAmountFuture() {
-		return chargeAmountFuture == null ? "" : chargeAmountFuture.setScale(2).toString();
-	}
-
-	public String jsonChargeAmountFuture() {
-		return chargeAmountFuture == null ? "" : chargeAmountFuture.toString();
-	}
-
-	public String nomAffichageChargeAmountFuture() {
-		return "future charge amount";
-	}
-
-	public String htmTooltipChargeAmountFuture() {
-		return null;
-	}
-
-	public String htmChargeAmountFuture() {
-		return chargeAmountFuture == null ? "" : StringEscapeUtils.escapeHtml4(strChargeAmountFuture());
-	}
-
-	public void inputChargeAmountFuture(String classApiMethodMethod) {
-		SchoolPayment s = (SchoolPayment)this;
-		sx(htmChargeAmountFuture());
-	}
-
-	public void htmChargeAmountFuture(String classApiMethodMethod) {
-		SchoolPayment s = (SchoolPayment)this;
-		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
-			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolPaymentChargeAmountFuture").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-green ").f();
-							e("label").a("for", classApiMethodMethod, "_chargeAmountFuture").a("class", "").f().sx("future charge amount").g("label");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
-							{ e("div").a("class", "w3-cell ").f();
-
-								inputChargeAmountFuture(classApiMethodMethod);
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("div");
-			} g("div");
-		} g("div");
-	}
-
-	/////////////////////
 	// chargeFirstLast //
 	/////////////////////
 
@@ -5693,6 +5481,218 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		} g("div");
 	}
 
+	/////////////////////
+	// chargeAmountDue //
+	/////////////////////
+
+	/**	L'entité « chargeAmountDue »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected BigDecimal chargeAmountDue;
+	@JsonIgnore
+	public Wrap<BigDecimal> chargeAmountDueWrap = new Wrap<BigDecimal>().p(this).c(BigDecimal.class).var("chargeAmountDue").o(chargeAmountDue);
+
+	/**	<br/>L'entité « chargeAmountDue »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.payment.SchoolPayment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:chargeAmountDue">Trouver l'entité chargeAmountDue dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _chargeAmountDue(Wrap<BigDecimal> c);
+
+	public BigDecimal getChargeAmountDue() {
+		return chargeAmountDue;
+	}
+
+	public void setChargeAmountDue(BigDecimal chargeAmountDue) {
+		this.chargeAmountDue = chargeAmountDue;
+		this.chargeAmountDueWrap.alreadyInitialized = true;
+	}
+	public SchoolPayment setChargeAmountDue(String o) {
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			this.chargeAmountDue = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.chargeAmountDueWrap.alreadyInitialized = true;
+		return (SchoolPayment)this;
+	}
+	public SchoolPayment setChargeAmountDue(Double o) {
+			this.chargeAmountDue = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.chargeAmountDueWrap.alreadyInitialized = true;
+		return (SchoolPayment)this;
+	}
+	public SchoolPayment setChargeAmountDue(Integer o) {
+			this.chargeAmountDue = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.chargeAmountDueWrap.alreadyInitialized = true;
+		return (SchoolPayment)this;
+	}
+	protected SchoolPayment chargeAmountDueInit() {
+		if(!chargeAmountDueWrap.alreadyInitialized) {
+			_chargeAmountDue(chargeAmountDueWrap);
+			if(chargeAmountDue == null)
+				setChargeAmountDue(chargeAmountDueWrap.o);
+		}
+		chargeAmountDueWrap.alreadyInitialized(true);
+		return (SchoolPayment)this;
+	}
+
+	public Double solrChargeAmountDue() {
+		return chargeAmountDue == null ? null : chargeAmountDue.doubleValue();
+	}
+
+	public String strChargeAmountDue() {
+		return chargeAmountDue == null ? "" : chargeAmountDue.setScale(2).toString();
+	}
+
+	public String jsonChargeAmountDue() {
+		return chargeAmountDue == null ? "" : chargeAmountDue.toString();
+	}
+
+	public String nomAffichageChargeAmountDue() {
+		return "charge amount due";
+	}
+
+	public String htmTooltipChargeAmountDue() {
+		return null;
+	}
+
+	public String htmChargeAmountDue() {
+		return chargeAmountDue == null ? "" : StringEscapeUtils.escapeHtml4(strChargeAmountDue());
+	}
+
+	public void inputChargeAmountDue(String classApiMethodMethod) {
+		SchoolPayment s = (SchoolPayment)this;
+		sx(htmChargeAmountDue());
+	}
+
+	public void htmChargeAmountDue(String classApiMethodMethod) {
+		SchoolPayment s = (SchoolPayment)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolPaymentChargeAmountDue").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", classApiMethodMethod, "_chargeAmountDue").a("class", "").f().sx("charge amount due").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputChargeAmountDue(classApiMethodMethod);
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	////////////////////////
+	// chargeAmountFuture //
+	////////////////////////
+
+	/**	L'entité « chargeAmountFuture »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected BigDecimal chargeAmountFuture;
+	@JsonIgnore
+	public Wrap<BigDecimal> chargeAmountFutureWrap = new Wrap<BigDecimal>().p(this).c(BigDecimal.class).var("chargeAmountFuture").o(chargeAmountFuture);
+
+	/**	<br/>L'entité « chargeAmountFuture »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.payment.SchoolPayment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:chargeAmountFuture">Trouver l'entité chargeAmountFuture dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _chargeAmountFuture(Wrap<BigDecimal> c);
+
+	public BigDecimal getChargeAmountFuture() {
+		return chargeAmountFuture;
+	}
+
+	public void setChargeAmountFuture(BigDecimal chargeAmountFuture) {
+		this.chargeAmountFuture = chargeAmountFuture;
+		this.chargeAmountFutureWrap.alreadyInitialized = true;
+	}
+	public SchoolPayment setChargeAmountFuture(String o) {
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			this.chargeAmountFuture = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.chargeAmountFutureWrap.alreadyInitialized = true;
+		return (SchoolPayment)this;
+	}
+	public SchoolPayment setChargeAmountFuture(Double o) {
+			this.chargeAmountFuture = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.chargeAmountFutureWrap.alreadyInitialized = true;
+		return (SchoolPayment)this;
+	}
+	public SchoolPayment setChargeAmountFuture(Integer o) {
+			this.chargeAmountFuture = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.chargeAmountFutureWrap.alreadyInitialized = true;
+		return (SchoolPayment)this;
+	}
+	protected SchoolPayment chargeAmountFutureInit() {
+		if(!chargeAmountFutureWrap.alreadyInitialized) {
+			_chargeAmountFuture(chargeAmountFutureWrap);
+			if(chargeAmountFuture == null)
+				setChargeAmountFuture(chargeAmountFutureWrap.o);
+		}
+		chargeAmountFutureWrap.alreadyInitialized(true);
+		return (SchoolPayment)this;
+	}
+
+	public Double solrChargeAmountFuture() {
+		return chargeAmountFuture == null ? null : chargeAmountFuture.doubleValue();
+	}
+
+	public String strChargeAmountFuture() {
+		return chargeAmountFuture == null ? "" : chargeAmountFuture.setScale(2).toString();
+	}
+
+	public String jsonChargeAmountFuture() {
+		return chargeAmountFuture == null ? "" : chargeAmountFuture.toString();
+	}
+
+	public String nomAffichageChargeAmountFuture() {
+		return "future charge amount";
+	}
+
+	public String htmTooltipChargeAmountFuture() {
+		return null;
+	}
+
+	public String htmChargeAmountFuture() {
+		return chargeAmountFuture == null ? "" : StringEscapeUtils.escapeHtml4(strChargeAmountFuture());
+	}
+
+	public void inputChargeAmountFuture(String classApiMethodMethod) {
+		SchoolPayment s = (SchoolPayment)this;
+		sx(htmChargeAmountFuture());
+	}
+
+	public void htmChargeAmountFuture(String classApiMethodMethod) {
+		SchoolPayment s = (SchoolPayment)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolPaymentChargeAmountFuture").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", classApiMethodMethod, "_chargeAmountFuture").a("class", "").f().sx("future charge amount").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputChargeAmountFuture(classApiMethodMethod);
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
 	//////////////////////
 	// paymentShortName //
 	//////////////////////
@@ -5961,12 +5961,12 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		transactionStatusInit();
 		paymentRecievedInit();
 		chargeAmountInit();
-		chargeAmountDueInit();
-		chargeAmountFutureInit();
 		chargeFirstLastInit();
 		chargeEnrollmentInit();
 		chargeMonthInit();
 		chargeLateFeeInit();
+		chargeAmountDueInit();
+		chargeAmountFutureInit();
 		paymentShortNameInit();
 		paymentCompleteNameInit();
 	}
@@ -6109,10 +6109,6 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				return oSchoolPayment.paymentRecieved;
 			case "chargeAmount":
 				return oSchoolPayment.chargeAmount;
-			case "chargeAmountDue":
-				return oSchoolPayment.chargeAmountDue;
-			case "chargeAmountFuture":
-				return oSchoolPayment.chargeAmountFuture;
 			case "chargeFirstLast":
 				return oSchoolPayment.chargeFirstLast;
 			case "chargeEnrollment":
@@ -6121,6 +6117,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				return oSchoolPayment.chargeMonth;
 			case "chargeLateFee":
 				return oSchoolPayment.chargeLateFee;
+			case "chargeAmountDue":
+				return oSchoolPayment.chargeAmountDue;
+			case "chargeAmountFuture":
+				return oSchoolPayment.chargeAmountFuture;
 			case "paymentShortName":
 				return oSchoolPayment.paymentShortName;
 			case "paymentCompleteName":
@@ -6271,16 +6271,6 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 					setChargeAmount(val);
 				savesSchoolPayment.add(var);
 				return val;
-			case "chargeAmountDue":
-				if(val != null)
-					setChargeAmountDue(val);
-				savesSchoolPayment.add(var);
-				return val;
-			case "chargeAmountFuture":
-				if(val != null)
-					setChargeAmountFuture(val);
-				savesSchoolPayment.add(var);
-				return val;
 			case "chargeFirstLast":
 				if(val != null)
 					setChargeFirstLast(val);
@@ -6299,6 +6289,16 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 			case "chargeLateFee":
 				if(val != null)
 					setChargeLateFee(val);
+				savesSchoolPayment.add(var);
+				return val;
+			case "chargeAmountDue":
+				if(val != null)
+					setChargeAmountDue(val);
+				savesSchoolPayment.add(var);
+				return val;
+			case "chargeAmountFuture":
+				if(val != null)
+					setChargeAmountFuture(val);
 				savesSchoolPayment.add(var);
 				return val;
 			case "paymentShortName":
@@ -6615,18 +6615,6 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 					oSchoolPayment.setChargeAmount(chargeAmount);
 			}
 
-			if(savesSchoolPayment.contains("chargeAmountDue")) {
-				Double chargeAmountDue = (Double)solrDocument.get("chargeAmountDue_stored_double");
-				if(chargeAmountDue != null)
-					oSchoolPayment.setChargeAmountDue(chargeAmountDue);
-			}
-
-			if(savesSchoolPayment.contains("chargeAmountFuture")) {
-				Double chargeAmountFuture = (Double)solrDocument.get("chargeAmountFuture_stored_double");
-				if(chargeAmountFuture != null)
-					oSchoolPayment.setChargeAmountFuture(chargeAmountFuture);
-			}
-
 			if(savesSchoolPayment.contains("chargeFirstLast")) {
 				Boolean chargeFirstLast = (Boolean)solrDocument.get("chargeFirstLast_stored_boolean");
 				if(chargeFirstLast != null)
@@ -6649,6 +6637,18 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				Boolean chargeLateFee = (Boolean)solrDocument.get("chargeLateFee_stored_boolean");
 				if(chargeLateFee != null)
 					oSchoolPayment.setChargeLateFee(chargeLateFee);
+			}
+
+			if(savesSchoolPayment.contains("chargeAmountDue")) {
+				Double chargeAmountDue = (Double)solrDocument.get("chargeAmountDue_stored_double");
+				if(chargeAmountDue != null)
+					oSchoolPayment.setChargeAmountDue(chargeAmountDue);
+			}
+
+			if(savesSchoolPayment.contains("chargeAmountFuture")) {
+				Double chargeAmountFuture = (Double)solrDocument.get("chargeAmountFuture_stored_double");
+				if(chargeAmountFuture != null)
+					oSchoolPayment.setChargeAmountFuture(chargeAmountFuture);
 			}
 
 			if(savesSchoolPayment.contains("paymentShortName")) {
@@ -6940,14 +6940,6 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 			document.addField("chargeAmount_indexed_double", chargeAmount.doubleValue());
 			document.addField("chargeAmount_stored_double", chargeAmount.doubleValue());
 		}
-		if(chargeAmountDue != null) {
-			document.addField("chargeAmountDue_indexed_double", chargeAmountDue.doubleValue());
-			document.addField("chargeAmountDue_stored_double", chargeAmountDue.doubleValue());
-		}
-		if(chargeAmountFuture != null) {
-			document.addField("chargeAmountFuture_indexed_double", chargeAmountFuture.doubleValue());
-			document.addField("chargeAmountFuture_stored_double", chargeAmountFuture.doubleValue());
-		}
 		if(chargeFirstLast != null) {
 			document.addField("chargeFirstLast_indexed_boolean", chargeFirstLast);
 			document.addField("chargeFirstLast_stored_boolean", chargeFirstLast);
@@ -6963,6 +6955,14 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		if(chargeLateFee != null) {
 			document.addField("chargeLateFee_indexed_boolean", chargeLateFee);
 			document.addField("chargeLateFee_stored_boolean", chargeLateFee);
+		}
+		if(chargeAmountDue != null) {
+			document.addField("chargeAmountDue_indexed_double", chargeAmountDue.doubleValue());
+			document.addField("chargeAmountDue_stored_double", chargeAmountDue.doubleValue());
+		}
+		if(chargeAmountFuture != null) {
+			document.addField("chargeAmountFuture_indexed_double", chargeAmountFuture.doubleValue());
+			document.addField("chargeAmountFuture_stored_double", chargeAmountFuture.doubleValue());
 		}
 		if(paymentShortName != null) {
 			document.addField("paymentShortName_indexed_string", paymentShortName);
@@ -7091,10 +7091,6 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				return "paymentRecieved_indexed_boolean";
 			case "chargeAmount":
 				return "chargeAmount_indexed_double";
-			case "chargeAmountDue":
-				return "chargeAmountDue_indexed_double";
-			case "chargeAmountFuture":
-				return "chargeAmountFuture_indexed_double";
 			case "chargeFirstLast":
 				return "chargeFirstLast_indexed_boolean";
 			case "chargeEnrollment":
@@ -7103,6 +7099,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				return "chargeMonth_indexed_boolean";
 			case "chargeLateFee":
 				return "chargeLateFee_indexed_boolean";
+			case "chargeAmountDue":
+				return "chargeAmountDue_indexed_double";
+			case "chargeAmountFuture":
+				return "chargeAmountFuture_indexed_double";
 			case "paymentShortName":
 				return "paymentShortName_indexed_string";
 			case "paymentCompleteName":
@@ -7328,14 +7328,6 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		if(chargeAmount != null)
 			oSchoolPayment.setChargeAmount(chargeAmount);
 
-		Double chargeAmountDue = (Double)solrDocument.get("chargeAmountDue_stored_double");
-		if(chargeAmountDue != null)
-			oSchoolPayment.setChargeAmountDue(chargeAmountDue);
-
-		Double chargeAmountFuture = (Double)solrDocument.get("chargeAmountFuture_stored_double");
-		if(chargeAmountFuture != null)
-			oSchoolPayment.setChargeAmountFuture(chargeAmountFuture);
-
 		Boolean chargeFirstLast = (Boolean)solrDocument.get("chargeFirstLast_stored_boolean");
 		if(chargeFirstLast != null)
 			oSchoolPayment.setChargeFirstLast(chargeFirstLast);
@@ -7351,6 +7343,14 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		Boolean chargeLateFee = (Boolean)solrDocument.get("chargeLateFee_stored_boolean");
 		if(chargeLateFee != null)
 			oSchoolPayment.setChargeLateFee(chargeLateFee);
+
+		Double chargeAmountDue = (Double)solrDocument.get("chargeAmountDue_stored_double");
+		if(chargeAmountDue != null)
+			oSchoolPayment.setChargeAmountDue(chargeAmountDue);
+
+		Double chargeAmountFuture = (Double)solrDocument.get("chargeAmountFuture_stored_double");
+		if(chargeAmountFuture != null)
+			oSchoolPayment.setChargeAmountFuture(chargeAmountFuture);
 
 		String paymentShortName = (String)solrDocument.get("paymentShortName_stored_string");
 		if(paymentShortName != null)
@@ -7410,10 +7410,6 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				apiRequest.addVars("paymentRecieved");
 			if(!Objects.equals(chargeAmount, original.getChargeAmount()))
 				apiRequest.addVars("chargeAmount");
-			if(!Objects.equals(chargeAmountDue, original.getChargeAmountDue()))
-				apiRequest.addVars("chargeAmountDue");
-			if(!Objects.equals(chargeAmountFuture, original.getChargeAmountFuture()))
-				apiRequest.addVars("chargeAmountFuture");
 			if(!Objects.equals(chargeFirstLast, original.getChargeFirstLast()))
 				apiRequest.addVars("chargeFirstLast");
 			if(!Objects.equals(chargeEnrollment, original.getChargeEnrollment()))
@@ -7422,6 +7418,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				apiRequest.addVars("chargeMonth");
 			if(!Objects.equals(chargeLateFee, original.getChargeLateFee()))
 				apiRequest.addVars("chargeLateFee");
+			if(!Objects.equals(chargeAmountDue, original.getChargeAmountDue()))
+				apiRequest.addVars("chargeAmountDue");
+			if(!Objects.equals(chargeAmountFuture, original.getChargeAmountFuture()))
+				apiRequest.addVars("chargeAmountFuture");
 			if(!Objects.equals(paymentShortName, original.getPaymentShortName()))
 				apiRequest.addVars("paymentShortName");
 			super.apiRequestCluster();
@@ -7433,7 +7433,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), enrollmentKey, childCompleteNamePreferred, childBirthDate, momCompleteNamePreferred, dadCompleteNamePreferred, enrollmentPaymentEachMonth, enrollmentPaymentComplete, paymentDescription, paymentDate, paymentAmount, paymentCash, paymentCheck, paymentSystem, paymentBy, transactionId, customerProfileId, transactionStatus, paymentRecieved, chargeAmount, chargeAmountDue, chargeAmountFuture, chargeFirstLast, chargeEnrollment, chargeMonth, chargeLateFee, paymentShortName);
+		return Objects.hash(super.hashCode(), enrollmentKey, childCompleteNamePreferred, childBirthDate, momCompleteNamePreferred, dadCompleteNamePreferred, enrollmentPaymentEachMonth, enrollmentPaymentComplete, paymentDescription, paymentDate, paymentAmount, paymentCash, paymentCheck, paymentSystem, paymentBy, transactionId, customerProfileId, transactionStatus, paymentRecieved, chargeAmount, chargeFirstLast, chargeEnrollment, chargeMonth, chargeLateFee, chargeAmountDue, chargeAmountFuture, paymentShortName);
 	}
 
 	////////////
@@ -7466,12 +7466,12 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				&& Objects.equals( transactionStatus, that.transactionStatus )
 				&& Objects.equals( paymentRecieved, that.paymentRecieved )
 				&& Objects.equals( chargeAmount, that.chargeAmount )
-				&& Objects.equals( chargeAmountDue, that.chargeAmountDue )
-				&& Objects.equals( chargeAmountFuture, that.chargeAmountFuture )
 				&& Objects.equals( chargeFirstLast, that.chargeFirstLast )
 				&& Objects.equals( chargeEnrollment, that.chargeEnrollment )
 				&& Objects.equals( chargeMonth, that.chargeMonth )
 				&& Objects.equals( chargeLateFee, that.chargeLateFee )
+				&& Objects.equals( chargeAmountDue, that.chargeAmountDue )
+				&& Objects.equals( chargeAmountFuture, that.chargeAmountFuture )
 				&& Objects.equals( paymentShortName, that.paymentShortName );
 	}
 
@@ -7502,12 +7502,12 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		sb.append( ", transactionStatus: \"" ).append(transactionStatus).append( "\"" );
 		sb.append( ", paymentRecieved: " ).append(paymentRecieved);
 		sb.append( ", chargeAmount: " ).append(chargeAmount);
-		sb.append( ", chargeAmountDue: " ).append(chargeAmountDue);
-		sb.append( ", chargeAmountFuture: " ).append(chargeAmountFuture);
 		sb.append( ", chargeFirstLast: " ).append(chargeFirstLast);
 		sb.append( ", chargeEnrollment: " ).append(chargeEnrollment);
 		sb.append( ", chargeMonth: " ).append(chargeMonth);
 		sb.append( ", chargeLateFee: " ).append(chargeLateFee);
+		sb.append( ", chargeAmountDue: " ).append(chargeAmountDue);
+		sb.append( ", chargeAmountFuture: " ).append(chargeAmountFuture);
 		sb.append( ", paymentShortName: \"" ).append(paymentShortName).append( "\"" );
 		sb.append(" }");
 		return sb.toString();
