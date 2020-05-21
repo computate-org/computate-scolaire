@@ -114,17 +114,20 @@ public class DesignDisplayPage extends DesignDisplayPageGen<DesignDisplayGenPage
 
 		enrollments = enrollmentSearch.getList();
 		c.o(enrollments);
+		LOGGER.info("SIZE: " + size);
 		if(size > 0) {
 			enrollment = enrollments.get(i);
 			blockKeyCurrent = enrollment.getBlockKey();
 			while(i < size) {
 				enrollment = enrollments.get(i);
 				blockKeyCurrent = enrollment.getBlockKey();
+				LOGGER.info("BLOCK: " + blockKeyCurrent);
 				if(blockKeyCurrent == null || ObjectUtils.compare(blockKeyCurrent, blockKeyBefore) != 0) {
 					blockKeyBefore = enrollment.getBlockKey();
 					enrollmentEnrollments = enrollment.getEnrollmentEnrollments();
 					enrollmentBlocks.add(enrollment);
 					enrollmentNumber = 1;
+					LOGGER.info("ENROLLMENT BLOCK: " + blockKeyCurrent);
 				}
 				if((i + 2) > size)
 					break;
