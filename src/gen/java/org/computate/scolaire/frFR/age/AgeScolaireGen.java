@@ -1758,18 +1758,18 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		this.saisonDateDebutCouverture.dejaInitialise = true;
 	}
 	public AgeScolaire setSaisonDateDebut(Instant o) {
-		this.saisonDateDebut = LocalDate.from(o);
+		this.saisonDateDebut = o == null ? null : LocalDate.from(o);
 		this.saisonDateDebutCouverture.dejaInitialise = true;
 		return (AgeScolaire)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public AgeScolaire setSaisonDateDebut(String o) {
-		this.saisonDateDebut = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		this.saisonDateDebut = o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.saisonDateDebutCouverture.dejaInitialise = true;
 		return (AgeScolaire)this;
 	}
 	public AgeScolaire setSaisonDateDebut(Date o) {
-		this.saisonDateDebut = o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
+		this.saisonDateDebut = o == null ? null : o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
 		this.saisonDateDebutCouverture.dejaInitialise = true;
 		return (AgeScolaire)this;
 	}
@@ -2177,18 +2177,18 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		this.sessionDateDebutCouverture.dejaInitialise = true;
 	}
 	public AgeScolaire setSessionDateDebut(Instant o) {
-		this.sessionDateDebut = LocalDate.from(o);
+		this.sessionDateDebut = o == null ? null : LocalDate.from(o);
 		this.sessionDateDebutCouverture.dejaInitialise = true;
 		return (AgeScolaire)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public AgeScolaire setSessionDateDebut(String o) {
-		this.sessionDateDebut = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		this.sessionDateDebut = o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.sessionDateDebutCouverture.dejaInitialise = true;
 		return (AgeScolaire)this;
 	}
 	public AgeScolaire setSessionDateDebut(Date o) {
-		this.sessionDateDebut = o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
+		this.sessionDateDebut = o == null ? null : o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
 		this.sessionDateDebutCouverture.dejaInitialise = true;
 		return (AgeScolaire)this;
 	}
@@ -2258,18 +2258,18 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		this.sessionDateFinCouverture.dejaInitialise = true;
 	}
 	public AgeScolaire setSessionDateFin(Instant o) {
-		this.sessionDateFin = LocalDate.from(o);
+		this.sessionDateFin = o == null ? null : LocalDate.from(o);
 		this.sessionDateFinCouverture.dejaInitialise = true;
 		return (AgeScolaire)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public AgeScolaire setSessionDateFin(String o) {
-		this.sessionDateFin = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		this.sessionDateFin = o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.sessionDateFinCouverture.dejaInitialise = true;
 		return (AgeScolaire)this;
 	}
 	public AgeScolaire setSessionDateFin(Date o) {
-		this.sessionDateFin = o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
+		this.sessionDateFin = o == null ? null : o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
 		this.sessionDateFinCouverture.dejaInitialise = true;
 		return (AgeScolaire)this;
 	}

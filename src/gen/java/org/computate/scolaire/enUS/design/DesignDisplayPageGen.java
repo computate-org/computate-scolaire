@@ -1552,18 +1552,18 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 		this.seasonStartDateWrap.alreadyInitialized = true;
 	}
 	public DesignDisplayPage setSeasonStartDate(Instant o) {
-		this.seasonStartDate = LocalDate.from(o);
+		this.seasonStartDate = o == null ? null : LocalDate.from(o);
 		this.seasonStartDateWrap.alreadyInitialized = true;
 		return (DesignDisplayPage)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public DesignDisplayPage setSeasonStartDate(String o) {
-		this.seasonStartDate = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		this.seasonStartDate = o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.seasonStartDateWrap.alreadyInitialized = true;
 		return (DesignDisplayPage)this;
 	}
 	public DesignDisplayPage setSeasonStartDate(Date o) {
-		this.seasonStartDate = o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
+		this.seasonStartDate = o == null ? null : o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
 		this.seasonStartDateWrap.alreadyInitialized = true;
 		return (DesignDisplayPage)this;
 	}

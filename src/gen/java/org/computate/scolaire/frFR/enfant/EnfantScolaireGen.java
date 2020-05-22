@@ -1676,18 +1676,18 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 		this.personneDateNaissanceCouverture.dejaInitialise = true;
 	}
 	public EnfantScolaire setPersonneDateNaissance(Instant o) {
-		this.personneDateNaissance = LocalDate.from(o);
+		this.personneDateNaissance = o == null ? null : LocalDate.from(o);
 		this.personneDateNaissanceCouverture.dejaInitialise = true;
 		return (EnfantScolaire)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public EnfantScolaire setPersonneDateNaissance(String o) {
-		this.personneDateNaissance = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		this.personneDateNaissance = o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.personneDateNaissanceCouverture.dejaInitialise = true;
 		return (EnfantScolaire)this;
 	}
 	public EnfantScolaire setPersonneDateNaissance(Date o) {
-		this.personneDateNaissance = o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
+		this.personneDateNaissance = o == null ? null : o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
 		this.personneDateNaissanceCouverture.dejaInitialise = true;
 		return (EnfantScolaire)this;
 	}

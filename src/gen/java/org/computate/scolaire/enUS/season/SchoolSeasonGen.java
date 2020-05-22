@@ -1571,18 +1571,18 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 		this.seasonStartDateWrap.alreadyInitialized = true;
 	}
 	public SchoolSeason setSeasonStartDate(Instant o) {
-		this.seasonStartDate = LocalDate.from(o);
+		this.seasonStartDate = o == null ? null : LocalDate.from(o);
 		this.seasonStartDateWrap.alreadyInitialized = true;
 		return (SchoolSeason)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolSeason setSeasonStartDate(String o) {
-		this.seasonStartDate = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		this.seasonStartDate = o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.seasonStartDateWrap.alreadyInitialized = true;
 		return (SchoolSeason)this;
 	}
 	public SchoolSeason setSeasonStartDate(Date o) {
-		this.seasonStartDate = o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
+		this.seasonStartDate = o == null ? null : o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
 		this.seasonStartDateWrap.alreadyInitialized = true;
 		return (SchoolSeason)this;
 	}

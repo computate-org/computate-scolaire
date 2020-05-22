@@ -275,32 +275,6 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 							});
 						}));
 						break;
-					case "cree":
-						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "cree", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
-									, b
-							-> {
-								if(b.succeeded())
-									a.handle(Future.succeededFuture());
-								else
-									a.handle(Future.failedFuture(new Exception("valeur GardienScolaire.cree a échoué", b.cause())));
-							});
-						}));
-						break;
-					case "modifie":
-						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "modifie", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
-									, b
-							-> {
-								if(b.succeeded())
-									a.handle(Future.succeededFuture());
-								else
-									a.handle(Future.failedFuture(new Exception("valeur GardienScolaire.modifie a échoué", b.cause())));
-							});
-						}));
-						break;
 					case "archive":
 						futures.add(Future.future(a -> {
 							tx.preparedQuery(SiteContexteFrFR.SQL_setD
@@ -324,45 +298,6 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 									a.handle(Future.succeededFuture());
 								else
 									a.handle(Future.failedFuture(new Exception("valeur GardienScolaire.supprime a échoué", b.cause())));
-							});
-						}));
-						break;
-					case "sessionId":
-						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "sessionId", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
-									, b
-							-> {
-								if(b.succeeded())
-									a.handle(Future.succeededFuture());
-								else
-									a.handle(Future.failedFuture(new Exception("valeur GardienScolaire.sessionId a échoué", b.cause())));
-							});
-						}));
-						break;
-					case "utilisateurId":
-						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "utilisateurId", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
-									, b
-							-> {
-								if(b.succeeded())
-									a.handle(Future.succeededFuture());
-								else
-									a.handle(Future.failedFuture(new Exception("valeur GardienScolaire.utilisateurId a échoué", b.cause())));
-							});
-						}));
-						break;
-					case "utilisateurCle":
-						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "utilisateurCle", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
-									, b
-							-> {
-								if(b.succeeded())
-									a.handle(Future.succeededFuture());
-								else
-									a.handle(Future.failedFuture(new Exception("valeur GardienScolaire.utilisateurCle a échoué", b.cause())));
 							});
 						}));
 						break;
@@ -1063,32 +998,6 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 							});
 						}));
 						break;
-					case "cree":
-						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "cree", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
-									, b
-							-> {
-								if(b.succeeded())
-									a.handle(Future.succeededFuture());
-								else
-									a.handle(Future.failedFuture(new Exception("valeur GardienScolaire.cree a échoué", b.cause())));
-							});
-						}));
-						break;
-					case "modifie":
-						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "modifie", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
-									, b
-							-> {
-								if(b.succeeded())
-									a.handle(Future.succeededFuture());
-								else
-									a.handle(Future.failedFuture(new Exception("valeur GardienScolaire.modifie a échoué", b.cause())));
-							});
-						}));
-						break;
 					case "archive":
 						futures.add(Future.future(a -> {
 							tx.preparedQuery(SiteContexteFrFR.SQL_setD
@@ -1112,45 +1021,6 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 									a.handle(Future.succeededFuture());
 								else
 									a.handle(Future.failedFuture(new Exception("valeur GardienScolaire.supprime a échoué", b.cause())));
-							});
-						}));
-						break;
-					case "sessionId":
-						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "sessionId", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
-									, b
-							-> {
-								if(b.succeeded())
-									a.handle(Future.succeededFuture());
-								else
-									a.handle(Future.failedFuture(new Exception("valeur GardienScolaire.sessionId a échoué", b.cause())));
-							});
-						}));
-						break;
-					case "utilisateurId":
-						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "utilisateurId", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
-									, b
-							-> {
-								if(b.succeeded())
-									a.handle(Future.succeededFuture());
-								else
-									a.handle(Future.failedFuture(new Exception("valeur GardienScolaire.utilisateurId a échoué", b.cause())));
-							});
-						}));
-						break;
-					case "utilisateurCle":
-						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "utilisateurCle", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
-									, b
-							-> {
-								if(b.succeeded())
-									a.handle(Future.succeededFuture());
-								else
-									a.handle(Future.failedFuture(new Exception("valeur GardienScolaire.utilisateurCle a échoué", b.cause())));
 							});
 						}));
 						break;
@@ -1553,62 +1423,6 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 							}));
 						}
 						break;
-					case "setCree":
-						if(jsonObject.getString(methodeNom) == null) {
-							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "cree")
-										, b
-								-> {
-									if(b.succeeded())
-										a.handle(Future.succeededFuture());
-									else
-										a.handle(Future.failedFuture(new Exception("valeur GardienScolaire.cree a échoué", b.cause())));
-								});
-							}));
-						} else {
-							o2.setCree(jsonObject.getString(methodeNom));
-							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "cree", o2.jsonCree())
-										, b
-								-> {
-									if(b.succeeded())
-										a.handle(Future.succeededFuture());
-									else
-										a.handle(Future.failedFuture(new Exception("valeur GardienScolaire.cree a échoué", b.cause())));
-								});
-							}));
-						}
-						break;
-					case "setModifie":
-						if(jsonObject.getString(methodeNom) == null) {
-							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "modifie")
-										, b
-								-> {
-									if(b.succeeded())
-										a.handle(Future.succeededFuture());
-									else
-										a.handle(Future.failedFuture(new Exception("valeur GardienScolaire.modifie a échoué", b.cause())));
-								});
-							}));
-						} else {
-							o2.setModifie(jsonObject.getString(methodeNom));
-							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "modifie", o2.jsonModifie())
-										, b
-								-> {
-									if(b.succeeded())
-										a.handle(Future.succeededFuture());
-									else
-										a.handle(Future.failedFuture(new Exception("valeur GardienScolaire.modifie a échoué", b.cause())));
-								});
-							}));
-						}
-						break;
 					case "setArchive":
 						if(jsonObject.getBoolean(methodeNom) == null) {
 							futures.add(Future.future(a -> {
@@ -1661,90 +1475,6 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 										a.handle(Future.succeededFuture());
 									else
 										a.handle(Future.failedFuture(new Exception("valeur GardienScolaire.supprime a échoué", b.cause())));
-								});
-							}));
-						}
-						break;
-					case "setSessionId":
-						if(jsonObject.getString(methodeNom) == null) {
-							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "sessionId")
-										, b
-								-> {
-									if(b.succeeded())
-										a.handle(Future.succeededFuture());
-									else
-										a.handle(Future.failedFuture(new Exception("valeur GardienScolaire.sessionId a échoué", b.cause())));
-								});
-							}));
-						} else {
-							o2.setSessionId(jsonObject.getString(methodeNom));
-							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "sessionId", o2.jsonSessionId())
-										, b
-								-> {
-									if(b.succeeded())
-										a.handle(Future.succeededFuture());
-									else
-										a.handle(Future.failedFuture(new Exception("valeur GardienScolaire.sessionId a échoué", b.cause())));
-								});
-							}));
-						}
-						break;
-					case "setUtilisateurId":
-						if(jsonObject.getString(methodeNom) == null) {
-							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "utilisateurId")
-										, b
-								-> {
-									if(b.succeeded())
-										a.handle(Future.succeededFuture());
-									else
-										a.handle(Future.failedFuture(new Exception("valeur GardienScolaire.utilisateurId a échoué", b.cause())));
-								});
-							}));
-						} else {
-							o2.setUtilisateurId(jsonObject.getString(methodeNom));
-							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "utilisateurId", o2.jsonUtilisateurId())
-										, b
-								-> {
-									if(b.succeeded())
-										a.handle(Future.succeededFuture());
-									else
-										a.handle(Future.failedFuture(new Exception("valeur GardienScolaire.utilisateurId a échoué", b.cause())));
-								});
-							}));
-						}
-						break;
-					case "setUtilisateurCle":
-						if(jsonObject.getString(methodeNom) == null) {
-							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "utilisateurCle")
-										, b
-								-> {
-									if(b.succeeded())
-										a.handle(Future.succeededFuture());
-									else
-										a.handle(Future.failedFuture(new Exception("valeur GardienScolaire.utilisateurCle a échoué", b.cause())));
-								});
-							}));
-						} else {
-							o2.setUtilisateurCle(jsonObject.getString(methodeNom));
-							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "utilisateurCle", o2.jsonUtilisateurCle())
-										, b
-								-> {
-									if(b.succeeded())
-										a.handle(Future.succeededFuture());
-									else
-										a.handle(Future.failedFuture(new Exception("valeur GardienScolaire.utilisateurCle a échoué", b.cause())));
 								});
 							}));
 						}

@@ -1675,18 +1675,18 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		this.personBirthDateWrap.alreadyInitialized = true;
 	}
 	public SchoolChild setPersonBirthDate(Instant o) {
-		this.personBirthDate = LocalDate.from(o);
+		this.personBirthDate = o == null ? null : LocalDate.from(o);
 		this.personBirthDateWrap.alreadyInitialized = true;
 		return (SchoolChild)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolChild setPersonBirthDate(String o) {
-		this.personBirthDate = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		this.personBirthDate = o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.personBirthDateWrap.alreadyInitialized = true;
 		return (SchoolChild)this;
 	}
 	public SchoolChild setPersonBirthDate(Date o) {
-		this.personBirthDate = o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
+		this.personBirthDate = o == null ? null : o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
 		this.personBirthDateWrap.alreadyInitialized = true;
 		return (SchoolChild)this;
 	}

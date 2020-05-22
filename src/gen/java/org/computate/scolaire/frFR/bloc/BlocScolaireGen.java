@@ -2016,18 +2016,18 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		this.saisonDateDebutCouverture.dejaInitialise = true;
 	}
 	public BlocScolaire setSaisonDateDebut(Instant o) {
-		this.saisonDateDebut = LocalDate.from(o);
+		this.saisonDateDebut = o == null ? null : LocalDate.from(o);
 		this.saisonDateDebutCouverture.dejaInitialise = true;
 		return (BlocScolaire)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public BlocScolaire setSaisonDateDebut(String o) {
-		this.saisonDateDebut = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		this.saisonDateDebut = o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.saisonDateDebutCouverture.dejaInitialise = true;
 		return (BlocScolaire)this;
 	}
 	public BlocScolaire setSaisonDateDebut(Date o) {
-		this.saisonDateDebut = o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
+		this.saisonDateDebut = o == null ? null : o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
 		this.saisonDateDebutCouverture.dejaInitialise = true;
 		return (BlocScolaire)this;
 	}
@@ -2435,18 +2435,18 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		this.sessionDateDebutCouverture.dejaInitialise = true;
 	}
 	public BlocScolaire setSessionDateDebut(Instant o) {
-		this.sessionDateDebut = LocalDate.from(o);
+		this.sessionDateDebut = o == null ? null : LocalDate.from(o);
 		this.sessionDateDebutCouverture.dejaInitialise = true;
 		return (BlocScolaire)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public BlocScolaire setSessionDateDebut(String o) {
-		this.sessionDateDebut = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		this.sessionDateDebut = o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.sessionDateDebutCouverture.dejaInitialise = true;
 		return (BlocScolaire)this;
 	}
 	public BlocScolaire setSessionDateDebut(Date o) {
-		this.sessionDateDebut = o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
+		this.sessionDateDebut = o == null ? null : o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
 		this.sessionDateDebutCouverture.dejaInitialise = true;
 		return (BlocScolaire)this;
 	}
@@ -2516,18 +2516,18 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		this.sessionDateFinCouverture.dejaInitialise = true;
 	}
 	public BlocScolaire setSessionDateFin(Instant o) {
-		this.sessionDateFin = LocalDate.from(o);
+		this.sessionDateFin = o == null ? null : LocalDate.from(o);
 		this.sessionDateFinCouverture.dejaInitialise = true;
 		return (BlocScolaire)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public BlocScolaire setSessionDateFin(String o) {
-		this.sessionDateFin = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		this.sessionDateFin = o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.sessionDateFinCouverture.dejaInitialise = true;
 		return (BlocScolaire)this;
 	}
 	public BlocScolaire setSessionDateFin(Date o) {
-		this.sessionDateFin = o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
+		this.sessionDateFin = o == null ? null : o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
 		this.sessionDateFinCouverture.dejaInitialise = true;
 		return (BlocScolaire)this;
 	}
@@ -2859,7 +2859,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 	/** Example: 01:00 **/
 	public BlocScolaire setBlocHeureDebut(String o) {
 		try {
-			this.blocHeureDebut = LocalTime.parse(o, DateTimeFormatter.ISO_TIME);
+			this.blocHeureDebut = o == null ? null : LocalTime.parse(o, DateTimeFormatter.ISO_TIME);
 			this.blocHeureDebutCouverture.dejaInitialise = true;
 		} catch(Exception e) {
 		}
@@ -2979,7 +2979,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 	/** Example: 01:00 **/
 	public BlocScolaire setBlocHeureFin(String o) {
 		try {
-			this.blocHeureFin = LocalTime.parse(o, DateTimeFormatter.ISO_TIME);
+			this.blocHeureFin = o == null ? null : LocalTime.parse(o, DateTimeFormatter.ISO_TIME);
 			this.blocHeureFinCouverture.dejaInitialise = true;
 		} catch(Exception e) {
 		}

@@ -2012,18 +2012,18 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 		this.seasonStartDateWrap.alreadyInitialized = true;
 	}
 	public SchoolBlock setSeasonStartDate(Instant o) {
-		this.seasonStartDate = LocalDate.from(o);
+		this.seasonStartDate = o == null ? null : LocalDate.from(o);
 		this.seasonStartDateWrap.alreadyInitialized = true;
 		return (SchoolBlock)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolBlock setSeasonStartDate(String o) {
-		this.seasonStartDate = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		this.seasonStartDate = o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.seasonStartDateWrap.alreadyInitialized = true;
 		return (SchoolBlock)this;
 	}
 	public SchoolBlock setSeasonStartDate(Date o) {
-		this.seasonStartDate = o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
+		this.seasonStartDate = o == null ? null : o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
 		this.seasonStartDateWrap.alreadyInitialized = true;
 		return (SchoolBlock)this;
 	}
@@ -2431,18 +2431,18 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 		this.sessionStartDateWrap.alreadyInitialized = true;
 	}
 	public SchoolBlock setSessionStartDate(Instant o) {
-		this.sessionStartDate = LocalDate.from(o);
+		this.sessionStartDate = o == null ? null : LocalDate.from(o);
 		this.sessionStartDateWrap.alreadyInitialized = true;
 		return (SchoolBlock)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolBlock setSessionStartDate(String o) {
-		this.sessionStartDate = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		this.sessionStartDate = o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.sessionStartDateWrap.alreadyInitialized = true;
 		return (SchoolBlock)this;
 	}
 	public SchoolBlock setSessionStartDate(Date o) {
-		this.sessionStartDate = o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
+		this.sessionStartDate = o == null ? null : o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
 		this.sessionStartDateWrap.alreadyInitialized = true;
 		return (SchoolBlock)this;
 	}
@@ -2512,18 +2512,18 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 		this.sessionEndDateWrap.alreadyInitialized = true;
 	}
 	public SchoolBlock setSessionEndDate(Instant o) {
-		this.sessionEndDate = LocalDate.from(o);
+		this.sessionEndDate = o == null ? null : LocalDate.from(o);
 		this.sessionEndDateWrap.alreadyInitialized = true;
 		return (SchoolBlock)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolBlock setSessionEndDate(String o) {
-		this.sessionEndDate = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		this.sessionEndDate = o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.sessionEndDateWrap.alreadyInitialized = true;
 		return (SchoolBlock)this;
 	}
 	public SchoolBlock setSessionEndDate(Date o) {
-		this.sessionEndDate = o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
+		this.sessionEndDate = o == null ? null : o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
 		this.sessionEndDateWrap.alreadyInitialized = true;
 		return (SchoolBlock)this;
 	}
@@ -2855,7 +2855,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 	/** Example: 01:00 **/
 	public SchoolBlock setBlockStartTime(String o) {
 		try {
-			this.blockStartTime = LocalTime.parse(o, DateTimeFormatter.ISO_TIME);
+			this.blockStartTime = o == null ? null : LocalTime.parse(o, DateTimeFormatter.ISO_TIME);
 			this.blockStartTimeWrap.alreadyInitialized = true;
 		} catch(Exception e) {
 		}
@@ -2975,7 +2975,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 	/** Example: 01:00 **/
 	public SchoolBlock setBlockEndTime(String o) {
 		try {
-			this.blockEndTime = LocalTime.parse(o, DateTimeFormatter.ISO_TIME);
+			this.blockEndTime = o == null ? null : LocalTime.parse(o, DateTimeFormatter.ISO_TIME);
 			this.blockEndTimeWrap.alreadyInitialized = true;
 		} catch(Exception e) {
 		}

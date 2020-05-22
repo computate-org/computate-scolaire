@@ -3678,18 +3678,18 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.enfantDateNaissanceCouverture.dejaInitialise = true;
 	}
 	public InscriptionScolaire setEnfantDateNaissance(Instant o) {
-		this.enfantDateNaissance = LocalDate.from(o);
+		this.enfantDateNaissance = o == null ? null : LocalDate.from(o);
 		this.enfantDateNaissanceCouverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public InscriptionScolaire setEnfantDateNaissance(String o) {
-		this.enfantDateNaissance = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		this.enfantDateNaissance = o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.enfantDateNaissanceCouverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
 	public InscriptionScolaire setEnfantDateNaissance(Date o) {
-		this.enfantDateNaissance = o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
+		this.enfantDateNaissance = o == null ? null : o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
 		this.enfantDateNaissanceCouverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
@@ -4540,18 +4540,18 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.saisonDateDebutCouverture.dejaInitialise = true;
 	}
 	public InscriptionScolaire setSaisonDateDebut(Instant o) {
-		this.saisonDateDebut = LocalDate.from(o);
+		this.saisonDateDebut = o == null ? null : LocalDate.from(o);
 		this.saisonDateDebutCouverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public InscriptionScolaire setSaisonDateDebut(String o) {
-		this.saisonDateDebut = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		this.saisonDateDebut = o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.saisonDateDebutCouverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
 	public InscriptionScolaire setSaisonDateDebut(Date o) {
-		this.saisonDateDebut = o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
+		this.saisonDateDebut = o == null ? null : o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
 		this.saisonDateDebutCouverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
@@ -4897,18 +4897,18 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.sessionDateDebutCouverture.dejaInitialise = true;
 	}
 	public InscriptionScolaire setSessionDateDebut(Instant o) {
-		this.sessionDateDebut = LocalDate.from(o);
+		this.sessionDateDebut = o == null ? null : LocalDate.from(o);
 		this.sessionDateDebutCouverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public InscriptionScolaire setSessionDateDebut(String o) {
-		this.sessionDateDebut = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		this.sessionDateDebut = o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.sessionDateDebutCouverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
 	public InscriptionScolaire setSessionDateDebut(Date o) {
-		this.sessionDateDebut = o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
+		this.sessionDateDebut = o == null ? null : o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
 		this.sessionDateDebutCouverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
@@ -4978,18 +4978,18 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.sessionDateFinCouverture.dejaInitialise = true;
 	}
 	public InscriptionScolaire setSessionDateFin(Instant o) {
-		this.sessionDateFin = LocalDate.from(o);
+		this.sessionDateFin = o == null ? null : LocalDate.from(o);
 		this.sessionDateFinCouverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public InscriptionScolaire setSessionDateFin(String o) {
-		this.sessionDateFin = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		this.sessionDateFin = o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.sessionDateFinCouverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
 	public InscriptionScolaire setSessionDateFin(Date o) {
-		this.sessionDateFin = o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
+		this.sessionDateFin = o == null ? null : o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
 		this.sessionDateFinCouverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
@@ -5259,7 +5259,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/** Example: 01:00 **/
 	public InscriptionScolaire setBlocHeureDebut(String o) {
 		try {
-			this.blocHeureDebut = LocalTime.parse(o, DateTimeFormatter.ISO_TIME);
+			this.blocHeureDebut = o == null ? null : LocalTime.parse(o, DateTimeFormatter.ISO_TIME);
 			this.blocHeureDebutCouverture.dejaInitialise = true;
 		} catch(Exception e) {
 		}
@@ -5331,7 +5331,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/** Example: 01:00 **/
 	public InscriptionScolaire setBlocHeureFin(String o) {
 		try {
-			this.blocHeureFin = LocalTime.parse(o, DateTimeFormatter.ISO_TIME);
+			this.blocHeureFin = o == null ? null : LocalTime.parse(o, DateTimeFormatter.ISO_TIME);
 			this.blocHeureFinCouverture.dejaInitialise = true;
 		} catch(Exception e) {
 		}
@@ -8457,18 +8457,18 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.inscriptionDateFraisCouverture.dejaInitialise = true;
 	}
 	public InscriptionScolaire setInscriptionDateFrais(Instant o) {
-		this.inscriptionDateFrais = LocalDate.from(o);
+		this.inscriptionDateFrais = o == null ? null : LocalDate.from(o);
 		this.inscriptionDateFraisCouverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public InscriptionScolaire setInscriptionDateFrais(String o) {
-		this.inscriptionDateFrais = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		this.inscriptionDateFrais = o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.inscriptionDateFraisCouverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
 	public InscriptionScolaire setInscriptionDateFrais(Date o) {
-		this.inscriptionDateFrais = o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
+		this.inscriptionDateFrais = o == null ? null : o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
 		this.inscriptionDateFraisCouverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
@@ -10735,18 +10735,18 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.inscriptionDate1Couverture.dejaInitialise = true;
 	}
 	public InscriptionScolaire setInscriptionDate1(Instant o) {
-		this.inscriptionDate1 = LocalDate.from(o);
+		this.inscriptionDate1 = o == null ? null : LocalDate.from(o);
 		this.inscriptionDate1Couverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public InscriptionScolaire setInscriptionDate1(String o) {
-		this.inscriptionDate1 = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		this.inscriptionDate1 = o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.inscriptionDate1Couverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
 	public InscriptionScolaire setInscriptionDate1(Date o) {
-		this.inscriptionDate1 = o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
+		this.inscriptionDate1 = o == null ? null : o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
 		this.inscriptionDate1Couverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
@@ -10875,18 +10875,18 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.inscriptionDate2Couverture.dejaInitialise = true;
 	}
 	public InscriptionScolaire setInscriptionDate2(Instant o) {
-		this.inscriptionDate2 = LocalDate.from(o);
+		this.inscriptionDate2 = o == null ? null : LocalDate.from(o);
 		this.inscriptionDate2Couverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public InscriptionScolaire setInscriptionDate2(String o) {
-		this.inscriptionDate2 = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		this.inscriptionDate2 = o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.inscriptionDate2Couverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
 	public InscriptionScolaire setInscriptionDate2(Date o) {
-		this.inscriptionDate2 = o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
+		this.inscriptionDate2 = o == null ? null : o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
 		this.inscriptionDate2Couverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
@@ -11015,18 +11015,18 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.inscriptionDate3Couverture.dejaInitialise = true;
 	}
 	public InscriptionScolaire setInscriptionDate3(Instant o) {
-		this.inscriptionDate3 = LocalDate.from(o);
+		this.inscriptionDate3 = o == null ? null : LocalDate.from(o);
 		this.inscriptionDate3Couverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public InscriptionScolaire setInscriptionDate3(String o) {
-		this.inscriptionDate3 = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		this.inscriptionDate3 = o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.inscriptionDate3Couverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
 	public InscriptionScolaire setInscriptionDate3(Date o) {
-		this.inscriptionDate3 = o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
+		this.inscriptionDate3 = o == null ? null : o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
 		this.inscriptionDate3Couverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
@@ -11155,18 +11155,18 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.inscriptionDate4Couverture.dejaInitialise = true;
 	}
 	public InscriptionScolaire setInscriptionDate4(Instant o) {
-		this.inscriptionDate4 = LocalDate.from(o);
+		this.inscriptionDate4 = o == null ? null : LocalDate.from(o);
 		this.inscriptionDate4Couverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public InscriptionScolaire setInscriptionDate4(String o) {
-		this.inscriptionDate4 = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		this.inscriptionDate4 = o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.inscriptionDate4Couverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
 	public InscriptionScolaire setInscriptionDate4(Date o) {
-		this.inscriptionDate4 = o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
+		this.inscriptionDate4 = o == null ? null : o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
 		this.inscriptionDate4Couverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
@@ -11295,18 +11295,18 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.inscriptionDate5Couverture.dejaInitialise = true;
 	}
 	public InscriptionScolaire setInscriptionDate5(Instant o) {
-		this.inscriptionDate5 = LocalDate.from(o);
+		this.inscriptionDate5 = o == null ? null : LocalDate.from(o);
 		this.inscriptionDate5Couverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public InscriptionScolaire setInscriptionDate5(String o) {
-		this.inscriptionDate5 = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		this.inscriptionDate5 = o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.inscriptionDate5Couverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
 	public InscriptionScolaire setInscriptionDate5(Date o) {
-		this.inscriptionDate5 = o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
+		this.inscriptionDate5 = o == null ? null : o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
 		this.inscriptionDate5Couverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
@@ -11435,18 +11435,18 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.inscriptionDate6Couverture.dejaInitialise = true;
 	}
 	public InscriptionScolaire setInscriptionDate6(Instant o) {
-		this.inscriptionDate6 = LocalDate.from(o);
+		this.inscriptionDate6 = o == null ? null : LocalDate.from(o);
 		this.inscriptionDate6Couverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public InscriptionScolaire setInscriptionDate6(String o) {
-		this.inscriptionDate6 = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		this.inscriptionDate6 = o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.inscriptionDate6Couverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
 	public InscriptionScolaire setInscriptionDate6(Date o) {
-		this.inscriptionDate6 = o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
+		this.inscriptionDate6 = o == null ? null : o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
 		this.inscriptionDate6Couverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
@@ -11575,18 +11575,18 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.inscriptionDate7Couverture.dejaInitialise = true;
 	}
 	public InscriptionScolaire setInscriptionDate7(Instant o) {
-		this.inscriptionDate7 = LocalDate.from(o);
+		this.inscriptionDate7 = o == null ? null : LocalDate.from(o);
 		this.inscriptionDate7Couverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public InscriptionScolaire setInscriptionDate7(String o) {
-		this.inscriptionDate7 = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		this.inscriptionDate7 = o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.inscriptionDate7Couverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
 	public InscriptionScolaire setInscriptionDate7(Date o) {
-		this.inscriptionDate7 = o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
+		this.inscriptionDate7 = o == null ? null : o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
 		this.inscriptionDate7Couverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
@@ -11715,18 +11715,18 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.inscriptionDate8Couverture.dejaInitialise = true;
 	}
 	public InscriptionScolaire setInscriptionDate8(Instant o) {
-		this.inscriptionDate8 = LocalDate.from(o);
+		this.inscriptionDate8 = o == null ? null : LocalDate.from(o);
 		this.inscriptionDate8Couverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public InscriptionScolaire setInscriptionDate8(String o) {
-		this.inscriptionDate8 = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		this.inscriptionDate8 = o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.inscriptionDate8Couverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
 	public InscriptionScolaire setInscriptionDate8(Date o) {
-		this.inscriptionDate8 = o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
+		this.inscriptionDate8 = o == null ? null : o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
 		this.inscriptionDate8Couverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
@@ -11855,18 +11855,18 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.inscriptionDate9Couverture.dejaInitialise = true;
 	}
 	public InscriptionScolaire setInscriptionDate9(Instant o) {
-		this.inscriptionDate9 = LocalDate.from(o);
+		this.inscriptionDate9 = o == null ? null : LocalDate.from(o);
 		this.inscriptionDate9Couverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public InscriptionScolaire setInscriptionDate9(String o) {
-		this.inscriptionDate9 = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		this.inscriptionDate9 = o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.inscriptionDate9Couverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
 	public InscriptionScolaire setInscriptionDate9(Date o) {
-		this.inscriptionDate9 = o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
+		this.inscriptionDate9 = o == null ? null : o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
 		this.inscriptionDate9Couverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
@@ -11995,18 +11995,18 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.inscriptionDate10Couverture.dejaInitialise = true;
 	}
 	public InscriptionScolaire setInscriptionDate10(Instant o) {
-		this.inscriptionDate10 = LocalDate.from(o);
+		this.inscriptionDate10 = o == null ? null : LocalDate.from(o);
 		this.inscriptionDate10Couverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public InscriptionScolaire setInscriptionDate10(String o) {
-		this.inscriptionDate10 = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		this.inscriptionDate10 = o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.inscriptionDate10Couverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
 	public InscriptionScolaire setInscriptionDate10(Date o) {
-		this.inscriptionDate10 = o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
+		this.inscriptionDate10 = o == null ? null : o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
 		this.inscriptionDate10Couverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}

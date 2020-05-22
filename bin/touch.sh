@@ -15,6 +15,3 @@ touch /usr/local/src/computate-scolaire/src/main/java/org/computate/scolaire/frF
 touch /usr/local/src/computate-scolaire/src/main/java/org/computate/scolaire/frFR/design/DesignPage.java
 touch /usr/local/src/computate-scolaire/src/main/java/org/computate/scolaire/frFR/html/part/PartHtml.java
 
-#Temporary
-touch /usr/local/src/computate-scolaire/src/main/java/org/computate/scolaire/frFR/inscription/design/DesignInscription.java
-

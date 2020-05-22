@@ -3668,18 +3668,18 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		this.childBirthDateWrap.alreadyInitialized = true;
 	}
 	public SchoolEnrollment setChildBirthDate(Instant o) {
-		this.childBirthDate = LocalDate.from(o);
+		this.childBirthDate = o == null ? null : LocalDate.from(o);
 		this.childBirthDateWrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolEnrollment setChildBirthDate(String o) {
-		this.childBirthDate = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		this.childBirthDate = o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.childBirthDateWrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
 	public SchoolEnrollment setChildBirthDate(Date o) {
-		this.childBirthDate = o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
+		this.childBirthDate = o == null ? null : o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
 		this.childBirthDateWrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
@@ -4528,18 +4528,18 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		this.seasonStartDateWrap.alreadyInitialized = true;
 	}
 	public SchoolEnrollment setSeasonStartDate(Instant o) {
-		this.seasonStartDate = LocalDate.from(o);
+		this.seasonStartDate = o == null ? null : LocalDate.from(o);
 		this.seasonStartDateWrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolEnrollment setSeasonStartDate(String o) {
-		this.seasonStartDate = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		this.seasonStartDate = o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.seasonStartDateWrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
 	public SchoolEnrollment setSeasonStartDate(Date o) {
-		this.seasonStartDate = o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
+		this.seasonStartDate = o == null ? null : o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
 		this.seasonStartDateWrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
@@ -4885,18 +4885,18 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		this.sessionStartDateWrap.alreadyInitialized = true;
 	}
 	public SchoolEnrollment setSessionStartDate(Instant o) {
-		this.sessionStartDate = LocalDate.from(o);
+		this.sessionStartDate = o == null ? null : LocalDate.from(o);
 		this.sessionStartDateWrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolEnrollment setSessionStartDate(String o) {
-		this.sessionStartDate = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		this.sessionStartDate = o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.sessionStartDateWrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
 	public SchoolEnrollment setSessionStartDate(Date o) {
-		this.sessionStartDate = o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
+		this.sessionStartDate = o == null ? null : o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
 		this.sessionStartDateWrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
@@ -4966,18 +4966,18 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		this.sessionEndDateWrap.alreadyInitialized = true;
 	}
 	public SchoolEnrollment setSessionEndDate(Instant o) {
-		this.sessionEndDate = LocalDate.from(o);
+		this.sessionEndDate = o == null ? null : LocalDate.from(o);
 		this.sessionEndDateWrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolEnrollment setSessionEndDate(String o) {
-		this.sessionEndDate = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		this.sessionEndDate = o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.sessionEndDateWrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
 	public SchoolEnrollment setSessionEndDate(Date o) {
-		this.sessionEndDate = o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
+		this.sessionEndDate = o == null ? null : o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
 		this.sessionEndDateWrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
@@ -5247,7 +5247,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/** Example: 01:00 **/
 	public SchoolEnrollment setBlockStartTime(String o) {
 		try {
-			this.blockStartTime = LocalTime.parse(o, DateTimeFormatter.ISO_TIME);
+			this.blockStartTime = o == null ? null : LocalTime.parse(o, DateTimeFormatter.ISO_TIME);
 			this.blockStartTimeWrap.alreadyInitialized = true;
 		} catch(Exception e) {
 		}
@@ -5319,7 +5319,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/** Example: 01:00 **/
 	public SchoolEnrollment setBlockEndTime(String o) {
 		try {
-			this.blockEndTime = LocalTime.parse(o, DateTimeFormatter.ISO_TIME);
+			this.blockEndTime = o == null ? null : LocalTime.parse(o, DateTimeFormatter.ISO_TIME);
 			this.blockEndTimeWrap.alreadyInitialized = true;
 		} catch(Exception e) {
 		}
@@ -8436,18 +8436,18 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		this.enrollmentChargeDateWrap.alreadyInitialized = true;
 	}
 	public SchoolEnrollment setEnrollmentChargeDate(Instant o) {
-		this.enrollmentChargeDate = LocalDate.from(o);
+		this.enrollmentChargeDate = o == null ? null : LocalDate.from(o);
 		this.enrollmentChargeDateWrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolEnrollment setEnrollmentChargeDate(String o) {
-		this.enrollmentChargeDate = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		this.enrollmentChargeDate = o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.enrollmentChargeDateWrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
 	public SchoolEnrollment setEnrollmentChargeDate(Date o) {
-		this.enrollmentChargeDate = o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
+		this.enrollmentChargeDate = o == null ? null : o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
 		this.enrollmentChargeDateWrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
@@ -10713,18 +10713,18 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		this.enrollmentDate1Wrap.alreadyInitialized = true;
 	}
 	public SchoolEnrollment setEnrollmentDate1(Instant o) {
-		this.enrollmentDate1 = LocalDate.from(o);
+		this.enrollmentDate1 = o == null ? null : LocalDate.from(o);
 		this.enrollmentDate1Wrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolEnrollment setEnrollmentDate1(String o) {
-		this.enrollmentDate1 = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		this.enrollmentDate1 = o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.enrollmentDate1Wrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
 	public SchoolEnrollment setEnrollmentDate1(Date o) {
-		this.enrollmentDate1 = o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
+		this.enrollmentDate1 = o == null ? null : o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
 		this.enrollmentDate1Wrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
@@ -10852,18 +10852,18 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		this.enrollmentDate2Wrap.alreadyInitialized = true;
 	}
 	public SchoolEnrollment setEnrollmentDate2(Instant o) {
-		this.enrollmentDate2 = LocalDate.from(o);
+		this.enrollmentDate2 = o == null ? null : LocalDate.from(o);
 		this.enrollmentDate2Wrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolEnrollment setEnrollmentDate2(String o) {
-		this.enrollmentDate2 = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		this.enrollmentDate2 = o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.enrollmentDate2Wrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
 	public SchoolEnrollment setEnrollmentDate2(Date o) {
-		this.enrollmentDate2 = o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
+		this.enrollmentDate2 = o == null ? null : o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
 		this.enrollmentDate2Wrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
@@ -10991,18 +10991,18 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		this.enrollmentDate3Wrap.alreadyInitialized = true;
 	}
 	public SchoolEnrollment setEnrollmentDate3(Instant o) {
-		this.enrollmentDate3 = LocalDate.from(o);
+		this.enrollmentDate3 = o == null ? null : LocalDate.from(o);
 		this.enrollmentDate3Wrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolEnrollment setEnrollmentDate3(String o) {
-		this.enrollmentDate3 = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		this.enrollmentDate3 = o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.enrollmentDate3Wrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
 	public SchoolEnrollment setEnrollmentDate3(Date o) {
-		this.enrollmentDate3 = o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
+		this.enrollmentDate3 = o == null ? null : o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
 		this.enrollmentDate3Wrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
@@ -11130,18 +11130,18 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		this.enrollmentDate4Wrap.alreadyInitialized = true;
 	}
 	public SchoolEnrollment setEnrollmentDate4(Instant o) {
-		this.enrollmentDate4 = LocalDate.from(o);
+		this.enrollmentDate4 = o == null ? null : LocalDate.from(o);
 		this.enrollmentDate4Wrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolEnrollment setEnrollmentDate4(String o) {
-		this.enrollmentDate4 = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		this.enrollmentDate4 = o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.enrollmentDate4Wrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
 	public SchoolEnrollment setEnrollmentDate4(Date o) {
-		this.enrollmentDate4 = o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
+		this.enrollmentDate4 = o == null ? null : o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
 		this.enrollmentDate4Wrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
@@ -11269,18 +11269,18 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		this.enrollmentDate5Wrap.alreadyInitialized = true;
 	}
 	public SchoolEnrollment setEnrollmentDate5(Instant o) {
-		this.enrollmentDate5 = LocalDate.from(o);
+		this.enrollmentDate5 = o == null ? null : LocalDate.from(o);
 		this.enrollmentDate5Wrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolEnrollment setEnrollmentDate5(String o) {
-		this.enrollmentDate5 = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		this.enrollmentDate5 = o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.enrollmentDate5Wrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
 	public SchoolEnrollment setEnrollmentDate5(Date o) {
-		this.enrollmentDate5 = o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
+		this.enrollmentDate5 = o == null ? null : o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
 		this.enrollmentDate5Wrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
@@ -11408,18 +11408,18 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		this.enrollmentDate6Wrap.alreadyInitialized = true;
 	}
 	public SchoolEnrollment setEnrollmentDate6(Instant o) {
-		this.enrollmentDate6 = LocalDate.from(o);
+		this.enrollmentDate6 = o == null ? null : LocalDate.from(o);
 		this.enrollmentDate6Wrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolEnrollment setEnrollmentDate6(String o) {
-		this.enrollmentDate6 = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		this.enrollmentDate6 = o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.enrollmentDate6Wrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
 	public SchoolEnrollment setEnrollmentDate6(Date o) {
-		this.enrollmentDate6 = o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
+		this.enrollmentDate6 = o == null ? null : o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
 		this.enrollmentDate6Wrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
@@ -11547,18 +11547,18 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		this.enrollmentDate7Wrap.alreadyInitialized = true;
 	}
 	public SchoolEnrollment setEnrollmentDate7(Instant o) {
-		this.enrollmentDate7 = LocalDate.from(o);
+		this.enrollmentDate7 = o == null ? null : LocalDate.from(o);
 		this.enrollmentDate7Wrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolEnrollment setEnrollmentDate7(String o) {
-		this.enrollmentDate7 = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		this.enrollmentDate7 = o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.enrollmentDate7Wrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
 	public SchoolEnrollment setEnrollmentDate7(Date o) {
-		this.enrollmentDate7 = o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
+		this.enrollmentDate7 = o == null ? null : o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
 		this.enrollmentDate7Wrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
@@ -11686,18 +11686,18 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		this.enrollmentDate8Wrap.alreadyInitialized = true;
 	}
 	public SchoolEnrollment setEnrollmentDate8(Instant o) {
-		this.enrollmentDate8 = LocalDate.from(o);
+		this.enrollmentDate8 = o == null ? null : LocalDate.from(o);
 		this.enrollmentDate8Wrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolEnrollment setEnrollmentDate8(String o) {
-		this.enrollmentDate8 = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		this.enrollmentDate8 = o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.enrollmentDate8Wrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
 	public SchoolEnrollment setEnrollmentDate8(Date o) {
-		this.enrollmentDate8 = o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
+		this.enrollmentDate8 = o == null ? null : o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
 		this.enrollmentDate8Wrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
@@ -11825,18 +11825,18 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		this.enrollmentDate9Wrap.alreadyInitialized = true;
 	}
 	public SchoolEnrollment setEnrollmentDate9(Instant o) {
-		this.enrollmentDate9 = LocalDate.from(o);
+		this.enrollmentDate9 = o == null ? null : LocalDate.from(o);
 		this.enrollmentDate9Wrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolEnrollment setEnrollmentDate9(String o) {
-		this.enrollmentDate9 = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		this.enrollmentDate9 = o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.enrollmentDate9Wrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
 	public SchoolEnrollment setEnrollmentDate9(Date o) {
-		this.enrollmentDate9 = o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
+		this.enrollmentDate9 = o == null ? null : o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
 		this.enrollmentDate9Wrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
@@ -11964,18 +11964,18 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		this.enrollmentDate10Wrap.alreadyInitialized = true;
 	}
 	public SchoolEnrollment setEnrollmentDate10(Instant o) {
-		this.enrollmentDate10 = LocalDate.from(o);
+		this.enrollmentDate10 = o == null ? null : LocalDate.from(o);
 		this.enrollmentDate10Wrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolEnrollment setEnrollmentDate10(String o) {
-		this.enrollmentDate10 = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		this.enrollmentDate10 = o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.enrollmentDate10Wrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}
 	public SchoolEnrollment setEnrollmentDate10(Date o) {
-		this.enrollmentDate10 = o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
+		this.enrollmentDate10 = o == null ? null : o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
 		this.enrollmentDate10Wrap.alreadyInitialized = true;
 		return (SchoolEnrollment)this;
 	}

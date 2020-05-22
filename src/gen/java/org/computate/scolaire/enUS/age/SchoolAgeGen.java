@@ -1754,18 +1754,18 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		this.seasonStartDateWrap.alreadyInitialized = true;
 	}
 	public SchoolAge setSeasonStartDate(Instant o) {
-		this.seasonStartDate = LocalDate.from(o);
+		this.seasonStartDate = o == null ? null : LocalDate.from(o);
 		this.seasonStartDateWrap.alreadyInitialized = true;
 		return (SchoolAge)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolAge setSeasonStartDate(String o) {
-		this.seasonStartDate = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		this.seasonStartDate = o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.seasonStartDateWrap.alreadyInitialized = true;
 		return (SchoolAge)this;
 	}
 	public SchoolAge setSeasonStartDate(Date o) {
-		this.seasonStartDate = o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
+		this.seasonStartDate = o == null ? null : o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
 		this.seasonStartDateWrap.alreadyInitialized = true;
 		return (SchoolAge)this;
 	}
@@ -2173,18 +2173,18 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		this.sessionStartDateWrap.alreadyInitialized = true;
 	}
 	public SchoolAge setSessionStartDate(Instant o) {
-		this.sessionStartDate = LocalDate.from(o);
+		this.sessionStartDate = o == null ? null : LocalDate.from(o);
 		this.sessionStartDateWrap.alreadyInitialized = true;
 		return (SchoolAge)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolAge setSessionStartDate(String o) {
-		this.sessionStartDate = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		this.sessionStartDate = o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.sessionStartDateWrap.alreadyInitialized = true;
 		return (SchoolAge)this;
 	}
 	public SchoolAge setSessionStartDate(Date o) {
-		this.sessionStartDate = o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
+		this.sessionStartDate = o == null ? null : o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
 		this.sessionStartDateWrap.alreadyInitialized = true;
 		return (SchoolAge)this;
 	}
@@ -2254,18 +2254,18 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		this.sessionEndDateWrap.alreadyInitialized = true;
 	}
 	public SchoolAge setSessionEndDate(Instant o) {
-		this.sessionEndDate = LocalDate.from(o);
+		this.sessionEndDate = o == null ? null : LocalDate.from(o);
 		this.sessionEndDateWrap.alreadyInitialized = true;
 		return (SchoolAge)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolAge setSessionEndDate(String o) {
-		this.sessionEndDate = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		this.sessionEndDate = o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.sessionEndDateWrap.alreadyInitialized = true;
 		return (SchoolAge)this;
 	}
 	public SchoolAge setSessionEndDate(Date o) {
-		this.sessionEndDate = o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
+		this.sessionEndDate = o == null ? null : o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
 		this.sessionEndDateWrap.alreadyInitialized = true;
 		return (SchoolAge)this;
 	}

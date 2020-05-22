@@ -1632,18 +1632,18 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		this.seasonStartDateWrap.alreadyInitialized = true;
 	}
 	public DesignPdfPage setSeasonStartDate(Instant o) {
-		this.seasonStartDate = LocalDate.from(o);
+		this.seasonStartDate = o == null ? null : LocalDate.from(o);
 		this.seasonStartDateWrap.alreadyInitialized = true;
 		return (DesignPdfPage)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public DesignPdfPage setSeasonStartDate(String o) {
-		this.seasonStartDate = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		this.seasonStartDate = o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.seasonStartDateWrap.alreadyInitialized = true;
 		return (DesignPdfPage)this;
 	}
 	public DesignPdfPage setSeasonStartDate(Date o) {
-		this.seasonStartDate = o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
+		this.seasonStartDate = o == null ? null : o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
 		this.seasonStartDateWrap.alreadyInitialized = true;
 		return (DesignPdfPage)this;
 	}

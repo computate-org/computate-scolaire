@@ -497,18 +497,18 @@ public abstract class ClusterGen<DEV> extends Object {
 		this.createdWrap.alreadyInitialized = true;
 	}
 	public Cluster setCreated(Instant o) {
-		this.created = ZonedDateTime.from(o).truncatedTo(ChronoUnit.MILLIS);
+		this.created = o == null ? null : ZonedDateTime.from(o).truncatedTo(ChronoUnit.MILLIS);
 		this.createdWrap.alreadyInitialized = true;
 		return (Cluster)this;
 	}
 	/** Example: 2011-12-03T10:15:30+01:00 **/
 	public Cluster setCreated(String o) {
-		this.created = ZonedDateTime.parse(o, DateTimeFormatter.ISO_DATE_TIME.withZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone()))).truncatedTo(ChronoUnit.MILLIS);
+		this.created = o == null ? null : ZonedDateTime.parse(o, DateTimeFormatter.ISO_DATE_TIME.withZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone()))).truncatedTo(ChronoUnit.MILLIS);
 		this.createdWrap.alreadyInitialized = true;
 		return (Cluster)this;
 	}
 	public Cluster setCreated(Date o) {
-		this.created = ZonedDateTime.ofInstant(o.toInstant(), ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).truncatedTo(ChronoUnit.MILLIS);
+		this.created = o == null ? null : ZonedDateTime.ofInstant(o.toInstant(), ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).truncatedTo(ChronoUnit.MILLIS);
 		this.createdWrap.alreadyInitialized = true;
 		return (Cluster)this;
 	}
@@ -601,18 +601,18 @@ public abstract class ClusterGen<DEV> extends Object {
 		this.modifiedWrap.alreadyInitialized = true;
 	}
 	public Cluster setModified(Instant o) {
-		this.modified = ZonedDateTime.from(o).truncatedTo(ChronoUnit.MILLIS);
+		this.modified = o == null ? null : ZonedDateTime.from(o).truncatedTo(ChronoUnit.MILLIS);
 		this.modifiedWrap.alreadyInitialized = true;
 		return (Cluster)this;
 	}
 	/** Example: 2011-12-03T10:15:30+01:00 **/
 	public Cluster setModified(String o) {
-		this.modified = ZonedDateTime.parse(o, DateTimeFormatter.ISO_DATE_TIME.withZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone()))).truncatedTo(ChronoUnit.MILLIS);
+		this.modified = o == null ? null : ZonedDateTime.parse(o, DateTimeFormatter.ISO_DATE_TIME.withZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone()))).truncatedTo(ChronoUnit.MILLIS);
 		this.modifiedWrap.alreadyInitialized = true;
 		return (Cluster)this;
 	}
 	public Cluster setModified(Date o) {
-		this.modified = ZonedDateTime.ofInstant(o.toInstant(), ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).truncatedTo(ChronoUnit.MILLIS);
+		this.modified = o == null ? null : ZonedDateTime.ofInstant(o.toInstant(), ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).truncatedTo(ChronoUnit.MILLIS);
 		this.modifiedWrap.alreadyInitialized = true;
 		return (Cluster)this;
 	}
