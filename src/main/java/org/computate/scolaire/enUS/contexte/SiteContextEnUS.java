@@ -23,7 +23,7 @@ public class SiteContextEnUS extends SiteContextEnUSGen<Object> {
 
 	public static final String SQL_exists = "select count(*), canonical_name, user_id from c group by canonical_name, user_id having c.pk=$1;\n";
 
-	public static final String SQL_create = "insert into c(canonical_name, user_id, created) values($1, $2, now()) returning pk;\n";
+	public static final String SQL_create = "insert into c(canonical_name, user_id, created) values($1, $2, $3) returning pk;\n";
 
 	public static final String SQL_setD = "insert into d(pk_c, path, value, current, created) values($1, $2, $3, true, now()) on conflict on constraint d_constraint do update set current=true, value=$3 returning pk, path, pk_c;\n";
 

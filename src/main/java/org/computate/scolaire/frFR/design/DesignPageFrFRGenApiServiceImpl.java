@@ -640,6 +640,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 
 				json.put("inheritPk", json.getValue("pk"));
 
+				json.put("cree", json.getValue("cree"));
+
 				RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourDesignPage(siteContexte, requeteSite.getOperationRequete(), json);
 				requeteSite2.setRequeteApi_(requeteApi);
 				requeteSite2.setRequeteVars(requeteSite.getRequeteVars());
@@ -2487,6 +2489,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 					if(fls.size() == 1 && fls.stream().findFirst().orElse(null).equals("sauvegardes")) {
 						fieldNames.removeAll(Optional.ofNullable(json2.getJsonArray("sauvegardes")).orElse(new JsonArray()).stream().map(s -> s.toString()).collect(Collectors.toList()));
 						fieldNames.remove("pk");
+						fieldNames.remove("cree");
 					}
 					else if(fls.size() >= 1) {
 						fieldNames.removeAll(fls);
@@ -2592,6 +2595,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 					if(fls.size() == 1 && fls.stream().findFirst().orElse(null).equals("sauvegardes")) {
 						fieldNames.removeAll(Optional.ofNullable(json2.getJsonArray("sauvegardes")).orElse(new JsonArray()).stream().map(s -> s.toString()).collect(Collectors.toList()));
 						fieldNames.remove("pk");
+						fieldNames.remove("cree");
 					}
 					else if(fls.size() >= 1) {
 						fieldNames.removeAll(fls);
@@ -3104,19 +3108,25 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 		try {
 			Transaction tx = requeteSite.getTx();
 			String utilisateurId = requeteSite.getUtilisateurId();
+			ZonedDateTime cree = Optional.ofNullable(requeteSite.getObjetJson()).map(j -> j.getString("cree")).map(s -> ZonedDateTime.parse(s, DateTimeFormatter.ISO_DATE_TIME.withZone(ZoneId.of(requeteSite.getConfigSite_().getSiteZone())))).orElse(ZonedDateTime.now(ZoneId.of(requeteSite.getConfigSite_().getSiteZone())));
 
 			tx.preparedQuery(
 					SiteContexteFrFR.SQL_creer
-					, Tuple.of(DesignPage.class.getCanonicalName(), utilisateurId)
+					, Tuple.of(DesignPage.class.getCanonicalName(), utilisateurId, cree.toOffsetDateTime())
 					, Collectors.toList()
 					, creerAsync
 			-> {
-				Row creerLigne = creerAsync.result().value().stream().findFirst().orElseGet(() -> null);
-				Long pk = creerLigne.getLong(0);
-				DesignPage o = new DesignPage();
-				o.setPk(pk);
-				o.setRequeteSite_(requeteSite);
-				gestionnaireEvenements.handle(Future.succeededFuture(o));
+				if(creerAsync.succeeded()) {
+					Row creerLigne = creerAsync.result().value().stream().findFirst().orElseGet(() -> null);
+					Long pk = creerLigne.getLong(0);
+					DesignPage o = new DesignPage();
+					o.setPk(pk);
+					o.setRequeteSite_(requeteSite);
+					gestionnaireEvenements.handle(Future.succeededFuture(o));
+				} else {
+					LOGGER.error(String.format("creerDesignPage a échoué. ", creerAsync.cause()));
+					gestionnaireEvenements.handle(Future.failedFuture(creerAsync.cause()));
+				}
 			});
 		} catch(Exception e) {
 			LOGGER.error(String.format("creerDesignPage a échoué. ", e));

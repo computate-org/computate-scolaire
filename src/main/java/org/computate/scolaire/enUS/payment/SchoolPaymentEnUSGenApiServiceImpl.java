@@ -846,6 +846,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 
 				json.put("inheritPk", json.getValue("pk"));
 
+				json.put("created", json.getValue("created"));
+
 				SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolPayment(siteContext, siteRequest.getOperationRequest(), json);
 				siteRequest2.setApiRequest_(apiRequest);
 				siteRequest2.setRequestVars(siteRequest.getRequestVars());
@@ -3170,6 +3172,7 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 					if(fls.size() == 1 && fls.stream().findFirst().orElse(null).equals("saves")) {
 						fieldNames.removeAll(Optional.ofNullable(json2.getJsonArray("saves")).orElse(new JsonArray()).stream().map(s -> s.toString()).collect(Collectors.toList()));
 						fieldNames.remove("pk");
+						fieldNames.remove("created");
 					}
 					else if(fls.size() >= 1) {
 						fieldNames.removeAll(fls);
@@ -3336,19 +3339,25 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 		try {
 			Transaction tx = siteRequest.getTx();
 			String userId = siteRequest.getUserId();
+			ZonedDateTime created = Optional.ofNullable(siteRequest.getJsonObject()).map(j -> j.getString("created")).map(s -> ZonedDateTime.parse(s, DateTimeFormatter.ISO_DATE_TIME.withZone(ZoneId.of(siteRequest.getSiteConfig_().getSiteZone())))).orElse(ZonedDateTime.now(ZoneId.of(siteRequest.getSiteConfig_().getSiteZone())));
 
 			tx.preparedQuery(
 					SiteContextEnUS.SQL_create
-					, Tuple.of(SchoolPayment.class.getCanonicalName(), userId)
+					, Tuple.of(SchoolPayment.class.getCanonicalName(), userId, created.toOffsetDateTime())
 					, Collectors.toList()
 					, createAsync
 			-> {
-				Row createLine = createAsync.result().value().stream().findFirst().orElseGet(() -> null);
-				Long pk = createLine.getLong(0);
-				SchoolPayment o = new SchoolPayment();
-				o.setPk(pk);
-				o.setSiteRequest_(siteRequest);
-				eventHandler.handle(Future.succeededFuture(o));
+				if(createAsync.succeeded()) {
+					Row createLine = createAsync.result().value().stream().findFirst().orElseGet(() -> null);
+					Long pk = createLine.getLong(0);
+					SchoolPayment o = new SchoolPayment();
+					o.setPk(pk);
+					o.setSiteRequest_(siteRequest);
+					eventHandler.handle(Future.succeededFuture(o));
+				} else {
+					LOGGER.error(String.format("createSchoolPayment failed. ", createAsync.cause()));
+					eventHandler.handle(Future.failedFuture(createAsync.cause()));
+				}
 			});
 		} catch(Exception e) {
 			LOGGER.error(String.format("createSchoolPayment failed. ", e));
@@ -3836,7 +3845,7 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
 					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
 					) {
-				searchList.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionId()).orElse("-----"))
+				searchList.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionIdBefore()).orElse("-----"))
 						+ " OR userKeys_indexed_longs:" + Optional.ofNullable(siteRequest.getUserKey()).orElse(0L));
 			}
 

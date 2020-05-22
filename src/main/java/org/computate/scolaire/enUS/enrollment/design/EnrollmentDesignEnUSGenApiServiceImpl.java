@@ -544,6 +544,8 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 
 				json.put("inheritPk", json.getValue("pk"));
 
+				json.put("created", json.getValue("created"));
+
 				SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForEnrollmentDesign(siteContext, siteRequest.getOperationRequest(), json);
 				siteRequest2.setApiRequest_(apiRequest);
 				siteRequest2.setRequestVars(siteRequest.getRequestVars());
@@ -1935,6 +1937,7 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 					if(fls.size() == 1 && fls.stream().findFirst().orElse(null).equals("saves")) {
 						fieldNames.removeAll(Optional.ofNullable(json2.getJsonArray("saves")).orElse(new JsonArray()).stream().map(s -> s.toString()).collect(Collectors.toList()));
 						fieldNames.remove("pk");
+						fieldNames.remove("created");
 					}
 					else if(fls.size() >= 1) {
 						fieldNames.removeAll(fls);
@@ -2122,19 +2125,25 @@ public class EnrollmentDesignEnUSGenApiServiceImpl implements EnrollmentDesignEn
 		try {
 			Transaction tx = siteRequest.getTx();
 			String userId = siteRequest.getUserId();
+			ZonedDateTime created = Optional.ofNullable(siteRequest.getJsonObject()).map(j -> j.getString("created")).map(s -> ZonedDateTime.parse(s, DateTimeFormatter.ISO_DATE_TIME.withZone(ZoneId.of(siteRequest.getSiteConfig_().getSiteZone())))).orElse(ZonedDateTime.now(ZoneId.of(siteRequest.getSiteConfig_().getSiteZone())));
 
 			tx.preparedQuery(
 					SiteContextEnUS.SQL_create
-					, Tuple.of(EnrollmentDesign.class.getCanonicalName(), userId)
+					, Tuple.of(EnrollmentDesign.class.getCanonicalName(), userId, created.toOffsetDateTime())
 					, Collectors.toList()
 					, createAsync
 			-> {
-				Row createLine = createAsync.result().value().stream().findFirst().orElseGet(() -> null);
-				Long pk = createLine.getLong(0);
-				EnrollmentDesign o = new EnrollmentDesign();
-				o.setPk(pk);
-				o.setSiteRequest_(siteRequest);
-				eventHandler.handle(Future.succeededFuture(o));
+				if(createAsync.succeeded()) {
+					Row createLine = createAsync.result().value().stream().findFirst().orElseGet(() -> null);
+					Long pk = createLine.getLong(0);
+					EnrollmentDesign o = new EnrollmentDesign();
+					o.setPk(pk);
+					o.setSiteRequest_(siteRequest);
+					eventHandler.handle(Future.succeededFuture(o));
+				} else {
+					LOGGER.error(String.format("createEnrollmentDesign failed. ", createAsync.cause()));
+					eventHandler.handle(Future.failedFuture(createAsync.cause()));
+				}
 			});
 		} catch(Exception e) {
 			LOGGER.error(String.format("createEnrollmentDesign failed. ", e));

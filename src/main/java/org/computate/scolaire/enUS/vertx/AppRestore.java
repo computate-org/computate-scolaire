@@ -50,7 +50,7 @@ public class AppRestore extends AbstractVerticle {
 	Base64.Decoder decoder;
 	Cipher cipher;
 
-	Boolean scramble = true;
+	Boolean scramble = false;
 
 	public static void main(String[] args) {
 
