@@ -455,6 +455,8 @@ public class AppliSwagger2 extends AppliSwagger2Gen<Object> {
 	 * r.enUS: contexteRows_
 	 * r: ContexteRows
 	 * r.enUS: ContextRows
+	 * r: "classeNomSimple:"
+	 * r.enUS: "classSimpleName:"
 	 * r: _frFR_
 	 * r.enUS: _enUS_
 	 * r: deconnexion
@@ -486,6 +488,33 @@ public class AppliSwagger2 extends AppliSwagger2Gen<Object> {
 			wChemins.tl(3, "operationId: deconnexion");
 			wChemins.tl(3, "x-vertx-event-bus: ", appliNom, "-", langueNom, "-deconnexion");
 			wChemins.tl(3, "description: >+");
+			wChemins.tl(3, "responses:");
+			wChemins.tl(4, "'200':");
+			wChemins.tl(5, "description: >+");
+			wChemins.tl(5, "content:");
+			wChemins.tl(6, "application/json; charset=utf-8:");
+			wChemins.tl(7, "schema:");
+			wChemins.tl(8, "type: string");
+			wChemins.l();
+			wChemins.tl(1, "/photo:");
+			wChemins.tl(2, "post:");
+			wChemins.tl(3, "operationId: photo");
+			wChemins.tl(3, "x-vertx-event-bus: ", appliNom, "-", langueNom, "-photo");
+			wChemins.tl(3, "description: >+");
+			wChemins.tl(3, "requestBody:");
+			wChemins.tl(4, "required: true");
+			wChemins.tl(4, "content:");
+			wChemins.tl(5, "multipart/form-data:");
+			wChemins.tl(6, "schema:");
+			wChemins.tl(7, "type: object");
+			wChemins.tl(7, "properties:");
+			wChemins.tl(8, "pk:");
+			wChemins.tl(9, "type: string");
+			wChemins.tl(8, "classeNomCanonique:");
+			wChemins.tl(9, "type: string");
+			wChemins.tl(8, "photo:");
+			wChemins.tl(9, "type: string");
+			wChemins.tl(9, "format: binary");
 			wChemins.tl(3, "responses:");
 			wChemins.tl(4, "'200':");
 			wChemins.tl(5, "description: >+");

@@ -181,6 +181,33 @@ public class AppSwagger2 extends AppSwagger2Gen<Object> {
 			wPaths.tl(7, "schema:");
 			wPaths.tl(8, "type: string");
 			wPaths.l();
+			wPaths.tl(1, "/photo:");
+			wPaths.tl(2, "post:");
+			wPaths.tl(3, "operationId: photo");
+			wPaths.tl(3, "x-vertx-event-bus: ", appName, "-", languageName, "-photo");
+			wPaths.tl(3, "description: >+");
+			wPaths.tl(3, "requestBody:");
+			wPaths.tl(4, "required: true");
+			wPaths.tl(4, "content:");
+			wPaths.tl(5, "multipart/form-data:");
+			wPaths.tl(6, "schema:");
+			wPaths.tl(7, "type: object");
+			wPaths.tl(7, "properties:");
+			wPaths.tl(8, "pk:");
+			wPaths.tl(9, "type: string");
+			wPaths.tl(8, "classeNomCanonique:");
+			wPaths.tl(9, "type: string");
+			wPaths.tl(8, "photo:");
+			wPaths.tl(9, "type: string");
+			wPaths.tl(9, "format: binary");
+			wPaths.tl(3, "responses:");
+			wPaths.tl(4, "'200':");
+			wPaths.tl(5, "description: >+");
+			wPaths.tl(5, "content:");
+			wPaths.tl(6, "application/json; charset=utf-8:");
+			wPaths.tl(7, "schema:");
+			wPaths.tl(8, "type: string");
+			wPaths.l();
 
 //		  /callback:
 //		    get:

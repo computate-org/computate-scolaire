@@ -1873,6 +1873,132 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		} g("div");
 	}
 
+	///////////
+	// photo //
+	///////////
+
+	/**	L'entité « photo »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String photo;
+	@JsonIgnore
+	public Wrap<String> photoWrap = new Wrap<String>().p(this).c(String.class).var("photo").o(photo);
+
+	/**	<br/>L'entité « photo »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.child.SchoolChild&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:photo">Trouver l'entité photo dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _photo(Wrap<String> c);
+
+	public String getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(String photo) {
+		this.photo = photo;
+		this.photoWrap.alreadyInitialized = true;
+	}
+	protected SchoolChild photoInit() {
+		if(!photoWrap.alreadyInitialized) {
+			_photo(photoWrap);
+			if(photo == null)
+				setPhoto(photoWrap.o);
+		}
+		photoWrap.alreadyInitialized(true);
+		return (SchoolChild)this;
+	}
+
+	public String solrPhoto() {
+		return photo;
+	}
+
+	public String strPhoto() {
+		return photo == null ? "" : photo;
+	}
+
+	public String jsonPhoto() {
+		return photo == null ? "" : photo;
+	}
+
+	public String nomAffichagePhoto() {
+		return "photo";
+	}
+
+	public String htmTooltipPhoto() {
+		return null;
+	}
+
+	public String htmPhoto() {
+		return photo == null ? "" : StringEscapeUtils.escapeHtml4(strPhoto());
+	}
+
+	public void inputPhoto(String classApiMethodMethod) {
+		SchoolChild s = (SchoolChild)this;
+		if(
+				userKeys.contains(siteRequest_.getUserKey())
+				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+				|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+		) {
+			e("div").a("class", "imageBase64Div1SchoolChild_photo").a("id", "imageBase64Div1SchoolChild", pk, "photo").f();
+				e("h5").f().sx("Upload image").g("h5"); 
+				e("form").a("method", "POST").a("enctype", "multipart/form-data").a("action", "/photo").a("class", "").f();
+				e("input").a("type", "hidden").a("name", "pk").a("value", pk).fg(); 
+				e("input").a("type", "hidden").a("name", "classSimpleName").a("value", "SchoolChild").fg(); 
+				e("input").a("name", "file").a("type", "file").a("onchange", "$.ajax({ type: 'POST', enctype: 'multipart/form-data', url: '/photo', data: new FormData(this.form), processData: false, contentType: false}); ").fg(); 
+				g("form");
+				e("img").a("id", "imageBase64ImgSchoolChild", pk, "photo");
+					a("class", "imgSchoolChild", pk, "Photo w3-image ");
+					a("src", StringUtils.isBlank(photo) ? "data:image/png;base64," : photo).a("alt", "");
+				fg();
+			g("div");
+		} else {
+			sx(htmPhoto());
+		}
+	}
+
+	public void htmPhoto(String classApiMethodMethod) {
+		SchoolChild s = (SchoolChild)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolChildPhoto").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-orange ").f();
+							e("label").a("for", classApiMethodMethod, "_photo").a("class", "").f().sx("photo").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputPhoto(classApiMethodMethod);
+							} g("div");
+							if(
+									userKeys.contains(siteRequest_.getUserKey())
+									|| Objects.equals(sessionId, siteRequest_.getSessionId())
+									|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+							) {
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-orange ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_photo')); $('#", classApiMethodMethod, "_photo').val(null); patchSchoolChildVal([{ name: 'fq', value: 'pk:' + $('#SchoolChildForm :input[name=pk]').val() }], 'setPhoto', null, function() { addGlow($('#", classApiMethodMethod, "_photo')); }, function() { addError($('#", classApiMethodMethod, "_photo')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
 	///////////////////////
 	// childCompleteName //
 	///////////////////////
@@ -1976,6 +2102,7 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		personFormalNameInit();
 		personBirthDateInit();
 		personAgeInSeptemberInit();
+		photoInit();
 		childCompleteNameInit();
 	}
 
@@ -2057,6 +2184,8 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 				return oSchoolChild.personBirthDate;
 			case "personAgeInSeptember":
 				return oSchoolChild.personAgeInSeptember;
+			case "photo":
+				return oSchoolChild.photo;
 			case "childCompleteName":
 				return oSchoolChild.childCompleteName;
 			default:
@@ -2133,6 +2262,11 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 			case "personBirthDate":
 				if(val != null)
 					setPersonBirthDate(val);
+				savesSchoolChild.add(var);
+				return val;
+			case "photo":
+				if(val != null)
+					setPhoto(val);
 				savesSchoolChild.add(var);
 				return val;
 			default:
@@ -2262,6 +2396,12 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 				String personAgeInSeptember = (String)solrDocument.get("personAgeInSeptember_stored_string");
 				if(personAgeInSeptember != null)
 					oSchoolChild.setPersonAgeInSeptember(personAgeInSeptember);
+			}
+
+			if(savesSchoolChild.contains("photo")) {
+				String photo = (String)solrDocument.get("photo_stored_string");
+				if(photo != null)
+					oSchoolChild.setPhoto(photo);
 			}
 
 			if(savesSchoolChild.contains("childCompleteName")) {
@@ -2439,6 +2579,9 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 			document.addField("personAgeInSeptember_indexed_string", personAgeInSeptember);
 			document.addField("personAgeInSeptember_stored_string", personAgeInSeptember);
 		}
+		if(photo != null) {
+			document.addField("photo_stored_string", photo);
+		}
 		if(childCompleteName != null) {
 			document.addField("childCompleteName_indexed_string", childCompleteName);
 			document.addField("childCompleteName_stored_string", childCompleteName);
@@ -2605,6 +2748,10 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		if(personAgeInSeptember != null)
 			oSchoolChild.setPersonAgeInSeptember(personAgeInSeptember);
 
+		String photo = (String)solrDocument.get("photo_stored_string");
+		if(photo != null)
+			oSchoolChild.setPhoto(photo);
+
 		String childCompleteName = (String)solrDocument.get("childCompleteName_stored_string");
 		if(childCompleteName != null)
 			oSchoolChild.setChildCompleteName(childCompleteName);
@@ -2631,6 +2778,8 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 				apiRequest.addVars("familyName");
 			if(!Objects.equals(personBirthDate, original.getPersonBirthDate()))
 				apiRequest.addVars("personBirthDate");
+			if(!Objects.equals(photo, original.getPhoto()))
+				apiRequest.addVars("photo");
 			super.apiRequestCluster();
 		}
 	}
@@ -2640,7 +2789,7 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), enrollmentKeys, personFirstName, personFirstNamePreferred, familyName, personBirthDate);
+		return Objects.hash(super.hashCode(), enrollmentKeys, personFirstName, personFirstNamePreferred, familyName, personBirthDate, photo);
 	}
 
 	////////////
@@ -2658,7 +2807,8 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 				&& Objects.equals( personFirstName, that.personFirstName )
 				&& Objects.equals( personFirstNamePreferred, that.personFirstNamePreferred )
 				&& Objects.equals( familyName, that.familyName )
-				&& Objects.equals( personBirthDate, that.personBirthDate );
+				&& Objects.equals( personBirthDate, that.personBirthDate )
+				&& Objects.equals( photo, that.photo );
 	}
 
 	//////////////
@@ -2674,6 +2824,7 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		sb.append( ", personFirstNamePreferred: \"" ).append(personFirstNamePreferred).append( "\"" );
 		sb.append( ", familyName: \"" ).append(familyName).append( "\"" );
 		sb.append( ", personBirthDate: " ).append(personBirthDate);
+		sb.append( ", photo: \"" ).append(photo).append( "\"" );
 		sb.append(" }");
 		return sb.toString();
 	}

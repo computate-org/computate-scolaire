@@ -154,6 +154,7 @@ public class ChildGenPage extends ChildGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPersonBirthDate("Page");
 			o.htmPersonAgeInSeptember("Page");
+			o.htmPhoto("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEnrollmentKeys("Page");
@@ -179,6 +180,7 @@ public class ChildGenPage extends ChildGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPersonBirthDate("POST");
 			o.htmPersonAgeInSeptember("POST");
+			o.htmPhoto("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEnrollmentKeys("POST");
@@ -225,6 +227,7 @@ public class ChildGenPage extends ChildGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPersonBirthDate("PUTCopy");
+			o.htmPhoto("PUTCopy");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEnrollmentKeys("PUTCopy");
@@ -253,6 +256,7 @@ public class ChildGenPage extends ChildGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPersonBirthDate("PATCH");
+			o.htmPhoto("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEnrollmentKeys("PATCH");

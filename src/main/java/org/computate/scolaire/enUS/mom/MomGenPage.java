@@ -155,6 +155,7 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 			o.htmPersonEmail("Page");
 			o.htmPersonPhoneNumber("Page");
 			o.htmPersonOccupation("Page");
+			o.htmPhoto("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPersonSms("Page");
@@ -187,6 +188,7 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 			o.htmPersonEmail("POST");
 			o.htmPersonPhoneNumber("POST");
 			o.htmPersonOccupation("POST");
+			o.htmPhoto("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPersonSms("POST");
@@ -241,6 +243,7 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 			o.htmPersonEmail("PUTCopy");
 			o.htmPersonPhoneNumber("PUTCopy");
 			o.htmPersonOccupation("PUTCopy");
+			o.htmPhoto("PUTCopy");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPersonSms("PUTCopy");
@@ -277,6 +280,7 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 			o.htmPersonEmail("PATCH");
 			o.htmPersonPhoneNumber("PATCH");
 			o.htmPersonOccupation("PATCH");
+			o.htmPhoto("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPersonSms("PATCH");

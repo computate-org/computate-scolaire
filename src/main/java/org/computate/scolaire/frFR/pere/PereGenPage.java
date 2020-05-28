@@ -156,6 +156,7 @@ public class PereGenPage extends PereGenPageGen<ClusterPage> {
 			o.htmPersonneMail("Page");
 			o.htmPersonneNumeroTelephone("Page");
 			o.htmPersonneOccupation("Page");
+			o.htmPhoto("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPersonneSms("Page");
@@ -188,6 +189,7 @@ public class PereGenPage extends PereGenPageGen<ClusterPage> {
 			o.htmPersonneMail("POST");
 			o.htmPersonneNumeroTelephone("POST");
 			o.htmPersonneOccupation("POST");
+			o.htmPhoto("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPersonneSms("POST");
@@ -242,6 +244,7 @@ public class PereGenPage extends PereGenPageGen<ClusterPage> {
 			o.htmPersonneMail("PUTCopie");
 			o.htmPersonneNumeroTelephone("PUTCopie");
 			o.htmPersonneOccupation("PUTCopie");
+			o.htmPhoto("PUTCopie");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPersonneSms("PUTCopie");
@@ -278,6 +281,7 @@ public class PereGenPage extends PereGenPageGen<ClusterPage> {
 			o.htmPersonneMail("PATCH");
 			o.htmPersonneNumeroTelephone("PATCH");
 			o.htmPersonneOccupation("PATCH");
+			o.htmPhoto("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPersonneSms("PATCH");

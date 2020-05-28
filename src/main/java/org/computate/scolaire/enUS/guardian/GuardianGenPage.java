@@ -155,6 +155,7 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 			o.htmPersonRelation("Page");
 			o.htmPersonEmergencyContact("Page");
 			o.htmPersonPickup("Page");
+			o.htmPhoto("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEnrollmentKeys("Page");
@@ -182,6 +183,7 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 			o.htmPersonRelation("POST");
 			o.htmPersonEmergencyContact("POST");
 			o.htmPersonPickup("POST");
+			o.htmPhoto("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEnrollmentKeys("POST");
@@ -231,6 +233,7 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 			o.htmPersonRelation("PUTCopy");
 			o.htmPersonEmergencyContact("PUTCopy");
 			o.htmPersonPickup("PUTCopy");
+			o.htmPhoto("PUTCopy");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEnrollmentKeys("PUTCopy");
@@ -262,6 +265,7 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 			o.htmPersonRelation("PATCH");
 			o.htmPersonEmergencyContact("PATCH");
 			o.htmPersonPickup("PATCH");
+			o.htmPhoto("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEnrollmentKeys("PATCH");

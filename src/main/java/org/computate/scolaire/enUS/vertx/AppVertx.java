@@ -1,7 +1,14 @@
 package org.computate.scolaire.enUS.vertx;
 
+import java.awt.AlphaComposite;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
@@ -9,12 +16,15 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
+import javax.imageio.ImageIO;
 import javax.xml.datatype.DatatypeFactory;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
@@ -28,7 +38,11 @@ import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
 import org.computate.scolaire.enUS.design.PageDesignEnUSGenApiService;
 import org.computate.scolaire.enUS.school.SchoolEnUSGenApiService;
+import org.computate.scolaire.enUS.child.SchoolChild;
+import org.computate.scolaire.enUS.child.SchoolChildEnUSApiServiceImpl;
 import org.computate.scolaire.enUS.child.SchoolChildEnUSGenApiService;
+import org.computate.scolaire.enUS.guardian.SchoolGuardian;
+import org.computate.scolaire.enUS.guardian.SchoolGuardianEnUSApiServiceImpl;
 import org.computate.scolaire.enUS.guardian.SchoolGuardianEnUSGenApiService;
 import org.computate.scolaire.enUS.html.part.HtmlPartEnUSGenApiService;
 import org.computate.scolaire.enUS.enrollment.SchoolEnrollment;
@@ -37,13 +51,18 @@ import org.computate.scolaire.enUS.enrollment.SchoolEnrollmentEnUSGenApiService;
 import org.computate.scolaire.enUS.java.LocalDateSerializer;
 import org.computate.scolaire.enUS.java.LocalTimeSerializer;
 import org.computate.scolaire.enUS.java.ZonedDateTimeSerializer;
+import org.computate.scolaire.enUS.mom.SchoolMom;
+import org.computate.scolaire.enUS.mom.SchoolMomEnUSApiServiceImpl;
 import org.computate.scolaire.enUS.mom.SchoolMomEnUSGenApiService;
 import org.computate.scolaire.enUS.payment.SchoolPayment;
 import org.computate.scolaire.enUS.payment.SchoolPaymentEnUSApiServiceImpl;
 import org.computate.scolaire.enUS.payment.SchoolPaymentEnUSGenApiService;
+import org.computate.scolaire.enUS.dad.SchoolDad;
+import org.computate.scolaire.enUS.dad.SchoolDadEnUSApiServiceImpl;
 import org.computate.scolaire.enUS.dad.SchoolDadEnUSGenApiService;
 import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
+import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.computate.scolaire.enUS.season.SchoolSeasonEnUSGenApiService;
 import org.computate.scolaire.enUS.session.SchoolSessionEnUSGenApiService;
 import org.computate.scolaire.enUS.user.SiteUserEnUSGenApiService;
@@ -55,6 +74,7 @@ import io.vertx.core.Future;
 import io.vertx.core.Handler;
 import io.vertx.core.Promise;
 import io.vertx.core.WorkerExecutor;
+import io.vertx.core.buffer.Buffer;
 import io.vertx.core.http.Cookie;
 import io.vertx.core.http.HttpHeaders;
 import io.vertx.core.http.HttpServerOptions;
@@ -75,6 +95,7 @@ import io.vertx.ext.healthchecks.HealthCheckHandler;
 import io.vertx.ext.healthchecks.Status;
 import io.vertx.ext.mail.MailClient;
 import io.vertx.ext.mail.MailConfig;
+import io.vertx.ext.web.FileUpload;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.Session;
 import io.vertx.ext.web.api.contract.openapi3.OpenAPI3RouterFactory;
@@ -418,6 +439,231 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 							rc.reroute("/");
 						});
 						routerFactory.addFailureHandlerByOperationId("logout", c -> {});
+		
+						routerFactory.addHandlerByOperationId("photo", rc -> {
+//							rc.response().setChunked(true);
+							Boolean photo = false;
+							for(FileUpload upload : rc.fileUploads()) {
+								if("file".equals(upload.name())) {
+									photo = true;
+									String fileName = StringUtils.substringBeforeLast(Paths.get(upload.uploadedFileName()).getFileName().toString(), ".") + ".png";
+									vertx.fileSystem().readFile(upload.uploadedFileName(), d -> {
+										if (d.succeeded()) {
+											try {
+												Long pk = Long.parseLong(rc.request().params().get("pk"));
+												String classSimpleName = rc.request().params().get("classSimpleName");
+												Buffer buffer = d.result();
+												byte[] bytes = buffer.getBytes();
+												ByteArrayInputStream is = new ByteArrayInputStream(bytes);
+							
+												BufferedImage img = ImageIO.read(is);
+												is.close();
+												int maxWidth = 300;
+												int maxHeight = 300;
+									
+												int type = img.getType() == 0? BufferedImage.TYPE_INT_ARGB : img.getType();
+									
+												//*Special* if the width or height is 0 use image src dimensions
+												if (maxWidth == 0) {
+													maxWidth = img.getWidth();
+												}
+												if (maxHeight == 0) {
+													maxHeight = img.getHeight();
+												}
+									
+												int height = maxHeight;
+												int width = maxWidth;
+									
+												//Work out the resized width/height
+												height = maxHeight;
+												int wid = maxWidth;
+												float sum = (float)img.getWidth() / (float)img.getHeight();
+												width = Math.round(height * sum);
+									
+												if (width > wid) {
+													//rezise again for the width this time
+													height = Math.round(wid/sum);
+													width = wid;
+												}
+									
+												BufferedImage resizedImage = new BufferedImage(width, height, type);
+												Graphics2D g = resizedImage.createGraphics();
+												g.setComposite(AlphaComposite.Src);
+									
+												g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+												g.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+												g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+									
+												g.drawImage(img, 0, 0, width, height, null);
+												g.dispose(); 
+									
+												ByteArrayOutputStream os = new ByteArrayOutputStream();
+												ImageIO.write(resizedImage, "png", os);
+												String str = "data:image/png;base64," + Base64.getEncoder().encodeToString(os.toByteArray());
+												os.close();
+
+												if("SchoolChild".equals(classSimpleName)) {
+													SchoolChildEnUSApiServiceImpl service = new SchoolChildEnUSApiServiceImpl(siteContextEnUS);
+													JsonObject json = new JsonObject();
+													json.put("setPhoto", str);
+													SiteRequestEnUS requeteSite = service.generateSiteRequestEnUSForSchoolChild(siteContextEnUS, null, json);
+
+													ApiRequest apiRequest = new ApiRequest();
+													apiRequest.setRows(1);
+													apiRequest.setNumFound(1l);
+													apiRequest.setNumPATCH(0L);
+													apiRequest.initDeepApiRequest(requeteSite);
+													requeteSite.setApiRequest_(apiRequest);
+													requeteSite.getVertx().eventBus().publish("websocketSchoolChild", JsonObject.mapFrom(apiRequest).toString());
+									
+													SearchList<SchoolChild> searchList = new SearchList<SchoolChild>();
+													searchList.setStore(true);
+													searchList.setQuery("*:*");
+													searchList.setC(SchoolChild.class);
+													searchList.addFilterQuery("pk_indexed_long:" + pk);
+													searchList.initDeepForClass(requeteSite);
+									
+													if(searchList.size() == 1) {
+														SchoolChild o = searchList.getList().stream().findFirst().orElse(null);
+														service.patchSchoolChildFuture(o, false, e -> {
+															if(e.succeeded()) {
+																rc.response().end("{}");
+															}
+															else {
+																LOGGER.error(configureOpenApiPhotoError, e.cause());
+																rc.fail(500, e.cause());
+															}
+														});
+													} else {
+														rc.response().end("{}");
+													}
+												}
+
+												if("SchoolMom".equals(classSimpleName)) {
+													SchoolMomEnUSApiServiceImpl service = new SchoolMomEnUSApiServiceImpl(siteContextEnUS);
+													JsonObject json = new JsonObject();
+													json.put("setPhoto", str);
+													SiteRequestEnUS requeteSite = service.generateSiteRequestEnUSForSchoolMom(siteContextEnUS, null, json);
+
+													ApiRequest apiRequest = new ApiRequest();
+													apiRequest.setRows(1);
+													apiRequest.setNumFound(1l);
+													apiRequest.setNumPATCH(0L);
+													apiRequest.initDeepApiRequest(requeteSite);
+													requeteSite.setApiRequest_(apiRequest);
+													requeteSite.getVertx().eventBus().publish("websocketSchoolMom", JsonObject.mapFrom(apiRequest).toString());
+									
+													SearchList<SchoolMom> searchList = new SearchList<SchoolMom>();
+													searchList.setStore(true);
+													searchList.setQuery("*:*");
+													searchList.setC(SchoolMom.class);
+													searchList.addFilterQuery("pk_indexed_long:" + pk);
+													searchList.initDeepForClass(requeteSite);
+									
+													if(searchList.size() == 1) {
+														SchoolMom o = searchList.getList().stream().findFirst().orElse(null);
+														service.patchSchoolMomFuture(o, false, e -> {
+															if(e.succeeded()) {
+																rc.response().end("{}");
+															}
+															else {
+																LOGGER.error(configureOpenApiPhotoError, e.cause());
+																rc.fail(500, e.cause());
+															}
+														});
+													} else {
+														rc.response().end("{}");
+													}
+												}
+
+												if("SchoolDad".equals(classSimpleName)) {
+													SchoolDadEnUSApiServiceImpl service = new SchoolDadEnUSApiServiceImpl(siteContextEnUS);
+													JsonObject json = new JsonObject();
+													json.put("setPhoto", str);
+													SiteRequestEnUS requeteSite = service.generateSiteRequestEnUSForSchoolDad(siteContextEnUS, null, json);
+
+													ApiRequest apiRequest = new ApiRequest();
+													apiRequest.setRows(1);
+													apiRequest.setNumFound(1l);
+													apiRequest.setNumPATCH(0L);
+													apiRequest.initDeepApiRequest(requeteSite);
+													requeteSite.setApiRequest_(apiRequest);
+													requeteSite.getVertx().eventBus().publish("websocketSchoolDad", JsonObject.mapFrom(apiRequest).toString());
+									
+													SearchList<SchoolDad> searchList = new SearchList<SchoolDad>();
+													searchList.setStore(true);
+													searchList.setQuery("*:*");
+													searchList.setC(SchoolDad.class);
+													searchList.addFilterQuery("pk_indexed_long:" + pk);
+													searchList.initDeepForClass(requeteSite);
+									
+													if(searchList.size() == 1) {
+														SchoolDad o = searchList.getList().stream().findFirst().orElse(null);
+														service.patchSchoolDadFuture(o, false, e -> {
+															if(e.succeeded()) {
+																rc.response().end("{}");
+															}
+															else {
+																LOGGER.error(configureOpenApiPhotoError, e.cause());
+																rc.fail(500, e.cause());
+															}
+														});
+													} else {
+														rc.response().end("{}");
+													}
+												}
+
+												if("SchoolGuardian".equals(classSimpleName)) {
+													SchoolGuardianEnUSApiServiceImpl service = new SchoolGuardianEnUSApiServiceImpl(siteContextEnUS);
+													JsonObject json = new JsonObject();
+													json.put("setPhoto", str);
+													SiteRequestEnUS requeteSite = service.generateSiteRequestEnUSForSchoolGuardian(siteContextEnUS, null, json);
+
+													ApiRequest apiRequest = new ApiRequest();
+													apiRequest.setRows(1);
+													apiRequest.setNumFound(1l);
+													apiRequest.setNumPATCH(0L);
+													apiRequest.initDeepApiRequest(requeteSite);
+													requeteSite.setApiRequest_(apiRequest);
+													requeteSite.getVertx().eventBus().publish("websocketSchoolGuardian", JsonObject.mapFrom(apiRequest).toString());
+									
+													SearchList<SchoolGuardian> searchList = new SearchList<SchoolGuardian>();
+													searchList.setStore(true);
+													searchList.setQuery("*:*");
+													searchList.setC(SchoolGuardian.class);
+													searchList.addFilterQuery("pk_indexed_long:" + pk);
+													searchList.initDeepForClass(requeteSite);
+									
+													if(searchList.size() == 1) {
+														SchoolGuardian o = searchList.getList().stream().findFirst().orElse(null);
+														service.patchSchoolGuardianFuture(o, false, e -> {
+															if(e.succeeded()) {
+																rc.response().end("{}");
+															}
+															else {
+																LOGGER.error(configureOpenApiPhotoError, e.cause());
+																rc.fail(500, e.cause());
+															}
+														});
+													} else {
+														rc.response().end("{}");
+													}
+												}
+											} catch(Exception ex) {
+												LOGGER.error(configureOpenApiPhotoError, ex);
+												rc.fail(500, ex);
+											}
+										}
+									});
+								}
+								if(!photo)
+									rc.response().end("{}");
+								upload.fileName();
+							}
+						});
+						routerFactory.addFailureHandlerByOperationId("photo", c -> {
+							LOGGER.error("Upload failed. ");
+						});
 		
 //						routerFactory.addSecurityHandler("openIdConnect", authHandler);
 						routerFactory.addSecuritySchemaScopeValidator("openIdConnect", "DefaultAuthScope", authHandler);

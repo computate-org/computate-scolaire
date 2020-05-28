@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.mere;        
+package org.computate.scolaire.frFR.mere;          
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -477,9 +477,23 @@ public class MereScolaire extends MereScolaireGen<Cluster> {
 	 * Definir: true
 	 * HtmlLigne: 5
 	 * HtmlCellule: 4
-	 */                   
+	 */                  
 	protected void _personneChercher(Couverture<Boolean> c) {
 		c.o(true);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Stocke: true
+	 * NomAffichage.frFR: photo
+	 * NomAffichage.enUS: photo
+	 * Definir: true
+	 * HtmlLigne: 4
+	 * HtmlCellule: 5
+	 * ImageBase64Url.frFR: /photo
+	 * ImageBase64Url.enUS: /photo
+	 */               
+	protected void _photo(Couverture<String> c) {
 	}
 
 	/**    

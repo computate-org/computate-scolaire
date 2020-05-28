@@ -121,6 +121,9 @@ public class SchoolMom extends SchoolMomGen<Cluster> {
 		c.o(true);
 	}
 
+	protected void _photo(Wrap<String> c) {
+	}
+
 	protected void _momCompleteName(Wrap<String> c) {
 		c.o(personCompleteName);
 	}

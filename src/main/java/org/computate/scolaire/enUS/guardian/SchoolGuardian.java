@@ -122,6 +122,9 @@ public class SchoolGuardian extends SchoolGuardianGen<Cluster> {
 		c.o(false);
 	}
 
+	protected void _photo(Wrap<String> c) {
+	}
+
 	protected void _guardianCompleteName(Wrap<String> c) {
 		c.o(personCompleteName);
 	}

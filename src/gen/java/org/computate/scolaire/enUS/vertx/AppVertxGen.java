@@ -53,6 +53,10 @@ public abstract class AppVertxGen<DEV> extends AbstractVerticle {
 	public static final String configureOpenApiError = configureOpenApiError1;
 	public static final String configureOpenApiSuccess1 = "The auth server and API was configured successfully. ";
 	public static final String configureOpenApiSuccess = configureOpenApiSuccess1;
+	public static final String configureOpenApiPhotoError1 = "Could not process the photo upload. ";
+	public static final String configureOpenApiPhotoError = configureOpenApiPhotoError1;
+	public static final String configureOpenApiPhotoSuccess1 = "Photo successfully uploaded. ";
+	public static final String configureOpenApiPhotoSuccess = configureOpenApiPhotoSuccess1;
 
 	public static final String configureHealthChecksErrorDatabase1 = "The database is not configured properly. ";
 	public static final String configureHealthChecksErrorDatabase = configureHealthChecksErrorDatabase1;
@@ -211,5 +215,5 @@ public abstract class AppVertxGen<DEV> extends AbstractVerticle {
 		return sb.toString();
 	}
 
-	public static final String[] AppVertxVals = new String[] { configureDataConnectionError1, configureDataConnectionSuccess1, configureDataInitError1, configureDataInitSuccess1, configureClusterDataError1, configureClusterDataSuccess1, configureOpenApiError1, configureOpenApiSuccess1, configureHealthChecksErrorDatabase1, configureHealthChecksEmptySolr1, configureHealthChecksErrorSolr1, configureHealthChecksErrorVertx1, startServerErrorServer1, startServerSuccessServer1, startServerBeforeServer1, startServerSsl1, closeDataError1, closeDataSuccess1 };
+	public static final String[] AppVertxVals = new String[] { configureDataConnectionError1, configureDataConnectionSuccess1, configureDataInitError1, configureDataInitSuccess1, configureClusterDataError1, configureClusterDataSuccess1, configureOpenApiError1, configureOpenApiSuccess1, configureOpenApiPhotoError1, configureOpenApiPhotoSuccess1, configureHealthChecksErrorDatabase1, configureHealthChecksEmptySolr1, configureHealthChecksErrorSolr1, configureHealthChecksErrorVertx1, startServerErrorServer1, startServerSuccessServer1, startServerBeforeServer1, startServerSsl1, closeDataError1, closeDataSuccess1 };
 }

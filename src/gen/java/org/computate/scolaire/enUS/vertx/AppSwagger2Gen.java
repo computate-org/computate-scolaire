@@ -1,35 +1,44 @@
 package org.computate.scolaire.enUS.vertx;
 
+import java.util.Arrays;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
-import java.math.MathContext;
-import org.computate.scolaire.enUS.cluster.Cluster;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
-import org.apache.commons.text.StringEscapeUtils;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import org.computate.scolaire.enUS.writer.AllWriter;
 import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.apache.commons.lang3.StringUtils;
 import java.lang.Integer;
 import java.text.NumberFormat;
+import io.vertx.core.logging.LoggerFactory;
+import org.computate.scolaire.enUS.wrap.Wrap;
+import org.computate.scolaire.enUS.config.SiteConfig;
+import org.apache.commons.collections.CollectionUtils;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.computate.scolaire.enUS.request.SiteRequestEnUS;
+import java.lang.String;
+import io.vertx.core.logging.Logger;
+import java.math.MathContext;
+import org.computate.scolaire.enUS.cluster.Cluster;
+import org.apache.commons.text.StringEscapeUtils;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.io.File;
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
-import org.computate.scolaire.enUS.wrap.Wrap;
-import org.computate.scolaire.enUS.config.SiteConfig;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.math.NumberUtils;
 import java.util.Optional;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import java.lang.Object;
-import org.computate.scolaire.enUS.request.SiteRequestEnUS;
-import java.lang.String;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 
 /**	
  * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.vertx.AppSwagger2&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
  * <br/>
  **/
 public abstract class AppSwagger2Gen<DEV> extends Object {
+	protected static final Logger LOGGER = LoggerFactory.getLogger(AppSwagger2.class);
 
 	//////////////////
 	// siteRequest_ //

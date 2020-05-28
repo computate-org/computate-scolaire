@@ -124,6 +124,9 @@ public class SchoolDad extends SchoolDadGen<Cluster> {
 		c.o(true);
 	}
 
+	protected void _photo(Wrap<String> c) {
+	}
+
 	protected void _dadCompleteName(Wrap<String> c) {
 		c.o(personCompleteName);
 	}

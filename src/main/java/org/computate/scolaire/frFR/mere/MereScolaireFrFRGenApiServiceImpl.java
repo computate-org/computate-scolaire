@@ -461,6 +461,19 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 							});
 						}));
 						break;
+					case "photo":
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "photo", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur MereScolaire.photo a échoué", b.cause())));
+							});
+						}));
+						break;
 					}
 				}
 			}
@@ -1209,6 +1222,19 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 									a.handle(Future.succeededFuture());
 								else
 									a.handle(Future.failedFuture(new Exception("valeur MereScolaire.personneChercher a échoué", b.cause())));
+							});
+						}));
+						break;
+					case "photo":
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "photo", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur MereScolaire.photo a échoué", b.cause())));
 							});
 						}));
 						break;
@@ -1980,6 +2006,34 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 										a.handle(Future.succeededFuture());
 									else
 										a.handle(Future.failedFuture(new Exception("valeur MereScolaire.personneChercher a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setPhoto":
+						if(jsonObject.getString(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "photo")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur MereScolaire.photo a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setPhoto(jsonObject.getString(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "photo", o2.jsonPhoto())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur MereScolaire.photo a échoué", b.cause())));
 								});
 							}));
 						}

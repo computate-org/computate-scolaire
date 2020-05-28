@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.pere;                       
+package org.computate.scolaire.frFR.pere;                         
 
 import java.text.Normalizer;
 import java.time.LocalDate;
@@ -489,6 +489,20 @@ public class PereScolaire extends PereScolaireGen<Cluster> {
 	 */                 
 	protected void _personneChercher(Couverture<Boolean> c) {
 		c.o(true);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Stocke: true
+	 * NomAffichage.frFR: photo
+	 * NomAffichage.enUS: photo
+	 * Definir: true
+	 * HtmlLigne: 4
+	 * HtmlCellule: 5
+	 * ImageBase64Url.frFR: /photo
+	 * ImageBase64Url.enUS: /photo
+	 */              
+	protected void _photo(Couverture<String> c) {
 	}
 
 	/**    

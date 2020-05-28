@@ -2623,6 +2623,132 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 		} g("div");
 	}
 
+	///////////
+	// photo //
+	///////////
+
+	/**	L'entité « photo »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String photo;
+	@JsonIgnore
+	public Wrap<String> photoWrap = new Wrap<String>().p(this).c(String.class).var("photo").o(photo);
+
+	/**	<br/>L'entité « photo »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.mom.SchoolMom&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:photo">Trouver l'entité photo dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _photo(Wrap<String> c);
+
+	public String getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(String photo) {
+		this.photo = photo;
+		this.photoWrap.alreadyInitialized = true;
+	}
+	protected SchoolMom photoInit() {
+		if(!photoWrap.alreadyInitialized) {
+			_photo(photoWrap);
+			if(photo == null)
+				setPhoto(photoWrap.o);
+		}
+		photoWrap.alreadyInitialized(true);
+		return (SchoolMom)this;
+	}
+
+	public String solrPhoto() {
+		return photo;
+	}
+
+	public String strPhoto() {
+		return photo == null ? "" : photo;
+	}
+
+	public String jsonPhoto() {
+		return photo == null ? "" : photo;
+	}
+
+	public String nomAffichagePhoto() {
+		return "photo";
+	}
+
+	public String htmTooltipPhoto() {
+		return null;
+	}
+
+	public String htmPhoto() {
+		return photo == null ? "" : StringEscapeUtils.escapeHtml4(strPhoto());
+	}
+
+	public void inputPhoto(String classApiMethodMethod) {
+		SchoolMom s = (SchoolMom)this;
+		if(
+				userKeys.contains(siteRequest_.getUserKey())
+				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+				|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+		) {
+			e("div").a("class", "imageBase64Div1SchoolMom_photo").a("id", "imageBase64Div1SchoolMom", pk, "photo").f();
+				e("h5").f().sx("Upload image").g("h5"); 
+				e("form").a("method", "POST").a("enctype", "multipart/form-data").a("action", "/photo").a("class", "").f();
+				e("input").a("type", "hidden").a("name", "pk").a("value", pk).fg(); 
+				e("input").a("type", "hidden").a("name", "classSimpleName").a("value", "SchoolMom").fg(); 
+				e("input").a("name", "file").a("type", "file").a("onchange", "$.ajax({ type: 'POST', enctype: 'multipart/form-data', url: '/photo', data: new FormData(this.form), processData: false, contentType: false}); ").fg(); 
+				g("form");
+				e("img").a("id", "imageBase64ImgSchoolMom", pk, "photo");
+					a("class", "imgSchoolMom", pk, "Photo w3-image ");
+					a("src", StringUtils.isBlank(photo) ? "data:image/png;base64," : photo).a("alt", "");
+				fg();
+			g("div");
+		} else {
+			sx(htmPhoto());
+		}
+	}
+
+	public void htmPhoto(String classApiMethodMethod) {
+		SchoolMom s = (SchoolMom)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolMomPhoto").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-pink ").f();
+							e("label").a("for", classApiMethodMethod, "_photo").a("class", "").f().sx("photo").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputPhoto(classApiMethodMethod);
+							} g("div");
+							if(
+									userKeys.contains(siteRequest_.getUserKey())
+									|| Objects.equals(sessionId, siteRequest_.getSessionId())
+									|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+							) {
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-pink ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_photo')); $('#", classApiMethodMethod, "_photo').val(null); patchSchoolMomVal([{ name: 'fq', value: 'pk:' + $('#SchoolMomForm :input[name=pk]').val() }], 'setPhoto', null, function() { addGlow($('#", classApiMethodMethod, "_photo')); }, function() { addError($('#", classApiMethodMethod, "_photo')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
 	/////////////////////
 	// momCompleteName //
 	/////////////////////
@@ -2732,6 +2858,7 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 		personReceiveEmailInit();
 		personEmergencyContactInit();
 		personPickupInit();
+		photoInit();
 		momCompleteNameInit();
 	}
 
@@ -2825,6 +2952,8 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 				return oSchoolMom.personEmergencyContact;
 			case "personPickup":
 				return oSchoolMom.personPickup;
+			case "photo":
+				return oSchoolMom.photo;
 			case "momCompleteName":
 				return oSchoolMom.momCompleteName;
 			default:
@@ -2931,6 +3060,11 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 			case "personPickup":
 				if(val != null)
 					setPersonPickup(val);
+				savesSchoolMom.add(var);
+				return val;
+			case "photo":
+				if(val != null)
+					setPhoto(val);
 				savesSchoolMom.add(var);
 				return val;
 			default:
@@ -3096,6 +3230,12 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 				Boolean personPickup = (Boolean)solrDocument.get("personPickup_stored_boolean");
 				if(personPickup != null)
 					oSchoolMom.setPersonPickup(personPickup);
+			}
+
+			if(savesSchoolMom.contains("photo")) {
+				String photo = (String)solrDocument.get("photo_stored_string");
+				if(photo != null)
+					oSchoolMom.setPhoto(photo);
 			}
 
 			if(savesSchoolMom.contains("momCompleteName")) {
@@ -3296,6 +3436,9 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 		if(personPickup != null) {
 			document.addField("personPickup_indexed_boolean", personPickup);
 			document.addField("personPickup_stored_boolean", personPickup);
+		}
+		if(photo != null) {
+			document.addField("photo_stored_string", photo);
 		}
 		if(momCompleteName != null) {
 			document.addField("momCompleteName_indexed_string", momCompleteName);
@@ -3499,6 +3642,10 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 		if(personPickup != null)
 			oSchoolMom.setPersonPickup(personPickup);
 
+		String photo = (String)solrDocument.get("photo_stored_string");
+		if(photo != null)
+			oSchoolMom.setPhoto(photo);
+
 		String momCompleteName = (String)solrDocument.get("momCompleteName_stored_string");
 		if(momCompleteName != null)
 			oSchoolMom.setMomCompleteName(momCompleteName);
@@ -3537,6 +3684,8 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 				apiRequest.addVars("personEmergencyContact");
 			if(!Objects.equals(personPickup, original.getPersonPickup()))
 				apiRequest.addVars("personPickup");
+			if(!Objects.equals(photo, original.getPhoto()))
+				apiRequest.addVars("photo");
 			super.apiRequestCluster();
 		}
 	}
@@ -3546,7 +3695,7 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), enrollmentKeys, personFirstName, personFirstNamePreferred, familyName, personOccupation, personPhoneNumber, personEmail, personSms, personReceiveEmail, personEmergencyContact, personPickup);
+		return Objects.hash(super.hashCode(), enrollmentKeys, personFirstName, personFirstNamePreferred, familyName, personOccupation, personPhoneNumber, personEmail, personSms, personReceiveEmail, personEmergencyContact, personPickup, photo);
 	}
 
 	////////////
@@ -3570,7 +3719,8 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 				&& Objects.equals( personSms, that.personSms )
 				&& Objects.equals( personReceiveEmail, that.personReceiveEmail )
 				&& Objects.equals( personEmergencyContact, that.personEmergencyContact )
-				&& Objects.equals( personPickup, that.personPickup );
+				&& Objects.equals( personPickup, that.personPickup )
+				&& Objects.equals( photo, that.photo );
 	}
 
 	//////////////
@@ -3592,6 +3742,7 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 		sb.append( ", personReceiveEmail: " ).append(personReceiveEmail);
 		sb.append( ", personEmergencyContact: " ).append(personEmergencyContact);
 		sb.append( ", personPickup: " ).append(personPickup);
+		sb.append( ", photo: \"" ).append(photo).append( "\"" );
 		sb.append(" }");
 		return sb.toString();
 	}

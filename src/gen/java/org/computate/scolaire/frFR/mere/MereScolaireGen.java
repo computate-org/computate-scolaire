@@ -2624,6 +2624,132 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 		} g("div");
 	}
 
+	///////////
+	// photo //
+	///////////
+
+	/**	L'entité « photo »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String photo;
+	@JsonIgnore
+	public Couverture<String> photoCouverture = new Couverture<String>().p(this).c(String.class).var("photo").o(photo);
+
+	/**	<br/>L'entité « photo »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.mere.MereScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:photo">Trouver l'entité photo dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _photo(Couverture<String> c);
+
+	public String getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(String photo) {
+		this.photo = photo;
+		this.photoCouverture.dejaInitialise = true;
+	}
+	protected MereScolaire photoInit() {
+		if(!photoCouverture.dejaInitialise) {
+			_photo(photoCouverture);
+			if(photo == null)
+				setPhoto(photoCouverture.o);
+		}
+		photoCouverture.dejaInitialise(true);
+		return (MereScolaire)this;
+	}
+
+	public String solrPhoto() {
+		return photo;
+	}
+
+	public String strPhoto() {
+		return photo == null ? "" : photo;
+	}
+
+	public String jsonPhoto() {
+		return photo == null ? "" : photo;
+	}
+
+	public String nomAffichagePhoto() {
+		return "photo";
+	}
+
+	public String htmTooltipPhoto() {
+		return null;
+	}
+
+	public String htmPhoto() {
+		return photo == null ? "" : StringEscapeUtils.escapeHtml4(strPhoto());
+	}
+
+	public void inputPhoto(String classeApiMethodeMethode) {
+		MereScolaire s = (MereScolaire)this;
+		if(
+				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
+				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+		) {
+			e("div").a("class", "imageBase64Div1MereScolaire_photo").a("id", "imageBase64Div1MereScolaire", pk, "photo").f();
+				e("h5").f().sx("Télécharger image").g("h5"); 
+				e("form").a("method", "POST").a("enctype", "multipart/form-data").a("action", "/photo").a("class", "").f();
+				e("input").a("type", "hidden").a("name", "pk").a("value", pk).fg(); 
+				e("input").a("type", "hidden").a("name", "classeNomSimple").a("value", "MereScolaire").fg(); 
+				e("input").a("name", "fichier").a("type", "file").a("onchange", "$.ajax({ type: 'POST', enctype: 'multipart/form-data', url: '/photo', data: new FormData(this.form), processData: false, contentType: false}); ").fg(); 
+				g("form");
+				e("img").a("id", "imageBase64ImgMereScolaire", pk, "photo");
+					a("class", "imgMereScolaire", pk, "Photo w3-image ");
+					a("src", StringUtils.isBlank(photo) ? "data:image/png;base64," : photo).a("alt", "");
+				fg();
+			g("div");
+		} else {
+			sx(htmPhoto());
+		}
+	}
+
+	public void htmPhoto(String classeApiMethodeMethode) {
+		MereScolaire s = (MereScolaire)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "MereScolairePhoto").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-pink ").f();
+							e("label").a("for", classeApiMethodeMethode, "_photo").a("class", "").f().sx("photo").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputPhoto(classeApiMethodeMethode);
+							} g("div");
+							if(
+									utilisateurCles.contains(requeteSite_.getUtilisateurCle())
+									|| Objects.equals(sessionId, requeteSite_.getSessionId())
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+							) {
+								if("Page".equals(classeApiMethodeMethode)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-pink ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_photo')); $('#", classeApiMethodeMethode, "_photo').val(null); patchMereScolaireVal([{ name: 'fq', value: 'pk:' + $('#MereScolaireForm :input[name=pk]').val() }], 'setPhoto', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_photo')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_photo')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
 	////////////////////
 	// mereNomComplet //
 	////////////////////
@@ -2733,6 +2859,7 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 		personneRecevoirMailInit();
 		personneContactUrgenceInit();
 		personneChercherInit();
+		photoInit();
 		mereNomCompletInit();
 	}
 
@@ -2826,6 +2953,8 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 				return oMereScolaire.personneContactUrgence;
 			case "personneChercher":
 				return oMereScolaire.personneChercher;
+			case "photo":
+				return oMereScolaire.photo;
 			case "mereNomComplet":
 				return oMereScolaire.mereNomComplet;
 			default:
@@ -2932,6 +3061,11 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 			case "personneChercher":
 				if(val != null)
 					setPersonneChercher(val);
+				sauvegardesMereScolaire.add(var);
+				return val;
+			case "photo":
+				if(val != null)
+					setPhoto(val);
 				sauvegardesMereScolaire.add(var);
 				return val;
 			default:
@@ -3097,6 +3231,12 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 				Boolean personneChercher = (Boolean)solrDocument.get("personneChercher_stored_boolean");
 				if(personneChercher != null)
 					oMereScolaire.setPersonneChercher(personneChercher);
+			}
+
+			if(sauvegardesMereScolaire.contains("photo")) {
+				String photo = (String)solrDocument.get("photo_stored_string");
+				if(photo != null)
+					oMereScolaire.setPhoto(photo);
 			}
 
 			if(sauvegardesMereScolaire.contains("mereNomComplet")) {
@@ -3297,6 +3437,9 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 		if(personneChercher != null) {
 			document.addField("personneChercher_indexed_boolean", personneChercher);
 			document.addField("personneChercher_stored_boolean", personneChercher);
+		}
+		if(photo != null) {
+			document.addField("photo_stored_string", photo);
 		}
 		if(mereNomComplet != null) {
 			document.addField("mereNomComplet_indexed_string", mereNomComplet);
@@ -3500,6 +3643,10 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 		if(personneChercher != null)
 			oMereScolaire.setPersonneChercher(personneChercher);
 
+		String photo = (String)solrDocument.get("photo_stored_string");
+		if(photo != null)
+			oMereScolaire.setPhoto(photo);
+
 		String mereNomComplet = (String)solrDocument.get("mereNomComplet_stored_string");
 		if(mereNomComplet != null)
 			oMereScolaire.setMereNomComplet(mereNomComplet);
@@ -3538,6 +3685,8 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 				requeteApi.addVars("personneContactUrgence");
 			if(!Objects.equals(personneChercher, original.getPersonneChercher()))
 				requeteApi.addVars("personneChercher");
+			if(!Objects.equals(photo, original.getPhoto()))
+				requeteApi.addVars("photo");
 			super.requeteApiCluster();
 		}
 	}
@@ -3547,7 +3696,7 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), inscriptionCles, personnePrenom, personnePrenomPrefere, familleNom, personneOccupation, personneNumeroTelephone, personneMail, personneSms, personneRecevoirMail, personneContactUrgence, personneChercher);
+		return Objects.hash(super.hashCode(), inscriptionCles, personnePrenom, personnePrenomPrefere, familleNom, personneOccupation, personneNumeroTelephone, personneMail, personneSms, personneRecevoirMail, personneContactUrgence, personneChercher, photo);
 	}
 
 	////////////
@@ -3571,7 +3720,8 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 				&& Objects.equals( personneSms, that.personneSms )
 				&& Objects.equals( personneRecevoirMail, that.personneRecevoirMail )
 				&& Objects.equals( personneContactUrgence, that.personneContactUrgence )
-				&& Objects.equals( personneChercher, that.personneChercher );
+				&& Objects.equals( personneChercher, that.personneChercher )
+				&& Objects.equals( photo, that.photo );
 	}
 
 	//////////////
@@ -3593,6 +3743,7 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 		sb.append( ", personneRecevoirMail: " ).append(personneRecevoirMail);
 		sb.append( ", personneContactUrgence: " ).append(personneContactUrgence);
 		sb.append( ", personneChercher: " ).append(personneChercher);
+		sb.append( ", photo: \"" ).append(photo).append( "\"" );
 		sb.append(" }");
 		return sb.toString();
 	}

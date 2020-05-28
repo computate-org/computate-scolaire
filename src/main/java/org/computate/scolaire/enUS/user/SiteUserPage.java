@@ -194,10 +194,10 @@ public class SiteUserPage extends SiteUserPageGen<SiteUserGenPage> {
 					controller.toString();
 	//				throw new RuntimeException(controller.getResults().toString());
 				else {
-					GetHostedProfilePageResponse response = controller.getApiResponse();
-					if(MessageTypeEnum.ERROR.equals(response.getMessages().getResultCode())) {
+					GetHostedProfilePageResponse profilePageResponse = controller.getApiResponse();
+					if(MessageTypeEnum.ERROR.equals(profilePageResponse.getMessages().getResultCode())) {
 //						throw new RuntimeException(response.getMessages().getMessage().stream().findFirst().map(m -> String.format("%s %s", m.getCode(), m.getText())).orElse("GetHostedProfilePageRequest failed. "));
-						System.err.println(response.getMessages().getMessage().stream().findFirst().map(m -> String.format("%s %s", m.getCode(), m.getText())).orElse("GetHostedProfilePageRequest failed. "));
+						System.err.println(profilePageResponse.getMessages().getMessage().stream().findFirst().map(m -> String.format("%s %s", m.getCode(), m.getText())).orElse("GetHostedProfilePageRequest failed. "));
 					}
 					else {
 						{ e("h1").f();
@@ -208,13 +208,15 @@ public class SiteUserPage extends SiteUserPageGen<SiteUserGenPage> {
 							} g("a");
 						} g("h1");
 						{ e("div").a("class", "").f();
-							e("div").a("class", "w3-large font-weight-bold ").f().sx("Configure school payments with authorize.net").g("div");
+							e("div").a("class", "w3-large font-weight-bold ").f().sx("Manage username and password").g("div");
+							e("a").a("target", "_blank").a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ").a("href", siteConfig.getAuthUrl() + "/realms/", siteConfig.getAuthRealm(), "/account").f().sx("Manage user profile").g("a");
+						} g("div");
+						{ e("div").a("class", "").f();
+							e("div").a("class", "w3-large font-weight-bold ").f().sx("Configure payment profile with authorize.net").g("div");
 							{ e("form").a("method", "post").a("target", "_blank").a("action", siteConfig.getAuthorizeUrl() + "/customer/manage").f();
-								e("input").a("type", "hidden").a("name", "token").a("value", response.getToken()).fg();
-				//				e("input").a("type", "hidden").a("name", "paymentProfileId").a("value", response.getToken()).fg();
-								e("button").a("type", "submit").f().sx("Manage payments").g("button");
+								e("input").a("type", "hidden").a("name", "token").a("value", profilePageResponse.getToken()).fg();
+								e("button").a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ").a("type", "submit").f().sx("Manage payment profile").g("button");
 							} g("form");
-							e("div").a("class", "").f().sx("Click here to manage payments in a new tab. ").g("div");
 						} g("div");
 					}
 				}

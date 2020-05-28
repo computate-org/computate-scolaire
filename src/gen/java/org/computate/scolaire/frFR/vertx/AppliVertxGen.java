@@ -52,6 +52,10 @@ public abstract class AppliVertxGen<DEV> extends AbstractVerticle {
 	public static final String configurerOpenApiErreur = configurerOpenApiErreur1;
 	public static final String configurerOpenApiSucces1 = "Le serveur auth et le API ont été configurées avec succès. ";
 	public static final String configurerOpenApiSucces = configurerOpenApiSucces1;
+	public static final String configurerOpenApiPhotoErreur1 = "Impossible de traiter le photo téléchargement. ";
+	public static final String configurerOpenApiPhotoErreur = configurerOpenApiPhotoErreur1;
+	public static final String configurerOpenApiPhotoSucces1 = "Photo téléchargement a réussi. ";
+	public static final String configurerOpenApiPhotoSucces = configurerOpenApiPhotoSucces1;
 
 	public static final String configurerControlesSanteErreurBaseDeDonnees1 = "La base de données n'est pas configurée correctement. ";
 	public static final String configurerControlesSanteErreurBaseDeDonnees = configurerControlesSanteErreurBaseDeDonnees1;
@@ -210,5 +214,5 @@ public abstract class AppliVertxGen<DEV> extends AbstractVerticle {
 		return sb.toString();
 	}
 
-	public static final String[] AppliVertxVals = new String[] { configurerDonneesErreurConnexion1, configurerDonneesSuccesConnexion1, configurerDonneesErreurInit1, configurerDonneesSuccesInit1, configurerClusterErreurDonnees1, configurerClusterSuccesDonnees1, configurerOpenApiErreur1, configurerOpenApiSucces1, configurerControlesSanteErreurBaseDeDonnees1, configurerControlesSanteVideSolr1, configurerControlesSanteErreurSolr1, configurerControlesSanteErreurVertx1, demarrerServeurErreurServeur1, demarrerServeurSuccesServeur1, demarrerServeurAvantServeur1, demarrerServeurSsl1, fermerDonneesErreur1, fermerDonneesSucces1 };
+	public static final String[] AppliVertxVals = new String[] { configurerDonneesErreurConnexion1, configurerDonneesSuccesConnexion1, configurerDonneesErreurInit1, configurerDonneesSuccesInit1, configurerClusterErreurDonnees1, configurerClusterSuccesDonnees1, configurerOpenApiErreur1, configurerOpenApiSucces1, configurerOpenApiPhotoErreur1, configurerOpenApiPhotoSucces1, configurerControlesSanteErreurBaseDeDonnees1, configurerControlesSanteVideSolr1, configurerControlesSanteErreurSolr1, configurerControlesSanteErreurVertx1, demarrerServeurErreurServeur1, demarrerServeurSuccesServeur1, demarrerServeurAvantServeur1, demarrerServeurSsl1, fermerDonneesErreur1, fermerDonneesSucces1 };
 }

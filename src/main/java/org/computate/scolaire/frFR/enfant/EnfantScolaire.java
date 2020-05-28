@@ -418,7 +418,7 @@ public class EnfantScolaire extends EnfantScolaireGen<Cluster> {
 	 * r.enUS: septemberFirst
 	 * r: annee
 	 * r.enUS: year
-	 */                   
+	 */             
 	protected void _personneAgeEnSeptembre(Couverture<String> c) {
 		if(personneDateNaissance != null) {
 			Integer annee = LocalDate.now().getYear();
@@ -426,6 +426,20 @@ public class EnfantScolaire extends EnfantScolaireGen<Cluster> {
 			long age = ChronoUnit.YEARS.between(personneDateNaissance, premierSeptembre);
 			c.o(String.format("âge %s le 1 septembre %s", age, annee));
 		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Stocke: true
+	 * NomAffichage.frFR: photo
+	 * NomAffichage.enUS: photo
+	 * Definir: true
+	 * HtmlLigne: 4
+	 * HtmlCellule: 3
+	 * ImageBase64Url.frFR: /photo
+	 * ImageBase64Url.enUS: /photo
+	 */               
+	protected void _photo(Couverture<String> c) {
 	}
 
 	/**    

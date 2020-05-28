@@ -148,11 +148,14 @@ public class EnrollmentPage extends EnrollmentPageGen<EnrollmentGenPage> {
 		}
 		else {
 			{ e("div").a("class", "w3-cell-row ").f();
+				o.htmChildKey("Page");
+				o.htmGuardianKeys("Page");
+			} g("div");
+			{ e("div").a("class", "w3-cell-row ").f();
 				o.htmMomKeys("Page");
 				o.htmDadKeys("Page");
 			} g("div");
 			{ e("div").a("class", "w3-cell-row ").f();
-				o.htmGuardianKeys("Page");
 				o.htmPaymentKeys("Page");
 			} g("div");
 		}
