@@ -1786,6 +1786,199 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 		} g("div");
 	}
 
+	/////////////////////////////////
+	// personneDateNaissanceDAnnee //
+	/////////////////////////////////
+
+	/**	L'entité « personneDateNaissanceDAnnee »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected Integer personneDateNaissanceDAnnee;
+	@JsonIgnore
+	public Couverture<Integer> personneDateNaissanceDAnneeCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("personneDateNaissanceDAnnee").o(personneDateNaissanceDAnnee);
+
+	/**	<br/>L'entité « personneDateNaissanceDAnnee »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:personneDateNaissanceDAnnee">Trouver l'entité personneDateNaissanceDAnnee dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _personneDateNaissanceDAnnee(Couverture<Integer> c);
+
+	public Integer getPersonneDateNaissanceDAnnee() {
+		return personneDateNaissanceDAnnee;
+	}
+
+	public void setPersonneDateNaissanceDAnnee(Integer personneDateNaissanceDAnnee) {
+		this.personneDateNaissanceDAnnee = personneDateNaissanceDAnnee;
+		this.personneDateNaissanceDAnneeCouverture.dejaInitialise = true;
+	}
+	public EnfantScolaire setPersonneDateNaissanceDAnnee(String o) {
+		if(NumberUtils.isParsable(o))
+			this.personneDateNaissanceDAnnee = Integer.parseInt(o);
+		this.personneDateNaissanceDAnneeCouverture.dejaInitialise = true;
+		return (EnfantScolaire)this;
+	}
+	protected EnfantScolaire personneDateNaissanceDAnneeInit() {
+		if(!personneDateNaissanceDAnneeCouverture.dejaInitialise) {
+			_personneDateNaissanceDAnnee(personneDateNaissanceDAnneeCouverture);
+			if(personneDateNaissanceDAnnee == null)
+				setPersonneDateNaissanceDAnnee(personneDateNaissanceDAnneeCouverture.o);
+		}
+		personneDateNaissanceDAnneeCouverture.dejaInitialise(true);
+		return (EnfantScolaire)this;
+	}
+
+	public Integer solrPersonneDateNaissanceDAnnee() {
+		return personneDateNaissanceDAnnee;
+	}
+
+	public String strPersonneDateNaissanceDAnnee() {
+		return personneDateNaissanceDAnnee == null ? "" : personneDateNaissanceDAnnee.toString();
+	}
+
+	public String jsonPersonneDateNaissanceDAnnee() {
+		return personneDateNaissanceDAnnee == null ? "" : personneDateNaissanceDAnnee.toString();
+	}
+
+	public String nomAffichagePersonneDateNaissanceDAnnee() {
+		return null;
+	}
+
+	public String htmTooltipPersonneDateNaissanceDAnnee() {
+		return null;
+	}
+
+	public String htmPersonneDateNaissanceDAnnee() {
+		return personneDateNaissanceDAnnee == null ? "" : StringEscapeUtils.escapeHtml4(strPersonneDateNaissanceDAnnee());
+	}
+
+	/////////////////////////////////////
+	// personneDateNaissanceMoisDAnnee //
+	/////////////////////////////////////
+
+	/**	L'entité « personneDateNaissanceMoisDAnnee »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String personneDateNaissanceMoisDAnnee;
+	@JsonIgnore
+	public Couverture<String> personneDateNaissanceMoisDAnneeCouverture = new Couverture<String>().p(this).c(String.class).var("personneDateNaissanceMoisDAnnee").o(personneDateNaissanceMoisDAnnee);
+
+	/**	<br/>L'entité « personneDateNaissanceMoisDAnnee »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:personneDateNaissanceMoisDAnnee">Trouver l'entité personneDateNaissanceMoisDAnnee dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _personneDateNaissanceMoisDAnnee(Couverture<String> c);
+
+	public String getPersonneDateNaissanceMoisDAnnee() {
+		return personneDateNaissanceMoisDAnnee;
+	}
+
+	public void setPersonneDateNaissanceMoisDAnnee(String personneDateNaissanceMoisDAnnee) {
+		this.personneDateNaissanceMoisDAnnee = personneDateNaissanceMoisDAnnee;
+		this.personneDateNaissanceMoisDAnneeCouverture.dejaInitialise = true;
+	}
+	protected EnfantScolaire personneDateNaissanceMoisDAnneeInit() {
+		if(!personneDateNaissanceMoisDAnneeCouverture.dejaInitialise) {
+			_personneDateNaissanceMoisDAnnee(personneDateNaissanceMoisDAnneeCouverture);
+			if(personneDateNaissanceMoisDAnnee == null)
+				setPersonneDateNaissanceMoisDAnnee(personneDateNaissanceMoisDAnneeCouverture.o);
+		}
+		personneDateNaissanceMoisDAnneeCouverture.dejaInitialise(true);
+		return (EnfantScolaire)this;
+	}
+
+	public String solrPersonneDateNaissanceMoisDAnnee() {
+		return personneDateNaissanceMoisDAnnee;
+	}
+
+	public String strPersonneDateNaissanceMoisDAnnee() {
+		return personneDateNaissanceMoisDAnnee == null ? "" : personneDateNaissanceMoisDAnnee;
+	}
+
+	public String jsonPersonneDateNaissanceMoisDAnnee() {
+		return personneDateNaissanceMoisDAnnee == null ? "" : personneDateNaissanceMoisDAnnee;
+	}
+
+	public String nomAffichagePersonneDateNaissanceMoisDAnnee() {
+		return null;
+	}
+
+	public String htmTooltipPersonneDateNaissanceMoisDAnnee() {
+		return null;
+	}
+
+	public String htmPersonneDateNaissanceMoisDAnnee() {
+		return personneDateNaissanceMoisDAnnee == null ? "" : StringEscapeUtils.escapeHtml4(strPersonneDateNaissanceMoisDAnnee());
+	}
+
+	////////////////////////////////////////
+	// personneDateNaissanceJourDeSemaine //
+	////////////////////////////////////////
+
+	/**	L'entité « personneDateNaissanceJourDeSemaine »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String personneDateNaissanceJourDeSemaine;
+	@JsonIgnore
+	public Couverture<String> personneDateNaissanceJourDeSemaineCouverture = new Couverture<String>().p(this).c(String.class).var("personneDateNaissanceJourDeSemaine").o(personneDateNaissanceJourDeSemaine);
+
+	/**	<br/>L'entité « personneDateNaissanceJourDeSemaine »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:personneDateNaissanceJourDeSemaine">Trouver l'entité personneDateNaissanceJourDeSemaine dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _personneDateNaissanceJourDeSemaine(Couverture<String> c);
+
+	public String getPersonneDateNaissanceJourDeSemaine() {
+		return personneDateNaissanceJourDeSemaine;
+	}
+
+	public void setPersonneDateNaissanceJourDeSemaine(String personneDateNaissanceJourDeSemaine) {
+		this.personneDateNaissanceJourDeSemaine = personneDateNaissanceJourDeSemaine;
+		this.personneDateNaissanceJourDeSemaineCouverture.dejaInitialise = true;
+	}
+	protected EnfantScolaire personneDateNaissanceJourDeSemaineInit() {
+		if(!personneDateNaissanceJourDeSemaineCouverture.dejaInitialise) {
+			_personneDateNaissanceJourDeSemaine(personneDateNaissanceJourDeSemaineCouverture);
+			if(personneDateNaissanceJourDeSemaine == null)
+				setPersonneDateNaissanceJourDeSemaine(personneDateNaissanceJourDeSemaineCouverture.o);
+		}
+		personneDateNaissanceJourDeSemaineCouverture.dejaInitialise(true);
+		return (EnfantScolaire)this;
+	}
+
+	public String solrPersonneDateNaissanceJourDeSemaine() {
+		return personneDateNaissanceJourDeSemaine;
+	}
+
+	public String strPersonneDateNaissanceJourDeSemaine() {
+		return personneDateNaissanceJourDeSemaine == null ? "" : personneDateNaissanceJourDeSemaine;
+	}
+
+	public String jsonPersonneDateNaissanceJourDeSemaine() {
+		return personneDateNaissanceJourDeSemaine == null ? "" : personneDateNaissanceJourDeSemaine;
+	}
+
+	public String nomAffichagePersonneDateNaissanceJourDeSemaine() {
+		return null;
+	}
+
+	public String htmTooltipPersonneDateNaissanceJourDeSemaine() {
+		return null;
+	}
+
+	public String htmPersonneDateNaissanceJourDeSemaine() {
+		return personneDateNaissanceJourDeSemaine == null ? "" : StringEscapeUtils.escapeHtml4(strPersonneDateNaissanceJourDeSemaine());
+	}
+
 	////////////////////////////
 	// personneAgeEnSeptembre //
 	////////////////////////////
@@ -2102,6 +2295,9 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 		personneNomCompletPrefereInit();
 		personneNomFormelInit();
 		personneDateNaissanceInit();
+		personneDateNaissanceDAnneeInit();
+		personneDateNaissanceMoisDAnneeInit();
+		personneDateNaissanceJourDeSemaineInit();
 		personneAgeEnSeptembreInit();
 		photoInit();
 		enfantNomCompletInit();
@@ -2183,6 +2379,12 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 				return oEnfantScolaire.personneNomFormel;
 			case "personneDateNaissance":
 				return oEnfantScolaire.personneDateNaissance;
+			case "personneDateNaissanceDAnnee":
+				return oEnfantScolaire.personneDateNaissanceDAnnee;
+			case "personneDateNaissanceMoisDAnnee":
+				return oEnfantScolaire.personneDateNaissanceMoisDAnnee;
+			case "personneDateNaissanceJourDeSemaine":
+				return oEnfantScolaire.personneDateNaissanceJourDeSemaine;
 			case "personneAgeEnSeptembre":
 				return oEnfantScolaire.personneAgeEnSeptembre;
 			case "photo":
@@ -2393,6 +2595,24 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 					oEnfantScolaire.setPersonneDateNaissance(personneDateNaissance);
 			}
 
+			if(sauvegardesEnfantScolaire.contains("personneDateNaissanceDAnnee")) {
+				Integer personneDateNaissanceDAnnee = (Integer)solrDocument.get("personneDateNaissanceDAnnee_stored_int");
+				if(personneDateNaissanceDAnnee != null)
+					oEnfantScolaire.setPersonneDateNaissanceDAnnee(personneDateNaissanceDAnnee);
+			}
+
+			if(sauvegardesEnfantScolaire.contains("personneDateNaissanceMoisDAnnee")) {
+				String personneDateNaissanceMoisDAnnee = (String)solrDocument.get("personneDateNaissanceMoisDAnnee_stored_string");
+				if(personneDateNaissanceMoisDAnnee != null)
+					oEnfantScolaire.setPersonneDateNaissanceMoisDAnnee(personneDateNaissanceMoisDAnnee);
+			}
+
+			if(sauvegardesEnfantScolaire.contains("personneDateNaissanceJourDeSemaine")) {
+				String personneDateNaissanceJourDeSemaine = (String)solrDocument.get("personneDateNaissanceJourDeSemaine_stored_string");
+				if(personneDateNaissanceJourDeSemaine != null)
+					oEnfantScolaire.setPersonneDateNaissanceJourDeSemaine(personneDateNaissanceJourDeSemaine);
+			}
+
 			if(sauvegardesEnfantScolaire.contains("personneAgeEnSeptembre")) {
 				String personneAgeEnSeptembre = (String)solrDocument.get("personneAgeEnSeptembre_stored_string");
 				if(personneAgeEnSeptembre != null)
@@ -2576,6 +2796,18 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 			document.addField("personneDateNaissance_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(personneDateNaissance.atStartOfDay(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toInstant().atZone(ZoneId.of("Z"))));
 			document.addField("personneDateNaissance_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(personneDateNaissance.atStartOfDay(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toInstant().atZone(ZoneId.of("Z"))));
 		}
+		if(personneDateNaissanceDAnnee != null) {
+			document.addField("personneDateNaissanceDAnnee_indexed_int", personneDateNaissanceDAnnee);
+			document.addField("personneDateNaissanceDAnnee_stored_int", personneDateNaissanceDAnnee);
+		}
+		if(personneDateNaissanceMoisDAnnee != null) {
+			document.addField("personneDateNaissanceMoisDAnnee_indexed_string", personneDateNaissanceMoisDAnnee);
+			document.addField("personneDateNaissanceMoisDAnnee_stored_string", personneDateNaissanceMoisDAnnee);
+		}
+		if(personneDateNaissanceJourDeSemaine != null) {
+			document.addField("personneDateNaissanceJourDeSemaine_indexed_string", personneDateNaissanceJourDeSemaine);
+			document.addField("personneDateNaissanceJourDeSemaine_stored_string", personneDateNaissanceJourDeSemaine);
+		}
 		if(personneAgeEnSeptembre != null) {
 			document.addField("personneAgeEnSeptembre_indexed_string", personneAgeEnSeptembre);
 			document.addField("personneAgeEnSeptembre_stored_string", personneAgeEnSeptembre);
@@ -2644,6 +2876,12 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 				return "personneNomFormel_indexed_string";
 			case "personneDateNaissance":
 				return "personneDateNaissance_indexed_date";
+			case "personneDateNaissanceDAnnee":
+				return "personneDateNaissanceDAnnee_indexed_int";
+			case "personneDateNaissanceMoisDAnnee":
+				return "personneDateNaissanceMoisDAnnee_indexed_string";
+			case "personneDateNaissanceJourDeSemaine":
+				return "personneDateNaissanceJourDeSemaine_indexed_string";
 			case "personneAgeEnSeptembre":
 				return "personneAgeEnSeptembre_indexed_string";
 			case "enfantNomComplet":
@@ -2744,6 +2982,18 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 		Date personneDateNaissance = (Date)solrDocument.get("personneDateNaissance_stored_date");
 		if(personneDateNaissance != null)
 			oEnfantScolaire.setPersonneDateNaissance(personneDateNaissance);
+
+		Integer personneDateNaissanceDAnnee = (Integer)solrDocument.get("personneDateNaissanceDAnnee_stored_int");
+		if(personneDateNaissanceDAnnee != null)
+			oEnfantScolaire.setPersonneDateNaissanceDAnnee(personneDateNaissanceDAnnee);
+
+		String personneDateNaissanceMoisDAnnee = (String)solrDocument.get("personneDateNaissanceMoisDAnnee_stored_string");
+		if(personneDateNaissanceMoisDAnnee != null)
+			oEnfantScolaire.setPersonneDateNaissanceMoisDAnnee(personneDateNaissanceMoisDAnnee);
+
+		String personneDateNaissanceJourDeSemaine = (String)solrDocument.get("personneDateNaissanceJourDeSemaine_stored_string");
+		if(personneDateNaissanceJourDeSemaine != null)
+			oEnfantScolaire.setPersonneDateNaissanceJourDeSemaine(personneDateNaissanceJourDeSemaine);
 
 		String personneAgeEnSeptembre = (String)solrDocument.get("personneAgeEnSeptembre_stored_string");
 		if(personneAgeEnSeptembre != null)

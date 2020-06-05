@@ -7,6 +7,10 @@ import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.html.part.HtmlPart;
 import org.computate.scolaire.enUS.search.SearchList;
 
+/**	
+ *	classCanonicalName: org.computate.scolaire.frFR.design.DesignPage
+ *	Model: true
+ **/
 public class PageDesign extends PageDesignGen<Cluster> {
 
 	protected void _pageDesignKey(Wrap<Long> c) {

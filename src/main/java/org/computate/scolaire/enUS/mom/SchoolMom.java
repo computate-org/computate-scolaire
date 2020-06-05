@@ -7,6 +7,26 @@ import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.enrollment.SchoolEnrollment;
 import org.computate.scolaire.enUS.search.SearchList;
 
+/**
+ * Model: true
+ * Api: true
+ * Page: true
+ * Saved: true
+ * RoleSession: true
+ * RoleUser: true
+ * Color: pink
+ * IconGroup: regular
+ * IconName: female
+ * Role.enUS: SiteAdmin
+ * ApiUri.enUS: /api/mom
+ * ApiTag.enUS: Mom
+ * AName.enUS: a mom
+ * Role.frFR: SiteAdmin
+ * ApiUri.frFR: /api/mere
+ * ApiTag.frFR: Mère
+ * AName.frFR: une mère
+ * CanonicalName: org.computate.scolaire.frFR.mere.MereScolaire
+ **/
 public class SchoolMom extends SchoolMomGen<Cluster> {
 
 	protected void _momKey(Wrap<Long> c) {

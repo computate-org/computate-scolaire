@@ -389,6 +389,51 @@ public class EnfantScolaire extends EnfantScolaireGen<Cluster> {
 	}
 
 	/**
+	 * {@inheritDoc}
+	 * Var.enUS: personBirthDateYear
+	 * Indexe: true
+	 * Stocke: true
+	 * r: personneDateNaissance
+	 * r.enUS: personBirthDate
+	 * r: Locale.FRANCE
+	 * r.enUS: Locale.US
+	 */                       
+	protected void _personneDateNaissanceDAnnee(Couverture<Integer> c) {
+		if(personneDateNaissance != null)
+			c.o(personneDateNaissance.getYear());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: personBirthDateMonthOfYear
+	 * Indexe: true
+	 * Stocke: true
+	 * r: personneDateNaissance
+	 * r.enUS: personBirthDate
+	 * r: Locale.FRANCE
+	 * r.enUS: Locale.US
+	 */                       
+	protected void _personneDateNaissanceMoisDAnnee(Couverture<String> c) {
+		if(personneDateNaissance != null)
+			c.o(personneDateNaissance.format(DateTimeFormatter.ofPattern("MMMM", Locale.FRANCE)));
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: personBirthDateDayOfWeek
+	 * Indexe: true
+	 * Stocke: true
+	 * r: personneDateNaissance
+	 * r.enUS: personBirthDate
+	 * r: Locale.FRANCE
+	 * r.enUS: Locale.US
+	 */                       
+	protected void _personneDateNaissanceJourDeSemaine(Couverture<String> c) {
+		if(personneDateNaissance != null)
+			c.o(personneDateNaissance.format(DateTimeFormatter.ofPattern("EEEE", Locale.FRANCE)));
+	}
+
+	/**
 	 * Var.enUS: strPersonBirthDate
 	 * r: "d MMMM yyyy"
 	 * r.enUS: "MMMM d, yyyy"

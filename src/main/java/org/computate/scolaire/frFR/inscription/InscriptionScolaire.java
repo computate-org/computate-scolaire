@@ -855,6 +855,51 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	}
 
 	/**
+	 * {@inheritDoc}
+	 * Var.enUS: childBirthDateYear
+	 * Indexe: true
+	 * Stocke: true
+	 * r: enfantDateNaissance
+	 * r.enUS: childBirthDate
+	 * r: Locale.FRANCE
+	 * r.enUS: Locale.US
+	 */                       
+	protected void _enfantDateNaissanceDAnnee(Couverture<Integer> c) {
+		if(enfantDateNaissance != null)
+			c.o(enfantDateNaissance.getYear());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: childBirthDateMonthOfYear
+	 * Indexe: true
+	 * Stocke: true
+	 * r: enfantDateNaissance
+	 * r.enUS: childBirthDate
+	 * r: Locale.FRANCE
+	 * r.enUS: Locale.US
+	 */                       
+	protected void _enfantDateNaissanceMoisDAnnee(Couverture<String> c) {
+		if(enfantDateNaissance != null)
+			c.o(enfantDateNaissance.format(DateTimeFormatter.ofPattern("MMMM", Locale.FRANCE)));
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: childBirthDateDayOfWeek
+	 * Indexe: true
+	 * Stocke: true
+	 * r: enfantDateNaissance
+	 * r.enUS: childBirthDate
+	 * r: Locale.FRANCE
+	 * r.enUS: Locale.US
+	 */                       
+	protected void _enfantDateNaissanceJourDeSemaine(Couverture<String> c) {
+		if(enfantDateNaissance != null)
+			c.o(enfantDateNaissance.format(DateTimeFormatter.ofPattern("EEEE", Locale.FRANCE)));
+	}
+
+	/**
 	 * Var.enUS: strChildBirthDate
 	 * r: enfantDateNaissance
 	 * r.enUS: childBirthDate
@@ -1557,6 +1602,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Var.enUS: childMedicalConditions
 	 * Indexe: true
 	 * Stocke: true
+	 * Texte: true
 	 * NomAffichage.frFR: conditions médicales
 	 * NomAffichage.enUS: medical conditions
 	 * Multiligne: true

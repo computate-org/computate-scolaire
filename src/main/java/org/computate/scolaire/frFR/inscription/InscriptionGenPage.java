@@ -695,7 +695,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 					JsonObject queryParams = Optional.ofNullable(operationRequete).map(OperationRequest::getParams).map(or -> or.getJsonObject("query")).orElse(new JsonObject());
 					Long num = listeInscriptionScolaire.getQueryResponse().getResults().getNumFound();
 					String q = "*:*";
-					String query1 = "objetTexte";
+					String query1 = "enfantConditionsMedicales";
 					String query2 = "";
 					String query = "*:*";
 					for(String paramNom : queryParams.fieldNames()) {
@@ -1117,12 +1117,12 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 	 * r.enUS: addError
 	 * r: suggereInscriptionScolaireObjetSuggere
 	 * r.enUS: suggestSchoolEnrollmentObjectSuggest
-	 * r: texteInscriptionScolaireObjetTexte
-	 * r.enUS: textSchoolEnrollmentObjectText
+	 * r: texteInscriptionScolaireEnfantConditionsMedicales
+	 * r.enUS: textSchoolEnrollmentChildMedicalConditions
 	 * r: 'objetSuggere:'
 	 * r.enUS: 'objectSuggest:'
-	 * r: 'objetTexte:'
-	 * r.enUS: 'objectText:'
+	 * r: 'enfantConditionsMedicales:'
+	 * r.enUS: 'childMedicalConditions:'
 	 * r: '#suggereListInscriptionScolaire'
 	 * r.enUS: '#suggestListSchoolEnrollment'
 	 * r: "suggereListInscriptionScolaire"
@@ -1134,7 +1134,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 			OperationRequest operationRequete = requeteSite_.getOperationRequete();
 			JsonObject queryParams = Optional.ofNullable(operationRequete).map(OperationRequest::getParams).map(or -> or.getJsonObject("query")).orElse(new JsonObject());
 			String q = "*:*";
-			String query1 = "objetTexte";
+			String query1 = "enfantConditionsMedicales";
 			String query2 = "";
 			for(String paramNom : queryParams.fieldNames()) {
 				String entiteVar = null;

@@ -3778,6 +3778,199 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		} g("div");
 	}
 
+	////////////////////////
+	// childBirthDateYear //
+	////////////////////////
+
+	/**	L'entité « childBirthDateYear »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected Integer childBirthDateYear;
+	@JsonIgnore
+	public Wrap<Integer> childBirthDateYearWrap = new Wrap<Integer>().p(this).c(Integer.class).var("childBirthDateYear").o(childBirthDateYear);
+
+	/**	<br/>L'entité « childBirthDateYear »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:childBirthDateYear">Trouver l'entité childBirthDateYear dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _childBirthDateYear(Wrap<Integer> c);
+
+	public Integer getChildBirthDateYear() {
+		return childBirthDateYear;
+	}
+
+	public void setChildBirthDateYear(Integer childBirthDateYear) {
+		this.childBirthDateYear = childBirthDateYear;
+		this.childBirthDateYearWrap.alreadyInitialized = true;
+	}
+	public SchoolEnrollment setChildBirthDateYear(String o) {
+		if(NumberUtils.isParsable(o))
+			this.childBirthDateYear = Integer.parseInt(o);
+		this.childBirthDateYearWrap.alreadyInitialized = true;
+		return (SchoolEnrollment)this;
+	}
+	protected SchoolEnrollment childBirthDateYearInit() {
+		if(!childBirthDateYearWrap.alreadyInitialized) {
+			_childBirthDateYear(childBirthDateYearWrap);
+			if(childBirthDateYear == null)
+				setChildBirthDateYear(childBirthDateYearWrap.o);
+		}
+		childBirthDateYearWrap.alreadyInitialized(true);
+		return (SchoolEnrollment)this;
+	}
+
+	public Integer solrChildBirthDateYear() {
+		return childBirthDateYear;
+	}
+
+	public String strChildBirthDateYear() {
+		return childBirthDateYear == null ? "" : childBirthDateYear.toString();
+	}
+
+	public String jsonChildBirthDateYear() {
+		return childBirthDateYear == null ? "" : childBirthDateYear.toString();
+	}
+
+	public String nomAffichageChildBirthDateYear() {
+		return null;
+	}
+
+	public String htmTooltipChildBirthDateYear() {
+		return null;
+	}
+
+	public String htmChildBirthDateYear() {
+		return childBirthDateYear == null ? "" : StringEscapeUtils.escapeHtml4(strChildBirthDateYear());
+	}
+
+	///////////////////////////////
+	// childBirthDateMonthOfYear //
+	///////////////////////////////
+
+	/**	L'entité « childBirthDateMonthOfYear »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String childBirthDateMonthOfYear;
+	@JsonIgnore
+	public Wrap<String> childBirthDateMonthOfYearWrap = new Wrap<String>().p(this).c(String.class).var("childBirthDateMonthOfYear").o(childBirthDateMonthOfYear);
+
+	/**	<br/>L'entité « childBirthDateMonthOfYear »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:childBirthDateMonthOfYear">Trouver l'entité childBirthDateMonthOfYear dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _childBirthDateMonthOfYear(Wrap<String> c);
+
+	public String getChildBirthDateMonthOfYear() {
+		return childBirthDateMonthOfYear;
+	}
+
+	public void setChildBirthDateMonthOfYear(String childBirthDateMonthOfYear) {
+		this.childBirthDateMonthOfYear = childBirthDateMonthOfYear;
+		this.childBirthDateMonthOfYearWrap.alreadyInitialized = true;
+	}
+	protected SchoolEnrollment childBirthDateMonthOfYearInit() {
+		if(!childBirthDateMonthOfYearWrap.alreadyInitialized) {
+			_childBirthDateMonthOfYear(childBirthDateMonthOfYearWrap);
+			if(childBirthDateMonthOfYear == null)
+				setChildBirthDateMonthOfYear(childBirthDateMonthOfYearWrap.o);
+		}
+		childBirthDateMonthOfYearWrap.alreadyInitialized(true);
+		return (SchoolEnrollment)this;
+	}
+
+	public String solrChildBirthDateMonthOfYear() {
+		return childBirthDateMonthOfYear;
+	}
+
+	public String strChildBirthDateMonthOfYear() {
+		return childBirthDateMonthOfYear == null ? "" : childBirthDateMonthOfYear;
+	}
+
+	public String jsonChildBirthDateMonthOfYear() {
+		return childBirthDateMonthOfYear == null ? "" : childBirthDateMonthOfYear;
+	}
+
+	public String nomAffichageChildBirthDateMonthOfYear() {
+		return null;
+	}
+
+	public String htmTooltipChildBirthDateMonthOfYear() {
+		return null;
+	}
+
+	public String htmChildBirthDateMonthOfYear() {
+		return childBirthDateMonthOfYear == null ? "" : StringEscapeUtils.escapeHtml4(strChildBirthDateMonthOfYear());
+	}
+
+	/////////////////////////////
+	// childBirthDateDayOfWeek //
+	/////////////////////////////
+
+	/**	L'entité « childBirthDateDayOfWeek »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String childBirthDateDayOfWeek;
+	@JsonIgnore
+	public Wrap<String> childBirthDateDayOfWeekWrap = new Wrap<String>().p(this).c(String.class).var("childBirthDateDayOfWeek").o(childBirthDateDayOfWeek);
+
+	/**	<br/>L'entité « childBirthDateDayOfWeek »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:childBirthDateDayOfWeek">Trouver l'entité childBirthDateDayOfWeek dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _childBirthDateDayOfWeek(Wrap<String> c);
+
+	public String getChildBirthDateDayOfWeek() {
+		return childBirthDateDayOfWeek;
+	}
+
+	public void setChildBirthDateDayOfWeek(String childBirthDateDayOfWeek) {
+		this.childBirthDateDayOfWeek = childBirthDateDayOfWeek;
+		this.childBirthDateDayOfWeekWrap.alreadyInitialized = true;
+	}
+	protected SchoolEnrollment childBirthDateDayOfWeekInit() {
+		if(!childBirthDateDayOfWeekWrap.alreadyInitialized) {
+			_childBirthDateDayOfWeek(childBirthDateDayOfWeekWrap);
+			if(childBirthDateDayOfWeek == null)
+				setChildBirthDateDayOfWeek(childBirthDateDayOfWeekWrap.o);
+		}
+		childBirthDateDayOfWeekWrap.alreadyInitialized(true);
+		return (SchoolEnrollment)this;
+	}
+
+	public String solrChildBirthDateDayOfWeek() {
+		return childBirthDateDayOfWeek;
+	}
+
+	public String strChildBirthDateDayOfWeek() {
+		return childBirthDateDayOfWeek == null ? "" : childBirthDateDayOfWeek;
+	}
+
+	public String jsonChildBirthDateDayOfWeek() {
+		return childBirthDateDayOfWeek == null ? "" : childBirthDateDayOfWeek;
+	}
+
+	public String nomAffichageChildBirthDateDayOfWeek() {
+		return null;
+	}
+
+	public String htmTooltipChildBirthDateDayOfWeek() {
+		return null;
+	}
+
+	public String htmChildBirthDateDayOfWeek() {
+		return childBirthDateDayOfWeek == null ? "" : StringEscapeUtils.escapeHtml4(strChildBirthDateDayOfWeek());
+	}
+
 	/////////////////////
 	// childBirthMonth //
 	/////////////////////
@@ -12442,6 +12635,9 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		childCompleteNameInit();
 		childCompleteNamePreferredInit();
 		childBirthDateInit();
+		childBirthDateYearInit();
+		childBirthDateMonthOfYearInit();
+		childBirthDateDayOfWeekInit();
 		childBirthMonthInit();
 		childBirthDayInit();
 		schoolNameInit();
@@ -12679,6 +12875,12 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				return oSchoolEnrollment.childCompleteNamePreferred;
 			case "childBirthDate":
 				return oSchoolEnrollment.childBirthDate;
+			case "childBirthDateYear":
+				return oSchoolEnrollment.childBirthDateYear;
+			case "childBirthDateMonthOfYear":
+				return oSchoolEnrollment.childBirthDateMonthOfYear;
+			case "childBirthDateDayOfWeek":
+				return oSchoolEnrollment.childBirthDateDayOfWeek;
 			case "childBirthMonth":
 				return oSchoolEnrollment.childBirthMonth;
 			case "childBirthDay":
@@ -13361,6 +13563,24 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				Date childBirthDate = (Date)solrDocument.get("childBirthDate_stored_date");
 				if(childBirthDate != null)
 					oSchoolEnrollment.setChildBirthDate(childBirthDate);
+			}
+
+			if(savesSchoolEnrollment.contains("childBirthDateYear")) {
+				Integer childBirthDateYear = (Integer)solrDocument.get("childBirthDateYear_stored_int");
+				if(childBirthDateYear != null)
+					oSchoolEnrollment.setChildBirthDateYear(childBirthDateYear);
+			}
+
+			if(savesSchoolEnrollment.contains("childBirthDateMonthOfYear")) {
+				String childBirthDateMonthOfYear = (String)solrDocument.get("childBirthDateMonthOfYear_stored_string");
+				if(childBirthDateMonthOfYear != null)
+					oSchoolEnrollment.setChildBirthDateMonthOfYear(childBirthDateMonthOfYear);
+			}
+
+			if(savesSchoolEnrollment.contains("childBirthDateDayOfWeek")) {
+				String childBirthDateDayOfWeek = (String)solrDocument.get("childBirthDateDayOfWeek_stored_string");
+				if(childBirthDateDayOfWeek != null)
+					oSchoolEnrollment.setChildBirthDateDayOfWeek(childBirthDateDayOfWeek);
 			}
 
 			if(savesSchoolEnrollment.contains("childBirthMonth")) {
@@ -14110,6 +14330,18 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 			document.addField("childBirthDate_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(childBirthDate.atStartOfDay(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toInstant().atZone(ZoneId.of("Z"))));
 			document.addField("childBirthDate_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(childBirthDate.atStartOfDay(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toInstant().atZone(ZoneId.of("Z"))));
 		}
+		if(childBirthDateYear != null) {
+			document.addField("childBirthDateYear_indexed_int", childBirthDateYear);
+			document.addField("childBirthDateYear_stored_int", childBirthDateYear);
+		}
+		if(childBirthDateMonthOfYear != null) {
+			document.addField("childBirthDateMonthOfYear_indexed_string", childBirthDateMonthOfYear);
+			document.addField("childBirthDateMonthOfYear_stored_string", childBirthDateMonthOfYear);
+		}
+		if(childBirthDateDayOfWeek != null) {
+			document.addField("childBirthDateDayOfWeek_indexed_string", childBirthDateDayOfWeek);
+			document.addField("childBirthDateDayOfWeek_stored_string", childBirthDateDayOfWeek);
+		}
 		if(childBirthMonth != null) {
 			document.addField("childBirthMonth_indexed_int", childBirthMonth);
 			document.addField("childBirthMonth_stored_int", childBirthMonth);
@@ -14279,6 +14511,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 			document.addField("enrollmentSpecialConsiderations_stored_string", enrollmentSpecialConsiderations);
 		}
 		if(childMedicalConditions != null) {
+			document.addField("childMedicalConditions_text_enUS", childMedicalConditions.toString());
 			document.addField("childMedicalConditions_indexed_string", childMedicalConditions);
 			document.addField("childMedicalConditions_stored_string", childMedicalConditions);
 		}
@@ -14534,6 +14767,12 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				return "childCompleteNamePreferred_indexed_string";
 			case "childBirthDate":
 				return "childBirthDate_indexed_date";
+			case "childBirthDateYear":
+				return "childBirthDateYear_indexed_int";
+			case "childBirthDateMonthOfYear":
+				return "childBirthDateMonthOfYear_indexed_string";
+			case "childBirthDateDayOfWeek":
+				return "childBirthDateDayOfWeek_indexed_string";
 			case "childBirthMonth":
 				return "childBirthMonth_indexed_int";
 			case "childBirthDay":
@@ -14681,6 +14920,8 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public static String varSearchSchoolEnrollment(String entityVar) {
 		switch(entityVar) {
+			case "childMedicalConditions":
+				return "childMedicalConditions_text_enUS";
 			default:
 				return Cluster.varSearchCluster(entityVar);
 		}
@@ -14834,6 +15075,18 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		Date childBirthDate = (Date)solrDocument.get("childBirthDate_stored_date");
 		if(childBirthDate != null)
 			oSchoolEnrollment.setChildBirthDate(childBirthDate);
+
+		Integer childBirthDateYear = (Integer)solrDocument.get("childBirthDateYear_stored_int");
+		if(childBirthDateYear != null)
+			oSchoolEnrollment.setChildBirthDateYear(childBirthDateYear);
+
+		String childBirthDateMonthOfYear = (String)solrDocument.get("childBirthDateMonthOfYear_stored_string");
+		if(childBirthDateMonthOfYear != null)
+			oSchoolEnrollment.setChildBirthDateMonthOfYear(childBirthDateMonthOfYear);
+
+		String childBirthDateDayOfWeek = (String)solrDocument.get("childBirthDateDayOfWeek_stored_string");
+		if(childBirthDateDayOfWeek != null)
+			oSchoolEnrollment.setChildBirthDateDayOfWeek(childBirthDateDayOfWeek);
 
 		Integer childBirthMonth = (Integer)solrDocument.get("childBirthMonth_stored_int");
 		if(childBirthMonth != null)

@@ -128,69 +128,70 @@ import net.authorize.api.controller.GetSettledBatchListController;
 import net.authorize.api.controller.GetTransactionListController;
 import net.authorize.api.controller.base.ApiOperationBase;
 
-/**	
- *	A Java class to start the Vert.x application as a main method. 
+/**
+ * A Java class to start the Vert.x application as a main method. 
+ * CanonicalName: org.computate.scolaire.frFR.vertx.AppliVertx
  **/
 public class AppVertx extends AppVertxGen<AbstractVerticle> {
 
 	public final DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 
-	/**	
-	 *	A SQL query for creating a database table "c" to store any type of object in the application. 
+	/**
+	 * A SQL query for creating a database table "c" to store any type of object in the application. 
 	 **/
 	public static final String SQL_createTableC = "create table if not exists c(pk bigserial primary key, current boolean, canonical_name text, created timestamp with time zone, user_id text); ";
 
-	/**	
-	 *	A SQL query for creating a unique index on the "c" table based on the pk, canonical_name, and user_id fields for faster lookup. 
+	/**
+	 * A SQL query for creating a unique index on the "c" table based on the pk, canonical_name, and user_id fields for faster lookup. 
 	 **/
 	public static final String SQL_uniqueIndexC = "create unique index if not exists c_index_user on c(pk, canonical_name, user_id); ";
 
-	/**	
-	 *	A SQL query for creating a database table "a" to store relations (like entity relations) between one other record in the "c" table with another record in the "c" table. 
+	/**
+	 * A SQL query for creating a database table "a" to store relations (like entity relations) between one other record in the "c" table with another record in the "c" table. 
 	 **/
 	public static final String SQL_createTableA = "create table if not exists a(pk bigserial primary key, pk1 bigint, entity1 text, pk2 bigint, entity2 text, current boolean, created timestamp with time zone, constraint a_constraint unique (pk1, entity1, pk2, entity2)); ";
 
-	/**	
-	 *	A SQL query for creating an index on the "a" table based on fields for faster lookup. 
+	/**
+	 * A SQL query for creating an index on the "a" table based on fields for faster lookup. 
 	 **/
 	public static final String SQL_uniqueIndexA = "create index if not exists a_index on a(pk1, pk2, current); ";
 
-	/**	
-	 *	A SQL query for creating a database table "d" to store String values to define fields in an instance of a class based on a record in the "c" table. 
+	/**
+	 * A SQL query for creating a database table "d" to store String values to define fields in an instance of a class based on a record in the "c" table. 
 	 **/
 	public static final String SQL_createTableD = "create table if not exists d(pk bigserial primary key, pk_c bigint, path text, value text, current boolean, created timestamp with time zone, constraint d_constraint unique (pk_c, path)); ";
 
-	/**	
-	 *	A SQL query for creating an index on the "d" table based on fields for faster lookup. 
+	/**
+	 * A SQL query for creating an index on the "d" table based on fields for faster lookup. 
 	 **/
 	public static final String SQL_uniqueIndexD = "create index if not exists d_index on d(pk_c, current); ";
 
-	/**	
-	 *	A io.vertx.ext.jdbc.JDBCClient for connecting to the relational database PostgreSQL. 
+	/**
+	 * A io.vertx.ext.jdbc.JDBCClient for connecting to the relational database PostgreSQL. 
 	 **/
 	private PgPool pgPool;
 
-	/**	
-	 *	A site context object for storing information about the entire site in English. 
+	/**
+	 * A site context object for storing information about the entire site in English. 
 	 **/
 	SiteContextEnUS siteContextEnUS;
 
-	/**	
-	 *	For logging information and errors in the application. 
+	/**
+	 * For logging information and errors in the application. 
 	 **/
 	private static final Logger LOGGER = LoggerFactory.getLogger(AppVertx.class);
 
-	/**	
-	 *	The main method for the Vert.x application that runs the Vert.x Runner class
+	/**
+	 * The main method for the Vert.x application that runs the Vert.x Runner class
 	 **/
 	public static void  main(String[] args) {
 		RunnerVertx.run(AppVertx.class);
 	}
 
-	/**	
-	 *	This is called by Vert.x when the verticle instance is deployed. 
-	 *	Initialize a new site context object for storing information about the entire site in English. 
-	 *	Setup the startPromise to handle the configuration steps and starting the server. 
+	/**
+	 * This is called by Vert.x when the verticle instance is deployed. 
+	 * Initialize a new site context object for storing information about the entire site in English. 
+	 * Setup the startPromise to handle the configuration steps and starting the server. 
 	 **/
 	@Override()
 	public void  start(Promise<Void> startPromise) throws Exception, Exception {
@@ -221,11 +222,11 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 		promiseSteps.setHandler(startPromise);
 	}
 
-	/**	
-	 *	Configure shared database connections across the cluster for massive scaling of the application. 
-	 *	Return a promise that configures a shared database client connection. 
-	 *	Load the database configuration into a shared io.vertx.ext.jdbc.JDBCClient for a scalable, clustered datasource connection pool. 
-	 *	Initialize the database tables if not already created for the first time. 
+	/**
+	 * Configure shared database connections across the cluster for massive scaling of the application. 
+	 * Return a promise that configures a shared database client connection. 
+	 * Load the database configuration into a shared io.vertx.ext.jdbc.JDBCClient for a scalable, clustered datasource connection pool. 
+	 * Initialize the database tables if not already created for the first time. 
 	 **/
 	private Promise<Void> configureData() {
 		SiteConfig siteConfig = siteContextEnUS.getSiteConfig();
@@ -298,9 +299,9 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 		return promise;
 	}
 
-	/**	
-	 *	Configure shared data across the cluster for massive scaling of the application. 
-	 *	Return a promise that configures a shared cluster data. 
+	/**
+	 * Configure shared data across the cluster for massive scaling of the application. 
+	 * Return a promise that configures a shared cluster data. 
 	 **/
 	private Promise<Void> configureCluster() {
 		SiteConfig siteConfig = siteContextEnUS.getSiteConfig();
@@ -326,11 +327,11 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 		return promise;
 	}
 
-	/**	
-	 *	Configure the connection to the auth server and setup the routes based on the OpenAPI definition. 
-	 *	Setup a callback route when returning from the auth server after successful authentication. 
-	 *	Setup a logout route for logging out completely of the application. 
-	 *	Return a promise that configures the authentication server and OpenAPI. 
+	/**
+	 * Configure the connection to the auth server and setup the routes based on the OpenAPI definition. 
+	 * Setup a callback route when returning from the auth server after successful authentication. 
+	 * Setup a logout route for logging out completely of the application. 
+	 * Return a promise that configures the authentication server and OpenAPI. 
 	 **/
 	private Promise<Void> configureOpenApi() {
 		SiteConfig siteConfig = siteContextEnUS.getSiteConfig();
@@ -687,9 +688,9 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 		return promise;
 	}
 
-	/**	
-	 *	Configure a shared worker executor for running blocking tasks in the background. 
-	 *	Return a promise that configures the shared worker executor. 
+	/**
+	 * Configure a shared worker executor for running blocking tasks in the background. 
+	 * Return a promise that configures the shared worker executor. 
 	 **/
 	private Promise<Void> configureSharedWorkerExecutor() {
 		Promise<Void> promise = Promise.promise();
@@ -700,9 +701,9 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 		return promise;
 	}
 
-	/**	
-	 *	Configure health checks for the status of the website and it's dependent services. 
-	 *	Return a promise that configures the health checks. 
+	/**
+	 * Configure health checks for the status of the website and it's dependent services. 
+	 * Return a promise that configures the health checks. 
 	 **/
 	private Promise<Void> configureHealthChecks() {
 		Promise<Void> promise = Promise.promise();
@@ -740,8 +741,8 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 		return promise;
 	}
 
-	/**	
-	 *	Configure websockets for realtime messages. 
+	/**
+	 * Configure websockets for realtime messages. 
 	 **/
 	private Promise<Void> configureWebsockets() {
 		Promise<Void> promise = Promise.promise();
@@ -755,8 +756,8 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 		return promise;
 	}
 
-	/**	
-	 *	Configure sending email. 
+	/**
+	 * Configure sending email. 
 	 **/
 	private Promise<Void> configureEmail() {
 		SiteConfig siteConfig = siteContextEnUS.getSiteConfig();
@@ -773,8 +774,8 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 		return promise;
 	}
 
-	/**	
-	 *	Configure charges with Authorize.net. 
+	/**
+	 * Configure charges with Authorize.net. 
 	 **/
 	private Promise<Void> configureAuthorizeNetCharges() {
 		SiteConfig siteConfig = siteContextEnUS.getSiteConfig();
@@ -910,8 +911,8 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 		});
 	}
 
-	/**	
-	 *	Configure payments with Authorize.net. 
+	/**
+	 * Configure payments with Authorize.net. 
 	 **/
 	private Promise<Void> configureAuthorizeNetPayments() {
 		SiteConfig siteConfig = siteContextEnUS.getSiteConfig();
@@ -1162,9 +1163,9 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 		}
 	}
 
-	/**	
-	 *	Start the Vert.x server. 
-	 *	Démarrer le serveur Vert.x. 
+	/**
+	 * Start the Vert.x server. 
+	 * Démarrer le serveur Vert.x. 
 	 **/
 	private Promise<Void> startServer() {
 		SiteConfig siteConfig = siteContextEnUS.getSiteConfig();
@@ -1226,9 +1227,9 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 		return promise;
 	}
 
-	/**	
-	 *	This is called by Vert.x when the verticle instance is undeployed. 
-	 *	Setup the stopPromise to handle tearing down the server. 
+	/**
+	 * This is called by Vert.x when the verticle instance is undeployed. 
+	 * Setup the stopPromise to handle tearing down the server. 
 	 **/
 	@Override()
 	public void  stop(Promise<Void> stopPromise) throws Exception, Exception {
@@ -1236,8 +1237,8 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 		promiseSteps.future().setHandler(stopPromise);
 	}
 
-	/**	
-	 *	Return a promise to close the database client connection. 
+	/**
+	 * Return a promise to close the database client connection. 
 	 **/
 	private Promise<Void> closeData() {
 		Promise<Void> promise = Promise.promise();

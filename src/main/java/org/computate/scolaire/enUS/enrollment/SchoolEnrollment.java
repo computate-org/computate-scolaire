@@ -28,6 +28,26 @@ import org.computate.scolaire.enUS.dad.SchoolDad;
 import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.season.SchoolSeason;
 
+/**
+ * Model: true
+ * Api: true
+ * Page: true
+ * Saved: true
+ * RoleSession: true
+ * RoleUser: true
+ * Color: blue-gray
+ * IconGroup: solid
+ * IconName: edit
+ * Role.enUS: SiteAdmin
+ * ApiUri.enUS: /api/enrollment
+ * ApiTag.enUS: Enrollment
+ * AName.enUS: an enrollment
+ * Role.frFR: SiteAdmin
+ * ApiUri.frFR: /api/inscription
+ * ApiTag.frFR: Inscription
+ * AName.frFR: une inscription
+ * CanonicalName: org.computate.scolaire.frFR.inscription.InscriptionScolaire
+ **/
 public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 
 	protected void _enrollmentKey(Wrap<Long> c) {
@@ -265,6 +285,21 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 	protected void _childBirthDate(Wrap<LocalDate> c) {
 		if(child_ != null)
 			c.o(child_.getPersonBirthDate());
+	}
+
+	protected void _childBirthDateYear(Wrap<Integer> c) {
+		if(childBirthDate != null)
+			c.o(childBirthDate.getYear());
+	}
+
+	protected void _childBirthDateMonthOfYear(Wrap<String> c) {
+		if(childBirthDate != null)
+			c.o(childBirthDate.format(DateTimeFormatter.ofPattern("MMMM", Locale.US)));
+	}
+
+	protected void _childBirthDateDayOfWeek(Wrap<String> c) {
+		if(childBirthDate != null)
+			c.o(childBirthDate.format(DateTimeFormatter.ofPattern("EEEE", Locale.US)));
 	}
 
 	@Override()

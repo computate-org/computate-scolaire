@@ -14,6 +14,26 @@ import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.enrollment.SchoolEnrollment;
 import org.computate.scolaire.enUS.search.SearchList;
 
+/**
+ * Model: true
+ * Api: true
+ * Page: true
+ * Saved: true
+ * RoleSession: true
+ * RoleUser: true
+ * Color: orange
+ * IconGroup: regular
+ * IconName: child
+ * Role.enUS: SiteAdmin
+ * ApiUri.enUS: /api/child
+ * ApiTag.enUS: Child
+ * AName.enUS: a child
+ * Role.frFR: SiteAdmin
+ * ApiUri.frFR: /api/enfant
+ * ApiTag.frFR: Enfant
+ * AName.frFR: un enfant
+ * CanonicalName: org.computate.scolaire.frFR.enfant.EnfantScolaire
+ **/
 public class SchoolChild extends SchoolChildGen<Cluster> {
 
 	protected void _childKey(Wrap<Long> c) {
@@ -100,6 +120,21 @@ public class SchoolChild extends SchoolChildGen<Cluster> {
 	}
 
 	protected void _personBirthDate(Wrap<LocalDate> c) {
+	}
+
+	protected void _personBirthDateYear(Wrap<Integer> c) {
+		if(personBirthDate != null)
+			c.o(personBirthDate.getYear());
+	}
+
+	protected void _personBirthDateMonthOfYear(Wrap<String> c) {
+		if(personBirthDate != null)
+			c.o(personBirthDate.format(DateTimeFormatter.ofPattern("MMMM", Locale.US)));
+	}
+
+	protected void _personBirthDateDayOfWeek(Wrap<String> c) {
+		if(personBirthDate != null)
+			c.o(personBirthDate.format(DateTimeFormatter.ofPattern("EEEE", Locale.US)));
 	}
 
 	@Override()

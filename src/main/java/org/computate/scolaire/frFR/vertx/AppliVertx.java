@@ -985,62 +985,6 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 		return promise;
 	}
 
-//	private Promise<Void> configurerOpenApi() {
-//		ConfigSite configSite = siteContexteFrFR.getConfigSite();
-//		Promise<Void> promise = Promise.promise();
-//		Router routeur = Router.router(vertx);
-//
-//		AppOpenAPI3RouterFactory.create(vertx, routeur, "openapi3-frFR.yaml", ar -> {
-//			if (ar.succeeded()) {
-//				AppOpenAPI3RouterFactory usineRouteur = ar.result();
-//				usineRouteur.mountServicesFromExtensions();
-//				siteContexteFrFR.setUsineRouteur(usineRouteur);
-//
-//				JsonObject keycloakJson = new JsonObject()
-//					.put("realm", configSite.getAuthRoyaume())
-//					.put("resource", configSite.getAuthRessource())
-//					.put("auth-server-url", configSite.getAuthUrl())
-//					.put("ssl-required", configSite.getAuthSslRequis())
-//					.put("credentials", new JsonObject().put("secret", configSite.getAuthSecret()))
-//					;
-//
-//				OAuth2Auth authFournisseur = KeycloakAuth.create(vertx, OAuth2FlowType.AUTH_CODE, keycloakJson);
-//
-//				routeur.route().handler(new CookieHandlerImpl());
-//				LocalSessionStore sessionStore = LocalSessionStore.create(vertx);
-//				SessionHandler sessionHandler = SessionHandler.create(sessionStore);
-//				sessionHandler.setAuthProvider(authFournisseur);
-//				routeur.route().handler(sessionHandler);
-//
-//				String siteUrlBase = configSite.getSiteUrlBase();
-//				OAuth2AuthHandler gestionnaireAuth = OAuth2AuthHandler.create(authFournisseur, siteUrlBase + "/callback");
-//
-//				gestionnaireAuth.setupCallback(routeur.get("/callback"));
-//
-//				routeur.get("/deconnexion").handler(rc -> {
-//					Session session = rc.session();
-//					if (session != null) {
-//						session.destroy();
-//					}
-//					rc.clearUser();
-//					rc.reroute("/ecole");
-//				});
-//
-//				usineRouteur.addSecurityHandler("openIdConnect", gestionnaireAuth);
-//
-//				usineRouteur.initRouter();
-//				siteContexteFrFR.setRouteur(usineRouteur.getRouter());
-//
-//				LOGGER.info(configurerOpenApiSucces);
-//				promise.complete();
-//			} else {
-//				LOGGER.error(configurerOpenApiErreur, ar.cause());
-//				promise.fail(ar.cause());
-//			}
-//		});
-//		return promise;
-//	}
-
 	/**
 	 * Var.enUS: configureSharedWorkerExecutor
 	 * 

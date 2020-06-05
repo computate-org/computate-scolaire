@@ -22,6 +22,7 @@ src/main/fabric8/*.yml
 **/*.swp
 .niogit*
 .index
+file-uploads
 
 # Avoid ignoring Maven wrapper jar file (.jar files are usually ignored)
 !/.mvn/wrapper/maven-wrapper.jar
