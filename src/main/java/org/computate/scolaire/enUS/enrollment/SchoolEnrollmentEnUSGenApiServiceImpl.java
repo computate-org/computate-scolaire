@@ -8019,7 +8019,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 
 			tx.preparedQuery(
 					SiteContextEnUS.SQL_create
-					, Tuple.of(SchoolEnrollment.class.getCanonicalName(), userId, created.toOffsetDateTime())
+					, Tuple.of(SchoolEnrollment.class.getCanonicalName(), userId)
 					, Collectors.toList()
 					, createAsync
 			-> {

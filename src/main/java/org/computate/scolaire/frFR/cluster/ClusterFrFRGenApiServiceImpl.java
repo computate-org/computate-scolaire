@@ -1598,7 +1598,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 
 			tx.preparedQuery(
 					SiteContexteFrFR.SQL_creer
-					, Tuple.of(Cluster.class.getCanonicalName(), utilisateurId, cree.toOffsetDateTime())
+					, Tuple.of(Cluster.class.getCanonicalName(), utilisateurId)
 					, Collectors.toList()
 					, creerAsync
 			-> {

@@ -4,6 +4,27 @@ import java.util.List;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import org.computate.scolaire.enUS.wrap.Wrap;
 
+/**
+ * Model: true
+ * Api: true
+ * Page: true
+ * Saved: true
+ * RoleUser: true
+ * Color: gray
+ * IconGroup: regular
+ * IconName: user-cog
+ * Role.enUS: SiteAdmin
+ * Role.enUS: SiteAdmin
+ * ApiUri.enUS: /api/user
+ * ApiTag.enUS: User
+ * AName.enUS: a site user
+ * Role.frFR: SiteAdmin
+ * Role.frFR: SiteAdmin
+ * ApiUri.frFR: /api/utilisateur
+ * ApiTag.frFR: Utilisateur
+ * AName.frFR: un utilisateur du site
+ * CanonicalName: org.computate.scolaire.frFR.utilisateur.UtilisateurSite
+ **/
 public class SiteUser extends SiteUserGen<Cluster> {
 
 	protected void _userKeys(List<Long> l) {

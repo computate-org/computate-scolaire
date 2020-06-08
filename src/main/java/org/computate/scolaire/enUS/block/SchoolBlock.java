@@ -12,6 +12,24 @@ import org.computate.scolaire.enUS.cluster.Cluster;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.search.SearchList;
 
+/**
+ * Model: true
+ * Api: true
+ * Page: true
+ * Saved: true
+ * Color: indigo
+ * IconGroup: regular
+ * IconName: bell
+ * Role.enUS: SiteAdmin
+ * ApiUri.enUS: /api/block
+ * ApiTag.enUS: Block
+ * AName.enUS: a block
+ * Role.frFR: SiteAdmin
+ * ApiUri.frFR: /api/bloc
+ * ApiTag.frFR: Bloc
+ * AName.frFR: un bloc
+ * CanonicalName: org.computate.scolaire.frFR.bloc.BlocScolaire
+ **/
 public class SchoolBlock extends SchoolBlockGen<Cluster> {
 
 	protected void _blockKey(Wrap<Long> c) {

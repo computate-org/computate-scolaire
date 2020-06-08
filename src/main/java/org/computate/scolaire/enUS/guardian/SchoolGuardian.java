@@ -10,6 +10,26 @@ import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.enrollment.SchoolEnrollment;
 import org.computate.scolaire.enUS.search.SearchList;
 
+/**
+ * Model: true
+ * Api: true
+ * Page: true
+ * Saved: true
+ * RoleSession: true
+ * RoleUser: true
+ * Color: yellow
+ * IconGroup: regular
+ * IconName: phone
+ * Role.enUS: SiteAdmin
+ * ApiUri.enUS: /api/guardian
+ * ApiTag.enUS: Guardian
+ * AName.enUS: a guardian
+ * Role.frFR: SiteAdmin
+ * ApiUri.frFR: /api/gardien
+ * ApiTag.frFR: Gardien
+ * AName.frFR: un gardien
+ * CanonicalName: org.computate.scolaire.frFR.gardien.GardienScolaire
+ **/
 public class SchoolGuardian extends SchoolGuardianGen<Cluster> {
 
 	protected void _guardianKey(Wrap<Long> c) {

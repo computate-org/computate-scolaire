@@ -2548,7 +2548,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 
 			tx.preparedQuery(
 					SiteContextEnUS.SQL_create
-					, Tuple.of(SchoolBlock.class.getCanonicalName(), userId, created.toOffsetDateTime())
+					, Tuple.of(SchoolBlock.class.getCanonicalName(), userId)
 					, Collectors.toList()
 					, createAsync
 			-> {

@@ -7,6 +7,24 @@ import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.school.School;
 import org.computate.scolaire.enUS.search.SearchList;
 
+/**
+ * Model: true
+ * Api: true
+ * Page: true
+ * Saved: true
+ * Color: orange
+ * IconGroup: regular
+ * IconName: calendar-check
+ * Role.enUS: SiteAdmin
+ * ApiUri.enUS: /api/year
+ * ApiTag.enUS: Year
+ * AName.enUS: a year
+ * Role.frFR: SiteAdmin
+ * ApiUri.frFR: /api/annee
+ * ApiTag.frFR: Année
+ * AName.frFR: une année
+ * CanonicalName: org.computate.scolaire.frFR.annee.AnneeScolaire
+ **/
 public class SchoolYear extends SchoolYearGen<Cluster> {
 
 	protected void _schoolKey(Wrap<Long> c) {

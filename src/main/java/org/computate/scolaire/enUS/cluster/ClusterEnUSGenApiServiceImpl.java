@@ -1598,7 +1598,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 
 			tx.preparedQuery(
 					SiteContextEnUS.SQL_create
-					, Tuple.of(Cluster.class.getCanonicalName(), userId, created.toOffsetDateTime())
+					, Tuple.of(Cluster.class.getCanonicalName(), userId)
 					, Collectors.toList()
 					, createAsync
 			-> {

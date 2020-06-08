@@ -7,6 +7,24 @@ import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.design.PageDesign;
 import org.computate.scolaire.enUS.search.SearchList;
 
+/**
+ * Model: true
+ * Api: true
+ * Page: true
+ * Saved: true
+ * Color: yellow
+ * IconGroup: regular
+ * IconName: sun
+ * Role.enUS: SiteAdmin
+ * ApiUri.enUS: /api/html-part
+ * ApiTag.enUS: Html Part
+ * AName.enUS: an HTML part
+ * Role.frFR: SiteAdmin
+ * ApiUri.frFR: /api/part-html
+ * ApiTag.frFR: Part de Html
+ * AName.frFR: un part de HTML
+ * CanonicalName: org.computate.scolaire.frFR.html.part.PartHtml
+ **/
 public class HtmlPart extends HtmlPartGen<Cluster> {
 
 	protected void _htmlPartKey(Wrap<Long> c) {

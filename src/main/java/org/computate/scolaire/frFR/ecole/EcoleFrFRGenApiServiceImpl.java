@@ -2327,7 +2327,7 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 
 			tx.preparedQuery(
 					SiteContexteFrFR.SQL_creer
-					, Tuple.of(Ecole.class.getCanonicalName(), utilisateurId, cree.toOffsetDateTime())
+					, Tuple.of(Ecole.class.getCanonicalName(), utilisateurId)
 					, Collectors.toList()
 					, creerAsync
 			-> {

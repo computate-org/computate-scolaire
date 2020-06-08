@@ -2508,7 +2508,7 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 
 			tx.preparedQuery(
 					SiteContextEnUS.SQL_create
-					, Tuple.of(SchoolMom.class.getCanonicalName(), userId, created.toOffsetDateTime())
+					, Tuple.of(SchoolMom.class.getCanonicalName(), userId)
 					, Collectors.toList()
 					, createAsync
 			-> {

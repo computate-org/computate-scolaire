@@ -2224,7 +2224,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 
 			tx.preparedQuery(
 					SiteContexteFrFR.SQL_creer
-					, Tuple.of(SessionScolaire.class.getCanonicalName(), utilisateurId, cree.toOffsetDateTime())
+					, Tuple.of(SessionScolaire.class.getCanonicalName(), utilisateurId)
 					, Collectors.toList()
 					, creerAsync
 			-> {

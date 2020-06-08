@@ -2965,7 +2965,7 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 
 			tx.preparedQuery(
 					SiteContextEnUS.SQL_create
-					, Tuple.of(SchoolPayment.class.getCanonicalName(), userId, created.toOffsetDateTime())
+					, Tuple.of(SchoolPayment.class.getCanonicalName(), userId)
 					, Collectors.toList()
 					, createAsync
 			-> {

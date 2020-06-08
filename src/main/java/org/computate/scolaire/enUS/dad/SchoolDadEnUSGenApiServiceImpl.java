@@ -2508,7 +2508,7 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 
 			tx.preparedQuery(
 					SiteContextEnUS.SQL_create
-					, Tuple.of(SchoolDad.class.getCanonicalName(), userId, created.toOffsetDateTime())
+					, Tuple.of(SchoolDad.class.getCanonicalName(), userId)
 					, Collectors.toList()
 					, createAsync
 			-> {

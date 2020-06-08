@@ -9,6 +9,24 @@ import org.computate.scolaire.enUS.page.PageLayout;
 import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.session.SchoolSession;
 
+/**
+ * Model: true
+ * Api: true
+ * Page: true
+ * Saved: true
+ * Color: blue
+ * IconGroup: duotone
+ * IconName: birthday-cake
+ * Role.enUS: SiteAdmin
+ * ApiUri.enUS: /api/age
+ * ApiTag.enUS: Age
+ * AName.enUS: an age
+ * Role.frFR: SiteAdmin
+ * ApiUri.frFR: /api/age
+ * ApiTag.frFR: Age
+ * AName.frFR: un âge
+ * CanonicalName: org.computate.scolaire.frFR.age.AgeScolaire
+ **/
 public class SchoolAge extends SchoolAgeGen<Cluster> {
 
 	protected void _ageKey(Wrap<Long> c) {

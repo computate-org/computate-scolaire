@@ -2224,7 +2224,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 
 			tx.preparedQuery(
 					SiteContexteFrFR.SQL_creer
-					, Tuple.of(AnneeScolaire.class.getCanonicalName(), utilisateurId, cree.toOffsetDateTime())
+					, Tuple.of(AnneeScolaire.class.getCanonicalName(), utilisateurId)
 					, Collectors.toList()
 					, creerAsync
 			-> {

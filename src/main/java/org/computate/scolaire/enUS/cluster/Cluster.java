@@ -15,6 +15,25 @@ import org.computate.scolaire.enUS.page.part.PagePart;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import org.computate.scolaire.enUS.xml.UtilXml;
 
+/**
+ * Model: true
+ * Api: true
+ * Page: true
+ * Saved: true
+ * RoleUser: true
+ * Color: gray
+ * IconGroup: regular
+ * IconName: fort-awesome
+ * Role.enUS: SiteAdmin
+ * ApiUri.enUS: /api/cluster
+ * ApiTag.enUS: Cluster
+ * AName.enUS: a cluster
+ * Role.frFR: SiteAdmin
+ * ApiUri.frFR: /api/cluster
+ * ApiTag.frFR: Cluster
+ * AName.frFR: un cluster
+ * CanonicalName: org.computate.scolaire.frFR.cluster.Cluster
+ **/
 public class Cluster extends ClusterGen<Object> {
 
 	protected void _siteRequest_(Wrap<SiteRequestEnUS> c) {}

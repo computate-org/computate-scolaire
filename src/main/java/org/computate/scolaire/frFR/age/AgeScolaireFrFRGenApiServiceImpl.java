@@ -2224,7 +2224,7 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 
 			tx.preparedQuery(
 					SiteContexteFrFR.SQL_creer
-					, Tuple.of(AgeScolaire.class.getCanonicalName(), utilisateurId, cree.toOffsetDateTime())
+					, Tuple.of(AgeScolaire.class.getCanonicalName(), utilisateurId)
 					, Collectors.toList()
 					, creerAsync
 			-> {

@@ -4,6 +4,24 @@ import java.util.List;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import org.computate.scolaire.enUS.wrap.Wrap;
 
+/**
+ * Model: true
+ * Api: true
+ * Page: true
+ * Saved: true
+ * Color: pink
+ * IconGroup: regular
+ * IconName: school
+ * Role.enUS: SiteAdmin
+ * ApiUri.enUS: /api/school
+ * ApiTag.enUS: School
+ * AName.enUS: a school
+ * Role.frFR: SiteAdmin
+ * ApiUri.frFR: /api/ecole
+ * ApiTag.frFR: Ecole
+ * AName.frFR: une école
+ * CanonicalName: org.computate.scolaire.frFR.ecole.Ecole
+ **/
 public class School extends SchoolGen<Cluster> {
 
 	protected void _schoolKey(Wrap<Long> c) {

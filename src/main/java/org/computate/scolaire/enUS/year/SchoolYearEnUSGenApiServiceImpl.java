@@ -2224,7 +2224,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 
 			tx.preparedQuery(
 					SiteContextEnUS.SQL_create
-					, Tuple.of(SchoolYear.class.getCanonicalName(), userId, created.toOffsetDateTime())
+					, Tuple.of(SchoolYear.class.getCanonicalName(), userId)
 					, Collectors.toList()
 					, createAsync
 			-> {

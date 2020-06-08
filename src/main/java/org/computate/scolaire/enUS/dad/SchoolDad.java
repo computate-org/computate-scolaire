@@ -10,6 +10,26 @@ import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.enrollment.SchoolEnrollment;
 import org.computate.scolaire.enUS.search.SearchList;
 
+/**
+ * Model: true
+ * Api: true
+ * Page: true
+ * Saved: true
+ * RoleSession: true
+ * RoleUser: true
+ * Color: light-blue
+ * IconGroup: regular
+ * IconName: male
+ * Role.enUS: SiteAdmin
+ * ApiUri.enUS: /api/dad
+ * ApiTag.enUS: Dad
+ * AName.enUS: a dad
+ * Role.frFR: SiteAdmin
+ * ApiUri.frFR: /api/pere
+ * ApiTag.frFR: Père
+ * AName.frFR: un père
+ * CanonicalName: org.computate.scolaire.frFR.pere.PereScolaire
+ **/
 public class SchoolDad extends SchoolDadGen<Cluster> {
 
 	protected void _dadKey(Wrap<Long> c) {

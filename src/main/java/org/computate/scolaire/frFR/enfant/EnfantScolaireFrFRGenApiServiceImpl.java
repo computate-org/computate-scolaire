@@ -2184,7 +2184,7 @@ public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGe
 
 			tx.preparedQuery(
 					SiteContexteFrFR.SQL_creer
-					, Tuple.of(EnfantScolaire.class.getCanonicalName(), utilisateurId, cree.toOffsetDateTime())
+					, Tuple.of(EnfantScolaire.class.getCanonicalName(), utilisateurId)
 					, Collectors.toList()
 					, creerAsync
 			-> {

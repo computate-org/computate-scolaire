@@ -2224,7 +2224,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 
 			tx.preparedQuery(
 					SiteContextEnUS.SQL_create
-					, Tuple.of(SchoolSession.class.getCanonicalName(), userId, created.toOffsetDateTime())
+					, Tuple.of(SchoolSession.class.getCanonicalName(), userId)
 					, Collectors.toList()
 					, createAsync
 			-> {

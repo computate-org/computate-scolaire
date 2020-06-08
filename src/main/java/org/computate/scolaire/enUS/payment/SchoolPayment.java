@@ -17,6 +17,25 @@ import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.enrollment.SchoolEnrollment;
 import org.computate.scolaire.enUS.search.SearchList;
 
+/**
+ * Model: true
+ * Api: true
+ * Page: true
+ * Saved: true
+ * RoleUser: true
+ * Color: green
+ * IconGroup: solid
+ * IconName: search-dollar
+ * Role.enUS: SiteAdmin
+ * ApiUri.enUS: /api/payment
+ * ApiTag.enUS: Payment
+ * AName.enUS: a payment
+ * Role.frFR: SiteAdmin
+ * ApiUri.frFR: /api/paiement
+ * ApiTag.frFR: Paiement
+ * AName.frFR: un paiement
+ * CanonicalName: org.computate.scolaire.frFR.paiement.PaiementScolaire
+ **/
 public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 
 	private LocalDate now;

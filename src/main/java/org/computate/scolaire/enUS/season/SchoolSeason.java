@@ -12,6 +12,24 @@ import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.session.SchoolSession;
 
+/**
+ * Model: true
+ * Api: true
+ * Page: true
+ * Saved: true
+ * Color: yellow
+ * IconGroup: regular
+ * IconName: sun
+ * Role.enUS: SiteAdmin
+ * ApiUri.enUS: /api/season
+ * ApiTag.enUS: Season
+ * AName.enUS: a season
+ * Role.frFR: SiteAdmin
+ * ApiUri.frFR: /api/saison
+ * ApiTag.frFR: Saison
+ * AName.frFR: une saison
+ * CanonicalName: org.computate.scolaire.frFR.saison.SaisonScolaire
+ **/
 public class SchoolSeason extends SchoolSeasonGen<Cluster> {
 
 	protected void _seasonKey(Wrap<Long> c) {

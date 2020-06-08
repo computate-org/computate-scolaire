@@ -11,6 +11,24 @@ import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.season.SchoolSeason;
 
+/**
+ * Model: true
+ * Api: true
+ * Page: true
+ * Saved: true
+ * Color: green
+ * IconGroup: duotone
+ * IconName: graduation-cap
+ * Role.enUS: SiteAdmin
+ * ApiUri.enUS: /api/session
+ * ApiTag.enUS: Session
+ * AName.enUS: a session
+ * Role.frFR: SiteAdmin
+ * ApiUri.frFR: /api/session
+ * ApiTag.frFR: Session
+ * AName.frFR: une session
+ * CanonicalName: org.computate.scolaire.frFR.session.SessionScolaire
+ **/
 public class SchoolSession extends SchoolSessionGen<Cluster> {
 
 	protected void _sessionKey(Wrap<Long> c) {

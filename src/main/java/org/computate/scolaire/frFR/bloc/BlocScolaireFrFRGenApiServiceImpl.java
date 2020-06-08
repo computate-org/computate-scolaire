@@ -2548,7 +2548,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 
 			tx.preparedQuery(
 					SiteContexteFrFR.SQL_creer
-					, Tuple.of(BlocScolaire.class.getCanonicalName(), utilisateurId, cree.toOffsetDateTime())
+					, Tuple.of(BlocScolaire.class.getCanonicalName(), utilisateurId)
 					, Collectors.toList()
 					, creerAsync
 			-> {

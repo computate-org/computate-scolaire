@@ -2278,7 +2278,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 
 			tx.preparedQuery(
 					SiteContextEnUS.SQL_create
-					, Tuple.of(SchoolSeason.class.getCanonicalName(), userId, created.toOffsetDateTime())
+					, Tuple.of(SchoolSeason.class.getCanonicalName(), userId)
 					, Collectors.toList()
 					, createAsync
 			-> {

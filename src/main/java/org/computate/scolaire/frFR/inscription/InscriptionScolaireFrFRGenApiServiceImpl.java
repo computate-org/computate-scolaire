@@ -8019,7 +8019,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 
 			tx.preparedQuery(
 					SiteContexteFrFR.SQL_creer
-					, Tuple.of(InscriptionScolaire.class.getCanonicalName(), utilisateurId, cree.toOffsetDateTime())
+					, Tuple.of(InscriptionScolaire.class.getCanonicalName(), utilisateurId)
 					, Collectors.toList()
 					, creerAsync
 			-> {

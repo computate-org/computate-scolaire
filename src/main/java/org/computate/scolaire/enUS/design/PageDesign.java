@@ -7,9 +7,24 @@ import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.html.part.HtmlPart;
 import org.computate.scolaire.enUS.search.SearchList;
 
-/**	
- *	classCanonicalName: org.computate.scolaire.frFR.design.DesignPage
- *	Model: true
+/**
+ * Model: true
+ * Api: true
+ * Page: true
+ * Saved: true
+ * PublicRead: true
+ * Color: khaki
+ * IconGroup: regular
+ * IconName: drafting-compass
+ * Role.enUS: SiteAdmin
+ * ApiUri.enUS: /api/page-design
+ * ApiTag.enUS: Page Design
+ * AName.enUS: a page design
+ * Role.frFR: SiteAdmin
+ * ApiUri.frFR: /api/design-page
+ * ApiTag.frFR: Design de page
+ * AName.frFR: un design de page
+ * CanonicalName: org.computate.scolaire.frFR.design.DesignPage
  **/
 public class PageDesign extends PageDesignGen<Cluster> {
 

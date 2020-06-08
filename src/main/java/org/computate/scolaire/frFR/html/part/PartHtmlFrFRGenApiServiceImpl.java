@@ -3353,7 +3353,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 
 			tx.preparedQuery(
 					SiteContexteFrFR.SQL_creer
-					, Tuple.of(PartHtml.class.getCanonicalName(), utilisateurId, cree.toOffsetDateTime())
+					, Tuple.of(PartHtml.class.getCanonicalName(), utilisateurId)
 					, Collectors.toList()
 					, creerAsync
 			-> {

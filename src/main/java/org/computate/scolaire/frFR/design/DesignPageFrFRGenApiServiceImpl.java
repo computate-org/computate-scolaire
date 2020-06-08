@@ -2842,7 +2842,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 
 			tx.preparedQuery(
 					SiteContexteFrFR.SQL_creer
-					, Tuple.of(DesignPage.class.getCanonicalName(), utilisateurId, cree.toOffsetDateTime())
+					, Tuple.of(DesignPage.class.getCanonicalName(), utilisateurId)
 					, Collectors.toList()
 					, creerAsync
 			-> {
