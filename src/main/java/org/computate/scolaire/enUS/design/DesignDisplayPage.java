@@ -127,7 +127,6 @@ public class DesignDisplayPage extends DesignDisplayPageGen<DesignDisplayGenPage
 					enrollmentEnrollments = enrollment.getEnrollmentEnrollments();
 					enrollmentBlocks.add(enrollment);
 					enrollmentNumber = 1;
-					LOGGER.info("ENROLLMENT BLOCK: " + blockKeyCurrent);
 				}
 				if((i + 2) > size)
 					break;

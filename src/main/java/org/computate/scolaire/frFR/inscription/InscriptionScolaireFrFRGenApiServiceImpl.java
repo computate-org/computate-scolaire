@@ -843,6 +843,19 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 							});
 						}));
 						break;
+					case "inscriptionNomsParents":
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "inscriptionNomsParents", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionNomsParents a échoué", b.cause())));
+							});
+						}));
+						break;
 					case "inscriptionSignature1":
 						futures.add(Future.future(a -> {
 							tx.preparedQuery(SiteContexteFrFR.SQL_setD
@@ -2134,6 +2147,19 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 									a.handle(Future.succeededFuture());
 								else
 									a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionDateFrais a échoué", b.cause())));
+							});
+						}));
+						break;
+					case "inscriptionNomsParents":
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "inscriptionNomsParents", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionNomsParents a échoué", b.cause())));
 							});
 						}));
 						break;
@@ -4364,6 +4390,34 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 										a.handle(Future.succeededFuture());
 									else
 										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionDateFrais a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setInscriptionNomsParents":
+						if(jsonObject.getString(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "inscriptionNomsParents")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionNomsParents a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setInscriptionNomsParents(jsonObject.getString(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "inscriptionNomsParents", o2.jsonInscriptionNomsParents())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionNomsParents a échoué", b.cause())));
 								});
 							}));
 						}
@@ -7179,6 +7233,34 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 							}));
 						}
 						break;
+					case "setInscriptionNomsParents":
+						if(jsonObject.getString(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "inscriptionNomsParents")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionNomsParents a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setInscriptionNomsParents(jsonObject.getString(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "inscriptionNomsParents", o2.jsonInscriptionNomsParents())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionNomsParents a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
 					case "setInscriptionSignature1":
 						if(jsonObject.getString(methodeNom) == null) {
 							futures.add(Future.future(a -> {
@@ -8019,7 +8101,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 
 			tx.preparedQuery(
 					SiteContexteFrFR.SQL_creer
-					, Tuple.of(InscriptionScolaire.class.getCanonicalName(), utilisateurId)
+					, Tuple.of(InscriptionScolaire.class.getCanonicalName(), utilisateurId, cree.toOffsetDateTime())
 					, Collectors.toList()
 					, creerAsync
 			-> {

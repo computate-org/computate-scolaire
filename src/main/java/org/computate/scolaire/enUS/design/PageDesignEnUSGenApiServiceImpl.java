@@ -2845,7 +2845,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 
 			tx.preparedQuery(
 					SiteContextEnUS.SQL_create
-					, Tuple.of(PageDesign.class.getCanonicalName(), userId)
+					, Tuple.of(PageDesign.class.getCanonicalName(), userId, created.toOffsetDateTime())
 					, Collectors.toList()
 					, createAsync
 			-> {

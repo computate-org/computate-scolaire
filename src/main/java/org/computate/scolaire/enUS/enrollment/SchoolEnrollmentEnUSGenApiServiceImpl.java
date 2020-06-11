@@ -843,6 +843,19 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							});
 						}));
 						break;
+					case "enrollmentParentNames":
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "enrollmentParentNames", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentParentNames failed", b.cause())));
+							});
+						}));
+						break;
 					case "enrollmentSignature1":
 						futures.add(Future.future(a -> {
 							tx.preparedQuery(SiteContextEnUS.SQL_setD
@@ -2134,6 +2147,19 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 									a.handle(Future.succeededFuture());
 								else
 									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentChargeDate failed", b.cause())));
+							});
+						}));
+						break;
+					case "enrollmentParentNames":
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "enrollmentParentNames", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentParentNames failed", b.cause())));
 							});
 						}));
 						break;
@@ -4364,6 +4390,34 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 										a.handle(Future.succeededFuture());
 									else
 										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentChargeDate failed", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setEnrollmentParentNames":
+						if(jsonObject.getString(methodName) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "enrollmentParentNames")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentParentNames failed", b.cause())));
+								});
+							}));
+						} else {
+							o2.setEnrollmentParentNames(jsonObject.getString(methodName));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "enrollmentParentNames", o2.jsonEnrollmentParentNames())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentParentNames failed", b.cause())));
 								});
 							}));
 						}
@@ -7179,6 +7233,34 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							}));
 						}
 						break;
+					case "setEnrollmentParentNames":
+						if(jsonObject.getString(methodName) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "enrollmentParentNames")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentParentNames failed", b.cause())));
+								});
+							}));
+						} else {
+							o2.setEnrollmentParentNames(jsonObject.getString(methodName));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "enrollmentParentNames", o2.jsonEnrollmentParentNames())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentParentNames failed", b.cause())));
+								});
+							}));
+						}
+						break;
 					case "setEnrollmentSignature1":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
@@ -8019,7 +8101,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 
 			tx.preparedQuery(
 					SiteContextEnUS.SQL_create
-					, Tuple.of(SchoolEnrollment.class.getCanonicalName(), userId)
+					, Tuple.of(SchoolEnrollment.class.getCanonicalName(), userId, created.toOffsetDateTime())
 					, Collectors.toList()
 					, createAsync
 			-> {

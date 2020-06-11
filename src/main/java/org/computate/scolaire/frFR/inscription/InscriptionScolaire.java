@@ -808,7 +808,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * r.enUS: child_
 	 * r: PersonneNomComplet
 	 * r.enUS: PersonCompleteName
-	 */   
+	 */ 
 	protected void _enfantNomComplet(Couverture<String> c) {
 		if(enfant_ != null)
 			c.o(enfant_.getPersonneNomComplet());
@@ -1887,6 +1887,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * {@inheritDoc}
 	 * Var.enUS: enrollmentParentNames
 	 * Stocke: true
+	 * Definir: true
 	 * r: MereScolaire
 	 * r.enUS: SchoolMom
 	 * r: PereScolaire

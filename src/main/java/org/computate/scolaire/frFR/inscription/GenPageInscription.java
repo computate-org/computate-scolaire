@@ -444,6 +444,7 @@ public class GenPageInscription extends GenPageInscriptionGen<ClusterPage> {
 			o.htmEnfantDateNaissance("PUTCopie");
 			o.htmEcoleAddresse("PUTCopie");
 			o.htmInscriptionDateFrais("PUTCopie");
+			o.htmInscriptionNomsParents("PUTCopie");
 			o.htmInscriptionSignature1("PUTCopie");
 			o.htmInscriptionSignature2("PUTCopie");
 			o.htmInscriptionSignature3("PUTCopie");
@@ -530,6 +531,7 @@ public class GenPageInscription extends GenPageInscriptionGen<ClusterPage> {
 			o.htmEnfantDateNaissance("PATCH");
 			o.htmEcoleAddresse("PATCH");
 			o.htmInscriptionDateFrais("PATCH");
+			o.htmInscriptionNomsParents("PATCH");
 			o.htmInscriptionSignature1("PATCH");
 			o.htmInscriptionSignature2("PATCH");
 			o.htmInscriptionSignature3("PATCH");

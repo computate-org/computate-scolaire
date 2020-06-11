@@ -444,6 +444,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 			o.htmChildBirthDate("PUTCopy");
 			o.htmSchoolAddress("PUTCopy");
 			o.htmEnrollmentChargeDate("PUTCopy");
+			o.htmEnrollmentParentNames("PUTCopy");
 			o.htmEnrollmentSignature1("PUTCopy");
 			o.htmEnrollmentSignature2("PUTCopy");
 			o.htmEnrollmentSignature3("PUTCopy");
@@ -530,6 +531,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 			o.htmChildBirthDate("PATCH");
 			o.htmSchoolAddress("PATCH");
 			o.htmEnrollmentChargeDate("PATCH");
+			o.htmEnrollmentParentNames("PATCH");
 			o.htmEnrollmentSignature1("PATCH");
 			o.htmEnrollmentSignature2("PATCH");
 			o.htmEnrollmentSignature3("PATCH");

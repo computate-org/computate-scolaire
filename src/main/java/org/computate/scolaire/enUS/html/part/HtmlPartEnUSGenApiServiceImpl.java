@@ -3353,7 +3353,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 
 			tx.preparedQuery(
 					SiteContextEnUS.SQL_create
-					, Tuple.of(HtmlPart.class.getCanonicalName(), userId)
+					, Tuple.of(HtmlPart.class.getCanonicalName(), userId, created.toOffsetDateTime())
 					, Collectors.toList()
 					, createAsync
 			-> {

@@ -2965,7 +2965,7 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 
 			tx.preparedQuery(
 					SiteContexteFrFR.SQL_creer
-					, Tuple.of(PaiementScolaire.class.getCanonicalName(), utilisateurId)
+					, Tuple.of(PaiementScolaire.class.getCanonicalName(), utilisateurId, cree.toOffsetDateTime())
 					, Collectors.toList()
 					, creerAsync
 			-> {
