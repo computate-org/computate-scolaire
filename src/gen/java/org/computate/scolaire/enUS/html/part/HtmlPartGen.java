@@ -36,6 +36,7 @@ import org.apache.solr.common.SolrDocument;
 import java.util.List;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.commons.lang3.math.NumberUtils;
+import org.computate.scolaire.enUS.design.PageDesign;
 import java.util.Optional;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.apache.solr.client.solrj.util.ClientUtils;
@@ -154,7 +155,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected List<Long> pageDesignKeys = new java.util.ArrayList<java.lang.Long>();
+	protected List<Long> pageDesignKeys = new ArrayList<Long>();
 	@JsonIgnore
 	public Wrap<List<Long>> pageDesignKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("pageDesignKeys").o(pageDesignKeys);
 
@@ -278,7 +279,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listHtmlPartPageDesignKeys_", classApiMethodMethod).f();
 								} g("ul");
-								{
+								if(
+										CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), PageDesign.ROLES)
+										|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), PageDesign.ROLES)
+										) {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-khaki ")

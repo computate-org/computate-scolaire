@@ -21,6 +21,7 @@ import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import java.lang.String;
 import io.vertx.core.logging.Logger;
+import org.computate.scolaire.frFR.annee.AnneeScolaire;
 import java.math.MathContext;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.frFR.cluster.Cluster;
@@ -153,7 +154,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected List<Long> anneeCles = new java.util.ArrayList<java.lang.Long>();
+	protected List<Long> anneeCles = new ArrayList<Long>();
 	@JsonIgnore
 	public Couverture<List<Long>> anneeClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("anneeCles").o(anneeCles);
 
@@ -278,7 +279,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listEcoleAnneeCles_", classeApiMethodeMethode).f();
 								} g("ul");
-								{
+								if(
+										CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), AnneeScolaire.ROLES)
+										|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), AnneeScolaire.ROLES)
+										) {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
@@ -305,7 +309,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected List<Long> saisonCles = new java.util.ArrayList<java.lang.Long>();
+	protected List<Long> saisonCles = new ArrayList<Long>();
 	@JsonIgnore
 	public Couverture<List<Long>> saisonClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("saisonCles").o(saisonCles);
 
@@ -392,7 +396,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected List<Long> sessionCles = new java.util.ArrayList<java.lang.Long>();
+	protected List<Long> sessionCles = new ArrayList<Long>();
 	@JsonIgnore
 	public Couverture<List<Long>> sessionClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("sessionCles").o(sessionCles);
 
@@ -479,7 +483,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected List<Long> groupeAgeCles = new java.util.ArrayList<java.lang.Long>();
+	protected List<Long> groupeAgeCles = new ArrayList<Long>();
 	@JsonIgnore
 	public Couverture<List<Long>> groupeAgeClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("groupeAgeCles").o(groupeAgeCles);
 
@@ -566,7 +570,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected List<Long> blocCles = new java.util.ArrayList<java.lang.Long>();
+	protected List<Long> blocCles = new ArrayList<Long>();
 	@JsonIgnore
 	public Couverture<List<Long>> blocClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("blocCles").o(blocCles);
 
@@ -653,7 +657,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected List<Long> enfantCles = new java.util.ArrayList<java.lang.Long>();
+	protected List<Long> enfantCles = new ArrayList<Long>();
 	@JsonIgnore
 	public Couverture<List<Long>> enfantClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("enfantCles").o(enfantCles);
 

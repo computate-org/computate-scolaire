@@ -132,7 +132,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<PagePart>(). 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected List<PagePart> pageParts = new java.util.ArrayList<org.computate.scolaire.frFR.page.part.PagePart>();
+	protected List<PagePart> pageParts = new ArrayList<PagePart>();
 	@JsonIgnore
 	public Couverture<List<PagePart>> pagePartsCouverture = new Couverture<List<PagePart>>().p(this).c(List.class).var("pageParts").o(pageParts);
 
@@ -1082,7 +1082,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<String>(). 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected List<String> classeNomsCanoniques = new java.util.ArrayList<java.lang.String>();
+	protected List<String> classeNomsCanoniques = new ArrayList<String>();
 	@JsonIgnore
 	public Couverture<List<String>> classeNomsCanoniquesCouverture = new Couverture<List<String>>().p(this).c(List.class).var("classeNomsCanoniques").o(classeNomsCanoniques);
 

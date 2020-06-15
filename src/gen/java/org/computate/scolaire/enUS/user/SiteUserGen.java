@@ -10,6 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 import io.vertx.core.logging.LoggerFactory;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import org.computate.scolaire.enUS.enrollment.SchoolEnrollment;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import org.apache.commons.collections.CollectionUtils;
 import java.lang.Long;
@@ -21,6 +22,7 @@ import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import java.lang.String;
 import io.vertx.core.logging.Logger;
+import org.computate.scolaire.enUS.payment.SchoolPayment;
 import java.math.MathContext;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.enUS.cluster.Cluster;
@@ -83,7 +85,7 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected List<Long> userKeys = new java.util.ArrayList<java.lang.Long>();
+	protected List<Long> userKeys = new ArrayList<Long>();
 	@JsonIgnore
 	public Wrap<List<Long>> userKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("userKeys").o(userKeys);
 
@@ -170,7 +172,7 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected List<Long> enrollmentKeys = new java.util.ArrayList<java.lang.Long>();
+	protected List<Long> enrollmentKeys = new ArrayList<Long>();
 	@JsonIgnore
 	public Wrap<List<Long>> enrollmentKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("enrollmentKeys").o(enrollmentKeys);
 
@@ -304,10 +306,7 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSiteUserEnrollmentKeys_", classApiMethodMethod).f();
 								} g("ul");
-								if(
-										CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
-										|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
-										) {
+								{
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ")
@@ -334,7 +333,7 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected List<Long> paymentKeys = new java.util.ArrayList<java.lang.Long>();
+	protected List<Long> paymentKeys = new ArrayList<Long>();
 	@JsonIgnore
 	public Wrap<List<Long>> paymentKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("paymentKeys").o(paymentKeys);
 
@@ -469,8 +468,8 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSiteUserPaymentKeys_", classApiMethodMethod).f();
 								} g("ul");
 								if(
-										CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
-										|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+										CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), SchoolPayment.ROLES)
+										|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), SchoolPayment.ROLES)
 										) {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")

@@ -24,6 +24,7 @@ import java.time.Instant;
 import java.time.ZoneId;
 import java.util.Objects;
 import java.util.List;
+import org.computate.scolaire.frFR.age.AgeScolaire;
 import java.time.LocalDate;
 import org.apache.solr.client.solrj.SolrQuery;
 import java.util.Optional;
@@ -164,7 +165,7 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected List<Long> inscriptionCles = new java.util.ArrayList<java.lang.Long>();
+	protected List<Long> inscriptionCles = new ArrayList<Long>();
 	@JsonIgnore
 	public Couverture<List<Long>> inscriptionClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("inscriptionCles").o(inscriptionCles);
 
@@ -251,7 +252,7 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected List<Long> ageCles = new java.util.ArrayList<java.lang.Long>();
+	protected List<Long> ageCles = new ArrayList<Long>();
 	@JsonIgnore
 	public Couverture<List<Long>> ageClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("ageCles").o(ageCles);
 
@@ -376,7 +377,10 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSessionScolaireAgeCles_", classeApiMethodeMethode).f();
 								} g("ul");
-								{
+								if(
+										CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), AgeScolaire.ROLES)
+										|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), AgeScolaire.ROLES)
+										) {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue ")
@@ -855,7 +859,10 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSessionScolaireSaisonCle_", classeApiMethodeMethode).f();
 								} g("ul");
-								{
+								if(
+										CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), SaisonScolaire.ROLES)
+										|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), SaisonScolaire.ROLES)
+										) {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")

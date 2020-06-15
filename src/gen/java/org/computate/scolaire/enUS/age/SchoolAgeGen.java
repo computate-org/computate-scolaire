@@ -29,6 +29,7 @@ import org.apache.solr.client.solrj.SolrQuery;
 import java.util.Optional;
 import org.apache.solr.client.solrj.util.ClientUtils;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import org.computate.scolaire.enUS.block.SchoolBlock;
 import org.apache.solr.common.SolrInputDocument;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
@@ -163,7 +164,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected List<Long> enrollmentKeys = new java.util.ArrayList<java.lang.Long>();
+	protected List<Long> enrollmentKeys = new ArrayList<Long>();
 	@JsonIgnore
 	public Wrap<List<Long>> enrollmentKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("enrollmentKeys").o(enrollmentKeys);
 
@@ -250,7 +251,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected List<Long> blockKeys = new java.util.ArrayList<java.lang.Long>();
+	protected List<Long> blockKeys = new ArrayList<Long>();
 	@JsonIgnore
 	public Wrap<List<Long>> blockKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("blockKeys").o(blockKeys);
 
@@ -374,7 +375,10 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSchoolAgeBlockKeys_", classApiMethodMethod).f();
 								} g("ul");
-								{
+								if(
+										CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), SchoolBlock.ROLES)
+										|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), SchoolBlock.ROLES)
+										) {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
@@ -852,7 +856,10 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSchoolAgeSessionKey_", classApiMethodMethod).f();
 								} g("ul");
-								{
+								if(
+										CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), SchoolSession.ROLES)
+										|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), SchoolSession.ROLES)
+										) {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")

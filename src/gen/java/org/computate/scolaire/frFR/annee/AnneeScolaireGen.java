@@ -20,6 +20,7 @@ import java.lang.Long;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.computate.scolaire.frFR.saison.SaisonScolaire;
 import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import java.lang.String;
@@ -195,7 +196,10 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listAnneeScolaireEcoleCle_", classeApiMethodeMethode).f();
 								} g("ul");
-								{
+								if(
+										CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), Ecole.ROLES)
+										|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), Ecole.ROLES)
+										) {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
@@ -291,7 +295,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected List<Long> inscriptionCles = new java.util.ArrayList<java.lang.Long>();
+	protected List<Long> inscriptionCles = new ArrayList<Long>();
 	@JsonIgnore
 	public Couverture<List<Long>> inscriptionClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("inscriptionCles").o(inscriptionCles);
 
@@ -378,7 +382,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected List<Long> saisonCles = new java.util.ArrayList<java.lang.Long>();
+	protected List<Long> saisonCles = new ArrayList<Long>();
 	@JsonIgnore
 	public Couverture<List<Long>> saisonClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("saisonCles").o(saisonCles);
 
@@ -503,7 +507,10 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listAnneeScolaireSaisonCles_", classeApiMethodeMethode).f();
 								} g("ul");
-								{
+								if(
+										CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), SaisonScolaire.ROLES)
+										|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), SaisonScolaire.ROLES)
+										) {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
@@ -1649,7 +1656,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<AnneeScolaire>(). 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected List<AnneeScolaire> anneesAnnee = new java.util.ArrayList<org.computate.scolaire.frFR.annee.AnneeScolaire>();
+	protected List<AnneeScolaire> anneesAnnee = new ArrayList<AnneeScolaire>();
 	@JsonIgnore
 	public Couverture<List<AnneeScolaire>> anneesAnneeCouverture = new Couverture<List<AnneeScolaire>>().p(this).c(List.class).var("anneesAnnee").o(anneesAnnee);
 

@@ -155,7 +155,7 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected List<Long> enrollmentKeys = new java.util.ArrayList<java.lang.Long>();
+	protected List<Long> enrollmentKeys = new ArrayList<Long>();
 	@JsonIgnore
 	public Wrap<List<Long>> enrollmentKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("enrollmentKeys").o(enrollmentKeys);
 
@@ -286,12 +286,7 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSchoolMomEnrollmentKeys_", classApiMethodMethod).f();
 								} g("ul");
-								if(
-										userKeys.contains(siteRequest_.getUserKey())
-										|| Objects.equals(sessionId, siteRequest_.getSessionId())
-										|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
-										|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
-								) {
+								{
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ")
@@ -494,7 +489,7 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 	 */
 	@JsonIgnore
 	@JsonInclude(Include.NON_NULL)
-	protected List<SchoolEnrollment> enrollments = new java.util.ArrayList<org.computate.scolaire.enUS.enrollment.SchoolEnrollment>();
+	protected List<SchoolEnrollment> enrollments = new ArrayList<SchoolEnrollment>();
 	@JsonIgnore
 	public Wrap<List<SchoolEnrollment>> enrollmentsWrap = new Wrap<List<SchoolEnrollment>>().p(this).c(List.class).var("enrollments").o(enrollments);
 
@@ -542,7 +537,7 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected List<Long> userKeys = new java.util.ArrayList<java.lang.Long>();
+	protected List<Long> userKeys = new ArrayList<Long>();
 	@JsonIgnore
 	public Wrap<List<Long>> userKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("userKeys").o(userKeys);
 
@@ -629,7 +624,7 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected List<Long> schoolKeys = new java.util.ArrayList<java.lang.Long>();
+	protected List<Long> schoolKeys = new ArrayList<Long>();
 	@JsonIgnore
 	public Wrap<List<Long>> schoolKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("schoolKeys").o(schoolKeys);
 
@@ -716,7 +711,7 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected List<Long> yearKeys = new java.util.ArrayList<java.lang.Long>();
+	protected List<Long> yearKeys = new ArrayList<Long>();
 	@JsonIgnore
 	public Wrap<List<Long>> yearKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("yearKeys").o(yearKeys);
 
@@ -803,7 +798,7 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected List<Long> seasonKeys = new java.util.ArrayList<java.lang.Long>();
+	protected List<Long> seasonKeys = new ArrayList<Long>();
 	@JsonIgnore
 	public Wrap<List<Long>> seasonKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("seasonKeys").o(seasonKeys);
 
@@ -890,7 +885,7 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected List<Long> sessionKeys = new java.util.ArrayList<java.lang.Long>();
+	protected List<Long> sessionKeys = new ArrayList<Long>();
 	@JsonIgnore
 	public Wrap<List<Long>> sessionKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("sessionKeys").o(sessionKeys);
 
@@ -977,7 +972,7 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected List<Long> ageKeys = new java.util.ArrayList<java.lang.Long>();
+	protected List<Long> ageKeys = new ArrayList<Long>();
 	@JsonIgnore
 	public Wrap<List<Long>> ageKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("ageKeys").o(ageKeys);
 

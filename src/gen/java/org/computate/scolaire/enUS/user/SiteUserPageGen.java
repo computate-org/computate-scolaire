@@ -7,6 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.text.NumberFormat;
 import io.vertx.core.logging.LoggerFactory;
 import org.computate.scolaire.enUS.user.SiteUserGenPage;
+import java.util.ArrayList;
 import org.apache.commons.collections.CollectionUtils;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
@@ -219,7 +220,7 @@ public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<SchoolYear>(). 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected List<SchoolYear> schoolYears = new java.util.ArrayList<org.computate.scolaire.enUS.year.SchoolYear>();
+	protected List<SchoolYear> schoolYears = new ArrayList<SchoolYear>();
 	@JsonIgnore
 	public Wrap<List<SchoolYear>> schoolYearsWrap = new Wrap<List<SchoolYear>>().p(this).c(List.class).var("schoolYears").o(schoolYears);
 

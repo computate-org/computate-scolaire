@@ -20,6 +20,7 @@ import java.lang.Long;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.computate.scolaire.enUS.season.SchoolSeason;
 import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import java.lang.String;
@@ -193,7 +194,10 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSchoolYearSchoolKey_", classApiMethodMethod).f();
 								} g("ul");
-								{
+								if(
+										CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), School.ROLES)
+										|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), School.ROLES)
+										) {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
@@ -289,7 +293,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected List<Long> enrollmentKeys = new java.util.ArrayList<java.lang.Long>();
+	protected List<Long> enrollmentKeys = new ArrayList<Long>();
 	@JsonIgnore
 	public Wrap<List<Long>> enrollmentKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("enrollmentKeys").o(enrollmentKeys);
 
@@ -376,7 +380,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected List<Long> seasonKeys = new java.util.ArrayList<java.lang.Long>();
+	protected List<Long> seasonKeys = new ArrayList<Long>();
 	@JsonIgnore
 	public Wrap<List<Long>> seasonKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("seasonKeys").o(seasonKeys);
 
@@ -500,7 +504,10 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSchoolYearSeasonKeys_", classApiMethodMethod).f();
 								} g("ul");
-								{
+								if(
+										CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), SchoolSeason.ROLES)
+										|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), SchoolSeason.ROLES)
+										) {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
@@ -1643,7 +1650,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<SchoolYear>(). 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected List<SchoolYear> yearYears = new java.util.ArrayList<org.computate.scolaire.enUS.year.SchoolYear>();
+	protected List<SchoolYear> yearYears = new ArrayList<SchoolYear>();
 	@JsonIgnore
 	public Wrap<List<SchoolYear>> yearYearsWrap = new Wrap<List<SchoolYear>>().p(this).c(List.class).var("yearYears").o(yearYears);
 

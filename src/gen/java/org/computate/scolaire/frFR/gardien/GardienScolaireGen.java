@@ -156,7 +156,7 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected List<Long> inscriptionCles = new java.util.ArrayList<java.lang.Long>();
+	protected List<Long> inscriptionCles = new ArrayList<Long>();
 	@JsonIgnore
 	public Couverture<List<Long>> inscriptionClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("inscriptionCles").o(inscriptionCles);
 
@@ -287,12 +287,7 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listGardienScolaireInscriptionCles_", classeApiMethodeMethode).f();
 								} g("ul");
-								if(
-										utilisateurCles.contains(requeteSite_.getUtilisateurCle())
-										|| Objects.equals(sessionId, requeteSite_.getSessionId())
-										|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-										|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-								) {
+								{
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ")
@@ -495,7 +490,7 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 	 */
 	@JsonIgnore
 	@JsonInclude(Include.NON_NULL)
-	protected List<InscriptionScolaire> inscriptions = new java.util.ArrayList<org.computate.scolaire.frFR.inscription.InscriptionScolaire>();
+	protected List<InscriptionScolaire> inscriptions = new ArrayList<InscriptionScolaire>();
 	@JsonIgnore
 	public Couverture<List<InscriptionScolaire>> inscriptionsCouverture = new Couverture<List<InscriptionScolaire>>().p(this).c(List.class).var("inscriptions").o(inscriptions);
 
@@ -543,7 +538,7 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected List<Long> utilisateurCles = new java.util.ArrayList<java.lang.Long>();
+	protected List<Long> utilisateurCles = new ArrayList<Long>();
 	@JsonIgnore
 	public Couverture<List<Long>> utilisateurClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("utilisateurCles").o(utilisateurCles);
 
@@ -630,7 +625,7 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected List<Long> ecoleCles = new java.util.ArrayList<java.lang.Long>();
+	protected List<Long> ecoleCles = new ArrayList<Long>();
 	@JsonIgnore
 	public Couverture<List<Long>> ecoleClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("ecoleCles").o(ecoleCles);
 
@@ -717,7 +712,7 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected List<Long> anneeCles = new java.util.ArrayList<java.lang.Long>();
+	protected List<Long> anneeCles = new ArrayList<Long>();
 	@JsonIgnore
 	public Couverture<List<Long>> anneeClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("anneeCles").o(anneeCles);
 
@@ -804,7 +799,7 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected List<Long> saisonCles = new java.util.ArrayList<java.lang.Long>();
+	protected List<Long> saisonCles = new ArrayList<Long>();
 	@JsonIgnore
 	public Couverture<List<Long>> saisonClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("saisonCles").o(saisonCles);
 
@@ -891,7 +886,7 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected List<Long> sessionCles = new java.util.ArrayList<java.lang.Long>();
+	protected List<Long> sessionCles = new ArrayList<Long>();
 	@JsonIgnore
 	public Couverture<List<Long>> sessionClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("sessionCles").o(sessionCles);
 
@@ -978,7 +973,7 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected List<Long> ageCles = new java.util.ArrayList<java.lang.Long>();
+	protected List<Long> ageCles = new ArrayList<Long>();
 	@JsonIgnore
 	public Couverture<List<Long>> ageClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("ageCles").o(ageCles);
 

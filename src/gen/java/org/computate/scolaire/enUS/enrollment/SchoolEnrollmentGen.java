@@ -19,6 +19,7 @@ import java.time.ZoneOffset;
 import io.vertx.core.logging.Logger;
 import org.computate.scolaire.enUS.payment.SchoolPayment;
 import org.computate.scolaire.enUS.year.SchoolYear;
+import org.computate.scolaire.enUS.user.SiteUser;
 import org.computate.scolaire.enUS.child.SchoolChild;
 import org.computate.scolaire.enUS.mom.SchoolMom;
 import java.math.MathContext;
@@ -318,7 +319,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected List<Long> blockKeys = new java.util.ArrayList<java.lang.Long>();
+	protected List<Long> blockKeys = new ArrayList<Long>();
 	@JsonIgnore
 	public Wrap<List<Long>> blockKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("blockKeys").o(blockKeys);
 
@@ -450,11 +451,9 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSchoolEnrollmentBlockKeys_", classApiMethodMethod).f();
 								} g("ul");
 								if(
-										userKeys.contains(siteRequest_.getUserKey())
-										|| Objects.equals(sessionId, siteRequest_.getSessionId())
-										|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
-										|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
-								) {
+										CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), SchoolBlock.ROLES)
+										|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), SchoolBlock.ROLES)
+										) {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
@@ -569,7 +568,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	 */
 	@JsonIgnore
 	@JsonInclude(Include.NON_NULL)
-	protected List<SchoolSeason> seasons_ = new java.util.ArrayList<org.computate.scolaire.enUS.season.SchoolSeason>();
+	protected List<SchoolSeason> seasons_ = new ArrayList<SchoolSeason>();
 	@JsonIgnore
 	public Wrap<List<SchoolSeason>> seasons_Wrap = new Wrap<List<SchoolSeason>>().p(this).c(List.class).var("seasons_").o(seasons_);
 
@@ -1114,12 +1113,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSchoolEnrollmentChildKey_", classApiMethodMethod).f();
 								} g("ul");
-								if(
-										userKeys.contains(siteRequest_.getUserKey())
-										|| Objects.equals(sessionId, siteRequest_.getSessionId())
-										|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
-										|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
-								) {
+								{
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
@@ -1146,7 +1140,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected List<Long> momKeys = new java.util.ArrayList<java.lang.Long>();
+	protected List<Long> momKeys = new ArrayList<Long>();
 	@JsonIgnore
 	public Wrap<List<Long>> momKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("momKeys").o(momKeys);
 
@@ -1277,12 +1271,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSchoolEnrollmentMomKeys_", classApiMethodMethod).f();
 								} g("ul");
-								if(
-										userKeys.contains(siteRequest_.getUserKey())
-										|| Objects.equals(sessionId, siteRequest_.getSessionId())
-										|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
-										|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
-								) {
+								{
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
@@ -1309,7 +1298,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected List<Long> dadKeys = new java.util.ArrayList<java.lang.Long>();
+	protected List<Long> dadKeys = new ArrayList<Long>();
 	@JsonIgnore
 	public Wrap<List<Long>> dadKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("dadKeys").o(dadKeys);
 
@@ -1440,12 +1429,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSchoolEnrollmentDadKeys_", classApiMethodMethod).f();
 								} g("ul");
-								if(
-										userKeys.contains(siteRequest_.getUserKey())
-										|| Objects.equals(sessionId, siteRequest_.getSessionId())
-										|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
-										|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
-								) {
+								{
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-light-blue ")
@@ -1472,7 +1456,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected List<Long> guardianKeys = new java.util.ArrayList<java.lang.Long>();
+	protected List<Long> guardianKeys = new ArrayList<Long>();
 	@JsonIgnore
 	public Wrap<List<Long>> guardianKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("guardianKeys").o(guardianKeys);
 
@@ -1603,12 +1587,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSchoolEnrollmentGuardianKeys_", classApiMethodMethod).f();
 								} g("ul");
-								if(
-										userKeys.contains(siteRequest_.getUserKey())
-										|| Objects.equals(sessionId, siteRequest_.getSessionId())
-										|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
-										|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
-								) {
+								{
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
@@ -1635,7 +1614,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected List<Long> paymentKeys = new java.util.ArrayList<java.lang.Long>();
+	protected List<Long> paymentKeys = new ArrayList<Long>();
 	@JsonIgnore
 	public Wrap<List<Long>> paymentKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("paymentKeys").o(paymentKeys);
 
@@ -1767,11 +1746,9 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSchoolEnrollmentPaymentKeys_", classApiMethodMethod).f();
 								} g("ul");
 								if(
-										userKeys.contains(siteRequest_.getUserKey())
-										|| Objects.equals(sessionId, siteRequest_.getSessionId())
-										|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
-										|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
-								) {
+										CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), SchoolPayment.ROLES)
+										|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), SchoolPayment.ROLES)
+										) {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
@@ -1867,7 +1844,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected List<Long> userKeys = new java.util.ArrayList<java.lang.Long>();
+	protected List<Long> userKeys = new ArrayList<Long>();
 	@JsonIgnore
 	public Wrap<List<Long>> userKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("userKeys").o(userKeys);
 
@@ -1999,11 +1976,9 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSchoolEnrollmentUserKeys_", classApiMethodMethod).f();
 								} g("ul");
 								if(
-										userKeys.contains(siteRequest_.getUserKey())
-										|| Objects.equals(sessionId, siteRequest_.getSessionId())
-										|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
-										|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
-								) {
+										CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), SiteUser.ROLES)
+										|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), SiteUser.ROLES)
+										) {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-gray ")
@@ -8999,7 +8974,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<String>(). 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected List<String> enrollmentDaysOfWeek = new java.util.ArrayList<java.lang.String>();
+	protected List<String> enrollmentDaysOfWeek = new ArrayList<String>();
 	@JsonIgnore
 	public Wrap<List<String>> enrollmentDaysOfWeekWrap = new Wrap<List<String>>().p(this).c(List.class).var("enrollmentDaysOfWeek").o(enrollmentDaysOfWeek);
 
@@ -12338,7 +12313,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<SchoolEnrollment>(). 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected List<SchoolEnrollment> enrollmentEnrollments = new java.util.ArrayList<org.computate.scolaire.enUS.enrollment.SchoolEnrollment>();
+	protected List<SchoolEnrollment> enrollmentEnrollments = new ArrayList<SchoolEnrollment>();
 	@JsonIgnore
 	public Wrap<List<SchoolEnrollment>> enrollmentEnrollmentsWrap = new Wrap<List<SchoolEnrollment>>().p(this).c(List.class).var("enrollmentEnrollments").o(enrollmentEnrollments);
 

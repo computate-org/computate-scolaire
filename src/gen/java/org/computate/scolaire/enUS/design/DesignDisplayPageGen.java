@@ -28,6 +28,7 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import org.computate.scolaire.enUS.html.part.HtmlPart;
 import java.text.NumberFormat;
 import io.vertx.core.logging.LoggerFactory;
+import java.util.ArrayList;
 import org.apache.commons.collections.CollectionUtils;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -293,7 +294,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<SchoolEnrollment>(). 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected List<SchoolEnrollment> enrollmentBlocks = new java.util.ArrayList<org.computate.scolaire.enUS.enrollment.SchoolEnrollment>();
+	protected List<SchoolEnrollment> enrollmentBlocks = new ArrayList<SchoolEnrollment>();
 	@JsonIgnore
 	public Wrap<List<SchoolEnrollment>> enrollmentBlocksWrap = new Wrap<List<SchoolEnrollment>>().p(this).c(List.class).var("enrollmentBlocks").o(enrollmentBlocks);
 
@@ -1809,7 +1810,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<SchoolBlock>(). 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected List<SchoolBlock> seasonBlocks = new java.util.ArrayList<org.computate.scolaire.enUS.block.SchoolBlock>();
+	protected List<SchoolBlock> seasonBlocks = new ArrayList<SchoolBlock>();
 	@JsonIgnore
 	public Wrap<List<SchoolBlock>> seasonBlocksWrap = new Wrap<List<SchoolBlock>>().p(this).c(List.class).var("seasonBlocks").o(seasonBlocks);
 

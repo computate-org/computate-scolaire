@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import org.apache.commons.lang3.StringUtils;
 import java.text.NumberFormat;
 import io.vertx.core.logging.LoggerFactory;
+import java.util.ArrayList;
 import org.computate.scolaire.enUS.block.BlockGenPage;
 import org.apache.commons.collections.CollectionUtils;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;

@@ -1,6 +1,7 @@
 package org.computate.scolaire.enUS.design;
 
 import java.util.Arrays;
+import org.computate.scolaire.enUS.html.part.HtmlPart;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.util.Date;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
@@ -35,6 +36,7 @@ import org.apache.solr.common.SolrDocument;
 import java.util.List;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.commons.lang3.math.NumberUtils;
+import org.computate.scolaire.enUS.design.PageDesign;
 import java.util.Optional;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.apache.solr.client.solrj.util.ClientUtils;
@@ -153,7 +155,7 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected List<Long> childDesignKeys = new java.util.ArrayList<java.lang.Long>();
+	protected List<Long> childDesignKeys = new ArrayList<Long>();
 	@JsonIgnore
 	public Wrap<List<Long>> childDesignKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("childDesignKeys").o(childDesignKeys);
 
@@ -240,7 +242,7 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected List<Long> parentDesignKeys = new java.util.ArrayList<java.lang.Long>();
+	protected List<Long> parentDesignKeys = new ArrayList<Long>();
 	@JsonIgnore
 	public Wrap<List<Long>> parentDesignKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("parentDesignKeys").o(parentDesignKeys);
 
@@ -370,8 +372,8 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listPageDesignParentDesignKeys_", classApiMethodMethod).f();
 								} g("ul");
 								if(
-										CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
-										|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+										CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), PageDesign.ROLES)
+										|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), PageDesign.ROLES)
 										) {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
@@ -399,7 +401,7 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected List<Long> htmlPartKeys = new java.util.ArrayList<java.lang.Long>();
+	protected List<Long> htmlPartKeys = new ArrayList<Long>();
 	@JsonIgnore
 	public Wrap<List<Long>> htmlPartKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("htmlPartKeys").o(htmlPartKeys);
 
@@ -529,8 +531,8 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listPageDesignHtmlPartKeys_", classApiMethodMethod).f();
 								} g("ul");
 								if(
-										CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
-										|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+										CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), HtmlPart.ROLES)
+										|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), HtmlPart.ROLES)
 										) {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")

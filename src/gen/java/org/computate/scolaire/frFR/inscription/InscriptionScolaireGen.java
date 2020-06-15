@@ -19,6 +19,7 @@ import java.time.ZoneOffset;
 import io.vertx.core.logging.Logger;
 import org.computate.scolaire.frFR.paiement.PaiementScolaire;
 import org.computate.scolaire.frFR.annee.AnneeScolaire;
+import org.computate.scolaire.frFR.utilisateur.UtilisateurSite;
 import org.computate.scolaire.frFR.enfant.EnfantScolaire;
 import org.computate.scolaire.frFR.mere.MereScolaire;
 import java.math.MathContext;
@@ -319,7 +320,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected List<Long> blocCles = new java.util.ArrayList<java.lang.Long>();
+	protected List<Long> blocCles = new ArrayList<Long>();
 	@JsonIgnore
 	public Couverture<List<Long>> blocClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("blocCles").o(blocCles);
 
@@ -452,11 +453,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listInscriptionScolaireBlocCles_", classeApiMethodeMethode).f();
 								} g("ul");
 								if(
-										utilisateurCles.contains(requeteSite_.getUtilisateurCle())
-										|| Objects.equals(sessionId, requeteSite_.getSessionId())
-										|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-										|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-								) {
+										CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), BlocScolaire.ROLES)
+										|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), BlocScolaire.ROLES)
+										) {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
@@ -571,7 +570,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	 */
 	@JsonIgnore
 	@JsonInclude(Include.NON_NULL)
-	protected List<SaisonScolaire> saisons_ = new java.util.ArrayList<org.computate.scolaire.frFR.saison.SaisonScolaire>();
+	protected List<SaisonScolaire> saisons_ = new ArrayList<SaisonScolaire>();
 	@JsonIgnore
 	public Couverture<List<SaisonScolaire>> saisons_Couverture = new Couverture<List<SaisonScolaire>>().p(this).c(List.class).var("saisons_").o(saisons_);
 
@@ -1117,12 +1116,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listInscriptionScolaireEnfantCle_", classeApiMethodeMethode).f();
 								} g("ul");
-								if(
-										utilisateurCles.contains(requeteSite_.getUtilisateurCle())
-										|| Objects.equals(sessionId, requeteSite_.getSessionId())
-										|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-										|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-								) {
+								{
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
@@ -1149,7 +1143,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected List<Long> mereCles = new java.util.ArrayList<java.lang.Long>();
+	protected List<Long> mereCles = new ArrayList<Long>();
 	@JsonIgnore
 	public Couverture<List<Long>> mereClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("mereCles").o(mereCles);
 
@@ -1281,12 +1275,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listInscriptionScolaireMereCles_", classeApiMethodeMethode).f();
 								} g("ul");
-								if(
-										utilisateurCles.contains(requeteSite_.getUtilisateurCle())
-										|| Objects.equals(sessionId, requeteSite_.getSessionId())
-										|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-										|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-								) {
+								{
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
@@ -1313,7 +1302,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected List<Long> pereCles = new java.util.ArrayList<java.lang.Long>();
+	protected List<Long> pereCles = new ArrayList<Long>();
 	@JsonIgnore
 	public Couverture<List<Long>> pereClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("pereCles").o(pereCles);
 
@@ -1445,12 +1434,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listInscriptionScolairePereCles_", classeApiMethodeMethode).f();
 								} g("ul");
-								if(
-										utilisateurCles.contains(requeteSite_.getUtilisateurCle())
-										|| Objects.equals(sessionId, requeteSite_.getSessionId())
-										|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-										|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-								) {
+								{
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-light-blue ")
@@ -1477,7 +1461,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected List<Long> gardienCles = new java.util.ArrayList<java.lang.Long>();
+	protected List<Long> gardienCles = new ArrayList<Long>();
 	@JsonIgnore
 	public Couverture<List<Long>> gardienClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("gardienCles").o(gardienCles);
 
@@ -1609,12 +1593,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listInscriptionScolaireGardienCles_", classeApiMethodeMethode).f();
 								} g("ul");
-								if(
-										utilisateurCles.contains(requeteSite_.getUtilisateurCle())
-										|| Objects.equals(sessionId, requeteSite_.getSessionId())
-										|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-										|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-								) {
+								{
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
@@ -1641,7 +1620,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected List<Long> paiementCles = new java.util.ArrayList<java.lang.Long>();
+	protected List<Long> paiementCles = new ArrayList<Long>();
 	@JsonIgnore
 	public Couverture<List<Long>> paiementClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("paiementCles").o(paiementCles);
 
@@ -1774,11 +1753,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listInscriptionScolairePaiementCles_", classeApiMethodeMethode).f();
 								} g("ul");
 								if(
-										utilisateurCles.contains(requeteSite_.getUtilisateurCle())
-										|| Objects.equals(sessionId, requeteSite_.getSessionId())
-										|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-										|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-								) {
+										CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), PaiementScolaire.ROLES)
+										|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), PaiementScolaire.ROLES)
+										) {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
@@ -1874,7 +1851,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected List<Long> utilisateurCles = new java.util.ArrayList<java.lang.Long>();
+	protected List<Long> utilisateurCles = new ArrayList<Long>();
 	@JsonIgnore
 	public Couverture<List<Long>> utilisateurClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("utilisateurCles").o(utilisateurCles);
 
@@ -2007,11 +1984,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listInscriptionScolaireUtilisateurCles_", classeApiMethodeMethode).f();
 								} g("ul");
 								if(
-										utilisateurCles.contains(requeteSite_.getUtilisateurCle())
-										|| Objects.equals(sessionId, requeteSite_.getSessionId())
-										|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-										|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-								) {
+										CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), UtilisateurSite.ROLES)
+										|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), UtilisateurSite.ROLES)
+										) {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-gray ")
@@ -9021,7 +8996,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<String>(). 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected List<String> inscriptionJoursDeSemaine = new java.util.ArrayList<java.lang.String>();
+	protected List<String> inscriptionJoursDeSemaine = new ArrayList<String>();
 	@JsonIgnore
 	public Couverture<List<String>> inscriptionJoursDeSemaineCouverture = new Couverture<List<String>>().p(this).c(List.class).var("inscriptionJoursDeSemaine").o(inscriptionJoursDeSemaine);
 
@@ -12371,7 +12346,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<InscriptionScolaire>(). 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected List<InscriptionScolaire> inscriptionsInscription = new java.util.ArrayList<org.computate.scolaire.frFR.inscription.InscriptionScolaire>();
+	protected List<InscriptionScolaire> inscriptionsInscription = new ArrayList<InscriptionScolaire>();
 	@JsonIgnore
 	public Couverture<List<InscriptionScolaire>> inscriptionsInscriptionCouverture = new Couverture<List<InscriptionScolaire>>().p(this).c(List.class).var("inscriptionsInscription").o(inscriptionsInscription);
 

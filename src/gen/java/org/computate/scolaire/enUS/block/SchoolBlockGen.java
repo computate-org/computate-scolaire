@@ -38,6 +38,7 @@ import org.computate.scolaire.enUS.writer.AllWriter;
 import io.vertx.core.logging.LoggerFactory;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import org.computate.scolaire.enUS.enrollment.SchoolEnrollment;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import org.apache.commons.collections.CollectionUtils;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -234,7 +235,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected List<Long> enrollmentKeys = new java.util.ArrayList<java.lang.Long>();
+	protected List<Long> enrollmentKeys = new ArrayList<Long>();
 	@JsonIgnore
 	public Wrap<List<Long>> enrollmentKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("enrollmentKeys").o(enrollmentKeys);
 
@@ -1041,7 +1042,10 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSchoolBlockAgeKey_", classApiMethodMethod).f();
 								} g("ul");
-								{
+								if(
+										CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), SchoolAge.ROLES)
+										|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), SchoolAge.ROLES)
+										) {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue ")
@@ -4048,7 +4052,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<SchoolBlock>(). 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected List<SchoolBlock> sessionBlocks = new java.util.ArrayList<org.computate.scolaire.enUS.block.SchoolBlock>();
+	protected List<SchoolBlock> sessionBlocks = new ArrayList<SchoolBlock>();
 	@JsonIgnore
 	public Wrap<List<SchoolBlock>> sessionBlocksWrap = new Wrap<List<SchoolBlock>>().p(this).c(List.class).var("sessionBlocks").o(sessionBlocks);
 
@@ -4095,7 +4099,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<SchoolBlock>(). 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected List<SchoolBlock> ageBlocks = new java.util.ArrayList<org.computate.scolaire.enUS.block.SchoolBlock>();
+	protected List<SchoolBlock> ageBlocks = new ArrayList<SchoolBlock>();
 	@JsonIgnore
 	public Wrap<List<SchoolBlock>> ageBlocksWrap = new Wrap<List<SchoolBlock>>().p(this).c(List.class).var("ageBlocks").o(ageBlocks);
 
@@ -4142,7 +4146,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<SchoolBlock>(). 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected List<SchoolBlock> blockBlocks = new java.util.ArrayList<org.computate.scolaire.enUS.block.SchoolBlock>();
+	protected List<SchoolBlock> blockBlocks = new ArrayList<SchoolBlock>();
 	@JsonIgnore
 	public Wrap<List<SchoolBlock>> blockBlocksWrap = new Wrap<List<SchoolBlock>>().p(this).c(List.class).var("blockBlocks").o(blockBlocks);
 

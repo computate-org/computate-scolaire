@@ -2,6 +2,7 @@ package org.computate.scolaire.frFR.saison;
 
 import java.util.Arrays;
 import java.util.Date;
+import org.computate.scolaire.frFR.session.SessionScolaire;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
 import org.computate.scolaire.frFR.requete.api.RequeteApi;
@@ -166,7 +167,7 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected List<Long> inscriptionCles = new java.util.ArrayList<java.lang.Long>();
+	protected List<Long> inscriptionCles = new ArrayList<Long>();
 	@JsonIgnore
 	public Couverture<List<Long>> inscriptionClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("inscriptionCles").o(inscriptionCles);
 
@@ -360,7 +361,10 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSaisonScolaireAnneeCle_", classeApiMethodeMethode).f();
 								} g("ul");
-								{
+								if(
+										CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), AnneeScolaire.ROLES)
+										|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), AnneeScolaire.ROLES)
+										) {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
@@ -387,7 +391,7 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected List<Long> sessionCles = new java.util.ArrayList<java.lang.Long>();
+	protected List<Long> sessionCles = new ArrayList<Long>();
 	@JsonIgnore
 	public Couverture<List<Long>> sessionClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("sessionCles").o(sessionCles);
 
@@ -512,7 +516,10 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSaisonScolaireSessionCles_", classeApiMethodeMethode).f();
 								} g("ul");
-								{
+								if(
+										CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), SessionScolaire.ROLES)
+										|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), SessionScolaire.ROLES)
+										) {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")

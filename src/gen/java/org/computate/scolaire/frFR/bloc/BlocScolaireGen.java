@@ -38,6 +38,7 @@ import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 import io.vertx.core.logging.LoggerFactory;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import org.computate.scolaire.frFR.inscription.InscriptionScolaire;
 import org.computate.scolaire.frFR.couverture.Couverture;
 import org.apache.commons.collections.CollectionUtils;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -235,7 +236,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected List<Long> inscriptionCles = new java.util.ArrayList<java.lang.Long>();
+	protected List<Long> inscriptionCles = new ArrayList<Long>();
 	@JsonIgnore
 	public Couverture<List<Long>> inscriptionClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("inscriptionCles").o(inscriptionCles);
 
@@ -1044,7 +1045,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listBlocScolaireAgeCle_", classeApiMethodeMethode).f();
 								} g("ul");
-								{
+								if(
+										CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), AgeScolaire.ROLES)
+										|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), AgeScolaire.ROLES)
+										) {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue ")
@@ -4053,7 +4057,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<BlocScolaire>(). 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected List<BlocScolaire> blocsSession = new java.util.ArrayList<org.computate.scolaire.frFR.bloc.BlocScolaire>();
+	protected List<BlocScolaire> blocsSession = new ArrayList<BlocScolaire>();
 	@JsonIgnore
 	public Couverture<List<BlocScolaire>> blocsSessionCouverture = new Couverture<List<BlocScolaire>>().p(this).c(List.class).var("blocsSession").o(blocsSession);
 
@@ -4100,7 +4104,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<BlocScolaire>(). 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected List<BlocScolaire> blocsAge = new java.util.ArrayList<org.computate.scolaire.frFR.bloc.BlocScolaire>();
+	protected List<BlocScolaire> blocsAge = new ArrayList<BlocScolaire>();
 	@JsonIgnore
 	public Couverture<List<BlocScolaire>> blocsAgeCouverture = new Couverture<List<BlocScolaire>>().p(this).c(List.class).var("blocsAge").o(blocsAge);
 
@@ -4147,7 +4151,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<BlocScolaire>(). 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected List<BlocScolaire> blocsBloc = new java.util.ArrayList<org.computate.scolaire.frFR.bloc.BlocScolaire>();
+	protected List<BlocScolaire> blocsBloc = new ArrayList<BlocScolaire>();
 	@JsonIgnore
 	public Couverture<List<BlocScolaire>> blocsBlocCouverture = new Couverture<List<BlocScolaire>>().p(this).c(List.class).var("blocsBloc").o(blocsBloc);
 

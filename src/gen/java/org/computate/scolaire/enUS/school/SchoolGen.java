@@ -21,6 +21,7 @@ import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import java.lang.String;
 import io.vertx.core.logging.Logger;
+import org.computate.scolaire.enUS.year.SchoolYear;
 import java.math.MathContext;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.enUS.cluster.Cluster;
@@ -152,7 +153,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected List<Long> yearKeys = new java.util.ArrayList<java.lang.Long>();
+	protected List<Long> yearKeys = new ArrayList<Long>();
 	@JsonIgnore
 	public Wrap<List<Long>> yearKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("yearKeys").o(yearKeys);
 
@@ -276,7 +277,10 @@ public abstract class SchoolGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSchoolYearKeys_", classApiMethodMethod).f();
 								} g("ul");
-								{
+								if(
+										CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), SchoolYear.ROLES)
+										|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), SchoolYear.ROLES)
+										) {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
@@ -303,7 +307,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected List<Long> seasonKeys = new java.util.ArrayList<java.lang.Long>();
+	protected List<Long> seasonKeys = new ArrayList<Long>();
 	@JsonIgnore
 	public Wrap<List<Long>> seasonKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("seasonKeys").o(seasonKeys);
 
@@ -390,7 +394,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected List<Long> sessionKeys = new java.util.ArrayList<java.lang.Long>();
+	protected List<Long> sessionKeys = new ArrayList<Long>();
 	@JsonIgnore
 	public Wrap<List<Long>> sessionKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("sessionKeys").o(sessionKeys);
 
@@ -477,7 +481,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected List<Long> ageGroupKeys = new java.util.ArrayList<java.lang.Long>();
+	protected List<Long> ageGroupKeys = new ArrayList<Long>();
 	@JsonIgnore
 	public Wrap<List<Long>> ageGroupKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("ageGroupKeys").o(ageGroupKeys);
 
@@ -564,7 +568,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected List<Long> blockKeys = new java.util.ArrayList<java.lang.Long>();
+	protected List<Long> blockKeys = new ArrayList<Long>();
 	@JsonIgnore
 	public Wrap<List<Long>> blockKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("blockKeys").o(blockKeys);
 
@@ -651,7 +655,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected List<Long> childKeys = new java.util.ArrayList<java.lang.Long>();
+	protected List<Long> childKeys = new ArrayList<Long>();
 	@JsonIgnore
 	public Wrap<List<Long>> childKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("childKeys").o(childKeys);
 

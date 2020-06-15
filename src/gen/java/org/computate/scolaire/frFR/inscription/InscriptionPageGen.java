@@ -8,6 +8,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.text.NumberFormat;
 import io.vertx.core.logging.LoggerFactory;
 import org.computate.scolaire.frFR.inscription.InscriptionGenPage;
+import java.util.ArrayList;
 import org.computate.scolaire.frFR.couverture.Couverture;
 import org.apache.commons.collections.CollectionUtils;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;

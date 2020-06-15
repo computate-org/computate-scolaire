@@ -1,6 +1,7 @@
 package org.computate.scolaire.frFR.design;
 
 import java.util.Arrays;
+import org.computate.scolaire.frFR.html.part.PartHtml;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.util.Date;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
@@ -35,6 +36,7 @@ import org.apache.solr.common.SolrDocument;
 import java.util.List;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.commons.lang3.math.NumberUtils;
+import org.computate.scolaire.frFR.design.DesignPage;
 import java.util.Optional;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.apache.solr.client.solrj.util.ClientUtils;
@@ -154,7 +156,7 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected List<Long> designEnfantCles = new java.util.ArrayList<java.lang.Long>();
+	protected List<Long> designEnfantCles = new ArrayList<Long>();
 	@JsonIgnore
 	public Couverture<List<Long>> designEnfantClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("designEnfantCles").o(designEnfantCles);
 
@@ -241,7 +243,7 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected List<Long> designParentCles = new java.util.ArrayList<java.lang.Long>();
+	protected List<Long> designParentCles = new ArrayList<Long>();
 	@JsonIgnore
 	public Couverture<List<Long>> designParentClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("designParentCles").o(designParentCles);
 
@@ -371,8 +373,8 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listDesignPageDesignParentCles_", classeApiMethodeMethode).f();
 								} g("ul");
 								if(
-										CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-										|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+										CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), DesignPage.ROLES)
+										|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), DesignPage.ROLES)
 										) {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
@@ -400,7 +402,7 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected List<Long> partHtmlCles = new java.util.ArrayList<java.lang.Long>();
+	protected List<Long> partHtmlCles = new ArrayList<Long>();
 	@JsonIgnore
 	public Couverture<List<Long>> partHtmlClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("partHtmlCles").o(partHtmlCles);
 
@@ -530,8 +532,8 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listDesignPagePartHtmlCles_", classeApiMethodeMethode).f();
 								} g("ul");
 								if(
-										CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-										|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+										CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), PartHtml.ROLES)
+										|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), PartHtml.ROLES)
 										) {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")

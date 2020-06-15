@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.inscription;                     
+package org.computate.scolaire.frFR.inscription;               
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -338,7 +338,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 			c.o(bloc_.getBlocCle());
 	}
 
-	/**
+	/**       
 	 * {@inheritDoc}
 	 * Var.enUS: childKey
 	 * Indexe: true
@@ -410,7 +410,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Description.enUS: The primary key of the school emergency contacts in the database. 
 	 * NomAffichage.frFR: paiements
 	 * NomAffichage.enUS: payments
-	 */               
+	 */          
 	protected void _paiementCles(List<Long> o) {}
 
 	/**

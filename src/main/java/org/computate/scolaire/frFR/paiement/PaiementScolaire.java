@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.paiement;                   
+package org.computate.scolaire.frFR.paiement;                     
 
 import java.math.BigDecimal;
 import java.text.NumberFormat;
@@ -61,7 +61,6 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * IconeGroupe: solid
  * IconeNom: search-dollar
  * 
- * RoleUtilisateur: true
  * Role.frFR: SiteAdmin
  * Role.enUS: SiteAdmin
  * RoleLire.frFR: User
