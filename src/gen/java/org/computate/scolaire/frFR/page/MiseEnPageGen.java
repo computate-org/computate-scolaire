@@ -13,6 +13,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.lang.Integer;
 import java.text.NumberFormat;
 import io.vertx.core.logging.LoggerFactory;
+import java.util.ArrayList;
 import org.computate.scolaire.frFR.couverture.Couverture;
 import org.apache.commons.collections.CollectionUtils;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -60,7 +61,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<PagePart>(). 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected List<PagePart> pageParts = new java.util.ArrayList<org.computate.scolaire.frFR.page.part.PagePart>();
+	protected List<PagePart> pageParts = new ArrayList<PagePart>();
 	@JsonIgnore
 	public Couverture<List<PagePart>> pagePartsCouverture = new Couverture<List<PagePart>>().p(this).c(List.class).var("pageParts").o(pageParts);
 
@@ -1097,7 +1098,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<String>(). 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected List<String> pageUris = new java.util.ArrayList<java.lang.String>();
+	protected List<String> pageUris = new ArrayList<String>();
 	@JsonIgnore
 	public Couverture<List<String>> pageUrisCouverture = new Couverture<List<String>>().p(this).c(List.class).var("pageUris").o(pageUris);
 
@@ -1832,18 +1833,18 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		this.pageCreeCouverture.dejaInitialise = true;
 	}
 	public MiseEnPage setPageCree(Instant o) {
-		this.pageCree = LocalDateTime.from(o).truncatedTo(ChronoUnit.MILLIS);
+		this.pageCree = o == null ? null : LocalDateTime.from(o).truncatedTo(ChronoUnit.MILLIS);
 		this.pageCreeCouverture.dejaInitialise = true;
 		return (MiseEnPage)this;
 	}
 	/** Example: 2011-12-03T10:15:30+01:00 **/
 	public MiseEnPage setPageCree(String o) {
-		this.pageCree = LocalDateTime.parse(o, DateTimeFormatter.ISO_OFFSET_DATE_TIME).truncatedTo(ChronoUnit.MILLIS);
+		this.pageCree = o == null ? null : LocalDateTime.parse(o, DateTimeFormatter.ISO_DATE_TIME).truncatedTo(ChronoUnit.MILLIS);
 		this.pageCreeCouverture.dejaInitialise = true;
 		return (MiseEnPage)this;
 	}
 	public MiseEnPage setPageCree(Date o) {
-		this.pageCree = LocalDateTime.ofInstant(o.toInstant(), ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).truncatedTo(ChronoUnit.MILLIS);
+		this.pageCree = o == null ? null : LocalDateTime.ofInstant(o.toInstant(), ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).truncatedTo(ChronoUnit.MILLIS);
 		this.pageCreeCouverture.dejaInitialise = true;
 		return (MiseEnPage)this;
 	}
@@ -1858,15 +1859,15 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	}
 
 	public Date solrPageCree() {
-		return pageCree == null ? null : Date.from(pageCree.atZone(ZoneId.systemDefault()).toInstant());
+		return pageCree == null ? null : Date.from(pageCree.atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toInstant().atZone(ZoneId.of("Z")).toInstant());
 	}
 
 	public String strPageCree() {
-		return pageCree == null ? "" : pageCree.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy H'h'mm:ss zz", Locale.FRANCE));
+		return pageCree == null ? "" : pageCree.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy H'h'mm:ss a zz", Locale.forLanguageTag("fr-FR")));
 	}
 
 	public String jsonPageCree() {
-		return pageCree == null ? "" : pageCree.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy H'h'mm:ss.SSS zz VV", Locale.FRANCE));
+		return pageCree == null ? "" : pageCree.format(DateTimeFormatter.ISO_DATE_TIME);
 	}
 
 	public String nomAffichagePageCree() {
@@ -1911,18 +1912,18 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		this.pageModifieeCouverture.dejaInitialise = true;
 	}
 	public MiseEnPage setPageModifiee(Instant o) {
-		this.pageModifiee = LocalDateTime.from(o).truncatedTo(ChronoUnit.MILLIS);
+		this.pageModifiee = o == null ? null : LocalDateTime.from(o).truncatedTo(ChronoUnit.MILLIS);
 		this.pageModifieeCouverture.dejaInitialise = true;
 		return (MiseEnPage)this;
 	}
 	/** Example: 2011-12-03T10:15:30+01:00 **/
 	public MiseEnPage setPageModifiee(String o) {
-		this.pageModifiee = LocalDateTime.parse(o, DateTimeFormatter.ISO_OFFSET_DATE_TIME).truncatedTo(ChronoUnit.MILLIS);
+		this.pageModifiee = o == null ? null : LocalDateTime.parse(o, DateTimeFormatter.ISO_DATE_TIME).truncatedTo(ChronoUnit.MILLIS);
 		this.pageModifieeCouverture.dejaInitialise = true;
 		return (MiseEnPage)this;
 	}
 	public MiseEnPage setPageModifiee(Date o) {
-		this.pageModifiee = LocalDateTime.ofInstant(o.toInstant(), ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).truncatedTo(ChronoUnit.MILLIS);
+		this.pageModifiee = o == null ? null : LocalDateTime.ofInstant(o.toInstant(), ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).truncatedTo(ChronoUnit.MILLIS);
 		this.pageModifieeCouverture.dejaInitialise = true;
 		return (MiseEnPage)this;
 	}
@@ -1937,15 +1938,15 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	}
 
 	public Date solrPageModifiee() {
-		return pageModifiee == null ? null : Date.from(pageModifiee.atZone(ZoneId.systemDefault()).toInstant());
+		return pageModifiee == null ? null : Date.from(pageModifiee.atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toInstant().atZone(ZoneId.of("Z")).toInstant());
 	}
 
 	public String strPageModifiee() {
-		return pageModifiee == null ? "" : pageModifiee.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy H'h'mm:ss zz", Locale.FRANCE));
+		return pageModifiee == null ? "" : pageModifiee.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy H'h'mm:ss a zz", Locale.forLanguageTag("fr-FR")));
 	}
 
 	public String jsonPageModifiee() {
-		return pageModifiee == null ? "" : pageModifiee.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy H'h'mm:ss.SSS zz VV", Locale.FRANCE));
+		return pageModifiee == null ? "" : pageModifiee.format(DateTimeFormatter.ISO_DATE_TIME);
 	}
 
 	public String nomAffichagePageModifiee() {

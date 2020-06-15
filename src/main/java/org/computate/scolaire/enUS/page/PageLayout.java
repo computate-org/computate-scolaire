@@ -1,7 +1,6 @@
 package org.computate.scolaire.enUS.page;
 
 import java.io.UnsupportedEncodingException;
-import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -15,57 +14,39 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Stack;
 import java.util.stream.Collectors;
-
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.lang3.reflect.MethodUtils;
 import org.apache.solr.common.SolrDocument;
-import org.computate.scolaire.enUS.age.AgeGenPage;
-import org.computate.scolaire.enUS.block.BlockGenPage;
-import org.computate.scolaire.enUS.child.ChildGenPage;
-import org.computate.scolaire.enUS.config.SiteConfig;
-import org.computate.scolaire.enUS.dad.DadGenPage;
-import org.computate.scolaire.enUS.design.PageDesignGenPage;
-import org.computate.scolaire.enUS.enrollment.EnrollmentGenPage;
-import org.computate.scolaire.enUS.guardian.GuardianGenPage;
 import org.computate.scolaire.enUS.html.part.HtmlPart;
+import org.computate.scolaire.enUS.age.AgeGenPage;
+import org.computate.scolaire.enUS.year.YearGenPage;
+import org.computate.scolaire.enUS.block.BlockGenPage;
+import org.computate.scolaire.enUS.config.SiteConfig;
+import org.computate.scolaire.enUS.wrap.Wrap;
+import org.computate.scolaire.enUS.design.PageDesignGenPage;
+import org.computate.scolaire.enUS.school.School;
+import org.computate.scolaire.enUS.school.SchoolGenPage;
+import org.computate.scolaire.enUS.writer.AllWriter;
+import org.computate.scolaire.enUS.child.ChildGenPage;
+import org.computate.scolaire.enUS.guardian.GuardianGenPage;
+import org.computate.scolaire.enUS.enrollment.EnrollmentGenPage;
 import org.computate.scolaire.enUS.mom.MomGenPage;
 import org.computate.scolaire.enUS.page.part.PagePart;
 import org.computate.scolaire.enUS.payment.PaymentGenPage;
-import org.computate.scolaire.enUS.request.SiteRequestEnUS;
-import org.computate.scolaire.enUS.school.School;
-import org.computate.scolaire.enUS.school.SchoolGenPage;
+import org.computate.scolaire.enUS.dad.DadGenPage;
 import org.computate.scolaire.enUS.search.SearchList;
+import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import org.computate.scolaire.enUS.season.SeasonGenPage;
 import org.computate.scolaire.enUS.session.SessionGenPage;
 import org.computate.scolaire.enUS.user.SiteUser;
-import org.computate.scolaire.enUS.wrap.Wrap;
-import org.computate.scolaire.enUS.writer.AllWriter;
 import org.computate.scolaire.enUS.xml.UtilXml;
-import org.computate.scolaire.enUS.year.YearGenPage;
 
-import net.authorize.Environment;
-import net.authorize.api.contract.v1.ArrayOfLineItem;
-import net.authorize.api.contract.v1.ArrayOfSetting;
-import net.authorize.api.contract.v1.CustomerProfilePaymentType;
-import net.authorize.api.contract.v1.GetHostedPaymentPageRequest;
-import net.authorize.api.contract.v1.GetHostedPaymentPageResponse;
-import net.authorize.api.contract.v1.GetHostedProfilePageRequest;
-import net.authorize.api.contract.v1.GetHostedProfilePageResponse;
-import net.authorize.api.contract.v1.LineItemType;
-import net.authorize.api.contract.v1.MerchantAuthenticationType;
-import net.authorize.api.contract.v1.MessageTypeEnum;
-import net.authorize.api.contract.v1.OrderType;
-import net.authorize.api.contract.v1.SettingType;
-import net.authorize.api.contract.v1.TransactionRequestType;
-import net.authorize.api.contract.v1.TransactionTypeEnum;
-import net.authorize.api.controller.GetHostedPaymentPageController;
-import net.authorize.api.controller.GetHostedProfilePageController;
-import net.authorize.api.controller.GetTransactionListForCustomerController;
-import net.authorize.api.controller.base.ApiOperationBase;
-
+/**
+ * CanonicalName: org.computate.scolaire.frFR.page.MiseEnPage
+ **/
 public class PageLayout extends PageLayoutGen<Object> {
 
 	public static final List<String> ROLES = Arrays.asList("SiteAdmin");
@@ -349,7 +330,7 @@ public class PageLayout extends PageLayoutGen<Object> {
 
 	@Override()
 	public void  htmlPageLayout() {
-		e("html").a("xmlns:xlink", "http://www.w3.org/1999/xlink").a("xmlns", "http://www.w3.org/1999/xhtml").a("xmlns:fb", "http://ogp.me/ns/fb#").f();
+		e("html").a("style", "height: 100%; ").a("xmlns:xlink", "http://www.w3.org/1999/xlink").a("xmlns", "http://www.w3.org/1999/xhtml").a("xmlns:fb", "http://ogp.me/ns/fb#").f();
 			e("head").f();
 				e("title").f();
 					sx(pageTitle);
@@ -365,7 +346,7 @@ public class PageLayout extends PageLayoutGen<Object> {
 				s("/*]]>*/").g("style");
 	
 			g("head");
-			e("body").a("class", "w3-light-grey ").f(); 
+			e("body").a("style", "height: 100%; ").a("class", "w3-light-grey ").f(); 
 				e("a").a("name", "top").f().g("a");
 				e("div").a("class", "top-box w3-top ").f();
 				g("div");
@@ -382,41 +363,13 @@ public class PageLayout extends PageLayoutGen<Object> {
 						sx("L'erreur a été envoyée par e-mail à l'administrateur pour analyse. ");
 					g("header");
 				g("div");
-				e("div").a("class", "site-section-all ").f();
-					e("div").a("class", "site-section-above ").f();
-						e("div").a("class", "w3-content w3-center w3-black ").f();
-							e("div").a("class", "").f();
-								menu("Menu1");
-							g("div"); 
-						g("div");
-						e("div").a("id", "site-section-primary").a("class", "site-section-primary w3-text-black w3-padding-bottom-32 ").f();
-							e("div").a("class", "w3-content ").f();
-	
-								htmlBody();
+				e("div").a("class", "w3-content w3-black ").f();
+					menu("Menu1");
+				g("div");
+				e("div").a("class", "w3-content ").f();
 
-								e("footer").a("class", "w3-center w3-black w3-padding-48 w3-margin-top ").f();
-									e("div").f();
-										e("a").a("href", "https://github.com/computate/computate-scolaire").a("class", "w3-xlarge ").f();
-											sx("This site is open source");
-										g("a");
-									g("div");
-									e("div").f();
-										e("a").a("href", "https://github.com/computate/computate-scolaire").a("class", "w3-large ").f();
-											sx("View the source code here");
-										g("a");
-									g("div");
-									e("div").a("class", "grow-30 w3-margin ").f();
-										e("a").a("href", "https://www.openshift.com/").a("target", "_blank").f();
-											e("span").a("class", "w3-large ").f();
-												sx("Powered by ");
-											g("span");
-											e("img").a("alt", "").a("class", "w3-image ").a("style", "display: inline-block; width: 200px; margin: 0 10px;").a("src", staticBaseUrl, "/svg/openshift.svg").fg();
-										g("a");
-									g("div");
-								g("footer");
-							g("div");
-						g("div");
-					g("div");
+					htmlBody();
+
 				g("div");
 				e("div").a("class", "w3-row site-section-contact ").f();
 					e("div").a("class", "w3-content w3-center  w3-cell-row w3-margin-bottom-32 ").f();
@@ -465,6 +418,17 @@ public class PageLayout extends PageLayoutGen<Object> {
 								g("h6");
 							g("div");
 						g("div");
+						e("footer").a("class", "w3-center w3-padding-24 w3-margin-top ").f();
+							e("div").f();
+								e("a").a("href", "https://github.com/computate/computate-scolaire").a("class", "w3-margin w3-small w3-text-white ").f();
+									sx("This site is open source.");
+								g("a");
+								e("a").a("href", "https://www.openshift.com/").a("class", "grow-20 w3-margin w3-text-white w3-small ").a("target", "_blank").f();
+									sx("Powered by ");
+									e("img").a("alt", "").a("class", "w3-image ").a("style", "display: inline-block; width: 200px; margin: 0 10px;").a("src", staticBaseUrl, "/svg/openshift.svg").fg();
+								g("a");
+							g("div");
+						g("footer");
 					g("div");
 				g("div");
 			g("body");
@@ -1138,130 +1102,6 @@ public class PageLayout extends PageLayoutGen<Object> {
 		}
 
 		return i;
-	}
-
-	public void writeMakePayment(BigDecimal amount, Long enrollmentKey, String childCompleteNamePreferred) {
-		SiteConfig siteConfig = siteRequest_.getSiteConfig_();
-		SiteUser siteUser = siteRequest_.getSiteUser();
-		if(siteUser != null) {
-			String customerProfileId = siteUser.getCustomerProfileId();
-			if(customerProfileId != null) {
-				MerchantAuthenticationType merchantAuthenticationType = new MerchantAuthenticationType();
-				merchantAuthenticationType.setName(siteConfig.getAuthorizeApiLoginId());
-				merchantAuthenticationType.setTransactionKey(siteConfig.getAuthorizeTransactionKey());
-				ApiOperationBase.setMerchantAuthentication(merchantAuthenticationType);
-				
-				GetHostedProfilePageRequest createCustomerProfileRequest = new GetHostedProfilePageRequest();
-				createCustomerProfileRequest.setMerchantAuthentication(merchantAuthenticationType);
-				createCustomerProfileRequest.setCustomerProfileId(customerProfileId);
-				ArrayOfSetting customerProfileSettings = new ArrayOfSetting();
-				{
-					SettingType settingType = new SettingType();
-					settingType.setSettingName("hostedProfileManageOptions");
-					settingType.setSettingValue("showPayment");
-					customerProfileSettings.getSetting().add(settingType);
-				}
-				{
-					SettingType settingType = new SettingType();
-					settingType.setSettingName("hostedProfileValidationMode");
-					settingType.setSettingValue("testMode");
-					customerProfileSettings.getSetting().add(settingType);
-				}
-				{
-					SettingType settingType = new SettingType();
-					settingType.setSettingName("hostedProfileBillingAddressOptions");
-					settingType.setSettingValue("showNone");
-					customerProfileSettings.getSetting().add(settingType);
-				}
-				{
-					SettingType settingType = new SettingType();
-					settingType.setSettingName("hostedProfileCardCodeRequired");
-					settingType.setSettingValue("true");
-					customerProfileSettings.getSetting().add(settingType);
-				}
-				createCustomerProfileRequest.setHostedProfileSettings(customerProfileSettings);
-		
-				GetHostedProfilePageController hostedProfileController = new GetHostedProfilePageController(createCustomerProfileRequest);
-				GetTransactionListForCustomerController.setEnvironment(Environment.valueOf(siteConfig.getAuthorizeEnvironment()));
-				GetHostedProfilePageResponse profilePageResponse = null;
-				hostedProfileController.execute();
-				if(hostedProfileController.getErrorResponse() != null)
-					throw new RuntimeException(hostedProfileController.getResults().toString());
-				else {
-					profilePageResponse = hostedProfileController.getApiResponse();
-					if(MessageTypeEnum.ERROR.equals(profilePageResponse.getMessages().getResultCode())) {
-						throw new RuntimeException(profilePageResponse.getMessages().getMessage().stream().findFirst().map(m -> String.format("%s %s", m.getCode(), m.getText())).orElse("GetHostedProfilePageRequest failed. "));
-					}
-				}
-				
-				GetHostedPaymentPageRequest hostedPaymentPageRequest = new GetHostedPaymentPageRequest();
-				hostedPaymentPageRequest.setMerchantAuthentication(merchantAuthenticationType);
-
-				ArrayOfSetting hostedPaymentSettings = new ArrayOfSetting();
-				{
-					SettingType settingType = new SettingType();
-					String hostedPaymentReturnOptionsStr = "{ \"url\": \"%s/refresh-enrollment/%s\", \"cancelUrl\": \"%s/refresh-enrollment/%s\" }";
-					String hostedPaymentReturnOptions = String.format(hostedPaymentReturnOptionsStr, siteConfig.getSiteBaseUrl(), enrollmentKey, siteConfig.getSiteBaseUrl(), enrollmentKey);
-					settingType.setSettingName("hostedPaymentReturnOptions");
-					settingType.setSettingValue(hostedPaymentReturnOptions);
-					hostedPaymentSettings.getSetting().add(settingType);
-				}
-				hostedPaymentPageRequest.setHostedPaymentSettings(hostedPaymentSettings);
-				TransactionRequestType transactionRequest = new TransactionRequestType();
-				// This is the default transaction type. 
-				// When using AIM, if the x_type field is not sent to us, the type will default to AUTH_CAPTURE. 
-				// Simple Checkout uses AUTH_CAPTURE only. 
-				// The Virtual Terminal defaults to AUTH_CAPTURE unless you select a different transaction type.
-				// With an AUTH_CAPTURE transaction, the process is completely automatic. 
-				// The transaction is submitted to your processor for authorization and, 
-				// if approved, is placed in your Unsettled Transactions with the status Captured Pending Settlement. 
-				// The transaction will settle at your next batch. 
-				// Settlement occurs every 24 hours, within 24 hours of your Transaction Cut-off Time.
-				// See: https://support.authorize.net/s/article/What-Are-the-Transaction-Types-That-Can-Be-Submitted
-				transactionRequest.setTransactionType(TransactionTypeEnum.AUTH_CAPTURE_TRANSACTION.value());
-				transactionRequest.setAmount(amount);
-				ArrayOfLineItem lineItems = new ArrayOfLineItem();
-				LineItemType lineItem = new LineItemType();
-				DateTimeFormatter fd = DateTimeFormatter.ofPattern("MMM yyyy", Locale.US);
-				LocalDate now = LocalDate.now();
-				LocalDate chargeEndDate = siteConfig.getPaymentNext();
-				CustomerProfilePaymentType profile = new CustomerProfilePaymentType();
-				profile.setCustomerProfileId(siteUser.getCustomerProfileId());
-				transactionRequest.setProfile(profile);
-				OrderType order = new OrderType();
-				order.setDescription(String.format("%s payment for %s %s", enrollmentKey, childCompleteNamePreferred, fd.format(chargeEndDate)));
-				transactionRequest.setOrder(order);
-				hostedPaymentPageRequest.setTransactionRequest(transactionRequest);
-		
-				GetHostedPaymentPageController hostedPaymentController = new GetHostedPaymentPageController(hostedPaymentPageRequest);
-				GetHostedPaymentPageController.setEnvironment(Environment.valueOf(siteConfig.getAuthorizeEnvironment()));
-				GetHostedPaymentPageResponse hostedPaymentResponse = null;
-				hostedPaymentController.execute();
-				if(hostedPaymentController.getErrorResponse() != null)
-					throw new RuntimeException(hostedPaymentController.getResults().toString());
-				else {
-					hostedPaymentResponse = hostedPaymentController.getApiResponse();
-					if(MessageTypeEnum.ERROR.equals(hostedPaymentResponse.getMessages().getResultCode())) {
-						throw new RuntimeException(hostedPaymentResponse.getMessages().getMessage().stream().findFirst().map(m -> String.format("%s %s", m.getCode(), m.getText())).orElse("GetHostedPaymentPageRequest failed. "));
-					}
-				}
-				{ e("div").a("class", "").f();
-					e("div").a("class", "w3-large font-weight-bold ").f().sx("Configure school payments with authorize.net").g("div");
-					{ e("form").a("method", "post").a("target", "_blank").a("action", siteConfig.getAuthorizeUrl() + "/customer/manage").f();
-						e("input").a("type", "hidden").a("name", "token").a("value", profilePageResponse.getToken()).fg();
-						e("button").a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ").a("type", "submit").f().sx("Manage payment profile").g("button");
-					} g("form");
-					e("div").a("class", "").f().sx("Click here to manage your payment profile with authorize.net. ").g("div");
-				} g("div");
-				{ e("div").a("class", "").f();
-					{ e("form").a("method", "post").a("target", "_blank").a("action", siteConfig.getAuthorizeUrl() + "/payment/payment").f();
-						e("input").a("type", "hidden").a("name", "token").a("value", hostedPaymentResponse.getToken()).fg();
-						e("button").a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ").a("type", "submit").f().sx("Make a payment").g("button");
-					} g("form");
-					e("div").a("class", "").f().sx("Click here to make a payment with authorize.net. ").g("div");
-				} g("div");
-			}
-		}
 	}
 
 	public String urlEncode(String s) {

@@ -763,7 +763,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	 * r.enUS: school
 	 */
 	@Override public void htmlMiseEnPage() {
-		e("html").a("xmlns:xlink", "http://www.w3.org/1999/xlink").a("xmlns", "http://www.w3.org/1999/xhtml").a("xmlns:fb", "http://ogp.me/ns/fb#").f();
+		e("html").a("style", "height: 100%; ").a("xmlns:xlink", "http://www.w3.org/1999/xlink").a("xmlns", "http://www.w3.org/1999/xhtml").a("xmlns:fb", "http://ogp.me/ns/fb#").f();
 			e("head").f();
 				e("title").f();
 					sx(pageTitre);
@@ -779,7 +779,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 				s("/*]]>*/").g("style");
 	
 			g("head");
-			e("body").a("class", "w3-light-grey ").f(); 
+			e("body").a("style", "height: 100%; ").a("class", "w3-light-grey ").f(); 
 				e("a").a("name", "top").f().g("a");
 				e("div").a("class", "top-box w3-top ").f();
 				g("div");
@@ -796,41 +796,13 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 						sx("L'erreur a été envoyée par e-mail à l'administrateur pour analyse. ");
 					g("header");
 				g("div");
-				e("div").a("class", "site-section-all ").f();
-					e("div").a("class", "site-section-above ").f();
-						e("div").a("class", "w3-content w3-center w3-black ").f();
-							e("div").a("class", "").f();
-								menu("Menu1");
-							g("div"); 
-						g("div");
-						e("div").a("id", "site-section-primary").a("class", "site-section-primary w3-text-black w3-padding-bottom-32 ").f();
-							e("div").a("class", "w3-content ").f();
-	
-								htmlBody();
+				e("div").a("class", "w3-content w3-black ").f();
+					menu("Menu1");
+				g("div");
+				e("div").a("class", "w3-content ").f();
 
-								e("footer").a("class", "w3-center w3-black w3-padding-48 w3-margin-top ").f();
-									e("div").f();
-										e("a").a("href", "https://github.com/computate/computate-scolaire").a("class", "w3-xlarge ").f();
-											sx("Ce site est open source");
-										g("a");
-									g("div");
-									e("div").f();
-										e("a").a("href", "https://github.com/computate/computate-scolaire").a("class", "w3-large ").f();
-											sx("Voir le code source ici");
-										g("a");
-									g("div");
-									e("div").a("class", "grow-30 w3-margin ").f();
-										e("a").a("href", "https://www.openshift.com/").a("target", "_blank").f();
-											e("span").a("class", "w3-large ").f();
-												sx("Powered by ");
-											g("span");
-											e("img").a("alt", "").a("class", "w3-image ").a("style", "display: inline-block; width: 200px; margin: 0 10px;").a("src", statiqueUrlBase, "/svg/openshift.svg").fg();
-										g("a");
-									g("div");
-								g("footer");
-							g("div");
-						g("div");
-					g("div");
+					htmlBody();
+
 				g("div");
 				e("div").a("class", "w3-row site-section-contact ").f();
 					e("div").a("class", "w3-content w3-center  w3-cell-row w3-margin-bottom-32 ").f();
@@ -879,6 +851,17 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 								g("h6");
 							g("div");
 						g("div");
+						e("footer").a("class", "w3-center w3-padding-24 w3-margin-top ").f();
+							e("div").f();
+								e("a").a("href", "https://github.com/computate/computate-scolaire").a("class", "w3-margin w3-small w3-text-white ").f();
+									sx("Ce site est open source.");
+								g("a");
+								e("a").a("href", "https://www.openshift.com/").a("class", "grow-20 w3-margin w3-text-white w3-small ").a("target", "_blank").f();
+									sx("Powered by ");
+									e("img").a("alt", "").a("class", "w3-image ").a("style", "display: inline-block; width: 200px; margin: 0 10px;").a("src", statiqueUrlBase, "/svg/openshift.svg").fg();
+								g("a");
+							g("div");
+						g("footer");
 					g("div");
 				g("div");
 			g("body");

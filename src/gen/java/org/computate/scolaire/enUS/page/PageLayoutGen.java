@@ -13,6 +13,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.lang.Integer;
 import java.text.NumberFormat;
 import io.vertx.core.logging.LoggerFactory;
+import java.util.ArrayList;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import org.apache.commons.collections.CollectionUtils;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -60,7 +61,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<PagePart>(). 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected List<PagePart> pageParts = new java.util.ArrayList<org.computate.scolaire.enUS.page.part.PagePart>();
+	protected List<PagePart> pageParts = new ArrayList<PagePart>();
 	@JsonIgnore
 	public Wrap<List<PagePart>> pagePartsWrap = new Wrap<List<PagePart>>().p(this).c(List.class).var("pageParts").o(pageParts);
 
@@ -1097,7 +1098,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<String>(). 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected List<String> pageUris = new java.util.ArrayList<java.lang.String>();
+	protected List<String> pageUris = new ArrayList<String>();
 	@JsonIgnore
 	public Wrap<List<String>> pageUrisWrap = new Wrap<List<String>>().p(this).c(List.class).var("pageUris").o(pageUris);
 
@@ -1832,18 +1833,18 @@ public abstract class PageLayoutGen<DEV> extends Object {
 		this.pageCreatedWrap.alreadyInitialized = true;
 	}
 	public PageLayout setPageCreated(Instant o) {
-		this.pageCreated = LocalDateTime.from(o).truncatedTo(ChronoUnit.MILLIS);
+		this.pageCreated = o == null ? null : LocalDateTime.from(o).truncatedTo(ChronoUnit.MILLIS);
 		this.pageCreatedWrap.alreadyInitialized = true;
 		return (PageLayout)this;
 	}
 	/** Example: 2011-12-03T10:15:30+01:00 **/
 	public PageLayout setPageCreated(String o) {
-		this.pageCreated = LocalDateTime.parse(o, DateTimeFormatter.ISO_OFFSET_DATE_TIME).truncatedTo(ChronoUnit.MILLIS);
+		this.pageCreated = o == null ? null : LocalDateTime.parse(o, DateTimeFormatter.ISO_DATE_TIME).truncatedTo(ChronoUnit.MILLIS);
 		this.pageCreatedWrap.alreadyInitialized = true;
 		return (PageLayout)this;
 	}
 	public PageLayout setPageCreated(Date o) {
-		this.pageCreated = LocalDateTime.ofInstant(o.toInstant(), ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).truncatedTo(ChronoUnit.MILLIS);
+		this.pageCreated = o == null ? null : LocalDateTime.ofInstant(o.toInstant(), ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).truncatedTo(ChronoUnit.MILLIS);
 		this.pageCreatedWrap.alreadyInitialized = true;
 		return (PageLayout)this;
 	}
@@ -1858,15 +1859,15 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	}
 
 	public Date solrPageCreated() {
-		return pageCreated == null ? null : Date.from(pageCreated.atZone(ZoneId.systemDefault()).toInstant());
+		return pageCreated == null ? null : Date.from(pageCreated.atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toInstant().atZone(ZoneId.of("Z")).toInstant());
 	}
 
 	public String strPageCreated() {
-		return pageCreated == null ? "" : pageCreated.format(DateTimeFormatter.ofPattern("EEE MMM d, yyyy h:mm:ss a zz", Locale.US));
+		return pageCreated == null ? "" : pageCreated.format(DateTimeFormatter.ofPattern("EEE MMM d, yyyy H:mm:ss a zz", Locale.forLanguageTag("en-US")));
 	}
 
 	public String jsonPageCreated() {
-		return pageCreated == null ? "" : pageCreated.format(DateTimeFormatter.ofPattern("EEE MMM d yyyy h:mm:ss.SSS a zz VV", Locale.US));
+		return pageCreated == null ? "" : pageCreated.format(DateTimeFormatter.ISO_DATE_TIME);
 	}
 
 	public String nomAffichagePageCreated() {
@@ -1911,18 +1912,18 @@ public abstract class PageLayoutGen<DEV> extends Object {
 		this.pageModifiedWrap.alreadyInitialized = true;
 	}
 	public PageLayout setPageModified(Instant o) {
-		this.pageModified = LocalDateTime.from(o).truncatedTo(ChronoUnit.MILLIS);
+		this.pageModified = o == null ? null : LocalDateTime.from(o).truncatedTo(ChronoUnit.MILLIS);
 		this.pageModifiedWrap.alreadyInitialized = true;
 		return (PageLayout)this;
 	}
 	/** Example: 2011-12-03T10:15:30+01:00 **/
 	public PageLayout setPageModified(String o) {
-		this.pageModified = LocalDateTime.parse(o, DateTimeFormatter.ISO_OFFSET_DATE_TIME).truncatedTo(ChronoUnit.MILLIS);
+		this.pageModified = o == null ? null : LocalDateTime.parse(o, DateTimeFormatter.ISO_DATE_TIME).truncatedTo(ChronoUnit.MILLIS);
 		this.pageModifiedWrap.alreadyInitialized = true;
 		return (PageLayout)this;
 	}
 	public PageLayout setPageModified(Date o) {
-		this.pageModified = LocalDateTime.ofInstant(o.toInstant(), ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).truncatedTo(ChronoUnit.MILLIS);
+		this.pageModified = o == null ? null : LocalDateTime.ofInstant(o.toInstant(), ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).truncatedTo(ChronoUnit.MILLIS);
 		this.pageModifiedWrap.alreadyInitialized = true;
 		return (PageLayout)this;
 	}
@@ -1937,15 +1938,15 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	}
 
 	public Date solrPageModified() {
-		return pageModified == null ? null : Date.from(pageModified.atZone(ZoneId.systemDefault()).toInstant());
+		return pageModified == null ? null : Date.from(pageModified.atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toInstant().atZone(ZoneId.of("Z")).toInstant());
 	}
 
 	public String strPageModified() {
-		return pageModified == null ? "" : pageModified.format(DateTimeFormatter.ofPattern("EEE MMM d, yyyy h:mm:ss a zz", Locale.US));
+		return pageModified == null ? "" : pageModified.format(DateTimeFormatter.ofPattern("EEE MMM d, yyyy H:mm:ss a zz", Locale.forLanguageTag("en-US")));
 	}
 
 	public String jsonPageModified() {
-		return pageModified == null ? "" : pageModified.format(DateTimeFormatter.ofPattern("EEE MMM d yyyy h:mm:ss.SSS a zz VV", Locale.US));
+		return pageModified == null ? "" : pageModified.format(DateTimeFormatter.ISO_DATE_TIME);
 	}
 
 	public String nomAffichagePageModified() {
