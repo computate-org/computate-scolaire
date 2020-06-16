@@ -1020,7 +1020,7 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 */                   
 	protected void _fraisMontantDu(Couverture<BigDecimal> c) {
 		LocalDate paiementProchain = requeteSite_.getConfigSite_().getPaiementProchain();
-		if(fraisMontant != null && (fraisPremierDernier || fraisInscription || paiementDate != null && paiementDate.compareTo(paiementProchain.minusMonths(1)) >= 0 && paiementDate.compareTo(paiementProchain) < 0))
+		if(fraisMontant != null && (fraisInscription || paiementDate != null && paiementDate.compareTo(paiementProchain.minusMonths(1)) >= 0 && paiementDate.compareTo(paiementProchain) < 0))
 			c.o(fraisMontant);
 	}
 
@@ -1053,7 +1053,7 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 */                   
 	protected void _fraisMontantFuture(Couverture<BigDecimal> c) {
 		LocalDate paiementProchain = requeteSite_.getConfigSite_().getPaiementProchain();
-		if(fraisMontant != null && paiementDate != null && !fraisPremierDernier && !fraisInscription && paiementDate.compareTo(paiementProchain) > 0)
+		if(fraisMontant != null && paiementDate != null && !fraisInscription && paiementDate.compareTo(paiementProchain) > 0)
 			c.o(fraisMontant);
 	}
 

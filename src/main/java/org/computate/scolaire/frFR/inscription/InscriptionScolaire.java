@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.inscription;               
+package org.computate.scolaire.frFR.inscription;          
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -104,7 +104,7 @@ import org.computate.scolaire.frFR.saison.SaisonScolaire;
  * Role.enUS: SiteAdmin
  * RoleSession: true
  * RoleUtilisateur: true
-*/      
+*/  
 public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {       
 
 	/**

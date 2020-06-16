@@ -1,6 +1,7 @@
 package org.computate.scolaire.frFR.page;          
 
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -21,7 +22,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.lang3.reflect.MethodUtils;
 import org.apache.solr.common.SolrDocument;
+import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.html.part.HtmlPart;
+import org.computate.scolaire.enUS.user.SiteUser;
 import org.computate.scolaire.frFR.age.AgeGenPage;
 import org.computate.scolaire.frFR.annee.AnneeGenPage;
 import org.computate.scolaire.frFR.bloc.BlocGenPage;
@@ -44,6 +47,26 @@ import org.computate.scolaire.frFR.saison.SaisonGenPage;
 import org.computate.scolaire.frFR.session.SessionGenPage;
 import org.computate.scolaire.frFR.utilisateur.UtilisateurSite;
 import org.computate.scolaire.frFR.xml.OutilXml;
+
+import net.authorize.Environment;
+import net.authorize.api.contract.v1.ArrayOfLineItem;
+import net.authorize.api.contract.v1.ArrayOfSetting;
+import net.authorize.api.contract.v1.CustomerProfilePaymentType;
+import net.authorize.api.contract.v1.GetHostedPaymentPageRequest;
+import net.authorize.api.contract.v1.GetHostedPaymentPageResponse;
+import net.authorize.api.contract.v1.GetHostedProfilePageRequest;
+import net.authorize.api.contract.v1.GetHostedProfilePageResponse;
+import net.authorize.api.contract.v1.LineItemType;
+import net.authorize.api.contract.v1.MerchantAuthenticationType;
+import net.authorize.api.contract.v1.MessageTypeEnum;
+import net.authorize.api.contract.v1.OrderType;
+import net.authorize.api.contract.v1.SettingType;
+import net.authorize.api.contract.v1.TransactionRequestType;
+import net.authorize.api.contract.v1.TransactionTypeEnum;
+import net.authorize.api.controller.GetHostedPaymentPageController;
+import net.authorize.api.controller.GetHostedProfilePageController;
+import net.authorize.api.controller.GetTransactionListForCustomerController;
+import net.authorize.api.controller.base.ApiOperationBase;
 
 /**  
  * NomCanonique.enUS: org.computate.scolaire.enUS.page.PageLayout
@@ -1947,4 +1970,145 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 			return "";
 		}
 	}
+
+	/**
+	 * r: requeteSite
+	 * r.enUS: siteRequest
+	 * r: ConfigSite
+	 * r.enUS: SiteConfig
+	 * r: UtilisateurSite
+	 * r.enUS: SiteUser
+	 * r: configSite
+	 * r.enUS: siteConfig
+	 * r: utilisateurSite
+	 * r.enUS: siteUser
+	 * r: SiteUrlBase
+	 * r.enUS: SiteBaseUrl
+	 * r: PaiementProchain
+	 * r.enUS: PaymentNext
+	 */
+	public void writeMakePayment(BigDecimal amount, Long enrollmentKey, String childCompleteNamePreferred) {
+		ConfigSite configSite = requeteSite_.getConfigSite_();
+		UtilisateurSite utilisateurSite = requeteSite_.getUtilisateurSite();
+		if(utilisateurSite != null) {
+			String customerProfileId = utilisateurSite.getCustomerProfileId();
+			if(customerProfileId != null) {
+				MerchantAuthenticationType merchantAuthenticationType = new MerchantAuthenticationType();
+				merchantAuthenticationType.setName(configSite.getAuthorizeApiLoginId());
+				merchantAuthenticationType.setTransactionKey(configSite.getAuthorizeTransactionKey());
+				ApiOperationBase.setMerchantAuthentication(merchantAuthenticationType);
+
+				GetHostedProfilePageRequest createCustomerProfileRequest = new GetHostedProfilePageRequest();
+				createCustomerProfileRequest.setMerchantAuthentication(merchantAuthenticationType);
+				createCustomerProfileRequest.setCustomerProfileId(customerProfileId);
+				ArrayOfSetting customerProfileSettings = new ArrayOfSetting();
+				{
+					SettingType settingType = new SettingType();
+					settingType.setSettingName("hostedProfileManageOptions");
+					settingType.setSettingValue("showPayment");
+					customerProfileSettings.getSetting().add(settingType);
+				}
+				{
+					SettingType settingType = new SettingType();
+					settingType.setSettingName("hostedProfileValidationMode");
+					settingType.setSettingValue("testMode");
+					customerProfileSettings.getSetting().add(settingType);
+				}
+				{
+					SettingType settingType = new SettingType();
+					settingType.setSettingName("hostedProfileBillingAddressOptions");
+					settingType.setSettingValue("showNone");
+					customerProfileSettings.getSetting().add(settingType);
+				}
+				{
+					SettingType settingType = new SettingType();
+					settingType.setSettingName("hostedProfileCardCodeRequired");
+					settingType.setSettingValue("true");
+					customerProfileSettings.getSetting().add(settingType);
+				}
+				createCustomerProfileRequest.setHostedProfileSettings(customerProfileSettings);
+
+				GetHostedProfilePageController hostedProfileController = new GetHostedProfilePageController(createCustomerProfileRequest);
+				GetTransactionListForCustomerController.setEnvironment(Environment.valueOf(configSite.getAuthorizeEnvironment()));
+				GetHostedProfilePageResponse profilePageResponse = null;
+				hostedProfileController.execute();
+				if(hostedProfileController.getErrorResponse() != null)
+					throw new RuntimeException(hostedProfileController.getResults().toString());
+				else {
+					profilePageResponse = hostedProfileController.getApiResponse();
+					if(MessageTypeEnum.ERROR.equals(profilePageResponse.getMessages().getResultCode())) {
+						throw new RuntimeException(profilePageResponse.getMessages().getMessage().stream().findFirst().map(m -> String.format("%s %s", m.getCode(), m.getText())).orElse("GetHostedProfilePageRequest failed. "));
+					}
+				}
+
+				GetHostedPaymentPageRequest hostedPaymentPageRequest = new GetHostedPaymentPageRequest();
+				hostedPaymentPageRequest.setMerchantAuthentication(merchantAuthenticationType);
+
+				ArrayOfSetting hostedPaymentSettings = new ArrayOfSetting();
+				{
+					SettingType settingType = new SettingType();
+					String hostedPaymentReturnOptionsStr = "{ \"url\": \"%s/refresh-enrollment/%s\", \"cancelUrl\": \"%s/refresh-enrollment/%s\" }";
+					String hostedPaymentReturnOptions = String.format(hostedPaymentReturnOptionsStr, configSite.getSiteUrlBase(), enrollmentKey, configSite.getSiteUrlBase(), enrollmentKey);
+					settingType.setSettingName("hostedPaymentReturnOptions");
+					settingType.setSettingValue(hostedPaymentReturnOptions);
+					hostedPaymentSettings.getSetting().add(settingType);
+				}
+				hostedPaymentPageRequest.setHostedPaymentSettings(hostedPaymentSettings);
+				TransactionRequestType transactionRequest = new TransactionRequestType();
+				// This is the default transaction type. 
+				// When using AIM, if the x_type field is not sent to us, the type will default to AUTH_CAPTURE. 
+				// Simple Checkout uses AUTH_CAPTURE only. 
+				// The Virtual Terminal defaults to AUTH_CAPTURE unless you select a different transaction type.
+				// With an AUTH_CAPTURE transaction, the process is completely automatic. 
+				// The transaction is submitted to your processor for authorization and, 
+				// if approved, is placed in your Unsettled Transactions with the status Captured Pending Settlement. 
+				// The transaction will settle at your next batch. 
+				// Settlement occurs every 24 hours, within 24 hours of your Transaction Cut-off Time.
+				// See: https://support.authorize.net/s/article/What-Are-the-Transaction-Types-That-Can-Be-Submitted
+				transactionRequest.setTransactionType(TransactionTypeEnum.AUTH_CAPTURE_TRANSACTION.value());
+				transactionRequest.setAmount(amount);
+				ArrayOfLineItem lineItems = new ArrayOfLineItem();
+				LineItemType lineItem = new LineItemType();
+				DateTimeFormatter fd = DateTimeFormatter.ofPattern("MMM yyyy", Locale.US);
+				LocalDate now = LocalDate.now();
+				LocalDate chargeEndDate = configSite.getPaiementProchain();
+				CustomerProfilePaymentType profile = new CustomerProfilePaymentType();
+				profile.setCustomerProfileId(utilisateurSite.getCustomerProfileId());
+				transactionRequest.setProfile(profile);
+				OrderType order = new OrderType();
+				order.setDescription(String.format("%s payment for %s %s", enrollmentKey, childCompleteNamePreferred, fd.format(chargeEndDate)));
+				transactionRequest.setOrder(order);
+				hostedPaymentPageRequest.setTransactionRequest(transactionRequest);
+
+				GetHostedPaymentPageController hostedPaymentController = new GetHostedPaymentPageController(hostedPaymentPageRequest);
+				GetHostedPaymentPageController.setEnvironment(Environment.valueOf(configSite.getAuthorizeEnvironment()));
+				GetHostedPaymentPageResponse hostedPaymentResponse = null;
+				hostedPaymentController.execute();
+				if(hostedPaymentController.getErrorResponse() != null)
+					throw new RuntimeException(hostedPaymentController.getResults().toString());
+				else {
+					hostedPaymentResponse = hostedPaymentController.getApiResponse();
+					if(MessageTypeEnum.ERROR.equals(hostedPaymentResponse.getMessages().getResultCode())) {
+						throw new RuntimeException(hostedPaymentResponse.getMessages().getMessage().stream().findFirst().map(m -> String.format("%s %s", m.getCode(), m.getText())).orElse("GetHostedPaymentPageRequest failed. "));
+					}
+				}
+				{ e("div").a("class", "").f();
+					e("div").a("class", "w3-large font-weight-bold ").f().sx("Configure school payments with authorize.net").g("div");
+					{ e("form").a("method", "post").a("target", "_blank").a("action", configSite.getAuthorizeUrl() + "/customer/manage").f();
+						e("input").a("type", "hidden").a("name", "token").a("value", profilePageResponse.getToken()).fg();
+						e("button").a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ").a("type", "submit").f().sx("Manage payment profile").g("button");
+					} g("form");
+					e("div").a("class", "").f().sx("Click here to manage your payment profile with authorize.net. ").g("div");
+				} g("div");
+				{ e("div").a("class", "").f();
+					{ e("form").a("method", "post").a("target", "_blank").a("action", configSite.getAuthorizeUrl() + "/payment/payment").f();
+						e("input").a("type", "hidden").a("name", "token").a("value", hostedPaymentResponse.getToken()).fg();
+						e("button").a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ").a("type", "submit").f().sx("Make a payment").g("button");
+					} g("form");
+					e("div").a("class", "").f().sx("Click here to make a payment with authorize.net. ").g("div");
+				} g("div");
+			}
+		}
+	}
+
 }

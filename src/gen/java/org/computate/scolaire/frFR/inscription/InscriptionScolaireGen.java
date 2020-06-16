@@ -9638,11 +9638,12 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
 				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 		) {
-			e("div").a("class", "signatureDiv1InscriptionScolaire_inscriptionSignature1").a("id", "signatureDiv1InscriptionScolaire", pk, "inscriptionSignature1").f();
+			e("div").a("class", "signatureDiv1InscriptionScolaire_inscriptionSignature1 signatureInputInscriptionScolaire", pk, "InscriptionSignature1").a("id", "signatureDiv1InscriptionScolaire", pk, "inscriptionSignature1").f();
 				e("div").a("id", "signatureInputInscriptionScolaire", pk, "inscriptionSignature1");
 					a("style", "display: ", StringUtils.isBlank(inscriptionSignature1) ? "block" : "none", "; ");
 				f().g("div");
 				e("img").a("id", "signatureImgInscriptionScolaire", pk, "inscriptionSignature1");
+					a("class", "signatureImgInscriptionScolaire", pk, "InscriptionSignature1 ");
 					a("src", StringUtils.isBlank(inscriptionSignature1) ? "data:image/png;base64," : inscriptionSignature1).a("alt", "");
 					a("style", "padding: 10px; display: ", StringUtils.isBlank(inscriptionSignature1) ? "none" : "block", "; ");
 				fg();
@@ -9775,11 +9776,12 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
 				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 		) {
-			e("div").a("class", "signatureDiv1InscriptionScolaire_inscriptionSignature2").a("id", "signatureDiv1InscriptionScolaire", pk, "inscriptionSignature2").f();
+			e("div").a("class", "signatureDiv1InscriptionScolaire_inscriptionSignature2 signatureInputInscriptionScolaire", pk, "InscriptionSignature2").a("id", "signatureDiv1InscriptionScolaire", pk, "inscriptionSignature2").f();
 				e("div").a("id", "signatureInputInscriptionScolaire", pk, "inscriptionSignature2");
 					a("style", "display: ", StringUtils.isBlank(inscriptionSignature2) ? "block" : "none", "; ");
 				f().g("div");
 				e("img").a("id", "signatureImgInscriptionScolaire", pk, "inscriptionSignature2");
+					a("class", "signatureImgInscriptionScolaire", pk, "InscriptionSignature2 ");
 					a("src", StringUtils.isBlank(inscriptionSignature2) ? "data:image/png;base64," : inscriptionSignature2).a("alt", "");
 					a("style", "padding: 10px; display: ", StringUtils.isBlank(inscriptionSignature2) ? "none" : "block", "; ");
 				fg();
@@ -9912,11 +9914,12 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
 				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 		) {
-			e("div").a("class", "signatureDiv1InscriptionScolaire_inscriptionSignature3").a("id", "signatureDiv1InscriptionScolaire", pk, "inscriptionSignature3").f();
+			e("div").a("class", "signatureDiv1InscriptionScolaire_inscriptionSignature3 signatureInputInscriptionScolaire", pk, "InscriptionSignature3").a("id", "signatureDiv1InscriptionScolaire", pk, "inscriptionSignature3").f();
 				e("div").a("id", "signatureInputInscriptionScolaire", pk, "inscriptionSignature3");
 					a("style", "display: ", StringUtils.isBlank(inscriptionSignature3) ? "block" : "none", "; ");
 				f().g("div");
 				e("img").a("id", "signatureImgInscriptionScolaire", pk, "inscriptionSignature3");
+					a("class", "signatureImgInscriptionScolaire", pk, "InscriptionSignature3 ");
 					a("src", StringUtils.isBlank(inscriptionSignature3) ? "data:image/png;base64," : inscriptionSignature3).a("alt", "");
 					a("style", "padding: 10px; display: ", StringUtils.isBlank(inscriptionSignature3) ? "none" : "block", "; ");
 				fg();
@@ -10049,11 +10052,12 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
 				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 		) {
-			e("div").a("class", "signatureDiv1InscriptionScolaire_inscriptionSignature4").a("id", "signatureDiv1InscriptionScolaire", pk, "inscriptionSignature4").f();
+			e("div").a("class", "signatureDiv1InscriptionScolaire_inscriptionSignature4 signatureInputInscriptionScolaire", pk, "InscriptionSignature4").a("id", "signatureDiv1InscriptionScolaire", pk, "inscriptionSignature4").f();
 				e("div").a("id", "signatureInputInscriptionScolaire", pk, "inscriptionSignature4");
 					a("style", "display: ", StringUtils.isBlank(inscriptionSignature4) ? "block" : "none", "; ");
 				f().g("div");
 				e("img").a("id", "signatureImgInscriptionScolaire", pk, "inscriptionSignature4");
+					a("class", "signatureImgInscriptionScolaire", pk, "InscriptionSignature4 ");
 					a("src", StringUtils.isBlank(inscriptionSignature4) ? "data:image/png;base64," : inscriptionSignature4).a("alt", "");
 					a("style", "padding: 10px; display: ", StringUtils.isBlank(inscriptionSignature4) ? "none" : "block", "; ");
 				fg();
@@ -10186,11 +10190,12 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
 				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 		) {
-			e("div").a("class", "signatureDiv1InscriptionScolaire_inscriptionSignature5").a("id", "signatureDiv1InscriptionScolaire", pk, "inscriptionSignature5").f();
+			e("div").a("class", "signatureDiv1InscriptionScolaire_inscriptionSignature5 signatureInputInscriptionScolaire", pk, "InscriptionSignature5").a("id", "signatureDiv1InscriptionScolaire", pk, "inscriptionSignature5").f();
 				e("div").a("id", "signatureInputInscriptionScolaire", pk, "inscriptionSignature5");
 					a("style", "display: ", StringUtils.isBlank(inscriptionSignature5) ? "block" : "none", "; ");
 				f().g("div");
 				e("img").a("id", "signatureImgInscriptionScolaire", pk, "inscriptionSignature5");
+					a("class", "signatureImgInscriptionScolaire", pk, "InscriptionSignature5 ");
 					a("src", StringUtils.isBlank(inscriptionSignature5) ? "data:image/png;base64," : inscriptionSignature5).a("alt", "");
 					a("style", "padding: 10px; display: ", StringUtils.isBlank(inscriptionSignature5) ? "none" : "block", "; ");
 				fg();
@@ -10323,11 +10328,12 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
 				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 		) {
-			e("div").a("class", "signatureDiv1InscriptionScolaire_inscriptionSignature6").a("id", "signatureDiv1InscriptionScolaire", pk, "inscriptionSignature6").f();
+			e("div").a("class", "signatureDiv1InscriptionScolaire_inscriptionSignature6 signatureInputInscriptionScolaire", pk, "InscriptionSignature6").a("id", "signatureDiv1InscriptionScolaire", pk, "inscriptionSignature6").f();
 				e("div").a("id", "signatureInputInscriptionScolaire", pk, "inscriptionSignature6");
 					a("style", "display: ", StringUtils.isBlank(inscriptionSignature6) ? "block" : "none", "; ");
 				f().g("div");
 				e("img").a("id", "signatureImgInscriptionScolaire", pk, "inscriptionSignature6");
+					a("class", "signatureImgInscriptionScolaire", pk, "InscriptionSignature6 ");
 					a("src", StringUtils.isBlank(inscriptionSignature6) ? "data:image/png;base64," : inscriptionSignature6).a("alt", "");
 					a("style", "padding: 10px; display: ", StringUtils.isBlank(inscriptionSignature6) ? "none" : "block", "; ");
 				fg();
@@ -10460,11 +10466,12 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
 				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 		) {
-			e("div").a("class", "signatureDiv1InscriptionScolaire_inscriptionSignature7").a("id", "signatureDiv1InscriptionScolaire", pk, "inscriptionSignature7").f();
+			e("div").a("class", "signatureDiv1InscriptionScolaire_inscriptionSignature7 signatureInputInscriptionScolaire", pk, "InscriptionSignature7").a("id", "signatureDiv1InscriptionScolaire", pk, "inscriptionSignature7").f();
 				e("div").a("id", "signatureInputInscriptionScolaire", pk, "inscriptionSignature7");
 					a("style", "display: ", StringUtils.isBlank(inscriptionSignature7) ? "block" : "none", "; ");
 				f().g("div");
 				e("img").a("id", "signatureImgInscriptionScolaire", pk, "inscriptionSignature7");
+					a("class", "signatureImgInscriptionScolaire", pk, "InscriptionSignature7 ");
 					a("src", StringUtils.isBlank(inscriptionSignature7) ? "data:image/png;base64," : inscriptionSignature7).a("alt", "");
 					a("style", "padding: 10px; display: ", StringUtils.isBlank(inscriptionSignature7) ? "none" : "block", "; ");
 				fg();
@@ -10597,11 +10604,12 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
 				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 		) {
-			e("div").a("class", "signatureDiv1InscriptionScolaire_inscriptionSignature8").a("id", "signatureDiv1InscriptionScolaire", pk, "inscriptionSignature8").f();
+			e("div").a("class", "signatureDiv1InscriptionScolaire_inscriptionSignature8 signatureInputInscriptionScolaire", pk, "InscriptionSignature8").a("id", "signatureDiv1InscriptionScolaire", pk, "inscriptionSignature8").f();
 				e("div").a("id", "signatureInputInscriptionScolaire", pk, "inscriptionSignature8");
 					a("style", "display: ", StringUtils.isBlank(inscriptionSignature8) ? "block" : "none", "; ");
 				f().g("div");
 				e("img").a("id", "signatureImgInscriptionScolaire", pk, "inscriptionSignature8");
+					a("class", "signatureImgInscriptionScolaire", pk, "InscriptionSignature8 ");
 					a("src", StringUtils.isBlank(inscriptionSignature8) ? "data:image/png;base64," : inscriptionSignature8).a("alt", "");
 					a("style", "padding: 10px; display: ", StringUtils.isBlank(inscriptionSignature8) ? "none" : "block", "; ");
 				fg();
@@ -10734,11 +10742,12 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
 				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 		) {
-			e("div").a("class", "signatureDiv1InscriptionScolaire_inscriptionSignature9").a("id", "signatureDiv1InscriptionScolaire", pk, "inscriptionSignature9").f();
+			e("div").a("class", "signatureDiv1InscriptionScolaire_inscriptionSignature9 signatureInputInscriptionScolaire", pk, "InscriptionSignature9").a("id", "signatureDiv1InscriptionScolaire", pk, "inscriptionSignature9").f();
 				e("div").a("id", "signatureInputInscriptionScolaire", pk, "inscriptionSignature9");
 					a("style", "display: ", StringUtils.isBlank(inscriptionSignature9) ? "block" : "none", "; ");
 				f().g("div");
 				e("img").a("id", "signatureImgInscriptionScolaire", pk, "inscriptionSignature9");
+					a("class", "signatureImgInscriptionScolaire", pk, "InscriptionSignature9 ");
 					a("src", StringUtils.isBlank(inscriptionSignature9) ? "data:image/png;base64," : inscriptionSignature9).a("alt", "");
 					a("style", "padding: 10px; display: ", StringUtils.isBlank(inscriptionSignature9) ? "none" : "block", "; ");
 				fg();
@@ -10871,11 +10880,12 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
 				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 		) {
-			e("div").a("class", "signatureDiv1InscriptionScolaire_inscriptionSignature10").a("id", "signatureDiv1InscriptionScolaire", pk, "inscriptionSignature10").f();
+			e("div").a("class", "signatureDiv1InscriptionScolaire_inscriptionSignature10 signatureInputInscriptionScolaire", pk, "InscriptionSignature10").a("id", "signatureDiv1InscriptionScolaire", pk, "inscriptionSignature10").f();
 				e("div").a("id", "signatureInputInscriptionScolaire", pk, "inscriptionSignature10");
 					a("style", "display: ", StringUtils.isBlank(inscriptionSignature10) ? "block" : "none", "; ");
 				f().g("div");
 				e("img").a("id", "signatureImgInscriptionScolaire", pk, "inscriptionSignature10");
+					a("class", "signatureImgInscriptionScolaire", pk, "InscriptionSignature10 ");
 					a("src", StringUtils.isBlank(inscriptionSignature10) ? "data:image/png;base64," : inscriptionSignature10).a("alt", "");
 					a("style", "padding: 10px; display: ", StringUtils.isBlank(inscriptionSignature10) ? "none" : "block", "; ");
 				fg();

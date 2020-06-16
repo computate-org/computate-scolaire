@@ -9615,11 +9615,12 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 		) {
-			e("div").a("class", "signatureDiv1SchoolEnrollment_enrollmentSignature1").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature1").f();
+			e("div").a("class", "signatureDiv1SchoolEnrollment_enrollmentSignature1 signatureInputSchoolEnrollment", pk, "EnrollmentSignature1").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature1").f();
 				e("div").a("id", "signatureInputSchoolEnrollment", pk, "enrollmentSignature1");
 					a("style", "display: ", StringUtils.isBlank(enrollmentSignature1) ? "block" : "none", "; ");
 				f().g("div");
 				e("img").a("id", "signatureImgSchoolEnrollment", pk, "enrollmentSignature1");
+					a("class", "signatureImgSchoolEnrollment", pk, "EnrollmentSignature1 ");
 					a("src", StringUtils.isBlank(enrollmentSignature1) ? "data:image/png;base64," : enrollmentSignature1).a("alt", "");
 					a("style", "padding: 10px; display: ", StringUtils.isBlank(enrollmentSignature1) ? "none" : "block", "; ");
 				fg();
@@ -9752,11 +9753,12 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 		) {
-			e("div").a("class", "signatureDiv1SchoolEnrollment_enrollmentSignature2").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature2").f();
+			e("div").a("class", "signatureDiv1SchoolEnrollment_enrollmentSignature2 signatureInputSchoolEnrollment", pk, "EnrollmentSignature2").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature2").f();
 				e("div").a("id", "signatureInputSchoolEnrollment", pk, "enrollmentSignature2");
 					a("style", "display: ", StringUtils.isBlank(enrollmentSignature2) ? "block" : "none", "; ");
 				f().g("div");
 				e("img").a("id", "signatureImgSchoolEnrollment", pk, "enrollmentSignature2");
+					a("class", "signatureImgSchoolEnrollment", pk, "EnrollmentSignature2 ");
 					a("src", StringUtils.isBlank(enrollmentSignature2) ? "data:image/png;base64," : enrollmentSignature2).a("alt", "");
 					a("style", "padding: 10px; display: ", StringUtils.isBlank(enrollmentSignature2) ? "none" : "block", "; ");
 				fg();
@@ -9889,11 +9891,12 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 		) {
-			e("div").a("class", "signatureDiv1SchoolEnrollment_enrollmentSignature3").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature3").f();
+			e("div").a("class", "signatureDiv1SchoolEnrollment_enrollmentSignature3 signatureInputSchoolEnrollment", pk, "EnrollmentSignature3").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature3").f();
 				e("div").a("id", "signatureInputSchoolEnrollment", pk, "enrollmentSignature3");
 					a("style", "display: ", StringUtils.isBlank(enrollmentSignature3) ? "block" : "none", "; ");
 				f().g("div");
 				e("img").a("id", "signatureImgSchoolEnrollment", pk, "enrollmentSignature3");
+					a("class", "signatureImgSchoolEnrollment", pk, "EnrollmentSignature3 ");
 					a("src", StringUtils.isBlank(enrollmentSignature3) ? "data:image/png;base64," : enrollmentSignature3).a("alt", "");
 					a("style", "padding: 10px; display: ", StringUtils.isBlank(enrollmentSignature3) ? "none" : "block", "; ");
 				fg();
@@ -10026,11 +10029,12 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 		) {
-			e("div").a("class", "signatureDiv1SchoolEnrollment_enrollmentSignature4").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature4").f();
+			e("div").a("class", "signatureDiv1SchoolEnrollment_enrollmentSignature4 signatureInputSchoolEnrollment", pk, "EnrollmentSignature4").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature4").f();
 				e("div").a("id", "signatureInputSchoolEnrollment", pk, "enrollmentSignature4");
 					a("style", "display: ", StringUtils.isBlank(enrollmentSignature4) ? "block" : "none", "; ");
 				f().g("div");
 				e("img").a("id", "signatureImgSchoolEnrollment", pk, "enrollmentSignature4");
+					a("class", "signatureImgSchoolEnrollment", pk, "EnrollmentSignature4 ");
 					a("src", StringUtils.isBlank(enrollmentSignature4) ? "data:image/png;base64," : enrollmentSignature4).a("alt", "");
 					a("style", "padding: 10px; display: ", StringUtils.isBlank(enrollmentSignature4) ? "none" : "block", "; ");
 				fg();
@@ -10163,11 +10167,12 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 		) {
-			e("div").a("class", "signatureDiv1SchoolEnrollment_enrollmentSignature5").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature5").f();
+			e("div").a("class", "signatureDiv1SchoolEnrollment_enrollmentSignature5 signatureInputSchoolEnrollment", pk, "EnrollmentSignature5").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature5").f();
 				e("div").a("id", "signatureInputSchoolEnrollment", pk, "enrollmentSignature5");
 					a("style", "display: ", StringUtils.isBlank(enrollmentSignature5) ? "block" : "none", "; ");
 				f().g("div");
 				e("img").a("id", "signatureImgSchoolEnrollment", pk, "enrollmentSignature5");
+					a("class", "signatureImgSchoolEnrollment", pk, "EnrollmentSignature5 ");
 					a("src", StringUtils.isBlank(enrollmentSignature5) ? "data:image/png;base64," : enrollmentSignature5).a("alt", "");
 					a("style", "padding: 10px; display: ", StringUtils.isBlank(enrollmentSignature5) ? "none" : "block", "; ");
 				fg();
@@ -10300,11 +10305,12 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 		) {
-			e("div").a("class", "signatureDiv1SchoolEnrollment_enrollmentSignature6").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature6").f();
+			e("div").a("class", "signatureDiv1SchoolEnrollment_enrollmentSignature6 signatureInputSchoolEnrollment", pk, "EnrollmentSignature6").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature6").f();
 				e("div").a("id", "signatureInputSchoolEnrollment", pk, "enrollmentSignature6");
 					a("style", "display: ", StringUtils.isBlank(enrollmentSignature6) ? "block" : "none", "; ");
 				f().g("div");
 				e("img").a("id", "signatureImgSchoolEnrollment", pk, "enrollmentSignature6");
+					a("class", "signatureImgSchoolEnrollment", pk, "EnrollmentSignature6 ");
 					a("src", StringUtils.isBlank(enrollmentSignature6) ? "data:image/png;base64," : enrollmentSignature6).a("alt", "");
 					a("style", "padding: 10px; display: ", StringUtils.isBlank(enrollmentSignature6) ? "none" : "block", "; ");
 				fg();
@@ -10437,11 +10443,12 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 		) {
-			e("div").a("class", "signatureDiv1SchoolEnrollment_enrollmentSignature7").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature7").f();
+			e("div").a("class", "signatureDiv1SchoolEnrollment_enrollmentSignature7 signatureInputSchoolEnrollment", pk, "EnrollmentSignature7").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature7").f();
 				e("div").a("id", "signatureInputSchoolEnrollment", pk, "enrollmentSignature7");
 					a("style", "display: ", StringUtils.isBlank(enrollmentSignature7) ? "block" : "none", "; ");
 				f().g("div");
 				e("img").a("id", "signatureImgSchoolEnrollment", pk, "enrollmentSignature7");
+					a("class", "signatureImgSchoolEnrollment", pk, "EnrollmentSignature7 ");
 					a("src", StringUtils.isBlank(enrollmentSignature7) ? "data:image/png;base64," : enrollmentSignature7).a("alt", "");
 					a("style", "padding: 10px; display: ", StringUtils.isBlank(enrollmentSignature7) ? "none" : "block", "; ");
 				fg();
@@ -10574,11 +10581,12 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 		) {
-			e("div").a("class", "signatureDiv1SchoolEnrollment_enrollmentSignature8").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature8").f();
+			e("div").a("class", "signatureDiv1SchoolEnrollment_enrollmentSignature8 signatureInputSchoolEnrollment", pk, "EnrollmentSignature8").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature8").f();
 				e("div").a("id", "signatureInputSchoolEnrollment", pk, "enrollmentSignature8");
 					a("style", "display: ", StringUtils.isBlank(enrollmentSignature8) ? "block" : "none", "; ");
 				f().g("div");
 				e("img").a("id", "signatureImgSchoolEnrollment", pk, "enrollmentSignature8");
+					a("class", "signatureImgSchoolEnrollment", pk, "EnrollmentSignature8 ");
 					a("src", StringUtils.isBlank(enrollmentSignature8) ? "data:image/png;base64," : enrollmentSignature8).a("alt", "");
 					a("style", "padding: 10px; display: ", StringUtils.isBlank(enrollmentSignature8) ? "none" : "block", "; ");
 				fg();
@@ -10711,11 +10719,12 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 		) {
-			e("div").a("class", "signatureDiv1SchoolEnrollment_enrollmentSignature9").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature9").f();
+			e("div").a("class", "signatureDiv1SchoolEnrollment_enrollmentSignature9 signatureInputSchoolEnrollment", pk, "EnrollmentSignature9").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature9").f();
 				e("div").a("id", "signatureInputSchoolEnrollment", pk, "enrollmentSignature9");
 					a("style", "display: ", StringUtils.isBlank(enrollmentSignature9) ? "block" : "none", "; ");
 				f().g("div");
 				e("img").a("id", "signatureImgSchoolEnrollment", pk, "enrollmentSignature9");
+					a("class", "signatureImgSchoolEnrollment", pk, "EnrollmentSignature9 ");
 					a("src", StringUtils.isBlank(enrollmentSignature9) ? "data:image/png;base64," : enrollmentSignature9).a("alt", "");
 					a("style", "padding: 10px; display: ", StringUtils.isBlank(enrollmentSignature9) ? "none" : "block", "; ");
 				fg();
@@ -10848,11 +10857,12 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 		) {
-			e("div").a("class", "signatureDiv1SchoolEnrollment_enrollmentSignature10").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature10").f();
+			e("div").a("class", "signatureDiv1SchoolEnrollment_enrollmentSignature10 signatureInputSchoolEnrollment", pk, "EnrollmentSignature10").a("id", "signatureDiv1SchoolEnrollment", pk, "enrollmentSignature10").f();
 				e("div").a("id", "signatureInputSchoolEnrollment", pk, "enrollmentSignature10");
 					a("style", "display: ", StringUtils.isBlank(enrollmentSignature10) ? "block" : "none", "; ");
 				f().g("div");
 				e("img").a("id", "signatureImgSchoolEnrollment", pk, "enrollmentSignature10");
+					a("class", "signatureImgSchoolEnrollment", pk, "EnrollmentSignature10 ");
 					a("src", StringUtils.isBlank(enrollmentSignature10) ? "data:image/png;base64," : enrollmentSignature10).a("alt", "");
 					a("style", "padding: 10px; display: ", StringUtils.isBlank(enrollmentSignature10) ? "none" : "block", "; ");
 				fg();
