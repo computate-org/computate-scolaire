@@ -150,7 +150,10 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEcoleNom("Page");
 			o.htmEcoleEmplacement("Page");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEcoleAdministrateurNom("Page");
+			o.htmEcoleMail("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEcoleMailDe("Page");
@@ -179,7 +182,10 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEcoleNom("POST");
 			o.htmEcoleEmplacement("POST");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEcoleAdministrateurNom("POST");
+			o.htmEcoleMail("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEcoleMailDe("POST");
@@ -230,7 +236,10 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEcoleNom("PUTCopie");
 			o.htmEcoleEmplacement("PUTCopie");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEcoleAdministrateurNom("PUTCopie");
+			o.htmEcoleMail("PUTCopie");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEcoleMailDe("PUTCopie");
@@ -263,7 +272,10 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEcoleNom("PATCH");
 			o.htmEcoleEmplacement("PATCH");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEcoleAdministrateurNom("PATCH");
+			o.htmEcoleMail("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEcoleMailDe("PATCH");
@@ -298,7 +310,10 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEcoleNom("Recherche");
 			o.htmEcoleEmplacement("Recherche");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEcoleAdministrateurNom("Recherche");
+			o.htmEcoleMail("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEcoleMailDe("Recherche");

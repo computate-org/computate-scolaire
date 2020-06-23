@@ -74,7 +74,7 @@ public class Ecole extends EcoleGen<Cluster> {
 	 * Indexe: true
 	 * Stocke: true
 	 * Attribuer: AnneeScolaire.ecoleCle
-	 * HtmlLigne: 6
+	 * HtmlLigne: 7
 	 * HtmlCellule: 1
 	 * Description.frFR: 
 	 * Description.enUS: 
@@ -193,7 +193,7 @@ public class Ecole extends EcoleGen<Cluster> {
 	 * Definir: true
 	 * Indexe: true
 	 * Stocke: true
-	 * HtmlLigne: 5
+	 * HtmlLigne: 6
 	 * HtmlCellule: 1
 	 * NomAffichage.frFR: numéro de téléphone
 	 * NomAffichage.enUS: phone number
@@ -209,8 +209,8 @@ public class Ecole extends EcoleGen<Cluster> {
 	 * Definir: true
 	 * Indexe: true
 	 * Stocke: true
-	 * HtmlLigne: 3
-	 * HtmlCellule: 3
+	 * HtmlLigne: 4
+	 * HtmlCellule: 1
 	 * NomAffichage.enUS: administrator of the school
 	 * NomAffichage.frFR: administrateur de l'école
 	 * Description.frFR: 
@@ -221,11 +221,25 @@ public class Ecole extends EcoleGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: schoolEmailFrom
+	 * Var.enUS: schoolEmail
 	 * Definir: true
 	 * Indexe: true
 	 * Stocke: true
 	 * HtmlLigne: 4
+	 * HtmlCellule: 2
+	 * NomAffichage.enUS: email
+	 * NomAffichage.frFR: mail
+	 */  
+	protected void _ecoleMail(Couverture<String> c) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: schoolEmailFrom
+	 * Definir: true
+	 * Indexe: true
+	 * Stocke: true
+	 * HtmlLigne: 5
 	 * HtmlCellule: 1
 	 * NomAffichage.enUS: emails from (1 only)
 	 * NomAffichage.frFR: mail de l'école de
@@ -239,7 +253,7 @@ public class Ecole extends EcoleGen<Cluster> {
 	 * Definir: true
 	 * Indexe: true
 	 * Stocke: true
-	 * HtmlLigne: 4
+	 * HtmlLigne: 5
 	 * HtmlCellule: 2
 	 * NomAffichage.enUS: emails to (1 or more by ,)
 	 * NomAffichage.frFR: mail de l'école à
@@ -269,7 +283,7 @@ public class Ecole extends EcoleGen<Cluster> {
 	 * Definir: true
 	 * Indexe: true
 	 * Stocke: true
-	 * HtmlLigne: 5
+	 * HtmlLigne: 6
 	 * HtmlCellule: 2
 	 * Multiligne: true
 	 * NomAffichage.frFR: addresse

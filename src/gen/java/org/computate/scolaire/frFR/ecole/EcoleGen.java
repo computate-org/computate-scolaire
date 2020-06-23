@@ -1236,6 +1236,127 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		} g("div");
 	}
 
+	///////////////
+	// ecoleMail //
+	///////////////
+
+	/**	L'entité « ecoleMail »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String ecoleMail;
+	@JsonIgnore
+	public Couverture<String> ecoleMailCouverture = new Couverture<String>().p(this).c(String.class).var("ecoleMail").o(ecoleMail);
+
+	/**	<br/>L'entité « ecoleMail »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.ecole.Ecole&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:ecoleMail">Trouver l'entité ecoleMail dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _ecoleMail(Couverture<String> c);
+
+	public String getEcoleMail() {
+		return ecoleMail;
+	}
+
+	public void setEcoleMail(String ecoleMail) {
+		this.ecoleMail = ecoleMail;
+		this.ecoleMailCouverture.dejaInitialise = true;
+	}
+	protected Ecole ecoleMailInit() {
+		if(!ecoleMailCouverture.dejaInitialise) {
+			_ecoleMail(ecoleMailCouverture);
+			if(ecoleMail == null)
+				setEcoleMail(ecoleMailCouverture.o);
+		}
+		ecoleMailCouverture.dejaInitialise(true);
+		return (Ecole)this;
+	}
+
+	public String solrEcoleMail() {
+		return ecoleMail;
+	}
+
+	public String strEcoleMail() {
+		return ecoleMail == null ? "" : ecoleMail;
+	}
+
+	public String jsonEcoleMail() {
+		return ecoleMail == null ? "" : ecoleMail;
+	}
+
+	public String nomAffichageEcoleMail() {
+		return "mail";
+	}
+
+	public String htmTooltipEcoleMail() {
+		return null;
+	}
+
+	public String htmEcoleMail() {
+		return ecoleMail == null ? "" : StringEscapeUtils.escapeHtml4(strEcoleMail());
+	}
+
+	public void inputEcoleMail(String classeApiMethodeMethode) {
+		Ecole s = (Ecole)this;
+		{
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "mail")
+				.a("title", "Description.enUS: ")
+				.a("id", classeApiMethodeMethode, "_ecoleMail");
+				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+					a("class", "setEcoleMail classEcole inputEcole", pk, "EcoleMail w3-input w3-border ");
+					a("name", "setEcoleMail");
+				} else {
+					a("class", "valeurEcoleMail w3-input w3-border classEcole inputEcole", pk, "EcoleMail w3-input w3-border ");
+					a("name", "ecoleMail");
+				}
+				if("Page".equals(classeApiMethodeMethode)) {
+					a("onclick", "enleverLueur($(this)); ");
+					a("onchange", "patchEcoleVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEcoleMail', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_ecoleMail')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_ecoleMail')); }); ");
+				}
+				a("value", strEcoleMail())
+			.fg();
+
+		}
+	}
+
+	public void htmEcoleMail(String classeApiMethodeMethode) {
+		Ecole s = (Ecole)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "EcoleEcoleMail").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-pink ").f();
+							e("label").a("for", classeApiMethodeMethode, "_ecoleMail").a("class", "").f().sx("mail").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputEcoleMail(classeApiMethodeMethode);
+							} g("div");
+							{
+								if("Page".equals(classeApiMethodeMethode)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-pink ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_ecoleMail')); $('#", classeApiMethodeMethode, "_ecoleMail').val(null); patchEcoleVal([{ name: 'fq', value: 'pk:' + $('#EcoleForm :input[name=pk]').val() }], 'setEcoleMail', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_ecoleMail')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_ecoleMail')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
 	/////////////////
 	// ecoleMailDe //
 	/////////////////
@@ -1875,6 +1996,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		ecoleNomInit();
 		ecoleNumeroTelephoneInit();
 		ecoleAdministrateurNomInit();
+		ecoleMailInit();
 		ecoleMailDeInit();
 		ecoleMailAInit();
 		ecoleEmplacementInit();
@@ -1943,6 +2065,8 @@ public abstract class EcoleGen<DEV> extends Cluster {
 				return oEcole.ecoleNumeroTelephone;
 			case "ecoleAdministrateurNom":
 				return oEcole.ecoleAdministrateurNom;
+			case "ecoleMail":
+				return oEcole.ecoleMail;
 			case "ecoleMailDe":
 				return oEcole.ecoleMailDe;
 			case "ecoleMailA":
@@ -2024,6 +2148,11 @@ public abstract class EcoleGen<DEV> extends Cluster {
 			case "ecoleAdministrateurNom":
 				if(val != null)
 					setEcoleAdministrateurNom(val);
+				sauvegardes.add(var);
+				return val;
+			case "ecoleMail":
+				if(val != null)
+					setEcoleMail(val);
 				sauvegardes.add(var);
 				return val;
 			case "ecoleMailDe":
@@ -2131,6 +2260,12 @@ public abstract class EcoleGen<DEV> extends Cluster {
 				String ecoleAdministrateurNom = (String)solrDocument.get("ecoleAdministrateurNom_stored_string");
 				if(ecoleAdministrateurNom != null)
 					oEcole.setEcoleAdministrateurNom(ecoleAdministrateurNom);
+			}
+
+			if(sauvegardes.contains("ecoleMail")) {
+				String ecoleMail = (String)solrDocument.get("ecoleMail_stored_string");
+				if(ecoleMail != null)
+					oEcole.setEcoleMail(ecoleMail);
 			}
 
 			if(sauvegardes.contains("ecoleMailDe")) {
@@ -2307,6 +2442,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 			document.addField("ecoleAdministrateurNom_indexed_string", ecoleAdministrateurNom);
 			document.addField("ecoleAdministrateurNom_stored_string", ecoleAdministrateurNom);
 		}
+		if(ecoleMail != null) {
+			document.addField("ecoleMail_indexed_string", ecoleMail);
+			document.addField("ecoleMail_stored_string", ecoleMail);
+		}
 		if(ecoleMailDe != null) {
 			document.addField("ecoleMailDe_indexed_string", ecoleMailDe);
 			document.addField("ecoleMailDe_stored_string", ecoleMailDe);
@@ -2378,6 +2517,8 @@ public abstract class EcoleGen<DEV> extends Cluster {
 				return "ecoleNumeroTelephone_indexed_string";
 			case "ecoleAdministrateurNom":
 				return "ecoleAdministrateurNom_indexed_string";
+			case "ecoleMail":
+				return "ecoleMail_indexed_string";
 			case "ecoleMailDe":
 				return "ecoleMailDe_indexed_string";
 			case "ecoleMailA":
@@ -2467,6 +2608,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		if(ecoleAdministrateurNom != null)
 			oEcole.setEcoleAdministrateurNom(ecoleAdministrateurNom);
 
+		String ecoleMail = (String)solrDocument.get("ecoleMail_stored_string");
+		if(ecoleMail != null)
+			oEcole.setEcoleMail(ecoleMail);
+
 		String ecoleMailDe = (String)solrDocument.get("ecoleMailDe_stored_string");
 		if(ecoleMailDe != null)
 			oEcole.setEcoleMailDe(ecoleMailDe);
@@ -2511,6 +2656,8 @@ public abstract class EcoleGen<DEV> extends Cluster {
 				requeteApi.addVars("ecoleNumeroTelephone");
 			if(!Objects.equals(ecoleAdministrateurNom, original.getEcoleAdministrateurNom()))
 				requeteApi.addVars("ecoleAdministrateurNom");
+			if(!Objects.equals(ecoleMail, original.getEcoleMail()))
+				requeteApi.addVars("ecoleMail");
 			if(!Objects.equals(ecoleMailDe, original.getEcoleMailDe()))
 				requeteApi.addVars("ecoleMailDe");
 			if(!Objects.equals(ecoleMailA, original.getEcoleMailA()))
@@ -2528,7 +2675,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), anneeCles, ecoleNom, ecoleNumeroTelephone, ecoleAdministrateurNom, ecoleMailDe, ecoleMailA, ecoleEmplacement, ecoleAddresse);
+		return Objects.hash(super.hashCode(), anneeCles, ecoleNom, ecoleNumeroTelephone, ecoleAdministrateurNom, ecoleMail, ecoleMailDe, ecoleMailA, ecoleEmplacement, ecoleAddresse);
 	}
 
 	////////////
@@ -2546,6 +2693,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 				&& Objects.equals( ecoleNom, that.ecoleNom )
 				&& Objects.equals( ecoleNumeroTelephone, that.ecoleNumeroTelephone )
 				&& Objects.equals( ecoleAdministrateurNom, that.ecoleAdministrateurNom )
+				&& Objects.equals( ecoleMail, that.ecoleMail )
 				&& Objects.equals( ecoleMailDe, that.ecoleMailDe )
 				&& Objects.equals( ecoleMailA, that.ecoleMailA )
 				&& Objects.equals( ecoleEmplacement, that.ecoleEmplacement )
@@ -2564,6 +2712,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		sb.append( ", ecoleNom: \"" ).append(ecoleNom).append( "\"" );
 		sb.append( ", ecoleNumeroTelephone: \"" ).append(ecoleNumeroTelephone).append( "\"" );
 		sb.append( ", ecoleAdministrateurNom: \"" ).append(ecoleAdministrateurNom).append( "\"" );
+		sb.append( ", ecoleMail: \"" ).append(ecoleMail).append( "\"" );
 		sb.append( ", ecoleMailDe: \"" ).append(ecoleMailDe).append( "\"" );
 		sb.append( ", ecoleMailA: \"" ).append(ecoleMailA).append( "\"" );
 		sb.append( ", ecoleEmplacement: \"" ).append(ecoleEmplacement).append( "\"" );

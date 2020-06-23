@@ -382,6 +382,19 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 							});
 						}));
 						break;
+					case "ecoleMail":
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "ecoleMail", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur Ecole.ecoleMail a échoué", b.cause())));
+							});
+						}));
+						break;
 					case "ecoleMailDe":
 						futures.add(Future.future(a -> {
 							tx.preparedQuery(SiteContexteFrFR.SQL_setD
@@ -1020,6 +1033,34 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 										a.handle(Future.succeededFuture());
 									else
 										a.handle(Future.failedFuture(new Exception("valeur Ecole.ecoleAdministrateurNom a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setEcoleMail":
+						if(jsonObject.getString(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "ecoleMail")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur Ecole.ecoleMail a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setEcoleMail(jsonObject.getString(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "ecoleMail", o2.jsonEcoleMail())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur Ecole.ecoleMail a échoué", b.cause())));
 								});
 							}));
 						}
@@ -2061,6 +2102,19 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 									a.handle(Future.succeededFuture());
 								else
 									a.handle(Future.failedFuture(new Exception("valeur Ecole.ecoleAdministrateurNom a échoué", b.cause())));
+							});
+						}));
+						break;
+					case "ecoleMail":
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "ecoleMail", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur Ecole.ecoleMail a échoué", b.cause())));
 							});
 						}));
 						break;

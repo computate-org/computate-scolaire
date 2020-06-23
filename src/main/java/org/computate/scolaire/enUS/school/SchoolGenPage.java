@@ -149,7 +149,10 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSchoolName("Page");
 			o.htmSchoolLocation("Page");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSchoolAdministratorName("Page");
+			o.htmSchoolEmail("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSchoolEmailFrom("Page");
@@ -178,7 +181,10 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSchoolName("POST");
 			o.htmSchoolLocation("POST");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSchoolAdministratorName("POST");
+			o.htmSchoolEmail("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSchoolEmailFrom("POST");
@@ -229,7 +235,10 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSchoolName("PUTCopy");
 			o.htmSchoolLocation("PUTCopy");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSchoolAdministratorName("PUTCopy");
+			o.htmSchoolEmail("PUTCopy");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSchoolEmailFrom("PUTCopy");
@@ -262,7 +271,10 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSchoolName("PATCH");
 			o.htmSchoolLocation("PATCH");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSchoolAdministratorName("PATCH");
+			o.htmSchoolEmail("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSchoolEmailFrom("PATCH");
@@ -297,7 +309,10 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSchoolName("Search");
 			o.htmSchoolLocation("Search");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSchoolAdministratorName("Search");
+			o.htmSchoolEmail("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSchoolEmailFrom("Search");

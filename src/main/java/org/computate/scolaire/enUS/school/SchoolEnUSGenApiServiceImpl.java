@@ -382,6 +382,19 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 							});
 						}));
 						break;
+					case "schoolEmail":
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "schoolEmail", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value School.schoolEmail failed", b.cause())));
+							});
+						}));
+						break;
 					case "schoolEmailFrom":
 						futures.add(Future.future(a -> {
 							tx.preparedQuery(SiteContextEnUS.SQL_setD
@@ -1020,6 +1033,34 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 										a.handle(Future.succeededFuture());
 									else
 										a.handle(Future.failedFuture(new Exception("value School.schoolAdministratorName failed", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setSchoolEmail":
+						if(jsonObject.getString(methodName) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "schoolEmail")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value School.schoolEmail failed", b.cause())));
+								});
+							}));
+						} else {
+							o2.setSchoolEmail(jsonObject.getString(methodName));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "schoolEmail", o2.jsonSchoolEmail())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value School.schoolEmail failed", b.cause())));
 								});
 							}));
 						}
@@ -2061,6 +2102,19 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 									a.handle(Future.succeededFuture());
 								else
 									a.handle(Future.failedFuture(new Exception("value School.schoolAdministratorName failed", b.cause())));
+							});
+						}));
+						break;
+					case "schoolEmail":
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "schoolEmail", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value School.schoolEmail failed", b.cause())));
 							});
 						}));
 						break;
