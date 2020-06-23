@@ -5822,8 +5822,8 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		switch(var) {
 			case "enrollmentKey":
 				oSchoolPayment.setEnrollmentKey((Long)val);
-				if(!savesSchoolPayment.contains(var))
-					savesSchoolPayment.add(var);
+				if(!saves.contains(var))
+					saves.add(var);
 				return val;
 			default:
 				return super.attributeCluster(var, val);
@@ -5854,138 +5854,132 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 			case "childCompleteNamePreferred":
 				if(val != null)
 					setChildCompleteNamePreferred(val);
-				savesSchoolPayment.add(var);
+				saves.add(var);
 				return val;
 			case "childBirthDate":
 				if(val != null)
 					setChildBirthDate(val);
-				savesSchoolPayment.add(var);
+				saves.add(var);
 				return val;
 			case "momCompleteNamePreferred":
 				if(val != null)
 					setMomCompleteNamePreferred(val);
-				savesSchoolPayment.add(var);
+				saves.add(var);
 				return val;
 			case "dadCompleteNamePreferred":
 				if(val != null)
 					setDadCompleteNamePreferred(val);
-				savesSchoolPayment.add(var);
+				saves.add(var);
 				return val;
 			case "enrollmentPaymentEachMonth":
 				if(val != null)
 					setEnrollmentPaymentEachMonth(val);
-				savesSchoolPayment.add(var);
+				saves.add(var);
 				return val;
 			case "enrollmentPaymentComplete":
 				if(val != null)
 					setEnrollmentPaymentComplete(val);
-				savesSchoolPayment.add(var);
+				saves.add(var);
 				return val;
 			case "paymentDescription":
 				if(val != null)
 					setPaymentDescription(val);
-				savesSchoolPayment.add(var);
+				saves.add(var);
 				return val;
 			case "paymentDate":
 				if(val != null)
 					setPaymentDate(val);
-				savesSchoolPayment.add(var);
+				saves.add(var);
 				return val;
 			case "paymentAmount":
 				if(val != null)
 					setPaymentAmount(val);
-				savesSchoolPayment.add(var);
+				saves.add(var);
 				return val;
 			case "paymentCash":
 				if(val != null)
 					setPaymentCash(val);
-				savesSchoolPayment.add(var);
+				saves.add(var);
 				return val;
 			case "paymentCheck":
 				if(val != null)
 					setPaymentCheck(val);
-				savesSchoolPayment.add(var);
+				saves.add(var);
 				return val;
 			case "paymentSystem":
 				if(val != null)
 					setPaymentSystem(val);
-				savesSchoolPayment.add(var);
+				saves.add(var);
 				return val;
 			case "paymentBy":
 				if(val != null)
 					setPaymentBy(val);
-				savesSchoolPayment.add(var);
+				saves.add(var);
 				return val;
 			case "transactionId":
 				if(val != null)
 					setTransactionId(val);
-				savesSchoolPayment.add(var);
+				saves.add(var);
 				return val;
 			case "customerProfileId":
 				if(val != null)
 					setCustomerProfileId(val);
-				savesSchoolPayment.add(var);
+				saves.add(var);
 				return val;
 			case "transactionStatus":
 				if(val != null)
 					setTransactionStatus(val);
-				savesSchoolPayment.add(var);
+				saves.add(var);
 				return val;
 			case "paymentRecieved":
 				if(val != null)
 					setPaymentRecieved(val);
-				savesSchoolPayment.add(var);
+				saves.add(var);
 				return val;
 			case "chargeAmount":
 				if(val != null)
 					setChargeAmount(val);
-				savesSchoolPayment.add(var);
+				saves.add(var);
 				return val;
 			case "chargeFirstLast":
 				if(val != null)
 					setChargeFirstLast(val);
-				savesSchoolPayment.add(var);
+				saves.add(var);
 				return val;
 			case "chargeEnrollment":
 				if(val != null)
 					setChargeEnrollment(val);
-				savesSchoolPayment.add(var);
+				saves.add(var);
 				return val;
 			case "chargeMonth":
 				if(val != null)
 					setChargeMonth(val);
-				savesSchoolPayment.add(var);
+				saves.add(var);
 				return val;
 			case "chargeLateFee":
 				if(val != null)
 					setChargeLateFee(val);
-				savesSchoolPayment.add(var);
+				saves.add(var);
 				return val;
 			case "chargeAmountDue":
 				if(val != null)
 					setChargeAmountDue(val);
-				savesSchoolPayment.add(var);
+				saves.add(var);
 				return val;
 			case "chargeAmountFuture":
 				if(val != null)
 					setChargeAmountFuture(val);
-				savesSchoolPayment.add(var);
+				saves.add(var);
 				return val;
 			case "paymentShortName":
 				if(val != null)
 					setPaymentShortName(val);
-				savesSchoolPayment.add(var);
+				saves.add(var);
 				return val;
 			default:
 				return super.defineCluster(var, val);
 		}
 	}
-
-	/////////////////
-	// saves //
-	/////////////////
-
-	protected List<String> savesSchoolPayment = new ArrayList<String>();
 
 	/////////////
 	// populate //
@@ -5996,10 +5990,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 	}
 	public void populateSchoolPayment(SolrDocument solrDocument) {
 		SchoolPayment oSchoolPayment = (SchoolPayment)this;
-		savesSchoolPayment = (List<String>)solrDocument.get("savesSchoolPayment_stored_strings");
-		if(savesSchoolPayment != null) {
+		saves = (List<String>)solrDocument.get("saves_stored_strings");
+		if(saves != null) {
 
-			if(savesSchoolPayment.contains("paymentKey")) {
+			if(saves.contains("paymentKey")) {
 				Long paymentKey = (Long)solrDocument.get("paymentKey_stored_long");
 				if(paymentKey != null)
 					oSchoolPayment.setPaymentKey(paymentKey);
@@ -6009,325 +6003,325 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 			if(enrollmentKey != null)
 				oSchoolPayment.setEnrollmentKey(enrollmentKey);
 
-			if(savesSchoolPayment.contains("userKeys")) {
+			if(saves.contains("userKeys")) {
 				List<Long> userKeys = (List<Long>)solrDocument.get("userKeys_stored_longs");
 				if(userKeys != null)
 					oSchoolPayment.userKeys.addAll(userKeys);
 			}
 
-			if(savesSchoolPayment.contains("schoolKey")) {
+			if(saves.contains("schoolKey")) {
 				Long schoolKey = (Long)solrDocument.get("schoolKey_stored_long");
 				if(schoolKey != null)
 					oSchoolPayment.setSchoolKey(schoolKey);
 			}
 
-			if(savesSchoolPayment.contains("yearKey")) {
+			if(saves.contains("yearKey")) {
 				Long yearKey = (Long)solrDocument.get("yearKey_stored_long");
 				if(yearKey != null)
 					oSchoolPayment.setYearKey(yearKey);
 			}
 
-			if(savesSchoolPayment.contains("seasonKey")) {
+			if(saves.contains("seasonKey")) {
 				Long seasonKey = (Long)solrDocument.get("seasonKey_stored_long");
 				if(seasonKey != null)
 					oSchoolPayment.setSeasonKey(seasonKey);
 			}
 
-			if(savesSchoolPayment.contains("sessionKey")) {
+			if(saves.contains("sessionKey")) {
 				Long sessionKey = (Long)solrDocument.get("sessionKey_stored_long");
 				if(sessionKey != null)
 					oSchoolPayment.setSessionKey(sessionKey);
 			}
 
-			if(savesSchoolPayment.contains("ageKey")) {
+			if(saves.contains("ageKey")) {
 				Long ageKey = (Long)solrDocument.get("ageKey_stored_long");
 				if(ageKey != null)
 					oSchoolPayment.setAgeKey(ageKey);
 			}
 
-			if(savesSchoolPayment.contains("blockKey")) {
+			if(saves.contains("blockKey")) {
 				Long blockKey = (Long)solrDocument.get("blockKey_stored_long");
 				if(blockKey != null)
 					oSchoolPayment.setBlockKey(blockKey);
 			}
 
-			if(savesSchoolPayment.contains("childKey")) {
+			if(saves.contains("childKey")) {
 				Long childKey = (Long)solrDocument.get("childKey_stored_long");
 				if(childKey != null)
 					oSchoolPayment.setChildKey(childKey);
 			}
 
-			if(savesSchoolPayment.contains("momKeys")) {
+			if(saves.contains("momKeys")) {
 				List<Long> momKeys = (List<Long>)solrDocument.get("momKeys_stored_longs");
 				if(momKeys != null)
 					oSchoolPayment.momKeys.addAll(momKeys);
 			}
 
-			if(savesSchoolPayment.contains("dadKeys")) {
+			if(saves.contains("dadKeys")) {
 				List<Long> dadKeys = (List<Long>)solrDocument.get("dadKeys_stored_longs");
 				if(dadKeys != null)
 					oSchoolPayment.dadKeys.addAll(dadKeys);
 			}
 
-			if(savesSchoolPayment.contains("guardianKeys")) {
+			if(saves.contains("guardianKeys")) {
 				List<Long> guardianKeys = (List<Long>)solrDocument.get("guardianKeys_stored_longs");
 				if(guardianKeys != null)
 					oSchoolPayment.guardianKeys.addAll(guardianKeys);
 			}
 
-			if(savesSchoolPayment.contains("childCompleteNamePreferred")) {
+			if(saves.contains("childCompleteNamePreferred")) {
 				String childCompleteNamePreferred = (String)solrDocument.get("childCompleteNamePreferred_stored_string");
 				if(childCompleteNamePreferred != null)
 					oSchoolPayment.setChildCompleteNamePreferred(childCompleteNamePreferred);
 			}
 
-			if(savesSchoolPayment.contains("childBirthDate")) {
+			if(saves.contains("childBirthDate")) {
 				Date childBirthDate = (Date)solrDocument.get("childBirthDate_stored_date");
 				if(childBirthDate != null)
 					oSchoolPayment.setChildBirthDate(childBirthDate);
 			}
 
-			if(savesSchoolPayment.contains("momCompleteNamePreferred")) {
+			if(saves.contains("momCompleteNamePreferred")) {
 				String momCompleteNamePreferred = (String)solrDocument.get("momCompleteNamePreferred_stored_string");
 				if(momCompleteNamePreferred != null)
 					oSchoolPayment.setMomCompleteNamePreferred(momCompleteNamePreferred);
 			}
 
-			if(savesSchoolPayment.contains("dadCompleteNamePreferred")) {
+			if(saves.contains("dadCompleteNamePreferred")) {
 				String dadCompleteNamePreferred = (String)solrDocument.get("dadCompleteNamePreferred_stored_string");
 				if(dadCompleteNamePreferred != null)
 					oSchoolPayment.setDadCompleteNamePreferred(dadCompleteNamePreferred);
 			}
 
-			if(savesSchoolPayment.contains("schoolName")) {
+			if(saves.contains("schoolName")) {
 				String schoolName = (String)solrDocument.get("schoolName_stored_string");
 				if(schoolName != null)
 					oSchoolPayment.setSchoolName(schoolName);
 			}
 
-			if(savesSchoolPayment.contains("schoolCompleteName")) {
+			if(saves.contains("schoolCompleteName")) {
 				String schoolCompleteName = (String)solrDocument.get("schoolCompleteName_stored_string");
 				if(schoolCompleteName != null)
 					oSchoolPayment.setSchoolCompleteName(schoolCompleteName);
 			}
 
-			if(savesSchoolPayment.contains("schoolLocation")) {
+			if(saves.contains("schoolLocation")) {
 				String schoolLocation = (String)solrDocument.get("schoolLocation_stored_string");
 				if(schoolLocation != null)
 					oSchoolPayment.setSchoolLocation(schoolLocation);
 			}
 
-			if(savesSchoolPayment.contains("yearStart")) {
+			if(saves.contains("yearStart")) {
 				Integer yearStart = (Integer)solrDocument.get("yearStart_stored_int");
 				if(yearStart != null)
 					oSchoolPayment.setYearStart(yearStart);
 			}
 
-			if(savesSchoolPayment.contains("yearEnd")) {
+			if(saves.contains("yearEnd")) {
 				Integer yearEnd = (Integer)solrDocument.get("yearEnd_stored_int");
 				if(yearEnd != null)
 					oSchoolPayment.setYearEnd(yearEnd);
 			}
 
-			if(savesSchoolPayment.contains("seasonStartDate")) {
+			if(saves.contains("seasonStartDate")) {
 				Date seasonStartDate = (Date)solrDocument.get("seasonStartDate_stored_date");
 				if(seasonStartDate != null)
 					oSchoolPayment.setSeasonStartDate(seasonStartDate);
 			}
 
-			if(savesSchoolPayment.contains("seasonSummer")) {
+			if(saves.contains("seasonSummer")) {
 				Boolean seasonSummer = (Boolean)solrDocument.get("seasonSummer_stored_boolean");
 				if(seasonSummer != null)
 					oSchoolPayment.setSeasonSummer(seasonSummer);
 			}
 
-			if(savesSchoolPayment.contains("seasonWinter")) {
+			if(saves.contains("seasonWinter")) {
 				Boolean seasonWinter = (Boolean)solrDocument.get("seasonWinter_stored_boolean");
 				if(seasonWinter != null)
 					oSchoolPayment.setSeasonWinter(seasonWinter);
 			}
 
-			if(savesSchoolPayment.contains("yearEnrollmentFee")) {
+			if(saves.contains("yearEnrollmentFee")) {
 				Double yearEnrollmentFee = (Double)solrDocument.get("yearEnrollmentFee_stored_double");
 				if(yearEnrollmentFee != null)
 					oSchoolPayment.setYearEnrollmentFee(yearEnrollmentFee);
 			}
 
-			if(savesSchoolPayment.contains("sessionStartDate")) {
+			if(saves.contains("sessionStartDate")) {
 				Date sessionStartDate = (Date)solrDocument.get("sessionStartDate_stored_date");
 				if(sessionStartDate != null)
 					oSchoolPayment.setSessionStartDate(sessionStartDate);
 			}
 
-			if(savesSchoolPayment.contains("sessionEndDate")) {
+			if(saves.contains("sessionEndDate")) {
 				Date sessionEndDate = (Date)solrDocument.get("sessionEndDate_stored_date");
 				if(sessionEndDate != null)
 					oSchoolPayment.setSessionEndDate(sessionEndDate);
 			}
 
-			if(savesSchoolPayment.contains("ageStart")) {
+			if(saves.contains("ageStart")) {
 				Integer ageStart = (Integer)solrDocument.get("ageStart_stored_int");
 				if(ageStart != null)
 					oSchoolPayment.setAgeStart(ageStart);
 			}
 
-			if(savesSchoolPayment.contains("ageEnd")) {
+			if(saves.contains("ageEnd")) {
 				Integer ageEnd = (Integer)solrDocument.get("ageEnd_stored_int");
 				if(ageEnd != null)
 					oSchoolPayment.setAgeEnd(ageEnd);
 			}
 
-			if(savesSchoolPayment.contains("blockStartTime")) {
+			if(saves.contains("blockStartTime")) {
 				String blockStartTime = (String)solrDocument.get("blockStartTime_stored_string");
 				if(blockStartTime != null)
 					oSchoolPayment.setBlockStartTime(blockStartTime);
 			}
 
-			if(savesSchoolPayment.contains("blockEndTime")) {
+			if(saves.contains("blockEndTime")) {
 				String blockEndTime = (String)solrDocument.get("blockEndTime_stored_string");
 				if(blockEndTime != null)
 					oSchoolPayment.setBlockEndTime(blockEndTime);
 			}
 
-			if(savesSchoolPayment.contains("blockPricePerMonth")) {
+			if(saves.contains("blockPricePerMonth")) {
 				Double blockPricePerMonth = (Double)solrDocument.get("blockPricePerMonth_stored_double");
 				if(blockPricePerMonth != null)
 					oSchoolPayment.setBlockPricePerMonth(blockPricePerMonth);
 			}
 
-			if(savesSchoolPayment.contains("blockTotalPrice")) {
+			if(saves.contains("blockTotalPrice")) {
 				Double blockTotalPrice = (Double)solrDocument.get("blockTotalPrice_stored_double");
 				if(blockTotalPrice != null)
 					oSchoolPayment.setBlockTotalPrice(blockTotalPrice);
 			}
 
-			if(savesSchoolPayment.contains("enrollmentPaymentEachMonth")) {
+			if(saves.contains("enrollmentPaymentEachMonth")) {
 				Boolean enrollmentPaymentEachMonth = (Boolean)solrDocument.get("enrollmentPaymentEachMonth_stored_boolean");
 				if(enrollmentPaymentEachMonth != null)
 					oSchoolPayment.setEnrollmentPaymentEachMonth(enrollmentPaymentEachMonth);
 			}
 
-			if(savesSchoolPayment.contains("enrollmentPaymentComplete")) {
+			if(saves.contains("enrollmentPaymentComplete")) {
 				Boolean enrollmentPaymentComplete = (Boolean)solrDocument.get("enrollmentPaymentComplete_stored_boolean");
 				if(enrollmentPaymentComplete != null)
 					oSchoolPayment.setEnrollmentPaymentComplete(enrollmentPaymentComplete);
 			}
 
-			if(savesSchoolPayment.contains("paymentDescription")) {
+			if(saves.contains("paymentDescription")) {
 				String paymentDescription = (String)solrDocument.get("paymentDescription_stored_string");
 				if(paymentDescription != null)
 					oSchoolPayment.setPaymentDescription(paymentDescription);
 			}
 
-			if(savesSchoolPayment.contains("paymentDate")) {
+			if(saves.contains("paymentDate")) {
 				Date paymentDate = (Date)solrDocument.get("paymentDate_stored_date");
 				if(paymentDate != null)
 					oSchoolPayment.setPaymentDate(paymentDate);
 			}
 
-			if(savesSchoolPayment.contains("paymentAmount")) {
+			if(saves.contains("paymentAmount")) {
 				Double paymentAmount = (Double)solrDocument.get("paymentAmount_stored_double");
 				if(paymentAmount != null)
 					oSchoolPayment.setPaymentAmount(paymentAmount);
 			}
 
-			if(savesSchoolPayment.contains("paymentCash")) {
+			if(saves.contains("paymentCash")) {
 				Boolean paymentCash = (Boolean)solrDocument.get("paymentCash_stored_boolean");
 				if(paymentCash != null)
 					oSchoolPayment.setPaymentCash(paymentCash);
 			}
 
-			if(savesSchoolPayment.contains("paymentCheck")) {
+			if(saves.contains("paymentCheck")) {
 				Boolean paymentCheck = (Boolean)solrDocument.get("paymentCheck_stored_boolean");
 				if(paymentCheck != null)
 					oSchoolPayment.setPaymentCheck(paymentCheck);
 			}
 
-			if(savesSchoolPayment.contains("paymentSystem")) {
+			if(saves.contains("paymentSystem")) {
 				Boolean paymentSystem = (Boolean)solrDocument.get("paymentSystem_stored_boolean");
 				if(paymentSystem != null)
 					oSchoolPayment.setPaymentSystem(paymentSystem);
 			}
 
-			if(savesSchoolPayment.contains("paymentBy")) {
+			if(saves.contains("paymentBy")) {
 				String paymentBy = (String)solrDocument.get("paymentBy_stored_string");
 				if(paymentBy != null)
 					oSchoolPayment.setPaymentBy(paymentBy);
 			}
 
-			if(savesSchoolPayment.contains("transactionId")) {
+			if(saves.contains("transactionId")) {
 				String transactionId = (String)solrDocument.get("transactionId_stored_string");
 				if(transactionId != null)
 					oSchoolPayment.setTransactionId(transactionId);
 			}
 
-			if(savesSchoolPayment.contains("customerProfileId")) {
+			if(saves.contains("customerProfileId")) {
 				String customerProfileId = (String)solrDocument.get("customerProfileId_stored_string");
 				if(customerProfileId != null)
 					oSchoolPayment.setCustomerProfileId(customerProfileId);
 			}
 
-			if(savesSchoolPayment.contains("transactionStatus")) {
+			if(saves.contains("transactionStatus")) {
 				String transactionStatus = (String)solrDocument.get("transactionStatus_stored_string");
 				if(transactionStatus != null)
 					oSchoolPayment.setTransactionStatus(transactionStatus);
 			}
 
-			if(savesSchoolPayment.contains("paymentRecieved")) {
+			if(saves.contains("paymentRecieved")) {
 				Boolean paymentRecieved = (Boolean)solrDocument.get("paymentRecieved_stored_boolean");
 				if(paymentRecieved != null)
 					oSchoolPayment.setPaymentRecieved(paymentRecieved);
 			}
 
-			if(savesSchoolPayment.contains("chargeAmount")) {
+			if(saves.contains("chargeAmount")) {
 				Double chargeAmount = (Double)solrDocument.get("chargeAmount_stored_double");
 				if(chargeAmount != null)
 					oSchoolPayment.setChargeAmount(chargeAmount);
 			}
 
-			if(savesSchoolPayment.contains("chargeFirstLast")) {
+			if(saves.contains("chargeFirstLast")) {
 				Boolean chargeFirstLast = (Boolean)solrDocument.get("chargeFirstLast_stored_boolean");
 				if(chargeFirstLast != null)
 					oSchoolPayment.setChargeFirstLast(chargeFirstLast);
 			}
 
-			if(savesSchoolPayment.contains("chargeEnrollment")) {
+			if(saves.contains("chargeEnrollment")) {
 				Boolean chargeEnrollment = (Boolean)solrDocument.get("chargeEnrollment_stored_boolean");
 				if(chargeEnrollment != null)
 					oSchoolPayment.setChargeEnrollment(chargeEnrollment);
 			}
 
-			if(savesSchoolPayment.contains("chargeMonth")) {
+			if(saves.contains("chargeMonth")) {
 				Boolean chargeMonth = (Boolean)solrDocument.get("chargeMonth_stored_boolean");
 				if(chargeMonth != null)
 					oSchoolPayment.setChargeMonth(chargeMonth);
 			}
 
-			if(savesSchoolPayment.contains("chargeLateFee")) {
+			if(saves.contains("chargeLateFee")) {
 				Boolean chargeLateFee = (Boolean)solrDocument.get("chargeLateFee_stored_boolean");
 				if(chargeLateFee != null)
 					oSchoolPayment.setChargeLateFee(chargeLateFee);
 			}
 
-			if(savesSchoolPayment.contains("chargeAmountDue")) {
+			if(saves.contains("chargeAmountDue")) {
 				Double chargeAmountDue = (Double)solrDocument.get("chargeAmountDue_stored_double");
 				if(chargeAmountDue != null)
 					oSchoolPayment.setChargeAmountDue(chargeAmountDue);
 			}
 
-			if(savesSchoolPayment.contains("chargeAmountFuture")) {
+			if(saves.contains("chargeAmountFuture")) {
 				Double chargeAmountFuture = (Double)solrDocument.get("chargeAmountFuture_stored_double");
 				if(chargeAmountFuture != null)
 					oSchoolPayment.setChargeAmountFuture(chargeAmountFuture);
 			}
 
-			if(savesSchoolPayment.contains("paymentShortName")) {
+			if(saves.contains("paymentShortName")) {
 				String paymentShortName = (String)solrDocument.get("paymentShortName_stored_string");
 				if(paymentShortName != null)
 					oSchoolPayment.setPaymentShortName(paymentShortName);
 			}
 
-			if(savesSchoolPayment.contains("paymentCompleteName")) {
+			if(saves.contains("paymentCompleteName")) {
 				String paymentCompleteName = (String)solrDocument.get("paymentCompleteName_stored_string");
 				if(paymentCompleteName != null)
 					oSchoolPayment.setPaymentCompleteName(paymentCompleteName);
@@ -6399,9 +6393,6 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 	}
 
 	public void indexSchoolPayment(SolrInputDocument document) {
-		if(savesSchoolPayment != null)
-			document.addField("savesSchoolPayment_stored_strings", savesSchoolPayment);
-
 		if(paymentKey != null) {
 			document.addField("paymentKey_indexed_long", paymentKey);
 			document.addField("paymentKey_stored_long", paymentKey);

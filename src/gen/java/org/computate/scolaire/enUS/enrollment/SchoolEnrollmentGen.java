@@ -13137,43 +13137,43 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		switch(var) {
 			case "yearKey":
 				oSchoolEnrollment.setYearKey((Long)val);
-				if(!savesSchoolEnrollment.contains(var))
-					savesSchoolEnrollment.add(var);
+				if(!saves.contains(var))
+					saves.add(var);
 				return val;
 			case "blockKeys":
 				oSchoolEnrollment.addBlockKeys((Long)val);
-				if(!savesSchoolEnrollment.contains(var))
-					savesSchoolEnrollment.add(var);
+				if(!saves.contains(var))
+					saves.add(var);
 				return val;
 			case "childKey":
 				oSchoolEnrollment.setChildKey((Long)val);
-				if(!savesSchoolEnrollment.contains(var))
-					savesSchoolEnrollment.add(var);
+				if(!saves.contains(var))
+					saves.add(var);
 				return val;
 			case "momKeys":
 				oSchoolEnrollment.addMomKeys((Long)val);
-				if(!savesSchoolEnrollment.contains(var))
-					savesSchoolEnrollment.add(var);
+				if(!saves.contains(var))
+					saves.add(var);
 				return val;
 			case "dadKeys":
 				oSchoolEnrollment.addDadKeys((Long)val);
-				if(!savesSchoolEnrollment.contains(var))
-					savesSchoolEnrollment.add(var);
+				if(!saves.contains(var))
+					saves.add(var);
 				return val;
 			case "guardianKeys":
 				oSchoolEnrollment.addGuardianKeys((Long)val);
-				if(!savesSchoolEnrollment.contains(var))
-					savesSchoolEnrollment.add(var);
+				if(!saves.contains(var))
+					saves.add(var);
 				return val;
 			case "paymentKeys":
 				oSchoolEnrollment.addPaymentKeys((Long)val);
-				if(!savesSchoolEnrollment.contains(var))
-					savesSchoolEnrollment.add(var);
+				if(!saves.contains(var))
+					saves.add(var);
 				return val;
 			case "userKeys":
 				oSchoolEnrollment.addUserKeys((Long)val);
-				if(!savesSchoolEnrollment.contains(var))
-					savesSchoolEnrollment.add(var);
+				if(!saves.contains(var))
+					saves.add(var);
 				return val;
 			default:
 				return super.attributeCluster(var, val);
@@ -13204,228 +13204,222 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 			case "childCompleteName":
 				if(val != null)
 					setChildCompleteName(val);
-				savesSchoolEnrollment.add(var);
+				saves.add(var);
 				return val;
 			case "childCompleteNamePreferred":
 				if(val != null)
 					setChildCompleteNamePreferred(val);
-				savesSchoolEnrollment.add(var);
+				saves.add(var);
 				return val;
 			case "childBirthDate":
 				if(val != null)
 					setChildBirthDate(val);
-				savesSchoolEnrollment.add(var);
+				saves.add(var);
 				return val;
 			case "schoolAddress":
 				if(val != null)
 					setSchoolAddress(val);
-				savesSchoolEnrollment.add(var);
+				saves.add(var);
 				return val;
 			case "enrollmentApproved":
 				if(val != null)
 					setEnrollmentApproved(val);
-				savesSchoolEnrollment.add(var);
+				saves.add(var);
 				return val;
 			case "enrollmentImmunizations":
 				if(val != null)
 					setEnrollmentImmunizations(val);
-				savesSchoolEnrollment.add(var);
+				saves.add(var);
 				return val;
 			case "familyMarried":
 				if(val != null)
 					setFamilyMarried(val);
-				savesSchoolEnrollment.add(var);
+				saves.add(var);
 				return val;
 			case "familySeparated":
 				if(val != null)
 					setFamilySeparated(val);
-				savesSchoolEnrollment.add(var);
+				saves.add(var);
 				return val;
 			case "familyDivorced":
 				if(val != null)
 					setFamilyDivorced(val);
-				savesSchoolEnrollment.add(var);
+				saves.add(var);
 				return val;
 			case "familyAddress":
 				if(val != null)
 					setFamilyAddress(val);
-				savesSchoolEnrollment.add(var);
+				saves.add(var);
 				return val;
 			case "familyHowDoYouKnowTheSchool":
 				if(val != null)
 					setFamilyHowDoYouKnowTheSchool(val);
-				savesSchoolEnrollment.add(var);
+				saves.add(var);
 				return val;
 			case "enrollmentSpecialConsiderations":
 				if(val != null)
 					setEnrollmentSpecialConsiderations(val);
-				savesSchoolEnrollment.add(var);
+				saves.add(var);
 				return val;
 			case "childMedicalConditions":
 				if(val != null)
 					setChildMedicalConditions(val);
-				savesSchoolEnrollment.add(var);
+				saves.add(var);
 				return val;
 			case "childPreviousSchoolsAttended":
 				if(val != null)
 					setChildPreviousSchoolsAttended(val);
-				savesSchoolEnrollment.add(var);
+				saves.add(var);
 				return val;
 			case "childDescription":
 				if(val != null)
 					setChildDescription(val);
-				savesSchoolEnrollment.add(var);
+				saves.add(var);
 				return val;
 			case "childObjectives":
 				if(val != null)
 					setChildObjectives(val);
-				savesSchoolEnrollment.add(var);
+				saves.add(var);
 				return val;
 			case "childPottyTrained":
 				if(val != null)
 					setChildPottyTrained(val);
-				savesSchoolEnrollment.add(var);
+				saves.add(var);
 				return val;
 			case "enrollmentGroupName":
 				if(val != null)
 					setEnrollmentGroupName(val);
-				savesSchoolEnrollment.add(var);
+				saves.add(var);
 				return val;
 			case "enrollmentPaymentEachMonth":
 				if(val != null)
 					setEnrollmentPaymentEachMonth(val);
-				savesSchoolEnrollment.add(var);
+				saves.add(var);
 				return val;
 			case "enrollmentPaymentComplete":
 				if(val != null)
 					setEnrollmentPaymentComplete(val);
-				savesSchoolEnrollment.add(var);
+				saves.add(var);
 				return val;
 			case "customerProfileId":
 				if(val != null)
 					setCustomerProfileId(val);
-				savesSchoolEnrollment.add(var);
+				saves.add(var);
 				return val;
 			case "enrollmentChargeDate":
 				if(val != null)
 					setEnrollmentChargeDate(val);
-				savesSchoolEnrollment.add(var);
+				saves.add(var);
 				return val;
 			case "enrollmentParentNames":
 				if(val != null)
 					setEnrollmentParentNames(val);
-				savesSchoolEnrollment.add(var);
+				saves.add(var);
 				return val;
 			case "enrollmentSignature1":
 				if(val != null)
 					setEnrollmentSignature1(val);
-				savesSchoolEnrollment.add(var);
+				saves.add(var);
 				return val;
 			case "enrollmentSignature2":
 				if(val != null)
 					setEnrollmentSignature2(val);
-				savesSchoolEnrollment.add(var);
+				saves.add(var);
 				return val;
 			case "enrollmentSignature3":
 				if(val != null)
 					setEnrollmentSignature3(val);
-				savesSchoolEnrollment.add(var);
+				saves.add(var);
 				return val;
 			case "enrollmentSignature4":
 				if(val != null)
 					setEnrollmentSignature4(val);
-				savesSchoolEnrollment.add(var);
+				saves.add(var);
 				return val;
 			case "enrollmentSignature5":
 				if(val != null)
 					setEnrollmentSignature5(val);
-				savesSchoolEnrollment.add(var);
+				saves.add(var);
 				return val;
 			case "enrollmentSignature6":
 				if(val != null)
 					setEnrollmentSignature6(val);
-				savesSchoolEnrollment.add(var);
+				saves.add(var);
 				return val;
 			case "enrollmentSignature7":
 				if(val != null)
 					setEnrollmentSignature7(val);
-				savesSchoolEnrollment.add(var);
+				saves.add(var);
 				return val;
 			case "enrollmentSignature8":
 				if(val != null)
 					setEnrollmentSignature8(val);
-				savesSchoolEnrollment.add(var);
+				saves.add(var);
 				return val;
 			case "enrollmentSignature9":
 				if(val != null)
 					setEnrollmentSignature9(val);
-				savesSchoolEnrollment.add(var);
+				saves.add(var);
 				return val;
 			case "enrollmentSignature10":
 				if(val != null)
 					setEnrollmentSignature10(val);
-				savesSchoolEnrollment.add(var);
+				saves.add(var);
 				return val;
 			case "enrollmentDate1":
 				if(val != null)
 					setEnrollmentDate1(val);
-				savesSchoolEnrollment.add(var);
+				saves.add(var);
 				return val;
 			case "enrollmentDate2":
 				if(val != null)
 					setEnrollmentDate2(val);
-				savesSchoolEnrollment.add(var);
+				saves.add(var);
 				return val;
 			case "enrollmentDate3":
 				if(val != null)
 					setEnrollmentDate3(val);
-				savesSchoolEnrollment.add(var);
+				saves.add(var);
 				return val;
 			case "enrollmentDate4":
 				if(val != null)
 					setEnrollmentDate4(val);
-				savesSchoolEnrollment.add(var);
+				saves.add(var);
 				return val;
 			case "enrollmentDate5":
 				if(val != null)
 					setEnrollmentDate5(val);
-				savesSchoolEnrollment.add(var);
+				saves.add(var);
 				return val;
 			case "enrollmentDate6":
 				if(val != null)
 					setEnrollmentDate6(val);
-				savesSchoolEnrollment.add(var);
+				saves.add(var);
 				return val;
 			case "enrollmentDate7":
 				if(val != null)
 					setEnrollmentDate7(val);
-				savesSchoolEnrollment.add(var);
+				saves.add(var);
 				return val;
 			case "enrollmentDate8":
 				if(val != null)
 					setEnrollmentDate8(val);
-				savesSchoolEnrollment.add(var);
+				saves.add(var);
 				return val;
 			case "enrollmentDate9":
 				if(val != null)
 					setEnrollmentDate9(val);
-				savesSchoolEnrollment.add(var);
+				saves.add(var);
 				return val;
 			case "enrollmentDate10":
 				if(val != null)
 					setEnrollmentDate10(val);
-				savesSchoolEnrollment.add(var);
+				saves.add(var);
 				return val;
 			default:
 				return super.defineCluster(var, val);
 		}
 	}
-
-	/////////////////
-	// saves //
-	/////////////////
-
-	protected List<String> savesSchoolEnrollment = new ArrayList<String>();
 
 	/////////////
 	// populate //
@@ -13436,10 +13430,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	}
 	public void populateSchoolEnrollment(SolrDocument solrDocument) {
 		SchoolEnrollment oSchoolEnrollment = (SchoolEnrollment)this;
-		savesSchoolEnrollment = (List<String>)solrDocument.get("savesSchoolEnrollment_stored_strings");
-		if(savesSchoolEnrollment != null) {
+		saves = (List<String>)solrDocument.get("saves_stored_strings");
+		if(saves != null) {
 
-			if(savesSchoolEnrollment.contains("enrollmentKey")) {
+			if(saves.contains("enrollmentKey")) {
 				Long enrollmentKey = (Long)solrDocument.get("enrollmentKey_stored_long");
 				if(enrollmentKey != null)
 					oSchoolEnrollment.setEnrollmentKey(enrollmentKey);
@@ -13453,31 +13447,31 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 			if(blockKeys != null)
 				oSchoolEnrollment.blockKeys.addAll(blockKeys);
 
-			if(savesSchoolEnrollment.contains("schoolKey")) {
+			if(saves.contains("schoolKey")) {
 				Long schoolKey = (Long)solrDocument.get("schoolKey_stored_long");
 				if(schoolKey != null)
 					oSchoolEnrollment.setSchoolKey(schoolKey);
 			}
 
-			if(savesSchoolEnrollment.contains("seasonKey")) {
+			if(saves.contains("seasonKey")) {
 				Long seasonKey = (Long)solrDocument.get("seasonKey_stored_long");
 				if(seasonKey != null)
 					oSchoolEnrollment.setSeasonKey(seasonKey);
 			}
 
-			if(savesSchoolEnrollment.contains("sessionKey")) {
+			if(saves.contains("sessionKey")) {
 				Long sessionKey = (Long)solrDocument.get("sessionKey_stored_long");
 				if(sessionKey != null)
 					oSchoolEnrollment.setSessionKey(sessionKey);
 			}
 
-			if(savesSchoolEnrollment.contains("ageKey")) {
+			if(saves.contains("ageKey")) {
 				Long ageKey = (Long)solrDocument.get("ageKey_stored_long");
 				if(ageKey != null)
 					oSchoolEnrollment.setAgeKey(ageKey);
 			}
 
-			if(savesSchoolEnrollment.contains("blockKey")) {
+			if(saves.contains("blockKey")) {
 				Long blockKey = (Long)solrDocument.get("blockKey_stored_long");
 				if(blockKey != null)
 					oSchoolEnrollment.setBlockKey(blockKey);
@@ -13503,7 +13497,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 			if(paymentKeys != null)
 				oSchoolEnrollment.paymentKeys.addAll(paymentKeys);
 
-			if(savesSchoolEnrollment.contains("enrollmentFormKey")) {
+			if(saves.contains("enrollmentFormKey")) {
 				Long enrollmentFormKey = (Long)solrDocument.get("enrollmentFormKey_stored_long");
 				if(enrollmentFormKey != null)
 					oSchoolEnrollment.setEnrollmentFormKey(enrollmentFormKey);
@@ -13513,649 +13507,649 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 			if(userKeys != null)
 				oSchoolEnrollment.userKeys.addAll(userKeys);
 
-			if(savesSchoolEnrollment.contains("educationSort")) {
+			if(saves.contains("educationSort")) {
 				Integer educationSort = (Integer)solrDocument.get("educationSort_stored_int");
 				if(educationSort != null)
 					oSchoolEnrollment.setEducationSort(educationSort);
 			}
 
-			if(savesSchoolEnrollment.contains("schoolSort")) {
+			if(saves.contains("schoolSort")) {
 				Integer schoolSort = (Integer)solrDocument.get("schoolSort_stored_int");
 				if(schoolSort != null)
 					oSchoolEnrollment.setSchoolSort(schoolSort);
 			}
 
-			if(savesSchoolEnrollment.contains("yearSort")) {
+			if(saves.contains("yearSort")) {
 				Integer yearSort = (Integer)solrDocument.get("yearSort_stored_int");
 				if(yearSort != null)
 					oSchoolEnrollment.setYearSort(yearSort);
 			}
 
-			if(savesSchoolEnrollment.contains("seasonSort")) {
+			if(saves.contains("seasonSort")) {
 				Integer seasonSort = (Integer)solrDocument.get("seasonSort_stored_int");
 				if(seasonSort != null)
 					oSchoolEnrollment.setSeasonSort(seasonSort);
 			}
 
-			if(savesSchoolEnrollment.contains("sessionSort")) {
+			if(saves.contains("sessionSort")) {
 				Integer sessionSort = (Integer)solrDocument.get("sessionSort_stored_int");
 				if(sessionSort != null)
 					oSchoolEnrollment.setSessionSort(sessionSort);
 			}
 
-			if(savesSchoolEnrollment.contains("ageSort")) {
+			if(saves.contains("ageSort")) {
 				Integer ageSort = (Integer)solrDocument.get("ageSort_stored_int");
 				if(ageSort != null)
 					oSchoolEnrollment.setAgeSort(ageSort);
 			}
 
-			if(savesSchoolEnrollment.contains("childFirstName")) {
+			if(saves.contains("childFirstName")) {
 				String childFirstName = (String)solrDocument.get("childFirstName_stored_string");
 				if(childFirstName != null)
 					oSchoolEnrollment.setChildFirstName(childFirstName);
 			}
 
-			if(savesSchoolEnrollment.contains("childFirstNamePreferred")) {
+			if(saves.contains("childFirstNamePreferred")) {
 				String childFirstNamePreferred = (String)solrDocument.get("childFirstNamePreferred_stored_string");
 				if(childFirstNamePreferred != null)
 					oSchoolEnrollment.setChildFirstNamePreferred(childFirstNamePreferred);
 			}
 
-			if(savesSchoolEnrollment.contains("childFamilyName")) {
+			if(saves.contains("childFamilyName")) {
 				String childFamilyName = (String)solrDocument.get("childFamilyName_stored_string");
 				if(childFamilyName != null)
 					oSchoolEnrollment.setChildFamilyName(childFamilyName);
 			}
 
-			if(savesSchoolEnrollment.contains("momFirstName")) {
+			if(saves.contains("momFirstName")) {
 				String momFirstName = (String)solrDocument.get("momFirstName_stored_string");
 				if(momFirstName != null)
 					oSchoolEnrollment.setMomFirstName(momFirstName);
 			}
 
-			if(savesSchoolEnrollment.contains("momFirstNamePreferred")) {
+			if(saves.contains("momFirstNamePreferred")) {
 				String momFirstNamePreferred = (String)solrDocument.get("momFirstNamePreferred_stored_string");
 				if(momFirstNamePreferred != null)
 					oSchoolEnrollment.setMomFirstNamePreferred(momFirstNamePreferred);
 			}
 
-			if(savesSchoolEnrollment.contains("momCompleteNamePreferred")) {
+			if(saves.contains("momCompleteNamePreferred")) {
 				String momCompleteNamePreferred = (String)solrDocument.get("momCompleteNamePreferred_stored_string");
 				if(momCompleteNamePreferred != null)
 					oSchoolEnrollment.setMomCompleteNamePreferred(momCompleteNamePreferred);
 			}
 
-			if(savesSchoolEnrollment.contains("dadFirstName")) {
+			if(saves.contains("dadFirstName")) {
 				String dadFirstName = (String)solrDocument.get("dadFirstName_stored_string");
 				if(dadFirstName != null)
 					oSchoolEnrollment.setDadFirstName(dadFirstName);
 			}
 
-			if(savesSchoolEnrollment.contains("dadFirstNamePreferred")) {
+			if(saves.contains("dadFirstNamePreferred")) {
 				String dadFirstNamePreferred = (String)solrDocument.get("dadFirstNamePreferred_stored_string");
 				if(dadFirstNamePreferred != null)
 					oSchoolEnrollment.setDadFirstNamePreferred(dadFirstNamePreferred);
 			}
 
-			if(savesSchoolEnrollment.contains("dadCompleteNamePreferred")) {
+			if(saves.contains("dadCompleteNamePreferred")) {
 				String dadCompleteNamePreferred = (String)solrDocument.get("dadCompleteNamePreferred_stored_string");
 				if(dadCompleteNamePreferred != null)
 					oSchoolEnrollment.setDadCompleteNamePreferred(dadCompleteNamePreferred);
 			}
 
-			if(savesSchoolEnrollment.contains("childCompleteName")) {
+			if(saves.contains("childCompleteName")) {
 				String childCompleteName = (String)solrDocument.get("childCompleteName_stored_string");
 				if(childCompleteName != null)
 					oSchoolEnrollment.setChildCompleteName(childCompleteName);
 			}
 
-			if(savesSchoolEnrollment.contains("childCompleteNamePreferred")) {
+			if(saves.contains("childCompleteNamePreferred")) {
 				String childCompleteNamePreferred = (String)solrDocument.get("childCompleteNamePreferred_stored_string");
 				if(childCompleteNamePreferred != null)
 					oSchoolEnrollment.setChildCompleteNamePreferred(childCompleteNamePreferred);
 			}
 
-			if(savesSchoolEnrollment.contains("childBirthDate")) {
+			if(saves.contains("childBirthDate")) {
 				Date childBirthDate = (Date)solrDocument.get("childBirthDate_stored_date");
 				if(childBirthDate != null)
 					oSchoolEnrollment.setChildBirthDate(childBirthDate);
 			}
 
-			if(savesSchoolEnrollment.contains("childBirthDateYear")) {
+			if(saves.contains("childBirthDateYear")) {
 				Integer childBirthDateYear = (Integer)solrDocument.get("childBirthDateYear_stored_int");
 				if(childBirthDateYear != null)
 					oSchoolEnrollment.setChildBirthDateYear(childBirthDateYear);
 			}
 
-			if(savesSchoolEnrollment.contains("childBirthDateMonthOfYear")) {
+			if(saves.contains("childBirthDateMonthOfYear")) {
 				String childBirthDateMonthOfYear = (String)solrDocument.get("childBirthDateMonthOfYear_stored_string");
 				if(childBirthDateMonthOfYear != null)
 					oSchoolEnrollment.setChildBirthDateMonthOfYear(childBirthDateMonthOfYear);
 			}
 
-			if(savesSchoolEnrollment.contains("childBirthDateDayOfWeek")) {
+			if(saves.contains("childBirthDateDayOfWeek")) {
 				String childBirthDateDayOfWeek = (String)solrDocument.get("childBirthDateDayOfWeek_stored_string");
 				if(childBirthDateDayOfWeek != null)
 					oSchoolEnrollment.setChildBirthDateDayOfWeek(childBirthDateDayOfWeek);
 			}
 
-			if(savesSchoolEnrollment.contains("childBirthMonth")) {
+			if(saves.contains("childBirthMonth")) {
 				Integer childBirthMonth = (Integer)solrDocument.get("childBirthMonth_stored_int");
 				if(childBirthMonth != null)
 					oSchoolEnrollment.setChildBirthMonth(childBirthMonth);
 			}
 
-			if(savesSchoolEnrollment.contains("childBirthDay")) {
+			if(saves.contains("childBirthDay")) {
 				Integer childBirthDay = (Integer)solrDocument.get("childBirthDay_stored_int");
 				if(childBirthDay != null)
 					oSchoolEnrollment.setChildBirthDay(childBirthDay);
 			}
 
-			if(savesSchoolEnrollment.contains("schoolName")) {
+			if(saves.contains("schoolName")) {
 				String schoolName = (String)solrDocument.get("schoolName_stored_string");
 				if(schoolName != null)
 					oSchoolEnrollment.setSchoolName(schoolName);
 			}
 
-			if(savesSchoolEnrollment.contains("schoolCompleteName")) {
+			if(saves.contains("schoolCompleteName")) {
 				String schoolCompleteName = (String)solrDocument.get("schoolCompleteName_stored_string");
 				if(schoolCompleteName != null)
 					oSchoolEnrollment.setSchoolCompleteName(schoolCompleteName);
 			}
 
-			if(savesSchoolEnrollment.contains("schoolLocation")) {
+			if(saves.contains("schoolLocation")) {
 				String schoolLocation = (String)solrDocument.get("schoolLocation_stored_string");
 				if(schoolLocation != null)
 					oSchoolEnrollment.setSchoolLocation(schoolLocation);
 			}
 
-			if(savesSchoolEnrollment.contains("schoolAddress")) {
+			if(saves.contains("schoolAddress")) {
 				String schoolAddress = (String)solrDocument.get("schoolAddress_stored_string");
 				if(schoolAddress != null)
 					oSchoolEnrollment.setSchoolAddress(schoolAddress);
 			}
 
-			if(savesSchoolEnrollment.contains("schoolPhoneNumber")) {
+			if(saves.contains("schoolPhoneNumber")) {
 				String schoolPhoneNumber = (String)solrDocument.get("schoolPhoneNumber_stored_string");
 				if(schoolPhoneNumber != null)
 					oSchoolEnrollment.setSchoolPhoneNumber(schoolPhoneNumber);
 			}
 
-			if(savesSchoolEnrollment.contains("schoolAdministratorName")) {
+			if(saves.contains("schoolAdministratorName")) {
 				String schoolAdministratorName = (String)solrDocument.get("schoolAdministratorName_stored_string");
 				if(schoolAdministratorName != null)
 					oSchoolEnrollment.setSchoolAdministratorName(schoolAdministratorName);
 			}
 
-			if(savesSchoolEnrollment.contains("yearStart")) {
+			if(saves.contains("yearStart")) {
 				Integer yearStart = (Integer)solrDocument.get("yearStart_stored_int");
 				if(yearStart != null)
 					oSchoolEnrollment.setYearStart(yearStart);
 			}
 
-			if(savesSchoolEnrollment.contains("yearEnd")) {
+			if(saves.contains("yearEnd")) {
 				Integer yearEnd = (Integer)solrDocument.get("yearEnd_stored_int");
 				if(yearEnd != null)
 					oSchoolEnrollment.setYearEnd(yearEnd);
 			}
 
-			if(savesSchoolEnrollment.contains("seasonStartDate")) {
+			if(saves.contains("seasonStartDate")) {
 				Date seasonStartDate = (Date)solrDocument.get("seasonStartDate_stored_date");
 				if(seasonStartDate != null)
 					oSchoolEnrollment.setSeasonStartDate(seasonStartDate);
 			}
 
-			if(savesSchoolEnrollment.contains("seasonSummer")) {
+			if(saves.contains("seasonSummer")) {
 				Boolean seasonSummer = (Boolean)solrDocument.get("seasonSummer_stored_boolean");
 				if(seasonSummer != null)
 					oSchoolEnrollment.setSeasonSummer(seasonSummer);
 			}
 
-			if(savesSchoolEnrollment.contains("seasonWinter")) {
+			if(saves.contains("seasonWinter")) {
 				Boolean seasonWinter = (Boolean)solrDocument.get("seasonWinter_stored_boolean");
 				if(seasonWinter != null)
 					oSchoolEnrollment.setSeasonWinter(seasonWinter);
 			}
 
-			if(savesSchoolEnrollment.contains("yearEnrollmentFee")) {
+			if(saves.contains("yearEnrollmentFee")) {
 				Double yearEnrollmentFee = (Double)solrDocument.get("yearEnrollmentFee_stored_double");
 				if(yearEnrollmentFee != null)
 					oSchoolEnrollment.setYearEnrollmentFee(yearEnrollmentFee);
 			}
 
-			if(savesSchoolEnrollment.contains("seasonCompleteName")) {
+			if(saves.contains("seasonCompleteName")) {
 				String seasonCompleteName = (String)solrDocument.get("seasonCompleteName_stored_string");
 				if(seasonCompleteName != null)
 					oSchoolEnrollment.setSeasonCompleteName(seasonCompleteName);
 			}
 
-			if(savesSchoolEnrollment.contains("sessionStartDate")) {
+			if(saves.contains("sessionStartDate")) {
 				Date sessionStartDate = (Date)solrDocument.get("sessionStartDate_stored_date");
 				if(sessionStartDate != null)
 					oSchoolEnrollment.setSessionStartDate(sessionStartDate);
 			}
 
-			if(savesSchoolEnrollment.contains("sessionEndDate")) {
+			if(saves.contains("sessionEndDate")) {
 				Date sessionEndDate = (Date)solrDocument.get("sessionEndDate_stored_date");
 				if(sessionEndDate != null)
 					oSchoolEnrollment.setSessionEndDate(sessionEndDate);
 			}
 
-			if(savesSchoolEnrollment.contains("ageCompleteName")) {
+			if(saves.contains("ageCompleteName")) {
 				String ageCompleteName = (String)solrDocument.get("ageCompleteName_stored_string");
 				if(ageCompleteName != null)
 					oSchoolEnrollment.setAgeCompleteName(ageCompleteName);
 			}
 
-			if(savesSchoolEnrollment.contains("ageStart")) {
+			if(saves.contains("ageStart")) {
 				Integer ageStart = (Integer)solrDocument.get("ageStart_stored_int");
 				if(ageStart != null)
 					oSchoolEnrollment.setAgeStart(ageStart);
 			}
 
-			if(savesSchoolEnrollment.contains("ageEnd")) {
+			if(saves.contains("ageEnd")) {
 				Integer ageEnd = (Integer)solrDocument.get("ageEnd_stored_int");
 				if(ageEnd != null)
 					oSchoolEnrollment.setAgeEnd(ageEnd);
 			}
 
-			if(savesSchoolEnrollment.contains("blockStartTime")) {
+			if(saves.contains("blockStartTime")) {
 				String blockStartTime = (String)solrDocument.get("blockStartTime_stored_string");
 				if(blockStartTime != null)
 					oSchoolEnrollment.setBlockStartTime(blockStartTime);
 			}
 
-			if(savesSchoolEnrollment.contains("blockEndTime")) {
+			if(saves.contains("blockEndTime")) {
 				String blockEndTime = (String)solrDocument.get("blockEndTime_stored_string");
 				if(blockEndTime != null)
 					oSchoolEnrollment.setBlockEndTime(blockEndTime);
 			}
 
-			if(savesSchoolEnrollment.contains("blockPricePerMonth")) {
+			if(saves.contains("blockPricePerMonth")) {
 				Double blockPricePerMonth = (Double)solrDocument.get("blockPricePerMonth_stored_double");
 				if(blockPricePerMonth != null)
 					oSchoolEnrollment.setBlockPricePerMonth(blockPricePerMonth);
 			}
 
-			if(savesSchoolEnrollment.contains("blockSunday")) {
+			if(saves.contains("blockSunday")) {
 				Boolean blockSunday = (Boolean)solrDocument.get("blockSunday_stored_boolean");
 				if(blockSunday != null)
 					oSchoolEnrollment.setBlockSunday(blockSunday);
 			}
 
-			if(savesSchoolEnrollment.contains("blockMonday")) {
+			if(saves.contains("blockMonday")) {
 				Boolean blockMonday = (Boolean)solrDocument.get("blockMonday_stored_boolean");
 				if(blockMonday != null)
 					oSchoolEnrollment.setBlockMonday(blockMonday);
 			}
 
-			if(savesSchoolEnrollment.contains("blockTuesday")) {
+			if(saves.contains("blockTuesday")) {
 				Boolean blockTuesday = (Boolean)solrDocument.get("blockTuesday_stored_boolean");
 				if(blockTuesday != null)
 					oSchoolEnrollment.setBlockTuesday(blockTuesday);
 			}
 
-			if(savesSchoolEnrollment.contains("blockWednesday")) {
+			if(saves.contains("blockWednesday")) {
 				Boolean blockWednesday = (Boolean)solrDocument.get("blockWednesday_stored_boolean");
 				if(blockWednesday != null)
 					oSchoolEnrollment.setBlockWednesday(blockWednesday);
 			}
 
-			if(savesSchoolEnrollment.contains("blockThursday")) {
+			if(saves.contains("blockThursday")) {
 				Boolean blockThursday = (Boolean)solrDocument.get("blockThursday_stored_boolean");
 				if(blockThursday != null)
 					oSchoolEnrollment.setBlockThursday(blockThursday);
 			}
 
-			if(savesSchoolEnrollment.contains("blockFriday")) {
+			if(saves.contains("blockFriday")) {
 				Boolean blockFriday = (Boolean)solrDocument.get("blockFriday_stored_boolean");
 				if(blockFriday != null)
 					oSchoolEnrollment.setBlockFriday(blockFriday);
 			}
 
-			if(savesSchoolEnrollment.contains("blockSaturday")) {
+			if(saves.contains("blockSaturday")) {
 				Boolean blockSaturday = (Boolean)solrDocument.get("blockSaturday_stored_boolean");
 				if(blockSaturday != null)
 					oSchoolEnrollment.setBlockSaturday(blockSaturday);
 			}
 
-			if(savesSchoolEnrollment.contains("blockTotalPrice")) {
+			if(saves.contains("blockTotalPrice")) {
 				Double blockTotalPrice = (Double)solrDocument.get("blockTotalPrice_stored_double");
 				if(blockTotalPrice != null)
 					oSchoolEnrollment.setBlockTotalPrice(blockTotalPrice);
 			}
 
-			if(savesSchoolEnrollment.contains("blockAdminName")) {
+			if(saves.contains("blockAdminName")) {
 				String blockAdminName = (String)solrDocument.get("blockAdminName_stored_string");
 				if(blockAdminName != null)
 					oSchoolEnrollment.setBlockAdminName(blockAdminName);
 			}
 
-			if(savesSchoolEnrollment.contains("blockShortName")) {
+			if(saves.contains("blockShortName")) {
 				String blockShortName = (String)solrDocument.get("blockShortName_stored_string");
 				if(blockShortName != null)
 					oSchoolEnrollment.setBlockShortName(blockShortName);
 			}
 
-			if(savesSchoolEnrollment.contains("blockCompleteName")) {
+			if(saves.contains("blockCompleteName")) {
 				String blockCompleteName = (String)solrDocument.get("blockCompleteName_stored_string");
 				if(blockCompleteName != null)
 					oSchoolEnrollment.setBlockCompleteName(blockCompleteName);
 			}
 
-			if(savesSchoolEnrollment.contains("enrollmentApproved")) {
+			if(saves.contains("enrollmentApproved")) {
 				Boolean enrollmentApproved = (Boolean)solrDocument.get("enrollmentApproved_stored_boolean");
 				if(enrollmentApproved != null)
 					oSchoolEnrollment.setEnrollmentApproved(enrollmentApproved);
 			}
 
-			if(savesSchoolEnrollment.contains("enrollmentImmunizations")) {
+			if(saves.contains("enrollmentImmunizations")) {
 				Boolean enrollmentImmunizations = (Boolean)solrDocument.get("enrollmentImmunizations_stored_boolean");
 				if(enrollmentImmunizations != null)
 					oSchoolEnrollment.setEnrollmentImmunizations(enrollmentImmunizations);
 			}
 
-			if(savesSchoolEnrollment.contains("familyMarried")) {
+			if(saves.contains("familyMarried")) {
 				Boolean familyMarried = (Boolean)solrDocument.get("familyMarried_stored_boolean");
 				if(familyMarried != null)
 					oSchoolEnrollment.setFamilyMarried(familyMarried);
 			}
 
-			if(savesSchoolEnrollment.contains("familySeparated")) {
+			if(saves.contains("familySeparated")) {
 				Boolean familySeparated = (Boolean)solrDocument.get("familySeparated_stored_boolean");
 				if(familySeparated != null)
 					oSchoolEnrollment.setFamilySeparated(familySeparated);
 			}
 
-			if(savesSchoolEnrollment.contains("familyDivorced")) {
+			if(saves.contains("familyDivorced")) {
 				Boolean familyDivorced = (Boolean)solrDocument.get("familyDivorced_stored_boolean");
 				if(familyDivorced != null)
 					oSchoolEnrollment.setFamilyDivorced(familyDivorced);
 			}
 
-			if(savesSchoolEnrollment.contains("familyAddress")) {
+			if(saves.contains("familyAddress")) {
 				String familyAddress = (String)solrDocument.get("familyAddress_stored_string");
 				if(familyAddress != null)
 					oSchoolEnrollment.setFamilyAddress(familyAddress);
 			}
 
-			if(savesSchoolEnrollment.contains("familyHowDoYouKnowTheSchool")) {
+			if(saves.contains("familyHowDoYouKnowTheSchool")) {
 				String familyHowDoYouKnowTheSchool = (String)solrDocument.get("familyHowDoYouKnowTheSchool_stored_string");
 				if(familyHowDoYouKnowTheSchool != null)
 					oSchoolEnrollment.setFamilyHowDoYouKnowTheSchool(familyHowDoYouKnowTheSchool);
 			}
 
-			if(savesSchoolEnrollment.contains("enrollmentSpecialConsiderations")) {
+			if(saves.contains("enrollmentSpecialConsiderations")) {
 				String enrollmentSpecialConsiderations = (String)solrDocument.get("enrollmentSpecialConsiderations_stored_string");
 				if(enrollmentSpecialConsiderations != null)
 					oSchoolEnrollment.setEnrollmentSpecialConsiderations(enrollmentSpecialConsiderations);
 			}
 
-			if(savesSchoolEnrollment.contains("childMedicalConditions")) {
+			if(saves.contains("childMedicalConditions")) {
 				String childMedicalConditions = (String)solrDocument.get("childMedicalConditions_stored_string");
 				if(childMedicalConditions != null)
 					oSchoolEnrollment.setChildMedicalConditions(childMedicalConditions);
 			}
 
-			if(savesSchoolEnrollment.contains("childPreviousSchoolsAttended")) {
+			if(saves.contains("childPreviousSchoolsAttended")) {
 				String childPreviousSchoolsAttended = (String)solrDocument.get("childPreviousSchoolsAttended_stored_string");
 				if(childPreviousSchoolsAttended != null)
 					oSchoolEnrollment.setChildPreviousSchoolsAttended(childPreviousSchoolsAttended);
 			}
 
-			if(savesSchoolEnrollment.contains("childDescription")) {
+			if(saves.contains("childDescription")) {
 				String childDescription = (String)solrDocument.get("childDescription_stored_string");
 				if(childDescription != null)
 					oSchoolEnrollment.setChildDescription(childDescription);
 			}
 
-			if(savesSchoolEnrollment.contains("childObjectives")) {
+			if(saves.contains("childObjectives")) {
 				String childObjectives = (String)solrDocument.get("childObjectives_stored_string");
 				if(childObjectives != null)
 					oSchoolEnrollment.setChildObjectives(childObjectives);
 			}
 
-			if(savesSchoolEnrollment.contains("childPottyTrained")) {
+			if(saves.contains("childPottyTrained")) {
 				Boolean childPottyTrained = (Boolean)solrDocument.get("childPottyTrained_stored_boolean");
 				if(childPottyTrained != null)
 					oSchoolEnrollment.setChildPottyTrained(childPottyTrained);
 			}
 
-			if(savesSchoolEnrollment.contains("enrollmentGroupName")) {
+			if(saves.contains("enrollmentGroupName")) {
 				String enrollmentGroupName = (String)solrDocument.get("enrollmentGroupName_stored_string");
 				if(enrollmentGroupName != null)
 					oSchoolEnrollment.setEnrollmentGroupName(enrollmentGroupName);
 			}
 
-			if(savesSchoolEnrollment.contains("enrollmentPaymentEachMonth")) {
+			if(saves.contains("enrollmentPaymentEachMonth")) {
 				Boolean enrollmentPaymentEachMonth = (Boolean)solrDocument.get("enrollmentPaymentEachMonth_stored_boolean");
 				if(enrollmentPaymentEachMonth != null)
 					oSchoolEnrollment.setEnrollmentPaymentEachMonth(enrollmentPaymentEachMonth);
 			}
 
-			if(savesSchoolEnrollment.contains("enrollmentPaymentComplete")) {
+			if(saves.contains("enrollmentPaymentComplete")) {
 				Boolean enrollmentPaymentComplete = (Boolean)solrDocument.get("enrollmentPaymentComplete_stored_boolean");
 				if(enrollmentPaymentComplete != null)
 					oSchoolEnrollment.setEnrollmentPaymentComplete(enrollmentPaymentComplete);
 			}
 
-			if(savesSchoolEnrollment.contains("customerProfileId")) {
+			if(saves.contains("customerProfileId")) {
 				String customerProfileId = (String)solrDocument.get("customerProfileId_stored_string");
 				if(customerProfileId != null)
 					oSchoolEnrollment.setCustomerProfileId(customerProfileId);
 			}
 
-			if(savesSchoolEnrollment.contains("enrollmentChargeDate")) {
+			if(saves.contains("enrollmentChargeDate")) {
 				Date enrollmentChargeDate = (Date)solrDocument.get("enrollmentChargeDate_stored_date");
 				if(enrollmentChargeDate != null)
 					oSchoolEnrollment.setEnrollmentChargeDate(enrollmentChargeDate);
 			}
 
-			if(savesSchoolEnrollment.contains("createdYear")) {
+			if(saves.contains("createdYear")) {
 				Integer createdYear = (Integer)solrDocument.get("createdYear_stored_int");
 				if(createdYear != null)
 					oSchoolEnrollment.setCreatedYear(createdYear);
 			}
 
-			if(savesSchoolEnrollment.contains("createdDayOfWeek")) {
+			if(saves.contains("createdDayOfWeek")) {
 				String createdDayOfWeek = (String)solrDocument.get("createdDayOfWeek_stored_string");
 				if(createdDayOfWeek != null)
 					oSchoolEnrollment.setCreatedDayOfWeek(createdDayOfWeek);
 			}
 
-			if(savesSchoolEnrollment.contains("createdMonthOfYear")) {
+			if(saves.contains("createdMonthOfYear")) {
 				String createdMonthOfYear = (String)solrDocument.get("createdMonthOfYear_stored_string");
 				if(createdMonthOfYear != null)
 					oSchoolEnrollment.setCreatedMonthOfYear(createdMonthOfYear);
 			}
 
-			if(savesSchoolEnrollment.contains("createdHourOfDay")) {
+			if(saves.contains("createdHourOfDay")) {
 				String createdHourOfDay = (String)solrDocument.get("createdHourOfDay_stored_string");
 				if(createdHourOfDay != null)
 					oSchoolEnrollment.setCreatedHourOfDay(createdHourOfDay);
 			}
 
-			if(savesSchoolEnrollment.contains("enrollmentDaysOfWeek")) {
+			if(saves.contains("enrollmentDaysOfWeek")) {
 				List<String> enrollmentDaysOfWeek = (List<String>)solrDocument.get("enrollmentDaysOfWeek_stored_strings");
 				if(enrollmentDaysOfWeek != null)
 					oSchoolEnrollment.enrollmentDaysOfWeek.addAll(enrollmentDaysOfWeek);
 			}
 
-			if(savesSchoolEnrollment.contains("enrollmentParentNames")) {
+			if(saves.contains("enrollmentParentNames")) {
 				String enrollmentParentNames = (String)solrDocument.get("enrollmentParentNames_stored_string");
 				if(enrollmentParentNames != null)
 					oSchoolEnrollment.setEnrollmentParentNames(enrollmentParentNames);
 			}
 
-			if(savesSchoolEnrollment.contains("enrollmentParentEmails")) {
+			if(saves.contains("enrollmentParentEmails")) {
 				String enrollmentParentEmails = (String)solrDocument.get("enrollmentParentEmails_stored_string");
 				if(enrollmentParentEmails != null)
 					oSchoolEnrollment.setEnrollmentParentEmails(enrollmentParentEmails);
 			}
 
-			if(savesSchoolEnrollment.contains("enrollmentParentNameLines")) {
+			if(saves.contains("enrollmentParentNameLines")) {
 				String enrollmentParentNameLines = (String)solrDocument.get("enrollmentParentNameLines_stored_string");
 				if(enrollmentParentNameLines != null)
 					oSchoolEnrollment.setEnrollmentParentNameLines(enrollmentParentNameLines);
 			}
 
-			if(savesSchoolEnrollment.contains("enrollmentParentEmailLines")) {
+			if(saves.contains("enrollmentParentEmailLines")) {
 				String enrollmentParentEmailLines = (String)solrDocument.get("enrollmentParentEmailLines_stored_string");
 				if(enrollmentParentEmailLines != null)
 					oSchoolEnrollment.setEnrollmentParentEmailLines(enrollmentParentEmailLines);
 			}
 
-			if(savesSchoolEnrollment.contains("enrollmentParentDetailLines")) {
+			if(saves.contains("enrollmentParentDetailLines")) {
 				String enrollmentParentDetailLines = (String)solrDocument.get("enrollmentParentDetailLines_stored_string");
 				if(enrollmentParentDetailLines != null)
 					oSchoolEnrollment.setEnrollmentParentDetailLines(enrollmentParentDetailLines);
 			}
 
-			if(savesSchoolEnrollment.contains("enrollmentPickupDetailLines")) {
+			if(saves.contains("enrollmentPickupDetailLines")) {
 				String enrollmentPickupDetailLines = (String)solrDocument.get("enrollmentPickupDetailLines_stored_string");
 				if(enrollmentPickupDetailLines != null)
 					oSchoolEnrollment.setEnrollmentPickupDetailLines(enrollmentPickupDetailLines);
 			}
 
-			if(savesSchoolEnrollment.contains("enrollmentEmergencyContactDetailLines")) {
+			if(saves.contains("enrollmentEmergencyContactDetailLines")) {
 				String enrollmentEmergencyContactDetailLines = (String)solrDocument.get("enrollmentEmergencyContactDetailLines_stored_string");
 				if(enrollmentEmergencyContactDetailLines != null)
 					oSchoolEnrollment.setEnrollmentEmergencyContactDetailLines(enrollmentEmergencyContactDetailLines);
 			}
 
-			if(savesSchoolEnrollment.contains("enrollmentSignature1")) {
+			if(saves.contains("enrollmentSignature1")) {
 				String enrollmentSignature1 = (String)solrDocument.get("enrollmentSignature1_stored_string");
 				if(enrollmentSignature1 != null)
 					oSchoolEnrollment.setEnrollmentSignature1(enrollmentSignature1);
 			}
 
-			if(savesSchoolEnrollment.contains("enrollmentSignature2")) {
+			if(saves.contains("enrollmentSignature2")) {
 				String enrollmentSignature2 = (String)solrDocument.get("enrollmentSignature2_stored_string");
 				if(enrollmentSignature2 != null)
 					oSchoolEnrollment.setEnrollmentSignature2(enrollmentSignature2);
 			}
 
-			if(savesSchoolEnrollment.contains("enrollmentSignature3")) {
+			if(saves.contains("enrollmentSignature3")) {
 				String enrollmentSignature3 = (String)solrDocument.get("enrollmentSignature3_stored_string");
 				if(enrollmentSignature3 != null)
 					oSchoolEnrollment.setEnrollmentSignature3(enrollmentSignature3);
 			}
 
-			if(savesSchoolEnrollment.contains("enrollmentSignature4")) {
+			if(saves.contains("enrollmentSignature4")) {
 				String enrollmentSignature4 = (String)solrDocument.get("enrollmentSignature4_stored_string");
 				if(enrollmentSignature4 != null)
 					oSchoolEnrollment.setEnrollmentSignature4(enrollmentSignature4);
 			}
 
-			if(savesSchoolEnrollment.contains("enrollmentSignature5")) {
+			if(saves.contains("enrollmentSignature5")) {
 				String enrollmentSignature5 = (String)solrDocument.get("enrollmentSignature5_stored_string");
 				if(enrollmentSignature5 != null)
 					oSchoolEnrollment.setEnrollmentSignature5(enrollmentSignature5);
 			}
 
-			if(savesSchoolEnrollment.contains("enrollmentSignature6")) {
+			if(saves.contains("enrollmentSignature6")) {
 				String enrollmentSignature6 = (String)solrDocument.get("enrollmentSignature6_stored_string");
 				if(enrollmentSignature6 != null)
 					oSchoolEnrollment.setEnrollmentSignature6(enrollmentSignature6);
 			}
 
-			if(savesSchoolEnrollment.contains("enrollmentSignature7")) {
+			if(saves.contains("enrollmentSignature7")) {
 				String enrollmentSignature7 = (String)solrDocument.get("enrollmentSignature7_stored_string");
 				if(enrollmentSignature7 != null)
 					oSchoolEnrollment.setEnrollmentSignature7(enrollmentSignature7);
 			}
 
-			if(savesSchoolEnrollment.contains("enrollmentSignature8")) {
+			if(saves.contains("enrollmentSignature8")) {
 				String enrollmentSignature8 = (String)solrDocument.get("enrollmentSignature8_stored_string");
 				if(enrollmentSignature8 != null)
 					oSchoolEnrollment.setEnrollmentSignature8(enrollmentSignature8);
 			}
 
-			if(savesSchoolEnrollment.contains("enrollmentSignature9")) {
+			if(saves.contains("enrollmentSignature9")) {
 				String enrollmentSignature9 = (String)solrDocument.get("enrollmentSignature9_stored_string");
 				if(enrollmentSignature9 != null)
 					oSchoolEnrollment.setEnrollmentSignature9(enrollmentSignature9);
 			}
 
-			if(savesSchoolEnrollment.contains("enrollmentSignature10")) {
+			if(saves.contains("enrollmentSignature10")) {
 				String enrollmentSignature10 = (String)solrDocument.get("enrollmentSignature10_stored_string");
 				if(enrollmentSignature10 != null)
 					oSchoolEnrollment.setEnrollmentSignature10(enrollmentSignature10);
 			}
 
-			if(savesSchoolEnrollment.contains("enrollmentDate1")) {
+			if(saves.contains("enrollmentDate1")) {
 				Date enrollmentDate1 = (Date)solrDocument.get("enrollmentDate1_stored_date");
 				if(enrollmentDate1 != null)
 					oSchoolEnrollment.setEnrollmentDate1(enrollmentDate1);
 			}
 
-			if(savesSchoolEnrollment.contains("enrollmentDate2")) {
+			if(saves.contains("enrollmentDate2")) {
 				Date enrollmentDate2 = (Date)solrDocument.get("enrollmentDate2_stored_date");
 				if(enrollmentDate2 != null)
 					oSchoolEnrollment.setEnrollmentDate2(enrollmentDate2);
 			}
 
-			if(savesSchoolEnrollment.contains("enrollmentDate3")) {
+			if(saves.contains("enrollmentDate3")) {
 				Date enrollmentDate3 = (Date)solrDocument.get("enrollmentDate3_stored_date");
 				if(enrollmentDate3 != null)
 					oSchoolEnrollment.setEnrollmentDate3(enrollmentDate3);
 			}
 
-			if(savesSchoolEnrollment.contains("enrollmentDate4")) {
+			if(saves.contains("enrollmentDate4")) {
 				Date enrollmentDate4 = (Date)solrDocument.get("enrollmentDate4_stored_date");
 				if(enrollmentDate4 != null)
 					oSchoolEnrollment.setEnrollmentDate4(enrollmentDate4);
 			}
 
-			if(savesSchoolEnrollment.contains("enrollmentDate5")) {
+			if(saves.contains("enrollmentDate5")) {
 				Date enrollmentDate5 = (Date)solrDocument.get("enrollmentDate5_stored_date");
 				if(enrollmentDate5 != null)
 					oSchoolEnrollment.setEnrollmentDate5(enrollmentDate5);
 			}
 
-			if(savesSchoolEnrollment.contains("enrollmentDate6")) {
+			if(saves.contains("enrollmentDate6")) {
 				Date enrollmentDate6 = (Date)solrDocument.get("enrollmentDate6_stored_date");
 				if(enrollmentDate6 != null)
 					oSchoolEnrollment.setEnrollmentDate6(enrollmentDate6);
 			}
 
-			if(savesSchoolEnrollment.contains("enrollmentDate7")) {
+			if(saves.contains("enrollmentDate7")) {
 				Date enrollmentDate7 = (Date)solrDocument.get("enrollmentDate7_stored_date");
 				if(enrollmentDate7 != null)
 					oSchoolEnrollment.setEnrollmentDate7(enrollmentDate7);
 			}
 
-			if(savesSchoolEnrollment.contains("enrollmentDate8")) {
+			if(saves.contains("enrollmentDate8")) {
 				Date enrollmentDate8 = (Date)solrDocument.get("enrollmentDate8_stored_date");
 				if(enrollmentDate8 != null)
 					oSchoolEnrollment.setEnrollmentDate8(enrollmentDate8);
 			}
 
-			if(savesSchoolEnrollment.contains("enrollmentDate9")) {
+			if(saves.contains("enrollmentDate9")) {
 				Date enrollmentDate9 = (Date)solrDocument.get("enrollmentDate9_stored_date");
 				if(enrollmentDate9 != null)
 					oSchoolEnrollment.setEnrollmentDate9(enrollmentDate9);
 			}
 
-			if(savesSchoolEnrollment.contains("enrollmentDate10")) {
+			if(saves.contains("enrollmentDate10")) {
 				Date enrollmentDate10 = (Date)solrDocument.get("enrollmentDate10_stored_date");
 				if(enrollmentDate10 != null)
 					oSchoolEnrollment.setEnrollmentDate10(enrollmentDate10);
 			}
 
-			if(savesSchoolEnrollment.contains("childImmunizationsReceived")) {
+			if(saves.contains("childImmunizationsReceived")) {
 				String childImmunizationsReceived = (String)solrDocument.get("childImmunizationsReceived_stored_string");
 				if(childImmunizationsReceived != null)
 					oSchoolEnrollment.setChildImmunizationsReceived(childImmunizationsReceived);
 			}
 
-			if(savesSchoolEnrollment.contains("childPhotosApproved")) {
+			if(saves.contains("childPhotosApproved")) {
 				String childPhotosApproved = (String)solrDocument.get("childPhotosApproved_stored_string");
 				if(childPhotosApproved != null)
 					oSchoolEnrollment.setChildPhotosApproved(childPhotosApproved);
 			}
 
-			if(savesSchoolEnrollment.contains("enrollmentCompleteName")) {
+			if(saves.contains("enrollmentCompleteName")) {
 				String enrollmentCompleteName = (String)solrDocument.get("enrollmentCompleteName_stored_string");
 				if(enrollmentCompleteName != null)
 					oSchoolEnrollment.setEnrollmentCompleteName(enrollmentCompleteName);
@@ -14227,9 +14221,6 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	}
 
 	public void indexSchoolEnrollment(SolrInputDocument document) {
-		if(savesSchoolEnrollment != null)
-			document.addField("savesSchoolEnrollment_stored_strings", savesSchoolEnrollment);
-
 		if(enrollmentKey != null) {
 			document.addField("enrollmentKey_indexed_long", enrollmentKey);
 			document.addField("enrollmentKey_stored_long", enrollmentKey);

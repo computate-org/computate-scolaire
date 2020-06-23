@@ -2778,8 +2778,8 @@ public abstract class SchoolGuardianGen<DEV> extends Cluster {
 		switch(var) {
 			case "enrollmentKeys":
 				oSchoolGuardian.addEnrollmentKeys((Long)val);
-				if(!savesSchoolGuardian.contains(var))
-					savesSchoolGuardian.add(var);
+				if(!saves.contains(var))
+					saves.add(var);
 				return val;
 			default:
 				return super.attributeCluster(var, val);
@@ -2810,53 +2810,47 @@ public abstract class SchoolGuardianGen<DEV> extends Cluster {
 			case "personFirstName":
 				if(val != null)
 					setPersonFirstName(val);
-				savesSchoolGuardian.add(var);
+				saves.add(var);
 				return val;
 			case "personFirstNamePreferred":
 				if(val != null)
 					setPersonFirstNamePreferred(val);
-				savesSchoolGuardian.add(var);
+				saves.add(var);
 				return val;
 			case "familyName":
 				if(val != null)
 					setFamilyName(val);
-				savesSchoolGuardian.add(var);
+				saves.add(var);
 				return val;
 			case "personPhoneNumber":
 				if(val != null)
 					setPersonPhoneNumber(val);
-				savesSchoolGuardian.add(var);
+				saves.add(var);
 				return val;
 			case "personRelation":
 				if(val != null)
 					setPersonRelation(val);
-				savesSchoolGuardian.add(var);
+				saves.add(var);
 				return val;
 			case "personEmergencyContact":
 				if(val != null)
 					setPersonEmergencyContact(val);
-				savesSchoolGuardian.add(var);
+				saves.add(var);
 				return val;
 			case "personPickup":
 				if(val != null)
 					setPersonPickup(val);
-				savesSchoolGuardian.add(var);
+				saves.add(var);
 				return val;
 			case "photo":
 				if(val != null)
 					setPhoto(val);
-				savesSchoolGuardian.add(var);
+				saves.add(var);
 				return val;
 			default:
 				return super.defineCluster(var, val);
 		}
 	}
-
-	/////////////////
-	// saves //
-	/////////////////
-
-	protected List<String> savesSchoolGuardian = new ArrayList<String>();
 
 	/////////////
 	// populate //
@@ -2867,10 +2861,10 @@ public abstract class SchoolGuardianGen<DEV> extends Cluster {
 	}
 	public void populateSchoolGuardian(SolrDocument solrDocument) {
 		SchoolGuardian oSchoolGuardian = (SchoolGuardian)this;
-		savesSchoolGuardian = (List<String>)solrDocument.get("savesSchoolGuardian_stored_strings");
-		if(savesSchoolGuardian != null) {
+		saves = (List<String>)solrDocument.get("saves_stored_strings");
+		if(saves != null) {
 
-			if(savesSchoolGuardian.contains("guardianKey")) {
+			if(saves.contains("guardianKey")) {
 				Long guardianKey = (Long)solrDocument.get("guardianKey_stored_long");
 				if(guardianKey != null)
 					oSchoolGuardian.setGuardianKey(guardianKey);
@@ -2880,145 +2874,145 @@ public abstract class SchoolGuardianGen<DEV> extends Cluster {
 			if(enrollmentKeys != null)
 				oSchoolGuardian.enrollmentKeys.addAll(enrollmentKeys);
 
-			if(savesSchoolGuardian.contains("familySort")) {
+			if(saves.contains("familySort")) {
 				Integer familySort = (Integer)solrDocument.get("familySort_stored_int");
 				if(familySort != null)
 					oSchoolGuardian.setFamilySort(familySort);
 			}
 
-			if(savesSchoolGuardian.contains("schoolSort")) {
+			if(saves.contains("schoolSort")) {
 				Integer schoolSort = (Integer)solrDocument.get("schoolSort_stored_int");
 				if(schoolSort != null)
 					oSchoolGuardian.setSchoolSort(schoolSort);
 			}
 
-			if(savesSchoolGuardian.contains("userKeys")) {
+			if(saves.contains("userKeys")) {
 				List<Long> userKeys = (List<Long>)solrDocument.get("userKeys_stored_longs");
 				if(userKeys != null)
 					oSchoolGuardian.userKeys.addAll(userKeys);
 			}
 
-			if(savesSchoolGuardian.contains("schoolKeys")) {
+			if(saves.contains("schoolKeys")) {
 				List<Long> schoolKeys = (List<Long>)solrDocument.get("schoolKeys_stored_longs");
 				if(schoolKeys != null)
 					oSchoolGuardian.schoolKeys.addAll(schoolKeys);
 			}
 
-			if(savesSchoolGuardian.contains("yearKeys")) {
+			if(saves.contains("yearKeys")) {
 				List<Long> yearKeys = (List<Long>)solrDocument.get("yearKeys_stored_longs");
 				if(yearKeys != null)
 					oSchoolGuardian.yearKeys.addAll(yearKeys);
 			}
 
-			if(savesSchoolGuardian.contains("seasonKeys")) {
+			if(saves.contains("seasonKeys")) {
 				List<Long> seasonKeys = (List<Long>)solrDocument.get("seasonKeys_stored_longs");
 				if(seasonKeys != null)
 					oSchoolGuardian.seasonKeys.addAll(seasonKeys);
 			}
 
-			if(savesSchoolGuardian.contains("sessionKeys")) {
+			if(saves.contains("sessionKeys")) {
 				List<Long> sessionKeys = (List<Long>)solrDocument.get("sessionKeys_stored_longs");
 				if(sessionKeys != null)
 					oSchoolGuardian.sessionKeys.addAll(sessionKeys);
 			}
 
-			if(savesSchoolGuardian.contains("ageKeys")) {
+			if(saves.contains("ageKeys")) {
 				List<Long> ageKeys = (List<Long>)solrDocument.get("ageKeys_stored_longs");
 				if(ageKeys != null)
 					oSchoolGuardian.ageKeys.addAll(ageKeys);
 			}
 
-			if(savesSchoolGuardian.contains("personFirstName")) {
+			if(saves.contains("personFirstName")) {
 				String personFirstName = (String)solrDocument.get("personFirstName_stored_string");
 				if(personFirstName != null)
 					oSchoolGuardian.setPersonFirstName(personFirstName);
 			}
 
-			if(savesSchoolGuardian.contains("personFirstNamePreferred")) {
+			if(saves.contains("personFirstNamePreferred")) {
 				String personFirstNamePreferred = (String)solrDocument.get("personFirstNamePreferred_stored_string");
 				if(personFirstNamePreferred != null)
 					oSchoolGuardian.setPersonFirstNamePreferred(personFirstNamePreferred);
 			}
 
-			if(savesSchoolGuardian.contains("familyName")) {
+			if(saves.contains("familyName")) {
 				String familyName = (String)solrDocument.get("familyName_stored_string");
 				if(familyName != null)
 					oSchoolGuardian.setFamilyName(familyName);
 			}
 
-			if(savesSchoolGuardian.contains("personCompleteName")) {
+			if(saves.contains("personCompleteName")) {
 				String personCompleteName = (String)solrDocument.get("personCompleteName_stored_string");
 				if(personCompleteName != null)
 					oSchoolGuardian.setPersonCompleteName(personCompleteName);
 			}
 
-			if(savesSchoolGuardian.contains("personCompleteNamePreferred")) {
+			if(saves.contains("personCompleteNamePreferred")) {
 				String personCompleteNamePreferred = (String)solrDocument.get("personCompleteNamePreferred_stored_string");
 				if(personCompleteNamePreferred != null)
 					oSchoolGuardian.setPersonCompleteNamePreferred(personCompleteNamePreferred);
 			}
 
-			if(savesSchoolGuardian.contains("personFormalName")) {
+			if(saves.contains("personFormalName")) {
 				String personFormalName = (String)solrDocument.get("personFormalName_stored_string");
 				if(personFormalName != null)
 					oSchoolGuardian.setPersonFormalName(personFormalName);
 			}
 
-			if(savesSchoolGuardian.contains("personOccupation")) {
+			if(saves.contains("personOccupation")) {
 				String personOccupation = (String)solrDocument.get("personOccupation_stored_string");
 				if(personOccupation != null)
 					oSchoolGuardian.setPersonOccupation(personOccupation);
 			}
 
-			if(savesSchoolGuardian.contains("personPhoneNumber")) {
+			if(saves.contains("personPhoneNumber")) {
 				String personPhoneNumber = (String)solrDocument.get("personPhoneNumber_stored_string");
 				if(personPhoneNumber != null)
 					oSchoolGuardian.setPersonPhoneNumber(personPhoneNumber);
 			}
 
-			if(savesSchoolGuardian.contains("personEmail")) {
+			if(saves.contains("personEmail")) {
 				String personEmail = (String)solrDocument.get("personEmail_stored_string");
 				if(personEmail != null)
 					oSchoolGuardian.setPersonEmail(personEmail);
 			}
 
-			if(savesSchoolGuardian.contains("personRelation")) {
+			if(saves.contains("personRelation")) {
 				String personRelation = (String)solrDocument.get("personRelation_stored_string");
 				if(personRelation != null)
 					oSchoolGuardian.setPersonRelation(personRelation);
 			}
 
-			if(savesSchoolGuardian.contains("personSms")) {
+			if(saves.contains("personSms")) {
 				Boolean personSms = (Boolean)solrDocument.get("personSms_stored_boolean");
 				if(personSms != null)
 					oSchoolGuardian.setPersonSms(personSms);
 			}
 
-			if(savesSchoolGuardian.contains("personReceiveEmail")) {
+			if(saves.contains("personReceiveEmail")) {
 				Boolean personReceiveEmail = (Boolean)solrDocument.get("personReceiveEmail_stored_boolean");
 				if(personReceiveEmail != null)
 					oSchoolGuardian.setPersonReceiveEmail(personReceiveEmail);
 			}
 
-			if(savesSchoolGuardian.contains("personEmergencyContact")) {
+			if(saves.contains("personEmergencyContact")) {
 				Boolean personEmergencyContact = (Boolean)solrDocument.get("personEmergencyContact_stored_boolean");
 				if(personEmergencyContact != null)
 					oSchoolGuardian.setPersonEmergencyContact(personEmergencyContact);
 			}
 
-			if(savesSchoolGuardian.contains("personPickup")) {
+			if(saves.contains("personPickup")) {
 				Boolean personPickup = (Boolean)solrDocument.get("personPickup_stored_boolean");
 				if(personPickup != null)
 					oSchoolGuardian.setPersonPickup(personPickup);
 			}
 
-			if(savesSchoolGuardian.contains("photo")) {
+			if(saves.contains("photo")) {
 				String photo = (String)solrDocument.get("photo_stored_string");
 				if(photo != null)
 					oSchoolGuardian.setPhoto(photo);
 			}
 
-			if(savesSchoolGuardian.contains("guardianCompleteName")) {
+			if(saves.contains("guardianCompleteName")) {
 				String guardianCompleteName = (String)solrDocument.get("guardianCompleteName_stored_string");
 				if(guardianCompleteName != null)
 					oSchoolGuardian.setGuardianCompleteName(guardianCompleteName);
@@ -3090,9 +3084,6 @@ public abstract class SchoolGuardianGen<DEV> extends Cluster {
 	}
 
 	public void indexSchoolGuardian(SolrInputDocument document) {
-		if(savesSchoolGuardian != null)
-			document.addField("savesSchoolGuardian_stored_strings", savesSchoolGuardian);
-
 		if(guardianKey != null) {
 			document.addField("guardianKey_indexed_long", guardianKey);
 			document.addField("guardianKey_stored_long", guardianKey);

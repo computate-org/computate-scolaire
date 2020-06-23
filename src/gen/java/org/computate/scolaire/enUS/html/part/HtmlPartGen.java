@@ -3669,8 +3669,8 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		switch(var) {
 			case "pageDesignKeys":
 				oHtmlPart.addPageDesignKeys((Long)val);
-				if(!savesHtmlPart.contains(var))
-					savesHtmlPart.add(var);
+				if(!saves.contains(var))
+					saves.add(var);
 				return val;
 			default:
 				return super.attributeCluster(var, val);
@@ -3701,143 +3701,137 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 			case "htmlLink":
 				if(val != null)
 					setHtmlLink(val);
-				savesHtmlPart.add(var);
+				saves.add(var);
 				return val;
 			case "htmlElement":
 				if(val != null)
 					setHtmlElement(val);
-				savesHtmlPart.add(var);
+				saves.add(var);
 				return val;
 			case "htmlId":
 				if(val != null)
 					setHtmlId(val);
-				savesHtmlPart.add(var);
+				saves.add(var);
 				return val;
 			case "htmlClasses":
 				if(val != null)
 					setHtmlClasses(val);
-				savesHtmlPart.add(var);
+				saves.add(var);
 				return val;
 			case "htmlStyle":
 				if(val != null)
 					setHtmlStyle(val);
-				savesHtmlPart.add(var);
+				saves.add(var);
 				return val;
 			case "htmlBefore":
 				if(val != null)
 					setHtmlBefore(val);
-				savesHtmlPart.add(var);
+				saves.add(var);
 				return val;
 			case "htmlAfter":
 				if(val != null)
 					setHtmlAfter(val);
-				savesHtmlPart.add(var);
+				saves.add(var);
 				return val;
 			case "htmlText":
 				if(val != null)
 					setHtmlText(val);
-				savesHtmlPart.add(var);
+				saves.add(var);
 				return val;
 			case "htmlVar":
 				if(val != null)
 					setHtmlVar(val);
-				savesHtmlPart.add(var);
+				saves.add(var);
 				return val;
 			case "htmlVarSpan":
 				if(val != null)
 					setHtmlVarSpan(val);
-				savesHtmlPart.add(var);
+				saves.add(var);
 				return val;
 			case "htmlVarForm":
 				if(val != null)
 					setHtmlVarForm(val);
-				savesHtmlPart.add(var);
+				saves.add(var);
 				return val;
 			case "htmlVarInput":
 				if(val != null)
 					setHtmlVarInput(val);
-				savesHtmlPart.add(var);
+				saves.add(var);
 				return val;
 			case "htmlVarForEach":
 				if(val != null)
 					setHtmlVarForEach(val);
-				savesHtmlPart.add(var);
+				saves.add(var);
 				return val;
 			case "htmlExclude":
 				if(val != null)
 					setHtmlExclude(val);
-				savesHtmlPart.add(var);
+				saves.add(var);
 				return val;
 			case "pdfExclude":
 				if(val != null)
 					setPdfExclude(val);
-				savesHtmlPart.add(var);
+				saves.add(var);
 				return val;
 			case "loginLogout":
 				if(val != null)
 					setLoginLogout(val);
-				savesHtmlPart.add(var);
+				saves.add(var);
 				return val;
 			case "sort1":
 				if(val != null)
 					setSort1(val);
-				savesHtmlPart.add(var);
+				saves.add(var);
 				return val;
 			case "sort2":
 				if(val != null)
 					setSort2(val);
-				savesHtmlPart.add(var);
+				saves.add(var);
 				return val;
 			case "sort3":
 				if(val != null)
 					setSort3(val);
-				savesHtmlPart.add(var);
+				saves.add(var);
 				return val;
 			case "sort4":
 				if(val != null)
 					setSort4(val);
-				savesHtmlPart.add(var);
+				saves.add(var);
 				return val;
 			case "sort5":
 				if(val != null)
 					setSort5(val);
-				savesHtmlPart.add(var);
+				saves.add(var);
 				return val;
 			case "sort6":
 				if(val != null)
 					setSort6(val);
-				savesHtmlPart.add(var);
+				saves.add(var);
 				return val;
 			case "sort7":
 				if(val != null)
 					setSort7(val);
-				savesHtmlPart.add(var);
+				saves.add(var);
 				return val;
 			case "sort8":
 				if(val != null)
 					setSort8(val);
-				savesHtmlPart.add(var);
+				saves.add(var);
 				return val;
 			case "sort9":
 				if(val != null)
 					setSort9(val);
-				savesHtmlPart.add(var);
+				saves.add(var);
 				return val;
 			case "sort10":
 				if(val != null)
 					setSort10(val);
-				savesHtmlPart.add(var);
+				saves.add(var);
 				return val;
 			default:
 				return super.defineCluster(var, val);
 		}
 	}
-
-	/////////////////
-	// saves //
-	/////////////////
-
-	protected List<String> savesHtmlPart = new ArrayList<String>();
 
 	/////////////
 	// populate //
@@ -3848,10 +3842,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 	public void populateHtmlPart(SolrDocument solrDocument) {
 		HtmlPart oHtmlPart = (HtmlPart)this;
-		savesHtmlPart = (List<String>)solrDocument.get("savesHtmlPart_stored_strings");
-		if(savesHtmlPart != null) {
+		saves = (List<String>)solrDocument.get("saves_stored_strings");
+		if(saves != null) {
 
-			if(savesHtmlPart.contains("htmlPartKey")) {
+			if(saves.contains("htmlPartKey")) {
 				Long htmlPartKey = (Long)solrDocument.get("htmlPartKey_stored_long");
 				if(htmlPartKey != null)
 					oHtmlPart.setHtmlPartKey(htmlPartKey);
@@ -3861,157 +3855,157 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 			if(pageDesignKeys != null)
 				oHtmlPart.pageDesignKeys.addAll(pageDesignKeys);
 
-			if(savesHtmlPart.contains("htmlLink")) {
+			if(saves.contains("htmlLink")) {
 				String htmlLink = (String)solrDocument.get("htmlLink_stored_string");
 				if(htmlLink != null)
 					oHtmlPart.setHtmlLink(htmlLink);
 			}
 
-			if(savesHtmlPart.contains("htmlElement")) {
+			if(saves.contains("htmlElement")) {
 				String htmlElement = (String)solrDocument.get("htmlElement_stored_string");
 				if(htmlElement != null)
 					oHtmlPart.setHtmlElement(htmlElement);
 			}
 
-			if(savesHtmlPart.contains("htmlId")) {
+			if(saves.contains("htmlId")) {
 				String htmlId = (String)solrDocument.get("htmlId_stored_string");
 				if(htmlId != null)
 					oHtmlPart.setHtmlId(htmlId);
 			}
 
-			if(savesHtmlPart.contains("htmlClasses")) {
+			if(saves.contains("htmlClasses")) {
 				String htmlClasses = (String)solrDocument.get("htmlClasses_stored_string");
 				if(htmlClasses != null)
 					oHtmlPart.setHtmlClasses(htmlClasses);
 			}
 
-			if(savesHtmlPart.contains("htmlStyle")) {
+			if(saves.contains("htmlStyle")) {
 				String htmlStyle = (String)solrDocument.get("htmlStyle_stored_string");
 				if(htmlStyle != null)
 					oHtmlPart.setHtmlStyle(htmlStyle);
 			}
 
-			if(savesHtmlPart.contains("htmlBefore")) {
+			if(saves.contains("htmlBefore")) {
 				String htmlBefore = (String)solrDocument.get("htmlBefore_stored_string");
 				if(htmlBefore != null)
 					oHtmlPart.setHtmlBefore(htmlBefore);
 			}
 
-			if(savesHtmlPart.contains("htmlAfter")) {
+			if(saves.contains("htmlAfter")) {
 				String htmlAfter = (String)solrDocument.get("htmlAfter_stored_string");
 				if(htmlAfter != null)
 					oHtmlPart.setHtmlAfter(htmlAfter);
 			}
 
-			if(savesHtmlPart.contains("htmlText")) {
+			if(saves.contains("htmlText")) {
 				String htmlText = (String)solrDocument.get("htmlText_stored_string");
 				if(htmlText != null)
 					oHtmlPart.setHtmlText(htmlText);
 			}
 
-			if(savesHtmlPart.contains("htmlVar")) {
+			if(saves.contains("htmlVar")) {
 				String htmlVar = (String)solrDocument.get("htmlVar_stored_string");
 				if(htmlVar != null)
 					oHtmlPart.setHtmlVar(htmlVar);
 			}
 
-			if(savesHtmlPart.contains("htmlVarSpan")) {
+			if(saves.contains("htmlVarSpan")) {
 				String htmlVarSpan = (String)solrDocument.get("htmlVarSpan_stored_string");
 				if(htmlVarSpan != null)
 					oHtmlPart.setHtmlVarSpan(htmlVarSpan);
 			}
 
-			if(savesHtmlPart.contains("htmlVarForm")) {
+			if(saves.contains("htmlVarForm")) {
 				String htmlVarForm = (String)solrDocument.get("htmlVarForm_stored_string");
 				if(htmlVarForm != null)
 					oHtmlPart.setHtmlVarForm(htmlVarForm);
 			}
 
-			if(savesHtmlPart.contains("htmlVarInput")) {
+			if(saves.contains("htmlVarInput")) {
 				String htmlVarInput = (String)solrDocument.get("htmlVarInput_stored_string");
 				if(htmlVarInput != null)
 					oHtmlPart.setHtmlVarInput(htmlVarInput);
 			}
 
-			if(savesHtmlPart.contains("htmlVarForEach")) {
+			if(saves.contains("htmlVarForEach")) {
 				String htmlVarForEach = (String)solrDocument.get("htmlVarForEach_stored_string");
 				if(htmlVarForEach != null)
 					oHtmlPart.setHtmlVarForEach(htmlVarForEach);
 			}
 
-			if(savesHtmlPart.contains("htmlExclude")) {
+			if(saves.contains("htmlExclude")) {
 				Boolean htmlExclude = (Boolean)solrDocument.get("htmlExclude_stored_boolean");
 				if(htmlExclude != null)
 					oHtmlPart.setHtmlExclude(htmlExclude);
 			}
 
-			if(savesHtmlPart.contains("pdfExclude")) {
+			if(saves.contains("pdfExclude")) {
 				Boolean pdfExclude = (Boolean)solrDocument.get("pdfExclude_stored_boolean");
 				if(pdfExclude != null)
 					oHtmlPart.setPdfExclude(pdfExclude);
 			}
 
-			if(savesHtmlPart.contains("loginLogout")) {
+			if(saves.contains("loginLogout")) {
 				Boolean loginLogout = (Boolean)solrDocument.get("loginLogout_stored_boolean");
 				if(loginLogout != null)
 					oHtmlPart.setLoginLogout(loginLogout);
 			}
 
-			if(savesHtmlPart.contains("sort1")) {
+			if(saves.contains("sort1")) {
 				Double sort1 = (Double)solrDocument.get("sort1_stored_double");
 				if(sort1 != null)
 					oHtmlPart.setSort1(sort1);
 			}
 
-			if(savesHtmlPart.contains("sort2")) {
+			if(saves.contains("sort2")) {
 				Double sort2 = (Double)solrDocument.get("sort2_stored_double");
 				if(sort2 != null)
 					oHtmlPart.setSort2(sort2);
 			}
 
-			if(savesHtmlPart.contains("sort3")) {
+			if(saves.contains("sort3")) {
 				Double sort3 = (Double)solrDocument.get("sort3_stored_double");
 				if(sort3 != null)
 					oHtmlPart.setSort3(sort3);
 			}
 
-			if(savesHtmlPart.contains("sort4")) {
+			if(saves.contains("sort4")) {
 				Double sort4 = (Double)solrDocument.get("sort4_stored_double");
 				if(sort4 != null)
 					oHtmlPart.setSort4(sort4);
 			}
 
-			if(savesHtmlPart.contains("sort5")) {
+			if(saves.contains("sort5")) {
 				Double sort5 = (Double)solrDocument.get("sort5_stored_double");
 				if(sort5 != null)
 					oHtmlPart.setSort5(sort5);
 			}
 
-			if(savesHtmlPart.contains("sort6")) {
+			if(saves.contains("sort6")) {
 				Double sort6 = (Double)solrDocument.get("sort6_stored_double");
 				if(sort6 != null)
 					oHtmlPart.setSort6(sort6);
 			}
 
-			if(savesHtmlPart.contains("sort7")) {
+			if(saves.contains("sort7")) {
 				Double sort7 = (Double)solrDocument.get("sort7_stored_double");
 				if(sort7 != null)
 					oHtmlPart.setSort7(sort7);
 			}
 
-			if(savesHtmlPart.contains("sort8")) {
+			if(saves.contains("sort8")) {
 				Double sort8 = (Double)solrDocument.get("sort8_stored_double");
 				if(sort8 != null)
 					oHtmlPart.setSort8(sort8);
 			}
 
-			if(savesHtmlPart.contains("sort9")) {
+			if(saves.contains("sort9")) {
 				Double sort9 = (Double)solrDocument.get("sort9_stored_double");
 				if(sort9 != null)
 					oHtmlPart.setSort9(sort9);
 			}
 
-			if(savesHtmlPart.contains("sort10")) {
+			if(saves.contains("sort10")) {
 				Double sort10 = (Double)solrDocument.get("sort10_stored_double");
 				if(sort10 != null)
 					oHtmlPart.setSort10(sort10);
@@ -4083,9 +4077,6 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public void indexHtmlPart(SolrInputDocument document) {
-		if(savesHtmlPart != null)
-			document.addField("savesHtmlPart_stored_strings", savesHtmlPart);
-
 		if(htmlPartKey != null) {
 			document.addField("htmlPartKey_indexed_long", htmlPartKey);
 			document.addField("htmlPartKey_stored_long", htmlPartKey);

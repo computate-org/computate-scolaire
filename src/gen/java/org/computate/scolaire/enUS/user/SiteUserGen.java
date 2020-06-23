@@ -1657,13 +1657,13 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 		switch(var) {
 			case "enrollmentKeys":
 				oSiteUser.addEnrollmentKeys((Long)val);
-				if(!savesSiteUser.contains(var))
-					savesSiteUser.add(var);
+				if(!saves.contains(var))
+					saves.add(var);
 				return val;
 			case "paymentKeys":
 				oSiteUser.addPaymentKeys((Long)val);
-				if(!savesSiteUser.contains(var))
-					savesSiteUser.add(var);
+				if(!saves.contains(var))
+					saves.add(var);
 				return val;
 			default:
 				return super.attributeCluster(var, val);
@@ -1694,43 +1694,37 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 			case "userName":
 				if(val != null)
 					setUserName(val);
-				savesSiteUser.add(var);
+				saves.add(var);
 				return val;
 			case "userEmail":
 				if(val != null)
 					setUserEmail(val);
-				savesSiteUser.add(var);
+				saves.add(var);
 				return val;
 			case "customerProfileId":
 				if(val != null)
 					setCustomerProfileId(val);
-				savesSiteUser.add(var);
+				saves.add(var);
 				return val;
 			case "userReceiveEmails":
 				if(val != null)
 					setUserReceiveEmails(val);
-				savesSiteUser.add(var);
+				saves.add(var);
 				return val;
 			case "seeArchived":
 				if(val != null)
 					setSeeArchived(val);
-				savesSiteUser.add(var);
+				saves.add(var);
 				return val;
 			case "seeDeleted":
 				if(val != null)
 					setSeeDeleted(val);
-				savesSiteUser.add(var);
+				saves.add(var);
 				return val;
 			default:
 				return super.defineCluster(var, val);
 		}
 	}
-
-	/////////////////
-	// saves //
-	/////////////////
-
-	protected List<String> savesSiteUser = new ArrayList<String>();
 
 	/////////////
 	// populate //
@@ -1741,10 +1735,10 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 	}
 	public void populateSiteUser(SolrDocument solrDocument) {
 		SiteUser oSiteUser = (SiteUser)this;
-		savesSiteUser = (List<String>)solrDocument.get("savesSiteUser_stored_strings");
-		if(savesSiteUser != null) {
+		saves = (List<String>)solrDocument.get("saves_stored_strings");
+		if(saves != null) {
 
-			if(savesSiteUser.contains("userKeys")) {
+			if(saves.contains("userKeys")) {
 				List<Long> userKeys = (List<Long>)solrDocument.get("userKeys_stored_longs");
 				if(userKeys != null)
 					oSiteUser.userKeys.addAll(userKeys);
@@ -1758,61 +1752,61 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 			if(paymentKeys != null)
 				oSiteUser.paymentKeys.addAll(paymentKeys);
 
-			if(savesSiteUser.contains("userName")) {
+			if(saves.contains("userName")) {
 				String userName = (String)solrDocument.get("userName_stored_string");
 				if(userName != null)
 					oSiteUser.setUserName(userName);
 			}
 
-			if(savesSiteUser.contains("userEmail")) {
+			if(saves.contains("userEmail")) {
 				String userEmail = (String)solrDocument.get("userEmail_stored_string");
 				if(userEmail != null)
 					oSiteUser.setUserEmail(userEmail);
 			}
 
-			if(savesSiteUser.contains("userFirstName")) {
+			if(saves.contains("userFirstName")) {
 				String userFirstName = (String)solrDocument.get("userFirstName_stored_string");
 				if(userFirstName != null)
 					oSiteUser.setUserFirstName(userFirstName);
 			}
 
-			if(savesSiteUser.contains("userLastName")) {
+			if(saves.contains("userLastName")) {
 				String userLastName = (String)solrDocument.get("userLastName_stored_string");
 				if(userLastName != null)
 					oSiteUser.setUserLastName(userLastName);
 			}
 
-			if(savesSiteUser.contains("userFullName")) {
+			if(saves.contains("userFullName")) {
 				String userFullName = (String)solrDocument.get("userFullName_stored_string");
 				if(userFullName != null)
 					oSiteUser.setUserFullName(userFullName);
 			}
 
-			if(savesSiteUser.contains("userSite")) {
+			if(saves.contains("userSite")) {
 				String userSite = (String)solrDocument.get("userSite_stored_string");
 				if(userSite != null)
 					oSiteUser.setUserSite(userSite);
 			}
 
-			if(savesSiteUser.contains("customerProfileId")) {
+			if(saves.contains("customerProfileId")) {
 				String customerProfileId = (String)solrDocument.get("customerProfileId_stored_string");
 				if(customerProfileId != null)
 					oSiteUser.setCustomerProfileId(customerProfileId);
 			}
 
-			if(savesSiteUser.contains("userReceiveEmails")) {
+			if(saves.contains("userReceiveEmails")) {
 				Boolean userReceiveEmails = (Boolean)solrDocument.get("userReceiveEmails_stored_boolean");
 				if(userReceiveEmails != null)
 					oSiteUser.setUserReceiveEmails(userReceiveEmails);
 			}
 
-			if(savesSiteUser.contains("seeArchived")) {
+			if(saves.contains("seeArchived")) {
 				Boolean seeArchived = (Boolean)solrDocument.get("seeArchived_stored_boolean");
 				if(seeArchived != null)
 					oSiteUser.setSeeArchived(seeArchived);
 			}
 
-			if(savesSiteUser.contains("seeDeleted")) {
+			if(saves.contains("seeDeleted")) {
 				Boolean seeDeleted = (Boolean)solrDocument.get("seeDeleted_stored_boolean");
 				if(seeDeleted != null)
 					oSiteUser.setSeeDeleted(seeDeleted);
@@ -1884,9 +1878,6 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 	}
 
 	public void indexSiteUser(SolrInputDocument document) {
-		if(savesSiteUser != null)
-			document.addField("savesSiteUser_stored_strings", savesSiteUser);
-
 		if(userKeys != null) {
 			for(java.lang.Long o : userKeys) {
 				document.addField("userKeys_indexed_longs", o);

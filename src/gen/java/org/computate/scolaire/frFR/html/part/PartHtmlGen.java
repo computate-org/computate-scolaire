@@ -3670,8 +3670,8 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		switch(var) {
 			case "designPageCles":
 				oPartHtml.addDesignPageCles((Long)val);
-				if(!sauvegardesPartHtml.contains(var))
-					sauvegardesPartHtml.add(var);
+				if(!sauvegardes.contains(var))
+					sauvegardes.add(var);
 				return val;
 			default:
 				return super.attribuerCluster(var, val);
@@ -3702,143 +3702,137 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 			case "htmlLien":
 				if(val != null)
 					setHtmlLien(val);
-				sauvegardesPartHtml.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "htmlElement":
 				if(val != null)
 					setHtmlElement(val);
-				sauvegardesPartHtml.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "htmlId":
 				if(val != null)
 					setHtmlId(val);
-				sauvegardesPartHtml.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "htmlClasses":
 				if(val != null)
 					setHtmlClasses(val);
-				sauvegardesPartHtml.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "htmlStyle":
 				if(val != null)
 					setHtmlStyle(val);
-				sauvegardesPartHtml.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "htmlAvant":
 				if(val != null)
 					setHtmlAvant(val);
-				sauvegardesPartHtml.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "htmlApres":
 				if(val != null)
 					setHtmlApres(val);
-				sauvegardesPartHtml.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "htmlTexte":
 				if(val != null)
 					setHtmlTexte(val);
-				sauvegardesPartHtml.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "htmlVar":
 				if(val != null)
 					setHtmlVar(val);
-				sauvegardesPartHtml.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "htmlVarSpan":
 				if(val != null)
 					setHtmlVarSpan(val);
-				sauvegardesPartHtml.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "htmlVarForm":
 				if(val != null)
 					setHtmlVarForm(val);
-				sauvegardesPartHtml.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "htmlVarInput":
 				if(val != null)
 					setHtmlVarInput(val);
-				sauvegardesPartHtml.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "htmlVarForEach":
 				if(val != null)
 					setHtmlVarForEach(val);
-				sauvegardesPartHtml.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "htmlExclure":
 				if(val != null)
 					setHtmlExclure(val);
-				sauvegardesPartHtml.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "pdfExclure":
 				if(val != null)
 					setPdfExclure(val);
-				sauvegardesPartHtml.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "connecterDeconnecter":
 				if(val != null)
 					setConnecterDeconnecter(val);
-				sauvegardesPartHtml.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "tri1":
 				if(val != null)
 					setTri1(val);
-				sauvegardesPartHtml.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "tri2":
 				if(val != null)
 					setTri2(val);
-				sauvegardesPartHtml.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "tri3":
 				if(val != null)
 					setTri3(val);
-				sauvegardesPartHtml.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "tri4":
 				if(val != null)
 					setTri4(val);
-				sauvegardesPartHtml.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "tri5":
 				if(val != null)
 					setTri5(val);
-				sauvegardesPartHtml.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "tri6":
 				if(val != null)
 					setTri6(val);
-				sauvegardesPartHtml.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "tri7":
 				if(val != null)
 					setTri7(val);
-				sauvegardesPartHtml.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "tri8":
 				if(val != null)
 					setTri8(val);
-				sauvegardesPartHtml.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "tri9":
 				if(val != null)
 					setTri9(val);
-				sauvegardesPartHtml.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "tri10":
 				if(val != null)
 					setTri10(val);
-				sauvegardesPartHtml.add(var);
+				sauvegardes.add(var);
 				return val;
 			default:
 				return super.definirCluster(var, val);
 		}
 	}
-
-	/////////////////
-	// sauvegardes //
-	/////////////////
-
-	protected List<String> sauvegardesPartHtml = new ArrayList<String>();
 
 	/////////////
 	// peupler //
@@ -3849,10 +3843,10 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	}
 	public void peuplerPartHtml(SolrDocument solrDocument) {
 		PartHtml oPartHtml = (PartHtml)this;
-		sauvegardesPartHtml = (List<String>)solrDocument.get("sauvegardesPartHtml_stored_strings");
-		if(sauvegardesPartHtml != null) {
+		sauvegardes = (List<String>)solrDocument.get("sauvegardes_stored_strings");
+		if(sauvegardes != null) {
 
-			if(sauvegardesPartHtml.contains("partHtmlCle")) {
+			if(sauvegardes.contains("partHtmlCle")) {
 				Long partHtmlCle = (Long)solrDocument.get("partHtmlCle_stored_long");
 				if(partHtmlCle != null)
 					oPartHtml.setPartHtmlCle(partHtmlCle);
@@ -3862,157 +3856,157 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 			if(designPageCles != null)
 				oPartHtml.designPageCles.addAll(designPageCles);
 
-			if(sauvegardesPartHtml.contains("htmlLien")) {
+			if(sauvegardes.contains("htmlLien")) {
 				String htmlLien = (String)solrDocument.get("htmlLien_stored_string");
 				if(htmlLien != null)
 					oPartHtml.setHtmlLien(htmlLien);
 			}
 
-			if(sauvegardesPartHtml.contains("htmlElement")) {
+			if(sauvegardes.contains("htmlElement")) {
 				String htmlElement = (String)solrDocument.get("htmlElement_stored_string");
 				if(htmlElement != null)
 					oPartHtml.setHtmlElement(htmlElement);
 			}
 
-			if(sauvegardesPartHtml.contains("htmlId")) {
+			if(sauvegardes.contains("htmlId")) {
 				String htmlId = (String)solrDocument.get("htmlId_stored_string");
 				if(htmlId != null)
 					oPartHtml.setHtmlId(htmlId);
 			}
 
-			if(sauvegardesPartHtml.contains("htmlClasses")) {
+			if(sauvegardes.contains("htmlClasses")) {
 				String htmlClasses = (String)solrDocument.get("htmlClasses_stored_string");
 				if(htmlClasses != null)
 					oPartHtml.setHtmlClasses(htmlClasses);
 			}
 
-			if(sauvegardesPartHtml.contains("htmlStyle")) {
+			if(sauvegardes.contains("htmlStyle")) {
 				String htmlStyle = (String)solrDocument.get("htmlStyle_stored_string");
 				if(htmlStyle != null)
 					oPartHtml.setHtmlStyle(htmlStyle);
 			}
 
-			if(sauvegardesPartHtml.contains("htmlAvant")) {
+			if(sauvegardes.contains("htmlAvant")) {
 				String htmlAvant = (String)solrDocument.get("htmlAvant_stored_string");
 				if(htmlAvant != null)
 					oPartHtml.setHtmlAvant(htmlAvant);
 			}
 
-			if(sauvegardesPartHtml.contains("htmlApres")) {
+			if(sauvegardes.contains("htmlApres")) {
 				String htmlApres = (String)solrDocument.get("htmlApres_stored_string");
 				if(htmlApres != null)
 					oPartHtml.setHtmlApres(htmlApres);
 			}
 
-			if(sauvegardesPartHtml.contains("htmlTexte")) {
+			if(sauvegardes.contains("htmlTexte")) {
 				String htmlTexte = (String)solrDocument.get("htmlTexte_stored_string");
 				if(htmlTexte != null)
 					oPartHtml.setHtmlTexte(htmlTexte);
 			}
 
-			if(sauvegardesPartHtml.contains("htmlVar")) {
+			if(sauvegardes.contains("htmlVar")) {
 				String htmlVar = (String)solrDocument.get("htmlVar_stored_string");
 				if(htmlVar != null)
 					oPartHtml.setHtmlVar(htmlVar);
 			}
 
-			if(sauvegardesPartHtml.contains("htmlVarSpan")) {
+			if(sauvegardes.contains("htmlVarSpan")) {
 				String htmlVarSpan = (String)solrDocument.get("htmlVarSpan_stored_string");
 				if(htmlVarSpan != null)
 					oPartHtml.setHtmlVarSpan(htmlVarSpan);
 			}
 
-			if(sauvegardesPartHtml.contains("htmlVarForm")) {
+			if(sauvegardes.contains("htmlVarForm")) {
 				String htmlVarForm = (String)solrDocument.get("htmlVarForm_stored_string");
 				if(htmlVarForm != null)
 					oPartHtml.setHtmlVarForm(htmlVarForm);
 			}
 
-			if(sauvegardesPartHtml.contains("htmlVarInput")) {
+			if(sauvegardes.contains("htmlVarInput")) {
 				String htmlVarInput = (String)solrDocument.get("htmlVarInput_stored_string");
 				if(htmlVarInput != null)
 					oPartHtml.setHtmlVarInput(htmlVarInput);
 			}
 
-			if(sauvegardesPartHtml.contains("htmlVarForEach")) {
+			if(sauvegardes.contains("htmlVarForEach")) {
 				String htmlVarForEach = (String)solrDocument.get("htmlVarForEach_stored_string");
 				if(htmlVarForEach != null)
 					oPartHtml.setHtmlVarForEach(htmlVarForEach);
 			}
 
-			if(sauvegardesPartHtml.contains("htmlExclure")) {
+			if(sauvegardes.contains("htmlExclure")) {
 				Boolean htmlExclure = (Boolean)solrDocument.get("htmlExclure_stored_boolean");
 				if(htmlExclure != null)
 					oPartHtml.setHtmlExclure(htmlExclure);
 			}
 
-			if(sauvegardesPartHtml.contains("pdfExclure")) {
+			if(sauvegardes.contains("pdfExclure")) {
 				Boolean pdfExclure = (Boolean)solrDocument.get("pdfExclure_stored_boolean");
 				if(pdfExclure != null)
 					oPartHtml.setPdfExclure(pdfExclure);
 			}
 
-			if(sauvegardesPartHtml.contains("connecterDeconnecter")) {
+			if(sauvegardes.contains("connecterDeconnecter")) {
 				Boolean connecterDeconnecter = (Boolean)solrDocument.get("connecterDeconnecter_stored_boolean");
 				if(connecterDeconnecter != null)
 					oPartHtml.setConnecterDeconnecter(connecterDeconnecter);
 			}
 
-			if(sauvegardesPartHtml.contains("tri1")) {
+			if(sauvegardes.contains("tri1")) {
 				Double tri1 = (Double)solrDocument.get("tri1_stored_double");
 				if(tri1 != null)
 					oPartHtml.setTri1(tri1);
 			}
 
-			if(sauvegardesPartHtml.contains("tri2")) {
+			if(sauvegardes.contains("tri2")) {
 				Double tri2 = (Double)solrDocument.get("tri2_stored_double");
 				if(tri2 != null)
 					oPartHtml.setTri2(tri2);
 			}
 
-			if(sauvegardesPartHtml.contains("tri3")) {
+			if(sauvegardes.contains("tri3")) {
 				Double tri3 = (Double)solrDocument.get("tri3_stored_double");
 				if(tri3 != null)
 					oPartHtml.setTri3(tri3);
 			}
 
-			if(sauvegardesPartHtml.contains("tri4")) {
+			if(sauvegardes.contains("tri4")) {
 				Double tri4 = (Double)solrDocument.get("tri4_stored_double");
 				if(tri4 != null)
 					oPartHtml.setTri4(tri4);
 			}
 
-			if(sauvegardesPartHtml.contains("tri5")) {
+			if(sauvegardes.contains("tri5")) {
 				Double tri5 = (Double)solrDocument.get("tri5_stored_double");
 				if(tri5 != null)
 					oPartHtml.setTri5(tri5);
 			}
 
-			if(sauvegardesPartHtml.contains("tri6")) {
+			if(sauvegardes.contains("tri6")) {
 				Double tri6 = (Double)solrDocument.get("tri6_stored_double");
 				if(tri6 != null)
 					oPartHtml.setTri6(tri6);
 			}
 
-			if(sauvegardesPartHtml.contains("tri7")) {
+			if(sauvegardes.contains("tri7")) {
 				Double tri7 = (Double)solrDocument.get("tri7_stored_double");
 				if(tri7 != null)
 					oPartHtml.setTri7(tri7);
 			}
 
-			if(sauvegardesPartHtml.contains("tri8")) {
+			if(sauvegardes.contains("tri8")) {
 				Double tri8 = (Double)solrDocument.get("tri8_stored_double");
 				if(tri8 != null)
 					oPartHtml.setTri8(tri8);
 			}
 
-			if(sauvegardesPartHtml.contains("tri9")) {
+			if(sauvegardes.contains("tri9")) {
 				Double tri9 = (Double)solrDocument.get("tri9_stored_double");
 				if(tri9 != null)
 					oPartHtml.setTri9(tri9);
 			}
 
-			if(sauvegardesPartHtml.contains("tri10")) {
+			if(sauvegardes.contains("tri10")) {
 				Double tri10 = (Double)solrDocument.get("tri10_stored_double");
 				if(tri10 != null)
 					oPartHtml.setTri10(tri10);
@@ -4084,9 +4078,6 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	}
 
 	public void indexerPartHtml(SolrInputDocument document) {
-		if(sauvegardesPartHtml != null)
-			document.addField("sauvegardesPartHtml_stored_strings", sauvegardesPartHtml);
-
 		if(partHtmlCle != null) {
 			document.addField("partHtmlCle_indexed_long", partHtmlCle);
 			document.addField("partHtmlCle_stored_long", partHtmlCle);

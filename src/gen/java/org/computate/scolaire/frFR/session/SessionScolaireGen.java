@@ -2650,13 +2650,13 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		switch(var) {
 			case "ageCles":
 				oSessionScolaire.addAgeCles((Long)val);
-				if(!sauvegardesSessionScolaire.contains(var))
-					sauvegardesSessionScolaire.add(var);
+				if(!sauvegardes.contains(var))
+					sauvegardes.add(var);
 				return val;
 			case "saisonCle":
 				oSessionScolaire.setSaisonCle((Long)val);
-				if(!sauvegardesSessionScolaire.contains(var))
-					sauvegardesSessionScolaire.add(var);
+				if(!sauvegardes.contains(var))
+					sauvegardes.add(var);
 				return val;
 			default:
 				return super.attribuerCluster(var, val);
@@ -2687,28 +2687,22 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 			case "ecoleAddresse":
 				if(val != null)
 					setEcoleAddresse(val);
-				sauvegardesSessionScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "sessionDateDebut":
 				if(val != null)
 					setSessionDateDebut(val);
-				sauvegardesSessionScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "sessionDateFin":
 				if(val != null)
 					setSessionDateFin(val);
-				sauvegardesSessionScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			default:
 				return super.definirCluster(var, val);
 		}
 	}
-
-	/////////////////
-	// sauvegardes //
-	/////////////////
-
-	protected List<String> sauvegardesSessionScolaire = new ArrayList<String>();
 
 	/////////////
 	// peupler //
@@ -2719,16 +2713,16 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 	}
 	public void peuplerSessionScolaire(SolrDocument solrDocument) {
 		SessionScolaire oSessionScolaire = (SessionScolaire)this;
-		sauvegardesSessionScolaire = (List<String>)solrDocument.get("sauvegardesSessionScolaire_stored_strings");
-		if(sauvegardesSessionScolaire != null) {
+		sauvegardes = (List<String>)solrDocument.get("sauvegardes_stored_strings");
+		if(sauvegardes != null) {
 
-			if(sauvegardesSessionScolaire.contains("sessionCle")) {
+			if(sauvegardes.contains("sessionCle")) {
 				Long sessionCle = (Long)solrDocument.get("sessionCle_stored_long");
 				if(sessionCle != null)
 					oSessionScolaire.setSessionCle(sessionCle);
 			}
 
-			if(sauvegardesSessionScolaire.contains("inscriptionCles")) {
+			if(sauvegardes.contains("inscriptionCles")) {
 				List<Long> inscriptionCles = (List<Long>)solrDocument.get("inscriptionCles_stored_longs");
 				if(inscriptionCles != null)
 					oSessionScolaire.inscriptionCles.addAll(inscriptionCles);
@@ -2738,31 +2732,31 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 			if(ageCles != null)
 				oSessionScolaire.ageCles.addAll(ageCles);
 
-			if(sauvegardesSessionScolaire.contains("scolaireTri")) {
+			if(sauvegardes.contains("scolaireTri")) {
 				Integer scolaireTri = (Integer)solrDocument.get("scolaireTri_stored_int");
 				if(scolaireTri != null)
 					oSessionScolaire.setScolaireTri(scolaireTri);
 			}
 
-			if(sauvegardesSessionScolaire.contains("ecoleTri")) {
+			if(sauvegardes.contains("ecoleTri")) {
 				Integer ecoleTri = (Integer)solrDocument.get("ecoleTri_stored_int");
 				if(ecoleTri != null)
 					oSessionScolaire.setEcoleTri(ecoleTri);
 			}
 
-			if(sauvegardesSessionScolaire.contains("anneeTri")) {
+			if(sauvegardes.contains("anneeTri")) {
 				Integer anneeTri = (Integer)solrDocument.get("anneeTri_stored_int");
 				if(anneeTri != null)
 					oSessionScolaire.setAnneeTri(anneeTri);
 			}
 
-			if(sauvegardesSessionScolaire.contains("saisonTri")) {
+			if(sauvegardes.contains("saisonTri")) {
 				Integer saisonTri = (Integer)solrDocument.get("saisonTri_stored_int");
 				if(saisonTri != null)
 					oSessionScolaire.setSaisonTri(saisonTri);
 			}
 
-			if(sauvegardesSessionScolaire.contains("sessionTri")) {
+			if(sauvegardes.contains("sessionTri")) {
 				Integer sessionTri = (Integer)solrDocument.get("sessionTri_stored_int");
 				if(sessionTri != null)
 					oSessionScolaire.setSessionTri(sessionTri);
@@ -2772,121 +2766,121 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 			if(saisonCle != null)
 				oSessionScolaire.setSaisonCle(saisonCle);
 
-			if(sauvegardesSessionScolaire.contains("ecoleCle")) {
+			if(sauvegardes.contains("ecoleCle")) {
 				Long ecoleCle = (Long)solrDocument.get("ecoleCle_stored_long");
 				if(ecoleCle != null)
 					oSessionScolaire.setEcoleCle(ecoleCle);
 			}
 
-			if(sauvegardesSessionScolaire.contains("anneeCle")) {
+			if(sauvegardes.contains("anneeCle")) {
 				Long anneeCle = (Long)solrDocument.get("anneeCle_stored_long");
 				if(anneeCle != null)
 					oSessionScolaire.setAnneeCle(anneeCle);
 			}
 
-			if(sauvegardesSessionScolaire.contains("ecoleNom")) {
+			if(sauvegardes.contains("ecoleNom")) {
 				String ecoleNom = (String)solrDocument.get("ecoleNom_stored_string");
 				if(ecoleNom != null)
 					oSessionScolaire.setEcoleNom(ecoleNom);
 			}
 
-			if(sauvegardesSessionScolaire.contains("ecoleNomComplet")) {
+			if(sauvegardes.contains("ecoleNomComplet")) {
 				String ecoleNomComplet = (String)solrDocument.get("ecoleNomComplet_stored_string");
 				if(ecoleNomComplet != null)
 					oSessionScolaire.setEcoleNomComplet(ecoleNomComplet);
 			}
 
-			if(sauvegardesSessionScolaire.contains("ecoleEmplacement")) {
+			if(sauvegardes.contains("ecoleEmplacement")) {
 				String ecoleEmplacement = (String)solrDocument.get("ecoleEmplacement_stored_string");
 				if(ecoleEmplacement != null)
 					oSessionScolaire.setEcoleEmplacement(ecoleEmplacement);
 			}
 
-			if(sauvegardesSessionScolaire.contains("ecoleAddresse")) {
+			if(sauvegardes.contains("ecoleAddresse")) {
 				String ecoleAddresse = (String)solrDocument.get("ecoleAddresse_stored_string");
 				if(ecoleAddresse != null)
 					oSessionScolaire.setEcoleAddresse(ecoleAddresse);
 			}
 
-			if(sauvegardesSessionScolaire.contains("ecoleNumeroTelephone")) {
+			if(sauvegardes.contains("ecoleNumeroTelephone")) {
 				String ecoleNumeroTelephone = (String)solrDocument.get("ecoleNumeroTelephone_stored_string");
 				if(ecoleNumeroTelephone != null)
 					oSessionScolaire.setEcoleNumeroTelephone(ecoleNumeroTelephone);
 			}
 
-			if(sauvegardesSessionScolaire.contains("ecoleAdministrateurNom")) {
+			if(sauvegardes.contains("ecoleAdministrateurNom")) {
 				String ecoleAdministrateurNom = (String)solrDocument.get("ecoleAdministrateurNom_stored_string");
 				if(ecoleAdministrateurNom != null)
 					oSessionScolaire.setEcoleAdministrateurNom(ecoleAdministrateurNom);
 			}
 
-			if(sauvegardesSessionScolaire.contains("anneeDebut")) {
+			if(sauvegardes.contains("anneeDebut")) {
 				Integer anneeDebut = (Integer)solrDocument.get("anneeDebut_stored_int");
 				if(anneeDebut != null)
 					oSessionScolaire.setAnneeDebut(anneeDebut);
 			}
 
-			if(sauvegardesSessionScolaire.contains("anneeFin")) {
+			if(sauvegardes.contains("anneeFin")) {
 				Integer anneeFin = (Integer)solrDocument.get("anneeFin_stored_int");
 				if(anneeFin != null)
 					oSessionScolaire.setAnneeFin(anneeFin);
 			}
 
-			if(sauvegardesSessionScolaire.contains("saisonDateDebut")) {
+			if(sauvegardes.contains("saisonDateDebut")) {
 				Date saisonDateDebut = (Date)solrDocument.get("saisonDateDebut_stored_date");
 				if(saisonDateDebut != null)
 					oSessionScolaire.setSaisonDateDebut(saisonDateDebut);
 			}
 
-			if(sauvegardesSessionScolaire.contains("saisonEte")) {
+			if(sauvegardes.contains("saisonEte")) {
 				Boolean saisonEte = (Boolean)solrDocument.get("saisonEte_stored_boolean");
 				if(saisonEte != null)
 					oSessionScolaire.setSaisonEte(saisonEte);
 			}
 
-			if(sauvegardesSessionScolaire.contains("saisonHiver")) {
+			if(sauvegardes.contains("saisonHiver")) {
 				Boolean saisonHiver = (Boolean)solrDocument.get("saisonHiver_stored_boolean");
 				if(saisonHiver != null)
 					oSessionScolaire.setSaisonHiver(saisonHiver);
 			}
 
-			if(sauvegardesSessionScolaire.contains("anneeFraisInscription")) {
+			if(sauvegardes.contains("anneeFraisInscription")) {
 				Double anneeFraisInscription = (Double)solrDocument.get("anneeFraisInscription_stored_double");
 				if(anneeFraisInscription != null)
 					oSessionScolaire.setAnneeFraisInscription(anneeFraisInscription);
 			}
 
-			if(sauvegardesSessionScolaire.contains("saisonNomCourt")) {
+			if(sauvegardes.contains("saisonNomCourt")) {
 				String saisonNomCourt = (String)solrDocument.get("saisonNomCourt_stored_string");
 				if(saisonNomCourt != null)
 					oSessionScolaire.setSaisonNomCourt(saisonNomCourt);
 			}
 
-			if(sauvegardesSessionScolaire.contains("saisonNomComplet")) {
+			if(sauvegardes.contains("saisonNomComplet")) {
 				String saisonNomComplet = (String)solrDocument.get("saisonNomComplet_stored_string");
 				if(saisonNomComplet != null)
 					oSessionScolaire.setSaisonNomComplet(saisonNomComplet);
 			}
 
-			if(sauvegardesSessionScolaire.contains("sessionDateDebut")) {
+			if(sauvegardes.contains("sessionDateDebut")) {
 				Date sessionDateDebut = (Date)solrDocument.get("sessionDateDebut_stored_date");
 				if(sessionDateDebut != null)
 					oSessionScolaire.setSessionDateDebut(sessionDateDebut);
 			}
 
-			if(sauvegardesSessionScolaire.contains("sessionDateFin")) {
+			if(sauvegardes.contains("sessionDateFin")) {
 				Date sessionDateFin = (Date)solrDocument.get("sessionDateFin_stored_date");
 				if(sessionDateFin != null)
 					oSessionScolaire.setSessionDateFin(sessionDateFin);
 			}
 
-			if(sauvegardesSessionScolaire.contains("sessionNomCourt")) {
+			if(sauvegardes.contains("sessionNomCourt")) {
 				String sessionNomCourt = (String)solrDocument.get("sessionNomCourt_stored_string");
 				if(sessionNomCourt != null)
 					oSessionScolaire.setSessionNomCourt(sessionNomCourt);
 			}
 
-			if(sauvegardesSessionScolaire.contains("sessionNomComplet")) {
+			if(sauvegardes.contains("sessionNomComplet")) {
 				String sessionNomComplet = (String)solrDocument.get("sessionNomComplet_stored_string");
 				if(sessionNomComplet != null)
 					oSessionScolaire.setSessionNomComplet(sessionNomComplet);
@@ -2958,9 +2952,6 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 	}
 
 	public void indexerSessionScolaire(SolrInputDocument document) {
-		if(sauvegardesSessionScolaire != null)
-			document.addField("sauvegardesSessionScolaire_stored_strings", sauvegardesSessionScolaire);
-
 		if(sessionCle != null) {
 			document.addField("sessionCle_indexed_long", sessionCle);
 			document.addField("sessionCle_stored_long", sessionCle);

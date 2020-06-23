@@ -5837,8 +5837,8 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		switch(var) {
 			case "inscriptionCle":
 				oPaiementScolaire.setInscriptionCle((Long)val);
-				if(!sauvegardesPaiementScolaire.contains(var))
-					sauvegardesPaiementScolaire.add(var);
+				if(!sauvegardes.contains(var))
+					sauvegardes.add(var);
 				return val;
 			default:
 				return super.attribuerCluster(var, val);
@@ -5869,138 +5869,132 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			case "enfantNomCompletPrefere":
 				if(val != null)
 					setEnfantNomCompletPrefere(val);
-				sauvegardesPaiementScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "enfantDateNaissance":
 				if(val != null)
 					setEnfantDateNaissance(val);
-				sauvegardesPaiementScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "mereNomCompletPrefere":
 				if(val != null)
 					setMereNomCompletPrefere(val);
-				sauvegardesPaiementScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "pereNomCompletPrefere":
 				if(val != null)
 					setPereNomCompletPrefere(val);
-				sauvegardesPaiementScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "inscriptionPaimentChaqueMois":
 				if(val != null)
 					setInscriptionPaimentChaqueMois(val);
-				sauvegardesPaiementScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "inscriptionPaimentComplet":
 				if(val != null)
 					setInscriptionPaimentComplet(val);
-				sauvegardesPaiementScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "paiementDescription":
 				if(val != null)
 					setPaiementDescription(val);
-				sauvegardesPaiementScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "paiementDate":
 				if(val != null)
 					setPaiementDate(val);
-				sauvegardesPaiementScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "paiementMontant":
 				if(val != null)
 					setPaiementMontant(val);
-				sauvegardesPaiementScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "paiementEspeces":
 				if(val != null)
 					setPaiementEspeces(val);
-				sauvegardesPaiementScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "paiementCheque":
 				if(val != null)
 					setPaiementCheque(val);
-				sauvegardesPaiementScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "paiementSysteme":
 				if(val != null)
 					setPaiementSysteme(val);
-				sauvegardesPaiementScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "paiementPar":
 				if(val != null)
 					setPaiementPar(val);
-				sauvegardesPaiementScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "transactionId":
 				if(val != null)
 					setTransactionId(val);
-				sauvegardesPaiementScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "customerProfileId":
 				if(val != null)
 					setCustomerProfileId(val);
-				sauvegardesPaiementScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "transactionStatus":
 				if(val != null)
 					setTransactionStatus(val);
-				sauvegardesPaiementScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "paiementRecu":
 				if(val != null)
 					setPaiementRecu(val);
-				sauvegardesPaiementScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "fraisMontant":
 				if(val != null)
 					setFraisMontant(val);
-				sauvegardesPaiementScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "fraisPremierDernier":
 				if(val != null)
 					setFraisPremierDernier(val);
-				sauvegardesPaiementScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "fraisInscription":
 				if(val != null)
 					setFraisInscription(val);
-				sauvegardesPaiementScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "fraisMois":
 				if(val != null)
 					setFraisMois(val);
-				sauvegardesPaiementScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "fraisRetard":
 				if(val != null)
 					setFraisRetard(val);
-				sauvegardesPaiementScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "fraisMontantDu":
 				if(val != null)
 					setFraisMontantDu(val);
-				sauvegardesPaiementScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "fraisMontantFuture":
 				if(val != null)
 					setFraisMontantFuture(val);
-				sauvegardesPaiementScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "paiementNomCourt":
 				if(val != null)
 					setPaiementNomCourt(val);
-				sauvegardesPaiementScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			default:
 				return super.definirCluster(var, val);
 		}
 	}
-
-	/////////////////
-	// sauvegardes //
-	/////////////////
-
-	protected List<String> sauvegardesPaiementScolaire = new ArrayList<String>();
 
 	/////////////
 	// peupler //
@@ -6011,10 +6005,10 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 	public void peuplerPaiementScolaire(SolrDocument solrDocument) {
 		PaiementScolaire oPaiementScolaire = (PaiementScolaire)this;
-		sauvegardesPaiementScolaire = (List<String>)solrDocument.get("sauvegardesPaiementScolaire_stored_strings");
-		if(sauvegardesPaiementScolaire != null) {
+		sauvegardes = (List<String>)solrDocument.get("sauvegardes_stored_strings");
+		if(sauvegardes != null) {
 
-			if(sauvegardesPaiementScolaire.contains("paiementCle")) {
+			if(sauvegardes.contains("paiementCle")) {
 				Long paiementCle = (Long)solrDocument.get("paiementCle_stored_long");
 				if(paiementCle != null)
 					oPaiementScolaire.setPaiementCle(paiementCle);
@@ -6024,325 +6018,325 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			if(inscriptionCle != null)
 				oPaiementScolaire.setInscriptionCle(inscriptionCle);
 
-			if(sauvegardesPaiementScolaire.contains("utilisateurCles")) {
+			if(sauvegardes.contains("utilisateurCles")) {
 				List<Long> utilisateurCles = (List<Long>)solrDocument.get("utilisateurCles_stored_longs");
 				if(utilisateurCles != null)
 					oPaiementScolaire.utilisateurCles.addAll(utilisateurCles);
 			}
 
-			if(sauvegardesPaiementScolaire.contains("ecoleCle")) {
+			if(sauvegardes.contains("ecoleCle")) {
 				Long ecoleCle = (Long)solrDocument.get("ecoleCle_stored_long");
 				if(ecoleCle != null)
 					oPaiementScolaire.setEcoleCle(ecoleCle);
 			}
 
-			if(sauvegardesPaiementScolaire.contains("anneeCle")) {
+			if(sauvegardes.contains("anneeCle")) {
 				Long anneeCle = (Long)solrDocument.get("anneeCle_stored_long");
 				if(anneeCle != null)
 					oPaiementScolaire.setAnneeCle(anneeCle);
 			}
 
-			if(sauvegardesPaiementScolaire.contains("saisonCle")) {
+			if(sauvegardes.contains("saisonCle")) {
 				Long saisonCle = (Long)solrDocument.get("saisonCle_stored_long");
 				if(saisonCle != null)
 					oPaiementScolaire.setSaisonCle(saisonCle);
 			}
 
-			if(sauvegardesPaiementScolaire.contains("sessionCle")) {
+			if(sauvegardes.contains("sessionCle")) {
 				Long sessionCle = (Long)solrDocument.get("sessionCle_stored_long");
 				if(sessionCle != null)
 					oPaiementScolaire.setSessionCle(sessionCle);
 			}
 
-			if(sauvegardesPaiementScolaire.contains("ageCle")) {
+			if(sauvegardes.contains("ageCle")) {
 				Long ageCle = (Long)solrDocument.get("ageCle_stored_long");
 				if(ageCle != null)
 					oPaiementScolaire.setAgeCle(ageCle);
 			}
 
-			if(sauvegardesPaiementScolaire.contains("blocCle")) {
+			if(sauvegardes.contains("blocCle")) {
 				Long blocCle = (Long)solrDocument.get("blocCle_stored_long");
 				if(blocCle != null)
 					oPaiementScolaire.setBlocCle(blocCle);
 			}
 
-			if(sauvegardesPaiementScolaire.contains("enfantCle")) {
+			if(sauvegardes.contains("enfantCle")) {
 				Long enfantCle = (Long)solrDocument.get("enfantCle_stored_long");
 				if(enfantCle != null)
 					oPaiementScolaire.setEnfantCle(enfantCle);
 			}
 
-			if(sauvegardesPaiementScolaire.contains("mereCles")) {
+			if(sauvegardes.contains("mereCles")) {
 				List<Long> mereCles = (List<Long>)solrDocument.get("mereCles_stored_longs");
 				if(mereCles != null)
 					oPaiementScolaire.mereCles.addAll(mereCles);
 			}
 
-			if(sauvegardesPaiementScolaire.contains("pereCles")) {
+			if(sauvegardes.contains("pereCles")) {
 				List<Long> pereCles = (List<Long>)solrDocument.get("pereCles_stored_longs");
 				if(pereCles != null)
 					oPaiementScolaire.pereCles.addAll(pereCles);
 			}
 
-			if(sauvegardesPaiementScolaire.contains("gardienCles")) {
+			if(sauvegardes.contains("gardienCles")) {
 				List<Long> gardienCles = (List<Long>)solrDocument.get("gardienCles_stored_longs");
 				if(gardienCles != null)
 					oPaiementScolaire.gardienCles.addAll(gardienCles);
 			}
 
-			if(sauvegardesPaiementScolaire.contains("enfantNomCompletPrefere")) {
+			if(sauvegardes.contains("enfantNomCompletPrefere")) {
 				String enfantNomCompletPrefere = (String)solrDocument.get("enfantNomCompletPrefere_stored_string");
 				if(enfantNomCompletPrefere != null)
 					oPaiementScolaire.setEnfantNomCompletPrefere(enfantNomCompletPrefere);
 			}
 
-			if(sauvegardesPaiementScolaire.contains("enfantDateNaissance")) {
+			if(sauvegardes.contains("enfantDateNaissance")) {
 				Date enfantDateNaissance = (Date)solrDocument.get("enfantDateNaissance_stored_date");
 				if(enfantDateNaissance != null)
 					oPaiementScolaire.setEnfantDateNaissance(enfantDateNaissance);
 			}
 
-			if(sauvegardesPaiementScolaire.contains("mereNomCompletPrefere")) {
+			if(sauvegardes.contains("mereNomCompletPrefere")) {
 				String mereNomCompletPrefere = (String)solrDocument.get("mereNomCompletPrefere_stored_string");
 				if(mereNomCompletPrefere != null)
 					oPaiementScolaire.setMereNomCompletPrefere(mereNomCompletPrefere);
 			}
 
-			if(sauvegardesPaiementScolaire.contains("pereNomCompletPrefere")) {
+			if(sauvegardes.contains("pereNomCompletPrefere")) {
 				String pereNomCompletPrefere = (String)solrDocument.get("pereNomCompletPrefere_stored_string");
 				if(pereNomCompletPrefere != null)
 					oPaiementScolaire.setPereNomCompletPrefere(pereNomCompletPrefere);
 			}
 
-			if(sauvegardesPaiementScolaire.contains("ecoleNom")) {
+			if(sauvegardes.contains("ecoleNom")) {
 				String ecoleNom = (String)solrDocument.get("ecoleNom_stored_string");
 				if(ecoleNom != null)
 					oPaiementScolaire.setEcoleNom(ecoleNom);
 			}
 
-			if(sauvegardesPaiementScolaire.contains("ecoleNomComplet")) {
+			if(sauvegardes.contains("ecoleNomComplet")) {
 				String ecoleNomComplet = (String)solrDocument.get("ecoleNomComplet_stored_string");
 				if(ecoleNomComplet != null)
 					oPaiementScolaire.setEcoleNomComplet(ecoleNomComplet);
 			}
 
-			if(sauvegardesPaiementScolaire.contains("ecoleEmplacement")) {
+			if(sauvegardes.contains("ecoleEmplacement")) {
 				String ecoleEmplacement = (String)solrDocument.get("ecoleEmplacement_stored_string");
 				if(ecoleEmplacement != null)
 					oPaiementScolaire.setEcoleEmplacement(ecoleEmplacement);
 			}
 
-			if(sauvegardesPaiementScolaire.contains("anneeDebut")) {
+			if(sauvegardes.contains("anneeDebut")) {
 				Integer anneeDebut = (Integer)solrDocument.get("anneeDebut_stored_int");
 				if(anneeDebut != null)
 					oPaiementScolaire.setAnneeDebut(anneeDebut);
 			}
 
-			if(sauvegardesPaiementScolaire.contains("anneeFin")) {
+			if(sauvegardes.contains("anneeFin")) {
 				Integer anneeFin = (Integer)solrDocument.get("anneeFin_stored_int");
 				if(anneeFin != null)
 					oPaiementScolaire.setAnneeFin(anneeFin);
 			}
 
-			if(sauvegardesPaiementScolaire.contains("saisonDateDebut")) {
+			if(sauvegardes.contains("saisonDateDebut")) {
 				Date saisonDateDebut = (Date)solrDocument.get("saisonDateDebut_stored_date");
 				if(saisonDateDebut != null)
 					oPaiementScolaire.setSaisonDateDebut(saisonDateDebut);
 			}
 
-			if(sauvegardesPaiementScolaire.contains("saisonEte")) {
+			if(sauvegardes.contains("saisonEte")) {
 				Boolean saisonEte = (Boolean)solrDocument.get("saisonEte_stored_boolean");
 				if(saisonEte != null)
 					oPaiementScolaire.setSaisonEte(saisonEte);
 			}
 
-			if(sauvegardesPaiementScolaire.contains("saisonHiver")) {
+			if(sauvegardes.contains("saisonHiver")) {
 				Boolean saisonHiver = (Boolean)solrDocument.get("saisonHiver_stored_boolean");
 				if(saisonHiver != null)
 					oPaiementScolaire.setSaisonHiver(saisonHiver);
 			}
 
-			if(sauvegardesPaiementScolaire.contains("anneeFraisInscription")) {
+			if(sauvegardes.contains("anneeFraisInscription")) {
 				Double anneeFraisInscription = (Double)solrDocument.get("anneeFraisInscription_stored_double");
 				if(anneeFraisInscription != null)
 					oPaiementScolaire.setAnneeFraisInscription(anneeFraisInscription);
 			}
 
-			if(sauvegardesPaiementScolaire.contains("sessionDateDebut")) {
+			if(sauvegardes.contains("sessionDateDebut")) {
 				Date sessionDateDebut = (Date)solrDocument.get("sessionDateDebut_stored_date");
 				if(sessionDateDebut != null)
 					oPaiementScolaire.setSessionDateDebut(sessionDateDebut);
 			}
 
-			if(sauvegardesPaiementScolaire.contains("sessionDateFin")) {
+			if(sauvegardes.contains("sessionDateFin")) {
 				Date sessionDateFin = (Date)solrDocument.get("sessionDateFin_stored_date");
 				if(sessionDateFin != null)
 					oPaiementScolaire.setSessionDateFin(sessionDateFin);
 			}
 
-			if(sauvegardesPaiementScolaire.contains("ageDebut")) {
+			if(sauvegardes.contains("ageDebut")) {
 				Integer ageDebut = (Integer)solrDocument.get("ageDebut_stored_int");
 				if(ageDebut != null)
 					oPaiementScolaire.setAgeDebut(ageDebut);
 			}
 
-			if(sauvegardesPaiementScolaire.contains("ageFin")) {
+			if(sauvegardes.contains("ageFin")) {
 				Integer ageFin = (Integer)solrDocument.get("ageFin_stored_int");
 				if(ageFin != null)
 					oPaiementScolaire.setAgeFin(ageFin);
 			}
 
-			if(sauvegardesPaiementScolaire.contains("blocHeureDebut")) {
+			if(sauvegardes.contains("blocHeureDebut")) {
 				String blocHeureDebut = (String)solrDocument.get("blocHeureDebut_stored_string");
 				if(blocHeureDebut != null)
 					oPaiementScolaire.setBlocHeureDebut(blocHeureDebut);
 			}
 
-			if(sauvegardesPaiementScolaire.contains("blocHeureFin")) {
+			if(sauvegardes.contains("blocHeureFin")) {
 				String blocHeureFin = (String)solrDocument.get("blocHeureFin_stored_string");
 				if(blocHeureFin != null)
 					oPaiementScolaire.setBlocHeureFin(blocHeureFin);
 			}
 
-			if(sauvegardesPaiementScolaire.contains("blocPrixParMois")) {
+			if(sauvegardes.contains("blocPrixParMois")) {
 				Double blocPrixParMois = (Double)solrDocument.get("blocPrixParMois_stored_double");
 				if(blocPrixParMois != null)
 					oPaiementScolaire.setBlocPrixParMois(blocPrixParMois);
 			}
 
-			if(sauvegardesPaiementScolaire.contains("blocPrixTotal")) {
+			if(sauvegardes.contains("blocPrixTotal")) {
 				Double blocPrixTotal = (Double)solrDocument.get("blocPrixTotal_stored_double");
 				if(blocPrixTotal != null)
 					oPaiementScolaire.setBlocPrixTotal(blocPrixTotal);
 			}
 
-			if(sauvegardesPaiementScolaire.contains("inscriptionPaimentChaqueMois")) {
+			if(sauvegardes.contains("inscriptionPaimentChaqueMois")) {
 				Boolean inscriptionPaimentChaqueMois = (Boolean)solrDocument.get("inscriptionPaimentChaqueMois_stored_boolean");
 				if(inscriptionPaimentChaqueMois != null)
 					oPaiementScolaire.setInscriptionPaimentChaqueMois(inscriptionPaimentChaqueMois);
 			}
 
-			if(sauvegardesPaiementScolaire.contains("inscriptionPaimentComplet")) {
+			if(sauvegardes.contains("inscriptionPaimentComplet")) {
 				Boolean inscriptionPaimentComplet = (Boolean)solrDocument.get("inscriptionPaimentComplet_stored_boolean");
 				if(inscriptionPaimentComplet != null)
 					oPaiementScolaire.setInscriptionPaimentComplet(inscriptionPaimentComplet);
 			}
 
-			if(sauvegardesPaiementScolaire.contains("paiementDescription")) {
+			if(sauvegardes.contains("paiementDescription")) {
 				String paiementDescription = (String)solrDocument.get("paiementDescription_stored_string");
 				if(paiementDescription != null)
 					oPaiementScolaire.setPaiementDescription(paiementDescription);
 			}
 
-			if(sauvegardesPaiementScolaire.contains("paiementDate")) {
+			if(sauvegardes.contains("paiementDate")) {
 				Date paiementDate = (Date)solrDocument.get("paiementDate_stored_date");
 				if(paiementDate != null)
 					oPaiementScolaire.setPaiementDate(paiementDate);
 			}
 
-			if(sauvegardesPaiementScolaire.contains("paiementMontant")) {
+			if(sauvegardes.contains("paiementMontant")) {
 				Double paiementMontant = (Double)solrDocument.get("paiementMontant_stored_double");
 				if(paiementMontant != null)
 					oPaiementScolaire.setPaiementMontant(paiementMontant);
 			}
 
-			if(sauvegardesPaiementScolaire.contains("paiementEspeces")) {
+			if(sauvegardes.contains("paiementEspeces")) {
 				Boolean paiementEspeces = (Boolean)solrDocument.get("paiementEspeces_stored_boolean");
 				if(paiementEspeces != null)
 					oPaiementScolaire.setPaiementEspeces(paiementEspeces);
 			}
 
-			if(sauvegardesPaiementScolaire.contains("paiementCheque")) {
+			if(sauvegardes.contains("paiementCheque")) {
 				Boolean paiementCheque = (Boolean)solrDocument.get("paiementCheque_stored_boolean");
 				if(paiementCheque != null)
 					oPaiementScolaire.setPaiementCheque(paiementCheque);
 			}
 
-			if(sauvegardesPaiementScolaire.contains("paiementSysteme")) {
+			if(sauvegardes.contains("paiementSysteme")) {
 				Boolean paiementSysteme = (Boolean)solrDocument.get("paiementSysteme_stored_boolean");
 				if(paiementSysteme != null)
 					oPaiementScolaire.setPaiementSysteme(paiementSysteme);
 			}
 
-			if(sauvegardesPaiementScolaire.contains("paiementPar")) {
+			if(sauvegardes.contains("paiementPar")) {
 				String paiementPar = (String)solrDocument.get("paiementPar_stored_string");
 				if(paiementPar != null)
 					oPaiementScolaire.setPaiementPar(paiementPar);
 			}
 
-			if(sauvegardesPaiementScolaire.contains("transactionId")) {
+			if(sauvegardes.contains("transactionId")) {
 				String transactionId = (String)solrDocument.get("transactionId_stored_string");
 				if(transactionId != null)
 					oPaiementScolaire.setTransactionId(transactionId);
 			}
 
-			if(sauvegardesPaiementScolaire.contains("customerProfileId")) {
+			if(sauvegardes.contains("customerProfileId")) {
 				String customerProfileId = (String)solrDocument.get("customerProfileId_stored_string");
 				if(customerProfileId != null)
 					oPaiementScolaire.setCustomerProfileId(customerProfileId);
 			}
 
-			if(sauvegardesPaiementScolaire.contains("transactionStatus")) {
+			if(sauvegardes.contains("transactionStatus")) {
 				String transactionStatus = (String)solrDocument.get("transactionStatus_stored_string");
 				if(transactionStatus != null)
 					oPaiementScolaire.setTransactionStatus(transactionStatus);
 			}
 
-			if(sauvegardesPaiementScolaire.contains("paiementRecu")) {
+			if(sauvegardes.contains("paiementRecu")) {
 				Boolean paiementRecu = (Boolean)solrDocument.get("paiementRecu_stored_boolean");
 				if(paiementRecu != null)
 					oPaiementScolaire.setPaiementRecu(paiementRecu);
 			}
 
-			if(sauvegardesPaiementScolaire.contains("fraisMontant")) {
+			if(sauvegardes.contains("fraisMontant")) {
 				Double fraisMontant = (Double)solrDocument.get("fraisMontant_stored_double");
 				if(fraisMontant != null)
 					oPaiementScolaire.setFraisMontant(fraisMontant);
 			}
 
-			if(sauvegardesPaiementScolaire.contains("fraisPremierDernier")) {
+			if(sauvegardes.contains("fraisPremierDernier")) {
 				Boolean fraisPremierDernier = (Boolean)solrDocument.get("fraisPremierDernier_stored_boolean");
 				if(fraisPremierDernier != null)
 					oPaiementScolaire.setFraisPremierDernier(fraisPremierDernier);
 			}
 
-			if(sauvegardesPaiementScolaire.contains("fraisInscription")) {
+			if(sauvegardes.contains("fraisInscription")) {
 				Boolean fraisInscription = (Boolean)solrDocument.get("fraisInscription_stored_boolean");
 				if(fraisInscription != null)
 					oPaiementScolaire.setFraisInscription(fraisInscription);
 			}
 
-			if(sauvegardesPaiementScolaire.contains("fraisMois")) {
+			if(sauvegardes.contains("fraisMois")) {
 				Boolean fraisMois = (Boolean)solrDocument.get("fraisMois_stored_boolean");
 				if(fraisMois != null)
 					oPaiementScolaire.setFraisMois(fraisMois);
 			}
 
-			if(sauvegardesPaiementScolaire.contains("fraisRetard")) {
+			if(sauvegardes.contains("fraisRetard")) {
 				Boolean fraisRetard = (Boolean)solrDocument.get("fraisRetard_stored_boolean");
 				if(fraisRetard != null)
 					oPaiementScolaire.setFraisRetard(fraisRetard);
 			}
 
-			if(sauvegardesPaiementScolaire.contains("fraisMontantDu")) {
+			if(sauvegardes.contains("fraisMontantDu")) {
 				Double fraisMontantDu = (Double)solrDocument.get("fraisMontantDu_stored_double");
 				if(fraisMontantDu != null)
 					oPaiementScolaire.setFraisMontantDu(fraisMontantDu);
 			}
 
-			if(sauvegardesPaiementScolaire.contains("fraisMontantFuture")) {
+			if(sauvegardes.contains("fraisMontantFuture")) {
 				Double fraisMontantFuture = (Double)solrDocument.get("fraisMontantFuture_stored_double");
 				if(fraisMontantFuture != null)
 					oPaiementScolaire.setFraisMontantFuture(fraisMontantFuture);
 			}
 
-			if(sauvegardesPaiementScolaire.contains("paiementNomCourt")) {
+			if(sauvegardes.contains("paiementNomCourt")) {
 				String paiementNomCourt = (String)solrDocument.get("paiementNomCourt_stored_string");
 				if(paiementNomCourt != null)
 					oPaiementScolaire.setPaiementNomCourt(paiementNomCourt);
 			}
 
-			if(sauvegardesPaiementScolaire.contains("paiementNomComplet")) {
+			if(sauvegardes.contains("paiementNomComplet")) {
 				String paiementNomComplet = (String)solrDocument.get("paiementNomComplet_stored_string");
 				if(paiementNomComplet != null)
 					oPaiementScolaire.setPaiementNomComplet(paiementNomComplet);
@@ -6414,9 +6408,6 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public void indexerPaiementScolaire(SolrInputDocument document) {
-		if(sauvegardesPaiementScolaire != null)
-			document.addField("sauvegardesPaiementScolaire_stored_strings", sauvegardesPaiementScolaire);
-
 		if(paiementCle != null) {
 			document.addField("paiementCle_indexed_long", paiementCle);
 			document.addField("paiementCle_stored_long", paiementCle);

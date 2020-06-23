@@ -1967,13 +1967,13 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 		switch(var) {
 			case "schoolKey":
 				oSchoolYear.setSchoolKey((Long)val);
-				if(!savesSchoolYear.contains(var))
-					savesSchoolYear.add(var);
+				if(!saves.contains(var))
+					saves.add(var);
 				return val;
 			case "seasonKeys":
 				oSchoolYear.addSeasonKeys((Long)val);
-				if(!savesSchoolYear.contains(var))
-					savesSchoolYear.add(var);
+				if(!saves.contains(var))
+					saves.add(var);
 				return val;
 			default:
 				return super.attributeCluster(var, val);
@@ -2004,28 +2004,22 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 			case "yearStart":
 				if(val != null)
 					setYearStart(val);
-				savesSchoolYear.add(var);
+				saves.add(var);
 				return val;
 			case "yearEnd":
 				if(val != null)
 					setYearEnd(val);
-				savesSchoolYear.add(var);
+				saves.add(var);
 				return val;
 			case "yearEnrollmentFee":
 				if(val != null)
 					setYearEnrollmentFee(val);
-				savesSchoolYear.add(var);
+				saves.add(var);
 				return val;
 			default:
 				return super.defineCluster(var, val);
 		}
 	}
-
-	/////////////////
-	// saves //
-	/////////////////
-
-	protected List<String> savesSchoolYear = new ArrayList<String>();
 
 	/////////////
 	// populate //
@@ -2036,20 +2030,20 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 	}
 	public void populateSchoolYear(SolrDocument solrDocument) {
 		SchoolYear oSchoolYear = (SchoolYear)this;
-		savesSchoolYear = (List<String>)solrDocument.get("savesSchoolYear_stored_strings");
-		if(savesSchoolYear != null) {
+		saves = (List<String>)solrDocument.get("saves_stored_strings");
+		if(saves != null) {
 
 			Long schoolKey = (Long)solrDocument.get("schoolKey_stored_long");
 			if(schoolKey != null)
 				oSchoolYear.setSchoolKey(schoolKey);
 
-			if(savesSchoolYear.contains("yearKey")) {
+			if(saves.contains("yearKey")) {
 				Long yearKey = (Long)solrDocument.get("yearKey_stored_long");
 				if(yearKey != null)
 					oSchoolYear.setYearKey(yearKey);
 			}
 
-			if(savesSchoolYear.contains("enrollmentKeys")) {
+			if(saves.contains("enrollmentKeys")) {
 				List<Long> enrollmentKeys = (List<Long>)solrDocument.get("enrollmentKeys_stored_longs");
 				if(enrollmentKeys != null)
 					oSchoolYear.enrollmentKeys.addAll(enrollmentKeys);
@@ -2059,91 +2053,91 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 			if(seasonKeys != null)
 				oSchoolYear.seasonKeys.addAll(seasonKeys);
 
-			if(savesSchoolYear.contains("educationSort")) {
+			if(saves.contains("educationSort")) {
 				Integer educationSort = (Integer)solrDocument.get("educationSort_stored_int");
 				if(educationSort != null)
 					oSchoolYear.setEducationSort(educationSort);
 			}
 
-			if(savesSchoolYear.contains("schoolSort")) {
+			if(saves.contains("schoolSort")) {
 				Integer schoolSort = (Integer)solrDocument.get("schoolSort_stored_int");
 				if(schoolSort != null)
 					oSchoolYear.setSchoolSort(schoolSort);
 			}
 
-			if(savesSchoolYear.contains("yearSort")) {
+			if(saves.contains("yearSort")) {
 				Integer yearSort = (Integer)solrDocument.get("yearSort_stored_int");
 				if(yearSort != null)
 					oSchoolYear.setYearSort(yearSort);
 			}
 
-			if(savesSchoolYear.contains("schoolName")) {
+			if(saves.contains("schoolName")) {
 				String schoolName = (String)solrDocument.get("schoolName_stored_string");
 				if(schoolName != null)
 					oSchoolYear.setSchoolName(schoolName);
 			}
 
-			if(savesSchoolYear.contains("schoolCompleteName")) {
+			if(saves.contains("schoolCompleteName")) {
 				String schoolCompleteName = (String)solrDocument.get("schoolCompleteName_stored_string");
 				if(schoolCompleteName != null)
 					oSchoolYear.setSchoolCompleteName(schoolCompleteName);
 			}
 
-			if(savesSchoolYear.contains("schoolLocation")) {
+			if(saves.contains("schoolLocation")) {
 				String schoolLocation = (String)solrDocument.get("schoolLocation_stored_string");
 				if(schoolLocation != null)
 					oSchoolYear.setSchoolLocation(schoolLocation);
 			}
 
-			if(savesSchoolYear.contains("schoolAddress")) {
+			if(saves.contains("schoolAddress")) {
 				String schoolAddress = (String)solrDocument.get("schoolAddress_stored_string");
 				if(schoolAddress != null)
 					oSchoolYear.setSchoolAddress(schoolAddress);
 			}
 
-			if(savesSchoolYear.contains("schoolPhoneNumber")) {
+			if(saves.contains("schoolPhoneNumber")) {
 				String schoolPhoneNumber = (String)solrDocument.get("schoolPhoneNumber_stored_string");
 				if(schoolPhoneNumber != null)
 					oSchoolYear.setSchoolPhoneNumber(schoolPhoneNumber);
 			}
 
-			if(savesSchoolYear.contains("schoolAdministratorName")) {
+			if(saves.contains("schoolAdministratorName")) {
 				String schoolAdministratorName = (String)solrDocument.get("schoolAdministratorName_stored_string");
 				if(schoolAdministratorName != null)
 					oSchoolYear.setSchoolAdministratorName(schoolAdministratorName);
 			}
 
-			if(savesSchoolYear.contains("enrollmentFormKey")) {
+			if(saves.contains("enrollmentFormKey")) {
 				Long enrollmentFormKey = (Long)solrDocument.get("enrollmentFormKey_stored_long");
 				if(enrollmentFormKey != null)
 					oSchoolYear.setEnrollmentFormKey(enrollmentFormKey);
 			}
 
-			if(savesSchoolYear.contains("yearStart")) {
+			if(saves.contains("yearStart")) {
 				Integer yearStart = (Integer)solrDocument.get("yearStart_stored_int");
 				if(yearStart != null)
 					oSchoolYear.setYearStart(yearStart);
 			}
 
-			if(savesSchoolYear.contains("yearEnd")) {
+			if(saves.contains("yearEnd")) {
 				Integer yearEnd = (Integer)solrDocument.get("yearEnd_stored_int");
 				if(yearEnd != null)
 					oSchoolYear.setYearEnd(yearEnd);
 			}
 
-			if(savesSchoolYear.contains("yearEnrollmentFee")) {
+			if(saves.contains("yearEnrollmentFee")) {
 				Double yearEnrollmentFee = (Double)solrDocument.get("yearEnrollmentFee_stored_double");
 				if(yearEnrollmentFee != null)
 					oSchoolYear.setYearEnrollmentFee(yearEnrollmentFee);
 			}
 
-			if(savesSchoolYear.contains("yearShortName")) {
+			if(saves.contains("yearShortName")) {
 				String yearShortName = (String)solrDocument.get("yearShortName_stored_string");
 				if(yearShortName != null)
 					oSchoolYear.setYearShortName(yearShortName);
 			}
 
-			if(savesSchoolYear.contains("yearCompleteName")) {
+			if(saves.contains("yearCompleteName")) {
 				String yearCompleteName = (String)solrDocument.get("yearCompleteName_stored_string");
 				if(yearCompleteName != null)
 					oSchoolYear.setYearCompleteName(yearCompleteName);
@@ -2215,9 +2209,6 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 	}
 
 	public void indexSchoolYear(SolrInputDocument document) {
-		if(savesSchoolYear != null)
-			document.addField("savesSchoolYear_stored_strings", savesSchoolYear);
-
 		if(schoolKey != null) {
 			document.addField("schoolKey_indexed_long", schoolKey);
 			document.addField("schoolKey_stored_long", schoolKey);

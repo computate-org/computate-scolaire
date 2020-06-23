@@ -1419,20 +1419,20 @@ public abstract class ClusterGen<DEV> extends Object {
 	///////////
 
 	/**	L'entité « saves »
-	 *	 is defined as null before being initialized. 
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<String>(). 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected List<String> saves;
+	protected List<String> saves = new ArrayList<String>();
 	@JsonIgnore
 	public Wrap<List<String>> savesWrap = new Wrap<List<String>>().p(this).c(List.class).var("saves").o(saves);
 
 	/**	<br/>L'entité « saves »
-	 *  est défini comme null avant d'être initialisé. 
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<String>(). 
 	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.cluster.Cluster&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:saves">Trouver l'entité saves dans Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param saves est l'entité déjà construit. 
 	 **/
-	protected abstract void _saves(Wrap<List<String>> c);
+	protected abstract void _saves(List<String> l);
 
 	public List<String> getSaves() {
 		return saves;
@@ -1463,9 +1463,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	}
 	protected Cluster savesInit() {
 		if(!savesWrap.alreadyInitialized) {
-			_saves(savesWrap);
-			if(saves == null)
-				setSaves(savesWrap.o);
+			_saves(saves);
 		}
 		savesWrap.alreadyInitialized(true);
 		return (Cluster)this;
@@ -2288,53 +2286,47 @@ public abstract class ClusterGen<DEV> extends Object {
 			case "inheritPk":
 				if(val != null)
 					setInheritPk(val);
-				savesCluster.add(var);
+				saves.add(var);
 				return val;
 			case "created":
 				if(val != null)
 					setCreated(val);
-				savesCluster.add(var);
+				saves.add(var);
 				return val;
 			case "modified":
 				if(val != null)
 					setModified(val);
-				savesCluster.add(var);
+				saves.add(var);
 				return val;
 			case "archived":
 				if(val != null)
 					setArchived(val);
-				savesCluster.add(var);
+				saves.add(var);
 				return val;
 			case "deleted":
 				if(val != null)
 					setDeleted(val);
-				savesCluster.add(var);
+				saves.add(var);
 				return val;
 			case "sessionId":
 				if(val != null)
 					setSessionId(val);
-				savesCluster.add(var);
+				saves.add(var);
 				return val;
 			case "userId":
 				if(val != null)
 					setUserId(val);
-				savesCluster.add(var);
+				saves.add(var);
 				return val;
 			case "userKey":
 				if(val != null)
 					setUserKey(val);
-				savesCluster.add(var);
+				saves.add(var);
 				return val;
 			default:
 				return null;
 		}
 	}
-
-	/////////////////
-	// saves //
-	/////////////////
-
-	protected List<String> savesCluster = new ArrayList<String>();
 
 	/////////////
 	// populate //
@@ -2345,13 +2337,13 @@ public abstract class ClusterGen<DEV> extends Object {
 	}
 	public void populateCluster(SolrDocument solrDocument) {
 		Cluster oCluster = (Cluster)this;
-		savesCluster = (List<String>)solrDocument.get("savesCluster_stored_strings");
-		if(savesCluster != null) {
+		saves = (List<String>)solrDocument.get("saves_stored_strings");
+		if(saves != null) {
 
 			Long pk = (Long)solrDocument.get("pk_stored_long");
 			oCluster.setPk(pk);
 
-			if(savesCluster.contains("inheritPk")) {
+			if(saves.contains("inheritPk")) {
 				Long inheritPk = (Long)solrDocument.get("inheritPk_stored_long");
 				if(inheritPk != null)
 					oCluster.setInheritPk(inheritPk);
@@ -2360,102 +2352,102 @@ public abstract class ClusterGen<DEV> extends Object {
 			String id = (String)solrDocument.get("id");
 			oCluster.setId(id);
 
-			if(savesCluster.contains("created")) {
+			if(saves.contains("created")) {
 				Date created = (Date)solrDocument.get("created_stored_date");
 				if(created != null)
 					oCluster.setCreated(created);
 			}
 
-			if(savesCluster.contains("modified")) {
+			if(saves.contains("modified")) {
 				Date modified = (Date)solrDocument.get("modified_stored_date");
 				if(modified != null)
 					oCluster.setModified(modified);
 			}
 
-			if(savesCluster.contains("archived")) {
+			if(saves.contains("archived")) {
 				Boolean archived = (Boolean)solrDocument.get("archived_stored_boolean");
 				if(archived != null)
 					oCluster.setArchived(archived);
 			}
 
-			if(savesCluster.contains("deleted")) {
+			if(saves.contains("deleted")) {
 				Boolean deleted = (Boolean)solrDocument.get("deleted_stored_boolean");
 				if(deleted != null)
 					oCluster.setDeleted(deleted);
 			}
 
-			if(savesCluster.contains("classCanonicalName")) {
+			if(saves.contains("classCanonicalName")) {
 				String classCanonicalName = (String)solrDocument.get("classCanonicalName_stored_string");
 				if(classCanonicalName != null)
 					oCluster.setClassCanonicalName(classCanonicalName);
 			}
 
-			if(savesCluster.contains("classSimpleName")) {
+			if(saves.contains("classSimpleName")) {
 				String classSimpleName = (String)solrDocument.get("classSimpleName_stored_string");
 				if(classSimpleName != null)
 					oCluster.setClassSimpleName(classSimpleName);
 			}
 
-			if(savesCluster.contains("classCanonicalNames")) {
+			if(saves.contains("classCanonicalNames")) {
 				List<String> classCanonicalNames = (List<String>)solrDocument.get("classCanonicalNames_stored_strings");
 				if(classCanonicalNames != null)
 					oCluster.classCanonicalNames.addAll(classCanonicalNames);
 			}
 
-			if(savesCluster.contains("sessionId")) {
+			if(saves.contains("sessionId")) {
 				String sessionId = (String)solrDocument.get("sessionId_stored_string");
 				if(sessionId != null)
 					oCluster.setSessionId(sessionId);
 			}
 
-			if(savesCluster.contains("userId")) {
+			if(saves.contains("userId")) {
 				String userId = (String)solrDocument.get("userId_stored_string");
 				if(userId != null)
 					oCluster.setUserId(userId);
 			}
 
-			if(savesCluster.contains("userKey")) {
+			if(saves.contains("userKey")) {
 				Long userKey = (Long)solrDocument.get("userKey_stored_long");
 				if(userKey != null)
 					oCluster.setUserKey(userKey);
 			}
 
-			if(savesCluster.contains("saves")) {
+			if(saves.contains("saves")) {
 				List<String> saves = (List<String>)solrDocument.get("saves_stored_strings");
 				if(saves != null)
-					oCluster.setSaves(saves);
+					oCluster.saves.addAll(saves);
 			}
 
-			if(savesCluster.contains("objectTitle")) {
+			if(saves.contains("objectTitle")) {
 				String objectTitle = (String)solrDocument.get("objectTitle_stored_string");
 				if(objectTitle != null)
 					oCluster.setObjectTitle(objectTitle);
 			}
 
-			if(savesCluster.contains("objectId")) {
+			if(saves.contains("objectId")) {
 				String objectId = (String)solrDocument.get("objectId_stored_string");
 				if(objectId != null)
 					oCluster.setObjectId(objectId);
 			}
 
-			if(savesCluster.contains("objectSuggest")) {
+			if(saves.contains("objectSuggest")) {
 				String objectSuggest = (String)solrDocument.get("objectSuggest_suggested");
 				oCluster.setObjectSuggest(objectSuggest);
 			}
 
-			if(savesCluster.contains("pageUrlId")) {
+			if(saves.contains("pageUrlId")) {
 				String pageUrlId = (String)solrDocument.get("pageUrlId_stored_string");
 				if(pageUrlId != null)
 					oCluster.setPageUrlId(pageUrlId);
 			}
 
-			if(savesCluster.contains("pageUrlPk")) {
+			if(saves.contains("pageUrlPk")) {
 				String pageUrlPk = (String)solrDocument.get("pageUrlPk_stored_string");
 				if(pageUrlPk != null)
 					oCluster.setPageUrlPk(pageUrlPk);
 			}
 
-			if(savesCluster.contains("pageUrlApi")) {
+			if(saves.contains("pageUrlApi")) {
 				String pageUrlApi = (String)solrDocument.get("pageUrlApi_stored_string");
 				if(pageUrlApi != null)
 					oCluster.setPageUrlApi(pageUrlApi);
@@ -2525,9 +2517,6 @@ public abstract class ClusterGen<DEV> extends Object {
 	}
 
 	public void indexCluster(SolrInputDocument document) {
-		if(savesCluster != null)
-			document.addField("savesCluster_stored_strings", savesCluster);
-
 		if(pk != null) {
 			document.addField("pk_indexed_long", pk);
 			document.addField("pk_stored_long", pk);
@@ -2770,7 +2759,7 @@ public abstract class ClusterGen<DEV> extends Object {
 
 		List<String> saves = (List<String>)solrDocument.get("saves_stored_strings");
 		if(saves != null)
-			oCluster.setSaves(saves);
+			oCluster.saves.addAll(saves);
 
 		String objectTitle = (String)solrDocument.get("objectTitle_stored_string");
 		if(objectTitle != null)

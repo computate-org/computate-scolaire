@@ -93,12 +93,7 @@ public class Cluster extends ClusterGen<Object> {
 	protected void _userKey(Wrap<Long> c) {
 	}
 
-	protected void _saves(Wrap<List<String>> c) {
-		try {
-			c.o((List<String>)FieldUtils.getField(getClass(), "saves" + getClass().getSimpleName(), true).get(this));
-		} catch (IllegalArgumentException | IllegalAccessException e) {
-			ExceptionUtils.rethrow(e);
-		}
+	protected void _saves(List<String> l) {
 	}
 
 	protected void _objectTitle(Wrap<String> c) {

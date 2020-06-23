@@ -4624,13 +4624,13 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 		switch(var) {
 			case "enrollmentKeys":
 				oSchoolBlock.addEnrollmentKeys((Long)val);
-				if(!savesSchoolBlock.contains(var))
-					savesSchoolBlock.add(var);
+				if(!saves.contains(var))
+					saves.add(var);
 				return val;
 			case "ageKey":
 				oSchoolBlock.setAgeKey((Long)val);
-				if(!savesSchoolBlock.contains(var))
-					savesSchoolBlock.add(var);
+				if(!saves.contains(var))
+					saves.add(var);
 				return val;
 			default:
 				return super.attributeCluster(var, val);
@@ -4661,58 +4661,52 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 			case "schoolAddress":
 				if(val != null)
 					setSchoolAddress(val);
-				savesSchoolBlock.add(var);
+				saves.add(var);
 				return val;
 			case "blockStartTime":
 				if(val != null)
 					setBlockStartTime(val);
-				savesSchoolBlock.add(var);
+				saves.add(var);
 				return val;
 			case "blockEndTime":
 				if(val != null)
 					setBlockEndTime(val);
-				savesSchoolBlock.add(var);
+				saves.add(var);
 				return val;
 			case "blockPricePerMonth":
 				if(val != null)
 					setBlockPricePerMonth(val);
-				savesSchoolBlock.add(var);
+				saves.add(var);
 				return val;
 			case "blockMonday":
 				if(val != null)
 					setBlockMonday(val);
-				savesSchoolBlock.add(var);
+				saves.add(var);
 				return val;
 			case "blockTuesday":
 				if(val != null)
 					setBlockTuesday(val);
-				savesSchoolBlock.add(var);
+				saves.add(var);
 				return val;
 			case "blockWednesday":
 				if(val != null)
 					setBlockWednesday(val);
-				savesSchoolBlock.add(var);
+				saves.add(var);
 				return val;
 			case "blockThursday":
 				if(val != null)
 					setBlockThursday(val);
-				savesSchoolBlock.add(var);
+				saves.add(var);
 				return val;
 			case "blockFriday":
 				if(val != null)
 					setBlockFriday(val);
-				savesSchoolBlock.add(var);
+				saves.add(var);
 				return val;
 			default:
 				return super.defineCluster(var, val);
 		}
 	}
-
-	/////////////////
-	// saves //
-	/////////////////
-
-	protected List<String> savesSchoolBlock = new ArrayList<String>();
 
 	/////////////
 	// populate //
@@ -4723,16 +4717,16 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 	}
 	public void populateSchoolBlock(SolrDocument solrDocument) {
 		SchoolBlock oSchoolBlock = (SchoolBlock)this;
-		savesSchoolBlock = (List<String>)solrDocument.get("savesSchoolBlock_stored_strings");
-		if(savesSchoolBlock != null) {
+		saves = (List<String>)solrDocument.get("saves_stored_strings");
+		if(saves != null) {
 
-			if(savesSchoolBlock.contains("blockKey")) {
+			if(saves.contains("blockKey")) {
 				Long blockKey = (Long)solrDocument.get("blockKey_stored_long");
 				if(blockKey != null)
 					oSchoolBlock.setBlockKey(blockKey);
 			}
 
-			if(savesSchoolBlock.contains("childKey")) {
+			if(saves.contains("childKey")) {
 				Long childKey = (Long)solrDocument.get("childKey_stored_long");
 				if(childKey != null)
 					oSchoolBlock.setChildKey(childKey);
@@ -4742,37 +4736,37 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 			if(enrollmentKeys != null)
 				oSchoolBlock.enrollmentKeys.addAll(enrollmentKeys);
 
-			if(savesSchoolBlock.contains("educationSort")) {
+			if(saves.contains("educationSort")) {
 				Integer educationSort = (Integer)solrDocument.get("educationSort_stored_int");
 				if(educationSort != null)
 					oSchoolBlock.setEducationSort(educationSort);
 			}
 
-			if(savesSchoolBlock.contains("schoolSort")) {
+			if(saves.contains("schoolSort")) {
 				Integer schoolSort = (Integer)solrDocument.get("schoolSort_stored_int");
 				if(schoolSort != null)
 					oSchoolBlock.setSchoolSort(schoolSort);
 			}
 
-			if(savesSchoolBlock.contains("yearSort")) {
+			if(saves.contains("yearSort")) {
 				Integer yearSort = (Integer)solrDocument.get("yearSort_stored_int");
 				if(yearSort != null)
 					oSchoolBlock.setYearSort(yearSort);
 			}
 
-			if(savesSchoolBlock.contains("seasonSort")) {
+			if(saves.contains("seasonSort")) {
 				Integer seasonSort = (Integer)solrDocument.get("seasonSort_stored_int");
 				if(seasonSort != null)
 					oSchoolBlock.setSeasonSort(seasonSort);
 			}
 
-			if(savesSchoolBlock.contains("sessionSort")) {
+			if(saves.contains("sessionSort")) {
 				Integer sessionSort = (Integer)solrDocument.get("sessionSort_stored_int");
 				if(sessionSort != null)
 					oSchoolBlock.setSessionSort(sessionSort);
 			}
 
-			if(savesSchoolBlock.contains("ageSort")) {
+			if(saves.contains("ageSort")) {
 				Integer ageSort = (Integer)solrDocument.get("ageSort_stored_int");
 				if(ageSort != null)
 					oSchoolBlock.setAgeSort(ageSort);
@@ -4782,229 +4776,229 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 			if(ageKey != null)
 				oSchoolBlock.setAgeKey(ageKey);
 
-			if(savesSchoolBlock.contains("schoolKey")) {
+			if(saves.contains("schoolKey")) {
 				Long schoolKey = (Long)solrDocument.get("schoolKey_stored_long");
 				if(schoolKey != null)
 					oSchoolBlock.setSchoolKey(schoolKey);
 			}
 
-			if(savesSchoolBlock.contains("yearKey")) {
+			if(saves.contains("yearKey")) {
 				Long yearKey = (Long)solrDocument.get("yearKey_stored_long");
 				if(yearKey != null)
 					oSchoolBlock.setYearKey(yearKey);
 			}
 
-			if(savesSchoolBlock.contains("seasonKey")) {
+			if(saves.contains("seasonKey")) {
 				Long seasonKey = (Long)solrDocument.get("seasonKey_stored_long");
 				if(seasonKey != null)
 					oSchoolBlock.setSeasonKey(seasonKey);
 			}
 
-			if(savesSchoolBlock.contains("sessionKey")) {
+			if(saves.contains("sessionKey")) {
 				Long sessionKey = (Long)solrDocument.get("sessionKey_stored_long");
 				if(sessionKey != null)
 					oSchoolBlock.setSessionKey(sessionKey);
 			}
 
-			if(savesSchoolBlock.contains("schoolName")) {
+			if(saves.contains("schoolName")) {
 				String schoolName = (String)solrDocument.get("schoolName_stored_string");
 				if(schoolName != null)
 					oSchoolBlock.setSchoolName(schoolName);
 			}
 
-			if(savesSchoolBlock.contains("schoolCompleteName")) {
+			if(saves.contains("schoolCompleteName")) {
 				String schoolCompleteName = (String)solrDocument.get("schoolCompleteName_stored_string");
 				if(schoolCompleteName != null)
 					oSchoolBlock.setSchoolCompleteName(schoolCompleteName);
 			}
 
-			if(savesSchoolBlock.contains("schoolLocation")) {
+			if(saves.contains("schoolLocation")) {
 				String schoolLocation = (String)solrDocument.get("schoolLocation_stored_string");
 				if(schoolLocation != null)
 					oSchoolBlock.setSchoolLocation(schoolLocation);
 			}
 
-			if(savesSchoolBlock.contains("schoolAddress")) {
+			if(saves.contains("schoolAddress")) {
 				String schoolAddress = (String)solrDocument.get("schoolAddress_stored_string");
 				if(schoolAddress != null)
 					oSchoolBlock.setSchoolAddress(schoolAddress);
 			}
 
-			if(savesSchoolBlock.contains("schoolPhoneNumber")) {
+			if(saves.contains("schoolPhoneNumber")) {
 				String schoolPhoneNumber = (String)solrDocument.get("schoolPhoneNumber_stored_string");
 				if(schoolPhoneNumber != null)
 					oSchoolBlock.setSchoolPhoneNumber(schoolPhoneNumber);
 			}
 
-			if(savesSchoolBlock.contains("schoolAdministratorName")) {
+			if(saves.contains("schoolAdministratorName")) {
 				String schoolAdministratorName = (String)solrDocument.get("schoolAdministratorName_stored_string");
 				if(schoolAdministratorName != null)
 					oSchoolBlock.setSchoolAdministratorName(schoolAdministratorName);
 			}
 
-			if(savesSchoolBlock.contains("yearStart")) {
+			if(saves.contains("yearStart")) {
 				Integer yearStart = (Integer)solrDocument.get("yearStart_stored_int");
 				if(yearStart != null)
 					oSchoolBlock.setYearStart(yearStart);
 			}
 
-			if(savesSchoolBlock.contains("yearEnd")) {
+			if(saves.contains("yearEnd")) {
 				Integer yearEnd = (Integer)solrDocument.get("yearEnd_stored_int");
 				if(yearEnd != null)
 					oSchoolBlock.setYearEnd(yearEnd);
 			}
 
-			if(savesSchoolBlock.contains("seasonStartDate")) {
+			if(saves.contains("seasonStartDate")) {
 				Date seasonStartDate = (Date)solrDocument.get("seasonStartDate_stored_date");
 				if(seasonStartDate != null)
 					oSchoolBlock.setSeasonStartDate(seasonStartDate);
 			}
 
-			if(savesSchoolBlock.contains("seasonSummer")) {
+			if(saves.contains("seasonSummer")) {
 				Boolean seasonSummer = (Boolean)solrDocument.get("seasonSummer_stored_boolean");
 				if(seasonSummer != null)
 					oSchoolBlock.setSeasonSummer(seasonSummer);
 			}
 
-			if(savesSchoolBlock.contains("seasonWinter")) {
+			if(saves.contains("seasonWinter")) {
 				Boolean seasonWinter = (Boolean)solrDocument.get("seasonWinter_stored_boolean");
 				if(seasonWinter != null)
 					oSchoolBlock.setSeasonWinter(seasonWinter);
 			}
 
-			if(savesSchoolBlock.contains("yearEnrollmentFee")) {
+			if(saves.contains("yearEnrollmentFee")) {
 				Double yearEnrollmentFee = (Double)solrDocument.get("yearEnrollmentFee_stored_double");
 				if(yearEnrollmentFee != null)
 					oSchoolBlock.setYearEnrollmentFee(yearEnrollmentFee);
 			}
 
-			if(savesSchoolBlock.contains("seasonShortName")) {
+			if(saves.contains("seasonShortName")) {
 				String seasonShortName = (String)solrDocument.get("seasonShortName_stored_string");
 				if(seasonShortName != null)
 					oSchoolBlock.setSeasonShortName(seasonShortName);
 			}
 
-			if(savesSchoolBlock.contains("seasonCompleteName")) {
+			if(saves.contains("seasonCompleteName")) {
 				String seasonCompleteName = (String)solrDocument.get("seasonCompleteName_stored_string");
 				if(seasonCompleteName != null)
 					oSchoolBlock.setSeasonCompleteName(seasonCompleteName);
 			}
 
-			if(savesSchoolBlock.contains("sessionStartDate")) {
+			if(saves.contains("sessionStartDate")) {
 				Date sessionStartDate = (Date)solrDocument.get("sessionStartDate_stored_date");
 				if(sessionStartDate != null)
 					oSchoolBlock.setSessionStartDate(sessionStartDate);
 			}
 
-			if(savesSchoolBlock.contains("sessionEndDate")) {
+			if(saves.contains("sessionEndDate")) {
 				Date sessionEndDate = (Date)solrDocument.get("sessionEndDate_stored_date");
 				if(sessionEndDate != null)
 					oSchoolBlock.setSessionEndDate(sessionEndDate);
 			}
 
-			if(savesSchoolBlock.contains("ageShortName")) {
+			if(saves.contains("ageShortName")) {
 				String ageShortName = (String)solrDocument.get("ageShortName_stored_string");
 				if(ageShortName != null)
 					oSchoolBlock.setAgeShortName(ageShortName);
 			}
 
-			if(savesSchoolBlock.contains("ageCompleteName")) {
+			if(saves.contains("ageCompleteName")) {
 				String ageCompleteName = (String)solrDocument.get("ageCompleteName_stored_string");
 				if(ageCompleteName != null)
 					oSchoolBlock.setAgeCompleteName(ageCompleteName);
 			}
 
-			if(savesSchoolBlock.contains("ageStart")) {
+			if(saves.contains("ageStart")) {
 				Integer ageStart = (Integer)solrDocument.get("ageStart_stored_int");
 				if(ageStart != null)
 					oSchoolBlock.setAgeStart(ageStart);
 			}
 
-			if(savesSchoolBlock.contains("ageEnd")) {
+			if(saves.contains("ageEnd")) {
 				Integer ageEnd = (Integer)solrDocument.get("ageEnd_stored_int");
 				if(ageEnd != null)
 					oSchoolBlock.setAgeEnd(ageEnd);
 			}
 
-			if(savesSchoolBlock.contains("blockStartTime")) {
+			if(saves.contains("blockStartTime")) {
 				String blockStartTime = (String)solrDocument.get("blockStartTime_stored_string");
 				if(blockStartTime != null)
 					oSchoolBlock.setBlockStartTime(blockStartTime);
 			}
 
-			if(savesSchoolBlock.contains("blockEndTime")) {
+			if(saves.contains("blockEndTime")) {
 				String blockEndTime = (String)solrDocument.get("blockEndTime_stored_string");
 				if(blockEndTime != null)
 					oSchoolBlock.setBlockEndTime(blockEndTime);
 			}
 
-			if(savesSchoolBlock.contains("blockPricePerMonth")) {
+			if(saves.contains("blockPricePerMonth")) {
 				Double blockPricePerMonth = (Double)solrDocument.get("blockPricePerMonth_stored_double");
 				if(blockPricePerMonth != null)
 					oSchoolBlock.setBlockPricePerMonth(blockPricePerMonth);
 			}
 
-			if(savesSchoolBlock.contains("blockSunday")) {
+			if(saves.contains("blockSunday")) {
 				Boolean blockSunday = (Boolean)solrDocument.get("blockSunday_stored_boolean");
 				if(blockSunday != null)
 					oSchoolBlock.setBlockSunday(blockSunday);
 			}
 
-			if(savesSchoolBlock.contains("blockMonday")) {
+			if(saves.contains("blockMonday")) {
 				Boolean blockMonday = (Boolean)solrDocument.get("blockMonday_stored_boolean");
 				if(blockMonday != null)
 					oSchoolBlock.setBlockMonday(blockMonday);
 			}
 
-			if(savesSchoolBlock.contains("blockTuesday")) {
+			if(saves.contains("blockTuesday")) {
 				Boolean blockTuesday = (Boolean)solrDocument.get("blockTuesday_stored_boolean");
 				if(blockTuesday != null)
 					oSchoolBlock.setBlockTuesday(blockTuesday);
 			}
 
-			if(savesSchoolBlock.contains("blockWednesday")) {
+			if(saves.contains("blockWednesday")) {
 				Boolean blockWednesday = (Boolean)solrDocument.get("blockWednesday_stored_boolean");
 				if(blockWednesday != null)
 					oSchoolBlock.setBlockWednesday(blockWednesday);
 			}
 
-			if(savesSchoolBlock.contains("blockThursday")) {
+			if(saves.contains("blockThursday")) {
 				Boolean blockThursday = (Boolean)solrDocument.get("blockThursday_stored_boolean");
 				if(blockThursday != null)
 					oSchoolBlock.setBlockThursday(blockThursday);
 			}
 
-			if(savesSchoolBlock.contains("blockFriday")) {
+			if(saves.contains("blockFriday")) {
 				Boolean blockFriday = (Boolean)solrDocument.get("blockFriday_stored_boolean");
 				if(blockFriday != null)
 					oSchoolBlock.setBlockFriday(blockFriday);
 			}
 
-			if(savesSchoolBlock.contains("blockSaturday")) {
+			if(saves.contains("blockSaturday")) {
 				Boolean blockSaturday = (Boolean)solrDocument.get("blockSaturday_stored_boolean");
 				if(blockSaturday != null)
 					oSchoolBlock.setBlockSaturday(blockSaturday);
 			}
 
-			if(savesSchoolBlock.contains("blockTotalPrice")) {
+			if(saves.contains("blockTotalPrice")) {
 				Double blockTotalPrice = (Double)solrDocument.get("blockTotalPrice_stored_double");
 				if(blockTotalPrice != null)
 					oSchoolBlock.setBlockTotalPrice(blockTotalPrice);
 			}
 
-			if(savesSchoolBlock.contains("blockShortName")) {
+			if(saves.contains("blockShortName")) {
 				String blockShortName = (String)solrDocument.get("blockShortName_stored_string");
 				if(blockShortName != null)
 					oSchoolBlock.setBlockShortName(blockShortName);
 			}
 
-			if(savesSchoolBlock.contains("blockAdminName")) {
+			if(saves.contains("blockAdminName")) {
 				String blockAdminName = (String)solrDocument.get("blockAdminName_stored_string");
 				if(blockAdminName != null)
 					oSchoolBlock.setBlockAdminName(blockAdminName);
 			}
 
-			if(savesSchoolBlock.contains("blockCompleteName")) {
+			if(saves.contains("blockCompleteName")) {
 				String blockCompleteName = (String)solrDocument.get("blockCompleteName_stored_string");
 				if(blockCompleteName != null)
 					oSchoolBlock.setBlockCompleteName(blockCompleteName);
@@ -5076,9 +5070,6 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 	}
 
 	public void indexSchoolBlock(SolrInputDocument document) {
-		if(savesSchoolBlock != null)
-			document.addField("savesSchoolBlock_stored_strings", savesSchoolBlock);
-
 		if(blockKey != null) {
 			document.addField("blockKey_indexed_long", blockKey);
 			document.addField("blockKey_stored_long", blockKey);

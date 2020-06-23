@@ -913,18 +913,18 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 		switch(var) {
 			case "childDesignKeys":
 				oPageDesign.addChildDesignKeys((Long)val);
-				if(!savesPageDesign.contains(var))
-					savesPageDesign.add(var);
+				if(!saves.contains(var))
+					saves.add(var);
 				return val;
 			case "parentDesignKeys":
 				oPageDesign.addParentDesignKeys((Long)val);
-				if(!savesPageDesign.contains(var))
-					savesPageDesign.add(var);
+				if(!saves.contains(var))
+					saves.add(var);
 				return val;
 			case "htmlPartKeys":
 				oPageDesign.addHtmlPartKeys((Long)val);
-				if(!savesPageDesign.contains(var))
-					savesPageDesign.add(var);
+				if(!saves.contains(var))
+					saves.add(var);
 				return val;
 			default:
 				return super.attributeCluster(var, val);
@@ -955,23 +955,17 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 			case "pageDesignCompleteName":
 				if(val != null)
 					setPageDesignCompleteName(val);
-				savesPageDesign.add(var);
+				saves.add(var);
 				return val;
 			case "designHidden":
 				if(val != null)
 					setDesignHidden(val);
-				savesPageDesign.add(var);
+				saves.add(var);
 				return val;
 			default:
 				return super.defineCluster(var, val);
 		}
 	}
-
-	/////////////////
-	// saves //
-	/////////////////
-
-	protected List<String> savesPageDesign = new ArrayList<String>();
 
 	/////////////
 	// populate //
@@ -982,10 +976,10 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 	}
 	public void populatePageDesign(SolrDocument solrDocument) {
 		PageDesign oPageDesign = (PageDesign)this;
-		savesPageDesign = (List<String>)solrDocument.get("savesPageDesign_stored_strings");
-		if(savesPageDesign != null) {
+		saves = (List<String>)solrDocument.get("saves_stored_strings");
+		if(saves != null) {
 
-			if(savesPageDesign.contains("pageDesignKey")) {
+			if(saves.contains("pageDesignKey")) {
 				Long pageDesignKey = (Long)solrDocument.get("pageDesignKey_stored_long");
 				if(pageDesignKey != null)
 					oPageDesign.setPageDesignKey(pageDesignKey);
@@ -1003,13 +997,13 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 			if(htmlPartKeys != null)
 				oPageDesign.htmlPartKeys.addAll(htmlPartKeys);
 
-			if(savesPageDesign.contains("pageDesignCompleteName")) {
+			if(saves.contains("pageDesignCompleteName")) {
 				String pageDesignCompleteName = (String)solrDocument.get("pageDesignCompleteName_stored_string");
 				if(pageDesignCompleteName != null)
 					oPageDesign.setPageDesignCompleteName(pageDesignCompleteName);
 			}
 
-			if(savesPageDesign.contains("designHidden")) {
+			if(saves.contains("designHidden")) {
 				Boolean designHidden = (Boolean)solrDocument.get("designHidden_stored_boolean");
 				if(designHidden != null)
 					oPageDesign.setDesignHidden(designHidden);
@@ -1081,9 +1075,6 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 	}
 
 	public void indexPageDesign(SolrInputDocument document) {
-		if(savesPageDesign != null)
-			document.addField("savesPageDesign_stored_strings", savesPageDesign);
-
 		if(pageDesignKey != null) {
 			document.addField("pageDesignKey_indexed_long", pageDesignKey);
 			document.addField("pageDesignKey_stored_long", pageDesignKey);

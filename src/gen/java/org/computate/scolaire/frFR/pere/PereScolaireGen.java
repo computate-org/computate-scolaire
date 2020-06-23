@@ -2979,8 +2979,8 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 		switch(var) {
 			case "inscriptionCles":
 				oPereScolaire.addInscriptionCles((Long)val);
-				if(!sauvegardesPereScolaire.contains(var))
-					sauvegardesPereScolaire.add(var);
+				if(!sauvegardes.contains(var))
+					sauvegardes.add(var);
 				return val;
 			default:
 				return super.attribuerCluster(var, val);
@@ -3011,68 +3011,62 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 			case "personnePrenom":
 				if(val != null)
 					setPersonnePrenom(val);
-				sauvegardesPereScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "personnePrenomPrefere":
 				if(val != null)
 					setPersonnePrenomPrefere(val);
-				sauvegardesPereScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "familleNom":
 				if(val != null)
 					setFamilleNom(val);
-				sauvegardesPereScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "personneOccupation":
 				if(val != null)
 					setPersonneOccupation(val);
-				sauvegardesPereScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "personneNumeroTelephone":
 				if(val != null)
 					setPersonneNumeroTelephone(val);
-				sauvegardesPereScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "personneMail":
 				if(val != null)
 					setPersonneMail(val);
-				sauvegardesPereScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "personneSms":
 				if(val != null)
 					setPersonneSms(val);
-				sauvegardesPereScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "personneRecevoirMail":
 				if(val != null)
 					setPersonneRecevoirMail(val);
-				sauvegardesPereScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "personneContactUrgence":
 				if(val != null)
 					setPersonneContactUrgence(val);
-				sauvegardesPereScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "personneChercher":
 				if(val != null)
 					setPersonneChercher(val);
-				sauvegardesPereScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "photo":
 				if(val != null)
 					setPhoto(val);
-				sauvegardesPereScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			default:
 				return super.definirCluster(var, val);
 		}
 	}
-
-	/////////////////
-	// sauvegardes //
-	/////////////////
-
-	protected List<String> sauvegardesPereScolaire = new ArrayList<String>();
 
 	/////////////
 	// peupler //
@@ -3083,10 +3077,10 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 	}
 	public void peuplerPereScolaire(SolrDocument solrDocument) {
 		PereScolaire oPereScolaire = (PereScolaire)this;
-		sauvegardesPereScolaire = (List<String>)solrDocument.get("sauvegardesPereScolaire_stored_strings");
-		if(sauvegardesPereScolaire != null) {
+		sauvegardes = (List<String>)solrDocument.get("sauvegardes_stored_strings");
+		if(sauvegardes != null) {
 
-			if(sauvegardesPereScolaire.contains("pereCle")) {
+			if(sauvegardes.contains("pereCle")) {
 				Long pereCle = (Long)solrDocument.get("pereCle_stored_long");
 				if(pereCle != null)
 					oPereScolaire.setPereCle(pereCle);
@@ -3096,145 +3090,145 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 			if(inscriptionCles != null)
 				oPereScolaire.inscriptionCles.addAll(inscriptionCles);
 
-			if(sauvegardesPereScolaire.contains("familleTri")) {
+			if(sauvegardes.contains("familleTri")) {
 				Integer familleTri = (Integer)solrDocument.get("familleTri_stored_int");
 				if(familleTri != null)
 					oPereScolaire.setFamilleTri(familleTri);
 			}
 
-			if(sauvegardesPereScolaire.contains("pereTri")) {
+			if(sauvegardes.contains("pereTri")) {
 				Integer pereTri = (Integer)solrDocument.get("pereTri_stored_int");
 				if(pereTri != null)
 					oPereScolaire.setPereTri(pereTri);
 			}
 
-			if(sauvegardesPereScolaire.contains("utilisateurCles")) {
+			if(sauvegardes.contains("utilisateurCles")) {
 				List<Long> utilisateurCles = (List<Long>)solrDocument.get("utilisateurCles_stored_longs");
 				if(utilisateurCles != null)
 					oPereScolaire.utilisateurCles.addAll(utilisateurCles);
 			}
 
-			if(sauvegardesPereScolaire.contains("ecoleCles")) {
+			if(sauvegardes.contains("ecoleCles")) {
 				List<Long> ecoleCles = (List<Long>)solrDocument.get("ecoleCles_stored_longs");
 				if(ecoleCles != null)
 					oPereScolaire.ecoleCles.addAll(ecoleCles);
 			}
 
-			if(sauvegardesPereScolaire.contains("anneeCles")) {
+			if(sauvegardes.contains("anneeCles")) {
 				List<Long> anneeCles = (List<Long>)solrDocument.get("anneeCles_stored_longs");
 				if(anneeCles != null)
 					oPereScolaire.anneeCles.addAll(anneeCles);
 			}
 
-			if(sauvegardesPereScolaire.contains("saisonCles")) {
+			if(sauvegardes.contains("saisonCles")) {
 				List<Long> saisonCles = (List<Long>)solrDocument.get("saisonCles_stored_longs");
 				if(saisonCles != null)
 					oPereScolaire.saisonCles.addAll(saisonCles);
 			}
 
-			if(sauvegardesPereScolaire.contains("sessionCles")) {
+			if(sauvegardes.contains("sessionCles")) {
 				List<Long> sessionCles = (List<Long>)solrDocument.get("sessionCles_stored_longs");
 				if(sessionCles != null)
 					oPereScolaire.sessionCles.addAll(sessionCles);
 			}
 
-			if(sauvegardesPereScolaire.contains("ageCles")) {
+			if(sauvegardes.contains("ageCles")) {
 				List<Long> ageCles = (List<Long>)solrDocument.get("ageCles_stored_longs");
 				if(ageCles != null)
 					oPereScolaire.ageCles.addAll(ageCles);
 			}
 
-			if(sauvegardesPereScolaire.contains("personnePrenom")) {
+			if(sauvegardes.contains("personnePrenom")) {
 				String personnePrenom = (String)solrDocument.get("personnePrenom_stored_string");
 				if(personnePrenom != null)
 					oPereScolaire.setPersonnePrenom(personnePrenom);
 			}
 
-			if(sauvegardesPereScolaire.contains("personnePrenomPrefere")) {
+			if(sauvegardes.contains("personnePrenomPrefere")) {
 				String personnePrenomPrefere = (String)solrDocument.get("personnePrenomPrefere_stored_string");
 				if(personnePrenomPrefere != null)
 					oPereScolaire.setPersonnePrenomPrefere(personnePrenomPrefere);
 			}
 
-			if(sauvegardesPereScolaire.contains("familleNom")) {
+			if(sauvegardes.contains("familleNom")) {
 				String familleNom = (String)solrDocument.get("familleNom_stored_string");
 				if(familleNom != null)
 					oPereScolaire.setFamilleNom(familleNom);
 			}
 
-			if(sauvegardesPereScolaire.contains("personneNomComplet")) {
+			if(sauvegardes.contains("personneNomComplet")) {
 				String personneNomComplet = (String)solrDocument.get("personneNomComplet_stored_string");
 				if(personneNomComplet != null)
 					oPereScolaire.setPersonneNomComplet(personneNomComplet);
 			}
 
-			if(sauvegardesPereScolaire.contains("personneNomCompletPrefere")) {
+			if(sauvegardes.contains("personneNomCompletPrefere")) {
 				String personneNomCompletPrefere = (String)solrDocument.get("personneNomCompletPrefere_stored_string");
 				if(personneNomCompletPrefere != null)
 					oPereScolaire.setPersonneNomCompletPrefere(personneNomCompletPrefere);
 			}
 
-			if(sauvegardesPereScolaire.contains("personneNomFormel")) {
+			if(sauvegardes.contains("personneNomFormel")) {
 				String personneNomFormel = (String)solrDocument.get("personneNomFormel_stored_string");
 				if(personneNomFormel != null)
 					oPereScolaire.setPersonneNomFormel(personneNomFormel);
 			}
 
-			if(sauvegardesPereScolaire.contains("personneOccupation")) {
+			if(sauvegardes.contains("personneOccupation")) {
 				String personneOccupation = (String)solrDocument.get("personneOccupation_stored_string");
 				if(personneOccupation != null)
 					oPereScolaire.setPersonneOccupation(personneOccupation);
 			}
 
-			if(sauvegardesPereScolaire.contains("personneNumeroTelephone")) {
+			if(sauvegardes.contains("personneNumeroTelephone")) {
 				String personneNumeroTelephone = (String)solrDocument.get("personneNumeroTelephone_stored_string");
 				if(personneNumeroTelephone != null)
 					oPereScolaire.setPersonneNumeroTelephone(personneNumeroTelephone);
 			}
 
-			if(sauvegardesPereScolaire.contains("personneMail")) {
+			if(sauvegardes.contains("personneMail")) {
 				String personneMail = (String)solrDocument.get("personneMail_stored_string");
 				if(personneMail != null)
 					oPereScolaire.setPersonneMail(personneMail);
 			}
 
-			if(sauvegardesPereScolaire.contains("personneRelation")) {
+			if(sauvegardes.contains("personneRelation")) {
 				String personneRelation = (String)solrDocument.get("personneRelation_stored_string");
 				if(personneRelation != null)
 					oPereScolaire.setPersonneRelation(personneRelation);
 			}
 
-			if(sauvegardesPereScolaire.contains("personneSms")) {
+			if(sauvegardes.contains("personneSms")) {
 				Boolean personneSms = (Boolean)solrDocument.get("personneSms_stored_boolean");
 				if(personneSms != null)
 					oPereScolaire.setPersonneSms(personneSms);
 			}
 
-			if(sauvegardesPereScolaire.contains("personneRecevoirMail")) {
+			if(sauvegardes.contains("personneRecevoirMail")) {
 				Boolean personneRecevoirMail = (Boolean)solrDocument.get("personneRecevoirMail_stored_boolean");
 				if(personneRecevoirMail != null)
 					oPereScolaire.setPersonneRecevoirMail(personneRecevoirMail);
 			}
 
-			if(sauvegardesPereScolaire.contains("personneContactUrgence")) {
+			if(sauvegardes.contains("personneContactUrgence")) {
 				Boolean personneContactUrgence = (Boolean)solrDocument.get("personneContactUrgence_stored_boolean");
 				if(personneContactUrgence != null)
 					oPereScolaire.setPersonneContactUrgence(personneContactUrgence);
 			}
 
-			if(sauvegardesPereScolaire.contains("personneChercher")) {
+			if(sauvegardes.contains("personneChercher")) {
 				Boolean personneChercher = (Boolean)solrDocument.get("personneChercher_stored_boolean");
 				if(personneChercher != null)
 					oPereScolaire.setPersonneChercher(personneChercher);
 			}
 
-			if(sauvegardesPereScolaire.contains("photo")) {
+			if(sauvegardes.contains("photo")) {
 				String photo = (String)solrDocument.get("photo_stored_string");
 				if(photo != null)
 					oPereScolaire.setPhoto(photo);
 			}
 
-			if(sauvegardesPereScolaire.contains("pereNomComplet")) {
+			if(sauvegardes.contains("pereNomComplet")) {
 				String pereNomComplet = (String)solrDocument.get("pereNomComplet_stored_string");
 				if(pereNomComplet != null)
 					oPereScolaire.setPereNomComplet(pereNomComplet);
@@ -3306,9 +3300,6 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 	}
 
 	public void indexerPereScolaire(SolrInputDocument document) {
-		if(sauvegardesPereScolaire != null)
-			document.addField("sauvegardesPereScolaire_stored_strings", sauvegardesPereScolaire);
-
 		if(pereCle != null) {
 			document.addField("pereCle_indexed_long", pereCle);
 			document.addField("pereCle_stored_long", pereCle);

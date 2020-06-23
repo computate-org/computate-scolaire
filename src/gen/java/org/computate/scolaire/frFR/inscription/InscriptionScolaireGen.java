@@ -13170,43 +13170,43 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		switch(var) {
 			case "anneeCle":
 				oInscriptionScolaire.setAnneeCle((Long)val);
-				if(!sauvegardesInscriptionScolaire.contains(var))
-					sauvegardesInscriptionScolaire.add(var);
+				if(!sauvegardes.contains(var))
+					sauvegardes.add(var);
 				return val;
 			case "blocCles":
 				oInscriptionScolaire.addBlocCles((Long)val);
-				if(!sauvegardesInscriptionScolaire.contains(var))
-					sauvegardesInscriptionScolaire.add(var);
+				if(!sauvegardes.contains(var))
+					sauvegardes.add(var);
 				return val;
 			case "enfantCle":
 				oInscriptionScolaire.setEnfantCle((Long)val);
-				if(!sauvegardesInscriptionScolaire.contains(var))
-					sauvegardesInscriptionScolaire.add(var);
+				if(!sauvegardes.contains(var))
+					sauvegardes.add(var);
 				return val;
 			case "mereCles":
 				oInscriptionScolaire.addMereCles((Long)val);
-				if(!sauvegardesInscriptionScolaire.contains(var))
-					sauvegardesInscriptionScolaire.add(var);
+				if(!sauvegardes.contains(var))
+					sauvegardes.add(var);
 				return val;
 			case "pereCles":
 				oInscriptionScolaire.addPereCles((Long)val);
-				if(!sauvegardesInscriptionScolaire.contains(var))
-					sauvegardesInscriptionScolaire.add(var);
+				if(!sauvegardes.contains(var))
+					sauvegardes.add(var);
 				return val;
 			case "gardienCles":
 				oInscriptionScolaire.addGardienCles((Long)val);
-				if(!sauvegardesInscriptionScolaire.contains(var))
-					sauvegardesInscriptionScolaire.add(var);
+				if(!sauvegardes.contains(var))
+					sauvegardes.add(var);
 				return val;
 			case "paiementCles":
 				oInscriptionScolaire.addPaiementCles((Long)val);
-				if(!sauvegardesInscriptionScolaire.contains(var))
-					sauvegardesInscriptionScolaire.add(var);
+				if(!sauvegardes.contains(var))
+					sauvegardes.add(var);
 				return val;
 			case "utilisateurCles":
 				oInscriptionScolaire.addUtilisateurCles((Long)val);
-				if(!sauvegardesInscriptionScolaire.contains(var))
-					sauvegardesInscriptionScolaire.add(var);
+				if(!sauvegardes.contains(var))
+					sauvegardes.add(var);
 				return val;
 			default:
 				return super.attribuerCluster(var, val);
@@ -13237,228 +13237,222 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			case "enfantNomComplet":
 				if(val != null)
 					setEnfantNomComplet(val);
-				sauvegardesInscriptionScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "enfantNomCompletPrefere":
 				if(val != null)
 					setEnfantNomCompletPrefere(val);
-				sauvegardesInscriptionScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "enfantDateNaissance":
 				if(val != null)
 					setEnfantDateNaissance(val);
-				sauvegardesInscriptionScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "ecoleAddresse":
 				if(val != null)
 					setEcoleAddresse(val);
-				sauvegardesInscriptionScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "inscriptionApprouve":
 				if(val != null)
 					setInscriptionApprouve(val);
-				sauvegardesInscriptionScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "inscriptionImmunisations":
 				if(val != null)
 					setInscriptionImmunisations(val);
-				sauvegardesInscriptionScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "familleMarie":
 				if(val != null)
 					setFamilleMarie(val);
-				sauvegardesInscriptionScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "familleSepare":
 				if(val != null)
 					setFamilleSepare(val);
-				sauvegardesInscriptionScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "familleDivorce":
 				if(val != null)
 					setFamilleDivorce(val);
-				sauvegardesInscriptionScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "familleAddresse":
 				if(val != null)
 					setFamilleAddresse(val);
-				sauvegardesInscriptionScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "familleCommentVousConnaissezEcole":
 				if(val != null)
 					setFamilleCommentVousConnaissezEcole(val);
-				sauvegardesInscriptionScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "inscriptionConsiderationsSpeciales":
 				if(val != null)
 					setInscriptionConsiderationsSpeciales(val);
-				sauvegardesInscriptionScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "enfantConditionsMedicales":
 				if(val != null)
 					setEnfantConditionsMedicales(val);
-				sauvegardesInscriptionScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "enfantEcolesPrecedemmentFrequentees":
 				if(val != null)
 					setEnfantEcolesPrecedemmentFrequentees(val);
-				sauvegardesInscriptionScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "enfantDescription":
 				if(val != null)
 					setEnfantDescription(val);
-				sauvegardesInscriptionScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "enfantObjectifs":
 				if(val != null)
 					setEnfantObjectifs(val);
-				sauvegardesInscriptionScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "enfantPropre":
 				if(val != null)
 					setEnfantPropre(val);
-				sauvegardesInscriptionScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "inscriptionNomGroupe":
 				if(val != null)
 					setInscriptionNomGroupe(val);
-				sauvegardesInscriptionScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "inscriptionPaimentChaqueMois":
 				if(val != null)
 					setInscriptionPaimentChaqueMois(val);
-				sauvegardesInscriptionScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "inscriptionPaimentComplet":
 				if(val != null)
 					setInscriptionPaimentComplet(val);
-				sauvegardesInscriptionScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "customerProfileId":
 				if(val != null)
 					setCustomerProfileId(val);
-				sauvegardesInscriptionScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "inscriptionDateFrais":
 				if(val != null)
 					setInscriptionDateFrais(val);
-				sauvegardesInscriptionScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "inscriptionNomsParents":
 				if(val != null)
 					setInscriptionNomsParents(val);
-				sauvegardesInscriptionScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "inscriptionSignature1":
 				if(val != null)
 					setInscriptionSignature1(val);
-				sauvegardesInscriptionScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "inscriptionSignature2":
 				if(val != null)
 					setInscriptionSignature2(val);
-				sauvegardesInscriptionScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "inscriptionSignature3":
 				if(val != null)
 					setInscriptionSignature3(val);
-				sauvegardesInscriptionScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "inscriptionSignature4":
 				if(val != null)
 					setInscriptionSignature4(val);
-				sauvegardesInscriptionScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "inscriptionSignature5":
 				if(val != null)
 					setInscriptionSignature5(val);
-				sauvegardesInscriptionScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "inscriptionSignature6":
 				if(val != null)
 					setInscriptionSignature6(val);
-				sauvegardesInscriptionScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "inscriptionSignature7":
 				if(val != null)
 					setInscriptionSignature7(val);
-				sauvegardesInscriptionScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "inscriptionSignature8":
 				if(val != null)
 					setInscriptionSignature8(val);
-				sauvegardesInscriptionScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "inscriptionSignature9":
 				if(val != null)
 					setInscriptionSignature9(val);
-				sauvegardesInscriptionScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "inscriptionSignature10":
 				if(val != null)
 					setInscriptionSignature10(val);
-				sauvegardesInscriptionScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "inscriptionDate1":
 				if(val != null)
 					setInscriptionDate1(val);
-				sauvegardesInscriptionScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "inscriptionDate2":
 				if(val != null)
 					setInscriptionDate2(val);
-				sauvegardesInscriptionScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "inscriptionDate3":
 				if(val != null)
 					setInscriptionDate3(val);
-				sauvegardesInscriptionScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "inscriptionDate4":
 				if(val != null)
 					setInscriptionDate4(val);
-				sauvegardesInscriptionScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "inscriptionDate5":
 				if(val != null)
 					setInscriptionDate5(val);
-				sauvegardesInscriptionScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "inscriptionDate6":
 				if(val != null)
 					setInscriptionDate6(val);
-				sauvegardesInscriptionScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "inscriptionDate7":
 				if(val != null)
 					setInscriptionDate7(val);
-				sauvegardesInscriptionScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "inscriptionDate8":
 				if(val != null)
 					setInscriptionDate8(val);
-				sauvegardesInscriptionScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "inscriptionDate9":
 				if(val != null)
 					setInscriptionDate9(val);
-				sauvegardesInscriptionScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "inscriptionDate10":
 				if(val != null)
 					setInscriptionDate10(val);
-				sauvegardesInscriptionScolaire.add(var);
+				sauvegardes.add(var);
 				return val;
 			default:
 				return super.definirCluster(var, val);
 		}
 	}
-
-	/////////////////
-	// sauvegardes //
-	/////////////////
-
-	protected List<String> sauvegardesInscriptionScolaire = new ArrayList<String>();
 
 	/////////////
 	// peupler //
@@ -13469,10 +13463,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 	public void peuplerInscriptionScolaire(SolrDocument solrDocument) {
 		InscriptionScolaire oInscriptionScolaire = (InscriptionScolaire)this;
-		sauvegardesInscriptionScolaire = (List<String>)solrDocument.get("sauvegardesInscriptionScolaire_stored_strings");
-		if(sauvegardesInscriptionScolaire != null) {
+		sauvegardes = (List<String>)solrDocument.get("sauvegardes_stored_strings");
+		if(sauvegardes != null) {
 
-			if(sauvegardesInscriptionScolaire.contains("inscriptionCle")) {
+			if(sauvegardes.contains("inscriptionCle")) {
 				Long inscriptionCle = (Long)solrDocument.get("inscriptionCle_stored_long");
 				if(inscriptionCle != null)
 					oInscriptionScolaire.setInscriptionCle(inscriptionCle);
@@ -13486,31 +13480,31 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			if(blocCles != null)
 				oInscriptionScolaire.blocCles.addAll(blocCles);
 
-			if(sauvegardesInscriptionScolaire.contains("ecoleCle")) {
+			if(sauvegardes.contains("ecoleCle")) {
 				Long ecoleCle = (Long)solrDocument.get("ecoleCle_stored_long");
 				if(ecoleCle != null)
 					oInscriptionScolaire.setEcoleCle(ecoleCle);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("saisonCle")) {
+			if(sauvegardes.contains("saisonCle")) {
 				Long saisonCle = (Long)solrDocument.get("saisonCle_stored_long");
 				if(saisonCle != null)
 					oInscriptionScolaire.setSaisonCle(saisonCle);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("sessionCle")) {
+			if(sauvegardes.contains("sessionCle")) {
 				Long sessionCle = (Long)solrDocument.get("sessionCle_stored_long");
 				if(sessionCle != null)
 					oInscriptionScolaire.setSessionCle(sessionCle);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("ageCle")) {
+			if(sauvegardes.contains("ageCle")) {
 				Long ageCle = (Long)solrDocument.get("ageCle_stored_long");
 				if(ageCle != null)
 					oInscriptionScolaire.setAgeCle(ageCle);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("blocCle")) {
+			if(sauvegardes.contains("blocCle")) {
 				Long blocCle = (Long)solrDocument.get("blocCle_stored_long");
 				if(blocCle != null)
 					oInscriptionScolaire.setBlocCle(blocCle);
@@ -13536,7 +13530,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			if(paiementCles != null)
 				oInscriptionScolaire.paiementCles.addAll(paiementCles);
 
-			if(sauvegardesInscriptionScolaire.contains("formInscriptionCle")) {
+			if(sauvegardes.contains("formInscriptionCle")) {
 				Long formInscriptionCle = (Long)solrDocument.get("formInscriptionCle_stored_long");
 				if(formInscriptionCle != null)
 					oInscriptionScolaire.setFormInscriptionCle(formInscriptionCle);
@@ -13546,649 +13540,649 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			if(utilisateurCles != null)
 				oInscriptionScolaire.utilisateurCles.addAll(utilisateurCles);
 
-			if(sauvegardesInscriptionScolaire.contains("scolaireTri")) {
+			if(sauvegardes.contains("scolaireTri")) {
 				Integer scolaireTri = (Integer)solrDocument.get("scolaireTri_stored_int");
 				if(scolaireTri != null)
 					oInscriptionScolaire.setScolaireTri(scolaireTri);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("ecoleTri")) {
+			if(sauvegardes.contains("ecoleTri")) {
 				Integer ecoleTri = (Integer)solrDocument.get("ecoleTri_stored_int");
 				if(ecoleTri != null)
 					oInscriptionScolaire.setEcoleTri(ecoleTri);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("anneeTri")) {
+			if(sauvegardes.contains("anneeTri")) {
 				Integer anneeTri = (Integer)solrDocument.get("anneeTri_stored_int");
 				if(anneeTri != null)
 					oInscriptionScolaire.setAnneeTri(anneeTri);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("saisonTri")) {
+			if(sauvegardes.contains("saisonTri")) {
 				Integer saisonTri = (Integer)solrDocument.get("saisonTri_stored_int");
 				if(saisonTri != null)
 					oInscriptionScolaire.setSaisonTri(saisonTri);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("sessionTri")) {
+			if(sauvegardes.contains("sessionTri")) {
 				Integer sessionTri = (Integer)solrDocument.get("sessionTri_stored_int");
 				if(sessionTri != null)
 					oInscriptionScolaire.setSessionTri(sessionTri);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("ageTri")) {
+			if(sauvegardes.contains("ageTri")) {
 				Integer ageTri = (Integer)solrDocument.get("ageTri_stored_int");
 				if(ageTri != null)
 					oInscriptionScolaire.setAgeTri(ageTri);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("enfantPrenom")) {
+			if(sauvegardes.contains("enfantPrenom")) {
 				String enfantPrenom = (String)solrDocument.get("enfantPrenom_stored_string");
 				if(enfantPrenom != null)
 					oInscriptionScolaire.setEnfantPrenom(enfantPrenom);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("enfantPrenomPrefere")) {
+			if(sauvegardes.contains("enfantPrenomPrefere")) {
 				String enfantPrenomPrefere = (String)solrDocument.get("enfantPrenomPrefere_stored_string");
 				if(enfantPrenomPrefere != null)
 					oInscriptionScolaire.setEnfantPrenomPrefere(enfantPrenomPrefere);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("enfantFamilleNom")) {
+			if(sauvegardes.contains("enfantFamilleNom")) {
 				String enfantFamilleNom = (String)solrDocument.get("enfantFamilleNom_stored_string");
 				if(enfantFamilleNom != null)
 					oInscriptionScolaire.setEnfantFamilleNom(enfantFamilleNom);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("merePrenom")) {
+			if(sauvegardes.contains("merePrenom")) {
 				String merePrenom = (String)solrDocument.get("merePrenom_stored_string");
 				if(merePrenom != null)
 					oInscriptionScolaire.setMerePrenom(merePrenom);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("merePrenomPrefere")) {
+			if(sauvegardes.contains("merePrenomPrefere")) {
 				String merePrenomPrefere = (String)solrDocument.get("merePrenomPrefere_stored_string");
 				if(merePrenomPrefere != null)
 					oInscriptionScolaire.setMerePrenomPrefere(merePrenomPrefere);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("mereNomCompletPrefere")) {
+			if(sauvegardes.contains("mereNomCompletPrefere")) {
 				String mereNomCompletPrefere = (String)solrDocument.get("mereNomCompletPrefere_stored_string");
 				if(mereNomCompletPrefere != null)
 					oInscriptionScolaire.setMereNomCompletPrefere(mereNomCompletPrefere);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("perePrenom")) {
+			if(sauvegardes.contains("perePrenom")) {
 				String perePrenom = (String)solrDocument.get("perePrenom_stored_string");
 				if(perePrenom != null)
 					oInscriptionScolaire.setPerePrenom(perePrenom);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("perePrenomPrefere")) {
+			if(sauvegardes.contains("perePrenomPrefere")) {
 				String perePrenomPrefere = (String)solrDocument.get("perePrenomPrefere_stored_string");
 				if(perePrenomPrefere != null)
 					oInscriptionScolaire.setPerePrenomPrefere(perePrenomPrefere);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("pereNomCompletPrefere")) {
+			if(sauvegardes.contains("pereNomCompletPrefere")) {
 				String pereNomCompletPrefere = (String)solrDocument.get("pereNomCompletPrefere_stored_string");
 				if(pereNomCompletPrefere != null)
 					oInscriptionScolaire.setPereNomCompletPrefere(pereNomCompletPrefere);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("enfantNomComplet")) {
+			if(sauvegardes.contains("enfantNomComplet")) {
 				String enfantNomComplet = (String)solrDocument.get("enfantNomComplet_stored_string");
 				if(enfantNomComplet != null)
 					oInscriptionScolaire.setEnfantNomComplet(enfantNomComplet);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("enfantNomCompletPrefere")) {
+			if(sauvegardes.contains("enfantNomCompletPrefere")) {
 				String enfantNomCompletPrefere = (String)solrDocument.get("enfantNomCompletPrefere_stored_string");
 				if(enfantNomCompletPrefere != null)
 					oInscriptionScolaire.setEnfantNomCompletPrefere(enfantNomCompletPrefere);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("enfantDateNaissance")) {
+			if(sauvegardes.contains("enfantDateNaissance")) {
 				Date enfantDateNaissance = (Date)solrDocument.get("enfantDateNaissance_stored_date");
 				if(enfantDateNaissance != null)
 					oInscriptionScolaire.setEnfantDateNaissance(enfantDateNaissance);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("enfantDateNaissanceDAnnee")) {
+			if(sauvegardes.contains("enfantDateNaissanceDAnnee")) {
 				Integer enfantDateNaissanceDAnnee = (Integer)solrDocument.get("enfantDateNaissanceDAnnee_stored_int");
 				if(enfantDateNaissanceDAnnee != null)
 					oInscriptionScolaire.setEnfantDateNaissanceDAnnee(enfantDateNaissanceDAnnee);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("enfantDateNaissanceMoisDAnnee")) {
+			if(sauvegardes.contains("enfantDateNaissanceMoisDAnnee")) {
 				String enfantDateNaissanceMoisDAnnee = (String)solrDocument.get("enfantDateNaissanceMoisDAnnee_stored_string");
 				if(enfantDateNaissanceMoisDAnnee != null)
 					oInscriptionScolaire.setEnfantDateNaissanceMoisDAnnee(enfantDateNaissanceMoisDAnnee);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("enfantDateNaissanceJourDeSemaine")) {
+			if(sauvegardes.contains("enfantDateNaissanceJourDeSemaine")) {
 				String enfantDateNaissanceJourDeSemaine = (String)solrDocument.get("enfantDateNaissanceJourDeSemaine_stored_string");
 				if(enfantDateNaissanceJourDeSemaine != null)
 					oInscriptionScolaire.setEnfantDateNaissanceJourDeSemaine(enfantDateNaissanceJourDeSemaine);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("enfantMoisNaissance")) {
+			if(sauvegardes.contains("enfantMoisNaissance")) {
 				Integer enfantMoisNaissance = (Integer)solrDocument.get("enfantMoisNaissance_stored_int");
 				if(enfantMoisNaissance != null)
 					oInscriptionScolaire.setEnfantMoisNaissance(enfantMoisNaissance);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("enfantJourNaissance")) {
+			if(sauvegardes.contains("enfantJourNaissance")) {
 				Integer enfantJourNaissance = (Integer)solrDocument.get("enfantJourNaissance_stored_int");
 				if(enfantJourNaissance != null)
 					oInscriptionScolaire.setEnfantJourNaissance(enfantJourNaissance);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("ecoleNom")) {
+			if(sauvegardes.contains("ecoleNom")) {
 				String ecoleNom = (String)solrDocument.get("ecoleNom_stored_string");
 				if(ecoleNom != null)
 					oInscriptionScolaire.setEcoleNom(ecoleNom);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("ecoleNomComplet")) {
+			if(sauvegardes.contains("ecoleNomComplet")) {
 				String ecoleNomComplet = (String)solrDocument.get("ecoleNomComplet_stored_string");
 				if(ecoleNomComplet != null)
 					oInscriptionScolaire.setEcoleNomComplet(ecoleNomComplet);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("ecoleEmplacement")) {
+			if(sauvegardes.contains("ecoleEmplacement")) {
 				String ecoleEmplacement = (String)solrDocument.get("ecoleEmplacement_stored_string");
 				if(ecoleEmplacement != null)
 					oInscriptionScolaire.setEcoleEmplacement(ecoleEmplacement);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("ecoleAddresse")) {
+			if(sauvegardes.contains("ecoleAddresse")) {
 				String ecoleAddresse = (String)solrDocument.get("ecoleAddresse_stored_string");
 				if(ecoleAddresse != null)
 					oInscriptionScolaire.setEcoleAddresse(ecoleAddresse);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("ecoleNumeroTelephone")) {
+			if(sauvegardes.contains("ecoleNumeroTelephone")) {
 				String ecoleNumeroTelephone = (String)solrDocument.get("ecoleNumeroTelephone_stored_string");
 				if(ecoleNumeroTelephone != null)
 					oInscriptionScolaire.setEcoleNumeroTelephone(ecoleNumeroTelephone);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("ecoleAdministrateurNom")) {
+			if(sauvegardes.contains("ecoleAdministrateurNom")) {
 				String ecoleAdministrateurNom = (String)solrDocument.get("ecoleAdministrateurNom_stored_string");
 				if(ecoleAdministrateurNom != null)
 					oInscriptionScolaire.setEcoleAdministrateurNom(ecoleAdministrateurNom);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("anneeDebut")) {
+			if(sauvegardes.contains("anneeDebut")) {
 				Integer anneeDebut = (Integer)solrDocument.get("anneeDebut_stored_int");
 				if(anneeDebut != null)
 					oInscriptionScolaire.setAnneeDebut(anneeDebut);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("anneeFin")) {
+			if(sauvegardes.contains("anneeFin")) {
 				Integer anneeFin = (Integer)solrDocument.get("anneeFin_stored_int");
 				if(anneeFin != null)
 					oInscriptionScolaire.setAnneeFin(anneeFin);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("saisonDateDebut")) {
+			if(sauvegardes.contains("saisonDateDebut")) {
 				Date saisonDateDebut = (Date)solrDocument.get("saisonDateDebut_stored_date");
 				if(saisonDateDebut != null)
 					oInscriptionScolaire.setSaisonDateDebut(saisonDateDebut);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("saisonEte")) {
+			if(sauvegardes.contains("saisonEte")) {
 				Boolean saisonEte = (Boolean)solrDocument.get("saisonEte_stored_boolean");
 				if(saisonEte != null)
 					oInscriptionScolaire.setSaisonEte(saisonEte);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("saisonHiver")) {
+			if(sauvegardes.contains("saisonHiver")) {
 				Boolean saisonHiver = (Boolean)solrDocument.get("saisonHiver_stored_boolean");
 				if(saisonHiver != null)
 					oInscriptionScolaire.setSaisonHiver(saisonHiver);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("anneeFraisInscription")) {
+			if(sauvegardes.contains("anneeFraisInscription")) {
 				Double anneeFraisInscription = (Double)solrDocument.get("anneeFraisInscription_stored_double");
 				if(anneeFraisInscription != null)
 					oInscriptionScolaire.setAnneeFraisInscription(anneeFraisInscription);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("saisonNomComplet")) {
+			if(sauvegardes.contains("saisonNomComplet")) {
 				String saisonNomComplet = (String)solrDocument.get("saisonNomComplet_stored_string");
 				if(saisonNomComplet != null)
 					oInscriptionScolaire.setSaisonNomComplet(saisonNomComplet);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("sessionDateDebut")) {
+			if(sauvegardes.contains("sessionDateDebut")) {
 				Date sessionDateDebut = (Date)solrDocument.get("sessionDateDebut_stored_date");
 				if(sessionDateDebut != null)
 					oInscriptionScolaire.setSessionDateDebut(sessionDateDebut);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("sessionDateFin")) {
+			if(sauvegardes.contains("sessionDateFin")) {
 				Date sessionDateFin = (Date)solrDocument.get("sessionDateFin_stored_date");
 				if(sessionDateFin != null)
 					oInscriptionScolaire.setSessionDateFin(sessionDateFin);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("ageNomComplet")) {
+			if(sauvegardes.contains("ageNomComplet")) {
 				String ageNomComplet = (String)solrDocument.get("ageNomComplet_stored_string");
 				if(ageNomComplet != null)
 					oInscriptionScolaire.setAgeNomComplet(ageNomComplet);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("ageDebut")) {
+			if(sauvegardes.contains("ageDebut")) {
 				Integer ageDebut = (Integer)solrDocument.get("ageDebut_stored_int");
 				if(ageDebut != null)
 					oInscriptionScolaire.setAgeDebut(ageDebut);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("ageFin")) {
+			if(sauvegardes.contains("ageFin")) {
 				Integer ageFin = (Integer)solrDocument.get("ageFin_stored_int");
 				if(ageFin != null)
 					oInscriptionScolaire.setAgeFin(ageFin);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("blocHeureDebut")) {
+			if(sauvegardes.contains("blocHeureDebut")) {
 				String blocHeureDebut = (String)solrDocument.get("blocHeureDebut_stored_string");
 				if(blocHeureDebut != null)
 					oInscriptionScolaire.setBlocHeureDebut(blocHeureDebut);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("blocHeureFin")) {
+			if(sauvegardes.contains("blocHeureFin")) {
 				String blocHeureFin = (String)solrDocument.get("blocHeureFin_stored_string");
 				if(blocHeureFin != null)
 					oInscriptionScolaire.setBlocHeureFin(blocHeureFin);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("blocPrixParMois")) {
+			if(sauvegardes.contains("blocPrixParMois")) {
 				Double blocPrixParMois = (Double)solrDocument.get("blocPrixParMois_stored_double");
 				if(blocPrixParMois != null)
 					oInscriptionScolaire.setBlocPrixParMois(blocPrixParMois);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("blocDimanche")) {
+			if(sauvegardes.contains("blocDimanche")) {
 				Boolean blocDimanche = (Boolean)solrDocument.get("blocDimanche_stored_boolean");
 				if(blocDimanche != null)
 					oInscriptionScolaire.setBlocDimanche(blocDimanche);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("blocLundi")) {
+			if(sauvegardes.contains("blocLundi")) {
 				Boolean blocLundi = (Boolean)solrDocument.get("blocLundi_stored_boolean");
 				if(blocLundi != null)
 					oInscriptionScolaire.setBlocLundi(blocLundi);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("blocMardi")) {
+			if(sauvegardes.contains("blocMardi")) {
 				Boolean blocMardi = (Boolean)solrDocument.get("blocMardi_stored_boolean");
 				if(blocMardi != null)
 					oInscriptionScolaire.setBlocMardi(blocMardi);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("blocMercredi")) {
+			if(sauvegardes.contains("blocMercredi")) {
 				Boolean blocMercredi = (Boolean)solrDocument.get("blocMercredi_stored_boolean");
 				if(blocMercredi != null)
 					oInscriptionScolaire.setBlocMercredi(blocMercredi);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("blocJeudi")) {
+			if(sauvegardes.contains("blocJeudi")) {
 				Boolean blocJeudi = (Boolean)solrDocument.get("blocJeudi_stored_boolean");
 				if(blocJeudi != null)
 					oInscriptionScolaire.setBlocJeudi(blocJeudi);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("blocVendredi")) {
+			if(sauvegardes.contains("blocVendredi")) {
 				Boolean blocVendredi = (Boolean)solrDocument.get("blocVendredi_stored_boolean");
 				if(blocVendredi != null)
 					oInscriptionScolaire.setBlocVendredi(blocVendredi);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("blocSamedi")) {
+			if(sauvegardes.contains("blocSamedi")) {
 				Boolean blocSamedi = (Boolean)solrDocument.get("blocSamedi_stored_boolean");
 				if(blocSamedi != null)
 					oInscriptionScolaire.setBlocSamedi(blocSamedi);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("blocPrixTotal")) {
+			if(sauvegardes.contains("blocPrixTotal")) {
 				Double blocPrixTotal = (Double)solrDocument.get("blocPrixTotal_stored_double");
 				if(blocPrixTotal != null)
 					oInscriptionScolaire.setBlocPrixTotal(blocPrixTotal);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("blocNomAdmin")) {
+			if(sauvegardes.contains("blocNomAdmin")) {
 				String blocNomAdmin = (String)solrDocument.get("blocNomAdmin_stored_string");
 				if(blocNomAdmin != null)
 					oInscriptionScolaire.setBlocNomAdmin(blocNomAdmin);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("blocNomCourt")) {
+			if(sauvegardes.contains("blocNomCourt")) {
 				String blocNomCourt = (String)solrDocument.get("blocNomCourt_stored_string");
 				if(blocNomCourt != null)
 					oInscriptionScolaire.setBlocNomCourt(blocNomCourt);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("blocNomComplet")) {
+			if(sauvegardes.contains("blocNomComplet")) {
 				String blocNomComplet = (String)solrDocument.get("blocNomComplet_stored_string");
 				if(blocNomComplet != null)
 					oInscriptionScolaire.setBlocNomComplet(blocNomComplet);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("inscriptionApprouve")) {
+			if(sauvegardes.contains("inscriptionApprouve")) {
 				Boolean inscriptionApprouve = (Boolean)solrDocument.get("inscriptionApprouve_stored_boolean");
 				if(inscriptionApprouve != null)
 					oInscriptionScolaire.setInscriptionApprouve(inscriptionApprouve);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("inscriptionImmunisations")) {
+			if(sauvegardes.contains("inscriptionImmunisations")) {
 				Boolean inscriptionImmunisations = (Boolean)solrDocument.get("inscriptionImmunisations_stored_boolean");
 				if(inscriptionImmunisations != null)
 					oInscriptionScolaire.setInscriptionImmunisations(inscriptionImmunisations);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("familleMarie")) {
+			if(sauvegardes.contains("familleMarie")) {
 				Boolean familleMarie = (Boolean)solrDocument.get("familleMarie_stored_boolean");
 				if(familleMarie != null)
 					oInscriptionScolaire.setFamilleMarie(familleMarie);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("familleSepare")) {
+			if(sauvegardes.contains("familleSepare")) {
 				Boolean familleSepare = (Boolean)solrDocument.get("familleSepare_stored_boolean");
 				if(familleSepare != null)
 					oInscriptionScolaire.setFamilleSepare(familleSepare);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("familleDivorce")) {
+			if(sauvegardes.contains("familleDivorce")) {
 				Boolean familleDivorce = (Boolean)solrDocument.get("familleDivorce_stored_boolean");
 				if(familleDivorce != null)
 					oInscriptionScolaire.setFamilleDivorce(familleDivorce);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("familleAddresse")) {
+			if(sauvegardes.contains("familleAddresse")) {
 				String familleAddresse = (String)solrDocument.get("familleAddresse_stored_string");
 				if(familleAddresse != null)
 					oInscriptionScolaire.setFamilleAddresse(familleAddresse);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("familleCommentVousConnaissezEcole")) {
+			if(sauvegardes.contains("familleCommentVousConnaissezEcole")) {
 				String familleCommentVousConnaissezEcole = (String)solrDocument.get("familleCommentVousConnaissezEcole_stored_string");
 				if(familleCommentVousConnaissezEcole != null)
 					oInscriptionScolaire.setFamilleCommentVousConnaissezEcole(familleCommentVousConnaissezEcole);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("inscriptionConsiderationsSpeciales")) {
+			if(sauvegardes.contains("inscriptionConsiderationsSpeciales")) {
 				String inscriptionConsiderationsSpeciales = (String)solrDocument.get("inscriptionConsiderationsSpeciales_stored_string");
 				if(inscriptionConsiderationsSpeciales != null)
 					oInscriptionScolaire.setInscriptionConsiderationsSpeciales(inscriptionConsiderationsSpeciales);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("enfantConditionsMedicales")) {
+			if(sauvegardes.contains("enfantConditionsMedicales")) {
 				String enfantConditionsMedicales = (String)solrDocument.get("enfantConditionsMedicales_stored_string");
 				if(enfantConditionsMedicales != null)
 					oInscriptionScolaire.setEnfantConditionsMedicales(enfantConditionsMedicales);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("enfantEcolesPrecedemmentFrequentees")) {
+			if(sauvegardes.contains("enfantEcolesPrecedemmentFrequentees")) {
 				String enfantEcolesPrecedemmentFrequentees = (String)solrDocument.get("enfantEcolesPrecedemmentFrequentees_stored_string");
 				if(enfantEcolesPrecedemmentFrequentees != null)
 					oInscriptionScolaire.setEnfantEcolesPrecedemmentFrequentees(enfantEcolesPrecedemmentFrequentees);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("enfantDescription")) {
+			if(sauvegardes.contains("enfantDescription")) {
 				String enfantDescription = (String)solrDocument.get("enfantDescription_stored_string");
 				if(enfantDescription != null)
 					oInscriptionScolaire.setEnfantDescription(enfantDescription);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("enfantObjectifs")) {
+			if(sauvegardes.contains("enfantObjectifs")) {
 				String enfantObjectifs = (String)solrDocument.get("enfantObjectifs_stored_string");
 				if(enfantObjectifs != null)
 					oInscriptionScolaire.setEnfantObjectifs(enfantObjectifs);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("enfantPropre")) {
+			if(sauvegardes.contains("enfantPropre")) {
 				Boolean enfantPropre = (Boolean)solrDocument.get("enfantPropre_stored_boolean");
 				if(enfantPropre != null)
 					oInscriptionScolaire.setEnfantPropre(enfantPropre);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("inscriptionNomGroupe")) {
+			if(sauvegardes.contains("inscriptionNomGroupe")) {
 				String inscriptionNomGroupe = (String)solrDocument.get("inscriptionNomGroupe_stored_string");
 				if(inscriptionNomGroupe != null)
 					oInscriptionScolaire.setInscriptionNomGroupe(inscriptionNomGroupe);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("inscriptionPaimentChaqueMois")) {
+			if(sauvegardes.contains("inscriptionPaimentChaqueMois")) {
 				Boolean inscriptionPaimentChaqueMois = (Boolean)solrDocument.get("inscriptionPaimentChaqueMois_stored_boolean");
 				if(inscriptionPaimentChaqueMois != null)
 					oInscriptionScolaire.setInscriptionPaimentChaqueMois(inscriptionPaimentChaqueMois);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("inscriptionPaimentComplet")) {
+			if(sauvegardes.contains("inscriptionPaimentComplet")) {
 				Boolean inscriptionPaimentComplet = (Boolean)solrDocument.get("inscriptionPaimentComplet_stored_boolean");
 				if(inscriptionPaimentComplet != null)
 					oInscriptionScolaire.setInscriptionPaimentComplet(inscriptionPaimentComplet);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("customerProfileId")) {
+			if(sauvegardes.contains("customerProfileId")) {
 				String customerProfileId = (String)solrDocument.get("customerProfileId_stored_string");
 				if(customerProfileId != null)
 					oInscriptionScolaire.setCustomerProfileId(customerProfileId);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("inscriptionDateFrais")) {
+			if(sauvegardes.contains("inscriptionDateFrais")) {
 				Date inscriptionDateFrais = (Date)solrDocument.get("inscriptionDateFrais_stored_date");
 				if(inscriptionDateFrais != null)
 					oInscriptionScolaire.setInscriptionDateFrais(inscriptionDateFrais);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("creeDAnnee")) {
+			if(sauvegardes.contains("creeDAnnee")) {
 				Integer creeDAnnee = (Integer)solrDocument.get("creeDAnnee_stored_int");
 				if(creeDAnnee != null)
 					oInscriptionScolaire.setCreeDAnnee(creeDAnnee);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("creeJourDeSemaine")) {
+			if(sauvegardes.contains("creeJourDeSemaine")) {
 				String creeJourDeSemaine = (String)solrDocument.get("creeJourDeSemaine_stored_string");
 				if(creeJourDeSemaine != null)
 					oInscriptionScolaire.setCreeJourDeSemaine(creeJourDeSemaine);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("creeMoisDAnnee")) {
+			if(sauvegardes.contains("creeMoisDAnnee")) {
 				String creeMoisDAnnee = (String)solrDocument.get("creeMoisDAnnee_stored_string");
 				if(creeMoisDAnnee != null)
 					oInscriptionScolaire.setCreeMoisDAnnee(creeMoisDAnnee);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("creeHeureDuJour")) {
+			if(sauvegardes.contains("creeHeureDuJour")) {
 				String creeHeureDuJour = (String)solrDocument.get("creeHeureDuJour_stored_string");
 				if(creeHeureDuJour != null)
 					oInscriptionScolaire.setCreeHeureDuJour(creeHeureDuJour);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("inscriptionJoursDeSemaine")) {
+			if(sauvegardes.contains("inscriptionJoursDeSemaine")) {
 				List<String> inscriptionJoursDeSemaine = (List<String>)solrDocument.get("inscriptionJoursDeSemaine_stored_strings");
 				if(inscriptionJoursDeSemaine != null)
 					oInscriptionScolaire.inscriptionJoursDeSemaine.addAll(inscriptionJoursDeSemaine);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("inscriptionNomsParents")) {
+			if(sauvegardes.contains("inscriptionNomsParents")) {
 				String inscriptionNomsParents = (String)solrDocument.get("inscriptionNomsParents_stored_string");
 				if(inscriptionNomsParents != null)
 					oInscriptionScolaire.setInscriptionNomsParents(inscriptionNomsParents);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("inscriptionMailsParents")) {
+			if(sauvegardes.contains("inscriptionMailsParents")) {
 				String inscriptionMailsParents = (String)solrDocument.get("inscriptionMailsParents_stored_string");
 				if(inscriptionMailsParents != null)
 					oInscriptionScolaire.setInscriptionMailsParents(inscriptionMailsParents);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("inscriptionNomParentLignes")) {
+			if(sauvegardes.contains("inscriptionNomParentLignes")) {
 				String inscriptionNomParentLignes = (String)solrDocument.get("inscriptionNomParentLignes_stored_string");
 				if(inscriptionNomParentLignes != null)
 					oInscriptionScolaire.setInscriptionNomParentLignes(inscriptionNomParentLignes);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("inscriptionMailParentLignes")) {
+			if(sauvegardes.contains("inscriptionMailParentLignes")) {
 				String inscriptionMailParentLignes = (String)solrDocument.get("inscriptionMailParentLignes_stored_string");
 				if(inscriptionMailParentLignes != null)
 					oInscriptionScolaire.setInscriptionMailParentLignes(inscriptionMailParentLignes);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("inscriptionDetailParentLignes")) {
+			if(sauvegardes.contains("inscriptionDetailParentLignes")) {
 				String inscriptionDetailParentLignes = (String)solrDocument.get("inscriptionDetailParentLignes_stored_string");
 				if(inscriptionDetailParentLignes != null)
 					oInscriptionScolaire.setInscriptionDetailParentLignes(inscriptionDetailParentLignes);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("inscriptionChercherParentLignes")) {
+			if(sauvegardes.contains("inscriptionChercherParentLignes")) {
 				String inscriptionChercherParentLignes = (String)solrDocument.get("inscriptionChercherParentLignes_stored_string");
 				if(inscriptionChercherParentLignes != null)
 					oInscriptionScolaire.setInscriptionChercherParentLignes(inscriptionChercherParentLignes);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("inscriptionContactUrgenceParentLignes")) {
+			if(sauvegardes.contains("inscriptionContactUrgenceParentLignes")) {
 				String inscriptionContactUrgenceParentLignes = (String)solrDocument.get("inscriptionContactUrgenceParentLignes_stored_string");
 				if(inscriptionContactUrgenceParentLignes != null)
 					oInscriptionScolaire.setInscriptionContactUrgenceParentLignes(inscriptionContactUrgenceParentLignes);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("inscriptionSignature1")) {
+			if(sauvegardes.contains("inscriptionSignature1")) {
 				String inscriptionSignature1 = (String)solrDocument.get("inscriptionSignature1_stored_string");
 				if(inscriptionSignature1 != null)
 					oInscriptionScolaire.setInscriptionSignature1(inscriptionSignature1);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("inscriptionSignature2")) {
+			if(sauvegardes.contains("inscriptionSignature2")) {
 				String inscriptionSignature2 = (String)solrDocument.get("inscriptionSignature2_stored_string");
 				if(inscriptionSignature2 != null)
 					oInscriptionScolaire.setInscriptionSignature2(inscriptionSignature2);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("inscriptionSignature3")) {
+			if(sauvegardes.contains("inscriptionSignature3")) {
 				String inscriptionSignature3 = (String)solrDocument.get("inscriptionSignature3_stored_string");
 				if(inscriptionSignature3 != null)
 					oInscriptionScolaire.setInscriptionSignature3(inscriptionSignature3);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("inscriptionSignature4")) {
+			if(sauvegardes.contains("inscriptionSignature4")) {
 				String inscriptionSignature4 = (String)solrDocument.get("inscriptionSignature4_stored_string");
 				if(inscriptionSignature4 != null)
 					oInscriptionScolaire.setInscriptionSignature4(inscriptionSignature4);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("inscriptionSignature5")) {
+			if(sauvegardes.contains("inscriptionSignature5")) {
 				String inscriptionSignature5 = (String)solrDocument.get("inscriptionSignature5_stored_string");
 				if(inscriptionSignature5 != null)
 					oInscriptionScolaire.setInscriptionSignature5(inscriptionSignature5);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("inscriptionSignature6")) {
+			if(sauvegardes.contains("inscriptionSignature6")) {
 				String inscriptionSignature6 = (String)solrDocument.get("inscriptionSignature6_stored_string");
 				if(inscriptionSignature6 != null)
 					oInscriptionScolaire.setInscriptionSignature6(inscriptionSignature6);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("inscriptionSignature7")) {
+			if(sauvegardes.contains("inscriptionSignature7")) {
 				String inscriptionSignature7 = (String)solrDocument.get("inscriptionSignature7_stored_string");
 				if(inscriptionSignature7 != null)
 					oInscriptionScolaire.setInscriptionSignature7(inscriptionSignature7);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("inscriptionSignature8")) {
+			if(sauvegardes.contains("inscriptionSignature8")) {
 				String inscriptionSignature8 = (String)solrDocument.get("inscriptionSignature8_stored_string");
 				if(inscriptionSignature8 != null)
 					oInscriptionScolaire.setInscriptionSignature8(inscriptionSignature8);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("inscriptionSignature9")) {
+			if(sauvegardes.contains("inscriptionSignature9")) {
 				String inscriptionSignature9 = (String)solrDocument.get("inscriptionSignature9_stored_string");
 				if(inscriptionSignature9 != null)
 					oInscriptionScolaire.setInscriptionSignature9(inscriptionSignature9);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("inscriptionSignature10")) {
+			if(sauvegardes.contains("inscriptionSignature10")) {
 				String inscriptionSignature10 = (String)solrDocument.get("inscriptionSignature10_stored_string");
 				if(inscriptionSignature10 != null)
 					oInscriptionScolaire.setInscriptionSignature10(inscriptionSignature10);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("inscriptionDate1")) {
+			if(sauvegardes.contains("inscriptionDate1")) {
 				Date inscriptionDate1 = (Date)solrDocument.get("inscriptionDate1_stored_date");
 				if(inscriptionDate1 != null)
 					oInscriptionScolaire.setInscriptionDate1(inscriptionDate1);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("inscriptionDate2")) {
+			if(sauvegardes.contains("inscriptionDate2")) {
 				Date inscriptionDate2 = (Date)solrDocument.get("inscriptionDate2_stored_date");
 				if(inscriptionDate2 != null)
 					oInscriptionScolaire.setInscriptionDate2(inscriptionDate2);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("inscriptionDate3")) {
+			if(sauvegardes.contains("inscriptionDate3")) {
 				Date inscriptionDate3 = (Date)solrDocument.get("inscriptionDate3_stored_date");
 				if(inscriptionDate3 != null)
 					oInscriptionScolaire.setInscriptionDate3(inscriptionDate3);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("inscriptionDate4")) {
+			if(sauvegardes.contains("inscriptionDate4")) {
 				Date inscriptionDate4 = (Date)solrDocument.get("inscriptionDate4_stored_date");
 				if(inscriptionDate4 != null)
 					oInscriptionScolaire.setInscriptionDate4(inscriptionDate4);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("inscriptionDate5")) {
+			if(sauvegardes.contains("inscriptionDate5")) {
 				Date inscriptionDate5 = (Date)solrDocument.get("inscriptionDate5_stored_date");
 				if(inscriptionDate5 != null)
 					oInscriptionScolaire.setInscriptionDate5(inscriptionDate5);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("inscriptionDate6")) {
+			if(sauvegardes.contains("inscriptionDate6")) {
 				Date inscriptionDate6 = (Date)solrDocument.get("inscriptionDate6_stored_date");
 				if(inscriptionDate6 != null)
 					oInscriptionScolaire.setInscriptionDate6(inscriptionDate6);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("inscriptionDate7")) {
+			if(sauvegardes.contains("inscriptionDate7")) {
 				Date inscriptionDate7 = (Date)solrDocument.get("inscriptionDate7_stored_date");
 				if(inscriptionDate7 != null)
 					oInscriptionScolaire.setInscriptionDate7(inscriptionDate7);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("inscriptionDate8")) {
+			if(sauvegardes.contains("inscriptionDate8")) {
 				Date inscriptionDate8 = (Date)solrDocument.get("inscriptionDate8_stored_date");
 				if(inscriptionDate8 != null)
 					oInscriptionScolaire.setInscriptionDate8(inscriptionDate8);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("inscriptionDate9")) {
+			if(sauvegardes.contains("inscriptionDate9")) {
 				Date inscriptionDate9 = (Date)solrDocument.get("inscriptionDate9_stored_date");
 				if(inscriptionDate9 != null)
 					oInscriptionScolaire.setInscriptionDate9(inscriptionDate9);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("inscriptionDate10")) {
+			if(sauvegardes.contains("inscriptionDate10")) {
 				Date inscriptionDate10 = (Date)solrDocument.get("inscriptionDate10_stored_date");
 				if(inscriptionDate10 != null)
 					oInscriptionScolaire.setInscriptionDate10(inscriptionDate10);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("enfantImmunisationsRecu")) {
+			if(sauvegardes.contains("enfantImmunisationsRecu")) {
 				String enfantImmunisationsRecu = (String)solrDocument.get("enfantImmunisationsRecu_stored_string");
 				if(enfantImmunisationsRecu != null)
 					oInscriptionScolaire.setEnfantImmunisationsRecu(enfantImmunisationsRecu);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("enfantPhotosApprouve")) {
+			if(sauvegardes.contains("enfantPhotosApprouve")) {
 				String enfantPhotosApprouve = (String)solrDocument.get("enfantPhotosApprouve_stored_string");
 				if(enfantPhotosApprouve != null)
 					oInscriptionScolaire.setEnfantPhotosApprouve(enfantPhotosApprouve);
 			}
 
-			if(sauvegardesInscriptionScolaire.contains("inscriptionNomComplet")) {
+			if(sauvegardes.contains("inscriptionNomComplet")) {
 				String inscriptionNomComplet = (String)solrDocument.get("inscriptionNomComplet_stored_string");
 				if(inscriptionNomComplet != null)
 					oInscriptionScolaire.setInscriptionNomComplet(inscriptionNomComplet);
@@ -14260,9 +14254,6 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public void indexerInscriptionScolaire(SolrInputDocument document) {
-		if(sauvegardesInscriptionScolaire != null)
-			document.addField("sauvegardesInscriptionScolaire_stored_strings", sauvegardesInscriptionScolaire);
-
 		if(inscriptionCle != null) {
 			document.addField("inscriptionCle_indexed_long", inscriptionCle);
 			document.addField("inscriptionCle_stored_long", inscriptionCle);

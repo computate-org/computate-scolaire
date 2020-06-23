@@ -1973,8 +1973,8 @@ public abstract class SchoolGen<DEV> extends Cluster {
 		switch(var) {
 			case "yearKeys":
 				oSchool.addYearKeys((Long)val);
-				if(!savesSchool.contains(var))
-					savesSchool.add(var);
+				if(!saves.contains(var))
+					saves.add(var);
 				return val;
 			default:
 				return super.attributeCluster(var, val);
@@ -2005,48 +2005,42 @@ public abstract class SchoolGen<DEV> extends Cluster {
 			case "schoolName":
 				if(val != null)
 					setSchoolName(val);
-				savesSchool.add(var);
+				saves.add(var);
 				return val;
 			case "schoolPhoneNumber":
 				if(val != null)
 					setSchoolPhoneNumber(val);
-				savesSchool.add(var);
+				saves.add(var);
 				return val;
 			case "schoolAdministratorName":
 				if(val != null)
 					setSchoolAdministratorName(val);
-				savesSchool.add(var);
+				saves.add(var);
 				return val;
 			case "schoolEmailFrom":
 				if(val != null)
 					setSchoolEmailFrom(val);
-				savesSchool.add(var);
+				saves.add(var);
 				return val;
 			case "schoolEmailTo":
 				if(val != null)
 					setSchoolEmailTo(val);
-				savesSchool.add(var);
+				saves.add(var);
 				return val;
 			case "schoolLocation":
 				if(val != null)
 					setSchoolLocation(val);
-				savesSchool.add(var);
+				saves.add(var);
 				return val;
 			case "schoolAddress":
 				if(val != null)
 					setSchoolAddress(val);
-				savesSchool.add(var);
+				saves.add(var);
 				return val;
 			default:
 				return super.defineCluster(var, val);
 		}
 	}
-
-	/////////////////
-	// saves //
-	/////////////////
-
-	protected List<String> savesSchool = new ArrayList<String>();
 
 	/////////////
 	// populate //
@@ -2057,10 +2051,10 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	}
 	public void populateSchool(SolrDocument solrDocument) {
 		School oSchool = (School)this;
-		savesSchool = (List<String>)solrDocument.get("savesSchool_stored_strings");
-		if(savesSchool != null) {
+		saves = (List<String>)solrDocument.get("saves_stored_strings");
+		if(saves != null) {
 
-			if(savesSchool.contains("schoolKey")) {
+			if(saves.contains("schoolKey")) {
 				Long schoolKey = (Long)solrDocument.get("schoolKey_stored_long");
 				if(schoolKey != null)
 					oSchool.setSchoolKey(schoolKey);
@@ -2070,97 +2064,97 @@ public abstract class SchoolGen<DEV> extends Cluster {
 			if(yearKeys != null)
 				oSchool.yearKeys.addAll(yearKeys);
 
-			if(savesSchool.contains("seasonKeys")) {
+			if(saves.contains("seasonKeys")) {
 				List<Long> seasonKeys = (List<Long>)solrDocument.get("seasonKeys_stored_longs");
 				if(seasonKeys != null)
 					oSchool.seasonKeys.addAll(seasonKeys);
 			}
 
-			if(savesSchool.contains("sessionKeys")) {
+			if(saves.contains("sessionKeys")) {
 				List<Long> sessionKeys = (List<Long>)solrDocument.get("sessionKeys_stored_longs");
 				if(sessionKeys != null)
 					oSchool.sessionKeys.addAll(sessionKeys);
 			}
 
-			if(savesSchool.contains("ageGroupKeys")) {
+			if(saves.contains("ageGroupKeys")) {
 				List<Long> ageGroupKeys = (List<Long>)solrDocument.get("ageGroupKeys_stored_longs");
 				if(ageGroupKeys != null)
 					oSchool.ageGroupKeys.addAll(ageGroupKeys);
 			}
 
-			if(savesSchool.contains("blockKeys")) {
+			if(saves.contains("blockKeys")) {
 				List<Long> blockKeys = (List<Long>)solrDocument.get("blockKeys_stored_longs");
 				if(blockKeys != null)
 					oSchool.blockKeys.addAll(blockKeys);
 			}
 
-			if(savesSchool.contains("childKeys")) {
+			if(saves.contains("childKeys")) {
 				List<Long> childKeys = (List<Long>)solrDocument.get("childKeys_stored_longs");
 				if(childKeys != null)
 					oSchool.childKeys.addAll(childKeys);
 			}
 
-			if(savesSchool.contains("educationSort")) {
+			if(saves.contains("educationSort")) {
 				Integer educationSort = (Integer)solrDocument.get("educationSort_stored_int");
 				if(educationSort != null)
 					oSchool.setEducationSort(educationSort);
 			}
 
-			if(savesSchool.contains("schoolSort")) {
+			if(saves.contains("schoolSort")) {
 				Integer schoolSort = (Integer)solrDocument.get("schoolSort_stored_int");
 				if(schoolSort != null)
 					oSchool.setSchoolSort(schoolSort);
 			}
 
-			if(savesSchool.contains("schoolName")) {
+			if(saves.contains("schoolName")) {
 				String schoolName = (String)solrDocument.get("schoolName_stored_string");
 				if(schoolName != null)
 					oSchool.setSchoolName(schoolName);
 			}
 
-			if(savesSchool.contains("schoolPhoneNumber")) {
+			if(saves.contains("schoolPhoneNumber")) {
 				String schoolPhoneNumber = (String)solrDocument.get("schoolPhoneNumber_stored_string");
 				if(schoolPhoneNumber != null)
 					oSchool.setSchoolPhoneNumber(schoolPhoneNumber);
 			}
 
-			if(savesSchool.contains("schoolAdministratorName")) {
+			if(saves.contains("schoolAdministratorName")) {
 				String schoolAdministratorName = (String)solrDocument.get("schoolAdministratorName_stored_string");
 				if(schoolAdministratorName != null)
 					oSchool.setSchoolAdministratorName(schoolAdministratorName);
 			}
 
-			if(savesSchool.contains("schoolEmailFrom")) {
+			if(saves.contains("schoolEmailFrom")) {
 				String schoolEmailFrom = (String)solrDocument.get("schoolEmailFrom_stored_string");
 				if(schoolEmailFrom != null)
 					oSchool.setSchoolEmailFrom(schoolEmailFrom);
 			}
 
-			if(savesSchool.contains("schoolEmailTo")) {
+			if(saves.contains("schoolEmailTo")) {
 				String schoolEmailTo = (String)solrDocument.get("schoolEmailTo_stored_string");
 				if(schoolEmailTo != null)
 					oSchool.setSchoolEmailTo(schoolEmailTo);
 			}
 
-			if(savesSchool.contains("schoolLocation")) {
+			if(saves.contains("schoolLocation")) {
 				String schoolLocation = (String)solrDocument.get("schoolLocation_stored_string");
 				if(schoolLocation != null)
 					oSchool.setSchoolLocation(schoolLocation);
 			}
 
-			if(savesSchool.contains("schoolAddress")) {
+			if(saves.contains("schoolAddress")) {
 				String schoolAddress = (String)solrDocument.get("schoolAddress_stored_string");
 				if(schoolAddress != null)
 					oSchool.setSchoolAddress(schoolAddress);
 			}
 
-			if(savesSchool.contains("schoolShortName")) {
+			if(saves.contains("schoolShortName")) {
 				String schoolShortName = (String)solrDocument.get("schoolShortName_stored_string");
 				if(schoolShortName != null)
 					oSchool.setSchoolShortName(schoolShortName);
 			}
 
-			if(savesSchool.contains("schoolCompleteName")) {
+			if(saves.contains("schoolCompleteName")) {
 				String schoolCompleteName = (String)solrDocument.get("schoolCompleteName_stored_string");
 				if(schoolCompleteName != null)
 					oSchool.setSchoolCompleteName(schoolCompleteName);
@@ -2232,9 +2226,6 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	}
 
 	public void indexSchool(SolrInputDocument document) {
-		if(savesSchool != null)
-			document.addField("savesSchool_stored_strings", savesSchool);
-
 		if(schoolKey != null) {
 			document.addField("schoolKey_indexed_long", schoolKey);
 			document.addField("schoolKey_stored_long", schoolKey);

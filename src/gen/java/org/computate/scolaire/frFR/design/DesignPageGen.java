@@ -914,18 +914,18 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		switch(var) {
 			case "designEnfantCles":
 				oDesignPage.addDesignEnfantCles((Long)val);
-				if(!sauvegardesDesignPage.contains(var))
-					sauvegardesDesignPage.add(var);
+				if(!sauvegardes.contains(var))
+					sauvegardes.add(var);
 				return val;
 			case "designParentCles":
 				oDesignPage.addDesignParentCles((Long)val);
-				if(!sauvegardesDesignPage.contains(var))
-					sauvegardesDesignPage.add(var);
+				if(!sauvegardes.contains(var))
+					sauvegardes.add(var);
 				return val;
 			case "partHtmlCles":
 				oDesignPage.addPartHtmlCles((Long)val);
-				if(!sauvegardesDesignPage.contains(var))
-					sauvegardesDesignPage.add(var);
+				if(!sauvegardes.contains(var))
+					sauvegardes.add(var);
 				return val;
 			default:
 				return super.attribuerCluster(var, val);
@@ -956,23 +956,17 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 			case "designPageNomComplet":
 				if(val != null)
 					setDesignPageNomComplet(val);
-				sauvegardesDesignPage.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "designCache":
 				if(val != null)
 					setDesignCache(val);
-				sauvegardesDesignPage.add(var);
+				sauvegardes.add(var);
 				return val;
 			default:
 				return super.definirCluster(var, val);
 		}
 	}
-
-	/////////////////
-	// sauvegardes //
-	/////////////////
-
-	protected List<String> sauvegardesDesignPage = new ArrayList<String>();
 
 	/////////////
 	// peupler //
@@ -983,10 +977,10 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 	}
 	public void peuplerDesignPage(SolrDocument solrDocument) {
 		DesignPage oDesignPage = (DesignPage)this;
-		sauvegardesDesignPage = (List<String>)solrDocument.get("sauvegardesDesignPage_stored_strings");
-		if(sauvegardesDesignPage != null) {
+		sauvegardes = (List<String>)solrDocument.get("sauvegardes_stored_strings");
+		if(sauvegardes != null) {
 
-			if(sauvegardesDesignPage.contains("designPageCle")) {
+			if(sauvegardes.contains("designPageCle")) {
 				Long designPageCle = (Long)solrDocument.get("designPageCle_stored_long");
 				if(designPageCle != null)
 					oDesignPage.setDesignPageCle(designPageCle);
@@ -1004,13 +998,13 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 			if(partHtmlCles != null)
 				oDesignPage.partHtmlCles.addAll(partHtmlCles);
 
-			if(sauvegardesDesignPage.contains("designPageNomComplet")) {
+			if(sauvegardes.contains("designPageNomComplet")) {
 				String designPageNomComplet = (String)solrDocument.get("designPageNomComplet_stored_string");
 				if(designPageNomComplet != null)
 					oDesignPage.setDesignPageNomComplet(designPageNomComplet);
 			}
 
-			if(sauvegardesDesignPage.contains("designCache")) {
+			if(sauvegardes.contains("designCache")) {
 				Boolean designCache = (Boolean)solrDocument.get("designCache_stored_boolean");
 				if(designCache != null)
 					oDesignPage.setDesignCache(designCache);
@@ -1082,9 +1076,6 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 	}
 
 	public void indexerDesignPage(SolrInputDocument document) {
-		if(sauvegardesDesignPage != null)
-			document.addField("sauvegardesDesignPage_stored_strings", sauvegardesDesignPage);
-
 		if(designPageCle != null) {
 			document.addField("designPageCle_indexed_long", designPageCle);
 			document.addField("designPageCle_stored_long", designPageCle);

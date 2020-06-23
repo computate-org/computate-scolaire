@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.cluster;                
+package org.computate.scolaire.frFR.cluster;               
 
 import java.text.Normalizer;
 import java.time.ZoneId;
@@ -275,12 +275,7 @@ public class Cluster extends ClusterGen<Object> {
 	 * r: sauvegardes
 	 * r.enUS: saves
 	 */               
-	protected void _sauvegardes(Couverture<List<String>> c) {
-		try {
-			c.o((List<String>)FieldUtils.getField(getClass(), "sauvegardes" + getClass().getSimpleName(), true).get(this));
-		} catch (IllegalArgumentException | IllegalAccessException e) {
-			ExceptionUtils.rethrow(e);
-		}
+	protected void _sauvegardes(List<String> l) {
 	}
 
 	/**

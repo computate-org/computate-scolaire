@@ -2978,8 +2978,8 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 		switch(var) {
 			case "enrollmentKeys":
 				oSchoolDad.addEnrollmentKeys((Long)val);
-				if(!savesSchoolDad.contains(var))
-					savesSchoolDad.add(var);
+				if(!saves.contains(var))
+					saves.add(var);
 				return val;
 			default:
 				return super.attributeCluster(var, val);
@@ -3010,68 +3010,62 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 			case "personFirstName":
 				if(val != null)
 					setPersonFirstName(val);
-				savesSchoolDad.add(var);
+				saves.add(var);
 				return val;
 			case "personFirstNamePreferred":
 				if(val != null)
 					setPersonFirstNamePreferred(val);
-				savesSchoolDad.add(var);
+				saves.add(var);
 				return val;
 			case "familyName":
 				if(val != null)
 					setFamilyName(val);
-				savesSchoolDad.add(var);
+				saves.add(var);
 				return val;
 			case "personOccupation":
 				if(val != null)
 					setPersonOccupation(val);
-				savesSchoolDad.add(var);
+				saves.add(var);
 				return val;
 			case "personPhoneNumber":
 				if(val != null)
 					setPersonPhoneNumber(val);
-				savesSchoolDad.add(var);
+				saves.add(var);
 				return val;
 			case "personEmail":
 				if(val != null)
 					setPersonEmail(val);
-				savesSchoolDad.add(var);
+				saves.add(var);
 				return val;
 			case "personSms":
 				if(val != null)
 					setPersonSms(val);
-				savesSchoolDad.add(var);
+				saves.add(var);
 				return val;
 			case "personReceiveEmail":
 				if(val != null)
 					setPersonReceiveEmail(val);
-				savesSchoolDad.add(var);
+				saves.add(var);
 				return val;
 			case "personEmergencyContact":
 				if(val != null)
 					setPersonEmergencyContact(val);
-				savesSchoolDad.add(var);
+				saves.add(var);
 				return val;
 			case "personPickup":
 				if(val != null)
 					setPersonPickup(val);
-				savesSchoolDad.add(var);
+				saves.add(var);
 				return val;
 			case "photo":
 				if(val != null)
 					setPhoto(val);
-				savesSchoolDad.add(var);
+				saves.add(var);
 				return val;
 			default:
 				return super.defineCluster(var, val);
 		}
 	}
-
-	/////////////////
-	// saves //
-	/////////////////
-
-	protected List<String> savesSchoolDad = new ArrayList<String>();
 
 	/////////////
 	// populate //
@@ -3082,10 +3076,10 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 	}
 	public void populateSchoolDad(SolrDocument solrDocument) {
 		SchoolDad oSchoolDad = (SchoolDad)this;
-		savesSchoolDad = (List<String>)solrDocument.get("savesSchoolDad_stored_strings");
-		if(savesSchoolDad != null) {
+		saves = (List<String>)solrDocument.get("saves_stored_strings");
+		if(saves != null) {
 
-			if(savesSchoolDad.contains("dadKey")) {
+			if(saves.contains("dadKey")) {
 				Long dadKey = (Long)solrDocument.get("dadKey_stored_long");
 				if(dadKey != null)
 					oSchoolDad.setDadKey(dadKey);
@@ -3095,145 +3089,145 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 			if(enrollmentKeys != null)
 				oSchoolDad.enrollmentKeys.addAll(enrollmentKeys);
 
-			if(savesSchoolDad.contains("familySort")) {
+			if(saves.contains("familySort")) {
 				Integer familySort = (Integer)solrDocument.get("familySort_stored_int");
 				if(familySort != null)
 					oSchoolDad.setFamilySort(familySort);
 			}
 
-			if(savesSchoolDad.contains("schoolSort")) {
+			if(saves.contains("schoolSort")) {
 				Integer schoolSort = (Integer)solrDocument.get("schoolSort_stored_int");
 				if(schoolSort != null)
 					oSchoolDad.setSchoolSort(schoolSort);
 			}
 
-			if(savesSchoolDad.contains("userKeys")) {
+			if(saves.contains("userKeys")) {
 				List<Long> userKeys = (List<Long>)solrDocument.get("userKeys_stored_longs");
 				if(userKeys != null)
 					oSchoolDad.userKeys.addAll(userKeys);
 			}
 
-			if(savesSchoolDad.contains("schoolKeys")) {
+			if(saves.contains("schoolKeys")) {
 				List<Long> schoolKeys = (List<Long>)solrDocument.get("schoolKeys_stored_longs");
 				if(schoolKeys != null)
 					oSchoolDad.schoolKeys.addAll(schoolKeys);
 			}
 
-			if(savesSchoolDad.contains("yearKeys")) {
+			if(saves.contains("yearKeys")) {
 				List<Long> yearKeys = (List<Long>)solrDocument.get("yearKeys_stored_longs");
 				if(yearKeys != null)
 					oSchoolDad.yearKeys.addAll(yearKeys);
 			}
 
-			if(savesSchoolDad.contains("seasonKeys")) {
+			if(saves.contains("seasonKeys")) {
 				List<Long> seasonKeys = (List<Long>)solrDocument.get("seasonKeys_stored_longs");
 				if(seasonKeys != null)
 					oSchoolDad.seasonKeys.addAll(seasonKeys);
 			}
 
-			if(savesSchoolDad.contains("sessionKeys")) {
+			if(saves.contains("sessionKeys")) {
 				List<Long> sessionKeys = (List<Long>)solrDocument.get("sessionKeys_stored_longs");
 				if(sessionKeys != null)
 					oSchoolDad.sessionKeys.addAll(sessionKeys);
 			}
 
-			if(savesSchoolDad.contains("ageKeys")) {
+			if(saves.contains("ageKeys")) {
 				List<Long> ageKeys = (List<Long>)solrDocument.get("ageKeys_stored_longs");
 				if(ageKeys != null)
 					oSchoolDad.ageKeys.addAll(ageKeys);
 			}
 
-			if(savesSchoolDad.contains("personFirstName")) {
+			if(saves.contains("personFirstName")) {
 				String personFirstName = (String)solrDocument.get("personFirstName_stored_string");
 				if(personFirstName != null)
 					oSchoolDad.setPersonFirstName(personFirstName);
 			}
 
-			if(savesSchoolDad.contains("personFirstNamePreferred")) {
+			if(saves.contains("personFirstNamePreferred")) {
 				String personFirstNamePreferred = (String)solrDocument.get("personFirstNamePreferred_stored_string");
 				if(personFirstNamePreferred != null)
 					oSchoolDad.setPersonFirstNamePreferred(personFirstNamePreferred);
 			}
 
-			if(savesSchoolDad.contains("familyName")) {
+			if(saves.contains("familyName")) {
 				String familyName = (String)solrDocument.get("familyName_stored_string");
 				if(familyName != null)
 					oSchoolDad.setFamilyName(familyName);
 			}
 
-			if(savesSchoolDad.contains("personCompleteName")) {
+			if(saves.contains("personCompleteName")) {
 				String personCompleteName = (String)solrDocument.get("personCompleteName_stored_string");
 				if(personCompleteName != null)
 					oSchoolDad.setPersonCompleteName(personCompleteName);
 			}
 
-			if(savesSchoolDad.contains("personCompleteNamePreferred")) {
+			if(saves.contains("personCompleteNamePreferred")) {
 				String personCompleteNamePreferred = (String)solrDocument.get("personCompleteNamePreferred_stored_string");
 				if(personCompleteNamePreferred != null)
 					oSchoolDad.setPersonCompleteNamePreferred(personCompleteNamePreferred);
 			}
 
-			if(savesSchoolDad.contains("personFormalName")) {
+			if(saves.contains("personFormalName")) {
 				String personFormalName = (String)solrDocument.get("personFormalName_stored_string");
 				if(personFormalName != null)
 					oSchoolDad.setPersonFormalName(personFormalName);
 			}
 
-			if(savesSchoolDad.contains("personOccupation")) {
+			if(saves.contains("personOccupation")) {
 				String personOccupation = (String)solrDocument.get("personOccupation_stored_string");
 				if(personOccupation != null)
 					oSchoolDad.setPersonOccupation(personOccupation);
 			}
 
-			if(savesSchoolDad.contains("personPhoneNumber")) {
+			if(saves.contains("personPhoneNumber")) {
 				String personPhoneNumber = (String)solrDocument.get("personPhoneNumber_stored_string");
 				if(personPhoneNumber != null)
 					oSchoolDad.setPersonPhoneNumber(personPhoneNumber);
 			}
 
-			if(savesSchoolDad.contains("personEmail")) {
+			if(saves.contains("personEmail")) {
 				String personEmail = (String)solrDocument.get("personEmail_stored_string");
 				if(personEmail != null)
 					oSchoolDad.setPersonEmail(personEmail);
 			}
 
-			if(savesSchoolDad.contains("personRelation")) {
+			if(saves.contains("personRelation")) {
 				String personRelation = (String)solrDocument.get("personRelation_stored_string");
 				if(personRelation != null)
 					oSchoolDad.setPersonRelation(personRelation);
 			}
 
-			if(savesSchoolDad.contains("personSms")) {
+			if(saves.contains("personSms")) {
 				Boolean personSms = (Boolean)solrDocument.get("personSms_stored_boolean");
 				if(personSms != null)
 					oSchoolDad.setPersonSms(personSms);
 			}
 
-			if(savesSchoolDad.contains("personReceiveEmail")) {
+			if(saves.contains("personReceiveEmail")) {
 				Boolean personReceiveEmail = (Boolean)solrDocument.get("personReceiveEmail_stored_boolean");
 				if(personReceiveEmail != null)
 					oSchoolDad.setPersonReceiveEmail(personReceiveEmail);
 			}
 
-			if(savesSchoolDad.contains("personEmergencyContact")) {
+			if(saves.contains("personEmergencyContact")) {
 				Boolean personEmergencyContact = (Boolean)solrDocument.get("personEmergencyContact_stored_boolean");
 				if(personEmergencyContact != null)
 					oSchoolDad.setPersonEmergencyContact(personEmergencyContact);
 			}
 
-			if(savesSchoolDad.contains("personPickup")) {
+			if(saves.contains("personPickup")) {
 				Boolean personPickup = (Boolean)solrDocument.get("personPickup_stored_boolean");
 				if(personPickup != null)
 					oSchoolDad.setPersonPickup(personPickup);
 			}
 
-			if(savesSchoolDad.contains("photo")) {
+			if(saves.contains("photo")) {
 				String photo = (String)solrDocument.get("photo_stored_string");
 				if(photo != null)
 					oSchoolDad.setPhoto(photo);
 			}
 
-			if(savesSchoolDad.contains("dadCompleteName")) {
+			if(saves.contains("dadCompleteName")) {
 				String dadCompleteName = (String)solrDocument.get("dadCompleteName_stored_string");
 				if(dadCompleteName != null)
 					oSchoolDad.setDadCompleteName(dadCompleteName);
@@ -3305,9 +3299,6 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 	}
 
 	public void indexSchoolDad(SolrInputDocument document) {
-		if(savesSchoolDad != null)
-			document.addField("savesSchoolDad_stored_strings", savesSchoolDad);
-
 		if(dadKey != null) {
 			document.addField("dadKey_indexed_long", dadKey);
 			document.addField("dadKey_stored_long", dadKey);

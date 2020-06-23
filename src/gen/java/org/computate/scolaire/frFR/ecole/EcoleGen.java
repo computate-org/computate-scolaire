@@ -1982,8 +1982,8 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		switch(var) {
 			case "anneeCles":
 				oEcole.addAnneeCles((Long)val);
-				if(!sauvegardesEcole.contains(var))
-					sauvegardesEcole.add(var);
+				if(!sauvegardes.contains(var))
+					sauvegardes.add(var);
 				return val;
 			default:
 				return super.attribuerCluster(var, val);
@@ -2014,48 +2014,42 @@ public abstract class EcoleGen<DEV> extends Cluster {
 			case "ecoleNom":
 				if(val != null)
 					setEcoleNom(val);
-				sauvegardesEcole.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "ecoleNumeroTelephone":
 				if(val != null)
 					setEcoleNumeroTelephone(val);
-				sauvegardesEcole.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "ecoleAdministrateurNom":
 				if(val != null)
 					setEcoleAdministrateurNom(val);
-				sauvegardesEcole.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "ecoleMailDe":
 				if(val != null)
 					setEcoleMailDe(val);
-				sauvegardesEcole.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "ecoleMailA":
 				if(val != null)
 					setEcoleMailA(val);
-				sauvegardesEcole.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "ecoleEmplacement":
 				if(val != null)
 					setEcoleEmplacement(val);
-				sauvegardesEcole.add(var);
+				sauvegardes.add(var);
 				return val;
 			case "ecoleAddresse":
 				if(val != null)
 					setEcoleAddresse(val);
-				sauvegardesEcole.add(var);
+				sauvegardes.add(var);
 				return val;
 			default:
 				return super.definirCluster(var, val);
 		}
 	}
-
-	/////////////////
-	// sauvegardes //
-	/////////////////
-
-	protected List<String> sauvegardesEcole = new ArrayList<String>();
 
 	/////////////
 	// peupler //
@@ -2066,10 +2060,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	}
 	public void peuplerEcole(SolrDocument solrDocument) {
 		Ecole oEcole = (Ecole)this;
-		sauvegardesEcole = (List<String>)solrDocument.get("sauvegardesEcole_stored_strings");
-		if(sauvegardesEcole != null) {
+		sauvegardes = (List<String>)solrDocument.get("sauvegardes_stored_strings");
+		if(sauvegardes != null) {
 
-			if(sauvegardesEcole.contains("ecoleCle")) {
+			if(sauvegardes.contains("ecoleCle")) {
 				Long ecoleCle = (Long)solrDocument.get("ecoleCle_stored_long");
 				if(ecoleCle != null)
 					oEcole.setEcoleCle(ecoleCle);
@@ -2079,97 +2073,97 @@ public abstract class EcoleGen<DEV> extends Cluster {
 			if(anneeCles != null)
 				oEcole.anneeCles.addAll(anneeCles);
 
-			if(sauvegardesEcole.contains("saisonCles")) {
+			if(sauvegardes.contains("saisonCles")) {
 				List<Long> saisonCles = (List<Long>)solrDocument.get("saisonCles_stored_longs");
 				if(saisonCles != null)
 					oEcole.saisonCles.addAll(saisonCles);
 			}
 
-			if(sauvegardesEcole.contains("sessionCles")) {
+			if(sauvegardes.contains("sessionCles")) {
 				List<Long> sessionCles = (List<Long>)solrDocument.get("sessionCles_stored_longs");
 				if(sessionCles != null)
 					oEcole.sessionCles.addAll(sessionCles);
 			}
 
-			if(sauvegardesEcole.contains("groupeAgeCles")) {
+			if(sauvegardes.contains("groupeAgeCles")) {
 				List<Long> groupeAgeCles = (List<Long>)solrDocument.get("groupeAgeCles_stored_longs");
 				if(groupeAgeCles != null)
 					oEcole.groupeAgeCles.addAll(groupeAgeCles);
 			}
 
-			if(sauvegardesEcole.contains("blocCles")) {
+			if(sauvegardes.contains("blocCles")) {
 				List<Long> blocCles = (List<Long>)solrDocument.get("blocCles_stored_longs");
 				if(blocCles != null)
 					oEcole.blocCles.addAll(blocCles);
 			}
 
-			if(sauvegardesEcole.contains("enfantCles")) {
+			if(sauvegardes.contains("enfantCles")) {
 				List<Long> enfantCles = (List<Long>)solrDocument.get("enfantCles_stored_longs");
 				if(enfantCles != null)
 					oEcole.enfantCles.addAll(enfantCles);
 			}
 
-			if(sauvegardesEcole.contains("scolaireTri")) {
+			if(sauvegardes.contains("scolaireTri")) {
 				Integer scolaireTri = (Integer)solrDocument.get("scolaireTri_stored_int");
 				if(scolaireTri != null)
 					oEcole.setScolaireTri(scolaireTri);
 			}
 
-			if(sauvegardesEcole.contains("ecoleTri")) {
+			if(sauvegardes.contains("ecoleTri")) {
 				Integer ecoleTri = (Integer)solrDocument.get("ecoleTri_stored_int");
 				if(ecoleTri != null)
 					oEcole.setEcoleTri(ecoleTri);
 			}
 
-			if(sauvegardesEcole.contains("ecoleNom")) {
+			if(sauvegardes.contains("ecoleNom")) {
 				String ecoleNom = (String)solrDocument.get("ecoleNom_stored_string");
 				if(ecoleNom != null)
 					oEcole.setEcoleNom(ecoleNom);
 			}
 
-			if(sauvegardesEcole.contains("ecoleNumeroTelephone")) {
+			if(sauvegardes.contains("ecoleNumeroTelephone")) {
 				String ecoleNumeroTelephone = (String)solrDocument.get("ecoleNumeroTelephone_stored_string");
 				if(ecoleNumeroTelephone != null)
 					oEcole.setEcoleNumeroTelephone(ecoleNumeroTelephone);
 			}
 
-			if(sauvegardesEcole.contains("ecoleAdministrateurNom")) {
+			if(sauvegardes.contains("ecoleAdministrateurNom")) {
 				String ecoleAdministrateurNom = (String)solrDocument.get("ecoleAdministrateurNom_stored_string");
 				if(ecoleAdministrateurNom != null)
 					oEcole.setEcoleAdministrateurNom(ecoleAdministrateurNom);
 			}
 
-			if(sauvegardesEcole.contains("ecoleMailDe")) {
+			if(sauvegardes.contains("ecoleMailDe")) {
 				String ecoleMailDe = (String)solrDocument.get("ecoleMailDe_stored_string");
 				if(ecoleMailDe != null)
 					oEcole.setEcoleMailDe(ecoleMailDe);
 			}
 
-			if(sauvegardesEcole.contains("ecoleMailA")) {
+			if(sauvegardes.contains("ecoleMailA")) {
 				String ecoleMailA = (String)solrDocument.get("ecoleMailA_stored_string");
 				if(ecoleMailA != null)
 					oEcole.setEcoleMailA(ecoleMailA);
 			}
 
-			if(sauvegardesEcole.contains("ecoleEmplacement")) {
+			if(sauvegardes.contains("ecoleEmplacement")) {
 				String ecoleEmplacement = (String)solrDocument.get("ecoleEmplacement_stored_string");
 				if(ecoleEmplacement != null)
 					oEcole.setEcoleEmplacement(ecoleEmplacement);
 			}
 
-			if(sauvegardesEcole.contains("ecoleAddresse")) {
+			if(sauvegardes.contains("ecoleAddresse")) {
 				String ecoleAddresse = (String)solrDocument.get("ecoleAddresse_stored_string");
 				if(ecoleAddresse != null)
 					oEcole.setEcoleAddresse(ecoleAddresse);
 			}
 
-			if(sauvegardesEcole.contains("ecoleNomCourt")) {
+			if(sauvegardes.contains("ecoleNomCourt")) {
 				String ecoleNomCourt = (String)solrDocument.get("ecoleNomCourt_stored_string");
 				if(ecoleNomCourt != null)
 					oEcole.setEcoleNomCourt(ecoleNomCourt);
 			}
 
-			if(sauvegardesEcole.contains("ecoleNomComplet")) {
+			if(sauvegardes.contains("ecoleNomComplet")) {
 				String ecoleNomComplet = (String)solrDocument.get("ecoleNomComplet_stored_string");
 				if(ecoleNomComplet != null)
 					oEcole.setEcoleNomComplet(ecoleNomComplet);
@@ -2241,9 +2235,6 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	}
 
 	public void indexerEcole(SolrInputDocument document) {
-		if(sauvegardesEcole != null)
-			document.addField("sauvegardesEcole_stored_strings", sauvegardesEcole);
-
 		if(ecoleCle != null) {
 			document.addField("ecoleCle_indexed_long", ecoleCle);
 			document.addField("ecoleCle_stored_long", ecoleCle);

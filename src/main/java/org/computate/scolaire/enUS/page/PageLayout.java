@@ -370,7 +370,7 @@ public class PageLayout extends PageLayoutGen<Object> {
 			g("head");
 			e("body").a("style", "height: 100%; ").a("class", "w3-light-grey ").f(); 
 				e("a").a("name", "top").f().g("a");
-				e("div").a("class", "top-box w3-top ").f();
+				e("div").a("class", "top-box w3-top w3-white ").f();
 				g("div");
 				e("div").a("id", "modaleErreur").a("class", "w3-modal").a("onclick", "this.style.display = 'none';").f();
 					e("div").a("class", "w3-modal-content w3-animate-zoom").f();
