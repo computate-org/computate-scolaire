@@ -9,6 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.lang.Integer;
 import java.text.NumberFormat;
 import io.vertx.core.logging.LoggerFactory;
+import java.util.ArrayList;
 import org.computate.scolaire.frFR.couverture.Couverture;
 import org.apache.commons.collections.CollectionUtils;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -41,7 +42,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 
 /**	
- *	Charge les propriétés dans le fichier de config de l'application dans des champs spécifiques. 
+ * Charge les propriétés dans le fichier de config de l'application dans des champs spécifiques. 
  * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
  * <br/>
  **/
@@ -84,30 +85,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		}
 		configCheminCouverture.dejaInitialise(true);
 		return (ConfigSite)this;
-	}
-
-	public String solrConfigChemin() {
-		return configChemin;
-	}
-
-	public String strConfigChemin() {
-		return configChemin == null ? "" : configChemin;
-	}
-
-	public String jsonConfigChemin() {
-		return configChemin == null ? "" : configChemin;
-	}
-
-	public String nomAffichageConfigChemin() {
-		return null;
-	}
-
-	public String htmTooltipConfigChemin() {
-		return null;
-	}
-
-	public String htmConfigChemin() {
-		return configChemin == null ? "" : StringEscapeUtils.escapeHtml4(strConfigChemin());
 	}
 
 	////////////
@@ -186,30 +163,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return (ConfigSite)this;
 	}
 
-	public String solrIdentifiantSite() {
-		return identifiantSite;
-	}
-
-	public String strIdentifiantSite() {
-		return identifiantSite == null ? "" : identifiantSite;
-	}
-
-	public String jsonIdentifiantSite() {
-		return identifiantSite == null ? "" : identifiantSite;
-	}
-
-	public String nomAffichageIdentifiantSite() {
-		return null;
-	}
-
-	public String htmTooltipIdentifiantSite() {
-		return null;
-	}
-
-	public String htmIdentifiantSite() {
-		return identifiantSite == null ? "" : StringEscapeUtils.escapeHtml4(strIdentifiantSite());
-	}
-
 	////////////////////
 	// prefixeEchappe //
 	////////////////////
@@ -246,30 +199,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		}
 		prefixeEchappeCouverture.dejaInitialise(true);
 		return (ConfigSite)this;
-	}
-
-	public String solrPrefixeEchappe() {
-		return prefixeEchappe;
-	}
-
-	public String strPrefixeEchappe() {
-		return prefixeEchappe == null ? "" : prefixeEchappe;
-	}
-
-	public String jsonPrefixeEchappe() {
-		return prefixeEchappe == null ? "" : prefixeEchappe;
-	}
-
-	public String nomAffichagePrefixeEchappe() {
-		return null;
-	}
-
-	public String htmTooltipPrefixeEchappe() {
-		return null;
-	}
-
-	public String htmPrefixeEchappe() {
-		return prefixeEchappe == null ? "" : StringEscapeUtils.escapeHtml4(strPrefixeEchappe());
 	}
 
 	/////////////////
@@ -310,30 +239,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return (ConfigSite)this;
 	}
 
-	public String solrAppliChemin() {
-		return appliChemin;
-	}
-
-	public String strAppliChemin() {
-		return appliChemin == null ? "" : appliChemin;
-	}
-
-	public String jsonAppliChemin() {
-		return appliChemin == null ? "" : appliChemin;
-	}
-
-	public String nomAffichageAppliChemin() {
-		return null;
-	}
-
-	public String htmTooltipAppliChemin() {
-		return null;
-	}
-
-	public String htmAppliChemin() {
-		return appliChemin == null ? "" : StringEscapeUtils.escapeHtml4(strAppliChemin());
-	}
-
 	////////////////////
 	// racineDocument //
 	////////////////////
@@ -370,30 +275,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		}
 		racineDocumentCouverture.dejaInitialise(true);
 		return (ConfigSite)this;
-	}
-
-	public String solrRacineDocument() {
-		return racineDocument;
-	}
-
-	public String strRacineDocument() {
-		return racineDocument == null ? "" : racineDocument;
-	}
-
-	public String jsonRacineDocument() {
-		return racineDocument == null ? "" : racineDocument;
-	}
-
-	public String nomAffichageRacineDocument() {
-		return null;
-	}
-
-	public String htmTooltipRacineDocument() {
-		return null;
-	}
-
-	public String htmRacineDocument() {
-		return racineDocument == null ? "" : StringEscapeUtils.escapeHtml4(strRacineDocument());
 	}
 
 	///////////////////
@@ -434,30 +315,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return (ConfigSite)this;
 	}
 
-	public String solrNomEntreprise() {
-		return nomEntreprise;
-	}
-
-	public String strNomEntreprise() {
-		return nomEntreprise == null ? "" : nomEntreprise;
-	}
-
-	public String jsonNomEntreprise() {
-		return nomEntreprise == null ? "" : nomEntreprise;
-	}
-
-	public String nomAffichageNomEntreprise() {
-		return null;
-	}
-
-	public String htmTooltipNomEntreprise() {
-		return null;
-	}
-
-	public String htmNomEntreprise() {
-		return nomEntreprise == null ? "" : StringEscapeUtils.escapeHtml4(strNomEntreprise());
-	}
-
 	////////////////
 	// nomDomaine //
 	////////////////
@@ -496,30 +353,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return (ConfigSite)this;
 	}
 
-	public String solrNomDomaine() {
-		return nomDomaine;
-	}
-
-	public String strNomDomaine() {
-		return nomDomaine == null ? "" : nomDomaine;
-	}
-
-	public String jsonNomDomaine() {
-		return nomDomaine == null ? "" : nomDomaine;
-	}
-
-	public String nomAffichageNomDomaine() {
-		return null;
-	}
-
-	public String htmTooltipNomDomaine() {
-		return null;
-	}
-
-	public String htmNomDomaine() {
-		return nomDomaine == null ? "" : StringEscapeUtils.escapeHtml4(strNomDomaine());
-	}
-
 	/////////////////
 	// siteNomHote //
 	/////////////////
@@ -556,30 +389,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		}
 		siteNomHoteCouverture.dejaInitialise(true);
 		return (ConfigSite)this;
-	}
-
-	public String solrSiteNomHote() {
-		return siteNomHote;
-	}
-
-	public String strSiteNomHote() {
-		return siteNomHote == null ? "" : siteNomHote;
-	}
-
-	public String jsonSiteNomHote() {
-		return siteNomHote == null ? "" : siteNomHote;
-	}
-
-	public String nomAffichageSiteNomHote() {
-		return null;
-	}
-
-	public String htmTooltipSiteNomHote() {
-		return null;
-	}
-
-	public String htmSiteNomHote() {
-		return siteNomHote == null ? "" : StringEscapeUtils.escapeHtml4(strSiteNomHote());
 	}
 
 	//////////////
@@ -627,30 +436,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return (ConfigSite)this;
 	}
 
-	public Integer solrSitePort() {
-		return sitePort;
-	}
-
-	public String strSitePort() {
-		return sitePort == null ? "" : sitePort.toString();
-	}
-
-	public String jsonSitePort() {
-		return sitePort == null ? "" : sitePort.toString();
-	}
-
-	public String nomAffichageSitePort() {
-		return null;
-	}
-
-	public String htmTooltipSitePort() {
-		return null;
-	}
-
-	public String htmSitePort() {
-		return sitePort == null ? "" : StringEscapeUtils.escapeHtml4(strSitePort());
-	}
-
 	/////////////////
 	// authRoyaume //
 	/////////////////
@@ -687,30 +472,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		}
 		authRoyaumeCouverture.dejaInitialise(true);
 		return (ConfigSite)this;
-	}
-
-	public String solrAuthRoyaume() {
-		return authRoyaume;
-	}
-
-	public String strAuthRoyaume() {
-		return authRoyaume == null ? "" : authRoyaume;
-	}
-
-	public String jsonAuthRoyaume() {
-		return authRoyaume == null ? "" : authRoyaume;
-	}
-
-	public String nomAffichageAuthRoyaume() {
-		return null;
-	}
-
-	public String htmTooltipAuthRoyaume() {
-		return null;
-	}
-
-	public String htmAuthRoyaume() {
-		return authRoyaume == null ? "" : StringEscapeUtils.escapeHtml4(strAuthRoyaume());
 	}
 
 	///////////////////
@@ -751,30 +512,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return (ConfigSite)this;
 	}
 
-	public String solrAuthRessource() {
-		return authRessource;
-	}
-
-	public String strAuthRessource() {
-		return authRessource == null ? "" : authRessource;
-	}
-
-	public String jsonAuthRessource() {
-		return authRessource == null ? "" : authRessource;
-	}
-
-	public String nomAffichageAuthRessource() {
-		return null;
-	}
-
-	public String htmTooltipAuthRessource() {
-		return null;
-	}
-
-	public String htmAuthRessource() {
-		return authRessource == null ? "" : StringEscapeUtils.escapeHtml4(strAuthRessource());
-	}
-
 	////////////////
 	// authSecret //
 	////////////////
@@ -811,30 +548,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		}
 		authSecretCouverture.dejaInitialise(true);
 		return (ConfigSite)this;
-	}
-
-	public String solrAuthSecret() {
-		return authSecret;
-	}
-
-	public String strAuthSecret() {
-		return authSecret == null ? "" : authSecret;
-	}
-
-	public String jsonAuthSecret() {
-		return authSecret == null ? "" : authSecret;
-	}
-
-	public String nomAffichageAuthSecret() {
-		return null;
-	}
-
-	public String htmTooltipAuthSecret() {
-		return null;
-	}
-
-	public String htmAuthSecret() {
-		return authSecret == null ? "" : StringEscapeUtils.escapeHtml4(strAuthSecret());
 	}
 
 	///////////////////
@@ -875,30 +588,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return (ConfigSite)this;
 	}
 
-	public String solrAuthSslRequis() {
-		return authSslRequis;
-	}
-
-	public String strAuthSslRequis() {
-		return authSslRequis == null ? "" : authSslRequis;
-	}
-
-	public String jsonAuthSslRequis() {
-		return authSslRequis == null ? "" : authSslRequis;
-	}
-
-	public String nomAffichageAuthSslRequis() {
-		return null;
-	}
-
-	public String htmTooltipAuthSslRequis() {
-		return null;
-	}
-
-	public String htmAuthSslRequis() {
-		return authSslRequis == null ? "" : StringEscapeUtils.escapeHtml4(strAuthSslRequis());
-	}
-
 	//////////////////
 	// sslJksChemin //
 	//////////////////
@@ -935,30 +624,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		}
 		sslJksCheminCouverture.dejaInitialise(true);
 		return (ConfigSite)this;
-	}
-
-	public String solrSslJksChemin() {
-		return sslJksChemin;
-	}
-
-	public String strSslJksChemin() {
-		return sslJksChemin == null ? "" : sslJksChemin;
-	}
-
-	public String jsonSslJksChemin() {
-		return sslJksChemin == null ? "" : sslJksChemin;
-	}
-
-	public String nomAffichageSslJksChemin() {
-		return null;
-	}
-
-	public String htmTooltipSslJksChemin() {
-		return null;
-	}
-
-	public String htmSslJksChemin() {
-		return sslJksChemin == null ? "" : StringEscapeUtils.escapeHtml4(strSslJksChemin());
 	}
 
 	//////////////////////
@@ -999,30 +664,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return (ConfigSite)this;
 	}
 
-	public String solrSslJksMotDePasse() {
-		return sslJksMotDePasse;
-	}
-
-	public String strSslJksMotDePasse() {
-		return sslJksMotDePasse == null ? "" : sslJksMotDePasse;
-	}
-
-	public String jsonSslJksMotDePasse() {
-		return sslJksMotDePasse == null ? "" : sslJksMotDePasse;
-	}
-
-	public String nomAffichageSslJksMotDePasse() {
-		return null;
-	}
-
-	public String htmTooltipSslJksMotDePasse() {
-		return null;
-	}
-
-	public String htmSslJksMotDePasse() {
-		return sslJksMotDePasse == null ? "" : StringEscapeUtils.escapeHtml4(strSslJksMotDePasse());
-	}
-
 	/////////////
 	// authUrl //
 	/////////////
@@ -1059,30 +700,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		}
 		authUrlCouverture.dejaInitialise(true);
 		return (ConfigSite)this;
-	}
-
-	public String solrAuthUrl() {
-		return authUrl;
-	}
-
-	public String strAuthUrl() {
-		return authUrl == null ? "" : authUrl;
-	}
-
-	public String jsonAuthUrl() {
-		return authUrl == null ? "" : authUrl;
-	}
-
-	public String nomAffichageAuthUrl() {
-		return null;
-	}
-
-	public String htmTooltipAuthUrl() {
-		return null;
-	}
-
-	public String htmAuthUrl() {
-		return authUrl == null ? "" : StringEscapeUtils.escapeHtml4(strAuthUrl());
 	}
 
 	/////////////////
@@ -1123,30 +740,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return (ConfigSite)this;
 	}
 
-	public String solrCryptageSel() {
-		return cryptageSel;
-	}
-
-	public String strCryptageSel() {
-		return cryptageSel == null ? "" : cryptageSel;
-	}
-
-	public String jsonCryptageSel() {
-		return cryptageSel == null ? "" : cryptageSel;
-	}
-
-	public String nomAffichageCryptageSel() {
-		return null;
-	}
-
-	public String htmTooltipCryptageSel() {
-		return null;
-	}
-
-	public String htmCryptageSel() {
-		return cryptageSel == null ? "" : StringEscapeUtils.escapeHtml4(strCryptageSel());
-	}
-
 	////////////////////////
 	// cryptageMotDePasse //
 	////////////////////////
@@ -1183,30 +776,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		}
 		cryptageMotDePasseCouverture.dejaInitialise(true);
 		return (ConfigSite)this;
-	}
-
-	public String solrCryptageMotDePasse() {
-		return cryptageMotDePasse;
-	}
-
-	public String strCryptageMotDePasse() {
-		return cryptageMotDePasse == null ? "" : cryptageMotDePasse;
-	}
-
-	public String jsonCryptageMotDePasse() {
-		return cryptageMotDePasse == null ? "" : cryptageMotDePasse;
-	}
-
-	public String nomAffichageCryptageMotDePasse() {
-		return null;
-	}
-
-	public String htmTooltipCryptageMotDePasse() {
-		return null;
-	}
-
-	public String htmCryptageMotDePasse() {
-		return cryptageMotDePasse == null ? "" : StringEscapeUtils.escapeHtml4(strCryptageMotDePasse());
 	}
 
 	/////////////////
@@ -1247,30 +816,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return (ConfigSite)this;
 	}
 
-	public String solrSiteUrlBase() {
-		return siteUrlBase;
-	}
-
-	public String strSiteUrlBase() {
-		return siteUrlBase == null ? "" : siteUrlBase;
-	}
-
-	public String jsonSiteUrlBase() {
-		return siteUrlBase == null ? "" : siteUrlBase;
-	}
-
-	public String nomAffichageSiteUrlBase() {
-		return null;
-	}
-
-	public String htmTooltipSiteUrlBase() {
-		return null;
-	}
-
-	public String htmSiteUrlBase() {
-		return siteUrlBase == null ? "" : StringEscapeUtils.escapeHtml4(strSiteUrlBase());
-	}
-
 	//////////////////////
 	// siteNomAffichage //
 	//////////////////////
@@ -1307,30 +852,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		}
 		siteNomAffichageCouverture.dejaInitialise(true);
 		return (ConfigSite)this;
-	}
-
-	public String solrSiteNomAffichage() {
-		return siteNomAffichage;
-	}
-
-	public String strSiteNomAffichage() {
-		return siteNomAffichage == null ? "" : siteNomAffichage;
-	}
-
-	public String jsonSiteNomAffichage() {
-		return siteNomAffichage == null ? "" : siteNomAffichage;
-	}
-
-	public String nomAffichageSiteNomAffichage() {
-		return null;
-	}
-
-	public String htmTooltipSiteNomAffichage() {
-		return null;
-	}
-
-	public String htmSiteNomAffichage() {
-		return siteNomAffichage == null ? "" : StringEscapeUtils.escapeHtml4(strSiteNomAffichage());
 	}
 
 	//////////////////////
@@ -1371,30 +892,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return (ConfigSite)this;
 	}
 
-	public String solrJdbcClassePilote() {
-		return jdbcClassePilote;
-	}
-
-	public String strJdbcClassePilote() {
-		return jdbcClassePilote == null ? "" : jdbcClassePilote;
-	}
-
-	public String jsonJdbcClassePilote() {
-		return jdbcClassePilote == null ? "" : jdbcClassePilote;
-	}
-
-	public String nomAffichageJdbcClassePilote() {
-		return null;
-	}
-
-	public String htmTooltipJdbcClassePilote() {
-		return null;
-	}
-
-	public String htmJdbcClassePilote() {
-		return jdbcClassePilote == null ? "" : StringEscapeUtils.escapeHtml4(strJdbcClassePilote());
-	}
-
 	/////////////////////
 	// jdbcUtilisateur //
 	/////////////////////
@@ -1433,30 +930,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return (ConfigSite)this;
 	}
 
-	public String solrJdbcUtilisateur() {
-		return jdbcUtilisateur;
-	}
-
-	public String strJdbcUtilisateur() {
-		return jdbcUtilisateur == null ? "" : jdbcUtilisateur;
-	}
-
-	public String jsonJdbcUtilisateur() {
-		return jdbcUtilisateur == null ? "" : jdbcUtilisateur;
-	}
-
-	public String nomAffichageJdbcUtilisateur() {
-		return null;
-	}
-
-	public String htmTooltipJdbcUtilisateur() {
-		return null;
-	}
-
-	public String htmJdbcUtilisateur() {
-		return jdbcUtilisateur == null ? "" : StringEscapeUtils.escapeHtml4(strJdbcUtilisateur());
-	}
-
 	////////////////////
 	// jdbcMotDePasse //
 	////////////////////
@@ -1493,30 +966,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		}
 		jdbcMotDePasseCouverture.dejaInitialise(true);
 		return (ConfigSite)this;
-	}
-
-	public String solrJdbcMotDePasse() {
-		return jdbcMotDePasse;
-	}
-
-	public String strJdbcMotDePasse() {
-		return jdbcMotDePasse == null ? "" : jdbcMotDePasse;
-	}
-
-	public String jsonJdbcMotDePasse() {
-		return jdbcMotDePasse == null ? "" : jdbcMotDePasse;
-	}
-
-	public String nomAffichageJdbcMotDePasse() {
-		return null;
-	}
-
-	public String htmTooltipJdbcMotDePasse() {
-		return null;
-	}
-
-	public String htmJdbcMotDePasse() {
-		return jdbcMotDePasse == null ? "" : StringEscapeUtils.escapeHtml4(strJdbcMotDePasse());
 	}
 
 	//////////////////////////
@@ -1564,30 +1013,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return (ConfigSite)this;
 	}
 
-	public Integer solrJdbcTailleMaxPiscine() {
-		return jdbcTailleMaxPiscine;
-	}
-
-	public String strJdbcTailleMaxPiscine() {
-		return jdbcTailleMaxPiscine == null ? "" : jdbcTailleMaxPiscine.toString();
-	}
-
-	public String jsonJdbcTailleMaxPiscine() {
-		return jdbcTailleMaxPiscine == null ? "" : jdbcTailleMaxPiscine.toString();
-	}
-
-	public String nomAffichageJdbcTailleMaxPiscine() {
-		return null;
-	}
-
-	public String htmTooltipJdbcTailleMaxPiscine() {
-		return null;
-	}
-
-	public String htmJdbcTailleMaxPiscine() {
-		return jdbcTailleMaxPiscine == null ? "" : StringEscapeUtils.escapeHtml4(strJdbcTailleMaxPiscine());
-	}
-
 	////////////////////////
 	// jdbcMaxFileAttente //
 	////////////////////////
@@ -1631,30 +1056,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		}
 		jdbcMaxFileAttenteCouverture.dejaInitialise(true);
 		return (ConfigSite)this;
-	}
-
-	public Integer solrJdbcMaxFileAttente() {
-		return jdbcMaxFileAttente;
-	}
-
-	public String strJdbcMaxFileAttente() {
-		return jdbcMaxFileAttente == null ? "" : jdbcMaxFileAttente.toString();
-	}
-
-	public String jsonJdbcMaxFileAttente() {
-		return jdbcMaxFileAttente == null ? "" : jdbcMaxFileAttente.toString();
-	}
-
-	public String nomAffichageJdbcMaxFileAttente() {
-		return null;
-	}
-
-	public String htmTooltipJdbcMaxFileAttente() {
-		return null;
-	}
-
-	public String htmJdbcMaxFileAttente() {
-		return jdbcMaxFileAttente == null ? "" : StringEscapeUtils.escapeHtml4(strJdbcMaxFileAttente());
 	}
 
 	//////////////////////////
@@ -1702,30 +1103,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return (ConfigSite)this;
 	}
 
-	public Integer solrJdbcTailleMinPiscine() {
-		return jdbcTailleMinPiscine;
-	}
-
-	public String strJdbcTailleMinPiscine() {
-		return jdbcTailleMinPiscine == null ? "" : jdbcTailleMinPiscine.toString();
-	}
-
-	public String jsonJdbcTailleMinPiscine() {
-		return jdbcTailleMinPiscine == null ? "" : jdbcTailleMinPiscine.toString();
-	}
-
-	public String nomAffichageJdbcTailleMinPiscine() {
-		return null;
-	}
-
-	public String htmTooltipJdbcTailleMinPiscine() {
-		return null;
-	}
-
-	public String htmJdbcTailleMinPiscine() {
-		return jdbcTailleMinPiscine == null ? "" : StringEscapeUtils.escapeHtml4(strJdbcTailleMinPiscine());
-	}
-
 	/////////////////////////
 	// jdbcMaxDeclarations //
 	/////////////////////////
@@ -1769,30 +1146,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		}
 		jdbcMaxDeclarationsCouverture.dejaInitialise(true);
 		return (ConfigSite)this;
-	}
-
-	public Integer solrJdbcMaxDeclarations() {
-		return jdbcMaxDeclarations;
-	}
-
-	public String strJdbcMaxDeclarations() {
-		return jdbcMaxDeclarations == null ? "" : jdbcMaxDeclarations.toString();
-	}
-
-	public String jsonJdbcMaxDeclarations() {
-		return jdbcMaxDeclarations == null ? "" : jdbcMaxDeclarations.toString();
-	}
-
-	public String nomAffichageJdbcMaxDeclarations() {
-		return null;
-	}
-
-	public String htmTooltipJdbcMaxDeclarations() {
-		return null;
-	}
-
-	public String htmJdbcMaxDeclarations() {
-		return jdbcMaxDeclarations == null ? "" : StringEscapeUtils.escapeHtml4(strJdbcMaxDeclarations());
 	}
 
 	/////////////////////////////////////
@@ -1840,30 +1193,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return (ConfigSite)this;
 	}
 
-	public Integer solrJdbcMaxDeclarationsParConnexion() {
-		return jdbcMaxDeclarationsParConnexion;
-	}
-
-	public String strJdbcMaxDeclarationsParConnexion() {
-		return jdbcMaxDeclarationsParConnexion == null ? "" : jdbcMaxDeclarationsParConnexion.toString();
-	}
-
-	public String jsonJdbcMaxDeclarationsParConnexion() {
-		return jdbcMaxDeclarationsParConnexion == null ? "" : jdbcMaxDeclarationsParConnexion.toString();
-	}
-
-	public String nomAffichageJdbcMaxDeclarationsParConnexion() {
-		return null;
-	}
-
-	public String htmTooltipJdbcMaxDeclarationsParConnexion() {
-		return null;
-	}
-
-	public String htmJdbcMaxDeclarationsParConnexion() {
-		return jdbcMaxDeclarationsParConnexion == null ? "" : StringEscapeUtils.escapeHtml4(strJdbcMaxDeclarationsParConnexion());
-	}
-
 	////////////////////////////
 	// jdbcTempsInactiviteMax //
 	////////////////////////////
@@ -1907,30 +1236,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		}
 		jdbcTempsInactiviteMaxCouverture.dejaInitialise(true);
 		return (ConfigSite)this;
-	}
-
-	public Integer solrJdbcTempsInactiviteMax() {
-		return jdbcTempsInactiviteMax;
-	}
-
-	public String strJdbcTempsInactiviteMax() {
-		return jdbcTempsInactiviteMax == null ? "" : jdbcTempsInactiviteMax.toString();
-	}
-
-	public String jsonJdbcTempsInactiviteMax() {
-		return jdbcTempsInactiviteMax == null ? "" : jdbcTempsInactiviteMax.toString();
-	}
-
-	public String nomAffichageJdbcTempsInactiviteMax() {
-		return null;
-	}
-
-	public String htmTooltipJdbcTempsInactiviteMax() {
-		return null;
-	}
-
-	public String htmJdbcTempsInactiviteMax() {
-		return jdbcTempsInactiviteMax == null ? "" : StringEscapeUtils.escapeHtml4(strJdbcTempsInactiviteMax());
 	}
 
 	////////////////////////
@@ -1978,30 +1283,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return (ConfigSite)this;
 	}
 
-	public Integer solrJdbcDelaiConnexion() {
-		return jdbcDelaiConnexion;
-	}
-
-	public String strJdbcDelaiConnexion() {
-		return jdbcDelaiConnexion == null ? "" : jdbcDelaiConnexion.toString();
-	}
-
-	public String jsonJdbcDelaiConnexion() {
-		return jdbcDelaiConnexion == null ? "" : jdbcDelaiConnexion.toString();
-	}
-
-	public String nomAffichageJdbcDelaiConnexion() {
-		return null;
-	}
-
-	public String htmTooltipJdbcDelaiConnexion() {
-		return null;
-	}
-
-	public String htmJdbcDelaiConnexion() {
-		return jdbcDelaiConnexion == null ? "" : StringEscapeUtils.escapeHtml4(strJdbcDelaiConnexion());
-	}
-
 	//////////////
 	// jdbcHote //
 	//////////////
@@ -2038,30 +1319,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		}
 		jdbcHoteCouverture.dejaInitialise(true);
 		return (ConfigSite)this;
-	}
-
-	public String solrJdbcHote() {
-		return jdbcHote;
-	}
-
-	public String strJdbcHote() {
-		return jdbcHote == null ? "" : jdbcHote;
-	}
-
-	public String jsonJdbcHote() {
-		return jdbcHote == null ? "" : jdbcHote;
-	}
-
-	public String nomAffichageJdbcHote() {
-		return null;
-	}
-
-	public String htmTooltipJdbcHote() {
-		return null;
-	}
-
-	public String htmJdbcHote() {
-		return jdbcHote == null ? "" : StringEscapeUtils.escapeHtml4(strJdbcHote());
 	}
 
 	//////////////
@@ -2109,30 +1366,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return (ConfigSite)this;
 	}
 
-	public Integer solrJdbcPort() {
-		return jdbcPort;
-	}
-
-	public String strJdbcPort() {
-		return jdbcPort == null ? "" : jdbcPort.toString();
-	}
-
-	public String jsonJdbcPort() {
-		return jdbcPort == null ? "" : jdbcPort.toString();
-	}
-
-	public String nomAffichageJdbcPort() {
-		return null;
-	}
-
-	public String htmTooltipJdbcPort() {
-		return null;
-	}
-
-	public String htmJdbcPort() {
-		return jdbcPort == null ? "" : StringEscapeUtils.escapeHtml4(strJdbcPort());
-	}
-
 	///////////////////////
 	// jdbcBaseDeDonnees //
 	///////////////////////
@@ -2169,30 +1402,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		}
 		jdbcBaseDeDonneesCouverture.dejaInitialise(true);
 		return (ConfigSite)this;
-	}
-
-	public String solrJdbcBaseDeDonnees() {
-		return jdbcBaseDeDonnees;
-	}
-
-	public String strJdbcBaseDeDonnees() {
-		return jdbcBaseDeDonnees == null ? "" : jdbcBaseDeDonnees;
-	}
-
-	public String jsonJdbcBaseDeDonnees() {
-		return jdbcBaseDeDonnees == null ? "" : jdbcBaseDeDonnees;
-	}
-
-	public String nomAffichageJdbcBaseDeDonnees() {
-		return null;
-	}
-
-	public String htmTooltipJdbcBaseDeDonnees() {
-		return null;
-	}
-
-	public String htmJdbcBaseDeDonnees() {
-		return jdbcBaseDeDonnees == null ? "" : StringEscapeUtils.escapeHtml4(strJdbcBaseDeDonnees());
 	}
 
 	/////////////
@@ -2233,30 +1442,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return (ConfigSite)this;
 	}
 
-	public String solrSolrUrl() {
-		return solrUrl;
-	}
-
-	public String strSolrUrl() {
-		return solrUrl == null ? "" : solrUrl;
-	}
-
-	public String jsonSolrUrl() {
-		return solrUrl == null ? "" : solrUrl;
-	}
-
-	public String nomAffichageSolrUrl() {
-		return null;
-	}
-
-	public String htmTooltipSolrUrl() {
-		return null;
-	}
-
-	public String htmSolrUrl() {
-		return solrUrl == null ? "" : StringEscapeUtils.escapeHtml4(strSolrUrl());
-	}
-
 	//////////////////////
 	// solrUrlComputate //
 	//////////////////////
@@ -2293,30 +1478,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		}
 		solrUrlComputateCouverture.dejaInitialise(true);
 		return (ConfigSite)this;
-	}
-
-	public String solrSolrUrlComputate() {
-		return solrUrlComputate;
-	}
-
-	public String strSolrUrlComputate() {
-		return solrUrlComputate == null ? "" : solrUrlComputate;
-	}
-
-	public String jsonSolrUrlComputate() {
-		return solrUrlComputate == null ? "" : solrUrlComputate;
-	}
-
-	public String nomAffichageSolrUrlComputate() {
-		return null;
-	}
-
-	public String htmTooltipSolrUrlComputate() {
-		return null;
-	}
-
-	public String htmSolrUrlComputate() {
-		return solrUrlComputate == null ? "" : StringEscapeUtils.escapeHtml4(strSolrUrlComputate());
 	}
 
 	////////////////////
@@ -2357,30 +1518,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return (ConfigSite)this;
 	}
 
-	public String solrCompteFacebook() {
-		return compteFacebook;
-	}
-
-	public String strCompteFacebook() {
-		return compteFacebook == null ? "" : compteFacebook;
-	}
-
-	public String jsonCompteFacebook() {
-		return compteFacebook == null ? "" : compteFacebook;
-	}
-
-	public String nomAffichageCompteFacebook() {
-		return null;
-	}
-
-	public String htmTooltipCompteFacebook() {
-		return null;
-	}
-
-	public String htmCompteFacebook() {
-		return compteFacebook == null ? "" : StringEscapeUtils.escapeHtml4(strCompteFacebook());
-	}
-
 	///////////////////
 	// compteTwitter //
 	///////////////////
@@ -2417,30 +1554,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		}
 		compteTwitterCouverture.dejaInitialise(true);
 		return (ConfigSite)this;
-	}
-
-	public String solrCompteTwitter() {
-		return compteTwitter;
-	}
-
-	public String strCompteTwitter() {
-		return compteTwitter == null ? "" : compteTwitter;
-	}
-
-	public String jsonCompteTwitter() {
-		return compteTwitter == null ? "" : compteTwitter;
-	}
-
-	public String nomAffichageCompteTwitter() {
-		return null;
-	}
-
-	public String htmTooltipCompteTwitter() {
-		return null;
-	}
-
-	public String htmCompteTwitter() {
-		return compteTwitter == null ? "" : StringEscapeUtils.escapeHtml4(strCompteTwitter());
 	}
 
 	/////////////////////
@@ -2481,30 +1594,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return (ConfigSite)this;
 	}
 
-	public String solrCompteInstagram() {
-		return compteInstagram;
-	}
-
-	public String strCompteInstagram() {
-		return compteInstagram == null ? "" : compteInstagram;
-	}
-
-	public String jsonCompteInstagram() {
-		return compteInstagram == null ? "" : compteInstagram;
-	}
-
-	public String nomAffichageCompteInstagram() {
-		return null;
-	}
-
-	public String htmTooltipCompteInstagram() {
-		return null;
-	}
-
-	public String htmCompteInstagram() {
-		return compteInstagram == null ? "" : StringEscapeUtils.escapeHtml4(strCompteInstagram());
-	}
-
 	///////////////////
 	// compteYoutube //
 	///////////////////
@@ -2541,30 +1630,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		}
 		compteYoutubeCouverture.dejaInitialise(true);
 		return (ConfigSite)this;
-	}
-
-	public String solrCompteYoutube() {
-		return compteYoutube;
-	}
-
-	public String strCompteYoutube() {
-		return compteYoutube == null ? "" : compteYoutube;
-	}
-
-	public String jsonCompteYoutube() {
-		return compteYoutube == null ? "" : compteYoutube;
-	}
-
-	public String nomAffichageCompteYoutube() {
-		return null;
-	}
-
-	public String htmTooltipCompteYoutube() {
-		return null;
-	}
-
-	public String htmCompteYoutube() {
-		return compteYoutube == null ? "" : StringEscapeUtils.escapeHtml4(strCompteYoutube());
 	}
 
 	/////////////////////
@@ -2605,30 +1670,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return (ConfigSite)this;
 	}
 
-	public String solrComptePinterest() {
-		return comptePinterest;
-	}
-
-	public String strComptePinterest() {
-		return comptePinterest == null ? "" : comptePinterest;
-	}
-
-	public String jsonComptePinterest() {
-		return comptePinterest == null ? "" : comptePinterest;
-	}
-
-	public String nomAffichageComptePinterest() {
-		return null;
-	}
-
-	public String htmTooltipComptePinterest() {
-		return null;
-	}
-
-	public String htmComptePinterest() {
-		return comptePinterest == null ? "" : StringEscapeUtils.escapeHtml4(strComptePinterest());
-	}
-
 	////////////////
 	// compteMail //
 	////////////////
@@ -2665,30 +1706,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		}
 		compteMailCouverture.dejaInitialise(true);
 		return (ConfigSite)this;
-	}
-
-	public String solrCompteMail() {
-		return compteMail;
-	}
-
-	public String strCompteMail() {
-		return compteMail == null ? "" : compteMail;
-	}
-
-	public String jsonCompteMail() {
-		return compteMail == null ? "" : compteMail;
-	}
-
-	public String nomAffichageCompteMail() {
-		return null;
-	}
-
-	public String htmTooltipCompteMail() {
-		return null;
-	}
-
-	public String htmCompteMail() {
-		return compteMail == null ? "" : StringEscapeUtils.escapeHtml4(strCompteMail());
 	}
 
 	///////////////
@@ -2729,30 +1746,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return (ConfigSite)this;
 	}
 
-	public String solrRoleAdmin() {
-		return roleAdmin;
-	}
-
-	public String strRoleAdmin() {
-		return roleAdmin == null ? "" : roleAdmin;
-	}
-
-	public String jsonRoleAdmin() {
-		return roleAdmin == null ? "" : roleAdmin;
-	}
-
-	public String nomAffichageRoleAdmin() {
-		return null;
-	}
-
-	public String htmTooltipRoleAdmin() {
-		return null;
-	}
-
-	public String htmRoleAdmin() {
-		return roleAdmin == null ? "" : StringEscapeUtils.escapeHtml4(strRoleAdmin());
-	}
-
 	///////////////
 	// mailAdmin //
 	///////////////
@@ -2789,30 +1782,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		}
 		mailAdminCouverture.dejaInitialise(true);
 		return (ConfigSite)this;
-	}
-
-	public String solrMailAdmin() {
-		return mailAdmin;
-	}
-
-	public String strMailAdmin() {
-		return mailAdmin == null ? "" : mailAdmin;
-	}
-
-	public String jsonMailAdmin() {
-		return mailAdmin == null ? "" : mailAdmin;
-	}
-
-	public String nomAffichageMailAdmin() {
-		return null;
-	}
-
-	public String htmTooltipMailAdmin() {
-		return null;
-	}
-
-	public String htmMailAdmin() {
-		return mailAdmin == null ? "" : StringEscapeUtils.escapeHtml4(strMailAdmin());
 	}
 
 	//////////////////////
@@ -2860,30 +1829,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return (ConfigSite)this;
 	}
 
-	public Integer solrNombreExecuteurs() {
-		return nombreExecuteurs;
-	}
-
-	public String strNombreExecuteurs() {
-		return nombreExecuteurs == null ? "" : nombreExecuteurs.toString();
-	}
-
-	public String jsonNombreExecuteurs() {
-		return nombreExecuteurs == null ? "" : nombreExecuteurs.toString();
-	}
-
-	public String nomAffichageNombreExecuteurs() {
-		return null;
-	}
-
-	public String htmTooltipNombreExecuteurs() {
-		return null;
-	}
-
-	public String htmNombreExecuteurs() {
-		return nombreExecuteurs == null ? "" : StringEscapeUtils.escapeHtml4(strNombreExecuteurs());
-	}
-
 	////////////////////
 	// openApiVersion //
 	////////////////////
@@ -2920,30 +1865,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		}
 		openApiVersionCouverture.dejaInitialise(true);
 		return (ConfigSite)this;
-	}
-
-	public String solrOpenApiVersion() {
-		return openApiVersion;
-	}
-
-	public String strOpenApiVersion() {
-		return openApiVersion == null ? "" : openApiVersion;
-	}
-
-	public String jsonOpenApiVersion() {
-		return openApiVersion == null ? "" : openApiVersion;
-	}
-
-	public String nomAffichageOpenApiVersion() {
-		return null;
-	}
-
-	public String htmTooltipOpenApiVersion() {
-		return null;
-	}
-
-	public String htmOpenApiVersion() {
-		return openApiVersion == null ? "" : StringEscapeUtils.escapeHtml4(strOpenApiVersion());
 	}
 
 	////////////////////
@@ -2984,30 +1905,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return (ConfigSite)this;
 	}
 
-	public String solrApiDescription() {
-		return apiDescription;
-	}
-
-	public String strApiDescription() {
-		return apiDescription == null ? "" : apiDescription;
-	}
-
-	public String jsonApiDescription() {
-		return apiDescription == null ? "" : apiDescription;
-	}
-
-	public String nomAffichageApiDescription() {
-		return null;
-	}
-
-	public String htmTooltipApiDescription() {
-		return null;
-	}
-
-	public String htmApiDescription() {
-		return apiDescription == null ? "" : StringEscapeUtils.escapeHtml4(strApiDescription());
-	}
-
 	//////////////
 	// apiTitre //
 	//////////////
@@ -3044,30 +1941,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		}
 		apiTitreCouverture.dejaInitialise(true);
 		return (ConfigSite)this;
-	}
-
-	public String solrApiTitre() {
-		return apiTitre;
-	}
-
-	public String strApiTitre() {
-		return apiTitre == null ? "" : apiTitre;
-	}
-
-	public String jsonApiTitre() {
-		return apiTitre == null ? "" : apiTitre;
-	}
-
-	public String nomAffichageApiTitre() {
-		return null;
-	}
-
-	public String htmTooltipApiTitre() {
-		return null;
-	}
-
-	public String htmApiTitre() {
-		return apiTitre == null ? "" : StringEscapeUtils.escapeHtml4(strApiTitre());
 	}
 
 	/////////////////////
@@ -3108,30 +1981,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return (ConfigSite)this;
 	}
 
-	public String solrApiTermsService() {
-		return apiTermsService;
-	}
-
-	public String strApiTermsService() {
-		return apiTermsService == null ? "" : apiTermsService;
-	}
-
-	public String jsonApiTermsService() {
-		return apiTermsService == null ? "" : apiTermsService;
-	}
-
-	public String nomAffichageApiTermsService() {
-		return null;
-	}
-
-	public String htmTooltipApiTermsService() {
-		return null;
-	}
-
-	public String htmApiTermsService() {
-		return apiTermsService == null ? "" : StringEscapeUtils.escapeHtml4(strApiTermsService());
-	}
-
 	////////////////
 	// apiVersion //
 	////////////////
@@ -3168,30 +2017,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		}
 		apiVersionCouverture.dejaInitialise(true);
 		return (ConfigSite)this;
-	}
-
-	public String solrApiVersion() {
-		return apiVersion;
-	}
-
-	public String strApiVersion() {
-		return apiVersion == null ? "" : apiVersion;
-	}
-
-	public String jsonApiVersion() {
-		return apiVersion == null ? "" : apiVersion;
-	}
-
-	public String nomAffichageApiVersion() {
-		return null;
-	}
-
-	public String htmTooltipApiVersion() {
-		return null;
-	}
-
-	public String htmApiVersion() {
-		return apiVersion == null ? "" : StringEscapeUtils.escapeHtml4(strApiVersion());
 	}
 
 	////////////////////
@@ -3232,30 +2057,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return (ConfigSite)this;
 	}
 
-	public String solrApiContactMail() {
-		return apiContactMail;
-	}
-
-	public String strApiContactMail() {
-		return apiContactMail == null ? "" : apiContactMail;
-	}
-
-	public String jsonApiContactMail() {
-		return apiContactMail == null ? "" : apiContactMail;
-	}
-
-	public String nomAffichageApiContactMail() {
-		return null;
-	}
-
-	public String htmTooltipApiContactMail() {
-		return null;
-	}
-
-	public String htmApiContactMail() {
-		return apiContactMail == null ? "" : StringEscapeUtils.escapeHtml4(strApiContactMail());
-	}
-
 	///////////////////
 	// apiLicenceNom //
 	///////////////////
@@ -3292,30 +2093,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		}
 		apiLicenceNomCouverture.dejaInitialise(true);
 		return (ConfigSite)this;
-	}
-
-	public String solrApiLicenceNom() {
-		return apiLicenceNom;
-	}
-
-	public String strApiLicenceNom() {
-		return apiLicenceNom == null ? "" : apiLicenceNom;
-	}
-
-	public String jsonApiLicenceNom() {
-		return apiLicenceNom == null ? "" : apiLicenceNom;
-	}
-
-	public String nomAffichageApiLicenceNom() {
-		return null;
-	}
-
-	public String htmTooltipApiLicenceNom() {
-		return null;
-	}
-
-	public String htmApiLicenceNom() {
-		return apiLicenceNom == null ? "" : StringEscapeUtils.escapeHtml4(strApiLicenceNom());
 	}
 
 	///////////////////
@@ -3356,30 +2133,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return (ConfigSite)this;
 	}
 
-	public String solrApiLicenceUrl() {
-		return apiLicenceUrl;
-	}
-
-	public String strApiLicenceUrl() {
-		return apiLicenceUrl == null ? "" : apiLicenceUrl;
-	}
-
-	public String jsonApiLicenceUrl() {
-		return apiLicenceUrl == null ? "" : apiLicenceUrl;
-	}
-
-	public String nomAffichageApiLicenceUrl() {
-		return null;
-	}
-
-	public String htmTooltipApiLicenceUrl() {
-		return null;
-	}
-
-	public String htmApiLicenceUrl() {
-		return apiLicenceUrl == null ? "" : StringEscapeUtils.escapeHtml4(strApiLicenceUrl());
-	}
-
 	////////////////
 	// apiNomHote //
 	////////////////
@@ -3416,30 +2169,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		}
 		apiNomHoteCouverture.dejaInitialise(true);
 		return (ConfigSite)this;
-	}
-
-	public String solrApiNomHote() {
-		return apiNomHote;
-	}
-
-	public String strApiNomHote() {
-		return apiNomHote == null ? "" : apiNomHote;
-	}
-
-	public String jsonApiNomHote() {
-		return apiNomHote == null ? "" : apiNomHote;
-	}
-
-	public String nomAffichageApiNomHote() {
-		return null;
-	}
-
-	public String htmTooltipApiNomHote() {
-		return null;
-	}
-
-	public String htmApiNomHote() {
-		return apiNomHote == null ? "" : StringEscapeUtils.escapeHtml4(strApiNomHote());
 	}
 
 	///////////////////
@@ -3480,30 +2209,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return (ConfigSite)this;
 	}
 
-	public String solrApiCheminBase() {
-		return apiCheminBase;
-	}
-
-	public String strApiCheminBase() {
-		return apiCheminBase == null ? "" : apiCheminBase;
-	}
-
-	public String jsonApiCheminBase() {
-		return apiCheminBase == null ? "" : apiCheminBase;
-	}
-
-	public String nomAffichageApiCheminBase() {
-		return null;
-	}
-
-	public String htmTooltipApiCheminBase() {
-		return null;
-	}
-
-	public String htmApiCheminBase() {
-		return apiCheminBase == null ? "" : StringEscapeUtils.escapeHtml4(strApiCheminBase());
-	}
-
 	/////////////////////
 	// statiqueUrlBase //
 	/////////////////////
@@ -3542,30 +2247,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return (ConfigSite)this;
 	}
 
-	public String solrStatiqueUrlBase() {
-		return statiqueUrlBase;
-	}
-
-	public String strStatiqueUrlBase() {
-		return statiqueUrlBase == null ? "" : statiqueUrlBase;
-	}
-
-	public String jsonStatiqueUrlBase() {
-		return statiqueUrlBase == null ? "" : statiqueUrlBase;
-	}
-
-	public String nomAffichageStatiqueUrlBase() {
-		return null;
-	}
-
-	public String htmTooltipStatiqueUrlBase() {
-		return null;
-	}
-
-	public String htmStatiqueUrlBase() {
-		return statiqueUrlBase == null ? "" : StringEscapeUtils.escapeHtml4(strStatiqueUrlBase());
-	}
-
 	//////////////
 	// mailHote //
 	//////////////
@@ -3602,30 +2283,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		}
 		mailHoteCouverture.dejaInitialise(true);
 		return (ConfigSite)this;
-	}
-
-	public String solrMailHote() {
-		return mailHote;
-	}
-
-	public String strMailHote() {
-		return mailHote == null ? "" : mailHote;
-	}
-
-	public String jsonMailHote() {
-		return mailHote == null ? "" : mailHote;
-	}
-
-	public String nomAffichageMailHote() {
-		return null;
-	}
-
-	public String htmTooltipMailHote() {
-		return null;
-	}
-
-	public String htmMailHote() {
-		return mailHote == null ? "" : StringEscapeUtils.escapeHtml4(strMailHote());
 	}
 
 	//////////////
@@ -3673,30 +2330,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return (ConfigSite)this;
 	}
 
-	public Integer solrMailPort() {
-		return mailPort;
-	}
-
-	public String strMailPort() {
-		return mailPort == null ? "" : mailPort.toString();
-	}
-
-	public String jsonMailPort() {
-		return mailPort == null ? "" : mailPort.toString();
-	}
-
-	public String nomAffichageMailPort() {
-		return null;
-	}
-
-	public String htmTooltipMailPort() {
-		return null;
-	}
-
-	public String htmMailPort() {
-		return mailPort == null ? "" : StringEscapeUtils.escapeHtml4(strMailPort());
-	}
-
 	/////////////////////
 	// mailUtilisateur //
 	/////////////////////
@@ -3733,30 +2366,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		}
 		mailUtilisateurCouverture.dejaInitialise(true);
 		return (ConfigSite)this;
-	}
-
-	public String solrMailUtilisateur() {
-		return mailUtilisateur;
-	}
-
-	public String strMailUtilisateur() {
-		return mailUtilisateur == null ? "" : mailUtilisateur;
-	}
-
-	public String jsonMailUtilisateur() {
-		return mailUtilisateur == null ? "" : mailUtilisateur;
-	}
-
-	public String nomAffichageMailUtilisateur() {
-		return null;
-	}
-
-	public String htmTooltipMailUtilisateur() {
-		return null;
-	}
-
-	public String htmMailUtilisateur() {
-		return mailUtilisateur == null ? "" : StringEscapeUtils.escapeHtml4(strMailUtilisateur());
 	}
 
 	////////////////////
@@ -3797,30 +2406,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return (ConfigSite)this;
 	}
 
-	public String solrMailMotDePasse() {
-		return mailMotDePasse;
-	}
-
-	public String strMailMotDePasse() {
-		return mailMotDePasse == null ? "" : mailMotDePasse;
-	}
-
-	public String jsonMailMotDePasse() {
-		return mailMotDePasse == null ? "" : mailMotDePasse;
-	}
-
-	public String nomAffichageMailMotDePasse() {
-		return null;
-	}
-
-	public String htmTooltipMailMotDePasse() {
-		return null;
-	}
-
-	public String htmMailMotDePasse() {
-		return mailMotDePasse == null ? "" : StringEscapeUtils.escapeHtml4(strMailMotDePasse());
-	}
-
 	////////////
 	// mailDe //
 	////////////
@@ -3857,30 +2442,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		}
 		mailDeCouverture.dejaInitialise(true);
 		return (ConfigSite)this;
-	}
-
-	public String solrMailDe() {
-		return mailDe;
-	}
-
-	public String strMailDe() {
-		return mailDe == null ? "" : mailDe;
-	}
-
-	public String jsonMailDe() {
-		return mailDe == null ? "" : mailDe;
-	}
-
-	public String nomAffichageMailDe() {
-		return null;
-	}
-
-	public String htmTooltipMailDe() {
-		return null;
-	}
-
-	public String htmMailDe() {
-		return mailDe == null ? "" : StringEscapeUtils.escapeHtml4(strMailDe());
 	}
 
 	//////////////
@@ -3926,30 +2487,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return (ConfigSite)this;
 	}
 
-	public Boolean solrMailAuth() {
-		return mailAuth;
-	}
-
-	public String strMailAuth() {
-		return mailAuth == null ? "" : mailAuth.toString();
-	}
-
-	public String jsonMailAuth() {
-		return mailAuth == null ? "" : mailAuth.toString();
-	}
-
-	public String nomAffichageMailAuth() {
-		return null;
-	}
-
-	public String htmTooltipMailAuth() {
-		return null;
-	}
-
-	public String htmMailAuth() {
-		return mailAuth == null ? "" : StringEscapeUtils.escapeHtml4(strMailAuth());
-	}
-
 	/////////////
 	// mailSsl //
 	/////////////
@@ -3993,30 +2530,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return (ConfigSite)this;
 	}
 
-	public Boolean solrMailSsl() {
-		return mailSsl;
-	}
-
-	public String strMailSsl() {
-		return mailSsl == null ? "" : mailSsl.toString();
-	}
-
-	public String jsonMailSsl() {
-		return mailSsl == null ? "" : mailSsl.toString();
-	}
-
-	public String nomAffichageMailSsl() {
-		return null;
-	}
-
-	public String htmTooltipMailSsl() {
-		return null;
-	}
-
-	public String htmMailSsl() {
-		return mailSsl == null ? "" : StringEscapeUtils.escapeHtml4(strMailSsl());
-	}
-
 	//////////////
 	// siteZone //
 	//////////////
@@ -4053,30 +2566,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		}
 		siteZoneCouverture.dejaInitialise(true);
 		return (ConfigSite)this;
-	}
-
-	public String solrSiteZone() {
-		return siteZone;
-	}
-
-	public String strSiteZone() {
-		return siteZone == null ? "" : siteZone;
-	}
-
-	public String jsonSiteZone() {
-		return siteZone == null ? "" : siteZone;
-	}
-
-	public String nomAffichageSiteZone() {
-		return null;
-	}
-
-	public String htmTooltipSiteZone() {
-		return null;
-	}
-
-	public String htmSiteZone() {
-		return siteZone == null ? "" : StringEscapeUtils.escapeHtml4(strSiteZone());
 	}
 
 	/////////////////////////
@@ -4117,30 +2606,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return (ConfigSite)this;
 	}
 
-	public String solrAuthorizeApiLoginId() {
-		return authorizeApiLoginId;
-	}
-
-	public String strAuthorizeApiLoginId() {
-		return authorizeApiLoginId == null ? "" : authorizeApiLoginId;
-	}
-
-	public String jsonAuthorizeApiLoginId() {
-		return authorizeApiLoginId == null ? "" : authorizeApiLoginId;
-	}
-
-	public String nomAffichageAuthorizeApiLoginId() {
-		return null;
-	}
-
-	public String htmTooltipAuthorizeApiLoginId() {
-		return null;
-	}
-
-	public String htmAuthorizeApiLoginId() {
-		return authorizeApiLoginId == null ? "" : StringEscapeUtils.escapeHtml4(strAuthorizeApiLoginId());
-	}
-
 	/////////////////////////////
 	// authorizeTransactionKey //
 	/////////////////////////////
@@ -4177,30 +2642,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		}
 		authorizeTransactionKeyCouverture.dejaInitialise(true);
 		return (ConfigSite)this;
-	}
-
-	public String solrAuthorizeTransactionKey() {
-		return authorizeTransactionKey;
-	}
-
-	public String strAuthorizeTransactionKey() {
-		return authorizeTransactionKey == null ? "" : authorizeTransactionKey;
-	}
-
-	public String jsonAuthorizeTransactionKey() {
-		return authorizeTransactionKey == null ? "" : authorizeTransactionKey;
-	}
-
-	public String nomAffichageAuthorizeTransactionKey() {
-		return null;
-	}
-
-	public String htmTooltipAuthorizeTransactionKey() {
-		return null;
-	}
-
-	public String htmAuthorizeTransactionKey() {
-		return authorizeTransactionKey == null ? "" : StringEscapeUtils.escapeHtml4(strAuthorizeTransactionKey());
 	}
 
 	//////////////////////////
@@ -4241,30 +2682,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return (ConfigSite)this;
 	}
 
-	public String solrAuthorizeEnvironment() {
-		return authorizeEnvironment;
-	}
-
-	public String strAuthorizeEnvironment() {
-		return authorizeEnvironment == null ? "" : authorizeEnvironment;
-	}
-
-	public String jsonAuthorizeEnvironment() {
-		return authorizeEnvironment == null ? "" : authorizeEnvironment;
-	}
-
-	public String nomAffichageAuthorizeEnvironment() {
-		return null;
-	}
-
-	public String htmTooltipAuthorizeEnvironment() {
-		return null;
-	}
-
-	public String htmAuthorizeEnvironment() {
-		return authorizeEnvironment == null ? "" : StringEscapeUtils.escapeHtml4(strAuthorizeEnvironment());
-	}
-
 	//////////////////
 	// authorizeUrl //
 	//////////////////
@@ -4301,30 +2718,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		}
 		authorizeUrlCouverture.dejaInitialise(true);
 		return (ConfigSite)this;
-	}
-
-	public String solrAuthorizeUrl() {
-		return authorizeUrl;
-	}
-
-	public String strAuthorizeUrl() {
-		return authorizeUrl == null ? "" : authorizeUrl;
-	}
-
-	public String jsonAuthorizeUrl() {
-		return authorizeUrl == null ? "" : authorizeUrl;
-	}
-
-	public String nomAffichageAuthorizeUrl() {
-		return null;
-	}
-
-	public String htmTooltipAuthorizeUrl() {
-		return null;
-	}
-
-	public String htmAuthorizeUrl() {
-		return authorizeUrl == null ? "" : StringEscapeUtils.escapeHtml4(strAuthorizeUrl());
 	}
 
 	//////////////////
@@ -4372,30 +2765,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return (ConfigSite)this;
 	}
 
-	public Integer solrPaiementJour() {
-		return paiementJour;
-	}
-
-	public String strPaiementJour() {
-		return paiementJour == null ? "" : paiementJour.toString();
-	}
-
-	public String jsonPaiementJour() {
-		return paiementJour == null ? "" : paiementJour.toString();
-	}
-
-	public String nomAffichagePaiementJour() {
-		return null;
-	}
-
-	public String htmTooltipPaiementJour() {
-		return null;
-	}
-
-	public String htmPaiementJour() {
-		return paiementJour == null ? "" : StringEscapeUtils.escapeHtml4(strPaiementJour());
-	}
-
 	//////////////////////
 	// paiementProchain //
 	//////////////////////
@@ -4428,13 +2797,13 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		this.paiementProchainCouverture.dejaInitialise = true;
 	}
 	public ConfigSite setPaiementProchain(Instant o) {
-		this.paiementProchain = LocalDate.from(o);
+		this.paiementProchain = o == null ? null : LocalDate.from(o);
 		this.paiementProchainCouverture.dejaInitialise = true;
 		return (ConfigSite)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public ConfigSite setPaiementProchain(String o) {
-		this.paiementProchain = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		this.paiementProchain = o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.paiementProchainCouverture.dejaInitialise = true;
 		return (ConfigSite)this;
 	}
@@ -4446,30 +2815,6 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		}
 		paiementProchainCouverture.dejaInitialise(true);
 		return (ConfigSite)this;
-	}
-
-	public Date solrPaiementProchain() {
-		return paiementProchain == null ? null : Date.from(paiementProchain.atStartOfDay(ZoneId.systemDefault()).toInstant());
-	}
-
-	public String strPaiementProchain() {
-		return paiementProchain == null ? "" : paiementProchain.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.forLanguageTag("fr-FR")));
-	}
-
-	public String jsonPaiementProchain() {
-		return paiementProchain == null ? "" : paiementProchain.format(DateTimeFormatter.ISO_DATE);
-	}
-
-	public String nomAffichagePaiementProchain() {
-		return null;
-	}
-
-	public String htmTooltipPaiementProchain() {
-		return null;
-	}
-
-	public String htmPaiementProchain() {
-		return paiementProchain == null ? "" : StringEscapeUtils.escapeHtml4(strPaiementProchain());
 	}
 
 	//////////////

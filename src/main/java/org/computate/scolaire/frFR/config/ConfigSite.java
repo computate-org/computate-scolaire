@@ -525,7 +525,7 @@ public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {
 
 	/**	
 	 * Var.enUS: jdbcConnectTimeout
-	 * frFR: Le temps d'inactivité maximale pour connexion àla base de données. 
+	 * frFR: Le temps d'inactivité maximale pour connexion à la base de données. 
 	 * enUS: The max idle time for the connection to the database. 
 	 * r: prefixeEchappe
 	 * r.enUS: prefixEscaped
@@ -533,9 +533,9 @@ public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {
 	protected void _jdbcDelaiConnexion(Couverture<Integer> c) {
 		Integer o;
 		if(config == null)
-			o = NumberUtils.toInt(System.getenv(c.var), 10);
+			o = NumberUtils.toInt(System.getenv(c.var), 5000);
 		else
-			o = config.getInt(prefixeEchappe + c.var, 10);
+			o = config.getInt(prefixeEchappe + c.var, 5000);
 		c.o(o);
 	}
 

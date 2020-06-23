@@ -9,6 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.lang.Integer;
 import java.text.NumberFormat;
 import io.vertx.core.logging.LoggerFactory;
+import java.util.ArrayList;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import org.apache.commons.collections.CollectionUtils;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -41,7 +42,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 
 /**	
- *	Loads the properties in the application config file into specific fields. 
+ * Loads the properties in the application config file into specific fields. 
  * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
  * <br/>
  **/
@@ -86,30 +87,6 @@ The path to the config file of the site.
 		}
 		configPathWrap.alreadyInitialized(true);
 		return (SiteConfig)this;
-	}
-
-	public String solrConfigPath() {
-		return configPath;
-	}
-
-	public String strConfigPath() {
-		return configPath == null ? "" : configPath;
-	}
-
-	public String jsonConfigPath() {
-		return configPath == null ? "" : configPath;
-	}
-
-	public String nomAffichageConfigPath() {
-		return null;
-	}
-
-	public String htmTooltipConfigPath() {
-		return null;
-	}
-
-	public String htmConfigPath() {
-		return configPath == null ? "" : StringEscapeUtils.escapeHtml4(strConfigPath());
 	}
 
 	////////////
@@ -192,30 +169,6 @@ The name of the principal group of settings of the config for this website.
 		return (SiteConfig)this;
 	}
 
-	public String solrSiteIdentifier() {
-		return siteIdentifier;
-	}
-
-	public String strSiteIdentifier() {
-		return siteIdentifier == null ? "" : siteIdentifier;
-	}
-
-	public String jsonSiteIdentifier() {
-		return siteIdentifier == null ? "" : siteIdentifier;
-	}
-
-	public String nomAffichageSiteIdentifier() {
-		return null;
-	}
-
-	public String htmTooltipSiteIdentifier() {
-		return null;
-	}
-
-	public String htmSiteIdentifier() {
-		return siteIdentifier == null ? "" : StringEscapeUtils.escapeHtml4(strSiteIdentifier());
-	}
-
 	///////////////////
 	// prefixEscaped //
 	///////////////////
@@ -254,30 +207,6 @@ The already escaped prefix to find the properties of the site.
 		}
 		prefixEscapedWrap.alreadyInitialized(true);
 		return (SiteConfig)this;
-	}
-
-	public String solrPrefixEscaped() {
-		return prefixEscaped;
-	}
-
-	public String strPrefixEscaped() {
-		return prefixEscaped == null ? "" : prefixEscaped;
-	}
-
-	public String jsonPrefixEscaped() {
-		return prefixEscaped == null ? "" : prefixEscaped;
-	}
-
-	public String nomAffichagePrefixEscaped() {
-		return null;
-	}
-
-	public String htmTooltipPrefixEscaped() {
-		return null;
-	}
-
-	public String htmPrefixEscaped() {
-		return prefixEscaped == null ? "" : StringEscapeUtils.escapeHtml4(strPrefixEscaped());
 	}
 
 	/////////////
@@ -320,30 +249,6 @@ The path to the project of the site cloned from git.
 		return (SiteConfig)this;
 	}
 
-	public String solrAppPath() {
-		return appPath;
-	}
-
-	public String strAppPath() {
-		return appPath == null ? "" : appPath;
-	}
-
-	public String jsonAppPath() {
-		return appPath == null ? "" : appPath;
-	}
-
-	public String nomAffichageAppPath() {
-		return null;
-	}
-
-	public String htmTooltipAppPath() {
-		return null;
-	}
-
-	public String htmAppPath() {
-		return appPath == null ? "" : StringEscapeUtils.escapeHtml4(strAppPath());
-	}
-
 	/////////////
 	// docRoot //
 	/////////////
@@ -382,30 +287,6 @@ The path to the docroot for the project.
 		}
 		docRootWrap.alreadyInitialized(true);
 		return (SiteConfig)this;
-	}
-
-	public String solrDocRoot() {
-		return docRoot;
-	}
-
-	public String strDocRoot() {
-		return docRoot == null ? "" : docRoot;
-	}
-
-	public String jsonDocRoot() {
-		return docRoot == null ? "" : docRoot;
-	}
-
-	public String nomAffichageDocRoot() {
-		return null;
-	}
-
-	public String htmTooltipDocRoot() {
-		return null;
-	}
-
-	public String htmDocRoot() {
-		return docRoot == null ? "" : StringEscapeUtils.escapeHtml4(strDocRoot());
 	}
 
 	/////////////////
@@ -448,30 +329,6 @@ The name of the company.
 		return (SiteConfig)this;
 	}
 
-	public String solrCompanyName() {
-		return companyName;
-	}
-
-	public String strCompanyName() {
-		return companyName == null ? "" : companyName;
-	}
-
-	public String jsonCompanyName() {
-		return companyName == null ? "" : companyName;
-	}
-
-	public String nomAffichageCompanyName() {
-		return null;
-	}
-
-	public String htmTooltipCompanyName() {
-		return null;
-	}
-
-	public String htmCompanyName() {
-		return companyName == null ? "" : StringEscapeUtils.escapeHtml4(strCompanyName());
-	}
-
 	////////////////
 	// domainName //
 	////////////////
@@ -512,30 +369,6 @@ The domain name of the site.
 		return (SiteConfig)this;
 	}
 
-	public String solrDomainName() {
-		return domainName;
-	}
-
-	public String strDomainName() {
-		return domainName == null ? "" : domainName;
-	}
-
-	public String jsonDomainName() {
-		return domainName == null ? "" : domainName;
-	}
-
-	public String nomAffichageDomainName() {
-		return null;
-	}
-
-	public String htmTooltipDomainName() {
-		return null;
-	}
-
-	public String htmDomainName() {
-		return domainName == null ? "" : StringEscapeUtils.escapeHtml4(strDomainName());
-	}
-
 	//////////////////
 	// siteHostName //
 	//////////////////
@@ -574,30 +407,6 @@ The host name of the site.
 		}
 		siteHostNameWrap.alreadyInitialized(true);
 		return (SiteConfig)this;
-	}
-
-	public String solrSiteHostName() {
-		return siteHostName;
-	}
-
-	public String strSiteHostName() {
-		return siteHostName == null ? "" : siteHostName;
-	}
-
-	public String jsonSiteHostName() {
-		return siteHostName == null ? "" : siteHostName;
-	}
-
-	public String nomAffichageSiteHostName() {
-		return null;
-	}
-
-	public String htmTooltipSiteHostName() {
-		return null;
-	}
-
-	public String htmSiteHostName() {
-		return siteHostName == null ? "" : StringEscapeUtils.escapeHtml4(strSiteHostName());
 	}
 
 	//////////////
@@ -647,30 +456,6 @@ The port of the site.
 		return (SiteConfig)this;
 	}
 
-	public Integer solrSitePort() {
-		return sitePort;
-	}
-
-	public String strSitePort() {
-		return sitePort == null ? "" : sitePort.toString();
-	}
-
-	public String jsonSitePort() {
-		return sitePort == null ? "" : sitePort.toString();
-	}
-
-	public String nomAffichageSitePort() {
-		return null;
-	}
-
-	public String htmTooltipSitePort() {
-		return null;
-	}
-
-	public String htmSitePort() {
-		return sitePort == null ? "" : StringEscapeUtils.escapeHtml4(strSitePort());
-	}
-
 	///////////////
 	// authRealm //
 	///////////////
@@ -709,30 +494,6 @@ The Keycloak realm of the site.
 		}
 		authRealmWrap.alreadyInitialized(true);
 		return (SiteConfig)this;
-	}
-
-	public String solrAuthRealm() {
-		return authRealm;
-	}
-
-	public String strAuthRealm() {
-		return authRealm == null ? "" : authRealm;
-	}
-
-	public String jsonAuthRealm() {
-		return authRealm == null ? "" : authRealm;
-	}
-
-	public String nomAffichageAuthRealm() {
-		return null;
-	}
-
-	public String htmTooltipAuthRealm() {
-		return null;
-	}
-
-	public String htmAuthRealm() {
-		return authRealm == null ? "" : StringEscapeUtils.escapeHtml4(strAuthRealm());
 	}
 
 	//////////////////
@@ -775,30 +536,6 @@ The Keycloak client ID of the site.
 		return (SiteConfig)this;
 	}
 
-	public String solrAuthResource() {
-		return authResource;
-	}
-
-	public String strAuthResource() {
-		return authResource == null ? "" : authResource;
-	}
-
-	public String jsonAuthResource() {
-		return authResource == null ? "" : authResource;
-	}
-
-	public String nomAffichageAuthResource() {
-		return null;
-	}
-
-	public String htmTooltipAuthResource() {
-		return null;
-	}
-
-	public String htmAuthResource() {
-		return authResource == null ? "" : StringEscapeUtils.escapeHtml4(strAuthResource());
-	}
-
 	////////////////
 	// authSecret //
 	////////////////
@@ -837,30 +574,6 @@ The Keycloak client secret of the site.
 		}
 		authSecretWrap.alreadyInitialized(true);
 		return (SiteConfig)this;
-	}
-
-	public String solrAuthSecret() {
-		return authSecret;
-	}
-
-	public String strAuthSecret() {
-		return authSecret == null ? "" : authSecret;
-	}
-
-	public String jsonAuthSecret() {
-		return authSecret == null ? "" : authSecret;
-	}
-
-	public String nomAffichageAuthSecret() {
-		return null;
-	}
-
-	public String htmTooltipAuthSecret() {
-		return null;
-	}
-
-	public String htmAuthSecret() {
-		return authSecret == null ? "" : StringEscapeUtils.escapeHtml4(strAuthSecret());
 	}
 
 	/////////////////////
@@ -903,30 +616,6 @@ Whether SSL is required in Keycloak for the site.
 		return (SiteConfig)this;
 	}
 
-	public String solrAuthSslRequired() {
-		return authSslRequired;
-	}
-
-	public String strAuthSslRequired() {
-		return authSslRequired == null ? "" : authSslRequired;
-	}
-
-	public String jsonAuthSslRequired() {
-		return authSslRequired == null ? "" : authSslRequired;
-	}
-
-	public String nomAffichageAuthSslRequired() {
-		return null;
-	}
-
-	public String htmTooltipAuthSslRequired() {
-		return null;
-	}
-
-	public String htmAuthSslRequired() {
-		return authSslRequired == null ? "" : StringEscapeUtils.escapeHtml4(strAuthSslRequired());
-	}
-
 	////////////////
 	// sslJksPath //
 	////////////////
@@ -965,30 +654,6 @@ The path to the Java keystore for the site.
 		}
 		sslJksPathWrap.alreadyInitialized(true);
 		return (SiteConfig)this;
-	}
-
-	public String solrSslJksPath() {
-		return sslJksPath;
-	}
-
-	public String strSslJksPath() {
-		return sslJksPath == null ? "" : sslJksPath;
-	}
-
-	public String jsonSslJksPath() {
-		return sslJksPath == null ? "" : sslJksPath;
-	}
-
-	public String nomAffichageSslJksPath() {
-		return null;
-	}
-
-	public String htmTooltipSslJksPath() {
-		return null;
-	}
-
-	public String htmSslJksPath() {
-		return sslJksPath == null ? "" : StringEscapeUtils.escapeHtml4(strSslJksPath());
 	}
 
 	////////////////////
@@ -1031,30 +696,6 @@ The password for the Java keystore for the site.
 		return (SiteConfig)this;
 	}
 
-	public String solrSslJksPassword() {
-		return sslJksPassword;
-	}
-
-	public String strSslJksPassword() {
-		return sslJksPassword == null ? "" : sslJksPassword;
-	}
-
-	public String jsonSslJksPassword() {
-		return sslJksPassword == null ? "" : sslJksPassword;
-	}
-
-	public String nomAffichageSslJksPassword() {
-		return null;
-	}
-
-	public String htmTooltipSslJksPassword() {
-		return null;
-	}
-
-	public String htmSslJksPassword() {
-		return sslJksPassword == null ? "" : StringEscapeUtils.escapeHtml4(strSslJksPassword());
-	}
-
 	/////////////
 	// authUrl //
 	/////////////
@@ -1093,30 +734,6 @@ The URL to the Keycloak server.
 		}
 		authUrlWrap.alreadyInitialized(true);
 		return (SiteConfig)this;
-	}
-
-	public String solrAuthUrl() {
-		return authUrl;
-	}
-
-	public String strAuthUrl() {
-		return authUrl == null ? "" : authUrl;
-	}
-
-	public String jsonAuthUrl() {
-		return authUrl == null ? "" : authUrl;
-	}
-
-	public String nomAffichageAuthUrl() {
-		return null;
-	}
-
-	public String htmTooltipAuthUrl() {
-		return null;
-	}
-
-	public String htmAuthUrl() {
-		return authUrl == null ? "" : StringEscapeUtils.escapeHtml4(strAuthUrl());
 	}
 
 	////////////////////
@@ -1159,30 +776,6 @@ The encryption salt to use for all database encryption.
 		return (SiteConfig)this;
 	}
 
-	public String solrEncryptionSalt() {
-		return encryptionSalt;
-	}
-
-	public String strEncryptionSalt() {
-		return encryptionSalt == null ? "" : encryptionSalt;
-	}
-
-	public String jsonEncryptionSalt() {
-		return encryptionSalt == null ? "" : encryptionSalt;
-	}
-
-	public String nomAffichageEncryptionSalt() {
-		return null;
-	}
-
-	public String htmTooltipEncryptionSalt() {
-		return null;
-	}
-
-	public String htmEncryptionSalt() {
-		return encryptionSalt == null ? "" : StringEscapeUtils.escapeHtml4(strEncryptionSalt());
-	}
-
 	////////////////////////
 	// encryptionPassword //
 	////////////////////////
@@ -1221,30 +814,6 @@ The encryption password to use for all encryption of the database.
 		}
 		encryptionPasswordWrap.alreadyInitialized(true);
 		return (SiteConfig)this;
-	}
-
-	public String solrEncryptionPassword() {
-		return encryptionPassword;
-	}
-
-	public String strEncryptionPassword() {
-		return encryptionPassword == null ? "" : encryptionPassword;
-	}
-
-	public String jsonEncryptionPassword() {
-		return encryptionPassword == null ? "" : encryptionPassword;
-	}
-
-	public String nomAffichageEncryptionPassword() {
-		return null;
-	}
-
-	public String htmTooltipEncryptionPassword() {
-		return null;
-	}
-
-	public String htmEncryptionPassword() {
-		return encryptionPassword == null ? "" : StringEscapeUtils.escapeHtml4(strEncryptionPassword());
 	}
 
 	/////////////////
@@ -1287,30 +856,6 @@ The base URL for the URLs of the site.
 		return (SiteConfig)this;
 	}
 
-	public String solrSiteBaseUrl() {
-		return siteBaseUrl;
-	}
-
-	public String strSiteBaseUrl() {
-		return siteBaseUrl == null ? "" : siteBaseUrl;
-	}
-
-	public String jsonSiteBaseUrl() {
-		return siteBaseUrl == null ? "" : siteBaseUrl;
-	}
-
-	public String nomAffichageSiteBaseUrl() {
-		return null;
-	}
-
-	public String htmTooltipSiteBaseUrl() {
-		return null;
-	}
-
-	public String htmSiteBaseUrl() {
-		return siteBaseUrl == null ? "" : StringEscapeUtils.escapeHtml4(strSiteBaseUrl());
-	}
-
 	/////////////////////
 	// siteDisplayName //
 	/////////////////////
@@ -1349,30 +894,6 @@ The display name of the site.
 		}
 		siteDisplayNameWrap.alreadyInitialized(true);
 		return (SiteConfig)this;
-	}
-
-	public String solrSiteDisplayName() {
-		return siteDisplayName;
-	}
-
-	public String strSiteDisplayName() {
-		return siteDisplayName == null ? "" : siteDisplayName;
-	}
-
-	public String jsonSiteDisplayName() {
-		return siteDisplayName == null ? "" : siteDisplayName;
-	}
-
-	public String nomAffichageSiteDisplayName() {
-		return null;
-	}
-
-	public String htmTooltipSiteDisplayName() {
-		return null;
-	}
-
-	public String htmSiteDisplayName() {
-		return siteDisplayName == null ? "" : StringEscapeUtils.escapeHtml4(strSiteDisplayName());
 	}
 
 	/////////////////////
@@ -1415,30 +936,6 @@ The class name of the JDBC driver class for the database.
 		return (SiteConfig)this;
 	}
 
-	public String solrJdbcDriverClass() {
-		return jdbcDriverClass;
-	}
-
-	public String strJdbcDriverClass() {
-		return jdbcDriverClass == null ? "" : jdbcDriverClass;
-	}
-
-	public String jsonJdbcDriverClass() {
-		return jdbcDriverClass == null ? "" : jdbcDriverClass;
-	}
-
-	public String nomAffichageJdbcDriverClass() {
-		return null;
-	}
-
-	public String htmTooltipJdbcDriverClass() {
-		return null;
-	}
-
-	public String htmJdbcDriverClass() {
-		return jdbcDriverClass == null ? "" : StringEscapeUtils.escapeHtml4(strJdbcDriverClass());
-	}
-
 	//////////////////
 	// jdbcUsername //
 	//////////////////
@@ -1479,30 +976,6 @@ The username for the database.
 		return (SiteConfig)this;
 	}
 
-	public String solrJdbcUsername() {
-		return jdbcUsername;
-	}
-
-	public String strJdbcUsername() {
-		return jdbcUsername == null ? "" : jdbcUsername;
-	}
-
-	public String jsonJdbcUsername() {
-		return jdbcUsername == null ? "" : jdbcUsername;
-	}
-
-	public String nomAffichageJdbcUsername() {
-		return null;
-	}
-
-	public String htmTooltipJdbcUsername() {
-		return null;
-	}
-
-	public String htmJdbcUsername() {
-		return jdbcUsername == null ? "" : StringEscapeUtils.escapeHtml4(strJdbcUsername());
-	}
-
 	//////////////////
 	// jdbcPassword //
 	//////////////////
@@ -1541,30 +1014,6 @@ The password for the database.
 		}
 		jdbcPasswordWrap.alreadyInitialized(true);
 		return (SiteConfig)this;
-	}
-
-	public String solrJdbcPassword() {
-		return jdbcPassword;
-	}
-
-	public String strJdbcPassword() {
-		return jdbcPassword == null ? "" : jdbcPassword;
-	}
-
-	public String jsonJdbcPassword() {
-		return jdbcPassword == null ? "" : jdbcPassword;
-	}
-
-	public String nomAffichageJdbcPassword() {
-		return null;
-	}
-
-	public String htmTooltipJdbcPassword() {
-		return null;
-	}
-
-	public String htmJdbcPassword() {
-		return jdbcPassword == null ? "" : StringEscapeUtils.escapeHtml4(strJdbcPassword());
 	}
 
 	/////////////////////
@@ -1612,30 +1061,6 @@ The max pool size for the database.
 		}
 		jdbcMaxPoolSizeWrap.alreadyInitialized(true);
 		return (SiteConfig)this;
-	}
-
-	public Integer solrJdbcMaxPoolSize() {
-		return jdbcMaxPoolSize;
-	}
-
-	public String strJdbcMaxPoolSize() {
-		return jdbcMaxPoolSize == null ? "" : jdbcMaxPoolSize.toString();
-	}
-
-	public String jsonJdbcMaxPoolSize() {
-		return jdbcMaxPoolSize == null ? "" : jdbcMaxPoolSize.toString();
-	}
-
-	public String nomAffichageJdbcMaxPoolSize() {
-		return null;
-	}
-
-	public String htmTooltipJdbcMaxPoolSize() {
-		return null;
-	}
-
-	public String htmJdbcMaxPoolSize() {
-		return jdbcMaxPoolSize == null ? "" : StringEscapeUtils.escapeHtml4(strJdbcMaxPoolSize());
 	}
 
 	//////////////////////////
@@ -1689,30 +1114,6 @@ Set the maximum connection request allowed in the wait queue,
 		return (SiteConfig)this;
 	}
 
-	public Integer solrJdbcMaxWaitQueueSize() {
-		return jdbcMaxWaitQueueSize;
-	}
-
-	public String strJdbcMaxWaitQueueSize() {
-		return jdbcMaxWaitQueueSize == null ? "" : jdbcMaxWaitQueueSize.toString();
-	}
-
-	public String jsonJdbcMaxWaitQueueSize() {
-		return jdbcMaxWaitQueueSize == null ? "" : jdbcMaxWaitQueueSize.toString();
-	}
-
-	public String nomAffichageJdbcMaxWaitQueueSize() {
-		return null;
-	}
-
-	public String htmTooltipJdbcMaxWaitQueueSize() {
-		return null;
-	}
-
-	public String htmJdbcMaxWaitQueueSize() {
-		return jdbcMaxWaitQueueSize == null ? "" : StringEscapeUtils.escapeHtml4(strJdbcMaxWaitQueueSize());
-	}
-
 	/////////////////////
 	// jdbcMinPoolSize //
 	/////////////////////
@@ -1758,30 +1159,6 @@ The max pool size for the database.
 		}
 		jdbcMinPoolSizeWrap.alreadyInitialized(true);
 		return (SiteConfig)this;
-	}
-
-	public Integer solrJdbcMinPoolSize() {
-		return jdbcMinPoolSize;
-	}
-
-	public String strJdbcMinPoolSize() {
-		return jdbcMinPoolSize == null ? "" : jdbcMinPoolSize.toString();
-	}
-
-	public String jsonJdbcMinPoolSize() {
-		return jdbcMinPoolSize == null ? "" : jdbcMinPoolSize.toString();
-	}
-
-	public String nomAffichageJdbcMinPoolSize() {
-		return null;
-	}
-
-	public String htmTooltipJdbcMinPoolSize() {
-		return null;
-	}
-
-	public String htmJdbcMinPoolSize() {
-		return jdbcMinPoolSize == null ? "" : StringEscapeUtils.escapeHtml4(strJdbcMinPoolSize());
 	}
 
 	///////////////////////
@@ -1831,30 +1208,6 @@ The max statements for the database.
 		return (SiteConfig)this;
 	}
 
-	public Integer solrJdbcMaxStatements() {
-		return jdbcMaxStatements;
-	}
-
-	public String strJdbcMaxStatements() {
-		return jdbcMaxStatements == null ? "" : jdbcMaxStatements.toString();
-	}
-
-	public String jsonJdbcMaxStatements() {
-		return jdbcMaxStatements == null ? "" : jdbcMaxStatements.toString();
-	}
-
-	public String nomAffichageJdbcMaxStatements() {
-		return null;
-	}
-
-	public String htmTooltipJdbcMaxStatements() {
-		return null;
-	}
-
-	public String htmJdbcMaxStatements() {
-		return jdbcMaxStatements == null ? "" : StringEscapeUtils.escapeHtml4(strJdbcMaxStatements());
-	}
-
 	////////////////////////////////////
 	// jdbcMaxStatementsPerConnection //
 	////////////////////////////////////
@@ -1900,30 +1253,6 @@ The max statements per connection for the database.
 		}
 		jdbcMaxStatementsPerConnectionWrap.alreadyInitialized(true);
 		return (SiteConfig)this;
-	}
-
-	public Integer solrJdbcMaxStatementsPerConnection() {
-		return jdbcMaxStatementsPerConnection;
-	}
-
-	public String strJdbcMaxStatementsPerConnection() {
-		return jdbcMaxStatementsPerConnection == null ? "" : jdbcMaxStatementsPerConnection.toString();
-	}
-
-	public String jsonJdbcMaxStatementsPerConnection() {
-		return jdbcMaxStatementsPerConnection == null ? "" : jdbcMaxStatementsPerConnection.toString();
-	}
-
-	public String nomAffichageJdbcMaxStatementsPerConnection() {
-		return null;
-	}
-
-	public String htmTooltipJdbcMaxStatementsPerConnection() {
-		return null;
-	}
-
-	public String htmJdbcMaxStatementsPerConnection() {
-		return jdbcMaxStatementsPerConnection == null ? "" : StringEscapeUtils.escapeHtml4(strJdbcMaxStatementsPerConnection());
 	}
 
 	/////////////////////
@@ -1973,30 +1302,6 @@ The max idle time for the database.
 		return (SiteConfig)this;
 	}
 
-	public Integer solrJdbcMaxIdleTime() {
-		return jdbcMaxIdleTime;
-	}
-
-	public String strJdbcMaxIdleTime() {
-		return jdbcMaxIdleTime == null ? "" : jdbcMaxIdleTime.toString();
-	}
-
-	public String jsonJdbcMaxIdleTime() {
-		return jdbcMaxIdleTime == null ? "" : jdbcMaxIdleTime.toString();
-	}
-
-	public String nomAffichageJdbcMaxIdleTime() {
-		return null;
-	}
-
-	public String htmTooltipJdbcMaxIdleTime() {
-		return null;
-	}
-
-	public String htmJdbcMaxIdleTime() {
-		return jdbcMaxIdleTime == null ? "" : StringEscapeUtils.escapeHtml4(strJdbcMaxIdleTime());
-	}
-
 	////////////////////////
 	// jdbcConnectTimeout //
 	////////////////////////
@@ -2044,30 +1349,6 @@ The max idle time for the connection to the database.
 		return (SiteConfig)this;
 	}
 
-	public Integer solrJdbcConnectTimeout() {
-		return jdbcConnectTimeout;
-	}
-
-	public String strJdbcConnectTimeout() {
-		return jdbcConnectTimeout == null ? "" : jdbcConnectTimeout.toString();
-	}
-
-	public String jsonJdbcConnectTimeout() {
-		return jdbcConnectTimeout == null ? "" : jdbcConnectTimeout.toString();
-	}
-
-	public String nomAffichageJdbcConnectTimeout() {
-		return null;
-	}
-
-	public String htmTooltipJdbcConnectTimeout() {
-		return null;
-	}
-
-	public String htmJdbcConnectTimeout() {
-		return jdbcConnectTimeout == null ? "" : StringEscapeUtils.escapeHtml4(strJdbcConnectTimeout());
-	}
-
 	//////////////
 	// jdbcHost //
 	//////////////
@@ -2106,30 +1387,6 @@ The JDBC URL to the database.
 		}
 		jdbcHostWrap.alreadyInitialized(true);
 		return (SiteConfig)this;
-	}
-
-	public String solrJdbcHost() {
-		return jdbcHost;
-	}
-
-	public String strJdbcHost() {
-		return jdbcHost == null ? "" : jdbcHost;
-	}
-
-	public String jsonJdbcHost() {
-		return jdbcHost == null ? "" : jdbcHost;
-	}
-
-	public String nomAffichageJdbcHost() {
-		return null;
-	}
-
-	public String htmTooltipJdbcHost() {
-		return null;
-	}
-
-	public String htmJdbcHost() {
-		return jdbcHost == null ? "" : StringEscapeUtils.escapeHtml4(strJdbcHost());
 	}
 
 	//////////////
@@ -2179,30 +1436,6 @@ The JDBC URL to the database.
 		return (SiteConfig)this;
 	}
 
-	public Integer solrJdbcPort() {
-		return jdbcPort;
-	}
-
-	public String strJdbcPort() {
-		return jdbcPort == null ? "" : jdbcPort.toString();
-	}
-
-	public String jsonJdbcPort() {
-		return jdbcPort == null ? "" : jdbcPort.toString();
-	}
-
-	public String nomAffichageJdbcPort() {
-		return null;
-	}
-
-	public String htmTooltipJdbcPort() {
-		return null;
-	}
-
-	public String htmJdbcPort() {
-		return jdbcPort == null ? "" : StringEscapeUtils.escapeHtml4(strJdbcPort());
-	}
-
 	//////////////////
 	// jdbcDatabase //
 	//////////////////
@@ -2241,30 +1474,6 @@ The JDBC URL to the database.
 		}
 		jdbcDatabaseWrap.alreadyInitialized(true);
 		return (SiteConfig)this;
-	}
-
-	public String solrJdbcDatabase() {
-		return jdbcDatabase;
-	}
-
-	public String strJdbcDatabase() {
-		return jdbcDatabase == null ? "" : jdbcDatabase;
-	}
-
-	public String jsonJdbcDatabase() {
-		return jdbcDatabase == null ? "" : jdbcDatabase;
-	}
-
-	public String nomAffichageJdbcDatabase() {
-		return null;
-	}
-
-	public String htmTooltipJdbcDatabase() {
-		return null;
-	}
-
-	public String htmJdbcDatabase() {
-		return jdbcDatabase == null ? "" : StringEscapeUtils.escapeHtml4(strJdbcDatabase());
 	}
 
 	/////////////
@@ -2307,30 +1516,6 @@ The URL to the SOLR search engine.
 		return (SiteConfig)this;
 	}
 
-	public String solrSolrUrl() {
-		return solrUrl;
-	}
-
-	public String strSolrUrl() {
-		return solrUrl == null ? "" : solrUrl;
-	}
-
-	public String jsonSolrUrl() {
-		return solrUrl == null ? "" : solrUrl;
-	}
-
-	public String nomAffichageSolrUrl() {
-		return null;
-	}
-
-	public String htmTooltipSolrUrl() {
-		return null;
-	}
-
-	public String htmSolrUrl() {
-		return solrUrl == null ? "" : StringEscapeUtils.escapeHtml4(strSolrUrl());
-	}
-
 	//////////////////////
 	// solrUrlComputate //
 	//////////////////////
@@ -2369,30 +1554,6 @@ The URL to the SOLR search engine for the computate project.
 		}
 		solrUrlComputateWrap.alreadyInitialized(true);
 		return (SiteConfig)this;
-	}
-
-	public String solrSolrUrlComputate() {
-		return solrUrlComputate;
-	}
-
-	public String strSolrUrlComputate() {
-		return solrUrlComputate == null ? "" : solrUrlComputate;
-	}
-
-	public String jsonSolrUrlComputate() {
-		return solrUrlComputate == null ? "" : solrUrlComputate;
-	}
-
-	public String nomAffichageSolrUrlComputate() {
-		return null;
-	}
-
-	public String htmTooltipSolrUrlComputate() {
-		return null;
-	}
-
-	public String htmSolrUrlComputate() {
-		return solrUrlComputate == null ? "" : StringEscapeUtils.escapeHtml4(strSolrUrlComputate());
 	}
 
 	/////////////////////
@@ -2435,30 +1596,6 @@ The Facebook account for the site.
 		return (SiteConfig)this;
 	}
 
-	public String solrAccountFacebook() {
-		return accountFacebook;
-	}
-
-	public String strAccountFacebook() {
-		return accountFacebook == null ? "" : accountFacebook;
-	}
-
-	public String jsonAccountFacebook() {
-		return accountFacebook == null ? "" : accountFacebook;
-	}
-
-	public String nomAffichageAccountFacebook() {
-		return null;
-	}
-
-	public String htmTooltipAccountFacebook() {
-		return null;
-	}
-
-	public String htmAccountFacebook() {
-		return accountFacebook == null ? "" : StringEscapeUtils.escapeHtml4(strAccountFacebook());
-	}
-
 	////////////////////
 	// accountTwitter //
 	////////////////////
@@ -2497,30 +1634,6 @@ The Twitter account for the site.
 		}
 		accountTwitterWrap.alreadyInitialized(true);
 		return (SiteConfig)this;
-	}
-
-	public String solrAccountTwitter() {
-		return accountTwitter;
-	}
-
-	public String strAccountTwitter() {
-		return accountTwitter == null ? "" : accountTwitter;
-	}
-
-	public String jsonAccountTwitter() {
-		return accountTwitter == null ? "" : accountTwitter;
-	}
-
-	public String nomAffichageAccountTwitter() {
-		return null;
-	}
-
-	public String htmTooltipAccountTwitter() {
-		return null;
-	}
-
-	public String htmAccountTwitter() {
-		return accountTwitter == null ? "" : StringEscapeUtils.escapeHtml4(strAccountTwitter());
 	}
 
 	//////////////////////
@@ -2563,30 +1676,6 @@ The Instagram account for the site.
 		return (SiteConfig)this;
 	}
 
-	public String solrAccountInstagram() {
-		return accountInstagram;
-	}
-
-	public String strAccountInstagram() {
-		return accountInstagram == null ? "" : accountInstagram;
-	}
-
-	public String jsonAccountInstagram() {
-		return accountInstagram == null ? "" : accountInstagram;
-	}
-
-	public String nomAffichageAccountInstagram() {
-		return null;
-	}
-
-	public String htmTooltipAccountInstagram() {
-		return null;
-	}
-
-	public String htmAccountInstagram() {
-		return accountInstagram == null ? "" : StringEscapeUtils.escapeHtml4(strAccountInstagram());
-	}
-
 	////////////////////
 	// accountYoutube //
 	////////////////////
@@ -2625,30 +1714,6 @@ The Youtube account for the site.
 		}
 		accountYoutubeWrap.alreadyInitialized(true);
 		return (SiteConfig)this;
-	}
-
-	public String solrAccountYoutube() {
-		return accountYoutube;
-	}
-
-	public String strAccountYoutube() {
-		return accountYoutube == null ? "" : accountYoutube;
-	}
-
-	public String jsonAccountYoutube() {
-		return accountYoutube == null ? "" : accountYoutube;
-	}
-
-	public String nomAffichageAccountYoutube() {
-		return null;
-	}
-
-	public String htmTooltipAccountYoutube() {
-		return null;
-	}
-
-	public String htmAccountYoutube() {
-		return accountYoutube == null ? "" : StringEscapeUtils.escapeHtml4(strAccountYoutube());
 	}
 
 	//////////////////////
@@ -2691,30 +1756,6 @@ The Pinterest account for the site.
 		return (SiteConfig)this;
 	}
 
-	public String solrAccountPinterest() {
-		return accountPinterest;
-	}
-
-	public String strAccountPinterest() {
-		return accountPinterest == null ? "" : accountPinterest;
-	}
-
-	public String jsonAccountPinterest() {
-		return accountPinterest == null ? "" : accountPinterest;
-	}
-
-	public String nomAffichageAccountPinterest() {
-		return null;
-	}
-
-	public String htmTooltipAccountPinterest() {
-		return null;
-	}
-
-	public String htmAccountPinterest() {
-		return accountPinterest == null ? "" : StringEscapeUtils.escapeHtml4(strAccountPinterest());
-	}
-
 	//////////////////
 	// accountEmail //
 	//////////////////
@@ -2753,30 +1794,6 @@ The Email account for the site.
 		}
 		accountEmailWrap.alreadyInitialized(true);
 		return (SiteConfig)this;
-	}
-
-	public String solrAccountEmail() {
-		return accountEmail;
-	}
-
-	public String strAccountEmail() {
-		return accountEmail == null ? "" : accountEmail;
-	}
-
-	public String jsonAccountEmail() {
-		return accountEmail == null ? "" : accountEmail;
-	}
-
-	public String nomAffichageAccountEmail() {
-		return null;
-	}
-
-	public String htmTooltipAccountEmail() {
-		return null;
-	}
-
-	public String htmAccountEmail() {
-		return accountEmail == null ? "" : StringEscapeUtils.escapeHtml4(strAccountEmail());
 	}
 
 	///////////////
@@ -2819,30 +1836,6 @@ The OpenID Connect role for an administrator.
 		return (SiteConfig)this;
 	}
 
-	public String solrRoleAdmin() {
-		return roleAdmin;
-	}
-
-	public String strRoleAdmin() {
-		return roleAdmin == null ? "" : roleAdmin;
-	}
-
-	public String jsonRoleAdmin() {
-		return roleAdmin == null ? "" : roleAdmin;
-	}
-
-	public String nomAffichageRoleAdmin() {
-		return null;
-	}
-
-	public String htmTooltipRoleAdmin() {
-		return null;
-	}
-
-	public String htmRoleAdmin() {
-		return roleAdmin == null ? "" : StringEscapeUtils.escapeHtml4(strRoleAdmin());
-	}
-
 	////////////////
 	// emailAdmin //
 	////////////////
@@ -2881,30 +1874,6 @@ The email address for the administrator of the site for the error reports.
 		}
 		emailAdminWrap.alreadyInitialized(true);
 		return (SiteConfig)this;
-	}
-
-	public String solrEmailAdmin() {
-		return emailAdmin;
-	}
-
-	public String strEmailAdmin() {
-		return emailAdmin == null ? "" : emailAdmin;
-	}
-
-	public String jsonEmailAdmin() {
-		return emailAdmin == null ? "" : emailAdmin;
-	}
-
-	public String nomAffichageEmailAdmin() {
-		return null;
-	}
-
-	public String htmTooltipEmailAdmin() {
-		return null;
-	}
-
-	public String htmEmailAdmin() {
-		return emailAdmin == null ? "" : StringEscapeUtils.escapeHtml4(strEmailAdmin());
 	}
 
 	/////////////////////
@@ -2954,30 +1923,6 @@ The number of executors for executing background tasks in the site.
 		return (SiteConfig)this;
 	}
 
-	public Integer solrNumberExecutors() {
-		return numberExecutors;
-	}
-
-	public String strNumberExecutors() {
-		return numberExecutors == null ? "" : numberExecutors.toString();
-	}
-
-	public String jsonNumberExecutors() {
-		return numberExecutors == null ? "" : numberExecutors.toString();
-	}
-
-	public String nomAffichageNumberExecutors() {
-		return null;
-	}
-
-	public String htmTooltipNumberExecutors() {
-		return null;
-	}
-
-	public String htmNumberExecutors() {
-		return numberExecutors == null ? "" : StringEscapeUtils.escapeHtml4(strNumberExecutors());
-	}
-
 	////////////////////
 	// openApiVersion //
 	////////////////////
@@ -3016,30 +1961,6 @@ The version of OpenAPI used with Vert.x which should probably be 3.0.
 		}
 		openApiVersionWrap.alreadyInitialized(true);
 		return (SiteConfig)this;
-	}
-
-	public String solrOpenApiVersion() {
-		return openApiVersion;
-	}
-
-	public String strOpenApiVersion() {
-		return openApiVersion == null ? "" : openApiVersion;
-	}
-
-	public String jsonOpenApiVersion() {
-		return openApiVersion == null ? "" : openApiVersion;
-	}
-
-	public String nomAffichageOpenApiVersion() {
-		return null;
-	}
-
-	public String htmTooltipOpenApiVersion() {
-		return null;
-	}
-
-	public String htmOpenApiVersion() {
-		return openApiVersion == null ? "" : StringEscapeUtils.escapeHtml4(strOpenApiVersion());
 	}
 
 	////////////////////
@@ -3082,30 +2003,6 @@ The description of your site API.
 		return (SiteConfig)this;
 	}
 
-	public String solrApiDescription() {
-		return apiDescription;
-	}
-
-	public String strApiDescription() {
-		return apiDescription == null ? "" : apiDescription;
-	}
-
-	public String jsonApiDescription() {
-		return apiDescription == null ? "" : apiDescription;
-	}
-
-	public String nomAffichageApiDescription() {
-		return null;
-	}
-
-	public String htmTooltipApiDescription() {
-		return null;
-	}
-
-	public String htmApiDescription() {
-		return apiDescription == null ? "" : StringEscapeUtils.escapeHtml4(strApiDescription());
-	}
-
 	//////////////
 	// apiTitle //
 	//////////////
@@ -3144,30 +2041,6 @@ The title of your site API.
 		}
 		apiTitleWrap.alreadyInitialized(true);
 		return (SiteConfig)this;
-	}
-
-	public String solrApiTitle() {
-		return apiTitle;
-	}
-
-	public String strApiTitle() {
-		return apiTitle == null ? "" : apiTitle;
-	}
-
-	public String jsonApiTitle() {
-		return apiTitle == null ? "" : apiTitle;
-	}
-
-	public String nomAffichageApiTitle() {
-		return null;
-	}
-
-	public String htmTooltipApiTitle() {
-		return null;
-	}
-
-	public String htmApiTitle() {
-		return apiTitle == null ? "" : StringEscapeUtils.escapeHtml4(strApiTitle());
 	}
 
 	/////////////////////
@@ -3210,30 +2083,6 @@ The terms of service of your site API.
 		return (SiteConfig)this;
 	}
 
-	public String solrApiTermsService() {
-		return apiTermsService;
-	}
-
-	public String strApiTermsService() {
-		return apiTermsService == null ? "" : apiTermsService;
-	}
-
-	public String jsonApiTermsService() {
-		return apiTermsService == null ? "" : apiTermsService;
-	}
-
-	public String nomAffichageApiTermsService() {
-		return null;
-	}
-
-	public String htmTooltipApiTermsService() {
-		return null;
-	}
-
-	public String htmApiTermsService() {
-		return apiTermsService == null ? "" : StringEscapeUtils.escapeHtml4(strApiTermsService());
-	}
-
 	////////////////
 	// apiVersion //
 	////////////////
@@ -3272,30 +2121,6 @@ The version of your site API.
 		}
 		apiVersionWrap.alreadyInitialized(true);
 		return (SiteConfig)this;
-	}
-
-	public String solrApiVersion() {
-		return apiVersion;
-	}
-
-	public String strApiVersion() {
-		return apiVersion == null ? "" : apiVersion;
-	}
-
-	public String jsonApiVersion() {
-		return apiVersion == null ? "" : apiVersion;
-	}
-
-	public String nomAffichageApiVersion() {
-		return null;
-	}
-
-	public String htmTooltipApiVersion() {
-		return null;
-	}
-
-	public String htmApiVersion() {
-		return apiVersion == null ? "" : StringEscapeUtils.escapeHtml4(strApiVersion());
 	}
 
 	/////////////////////
@@ -3338,30 +2163,6 @@ The contact email of your site API.
 		return (SiteConfig)this;
 	}
 
-	public String solrApiContactEmail() {
-		return apiContactEmail;
-	}
-
-	public String strApiContactEmail() {
-		return apiContactEmail == null ? "" : apiContactEmail;
-	}
-
-	public String jsonApiContactEmail() {
-		return apiContactEmail == null ? "" : apiContactEmail;
-	}
-
-	public String nomAffichageApiContactEmail() {
-		return null;
-	}
-
-	public String htmTooltipApiContactEmail() {
-		return null;
-	}
-
-	public String htmApiContactEmail() {
-		return apiContactEmail == null ? "" : StringEscapeUtils.escapeHtml4(strApiContactEmail());
-	}
-
 	////////////////////
 	// apiLicenseName //
 	////////////////////
@@ -3400,30 +2201,6 @@ The open source license name of your site API.
 		}
 		apiLicenseNameWrap.alreadyInitialized(true);
 		return (SiteConfig)this;
-	}
-
-	public String solrApiLicenseName() {
-		return apiLicenseName;
-	}
-
-	public String strApiLicenseName() {
-		return apiLicenseName == null ? "" : apiLicenseName;
-	}
-
-	public String jsonApiLicenseName() {
-		return apiLicenseName == null ? "" : apiLicenseName;
-	}
-
-	public String nomAffichageApiLicenseName() {
-		return null;
-	}
-
-	public String htmTooltipApiLicenseName() {
-		return null;
-	}
-
-	public String htmApiLicenseName() {
-		return apiLicenseName == null ? "" : StringEscapeUtils.escapeHtml4(strApiLicenseName());
 	}
 
 	///////////////////
@@ -3466,30 +2243,6 @@ The open source license URL of your site API.
 		return (SiteConfig)this;
 	}
 
-	public String solrApiLicenseUrl() {
-		return apiLicenseUrl;
-	}
-
-	public String strApiLicenseUrl() {
-		return apiLicenseUrl == null ? "" : apiLicenseUrl;
-	}
-
-	public String jsonApiLicenseUrl() {
-		return apiLicenseUrl == null ? "" : apiLicenseUrl;
-	}
-
-	public String nomAffichageApiLicenseUrl() {
-		return null;
-	}
-
-	public String htmTooltipApiLicenseUrl() {
-		return null;
-	}
-
-	public String htmApiLicenseUrl() {
-		return apiLicenseUrl == null ? "" : StringEscapeUtils.escapeHtml4(strApiLicenseUrl());
-	}
-
 	/////////////////
 	// apiHostName //
 	/////////////////
@@ -3528,30 +2281,6 @@ The host name of your site API.
 		}
 		apiHostNameWrap.alreadyInitialized(true);
 		return (SiteConfig)this;
-	}
-
-	public String solrApiHostName() {
-		return apiHostName;
-	}
-
-	public String strApiHostName() {
-		return apiHostName == null ? "" : apiHostName;
-	}
-
-	public String jsonApiHostName() {
-		return apiHostName == null ? "" : apiHostName;
-	}
-
-	public String nomAffichageApiHostName() {
-		return null;
-	}
-
-	public String htmTooltipApiHostName() {
-		return null;
-	}
-
-	public String htmApiHostName() {
-		return apiHostName == null ? "" : StringEscapeUtils.escapeHtml4(strApiHostName());
 	}
 
 	/////////////////
@@ -3594,30 +2323,6 @@ The base path of your site API.
 		return (SiteConfig)this;
 	}
 
-	public String solrApiBasePath() {
-		return apiBasePath;
-	}
-
-	public String strApiBasePath() {
-		return apiBasePath == null ? "" : apiBasePath;
-	}
-
-	public String jsonApiBasePath() {
-		return apiBasePath == null ? "" : apiBasePath;
-	}
-
-	public String nomAffichageApiBasePath() {
-		return null;
-	}
-
-	public String htmTooltipApiBasePath() {
-		return null;
-	}
-
-	public String htmApiBasePath() {
-		return apiBasePath == null ? "" : StringEscapeUtils.escapeHtml4(strApiBasePath());
-	}
-
 	///////////////////
 	// staticBaseUrl //
 	///////////////////
@@ -3658,30 +2363,6 @@ The base URL of your static files.
 		return (SiteConfig)this;
 	}
 
-	public String solrStaticBaseUrl() {
-		return staticBaseUrl;
-	}
-
-	public String strStaticBaseUrl() {
-		return staticBaseUrl == null ? "" : staticBaseUrl;
-	}
-
-	public String jsonStaticBaseUrl() {
-		return staticBaseUrl == null ? "" : staticBaseUrl;
-	}
-
-	public String nomAffichageStaticBaseUrl() {
-		return null;
-	}
-
-	public String htmTooltipStaticBaseUrl() {
-		return null;
-	}
-
-	public String htmStaticBaseUrl() {
-		return staticBaseUrl == null ? "" : StringEscapeUtils.escapeHtml4(strStaticBaseUrl());
-	}
-
 	///////////////
 	// emailHost //
 	///////////////
@@ -3718,30 +2399,6 @@ The base URL of your static files.
 		}
 		emailHostWrap.alreadyInitialized(true);
 		return (SiteConfig)this;
-	}
-
-	public String solrEmailHost() {
-		return emailHost;
-	}
-
-	public String strEmailHost() {
-		return emailHost == null ? "" : emailHost;
-	}
-
-	public String jsonEmailHost() {
-		return emailHost == null ? "" : emailHost;
-	}
-
-	public String nomAffichageEmailHost() {
-		return null;
-	}
-
-	public String htmTooltipEmailHost() {
-		return null;
-	}
-
-	public String htmEmailHost() {
-		return emailHost == null ? "" : StringEscapeUtils.escapeHtml4(strEmailHost());
 	}
 
 	///////////////
@@ -3789,30 +2446,6 @@ The base URL of your static files.
 		return (SiteConfig)this;
 	}
 
-	public Integer solrEmailPort() {
-		return emailPort;
-	}
-
-	public String strEmailPort() {
-		return emailPort == null ? "" : emailPort.toString();
-	}
-
-	public String jsonEmailPort() {
-		return emailPort == null ? "" : emailPort.toString();
-	}
-
-	public String nomAffichageEmailPort() {
-		return null;
-	}
-
-	public String htmTooltipEmailPort() {
-		return null;
-	}
-
-	public String htmEmailPort() {
-		return emailPort == null ? "" : StringEscapeUtils.escapeHtml4(strEmailPort());
-	}
-
 	///////////////////
 	// emailUsername //
 	///////////////////
@@ -3849,30 +2482,6 @@ The base URL of your static files.
 		}
 		emailUsernameWrap.alreadyInitialized(true);
 		return (SiteConfig)this;
-	}
-
-	public String solrEmailUsername() {
-		return emailUsername;
-	}
-
-	public String strEmailUsername() {
-		return emailUsername == null ? "" : emailUsername;
-	}
-
-	public String jsonEmailUsername() {
-		return emailUsername == null ? "" : emailUsername;
-	}
-
-	public String nomAffichageEmailUsername() {
-		return null;
-	}
-
-	public String htmTooltipEmailUsername() {
-		return null;
-	}
-
-	public String htmEmailUsername() {
-		return emailUsername == null ? "" : StringEscapeUtils.escapeHtml4(strEmailUsername());
 	}
 
 	///////////////////
@@ -3913,30 +2522,6 @@ The base URL of your static files.
 		return (SiteConfig)this;
 	}
 
-	public String solrEmailPassword() {
-		return emailPassword;
-	}
-
-	public String strEmailPassword() {
-		return emailPassword == null ? "" : emailPassword;
-	}
-
-	public String jsonEmailPassword() {
-		return emailPassword == null ? "" : emailPassword;
-	}
-
-	public String nomAffichageEmailPassword() {
-		return null;
-	}
-
-	public String htmTooltipEmailPassword() {
-		return null;
-	}
-
-	public String htmEmailPassword() {
-		return emailPassword == null ? "" : StringEscapeUtils.escapeHtml4(strEmailPassword());
-	}
-
 	///////////////
 	// emailFrom //
 	///////////////
@@ -3973,30 +2558,6 @@ The base URL of your static files.
 		}
 		emailFromWrap.alreadyInitialized(true);
 		return (SiteConfig)this;
-	}
-
-	public String solrEmailFrom() {
-		return emailFrom;
-	}
-
-	public String strEmailFrom() {
-		return emailFrom == null ? "" : emailFrom;
-	}
-
-	public String jsonEmailFrom() {
-		return emailFrom == null ? "" : emailFrom;
-	}
-
-	public String nomAffichageEmailFrom() {
-		return null;
-	}
-
-	public String htmTooltipEmailFrom() {
-		return null;
-	}
-
-	public String htmEmailFrom() {
-		return emailFrom == null ? "" : StringEscapeUtils.escapeHtml4(strEmailFrom());
 	}
 
 	///////////////
@@ -4042,30 +2603,6 @@ The base URL of your static files.
 		return (SiteConfig)this;
 	}
 
-	public Boolean solrEmailAuth() {
-		return emailAuth;
-	}
-
-	public String strEmailAuth() {
-		return emailAuth == null ? "" : emailAuth.toString();
-	}
-
-	public String jsonEmailAuth() {
-		return emailAuth == null ? "" : emailAuth.toString();
-	}
-
-	public String nomAffichageEmailAuth() {
-		return null;
-	}
-
-	public String htmTooltipEmailAuth() {
-		return null;
-	}
-
-	public String htmEmailAuth() {
-		return emailAuth == null ? "" : StringEscapeUtils.escapeHtml4(strEmailAuth());
-	}
-
 	//////////////
 	// emailSsl //
 	//////////////
@@ -4109,30 +2646,6 @@ The base URL of your static files.
 		return (SiteConfig)this;
 	}
 
-	public Boolean solrEmailSsl() {
-		return emailSsl;
-	}
-
-	public String strEmailSsl() {
-		return emailSsl == null ? "" : emailSsl.toString();
-	}
-
-	public String jsonEmailSsl() {
-		return emailSsl == null ? "" : emailSsl.toString();
-	}
-
-	public String nomAffichageEmailSsl() {
-		return null;
-	}
-
-	public String htmTooltipEmailSsl() {
-		return null;
-	}
-
-	public String htmEmailSsl() {
-		return emailSsl == null ? "" : StringEscapeUtils.escapeHtml4(strEmailSsl());
-	}
-
 	//////////////
 	// siteZone //
 	//////////////
@@ -4173,30 +2686,6 @@ The default timezone of the site.
 		return (SiteConfig)this;
 	}
 
-	public String solrSiteZone() {
-		return siteZone;
-	}
-
-	public String strSiteZone() {
-		return siteZone == null ? "" : siteZone;
-	}
-
-	public String jsonSiteZone() {
-		return siteZone == null ? "" : siteZone;
-	}
-
-	public String nomAffichageSiteZone() {
-		return null;
-	}
-
-	public String htmTooltipSiteZone() {
-		return null;
-	}
-
-	public String htmSiteZone() {
-		return siteZone == null ? "" : StringEscapeUtils.escapeHtml4(strSiteZone());
-	}
-
 	/////////////////////////
 	// authorizeApiLoginId //
 	/////////////////////////
@@ -4233,30 +2722,6 @@ The default timezone of the site.
 		}
 		authorizeApiLoginIdWrap.alreadyInitialized(true);
 		return (SiteConfig)this;
-	}
-
-	public String solrAuthorizeApiLoginId() {
-		return authorizeApiLoginId;
-	}
-
-	public String strAuthorizeApiLoginId() {
-		return authorizeApiLoginId == null ? "" : authorizeApiLoginId;
-	}
-
-	public String jsonAuthorizeApiLoginId() {
-		return authorizeApiLoginId == null ? "" : authorizeApiLoginId;
-	}
-
-	public String nomAffichageAuthorizeApiLoginId() {
-		return null;
-	}
-
-	public String htmTooltipAuthorizeApiLoginId() {
-		return null;
-	}
-
-	public String htmAuthorizeApiLoginId() {
-		return authorizeApiLoginId == null ? "" : StringEscapeUtils.escapeHtml4(strAuthorizeApiLoginId());
 	}
 
 	/////////////////////////////
@@ -4297,30 +2762,6 @@ The default timezone of the site.
 		return (SiteConfig)this;
 	}
 
-	public String solrAuthorizeTransactionKey() {
-		return authorizeTransactionKey;
-	}
-
-	public String strAuthorizeTransactionKey() {
-		return authorizeTransactionKey == null ? "" : authorizeTransactionKey;
-	}
-
-	public String jsonAuthorizeTransactionKey() {
-		return authorizeTransactionKey == null ? "" : authorizeTransactionKey;
-	}
-
-	public String nomAffichageAuthorizeTransactionKey() {
-		return null;
-	}
-
-	public String htmTooltipAuthorizeTransactionKey() {
-		return null;
-	}
-
-	public String htmAuthorizeTransactionKey() {
-		return authorizeTransactionKey == null ? "" : StringEscapeUtils.escapeHtml4(strAuthorizeTransactionKey());
-	}
-
 	//////////////////////////
 	// authorizeEnvironment //
 	//////////////////////////
@@ -4359,30 +2800,6 @@ The default timezone of the site.
 		return (SiteConfig)this;
 	}
 
-	public String solrAuthorizeEnvironment() {
-		return authorizeEnvironment;
-	}
-
-	public String strAuthorizeEnvironment() {
-		return authorizeEnvironment == null ? "" : authorizeEnvironment;
-	}
-
-	public String jsonAuthorizeEnvironment() {
-		return authorizeEnvironment == null ? "" : authorizeEnvironment;
-	}
-
-	public String nomAffichageAuthorizeEnvironment() {
-		return null;
-	}
-
-	public String htmTooltipAuthorizeEnvironment() {
-		return null;
-	}
-
-	public String htmAuthorizeEnvironment() {
-		return authorizeEnvironment == null ? "" : StringEscapeUtils.escapeHtml4(strAuthorizeEnvironment());
-	}
-
 	//////////////////
 	// authorizeUrl //
 	//////////////////
@@ -4419,30 +2836,6 @@ The default timezone of the site.
 		}
 		authorizeUrlWrap.alreadyInitialized(true);
 		return (SiteConfig)this;
-	}
-
-	public String solrAuthorizeUrl() {
-		return authorizeUrl;
-	}
-
-	public String strAuthorizeUrl() {
-		return authorizeUrl == null ? "" : authorizeUrl;
-	}
-
-	public String jsonAuthorizeUrl() {
-		return authorizeUrl == null ? "" : authorizeUrl;
-	}
-
-	public String nomAffichageAuthorizeUrl() {
-		return null;
-	}
-
-	public String htmTooltipAuthorizeUrl() {
-		return null;
-	}
-
-	public String htmAuthorizeUrl() {
-		return authorizeUrl == null ? "" : StringEscapeUtils.escapeHtml4(strAuthorizeUrl());
 	}
 
 	////////////////
@@ -4490,30 +2883,6 @@ The default timezone of the site.
 		return (SiteConfig)this;
 	}
 
-	public Integer solrPaymentDay() {
-		return paymentDay;
-	}
-
-	public String strPaymentDay() {
-		return paymentDay == null ? "" : paymentDay.toString();
-	}
-
-	public String jsonPaymentDay() {
-		return paymentDay == null ? "" : paymentDay.toString();
-	}
-
-	public String nomAffichagePaymentDay() {
-		return null;
-	}
-
-	public String htmTooltipPaymentDay() {
-		return null;
-	}
-
-	public String htmPaymentDay() {
-		return paymentDay == null ? "" : StringEscapeUtils.escapeHtml4(strPaymentDay());
-	}
-
 	/////////////////
 	// paymentNext //
 	/////////////////
@@ -4546,13 +2915,13 @@ The default timezone of the site.
 		this.paymentNextWrap.alreadyInitialized = true;
 	}
 	public SiteConfig setPaymentNext(Instant o) {
-		this.paymentNext = LocalDate.from(o);
+		this.paymentNext = o == null ? null : LocalDate.from(o);
 		this.paymentNextWrap.alreadyInitialized = true;
 		return (SiteConfig)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SiteConfig setPaymentNext(String o) {
-		this.paymentNext = LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		this.paymentNext = o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 		this.paymentNextWrap.alreadyInitialized = true;
 		return (SiteConfig)this;
 	}
@@ -4564,30 +2933,6 @@ The default timezone of the site.
 		}
 		paymentNextWrap.alreadyInitialized(true);
 		return (SiteConfig)this;
-	}
-
-	public Date solrPaymentNext() {
-		return paymentNext == null ? null : Date.from(paymentNext.atStartOfDay(ZoneId.systemDefault()).toInstant());
-	}
-
-	public String strPaymentNext() {
-		return paymentNext == null ? "" : paymentNext.format(DateTimeFormatter.ofPattern("EEE MMM d, yyyy", Locale.forLanguageTag("en-US")));
-	}
-
-	public String jsonPaymentNext() {
-		return paymentNext == null ? "" : paymentNext.format(DateTimeFormatter.ISO_DATE);
-	}
-
-	public String nomAffichagePaymentNext() {
-		return null;
-	}
-
-	public String htmTooltipPaymentNext() {
-		return null;
-	}
-
-	public String htmPaymentNext() {
-		return paymentNext == null ? "" : StringEscapeUtils.escapeHtml4(strPaymentNext());
 	}
 
 	//////////////

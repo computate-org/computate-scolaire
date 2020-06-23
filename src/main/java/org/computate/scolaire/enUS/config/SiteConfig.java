@@ -14,21 +14,22 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.computate.scolaire.enUS.wrap.Wrap;
 
-/**	
- *	Loads the properties in the application config file into specific fields. 
+/**
+ * Loads the properties in the application config file into specific fields. 
+ * CanonicalName: org.computate.scolaire.frFR.config.ConfigSite
  **/
 public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 
-	/**	
-	 *	The path to the config file of the site. 
+	/**
+	 * The path to the config file of the site. 
 	 **/
 	protected void _configPath(Wrap<String> c) {   
 		String o = System.getenv("configPath");
 		c.o(o);
 	}
 
-	/**	
-	 *	The INI Configuration Object for the config file. 
+	/**
+	 * The INI Configuration Object for the config file. 
 	 **/
 	protected void _config(Wrap<INIConfiguration> c) {
 		if(configPath != null) {
@@ -45,8 +46,8 @@ public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 		}
 	}
 
-	/**	
-	 *	The name of the principal group of settings of the config for this website. 
+	/**
+	 * The name of the principal group of settings of the config for this website. 
 	 **/
 	protected void _siteIdentifier(Wrap<String> c) {
 		String o;
@@ -58,16 +59,16 @@ public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	
-	 *	The already escaped prefix to find the properties of the site. 
+	/**
+	 * The already escaped prefix to find the properties of the site. 
 	 **/
 	protected void _prefixEscaped(Wrap<String> c) {
 		String o = StringUtils.replace(siteIdentifier, ".", "..") + ".";
 		c.o(o);
 	}
 
-	/**	
-	 *	The path to the project of the site cloned from git. 
+	/**
+	 * The path to the project of the site cloned from git. 
 	 **/
 	protected void _appPath(Wrap<String> c) {
 		String o;
@@ -79,8 +80,8 @@ public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	
-	 *	The path to the docroot for the project. 
+	/**
+	 * The path to the docroot for the project. 
 	 **/
 	protected void _docRoot(Wrap<String> c) {
 		String o;
@@ -91,8 +92,8 @@ public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	
-	 *	The name of the company. 
+	/**
+	 * The name of the company. 
 	 **/
 	protected void _companyName(Wrap<String> c) {
 		String o;
@@ -103,8 +104,8 @@ public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	
-	 *	The domain name of the site. 
+	/**
+	 * The domain name of the site. 
 	 **/
 	protected void _domainName(Wrap<String> c) {
 		String o;
@@ -115,8 +116,8 @@ public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	
-	 *	The host name of the site. 
+	/**
+	 * The host name of the site. 
 	 **/
 	protected void _siteHostName(Wrap<String> c) {
 		String o;
@@ -127,8 +128,8 @@ public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	
-	 *	The port of the site. 
+	/**
+	 * The port of the site. 
 	 **/
 	protected void _sitePort(Wrap<Integer> c) {
 		Integer o;
@@ -139,8 +140,8 @@ public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	
-	 *	The Keycloak realm of the site. 
+	/**
+	 * The Keycloak realm of the site. 
 	 **/
 	protected void _authRealm(Wrap<String> c) {
 		String o;
@@ -151,8 +152,8 @@ public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	
-	 *	The Keycloak client ID of the site. 
+	/**
+	 * The Keycloak client ID of the site. 
 	 **/
 	protected void _authResource(Wrap<String> c) {
 		String o;
@@ -163,8 +164,8 @@ public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	
-	 *	The Keycloak client secret of the site. 
+	/**
+	 * The Keycloak client secret of the site. 
 	 **/
 	protected void _authSecret(Wrap<String> c) {
 		String o;
@@ -175,8 +176,8 @@ public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	
-	 *	Whether SSL is required in Keycloak for the site. 
+	/**
+	 * Whether SSL is required in Keycloak for the site. 
 	 **/
 	protected void _authSslRequired(Wrap<String> c) {
 		String o;
@@ -187,8 +188,8 @@ public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	
-	 *	The path to the Java keystore for the site. 
+	/**
+	 * The path to the Java keystore for the site. 
 	 **/
 	protected void _sslJksPath(Wrap<String> c) {
 		String o;
@@ -199,8 +200,8 @@ public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	
-	 *	The password for the Java keystore for the site. 
+	/**
+	 * The password for the Java keystore for the site. 
 	 **/
 	protected void _sslJksPassword(Wrap<String> c) {
 		String o;
@@ -211,8 +212,8 @@ public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	
-	 *	The URL to the Keycloak server. 
+	/**
+	 * The URL to the Keycloak server. 
 	 **/
 	protected void _authUrl(Wrap<String> c) {
 		String o;
@@ -223,8 +224,8 @@ public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	
-	 *	The encryption salt to use for all database encryption. 
+	/**
+	 * The encryption salt to use for all database encryption. 
 	 **/
 	protected void _encryptionSalt(Wrap<String> c) {
 		String o;
@@ -235,8 +236,8 @@ public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	
-	 *	The encryption password to use for all encryption of the database. 
+	/**
+	 * The encryption password to use for all encryption of the database. 
 	 **/
 	protected void _encryptionPassword(Wrap<String> c) {
 		String o;
@@ -247,8 +248,8 @@ public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	
-	 *	The base URL for the URLs of the site. 
+	/**
+	 * The base URL for the URLs of the site. 
 	 **/
 	protected void _siteBaseUrl(Wrap<String> c) {
 		String o;
@@ -259,8 +260,8 @@ public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	
-	 *	The display name of the site. 
+	/**
+	 * The display name of the site. 
 	 **/
 	protected void _siteDisplayName(Wrap<String> c) {
 		String o;
@@ -271,8 +272,8 @@ public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	
-	 *	The class name of the JDBC driver class for the database. 
+	/**
+	 * The class name of the JDBC driver class for the database. 
 	 **/
 	protected void _jdbcDriverClass(Wrap<String> c) {
 		String o;
@@ -283,8 +284,8 @@ public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	
-	 *	The username for the database. 
+	/**
+	 * The username for the database. 
 	 **/
 	protected void _jdbcUsername(Wrap<String> c) {
 		String o;
@@ -295,8 +296,8 @@ public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	
-	 *	The password for the database. 
+	/**
+	 * The password for the database. 
 	 **/
 	protected void _jdbcPassword(Wrap<String> c) {
 		String o;
@@ -307,8 +308,8 @@ public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	
-	 *	The max pool size for the database. 
+	/**
+	 * The max pool size for the database. 
 	 **/
 	protected void _jdbcMaxPoolSize(Wrap<Integer> c) {
 		Integer o;
@@ -319,10 +320,10 @@ public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	
-	 *	Set the maximum connection request allowed in the wait queue, 
-	 *	any requests beyond the max size will result in an failure. 
-	 *	If the value is set to a negative number then the queue will be unbounded. 
+	/**
+	 * Set the maximum connection request allowed in the wait queue, 
+	 * any requests beyond the max size will result in an failure. 
+	 * If the value is set to a negative number then the queue will be unbounded. 
 	 **/
 	protected void _jdbcMaxWaitQueueSize(Wrap<Integer> c) {
 		Integer o;
@@ -333,8 +334,8 @@ public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	
-	 *	The max pool size for the database. 
+	/**
+	 * The max pool size for the database. 
 	 **/
 	protected void _jdbcMinPoolSize(Wrap<Integer> c) {
 		Integer o;
@@ -345,8 +346,8 @@ public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	
-	 *	The max statements for the database. 
+	/**
+	 * The max statements for the database. 
 	 **/
 	protected void _jdbcMaxStatements(Wrap<Integer> c) {
 		Integer o;
@@ -357,8 +358,8 @@ public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	
-	 *	The max statements per connection for the database. 
+	/**
+	 * The max statements per connection for the database. 
 	 **/
 	protected void _jdbcMaxStatementsPerConnection(Wrap<Integer> c) {
 		Integer o;
@@ -369,8 +370,8 @@ public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	
-	 *	The max idle time for the database. 
+	/**
+	 * The max idle time for the database. 
 	 **/
 	protected void _jdbcMaxIdleTime(Wrap<Integer> c) {
 		Integer o;
@@ -381,20 +382,20 @@ public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	
-	 *	The max idle time for the connection to the database. 
+	/**
+	 * The max idle time for the connection to the database. 
 	 **/
 	protected void _jdbcConnectTimeout(Wrap<Integer> c) {
 		Integer o;
 		if(config == null)
-			o = NumberUtils.toInt(System.getenv(c.var), 10);
+			o = NumberUtils.toInt(System.getenv(c.var), 5000);
 		else
-			o = config.getInt(prefixEscaped + c.var, 10);
+			o = config.getInt(prefixEscaped + c.var, 5000);
 		c.o(o);
 	}
 
-	/**	
-	 *	The JDBC URL to the database. 
+	/**
+	 * The JDBC URL to the database. 
 	 **/
 	protected void _jdbcHost(Wrap<String> c) {
 		String o;
@@ -405,8 +406,8 @@ public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	
-	 *	The JDBC URL to the database. 
+	/**
+	 * The JDBC URL to the database. 
 	 **/
 	protected void _jdbcPort(Wrap<Integer> c) {
 		Integer o;
@@ -417,8 +418,8 @@ public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	
-	 *	The JDBC URL to the database. 
+	/**
+	 * The JDBC URL to the database. 
 	 **/
 	protected void _jdbcDatabase(Wrap<String> c) {
 		String o;
@@ -429,8 +430,8 @@ public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	
-	 *	The URL to the SOLR search engine. 
+	/**
+	 * The URL to the SOLR search engine. 
 	 **/
 	protected void _solrUrl(Wrap<String> c) {
 		String o;
@@ -441,8 +442,8 @@ public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	
-	 *	The URL to the SOLR search engine for the computate project. 
+	/**
+	 * The URL to the SOLR search engine for the computate project. 
 	 **/
 	protected void _solrUrlComputate(Wrap<String> c) {
 		String o;
@@ -453,8 +454,8 @@ public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	
-	 *	The Facebook account for the site. 
+	/**
+	 * The Facebook account for the site. 
 	 **/
 	protected void _accountFacebook(Wrap<String> c) {
 		String o;
@@ -465,8 +466,8 @@ public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	
-	 *	The Twitter account for the site. 
+	/**
+	 * The Twitter account for the site. 
 	 **/
 	protected void _accountTwitter(Wrap<String> c) {
 		String o;
@@ -477,8 +478,8 @@ public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	
-	 *	The Instagram account for the site. 
+	/**
+	 * The Instagram account for the site. 
 	 **/
 	protected void _accountInstagram(Wrap<String> c) {
 		String o;
@@ -489,8 +490,8 @@ public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	
-	 *	The Youtube account for the site. 
+	/**
+	 * The Youtube account for the site. 
 	 **/
 	protected void _accountYoutube(Wrap<String> c) {
 		String o;
@@ -501,8 +502,8 @@ public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	
-	 *	The Pinterest account for the site. 
+	/**
+	 * The Pinterest account for the site. 
 	 **/
 	protected void _accountPinterest(Wrap<String> c) {
 		String o;
@@ -513,8 +514,8 @@ public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	
-	 *	The Email account for the site. 
+	/**
+	 * The Email account for the site. 
 	 **/
 	protected void _accountEmail(Wrap<String> c) {
 		String o;
@@ -525,8 +526,8 @@ public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	
-	 *	The OpenID Connect role for an administrator. 
+	/**
+	 * The OpenID Connect role for an administrator. 
 	 **/
 	protected void _roleAdmin(Wrap<String> c) {
 		String o;
@@ -537,8 +538,8 @@ public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	
-	 *	The email address for the administrator of the site for the error reports. 
+	/**
+	 * The email address for the administrator of the site for the error reports. 
 	 **/
 	protected void _emailAdmin(Wrap<String> c) {
 		String o;
@@ -549,8 +550,8 @@ public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	
-	 *	The number of executors for executing background tasks in the site. 
+	/**
+	 * The number of executors for executing background tasks in the site. 
 	 **/
 	protected void _numberExecutors(Wrap<Integer> c) {
 		Integer o;
@@ -561,8 +562,8 @@ public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	
-	 *	The version of OpenAPI used with Vert.x which should probably be 3.0. 
+	/**
+	 * The version of OpenAPI used with Vert.x which should probably be 3.0. 
 	 **/
 	protected void _openApiVersion(Wrap<String> c) {
 		String o;
@@ -573,8 +574,8 @@ public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	
-	 *	The description of your site API. 
+	/**
+	 * The description of your site API. 
 	 **/
 	protected void _apiDescription(Wrap<String> c) {
 		String o;
@@ -585,8 +586,8 @@ public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	
-	 *	The title of your site API. 
+	/**
+	 * The title of your site API. 
 	 **/
 	protected void _apiTitle(Wrap<String> c) {
 		String o;
@@ -597,8 +598,8 @@ public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	
-	 *	The terms of service of your site API. 
+	/**
+	 * The terms of service of your site API. 
 	 **/
 	protected void _apiTermsService(Wrap<String> c) {
 		String o;
@@ -609,8 +610,8 @@ public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	
-	 *	The version of your site API. 
+	/**
+	 * The version of your site API. 
 	 **/
 	protected void _apiVersion(Wrap<String> c) {
 		String o;
@@ -621,8 +622,8 @@ public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	
-	 *	The contact email of your site API. 
+	/**
+	 * The contact email of your site API. 
 	 **/
 	protected void _apiContactEmail(Wrap<String> c) {
 		String o;
@@ -633,8 +634,8 @@ public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	
-	 *	The open source license name of your site API. 
+	/**
+	 * The open source license name of your site API. 
 	 **/
 	protected void _apiLicenseName(Wrap<String> c) {
 		String o;
@@ -645,8 +646,8 @@ public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	
-	 *	The open source license URL of your site API. 
+	/**
+	 * The open source license URL of your site API. 
 	 **/
 	protected void _apiLicenseUrl(Wrap<String> c) {
 		String o;
@@ -657,8 +658,8 @@ public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	
-	 *	The host name of your site API. 
+	/**
+	 * The host name of your site API. 
 	 **/
 	protected void _apiHostName(Wrap<String> c) {
 		String o;
@@ -669,8 +670,8 @@ public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	
-	 *	The base path of your site API. 
+	/**
+	 * The base path of your site API. 
 	 **/
 	protected void _apiBasePath(Wrap<String> c) {
 		String o;
@@ -681,8 +682,8 @@ public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	
-	 *	The base URL of your static files. 
+	/**
+	 * The base URL of your static files. 
 	 **/
 	protected void _staticBaseUrl(Wrap<String> c) {
 		String o;
@@ -756,8 +757,8 @@ public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	/**	
-	 *	The default timezone of the site. 
+	/**
+	 * The default timezone of the site. 
 	 **/
 	protected void _siteZone(Wrap<String> c) {
 		String o;
