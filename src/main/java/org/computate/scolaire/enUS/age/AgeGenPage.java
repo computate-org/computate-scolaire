@@ -103,7 +103,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 	@Override public void htmlScriptsAgeGenPage() {
 		e("script").a("src", staticBaseUrl, "/js/enUS/AgePage.js").f().g("script");
 		e("script").a("src", staticBaseUrl, "/js/enUS/BlockPage.js").f().g("script");
-		e("script").a("src", staticBaseUrl, "/js/enUS/SessionPage.js").f().g("script");
+		e("script").a("src", staticBaseUrl, "/js/enUS/YearPage.js").f().g("script");
 	}
 
 	@Override public void htmlScriptAgeGenPage() {
@@ -127,9 +127,9 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 				) {
-			tl(2, "suggestSchoolAgeSessionKey([{'name':'fq','value':'ageKeys:' + pk}], $('#listSchoolAgeSessionKey_Page'), pk, true); ");
+			tl(2, "suggestSchoolAgeYearKey([{'name':'fq','value':'ageKeys:' + pk}], $('#listSchoolAgeYearKey_Page'), pk, true); ");
 		} else {
-			tl(2, "suggestSchoolAgeSessionKey([{'name':'fq','value':'ageKeys:' + pk}], $('#listSchoolAgeSessionKey_Page'), pk, false); ");
+			tl(2, "suggestSchoolAgeYearKey([{'name':'fq','value':'ageKeys:' + pk}], $('#listSchoolAgeYearKey_Page'), pk, false); ");
 		}
 		if(
 				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
@@ -160,7 +160,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 			o.htmAgeEnd("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmSessionKey("Page");
+			o.htmYearKey("Page");
 			o.htmBlockKeys("Page");
 		} g("div");
 	}
@@ -181,7 +181,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 			o.htmAgeEnd("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmSessionKey("POST");
+			o.htmYearKey("POST");
 			o.htmBlockKeys("POST");
 		} g("div");
 	}
@@ -224,7 +224,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 			o.htmAgeEnd("PUTCopy");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmSessionKey("PUTCopy");
+			o.htmYearKey("PUTCopy");
 			o.htmBlockKeys("PUTCopy");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
@@ -250,7 +250,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 			o.htmAgeEnd("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmSessionKey("PATCH");
+			o.htmYearKey("PATCH");
 			o.htmBlockKeys("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
@@ -278,7 +278,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 			o.htmAgeEnd("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmSessionKey("Search");
+			o.htmYearKey("Search");
 			o.htmBlockKeys("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();

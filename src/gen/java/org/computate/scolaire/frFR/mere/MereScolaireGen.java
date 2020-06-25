@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.util.Date;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
+import java.util.HashMap;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 import org.computate.scolaire.frFR.requete.api.RequeteApi;
 import org.apache.commons.lang3.StringUtils;
@@ -1134,7 +1135,7 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 				}
 				if("Page".equals(classeApiMethodeMethode)) {
 					a("onclick", "enleverLueur($(this)); ");
-					a("onchange", "patchMereScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonnePrenom', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_personnePrenom')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personnePrenom')); }); ");
+					a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonnePrenom', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_personnePrenom')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personnePrenom')); }); ");
 				}
 				a("value", strPersonnePrenom())
 			.fg();
@@ -1169,7 +1170,7 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 										{ e("button")
 											.a("tabindex", "-1")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-pink ")
-										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_personnePrenom')); $('#", classeApiMethodeMethode, "_personnePrenom').val(null); patchMereScolaireVal([{ name: 'fq', value: 'pk:' + $('#MereScolaireForm :input[name=pk]').val() }], 'setPersonnePrenom', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_personnePrenom')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personnePrenom')); }); ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_personnePrenom')); $('#", classeApiMethodeMethode, "_personnePrenom').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#MereScolaireForm :input[name=pk]').val() }], 'setPersonnePrenom', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_personnePrenom')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personnePrenom')); }); ")
 											.f();
 											e("i").a("class", "far fa-eraser ").f().g("i");
 										} g("button");
@@ -1266,7 +1267,7 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 				}
 				if("Page".equals(classeApiMethodeMethode)) {
 					a("onclick", "enleverLueur($(this)); ");
-					a("onchange", "patchMereScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonnePrenomPrefere', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_personnePrenomPrefere')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personnePrenomPrefere')); }); ");
+					a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonnePrenomPrefere', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_personnePrenomPrefere')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personnePrenomPrefere')); }); ");
 				}
 				a("value", strPersonnePrenomPrefere())
 			.fg();
@@ -1301,7 +1302,7 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 										{ e("button")
 											.a("tabindex", "-1")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-pink ")
-										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_personnePrenomPrefere')); $('#", classeApiMethodeMethode, "_personnePrenomPrefere').val(null); patchMereScolaireVal([{ name: 'fq', value: 'pk:' + $('#MereScolaireForm :input[name=pk]').val() }], 'setPersonnePrenomPrefere', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_personnePrenomPrefere')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personnePrenomPrefere')); }); ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_personnePrenomPrefere')); $('#", classeApiMethodeMethode, "_personnePrenomPrefere').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#MereScolaireForm :input[name=pk]').val() }], 'setPersonnePrenomPrefere', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_personnePrenomPrefere')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personnePrenomPrefere')); }); ")
 											.f();
 											e("i").a("class", "far fa-eraser ").f().g("i");
 										} g("button");
@@ -1398,7 +1399,7 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 				}
 				if("Page".equals(classeApiMethodeMethode)) {
 					a("onclick", "enleverLueur($(this)); ");
-					a("onchange", "patchMereScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setFamilleNom', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_familleNom')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_familleNom')); }); ");
+					a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setFamilleNom', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_familleNom')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_familleNom')); }); ");
 				}
 				a("value", strFamilleNom())
 			.fg();
@@ -1433,7 +1434,7 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 										{ e("button")
 											.a("tabindex", "-1")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-pink ")
-										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_familleNom')); $('#", classeApiMethodeMethode, "_familleNom').val(null); patchMereScolaireVal([{ name: 'fq', value: 'pk:' + $('#MereScolaireForm :input[name=pk]').val() }], 'setFamilleNom', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_familleNom')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_familleNom')); }); ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_familleNom')); $('#", classeApiMethodeMethode, "_familleNom').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#MereScolaireForm :input[name=pk]').val() }], 'setFamilleNom', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_familleNom')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_familleNom')); }); ")
 											.f();
 											e("i").a("class", "far fa-eraser ").f().g("i");
 										} g("button");
@@ -1716,7 +1717,7 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 				}
 				if("Page".equals(classeApiMethodeMethode)) {
 					a("onclick", "enleverLueur($(this)); ");
-					a("onchange", "patchMereScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonneOccupation', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneOccupation')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneOccupation')); }); ");
+					a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonneOccupation', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneOccupation')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneOccupation')); }); ");
 				}
 				a("value", strPersonneOccupation())
 			.fg();
@@ -1751,7 +1752,7 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 										{ e("button")
 											.a("tabindex", "-1")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-pink ")
-										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_personneOccupation')); $('#", classeApiMethodeMethode, "_personneOccupation').val(null); patchMereScolaireVal([{ name: 'fq', value: 'pk:' + $('#MereScolaireForm :input[name=pk]').val() }], 'setPersonneOccupation', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneOccupation')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneOccupation')); }); ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_personneOccupation')); $('#", classeApiMethodeMethode, "_personneOccupation').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#MereScolaireForm :input[name=pk]').val() }], 'setPersonneOccupation', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneOccupation')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneOccupation')); }); ")
 											.f();
 											e("i").a("class", "far fa-eraser ").f().g("i");
 										} g("button");
@@ -1848,7 +1849,7 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 				}
 				if("Page".equals(classeApiMethodeMethode)) {
 					a("onclick", "enleverLueur($(this)); ");
-					a("onchange", "patchMereScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonneNumeroTelephone', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneNumeroTelephone')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneNumeroTelephone')); }); ");
+					a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonneNumeroTelephone', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneNumeroTelephone')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneNumeroTelephone')); }); ");
 				}
 				a("value", strPersonneNumeroTelephone())
 			.fg();
@@ -1883,7 +1884,7 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 										{ e("button")
 											.a("tabindex", "-1")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-pink ")
-										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_personneNumeroTelephone')); $('#", classeApiMethodeMethode, "_personneNumeroTelephone').val(null); patchMereScolaireVal([{ name: 'fq', value: 'pk:' + $('#MereScolaireForm :input[name=pk]').val() }], 'setPersonneNumeroTelephone', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneNumeroTelephone')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneNumeroTelephone')); }); ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_personneNumeroTelephone')); $('#", classeApiMethodeMethode, "_personneNumeroTelephone').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#MereScolaireForm :input[name=pk]').val() }], 'setPersonneNumeroTelephone', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneNumeroTelephone')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneNumeroTelephone')); }); ")
 											.f();
 											e("i").a("class", "far fa-eraser ").f().g("i");
 										} g("button");
@@ -1980,7 +1981,7 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 				}
 				if("Page".equals(classeApiMethodeMethode)) {
 					a("onclick", "enleverLueur($(this)); ");
-					a("onchange", "patchMereScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonneMail', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneMail')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneMail')); }); ");
+					a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonneMail', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneMail')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneMail')); }); ");
 				}
 				a("value", strPersonneMail())
 			.fg();
@@ -2015,7 +2016,7 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 										{ e("button")
 											.a("tabindex", "-1")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-pink ")
-										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_personneMail')); $('#", classeApiMethodeMethode, "_personneMail').val(null); patchMereScolaireVal([{ name: 'fq', value: 'pk:' + $('#MereScolaireForm :input[name=pk]').val() }], 'setPersonneMail', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneMail')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneMail')); }); ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_personneMail')); $('#", classeApiMethodeMethode, "_personneMail').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#MereScolaireForm :input[name=pk]').val() }], 'setPersonneMail', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneMail')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneMail')); }); ")
 											.f();
 											e("i").a("class", "far fa-eraser ").f().g("i");
 										} g("button");
@@ -2183,7 +2184,7 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 				a("name", "personneSms");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
-				a("onchange", "patchMereScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonneSms', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneSms')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneSms')); }); ");
+				a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonneSms', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneSms')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneSms')); }); ");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
 				if(getPersonneSms() != null && getPersonneSms())
@@ -2315,7 +2316,7 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 				a("name", "personneRecevoirMail");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
-				a("onchange", "patchMereScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonneRecevoirMail', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneRecevoirMail')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneRecevoirMail')); }); ");
+				a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonneRecevoirMail', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneRecevoirMail')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneRecevoirMail')); }); ");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
 				if(getPersonneRecevoirMail() != null && getPersonneRecevoirMail())
@@ -2447,7 +2448,7 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 				a("name", "personneContactUrgence");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
-				a("onchange", "patchMereScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonneContactUrgence', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneContactUrgence')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneContactUrgence')); }); ");
+				a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonneContactUrgence', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneContactUrgence')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneContactUrgence')); }); ");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
 				if(getPersonneContactUrgence() != null && getPersonneContactUrgence())
@@ -2579,7 +2580,7 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 				a("name", "personneChercher");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
-				a("onchange", "patchMereScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonneChercher', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneChercher')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneChercher')); }); ");
+				a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonneChercher', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneChercher')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneChercher')); }); ");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
 				if(getPersonneChercher() != null && getPersonneChercher())
@@ -2731,7 +2732,7 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 										{ e("button")
 											.a("tabindex", "-1")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-pink ")
-										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_photo')); $('#", classeApiMethodeMethode, "_photo').val(null); patchMereScolaireVal([{ name: 'fq', value: 'pk:' + $('#MereScolaireForm :input[name=pk]').val() }], 'setPhoto', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_photo')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_photo')); }); ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_photo')); $('#", classeApiMethodeMethode, "_photo').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#MereScolaireForm :input[name=pk]').val() }], 'setPhoto', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_photo')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_photo')); }); ")
 											.f();
 											e("i").a("class", "far fa-eraser ").f().g("i");
 										} g("button");

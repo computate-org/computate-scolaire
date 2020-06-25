@@ -150,9 +150,6 @@ public class AgeScolaire extends AgeScolaireGen<Cluster> {
 	 * Var.enUS: sessionKey
 	 * Indexe: true
 	 * Stocke: true
-	 * Attribuer: SessionScolaire.ageCles
-	 * HtmlLigne: 4
-	 * HtmlCellule: 1
 	 * Description.frFR: L'année scolaire de la saison scolaire. 
 	 * Description.enUS: The school year of the school season. 
 	 * NomAffichage.frFR: session
@@ -215,6 +212,9 @@ public class AgeScolaire extends AgeScolaireGen<Cluster> {
 	 * Var.enUS: yearKey
 	 * Indexe: true
 	 * Stocke: true
+	 * Attribuer: AnneeScolaire.ageCles
+	 * HtmlLigne: 4
+	 * HtmlCellule: 1
 	 * Description.frFR: L'année scolaire de la saison scolaire. 
 	 * Description.enUS: The school year of the school season. 
 	 * NomAffichage.frFR: année

@@ -33,6 +33,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.apache.solr.common.SolrInputDocument;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import java.util.HashMap;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 import io.vertx.core.logging.LoggerFactory;
 import java.text.NumberFormat;
@@ -1360,7 +1361,7 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 				}
 				if("Page".equals(classeApiMethodeMethode)) {
 					a("onclick", "enleverLueur($(this)); ");
-					a("onchange", "patchSessionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEcoleAddresse', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_ecoleAddresse')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_ecoleAddresse')); }); ");
+					a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setEcoleAddresse', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_ecoleAddresse')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_ecoleAddresse')); }); ");
 				}
 				a("value", strEcoleAddresse())
 			.fg();
@@ -1388,7 +1389,7 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 										{ e("button")
 											.a("tabindex", "-1")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
-										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_ecoleAddresse')); $('#", classeApiMethodeMethode, "_ecoleAddresse').val(null); patchSessionScolaireVal([{ name: 'fq', value: 'pk:' + $('#SessionScolaireForm :input[name=pk]').val() }], 'setEcoleAddresse', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_ecoleAddresse')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_ecoleAddresse')); }); ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_ecoleAddresse')); $('#", classeApiMethodeMethode, "_ecoleAddresse').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#SessionScolaireForm :input[name=pk]').val() }], 'setEcoleAddresse', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_ecoleAddresse')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_ecoleAddresse')); }); ")
 											.f();
 											e("i").a("class", "far fa-eraser ").f().g("i");
 										} g("button");
@@ -2176,7 +2177,7 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 				.a("onclick", "enleverLueur($(this)); ")
 				.a("title", "L'année scolaire de la saison scolaire.  (DD-MM-YYYY)")
 				.a("value", sessionDateDebut == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy").format(sessionDateDebut))
-				.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patchSessionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSessionDateDebut', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_sessionDateDebut')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_sessionDateDebut')); }); } ")
+				.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setSessionDateDebut', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_sessionDateDebut')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_sessionDateDebut')); }); } ")
 				.fg();
 		}
 	}
@@ -2200,7 +2201,7 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 										{ e("button")
 											.a("tabindex", "-1")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
-										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_sessionDateDebut')); $('#", classeApiMethodeMethode, "_sessionDateDebut').val(null); patchSessionScolaireVal([{ name: 'fq', value: 'pk:' + $('#SessionScolaireForm :input[name=pk]').val() }], 'setSessionDateDebut', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_sessionDateDebut')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_sessionDateDebut')); }); ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_sessionDateDebut')); $('#", classeApiMethodeMethode, "_sessionDateDebut').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#SessionScolaireForm :input[name=pk]').val() }], 'setSessionDateDebut', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_sessionDateDebut')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_sessionDateDebut')); }); ")
 											.f();
 											e("i").a("class", "far fa-eraser ").f().g("i");
 										} g("button");
@@ -2307,7 +2308,7 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 				.a("onclick", "enleverLueur($(this)); ")
 				.a("title", "L'année scolaire de la saison scolaire.  (DD-MM-YYYY)")
 				.a("value", sessionDateFin == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy").format(sessionDateFin))
-				.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patchSessionScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSessionDateFin', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_sessionDateFin')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_sessionDateFin')); }); } ")
+				.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setSessionDateFin', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_sessionDateFin')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_sessionDateFin')); }); } ")
 				.fg();
 		}
 	}
@@ -2331,7 +2332,7 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 										{ e("button")
 											.a("tabindex", "-1")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-green ")
-										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_sessionDateFin')); $('#", classeApiMethodeMethode, "_sessionDateFin').val(null); patchSessionScolaireVal([{ name: 'fq', value: 'pk:' + $('#SessionScolaireForm :input[name=pk]').val() }], 'setSessionDateFin', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_sessionDateFin')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_sessionDateFin')); }); ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_sessionDateFin')); $('#", classeApiMethodeMethode, "_sessionDateFin').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#SessionScolaireForm :input[name=pk]').val() }], 'setSessionDateFin', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_sessionDateFin')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_sessionDateFin')); }); ")
 											.f();
 											e("i").a("class", "far fa-eraser ").f().g("i");
 										} g("button");

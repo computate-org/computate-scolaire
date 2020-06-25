@@ -16,6 +16,7 @@ import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import java.time.ZoneOffset;
 import io.vertx.core.logging.Logger;
+import org.computate.scolaire.frFR.annee.AnneeScolaire;
 import java.math.MathContext;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import java.util.Set;
@@ -33,6 +34,7 @@ import org.computate.scolaire.frFR.bloc.BlocScolaire;
 import org.apache.solr.common.SolrInputDocument;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import java.util.HashMap;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 import io.vertx.core.logging.LoggerFactory;
 import java.text.NumberFormat;
@@ -812,74 +814,6 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		return sessionCle == null ? "" : StringEscapeUtils.escapeHtml4(strSessionCle());
 	}
 
-	public void inputSessionCle(String classeApiMethodeMethode) {
-		AgeScolaire s = (AgeScolaire)this;
-		{
-			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-				e("input")
-					.a("type", "text")
-					.a("placeholder", "session")
-					.a("title", "L'année scolaire de la saison scolaire. ")
-					.a("class", "valeur suggereSessionCle w3-input w3-border w3-cell w3-cell-middle ")
-					.a("name", "setSessionCle")
-					.a("id", classeApiMethodeMethode, "_sessionCle")
-					.a("autocomplete", "off")
-					.a("oninput", "suggereAgeScolaireSessionCle($(this).val() ? rechercherSessionScolaireFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'ageCles:" + pk + "'}", "], $('#listAgeScolaireSessionCle_", classeApiMethodeMethode, "'), ", pk, "); ")
-				.fg();
-
-		}
-	}
-
-	public void htmSessionCle(String classeApiMethodeMethode) {
-		AgeScolaire s = (AgeScolaire)this;
-		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
-			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggere", classeApiMethodeMethode, "AgeScolaireSessionCle").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "?fq=ageCles:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-green w3-hover-green ").f();
-								e("i").a("class", "fad fa-graduation-cap ").f().g("i");
-								sx("session");
-							} g("a");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("h5").a("class", "w3-cell ").f();
-								sx("relier une session a cet âge");
-							} g("h5");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
-							{ e("div").a("class", "w3-cell ").f();
-								{ e("div").a("class", "w3-cell-row ").f();
-
-								inputSessionCle(classeApiMethodeMethode);
-								} g("div");
-							} g("div");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
-							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listAgeScolaireSessionCle_", classeApiMethodeMethode).f();
-								} g("ul");
-								if(
-										CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), SessionScolaire.ROLES)
-										|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), SessionScolaire.ROLES)
-										) {
-									{ e("div").a("class", "w3-cell-row ").f();
-										e("button")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-											.a("id", classeApiMethodeMethode, "_sessionCle_ajouter")
-											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Envoi…'; postSessionScolaireVals({ ageCles: [ \"", pk, "\" ] }, function() {}, function() { ajouterErreur($('#", classeApiMethodeMethode, "sessionCle')); });")
-											.f().sx("ajouter une session")
-										.g("button");
-									} g("div");
-								}
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("div");
-			} g("div");
-		} g("div");
-	}
-
 	//////////////////////
 	// sessionRecherche //
 	//////////////////////
@@ -1093,6 +1027,74 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 
 	public String htmAnneeCle() {
 		return anneeCle == null ? "" : StringEscapeUtils.escapeHtml4(strAnneeCle());
+	}
+
+	public void inputAnneeCle(String classeApiMethodeMethode) {
+		AgeScolaire s = (AgeScolaire)this;
+		{
+			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+				e("input")
+					.a("type", "text")
+					.a("placeholder", "année")
+					.a("title", "L'année scolaire de la saison scolaire. ")
+					.a("class", "valeur suggereAnneeCle w3-input w3-border w3-cell w3-cell-middle ")
+					.a("name", "setAnneeCle")
+					.a("id", classeApiMethodeMethode, "_anneeCle")
+					.a("autocomplete", "off")
+					.a("oninput", "suggereAgeScolaireAnneeCle($(this).val() ? rechercherAnneeScolaireFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'ageCles:" + pk + "'}", "], $('#listAgeScolaireAnneeCle_", classeApiMethodeMethode, "'), ", pk, "); ")
+				.fg();
+
+		}
+	}
+
+	public void htmAnneeCle(String classeApiMethodeMethode) {
+		AgeScolaire s = (AgeScolaire)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "AgeScolaireAnneeCle").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("a").a("href", "?fq=ageCles:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-orange w3-hover-orange ").f();
+								e("i").a("class", "far fa-calendar-check ").f().g("i");
+								sx("année");
+							} g("a");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("h5").a("class", "w3-cell ").f();
+								sx("relier une année a cet âge");
+							} g("h5");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-cell-row ").f();
+
+								inputAnneeCle(classeApiMethodeMethode);
+								} g("div");
+							} g("div");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listAgeScolaireAnneeCle_", classeApiMethodeMethode).f();
+								} g("ul");
+								if(
+										CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), AnneeScolaire.ROLES)
+										|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), AnneeScolaire.ROLES)
+										) {
+									{ e("div").a("class", "w3-cell-row ").f();
+										e("button")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
+											.a("id", classeApiMethodeMethode, "_anneeCle_ajouter")
+											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Envoi…'; postAnneeScolaireVals({ ageCles: [ \"", pk, "\" ] }, function() {}, function() { ajouterErreur($('#", classeApiMethodeMethode, "anneeCle')); });")
+											.f().sx("ajouter une année")
+										.g("button");
+									} g("div");
+								}
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
 	}
 
 	///////////////
@@ -1429,7 +1431,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 				}
 				if("Page".equals(classeApiMethodeMethode)) {
 					a("onclick", "enleverLueur($(this)); ");
-					a("onchange", "patchAgeScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setEcoleAddresse', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_ecoleAddresse')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_ecoleAddresse')); }); ");
+					a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setEcoleAddresse', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_ecoleAddresse')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_ecoleAddresse')); }); ");
 				}
 				a("value", strEcoleAddresse())
 			.fg();
@@ -1457,7 +1459,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 										{ e("button")
 											.a("tabindex", "-1")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-blue ")
-										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_ecoleAddresse')); $('#", classeApiMethodeMethode, "_ecoleAddresse').val(null); patchAgeScolaireVal([{ name: 'fq', value: 'pk:' + $('#AgeScolaireForm :input[name=pk]').val() }], 'setEcoleAddresse', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_ecoleAddresse')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_ecoleAddresse')); }); ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_ecoleAddresse')); $('#", classeApiMethodeMethode, "_ecoleAddresse').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#AgeScolaireForm :input[name=pk]').val() }], 'setEcoleAddresse', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_ecoleAddresse')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_ecoleAddresse')); }); ")
 											.f();
 											e("i").a("class", "far fa-eraser ").f().g("i");
 										} g("button");
@@ -2462,7 +2464,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 				}
 				if("Page".equals(classeApiMethodeMethode)) {
 					a("onclick", "enleverLueur($(this)); ");
-					a("onchange", "patchAgeScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setAgeDebut', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_ageDebut')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_ageDebut')); }); ");
+					a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setAgeDebut', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_ageDebut')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_ageDebut')); }); ");
 				}
 				a("value", strAgeDebut())
 			.fg();
@@ -2490,7 +2492,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 										{ e("button")
 											.a("tabindex", "-1")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-blue ")
-										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_ageDebut')); $('#", classeApiMethodeMethode, "_ageDebut').val(null); patchAgeScolaireVal([{ name: 'fq', value: 'pk:' + $('#AgeScolaireForm :input[name=pk]').val() }], 'setAgeDebut', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_ageDebut')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_ageDebut')); }); ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_ageDebut')); $('#", classeApiMethodeMethode, "_ageDebut').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#AgeScolaireForm :input[name=pk]').val() }], 'setAgeDebut', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_ageDebut')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_ageDebut')); }); ")
 											.f();
 											e("i").a("class", "far fa-eraser ").f().g("i");
 										} g("button");
@@ -2590,7 +2592,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 				}
 				if("Page".equals(classeApiMethodeMethode)) {
 					a("onclick", "enleverLueur($(this)); ");
-					a("onchange", "patchAgeScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setAgeFin', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_ageFin')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_ageFin')); }); ");
+					a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setAgeFin', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_ageFin')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_ageFin')); }); ");
 				}
 				a("value", strAgeFin())
 			.fg();
@@ -2618,7 +2620,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 										{ e("button")
 											.a("tabindex", "-1")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-blue ")
-										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_ageFin')); $('#", classeApiMethodeMethode, "_ageFin').val(null); patchAgeScolaireVal([{ name: 'fq', value: 'pk:' + $('#AgeScolaireForm :input[name=pk]').val() }], 'setAgeFin', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_ageFin')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_ageFin')); }); ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_ageFin')); $('#", classeApiMethodeMethode, "_ageFin').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#AgeScolaireForm :input[name=pk]').val() }], 'setAgeFin', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_ageFin')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_ageFin')); }); ")
 											.f();
 											e("i").a("class", "far fa-eraser ").f().g("i");
 										} g("button");
@@ -2952,8 +2954,8 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 				if(!sauvegardes.contains(var))
 					sauvegardes.add(var);
 				return val;
-			case "sessionCle":
-				oAgeScolaire.setSessionCle((Long)val);
+			case "anneeCle":
+				oAgeScolaire.setAnneeCle((Long)val);
 				if(!sauvegardes.contains(var))
 					sauvegardes.add(var);
 				return val;
@@ -3061,9 +3063,11 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 					oAgeScolaire.setSessionTri(sessionTri);
 			}
 
-			Long sessionCle = (Long)solrDocument.get("sessionCle_stored_long");
-			if(sessionCle != null)
-				oAgeScolaire.setSessionCle(sessionCle);
+			if(sauvegardes.contains("sessionCle")) {
+				Long sessionCle = (Long)solrDocument.get("sessionCle_stored_long");
+				if(sessionCle != null)
+					oAgeScolaire.setSessionCle(sessionCle);
+			}
 
 			if(sauvegardes.contains("ecoleCle")) {
 				Long ecoleCle = (Long)solrDocument.get("ecoleCle_stored_long");
@@ -3071,11 +3075,9 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 					oAgeScolaire.setEcoleCle(ecoleCle);
 			}
 
-			if(sauvegardes.contains("anneeCle")) {
-				Long anneeCle = (Long)solrDocument.get("anneeCle_stored_long");
-				if(anneeCle != null)
-					oAgeScolaire.setAnneeCle(anneeCle);
-			}
+			Long anneeCle = (Long)solrDocument.get("anneeCle_stored_long");
+			if(anneeCle != null)
+				oAgeScolaire.setAnneeCle(anneeCle);
 
 			if(sauvegardes.contains("saisonCle")) {
 				Long saisonCle = (Long)solrDocument.get("saisonCle_stored_long");
@@ -3679,8 +3681,8 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 			AgeScolaire original = (AgeScolaire)o;
 			if(!Objects.equals(blocCles, original.getBlocCles()))
 				requeteApi.addVars("blocCles");
-			if(!Objects.equals(sessionCle, original.getSessionCle()))
-				requeteApi.addVars("sessionCle");
+			if(!Objects.equals(anneeCle, original.getAnneeCle()))
+				requeteApi.addVars("anneeCle");
 			if(!Objects.equals(ecoleAddresse, original.getEcoleAddresse()))
 				requeteApi.addVars("ecoleAddresse");
 			if(!Objects.equals(ageDebut, original.getAgeDebut()))
@@ -3696,7 +3698,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), blocCles, sessionCle, ecoleAddresse, ageDebut, ageFin);
+		return Objects.hash(super.hashCode(), blocCles, anneeCle, ecoleAddresse, ageDebut, ageFin);
 	}
 
 	////////////
@@ -3711,7 +3713,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		AgeScolaire that = (AgeScolaire)o;
 		return super.equals(o)
 				&& Objects.equals( blocCles, that.blocCles )
-				&& Objects.equals( sessionCle, that.sessionCle )
+				&& Objects.equals( anneeCle, that.anneeCle )
 				&& Objects.equals( ecoleAddresse, that.ecoleAddresse )
 				&& Objects.equals( ageDebut, that.ageDebut )
 				&& Objects.equals( ageFin, that.ageFin );
@@ -3726,7 +3728,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		sb.append(super.toString() + "\n");
 		sb.append("AgeScolaire { ");
 		sb.append( "blocCles: " ).append(blocCles);
-		sb.append( ", sessionCle: " ).append(sessionCle);
+		sb.append( ", anneeCle: " ).append(anneeCle);
 		sb.append( ", ecoleAddresse: \"" ).append(ecoleAddresse).append( "\"" );
 		sb.append( ", ageDebut: " ).append(ageDebut);
 		sb.append( ", ageFin: " ).append(ageFin);

@@ -26,6 +26,7 @@ import org.computate.scolaire.enUS.mom.SchoolMom;
 import java.util.Optional;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import java.util.HashMap;
 import org.computate.scolaire.enUS.html.part.HtmlPart;
 import java.text.NumberFormat;
 import io.vertx.core.logging.LoggerFactory;

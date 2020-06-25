@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.util.Date;
 import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
+import java.util.HashMap;
 import org.computate.scolaire.enUS.writer.AllWriter;
 import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.apache.commons.lang3.StringUtils;
@@ -1133,7 +1134,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 				}
 				if("Page".equals(classApiMethodMethod)) {
 					a("onclick", "removeGlow($(this)); ");
-					a("onchange", "patchSchoolDadVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonFirstName', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_personFirstName')); }, function() { addError($('#", classApiMethodMethod, "_personFirstName')); }); ");
+					a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonFirstName', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_personFirstName')); }, function() { addError($('#", classApiMethodMethod, "_personFirstName')); }); ");
 				}
 				a("value", strPersonFirstName())
 			.fg();
@@ -1168,7 +1169,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 										{ e("button")
 											.a("tabindex", "-1")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-light-blue ")
-										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_personFirstName')); $('#", classApiMethodMethod, "_personFirstName').val(null); patchSchoolDadVal([{ name: 'fq', value: 'pk:' + $('#SchoolDadForm :input[name=pk]').val() }], 'setPersonFirstName', null, function() { addGlow($('#", classApiMethodMethod, "_personFirstName')); }, function() { addError($('#", classApiMethodMethod, "_personFirstName')); }); ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_personFirstName')); $('#", classApiMethodMethod, "_personFirstName').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#SchoolDadForm :input[name=pk]').val() }], 'setPersonFirstName', null, function() { addGlow($('#", classApiMethodMethod, "_personFirstName')); }, function() { addError($('#", classApiMethodMethod, "_personFirstName')); }); ")
 											.f();
 											e("i").a("class", "far fa-eraser ").f().g("i");
 										} g("button");
@@ -1265,7 +1266,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 				}
 				if("Page".equals(classApiMethodMethod)) {
 					a("onclick", "removeGlow($(this)); ");
-					a("onchange", "patchSchoolDadVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonFirstNamePreferred', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_personFirstNamePreferred')); }, function() { addError($('#", classApiMethodMethod, "_personFirstNamePreferred')); }); ");
+					a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonFirstNamePreferred', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_personFirstNamePreferred')); }, function() { addError($('#", classApiMethodMethod, "_personFirstNamePreferred')); }); ");
 				}
 				a("value", strPersonFirstNamePreferred())
 			.fg();
@@ -1300,7 +1301,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 										{ e("button")
 											.a("tabindex", "-1")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-light-blue ")
-										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_personFirstNamePreferred')); $('#", classApiMethodMethod, "_personFirstNamePreferred').val(null); patchSchoolDadVal([{ name: 'fq', value: 'pk:' + $('#SchoolDadForm :input[name=pk]').val() }], 'setPersonFirstNamePreferred', null, function() { addGlow($('#", classApiMethodMethod, "_personFirstNamePreferred')); }, function() { addError($('#", classApiMethodMethod, "_personFirstNamePreferred')); }); ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_personFirstNamePreferred')); $('#", classApiMethodMethod, "_personFirstNamePreferred').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#SchoolDadForm :input[name=pk]').val() }], 'setPersonFirstNamePreferred', null, function() { addGlow($('#", classApiMethodMethod, "_personFirstNamePreferred')); }, function() { addError($('#", classApiMethodMethod, "_personFirstNamePreferred')); }); ")
 											.f();
 											e("i").a("class", "far fa-eraser ").f().g("i");
 										} g("button");
@@ -1397,7 +1398,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 				}
 				if("Page".equals(classApiMethodMethod)) {
 					a("onclick", "removeGlow($(this)); ");
-					a("onchange", "patchSchoolDadVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setFamilyName', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_familyName')); }, function() { addError($('#", classApiMethodMethod, "_familyName')); }); ");
+					a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setFamilyName', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_familyName')); }, function() { addError($('#", classApiMethodMethod, "_familyName')); }); ");
 				}
 				a("value", strFamilyName())
 			.fg();
@@ -1432,7 +1433,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 										{ e("button")
 											.a("tabindex", "-1")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-light-blue ")
-										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_familyName')); $('#", classApiMethodMethod, "_familyName').val(null); patchSchoolDadVal([{ name: 'fq', value: 'pk:' + $('#SchoolDadForm :input[name=pk]').val() }], 'setFamilyName', null, function() { addGlow($('#", classApiMethodMethod, "_familyName')); }, function() { addError($('#", classApiMethodMethod, "_familyName')); }); ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_familyName')); $('#", classApiMethodMethod, "_familyName').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#SchoolDadForm :input[name=pk]').val() }], 'setFamilyName', null, function() { addGlow($('#", classApiMethodMethod, "_familyName')); }, function() { addError($('#", classApiMethodMethod, "_familyName')); }); ")
 											.f();
 											e("i").a("class", "far fa-eraser ").f().g("i");
 										} g("button");
@@ -1715,7 +1716,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 				}
 				if("Page".equals(classApiMethodMethod)) {
 					a("onclick", "removeGlow($(this)); ");
-					a("onchange", "patchSchoolDadVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonOccupation', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_personOccupation')); }, function() { addError($('#", classApiMethodMethod, "_personOccupation')); }); ");
+					a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonOccupation', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_personOccupation')); }, function() { addError($('#", classApiMethodMethod, "_personOccupation')); }); ");
 				}
 				a("value", strPersonOccupation())
 			.fg();
@@ -1750,7 +1751,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 										{ e("button")
 											.a("tabindex", "-1")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-light-blue ")
-										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_personOccupation')); $('#", classApiMethodMethod, "_personOccupation').val(null); patchSchoolDadVal([{ name: 'fq', value: 'pk:' + $('#SchoolDadForm :input[name=pk]').val() }], 'setPersonOccupation', null, function() { addGlow($('#", classApiMethodMethod, "_personOccupation')); }, function() { addError($('#", classApiMethodMethod, "_personOccupation')); }); ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_personOccupation')); $('#", classApiMethodMethod, "_personOccupation').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#SchoolDadForm :input[name=pk]').val() }], 'setPersonOccupation', null, function() { addGlow($('#", classApiMethodMethod, "_personOccupation')); }, function() { addError($('#", classApiMethodMethod, "_personOccupation')); }); ")
 											.f();
 											e("i").a("class", "far fa-eraser ").f().g("i");
 										} g("button");
@@ -1847,7 +1848,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 				}
 				if("Page".equals(classApiMethodMethod)) {
 					a("onclick", "removeGlow($(this)); ");
-					a("onchange", "patchSchoolDadVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonPhoneNumber', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_personPhoneNumber')); }, function() { addError($('#", classApiMethodMethod, "_personPhoneNumber')); }); ");
+					a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonPhoneNumber', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_personPhoneNumber')); }, function() { addError($('#", classApiMethodMethod, "_personPhoneNumber')); }); ");
 				}
 				a("value", strPersonPhoneNumber())
 			.fg();
@@ -1882,7 +1883,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 										{ e("button")
 											.a("tabindex", "-1")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-light-blue ")
-										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_personPhoneNumber')); $('#", classApiMethodMethod, "_personPhoneNumber').val(null); patchSchoolDadVal([{ name: 'fq', value: 'pk:' + $('#SchoolDadForm :input[name=pk]').val() }], 'setPersonPhoneNumber', null, function() { addGlow($('#", classApiMethodMethod, "_personPhoneNumber')); }, function() { addError($('#", classApiMethodMethod, "_personPhoneNumber')); }); ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_personPhoneNumber')); $('#", classApiMethodMethod, "_personPhoneNumber').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#SchoolDadForm :input[name=pk]').val() }], 'setPersonPhoneNumber', null, function() { addGlow($('#", classApiMethodMethod, "_personPhoneNumber')); }, function() { addError($('#", classApiMethodMethod, "_personPhoneNumber')); }); ")
 											.f();
 											e("i").a("class", "far fa-eraser ").f().g("i");
 										} g("button");
@@ -1979,7 +1980,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 				}
 				if("Page".equals(classApiMethodMethod)) {
 					a("onclick", "removeGlow($(this)); ");
-					a("onchange", "patchSchoolDadVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonEmail', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_personEmail')); }, function() { addError($('#", classApiMethodMethod, "_personEmail')); }); ");
+					a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonEmail', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_personEmail')); }, function() { addError($('#", classApiMethodMethod, "_personEmail')); }); ");
 				}
 				a("value", strPersonEmail())
 			.fg();
@@ -2014,7 +2015,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 										{ e("button")
 											.a("tabindex", "-1")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-light-blue ")
-										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_personEmail')); $('#", classApiMethodMethod, "_personEmail').val(null); patchSchoolDadVal([{ name: 'fq', value: 'pk:' + $('#SchoolDadForm :input[name=pk]').val() }], 'setPersonEmail', null, function() { addGlow($('#", classApiMethodMethod, "_personEmail')); }, function() { addError($('#", classApiMethodMethod, "_personEmail')); }); ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_personEmail')); $('#", classApiMethodMethod, "_personEmail').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#SchoolDadForm :input[name=pk]').val() }], 'setPersonEmail', null, function() { addGlow($('#", classApiMethodMethod, "_personEmail')); }, function() { addError($('#", classApiMethodMethod, "_personEmail')); }); ")
 											.f();
 											e("i").a("class", "far fa-eraser ").f().g("i");
 										} g("button");
@@ -2182,7 +2183,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 				a("name", "personSms");
 			}
 			if("Page".equals(classApiMethodMethod)) {
-				a("onchange", "patchSchoolDadVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonSms', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_personSms')); }, function() { addError($('#", classApiMethodMethod, "_personSms')); }); ");
+				a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonSms', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_personSms')); }, function() { addError($('#", classApiMethodMethod, "_personSms')); }); ");
 			}
 			if("Page".equals(classApiMethodMethod)) {
 				if(getPersonSms() != null && getPersonSms())
@@ -2314,7 +2315,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 				a("name", "personReceiveEmail");
 			}
 			if("Page".equals(classApiMethodMethod)) {
-				a("onchange", "patchSchoolDadVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonReceiveEmail', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_personReceiveEmail')); }, function() { addError($('#", classApiMethodMethod, "_personReceiveEmail')); }); ");
+				a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonReceiveEmail', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_personReceiveEmail')); }, function() { addError($('#", classApiMethodMethod, "_personReceiveEmail')); }); ");
 			}
 			if("Page".equals(classApiMethodMethod)) {
 				if(getPersonReceiveEmail() != null && getPersonReceiveEmail())
@@ -2446,7 +2447,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 				a("name", "personEmergencyContact");
 			}
 			if("Page".equals(classApiMethodMethod)) {
-				a("onchange", "patchSchoolDadVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonEmergencyContact', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_personEmergencyContact')); }, function() { addError($('#", classApiMethodMethod, "_personEmergencyContact')); }); ");
+				a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonEmergencyContact', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_personEmergencyContact')); }, function() { addError($('#", classApiMethodMethod, "_personEmergencyContact')); }); ");
 			}
 			if("Page".equals(classApiMethodMethod)) {
 				if(getPersonEmergencyContact() != null && getPersonEmergencyContact())
@@ -2578,7 +2579,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 				a("name", "personPickup");
 			}
 			if("Page".equals(classApiMethodMethod)) {
-				a("onchange", "patchSchoolDadVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonPickup', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_personPickup')); }, function() { addError($('#", classApiMethodMethod, "_personPickup')); }); ");
+				a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonPickup', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_personPickup')); }, function() { addError($('#", classApiMethodMethod, "_personPickup')); }); ");
 			}
 			if("Page".equals(classApiMethodMethod)) {
 				if(getPersonPickup() != null && getPersonPickup())
@@ -2730,7 +2731,7 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 										{ e("button")
 											.a("tabindex", "-1")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-light-blue ")
-										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_photo')); $('#", classApiMethodMethod, "_photo').val(null); patchSchoolDadVal([{ name: 'fq', value: 'pk:' + $('#SchoolDadForm :input[name=pk]').val() }], 'setPhoto', null, function() { addGlow($('#", classApiMethodMethod, "_photo')); }, function() { addError($('#", classApiMethodMethod, "_photo')); }); ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_photo')); $('#", classApiMethodMethod, "_photo').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#SchoolDadForm :input[name=pk]').val() }], 'setPhoto', null, function() { addGlow($('#", classApiMethodMethod, "_photo')); }, function() { addError($('#", classApiMethodMethod, "_photo')); }); ")
 											.f();
 											e("i").a("class", "far fa-eraser ").f().g("i");
 										} g("button");

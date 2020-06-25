@@ -34,6 +34,7 @@ import org.computate.scolaire.enUS.block.SchoolBlock;
 import org.apache.solr.common.SolrInputDocument;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import java.util.HashMap;
 import org.computate.scolaire.enUS.writer.AllWriter;
 import io.vertx.core.logging.LoggerFactory;
 import java.text.NumberFormat;
@@ -1680,7 +1681,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 				}
 				if("Page".equals(classApiMethodMethod)) {
 					a("onclick", "removeGlow($(this)); ");
-					a("onchange", "patchSchoolBlockVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSchoolAddress', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_schoolAddress')); }, function() { addError($('#", classApiMethodMethod, "_schoolAddress')); }); ");
+					a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setSchoolAddress', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_schoolAddress')); }, function() { addError($('#", classApiMethodMethod, "_schoolAddress')); }); ");
 				}
 				a("value", strSchoolAddress())
 			.fg();
@@ -1708,7 +1709,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 										{ e("button")
 											.a("tabindex", "-1")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-indigo ")
-										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_schoolAddress')); $('#", classApiMethodMethod, "_schoolAddress').val(null); patchSchoolBlockVal([{ name: 'fq', value: 'pk:' + $('#SchoolBlockForm :input[name=pk]').val() }], 'setSchoolAddress', null, function() { addGlow($('#", classApiMethodMethod, "_schoolAddress')); }, function() { addError($('#", classApiMethodMethod, "_schoolAddress')); }); ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_schoolAddress')); $('#", classApiMethodMethod, "_schoolAddress').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#SchoolBlockForm :input[name=pk]').val() }], 'setSchoolAddress', null, function() { addGlow($('#", classApiMethodMethod, "_schoolAddress')); }, function() { addError($('#", classApiMethodMethod, "_schoolAddress')); }); ")
 											.f();
 											e("i").a("class", "far fa-eraser ").f().g("i");
 										} g("button");
@@ -2909,7 +2910,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 				.a("id", classApiMethodMethod, "_blockStartTime")
 				.a("onclick", "removeGlow($(this)); ")
 				.a("value", blockStartTime == null ? "" : DateTimeFormatter.ofPattern("h:mm a").format(blockStartTime))
-				.a("onchange", "var t = moment(this.value, 'h:mm a'); if(t) { var s = t.format('HH:mm'); patchSchoolBlockVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlockStartTime', s, function() { addGlow($('#", classApiMethodMethod, "_blockStartTime')); }, function() { addError($('#", classApiMethodMethod, "_blockStartTime')); }); } ")
+				.a("onchange", "var t = moment(this.value, 'h:mm a'); if(t) { var s = t.format('HH:mm'); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlockStartTime', s, function() { addGlow($('#", classApiMethodMethod, "_blockStartTime')); }, function() { addError($('#", classApiMethodMethod, "_blockStartTime')); }); } ")
 				.fg();
 		}
 	}
@@ -2933,7 +2934,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 										{ e("button")
 											.a("tabindex", "-1")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-indigo ")
-										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_blockStartTime')); $('#", classApiMethodMethod, "_blockStartTime').val(null); patchSchoolBlockVal([{ name: 'fq', value: 'pk:' + $('#SchoolBlockForm :input[name=pk]').val() }], 'setBlockStartTime', null, function() { addGlow($('#", classApiMethodMethod, "_blockStartTime')); }, function() { addError($('#", classApiMethodMethod, "_blockStartTime')); }); ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_blockStartTime')); $('#", classApiMethodMethod, "_blockStartTime').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#SchoolBlockForm :input[name=pk]').val() }], 'setBlockStartTime', null, function() { addGlow($('#", classApiMethodMethod, "_blockStartTime')); }, function() { addError($('#", classApiMethodMethod, "_blockStartTime')); }); ")
 											.f();
 											e("i").a("class", "far fa-eraser ").f().g("i");
 										} g("button");
@@ -3029,7 +3030,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 				.a("id", classApiMethodMethod, "_blockEndTime")
 				.a("onclick", "removeGlow($(this)); ")
 				.a("value", blockEndTime == null ? "" : DateTimeFormatter.ofPattern("h:mm a").format(blockEndTime))
-				.a("onchange", "var t = moment(this.value, 'h:mm a'); if(t) { var s = t.format('HH:mm'); patchSchoolBlockVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlockEndTime', s, function() { addGlow($('#", classApiMethodMethod, "_blockEndTime')); }, function() { addError($('#", classApiMethodMethod, "_blockEndTime')); }); } ")
+				.a("onchange", "var t = moment(this.value, 'h:mm a'); if(t) { var s = t.format('HH:mm'); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlockEndTime', s, function() { addGlow($('#", classApiMethodMethod, "_blockEndTime')); }, function() { addError($('#", classApiMethodMethod, "_blockEndTime')); }); } ")
 				.fg();
 		}
 	}
@@ -3053,7 +3054,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 										{ e("button")
 											.a("tabindex", "-1")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-indigo ")
-										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_blockEndTime')); $('#", classApiMethodMethod, "_blockEndTime').val(null); patchSchoolBlockVal([{ name: 'fq', value: 'pk:' + $('#SchoolBlockForm :input[name=pk]').val() }], 'setBlockEndTime', null, function() { addGlow($('#", classApiMethodMethod, "_blockEndTime')); }, function() { addError($('#", classApiMethodMethod, "_blockEndTime')); }); ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_blockEndTime')); $('#", classApiMethodMethod, "_blockEndTime').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#SchoolBlockForm :input[name=pk]').val() }], 'setBlockEndTime', null, function() { addGlow($('#", classApiMethodMethod, "_blockEndTime')); }, function() { addError($('#", classApiMethodMethod, "_blockEndTime')); }); ")
 											.f();
 											e("i").a("class", "far fa-eraser ").f().g("i");
 										} g("button");
@@ -3163,7 +3164,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 				}
 				if("Page".equals(classApiMethodMethod)) {
 					a("onclick", "removeGlow($(this)); ");
-					a("onchange", "patchSchoolBlockVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlockPricePerMonth', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_blockPricePerMonth')); }, function() { addError($('#", classApiMethodMethod, "_blockPricePerMonth')); }); ");
+					a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlockPricePerMonth', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_blockPricePerMonth')); }, function() { addError($('#", classApiMethodMethod, "_blockPricePerMonth')); }); ");
 				}
 				a("value", strBlockPricePerMonth())
 			.fg();
@@ -3191,7 +3192,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 										{ e("button")
 											.a("tabindex", "-1")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-indigo ")
-										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_blockPricePerMonth')); $('#", classApiMethodMethod, "_blockPricePerMonth').val(null); patchSchoolBlockVal([{ name: 'fq', value: 'pk:' + $('#SchoolBlockForm :input[name=pk]').val() }], 'setBlockPricePerMonth', null, function() { addGlow($('#", classApiMethodMethod, "_blockPricePerMonth')); }, function() { addError($('#", classApiMethodMethod, "_blockPricePerMonth')); }); ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_blockPricePerMonth')); $('#", classApiMethodMethod, "_blockPricePerMonth').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#SchoolBlockForm :input[name=pk]').val() }], 'setBlockPricePerMonth', null, function() { addGlow($('#", classApiMethodMethod, "_blockPricePerMonth')); }, function() { addError($('#", classApiMethodMethod, "_blockPricePerMonth')); }); ")
 											.f();
 											e("i").a("class", "far fa-eraser ").f().g("i");
 										} g("button");
@@ -3359,7 +3360,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 				a("name", "blockMonday");
 			}
 			if("Page".equals(classApiMethodMethod)) {
-				a("onchange", "patchSchoolBlockVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlockMonday', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_blockMonday')); }, function() { addError($('#", classApiMethodMethod, "_blockMonday')); }); ");
+				a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlockMonday', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_blockMonday')); }, function() { addError($('#", classApiMethodMethod, "_blockMonday')); }); ");
 			}
 			if("Page".equals(classApiMethodMethod)) {
 				if(getBlockMonday() != null && getBlockMonday())
@@ -3484,7 +3485,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 				a("name", "blockTuesday");
 			}
 			if("Page".equals(classApiMethodMethod)) {
-				a("onchange", "patchSchoolBlockVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlockTuesday', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_blockTuesday')); }, function() { addError($('#", classApiMethodMethod, "_blockTuesday')); }); ");
+				a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlockTuesday', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_blockTuesday')); }, function() { addError($('#", classApiMethodMethod, "_blockTuesday')); }); ");
 			}
 			if("Page".equals(classApiMethodMethod)) {
 				if(getBlockTuesday() != null && getBlockTuesday())
@@ -3609,7 +3610,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 				a("name", "blockWednesday");
 			}
 			if("Page".equals(classApiMethodMethod)) {
-				a("onchange", "patchSchoolBlockVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlockWednesday', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_blockWednesday')); }, function() { addError($('#", classApiMethodMethod, "_blockWednesday')); }); ");
+				a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlockWednesday', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_blockWednesday')); }, function() { addError($('#", classApiMethodMethod, "_blockWednesday')); }); ");
 			}
 			if("Page".equals(classApiMethodMethod)) {
 				if(getBlockWednesday() != null && getBlockWednesday())
@@ -3734,7 +3735,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 				a("name", "blockThursday");
 			}
 			if("Page".equals(classApiMethodMethod)) {
-				a("onchange", "patchSchoolBlockVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlockThursday', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_blockThursday')); }, function() { addError($('#", classApiMethodMethod, "_blockThursday')); }); ");
+				a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlockThursday', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_blockThursday')); }, function() { addError($('#", classApiMethodMethod, "_blockThursday')); }); ");
 			}
 			if("Page".equals(classApiMethodMethod)) {
 				if(getBlockThursday() != null && getBlockThursday())
@@ -3859,7 +3860,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 				a("name", "blockFriday");
 			}
 			if("Page".equals(classApiMethodMethod)) {
-				a("onchange", "patchSchoolBlockVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlockFriday', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_blockFriday')); }, function() { addError($('#", classApiMethodMethod, "_blockFriday')); }); ");
+				a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setBlockFriday', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_blockFriday')); }, function() { addError($('#", classApiMethodMethod, "_blockFriday')); }); ");
 			}
 			if("Page".equals(classApiMethodMethod)) {
 				if(getBlockFriday() != null && getBlockFriday())

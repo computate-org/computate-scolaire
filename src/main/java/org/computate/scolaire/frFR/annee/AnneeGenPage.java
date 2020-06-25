@@ -104,7 +104,7 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 	@Override public void htmlScriptsAnneeGenPage() {
 		e("script").a("src", statiqueUrlBase, "/js/frFR/AnneePage.js").f().g("script");
 		e("script").a("src", statiqueUrlBase, "/js/frFR/EcolePage.js").f().g("script");
-		e("script").a("src", statiqueUrlBase, "/js/frFR/SaisonPage.js").f().g("script");
+		e("script").a("src", statiqueUrlBase, "/js/frFR/AgePage.js").f().g("script");
 	}
 
 	@Override public void htmlScriptAnneeGenPage() {
@@ -128,17 +128,17 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
 				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 				) {
-			tl(2, "suggereAnneeScolaireEcoleCle([{'name':'fq','value':'anneeCles:' + pk}], $('#listAnneeScolaireEcoleCle_Page'), pk, true); ");
+			tl(2, "suggereAnneeScolaireAgeCles([{'name':'fq','value':'anneeCle:' + pk}], $('#listAnneeScolaireAgeCles_Page'), pk, true); ");
 		} else {
-			tl(2, "suggereAnneeScolaireEcoleCle([{'name':'fq','value':'anneeCles:' + pk}], $('#listAnneeScolaireEcoleCle_Page'), pk, false); ");
+			tl(2, "suggereAnneeScolaireAgeCles([{'name':'fq','value':'anneeCle:' + pk}], $('#listAnneeScolaireAgeCles_Page'), pk, false); ");
 		}
 		if(
 				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
 				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 				) {
-			tl(2, "suggereAnneeScolaireSaisonCles([{'name':'fq','value':'anneeCle:' + pk}], $('#listAnneeScolaireSaisonCles_Page'), pk, true); ");
+			tl(2, "suggereAnneeScolaireEcoleCle([{'name':'fq','value':'anneeCles:' + pk}], $('#listAnneeScolaireEcoleCle_Page'), pk, true); ");
 		} else {
-			tl(2, "suggereAnneeScolaireSaisonCles([{'name':'fq','value':'anneeCle:' + pk}], $('#listAnneeScolaireSaisonCles_Page'), pk, false); ");
+			tl(2, "suggereAnneeScolaireEcoleCle([{'name':'fq','value':'anneeCles:' + pk}], $('#listAnneeScolaireEcoleCle_Page'), pk, false); ");
 		}
 		tl(1, "}");
 		tl(1, "websocketAnneeScolaire(websocketAnneeScolaireInner);");
@@ -157,13 +157,15 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 			o.htmSupprime("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmSessionDateDebut("Page");
+			o.htmSessionDateFin("Page");
 			o.htmAnneeDebut("Page");
 			o.htmAnneeFin("Page");
 			o.htmAnneeFraisInscription("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmAgeCles("Page");
 			o.htmEcoleCle("Page");
-			o.htmSaisonCles("Page");
 		} g("div");
 	}
 
@@ -179,13 +181,15 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 			o.htmSupprime("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmSessionDateDebut("POST");
+			o.htmSessionDateFin("POST");
 			o.htmAnneeDebut("POST");
 			o.htmAnneeFin("POST");
 			o.htmAnneeFraisInscription("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmAgeCles("POST");
 			o.htmEcoleCle("POST");
-			o.htmSaisonCles("POST");
 		} g("div");
 	}
 
@@ -223,13 +227,15 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 			o.htmSupprime("PUTCopie");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmSessionDateDebut("PUTCopie");
+			o.htmSessionDateFin("PUTCopie");
 			o.htmAnneeDebut("PUTCopie");
 			o.htmAnneeFin("PUTCopie");
 			o.htmAnneeFraisInscription("PUTCopie");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmAgeCles("PUTCopie");
 			o.htmEcoleCle("PUTCopie");
-			o.htmSaisonCles("PUTCopie");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInheritPk("PUTCopie");
@@ -249,13 +255,15 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 			o.htmSupprime("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmSessionDateDebut("PATCH");
+			o.htmSessionDateFin("PATCH");
 			o.htmAnneeDebut("PATCH");
 			o.htmAnneeFin("PATCH");
 			o.htmAnneeFraisInscription("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmAgeCles("PATCH");
 			o.htmEcoleCle("PATCH");
-			o.htmSaisonCles("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInheritPk("PATCH");
@@ -277,13 +285,15 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 			o.htmSupprime("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmSessionDateDebut("Recherche");
+			o.htmSessionDateFin("Recherche");
 			o.htmAnneeDebut("Recherche");
 			o.htmAnneeFin("Recherche");
 			o.htmAnneeFraisInscription("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmAgeCles("Recherche");
 			o.htmEcoleCle("Recherche");
-			o.htmSaisonCles("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInheritPk("Recherche");

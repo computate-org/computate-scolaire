@@ -16,6 +16,7 @@ import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import java.time.ZoneOffset;
 import io.vertx.core.logging.Logger;
+import org.computate.scolaire.enUS.year.SchoolYear;
 import java.math.MathContext;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import java.util.Set;
@@ -33,6 +34,7 @@ import org.computate.scolaire.enUS.block.SchoolBlock;
 import org.apache.solr.common.SolrInputDocument;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import java.util.HashMap;
 import org.computate.scolaire.enUS.writer.AllWriter;
 import io.vertx.core.logging.LoggerFactory;
 import java.text.NumberFormat;
@@ -810,73 +812,6 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		return sessionKey == null ? "" : StringEscapeUtils.escapeHtml4(strSessionKey());
 	}
 
-	public void inputSessionKey(String classApiMethodMethod) {
-		SchoolAge s = (SchoolAge)this;
-		{
-			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-				e("input")
-					.a("type", "text")
-					.a("placeholder", "session")
-					.a("class", "valueObjectSuggest suggestSessionKey w3-input w3-border w3-cell w3-cell-middle ")
-					.a("name", "setSessionKey")
-					.a("id", classApiMethodMethod, "_sessionKey")
-					.a("autocomplete", "off")
-					.a("oninput", "suggestSchoolAgeSessionKey($(this).val() ? searchSchoolSessionFilters($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'ageKeys:" + pk + "'}", "], $('#listSchoolAgeSessionKey_", classApiMethodMethod, "'), ", pk, "); ")
-				.fg();
-
-		}
-	}
-
-	public void htmSessionKey(String classApiMethodMethod) {
-		SchoolAge s = (SchoolAge)this;
-		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
-			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolAgeSessionKey").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "/session?fq=ageKeys:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-green w3-hover-green ").f();
-								e("i").a("class", "fad fa-graduation-cap ").f().g("i");
-								sx("session");
-							} g("a");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("h5").a("class", "w3-cell ").f();
-								sx("relate a session to this age");
-							} g("h5");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
-							{ e("div").a("class", "w3-cell ").f();
-								{ e("div").a("class", "w3-cell-row ").f();
-
-								inputSessionKey(classApiMethodMethod);
-								} g("div");
-							} g("div");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
-							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSchoolAgeSessionKey_", classApiMethodMethod).f();
-								} g("ul");
-								if(
-										CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), SchoolSession.ROLES)
-										|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), SchoolSession.ROLES)
-										) {
-									{ e("div").a("class", "w3-cell-row ").f();
-										e("button")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-											.a("id", classApiMethodMethod, "_sessionKey_add")
-											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Sending…'; postSchoolSessionVals({ ageKeys: [ \"", pk, "\" ] }, function() {}, function() { addError($('#", classApiMethodMethod, "sessionKey')); });")
-											.f().sx("add a session")
-										.g("button");
-									} g("div");
-								}
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("div");
-			} g("div");
-		} g("div");
-	}
-
 	///////////////////
 	// sessionSearch //
 	///////////////////
@@ -1090,6 +1025,73 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 
 	public String htmYearKey() {
 		return yearKey == null ? "" : StringEscapeUtils.escapeHtml4(strYearKey());
+	}
+
+	public void inputYearKey(String classApiMethodMethod) {
+		SchoolAge s = (SchoolAge)this;
+		{
+			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+				e("input")
+					.a("type", "text")
+					.a("placeholder", "year")
+					.a("class", "valueObjectSuggest suggestYearKey w3-input w3-border w3-cell w3-cell-middle ")
+					.a("name", "setYearKey")
+					.a("id", classApiMethodMethod, "_yearKey")
+					.a("autocomplete", "off")
+					.a("oninput", "suggestSchoolAgeYearKey($(this).val() ? searchSchoolYearFilters($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'ageKeys:" + pk + "'}", "], $('#listSchoolAgeYearKey_", classApiMethodMethod, "'), ", pk, "); ")
+				.fg();
+
+		}
+	}
+
+	public void htmYearKey(String classApiMethodMethod) {
+		SchoolAge s = (SchoolAge)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolAgeYearKey").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("a").a("href", "/year?fq=ageKeys:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-orange w3-hover-orange ").f();
+								e("i").a("class", "far fa-calendar-check ").f().g("i");
+								sx("year");
+							} g("a");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("h5").a("class", "w3-cell ").f();
+								sx("relate a year to this age");
+							} g("h5");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-cell-row ").f();
+
+								inputYearKey(classApiMethodMethod);
+								} g("div");
+							} g("div");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSchoolAgeYearKey_", classApiMethodMethod).f();
+								} g("ul");
+								if(
+										CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), SchoolYear.ROLES)
+										|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), SchoolYear.ROLES)
+										) {
+									{ e("div").a("class", "w3-cell-row ").f();
+										e("button")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
+											.a("id", classApiMethodMethod, "_yearKey_add")
+											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Sending…'; postSchoolYearVals({ ageKeys: [ \"", pk, "\" ] }, function() {}, function() { addError($('#", classApiMethodMethod, "yearKey')); });")
+											.f().sx("add a year")
+										.g("button");
+									} g("div");
+								}
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
 	}
 
 	///////////////
@@ -1425,7 +1427,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 				}
 				if("Page".equals(classApiMethodMethod)) {
 					a("onclick", "removeGlow($(this)); ");
-					a("onchange", "patchSchoolAgeVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSchoolAddress', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_schoolAddress')); }, function() { addError($('#", classApiMethodMethod, "_schoolAddress')); }); ");
+					a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setSchoolAddress', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_schoolAddress')); }, function() { addError($('#", classApiMethodMethod, "_schoolAddress')); }); ");
 				}
 				a("value", strSchoolAddress())
 			.fg();
@@ -1453,7 +1455,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 										{ e("button")
 											.a("tabindex", "-1")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-blue ")
-										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_schoolAddress')); $('#", classApiMethodMethod, "_schoolAddress').val(null); patchSchoolAgeVal([{ name: 'fq', value: 'pk:' + $('#SchoolAgeForm :input[name=pk]').val() }], 'setSchoolAddress', null, function() { addGlow($('#", classApiMethodMethod, "_schoolAddress')); }, function() { addError($('#", classApiMethodMethod, "_schoolAddress')); }); ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_schoolAddress')); $('#", classApiMethodMethod, "_schoolAddress').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#SchoolAgeForm :input[name=pk]').val() }], 'setSchoolAddress', null, function() { addGlow($('#", classApiMethodMethod, "_schoolAddress')); }, function() { addError($('#", classApiMethodMethod, "_schoolAddress')); }); ")
 											.f();
 											e("i").a("class", "far fa-eraser ").f().g("i");
 										} g("button");
@@ -2457,7 +2459,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 				}
 				if("Page".equals(classApiMethodMethod)) {
 					a("onclick", "removeGlow($(this)); ");
-					a("onchange", "patchSchoolAgeVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setAgeStart', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_ageStart')); }, function() { addError($('#", classApiMethodMethod, "_ageStart')); }); ");
+					a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setAgeStart', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_ageStart')); }, function() { addError($('#", classApiMethodMethod, "_ageStart')); }); ");
 				}
 				a("value", strAgeStart())
 			.fg();
@@ -2485,7 +2487,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 										{ e("button")
 											.a("tabindex", "-1")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-blue ")
-										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_ageStart')); $('#", classApiMethodMethod, "_ageStart').val(null); patchSchoolAgeVal([{ name: 'fq', value: 'pk:' + $('#SchoolAgeForm :input[name=pk]').val() }], 'setAgeStart', null, function() { addGlow($('#", classApiMethodMethod, "_ageStart')); }, function() { addError($('#", classApiMethodMethod, "_ageStart')); }); ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_ageStart')); $('#", classApiMethodMethod, "_ageStart').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#SchoolAgeForm :input[name=pk]').val() }], 'setAgeStart', null, function() { addGlow($('#", classApiMethodMethod, "_ageStart')); }, function() { addError($('#", classApiMethodMethod, "_ageStart')); }); ")
 											.f();
 											e("i").a("class", "far fa-eraser ").f().g("i");
 										} g("button");
@@ -2584,7 +2586,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 				}
 				if("Page".equals(classApiMethodMethod)) {
 					a("onclick", "removeGlow($(this)); ");
-					a("onchange", "patchSchoolAgeVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setAgeEnd', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_ageEnd')); }, function() { addError($('#", classApiMethodMethod, "_ageEnd')); }); ");
+					a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setAgeEnd', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_ageEnd')); }, function() { addError($('#", classApiMethodMethod, "_ageEnd')); }); ");
 				}
 				a("value", strAgeEnd())
 			.fg();
@@ -2612,7 +2614,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 										{ e("button")
 											.a("tabindex", "-1")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-blue ")
-										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_ageEnd')); $('#", classApiMethodMethod, "_ageEnd').val(null); patchSchoolAgeVal([{ name: 'fq', value: 'pk:' + $('#SchoolAgeForm :input[name=pk]').val() }], 'setAgeEnd', null, function() { addGlow($('#", classApiMethodMethod, "_ageEnd')); }, function() { addError($('#", classApiMethodMethod, "_ageEnd')); }); ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_ageEnd')); $('#", classApiMethodMethod, "_ageEnd').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#SchoolAgeForm :input[name=pk]').val() }], 'setAgeEnd', null, function() { addGlow($('#", classApiMethodMethod, "_ageEnd')); }, function() { addError($('#", classApiMethodMethod, "_ageEnd')); }); ")
 											.f();
 											e("i").a("class", "far fa-eraser ").f().g("i");
 										} g("button");
@@ -2946,8 +2948,8 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 				if(!saves.contains(var))
 					saves.add(var);
 				return val;
-			case "sessionKey":
-				oSchoolAge.setSessionKey((Long)val);
+			case "yearKey":
+				oSchoolAge.setYearKey((Long)val);
 				if(!saves.contains(var))
 					saves.add(var);
 				return val;
@@ -3055,9 +3057,11 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 					oSchoolAge.setSessionSort(sessionSort);
 			}
 
-			Long sessionKey = (Long)solrDocument.get("sessionKey_stored_long");
-			if(sessionKey != null)
-				oSchoolAge.setSessionKey(sessionKey);
+			if(saves.contains("sessionKey")) {
+				Long sessionKey = (Long)solrDocument.get("sessionKey_stored_long");
+				if(sessionKey != null)
+					oSchoolAge.setSessionKey(sessionKey);
+			}
 
 			if(saves.contains("schoolKey")) {
 				Long schoolKey = (Long)solrDocument.get("schoolKey_stored_long");
@@ -3065,11 +3069,9 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 					oSchoolAge.setSchoolKey(schoolKey);
 			}
 
-			if(saves.contains("yearKey")) {
-				Long yearKey = (Long)solrDocument.get("yearKey_stored_long");
-				if(yearKey != null)
-					oSchoolAge.setYearKey(yearKey);
-			}
+			Long yearKey = (Long)solrDocument.get("yearKey_stored_long");
+			if(yearKey != null)
+				oSchoolAge.setYearKey(yearKey);
 
 			if(saves.contains("seasonKey")) {
 				Long seasonKey = (Long)solrDocument.get("seasonKey_stored_long");
@@ -3673,8 +3675,8 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 			SchoolAge original = (SchoolAge)o;
 			if(!Objects.equals(blockKeys, original.getBlockKeys()))
 				apiRequest.addVars("blockKeys");
-			if(!Objects.equals(sessionKey, original.getSessionKey()))
-				apiRequest.addVars("sessionKey");
+			if(!Objects.equals(yearKey, original.getYearKey()))
+				apiRequest.addVars("yearKey");
 			if(!Objects.equals(schoolAddress, original.getSchoolAddress()))
 				apiRequest.addVars("schoolAddress");
 			if(!Objects.equals(ageStart, original.getAgeStart()))
@@ -3690,7 +3692,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), blockKeys, sessionKey, schoolAddress, ageStart, ageEnd);
+		return Objects.hash(super.hashCode(), blockKeys, yearKey, schoolAddress, ageStart, ageEnd);
 	}
 
 	////////////
@@ -3705,7 +3707,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		SchoolAge that = (SchoolAge)o;
 		return super.equals(o)
 				&& Objects.equals( blockKeys, that.blockKeys )
-				&& Objects.equals( sessionKey, that.sessionKey )
+				&& Objects.equals( yearKey, that.yearKey )
 				&& Objects.equals( schoolAddress, that.schoolAddress )
 				&& Objects.equals( ageStart, that.ageStart )
 				&& Objects.equals( ageEnd, that.ageEnd );
@@ -3720,7 +3722,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		sb.append(super.toString() + "\n");
 		sb.append("SchoolAge { ");
 		sb.append( "blockKeys: " ).append(blockKeys);
-		sb.append( ", sessionKey: " ).append(sessionKey);
+		sb.append( ", yearKey: " ).append(yearKey);
 		sb.append( ", schoolAddress: \"" ).append(schoolAddress).append( "\"" );
 		sb.append( ", ageStart: " ).append(ageStart);
 		sb.append( ", ageEnd: " ).append(ageEnd);

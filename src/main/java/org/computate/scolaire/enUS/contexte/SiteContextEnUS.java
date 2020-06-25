@@ -15,6 +15,9 @@ import io.vertx.ext.web.api.contract.openapi3.OpenAPI3RouterFactory;
 import io.vertx.ext.web.handler.OAuth2AuthHandler;
 import io.vertx.pgclient.PgPool;
 
+/**
+ * CanonicalName: org.computate.scolaire.frFR.contexte.SiteContexteFrFR
+ **/
 public class SiteContextEnUS extends SiteContextEnUSGen<Object> {
 
 	protected Logger log = LoggerFactory.getLogger(getClass());

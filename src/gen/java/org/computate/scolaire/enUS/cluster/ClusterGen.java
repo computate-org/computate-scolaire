@@ -30,6 +30,7 @@ import org.apache.solr.common.SolrInputDocument;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import org.computate.scolaire.enUS.writer.AllWriter;
 import io.vertx.core.logging.LoggerFactory;
 import java.text.NumberFormat;
@@ -354,7 +355,7 @@ public abstract class ClusterGen<DEV> extends Object {
 				}
 				if("Page".equals(classApiMethodMethod)) {
 					s.a("onclick", "removeGlow($(this)); ");
-					s.a("onchange", "patchClusterVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInheritPk', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_inheritPk')); }, function() { addError($('#", classApiMethodMethod, "_inheritPk')); }); ");
+					s.a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setInheritPk', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_inheritPk')); }, function() { addError($('#", classApiMethodMethod, "_inheritPk')); }); ");
 				}
 				s.a("value", strInheritPk())
 			.fg();
@@ -391,7 +392,7 @@ public abstract class ClusterGen<DEV> extends Object {
 										{ s.e("button")
 											.a("tabindex", "-1")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-gray ")
-										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_inheritPk')); $('#", classApiMethodMethod, "_inheritPk').val(null); patchClusterVal([{ name: 'fq', value: 'pk:' + $('#ClusterForm :input[name=pk]').val() }], 'setInheritPk', null, function() { addGlow($('#", classApiMethodMethod, "_inheritPk')); }, function() { addError($('#", classApiMethodMethod, "_inheritPk')); }); ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_inheritPk')); $('#", classApiMethodMethod, "_inheritPk').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#ClusterForm :input[name=pk]').val() }], 'setInheritPk', null, function() { addGlow($('#", classApiMethodMethod, "_inheritPk')); }, function() { addError($('#", classApiMethodMethod, "_inheritPk')); }); ")
 											.f();
 											s.e("i").a("class", "far fa-eraser ").f().g("i");
 										} s.g("button");
@@ -765,7 +766,7 @@ public abstract class ClusterGen<DEV> extends Object {
 				s.a("name", "archived");
 			}
 			if("Page".equals(classApiMethodMethod)) {
-				s.a("onchange", "patchClusterVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setArchived', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_archived')); }, function() { addError($('#", classApiMethodMethod, "_archived')); }); ");
+				s.a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setArchived', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_archived')); }, function() { addError($('#", classApiMethodMethod, "_archived')); }); ");
 			}
 			if("Page".equals(classApiMethodMethod)) {
 				if(getArchived() != null && getArchived())
@@ -902,7 +903,7 @@ public abstract class ClusterGen<DEV> extends Object {
 				s.a("name", "deleted");
 			}
 			if("Page".equals(classApiMethodMethod)) {
-				s.a("onchange", "patchClusterVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setDeleted', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_deleted')); }, function() { addError($('#", classApiMethodMethod, "_deleted')); }); ");
+				s.a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setDeleted', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_deleted')); }, function() { addError($('#", classApiMethodMethod, "_deleted')); }); ");
 			}
 			if("Page".equals(classApiMethodMethod)) {
 				if(getDeleted() != null && getDeleted())

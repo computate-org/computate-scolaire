@@ -33,6 +33,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.apache.solr.common.SolrInputDocument;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import java.util.HashMap;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 import io.vertx.core.logging.LoggerFactory;
 import java.text.NumberFormat;
@@ -1642,7 +1643,7 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 				.a("onclick", "enleverLueur($(this)); ")
 				.a("title", "Les sessions scolaires de la saison scolaire.  (DD-MM-YYYY)")
 				.a("value", saisonDateDebut == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy").format(saisonDateDebut))
-				.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patchSaisonScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSaisonDateDebut', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_saisonDateDebut')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_saisonDateDebut')); }); } ")
+				.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setSaisonDateDebut', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_saisonDateDebut')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_saisonDateDebut')); }); } ")
 				.fg();
 		}
 	}
@@ -1666,7 +1667,7 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 										{ e("button")
 											.a("tabindex", "-1")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
-										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_saisonDateDebut')); $('#", classeApiMethodeMethode, "_saisonDateDebut').val(null); patchSaisonScolaireVal([{ name: 'fq', value: 'pk:' + $('#SaisonScolaireForm :input[name=pk]').val() }], 'setSaisonDateDebut', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_saisonDateDebut')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_saisonDateDebut')); }); ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_saisonDateDebut')); $('#", classeApiMethodeMethode, "_saisonDateDebut').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#SaisonScolaireForm :input[name=pk]').val() }], 'setSaisonDateDebut', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_saisonDateDebut')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_saisonDateDebut')); }); ")
 											.f();
 											e("i").a("class", "far fa-eraser ").f().g("i");
 										} g("button");
@@ -1767,7 +1768,7 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 				a("name", "saisonEte");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
-				a("onchange", "patchSaisonScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSaisonEte', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_saisonEte')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_saisonEte')); }); ");
+				a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setSaisonEte', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_saisonEte')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_saisonEte')); }); ");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
 				if(getSaisonEte() != null && getSaisonEte())
@@ -1892,7 +1893,7 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 				a("name", "saisonHiver");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
-				a("onchange", "patchSaisonScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSaisonHiver', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_saisonHiver')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_saisonHiver')); }); ");
+				a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setSaisonHiver', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_saisonHiver')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_saisonHiver')); }); ");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
 				if(getSaisonHiver() != null && getSaisonHiver())
@@ -2017,7 +2018,7 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 				a("name", "saisonFuture");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
-				a("onchange", "patchSaisonScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSaisonFuture', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_saisonFuture')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_saisonFuture')); }); ");
+				a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setSaisonFuture', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_saisonFuture')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_saisonFuture')); }); ");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
 				if(getSaisonFuture() != null && getSaisonFuture())

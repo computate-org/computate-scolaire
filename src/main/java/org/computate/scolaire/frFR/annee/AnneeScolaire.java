@@ -1,8 +1,11 @@
 package org.computate.scolaire.frFR.annee;                                   
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.computate.scolaire.frFR.couverture.Couverture;
 import org.computate.scolaire.frFR.ecole.Ecole;
@@ -99,15 +102,27 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	 * Var.enUS: seasonKeys
 	 * Indexe: true
 	 * Stocke: true
-	 * Attribuer: SaisonScolaire.anneeCle
-	 * HtmlLigne: 4
-	 * HtmlCelulle: 2
 	 * Description.frFR: 
 	 * Description.enUS: 
 	 * NomAffichage.frFR: saisons
 	 * NomAffichage.enUS: seasons
 	 */    
 	protected void _saisonCles(List<Long> o) {}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: ageKeys
+	 * Indexe: true
+	 * Stocke: true
+	 * Attribuer: AgeScolaire.anneeCle
+	 * HtmlLigne: 4
+	 * HtmlCellule: 2
+	 * Description.frFR: Les âges scolaires de la session scolaire. 
+	 * Description.enUS: The school age of the school session. 
+	 * NomAffichage.frFR: âges
+	 * NomAffichage.enUS: ages
+	 */  
+	protected void _ageCles(List<Long> o) {}
 
 	/**
 	 * {@inheritDoc}
@@ -291,6 +306,64 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
+	 * Var.enUS: sessionStartDate
+	 * Indexe: true
+	 * Stocke: true
+	 * Definir: true
+	 * HtmlLigne: 3
+	 * HtmlCellule: 1
+	 * NomAffichage.frFR: début de la session
+	 * NomAffichage.enUS: start of the session
+	 */                   
+	protected void _sessionDateDebut(Couverture<LocalDate> c) {}
+
+	/**
+	 * Var.enUS: setSessionStartDate
+	 * r: SessionDateDebut
+	 * r.enUS: SessionStartDate
+	 */
+	@Override public AnneeScolaire setSessionDateDebut(String o) {
+		if(StringUtils.contains(o, " "))
+			o = StringUtils.substringBefore(o, " ");
+		try {
+			return super.setSessionDateDebut(o);
+		} catch (Exception e) {
+			setSessionDateDebut(LocalDate.from(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(o)));
+			return this;
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: sessionEndDate
+	 * Indexe: true
+	 * Stocke: true
+	 * Definir: true
+	 * HtmlLigne: 3
+	 * HtmlCellule: 1
+	 * NomAffichage.frFR: fin de la session
+	 * NomAffichage.enUS: end of the session
+	 */                   
+	protected void _sessionDateFin(Couverture<LocalDate> c) {}
+
+	/**
+	 * Var.enUS: setSessionEndDate
+	 * r: SessionDateFin
+	 * r.enUS: SessionEndDate
+	 */
+	@Override public AnneeScolaire setSessionDateFin(String o) {
+		if(StringUtils.contains(o, " "))
+			o = StringUtils.substringBefore(o, " ");
+		try {
+			return super.setSessionDateFin(o);
+		} catch (Exception e) {
+			setSessionDateFin(LocalDate.from(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(o)));
+			return this;
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
 	 * Var.enUS: yearStart
 	 * Indexe: true
 	 * Stocke: true
@@ -299,8 +372,13 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	 * HtmlCelulle: 1
 	 * NomAffichage.frFR: début de l'année
 	 * NomAffichage.enUS: start of year
+	 * r: sessionDateDebut
+	 * r.enUS: sessionStartDate
 	 */                   
-	protected void _anneeDebut(Couverture<Integer> c) {}
+	protected void _anneeDebut(Couverture<Integer> c) {
+		if(sessionDateDebut != null)
+			c.o(sessionDateDebut.getYear());
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -312,12 +390,12 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	 * HtmlCelulle: 2
 	 * NomAffichage.frFR: le fin de l'année
 	 * NomAffichage.enUS: end of year
-	 * r: anneeDebut
-	 * r.enUS: yearStart
+	 * r: sessionDateFin
+	 * r.enUS: sessionEndDate
 	 */                       
 	protected void _anneeFin(Couverture<Integer> c) {
-		if(anneeDebut != null)
-			c.o(anneeDebut + 1);
+		if(sessionDateFin != null)
+			c.o(sessionDateFin.getYear());
 	}
 
 	/**

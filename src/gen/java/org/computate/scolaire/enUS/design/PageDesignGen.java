@@ -5,6 +5,7 @@ import org.computate.scolaire.enUS.html.part.HtmlPart;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.util.Date;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
+import java.util.HashMap;
 import org.computate.scolaire.enUS.writer.AllWriter;
 import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.apache.commons.lang3.StringUtils;
@@ -632,7 +633,7 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 				}
 				if("Page".equals(classApiMethodMethod)) {
 					a("onclick", "removeGlow($(this)); ");
-					a("onchange", "patchPageDesignVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setPageDesignCompleteName', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_pageDesignCompleteName')); }, function() { addError($('#", classApiMethodMethod, "_pageDesignCompleteName')); }); ");
+					a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setPageDesignCompleteName', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_pageDesignCompleteName')); }, function() { addError($('#", classApiMethodMethod, "_pageDesignCompleteName')); }); ");
 				}
 				a("value", strPageDesignCompleteName())
 			.fg();
@@ -665,7 +666,7 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 										{ e("button")
 											.a("tabindex", "-1")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-khaki ")
-										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_pageDesignCompleteName')); $('#", classApiMethodMethod, "_pageDesignCompleteName').val(null); patchPageDesignVal([{ name: 'fq', value: 'pk:' + $('#PageDesignForm :input[name=pk]').val() }], 'setPageDesignCompleteName', null, function() { addGlow($('#", classApiMethodMethod, "_pageDesignCompleteName')); }, function() { addError($('#", classApiMethodMethod, "_pageDesignCompleteName')); }); ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_pageDesignCompleteName')); $('#", classApiMethodMethod, "_pageDesignCompleteName').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#PageDesignForm :input[name=pk]').val() }], 'setPageDesignCompleteName', null, function() { addGlow($('#", classApiMethodMethod, "_pageDesignCompleteName')); }, function() { addError($('#", classApiMethodMethod, "_pageDesignCompleteName')); }); ")
 											.f();
 											e("i").a("class", "far fa-eraser ").f().g("i");
 										} g("button");
@@ -769,7 +770,7 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 				a("name", "designHidden");
 			}
 			if("Page".equals(classApiMethodMethod)) {
-				a("onchange", "patchPageDesignVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setDesignHidden', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_designHidden')); }, function() { addError($('#", classApiMethodMethod, "_designHidden')); }); ");
+				a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setDesignHidden', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_designHidden')); }, function() { addError($('#", classApiMethodMethod, "_designHidden')); }); ");
 			}
 			if("Page".equals(classApiMethodMethod)) {
 				if(getDesignHidden() != null && getDesignHidden())

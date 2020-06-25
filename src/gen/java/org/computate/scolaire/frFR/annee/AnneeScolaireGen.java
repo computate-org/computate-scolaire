@@ -1,52 +1,60 @@
 package org.computate.scolaire.frFR.annee;
 
 import java.util.Arrays;
-import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.util.Date;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
 import org.computate.scolaire.frFR.ecole.Ecole;
-import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 import org.computate.scolaire.frFR.requete.api.RequeteApi;
 import org.apache.commons.lang3.StringUtils;
 import java.lang.Integer;
-import io.vertx.core.logging.LoggerFactory;
-import java.text.NumberFormat;
-import java.util.ArrayList;
 import java.math.BigDecimal;
-import org.computate.scolaire.frFR.couverture.Couverture;
-import org.apache.commons.collections.CollectionUtils;
 import java.lang.Long;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.computate.scolaire.frFR.saison.SaisonScolaire;
+import java.util.Locale;
 import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
-import java.lang.String;
+import java.time.ZoneOffset;
 import io.vertx.core.logging.Logger;
 import org.computate.scolaire.frFR.annee.AnneeScolaire;
 import java.math.MathContext;
-import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import java.util.Set;
-import org.apache.commons.text.StringEscapeUtils;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import org.apache.solr.client.solrj.SolrClient;
+import java.time.Instant;
+import java.time.ZoneId;
 import java.util.Objects;
-import io.vertx.core.json.JsonArray;
-import org.apache.solr.common.SolrDocument;
 import java.util.List;
+import org.computate.scolaire.frFR.age.AgeScolaire;
+import java.time.LocalDate;
 import org.apache.solr.client.solrj.SolrQuery;
-import org.apache.commons.lang3.math.NumberUtils;
 import java.util.Optional;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import org.apache.solr.client.solrj.util.ClientUtils;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import org.apache.solr.common.SolrInputDocument;
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import java.util.HashMap;
+import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
+import io.vertx.core.logging.LoggerFactory;
+import java.text.NumberFormat;
+import java.util.ArrayList;
+import org.computate.scolaire.frFR.couverture.Couverture;
+import org.apache.commons.collections.CollectionUtils;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.lang.String;
+import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.commons.text.StringEscapeUtils;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import org.apache.solr.client.solrj.SolrClient;
+import io.vertx.core.json.JsonArray;
+import org.apache.solr.common.SolrDocument;
+import java.time.temporal.ChronoUnit;
+import java.time.format.DateTimeFormatter;
+import org.apache.commons.lang3.math.NumberUtils;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 
 /**	
  * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.annee.AnneeScolaire&fq=classeEtendGen_indexed_boolean:true">Trouver la classe yearCompleteName dans Solr</a>
@@ -156,7 +164,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 				e("input")
 					.a("type", "text")
 					.a("placeholder", "école")
-					.a("title", "Description.enUS: ")
+					.a("title", "Les âges scolaires de la session scolaire. ")
 					.a("class", "valeur suggereEcoleCle w3-input w3-border w3-cell w3-cell-middle ")
 					.a("name", "setEcoleCle")
 					.a("id", classeApiMethodeMethode, "_ecoleCle")
@@ -460,34 +468,121 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 		return saisonCles == null ? "" : StringEscapeUtils.escapeHtml4(strSaisonCles());
 	}
 
-	public void inputSaisonCles(String classeApiMethodeMethode) {
+	/////////////
+	// ageCles //
+	/////////////
+
+	/**	L'entité « ageCles »
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
+	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected List<Long> ageCles = new ArrayList<Long>();
+	@JsonIgnore
+	public Couverture<List<Long>> ageClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("ageCles").o(ageCles);
+
+	/**	<br/>L'entité « ageCles »
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.annee.AnneeScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:ageCles">Trouver l'entité ageCles dans Solr</a>
+	 * <br/>
+	 * @param ageCles est l'entité déjà construit. 
+	 **/
+	protected abstract void _ageCles(List<Long> o);
+
+	public List<Long> getAgeCles() {
+		return ageCles;
+	}
+
+	public void setAgeCles(List<Long> ageCles) {
+		this.ageCles = ageCles;
+		this.ageClesCouverture.dejaInitialise = true;
+	}
+	public AnneeScolaire addAgeCles(Long...objets) {
+		for(Long o : objets) {
+			addAgeCles(o);
+		}
+		return (AnneeScolaire)this;
+	}
+	public AnneeScolaire addAgeCles(Long o) {
+		if(o != null && !ageCles.contains(o))
+			this.ageCles.add(o);
+		return (AnneeScolaire)this;
+	}
+	public AnneeScolaire setAgeCles(JsonArray objets) {
+		ageCles.clear();
+		for(int i = 0; i < objets.size(); i++) {
+			Long o = objets.getLong(i);
+			addAgeCles(o);
+		}
+		return (AnneeScolaire)this;
+	}
+	public AnneeScolaire addAgeCles(String o) {
+		if(NumberUtils.isParsable(o)) {
+			Long p = Long.parseLong(o);
+			addAgeCles(p);
+		}
+		return (AnneeScolaire)this;
+	}
+	protected AnneeScolaire ageClesInit() {
+		if(!ageClesCouverture.dejaInitialise) {
+			_ageCles(ageCles);
+		}
+		ageClesCouverture.dejaInitialise(true);
+		return (AnneeScolaire)this;
+	}
+
+	public List<Long> solrAgeCles() {
+		return ageCles;
+	}
+
+	public String strAgeCles() {
+		return ageCles == null ? "" : ageCles.toString();
+	}
+
+	public String jsonAgeCles() {
+		return ageCles == null ? "" : ageCles.toString();
+	}
+
+	public String nomAffichageAgeCles() {
+		return "âges";
+	}
+
+	public String htmTooltipAgeCles() {
+		return null;
+	}
+
+	public String htmAgeCles() {
+		return ageCles == null ? "" : StringEscapeUtils.escapeHtml4(strAgeCles());
+	}
+
+	public void inputAgeCles(String classeApiMethodeMethode) {
 		AnneeScolaire s = (AnneeScolaire)this;
 		{
 			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
 				e("input")
 					.a("type", "text")
-					.a("placeholder", "saisons")
-					.a("title", "Description.enUS: ")
-					.a("class", "valeur suggereSaisonCles w3-input w3-border w3-cell w3-cell-middle ")
-					.a("name", "setSaisonCles")
-					.a("id", classeApiMethodeMethode, "_saisonCles")
+					.a("placeholder", "âges")
+					.a("title", "Les âges scolaires de la session scolaire. ")
+					.a("class", "valeur suggereAgeCles w3-input w3-border w3-cell w3-cell-middle ")
+					.a("name", "setAgeCles")
+					.a("id", classeApiMethodeMethode, "_ageCles")
 					.a("autocomplete", "off")
-					.a("oninput", "suggereAnneeScolaireSaisonCles($(this).val() ? rechercherSaisonScolaireFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'anneeCle:" + pk + "'}", "], $('#listAnneeScolaireSaisonCles_", classeApiMethodeMethode, "'), ", pk, "); ")
+					.a("oninput", "suggereAnneeScolaireAgeCles($(this).val() ? rechercherAgeScolaireFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'anneeCle:" + pk + "'}", "], $('#listAnneeScolaireAgeCles_", classeApiMethodeMethode, "'), ", pk, "); ")
 				.fg();
 
 		}
 	}
 
-	public void htmSaisonCles(String classeApiMethodeMethode) {
+	public void htmAgeCles(String classeApiMethodeMethode) {
 		AnneeScolaire s = (AnneeScolaire)this;
 		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggere", classeApiMethodeMethode, "AnneeScolaireSaisonCles").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "AnneeScolaireAgeCles").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "?fq=anneeCle:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-yellow w3-hover-yellow ").f();
-								e("i").a("class", "far fa-sun ").f().g("i");
-								sx("saisons");
+							{ e("a").a("href", "?fq=anneeCle:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-blue w3-hover-blue ").f();
+								e("i").a("class", "fad fa-birthday-cake ").f().g("i");
+								sx("âges");
 							} g("a");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row ").f();
@@ -499,24 +594,24 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell ").f();
 								{ e("div").a("class", "w3-cell-row ").f();
 
-								inputSaisonCles(classeApiMethodeMethode);
+								inputAgeCles(classeApiMethodeMethode);
 								} g("div");
 							} g("div");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listAnneeScolaireSaisonCles_", classeApiMethodeMethode).f();
+								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listAnneeScolaireAgeCles_", classeApiMethodeMethode).f();
 								} g("ul");
 								if(
-										CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), SaisonScolaire.ROLES)
-										|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), SaisonScolaire.ROLES)
+										CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), AgeScolaire.ROLES)
+										|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), AgeScolaire.ROLES)
 										) {
 									{ e("div").a("class", "w3-cell-row ").f();
 										e("button")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
-											.a("id", classeApiMethodeMethode, "_saisonCles_ajouter")
-											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Envoi…'; postSaisonScolaireVals({ anneeCle: \"", pk, "\" }, function() {}, function() { ajouterErreur($('#", classeApiMethodeMethode, "saisonCles')); });")
-											.f().sx("ajouter une saison")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue ")
+											.a("id", classeApiMethodeMethode, "_ageCles_ajouter")
+											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Envoi…'; postAgeScolaireVals({ anneeCle: \"", pk, "\" }, function() {}, function() { ajouterErreur($('#", classeApiMethodeMethode, "ageCles')); });")
+											.f().sx("ajouter un âge")
 										.g("button");
 									} g("div");
 								}
@@ -1253,6 +1348,268 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 		return formInscriptionCle == null ? "" : StringEscapeUtils.escapeHtml4(strFormInscriptionCle());
 	}
 
+	//////////////////////
+	// sessionDateDebut //
+	//////////////////////
+
+	/**	L'entité « sessionDateDebut »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonDeserialize(using = LocalDateDeserializer.class)
+	@JsonSerialize(using = LocalDateSerializer.class)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+	@JsonInclude(Include.NON_NULL)
+	protected LocalDate sessionDateDebut;
+	@JsonIgnore
+	public Couverture<LocalDate> sessionDateDebutCouverture = new Couverture<LocalDate>().p(this).c(LocalDate.class).var("sessionDateDebut").o(sessionDateDebut);
+
+	/**	<br/>L'entité « sessionDateDebut »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.annee.AnneeScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:sessionDateDebut">Trouver l'entité sessionDateDebut dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _sessionDateDebut(Couverture<LocalDate> c);
+
+	public LocalDate getSessionDateDebut() {
+		return sessionDateDebut;
+	}
+
+	public void setSessionDateDebut(LocalDate sessionDateDebut) {
+		this.sessionDateDebut = sessionDateDebut;
+		this.sessionDateDebutCouverture.dejaInitialise = true;
+	}
+	public AnneeScolaire setSessionDateDebut(Instant o) {
+		this.sessionDateDebut = o == null ? null : LocalDate.from(o);
+		this.sessionDateDebutCouverture.dejaInitialise = true;
+		return (AnneeScolaire)this;
+	}
+	/** Example: 2011-12-03+01:00 **/
+	public AnneeScolaire setSessionDateDebut(String o) {
+		this.sessionDateDebut = o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		this.sessionDateDebutCouverture.dejaInitialise = true;
+		return (AnneeScolaire)this;
+	}
+	public AnneeScolaire setSessionDateDebut(Date o) {
+		this.sessionDateDebut = o == null ? null : o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
+		this.sessionDateDebutCouverture.dejaInitialise = true;
+		return (AnneeScolaire)this;
+	}
+	protected AnneeScolaire sessionDateDebutInit() {
+		if(!sessionDateDebutCouverture.dejaInitialise) {
+			_sessionDateDebut(sessionDateDebutCouverture);
+			if(sessionDateDebut == null)
+				setSessionDateDebut(sessionDateDebutCouverture.o);
+		}
+		sessionDateDebutCouverture.dejaInitialise(true);
+		return (AnneeScolaire)this;
+	}
+
+	public Date solrSessionDateDebut() {
+		return sessionDateDebut == null ? null : Date.from(sessionDateDebut.atStartOfDay(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toInstant().atZone(ZoneId.of("Z")).toInstant());
+	}
+
+	public String strSessionDateDebut() {
+		return sessionDateDebut == null ? "" : sessionDateDebut.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.forLanguageTag("fr-FR")));
+	}
+
+	public String jsonSessionDateDebut() {
+		return sessionDateDebut == null ? "" : sessionDateDebut.format(DateTimeFormatter.ISO_DATE);
+	}
+
+	public String nomAffichageSessionDateDebut() {
+		return "début de la session";
+	}
+
+	public String htmTooltipSessionDateDebut() {
+		return null;
+	}
+
+	public String htmSessionDateDebut() {
+		return sessionDateDebut == null ? "" : StringEscapeUtils.escapeHtml4(strSessionDateDebut());
+	}
+
+	public void inputSessionDateDebut(String classeApiMethodeMethode) {
+		AnneeScolaire s = (AnneeScolaire)this;
+		{
+			e("input")
+				.a("type", "text")
+				.a("class", "w3-input w3-border datepicker setSessionDateDebut classAnneeScolaire inputAnneeScolaire", pk, "SessionDateDebut w3-input w3-border ")
+				.a("placeholder", "DD-MM-YYYY")
+				.a("data-timeformat", "dd-MM-yyyy")
+				.a("id", classeApiMethodeMethode, "_sessionDateDebut")
+				.a("onclick", "enleverLueur($(this)); ")
+				.a("title", "Les âges scolaires de la session scolaire.  (DD-MM-YYYY)")
+				.a("value", sessionDateDebut == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy").format(sessionDateDebut))
+				.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setSessionDateDebut', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_sessionDateDebut')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_sessionDateDebut')); }); } ")
+				.fg();
+		}
+	}
+
+	public void htmSessionDateDebut(String classeApiMethodeMethode) {
+		AnneeScolaire s = (AnneeScolaire)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "AnneeScolaireSessionDateDebut").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-orange ").f();
+							e("label").a("for", classeApiMethodeMethode, "_sessionDateDebut").a("class", "").f().sx("début de la session").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row  ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								inputSessionDateDebut(classeApiMethodeMethode);
+							} g("div");
+							{
+								if("Page".equals(classeApiMethodeMethode)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-orange ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_sessionDateDebut')); $('#", classeApiMethodeMethode, "_sessionDateDebut').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#AnneeScolaireForm :input[name=pk]').val() }], 'setSessionDateDebut', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_sessionDateDebut')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_sessionDateDebut')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	////////////////////
+	// sessionDateFin //
+	////////////////////
+
+	/**	L'entité « sessionDateFin »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonDeserialize(using = LocalDateDeserializer.class)
+	@JsonSerialize(using = LocalDateSerializer.class)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+	@JsonInclude(Include.NON_NULL)
+	protected LocalDate sessionDateFin;
+	@JsonIgnore
+	public Couverture<LocalDate> sessionDateFinCouverture = new Couverture<LocalDate>().p(this).c(LocalDate.class).var("sessionDateFin").o(sessionDateFin);
+
+	/**	<br/>L'entité « sessionDateFin »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.annee.AnneeScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:sessionDateFin">Trouver l'entité sessionDateFin dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _sessionDateFin(Couverture<LocalDate> c);
+
+	public LocalDate getSessionDateFin() {
+		return sessionDateFin;
+	}
+
+	public void setSessionDateFin(LocalDate sessionDateFin) {
+		this.sessionDateFin = sessionDateFin;
+		this.sessionDateFinCouverture.dejaInitialise = true;
+	}
+	public AnneeScolaire setSessionDateFin(Instant o) {
+		this.sessionDateFin = o == null ? null : LocalDate.from(o);
+		this.sessionDateFinCouverture.dejaInitialise = true;
+		return (AnneeScolaire)this;
+	}
+	/** Example: 2011-12-03+01:00 **/
+	public AnneeScolaire setSessionDateFin(String o) {
+		this.sessionDateFin = o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		this.sessionDateFinCouverture.dejaInitialise = true;
+		return (AnneeScolaire)this;
+	}
+	public AnneeScolaire setSessionDateFin(Date o) {
+		this.sessionDateFin = o == null ? null : o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
+		this.sessionDateFinCouverture.dejaInitialise = true;
+		return (AnneeScolaire)this;
+	}
+	protected AnneeScolaire sessionDateFinInit() {
+		if(!sessionDateFinCouverture.dejaInitialise) {
+			_sessionDateFin(sessionDateFinCouverture);
+			if(sessionDateFin == null)
+				setSessionDateFin(sessionDateFinCouverture.o);
+		}
+		sessionDateFinCouverture.dejaInitialise(true);
+		return (AnneeScolaire)this;
+	}
+
+	public Date solrSessionDateFin() {
+		return sessionDateFin == null ? null : Date.from(sessionDateFin.atStartOfDay(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toInstant().atZone(ZoneId.of("Z")).toInstant());
+	}
+
+	public String strSessionDateFin() {
+		return sessionDateFin == null ? "" : sessionDateFin.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.forLanguageTag("fr-FR")));
+	}
+
+	public String jsonSessionDateFin() {
+		return sessionDateFin == null ? "" : sessionDateFin.format(DateTimeFormatter.ISO_DATE);
+	}
+
+	public String nomAffichageSessionDateFin() {
+		return "fin de la session";
+	}
+
+	public String htmTooltipSessionDateFin() {
+		return null;
+	}
+
+	public String htmSessionDateFin() {
+		return sessionDateFin == null ? "" : StringEscapeUtils.escapeHtml4(strSessionDateFin());
+	}
+
+	public void inputSessionDateFin(String classeApiMethodeMethode) {
+		AnneeScolaire s = (AnneeScolaire)this;
+		{
+			e("input")
+				.a("type", "text")
+				.a("class", "w3-input w3-border datepicker setSessionDateFin classAnneeScolaire inputAnneeScolaire", pk, "SessionDateFin w3-input w3-border ")
+				.a("placeholder", "DD-MM-YYYY")
+				.a("data-timeformat", "dd-MM-yyyy")
+				.a("id", classeApiMethodeMethode, "_sessionDateFin")
+				.a("onclick", "enleverLueur($(this)); ")
+				.a("title", "Les âges scolaires de la session scolaire.  (DD-MM-YYYY)")
+				.a("value", sessionDateFin == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy").format(sessionDateFin))
+				.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setSessionDateFin', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_sessionDateFin')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_sessionDateFin')); }); } ")
+				.fg();
+		}
+	}
+
+	public void htmSessionDateFin(String classeApiMethodeMethode) {
+		AnneeScolaire s = (AnneeScolaire)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "AnneeScolaireSessionDateFin").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-orange ").f();
+							e("label").a("for", classeApiMethodeMethode, "_sessionDateFin").a("class", "").f().sx("fin de la session").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row  ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								inputSessionDateFin(classeApiMethodeMethode);
+							} g("div");
+							{
+								if("Page".equals(classeApiMethodeMethode)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-orange ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_sessionDateFin')); $('#", classeApiMethodeMethode, "_sessionDateFin').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#AnneeScolaireForm :input[name=pk]').val() }], 'setSessionDateFin', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_sessionDateFin')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_sessionDateFin')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
 	////////////////
 	// anneeDebut //
 	////////////////
@@ -1328,7 +1685,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "début de l'année")
-				.a("title", "Description.enUS: ")
+				.a("title", "Les âges scolaires de la session scolaire. ")
 				.a("id", classeApiMethodeMethode, "_anneeDebut");
 				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
 					a("class", "setAnneeDebut classAnneeScolaire inputAnneeScolaire", pk, "AnneeDebut w3-input w3-border ");
@@ -1339,7 +1696,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 				}
 				if("Page".equals(classeApiMethodeMethode)) {
 					a("onclick", "enleverLueur($(this)); ");
-					a("onchange", "patchAnneeScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setAnneeDebut', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_anneeDebut')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_anneeDebut')); }); ");
+					a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setAnneeDebut', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_anneeDebut')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_anneeDebut')); }); ");
 				}
 				a("value", strAnneeDebut())
 			.fg();
@@ -1367,7 +1724,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 										{ e("button")
 											.a("tabindex", "-1")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-orange ")
-										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_anneeDebut')); $('#", classeApiMethodeMethode, "_anneeDebut').val(null); patchAnneeScolaireVal([{ name: 'fq', value: 'pk:' + $('#AnneeScolaireForm :input[name=pk]').val() }], 'setAnneeDebut', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_anneeDebut')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_anneeDebut')); }); ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_anneeDebut')); $('#", classeApiMethodeMethode, "_anneeDebut').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#AnneeScolaireForm :input[name=pk]').val() }], 'setAnneeDebut', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_anneeDebut')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_anneeDebut')); }); ")
 											.f();
 											e("i").a("class", "far fa-eraser ").f().g("i");
 										} g("button");
@@ -1456,7 +1813,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "le fin de l'année")
-				.a("title", "Description.enUS: ")
+				.a("title", "Les âges scolaires de la session scolaire. ")
 				.a("id", classeApiMethodeMethode, "_anneeFin");
 				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
 					a("class", "setAnneeFin classAnneeScolaire inputAnneeScolaire", pk, "AnneeFin w3-input w3-border ");
@@ -1467,7 +1824,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 				}
 				if("Page".equals(classeApiMethodeMethode)) {
 					a("onclick", "enleverLueur($(this)); ");
-					a("onchange", "patchAnneeScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setAnneeFin', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_anneeFin')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_anneeFin')); }); ");
+					a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setAnneeFin', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_anneeFin')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_anneeFin')); }); ");
 				}
 				a("value", strAnneeFin())
 			.fg();
@@ -1495,7 +1852,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 										{ e("button")
 											.a("tabindex", "-1")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-orange ")
-										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_anneeFin')); $('#", classeApiMethodeMethode, "_anneeFin').val(null); patchAnneeScolaireVal([{ name: 'fq', value: 'pk:' + $('#AnneeScolaireForm :input[name=pk]').val() }], 'setAnneeFin', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_anneeFin')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_anneeFin')); }); ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_anneeFin')); $('#", classeApiMethodeMethode, "_anneeFin').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#AnneeScolaireForm :input[name=pk]').val() }], 'setAnneeFin', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_anneeFin')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_anneeFin')); }); ")
 											.f();
 											e("i").a("class", "far fa-eraser ").f().g("i");
 										} g("button");
@@ -1595,7 +1952,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "frais d'inscription")
-				.a("title", "Description.enUS: ")
+				.a("title", "Les âges scolaires de la session scolaire. ")
 				.a("id", classeApiMethodeMethode, "_anneeFraisInscription");
 				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
 					a("class", "setAnneeFraisInscription classAnneeScolaire inputAnneeScolaire", pk, "AnneeFraisInscription w3-input w3-border ");
@@ -1606,7 +1963,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 				}
 				if("Page".equals(classeApiMethodeMethode)) {
 					a("onclick", "enleverLueur($(this)); ");
-					a("onchange", "patchAnneeScolaireVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setAnneeFraisInscription', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_anneeFraisInscription')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_anneeFraisInscription')); }); ");
+					a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setAnneeFraisInscription', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_anneeFraisInscription')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_anneeFraisInscription')); }); ");
 				}
 				a("value", strAnneeFraisInscription())
 			.fg();
@@ -1634,7 +1991,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 										{ e("button")
 											.a("tabindex", "-1")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-orange ")
-										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_anneeFraisInscription')); $('#", classeApiMethodeMethode, "_anneeFraisInscription').val(null); patchAnneeScolaireVal([{ name: 'fq', value: 'pk:' + $('#AnneeScolaireForm :input[name=pk]').val() }], 'setAnneeFraisInscription', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_anneeFraisInscription')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_anneeFraisInscription')); }); ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_anneeFraisInscription')); $('#", classeApiMethodeMethode, "_anneeFraisInscription').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#AnneeScolaireForm :input[name=pk]').val() }], 'setAnneeFraisInscription', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_anneeFraisInscription')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_anneeFraisInscription')); }); ")
 											.f();
 											e("i").a("class", "far fa-eraser ").f().g("i");
 										} g("button");
@@ -1844,6 +2201,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 		anneeCleInit();
 		inscriptionClesInit();
 		saisonClesInit();
+		ageClesInit();
 		scolaireTriInit();
 		ecoleTriInit();
 		anneeTriInit();
@@ -1856,6 +2214,8 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 		ecoleNumeroTelephoneInit();
 		ecoleAdministrateurNomInit();
 		formInscriptionCleInit();
+		sessionDateDebutInit();
+		sessionDateFinInit();
 		anneeDebutInit();
 		anneeFinInit();
 		anneeFraisInscriptionInit();
@@ -1910,6 +2270,8 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 				return oAnneeScolaire.inscriptionCles;
 			case "saisonCles":
 				return oAnneeScolaire.saisonCles;
+			case "ageCles":
+				return oAnneeScolaire.ageCles;
 			case "scolaireTri":
 				return oAnneeScolaire.scolaireTri;
 			case "ecoleTri":
@@ -1934,6 +2296,10 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 				return oAnneeScolaire.ecoleAdministrateurNom;
 			case "formInscriptionCle":
 				return oAnneeScolaire.formInscriptionCle;
+			case "sessionDateDebut":
+				return oAnneeScolaire.sessionDateDebut;
+			case "sessionDateFin":
+				return oAnneeScolaire.sessionDateFin;
 			case "anneeDebut":
 				return oAnneeScolaire.anneeDebut;
 			case "anneeFin":
@@ -1976,8 +2342,8 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 				if(!sauvegardes.contains(var))
 					sauvegardes.add(var);
 				return val;
-			case "saisonCles":
-				oAnneeScolaire.addSaisonCles((Long)val);
+			case "ageCles":
+				oAnneeScolaire.addAgeCles((Long)val);
 				if(!sauvegardes.contains(var))
 					sauvegardes.add(var);
 				return val;
@@ -2007,6 +2373,16 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 	}
 	public Object definirAnneeScolaire(String var, String val) {
 		switch(var) {
+			case "sessionDateDebut":
+				if(val != null)
+					setSessionDateDebut(val);
+				sauvegardes.add(var);
+				return val;
+			case "sessionDateFin":
+				if(val != null)
+					setSessionDateFin(val);
+				sauvegardes.add(var);
+				return val;
 			case "anneeDebut":
 				if(val != null)
 					setAnneeDebut(val);
@@ -2055,9 +2431,15 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 					oAnneeScolaire.inscriptionCles.addAll(inscriptionCles);
 			}
 
-			List<Long> saisonCles = (List<Long>)solrDocument.get("saisonCles_stored_longs");
-			if(saisonCles != null)
-				oAnneeScolaire.saisonCles.addAll(saisonCles);
+			if(sauvegardes.contains("saisonCles")) {
+				List<Long> saisonCles = (List<Long>)solrDocument.get("saisonCles_stored_longs");
+				if(saisonCles != null)
+					oAnneeScolaire.saisonCles.addAll(saisonCles);
+			}
+
+			List<Long> ageCles = (List<Long>)solrDocument.get("ageCles_stored_longs");
+			if(ageCles != null)
+				oAnneeScolaire.ageCles.addAll(ageCles);
 
 			if(sauvegardes.contains("scolaireTri")) {
 				Integer scolaireTri = (Integer)solrDocument.get("scolaireTri_stored_int");
@@ -2117,6 +2499,18 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 				Long formInscriptionCle = (Long)solrDocument.get("formInscriptionCle_stored_long");
 				if(formInscriptionCle != null)
 					oAnneeScolaire.setFormInscriptionCle(formInscriptionCle);
+			}
+
+			if(sauvegardes.contains("sessionDateDebut")) {
+				Date sessionDateDebut = (Date)solrDocument.get("sessionDateDebut_stored_date");
+				if(sessionDateDebut != null)
+					oAnneeScolaire.setSessionDateDebut(sessionDateDebut);
+			}
+
+			if(sauvegardes.contains("sessionDateFin")) {
+				Date sessionDateFin = (Date)solrDocument.get("sessionDateFin_stored_date");
+				if(sessionDateFin != null)
+					oAnneeScolaire.setSessionDateFin(sessionDateFin);
 			}
 
 			if(sauvegardes.contains("anneeDebut")) {
@@ -2239,6 +2633,14 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 				document.addField("saisonCles_stored_longs", o);
 			}
 		}
+		if(ageCles != null) {
+			for(java.lang.Long o : ageCles) {
+				document.addField("ageCles_indexed_longs", o);
+			}
+			for(java.lang.Long o : ageCles) {
+				document.addField("ageCles_stored_longs", o);
+			}
+		}
 		if(scolaireTri != null) {
 			document.addField("scolaireTri_indexed_int", scolaireTri);
 			document.addField("scolaireTri_stored_int", scolaireTri);
@@ -2278,6 +2680,14 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 		if(formInscriptionCle != null) {
 			document.addField("formInscriptionCle_indexed_long", formInscriptionCle);
 			document.addField("formInscriptionCle_stored_long", formInscriptionCle);
+		}
+		if(sessionDateDebut != null) {
+			document.addField("sessionDateDebut_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(sessionDateDebut.atStartOfDay(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toInstant().atZone(ZoneId.of("Z"))));
+			document.addField("sessionDateDebut_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(sessionDateDebut.atStartOfDay(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toInstant().atZone(ZoneId.of("Z"))));
+		}
+		if(sessionDateFin != null) {
+			document.addField("sessionDateFin_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(sessionDateFin.atStartOfDay(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toInstant().atZone(ZoneId.of("Z"))));
+			document.addField("sessionDateFin_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(sessionDateFin.atStartOfDay(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toInstant().atZone(ZoneId.of("Z"))));
 		}
 		if(anneeDebut != null) {
 			document.addField("anneeDebut_indexed_int", anneeDebut);
@@ -2330,6 +2740,8 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 				return "inscriptionCles_indexed_longs";
 			case "saisonCles":
 				return "saisonCles_indexed_longs";
+			case "ageCles":
+				return "ageCles_indexed_longs";
 			case "scolaireTri":
 				return "scolaireTri_indexed_int";
 			case "ecoleTri":
@@ -2350,6 +2762,10 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 				return "ecoleAdministrateurNom_indexed_string";
 			case "formInscriptionCle":
 				return "formInscriptionCle_indexed_long";
+			case "sessionDateDebut":
+				return "sessionDateDebut_indexed_date";
+			case "sessionDateFin":
+				return "sessionDateFin_indexed_date";
 			case "anneeDebut":
 				return "anneeDebut_indexed_int";
 			case "anneeFin":
@@ -2405,6 +2821,10 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 		if(saisonCles != null)
 			oAnneeScolaire.saisonCles.addAll(saisonCles);
 
+		List<Long> ageCles = (List<Long>)solrDocument.get("ageCles_stored_longs");
+		if(ageCles != null)
+			oAnneeScolaire.ageCles.addAll(ageCles);
+
 		Integer scolaireTri = (Integer)solrDocument.get("scolaireTri_stored_int");
 		if(scolaireTri != null)
 			oAnneeScolaire.setScolaireTri(scolaireTri);
@@ -2445,6 +2865,14 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 		if(formInscriptionCle != null)
 			oAnneeScolaire.setFormInscriptionCle(formInscriptionCle);
 
+		Date sessionDateDebut = (Date)solrDocument.get("sessionDateDebut_stored_date");
+		if(sessionDateDebut != null)
+			oAnneeScolaire.setSessionDateDebut(sessionDateDebut);
+
+		Date sessionDateFin = (Date)solrDocument.get("sessionDateFin_stored_date");
+		if(sessionDateFin != null)
+			oAnneeScolaire.setSessionDateFin(sessionDateFin);
+
 		Integer anneeDebut = (Integer)solrDocument.get("anneeDebut_stored_int");
 		if(anneeDebut != null)
 			oAnneeScolaire.setAnneeDebut(anneeDebut);
@@ -2479,8 +2907,12 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 			AnneeScolaire original = (AnneeScolaire)o;
 			if(!Objects.equals(ecoleCle, original.getEcoleCle()))
 				requeteApi.addVars("ecoleCle");
-			if(!Objects.equals(saisonCles, original.getSaisonCles()))
-				requeteApi.addVars("saisonCles");
+			if(!Objects.equals(ageCles, original.getAgeCles()))
+				requeteApi.addVars("ageCles");
+			if(!Objects.equals(sessionDateDebut, original.getSessionDateDebut()))
+				requeteApi.addVars("sessionDateDebut");
+			if(!Objects.equals(sessionDateFin, original.getSessionDateFin()))
+				requeteApi.addVars("sessionDateFin");
 			if(!Objects.equals(anneeDebut, original.getAnneeDebut()))
 				requeteApi.addVars("anneeDebut");
 			if(!Objects.equals(anneeFin, original.getAnneeFin()))
@@ -2496,7 +2928,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), ecoleCle, saisonCles, anneeDebut, anneeFin, anneeFraisInscription);
+		return Objects.hash(super.hashCode(), ecoleCle, ageCles, sessionDateDebut, sessionDateFin, anneeDebut, anneeFin, anneeFraisInscription);
 	}
 
 	////////////
@@ -2511,7 +2943,9 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 		AnneeScolaire that = (AnneeScolaire)o;
 		return super.equals(o)
 				&& Objects.equals( ecoleCle, that.ecoleCle )
-				&& Objects.equals( saisonCles, that.saisonCles )
+				&& Objects.equals( ageCles, that.ageCles )
+				&& Objects.equals( sessionDateDebut, that.sessionDateDebut )
+				&& Objects.equals( sessionDateFin, that.sessionDateFin )
 				&& Objects.equals( anneeDebut, that.anneeDebut )
 				&& Objects.equals( anneeFin, that.anneeFin )
 				&& Objects.equals( anneeFraisInscription, that.anneeFraisInscription );
@@ -2526,7 +2960,9 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 		sb.append(super.toString() + "\n");
 		sb.append("AnneeScolaire { ");
 		sb.append( "ecoleCle: " ).append(ecoleCle);
-		sb.append( ", saisonCles: " ).append(saisonCles);
+		sb.append( ", ageCles: " ).append(ageCles);
+		sb.append( ", sessionDateDebut: " ).append(sessionDateDebut);
+		sb.append( ", sessionDateFin: " ).append(sessionDateFin);
 		sb.append( ", anneeDebut: " ).append(anneeDebut);
 		sb.append( ", anneeFin: " ).append(anneeFin);
 		sb.append( ", anneeFraisInscription: " ).append(anneeFraisInscription);

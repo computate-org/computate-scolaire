@@ -53,7 +53,7 @@ public class SiteContexteFrFR extends SiteContexteFrFRGen<Object> {
 	 * r: cree
 	 * r.enUS: created
 	 */
-	public static final String SQL_creer = "insert into c(nom_canonique, id_utilisateur, cree) values($1, $2, now()) returning pk;\n";
+	public static final String SQL_creer = "insert into c(nom_canonique, id_utilisateur, cree) values($1, $2, $3) returning pk;\n";
 
 	/**
 	 * r: chemin

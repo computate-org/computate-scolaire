@@ -4,6 +4,7 @@ import java.util.Arrays;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import org.computate.scolaire.frFR.session.SessionScolaire;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
+import java.util.HashMap;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 import org.computate.scolaire.frFR.requete.api.RequeteApi;
 import org.apache.commons.lang3.StringUtils;

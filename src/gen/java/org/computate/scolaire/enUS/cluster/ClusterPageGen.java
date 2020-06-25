@@ -4,6 +4,7 @@ import org.computate.scolaire.enUS.wrap.Wrap;
 import java.util.Arrays;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import org.computate.scolaire.enUS.cluster.ClusterGenPage;
+import java.util.HashMap;
 import org.apache.commons.lang3.StringUtils;
 import java.text.NumberFormat;
 import io.vertx.core.logging.LoggerFactory;

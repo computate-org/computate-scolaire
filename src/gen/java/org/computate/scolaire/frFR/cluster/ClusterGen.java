@@ -30,6 +30,7 @@ import org.apache.solr.common.SolrInputDocument;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 import io.vertx.core.logging.LoggerFactory;
 import java.text.NumberFormat;
@@ -355,7 +356,7 @@ public abstract class ClusterGen<DEV> extends Object {
 				}
 				if("Page".equals(classeApiMethodeMethode)) {
 					s.a("onclick", "enleverLueur($(this)); ");
-					s.a("onchange", "patchClusterVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setInheritPk', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_inheritPk')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_inheritPk')); }); ");
+					s.a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setInheritPk', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_inheritPk')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_inheritPk')); }); ");
 				}
 				s.a("value", strInheritPk())
 			.fg();
@@ -392,7 +393,7 @@ public abstract class ClusterGen<DEV> extends Object {
 										{ s.e("button")
 											.a("tabindex", "-1")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-gray ")
-										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_inheritPk')); $('#", classeApiMethodeMethode, "_inheritPk').val(null); patchClusterVal([{ name: 'fq', value: 'pk:' + $('#ClusterForm :input[name=pk]').val() }], 'setInheritPk', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_inheritPk')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_inheritPk')); }); ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_inheritPk')); $('#", classeApiMethodeMethode, "_inheritPk').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#ClusterForm :input[name=pk]').val() }], 'setInheritPk', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_inheritPk')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_inheritPk')); }); ")
 											.f();
 											s.e("i").a("class", "far fa-eraser ").f().g("i");
 										} s.g("button");
@@ -766,7 +767,7 @@ public abstract class ClusterGen<DEV> extends Object {
 				s.a("name", "archive");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
-				s.a("onchange", "patchClusterVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setArchive', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_archive')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_archive')); }); ");
+				s.a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setArchive', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_archive')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_archive')); }); ");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
 				if(getArchive() != null && getArchive())
@@ -903,7 +904,7 @@ public abstract class ClusterGen<DEV> extends Object {
 				s.a("name", "supprime");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
-				s.a("onchange", "patchClusterVal([{ name: 'fq', value: 'pk:", pk, "' }], 'setSupprime', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_supprime')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_supprime')); }); ");
+				s.a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setSupprime', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_supprime')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_supprime')); }); ");
 			}
 			if("Page".equals(classeApiMethodeMethode)) {
 				if(getSupprime() != null && getSupprime())

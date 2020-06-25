@@ -1,7 +1,10 @@
 package org.computate.scolaire.enUS.year;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import org.apache.commons.lang3.StringUtils;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.school.School;
@@ -37,6 +40,8 @@ public class SchoolYear extends SchoolYearGen<Cluster> {
 	protected void _enrollmentKeys(List<Long> o) {}
 
 	protected void _seasonKeys(List<Long> o) {}
+
+	protected void _ageKeys(List<Long> o) {}
 
 	protected void _educationSort(Wrap<Integer> c) {
 		c.o(2);
@@ -96,11 +101,42 @@ public class SchoolYear extends SchoolYearGen<Cluster> {
 	protected void _enrollmentFormKey(Wrap<Long> c) {
 	}
 
-	protected void _yearStart(Wrap<Integer> c) {}
+	protected void _sessionStartDate(Wrap<LocalDate> c) {}
+
+	@Override()
+	public SchoolYear setSessionStartDate(String o) {
+		if(StringUtils.contains(o, " "))
+			o = StringUtils.substringBefore(o, " ");
+		try {
+			return super.setSessionStartDate(o);
+		} catch (Exception e) {
+			setSessionStartDate(LocalDate.from(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(o)));
+			return this;
+		}
+	}
+
+	protected void _sessionEndDate(Wrap<LocalDate> c) {}
+
+	@Override()
+	public SchoolYear setSessionEndDate(String o) {
+		if(StringUtils.contains(o, " "))
+			o = StringUtils.substringBefore(o, " ");
+		try {
+			return super.setSessionEndDate(o);
+		} catch (Exception e) {
+			setSessionEndDate(LocalDate.from(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(o)));
+			return this;
+		}
+	}
+
+	protected void _yearStart(Wrap<Integer> c) {
+		if(sessionStartDate != null)
+			c.o(sessionStartDate.getYear());
+	}
 
 	protected void _yearEnd(Wrap<Integer> c) {
-		if(yearStart != null)
-			c.o(yearStart + 1);
+		if(sessionEndDate != null)
+			c.o(sessionEndDate.getYear());
 	}
 
 	protected void _yearEnrollmentFee(Wrap<BigDecimal> c) {}

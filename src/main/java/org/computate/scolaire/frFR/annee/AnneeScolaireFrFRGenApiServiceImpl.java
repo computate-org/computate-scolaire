@@ -2,8 +2,8 @@ package org.computate.scolaire.frFR.annee;
 
 import org.computate.scolaire.frFR.ecole.EcoleFrFRGenApiServiceImpl;
 import org.computate.scolaire.frFR.ecole.Ecole;
-import org.computate.scolaire.frFR.saison.SaisonScolaireFrFRGenApiServiceImpl;
-import org.computate.scolaire.frFR.saison.SaisonScolaire;
+import org.computate.scolaire.frFR.age.AgeScolaireFrFRGenApiServiceImpl;
+import org.computate.scolaire.frFR.age.AgeScolaire;
 import org.computate.scolaire.frFR.config.ConfigSite;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
@@ -346,35 +346,61 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 							}
 						}
 						break;
-					case "saisonCles":
+					case "ageCles":
 						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							if(l != null) {
-								ListeRecherche<SaisonScolaire> listeRecherche = new ListeRecherche<SaisonScolaire>();
+								ListeRecherche<AgeScolaire> listeRecherche = new ListeRecherche<AgeScolaire>();
 								listeRecherche.setQuery("*:*");
 								listeRecherche.setStocker(true);
-								listeRecherche.setC(SaisonScolaire.class);
+								listeRecherche.setC(AgeScolaire.class);
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContexteFrFR.SQL_addA
-												, Tuple.of(l2, "anneeCle", pk, "saisonCles")
+												, Tuple.of(pk, "ageCles", l2, "anneeCle")
 												, b
 										-> {
 											if(b.succeeded())
 												a.handle(Future.succeededFuture());
 											else
-												a.handle(Future.failedFuture(new Exception("valeur AnneeScolaire.saisonCles a échoué", b.cause())));
+												a.handle(Future.failedFuture(new Exception("valeur AnneeScolaire.ageCles a échoué", b.cause())));
 										});
 									}));
 									if(!pks.contains(l2)) {
 										pks.add(l2);
-										classes.add("SaisonScolaire");
+										classes.add("AgeScolaire");
 									}
 								}
 							}
 						}
+						break;
+					case "sessionDateDebut":
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "sessionDateDebut", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur AnneeScolaire.sessionDateDebut a échoué", b.cause())));
+							});
+						}));
+						break;
+					case "sessionDateFin":
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "sessionDateFin", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur AnneeScolaire.sessionDateFin a échoué", b.cause())));
+							});
+						}));
 						break;
 					case "anneeDebut":
 						futures.add(Future.future(a -> {
@@ -1087,24 +1113,50 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 						}));
 						}
 						break;
-					case "saisonCles":
+					case "ageCles":
 						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							futures.add(Future.future(a -> {
 								tx.preparedQuery(SiteContexteFrFR.SQL_addA
-										, Tuple.of(l, "anneeCle", pk, "saisonCles")
+										, Tuple.of(pk, "ageCles", l, "anneeCle")
 										, b
 								-> {
 									if(b.succeeded())
 										a.handle(Future.succeededFuture());
 									else
-										a.handle(Future.failedFuture(new Exception("valeur AnneeScolaire.saisonCles a échoué", b.cause())));
+										a.handle(Future.failedFuture(new Exception("valeur AnneeScolaire.ageCles a échoué", b.cause())));
 								});
 							}));
 							if(!pks.contains(l)) {
 								pks.add(l);
-								classes.add("SaisonScolaire");
+								classes.add("AgeScolaire");
 							}
 						}
+						break;
+					case "sessionDateDebut":
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "sessionDateDebut", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur AnneeScolaire.sessionDateDebut a échoué", b.cause())));
+							});
+						}));
+						break;
+					case "sessionDateFin":
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "sessionDateFin", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur AnneeScolaire.sessionDateFin a échoué", b.cause())));
+							});
+						}));
 						break;
 					case "anneeDebut":
 						futures.add(Future.future(a -> {
@@ -1566,151 +1618,207 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 							}
 						}
 						break;
-					case "addSaisonCles":
+					case "addAgeCles":
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodeNom));
 							if(l != null) {
-								ListeRecherche<SaisonScolaire> listeRecherche = new ListeRecherche<SaisonScolaire>();
+								ListeRecherche<AgeScolaire> listeRecherche = new ListeRecherche<AgeScolaire>();
 								listeRecherche.setQuery("*:*");
 								listeRecherche.setStocker(true);
-								listeRecherche.setC(SaisonScolaire.class);
+								listeRecherche.setC(AgeScolaire.class);
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l2 != null && !o.getSaisonCles().contains(l2)) {
+								if(l2 != null && !o.getAgeCles().contains(l2)) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContexteFrFR.SQL_addA
-												, Tuple.of(l2, "anneeCle", pk, "saisonCles")
+												, Tuple.of(pk, "ageCles", l2, "anneeCle")
 												, b
 										-> {
 											if(b.succeeded())
 												a.handle(Future.succeededFuture());
 											else
-												a.handle(Future.failedFuture(new Exception("valeur AnneeScolaire.saisonCles a échoué", b.cause())));
+												a.handle(Future.failedFuture(new Exception("valeur AnneeScolaire.ageCles a échoué", b.cause())));
 										});
 									}));
 									if(!pks.contains(l2)) {
 										pks.add(l2);
-										classes.add("SaisonScolaire");
+										classes.add("AgeScolaire");
 									}
 								}
 							}
 						}
 						break;
-					case "addAllSaisonCles":
-						JsonArray addAllSaisonClesValeurs = jsonObject.getJsonArray(methodeNom);
-						if(addAllSaisonClesValeurs != null) {
-							for(Integer i = 0; i <  addAllSaisonClesValeurs.size(); i++) {
-								Long l = Long.parseLong(addAllSaisonClesValeurs.getString(i));
+					case "addAllAgeCles":
+						JsonArray addAllAgeClesValeurs = jsonObject.getJsonArray(methodeNom);
+						if(addAllAgeClesValeurs != null) {
+							for(Integer i = 0; i <  addAllAgeClesValeurs.size(); i++) {
+								Long l = Long.parseLong(addAllAgeClesValeurs.getString(i));
 								if(l != null) {
-									ListeRecherche<SaisonScolaire> listeRecherche = new ListeRecherche<SaisonScolaire>();
+									ListeRecherche<AgeScolaire> listeRecherche = new ListeRecherche<AgeScolaire>();
 									listeRecherche.setQuery("*:*");
 									listeRecherche.setStocker(true);
-									listeRecherche.setC(SaisonScolaire.class);
+									listeRecherche.setC(AgeScolaire.class);
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-									if(l2 != null && !o.getSaisonCles().contains(l2)) {
+									if(l2 != null && !o.getAgeCles().contains(l2)) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContexteFrFR.SQL_addA
-												, Tuple.of(l2, "anneeCle", pk, "saisonCles")
+												, Tuple.of(pk, "ageCles", l2, "anneeCle")
 												, b
 										-> {
 											if(b.succeeded())
 												a.handle(Future.succeededFuture());
 											else
-												a.handle(Future.failedFuture(new Exception("valeur AnneeScolaire.saisonCles a échoué", b.cause())));
+												a.handle(Future.failedFuture(new Exception("valeur AnneeScolaire.ageCles a échoué", b.cause())));
 										});
 									}));
 										if(!pks.contains(l2)) {
 											pks.add(l2);
-											classes.add("SaisonScolaire");
+											classes.add("AgeScolaire");
 										}
 									}
 								}
 							}
 						}
 						break;
-					case "setSaisonCles":
-						JsonArray setSaisonClesValeurs = jsonObject.getJsonArray(methodeNom);
-						if(setSaisonClesValeurs != null) {
-							for(Integer i = 0; i <  setSaisonClesValeurs.size(); i++) {
-								Long l = Long.parseLong(setSaisonClesValeurs.getString(i));
+					case "setAgeCles":
+						JsonArray setAgeClesValeurs = jsonObject.getJsonArray(methodeNom);
+						if(setAgeClesValeurs != null) {
+							for(Integer i = 0; i <  setAgeClesValeurs.size(); i++) {
+								Long l = Long.parseLong(setAgeClesValeurs.getString(i));
 								if(l != null) {
-									ListeRecherche<SaisonScolaire> listeRecherche = new ListeRecherche<SaisonScolaire>();
+									ListeRecherche<AgeScolaire> listeRecherche = new ListeRecherche<AgeScolaire>();
 									listeRecherche.setQuery("*:*");
 									listeRecherche.setStocker(true);
-									listeRecherche.setC(SaisonScolaire.class);
+									listeRecherche.setC(AgeScolaire.class);
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-									if(l2 != null && !o.getSaisonCles().contains(l2)) {
+									if(l2 != null && !o.getAgeCles().contains(l2)) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContexteFrFR.SQL_addA
-												, Tuple.of(l2, "anneeCle", pk, "saisonCles")
+												, Tuple.of(pk, "ageCles", l2, "anneeCle")
 												, b
 										-> {
 											if(b.succeeded())
 												a.handle(Future.succeededFuture());
 											else
-												a.handle(Future.failedFuture(new Exception("valeur AnneeScolaire.saisonCles a échoué", b.cause())));
+												a.handle(Future.failedFuture(new Exception("valeur AnneeScolaire.ageCles a échoué", b.cause())));
 										});
 									}));
 										if(!pks.contains(l2)) {
 											pks.add(l2);
-											classes.add("SaisonScolaire");
+											classes.add("AgeScolaire");
 										}
 									}
 								}
 							}
 						}
-						if(o.getSaisonCles() != null) {
-							for(Long l :  o.getSaisonCles()) {
-								if(l != null && (setSaisonClesValeurs == null || !setSaisonClesValeurs.contains(l))) {
+						if(o.getAgeCles() != null) {
+							for(Long l :  o.getAgeCles()) {
+								if(l != null && (setAgeClesValeurs == null || !setAgeClesValeurs.contains(l))) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
-												, Tuple.of(l, "anneeCle", pk, "saisonCles")
+												, Tuple.of(pk, "ageCles", l, "anneeCle")
 												, b
 										-> {
 											if(b.succeeded())
 												a.handle(Future.succeededFuture());
 											else
-												a.handle(Future.failedFuture(new Exception("valeur AnneeScolaire.saisonCles a échoué", b.cause())));
+												a.handle(Future.failedFuture(new Exception("valeur AnneeScolaire.ageCles a échoué", b.cause())));
 										});
 									}));
 								}
 							}
 						}
 						break;
-					case "removeSaisonCles":
+					case "removeAgeCles":
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodeNom));
 							if(l != null) {
-								ListeRecherche<SaisonScolaire> listeRecherche = new ListeRecherche<SaisonScolaire>();
+								ListeRecherche<AgeScolaire> listeRecherche = new ListeRecherche<AgeScolaire>();
 								listeRecherche.setQuery("*:*");
 								listeRecherche.setStocker(true);
-								listeRecherche.setC(SaisonScolaire.class);
+								listeRecherche.setC(AgeScolaire.class);
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l2 != null && o.getSaisonCles().contains(l2)) {
+								if(l2 != null && o.getAgeCles().contains(l2)) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
-												, Tuple.of(l2, "anneeCle", pk, "saisonCles")
+												, Tuple.of(pk, "ageCles", l2, "anneeCle")
 												, b
 										-> {
 											if(b.succeeded())
 												a.handle(Future.succeededFuture());
 											else
-												a.handle(Future.failedFuture(new Exception("valeur AnneeScolaire.saisonCles a échoué", b.cause())));
+												a.handle(Future.failedFuture(new Exception("valeur AnneeScolaire.ageCles a échoué", b.cause())));
 										});
 									}));
 									if(!pks.contains(l2)) {
 										pks.add(l2);
-										classes.add("SaisonScolaire");
+										classes.add("AgeScolaire");
 									}
 								}
 							}
+						}
+						break;
+					case "setSessionDateDebut":
+						if(jsonObject.getString(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "sessionDateDebut")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur AnneeScolaire.sessionDateDebut a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setSessionDateDebut(jsonObject.getString(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "sessionDateDebut", o2.jsonSessionDateDebut())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur AnneeScolaire.sessionDateDebut a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setSessionDateFin":
+						if(jsonObject.getString(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "sessionDateFin")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur AnneeScolaire.sessionDateFin a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setSessionDateFin(jsonObject.getString(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "sessionDateFin", o2.jsonSessionDateFin())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur AnneeScolaire.sessionDateFin a échoué", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "setAnneeDebut":
@@ -2883,7 +2991,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 				listeRecherche.setC(AnneeScolaire.class);
 				listeRecherche.addFilterQuery("modifie_indexed_date:[" + DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(requeteSite.getRequeteApi_().getCree().toInstant(), ZoneId.of("UTC"))) + " TO *]");
 				listeRecherche.add("json.facet", "{ecoleCle:{terms:{field:ecoleCle_indexed_longs, limit:1000}}}");
-				listeRecherche.add("json.facet", "{saisonCles:{terms:{field:saisonCles_indexed_longs, limit:1000}}}");
+				listeRecherche.add("json.facet", "{ageCles:{terms:{field:ageCles_indexed_longs, limit:1000}}}");
 				listeRecherche.setRows(1000);
 				listeRecherche.initLoinListeRecherche(requeteSite);
 				List<Future> futures = new ArrayList<>();
@@ -2927,18 +3035,18 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 						}
 					}
 
-					if("SaisonScolaire".equals(classeNomSimple2) && pk2 != null) {
-						ListeRecherche<SaisonScolaire> listeRecherche2 = new ListeRecherche<SaisonScolaire>();
+					if("AgeScolaire".equals(classeNomSimple2) && pk2 != null) {
+						ListeRecherche<AgeScolaire> listeRecherche2 = new ListeRecherche<AgeScolaire>();
 						listeRecherche2.setStocker(true);
 						listeRecherche2.setQuery("*:*");
-						listeRecherche2.setC(SaisonScolaire.class);
+						listeRecherche2.setC(AgeScolaire.class);
 						listeRecherche2.addFilterQuery("pk_indexed_long:" + pk2);
 						listeRecherche2.setRows(1);
 						listeRecherche2.initLoinListeRecherche(requeteSite);
-						SaisonScolaire o2 = listeRecherche2.getList().stream().findFirst().orElse(null);
+						AgeScolaire o2 = listeRecherche2.getList().stream().findFirst().orElse(null);
 
 						if(o2 != null) {
-							SaisonScolaireFrFRGenApiServiceImpl service = new SaisonScolaireFrFRGenApiServiceImpl(requeteSite.getSiteContexte_());
+							AgeScolaireFrFRGenApiServiceImpl service = new AgeScolaireFrFRGenApiServiceImpl(requeteSite.getSiteContexte_());
 							RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourAnneeScolaire(siteContexte, requeteSite.getOperationRequete(), new JsonObject());
 							RequeteApi requeteApi2 = new RequeteApi();
 							requeteApi2.setRows(1);
@@ -2946,15 +3054,15 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 							requeteApi2.setNumPATCH(0L);
 							requeteApi2.initLoinRequeteApi(requeteSite2);
 							requeteSite2.setRequeteApi_(requeteApi2);
-							requeteSite2.getVertx().eventBus().publish("websocketSaisonScolaire", JsonObject.mapFrom(requeteApi2).toString());
+							requeteSite2.getVertx().eventBus().publish("websocketAgeScolaire", JsonObject.mapFrom(requeteApi2).toString());
 
 							o2.setPk(pk2);
 							o2.setRequeteSite_(requeteSite2);
 							futures.add(
-								service.patchSaisonScolaireFuture(o2, false, a -> {
+								service.patchAgeScolaireFuture(o2, false, a -> {
 									if(a.succeeded()) {
 									} else {
-										LOGGER.info(String.format("SaisonScolaire %s a échoué. ", pk2));
+										LOGGER.info(String.format("AgeScolaire %s a échoué. ", pk2));
 										gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
 									}
 								})
