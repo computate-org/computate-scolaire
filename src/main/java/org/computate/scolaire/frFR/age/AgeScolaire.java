@@ -150,11 +150,12 @@ public class AgeScolaire extends AgeScolaireGen<Cluster> {
 	 * Var.enUS: sessionKey
 	 * Indexe: true
 	 * Stocke: true
+	 * Attribuer: SessionScolaire.ageCles
 	 * Description.frFR: L'année scolaire de la saison scolaire. 
 	 * Description.enUS: The school year of the school season. 
 	 * NomAffichage.frFR: session
 	 * NomAffichage.enUS: session
-	*/             
+	*/            
 	protected void _sessionCle(Couverture<Long> c) {
 	}
 

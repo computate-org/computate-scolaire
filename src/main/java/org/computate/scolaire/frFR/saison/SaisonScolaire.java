@@ -113,7 +113,7 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 	 * Description.enUS: The school sessions of the school season. 
 	 * NomAffichage.frFR: sessions
 	 * NomAffichage.enUS: sessions
-	 */     
+	 */   
 	protected void _sessionCles(List<Long> o) {}
 
 	/**

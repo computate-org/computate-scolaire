@@ -2,6 +2,8 @@ package org.computate.scolaire.frFR.age;
 
 import org.computate.scolaire.frFR.bloc.BlocScolaireFrFRGenApiServiceImpl;
 import org.computate.scolaire.frFR.bloc.BlocScolaire;
+import org.computate.scolaire.frFR.session.SessionScolaireFrFRGenApiServiceImpl;
+import org.computate.scolaire.frFR.session.SessionScolaire;
 import org.computate.scolaire.frFR.annee.AnneeScolaireFrFRGenApiServiceImpl;
 import org.computate.scolaire.frFR.annee.AnneeScolaire;
 import org.computate.scolaire.frFR.config.ConfigSite;
@@ -340,6 +342,37 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 									if(!pks.contains(l2)) {
 										pks.add(l2);
 										classes.add("BlocScolaire");
+									}
+								}
+							}
+						}
+						break;
+					case "sessionCle":
+						{
+							Long l = Long.parseLong(jsonObject.getString(entiteVar));
+							if(l != null) {
+								ListeRecherche<SessionScolaire> listeRecherche = new ListeRecherche<SessionScolaire>();
+								listeRecherche.setQuery("*:*");
+								listeRecherche.setStocker(true);
+								listeRecherche.setC(SessionScolaire.class);
+								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+								listeRecherche.initLoinListeRecherche(requeteSite);
+								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA
+												, Tuple.of(l2, "ageCles", pk, "sessionCle")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("valeur AgeScolaire.sessionCle a échoué", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
+										classes.add("SessionScolaire");
 									}
 								}
 							}
@@ -1090,6 +1123,22 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 							}
 						}
 						break;
+					case "sessionCle":
+							{
+						Long l = Long.parseLong(jsonObject.getString(entiteVar));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_addA
+									, Tuple.of(l, "ageCles", pk, "sessionCle")
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur AgeScolaire.sessionCle a échoué", b.cause())));
+							});
+						}));
+						}
+						break;
 					case "anneeCle":
 							{
 						Long l = Long.parseLong(jsonObject.getString(entiteVar));
@@ -1644,6 +1693,70 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 									if(!pks.contains(l2)) {
 										pks.add(l2);
 										classes.add("BlocScolaire");
+									}
+								}
+							}
+						}
+						break;
+					case "setSessionCle":
+						{
+							Long l = o2.getSessionCle();
+							if(l != null && !l.equals(o.getSessionCle())) {
+								ListeRecherche<SessionScolaire> listeRecherche = new ListeRecherche<SessionScolaire>();
+								listeRecherche.setQuery("*:*");
+								listeRecherche.setStocker(true);
+								listeRecherche.setC(SessionScolaire.class);
+								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+								listeRecherche.initLoinListeRecherche(requeteSite);
+								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null) {
+									o2.setSessionCle(jsonObject.getString(methodeNom));
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA
+												, Tuple.of(l2, "ageCles", pk, "sessionCle")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("valeur AgeScolaire.sessionCle a échoué", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
+										classes.add("SessionScolaire");
+									}
+								}
+							}
+						}
+						break;
+					case "removeSessionCle":
+						{
+							Long l = o2.getSessionCle();
+							if(l != null) {
+								ListeRecherche<SessionScolaire> listeRecherche = new ListeRecherche<SessionScolaire>();
+								listeRecherche.setQuery("*:*");
+								listeRecherche.setStocker(true);
+								listeRecherche.setC(SessionScolaire.class);
+								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+								listeRecherche.initLoinListeRecherche(requeteSite);
+								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null && l2.equals(o.getSessionCle())) {
+									o2.setSessionCle(jsonObject.getString(methodeNom));
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
+												, Tuple.of(l2, "ageCles", pk, "sessionCle")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("valeur AgeScolaire.sessionCle a échoué", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
+										classes.add("SessionScolaire");
 									}
 								}
 							}
@@ -2892,6 +3005,7 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 				listeRecherche.setC(AgeScolaire.class);
 				listeRecherche.addFilterQuery("modifie_indexed_date:[" + DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(requeteSite.getRequeteApi_().getCree().toInstant(), ZoneId.of("UTC"))) + " TO *]");
 				listeRecherche.add("json.facet", "{blocCles:{terms:{field:blocCles_indexed_longs, limit:1000}}}");
+				listeRecherche.add("json.facet", "{sessionCle:{terms:{field:sessionCle_indexed_longs, limit:1000}}}");
 				listeRecherche.add("json.facet", "{anneeCle:{terms:{field:anneeCle_indexed_longs, limit:1000}}}");
 				listeRecherche.setRows(1000);
 				listeRecherche.initLoinListeRecherche(requeteSite);
@@ -2929,6 +3043,41 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 									if(a.succeeded()) {
 									} else {
 										LOGGER.info(String.format("BlocScolaire %s a échoué. ", pk2));
+										gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
+									}
+								})
+							);
+						}
+					}
+
+					if("SessionScolaire".equals(classeNomSimple2) && pk2 != null) {
+						ListeRecherche<SessionScolaire> listeRecherche2 = new ListeRecherche<SessionScolaire>();
+						listeRecherche2.setStocker(true);
+						listeRecherche2.setQuery("*:*");
+						listeRecherche2.setC(SessionScolaire.class);
+						listeRecherche2.addFilterQuery("pk_indexed_long:" + pk2);
+						listeRecherche2.setRows(1);
+						listeRecherche2.initLoinListeRecherche(requeteSite);
+						SessionScolaire o2 = listeRecherche2.getList().stream().findFirst().orElse(null);
+
+						if(o2 != null) {
+							SessionScolaireFrFRGenApiServiceImpl service = new SessionScolaireFrFRGenApiServiceImpl(requeteSite.getSiteContexte_());
+							RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourAgeScolaire(siteContexte, requeteSite.getOperationRequete(), new JsonObject());
+							RequeteApi requeteApi2 = new RequeteApi();
+							requeteApi2.setRows(1);
+							requeteApi2.setNumFound(1l);
+							requeteApi2.setNumPATCH(0L);
+							requeteApi2.initLoinRequeteApi(requeteSite2);
+							requeteSite2.setRequeteApi_(requeteApi2);
+							requeteSite2.getVertx().eventBus().publish("websocketSessionScolaire", JsonObject.mapFrom(requeteApi2).toString());
+
+							o2.setPk(pk2);
+							o2.setRequeteSite_(requeteSite2);
+							futures.add(
+								service.patchSessionScolaireFuture(o2, false, a -> {
+									if(a.succeeded()) {
+									} else {
+										LOGGER.info(String.format("SessionScolaire %s a échoué. ", pk2));
 										gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
 									}
 								})

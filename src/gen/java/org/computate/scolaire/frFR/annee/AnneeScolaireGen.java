@@ -12,6 +12,7 @@ import java.math.BigDecimal;
 import java.lang.Long;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import java.util.Locale;
+import org.computate.scolaire.frFR.saison.SaisonScolaire;
 import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import java.time.ZoneOffset;
@@ -2414,6 +2415,11 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 				if(!sauvegardes.contains(var))
 					sauvegardes.add(var);
 				return val;
+			case "saisonCles":
+				oAnneeScolaire.addSaisonCles((Long)val);
+				if(!sauvegardes.contains(var))
+					sauvegardes.add(var);
+				return val;
 			case "ageCles":
 				oAnneeScolaire.addAgeCles((Long)val);
 				if(!sauvegardes.contains(var))
@@ -2503,11 +2509,9 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 					oAnneeScolaire.inscriptionCles.addAll(inscriptionCles);
 			}
 
-			if(sauvegardes.contains("saisonCles")) {
-				List<Long> saisonCles = (List<Long>)solrDocument.get("saisonCles_stored_longs");
-				if(saisonCles != null)
-					oAnneeScolaire.saisonCles.addAll(saisonCles);
-			}
+			List<Long> saisonCles = (List<Long>)solrDocument.get("saisonCles_stored_longs");
+			if(saisonCles != null)
+				oAnneeScolaire.saisonCles.addAll(saisonCles);
 
 			List<Long> ageCles = (List<Long>)solrDocument.get("ageCles_stored_longs");
 			if(ageCles != null)
@@ -2995,6 +2999,8 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 			AnneeScolaire original = (AnneeScolaire)o;
 			if(!Objects.equals(ecoleCle, original.getEcoleCle()))
 				requeteApi.addVars("ecoleCle");
+			if(!Objects.equals(saisonCles, original.getSaisonCles()))
+				requeteApi.addVars("saisonCles");
 			if(!Objects.equals(ageCles, original.getAgeCles()))
 				requeteApi.addVars("ageCles");
 			if(!Objects.equals(sessionDateDebut, original.getSessionDateDebut()))
@@ -3016,7 +3022,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), ecoleCle, ageCles, sessionDateDebut, sessionDateFin, anneeDebut, anneeFin, anneeFraisInscription);
+		return Objects.hash(super.hashCode(), ecoleCle, saisonCles, ageCles, sessionDateDebut, sessionDateFin, anneeDebut, anneeFin, anneeFraisInscription);
 	}
 
 	////////////
@@ -3031,6 +3037,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 		AnneeScolaire that = (AnneeScolaire)o;
 		return super.equals(o)
 				&& Objects.equals( ecoleCle, that.ecoleCle )
+				&& Objects.equals( saisonCles, that.saisonCles )
 				&& Objects.equals( ageCles, that.ageCles )
 				&& Objects.equals( sessionDateDebut, that.sessionDateDebut )
 				&& Objects.equals( sessionDateFin, that.sessionDateFin )
@@ -3048,6 +3055,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 		sb.append(super.toString() + "\n");
 		sb.append("AnneeScolaire { ");
 		sb.append( "ecoleCle: " ).append(ecoleCle);
+		sb.append( ", saisonCles: " ).append(saisonCles);
 		sb.append( ", ageCles: " ).append(ageCles);
 		sb.append( ", sessionDateDebut: " ).append(sessionDateDebut);
 		sb.append( ", sessionDateFin: " ).append(sessionDateFin);

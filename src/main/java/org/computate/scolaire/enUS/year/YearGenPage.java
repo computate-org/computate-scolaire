@@ -103,6 +103,7 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 	@Override public void htmlScriptsYearGenPage() {
 		e("script").a("src", staticBaseUrl, "/js/enUS/YearPage.js").f().g("script");
 		e("script").a("src", staticBaseUrl, "/js/enUS/SchoolPage.js").f().g("script");
+		e("script").a("src", staticBaseUrl, "/js/enUS/SeasonPage.js").f().g("script");
 		e("script").a("src", staticBaseUrl, "/js/enUS/AgePage.js").f().g("script");
 	}
 
@@ -138,6 +139,14 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 			tl(2, "suggestSchoolYearAgeKeys([{'name':'fq','value':'yearKey:' + pk}], $('#listSchoolYearAgeKeys_Page'), pk, true); ");
 		} else {
 			tl(2, "suggestSchoolYearAgeKeys([{'name':'fq','value':'yearKey:' + pk}], $('#listSchoolYearAgeKeys_Page'), pk, false); ");
+		}
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			tl(2, "suggestSchoolYearSeasonKeys([{'name':'fq','value':'yearKey:' + pk}], $('#listSchoolYearSeasonKeys_Page'), pk, true); ");
+		} else {
+			tl(2, "suggestSchoolYearSeasonKeys([{'name':'fq','value':'yearKey:' + pk}], $('#listSchoolYearSeasonKeys_Page'), pk, false); ");
 		}
 		tl(1, "}");
 		tl(1, "websocketSchoolYear(websocketSchoolYearInner);");

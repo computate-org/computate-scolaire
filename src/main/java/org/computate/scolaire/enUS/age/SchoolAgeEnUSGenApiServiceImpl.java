@@ -2,6 +2,8 @@ package org.computate.scolaire.enUS.age;
 
 import org.computate.scolaire.enUS.block.SchoolBlockEnUSGenApiServiceImpl;
 import org.computate.scolaire.enUS.block.SchoolBlock;
+import org.computate.scolaire.enUS.session.SchoolSessionEnUSGenApiServiceImpl;
+import org.computate.scolaire.enUS.session.SchoolSession;
 import org.computate.scolaire.enUS.year.SchoolYearEnUSGenApiServiceImpl;
 import org.computate.scolaire.enUS.year.SchoolYear;
 import org.computate.scolaire.enUS.config.SiteConfig;
@@ -340,6 +342,37 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 									if(!pks.contains(l2)) {
 										pks.add(l2);
 										classes.add("SchoolBlock");
+									}
+								}
+							}
+						}
+						break;
+					case "sessionKey":
+						{
+							Long l = Long.parseLong(jsonObject.getString(entityVar));
+							if(l != null) {
+								SearchList<SchoolSession> searchList = new SearchList<SchoolSession>();
+								searchList.setQuery("*:*");
+								searchList.setStore(true);
+								searchList.setC(SchoolSession.class);
+								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+								searchList.initDeepSearchList(siteRequest);
+								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_addA
+												, Tuple.of(l2, "ageKeys", pk, "sessionKey")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolAge.sessionKey failed", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
+										classes.add("SchoolSession");
 									}
 								}
 							}
@@ -1090,6 +1123,22 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 							}
 						}
 						break;
+					case "sessionKey":
+							{
+						Long l = Long.parseLong(jsonObject.getString(entityVar));
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_addA
+									, Tuple.of(l, "ageKeys", pk, "sessionKey")
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolAge.sessionKey failed", b.cause())));
+							});
+						}));
+						}
+						break;
 					case "yearKey":
 							{
 						Long l = Long.parseLong(jsonObject.getString(entityVar));
@@ -1644,6 +1693,70 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 									if(!pks.contains(l2)) {
 										pks.add(l2);
 										classes.add("SchoolBlock");
+									}
+								}
+							}
+						}
+						break;
+					case "setSessionKey":
+						{
+							Long l = o2.getSessionKey();
+							if(l != null && !l.equals(o.getSessionKey())) {
+								SearchList<SchoolSession> searchList = new SearchList<SchoolSession>();
+								searchList.setQuery("*:*");
+								searchList.setStore(true);
+								searchList.setC(SchoolSession.class);
+								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+								searchList.initDeepSearchList(siteRequest);
+								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null) {
+									o2.setSessionKey(jsonObject.getString(methodName));
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_addA
+												, Tuple.of(l2, "ageKeys", pk, "sessionKey")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolAge.sessionKey failed", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
+										classes.add("SchoolSession");
+									}
+								}
+							}
+						}
+						break;
+					case "removeSessionKey":
+						{
+							Long l = o2.getSessionKey();
+							if(l != null) {
+								SearchList<SchoolSession> searchList = new SearchList<SchoolSession>();
+								searchList.setQuery("*:*");
+								searchList.setStore(true);
+								searchList.setC(SchoolSession.class);
+								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+								searchList.initDeepSearchList(siteRequest);
+								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null && l2.equals(o.getSessionKey())) {
+									o2.setSessionKey(jsonObject.getString(methodName));
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA
+												, Tuple.of(l2, "ageKeys", pk, "sessionKey")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolAge.sessionKey failed", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
+										classes.add("SchoolSession");
 									}
 								}
 							}
@@ -2892,6 +3005,7 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 				searchList.setC(SchoolAge.class);
 				searchList.addFilterQuery("modified_indexed_date:[" + DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(siteRequest.getApiRequest_().getCreated().toInstant(), ZoneId.of("UTC"))) + " TO *]");
 				searchList.add("json.facet", "{blockKeys:{terms:{field:blockKeys_indexed_longs, limit:1000}}}");
+				searchList.add("json.facet", "{sessionKey:{terms:{field:sessionKey_indexed_longs, limit:1000}}}");
 				searchList.add("json.facet", "{yearKey:{terms:{field:yearKey_indexed_longs, limit:1000}}}");
 				searchList.setRows(1000);
 				searchList.initDeepSearchList(siteRequest);
@@ -2929,6 +3043,41 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 									if(a.succeeded()) {
 									} else {
 										LOGGER.info(String.format("SchoolBlock %s failed. ", pk2));
+										eventHandler.handle(Future.failedFuture(a.cause()));
+									}
+								})
+							);
+						}
+					}
+
+					if("SchoolSession".equals(classSimpleName2) && pk2 != null) {
+						SearchList<SchoolSession> searchList2 = new SearchList<SchoolSession>();
+						searchList2.setStore(true);
+						searchList2.setQuery("*:*");
+						searchList2.setC(SchoolSession.class);
+						searchList2.addFilterQuery("pk_indexed_long:" + pk2);
+						searchList2.setRows(1);
+						searchList2.initDeepSearchList(siteRequest);
+						SchoolSession o2 = searchList2.getList().stream().findFirst().orElse(null);
+
+						if(o2 != null) {
+							SchoolSessionEnUSGenApiServiceImpl service = new SchoolSessionEnUSGenApiServiceImpl(siteRequest.getSiteContext_());
+							SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolAge(siteContext, siteRequest.getOperationRequest(), new JsonObject());
+							ApiRequest apiRequest2 = new ApiRequest();
+							apiRequest2.setRows(1);
+							apiRequest2.setNumFound(1l);
+							apiRequest2.setNumPATCH(0L);
+							apiRequest2.initDeepApiRequest(siteRequest2);
+							siteRequest2.setApiRequest_(apiRequest2);
+							siteRequest2.getVertx().eventBus().publish("websocketSchoolSession", JsonObject.mapFrom(apiRequest2).toString());
+
+							o2.setPk(pk2);
+							o2.setSiteRequest_(siteRequest2);
+							futures.add(
+								service.patchSchoolSessionFuture(o2, false, a -> {
+									if(a.succeeded()) {
+									} else {
+										LOGGER.info(String.format("SchoolSession %s failed. ", pk2));
 										eventHandler.handle(Future.failedFuture(a.cause()));
 									}
 								})

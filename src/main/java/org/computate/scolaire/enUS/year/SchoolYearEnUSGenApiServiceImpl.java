@@ -2,6 +2,8 @@ package org.computate.scolaire.enUS.year;
 
 import org.computate.scolaire.enUS.school.SchoolEnUSGenApiServiceImpl;
 import org.computate.scolaire.enUS.school.School;
+import org.computate.scolaire.enUS.season.SchoolSeasonEnUSGenApiServiceImpl;
+import org.computate.scolaire.enUS.season.SchoolSeason;
 import org.computate.scolaire.enUS.age.SchoolAgeEnUSGenApiServiceImpl;
 import org.computate.scolaire.enUS.age.SchoolAge;
 import org.computate.scolaire.enUS.config.SiteConfig;
@@ -341,6 +343,36 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 									if(!pks.contains(l2)) {
 										pks.add(l2);
 										classes.add("School");
+									}
+								}
+							}
+						}
+						break;
+					case "seasonKeys":
+						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
+							if(l != null) {
+								SearchList<SchoolSeason> searchList = new SearchList<SchoolSeason>();
+								searchList.setQuery("*:*");
+								searchList.setStore(true);
+								searchList.setC(SchoolSeason.class);
+								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+								searchList.initDeepSearchList(siteRequest);
+								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_addA
+												, Tuple.of(pk, "seasonKeys", l2, "yearKey")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolYear.seasonKeys failed", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
+										classes.add("SchoolSeason");
 									}
 								}
 							}
@@ -1113,6 +1145,25 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 						}));
 						}
 						break;
+					case "seasonKeys":
+						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_addA
+										, Tuple.of(pk, "seasonKeys", l, "yearKey")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolYear.seasonKeys failed", b.cause())));
+								});
+							}));
+							if(!pks.contains(l)) {
+								pks.add(l);
+								classes.add("SchoolSeason");
+							}
+						}
+						break;
 					case "ageKeys":
 						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							futures.add(Future.future(a -> {
@@ -1613,6 +1664,153 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 									if(!pks.contains(l2)) {
 										pks.add(l2);
 										classes.add("School");
+									}
+								}
+							}
+						}
+						break;
+					case "addSeasonKeys":
+						{
+							Long l = Long.parseLong(jsonObject.getString(methodName));
+							if(l != null) {
+								SearchList<SchoolSeason> searchList = new SearchList<SchoolSeason>();
+								searchList.setQuery("*:*");
+								searchList.setStore(true);
+								searchList.setC(SchoolSeason.class);
+								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+								searchList.initDeepSearchList(siteRequest);
+								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null && !o.getSeasonKeys().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_addA
+												, Tuple.of(pk, "seasonKeys", l2, "yearKey")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolYear.seasonKeys failed", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
+										classes.add("SchoolSeason");
+									}
+								}
+							}
+						}
+						break;
+					case "addAllSeasonKeys":
+						JsonArray addAllSeasonKeysValues = jsonObject.getJsonArray(methodName);
+						if(addAllSeasonKeysValues != null) {
+							for(Integer i = 0; i <  addAllSeasonKeysValues.size(); i++) {
+								Long l = Long.parseLong(addAllSeasonKeysValues.getString(i));
+								if(l != null) {
+									SearchList<SchoolSeason> searchList = new SearchList<SchoolSeason>();
+									searchList.setQuery("*:*");
+									searchList.setStore(true);
+									searchList.setC(SchoolSeason.class);
+									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+									searchList.initDeepSearchList(siteRequest);
+									Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l2 != null && !o.getSeasonKeys().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_addA
+												, Tuple.of(pk, "seasonKeys", l2, "yearKey")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolYear.seasonKeys failed", b.cause())));
+										});
+									}));
+										if(!pks.contains(l2)) {
+											pks.add(l2);
+											classes.add("SchoolSeason");
+										}
+									}
+								}
+							}
+						}
+						break;
+					case "setSeasonKeys":
+						JsonArray setSeasonKeysValues = jsonObject.getJsonArray(methodName);
+						if(setSeasonKeysValues != null) {
+							for(Integer i = 0; i <  setSeasonKeysValues.size(); i++) {
+								Long l = Long.parseLong(setSeasonKeysValues.getString(i));
+								if(l != null) {
+									SearchList<SchoolSeason> searchList = new SearchList<SchoolSeason>();
+									searchList.setQuery("*:*");
+									searchList.setStore(true);
+									searchList.setC(SchoolSeason.class);
+									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+									searchList.initDeepSearchList(siteRequest);
+									Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l2 != null && !o.getSeasonKeys().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_addA
+												, Tuple.of(pk, "seasonKeys", l2, "yearKey")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolYear.seasonKeys failed", b.cause())));
+										});
+									}));
+										if(!pks.contains(l2)) {
+											pks.add(l2);
+											classes.add("SchoolSeason");
+										}
+									}
+								}
+							}
+						}
+						if(o.getSeasonKeys() != null) {
+							for(Long l :  o.getSeasonKeys()) {
+								if(l != null && (setSeasonKeysValues == null || !setSeasonKeysValues.contains(l))) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA
+												, Tuple.of(pk, "seasonKeys", l, "yearKey")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolYear.seasonKeys failed", b.cause())));
+										});
+									}));
+								}
+							}
+						}
+						break;
+					case "removeSeasonKeys":
+						{
+							Long l = Long.parseLong(jsonObject.getString(methodName));
+							if(l != null) {
+								SearchList<SchoolSeason> searchList = new SearchList<SchoolSeason>();
+								searchList.setQuery("*:*");
+								searchList.setStore(true);
+								searchList.setC(SchoolSeason.class);
+								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+								searchList.initDeepSearchList(siteRequest);
+								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null && o.getSeasonKeys().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA
+												, Tuple.of(pk, "seasonKeys", l2, "yearKey")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("value SchoolYear.seasonKeys failed", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
+										classes.add("SchoolSeason");
 									}
 								}
 							}
@@ -3000,6 +3198,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 				searchList.setC(SchoolYear.class);
 				searchList.addFilterQuery("modified_indexed_date:[" + DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(siteRequest.getApiRequest_().getCreated().toInstant(), ZoneId.of("UTC"))) + " TO *]");
 				searchList.add("json.facet", "{schoolKey:{terms:{field:schoolKey_indexed_longs, limit:1000}}}");
+				searchList.add("json.facet", "{seasonKeys:{terms:{field:seasonKeys_indexed_longs, limit:1000}}}");
 				searchList.add("json.facet", "{ageKeys:{terms:{field:ageKeys_indexed_longs, limit:1000}}}");
 				searchList.setRows(1000);
 				searchList.initDeepSearchList(siteRequest);
@@ -3037,6 +3236,41 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 									if(a.succeeded()) {
 									} else {
 										LOGGER.info(String.format("School %s failed. ", pk2));
+										eventHandler.handle(Future.failedFuture(a.cause()));
+									}
+								})
+							);
+						}
+					}
+
+					if("SchoolSeason".equals(classSimpleName2) && pk2 != null) {
+						SearchList<SchoolSeason> searchList2 = new SearchList<SchoolSeason>();
+						searchList2.setStore(true);
+						searchList2.setQuery("*:*");
+						searchList2.setC(SchoolSeason.class);
+						searchList2.addFilterQuery("pk_indexed_long:" + pk2);
+						searchList2.setRows(1);
+						searchList2.initDeepSearchList(siteRequest);
+						SchoolSeason o2 = searchList2.getList().stream().findFirst().orElse(null);
+
+						if(o2 != null) {
+							SchoolSeasonEnUSGenApiServiceImpl service = new SchoolSeasonEnUSGenApiServiceImpl(siteRequest.getSiteContext_());
+							SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolYear(siteContext, siteRequest.getOperationRequest(), new JsonObject());
+							ApiRequest apiRequest2 = new ApiRequest();
+							apiRequest2.setRows(1);
+							apiRequest2.setNumFound(1l);
+							apiRequest2.setNumPATCH(0L);
+							apiRequest2.initDeepApiRequest(siteRequest2);
+							siteRequest2.setApiRequest_(apiRequest2);
+							siteRequest2.getVertx().eventBus().publish("websocketSchoolSeason", JsonObject.mapFrom(apiRequest2).toString());
+
+							o2.setPk(pk2);
+							o2.setSiteRequest_(siteRequest2);
+							futures.add(
+								service.patchSchoolSeasonFuture(o2, false, a -> {
+									if(a.succeeded()) {
+									} else {
+										LOGGER.info(String.format("SchoolSeason %s failed. ", pk2));
 										eventHandler.handle(Future.failedFuture(a.cause()));
 									}
 								})

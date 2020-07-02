@@ -103,6 +103,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 	@Override public void htmlScriptsAgeGenPage() {
 		e("script").a("src", staticBaseUrl, "/js/enUS/AgePage.js").f().g("script");
 		e("script").a("src", staticBaseUrl, "/js/enUS/BlockPage.js").f().g("script");
+		e("script").a("src", staticBaseUrl, "/js/enUS/SessionPage.js").f().g("script");
 		e("script").a("src", staticBaseUrl, "/js/enUS/YearPage.js").f().g("script");
 	}
 
@@ -138,6 +139,14 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 			tl(2, "suggestSchoolAgeBlockKeys([{'name':'fq','value':'ageKey:' + pk}], $('#listSchoolAgeBlockKeys_Page'), pk, true); ");
 		} else {
 			tl(2, "suggestSchoolAgeBlockKeys([{'name':'fq','value':'ageKey:' + pk}], $('#listSchoolAgeBlockKeys_Page'), pk, false); ");
+		}
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			tl(2, "suggestSchoolAgeSessionKey([{'name':'fq','value':'ageKeys:' + pk}], $('#listSchoolAgeSessionKey_Page'), pk, true); ");
+		} else {
+			tl(2, "suggestSchoolAgeSessionKey([{'name':'fq','value':'ageKeys:' + pk}], $('#listSchoolAgeSessionKey_Page'), pk, false); ");
 		}
 		tl(1, "}");
 		tl(1, "websocketSchoolAge(websocketSchoolAgeInner);");

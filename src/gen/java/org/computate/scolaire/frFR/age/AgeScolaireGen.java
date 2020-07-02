@@ -3026,6 +3026,11 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 				if(!sauvegardes.contains(var))
 					sauvegardes.add(var);
 				return val;
+			case "sessionCle":
+				oAgeScolaire.setSessionCle((Long)val);
+				if(!sauvegardes.contains(var))
+					sauvegardes.add(var);
+				return val;
 			case "anneeCle":
 				oAgeScolaire.setAnneeCle((Long)val);
 				if(!sauvegardes.contains(var))
@@ -3135,11 +3140,9 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 					oAgeScolaire.setSessionTri(sessionTri);
 			}
 
-			if(sauvegardes.contains("sessionCle")) {
-				Long sessionCle = (Long)solrDocument.get("sessionCle_stored_long");
-				if(sessionCle != null)
-					oAgeScolaire.setSessionCle(sessionCle);
-			}
+			Long sessionCle = (Long)solrDocument.get("sessionCle_stored_long");
+			if(sessionCle != null)
+				oAgeScolaire.setSessionCle(sessionCle);
 
 			if(sauvegardes.contains("ecoleCle")) {
 				Long ecoleCle = (Long)solrDocument.get("ecoleCle_stored_long");
@@ -3769,6 +3772,8 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 			AgeScolaire original = (AgeScolaire)o;
 			if(!Objects.equals(blocCles, original.getBlocCles()))
 				requeteApi.addVars("blocCles");
+			if(!Objects.equals(sessionCle, original.getSessionCle()))
+				requeteApi.addVars("sessionCle");
 			if(!Objects.equals(anneeCle, original.getAnneeCle()))
 				requeteApi.addVars("anneeCle");
 			if(!Objects.equals(ecoleAddresse, original.getEcoleAddresse()))
@@ -3786,7 +3791,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), blocCles, anneeCle, ecoleAddresse, ageDebut, ageFin);
+		return Objects.hash(super.hashCode(), blocCles, sessionCle, anneeCle, ecoleAddresse, ageDebut, ageFin);
 	}
 
 	////////////
@@ -3801,6 +3806,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		AgeScolaire that = (AgeScolaire)o;
 		return super.equals(o)
 				&& Objects.equals( blocCles, that.blocCles )
+				&& Objects.equals( sessionCle, that.sessionCle )
 				&& Objects.equals( anneeCle, that.anneeCle )
 				&& Objects.equals( ecoleAddresse, that.ecoleAddresse )
 				&& Objects.equals( ageDebut, that.ageDebut )
@@ -3816,6 +3822,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		sb.append(super.toString() + "\n");
 		sb.append("AgeScolaire { ");
 		sb.append( "blocCles: " ).append(blocCles);
+		sb.append( ", sessionCle: " ).append(sessionCle);
 		sb.append( ", anneeCle: " ).append(anneeCle);
 		sb.append( ", ecoleAddresse: \"" ).append(ecoleAddresse).append( "\"" );
 		sb.append( ", ageDebut: " ).append(ageDebut);

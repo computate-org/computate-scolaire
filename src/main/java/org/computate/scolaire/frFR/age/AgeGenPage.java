@@ -104,6 +104,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 	@Override public void htmlScriptsAgeGenPage() {
 		e("script").a("src", statiqueUrlBase, "/js/frFR/AgePage.js").f().g("script");
 		e("script").a("src", statiqueUrlBase, "/js/frFR/BlocPage.js").f().g("script");
+		e("script").a("src", statiqueUrlBase, "/js/frFR/SessionPage.js").f().g("script");
 		e("script").a("src", statiqueUrlBase, "/js/frFR/AnneePage.js").f().g("script");
 	}
 
@@ -139,6 +140,14 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 			tl(2, "suggereAgeScolaireBlocCles([{'name':'fq','value':'ageCle:' + pk}], $('#listAgeScolaireBlocCles_Page'), pk, true); ");
 		} else {
 			tl(2, "suggereAgeScolaireBlocCles([{'name':'fq','value':'ageCle:' + pk}], $('#listAgeScolaireBlocCles_Page'), pk, false); ");
+		}
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			tl(2, "suggereAgeScolaireSessionCle([{'name':'fq','value':'ageCles:' + pk}], $('#listAgeScolaireSessionCle_Page'), pk, true); ");
+		} else {
+			tl(2, "suggereAgeScolaireSessionCle([{'name':'fq','value':'ageCles:' + pk}], $('#listAgeScolaireSessionCle_Page'), pk, false); ");
 		}
 		tl(1, "}");
 		tl(1, "websocketAgeScolaire(websocketAgeScolaireInner);");

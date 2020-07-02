@@ -102,6 +102,7 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	 * Var.enUS: seasonKeys
 	 * Indexe: true
 	 * Stocke: true
+	 * Attribuer: SaisonScolaire.anneeCle
 	 * Description.frFR: 
 	 * Description.enUS: 
 	 * NomAffichage.frFR: saisons
