@@ -156,9 +156,9 @@ public class SchoolEnrollmentEnUSApiServiceImpl extends SchoolEnrollmentEnUSGenA
 					customerProfileId = response.getCustomerProfileId();
 				}
 				if(patch)
-					jsonObject.put("setCustomerProfileId", customerProfileId);
+					jsonObject.put("setCustomerProfileId" + schoolNumber, customerProfileId);
 				else
-					jsonObject.put("customerProfileId", customerProfileId);
+					jsonObject.put("customerProfileId" + schoolNumber, customerProfileId);
 				return true;
 			}
 			else {
