@@ -1116,6 +1116,134 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		} g("div");
 	}
 
+	/////////////////
+	// ecoleNumero //
+	/////////////////
+
+	/**	L'entité « ecoleNumero »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected Integer ecoleNumero;
+	@JsonIgnore
+	public Couverture<Integer> ecoleNumeroCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("ecoleNumero").o(ecoleNumero);
+
+	/**	<br/>L'entité « ecoleNumero »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.ecole.Ecole&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:ecoleNumero">Trouver l'entité ecoleNumero dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _ecoleNumero(Couverture<Integer> c);
+
+	public Integer getEcoleNumero() {
+		return ecoleNumero;
+	}
+
+	public void setEcoleNumero(Integer ecoleNumero) {
+		this.ecoleNumero = ecoleNumero;
+		this.ecoleNumeroCouverture.dejaInitialise = true;
+	}
+	public Ecole setEcoleNumero(String o) {
+		if(NumberUtils.isParsable(o))
+			this.ecoleNumero = Integer.parseInt(o);
+		this.ecoleNumeroCouverture.dejaInitialise = true;
+		return (Ecole)this;
+	}
+	protected Ecole ecoleNumeroInit() {
+		if(!ecoleNumeroCouverture.dejaInitialise) {
+			_ecoleNumero(ecoleNumeroCouverture);
+			if(ecoleNumero == null)
+				setEcoleNumero(ecoleNumeroCouverture.o);
+		}
+		ecoleNumeroCouverture.dejaInitialise(true);
+		return (Ecole)this;
+	}
+
+	public Integer solrEcoleNumero() {
+		return ecoleNumero;
+	}
+
+	public String strEcoleNumero() {
+		return ecoleNumero == null ? "" : ecoleNumero.toString();
+	}
+
+	public String jsonEcoleNumero() {
+		return ecoleNumero == null ? "" : ecoleNumero.toString();
+	}
+
+	public String nomAffichageEcoleNumero() {
+		return "école numéro";
+	}
+
+	public String htmTooltipEcoleNumero() {
+		return null;
+	}
+
+	public String htmEcoleNumero() {
+		return ecoleNumero == null ? "" : StringEscapeUtils.escapeHtml4(strEcoleNumero());
+	}
+
+	public void inputEcoleNumero(String classeApiMethodeMethode) {
+		Ecole s = (Ecole)this;
+		{
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "école numéro")
+				.a("title", "Description.enUS: ")
+				.a("id", classeApiMethodeMethode, "_ecoleNumero");
+				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+					a("class", "setEcoleNumero classEcole inputEcole", pk, "EcoleNumero w3-input w3-border ");
+					a("name", "setEcoleNumero");
+				} else {
+					a("class", "valeurEcoleNumero w3-input w3-border classEcole inputEcole", pk, "EcoleNumero w3-input w3-border ");
+					a("name", "ecoleNumero");
+				}
+				if("Page".equals(classeApiMethodeMethode)) {
+					a("onclick", "enleverLueur($(this)); ");
+					a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setEcoleNumero', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_ecoleNumero')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_ecoleNumero')); }); ");
+				}
+				a("value", strEcoleNumero())
+			.fg();
+
+		}
+	}
+
+	public void htmEcoleNumero(String classeApiMethodeMethode) {
+		Ecole s = (Ecole)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "EcoleEcoleNumero").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-pink ").f();
+							e("label").a("for", classeApiMethodeMethode, "_ecoleNumero").a("class", "").f().sx("école numéro").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputEcoleNumero(classeApiMethodeMethode);
+							} g("div");
+							{
+								if("Page".equals(classeApiMethodeMethode)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-pink ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_ecoleNumero')); $('#", classeApiMethodeMethode, "_ecoleNumero').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#EcoleForm :input[name=pk]').val() }], 'setEcoleNumero', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_ecoleNumero')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_ecoleNumero')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
 	////////////////////////////
 	// ecoleAdministrateurNom //
 	////////////////////////////
@@ -1996,6 +2124,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		ecoleTriInit();
 		ecoleNomInit();
 		ecoleNumeroTelephoneInit();
+		ecoleNumeroInit();
 		ecoleAdministrateurNomInit();
 		ecoleMailInit();
 		ecoleMailDeInit();
@@ -2064,6 +2193,8 @@ public abstract class EcoleGen<DEV> extends Cluster {
 				return oEcole.ecoleNom;
 			case "ecoleNumeroTelephone":
 				return oEcole.ecoleNumeroTelephone;
+			case "ecoleNumero":
+				return oEcole.ecoleNumero;
 			case "ecoleAdministrateurNom":
 				return oEcole.ecoleAdministrateurNom;
 			case "ecoleMail":
@@ -2144,6 +2275,11 @@ public abstract class EcoleGen<DEV> extends Cluster {
 			case "ecoleNumeroTelephone":
 				if(val != null)
 					setEcoleNumeroTelephone(val);
+				sauvegardes.add(var);
+				return val;
+			case "ecoleNumero":
+				if(val != null)
+					setEcoleNumero(val);
 				sauvegardes.add(var);
 				return val;
 			case "ecoleAdministrateurNom":
@@ -2255,6 +2391,12 @@ public abstract class EcoleGen<DEV> extends Cluster {
 				String ecoleNumeroTelephone = (String)solrDocument.get("ecoleNumeroTelephone_stored_string");
 				if(ecoleNumeroTelephone != null)
 					oEcole.setEcoleNumeroTelephone(ecoleNumeroTelephone);
+			}
+
+			if(sauvegardes.contains("ecoleNumero")) {
+				Integer ecoleNumero = (Integer)solrDocument.get("ecoleNumero_stored_int");
+				if(ecoleNumero != null)
+					oEcole.setEcoleNumero(ecoleNumero);
 			}
 
 			if(sauvegardes.contains("ecoleAdministrateurNom")) {
@@ -2439,6 +2581,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 			document.addField("ecoleNumeroTelephone_indexed_string", ecoleNumeroTelephone);
 			document.addField("ecoleNumeroTelephone_stored_string", ecoleNumeroTelephone);
 		}
+		if(ecoleNumero != null) {
+			document.addField("ecoleNumero_indexed_int", ecoleNumero);
+			document.addField("ecoleNumero_stored_int", ecoleNumero);
+		}
 		if(ecoleAdministrateurNom != null) {
 			document.addField("ecoleAdministrateurNom_indexed_string", ecoleAdministrateurNom);
 			document.addField("ecoleAdministrateurNom_stored_string", ecoleAdministrateurNom);
@@ -2516,6 +2662,8 @@ public abstract class EcoleGen<DEV> extends Cluster {
 				return "ecoleNom_indexed_string";
 			case "ecoleNumeroTelephone":
 				return "ecoleNumeroTelephone_indexed_string";
+			case "ecoleNumero":
+				return "ecoleNumero_indexed_int";
 			case "ecoleAdministrateurNom":
 				return "ecoleAdministrateurNom_indexed_string";
 			case "ecoleMail":
@@ -2605,6 +2753,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		if(ecoleNumeroTelephone != null)
 			oEcole.setEcoleNumeroTelephone(ecoleNumeroTelephone);
 
+		Integer ecoleNumero = (Integer)solrDocument.get("ecoleNumero_stored_int");
+		if(ecoleNumero != null)
+			oEcole.setEcoleNumero(ecoleNumero);
+
 		String ecoleAdministrateurNom = (String)solrDocument.get("ecoleAdministrateurNom_stored_string");
 		if(ecoleAdministrateurNom != null)
 			oEcole.setEcoleAdministrateurNom(ecoleAdministrateurNom);
@@ -2655,6 +2807,8 @@ public abstract class EcoleGen<DEV> extends Cluster {
 				requeteApi.addVars("ecoleNom");
 			if(!Objects.equals(ecoleNumeroTelephone, original.getEcoleNumeroTelephone()))
 				requeteApi.addVars("ecoleNumeroTelephone");
+			if(!Objects.equals(ecoleNumero, original.getEcoleNumero()))
+				requeteApi.addVars("ecoleNumero");
 			if(!Objects.equals(ecoleAdministrateurNom, original.getEcoleAdministrateurNom()))
 				requeteApi.addVars("ecoleAdministrateurNom");
 			if(!Objects.equals(ecoleMail, original.getEcoleMail()))
@@ -2676,7 +2830,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), anneeCles, ecoleNom, ecoleNumeroTelephone, ecoleAdministrateurNom, ecoleMail, ecoleMailDe, ecoleMailA, ecoleEmplacement, ecoleAddresse);
+		return Objects.hash(super.hashCode(), anneeCles, ecoleNom, ecoleNumeroTelephone, ecoleNumero, ecoleAdministrateurNom, ecoleMail, ecoleMailDe, ecoleMailA, ecoleEmplacement, ecoleAddresse);
 	}
 
 	////////////
@@ -2693,6 +2847,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 				&& Objects.equals( anneeCles, that.anneeCles )
 				&& Objects.equals( ecoleNom, that.ecoleNom )
 				&& Objects.equals( ecoleNumeroTelephone, that.ecoleNumeroTelephone )
+				&& Objects.equals( ecoleNumero, that.ecoleNumero )
 				&& Objects.equals( ecoleAdministrateurNom, that.ecoleAdministrateurNom )
 				&& Objects.equals( ecoleMail, that.ecoleMail )
 				&& Objects.equals( ecoleMailDe, that.ecoleMailDe )
@@ -2712,6 +2867,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		sb.append( "anneeCles: " ).append(anneeCles);
 		sb.append( ", ecoleNom: \"" ).append(ecoleNom).append( "\"" );
 		sb.append( ", ecoleNumeroTelephone: \"" ).append(ecoleNumeroTelephone).append( "\"" );
+		sb.append( ", ecoleNumero: " ).append(ecoleNumero);
 		sb.append( ", ecoleAdministrateurNom: \"" ).append(ecoleAdministrateurNom).append( "\"" );
 		sb.append( ", ecoleMail: \"" ).append(ecoleMail).append( "\"" );
 		sb.append( ", ecoleMailDe: \"" ).append(ecoleMailDe).append( "\"" );

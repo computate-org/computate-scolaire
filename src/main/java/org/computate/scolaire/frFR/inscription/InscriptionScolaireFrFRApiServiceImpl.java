@@ -87,17 +87,10 @@ public class InscriptionScolaireFrFRApiServiceImpl extends InscriptionScolaireFr
 								}
 
 								InscriptionScolaire schoolEnrollment = listeInscriptionScolaire.first();
-								ConfigSite siteConfig = requeteSite.getConfigSite_();
-								MerchantAuthenticationType merchantAuthenticationType = new MerchantAuthenticationType();
-								String authorizeApiLoginId = siteConfig.getAuthorizeApiLoginId();
-								String authorizeTransactionKey = siteConfig.getAuthorizeTransactionKey();
-								merchantAuthenticationType.setName(authorizeApiLoginId);
-								merchantAuthenticationType.setTransactionKey(authorizeTransactionKey);
-								ApiOperationBase.setMerchantAuthentication(merchantAuthenticationType);
 
 								inscriptionFraisFuture(schoolEnrollment, d -> {
 									if(d.succeeded()) {
-										authorizeNetEnrollmentPaiementsFuture(merchantAuthenticationType, schoolEnrollment, e -> {
+										authorizeNetEnrollmentPaiementsFuture(schoolEnrollment, e -> {
 											if(e.succeeded()) {
 												LOGGER.info("Creating paiements for customer %s succeeded. ");
 												rechargerpagerechercheInscriptionScolaireReponse(listeInscriptionScolaire, f -> {
@@ -143,19 +136,12 @@ public class InscriptionScolaireFrFRApiServiceImpl extends InscriptionScolaireFr
 	public void listePATCHPaiementsInscriptionScolaire(RequeteApi requeteApi, ListeRecherche<InscriptionScolaire> listeInscriptionScolaire, String dt, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		List<Future> futures = new ArrayList<>();
 		RequeteSiteFrFR requeteSite = listeInscriptionScolaire.getRequeteSite_();
-		ConfigSite siteConfig = requeteSite.getConfigSite_();
-		MerchantAuthenticationType merchantAuthenticationType = new MerchantAuthenticationType();
-		String authorizeApiLoginId = siteConfig.getAuthorizeApiLoginId();
-		String authorizeTransactionKey = siteConfig.getAuthorizeTransactionKey();
-		merchantAuthenticationType.setName(authorizeApiLoginId);
-		merchantAuthenticationType.setTransactionKey(authorizeTransactionKey);
-		ApiOperationBase.setMerchantAuthentication(merchantAuthenticationType);
 
 		listeInscriptionScolaire.getList().forEach(o -> {
 			futures.add(
 					inscriptionFraisFuture(o, a -> {
 					if(a.succeeded()) {
-						authorizeNetEnrollmentPaiementsFuture(merchantAuthenticationType, o, c -> {
+						authorizeNetEnrollmentPaiementsFuture(o, c -> {
 							if(a.succeeded()) {
 							} else {
 								erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, a);
@@ -328,14 +314,35 @@ public class InscriptionScolaireFrFRApiServiceImpl extends InscriptionScolaireFr
 		}
 	}
 
-	public Future<Void> authorizeNetEnrollmentPaiementsFuture(MerchantAuthenticationType merchantAuthenticationType, InscriptionScolaire schoolEnrollment, Handler<AsyncResult<Void>> gestionnaireEvenements) {
+	public Future<Void> authorizeNetEnrollmentPaiementsFuture(InscriptionScolaire schoolEnrollment, Handler<AsyncResult<Void>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = schoolEnrollment.getRequeteSite_();
 		SiteContexteFrFR siteContexteFrFR = requeteSite.getSiteContexte_();
 		UtilisateurSite siteUser = requeteSite.getUtilisateurSite();
 		ConfigSite siteConfig = requeteSite.getConfigSite_();
 		Promise<Void> promise = Promise.promise();
-		String customerProfileId = Optional.ofNullable(siteUser).map(UtilisateurSite::getCustomerProfileId).orElse(null);
+		Integer ecoleNumero = schoolEnrollment.getEcoleNumero();
+		MerchantAuthenticationType merchantAuthenticationType = new MerchantAuthenticationType();
+		String authorizeApiLoginId = (String)siteConfig.obtenirConfigSite("authorizeApiLoginId" + ecoleNumero);
+		String authorizeTransactionKey = (String)siteConfig.obtenirConfigSite("authorizeTransactionKey" + ecoleNumero);
+		merchantAuthenticationType.setName(authorizeApiLoginId);
+		merchantAuthenticationType.setTransactionKey(authorizeTransactionKey);
+		ApiOperationBase.setMerchantAuthentication(merchantAuthenticationType);
+		String customerProfileId = Optional.ofNullable(siteUser).map(u -> (String)u.obtenirUtilisateurSite("customerProfileId" + ecoleNumero)).orElse(null);
 
+		if(authorizeTransactionKey == null) {
+			String m = String.format("Il manque une clé de transaction Authorize.net. ");
+			LOGGER.error(m);
+			gestionnaireEvenements.handle(Future.failedFuture(m));
+			promise.fail(m);
+			return promise.future();
+		}
+		if(authorizeApiLoginId == null) {
+			String m = String.format("Il manque un ID de connexion API Authorize.net. ");
+			LOGGER.error(m);
+			gestionnaireEvenements.handle(Future.failedFuture(m));
+			promise.fail(m);
+			return promise.future();
+		}
 		if(siteUser == null) {
 			String m = String.format("Seul un utilisateur connecté peut accéder à cette page. ");
 			LOGGER.error(m);
@@ -358,7 +365,7 @@ public class InscriptionScolaireFrFRApiServiceImpl extends InscriptionScolaireFr
 				
 				GetTransactionListForCustomerRequest getRequest = new GetTransactionListForCustomerRequest();
 				getRequest.setMerchantAuthentication(merchantAuthenticationType);
-				getRequest.setCustomerProfileId(siteUser.getCustomerProfileId());
+				getRequest.setCustomerProfileId(customerProfileId);
 	
 				getRequest.setPaging(paging);
 	
@@ -383,7 +390,7 @@ public class InscriptionScolaireFrFRApiServiceImpl extends InscriptionScolaireFr
 	
 					if (getResponse.getMessages().getResultCode() == MessageTypeEnum.OK) {
 						List<TransactionSummaryType> transactions = Optional.ofNullable(getResponse).map(GetTransactionListResponse::getTransactions).map(ArrayOfTransactionSummaryType::getTransaction).orElse(Arrays.asList());
-						LOGGER.info(String.format("Il y a %s transactions pour client %s à charger. ", transactions.size(), siteUser.getCustomerProfileId()));
+						LOGGER.info(String.format("Il y a %s transactions pour client %s à charger. ", transactions.size(), customerProfileId));
 						for(TransactionSummaryType transaction : transactions) {
 							futures.add(
 								futureAuthorizeNetPaiement(merchantAuthenticationType, paiementService, schoolEnrollment.getRequeteSite_(), transaction, schoolEnrollment, b -> {
@@ -399,16 +406,16 @@ public class InscriptionScolaireFrFRApiServiceImpl extends InscriptionScolaireFr
 							if(b.succeeded()) {
 								gestionnaireEvenements.handle(Future.succeededFuture());
 								promise.complete();
-								LOGGER.info(String.format("transactions pour client %s chargé. ", siteUser.getCustomerProfileId()));
+								LOGGER.info(String.format("transactions pour client %s chargé. ", customerProfileId));
 							} else {
-								LOGGER.error(String.format("transactions pour client %s ont échoués. ", siteUser.getCustomerProfileId()));
+								LOGGER.error(String.format("transactions pour client %s ont échoués. ", customerProfileId));
 								gestionnaireEvenements.handle(Future.failedFuture(b.cause()));
 								promise.fail(b.cause());
 							}
 						});
 					}
 					else {
-						LOGGER.error(String.format("transactions pour client %s ont échoués. ", siteUser.getCustomerProfileId()));
+						LOGGER.error(String.format("transactions pour client %s ont échoués. ", customerProfileId));
 						gestionnaireEvenements.handle(Future.failedFuture(getResponse.getMessages().getMessage().stream().findFirst().map(m -> m.getText()).orElse("")));
 					}
 				}

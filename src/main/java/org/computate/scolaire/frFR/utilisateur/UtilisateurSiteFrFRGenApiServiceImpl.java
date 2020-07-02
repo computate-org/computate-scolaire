@@ -862,30 +862,58 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 							}));
 						}
 						break;
-					case "setCustomerProfileId":
+					case "setCustomerProfileId1":
 						if(jsonObject.getString(methodeNom) == null) {
 							futures.add(Future.future(a -> {
 								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "customerProfileId")
+										, Tuple.of(pk, "customerProfileId1")
 										, b
 								-> {
 									if(b.succeeded())
 										a.handle(Future.succeededFuture());
 									else
-										a.handle(Future.failedFuture(new Exception("valeur UtilisateurSite.customerProfileId a échoué", b.cause())));
+										a.handle(Future.failedFuture(new Exception("valeur UtilisateurSite.customerProfileId1 a échoué", b.cause())));
 								});
 							}));
 						} else {
-							o2.setCustomerProfileId(jsonObject.getString(methodeNom));
+							o2.setCustomerProfileId1(jsonObject.getString(methodeNom));
 							futures.add(Future.future(a -> {
 								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "customerProfileId", o2.jsonCustomerProfileId())
+										, Tuple.of(pk, "customerProfileId1", o2.jsonCustomerProfileId1())
 										, b
 								-> {
 									if(b.succeeded())
 										a.handle(Future.succeededFuture());
 									else
-										a.handle(Future.failedFuture(new Exception("valeur UtilisateurSite.customerProfileId a échoué", b.cause())));
+										a.handle(Future.failedFuture(new Exception("valeur UtilisateurSite.customerProfileId1 a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setCustomerProfileId2":
+						if(jsonObject.getString(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "customerProfileId2")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur UtilisateurSite.customerProfileId2 a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setCustomerProfileId2(jsonObject.getString(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "customerProfileId2", o2.jsonCustomerProfileId2())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur UtilisateurSite.customerProfileId2 a échoué", b.cause())));
 								});
 							}));
 						}
@@ -1304,16 +1332,29 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 							});
 						}));
 						break;
-					case "customerProfileId":
+					case "customerProfileId1":
 						futures.add(Future.future(a -> {
 							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "customerProfileId", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, Tuple.of(pk, "customerProfileId1", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
 									a.handle(Future.succeededFuture());
 								else
-									a.handle(Future.failedFuture(new Exception("valeur UtilisateurSite.customerProfileId a échoué", b.cause())));
+									a.handle(Future.failedFuture(new Exception("valeur UtilisateurSite.customerProfileId1 a échoué", b.cause())));
+							});
+						}));
+						break;
+					case "customerProfileId2":
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "customerProfileId2", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur UtilisateurSite.customerProfileId2 a échoué", b.cause())));
 							});
 						}));
 						break;
@@ -1846,7 +1887,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 												jsonObject.put("setUtilisateurPrenom", principalJson.getString("given_name"));
 												jsonObject.put("setUtilisateurNomFamille", principalJson.getString("family_name"));
 												jsonObject.put("setUtilisateurNomComplet", principalJson.getString("name"));
-												jsonObject.put("setCustomerProfileId", Optional.ofNullable(utilisateurSite1).map(u -> u.getCustomerProfileId()).orElse(null));
+												jsonObject.put("setCustomerProfileId1", Optional.ofNullable(utilisateurSite1).map(u -> u.getCustomerProfileId1()).orElse(null));
+												jsonObject.put("setCustomerProfileId2", Optional.ofNullable(utilisateurSite1).map(u -> u.getCustomerProfileId2()).orElse(null));
 												jsonObject.put("setUtilisateurId", principalJson.getString("sub"));
 												jsonObject.put("setUtilisateurMail", principalJson.getString("email"));
 												Boolean definir = utilisateurUtilisateurSiteDefinir(requeteSite, jsonObject, true);
@@ -1944,9 +1986,17 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 
 	public Boolean utilisateurUtilisateurSiteDefinir(RequeteSiteFrFR requeteSite, JsonObject jsonObject, Boolean patch) {
 		if(patch) {
-			return jsonObject.getString("setCustomerProfileId") == null;
+			if(jsonObject.getString("setCustomerProfileId1") == null)
+				return true;
+			if(jsonObject.getString("setCustomerProfileId2") == null)
+				return true;
+			return false;
 		} else {
-			return jsonObject.getString("customerProfileId") == null;
+			if(jsonObject.getString("setCustomerProfileId1") == null)
+				return true;
+			if(jsonObject.getString("setCustomerProfileId2") == null)
+				return true;
+			return false;
 		}
 	}
 

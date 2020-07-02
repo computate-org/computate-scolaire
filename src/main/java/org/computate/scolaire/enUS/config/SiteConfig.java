@@ -769,7 +769,7 @@ public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	protected void _authorizeApiLoginId(Wrap<String> c) {
+	protected void _authorizeApiLoginId1(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);
@@ -778,7 +778,43 @@ public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 		c.o(o);
 	}
 
-	protected void _authorizeTransactionKey(Wrap<String> c) {
+	protected void _authorizeTransactionKey1(Wrap<String> c) {
+		String o;
+		if(config == null)
+			o = System.getenv(c.var);
+		else
+			o = config.getString(prefixEscaped + c.var);
+		c.o(o);
+	}
+
+	protected void _schoolLocation1(Wrap<String> c) {
+		String o;
+		if(config == null)
+			o = System.getenv(c.var);
+		else
+			o = config.getString(prefixEscaped + c.var);
+		c.o(o);
+	}
+
+	protected void _authorizeApiLoginId2(Wrap<String> c) {
+		String o;
+		if(config == null)
+			o = System.getenv(c.var);
+		else
+			o = config.getString(prefixEscaped + c.var);
+		c.o(o);
+	}
+
+	protected void _authorizeTransactionKey2(Wrap<String> c) {
+		String o;
+		if(config == null)
+			o = System.getenv(c.var);
+		else
+			o = config.getString(prefixEscaped + c.var);
+		c.o(o);
+	}
+
+	protected void _schoolLocation2(Wrap<String> c) {
 		String o;
 		if(config == null)
 			o = System.getenv(c.var);

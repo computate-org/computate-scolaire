@@ -71,7 +71,7 @@ public class UtilisateurSite extends UtilisateurSiteGen<Cluster> {
 	 * Indexe: true
 	 * Stocke: true
 	 * Attribuer: InscriptionScolaire.utilisateurCles
-	 * HtmlLigne: 4
+	 * HtmlLigne: 5
 	 * HtmlCellule: 1
 	 * NomAffichage.frFR: inscriptions
 	 * NomAffichage.enUS: enrollments
@@ -84,7 +84,7 @@ public class UtilisateurSite extends UtilisateurSiteGen<Cluster> {
 	 * Indexe: true
 	 * Stocke: true
 	 * Attribuer: PaiementScolaire.utilisateurCles
-	 * HtmlLigne: 4
+	 * HtmlLigne: 5
 	 * HtmlCellule: 2
 	 * Description.frFR: La clé primaire des contacts d'urgence dans la base de données. 
 	 * Description.enUS: The primary key of the school emergency contacts in the database. 
@@ -182,12 +182,25 @@ public class UtilisateurSite extends UtilisateurSiteGen<Cluster> {
 	 * Indexe: true
 	 * Stocke: true
 	 * Definir: true
-	 * HtmlLigne: 3
-	 * HtmlCellule: 4
-	 * NomAffichage.frFR: customer profile ID
-	 * NomAffichage.enUS: customer profile ID
+	 * HtmlLigne: 4
+	 * HtmlCellule: 1
+	 * NomAffichage.frFR: customer profile ID 1
+	 * NomAffichage.enUS: customer profile ID 1
 	 */       
-	protected void _customerProfileId(Couverture<String> c) {
+	protected void _customerProfileId1(Couverture<String> c) {
+	}
+
+	/**	
+	 * description.frFR: ID authorize.net pour l'utilisateur. 
+	 * Indexe: true
+	 * Stocke: true
+	 * Definir: true
+	 * HtmlLigne: 4
+	 * HtmlCellule: 2
+	 * NomAffichage.frFR: customer profile ID 2
+	 * NomAffichage.enUS: customer profile ID 2
+	 */       
+	protected void _customerProfileId2(Couverture<String> c) {
 	}
 
 	/**	

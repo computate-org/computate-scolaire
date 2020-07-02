@@ -128,17 +128,17 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
 				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 				) {
-			tl(2, "suggereAnneeScolaireAgeCles([{'name':'fq','value':'anneeCle:' + pk}], $('#listAnneeScolaireAgeCles_Page'), pk, true); ");
+			tl(2, "suggereAnneeScolaireEcoleCle([{'name':'fq','value':'anneeCles:' + pk}], $('#listAnneeScolaireEcoleCle_Page'), pk, true); ");
 		} else {
-			tl(2, "suggereAnneeScolaireAgeCles([{'name':'fq','value':'anneeCle:' + pk}], $('#listAnneeScolaireAgeCles_Page'), pk, false); ");
+			tl(2, "suggereAnneeScolaireEcoleCle([{'name':'fq','value':'anneeCles:' + pk}], $('#listAnneeScolaireEcoleCle_Page'), pk, false); ");
 		}
 		if(
 				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
 				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 				) {
-			tl(2, "suggereAnneeScolaireEcoleCle([{'name':'fq','value':'anneeCles:' + pk}], $('#listAnneeScolaireEcoleCle_Page'), pk, true); ");
+			tl(2, "suggereAnneeScolaireAgeCles([{'name':'fq','value':'anneeCle:' + pk}], $('#listAnneeScolaireAgeCles_Page'), pk, true); ");
 		} else {
-			tl(2, "suggereAnneeScolaireEcoleCle([{'name':'fq','value':'anneeCles:' + pk}], $('#listAnneeScolaireEcoleCle_Page'), pk, false); ");
+			tl(2, "suggereAnneeScolaireAgeCles([{'name':'fq','value':'anneeCle:' + pk}], $('#listAnneeScolaireAgeCles_Page'), pk, false); ");
 		}
 		tl(1, "}");
 		tl(1, "websocketAnneeScolaire(websocketAnneeScolaireInner);");
@@ -164,8 +164,8 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 			o.htmAnneeFraisInscription("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmAgeCles("Page");
 			o.htmEcoleCle("Page");
+			o.htmAgeCles("Page");
 		} g("div");
 	}
 
@@ -188,8 +188,8 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 			o.htmAnneeFraisInscription("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmAgeCles("POST");
 			o.htmEcoleCle("POST");
+			o.htmAgeCles("POST");
 		} g("div");
 	}
 
@@ -234,8 +234,8 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 			o.htmAnneeFraisInscription("PUTCopie");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmAgeCles("PUTCopie");
 			o.htmEcoleCle("PUTCopie");
+			o.htmAgeCles("PUTCopie");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInheritPk("PUTCopie");
@@ -262,8 +262,8 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 			o.htmAnneeFraisInscription("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmAgeCles("PATCH");
 			o.htmEcoleCle("PATCH");
+			o.htmAgeCles("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInheritPk("PATCH");
@@ -292,8 +292,8 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 			o.htmAnneeFraisInscription("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmAgeCles("Recherche");
 			o.htmEcoleCle("Recherche");
+			o.htmAgeCles("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInheritPk("Recherche");

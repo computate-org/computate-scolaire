@@ -1000,69 +1000,69 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		return utilisateurSite == null ? "" : StringEscapeUtils.escapeHtml4(strUtilisateurSite());
 	}
 
-	///////////////////////
-	// customerProfileId //
-	///////////////////////
+	////////////////////////
+	// customerProfileId1 //
+	////////////////////////
 
-	/**	L'entité « customerProfileId »
+	/**	L'entité « customerProfileId1 »
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected String customerProfileId;
+	protected String customerProfileId1;
 	@JsonIgnore
-	public Couverture<String> customerProfileIdCouverture = new Couverture<String>().p(this).c(String.class).var("customerProfileId").o(customerProfileId);
+	public Couverture<String> customerProfileId1Couverture = new Couverture<String>().p(this).c(String.class).var("customerProfileId1").o(customerProfileId1);
 
-	/**	<br/>L'entité « customerProfileId »
+	/**	<br/>L'entité « customerProfileId1 »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.utilisateur.UtilisateurSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:customerProfileId">Trouver l'entité customerProfileId dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.utilisateur.UtilisateurSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:customerProfileId1">Trouver l'entité customerProfileId1 dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _customerProfileId(Couverture<String> c);
+	protected abstract void _customerProfileId1(Couverture<String> c);
 
-	public String getCustomerProfileId() {
-		return customerProfileId;
+	public String getCustomerProfileId1() {
+		return customerProfileId1;
 	}
 
-	public void setCustomerProfileId(String customerProfileId) {
-		this.customerProfileId = customerProfileId;
-		this.customerProfileIdCouverture.dejaInitialise = true;
+	public void setCustomerProfileId1(String customerProfileId1) {
+		this.customerProfileId1 = customerProfileId1;
+		this.customerProfileId1Couverture.dejaInitialise = true;
 	}
-	protected UtilisateurSite customerProfileIdInit() {
-		if(!customerProfileIdCouverture.dejaInitialise) {
-			_customerProfileId(customerProfileIdCouverture);
-			if(customerProfileId == null)
-				setCustomerProfileId(customerProfileIdCouverture.o);
+	protected UtilisateurSite customerProfileId1Init() {
+		if(!customerProfileId1Couverture.dejaInitialise) {
+			_customerProfileId1(customerProfileId1Couverture);
+			if(customerProfileId1 == null)
+				setCustomerProfileId1(customerProfileId1Couverture.o);
 		}
-		customerProfileIdCouverture.dejaInitialise(true);
+		customerProfileId1Couverture.dejaInitialise(true);
 		return (UtilisateurSite)this;
 	}
 
-	public String solrCustomerProfileId() {
-		return customerProfileId;
+	public String solrCustomerProfileId1() {
+		return customerProfileId1;
 	}
 
-	public String strCustomerProfileId() {
-		return customerProfileId == null ? "" : customerProfileId;
+	public String strCustomerProfileId1() {
+		return customerProfileId1 == null ? "" : customerProfileId1;
 	}
 
-	public String jsonCustomerProfileId() {
-		return customerProfileId == null ? "" : customerProfileId;
+	public String jsonCustomerProfileId1() {
+		return customerProfileId1 == null ? "" : customerProfileId1;
 	}
 
-	public String nomAffichageCustomerProfileId() {
-		return "customer profile ID";
+	public String nomAffichageCustomerProfileId1() {
+		return "customer profile ID 1";
 	}
 
-	public String htmTooltipCustomerProfileId() {
+	public String htmTooltipCustomerProfileId1() {
 		return null;
 	}
 
-	public String htmCustomerProfileId() {
-		return customerProfileId == null ? "" : StringEscapeUtils.escapeHtml4(strCustomerProfileId());
+	public String htmCustomerProfileId1() {
+		return customerProfileId1 == null ? "" : StringEscapeUtils.escapeHtml4(strCustomerProfileId1());
 	}
 
-	public void inputCustomerProfileId(String classeApiMethodeMethode) {
+	public void inputCustomerProfileId1(String classeApiMethodeMethode) {
 		UtilisateurSite s = (UtilisateurSite)this;
 		if(
 				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
@@ -1070,21 +1070,21 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 				) {
 			e("input")
 				.a("type", "text")
-				.a("placeholder", "customer profile ID")
+				.a("placeholder", "customer profile ID 1")
 				.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
-				.a("id", classeApiMethodeMethode, "_customerProfileId");
+				.a("id", classeApiMethodeMethode, "_customerProfileId1");
 				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-					a("class", "setCustomerProfileId classUtilisateurSite inputUtilisateurSite", pk, "CustomerProfileId w3-input w3-border ");
-					a("name", "setCustomerProfileId");
+					a("class", "setCustomerProfileId1 classUtilisateurSite inputUtilisateurSite", pk, "CustomerProfileId1 w3-input w3-border ");
+					a("name", "setCustomerProfileId1");
 				} else {
-					a("class", "valeurCustomerProfileId w3-input w3-border classUtilisateurSite inputUtilisateurSite", pk, "CustomerProfileId w3-input w3-border ");
-					a("name", "customerProfileId");
+					a("class", "valeurCustomerProfileId1 w3-input w3-border classUtilisateurSite inputUtilisateurSite", pk, "CustomerProfileId1 w3-input w3-border ");
+					a("name", "customerProfileId1");
 				}
 				if("Page".equals(classeApiMethodeMethode)) {
 					a("onclick", "enleverLueur($(this)); ");
-					a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setCustomerProfileId', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_customerProfileId')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_customerProfileId')); }); ");
+					a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setCustomerProfileId1', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_customerProfileId1')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_customerProfileId1')); }); ");
 				}
-				a("value", strCustomerProfileId())
+				a("value", strCustomerProfileId1())
 			.fg();
 
 		} else {
@@ -1092,24 +1092,24 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
 					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 					) {
-				sx(htmCustomerProfileId());
+				sx(htmCustomerProfileId1());
 			}
 		}
 	}
 
-	public void htmCustomerProfileId(String classeApiMethodeMethode) {
+	public void htmCustomerProfileId1(String classeApiMethodeMethode) {
 		UtilisateurSite s = (UtilisateurSite)this;
 		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
 			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggere", classeApiMethodeMethode, "UtilisateurSiteCustomerProfileId").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "UtilisateurSiteCustomerProfileId1").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-gray ").f();
-							e("label").a("for", classeApiMethodeMethode, "_customerProfileId").a("class", "").f().sx("customer profile ID").g("label");
+							e("label").a("for", classeApiMethodeMethode, "_customerProfileId1").a("class", "").f().sx("customer profile ID 1").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
 
-								inputCustomerProfileId(classeApiMethodeMethode);
+								inputCustomerProfileId1(classeApiMethodeMethode);
 							} g("div");
 							if(
 									CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
@@ -1120,7 +1120,141 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 										{ e("button")
 											.a("tabindex", "-1")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-gray ")
-										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_customerProfileId')); $('#", classeApiMethodeMethode, "_customerProfileId').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#UtilisateurSiteForm :input[name=pk]').val() }], 'setCustomerProfileId', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_customerProfileId')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_customerProfileId')); }); ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_customerProfileId1')); $('#", classeApiMethodeMethode, "_customerProfileId1').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#UtilisateurSiteForm :input[name=pk]').val() }], 'setCustomerProfileId1', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_customerProfileId1')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_customerProfileId1')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	////////////////////////
+	// customerProfileId2 //
+	////////////////////////
+
+	/**	L'entité « customerProfileId2 »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String customerProfileId2;
+	@JsonIgnore
+	public Couverture<String> customerProfileId2Couverture = new Couverture<String>().p(this).c(String.class).var("customerProfileId2").o(customerProfileId2);
+
+	/**	<br/>L'entité « customerProfileId2 »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.utilisateur.UtilisateurSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:customerProfileId2">Trouver l'entité customerProfileId2 dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _customerProfileId2(Couverture<String> c);
+
+	public String getCustomerProfileId2() {
+		return customerProfileId2;
+	}
+
+	public void setCustomerProfileId2(String customerProfileId2) {
+		this.customerProfileId2 = customerProfileId2;
+		this.customerProfileId2Couverture.dejaInitialise = true;
+	}
+	protected UtilisateurSite customerProfileId2Init() {
+		if(!customerProfileId2Couverture.dejaInitialise) {
+			_customerProfileId2(customerProfileId2Couverture);
+			if(customerProfileId2 == null)
+				setCustomerProfileId2(customerProfileId2Couverture.o);
+		}
+		customerProfileId2Couverture.dejaInitialise(true);
+		return (UtilisateurSite)this;
+	}
+
+	public String solrCustomerProfileId2() {
+		return customerProfileId2;
+	}
+
+	public String strCustomerProfileId2() {
+		return customerProfileId2 == null ? "" : customerProfileId2;
+	}
+
+	public String jsonCustomerProfileId2() {
+		return customerProfileId2 == null ? "" : customerProfileId2;
+	}
+
+	public String nomAffichageCustomerProfileId2() {
+		return "customer profile ID 2";
+	}
+
+	public String htmTooltipCustomerProfileId2() {
+		return null;
+	}
+
+	public String htmCustomerProfileId2() {
+		return customerProfileId2 == null ? "" : StringEscapeUtils.escapeHtml4(strCustomerProfileId2());
+	}
+
+	public void inputCustomerProfileId2(String classeApiMethodeMethode) {
+		UtilisateurSite s = (UtilisateurSite)this;
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "customer profile ID 2")
+				.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
+				.a("id", classeApiMethodeMethode, "_customerProfileId2");
+				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+					a("class", "setCustomerProfileId2 classUtilisateurSite inputUtilisateurSite", pk, "CustomerProfileId2 w3-input w3-border ");
+					a("name", "setCustomerProfileId2");
+				} else {
+					a("class", "valeurCustomerProfileId2 w3-input w3-border classUtilisateurSite inputUtilisateurSite", pk, "CustomerProfileId2 w3-input w3-border ");
+					a("name", "customerProfileId2");
+				}
+				if("Page".equals(classeApiMethodeMethode)) {
+					a("onclick", "enleverLueur($(this)); ");
+					a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setCustomerProfileId2', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_customerProfileId2')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_customerProfileId2')); }); ");
+				}
+				a("value", strCustomerProfileId2())
+			.fg();
+
+		} else {
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+					) {
+				sx(htmCustomerProfileId2());
+			}
+		}
+	}
+
+	public void htmCustomerProfileId2(String classeApiMethodeMethode) {
+		UtilisateurSite s = (UtilisateurSite)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "UtilisateurSiteCustomerProfileId2").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-gray ").f();
+							e("label").a("for", classeApiMethodeMethode, "_customerProfileId2").a("class", "").f().sx("customer profile ID 2").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputCustomerProfileId2(classeApiMethodeMethode);
+							} g("div");
+							if(
+									CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+									) {
+								if("Page".equals(classeApiMethodeMethode)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-gray ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_customerProfileId2')); $('#", classeApiMethodeMethode, "_customerProfileId2').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#UtilisateurSiteForm :input[name=pk]').val() }], 'setCustomerProfileId2', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_customerProfileId2')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_customerProfileId2')); }); ")
 											.f();
 											e("i").a("class", "far fa-eraser ").f().g("i");
 										} g("button");
@@ -1569,7 +1703,8 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		utilisateurNomFamilleInit();
 		utilisateurNomCompletInit();
 		utilisateurSiteInit();
-		customerProfileIdInit();
+		customerProfileId1Init();
+		customerProfileId2Init();
 		utilisateurRecevoirCourrielsInit();
 		voirArchiveInit();
 		voirSupprimeInit();
@@ -1629,8 +1764,10 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 				return oUtilisateurSite.utilisateurNomComplet;
 			case "utilisateurSite":
 				return oUtilisateurSite.utilisateurSite;
-			case "customerProfileId":
-				return oUtilisateurSite.customerProfileId;
+			case "customerProfileId1":
+				return oUtilisateurSite.customerProfileId1;
+			case "customerProfileId2":
+				return oUtilisateurSite.customerProfileId2;
 			case "utilisateurRecevoirCourriels":
 				return oUtilisateurSite.utilisateurRecevoirCourriels;
 			case "voirArchive":
@@ -1708,9 +1845,14 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 					setUtilisateurMail(val);
 				sauvegardes.add(var);
 				return val;
-			case "customerProfileId":
+			case "customerProfileId1":
 				if(val != null)
-					setCustomerProfileId(val);
+					setCustomerProfileId1(val);
+				sauvegardes.add(var);
+				return val;
+			case "customerProfileId2":
+				if(val != null)
+					setCustomerProfileId2(val);
 				sauvegardes.add(var);
 				return val;
 			case "utilisateurRecevoirCourriels":
@@ -1795,10 +1937,16 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 					oUtilisateurSite.setUtilisateurSite(utilisateurSite);
 			}
 
-			if(sauvegardes.contains("customerProfileId")) {
-				String customerProfileId = (String)solrDocument.get("customerProfileId_stored_string");
-				if(customerProfileId != null)
-					oUtilisateurSite.setCustomerProfileId(customerProfileId);
+			if(sauvegardes.contains("customerProfileId1")) {
+				String customerProfileId1 = (String)solrDocument.get("customerProfileId1_stored_string");
+				if(customerProfileId1 != null)
+					oUtilisateurSite.setCustomerProfileId1(customerProfileId1);
+			}
+
+			if(sauvegardes.contains("customerProfileId2")) {
+				String customerProfileId2 = (String)solrDocument.get("customerProfileId2_stored_string");
+				if(customerProfileId2 != null)
+					oUtilisateurSite.setCustomerProfileId2(customerProfileId2);
 			}
 
 			if(sauvegardes.contains("utilisateurRecevoirCourriels")) {
@@ -1933,9 +2081,13 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 			document.addField("utilisateurSite_indexed_string", utilisateurSite);
 			document.addField("utilisateurSite_stored_string", utilisateurSite);
 		}
-		if(customerProfileId != null) {
-			document.addField("customerProfileId_indexed_string", customerProfileId);
-			document.addField("customerProfileId_stored_string", customerProfileId);
+		if(customerProfileId1 != null) {
+			document.addField("customerProfileId1_indexed_string", customerProfileId1);
+			document.addField("customerProfileId1_stored_string", customerProfileId1);
+		}
+		if(customerProfileId2 != null) {
+			document.addField("customerProfileId2_indexed_string", customerProfileId2);
+			document.addField("customerProfileId2_stored_string", customerProfileId2);
 		}
 		if(utilisateurRecevoirCourriels != null) {
 			document.addField("utilisateurRecevoirCourriels_indexed_boolean", utilisateurRecevoirCourriels);
@@ -1990,8 +2142,10 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 				return "utilisateurNomComplet_indexed_string";
 			case "utilisateurSite":
 				return "utilisateurSite_indexed_string";
-			case "customerProfileId":
-				return "customerProfileId_indexed_string";
+			case "customerProfileId1":
+				return "customerProfileId1_indexed_string";
+			case "customerProfileId2":
+				return "customerProfileId2_indexed_string";
 			case "utilisateurRecevoirCourriels":
 				return "utilisateurRecevoirCourriels_indexed_boolean";
 			case "voirArchive":
@@ -2063,9 +2217,13 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		if(utilisateurSite != null)
 			oUtilisateurSite.setUtilisateurSite(utilisateurSite);
 
-		String customerProfileId = (String)solrDocument.get("customerProfileId_stored_string");
-		if(customerProfileId != null)
-			oUtilisateurSite.setCustomerProfileId(customerProfileId);
+		String customerProfileId1 = (String)solrDocument.get("customerProfileId1_stored_string");
+		if(customerProfileId1 != null)
+			oUtilisateurSite.setCustomerProfileId1(customerProfileId1);
+
+		String customerProfileId2 = (String)solrDocument.get("customerProfileId2_stored_string");
+		if(customerProfileId2 != null)
+			oUtilisateurSite.setCustomerProfileId2(customerProfileId2);
 
 		Boolean utilisateurRecevoirCourriels = (Boolean)solrDocument.get("utilisateurRecevoirCourriels_stored_boolean");
 		if(utilisateurRecevoirCourriels != null)
@@ -2110,8 +2268,10 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 				requeteApi.addVars("utilisateurNom");
 			if(!Objects.equals(utilisateurMail, original.getUtilisateurMail()))
 				requeteApi.addVars("utilisateurMail");
-			if(!Objects.equals(customerProfileId, original.getCustomerProfileId()))
-				requeteApi.addVars("customerProfileId");
+			if(!Objects.equals(customerProfileId1, original.getCustomerProfileId1()))
+				requeteApi.addVars("customerProfileId1");
+			if(!Objects.equals(customerProfileId2, original.getCustomerProfileId2()))
+				requeteApi.addVars("customerProfileId2");
 			if(!Objects.equals(utilisateurRecevoirCourriels, original.getUtilisateurRecevoirCourriels()))
 				requeteApi.addVars("utilisateurRecevoirCourriels");
 			if(!Objects.equals(voirArchive, original.getVoirArchive()))
@@ -2127,7 +2287,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), inscriptionCles, paiementCles, utilisateurNom, utilisateurMail, customerProfileId, utilisateurRecevoirCourriels, voirArchive, voirSupprime);
+		return Objects.hash(super.hashCode(), inscriptionCles, paiementCles, utilisateurNom, utilisateurMail, customerProfileId1, customerProfileId2, utilisateurRecevoirCourriels, voirArchive, voirSupprime);
 	}
 
 	////////////
@@ -2145,7 +2305,8 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 				&& Objects.equals( paiementCles, that.paiementCles )
 				&& Objects.equals( utilisateurNom, that.utilisateurNom )
 				&& Objects.equals( utilisateurMail, that.utilisateurMail )
-				&& Objects.equals( customerProfileId, that.customerProfileId )
+				&& Objects.equals( customerProfileId1, that.customerProfileId1 )
+				&& Objects.equals( customerProfileId2, that.customerProfileId2 )
 				&& Objects.equals( utilisateurRecevoirCourriels, that.utilisateurRecevoirCourriels )
 				&& Objects.equals( voirArchive, that.voirArchive )
 				&& Objects.equals( voirSupprime, that.voirSupprime );
@@ -2163,7 +2324,8 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		sb.append( ", paiementCles: " ).append(paiementCles);
 		sb.append( ", utilisateurNom: \"" ).append(utilisateurNom).append( "\"" );
 		sb.append( ", utilisateurMail: \"" ).append(utilisateurMail).append( "\"" );
-		sb.append( ", customerProfileId: \"" ).append(customerProfileId).append( "\"" );
+		sb.append( ", customerProfileId1: \"" ).append(customerProfileId1).append( "\"" );
+		sb.append( ", customerProfileId2: \"" ).append(customerProfileId2).append( "\"" );
 		sb.append( ", utilisateurRecevoirCourriels: " ).append(utilisateurRecevoirCourriels);
 		sb.append( ", voirArchive: " ).append(voirArchive);
 		sb.append( ", voirSupprime: " ).append(voirSupprime);

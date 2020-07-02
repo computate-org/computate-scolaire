@@ -161,6 +161,7 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSchoolPhoneNumber("Page");
 			o.htmSchoolAddress("Page");
+			o.htmSchoolNumber("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmYearKeys("Page");
@@ -193,6 +194,7 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSchoolPhoneNumber("POST");
 			o.htmSchoolAddress("POST");
+			o.htmSchoolNumber("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmYearKeys("POST");
@@ -247,6 +249,7 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSchoolPhoneNumber("PUTCopy");
 			o.htmSchoolAddress("PUTCopy");
+			o.htmSchoolNumber("PUTCopy");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmYearKeys("PUTCopy");
@@ -283,6 +286,7 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSchoolPhoneNumber("PATCH");
 			o.htmSchoolAddress("PATCH");
+			o.htmSchoolNumber("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmYearKeys("PATCH");
@@ -321,6 +325,7 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSchoolPhoneNumber("Search");
 			o.htmSchoolAddress("Search");
+			o.htmSchoolNumber("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmYearKeys("Search");

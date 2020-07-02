@@ -139,6 +139,21 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
+	 * Var.enUS: schoolNumber
+	 * Indexe: true
+	 * Stocke: true
+	 * r: inscription
+	 * r.enUS: enrollment
+	 * r: EcoleNumero
+	 * r.enUS: SchoolNumber
+	 */
+	protected void _ecoleNumero(Couverture<Integer> c) {
+		if(inscription_ != null)
+			c.o(inscription_.getEcoleNumero());
+	}
+
+	/**
+	 * {@inheritDoc}
 	 * Var.enUS: userKeys
 	 * Indexe: true
 	 * Stocke: true

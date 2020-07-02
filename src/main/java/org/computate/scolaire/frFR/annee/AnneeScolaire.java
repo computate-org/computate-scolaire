@@ -66,12 +66,12 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	 * Stocke: true
 	 * Attribuer: Ecole.anneeCles
 	 * HtmlLigne: 4
-	 * HtmlCelulle: 1
+	 * HtmlCellule: 1
 	 * Description.frFR: La clé primaire de l'école dans la base de données. 
 	 * Description.enUS: The primary key of the school in the database. 
 	 * NomAffichage.frFR: école
 	 * NomAffichage.enUS: school
-	 */               
+	 */              
 	protected void _ecoleCle(Couverture<Long> c) {
 	}
 
@@ -271,6 +271,21 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	protected void _ecoleNumeroTelephone(Couverture<String> c) {
 		if(ecole_ != null)
 			c.o((String)ecole_.getEcoleNumeroTelephone());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: schoolNumber
+	 * Indexe: true
+	 * Stocke: true
+	 * r: EcoleNumero
+	 * r.enUS: SchoolNumber
+	 * r: ecole
+	 * r.enUS: school
+	 */
+	protected void _ecoleNumero(Couverture<Integer> c) {
+		if(ecole_ != null)
+			c.o((Integer)ecole_.getEcoleNumero());
 	}
 
 	/**

@@ -35,11 +35,6 @@ public class SiteUserEnUSApiServiceImpl extends SiteUserEnUSGenApiServiceImpl {
 	@Override public Boolean userSiteUserDefine(SiteRequestEnUS siteRequest, JsonObject jsonObject, Boolean patch) {
 		String sessionIdBefore = siteRequest.getSessionIdBefore();
 		String sessionId = siteRequest.getSessionId();
-		String customerProfileId;
-		if(patch)
-			customerProfileId = jsonObject.getString("setCustomerProfileId");
-		else
-			customerProfileId = jsonObject.getString("customerProfileId");
 
 		SearchList<SchoolEnrollment> enrollmentList = new SearchList<SchoolEnrollment>();
 		if(sessionIdBefore != null) {
@@ -58,55 +53,79 @@ public class SiteUserEnUSApiServiceImpl extends SiteUserEnUSGenApiServiceImpl {
 			}
 		}
 
-		if(customerProfileId == null) {
-			SiteConfig siteConfig = siteRequest.getSiteConfig_();
-			MerchantAuthenticationType merchantAuthenticationType = new MerchantAuthenticationType();
-			merchantAuthenticationType.setName(siteConfig.getAuthorizeApiLoginId());
-			merchantAuthenticationType.setTransactionKey(siteConfig.getAuthorizeTransactionKey());
-			ApiOperationBase.setMerchantAuthentication(merchantAuthenticationType);
-			
-			CreateCustomerProfileRequest createCustomerProfileRequest = new CreateCustomerProfileRequest();
-			createCustomerProfileRequest.setMerchantAuthentication(merchantAuthenticationType);
-			CustomerProfileType profile = new CustomerProfileType();
-			if(patch) {
-				profile.setEmail(jsonObject.getString("setUserEmail"));
-				profile.setDescription(jsonObject.getString("setUserId"));
-				profile.setMerchantCustomerId(jsonObject.getString("setUserCompleteName"));
-			}
-			else {
-				profile.setEmail(jsonObject.getString("userEmail"));
-				profile.setDescription(jsonObject.getString("userId"));
-				profile.setMerchantCustomerId(jsonObject.getString("userCompleteName"));
-			}
-			createCustomerProfileRequest.setProfile(profile);
-	
-			CreateCustomerProfileController controller = new CreateCustomerProfileController(createCustomerProfileRequest);
-			GetTransactionListForCustomerController.setEnvironment(Environment.valueOf(siteConfig.getAuthorizeEnvironment()));
-			controller.execute();
-			if(controller.getErrorResponse() != null)
-				throw new RuntimeException(controller.getResults().toString());
-			CreateCustomerProfileResponse response = controller.getApiResponse();
-			if(MessageTypeEnum.ERROR.equals(response.getMessages().getResultCode())) {
-				String message = response.getMessages().getMessage().stream().findFirst().map(m -> m.getText()).orElse("");
-				Matcher matcher = Pattern.compile("A duplicate record with ID (\\d+) already exists.").matcher(message);
-				if(matcher.find()) {
-					customerProfileId = matcher.group(1);
-				}
-				else {
-//					throw new RuntimeException(response.getMessages().getMessage().stream().findFirst().map(m -> String.format("%s %s", m.getCode(), m.getText())).orElse("CreateCustomerProfileRequest failed. "));
-					LOGGER.error(response.getMessages().getMessage().stream().findFirst().map(m -> String.format("%s %s", m.getCode(), m.getText())).orElse("CreateCustomerProfileRequest failed. "));
-				}
-			}
-			else {
-				customerProfileId = response.getCustomerProfileId();
-			}
-			if(patch)
-				jsonObject.put("setCustomerProfileId", customerProfileId);
-			else
-				jsonObject.put("customerProfileId", customerProfileId);
+		Boolean defineProfile1 = userSiteUserDefineProfile(1, siteRequest, jsonObject, patch);
+		Boolean defineProfile2 = userSiteUserDefineProfile(2, siteRequest, jsonObject, patch);
+		if(defineProfile1 || defineProfile2) 
 			return true;
-		}
 		else 
 			return enrollmentList.size() > 0;
+	}
+
+	public Boolean userSiteUserDefineProfile(Integer schoolNumber, SiteRequestEnUS siteRequest, JsonObject jsonObject, Boolean patch) {
+		SiteConfig siteConfig = siteRequest.getSiteConfig_();
+		String authorizeApiLoginId = (String)siteConfig.obtainSiteConfig("authorizeApiLoginId" + schoolNumber);
+		String authorizeTransactionKey = (String)siteConfig.obtainSiteConfig("authorizeTransactionKey" + schoolNumber);
+
+		if(authorizeApiLoginId != null && authorizeTransactionKey != null) {
+			String customerProfileId;
+			if(patch)
+				customerProfileId = jsonObject.getString("setCustomerProfileId" + schoolNumber);
+			else
+				customerProfileId = jsonObject.getString("customerProfileId" + schoolNumber);
+	
+			if(customerProfileId == null) {
+				MerchantAuthenticationType merchantAuthenticationType = new MerchantAuthenticationType();
+				merchantAuthenticationType.setName(authorizeApiLoginId);
+				merchantAuthenticationType.setTransactionKey(authorizeTransactionKey);
+				ApiOperationBase.setMerchantAuthentication(merchantAuthenticationType);
+				
+				CreateCustomerProfileRequest createCustomerProfileRequest = new CreateCustomerProfileRequest();
+				createCustomerProfileRequest.setMerchantAuthentication(merchantAuthenticationType);
+				CustomerProfileType profile = new CustomerProfileType();
+				if(patch) {
+					profile.setEmail(jsonObject.getString("setUserEmail"));
+					profile.setDescription(jsonObject.getString("setUserId"));
+					profile.setMerchantCustomerId(jsonObject.getString("setUserCompleteName"));
+				}
+				else {
+					profile.setEmail(jsonObject.getString("userEmail"));
+					profile.setDescription(jsonObject.getString("userId"));
+					profile.setMerchantCustomerId(jsonObject.getString("userCompleteName"));
+				}
+				createCustomerProfileRequest.setProfile(profile);
+		
+				CreateCustomerProfileController controller = new CreateCustomerProfileController(createCustomerProfileRequest);
+				GetTransactionListForCustomerController.setEnvironment(Environment.valueOf(siteConfig.getAuthorizeEnvironment()));
+				controller.execute();
+				if(controller.getErrorResponse() != null)
+					throw new RuntimeException(controller.getResults().toString());
+				CreateCustomerProfileResponse response = controller.getApiResponse();
+				if(MessageTypeEnum.ERROR.equals(response.getMessages().getResultCode())) {
+					String message = response.getMessages().getMessage().stream().findFirst().map(m -> m.getText()).orElse("");
+					Matcher matcher = Pattern.compile("A duplicate record with ID (\\d+) already exists.").matcher(message);
+					if(matcher.find()) {
+						customerProfileId = matcher.group(1);
+					}
+					else {
+	//					throw new RuntimeException(response.getMessages().getMessage().stream().findFirst().map(m -> String.format("%s %s", m.getCode(), m.getText())).orElse("CreateCustomerProfileRequest failed. "));
+						LOGGER.error(response.getMessages().getMessage().stream().findFirst().map(m -> String.format("%s %s", m.getCode(), m.getText())).orElse("CreateCustomerProfileRequest failed. "));
+					}
+				}
+				else {
+					customerProfileId = response.getCustomerProfileId();
+				}
+				if(patch)
+					jsonObject.put("setCustomerProfileId", customerProfileId);
+				else
+					jsonObject.put("customerProfileId", customerProfileId);
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+		else {
+			return false;
+		}
 	}
 }

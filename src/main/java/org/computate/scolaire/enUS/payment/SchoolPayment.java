@@ -59,6 +59,11 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 		}
 	}
 
+	protected void _schoolNumber(Wrap<Integer> c) {
+		if(enrollment_ != null)
+			c.o(enrollment_.getSchoolNumber());
+	}
+
 	protected void _userKeys(List<Long> l) {
 		l.addAll(enrollmentSearch.getQueryResponse().getFacetField("userKeys_indexed_longs").getValues().stream().map(o -> Long.parseLong(o.getName())).collect(Collectors.toList()));
 	}

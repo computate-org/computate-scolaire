@@ -369,6 +369,75 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		return (PaiementScolaire)this;
 	}
 
+	/////////////////
+	// ecoleNumero //
+	/////////////////
+
+	/**	L'entité « ecoleNumero »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected Integer ecoleNumero;
+	@JsonIgnore
+	public Couverture<Integer> ecoleNumeroCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("ecoleNumero").o(ecoleNumero);
+
+	/**	<br/>L'entité « ecoleNumero »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:ecoleNumero">Trouver l'entité ecoleNumero dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _ecoleNumero(Couverture<Integer> c);
+
+	public Integer getEcoleNumero() {
+		return ecoleNumero;
+	}
+
+	public void setEcoleNumero(Integer ecoleNumero) {
+		this.ecoleNumero = ecoleNumero;
+		this.ecoleNumeroCouverture.dejaInitialise = true;
+	}
+	public PaiementScolaire setEcoleNumero(String o) {
+		if(NumberUtils.isParsable(o))
+			this.ecoleNumero = Integer.parseInt(o);
+		this.ecoleNumeroCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	protected PaiementScolaire ecoleNumeroInit() {
+		if(!ecoleNumeroCouverture.dejaInitialise) {
+			_ecoleNumero(ecoleNumeroCouverture);
+			if(ecoleNumero == null)
+				setEcoleNumero(ecoleNumeroCouverture.o);
+		}
+		ecoleNumeroCouverture.dejaInitialise(true);
+		return (PaiementScolaire)this;
+	}
+
+	public Integer solrEcoleNumero() {
+		return ecoleNumero;
+	}
+
+	public String strEcoleNumero() {
+		return ecoleNumero == null ? "" : ecoleNumero.toString();
+	}
+
+	public String jsonEcoleNumero() {
+		return ecoleNumero == null ? "" : ecoleNumero.toString();
+	}
+
+	public String nomAffichageEcoleNumero() {
+		return null;
+	}
+
+	public String htmTooltipEcoleNumero() {
+		return null;
+	}
+
+	public String htmEcoleNumero() {
+		return ecoleNumero == null ? "" : StringEscapeUtils.escapeHtml4(strEcoleNumero());
+	}
+
 	/////////////////////
 	// utilisateurCles //
 	/////////////////////
@@ -5601,6 +5670,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		inscriptionCleInit();
 		inscriptionRechercheInit();
 		inscription_Init();
+		ecoleNumeroInit();
 		utilisateurClesInit();
 		ecoleCleInit();
 		anneeCleInit();
@@ -5703,6 +5773,8 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				return oPaiementScolaire.inscriptionRecherche;
 			case "inscription_":
 				return oPaiementScolaire.inscription_;
+			case "ecoleNumero":
+				return oPaiementScolaire.ecoleNumero;
 			case "utilisateurCles":
 				return oPaiementScolaire.utilisateurCles;
 			case "ecoleCle":
@@ -6018,6 +6090,12 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			Long inscriptionCle = (Long)solrDocument.get("inscriptionCle_stored_long");
 			if(inscriptionCle != null)
 				oPaiementScolaire.setInscriptionCle(inscriptionCle);
+
+			if(sauvegardes.contains("ecoleNumero")) {
+				Integer ecoleNumero = (Integer)solrDocument.get("ecoleNumero_stored_int");
+				if(ecoleNumero != null)
+					oPaiementScolaire.setEcoleNumero(ecoleNumero);
+			}
 
 			if(sauvegardes.contains("utilisateurCles")) {
 				List<Long> utilisateurCles = (List<Long>)solrDocument.get("utilisateurCles_stored_longs");
@@ -6417,6 +6495,10 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			document.addField("inscriptionCle_indexed_long", inscriptionCle);
 			document.addField("inscriptionCle_stored_long", inscriptionCle);
 		}
+		if(ecoleNumero != null) {
+			document.addField("ecoleNumero_indexed_int", ecoleNumero);
+			document.addField("ecoleNumero_stored_int", ecoleNumero);
+		}
 		if(utilisateurCles != null) {
 			for(java.lang.Long o : utilisateurCles) {
 				document.addField("utilisateurCles_indexed_longs", o);
@@ -6676,6 +6758,8 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				return "paiementCle_indexed_long";
 			case "inscriptionCle":
 				return "inscriptionCle_indexed_long";
+			case "ecoleNumero":
+				return "ecoleNumero_indexed_int";
 			case "utilisateurCles":
 				return "utilisateurCles_indexed_longs";
 			case "ecoleCle":
@@ -6820,6 +6904,10 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		Long inscriptionCle = (Long)solrDocument.get("inscriptionCle_stored_long");
 		if(inscriptionCle != null)
 			oPaiementScolaire.setInscriptionCle(inscriptionCle);
+
+		Integer ecoleNumero = (Integer)solrDocument.get("ecoleNumero_stored_int");
+		if(ecoleNumero != null)
+			oPaiementScolaire.setEcoleNumero(ecoleNumero);
 
 		List<Long> utilisateurCles = (List<Long>)solrDocument.get("utilisateurCles_stored_longs");
 		if(utilisateurCles != null)

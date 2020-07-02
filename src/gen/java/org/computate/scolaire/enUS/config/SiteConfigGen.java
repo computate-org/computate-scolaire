@@ -3,6 +3,7 @@ package org.computate.scolaire.enUS.config;
 import java.util.Arrays;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.util.Date;
+import java.util.HashMap;
 import org.computate.scolaire.enUS.writer.AllWriter;
 import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.apache.commons.lang3.StringUtils;
@@ -2686,79 +2687,231 @@ The default timezone of the site.
 		return (SiteConfig)this;
 	}
 
-	/////////////////////////
-	// authorizeApiLoginId //
-	/////////////////////////
+	//////////////////////////
+	// authorizeApiLoginId1 //
+	//////////////////////////
 
-	/**	L'entité « authorizeApiLoginId »
+	/**	L'entité « authorizeApiLoginId1 »
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected String authorizeApiLoginId;
+	protected String authorizeApiLoginId1;
 	@JsonIgnore
-	public Wrap<String> authorizeApiLoginIdWrap = new Wrap<String>().p(this).c(String.class).var("authorizeApiLoginId").o(authorizeApiLoginId);
+	public Wrap<String> authorizeApiLoginId1Wrap = new Wrap<String>().p(this).c(String.class).var("authorizeApiLoginId1").o(authorizeApiLoginId1);
 
-	/**	<br/>L'entité « authorizeApiLoginId »
+	/**	<br/>L'entité « authorizeApiLoginId1 »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:authorizeApiLoginId">Trouver l'entité authorizeApiLoginId dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:authorizeApiLoginId1">Trouver l'entité authorizeApiLoginId1 dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _authorizeApiLoginId(Wrap<String> c);
+	protected abstract void _authorizeApiLoginId1(Wrap<String> c);
 
-	public String getAuthorizeApiLoginId() {
-		return authorizeApiLoginId;
+	public String getAuthorizeApiLoginId1() {
+		return authorizeApiLoginId1;
 	}
 
-	public void setAuthorizeApiLoginId(String authorizeApiLoginId) {
-		this.authorizeApiLoginId = authorizeApiLoginId;
-		this.authorizeApiLoginIdWrap.alreadyInitialized = true;
+	public void setAuthorizeApiLoginId1(String authorizeApiLoginId1) {
+		this.authorizeApiLoginId1 = authorizeApiLoginId1;
+		this.authorizeApiLoginId1Wrap.alreadyInitialized = true;
 	}
-	protected SiteConfig authorizeApiLoginIdInit() {
-		if(!authorizeApiLoginIdWrap.alreadyInitialized) {
-			_authorizeApiLoginId(authorizeApiLoginIdWrap);
-			if(authorizeApiLoginId == null)
-				setAuthorizeApiLoginId(authorizeApiLoginIdWrap.o);
+	protected SiteConfig authorizeApiLoginId1Init() {
+		if(!authorizeApiLoginId1Wrap.alreadyInitialized) {
+			_authorizeApiLoginId1(authorizeApiLoginId1Wrap);
+			if(authorizeApiLoginId1 == null)
+				setAuthorizeApiLoginId1(authorizeApiLoginId1Wrap.o);
 		}
-		authorizeApiLoginIdWrap.alreadyInitialized(true);
+		authorizeApiLoginId1Wrap.alreadyInitialized(true);
 		return (SiteConfig)this;
 	}
 
-	/////////////////////////////
-	// authorizeTransactionKey //
-	/////////////////////////////
+	//////////////////////////////
+	// authorizeTransactionKey1 //
+	//////////////////////////////
 
-	/**	L'entité « authorizeTransactionKey »
+	/**	L'entité « authorizeTransactionKey1 »
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected String authorizeTransactionKey;
+	protected String authorizeTransactionKey1;
 	@JsonIgnore
-	public Wrap<String> authorizeTransactionKeyWrap = new Wrap<String>().p(this).c(String.class).var("authorizeTransactionKey").o(authorizeTransactionKey);
+	public Wrap<String> authorizeTransactionKey1Wrap = new Wrap<String>().p(this).c(String.class).var("authorizeTransactionKey1").o(authorizeTransactionKey1);
 
-	/**	<br/>L'entité « authorizeTransactionKey »
+	/**	<br/>L'entité « authorizeTransactionKey1 »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:authorizeTransactionKey">Trouver l'entité authorizeTransactionKey dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:authorizeTransactionKey1">Trouver l'entité authorizeTransactionKey1 dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _authorizeTransactionKey(Wrap<String> c);
+	protected abstract void _authorizeTransactionKey1(Wrap<String> c);
 
-	public String getAuthorizeTransactionKey() {
-		return authorizeTransactionKey;
+	public String getAuthorizeTransactionKey1() {
+		return authorizeTransactionKey1;
 	}
 
-	public void setAuthorizeTransactionKey(String authorizeTransactionKey) {
-		this.authorizeTransactionKey = authorizeTransactionKey;
-		this.authorizeTransactionKeyWrap.alreadyInitialized = true;
+	public void setAuthorizeTransactionKey1(String authorizeTransactionKey1) {
+		this.authorizeTransactionKey1 = authorizeTransactionKey1;
+		this.authorizeTransactionKey1Wrap.alreadyInitialized = true;
 	}
-	protected SiteConfig authorizeTransactionKeyInit() {
-		if(!authorizeTransactionKeyWrap.alreadyInitialized) {
-			_authorizeTransactionKey(authorizeTransactionKeyWrap);
-			if(authorizeTransactionKey == null)
-				setAuthorizeTransactionKey(authorizeTransactionKeyWrap.o);
+	protected SiteConfig authorizeTransactionKey1Init() {
+		if(!authorizeTransactionKey1Wrap.alreadyInitialized) {
+			_authorizeTransactionKey1(authorizeTransactionKey1Wrap);
+			if(authorizeTransactionKey1 == null)
+				setAuthorizeTransactionKey1(authorizeTransactionKey1Wrap.o);
 		}
-		authorizeTransactionKeyWrap.alreadyInitialized(true);
+		authorizeTransactionKey1Wrap.alreadyInitialized(true);
+		return (SiteConfig)this;
+	}
+
+	/////////////////////
+	// schoolLocation1 //
+	/////////////////////
+
+	/**	L'entité « schoolLocation1 »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String schoolLocation1;
+	@JsonIgnore
+	public Wrap<String> schoolLocation1Wrap = new Wrap<String>().p(this).c(String.class).var("schoolLocation1").o(schoolLocation1);
+
+	/**	<br/>L'entité « schoolLocation1 »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolLocation1">Trouver l'entité schoolLocation1 dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _schoolLocation1(Wrap<String> c);
+
+	public String getSchoolLocation1() {
+		return schoolLocation1;
+	}
+
+	public void setSchoolLocation1(String schoolLocation1) {
+		this.schoolLocation1 = schoolLocation1;
+		this.schoolLocation1Wrap.alreadyInitialized = true;
+	}
+	protected SiteConfig schoolLocation1Init() {
+		if(!schoolLocation1Wrap.alreadyInitialized) {
+			_schoolLocation1(schoolLocation1Wrap);
+			if(schoolLocation1 == null)
+				setSchoolLocation1(schoolLocation1Wrap.o);
+		}
+		schoolLocation1Wrap.alreadyInitialized(true);
+		return (SiteConfig)this;
+	}
+
+	//////////////////////////
+	// authorizeApiLoginId2 //
+	//////////////////////////
+
+	/**	L'entité « authorizeApiLoginId2 »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String authorizeApiLoginId2;
+	@JsonIgnore
+	public Wrap<String> authorizeApiLoginId2Wrap = new Wrap<String>().p(this).c(String.class).var("authorizeApiLoginId2").o(authorizeApiLoginId2);
+
+	/**	<br/>L'entité « authorizeApiLoginId2 »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:authorizeApiLoginId2">Trouver l'entité authorizeApiLoginId2 dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _authorizeApiLoginId2(Wrap<String> c);
+
+	public String getAuthorizeApiLoginId2() {
+		return authorizeApiLoginId2;
+	}
+
+	public void setAuthorizeApiLoginId2(String authorizeApiLoginId2) {
+		this.authorizeApiLoginId2 = authorizeApiLoginId2;
+		this.authorizeApiLoginId2Wrap.alreadyInitialized = true;
+	}
+	protected SiteConfig authorizeApiLoginId2Init() {
+		if(!authorizeApiLoginId2Wrap.alreadyInitialized) {
+			_authorizeApiLoginId2(authorizeApiLoginId2Wrap);
+			if(authorizeApiLoginId2 == null)
+				setAuthorizeApiLoginId2(authorizeApiLoginId2Wrap.o);
+		}
+		authorizeApiLoginId2Wrap.alreadyInitialized(true);
+		return (SiteConfig)this;
+	}
+
+	//////////////////////////////
+	// authorizeTransactionKey2 //
+	//////////////////////////////
+
+	/**	L'entité « authorizeTransactionKey2 »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String authorizeTransactionKey2;
+	@JsonIgnore
+	public Wrap<String> authorizeTransactionKey2Wrap = new Wrap<String>().p(this).c(String.class).var("authorizeTransactionKey2").o(authorizeTransactionKey2);
+
+	/**	<br/>L'entité « authorizeTransactionKey2 »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:authorizeTransactionKey2">Trouver l'entité authorizeTransactionKey2 dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _authorizeTransactionKey2(Wrap<String> c);
+
+	public String getAuthorizeTransactionKey2() {
+		return authorizeTransactionKey2;
+	}
+
+	public void setAuthorizeTransactionKey2(String authorizeTransactionKey2) {
+		this.authorizeTransactionKey2 = authorizeTransactionKey2;
+		this.authorizeTransactionKey2Wrap.alreadyInitialized = true;
+	}
+	protected SiteConfig authorizeTransactionKey2Init() {
+		if(!authorizeTransactionKey2Wrap.alreadyInitialized) {
+			_authorizeTransactionKey2(authorizeTransactionKey2Wrap);
+			if(authorizeTransactionKey2 == null)
+				setAuthorizeTransactionKey2(authorizeTransactionKey2Wrap.o);
+		}
+		authorizeTransactionKey2Wrap.alreadyInitialized(true);
+		return (SiteConfig)this;
+	}
+
+	/////////////////////
+	// schoolLocation2 //
+	/////////////////////
+
+	/**	L'entité « schoolLocation2 »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String schoolLocation2;
+	@JsonIgnore
+	public Wrap<String> schoolLocation2Wrap = new Wrap<String>().p(this).c(String.class).var("schoolLocation2").o(schoolLocation2);
+
+	/**	<br/>L'entité « schoolLocation2 »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolLocation2">Trouver l'entité schoolLocation2 dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _schoolLocation2(Wrap<String> c);
+
+	public String getSchoolLocation2() {
+		return schoolLocation2;
+	}
+
+	public void setSchoolLocation2(String schoolLocation2) {
+		this.schoolLocation2 = schoolLocation2;
+		this.schoolLocation2Wrap.alreadyInitialized = true;
+	}
+	protected SiteConfig schoolLocation2Init() {
+		if(!schoolLocation2Wrap.alreadyInitialized) {
+			_schoolLocation2(schoolLocation2Wrap);
+			if(schoolLocation2 == null)
+				setSchoolLocation2(schoolLocation2Wrap.o);
+		}
+		schoolLocation2Wrap.alreadyInitialized(true);
 		return (SiteConfig)this;
 	}
 
@@ -3018,8 +3171,12 @@ The default timezone of the site.
 		emailAuthInit();
 		emailSslInit();
 		siteZoneInit();
-		authorizeApiLoginIdInit();
-		authorizeTransactionKeyInit();
+		authorizeApiLoginId1Init();
+		authorizeTransactionKey1Init();
+		schoolLocation1Init();
+		authorizeApiLoginId2Init();
+		authorizeTransactionKey2Init();
+		schoolLocation2Init();
 		authorizeEnvironmentInit();
 		authorizeUrlInit();
 		paymentDayInit();
@@ -3178,10 +3335,18 @@ The default timezone of the site.
 				return oSiteConfig.emailSsl;
 			case "siteZone":
 				return oSiteConfig.siteZone;
-			case "authorizeApiLoginId":
-				return oSiteConfig.authorizeApiLoginId;
-			case "authorizeTransactionKey":
-				return oSiteConfig.authorizeTransactionKey;
+			case "authorizeApiLoginId1":
+				return oSiteConfig.authorizeApiLoginId1;
+			case "authorizeTransactionKey1":
+				return oSiteConfig.authorizeTransactionKey1;
+			case "schoolLocation1":
+				return oSiteConfig.schoolLocation1;
+			case "authorizeApiLoginId2":
+				return oSiteConfig.authorizeApiLoginId2;
+			case "authorizeTransactionKey2":
+				return oSiteConfig.authorizeTransactionKey2;
+			case "schoolLocation2":
+				return oSiteConfig.schoolLocation2;
 			case "authorizeEnvironment":
 				return oSiteConfig.authorizeEnvironment;
 			case "authorizeUrl":

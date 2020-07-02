@@ -50,7 +50,7 @@ public class PaymentPage extends PaymentPageGen<PaymentGenPage> {
 				Long enrollmentKey = payment.getEnrollmentKey();
 				String childCompleteNamePreferred = payment.getChildCompleteNamePreferred();
 				if(enrollmentKey != null && childCompleteNamePreferred != null) {
-					writeMakePayment(amount, enrollmentKey, childCompleteNamePreferred);
+					writeMakePayment(payment.getSchoolNumber(), amount, enrollmentKey, childCompleteNamePreferred);
 				}
 			}
 		}

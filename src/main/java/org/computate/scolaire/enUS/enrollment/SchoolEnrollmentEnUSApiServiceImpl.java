@@ -76,11 +76,6 @@ public class SchoolEnrollmentEnUSApiServiceImpl extends SchoolEnrollmentEnUSGenA
 	@Override public Boolean userSchoolEnrollmentDefine(SiteRequestEnUS siteRequest, JsonObject jsonObject, Boolean patch) {
 		String sessionIdBefore = siteRequest.getSessionIdBefore();
 		String sessionId = siteRequest.getSessionId();
-		String customerProfileId;
-		if(patch)
-			customerProfileId = jsonObject.getString("setCustomerProfileId");
-		else
-			customerProfileId = jsonObject.getString("customerProfileId");
 
 		SearchList<SchoolEnrollment> enrollmentList = new SearchList<SchoolEnrollment>();
 		if(sessionIdBefore != null) {
@@ -99,56 +94,80 @@ public class SchoolEnrollmentEnUSApiServiceImpl extends SchoolEnrollmentEnUSGenA
 			}
 		}
 
-		if(customerProfileId == null) {
-			SiteConfig siteConfig = siteRequest.getSiteConfig_();
-			MerchantAuthenticationType merchantAuthenticationType = new MerchantAuthenticationType();
-			merchantAuthenticationType.setName(siteConfig.getAuthorizeApiLoginId());
-			merchantAuthenticationType.setTransactionKey(siteConfig.getAuthorizeTransactionKey());
-			ApiOperationBase.setMerchantAuthentication(merchantAuthenticationType);
-			
-			CreateCustomerProfileRequest createCustomerProfileRequest = new CreateCustomerProfileRequest();
-			createCustomerProfileRequest.setMerchantAuthentication(merchantAuthenticationType);
-			CustomerProfileType profile = new CustomerProfileType();
-			if(patch) {
-				profile.setEmail(jsonObject.getString("setUserEmail"));
-				profile.setDescription(jsonObject.getString("setUserId"));
-				profile.setMerchantCustomerId(jsonObject.getString("setUserCompleteName"));
-			}
-			else {
-				profile.setEmail(jsonObject.getString("userEmail"));
-				profile.setDescription(jsonObject.getString("userId"));
-				profile.setMerchantCustomerId(jsonObject.getString("userCompleteName"));
-			}
-			createCustomerProfileRequest.setProfile(profile);
-	
-			CreateCustomerProfileController controller = new CreateCustomerProfileController(createCustomerProfileRequest);
-			GetTransactionListForCustomerController.setEnvironment(Environment.valueOf(siteConfig.getAuthorizeEnvironment()));
-			controller.execute();
-			if(controller.getErrorResponse() != null)
-				throw new RuntimeException(controller.getResults().toString());
-			CreateCustomerProfileResponse response = controller.getApiResponse();
-			if(MessageTypeEnum.ERROR.equals(response.getMessages().getResultCode())) {
-				String message = response.getMessages().getMessage().stream().findFirst().map(m -> m.getText()).orElse("");
-				Matcher matcher = Pattern.compile("A duplicate record with ID (\\d+) already exists.").matcher(message);
-				if(matcher.find()) {
-					customerProfileId = matcher.group(1);
-				}
-				else {
-//					throw new RuntimeException(response.getMessages().getMessage().stream().findFirst().map(m -> String.format("%s %s", m.getCode(), m.getText())).orElse("CreateCustomerProfileRequest failed. "));
-					LOGGER.error(response.getMessages().getMessage().stream().findFirst().map(m -> String.format("%s %s", m.getCode(), m.getText())).orElse("CreateCustomerProfileRequest failed. "));
-				}
-			}
-			else {
-				customerProfileId = response.getCustomerProfileId();
-			}
-			if(patch)
-				jsonObject.put("setCustomerProfileId", customerProfileId);
-			else
-				jsonObject.put("customerProfileId", customerProfileId);
+		Boolean defineProfile1 = userSiteUserDefineProfile(1, siteRequest, jsonObject, patch);
+		Boolean defineProfile2 = userSiteUserDefineProfile(2, siteRequest, jsonObject, patch);
+		if(defineProfile1 || defineProfile2) 
 			return true;
-		}
 		else 
 			return enrollmentList.size() > 0;
+	}
+
+	public Boolean userSiteUserDefineProfile(Integer schoolNumber, SiteRequestEnUS siteRequest, JsonObject jsonObject, Boolean patch) {
+		SiteConfig siteConfig = siteRequest.getSiteConfig_();
+		String authorizeApiLoginId = (String)siteConfig.obtainSiteConfig("authorizeApiLoginId" + schoolNumber);
+		String authorizeTransactionKey = (String)siteConfig.obtainSiteConfig("authorizeTransactionKey" + schoolNumber);
+
+		if(authorizeApiLoginId != null && authorizeTransactionKey != null) {
+			String customerProfileId;
+			if(patch)
+				customerProfileId = jsonObject.getString("setCustomerProfileId" + schoolNumber);
+			else
+				customerProfileId = jsonObject.getString("customerProfileId" + schoolNumber);
+	
+			if(customerProfileId == null) {
+				MerchantAuthenticationType merchantAuthenticationType = new MerchantAuthenticationType();
+				merchantAuthenticationType.setName(authorizeApiLoginId);
+				merchantAuthenticationType.setTransactionKey(authorizeTransactionKey);
+				ApiOperationBase.setMerchantAuthentication(merchantAuthenticationType);
+				
+				CreateCustomerProfileRequest createCustomerProfileRequest = new CreateCustomerProfileRequest();
+				createCustomerProfileRequest.setMerchantAuthentication(merchantAuthenticationType);
+				CustomerProfileType profile = new CustomerProfileType();
+				if(patch) {
+					profile.setEmail(jsonObject.getString("setUserEmail"));
+					profile.setDescription(jsonObject.getString("setUserId"));
+					profile.setMerchantCustomerId(jsonObject.getString("setUserCompleteName"));
+				}
+				else {
+					profile.setEmail(jsonObject.getString("userEmail"));
+					profile.setDescription(jsonObject.getString("userId"));
+					profile.setMerchantCustomerId(jsonObject.getString("userCompleteName"));
+				}
+				createCustomerProfileRequest.setProfile(profile);
+		
+				CreateCustomerProfileController controller = new CreateCustomerProfileController(createCustomerProfileRequest);
+				GetTransactionListForCustomerController.setEnvironment(Environment.valueOf(siteConfig.getAuthorizeEnvironment()));
+				controller.execute();
+				if(controller.getErrorResponse() != null)
+					throw new RuntimeException(controller.getResults().toString());
+				CreateCustomerProfileResponse response = controller.getApiResponse();
+				if(MessageTypeEnum.ERROR.equals(response.getMessages().getResultCode())) {
+					String message = response.getMessages().getMessage().stream().findFirst().map(m -> m.getText()).orElse("");
+					Matcher matcher = Pattern.compile("A duplicate record with ID (\\d+) already exists.").matcher(message);
+					if(matcher.find()) {
+						customerProfileId = matcher.group(1);
+					}
+					else {
+	//					throw new RuntimeException(response.getMessages().getMessage().stream().findFirst().map(m -> String.format("%s %s", m.getCode(), m.getText())).orElse("CreateCustomerProfileRequest failed. "));
+						LOGGER.error(response.getMessages().getMessage().stream().findFirst().map(m -> String.format("%s %s", m.getCode(), m.getText())).orElse("CreateCustomerProfileRequest failed. "));
+					}
+				}
+				else {
+					customerProfileId = response.getCustomerProfileId();
+				}
+				if(patch)
+					jsonObject.put("setCustomerProfileId", customerProfileId);
+				else
+					jsonObject.put("customerProfileId", customerProfileId);
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+		else {
+			return false;
+		}
 	}
 
 	@Override
@@ -170,17 +189,10 @@ public class SchoolEnrollmentEnUSApiServiceImpl extends SchoolEnrollmentEnUSGenA
 								}
 
 								SchoolEnrollment schoolEnrollment = listSchoolEnrollment.first();
-								SiteConfig siteConfig = siteRequest.getSiteConfig_();
-								MerchantAuthenticationType merchantAuthenticationType = new MerchantAuthenticationType();
-								String authorizeApiLoginId = siteConfig.getAuthorizeApiLoginId();
-								String authorizeTransactionKey = siteConfig.getAuthorizeTransactionKey();
-								merchantAuthenticationType.setName(authorizeApiLoginId);
-								merchantAuthenticationType.setTransactionKey(authorizeTransactionKey);
-								ApiOperationBase.setMerchantAuthentication(merchantAuthenticationType);
 
 								enrollmentChargesFuture(schoolEnrollment, d -> {
 									if(d.succeeded()) {
-										authorizeNetEnrollmentPaymentsFuture(merchantAuthenticationType, schoolEnrollment, e -> {
+										authorizeNetEnrollmentPaymentsFuture(schoolEnrollment, e -> {
 											if(e.succeeded()) {
 												LOGGER.info("Creating payments for customer %s succeeded. ");
 												refreshsearchpageSchoolEnrollmentResponse(listSchoolEnrollment, f -> {
@@ -225,19 +237,12 @@ public class SchoolEnrollmentEnUSApiServiceImpl extends SchoolEnrollmentEnUSGenA
 	@Override public void listPATCHPaymentsSchoolEnrollment(ApiRequest apiRequest, SearchList<SchoolEnrollment> listSchoolEnrollment, String dt, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		List<Future> futures = new ArrayList<>();
 		SiteRequestEnUS siteRequest = listSchoolEnrollment.getSiteRequest_();
-		SiteConfig siteConfig = siteRequest.getSiteConfig_();
-		MerchantAuthenticationType merchantAuthenticationType = new MerchantAuthenticationType();
-		String authorizeApiLoginId = siteConfig.getAuthorizeApiLoginId();
-		String authorizeTransactionKey = siteConfig.getAuthorizeTransactionKey();
-		merchantAuthenticationType.setName(authorizeApiLoginId);
-		merchantAuthenticationType.setTransactionKey(authorizeTransactionKey);
-		ApiOperationBase.setMerchantAuthentication(merchantAuthenticationType);
 
 		listSchoolEnrollment.getList().forEach(o -> {
 			futures.add(
 					enrollmentChargesFuture(o, a -> {
 					if(a.succeeded()) {
-						authorizeNetEnrollmentPaymentsFuture(merchantAuthenticationType, o, c -> {
+						authorizeNetEnrollmentPaymentsFuture(o, c -> {
 							if(a.succeeded()) {
 							} else {
 								errorSchoolEnrollment(siteRequest, eventHandler, a);
@@ -409,14 +414,35 @@ public class SchoolEnrollmentEnUSApiServiceImpl extends SchoolEnrollmentEnUSGenA
 		}
 	}
 
-	public Future<Void> authorizeNetEnrollmentPaymentsFuture(MerchantAuthenticationType merchantAuthenticationType, SchoolEnrollment schoolEnrollment, Handler<AsyncResult<Void>> eventHandler) {
+	public Future<Void> authorizeNetEnrollmentPaymentsFuture(SchoolEnrollment schoolEnrollment, Handler<AsyncResult<Void>> eventHandler) {
 		SiteRequestEnUS siteRequest = schoolEnrollment.getSiteRequest_();
 		SiteContextEnUS siteContextEnUS = siteRequest.getSiteContext_();
 		SiteUser siteUser = siteRequest.getSiteUser();
 		SiteConfig siteConfig = siteRequest.getSiteConfig_();
 		Promise<Void> promise = Promise.promise();
-		String customerProfileId = Optional.ofNullable(siteUser).map(SiteUser::getCustomerProfileId).orElse(null);
+		Integer schoolNumber = schoolEnrollment.getSchoolNumber();
+		MerchantAuthenticationType merchantAuthenticationType = new MerchantAuthenticationType();
+		String authorizeApiLoginId = (String)siteConfig.obtainSiteConfig("authorizeApiLoginId" + schoolNumber);
+		String authorizeTransactionKey = (String)siteConfig.obtainSiteConfig("authorizeTransactionKey" + schoolNumber);
+		merchantAuthenticationType.setName(authorizeApiLoginId);
+		merchantAuthenticationType.setTransactionKey(authorizeTransactionKey);
+		ApiOperationBase.setMerchantAuthentication(merchantAuthenticationType);
+		String customerProfileId = Optional.ofNullable(siteUser).map(u -> (String)u.obtainSiteUser("customerProfileId" + schoolNumber)).orElse(null);
 
+		if(authorizeTransactionKey == null) {
+			String m = String.format("Missing an Authorize.net transaction key. ");
+			LOGGER.error(m);
+			eventHandler.handle(Future.failedFuture(m));
+			promise.fail(m);
+			return promise.future();
+		}
+		if(authorizeApiLoginId == null) {
+			String m = String.format("Missing an Authorize.net api login ID. ");
+			LOGGER.error(m);
+			eventHandler.handle(Future.failedFuture(m));
+			promise.fail(m);
+			return promise.future();
+		}
 		if(siteUser == null) {
 			String m = String.format("Only a logged in user can access this page. ");
 			LOGGER.error(m);
@@ -439,7 +465,7 @@ public class SchoolEnrollmentEnUSApiServiceImpl extends SchoolEnrollmentEnUSGenA
 				
 				GetTransactionListForCustomerRequest getRequest = new GetTransactionListForCustomerRequest();
 				getRequest.setMerchantAuthentication(merchantAuthenticationType);
-				getRequest.setCustomerProfileId(siteUser.getCustomerProfileId());
+				getRequest.setCustomerProfileId(customerProfileId);
 	
 				getRequest.setPaging(paging);
 	
@@ -464,7 +490,7 @@ public class SchoolEnrollmentEnUSApiServiceImpl extends SchoolEnrollmentEnUSGenA
 	
 					if (getResponse.getMessages().getResultCode() == MessageTypeEnum.OK) {
 						List<TransactionSummaryType> transactions = Optional.ofNullable(getResponse).map(GetTransactionListResponse::getTransactions).map(ArrayOfTransactionSummaryType::getTransaction).orElse(Arrays.asList());
-						LOGGER.info(String.format("There are %s transactions for client %s to load. ", transactions.size(), siteUser.getCustomerProfileId()));
+						LOGGER.info(String.format("There are %s transactions for client %s to load. ", transactions.size(), customerProfileId));
 						for(TransactionSummaryType transaction : transactions) {
 							futures.add(
 								futureAuthorizeNetPayment(merchantAuthenticationType, paymentService, schoolEnrollment.getSiteRequest_(), transaction, schoolEnrollment, b -> {
@@ -480,16 +506,16 @@ public class SchoolEnrollmentEnUSApiServiceImpl extends SchoolEnrollmentEnUSGenA
 							if(b.succeeded()) {
 								eventHandler.handle(Future.succeededFuture());
 								promise.complete();
-								LOGGER.info(String.format("transactions for customer %s loaded. ", siteUser.getCustomerProfileId()));
+								LOGGER.info(String.format("transactions for customer %s loaded. ", customerProfileId));
 							} else {
-								LOGGER.error(String.format("transactions for customer %s failed. ", siteUser.getCustomerProfileId()));
+								LOGGER.error(String.format("transactions for customer %s failed. ", customerProfileId));
 								eventHandler.handle(Future.failedFuture(b.cause()));
 								promise.fail(b.cause());
 							}
 						});
 					}
 					else {
-						LOGGER.error(String.format("transactions for customer %s failed. ", siteUser.getCustomerProfileId()));
+						LOGGER.error(String.format("transactions for customer %s failed. ", customerProfileId));
 						eventHandler.handle(Future.failedFuture(getResponse.getMessages().getMessage().stream().findFirst().map(m -> m.getText()).orElse("")));
 					}
 				}

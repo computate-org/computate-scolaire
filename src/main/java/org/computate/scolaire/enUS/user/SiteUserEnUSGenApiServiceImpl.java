@@ -862,30 +862,58 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 							}));
 						}
 						break;
-					case "setCustomerProfileId":
+					case "setCustomerProfileId1":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
 								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "customerProfileId")
+										, Tuple.of(pk, "customerProfileId1")
 										, b
 								-> {
 									if(b.succeeded())
 										a.handle(Future.succeededFuture());
 									else
-										a.handle(Future.failedFuture(new Exception("value SiteUser.customerProfileId failed", b.cause())));
+										a.handle(Future.failedFuture(new Exception("value SiteUser.customerProfileId1 failed", b.cause())));
 								});
 							}));
 						} else {
-							o2.setCustomerProfileId(jsonObject.getString(methodName));
+							o2.setCustomerProfileId1(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
 								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "customerProfileId", o2.jsonCustomerProfileId())
+										, Tuple.of(pk, "customerProfileId1", o2.jsonCustomerProfileId1())
 										, b
 								-> {
 									if(b.succeeded())
 										a.handle(Future.succeededFuture());
 									else
-										a.handle(Future.failedFuture(new Exception("value SiteUser.customerProfileId failed", b.cause())));
+										a.handle(Future.failedFuture(new Exception("value SiteUser.customerProfileId1 failed", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setCustomerProfileId2":
+						if(jsonObject.getString(methodName) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "customerProfileId2")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SiteUser.customerProfileId2 failed", b.cause())));
+								});
+							}));
+						} else {
+							o2.setCustomerProfileId2(jsonObject.getString(methodName));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "customerProfileId2", o2.jsonCustomerProfileId2())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SiteUser.customerProfileId2 failed", b.cause())));
 								});
 							}));
 						}
@@ -1304,16 +1332,29 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 							});
 						}));
 						break;
-					case "customerProfileId":
+					case "customerProfileId1":
 						futures.add(Future.future(a -> {
 							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "customerProfileId", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, Tuple.of(pk, "customerProfileId1", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
 									a.handle(Future.succeededFuture());
 								else
-									a.handle(Future.failedFuture(new Exception("value SiteUser.customerProfileId failed", b.cause())));
+									a.handle(Future.failedFuture(new Exception("value SiteUser.customerProfileId1 failed", b.cause())));
+							});
+						}));
+						break;
+					case "customerProfileId2":
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "customerProfileId2", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SiteUser.customerProfileId2 failed", b.cause())));
 							});
 						}));
 						break;
@@ -1846,7 +1887,8 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 												jsonObject.put("setUserFirstName", jsonPrincipal.getString("given_name"));
 												jsonObject.put("setUserLastName", jsonPrincipal.getString("family_name"));
 												jsonObject.put("setUserCompleteName", jsonPrincipal.getString("name"));
-												jsonObject.put("setCustomerProfileId", Optional.ofNullable(siteUser1).map(u -> u.getCustomerProfileId()).orElse(null));
+												jsonObject.put("setCustomerProfileId1", Optional.ofNullable(siteUser1).map(u -> u.getCustomerProfileId1()).orElse(null));
+												jsonObject.put("setCustomerProfileId2", Optional.ofNullable(siteUser1).map(u -> u.getCustomerProfileId2()).orElse(null));
 												jsonObject.put("setUserId", jsonPrincipal.getString("sub"));
 												jsonObject.put("setUserEmail", jsonPrincipal.getString("email"));
 												Boolean define = userSiteUserDefine(siteRequest, jsonObject, true);
@@ -1944,9 +1986,17 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 
 	public Boolean userSiteUserDefine(SiteRequestEnUS siteRequest, JsonObject jsonObject, Boolean patch) {
 		if(patch) {
-			return jsonObject.getString("setCustomerProfileId") == null;
+			if(jsonObject.getString("setCustomerProfileId1") == null)
+				return true;
+			if(jsonObject.getString("setCustomerProfileId2") == null)
+				return true;
+			return false;
 		} else {
-			return jsonObject.getString("customerProfileId") == null;
+			if(jsonObject.getString("setCustomerProfileId1") == null)
+				return true;
+			if(jsonObject.getString("setCustomerProfileId2") == null)
+				return true;
+			return false;
 		}
 	}
 

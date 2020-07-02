@@ -367,6 +367,75 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		return (SchoolPayment)this;
 	}
 
+	//////////////////
+	// schoolNumber //
+	//////////////////
+
+	/**	L'entité « schoolNumber »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected Integer schoolNumber;
+	@JsonIgnore
+	public Wrap<Integer> schoolNumberWrap = new Wrap<Integer>().p(this).c(Integer.class).var("schoolNumber").o(schoolNumber);
+
+	/**	<br/>L'entité « schoolNumber »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.payment.SchoolPayment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolNumber">Trouver l'entité schoolNumber dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _schoolNumber(Wrap<Integer> c);
+
+	public Integer getSchoolNumber() {
+		return schoolNumber;
+	}
+
+	public void setSchoolNumber(Integer schoolNumber) {
+		this.schoolNumber = schoolNumber;
+		this.schoolNumberWrap.alreadyInitialized = true;
+	}
+	public SchoolPayment setSchoolNumber(String o) {
+		if(NumberUtils.isParsable(o))
+			this.schoolNumber = Integer.parseInt(o);
+		this.schoolNumberWrap.alreadyInitialized = true;
+		return (SchoolPayment)this;
+	}
+	protected SchoolPayment schoolNumberInit() {
+		if(!schoolNumberWrap.alreadyInitialized) {
+			_schoolNumber(schoolNumberWrap);
+			if(schoolNumber == null)
+				setSchoolNumber(schoolNumberWrap.o);
+		}
+		schoolNumberWrap.alreadyInitialized(true);
+		return (SchoolPayment)this;
+	}
+
+	public Integer solrSchoolNumber() {
+		return schoolNumber;
+	}
+
+	public String strSchoolNumber() {
+		return schoolNumber == null ? "" : schoolNumber.toString();
+	}
+
+	public String jsonSchoolNumber() {
+		return schoolNumber == null ? "" : schoolNumber.toString();
+	}
+
+	public String nomAffichageSchoolNumber() {
+		return null;
+	}
+
+	public String htmTooltipSchoolNumber() {
+		return null;
+	}
+
+	public String htmSchoolNumber() {
+		return schoolNumber == null ? "" : StringEscapeUtils.escapeHtml4(strSchoolNumber());
+	}
+
 	//////////////
 	// userKeys //
 	//////////////
@@ -5586,6 +5655,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		enrollmentKeyInit();
 		enrollmentSearchInit();
 		enrollment_Init();
+		schoolNumberInit();
 		userKeysInit();
 		schoolKeyInit();
 		yearKeyInit();
@@ -5688,6 +5758,8 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				return oSchoolPayment.enrollmentSearch;
 			case "enrollment_":
 				return oSchoolPayment.enrollment_;
+			case "schoolNumber":
+				return oSchoolPayment.schoolNumber;
 			case "userKeys":
 				return oSchoolPayment.userKeys;
 			case "schoolKey":
@@ -6003,6 +6075,12 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 			Long enrollmentKey = (Long)solrDocument.get("enrollmentKey_stored_long");
 			if(enrollmentKey != null)
 				oSchoolPayment.setEnrollmentKey(enrollmentKey);
+
+			if(saves.contains("schoolNumber")) {
+				Integer schoolNumber = (Integer)solrDocument.get("schoolNumber_stored_int");
+				if(schoolNumber != null)
+					oSchoolPayment.setSchoolNumber(schoolNumber);
+			}
 
 			if(saves.contains("userKeys")) {
 				List<Long> userKeys = (List<Long>)solrDocument.get("userKeys_stored_longs");
@@ -6402,6 +6480,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 			document.addField("enrollmentKey_indexed_long", enrollmentKey);
 			document.addField("enrollmentKey_stored_long", enrollmentKey);
 		}
+		if(schoolNumber != null) {
+			document.addField("schoolNumber_indexed_int", schoolNumber);
+			document.addField("schoolNumber_stored_int", schoolNumber);
+		}
 		if(userKeys != null) {
 			for(java.lang.Long o : userKeys) {
 				document.addField("userKeys_indexed_longs", o);
@@ -6661,6 +6743,8 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				return "paymentKey_indexed_long";
 			case "enrollmentKey":
 				return "enrollmentKey_indexed_long";
+			case "schoolNumber":
+				return "schoolNumber_indexed_int";
 			case "userKeys":
 				return "userKeys_indexed_longs";
 			case "schoolKey":
@@ -6805,6 +6889,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		Long enrollmentKey = (Long)solrDocument.get("enrollmentKey_stored_long");
 		if(enrollmentKey != null)
 			oSchoolPayment.setEnrollmentKey(enrollmentKey);
+
+		Integer schoolNumber = (Integer)solrDocument.get("schoolNumber_stored_int");
+		if(schoolNumber != null)
+			oSchoolPayment.setSchoolNumber(schoolNumber);
 
 		List<Long> userKeys = (List<Long>)solrDocument.get("userKeys_stored_longs");
 		if(userKeys != null)

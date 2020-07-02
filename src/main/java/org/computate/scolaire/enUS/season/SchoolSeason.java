@@ -102,6 +102,11 @@ public class SchoolSeason extends SchoolSeasonGen<Cluster> {
 			c.o((String)year_.getSchoolPhoneNumber());
 	}
 
+	protected void _schoolNumber(Wrap<Integer> c) {
+		if(year_ != null)
+			c.o((Integer)year_.getSchoolNumber());
+	}
+
 	protected void _schoolAdministratorName(Wrap<String> c) {
 		if(year_ != null)
 			c.o((String)year_.getSchoolAdministratorName());

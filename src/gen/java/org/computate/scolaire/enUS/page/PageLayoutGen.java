@@ -6,6 +6,7 @@ import java.util.Date;
 import java.time.ZonedDateTime;
 import java.time.LocalDateTime;
 import org.computate.scolaire.enUS.search.SearchList;
+import java.util.HashMap;
 import org.computate.scolaire.enUS.school.School;
 import org.computate.scolaire.enUS.writer.AllWriter;
 import org.computate.scolaire.enUS.request.api.ApiRequest;

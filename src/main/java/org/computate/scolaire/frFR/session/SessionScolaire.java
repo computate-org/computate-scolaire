@@ -324,6 +324,21 @@ public class SessionScolaire extends SessionScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
+	 * Var.enUS: schoolNumber
+	 * Indexe: true
+	 * Stocke: true
+	 * r: EcoleNumero
+	 * r.enUS: SchoolNumber
+	 * r: saison
+	 * r.enUS: season
+	 */
+	protected void _ecoleNumero(Couverture<Integer> c) {
+		if(saison_ != null)
+			c.o((Integer)saison_.getEcoleNumero());
+	}
+
+	/**
+	 * {@inheritDoc}
 	 * Var.enUS: schoolAdministratorName
 	 * Indexe: true
 	 * Stocke: true

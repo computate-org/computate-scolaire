@@ -54,6 +54,9 @@ public class School extends SchoolGen<Cluster> {
 	protected void _schoolPhoneNumber(Wrap<String> c) {
 	}
 
+	protected void _schoolNumber(Wrap<Integer> c) {
+	}
+
 	protected void _schoolAdministratorName(Wrap<String> c) {
 	}
 

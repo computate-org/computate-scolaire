@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.ecole;                    
+package org.computate.scolaire.frFR.ecole;                        
 
 import java.util.List;
 
@@ -201,6 +201,20 @@ public class Ecole extends EcoleGen<Cluster> {
 	 * Description.enUS: Telephone number of the school. 
 	 */
 	protected void _ecoleNumeroTelephone(Couverture<String> c) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: schoolNumber
+	 * Definir: true
+	 * Indexe: true
+	 * Stocke: true
+	 * HtmlLigne: 6
+	 * HtmlCellule: 3
+	 * NomAffichage.frFR: école numéro
+	 * NomAffichage.enUS: school number
+	 */
+	protected void _ecoleNumero(Couverture<Integer> c) {
 	}
 
 	/**

@@ -342,6 +342,11 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 			c.o(year_.getSchoolPhoneNumber());
 	}
 
+	protected void _schoolNumber(Wrap<Integer> c) {
+		if(year_ != null)
+			c.o((Integer)year_.getSchoolNumber());
+	}
+
 	protected void _schoolAdministratorName(Wrap<String> c) {
 		if(year_ != null)
 			c.o(year_.getSchoolAdministratorName());

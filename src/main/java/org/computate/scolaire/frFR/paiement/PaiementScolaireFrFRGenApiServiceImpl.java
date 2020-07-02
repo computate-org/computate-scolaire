@@ -3416,7 +3416,8 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 												jsonObject.put("setUtilisateurPrenom", principalJson.getString("given_name"));
 												jsonObject.put("setUtilisateurNomFamille", principalJson.getString("family_name"));
 												jsonObject.put("setUtilisateurNomComplet", principalJson.getString("name"));
-												jsonObject.put("setCustomerProfileId", Optional.ofNullable(utilisateurSite1).map(u -> u.getCustomerProfileId()).orElse(null));
+												jsonObject.put("setCustomerProfileId1", Optional.ofNullable(utilisateurSite1).map(u -> u.getCustomerProfileId1()).orElse(null));
+												jsonObject.put("setCustomerProfileId2", Optional.ofNullable(utilisateurSite1).map(u -> u.getCustomerProfileId2()).orElse(null));
 												jsonObject.put("setUtilisateurId", principalJson.getString("sub"));
 												jsonObject.put("setUtilisateurMail", principalJson.getString("email"));
 												Boolean definir = utilisateurPaiementScolaireDefinir(requeteSite, jsonObject, true);
@@ -3514,9 +3515,17 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 
 	public Boolean utilisateurPaiementScolaireDefinir(RequeteSiteFrFR requeteSite, JsonObject jsonObject, Boolean patch) {
 		if(patch) {
-			return jsonObject.getString("setCustomerProfileId") == null;
+			if(jsonObject.getString("setCustomerProfileId1") == null)
+				return true;
+			if(jsonObject.getString("setCustomerProfileId2") == null)
+				return true;
+			return false;
 		} else {
-			return jsonObject.getString("customerProfileId") == null;
+			if(jsonObject.getString("setCustomerProfileId1") == null)
+				return true;
+			if(jsonObject.getString("setCustomerProfileId2") == null)
+				return true;
+			return false;
 		}
 	}
 

@@ -391,6 +391,21 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
+	 * Var.enUS: schoolNumber
+	 * Indexe: true
+	 * Stocke: true
+	 * r: EcoleNumero
+	 * r.enUS: SchoolNumber
+	 * r: age
+	 * r.enUS: age
+	 */
+	protected void _ecoleNumero(Couverture<Integer> c) {
+		if(age_ != null)
+			c.o((Integer)age_.getEcoleNumero());
+	}
+
+	/**
+	 * {@inheritDoc}
 	 * Var.enUS: schoolAdministratorName
 	 * Indexe: true
 	 * Stocke: true

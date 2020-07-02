@@ -709,8 +709,8 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 		e("script").a("src", statiqueUrlBase, "/js/frFR/UtilisateurSitePage.js").f().g("script");
 		e("script").a("src", statiqueUrlBase, "/js/frFR/EcolePage.js").f().g("script");
 		e("script").a("src", statiqueUrlBase, "/js/frFR/AnneePage.js").f().g("script");
-		e("script").a("src", statiqueUrlBase, "/js/frFR/SaisonPage.js").f().g("script");
-		e("script").a("src", statiqueUrlBase, "/js/frFR/SessionPage.js").f().g("script");
+//		e("script").a("src", statiqueUrlBase, "/js/frFR/SaisonPage.js").f().g("script");
+//		e("script").a("src", statiqueUrlBase, "/js/frFR/SessionPage.js").f().g("script");
 		e("script").a("src", statiqueUrlBase, "/js/frFR/AgePage.js").f().g("script");
 		e("script").a("src", statiqueUrlBase, "/js/frFR/BlocPage.js").f().g("script");
 		e("script").a("src", statiqueUrlBase, "/js/frFR/InscriptionPage.js").f().g("script");
@@ -1037,26 +1037,26 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 						AnneeGenPage.htmlSuggereAnneeGenPage(this, id, null);
 					} g("div");
 				} g("div");
-	
-				{ e("div").a("class", "w3-dropdown-hover ").f();
-					{ e("div").a("class", "w3-button w3-hover-yellow ").f();
-							e("i").a("class", "far fa-sun ").f().g("i");
-							sx("saisons");
-					} g("div");
-					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
-						SaisonGenPage.htmlSuggereSaisonGenPage(this, id, null);
-					} g("div");
-				} g("div");
-	
-				{ e("div").a("class", "w3-dropdown-hover ").f();
-					{ e("div").a("class", "w3-button w3-hover-green ").f();
-							e("i").a("class", "fad fa-graduation-cap ").f().g("i");
-							sx("sessions");
-					} g("div");
-					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
-						SessionGenPage.htmlSuggereSessionGenPage(this, id, null);
-					} g("div");
-				} g("div");
+//	
+//				{ e("div").a("class", "w3-dropdown-hover ").f();
+//					{ e("div").a("class", "w3-button w3-hover-yellow ").f();
+//							e("i").a("class", "far fa-sun ").f().g("i");
+//							sx("saisons");
+//					} g("div");
+//					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
+//						SaisonGenPage.htmlSuggereSaisonGenPage(this, id, null);
+//					} g("div");
+//				} g("div");
+//	
+//				{ e("div").a("class", "w3-dropdown-hover ").f();
+//					{ e("div").a("class", "w3-button w3-hover-green ").f();
+//							e("i").a("class", "fad fa-graduation-cap ").f().g("i");
+//							sx("sessions");
+//					} g("div");
+//					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
+//						SessionGenPage.htmlSuggereSessionGenPage(this, id, null);
+//					} g("div");
+//				} g("div");
 	
 				{ e("div").a("class", "w3-dropdown-hover ").f();
 					{ e("div").a("class", "w3-button w3-hover-blue ").f();
@@ -1972,6 +1972,10 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	}
 
 	/**
+	 * r: obtenirConfigSite
+	 * r.enUS: obtainSiteConfig
+	 * r: obtenirUtilisateurSite
+	 * r.enUS: obtainSiteUser
 	 * r: requeteSite
 	 * r.enUS: siteRequest
 	 * r: ConfigSite
@@ -1987,15 +1991,18 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	 * r: PaiementProchain
 	 * r.enUS: PaymentNext
 	 */
-	public void writeMakePayment(BigDecimal amount, Long enrollmentKey, String childCompleteNamePreferred) {
+	public void writeMakePayment(Integer ecoleNumero, BigDecimal amount, Long enrollmentKey, String childCompleteNamePreferred) {
 		ConfigSite configSite = requeteSite_.getConfigSite_();
 		UtilisateurSite utilisateurSite = requeteSite_.getUtilisateurSite();
+		String authorizeApiLoginId = (String)configSite.obtenirConfigSite("authorizeApiLoginId" + ecoleNumero);
+		String authorizeTransactionKey = (String)configSite.obtenirConfigSite("authorizeTransactionKey" + ecoleNumero);
+
 		if(utilisateurSite != null) {
-			String customerProfileId = utilisateurSite.getCustomerProfileId();
+			String customerProfileId = (String)utilisateurSite.obtenirUtilisateurSite("customerProfileId" + ecoleNumero);
 			if(customerProfileId != null) {
 				MerchantAuthenticationType merchantAuthenticationType = new MerchantAuthenticationType();
-				merchantAuthenticationType.setName(configSite.getAuthorizeApiLoginId());
-				merchantAuthenticationType.setTransactionKey(configSite.getAuthorizeTransactionKey());
+				merchantAuthenticationType.setName(authorizeApiLoginId);
+				merchantAuthenticationType.setTransactionKey(authorizeTransactionKey);
 				ApiOperationBase.setMerchantAuthentication(merchantAuthenticationType);
 
 				GetHostedProfilePageRequest createCustomerProfileRequest = new GetHostedProfilePageRequest();
@@ -2073,7 +2080,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 				LocalDate now = LocalDate.now();
 				LocalDate chargeEndDate = configSite.getPaiementProchain();
 				CustomerProfilePaymentType profile = new CustomerProfilePaymentType();
-				profile.setCustomerProfileId(utilisateurSite.getCustomerProfileId());
+				profile.setCustomerProfileId(customerProfileId);
 				transactionRequest.setProfile(profile);
 				OrderType order = new OrderType();
 				order.setDescription(String.format("%s payment for %s %s", enrollmentKey, childCompleteNamePreferred, fd.format(chargeEndDate)));

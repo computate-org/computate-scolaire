@@ -296,6 +296,21 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
+	 * Var.enUS: schoolNumber
+	 * Indexe: true
+	 * Stocke: true
+	 * r: EcoleNumero
+	 * r.enUS: SchoolNumber
+	 * r: annee
+	 * r.enUS: year
+	 */
+	protected void _ecoleNumero(Couverture<Integer> c) {
+		if(annee_ != null)
+			c.o((Integer)annee_.getEcoleNumero());
+	}
+
+	/**
+	 * {@inheritDoc}
 	 * Var.enUS: schoolAdministratorName
 	 * Indexe: true
 	 * Stocke: true

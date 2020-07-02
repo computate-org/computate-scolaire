@@ -369,6 +369,19 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 							});
 						}));
 						break;
+					case "ecoleNumero":
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "ecoleNumero", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur Ecole.ecoleNumero a échoué", b.cause())));
+							});
+						}));
+						break;
 					case "ecoleAdministrateurNom":
 						futures.add(Future.future(a -> {
 							tx.preparedQuery(SiteContexteFrFR.SQL_setD
@@ -1005,6 +1018,34 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 										a.handle(Future.succeededFuture());
 									else
 										a.handle(Future.failedFuture(new Exception("valeur Ecole.ecoleNumeroTelephone a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setEcoleNumero":
+						if(jsonObject.getString(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "ecoleNumero")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur Ecole.ecoleNumero a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setEcoleNumero(jsonObject.getString(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "ecoleNumero", o2.jsonEcoleNumero())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur Ecole.ecoleNumero a échoué", b.cause())));
 								});
 							}));
 						}
@@ -2092,6 +2133,19 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 							});
 						}));
 						break;
+					case "ecoleNumero":
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "ecoleNumero", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur Ecole.ecoleNumero a échoué", b.cause())));
+							});
+						}));
+						break;
 					case "ecoleAdministrateurNom":
 						futures.add(Future.future(a -> {
 							tx.preparedQuery(SiteContexteFrFR.SQL_setD
@@ -2679,7 +2733,8 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 												jsonObject.put("setUtilisateurPrenom", principalJson.getString("given_name"));
 												jsonObject.put("setUtilisateurNomFamille", principalJson.getString("family_name"));
 												jsonObject.put("setUtilisateurNomComplet", principalJson.getString("name"));
-												jsonObject.put("setCustomerProfileId", Optional.ofNullable(utilisateurSite1).map(u -> u.getCustomerProfileId()).orElse(null));
+												jsonObject.put("setCustomerProfileId1", Optional.ofNullable(utilisateurSite1).map(u -> u.getCustomerProfileId1()).orElse(null));
+												jsonObject.put("setCustomerProfileId2", Optional.ofNullable(utilisateurSite1).map(u -> u.getCustomerProfileId2()).orElse(null));
 												jsonObject.put("setUtilisateurId", principalJson.getString("sub"));
 												jsonObject.put("setUtilisateurMail", principalJson.getString("email"));
 												Boolean definir = utilisateurEcoleDefinir(requeteSite, jsonObject, true);
@@ -2777,9 +2832,17 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 
 	public Boolean utilisateurEcoleDefinir(RequeteSiteFrFR requeteSite, JsonObject jsonObject, Boolean patch) {
 		if(patch) {
-			return jsonObject.getString("setCustomerProfileId") == null;
+			if(jsonObject.getString("setCustomerProfileId1") == null)
+				return true;
+			if(jsonObject.getString("setCustomerProfileId2") == null)
+				return true;
+			return false;
 		} else {
-			return jsonObject.getString("customerProfileId") == null;
+			if(jsonObject.getString("setCustomerProfileId1") == null)
+				return true;
+			if(jsonObject.getString("setCustomerProfileId2") == null)
+				return true;
+			return false;
 		}
 	}
 

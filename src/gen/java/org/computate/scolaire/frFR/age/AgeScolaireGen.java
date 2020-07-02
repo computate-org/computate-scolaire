@@ -1535,6 +1535,75 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		return ecoleNumeroTelephone == null ? "" : StringEscapeUtils.escapeHtml4(strEcoleNumeroTelephone());
 	}
 
+	/////////////////
+	// ecoleNumero //
+	/////////////////
+
+	/**	L'entité « ecoleNumero »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected Integer ecoleNumero;
+	@JsonIgnore
+	public Couverture<Integer> ecoleNumeroCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("ecoleNumero").o(ecoleNumero);
+
+	/**	<br/>L'entité « ecoleNumero »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.age.AgeScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:ecoleNumero">Trouver l'entité ecoleNumero dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _ecoleNumero(Couverture<Integer> c);
+
+	public Integer getEcoleNumero() {
+		return ecoleNumero;
+	}
+
+	public void setEcoleNumero(Integer ecoleNumero) {
+		this.ecoleNumero = ecoleNumero;
+		this.ecoleNumeroCouverture.dejaInitialise = true;
+	}
+	public AgeScolaire setEcoleNumero(String o) {
+		if(NumberUtils.isParsable(o))
+			this.ecoleNumero = Integer.parseInt(o);
+		this.ecoleNumeroCouverture.dejaInitialise = true;
+		return (AgeScolaire)this;
+	}
+	protected AgeScolaire ecoleNumeroInit() {
+		if(!ecoleNumeroCouverture.dejaInitialise) {
+			_ecoleNumero(ecoleNumeroCouverture);
+			if(ecoleNumero == null)
+				setEcoleNumero(ecoleNumeroCouverture.o);
+		}
+		ecoleNumeroCouverture.dejaInitialise(true);
+		return (AgeScolaire)this;
+	}
+
+	public Integer solrEcoleNumero() {
+		return ecoleNumero;
+	}
+
+	public String strEcoleNumero() {
+		return ecoleNumero == null ? "" : ecoleNumero.toString();
+	}
+
+	public String jsonEcoleNumero() {
+		return ecoleNumero == null ? "" : ecoleNumero.toString();
+	}
+
+	public String nomAffichageEcoleNumero() {
+		return null;
+	}
+
+	public String htmTooltipEcoleNumero() {
+		return null;
+	}
+
+	public String htmEcoleNumero() {
+		return ecoleNumero == null ? "" : StringEscapeUtils.escapeHtml4(strEcoleNumero());
+	}
+
 	////////////////////////////
 	// ecoleAdministrateurNom //
 	////////////////////////////
@@ -2798,6 +2867,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		ecoleEmplacementInit();
 		ecoleAddresseInit();
 		ecoleNumeroTelephoneInit();
+		ecoleNumeroInit();
 		ecoleAdministrateurNomInit();
 		anneeDebutInit();
 		anneeFinInit();
@@ -2892,6 +2962,8 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 				return oAgeScolaire.ecoleAddresse;
 			case "ecoleNumeroTelephone":
 				return oAgeScolaire.ecoleNumeroTelephone;
+			case "ecoleNumero":
+				return oAgeScolaire.ecoleNumero;
 			case "ecoleAdministrateurNom":
 				return oAgeScolaire.ecoleAdministrateurNom;
 			case "anneeDebut":
@@ -3113,6 +3185,12 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 				String ecoleNumeroTelephone = (String)solrDocument.get("ecoleNumeroTelephone_stored_string");
 				if(ecoleNumeroTelephone != null)
 					oAgeScolaire.setEcoleNumeroTelephone(ecoleNumeroTelephone);
+			}
+
+			if(sauvegardes.contains("ecoleNumero")) {
+				Integer ecoleNumero = (Integer)solrDocument.get("ecoleNumero_stored_int");
+				if(ecoleNumero != null)
+					oAgeScolaire.setEcoleNumero(ecoleNumero);
 			}
 
 			if(sauvegardes.contains("ecoleAdministrateurNom")) {
@@ -3353,6 +3431,10 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 			document.addField("ecoleNumeroTelephone_indexed_string", ecoleNumeroTelephone);
 			document.addField("ecoleNumeroTelephone_stored_string", ecoleNumeroTelephone);
 		}
+		if(ecoleNumero != null) {
+			document.addField("ecoleNumero_indexed_int", ecoleNumero);
+			document.addField("ecoleNumero_stored_int", ecoleNumero);
+		}
 		if(ecoleAdministrateurNom != null) {
 			document.addField("ecoleAdministrateurNom_indexed_string", ecoleAdministrateurNom);
 			document.addField("ecoleAdministrateurNom_stored_string", ecoleAdministrateurNom);
@@ -3474,6 +3556,8 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 				return "ecoleAddresse_indexed_string";
 			case "ecoleNumeroTelephone":
 				return "ecoleNumeroTelephone_indexed_string";
+			case "ecoleNumero":
+				return "ecoleNumero_indexed_int";
 			case "ecoleAdministrateurNom":
 				return "ecoleAdministrateurNom_indexed_string";
 			case "anneeDebut":
@@ -3602,6 +3686,10 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		String ecoleNumeroTelephone = (String)solrDocument.get("ecoleNumeroTelephone_stored_string");
 		if(ecoleNumeroTelephone != null)
 			oAgeScolaire.setEcoleNumeroTelephone(ecoleNumeroTelephone);
+
+		Integer ecoleNumero = (Integer)solrDocument.get("ecoleNumero_stored_int");
+		if(ecoleNumero != null)
+			oAgeScolaire.setEcoleNumero(ecoleNumero);
 
 		String ecoleAdministrateurNom = (String)solrDocument.get("ecoleAdministrateurNom_stored_string");
 		if(ecoleAdministrateurNom != null)

@@ -3,6 +3,7 @@ package org.computate.scolaire.frFR.config;
 import java.util.Arrays;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.util.Date;
+import java.util.HashMap;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 import org.computate.scolaire.frFR.requete.api.RequeteApi;
 import org.apache.commons.lang3.StringUtils;
@@ -2568,79 +2569,231 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		return (ConfigSite)this;
 	}
 
-	/////////////////////////
-	// authorizeApiLoginId //
-	/////////////////////////
+	//////////////////////////
+	// authorizeApiLoginId1 //
+	//////////////////////////
 
-	/**	L'entité « authorizeApiLoginId »
+	/**	L'entité « authorizeApiLoginId1 »
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected String authorizeApiLoginId;
+	protected String authorizeApiLoginId1;
 	@JsonIgnore
-	public Couverture<String> authorizeApiLoginIdCouverture = new Couverture<String>().p(this).c(String.class).var("authorizeApiLoginId").o(authorizeApiLoginId);
+	public Couverture<String> authorizeApiLoginId1Couverture = new Couverture<String>().p(this).c(String.class).var("authorizeApiLoginId1").o(authorizeApiLoginId1);
 
-	/**	<br/>L'entité « authorizeApiLoginId »
+	/**	<br/>L'entité « authorizeApiLoginId1 »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:authorizeApiLoginId">Trouver l'entité authorizeApiLoginId dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:authorizeApiLoginId1">Trouver l'entité authorizeApiLoginId1 dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _authorizeApiLoginId(Couverture<String> c);
+	protected abstract void _authorizeApiLoginId1(Couverture<String> c);
 
-	public String getAuthorizeApiLoginId() {
-		return authorizeApiLoginId;
+	public String getAuthorizeApiLoginId1() {
+		return authorizeApiLoginId1;
 	}
 
-	public void setAuthorizeApiLoginId(String authorizeApiLoginId) {
-		this.authorizeApiLoginId = authorizeApiLoginId;
-		this.authorizeApiLoginIdCouverture.dejaInitialise = true;
+	public void setAuthorizeApiLoginId1(String authorizeApiLoginId1) {
+		this.authorizeApiLoginId1 = authorizeApiLoginId1;
+		this.authorizeApiLoginId1Couverture.dejaInitialise = true;
 	}
-	protected ConfigSite authorizeApiLoginIdInit() {
-		if(!authorizeApiLoginIdCouverture.dejaInitialise) {
-			_authorizeApiLoginId(authorizeApiLoginIdCouverture);
-			if(authorizeApiLoginId == null)
-				setAuthorizeApiLoginId(authorizeApiLoginIdCouverture.o);
+	protected ConfigSite authorizeApiLoginId1Init() {
+		if(!authorizeApiLoginId1Couverture.dejaInitialise) {
+			_authorizeApiLoginId1(authorizeApiLoginId1Couverture);
+			if(authorizeApiLoginId1 == null)
+				setAuthorizeApiLoginId1(authorizeApiLoginId1Couverture.o);
 		}
-		authorizeApiLoginIdCouverture.dejaInitialise(true);
+		authorizeApiLoginId1Couverture.dejaInitialise(true);
 		return (ConfigSite)this;
 	}
 
-	/////////////////////////////
-	// authorizeTransactionKey //
-	/////////////////////////////
+	//////////////////////////////
+	// authorizeTransactionKey1 //
+	//////////////////////////////
 
-	/**	L'entité « authorizeTransactionKey »
+	/**	L'entité « authorizeTransactionKey1 »
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected String authorizeTransactionKey;
+	protected String authorizeTransactionKey1;
 	@JsonIgnore
-	public Couverture<String> authorizeTransactionKeyCouverture = new Couverture<String>().p(this).c(String.class).var("authorizeTransactionKey").o(authorizeTransactionKey);
+	public Couverture<String> authorizeTransactionKey1Couverture = new Couverture<String>().p(this).c(String.class).var("authorizeTransactionKey1").o(authorizeTransactionKey1);
 
-	/**	<br/>L'entité « authorizeTransactionKey »
+	/**	<br/>L'entité « authorizeTransactionKey1 »
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:authorizeTransactionKey">Trouver l'entité authorizeTransactionKey dans Solr</a>
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:authorizeTransactionKey1">Trouver l'entité authorizeTransactionKey1 dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _authorizeTransactionKey(Couverture<String> c);
+	protected abstract void _authorizeTransactionKey1(Couverture<String> c);
 
-	public String getAuthorizeTransactionKey() {
-		return authorizeTransactionKey;
+	public String getAuthorizeTransactionKey1() {
+		return authorizeTransactionKey1;
 	}
 
-	public void setAuthorizeTransactionKey(String authorizeTransactionKey) {
-		this.authorizeTransactionKey = authorizeTransactionKey;
-		this.authorizeTransactionKeyCouverture.dejaInitialise = true;
+	public void setAuthorizeTransactionKey1(String authorizeTransactionKey1) {
+		this.authorizeTransactionKey1 = authorizeTransactionKey1;
+		this.authorizeTransactionKey1Couverture.dejaInitialise = true;
 	}
-	protected ConfigSite authorizeTransactionKeyInit() {
-		if(!authorizeTransactionKeyCouverture.dejaInitialise) {
-			_authorizeTransactionKey(authorizeTransactionKeyCouverture);
-			if(authorizeTransactionKey == null)
-				setAuthorizeTransactionKey(authorizeTransactionKeyCouverture.o);
+	protected ConfigSite authorizeTransactionKey1Init() {
+		if(!authorizeTransactionKey1Couverture.dejaInitialise) {
+			_authorizeTransactionKey1(authorizeTransactionKey1Couverture);
+			if(authorizeTransactionKey1 == null)
+				setAuthorizeTransactionKey1(authorizeTransactionKey1Couverture.o);
 		}
-		authorizeTransactionKeyCouverture.dejaInitialise(true);
+		authorizeTransactionKey1Couverture.dejaInitialise(true);
+		return (ConfigSite)this;
+	}
+
+	/////////////////////
+	// schoolLocation1 //
+	/////////////////////
+
+	/**	L'entité « schoolLocation1 »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String schoolLocation1;
+	@JsonIgnore
+	public Couverture<String> schoolLocation1Couverture = new Couverture<String>().p(this).c(String.class).var("schoolLocation1").o(schoolLocation1);
+
+	/**	<br/>L'entité « schoolLocation1 »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:schoolLocation1">Trouver l'entité schoolLocation1 dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _schoolLocation1(Couverture<String> c);
+
+	public String getSchoolLocation1() {
+		return schoolLocation1;
+	}
+
+	public void setSchoolLocation1(String schoolLocation1) {
+		this.schoolLocation1 = schoolLocation1;
+		this.schoolLocation1Couverture.dejaInitialise = true;
+	}
+	protected ConfigSite schoolLocation1Init() {
+		if(!schoolLocation1Couverture.dejaInitialise) {
+			_schoolLocation1(schoolLocation1Couverture);
+			if(schoolLocation1 == null)
+				setSchoolLocation1(schoolLocation1Couverture.o);
+		}
+		schoolLocation1Couverture.dejaInitialise(true);
+		return (ConfigSite)this;
+	}
+
+	//////////////////////////
+	// authorizeApiLoginId2 //
+	//////////////////////////
+
+	/**	L'entité « authorizeApiLoginId2 »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String authorizeApiLoginId2;
+	@JsonIgnore
+	public Couverture<String> authorizeApiLoginId2Couverture = new Couverture<String>().p(this).c(String.class).var("authorizeApiLoginId2").o(authorizeApiLoginId2);
+
+	/**	<br/>L'entité « authorizeApiLoginId2 »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:authorizeApiLoginId2">Trouver l'entité authorizeApiLoginId2 dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _authorizeApiLoginId2(Couverture<String> c);
+
+	public String getAuthorizeApiLoginId2() {
+		return authorizeApiLoginId2;
+	}
+
+	public void setAuthorizeApiLoginId2(String authorizeApiLoginId2) {
+		this.authorizeApiLoginId2 = authorizeApiLoginId2;
+		this.authorizeApiLoginId2Couverture.dejaInitialise = true;
+	}
+	protected ConfigSite authorizeApiLoginId2Init() {
+		if(!authorizeApiLoginId2Couverture.dejaInitialise) {
+			_authorizeApiLoginId2(authorizeApiLoginId2Couverture);
+			if(authorizeApiLoginId2 == null)
+				setAuthorizeApiLoginId2(authorizeApiLoginId2Couverture.o);
+		}
+		authorizeApiLoginId2Couverture.dejaInitialise(true);
+		return (ConfigSite)this;
+	}
+
+	//////////////////////////////
+	// authorizeTransactionKey2 //
+	//////////////////////////////
+
+	/**	L'entité « authorizeTransactionKey2 »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String authorizeTransactionKey2;
+	@JsonIgnore
+	public Couverture<String> authorizeTransactionKey2Couverture = new Couverture<String>().p(this).c(String.class).var("authorizeTransactionKey2").o(authorizeTransactionKey2);
+
+	/**	<br/>L'entité « authorizeTransactionKey2 »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:authorizeTransactionKey2">Trouver l'entité authorizeTransactionKey2 dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _authorizeTransactionKey2(Couverture<String> c);
+
+	public String getAuthorizeTransactionKey2() {
+		return authorizeTransactionKey2;
+	}
+
+	public void setAuthorizeTransactionKey2(String authorizeTransactionKey2) {
+		this.authorizeTransactionKey2 = authorizeTransactionKey2;
+		this.authorizeTransactionKey2Couverture.dejaInitialise = true;
+	}
+	protected ConfigSite authorizeTransactionKey2Init() {
+		if(!authorizeTransactionKey2Couverture.dejaInitialise) {
+			_authorizeTransactionKey2(authorizeTransactionKey2Couverture);
+			if(authorizeTransactionKey2 == null)
+				setAuthorizeTransactionKey2(authorizeTransactionKey2Couverture.o);
+		}
+		authorizeTransactionKey2Couverture.dejaInitialise(true);
+		return (ConfigSite)this;
+	}
+
+	/////////////////////
+	// schoolLocation2 //
+	/////////////////////
+
+	/**	L'entité « schoolLocation2 »
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String schoolLocation2;
+	@JsonIgnore
+	public Couverture<String> schoolLocation2Couverture = new Couverture<String>().p(this).c(String.class).var("schoolLocation2").o(schoolLocation2);
+
+	/**	<br/>L'entité « schoolLocation2 »
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:schoolLocation2">Trouver l'entité schoolLocation2 dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _schoolLocation2(Couverture<String> c);
+
+	public String getSchoolLocation2() {
+		return schoolLocation2;
+	}
+
+	public void setSchoolLocation2(String schoolLocation2) {
+		this.schoolLocation2 = schoolLocation2;
+		this.schoolLocation2Couverture.dejaInitialise = true;
+	}
+	protected ConfigSite schoolLocation2Init() {
+		if(!schoolLocation2Couverture.dejaInitialise) {
+			_schoolLocation2(schoolLocation2Couverture);
+			if(schoolLocation2 == null)
+				setSchoolLocation2(schoolLocation2Couverture.o);
+		}
+		schoolLocation2Couverture.dejaInitialise(true);
 		return (ConfigSite)this;
 	}
 
@@ -2900,8 +3053,12 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		mailAuthInit();
 		mailSslInit();
 		siteZoneInit();
-		authorizeApiLoginIdInit();
-		authorizeTransactionKeyInit();
+		authorizeApiLoginId1Init();
+		authorizeTransactionKey1Init();
+		schoolLocation1Init();
+		authorizeApiLoginId2Init();
+		authorizeTransactionKey2Init();
+		schoolLocation2Init();
 		authorizeEnvironmentInit();
 		authorizeUrlInit();
 		paiementJourInit();
@@ -3060,10 +3217,18 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 				return oConfigSite.mailSsl;
 			case "siteZone":
 				return oConfigSite.siteZone;
-			case "authorizeApiLoginId":
-				return oConfigSite.authorizeApiLoginId;
-			case "authorizeTransactionKey":
-				return oConfigSite.authorizeTransactionKey;
+			case "authorizeApiLoginId1":
+				return oConfigSite.authorizeApiLoginId1;
+			case "authorizeTransactionKey1":
+				return oConfigSite.authorizeTransactionKey1;
+			case "schoolLocation1":
+				return oConfigSite.schoolLocation1;
+			case "authorizeApiLoginId2":
+				return oConfigSite.authorizeApiLoginId2;
+			case "authorizeTransactionKey2":
+				return oConfigSite.authorizeTransactionKey2;
+			case "schoolLocation2":
+				return oConfigSite.schoolLocation2;
 			case "authorizeEnvironment":
 				return oConfigSite.authorizeEnvironment;
 			case "authorizeUrl":

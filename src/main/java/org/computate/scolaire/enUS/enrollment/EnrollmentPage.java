@@ -91,7 +91,7 @@ public class EnrollmentPage extends EnrollmentPageGen<EnrollmentGenPage> {
 						e("div").a("class", "w3-panel w3-blue ").f();
 						sx(String.format("Please pay the upcoming charges of $%s by the payment date to avoid any late fees. ", amount));
 						g("div");
-						writeMakePayment(amount, schoolEnrollment.getPk(), schoolEnrollment.getChildCompleteNamePreferred());
+						writeMakePayment(o.getSchoolNumber(), amount, schoolEnrollment.getPk(), schoolEnrollment.getChildCompleteNamePreferred());
 					}
 				} g("div");
 			} g("div");

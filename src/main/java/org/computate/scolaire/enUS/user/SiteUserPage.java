@@ -142,82 +142,90 @@ public class SiteUserPage extends SiteUserPageGen<SiteUserGenPage> {
 	@Override public void htmlBodySiteUserGenPage() {
 		super.htmlBodySiteUserGenPage();
 
-		writeConfigurePayments();
+		writeConfigurePayments(1);
+		writeConfigurePayments(2);
 		writeSchoolReports();
 	}
 
-	public void writeConfigurePayments() {
+	public void writeConfigurePayments(Integer schoolNumber) {
 		SiteConfig siteConfig = siteRequest_.getSiteConfig_();
-		SiteUser siteUser = siteRequest_.getSiteUser();
-		if(siteUser != null) {
-			String customerProfileId = siteUser.getCustomerProfileId();
-			if(customerProfileId != null) {
-				MerchantAuthenticationType merchantAuthenticationType = new MerchantAuthenticationType();
-				merchantAuthenticationType.setName(siteConfig.getAuthorizeApiLoginId());
-				merchantAuthenticationType.setTransactionKey(siteConfig.getAuthorizeTransactionKey());
-				ApiOperationBase.setMerchantAuthentication(merchantAuthenticationType);
-				
-				GetHostedProfilePageRequest createCustomerProfileRequest = new GetHostedProfilePageRequest();
-				createCustomerProfileRequest.setMerchantAuthentication(merchantAuthenticationType);
-				createCustomerProfileRequest.setCustomerProfileId(customerProfileId);
-				ArrayOfSetting settings = new ArrayOfSetting();
-				{
-					SettingType settingType = new SettingType();
-					settingType.setSettingName("hostedProfileManageOptions");
-					settingType.setSettingValue("showPayment");
-					settings.getSetting().add(settingType);
-				}
-				{
-					SettingType settingType = new SettingType();
-					settingType.setSettingName("hostedProfileValidationMode");
-					settingType.setSettingValue("testMode");
-					settings.getSetting().add(settingType);
-				}
-				{
-					SettingType settingType = new SettingType();
-					settingType.setSettingName("hostedProfileBillingAddressOptions");
-					settingType.setSettingValue("showNone");
-					settings.getSetting().add(settingType);
-				}
-				{
-					SettingType settingType = new SettingType();
-					settingType.setSettingName("hostedProfileCardCodeRequired");
-					settingType.setSettingValue("true");
-					settings.getSetting().add(settingType);
-				}
-				createCustomerProfileRequest.setHostedProfileSettings(settings);
-		
-				GetHostedProfilePageController controller = new GetHostedProfilePageController(createCustomerProfileRequest);
-				GetTransactionListForCustomerController.setEnvironment(Environment.valueOf(siteConfig.getAuthorizeEnvironment()));
-				controller.execute();
-				if(controller.getErrorResponse() != null)
-					controller.toString();
-	//				throw new RuntimeException(controller.getResults().toString());
-				else {
-					GetHostedProfilePageResponse profilePageResponse = controller.getApiResponse();
-					if(MessageTypeEnum.ERROR.equals(profilePageResponse.getMessages().getResultCode())) {
-//						throw new RuntimeException(response.getMessages().getMessage().stream().findFirst().map(m -> String.format("%s %s", m.getCode(), m.getText())).orElse("GetHostedProfilePageRequest failed. "));
-						System.err.println(profilePageResponse.getMessages().getMessage().stream().findFirst().map(m -> String.format("%s %s", m.getCode(), m.getText())).orElse("GetHostedProfilePageRequest failed. "));
+		String authorizeApiLoginId = (String)siteConfig.obtainSiteConfig("authorizeApiLoginId" + schoolNumber);
+		String authorizeTransactionKey = (String)siteConfig.obtainSiteConfig("authorizeTransactionKey" + schoolNumber);
+
+		if(authorizeApiLoginId != null && authorizeTransactionKey != null) {
+			SiteUser siteUser = siteRequest_.getSiteUser();
+
+			if(siteUser != null) {
+				String customerProfileId = (String)siteUser.obtainSiteUser("customerProfileId" + schoolNumber);
+
+				if(customerProfileId != null) {
+					MerchantAuthenticationType merchantAuthenticationType = new MerchantAuthenticationType();
+					merchantAuthenticationType.setName(authorizeApiLoginId);
+					merchantAuthenticationType.setTransactionKey(authorizeTransactionKey);
+					ApiOperationBase.setMerchantAuthentication(merchantAuthenticationType);
+					
+					GetHostedProfilePageRequest createCustomerProfileRequest = new GetHostedProfilePageRequest();
+					createCustomerProfileRequest.setMerchantAuthentication(merchantAuthenticationType);
+					createCustomerProfileRequest.setCustomerProfileId(customerProfileId);
+					ArrayOfSetting settings = new ArrayOfSetting();
+					{
+						SettingType settingType = new SettingType();
+						settingType.setSettingName("hostedProfileManageOptions");
+						settingType.setSettingValue("showPayment");
+						settings.getSetting().add(settingType);
 					}
+					{
+						SettingType settingType = new SettingType();
+						settingType.setSettingName("hostedProfileValidationMode");
+						settingType.setSettingValue("testMode");
+						settings.getSetting().add(settingType);
+					}
+					{
+						SettingType settingType = new SettingType();
+						settingType.setSettingName("hostedProfileBillingAddressOptions");
+						settingType.setSettingValue("showNone");
+						settings.getSetting().add(settingType);
+					}
+					{
+						SettingType settingType = new SettingType();
+						settingType.setSettingName("hostedProfileCardCodeRequired");
+						settingType.setSettingValue("true");
+						settings.getSetting().add(settingType);
+					}
+					createCustomerProfileRequest.setHostedProfileSettings(settings);
+			
+					GetHostedProfilePageController controller = new GetHostedProfilePageController(createCustomerProfileRequest);
+					GetTransactionListForCustomerController.setEnvironment(Environment.valueOf(siteConfig.getAuthorizeEnvironment()));
+					controller.execute();
+					if(controller.getErrorResponse() != null)
+						controller.toString();
+		//				throw new RuntimeException(controller.getResults().toString());
 					else {
-						{ e("h1").f();
-							{ e("a").a("href", "/user").a("class", "w3-bar-item w3-btn w3-center w3-block w3-gray w3-hover-gray ").f();
-								if(contextIconCssClasses != null)
-									e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
-								e("span").a("class", " ").f().sx("make payments").g("span");
-							} g("a");
-						} g("h1");
-						{ e("div").a("class", "").f();
-							e("div").a("class", "w3-large font-weight-bold ").f().sx("Manage username and password").g("div");
-							e("a").a("target", "_blank").a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ").a("href", siteConfig.getAuthUrl() + "/realms/", siteConfig.getAuthRealm(), "/account").f().sx("Manage user profile").g("a");
-						} g("div");
-						{ e("div").a("class", "").f();
-							e("div").a("class", "w3-large font-weight-bold ").f().sx("Configure payment profile with authorize.net").g("div");
-							{ e("form").a("method", "post").a("target", "_blank").a("action", siteConfig.getAuthorizeUrl() + "/customer/manage").f();
-								e("input").a("type", "hidden").a("name", "token").a("value", profilePageResponse.getToken()).fg();
-								e("button").a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ").a("type", "submit").f().sx("Manage payment profile").g("button");
-							} g("form");
-						} g("div");
+						GetHostedProfilePageResponse profilePageResponse = controller.getApiResponse();
+						if(MessageTypeEnum.ERROR.equals(profilePageResponse.getMessages().getResultCode())) {
+	//						throw new RuntimeException(response.getMessages().getMessage().stream().findFirst().map(m -> String.format("%s %s", m.getCode(), m.getText())).orElse("GetHostedProfilePageRequest failed. "));
+							System.err.println(profilePageResponse.getMessages().getMessage().stream().findFirst().map(m -> String.format("%s %s", m.getCode(), m.getText())).orElse("GetHostedProfilePageRequest failed. "));
+						}
+						else {
+							{ e("h1").f();
+								{ e("a").a("href", "/user").a("class", "w3-bar-item w3-btn w3-center w3-block w3-gray w3-hover-gray ").f();
+									if(contextIconCssClasses != null)
+										e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
+									e("span").a("class", " ").f().sx("make payments").g("span");
+								} g("a");
+							} g("h1");
+							{ e("div").a("class", "").f();
+								e("div").a("class", "w3-large font-weight-bold ").f().sx("Manage username and password").g("div");
+								e("a").a("target", "_blank").a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ").a("href", siteConfig.getAuthUrl() + "/realms/", siteConfig.getAuthRealm(), "/account").f().sx("Manage user profile").g("a");
+							} g("div");
+							{ e("div").a("class", "").f();
+								e("div").a("class", "w3-large font-weight-bold ").f().sx("Configure payment profile with authorize.net").g("div");
+								{ e("form").a("method", "post").a("target", "_blank").a("action", siteConfig.getAuthorizeUrl() + "/customer/manage").f();
+									e("input").a("type", "hidden").a("name", "token").a("value", profilePageResponse.getToken()).fg();
+									e("button").a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ").a("type", "submit").f().sx("Manage payment profile").g("button");
+								} g("form");
+							} g("div");
+						}
 					}
 				}
 			}
