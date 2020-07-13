@@ -253,6 +253,7 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 			o.htmSessionId("PUTCopie");
 			o.htmUtilisateurId("PUTCopie");
 			o.htmUtilisateurCle("PUTCopie");
+			o.htmSaisonDateDebut("PUTCopie");
 		} g("div");
 	}
 
@@ -281,6 +282,7 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 			o.htmSessionId("PATCH");
 			o.htmUtilisateurId("PATCH");
 			o.htmUtilisateurCle("PATCH");
+			o.htmSaisonDateDebut("PATCH");
 		} g("div");
 	}
 
@@ -312,6 +314,7 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 			o.htmUtilisateurId("Recherche");
 			o.htmUtilisateurCle("Recherche");
 			o.htmObjetTitre("Recherche");
+			o.htmSaisonDateDebut("Recherche");
 		} g("div");
 	}
 

@@ -3,6 +3,7 @@ package org.computate.scolaire.enUS.age;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import org.computate.scolaire.enUS.year.SchoolYear;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.page.PageLayout;
@@ -60,122 +61,102 @@ public class SchoolAge extends SchoolAgeGen<Cluster> {
 	protected void _sessionKey(Wrap<Long> c) {
 	}
 
-	protected void _sessionSearch(SearchList<SchoolSession> l) {
+	protected void _yearSearch(SearchList<SchoolYear> l) {
 		l.setQuery("*:*");
 		l.addFilterQuery("ageKeys_indexed_longs:" + pk);
-		l.setC(SchoolSession.class);
+		l.setC(SchoolYear.class);
 		l.setStore(true);
 	}
 
-	protected void _session_(Wrap<SchoolSession> c) {
-		if(sessionSearch.size() > 0) {
-			c.o(sessionSearch.get(0));
+	protected void _year_(Wrap<SchoolYear> c) {
+		if(yearSearch.size() > 0) {
+			c.o(yearSearch.get(0));
 		}
 	}
 
 	protected void _schoolKey(Wrap<Long> c) {
-		if(session_ != null)
-			c.o(session_.getSchoolKey());
+		if(year_ != null)
+			c.o(year_.getSchoolKey());
 	}
 
 	protected void _yearKey(Wrap<Long> c) {
-		if(session_ != null)
-			c.o(session_.getYearKey());
-	}
-
-	protected void _seasonKey(Wrap<Long> c) {
-		if(session_ != null)
-			c.o(session_.getSeasonKey());
+		if(year_ != null)
+			c.o(year_.getYearKey());
 	}
 
 	protected void _schoolName(Wrap<String> c) {
-		if(session_ != null)
-			c.o(session_.getSchoolName());
+		if(year_ != null)
+			c.o(year_.getSchoolName());
 	}
 
 	protected void _schoolCompleteName(Wrap<String> c) {
-		if(session_ != null)
-			c.o((String)session_.getSchoolCompleteName());
+		if(year_ != null)
+			c.o((String)year_.getSchoolCompleteName());
 	}
 
 	protected void _schoolLocation(Wrap<String> c) {
-		if(session_ != null)
-			c.o((String)session_.getSchoolLocation());
+		if(year_ != null)
+			c.o((String)year_.getSchoolLocation());
 	}
 
 	protected void _schoolAddress(Wrap<String> c) {
-		if(session_ != null)
-			c.o((String)session_.getSchoolAddress());
+		if(year_ != null)
+			c.o((String)year_.getSchoolAddress());
 	}
 
 	protected void _schoolPhoneNumber(Wrap<String> c) {
-		if(session_ != null)
-			c.o((String)session_.getSchoolPhoneNumber());
+		if(year_ != null)
+			c.o((String)year_.getSchoolPhoneNumber());
 	}
 
 	protected void _schoolNumber(Wrap<Integer> c) {
-		if(session_ != null)
-			c.o((Integer)session_.getSchoolNumber());
+		if(year_ != null)
+			c.o((Integer)year_.getSchoolNumber());
 	}
 
 	protected void _schoolAdministratorName(Wrap<String> c) {
-		if(session_ != null)
-			c.o((String)session_.getSchoolAdministratorName());
+		if(year_ != null)
+			c.o((String)year_.getSchoolAdministratorName());
 	}
 
 	protected void _yearStart(Wrap<Integer> c) {
-		if(session_ != null)
-			c.o(session_.getYearStart());
+		if(year_ != null)
+			c.o(year_.getYearStart());
 	}
 
 	protected void _yearEnd(Wrap<Integer> c) {
-		if(session_ != null)
-			c.o(session_.getYearEnd());
+		if(year_ != null)
+			c.o(year_.getYearEnd());
 	}
 
 	protected void _seasonStartDate(Wrap<LocalDate> c) {
-		if(session_ != null)
-			c.o(session_.getSeasonStartDate());
-	}
-
-	protected void _seasonSummer(Wrap<Boolean> c) {
-		if(session_ != null)
-			c.o(session_.getSeasonSummer());
-	}
-
-	protected void _seasonWinter(Wrap<Boolean> c) {
-		if(session_ != null)
-			c.o(session_.getSeasonWinter());
+		if(year_ != null)
+			c.o(year_.getSeasonStartDate());
 	}
 
 	protected void _yearEnrollmentFee(Wrap<BigDecimal> c) {
-		if(session_ != null)
-			c.o(session_.getYearEnrollmentFee());
+		if(year_ != null)
+			c.o(year_.getYearEnrollmentFee());
 	}
 
-	protected void _seasonShortName(Wrap<String> c) {
-		if(session_ != null)
-			c.o(session_.getSeasonShortName());
+	protected void _yearShortName(Wrap<String> c) {
+		if(year_ != null)
+			c.o(year_.getYearShortName());
 	}
 
-	protected void _seasonCompleteName(Wrap<String> c) {
-		if(session_ != null)
-			c.o(session_.getSeasonCompleteName());
+	protected void _yearCompleteName(Wrap<String> c) {
+		if(year_ != null)
+			c.o(year_.getYearCompleteName());
 	}
 
 	protected void _sessionStartDate(Wrap<LocalDate> c) {
-		if(session_ != null)
-			c.o((LocalDate)session_.getSessionStartDate());
+		if(year_ != null)
+			c.o((LocalDate)year_.getSessionStartDate());
 	}
 
 	protected void _sessionEndDate(Wrap<LocalDate> c) {
-		if(session_ != null)
-			c.o((LocalDate)session_.getSessionEndDate());
-	}
-
-	protected void _sessionCompleteName(Wrap<String> c) {
-		if(session_ != null)
-			c.o(session_.getSessionCompleteName());
+		if(year_ != null)
+			c.o((LocalDate)year_.getSessionEndDate());
 	}
 
 	protected void _ageStart(Wrap<Integer> c) {
@@ -192,7 +173,7 @@ public class SchoolAge extends SchoolAgeGen<Cluster> {
 
 	protected void _ageCompleteName(Wrap<String> c) {
 		String o;
-		o = String.format("ages %s-%s during the %s", strAgeStart(), strAgeEnd(), sessionCompleteName);
+		o = String.format("ages %s-%s during the %s", strAgeStart(), strAgeEnd(), yearCompleteName);
 		c.o(o);
 	}
 

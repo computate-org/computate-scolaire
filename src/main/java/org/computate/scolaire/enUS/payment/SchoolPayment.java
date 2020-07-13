@@ -78,11 +78,6 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 			c.o(enrollment_.getYearKey());
 	}
 
-	protected void _seasonKey(Wrap<Long> c) {
-		if(enrollment_ != null)
-			c.o(enrollment_.getSeasonKey());
-	}
-
 	protected void _sessionKey(Wrap<Long> c) {
 		if(enrollment_ != null)
 			c.o(enrollment_.getSessionKey());
@@ -166,16 +161,6 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 	protected void _seasonStartDate(Wrap<LocalDate> c) {
 		if(enrollment_ != null)
 			c.o(enrollment_.getSeasonStartDate());
-	}
-
-	protected void _seasonSummer(Wrap<Boolean> c) {
-		if(enrollment_ != null)
-			c.o(enrollment_.getSeasonSummer());
-	}
-
-	protected void _seasonWinter(Wrap<Boolean> c) {
-		if(enrollment_ != null)
-			c.o(enrollment_.getSeasonWinter());
 	}
 
 	protected void _yearEnrollmentFee(Wrap<BigDecimal> c) {

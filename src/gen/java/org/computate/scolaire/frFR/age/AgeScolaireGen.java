@@ -43,7 +43,6 @@ import org.computate.scolaire.frFR.couverture.Couverture;
 import org.apache.commons.collections.CollectionUtils;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.lang.Boolean;
 import java.lang.String;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.commons.text.StringEscapeUtils;
@@ -815,80 +814,80 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		return sessionCle == null ? "" : StringEscapeUtils.escapeHtml4(strSessionCle());
 	}
 
-	//////////////////////
-	// sessionRecherche //
-	//////////////////////
+	////////////////////
+	// anneeRecherche //
+	////////////////////
 
-	/**	 L'entité sessionRecherche
-	 *	Il est construit avant d'être initialisé avec le constructeur par défaut ListeRecherche<SessionScolaire>(). 
+	/**	 L'entité anneeRecherche
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut ListeRecherche<AnneeScolaire>(). 
 	 */
 	@JsonIgnore
 	@JsonInclude(Include.NON_NULL)
-	protected ListeRecherche<SessionScolaire> sessionRecherche = new ListeRecherche<SessionScolaire>();
+	protected ListeRecherche<AnneeScolaire> anneeRecherche = new ListeRecherche<AnneeScolaire>();
 	@JsonIgnore
-	public Couverture<ListeRecherche<SessionScolaire>> sessionRechercheCouverture = new Couverture<ListeRecherche<SessionScolaire>>().p(this).c(ListeRecherche.class).var("sessionRecherche").o(sessionRecherche);
+	public Couverture<ListeRecherche<AnneeScolaire>> anneeRechercheCouverture = new Couverture<ListeRecherche<AnneeScolaire>>().p(this).c(ListeRecherche.class).var("anneeRecherche").o(anneeRecherche);
 
-	/**	<br/> L'entité sessionRecherche
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut ListeRecherche<SessionScolaire>(). 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.age.AgeScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:sessionRecherche">Trouver l'entité sessionRecherche dans Solr</a>
+	/**	<br/> L'entité anneeRecherche
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut ListeRecherche<AnneeScolaire>(). 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.age.AgeScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:anneeRecherche">Trouver l'entité anneeRecherche dans Solr</a>
 	 * <br/>
-	 * @param sessionRecherche est l'entité déjà construit. 
+	 * @param anneeRecherche est l'entité déjà construit. 
 	 **/
-	protected abstract void _sessionRecherche(ListeRecherche<SessionScolaire> l);
+	protected abstract void _anneeRecherche(ListeRecherche<AnneeScolaire> l);
 
-	public ListeRecherche<SessionScolaire> getSessionRecherche() {
-		return sessionRecherche;
+	public ListeRecherche<AnneeScolaire> getAnneeRecherche() {
+		return anneeRecherche;
 	}
 
-	public void setSessionRecherche(ListeRecherche<SessionScolaire> sessionRecherche) {
-		this.sessionRecherche = sessionRecherche;
-		this.sessionRechercheCouverture.dejaInitialise = true;
+	public void setAnneeRecherche(ListeRecherche<AnneeScolaire> anneeRecherche) {
+		this.anneeRecherche = anneeRecherche;
+		this.anneeRechercheCouverture.dejaInitialise = true;
 	}
-	protected AgeScolaire sessionRechercheInit() {
-		if(!sessionRechercheCouverture.dejaInitialise) {
-			_sessionRecherche(sessionRecherche);
+	protected AgeScolaire anneeRechercheInit() {
+		if(!anneeRechercheCouverture.dejaInitialise) {
+			_anneeRecherche(anneeRecherche);
 		}
-		sessionRecherche.initLoinPourClasse(requeteSite_);
-		sessionRechercheCouverture.dejaInitialise(true);
+		anneeRecherche.initLoinPourClasse(requeteSite_);
+		anneeRechercheCouverture.dejaInitialise(true);
 		return (AgeScolaire)this;
 	}
 
-	//////////////
-	// session_ //
-	//////////////
+	////////////
+	// annee_ //
+	////////////
 
-	/**	 L'entité session_
+	/**	 L'entité annee_
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonIgnore
 	@JsonInclude(Include.NON_NULL)
-	protected SessionScolaire session_;
+	protected AnneeScolaire annee_;
 	@JsonIgnore
-	public Couverture<SessionScolaire> session_Couverture = new Couverture<SessionScolaire>().p(this).c(SessionScolaire.class).var("session_").o(session_);
+	public Couverture<AnneeScolaire> annee_Couverture = new Couverture<AnneeScolaire>().p(this).c(AnneeScolaire.class).var("annee_").o(annee_);
 
-	/**	<br/> L'entité session_
+	/**	<br/> L'entité annee_
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.age.AgeScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:session_">Trouver l'entité session_ dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.age.AgeScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:annee_">Trouver l'entité annee_ dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _session_(Couverture<SessionScolaire> c);
+	protected abstract void _annee_(Couverture<AnneeScolaire> c);
 
-	public SessionScolaire getSession_() {
-		return session_;
+	public AnneeScolaire getAnnee_() {
+		return annee_;
 	}
 
-	public void setSession_(SessionScolaire session_) {
-		this.session_ = session_;
-		this.session_Couverture.dejaInitialise = true;
+	public void setAnnee_(AnneeScolaire annee_) {
+		this.annee_ = annee_;
+		this.annee_Couverture.dejaInitialise = true;
 	}
-	protected AgeScolaire session_Init() {
-		if(!session_Couverture.dejaInitialise) {
-			_session_(session_Couverture);
-			if(session_ == null)
-				setSession_(session_Couverture.o);
+	protected AgeScolaire annee_Init() {
+		if(!annee_Couverture.dejaInitialise) {
+			_annee_(annee_Couverture);
+			if(annee_ == null)
+				setAnnee_(annee_Couverture.o);
 		}
-		session_Couverture.dejaInitialise(true);
+		annee_Couverture.dejaInitialise(true);
 		return (AgeScolaire)this;
 	}
 
@@ -1096,75 +1095,6 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 				} g("div");
 			} g("div");
 		} g("div");
-	}
-
-	///////////////
-	// saisonCle //
-	///////////////
-
-	/**	 L'entité saisonCle
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonSerialize(using = ToStringSerializer.class)
-	@JsonInclude(Include.NON_NULL)
-	protected Long saisonCle;
-	@JsonIgnore
-	public Couverture<Long> saisonCleCouverture = new Couverture<Long>().p(this).c(Long.class).var("saisonCle").o(saisonCle);
-
-	/**	<br/> L'entité saisonCle
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.age.AgeScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:saisonCle">Trouver l'entité saisonCle dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _saisonCle(Couverture<Long> c);
-
-	public Long getSaisonCle() {
-		return saisonCle;
-	}
-
-	public void setSaisonCle(Long saisonCle) {
-		this.saisonCle = saisonCle;
-		this.saisonCleCouverture.dejaInitialise = true;
-	}
-	public AgeScolaire setSaisonCle(String o) {
-		if(NumberUtils.isParsable(o))
-			this.saisonCle = Long.parseLong(o);
-		this.saisonCleCouverture.dejaInitialise = true;
-		return (AgeScolaire)this;
-	}
-	protected AgeScolaire saisonCleInit() {
-		if(!saisonCleCouverture.dejaInitialise) {
-			_saisonCle(saisonCleCouverture);
-			if(saisonCle == null)
-				setSaisonCle(saisonCleCouverture.o);
-		}
-		saisonCleCouverture.dejaInitialise(true);
-		return (AgeScolaire)this;
-	}
-
-	public Long solrSaisonCle() {
-		return saisonCle;
-	}
-
-	public String strSaisonCle() {
-		return saisonCle == null ? "" : saisonCle.toString();
-	}
-
-	public String jsonSaisonCle() {
-		return saisonCle == null ? "" : saisonCle.toString();
-	}
-
-	public String nomAffichageSaisonCle() {
-		return "année";
-	}
-
-	public String htmTooltipSaisonCle() {
-		return null;
-	}
-
-	public String htmSaisonCle() {
-		return saisonCle == null ? "" : StringEscapeUtils.escapeHtml4(strSaisonCle());
 	}
 
 	//////////////
@@ -1886,140 +1816,6 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		return saisonDateDebut == null ? "" : StringEscapeUtils.escapeHtml4(strSaisonDateDebut());
 	}
 
-	///////////////
-	// saisonEte //
-	///////////////
-
-	/**	 L'entité saisonEte
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonInclude(Include.NON_NULL)
-	protected Boolean saisonEte;
-	@JsonIgnore
-	public Couverture<Boolean> saisonEteCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("saisonEte").o(saisonEte);
-
-	/**	<br/> L'entité saisonEte
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.age.AgeScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:saisonEte">Trouver l'entité saisonEte dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _saisonEte(Couverture<Boolean> c);
-
-	public Boolean getSaisonEte() {
-		return saisonEte;
-	}
-
-	public void setSaisonEte(Boolean saisonEte) {
-		this.saisonEte = saisonEte;
-		this.saisonEteCouverture.dejaInitialise = true;
-	}
-	public AgeScolaire setSaisonEte(String o) {
-		this.saisonEte = Boolean.parseBoolean(o);
-		this.saisonEteCouverture.dejaInitialise = true;
-		return (AgeScolaire)this;
-	}
-	protected AgeScolaire saisonEteInit() {
-		if(!saisonEteCouverture.dejaInitialise) {
-			_saisonEte(saisonEteCouverture);
-			if(saisonEte == null)
-				setSaisonEte(saisonEteCouverture.o);
-		}
-		saisonEteCouverture.dejaInitialise(true);
-		return (AgeScolaire)this;
-	}
-
-	public Boolean solrSaisonEte() {
-		return saisonEte;
-	}
-
-	public String strSaisonEte() {
-		return saisonEte == null ? "" : saisonEte.toString();
-	}
-
-	public String jsonSaisonEte() {
-		return saisonEte == null ? "" : saisonEte.toString();
-	}
-
-	public String nomAffichageSaisonEte() {
-		return "été";
-	}
-
-	public String htmTooltipSaisonEte() {
-		return null;
-	}
-
-	public String htmSaisonEte() {
-		return saisonEte == null ? "" : StringEscapeUtils.escapeHtml4(strSaisonEte());
-	}
-
-	/////////////////
-	// saisonHiver //
-	/////////////////
-
-	/**	 L'entité saisonHiver
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonInclude(Include.NON_NULL)
-	protected Boolean saisonHiver;
-	@JsonIgnore
-	public Couverture<Boolean> saisonHiverCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("saisonHiver").o(saisonHiver);
-
-	/**	<br/> L'entité saisonHiver
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.age.AgeScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:saisonHiver">Trouver l'entité saisonHiver dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _saisonHiver(Couverture<Boolean> c);
-
-	public Boolean getSaisonHiver() {
-		return saisonHiver;
-	}
-
-	public void setSaisonHiver(Boolean saisonHiver) {
-		this.saisonHiver = saisonHiver;
-		this.saisonHiverCouverture.dejaInitialise = true;
-	}
-	public AgeScolaire setSaisonHiver(String o) {
-		this.saisonHiver = Boolean.parseBoolean(o);
-		this.saisonHiverCouverture.dejaInitialise = true;
-		return (AgeScolaire)this;
-	}
-	protected AgeScolaire saisonHiverInit() {
-		if(!saisonHiverCouverture.dejaInitialise) {
-			_saisonHiver(saisonHiverCouverture);
-			if(saisonHiver == null)
-				setSaisonHiver(saisonHiverCouverture.o);
-		}
-		saisonHiverCouverture.dejaInitialise(true);
-		return (AgeScolaire)this;
-	}
-
-	public Boolean solrSaisonHiver() {
-		return saisonHiver;
-	}
-
-	public String strSaisonHiver() {
-		return saisonHiver == null ? "" : saisonHiver.toString();
-	}
-
-	public String jsonSaisonHiver() {
-		return saisonHiver == null ? "" : saisonHiver.toString();
-	}
-
-	public String nomAffichageSaisonHiver() {
-		return "hiver";
-	}
-
-	public String htmTooltipSaisonHiver() {
-		return null;
-	}
-
-	public String htmSaisonHiver() {
-		return saisonHiver == null ? "" : StringEscapeUtils.escapeHtml4(strSaisonHiver());
-	}
-
 	///////////////////////////
 	// anneeFraisInscription //
 	///////////////////////////
@@ -2100,128 +1896,128 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		return anneeFraisInscription == null ? "" : StringEscapeUtils.escapeHtml4(strAnneeFraisInscription());
 	}
 
-	////////////////////
-	// saisonNomCourt //
-	////////////////////
+	///////////////////
+	// anneeNomCourt //
+	///////////////////
 
-	/**	 L'entité saisonNomCourt
+	/**	 L'entité anneeNomCourt
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected String saisonNomCourt;
+	protected String anneeNomCourt;
 	@JsonIgnore
-	public Couverture<String> saisonNomCourtCouverture = new Couverture<String>().p(this).c(String.class).var("saisonNomCourt").o(saisonNomCourt);
+	public Couverture<String> anneeNomCourtCouverture = new Couverture<String>().p(this).c(String.class).var("anneeNomCourt").o(anneeNomCourt);
 
-	/**	<br/> L'entité saisonNomCourt
+	/**	<br/> L'entité anneeNomCourt
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.age.AgeScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:saisonNomCourt">Trouver l'entité saisonNomCourt dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.age.AgeScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:anneeNomCourt">Trouver l'entité anneeNomCourt dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _saisonNomCourt(Couverture<String> c);
+	protected abstract void _anneeNomCourt(Couverture<String> c);
 
-	public String getSaisonNomCourt() {
-		return saisonNomCourt;
+	public String getAnneeNomCourt() {
+		return anneeNomCourt;
 	}
 
-	public void setSaisonNomCourt(String saisonNomCourt) {
-		this.saisonNomCourt = saisonNomCourt;
-		this.saisonNomCourtCouverture.dejaInitialise = true;
+	public void setAnneeNomCourt(String anneeNomCourt) {
+		this.anneeNomCourt = anneeNomCourt;
+		this.anneeNomCourtCouverture.dejaInitialise = true;
 	}
-	protected AgeScolaire saisonNomCourtInit() {
-		if(!saisonNomCourtCouverture.dejaInitialise) {
-			_saisonNomCourt(saisonNomCourtCouverture);
-			if(saisonNomCourt == null)
-				setSaisonNomCourt(saisonNomCourtCouverture.o);
+	protected AgeScolaire anneeNomCourtInit() {
+		if(!anneeNomCourtCouverture.dejaInitialise) {
+			_anneeNomCourt(anneeNomCourtCouverture);
+			if(anneeNomCourt == null)
+				setAnneeNomCourt(anneeNomCourtCouverture.o);
 		}
-		saisonNomCourtCouverture.dejaInitialise(true);
+		anneeNomCourtCouverture.dejaInitialise(true);
 		return (AgeScolaire)this;
 	}
 
-	public String solrSaisonNomCourt() {
-		return saisonNomCourt;
+	public String solrAnneeNomCourt() {
+		return anneeNomCourt;
 	}
 
-	public String strSaisonNomCourt() {
-		return saisonNomCourt == null ? "" : saisonNomCourt;
+	public String strAnneeNomCourt() {
+		return anneeNomCourt == null ? "" : anneeNomCourt;
 	}
 
-	public String jsonSaisonNomCourt() {
-		return saisonNomCourt == null ? "" : saisonNomCourt;
+	public String jsonAnneeNomCourt() {
+		return anneeNomCourt == null ? "" : anneeNomCourt;
 	}
 
-	public String nomAffichageSaisonNomCourt() {
+	public String nomAffichageAnneeNomCourt() {
 		return null;
 	}
 
-	public String htmTooltipSaisonNomCourt() {
+	public String htmTooltipAnneeNomCourt() {
 		return null;
 	}
 
-	public String htmSaisonNomCourt() {
-		return saisonNomCourt == null ? "" : StringEscapeUtils.escapeHtml4(strSaisonNomCourt());
+	public String htmAnneeNomCourt() {
+		return anneeNomCourt == null ? "" : StringEscapeUtils.escapeHtml4(strAnneeNomCourt());
 	}
 
-	//////////////////////
-	// saisonNomComplet //
-	//////////////////////
+	/////////////////////
+	// anneeNomComplet //
+	/////////////////////
 
-	/**	 L'entité saisonNomComplet
+	/**	 L'entité anneeNomComplet
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected String saisonNomComplet;
+	protected String anneeNomComplet;
 	@JsonIgnore
-	public Couverture<String> saisonNomCompletCouverture = new Couverture<String>().p(this).c(String.class).var("saisonNomComplet").o(saisonNomComplet);
+	public Couverture<String> anneeNomCompletCouverture = new Couverture<String>().p(this).c(String.class).var("anneeNomComplet").o(anneeNomComplet);
 
-	/**	<br/> L'entité saisonNomComplet
+	/**	<br/> L'entité anneeNomComplet
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.age.AgeScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:saisonNomComplet">Trouver l'entité saisonNomComplet dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.age.AgeScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:anneeNomComplet">Trouver l'entité anneeNomComplet dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _saisonNomComplet(Couverture<String> c);
+	protected abstract void _anneeNomComplet(Couverture<String> c);
 
-	public String getSaisonNomComplet() {
-		return saisonNomComplet;
+	public String getAnneeNomComplet() {
+		return anneeNomComplet;
 	}
 
-	public void setSaisonNomComplet(String saisonNomComplet) {
-		this.saisonNomComplet = saisonNomComplet;
-		this.saisonNomCompletCouverture.dejaInitialise = true;
+	public void setAnneeNomComplet(String anneeNomComplet) {
+		this.anneeNomComplet = anneeNomComplet;
+		this.anneeNomCompletCouverture.dejaInitialise = true;
 	}
-	protected AgeScolaire saisonNomCompletInit() {
-		if(!saisonNomCompletCouverture.dejaInitialise) {
-			_saisonNomComplet(saisonNomCompletCouverture);
-			if(saisonNomComplet == null)
-				setSaisonNomComplet(saisonNomCompletCouverture.o);
+	protected AgeScolaire anneeNomCompletInit() {
+		if(!anneeNomCompletCouverture.dejaInitialise) {
+			_anneeNomComplet(anneeNomCompletCouverture);
+			if(anneeNomComplet == null)
+				setAnneeNomComplet(anneeNomCompletCouverture.o);
 		}
-		saisonNomCompletCouverture.dejaInitialise(true);
+		anneeNomCompletCouverture.dejaInitialise(true);
 		return (AgeScolaire)this;
 	}
 
-	public String solrSaisonNomComplet() {
-		return saisonNomComplet;
+	public String solrAnneeNomComplet() {
+		return anneeNomComplet;
 	}
 
-	public String strSaisonNomComplet() {
-		return saisonNomComplet == null ? "" : saisonNomComplet;
+	public String strAnneeNomComplet() {
+		return anneeNomComplet == null ? "" : anneeNomComplet;
 	}
 
-	public String jsonSaisonNomComplet() {
-		return saisonNomComplet == null ? "" : saisonNomComplet;
+	public String jsonAnneeNomComplet() {
+		return anneeNomComplet == null ? "" : anneeNomComplet;
 	}
 
-	public String nomAffichageSaisonNomComplet() {
+	public String nomAffichageAnneeNomComplet() {
 		return null;
 	}
 
-	public String htmTooltipSaisonNomComplet() {
+	public String htmTooltipAnneeNomComplet() {
 		return null;
 	}
 
-	public String htmSaisonNomComplet() {
-		return saisonNomComplet == null ? "" : StringEscapeUtils.escapeHtml4(strSaisonNomComplet());
+	public String htmAnneeNomComplet() {
+		return anneeNomComplet == null ? "" : StringEscapeUtils.escapeHtml4(strAnneeNomComplet());
 	}
 
 	//////////////////////
@@ -2384,68 +2180,6 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 
 	public String htmSessionDateFin() {
 		return sessionDateFin == null ? "" : StringEscapeUtils.escapeHtml4(strSessionDateFin());
-	}
-
-	///////////////////////
-	// sessionNomComplet //
-	///////////////////////
-
-	/**	 L'entité sessionNomComplet
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonInclude(Include.NON_NULL)
-	protected String sessionNomComplet;
-	@JsonIgnore
-	public Couverture<String> sessionNomCompletCouverture = new Couverture<String>().p(this).c(String.class).var("sessionNomComplet").o(sessionNomComplet);
-
-	/**	<br/> L'entité sessionNomComplet
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.age.AgeScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:sessionNomComplet">Trouver l'entité sessionNomComplet dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _sessionNomComplet(Couverture<String> c);
-
-	public String getSessionNomComplet() {
-		return sessionNomComplet;
-	}
-
-	public void setSessionNomComplet(String sessionNomComplet) {
-		this.sessionNomComplet = sessionNomComplet;
-		this.sessionNomCompletCouverture.dejaInitialise = true;
-	}
-	protected AgeScolaire sessionNomCompletInit() {
-		if(!sessionNomCompletCouverture.dejaInitialise) {
-			_sessionNomComplet(sessionNomCompletCouverture);
-			if(sessionNomComplet == null)
-				setSessionNomComplet(sessionNomCompletCouverture.o);
-		}
-		sessionNomCompletCouverture.dejaInitialise(true);
-		return (AgeScolaire)this;
-	}
-
-	public String solrSessionNomComplet() {
-		return sessionNomComplet;
-	}
-
-	public String strSessionNomComplet() {
-		return sessionNomComplet == null ? "" : sessionNomComplet;
-	}
-
-	public String jsonSessionNomComplet() {
-		return sessionNomComplet == null ? "" : sessionNomComplet;
-	}
-
-	public String nomAffichageSessionNomComplet() {
-		return null;
-	}
-
-	public String htmTooltipSessionNomComplet() {
-		return null;
-	}
-
-	public String htmSessionNomComplet() {
-		return sessionNomComplet == null ? "" : StringEscapeUtils.escapeHtml4(strSessionNomComplet());
 	}
 
 	//////////////
@@ -2858,11 +2592,10 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		saisonTriInit();
 		sessionTriInit();
 		sessionCleInit();
-		sessionRechercheInit();
-		session_Init();
+		anneeRechercheInit();
+		annee_Init();
 		ecoleCleInit();
 		anneeCleInit();
-		saisonCleInit();
 		ecoleNomInit();
 		ecoleNomCompletInit();
 		ecoleEmplacementInit();
@@ -2873,14 +2606,11 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		anneeDebutInit();
 		anneeFinInit();
 		saisonDateDebutInit();
-		saisonEteInit();
-		saisonHiverInit();
 		anneeFraisInscriptionInit();
-		saisonNomCourtInit();
-		saisonNomCompletInit();
+		anneeNomCourtInit();
+		anneeNomCompletInit();
 		sessionDateDebutInit();
 		sessionDateFinInit();
-		sessionNomCompletInit();
 		ageDebutInit();
 		ageFinInit();
 		ageNomCourtInit();
@@ -2897,8 +2627,8 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 
 	public void requeteSiteAgeScolaire(RequeteSiteFrFR requeteSite_) {
 			super.requeteSiteCluster(requeteSite_);
-		if(sessionRecherche != null)
-			sessionRecherche.setRequeteSite_(requeteSite_);
+		if(anneeRecherche != null)
+			anneeRecherche.setRequeteSite_(requeteSite_);
 	}
 
 	public void requeteSitePourClasse(RequeteSiteFrFR requeteSite_) {
@@ -2943,16 +2673,14 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 				return oAgeScolaire.sessionTri;
 			case "sessionCle":
 				return oAgeScolaire.sessionCle;
-			case "sessionRecherche":
-				return oAgeScolaire.sessionRecherche;
-			case "session_":
-				return oAgeScolaire.session_;
+			case "anneeRecherche":
+				return oAgeScolaire.anneeRecherche;
+			case "annee_":
+				return oAgeScolaire.annee_;
 			case "ecoleCle":
 				return oAgeScolaire.ecoleCle;
 			case "anneeCle":
 				return oAgeScolaire.anneeCle;
-			case "saisonCle":
-				return oAgeScolaire.saisonCle;
 			case "ecoleNom":
 				return oAgeScolaire.ecoleNom;
 			case "ecoleNomComplet":
@@ -2973,22 +2701,16 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 				return oAgeScolaire.anneeFin;
 			case "saisonDateDebut":
 				return oAgeScolaire.saisonDateDebut;
-			case "saisonEte":
-				return oAgeScolaire.saisonEte;
-			case "saisonHiver":
-				return oAgeScolaire.saisonHiver;
 			case "anneeFraisInscription":
 				return oAgeScolaire.anneeFraisInscription;
-			case "saisonNomCourt":
-				return oAgeScolaire.saisonNomCourt;
-			case "saisonNomComplet":
-				return oAgeScolaire.saisonNomComplet;
+			case "anneeNomCourt":
+				return oAgeScolaire.anneeNomCourt;
+			case "anneeNomComplet":
+				return oAgeScolaire.anneeNomComplet;
 			case "sessionDateDebut":
 				return oAgeScolaire.sessionDateDebut;
 			case "sessionDateFin":
 				return oAgeScolaire.sessionDateFin;
-			case "sessionNomComplet":
-				return oAgeScolaire.sessionNomComplet;
 			case "ageDebut":
 				return oAgeScolaire.ageDebut;
 			case "ageFin":
@@ -3155,12 +2877,6 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 			if(anneeCle != null)
 				oAgeScolaire.setAnneeCle(anneeCle);
 
-			if(sauvegardes.contains("saisonCle")) {
-				Long saisonCle = (Long)solrDocument.get("saisonCle_stored_long");
-				if(saisonCle != null)
-					oAgeScolaire.setSaisonCle(saisonCle);
-			}
-
 			if(sauvegardes.contains("ecoleNom")) {
 				String ecoleNom = (String)solrDocument.get("ecoleNom_stored_string");
 				if(ecoleNom != null)
@@ -3221,34 +2937,22 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 					oAgeScolaire.setSaisonDateDebut(saisonDateDebut);
 			}
 
-			if(sauvegardes.contains("saisonEte")) {
-				Boolean saisonEte = (Boolean)solrDocument.get("saisonEte_stored_boolean");
-				if(saisonEte != null)
-					oAgeScolaire.setSaisonEte(saisonEte);
-			}
-
-			if(sauvegardes.contains("saisonHiver")) {
-				Boolean saisonHiver = (Boolean)solrDocument.get("saisonHiver_stored_boolean");
-				if(saisonHiver != null)
-					oAgeScolaire.setSaisonHiver(saisonHiver);
-			}
-
 			if(sauvegardes.contains("anneeFraisInscription")) {
 				Double anneeFraisInscription = (Double)solrDocument.get("anneeFraisInscription_stored_double");
 				if(anneeFraisInscription != null)
 					oAgeScolaire.setAnneeFraisInscription(anneeFraisInscription);
 			}
 
-			if(sauvegardes.contains("saisonNomCourt")) {
-				String saisonNomCourt = (String)solrDocument.get("saisonNomCourt_stored_string");
-				if(saisonNomCourt != null)
-					oAgeScolaire.setSaisonNomCourt(saisonNomCourt);
+			if(sauvegardes.contains("anneeNomCourt")) {
+				String anneeNomCourt = (String)solrDocument.get("anneeNomCourt_stored_string");
+				if(anneeNomCourt != null)
+					oAgeScolaire.setAnneeNomCourt(anneeNomCourt);
 			}
 
-			if(sauvegardes.contains("saisonNomComplet")) {
-				String saisonNomComplet = (String)solrDocument.get("saisonNomComplet_stored_string");
-				if(saisonNomComplet != null)
-					oAgeScolaire.setSaisonNomComplet(saisonNomComplet);
+			if(sauvegardes.contains("anneeNomComplet")) {
+				String anneeNomComplet = (String)solrDocument.get("anneeNomComplet_stored_string");
+				if(anneeNomComplet != null)
+					oAgeScolaire.setAnneeNomComplet(anneeNomComplet);
 			}
 
 			if(sauvegardes.contains("sessionDateDebut")) {
@@ -3261,12 +2965,6 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 				Date sessionDateFin = (Date)solrDocument.get("sessionDateFin_stored_date");
 				if(sessionDateFin != null)
 					oAgeScolaire.setSessionDateFin(sessionDateFin);
-			}
-
-			if(sauvegardes.contains("sessionNomComplet")) {
-				String sessionNomComplet = (String)solrDocument.get("sessionNomComplet_stored_string");
-				if(sessionNomComplet != null)
-					oAgeScolaire.setSessionNomComplet(sessionNomComplet);
 			}
 
 			if(sauvegardes.contains("ageDebut")) {
@@ -3411,10 +3109,6 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 			document.addField("anneeCle_indexed_long", anneeCle);
 			document.addField("anneeCle_stored_long", anneeCle);
 		}
-		if(saisonCle != null) {
-			document.addField("saisonCle_indexed_long", saisonCle);
-			document.addField("saisonCle_stored_long", saisonCle);
-		}
 		if(ecoleNom != null) {
 			document.addField("ecoleNom_indexed_string", ecoleNom);
 			document.addField("ecoleNom_stored_string", ecoleNom);
@@ -3455,25 +3149,17 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 			document.addField("saisonDateDebut_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(saisonDateDebut.atStartOfDay(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toInstant().atZone(ZoneId.of("Z"))));
 			document.addField("saisonDateDebut_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(saisonDateDebut.atStartOfDay(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toInstant().atZone(ZoneId.of("Z"))));
 		}
-		if(saisonEte != null) {
-			document.addField("saisonEte_indexed_boolean", saisonEte);
-			document.addField("saisonEte_stored_boolean", saisonEte);
-		}
-		if(saisonHiver != null) {
-			document.addField("saisonHiver_indexed_boolean", saisonHiver);
-			document.addField("saisonHiver_stored_boolean", saisonHiver);
-		}
 		if(anneeFraisInscription != null) {
 			document.addField("anneeFraisInscription_indexed_double", anneeFraisInscription.doubleValue());
 			document.addField("anneeFraisInscription_stored_double", anneeFraisInscription.doubleValue());
 		}
-		if(saisonNomCourt != null) {
-			document.addField("saisonNomCourt_indexed_string", saisonNomCourt);
-			document.addField("saisonNomCourt_stored_string", saisonNomCourt);
+		if(anneeNomCourt != null) {
+			document.addField("anneeNomCourt_indexed_string", anneeNomCourt);
+			document.addField("anneeNomCourt_stored_string", anneeNomCourt);
 		}
-		if(saisonNomComplet != null) {
-			document.addField("saisonNomComplet_indexed_string", saisonNomComplet);
-			document.addField("saisonNomComplet_stored_string", saisonNomComplet);
+		if(anneeNomComplet != null) {
+			document.addField("anneeNomComplet_indexed_string", anneeNomComplet);
+			document.addField("anneeNomComplet_stored_string", anneeNomComplet);
 		}
 		if(sessionDateDebut != null) {
 			document.addField("sessionDateDebut_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(sessionDateDebut.atStartOfDay(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toInstant().atZone(ZoneId.of("Z"))));
@@ -3482,10 +3168,6 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		if(sessionDateFin != null) {
 			document.addField("sessionDateFin_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(sessionDateFin.atStartOfDay(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toInstant().atZone(ZoneId.of("Z"))));
 			document.addField("sessionDateFin_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(sessionDateFin.atStartOfDay(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toInstant().atZone(ZoneId.of("Z"))));
-		}
-		if(sessionNomComplet != null) {
-			document.addField("sessionNomComplet_indexed_string", sessionNomComplet);
-			document.addField("sessionNomComplet_stored_string", sessionNomComplet);
 		}
 		if(ageDebut != null) {
 			document.addField("ageDebut_indexed_int", ageDebut);
@@ -3548,8 +3230,6 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 				return "ecoleCle_indexed_long";
 			case "anneeCle":
 				return "anneeCle_indexed_long";
-			case "saisonCle":
-				return "saisonCle_indexed_long";
 			case "ecoleNom":
 				return "ecoleNom_indexed_string";
 			case "ecoleNomComplet":
@@ -3570,22 +3250,16 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 				return "anneeFin_indexed_int";
 			case "saisonDateDebut":
 				return "saisonDateDebut_indexed_date";
-			case "saisonEte":
-				return "saisonEte_indexed_boolean";
-			case "saisonHiver":
-				return "saisonHiver_indexed_boolean";
 			case "anneeFraisInscription":
 				return "anneeFraisInscription_indexed_double";
-			case "saisonNomCourt":
-				return "saisonNomCourt_indexed_string";
-			case "saisonNomComplet":
-				return "saisonNomComplet_indexed_string";
+			case "anneeNomCourt":
+				return "anneeNomCourt_indexed_string";
+			case "anneeNomComplet":
+				return "anneeNomComplet_indexed_string";
 			case "sessionDateDebut":
 				return "sessionDateDebut_indexed_date";
 			case "sessionDateFin":
 				return "sessionDateFin_indexed_date";
-			case "sessionNomComplet":
-				return "sessionNomComplet_indexed_string";
 			case "ageDebut":
 				return "ageDebut_indexed_int";
 			case "ageFin":
@@ -3667,10 +3341,6 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		if(anneeCle != null)
 			oAgeScolaire.setAnneeCle(anneeCle);
 
-		Long saisonCle = (Long)solrDocument.get("saisonCle_stored_long");
-		if(saisonCle != null)
-			oAgeScolaire.setSaisonCle(saisonCle);
-
 		String ecoleNom = (String)solrDocument.get("ecoleNom_stored_string");
 		if(ecoleNom != null)
 			oAgeScolaire.setEcoleNom(ecoleNom);
@@ -3711,25 +3381,17 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		if(saisonDateDebut != null)
 			oAgeScolaire.setSaisonDateDebut(saisonDateDebut);
 
-		Boolean saisonEte = (Boolean)solrDocument.get("saisonEte_stored_boolean");
-		if(saisonEte != null)
-			oAgeScolaire.setSaisonEte(saisonEte);
-
-		Boolean saisonHiver = (Boolean)solrDocument.get("saisonHiver_stored_boolean");
-		if(saisonHiver != null)
-			oAgeScolaire.setSaisonHiver(saisonHiver);
-
 		Double anneeFraisInscription = (Double)solrDocument.get("anneeFraisInscription_stored_double");
 		if(anneeFraisInscription != null)
 			oAgeScolaire.setAnneeFraisInscription(anneeFraisInscription);
 
-		String saisonNomCourt = (String)solrDocument.get("saisonNomCourt_stored_string");
-		if(saisonNomCourt != null)
-			oAgeScolaire.setSaisonNomCourt(saisonNomCourt);
+		String anneeNomCourt = (String)solrDocument.get("anneeNomCourt_stored_string");
+		if(anneeNomCourt != null)
+			oAgeScolaire.setAnneeNomCourt(anneeNomCourt);
 
-		String saisonNomComplet = (String)solrDocument.get("saisonNomComplet_stored_string");
-		if(saisonNomComplet != null)
-			oAgeScolaire.setSaisonNomComplet(saisonNomComplet);
+		String anneeNomComplet = (String)solrDocument.get("anneeNomComplet_stored_string");
+		if(anneeNomComplet != null)
+			oAgeScolaire.setAnneeNomComplet(anneeNomComplet);
 
 		Date sessionDateDebut = (Date)solrDocument.get("sessionDateDebut_stored_date");
 		if(sessionDateDebut != null)
@@ -3738,10 +3400,6 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		Date sessionDateFin = (Date)solrDocument.get("sessionDateFin_stored_date");
 		if(sessionDateFin != null)
 			oAgeScolaire.setSessionDateFin(sessionDateFin);
-
-		String sessionNomComplet = (String)solrDocument.get("sessionNomComplet_stored_string");
-		if(sessionNomComplet != null)
-			oAgeScolaire.setSessionNomComplet(sessionNomComplet);
 
 		Integer ageDebut = (Integer)solrDocument.get("ageDebut_stored_int");
 		if(ageDebut != null)

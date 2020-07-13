@@ -260,25 +260,25 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 		if(age_ != null)
 			c.o(age_.getAnneeCle());
 	}
-
-	/**
-	 * {@inheritDoc}
-	 * Var.enUS: seasonKey
-	 * Indexe: true
-	 * Stocke: true
-	 * Description.frFR: L'année scolaire de la saison scolaire. 
-	 * Description.enUS: The school year of the school season. 
-	 * NomAffichage.frFR: année
-	 * NomAffichage.enUS: year
-	 * r: SaisonCle
-	 * r.enUS: SeasonKey
-	 * r: age
-	 * r.enUS: age
-	*/             
-	protected void _saisonCle(Couverture<Long> c) {
-		if(age_ != null)
-			c.o(age_.getSaisonCle());
-	}
+//
+//	/**
+//	 * {@inheritDoc}
+//	 * Var.enUS: seasonKey
+//	 * Indexe: true
+//	 * Stocke: true
+//	 * Description.frFR: L'année scolaire de la saison scolaire. 
+//	 * Description.enUS: The school year of the school season. 
+//	 * NomAffichage.frFR: année
+//	 * NomAffichage.enUS: year
+//	 * r: SaisonCle
+//	 * r.enUS: SeasonKey
+//	 * r: age
+//	 * r.enUS: age
+//	*/             
+//	protected void _saisonCle(Couverture<Long> c) {
+//		if(age_ != null)
+//			c.o(age_.getSaisonCle());
+//	}
 
 	/**
 	 * {@inheritDoc}
@@ -471,40 +471,40 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 		if(age_ != null)
 			c.o(age_.getSaisonDateDebut());
 	}
-
-	/**
-	 * {@inheritDoc}
-	 * Var.enUS: seasonSummer
-	 * Indexe: true
-	 * Stocke: true
-	 * NomAffichage.frFR: été
-	 * NomAffichage.enUS: summer
-	 * r: SaisonEte
-	 * r.enUS: SeasonSummer
-	 * r: age
-	 * r.enUS: age
-	 */                   
-	protected void _saisonEte(Couverture<Boolean> c) {
-		if(age_ != null)
-			c.o(age_.getSaisonEte());
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * Var.enUS: seasonWinter
-	 * Indexe: true
-	 * Stocke: true
-	 * NomAffichage.frFR: hiver
-	 * NomAffichage.enUS: winter
-	 * r: SaisonHiver
-	 * r.enUS: SeasonWinter
-	 * r: age
-	 * r.enUS: age
-	 */                   
-	protected void _saisonHiver(Couverture<Boolean> c) {
-		if(age_ != null)
-			c.o(age_.getSaisonHiver());
-	}
+//
+//	/**
+//	 * {@inheritDoc}
+//	 * Var.enUS: seasonSummer
+//	 * Indexe: true
+//	 * Stocke: true
+//	 * NomAffichage.frFR: été
+//	 * NomAffichage.enUS: summer
+//	 * r: SaisonEte
+//	 * r.enUS: SeasonSummer
+//	 * r: age
+//	 * r.enUS: age
+//	 */                   
+//	protected void _saisonEte(Couverture<Boolean> c) {
+//		if(age_ != null)
+//			c.o(age_.getSaisonEte());
+//	}
+//
+//	/**
+//	 * {@inheritDoc}
+//	 * Var.enUS: seasonWinter
+//	 * Indexe: true
+//	 * Stocke: true
+//	 * NomAffichage.frFR: hiver
+//	 * NomAffichage.enUS: winter
+//	 * r: SaisonHiver
+//	 * r.enUS: SeasonWinter
+//	 * r: age
+//	 * r.enUS: age
+//	 */                   
+//	protected void _saisonHiver(Couverture<Boolean> c) {
+//		if(age_ != null)
+//			c.o(age_.getSaisonHiver());
+//	}
 
 	/**
 	 * {@inheritDoc}
@@ -522,36 +522,36 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 		if(age_ != null)
 			c.o(age_.getAnneeFraisInscription());
 	}
-
-	/**   
-	 * {@inheritDoc}
-	 * Var.enUS: seasonShortName
-	 * Indexe: true
-	 * Stocke: true
-	 * r: SaisonNomCourt
-	 * r.enUS: SeasonShortName
-	 * r: age
-	 * r.enUS: age
-	 */
-	protected void _saisonNomCourt(Couverture<String> c) {
-		if(age_ != null)
-			c.o(age_.getSaisonNomCourt());
-	}
-
-	/**   
-	 * {@inheritDoc}
-	 * Var.enUS: seasonCompleteName
-	 * Indexe: true
-	 * Stocke: true
-	 * r: SaisonNomComplet
-	 * r.enUS: SeasonCompleteName
-	 * r: age
-	 * r.enUS: age
-	 */
-	protected void _saisonNomComplet(Couverture<String> c) {
-		if(age_ != null)
-			c.o(age_.getSaisonNomComplet());
-	}
+//
+//	/**   
+//	 * {@inheritDoc}
+//	 * Var.enUS: seasonShortName
+//	 * Indexe: true
+//	 * Stocke: true
+//	 * r: SaisonNomCourt
+//	 * r.enUS: SeasonShortName
+//	 * r: age
+//	 * r.enUS: age
+//	 */
+//	protected void _saisonNomCourt(Couverture<String> c) {
+//		if(age_ != null)
+//			c.o(age_.getSaisonNomCourt());
+//	}
+//
+//	/**   
+//	 * {@inheritDoc}
+//	 * Var.enUS: seasonCompleteName
+//	 * Indexe: true
+//	 * Stocke: true
+//	 * r: SaisonNomComplet
+//	 * r.enUS: SeasonCompleteName
+//	 * r: age
+//	 * r.enUS: age
+//	 */
+//	protected void _saisonNomComplet(Couverture<String> c) {
+//		if(age_ != null)
+//			c.o(age_.getSaisonNomComplet());
+//	}
 
 	/**
 	 * {@inheritDoc}

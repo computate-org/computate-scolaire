@@ -108,6 +108,10 @@ public class SchoolYear extends SchoolYearGen<Cluster> {
 
 	protected void _sessionStartDate(Wrap<LocalDate> c) {}
 
+	protected void _seasonStartDate(Wrap<LocalDate> c) {
+		c.o(sessionStartDate);
+	}
+
 	@Override()
 	public SchoolYear setSessionStartDate(String o) {
 		if(StringUtils.contains(o, " "))

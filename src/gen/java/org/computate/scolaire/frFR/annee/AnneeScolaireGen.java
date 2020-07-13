@@ -1550,6 +1550,137 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 		} g("div");
 	}
 
+	/////////////////////
+	// saisonDateDebut //
+	/////////////////////
+
+	/**	 L'entité saisonDateDebut
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonDeserialize(using = LocalDateDeserializer.class)
+	@JsonSerialize(using = LocalDateSerializer.class)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+	@JsonInclude(Include.NON_NULL)
+	protected LocalDate saisonDateDebut;
+	@JsonIgnore
+	public Couverture<LocalDate> saisonDateDebutCouverture = new Couverture<LocalDate>().p(this).c(LocalDate.class).var("saisonDateDebut").o(saisonDateDebut);
+
+	/**	<br/> L'entité saisonDateDebut
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.annee.AnneeScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:saisonDateDebut">Trouver l'entité saisonDateDebut dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _saisonDateDebut(Couverture<LocalDate> c);
+
+	public LocalDate getSaisonDateDebut() {
+		return saisonDateDebut;
+	}
+
+	public void setSaisonDateDebut(LocalDate saisonDateDebut) {
+		this.saisonDateDebut = saisonDateDebut;
+		this.saisonDateDebutCouverture.dejaInitialise = true;
+	}
+	public AnneeScolaire setSaisonDateDebut(Instant o) {
+		this.saisonDateDebut = o == null ? null : LocalDate.from(o);
+		this.saisonDateDebutCouverture.dejaInitialise = true;
+		return (AnneeScolaire)this;
+	}
+	/** Example: 2011-12-03+01:00 **/
+	public AnneeScolaire setSaisonDateDebut(String o) {
+		this.saisonDateDebut = o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		this.saisonDateDebutCouverture.dejaInitialise = true;
+		return (AnneeScolaire)this;
+	}
+	public AnneeScolaire setSaisonDateDebut(Date o) {
+		this.saisonDateDebut = o == null ? null : o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
+		this.saisonDateDebutCouverture.dejaInitialise = true;
+		return (AnneeScolaire)this;
+	}
+	protected AnneeScolaire saisonDateDebutInit() {
+		if(!saisonDateDebutCouverture.dejaInitialise) {
+			_saisonDateDebut(saisonDateDebutCouverture);
+			if(saisonDateDebut == null)
+				setSaisonDateDebut(saisonDateDebutCouverture.o);
+		}
+		saisonDateDebutCouverture.dejaInitialise(true);
+		return (AnneeScolaire)this;
+	}
+
+	public Date solrSaisonDateDebut() {
+		return saisonDateDebut == null ? null : Date.from(saisonDateDebut.atStartOfDay(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toInstant().atZone(ZoneId.of("Z")).toInstant());
+	}
+
+	public String strSaisonDateDebut() {
+		return saisonDateDebut == null ? "" : saisonDateDebut.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.forLanguageTag("fr-FR")));
+	}
+
+	public String jsonSaisonDateDebut() {
+		return saisonDateDebut == null ? "" : saisonDateDebut.format(DateTimeFormatter.ISO_DATE);
+	}
+
+	public String nomAffichageSaisonDateDebut() {
+		return "début de la saison";
+	}
+
+	public String htmTooltipSaisonDateDebut() {
+		return null;
+	}
+
+	public String htmSaisonDateDebut() {
+		return saisonDateDebut == null ? "" : StringEscapeUtils.escapeHtml4(strSaisonDateDebut());
+	}
+
+	public void inputSaisonDateDebut(String classeApiMethodeMethode) {
+		AnneeScolaire s = (AnneeScolaire)this;
+		{
+			e("input")
+				.a("type", "text")
+				.a("class", "w3-input w3-border datepicker setSaisonDateDebut classAnneeScolaire inputAnneeScolaire", pk, "SaisonDateDebut w3-input w3-border ")
+				.a("placeholder", "DD-MM-YYYY")
+				.a("data-timeformat", "dd-MM-yyyy")
+				.a("id", classeApiMethodeMethode, "_saisonDateDebut")
+				.a("onclick", "enleverLueur($(this)); ")
+				.a("title", "Les âges scolaires de la session scolaire.  (DD-MM-YYYY)")
+				.a("value", saisonDateDebut == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy").format(saisonDateDebut))
+				.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setSaisonDateDebut', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_saisonDateDebut')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_saisonDateDebut')); }); } ")
+				.fg();
+		}
+	}
+
+	public void htmSaisonDateDebut(String classeApiMethodeMethode) {
+		AnneeScolaire s = (AnneeScolaire)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "AnneeScolaireSaisonDateDebut").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-orange ").f();
+							e("label").a("for", classeApiMethodeMethode, "_saisonDateDebut").a("class", "").f().sx("début de la saison").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row  ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								inputSaisonDateDebut(classeApiMethodeMethode);
+							} g("div");
+							{
+								if("Page".equals(classeApiMethodeMethode)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-orange ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_saisonDateDebut')); $('#", classeApiMethodeMethode, "_saisonDateDebut').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#AnneeScolaireForm :input[name=pk]').val() }], 'setSaisonDateDebut', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_saisonDateDebut')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_saisonDateDebut')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
 	////////////////////
 	// sessionDateFin //
 	////////////////////
@@ -2287,6 +2418,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 		ecoleAdministrateurNomInit();
 		formInscriptionCleInit();
 		sessionDateDebutInit();
+		saisonDateDebutInit();
 		sessionDateFinInit();
 		anneeDebutInit();
 		anneeFinInit();
@@ -2372,6 +2504,8 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 				return oAnneeScolaire.formInscriptionCle;
 			case "sessionDateDebut":
 				return oAnneeScolaire.sessionDateDebut;
+			case "saisonDateDebut":
+				return oAnneeScolaire.saisonDateDebut;
 			case "sessionDateFin":
 				return oAnneeScolaire.sessionDateFin;
 			case "anneeDebut":
@@ -2455,6 +2589,11 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 			case "sessionDateDebut":
 				if(val != null)
 					setSessionDateDebut(val);
+				sauvegardes.add(var);
+				return val;
+			case "saisonDateDebut":
+				if(val != null)
+					setSaisonDateDebut(val);
 				sauvegardes.add(var);
 				return val;
 			case "sessionDateFin":
@@ -2588,6 +2727,12 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 				Date sessionDateDebut = (Date)solrDocument.get("sessionDateDebut_stored_date");
 				if(sessionDateDebut != null)
 					oAnneeScolaire.setSessionDateDebut(sessionDateDebut);
+			}
+
+			if(sauvegardes.contains("saisonDateDebut")) {
+				Date saisonDateDebut = (Date)solrDocument.get("saisonDateDebut_stored_date");
+				if(saisonDateDebut != null)
+					oAnneeScolaire.setSaisonDateDebut(saisonDateDebut);
 			}
 
 			if(sauvegardes.contains("sessionDateFin")) {
@@ -2772,6 +2917,10 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 			document.addField("sessionDateDebut_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(sessionDateDebut.atStartOfDay(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toInstant().atZone(ZoneId.of("Z"))));
 			document.addField("sessionDateDebut_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(sessionDateDebut.atStartOfDay(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toInstant().atZone(ZoneId.of("Z"))));
 		}
+		if(saisonDateDebut != null) {
+			document.addField("saisonDateDebut_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(saisonDateDebut.atStartOfDay(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toInstant().atZone(ZoneId.of("Z"))));
+			document.addField("saisonDateDebut_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(saisonDateDebut.atStartOfDay(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toInstant().atZone(ZoneId.of("Z"))));
+		}
 		if(sessionDateFin != null) {
 			document.addField("sessionDateFin_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(sessionDateFin.atStartOfDay(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toInstant().atZone(ZoneId.of("Z"))));
 			document.addField("sessionDateFin_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(sessionDateFin.atStartOfDay(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toInstant().atZone(ZoneId.of("Z"))));
@@ -2853,6 +3002,8 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 				return "formInscriptionCle_indexed_long";
 			case "sessionDateDebut":
 				return "sessionDateDebut_indexed_date";
+			case "saisonDateDebut":
+				return "saisonDateDebut_indexed_date";
 			case "sessionDateFin":
 				return "sessionDateFin_indexed_date";
 			case "anneeDebut":
@@ -2962,6 +3113,10 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 		if(sessionDateDebut != null)
 			oAnneeScolaire.setSessionDateDebut(sessionDateDebut);
 
+		Date saisonDateDebut = (Date)solrDocument.get("saisonDateDebut_stored_date");
+		if(saisonDateDebut != null)
+			oAnneeScolaire.setSaisonDateDebut(saisonDateDebut);
+
 		Date sessionDateFin = (Date)solrDocument.get("sessionDateFin_stored_date");
 		if(sessionDateFin != null)
 			oAnneeScolaire.setSessionDateFin(sessionDateFin);
@@ -3006,6 +3161,8 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 				requeteApi.addVars("ageCles");
 			if(!Objects.equals(sessionDateDebut, original.getSessionDateDebut()))
 				requeteApi.addVars("sessionDateDebut");
+			if(!Objects.equals(saisonDateDebut, original.getSaisonDateDebut()))
+				requeteApi.addVars("saisonDateDebut");
 			if(!Objects.equals(sessionDateFin, original.getSessionDateFin()))
 				requeteApi.addVars("sessionDateFin");
 			if(!Objects.equals(anneeDebut, original.getAnneeDebut()))
@@ -3023,7 +3180,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), ecoleCle, saisonCles, ageCles, sessionDateDebut, sessionDateFin, anneeDebut, anneeFin, anneeFraisInscription);
+		return Objects.hash(super.hashCode(), ecoleCle, saisonCles, ageCles, sessionDateDebut, saisonDateDebut, sessionDateFin, anneeDebut, anneeFin, anneeFraisInscription);
 	}
 
 	////////////
@@ -3041,6 +3198,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 				&& Objects.equals( saisonCles, that.saisonCles )
 				&& Objects.equals( ageCles, that.ageCles )
 				&& Objects.equals( sessionDateDebut, that.sessionDateDebut )
+				&& Objects.equals( saisonDateDebut, that.saisonDateDebut )
 				&& Objects.equals( sessionDateFin, that.sessionDateFin )
 				&& Objects.equals( anneeDebut, that.anneeDebut )
 				&& Objects.equals( anneeFin, that.anneeFin )
@@ -3059,6 +3217,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 		sb.append( ", saisonCles: " ).append(saisonCles);
 		sb.append( ", ageCles: " ).append(ageCles);
 		sb.append( ", sessionDateDebut: " ).append(sessionDateDebut);
+		sb.append( ", saisonDateDebut: " ).append(saisonDateDebut);
 		sb.append( ", sessionDateFin: " ).append(sessionDateFin);
 		sb.append( ", anneeDebut: " ).append(anneeDebut);
 		sb.append( ", anneeFin: " ).append(anneeFin);

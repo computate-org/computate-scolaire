@@ -43,7 +43,6 @@ import org.computate.scolaire.enUS.wrap.Wrap;
 import org.apache.commons.collections.CollectionUtils;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.lang.Boolean;
 import java.lang.String;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.commons.text.StringEscapeUtils;
@@ -813,80 +812,80 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		return sessionKey == null ? "" : StringEscapeUtils.escapeHtml4(strSessionKey());
 	}
 
-	///////////////////
-	// sessionSearch //
-	///////////////////
+	////////////////
+	// yearSearch //
+	////////////////
 
-	/**	 The entity sessionSearch
-	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<SchoolSession>(). 
+	/**	 The entity yearSearch
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<SchoolYear>(). 
 	 */
 	@JsonIgnore
 	@JsonInclude(Include.NON_NULL)
-	protected SearchList<SchoolSession> sessionSearch = new SearchList<SchoolSession>();
+	protected SearchList<SchoolYear> yearSearch = new SearchList<SchoolYear>();
 	@JsonIgnore
-	public Wrap<SearchList<SchoolSession>> sessionSearchWrap = new Wrap<SearchList<SchoolSession>>().p(this).c(SearchList.class).var("sessionSearch").o(sessionSearch);
+	public Wrap<SearchList<SchoolYear>> yearSearchWrap = new Wrap<SearchList<SchoolYear>>().p(this).c(SearchList.class).var("yearSearch").o(yearSearch);
 
-	/**	<br/> The entity sessionSearch
-	 *  It is constructed before being initialized with the constructor by default SearchList<SchoolSession>(). 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.age.SchoolAge&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:sessionSearch">Find the entity sessionSearch in Solr</a>
+	/**	<br/> The entity yearSearch
+	 *  It is constructed before being initialized with the constructor by default SearchList<SchoolYear>(). 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.age.SchoolAge&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:yearSearch">Find the entity yearSearch in Solr</a>
 	 * <br/>
-	 * @param sessionSearch is the entity already constructed. 
+	 * @param yearSearch is the entity already constructed. 
 	 **/
-	protected abstract void _sessionSearch(SearchList<SchoolSession> l);
+	protected abstract void _yearSearch(SearchList<SchoolYear> l);
 
-	public SearchList<SchoolSession> getSessionSearch() {
-		return sessionSearch;
+	public SearchList<SchoolYear> getYearSearch() {
+		return yearSearch;
 	}
 
-	public void setSessionSearch(SearchList<SchoolSession> sessionSearch) {
-		this.sessionSearch = sessionSearch;
-		this.sessionSearchWrap.alreadyInitialized = true;
+	public void setYearSearch(SearchList<SchoolYear> yearSearch) {
+		this.yearSearch = yearSearch;
+		this.yearSearchWrap.alreadyInitialized = true;
 	}
-	protected SchoolAge sessionSearchInit() {
-		if(!sessionSearchWrap.alreadyInitialized) {
-			_sessionSearch(sessionSearch);
+	protected SchoolAge yearSearchInit() {
+		if(!yearSearchWrap.alreadyInitialized) {
+			_yearSearch(yearSearch);
 		}
-		sessionSearch.initDeepForClass(siteRequest_);
-		sessionSearchWrap.alreadyInitialized(true);
+		yearSearch.initDeepForClass(siteRequest_);
+		yearSearchWrap.alreadyInitialized(true);
 		return (SchoolAge)this;
 	}
 
-	//////////////
-	// session_ //
-	//////////////
+	///////////
+	// year_ //
+	///////////
 
-	/**	 The entity session_
+	/**	 The entity year_
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonIgnore
 	@JsonInclude(Include.NON_NULL)
-	protected SchoolSession session_;
+	protected SchoolYear year_;
 	@JsonIgnore
-	public Wrap<SchoolSession> session_Wrap = new Wrap<SchoolSession>().p(this).c(SchoolSession.class).var("session_").o(session_);
+	public Wrap<SchoolYear> year_Wrap = new Wrap<SchoolYear>().p(this).c(SchoolYear.class).var("year_").o(year_);
 
-	/**	<br/> The entity session_
+	/**	<br/> The entity year_
 	 *  is defined as null before being initialized. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.age.SchoolAge&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:session_">Find the entity session_ in Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.age.SchoolAge&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:year_">Find the entity year_ in Solr</a>
 	 * <br/>
 	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
-	protected abstract void _session_(Wrap<SchoolSession> c);
+	protected abstract void _year_(Wrap<SchoolYear> c);
 
-	public SchoolSession getSession_() {
-		return session_;
+	public SchoolYear getYear_() {
+		return year_;
 	}
 
-	public void setSession_(SchoolSession session_) {
-		this.session_ = session_;
-		this.session_Wrap.alreadyInitialized = true;
+	public void setYear_(SchoolYear year_) {
+		this.year_ = year_;
+		this.year_Wrap.alreadyInitialized = true;
 	}
-	protected SchoolAge session_Init() {
-		if(!session_Wrap.alreadyInitialized) {
-			_session_(session_Wrap);
-			if(session_ == null)
-				setSession_(session_Wrap.o);
+	protected SchoolAge year_Init() {
+		if(!year_Wrap.alreadyInitialized) {
+			_year_(year_Wrap);
+			if(year_ == null)
+				setYear_(year_Wrap.o);
 		}
-		session_Wrap.alreadyInitialized(true);
+		year_Wrap.alreadyInitialized(true);
 		return (SchoolAge)this;
 	}
 
@@ -1093,75 +1092,6 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 				} g("div");
 			} g("div");
 		} g("div");
-	}
-
-	///////////////
-	// seasonKey //
-	///////////////
-
-	/**	 The entity seasonKey
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonSerialize(using = ToStringSerializer.class)
-	@JsonInclude(Include.NON_NULL)
-	protected Long seasonKey;
-	@JsonIgnore
-	public Wrap<Long> seasonKeyWrap = new Wrap<Long>().p(this).c(Long.class).var("seasonKey").o(seasonKey);
-
-	/**	<br/> The entity seasonKey
-	 *  is defined as null before being initialized. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.age.SchoolAge&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:seasonKey">Find the entity seasonKey in Solr</a>
-	 * <br/>
-	 * @param c is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _seasonKey(Wrap<Long> c);
-
-	public Long getSeasonKey() {
-		return seasonKey;
-	}
-
-	public void setSeasonKey(Long seasonKey) {
-		this.seasonKey = seasonKey;
-		this.seasonKeyWrap.alreadyInitialized = true;
-	}
-	public SchoolAge setSeasonKey(String o) {
-		if(NumberUtils.isParsable(o))
-			this.seasonKey = Long.parseLong(o);
-		this.seasonKeyWrap.alreadyInitialized = true;
-		return (SchoolAge)this;
-	}
-	protected SchoolAge seasonKeyInit() {
-		if(!seasonKeyWrap.alreadyInitialized) {
-			_seasonKey(seasonKeyWrap);
-			if(seasonKey == null)
-				setSeasonKey(seasonKeyWrap.o);
-		}
-		seasonKeyWrap.alreadyInitialized(true);
-		return (SchoolAge)this;
-	}
-
-	public Long solrSeasonKey() {
-		return seasonKey;
-	}
-
-	public String strSeasonKey() {
-		return seasonKey == null ? "" : seasonKey.toString();
-	}
-
-	public String jsonSeasonKey() {
-		return seasonKey == null ? "" : seasonKey.toString();
-	}
-
-	public String nomAffichageSeasonKey() {
-		return "year";
-	}
-
-	public String htmTooltipSeasonKey() {
-		return null;
-	}
-
-	public String htmSeasonKey() {
-		return seasonKey == null ? "" : StringEscapeUtils.escapeHtml4(strSeasonKey());
 	}
 
 	////////////////
@@ -1882,140 +1812,6 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		return seasonStartDate == null ? "" : StringEscapeUtils.escapeHtml4(strSeasonStartDate());
 	}
 
-	//////////////////
-	// seasonSummer //
-	//////////////////
-
-	/**	 The entity seasonSummer
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonInclude(Include.NON_NULL)
-	protected Boolean seasonSummer;
-	@JsonIgnore
-	public Wrap<Boolean> seasonSummerWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("seasonSummer").o(seasonSummer);
-
-	/**	<br/> The entity seasonSummer
-	 *  is defined as null before being initialized. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.age.SchoolAge&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:seasonSummer">Find the entity seasonSummer in Solr</a>
-	 * <br/>
-	 * @param c is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _seasonSummer(Wrap<Boolean> c);
-
-	public Boolean getSeasonSummer() {
-		return seasonSummer;
-	}
-
-	public void setSeasonSummer(Boolean seasonSummer) {
-		this.seasonSummer = seasonSummer;
-		this.seasonSummerWrap.alreadyInitialized = true;
-	}
-	public SchoolAge setSeasonSummer(String o) {
-		this.seasonSummer = Boolean.parseBoolean(o);
-		this.seasonSummerWrap.alreadyInitialized = true;
-		return (SchoolAge)this;
-	}
-	protected SchoolAge seasonSummerInit() {
-		if(!seasonSummerWrap.alreadyInitialized) {
-			_seasonSummer(seasonSummerWrap);
-			if(seasonSummer == null)
-				setSeasonSummer(seasonSummerWrap.o);
-		}
-		seasonSummerWrap.alreadyInitialized(true);
-		return (SchoolAge)this;
-	}
-
-	public Boolean solrSeasonSummer() {
-		return seasonSummer;
-	}
-
-	public String strSeasonSummer() {
-		return seasonSummer == null ? "" : seasonSummer.toString();
-	}
-
-	public String jsonSeasonSummer() {
-		return seasonSummer == null ? "" : seasonSummer.toString();
-	}
-
-	public String nomAffichageSeasonSummer() {
-		return "summer";
-	}
-
-	public String htmTooltipSeasonSummer() {
-		return null;
-	}
-
-	public String htmSeasonSummer() {
-		return seasonSummer == null ? "" : StringEscapeUtils.escapeHtml4(strSeasonSummer());
-	}
-
-	//////////////////
-	// seasonWinter //
-	//////////////////
-
-	/**	 The entity seasonWinter
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonInclude(Include.NON_NULL)
-	protected Boolean seasonWinter;
-	@JsonIgnore
-	public Wrap<Boolean> seasonWinterWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("seasonWinter").o(seasonWinter);
-
-	/**	<br/> The entity seasonWinter
-	 *  is defined as null before being initialized. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.age.SchoolAge&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:seasonWinter">Find the entity seasonWinter in Solr</a>
-	 * <br/>
-	 * @param c is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _seasonWinter(Wrap<Boolean> c);
-
-	public Boolean getSeasonWinter() {
-		return seasonWinter;
-	}
-
-	public void setSeasonWinter(Boolean seasonWinter) {
-		this.seasonWinter = seasonWinter;
-		this.seasonWinterWrap.alreadyInitialized = true;
-	}
-	public SchoolAge setSeasonWinter(String o) {
-		this.seasonWinter = Boolean.parseBoolean(o);
-		this.seasonWinterWrap.alreadyInitialized = true;
-		return (SchoolAge)this;
-	}
-	protected SchoolAge seasonWinterInit() {
-		if(!seasonWinterWrap.alreadyInitialized) {
-			_seasonWinter(seasonWinterWrap);
-			if(seasonWinter == null)
-				setSeasonWinter(seasonWinterWrap.o);
-		}
-		seasonWinterWrap.alreadyInitialized(true);
-		return (SchoolAge)this;
-	}
-
-	public Boolean solrSeasonWinter() {
-		return seasonWinter;
-	}
-
-	public String strSeasonWinter() {
-		return seasonWinter == null ? "" : seasonWinter.toString();
-	}
-
-	public String jsonSeasonWinter() {
-		return seasonWinter == null ? "" : seasonWinter.toString();
-	}
-
-	public String nomAffichageSeasonWinter() {
-		return "winter";
-	}
-
-	public String htmTooltipSeasonWinter() {
-		return null;
-	}
-
-	public String htmSeasonWinter() {
-		return seasonWinter == null ? "" : StringEscapeUtils.escapeHtml4(strSeasonWinter());
-	}
-
 	///////////////////////
 	// yearEnrollmentFee //
 	///////////////////////
@@ -2096,128 +1892,128 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		return yearEnrollmentFee == null ? "" : StringEscapeUtils.escapeHtml4(strYearEnrollmentFee());
 	}
 
-	/////////////////////
-	// seasonShortName //
-	/////////////////////
+	///////////////////
+	// yearShortName //
+	///////////////////
 
-	/**	 The entity seasonShortName
+	/**	 The entity yearShortName
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected String seasonShortName;
+	protected String yearShortName;
 	@JsonIgnore
-	public Wrap<String> seasonShortNameWrap = new Wrap<String>().p(this).c(String.class).var("seasonShortName").o(seasonShortName);
+	public Wrap<String> yearShortNameWrap = new Wrap<String>().p(this).c(String.class).var("yearShortName").o(yearShortName);
 
-	/**	<br/> The entity seasonShortName
+	/**	<br/> The entity yearShortName
 	 *  is defined as null before being initialized. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.age.SchoolAge&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:seasonShortName">Find the entity seasonShortName in Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.age.SchoolAge&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:yearShortName">Find the entity yearShortName in Solr</a>
 	 * <br/>
 	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
-	protected abstract void _seasonShortName(Wrap<String> c);
+	protected abstract void _yearShortName(Wrap<String> c);
 
-	public String getSeasonShortName() {
-		return seasonShortName;
+	public String getYearShortName() {
+		return yearShortName;
 	}
 
-	public void setSeasonShortName(String seasonShortName) {
-		this.seasonShortName = seasonShortName;
-		this.seasonShortNameWrap.alreadyInitialized = true;
+	public void setYearShortName(String yearShortName) {
+		this.yearShortName = yearShortName;
+		this.yearShortNameWrap.alreadyInitialized = true;
 	}
-	protected SchoolAge seasonShortNameInit() {
-		if(!seasonShortNameWrap.alreadyInitialized) {
-			_seasonShortName(seasonShortNameWrap);
-			if(seasonShortName == null)
-				setSeasonShortName(seasonShortNameWrap.o);
+	protected SchoolAge yearShortNameInit() {
+		if(!yearShortNameWrap.alreadyInitialized) {
+			_yearShortName(yearShortNameWrap);
+			if(yearShortName == null)
+				setYearShortName(yearShortNameWrap.o);
 		}
-		seasonShortNameWrap.alreadyInitialized(true);
+		yearShortNameWrap.alreadyInitialized(true);
 		return (SchoolAge)this;
 	}
 
-	public String solrSeasonShortName() {
-		return seasonShortName;
+	public String solrYearShortName() {
+		return yearShortName;
 	}
 
-	public String strSeasonShortName() {
-		return seasonShortName == null ? "" : seasonShortName;
+	public String strYearShortName() {
+		return yearShortName == null ? "" : yearShortName;
 	}
 
-	public String jsonSeasonShortName() {
-		return seasonShortName == null ? "" : seasonShortName;
+	public String jsonYearShortName() {
+		return yearShortName == null ? "" : yearShortName;
 	}
 
-	public String nomAffichageSeasonShortName() {
+	public String nomAffichageYearShortName() {
 		return null;
 	}
 
-	public String htmTooltipSeasonShortName() {
+	public String htmTooltipYearShortName() {
 		return null;
 	}
 
-	public String htmSeasonShortName() {
-		return seasonShortName == null ? "" : StringEscapeUtils.escapeHtml4(strSeasonShortName());
+	public String htmYearShortName() {
+		return yearShortName == null ? "" : StringEscapeUtils.escapeHtml4(strYearShortName());
 	}
 
-	////////////////////////
-	// seasonCompleteName //
-	////////////////////////
+	//////////////////////
+	// yearCompleteName //
+	//////////////////////
 
-	/**	 The entity seasonCompleteName
+	/**	 The entity yearCompleteName
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected String seasonCompleteName;
+	protected String yearCompleteName;
 	@JsonIgnore
-	public Wrap<String> seasonCompleteNameWrap = new Wrap<String>().p(this).c(String.class).var("seasonCompleteName").o(seasonCompleteName);
+	public Wrap<String> yearCompleteNameWrap = new Wrap<String>().p(this).c(String.class).var("yearCompleteName").o(yearCompleteName);
 
-	/**	<br/> The entity seasonCompleteName
+	/**	<br/> The entity yearCompleteName
 	 *  is defined as null before being initialized. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.age.SchoolAge&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:seasonCompleteName">Find the entity seasonCompleteName in Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.age.SchoolAge&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:yearCompleteName">Find the entity yearCompleteName in Solr</a>
 	 * <br/>
 	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
-	protected abstract void _seasonCompleteName(Wrap<String> c);
+	protected abstract void _yearCompleteName(Wrap<String> c);
 
-	public String getSeasonCompleteName() {
-		return seasonCompleteName;
+	public String getYearCompleteName() {
+		return yearCompleteName;
 	}
 
-	public void setSeasonCompleteName(String seasonCompleteName) {
-		this.seasonCompleteName = seasonCompleteName;
-		this.seasonCompleteNameWrap.alreadyInitialized = true;
+	public void setYearCompleteName(String yearCompleteName) {
+		this.yearCompleteName = yearCompleteName;
+		this.yearCompleteNameWrap.alreadyInitialized = true;
 	}
-	protected SchoolAge seasonCompleteNameInit() {
-		if(!seasonCompleteNameWrap.alreadyInitialized) {
-			_seasonCompleteName(seasonCompleteNameWrap);
-			if(seasonCompleteName == null)
-				setSeasonCompleteName(seasonCompleteNameWrap.o);
+	protected SchoolAge yearCompleteNameInit() {
+		if(!yearCompleteNameWrap.alreadyInitialized) {
+			_yearCompleteName(yearCompleteNameWrap);
+			if(yearCompleteName == null)
+				setYearCompleteName(yearCompleteNameWrap.o);
 		}
-		seasonCompleteNameWrap.alreadyInitialized(true);
+		yearCompleteNameWrap.alreadyInitialized(true);
 		return (SchoolAge)this;
 	}
 
-	public String solrSeasonCompleteName() {
-		return seasonCompleteName;
+	public String solrYearCompleteName() {
+		return yearCompleteName;
 	}
 
-	public String strSeasonCompleteName() {
-		return seasonCompleteName == null ? "" : seasonCompleteName;
+	public String strYearCompleteName() {
+		return yearCompleteName == null ? "" : yearCompleteName;
 	}
 
-	public String jsonSeasonCompleteName() {
-		return seasonCompleteName == null ? "" : seasonCompleteName;
+	public String jsonYearCompleteName() {
+		return yearCompleteName == null ? "" : yearCompleteName;
 	}
 
-	public String nomAffichageSeasonCompleteName() {
+	public String nomAffichageYearCompleteName() {
 		return null;
 	}
 
-	public String htmTooltipSeasonCompleteName() {
+	public String htmTooltipYearCompleteName() {
 		return null;
 	}
 
-	public String htmSeasonCompleteName() {
-		return seasonCompleteName == null ? "" : StringEscapeUtils.escapeHtml4(strSeasonCompleteName());
+	public String htmYearCompleteName() {
+		return yearCompleteName == null ? "" : StringEscapeUtils.escapeHtml4(strYearCompleteName());
 	}
 
 	//////////////////////
@@ -2380,68 +2176,6 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 
 	public String htmSessionEndDate() {
 		return sessionEndDate == null ? "" : StringEscapeUtils.escapeHtml4(strSessionEndDate());
-	}
-
-	/////////////////////////
-	// sessionCompleteName //
-	/////////////////////////
-
-	/**	 The entity sessionCompleteName
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonInclude(Include.NON_NULL)
-	protected String sessionCompleteName;
-	@JsonIgnore
-	public Wrap<String> sessionCompleteNameWrap = new Wrap<String>().p(this).c(String.class).var("sessionCompleteName").o(sessionCompleteName);
-
-	/**	<br/> The entity sessionCompleteName
-	 *  is defined as null before being initialized. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.age.SchoolAge&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:sessionCompleteName">Find the entity sessionCompleteName in Solr</a>
-	 * <br/>
-	 * @param c is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _sessionCompleteName(Wrap<String> c);
-
-	public String getSessionCompleteName() {
-		return sessionCompleteName;
-	}
-
-	public void setSessionCompleteName(String sessionCompleteName) {
-		this.sessionCompleteName = sessionCompleteName;
-		this.sessionCompleteNameWrap.alreadyInitialized = true;
-	}
-	protected SchoolAge sessionCompleteNameInit() {
-		if(!sessionCompleteNameWrap.alreadyInitialized) {
-			_sessionCompleteName(sessionCompleteNameWrap);
-			if(sessionCompleteName == null)
-				setSessionCompleteName(sessionCompleteNameWrap.o);
-		}
-		sessionCompleteNameWrap.alreadyInitialized(true);
-		return (SchoolAge)this;
-	}
-
-	public String solrSessionCompleteName() {
-		return sessionCompleteName;
-	}
-
-	public String strSessionCompleteName() {
-		return sessionCompleteName == null ? "" : sessionCompleteName;
-	}
-
-	public String jsonSessionCompleteName() {
-		return sessionCompleteName == null ? "" : sessionCompleteName;
-	}
-
-	public String nomAffichageSessionCompleteName() {
-		return null;
-	}
-
-	public String htmTooltipSessionCompleteName() {
-		return null;
-	}
-
-	public String htmSessionCompleteName() {
-		return sessionCompleteName == null ? "" : StringEscapeUtils.escapeHtml4(strSessionCompleteName());
 	}
 
 	//////////////
@@ -2852,11 +2586,10 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		seasonSortInit();
 		sessionSortInit();
 		sessionKeyInit();
-		sessionSearchInit();
-		session_Init();
+		yearSearchInit();
+		year_Init();
 		schoolKeyInit();
 		yearKeyInit();
-		seasonKeyInit();
 		schoolNameInit();
 		schoolCompleteNameInit();
 		schoolLocationInit();
@@ -2867,14 +2600,11 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		yearStartInit();
 		yearEndInit();
 		seasonStartDateInit();
-		seasonSummerInit();
-		seasonWinterInit();
 		yearEnrollmentFeeInit();
-		seasonShortNameInit();
-		seasonCompleteNameInit();
+		yearShortNameInit();
+		yearCompleteNameInit();
 		sessionStartDateInit();
 		sessionEndDateInit();
-		sessionCompleteNameInit();
 		ageStartInit();
 		ageEndInit();
 		ageShortNameInit();
@@ -2891,8 +2621,8 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 
 	public void siteRequestSchoolAge(SiteRequestEnUS siteRequest_) {
 			super.siteRequestCluster(siteRequest_);
-		if(sessionSearch != null)
-			sessionSearch.setSiteRequest_(siteRequest_);
+		if(yearSearch != null)
+			yearSearch.setSiteRequest_(siteRequest_);
 	}
 
 	public void siteRequestForClass(SiteRequestEnUS siteRequest_) {
@@ -2937,16 +2667,14 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 				return oSchoolAge.sessionSort;
 			case "sessionKey":
 				return oSchoolAge.sessionKey;
-			case "sessionSearch":
-				return oSchoolAge.sessionSearch;
-			case "session_":
-				return oSchoolAge.session_;
+			case "yearSearch":
+				return oSchoolAge.yearSearch;
+			case "year_":
+				return oSchoolAge.year_;
 			case "schoolKey":
 				return oSchoolAge.schoolKey;
 			case "yearKey":
 				return oSchoolAge.yearKey;
-			case "seasonKey":
-				return oSchoolAge.seasonKey;
 			case "schoolName":
 				return oSchoolAge.schoolName;
 			case "schoolCompleteName":
@@ -2967,22 +2695,16 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 				return oSchoolAge.yearEnd;
 			case "seasonStartDate":
 				return oSchoolAge.seasonStartDate;
-			case "seasonSummer":
-				return oSchoolAge.seasonSummer;
-			case "seasonWinter":
-				return oSchoolAge.seasonWinter;
 			case "yearEnrollmentFee":
 				return oSchoolAge.yearEnrollmentFee;
-			case "seasonShortName":
-				return oSchoolAge.seasonShortName;
-			case "seasonCompleteName":
-				return oSchoolAge.seasonCompleteName;
+			case "yearShortName":
+				return oSchoolAge.yearShortName;
+			case "yearCompleteName":
+				return oSchoolAge.yearCompleteName;
 			case "sessionStartDate":
 				return oSchoolAge.sessionStartDate;
 			case "sessionEndDate":
 				return oSchoolAge.sessionEndDate;
-			case "sessionCompleteName":
-				return oSchoolAge.sessionCompleteName;
 			case "ageStart":
 				return oSchoolAge.ageStart;
 			case "ageEnd":
@@ -3149,12 +2871,6 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 			if(yearKey != null)
 				oSchoolAge.setYearKey(yearKey);
 
-			if(saves.contains("seasonKey")) {
-				Long seasonKey = (Long)solrDocument.get("seasonKey_stored_long");
-				if(seasonKey != null)
-					oSchoolAge.setSeasonKey(seasonKey);
-			}
-
 			if(saves.contains("schoolName")) {
 				String schoolName = (String)solrDocument.get("schoolName_stored_string");
 				if(schoolName != null)
@@ -3215,34 +2931,22 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 					oSchoolAge.setSeasonStartDate(seasonStartDate);
 			}
 
-			if(saves.contains("seasonSummer")) {
-				Boolean seasonSummer = (Boolean)solrDocument.get("seasonSummer_stored_boolean");
-				if(seasonSummer != null)
-					oSchoolAge.setSeasonSummer(seasonSummer);
-			}
-
-			if(saves.contains("seasonWinter")) {
-				Boolean seasonWinter = (Boolean)solrDocument.get("seasonWinter_stored_boolean");
-				if(seasonWinter != null)
-					oSchoolAge.setSeasonWinter(seasonWinter);
-			}
-
 			if(saves.contains("yearEnrollmentFee")) {
 				Double yearEnrollmentFee = (Double)solrDocument.get("yearEnrollmentFee_stored_double");
 				if(yearEnrollmentFee != null)
 					oSchoolAge.setYearEnrollmentFee(yearEnrollmentFee);
 			}
 
-			if(saves.contains("seasonShortName")) {
-				String seasonShortName = (String)solrDocument.get("seasonShortName_stored_string");
-				if(seasonShortName != null)
-					oSchoolAge.setSeasonShortName(seasonShortName);
+			if(saves.contains("yearShortName")) {
+				String yearShortName = (String)solrDocument.get("yearShortName_stored_string");
+				if(yearShortName != null)
+					oSchoolAge.setYearShortName(yearShortName);
 			}
 
-			if(saves.contains("seasonCompleteName")) {
-				String seasonCompleteName = (String)solrDocument.get("seasonCompleteName_stored_string");
-				if(seasonCompleteName != null)
-					oSchoolAge.setSeasonCompleteName(seasonCompleteName);
+			if(saves.contains("yearCompleteName")) {
+				String yearCompleteName = (String)solrDocument.get("yearCompleteName_stored_string");
+				if(yearCompleteName != null)
+					oSchoolAge.setYearCompleteName(yearCompleteName);
 			}
 
 			if(saves.contains("sessionStartDate")) {
@@ -3255,12 +2959,6 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 				Date sessionEndDate = (Date)solrDocument.get("sessionEndDate_stored_date");
 				if(sessionEndDate != null)
 					oSchoolAge.setSessionEndDate(sessionEndDate);
-			}
-
-			if(saves.contains("sessionCompleteName")) {
-				String sessionCompleteName = (String)solrDocument.get("sessionCompleteName_stored_string");
-				if(sessionCompleteName != null)
-					oSchoolAge.setSessionCompleteName(sessionCompleteName);
 			}
 
 			if(saves.contains("ageStart")) {
@@ -3405,10 +3103,6 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 			document.addField("yearKey_indexed_long", yearKey);
 			document.addField("yearKey_stored_long", yearKey);
 		}
-		if(seasonKey != null) {
-			document.addField("seasonKey_indexed_long", seasonKey);
-			document.addField("seasonKey_stored_long", seasonKey);
-		}
 		if(schoolName != null) {
 			document.addField("schoolName_indexed_string", schoolName);
 			document.addField("schoolName_stored_string", schoolName);
@@ -3449,25 +3143,17 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 			document.addField("seasonStartDate_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(seasonStartDate.atStartOfDay(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toInstant().atZone(ZoneId.of("Z"))));
 			document.addField("seasonStartDate_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(seasonStartDate.atStartOfDay(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toInstant().atZone(ZoneId.of("Z"))));
 		}
-		if(seasonSummer != null) {
-			document.addField("seasonSummer_indexed_boolean", seasonSummer);
-			document.addField("seasonSummer_stored_boolean", seasonSummer);
-		}
-		if(seasonWinter != null) {
-			document.addField("seasonWinter_indexed_boolean", seasonWinter);
-			document.addField("seasonWinter_stored_boolean", seasonWinter);
-		}
 		if(yearEnrollmentFee != null) {
 			document.addField("yearEnrollmentFee_indexed_double", yearEnrollmentFee.doubleValue());
 			document.addField("yearEnrollmentFee_stored_double", yearEnrollmentFee.doubleValue());
 		}
-		if(seasonShortName != null) {
-			document.addField("seasonShortName_indexed_string", seasonShortName);
-			document.addField("seasonShortName_stored_string", seasonShortName);
+		if(yearShortName != null) {
+			document.addField("yearShortName_indexed_string", yearShortName);
+			document.addField("yearShortName_stored_string", yearShortName);
 		}
-		if(seasonCompleteName != null) {
-			document.addField("seasonCompleteName_indexed_string", seasonCompleteName);
-			document.addField("seasonCompleteName_stored_string", seasonCompleteName);
+		if(yearCompleteName != null) {
+			document.addField("yearCompleteName_indexed_string", yearCompleteName);
+			document.addField("yearCompleteName_stored_string", yearCompleteName);
 		}
 		if(sessionStartDate != null) {
 			document.addField("sessionStartDate_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(sessionStartDate.atStartOfDay(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toInstant().atZone(ZoneId.of("Z"))));
@@ -3476,10 +3162,6 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		if(sessionEndDate != null) {
 			document.addField("sessionEndDate_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(sessionEndDate.atStartOfDay(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toInstant().atZone(ZoneId.of("Z"))));
 			document.addField("sessionEndDate_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(sessionEndDate.atStartOfDay(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toInstant().atZone(ZoneId.of("Z"))));
-		}
-		if(sessionCompleteName != null) {
-			document.addField("sessionCompleteName_indexed_string", sessionCompleteName);
-			document.addField("sessionCompleteName_stored_string", sessionCompleteName);
 		}
 		if(ageStart != null) {
 			document.addField("ageStart_indexed_int", ageStart);
@@ -3542,8 +3224,6 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 				return "schoolKey_indexed_long";
 			case "yearKey":
 				return "yearKey_indexed_long";
-			case "seasonKey":
-				return "seasonKey_indexed_long";
 			case "schoolName":
 				return "schoolName_indexed_string";
 			case "schoolCompleteName":
@@ -3564,22 +3244,16 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 				return "yearEnd_indexed_int";
 			case "seasonStartDate":
 				return "seasonStartDate_indexed_date";
-			case "seasonSummer":
-				return "seasonSummer_indexed_boolean";
-			case "seasonWinter":
-				return "seasonWinter_indexed_boolean";
 			case "yearEnrollmentFee":
 				return "yearEnrollmentFee_indexed_double";
-			case "seasonShortName":
-				return "seasonShortName_indexed_string";
-			case "seasonCompleteName":
-				return "seasonCompleteName_indexed_string";
+			case "yearShortName":
+				return "yearShortName_indexed_string";
+			case "yearCompleteName":
+				return "yearCompleteName_indexed_string";
 			case "sessionStartDate":
 				return "sessionStartDate_indexed_date";
 			case "sessionEndDate":
 				return "sessionEndDate_indexed_date";
-			case "sessionCompleteName":
-				return "sessionCompleteName_indexed_string";
 			case "ageStart":
 				return "ageStart_indexed_int";
 			case "ageEnd":
@@ -3661,10 +3335,6 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		if(yearKey != null)
 			oSchoolAge.setYearKey(yearKey);
 
-		Long seasonKey = (Long)solrDocument.get("seasonKey_stored_long");
-		if(seasonKey != null)
-			oSchoolAge.setSeasonKey(seasonKey);
-
 		String schoolName = (String)solrDocument.get("schoolName_stored_string");
 		if(schoolName != null)
 			oSchoolAge.setSchoolName(schoolName);
@@ -3705,25 +3375,17 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		if(seasonStartDate != null)
 			oSchoolAge.setSeasonStartDate(seasonStartDate);
 
-		Boolean seasonSummer = (Boolean)solrDocument.get("seasonSummer_stored_boolean");
-		if(seasonSummer != null)
-			oSchoolAge.setSeasonSummer(seasonSummer);
-
-		Boolean seasonWinter = (Boolean)solrDocument.get("seasonWinter_stored_boolean");
-		if(seasonWinter != null)
-			oSchoolAge.setSeasonWinter(seasonWinter);
-
 		Double yearEnrollmentFee = (Double)solrDocument.get("yearEnrollmentFee_stored_double");
 		if(yearEnrollmentFee != null)
 			oSchoolAge.setYearEnrollmentFee(yearEnrollmentFee);
 
-		String seasonShortName = (String)solrDocument.get("seasonShortName_stored_string");
-		if(seasonShortName != null)
-			oSchoolAge.setSeasonShortName(seasonShortName);
+		String yearShortName = (String)solrDocument.get("yearShortName_stored_string");
+		if(yearShortName != null)
+			oSchoolAge.setYearShortName(yearShortName);
 
-		String seasonCompleteName = (String)solrDocument.get("seasonCompleteName_stored_string");
-		if(seasonCompleteName != null)
-			oSchoolAge.setSeasonCompleteName(seasonCompleteName);
+		String yearCompleteName = (String)solrDocument.get("yearCompleteName_stored_string");
+		if(yearCompleteName != null)
+			oSchoolAge.setYearCompleteName(yearCompleteName);
 
 		Date sessionStartDate = (Date)solrDocument.get("sessionStartDate_stored_date");
 		if(sessionStartDate != null)
@@ -3732,10 +3394,6 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		Date sessionEndDate = (Date)solrDocument.get("sessionEndDate_stored_date");
 		if(sessionEndDate != null)
 			oSchoolAge.setSessionEndDate(sessionEndDate);
-
-		String sessionCompleteName = (String)solrDocument.get("sessionCompleteName_stored_string");
-		if(sessionCompleteName != null)
-			oSchoolAge.setSessionCompleteName(sessionCompleteName);
 
 		Integer ageStart = (Integer)solrDocument.get("ageStart_stored_int");
 		if(ageStart != null)

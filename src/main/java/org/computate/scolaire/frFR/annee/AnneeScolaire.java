@@ -334,6 +334,21 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	protected void _sessionDateDebut(Couverture<LocalDate> c) {}
 
 	/**
+	 * {@inheritDoc}
+	 * Var.enUS: seasonStartDate
+	 * Indexe: true
+	 * Stocke: true
+	 * Definir: true
+	 * NomAffichage.frFR: début de la saison
+	 * NomAffichage.enUS: start of the season
+	 * r: sessionDateDebut
+	 * r.enUS: sessionStartDate
+	 */                   
+	protected void _saisonDateDebut(Couverture<LocalDate> c) {
+		c.o(sessionDateDebut);
+	}
+
+	/**
 	 * Var.enUS: setSessionStartDate
 	 * r: SessionDateDebut
 	 * r.enUS: SessionStartDate

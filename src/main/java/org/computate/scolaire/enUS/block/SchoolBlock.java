@@ -95,11 +95,6 @@ public class SchoolBlock extends SchoolBlockGen<Cluster> {
 			c.o(age_.getYearKey());
 	}
 
-	protected void _seasonKey(Wrap<Long> c) {
-		if(age_ != null)
-			c.o(age_.getSeasonKey());
-	}
-
 	protected void _sessionKey(Wrap<Long> c) {
 		if(age_ != null)
 			c.o(age_.getSessionKey());
@@ -155,29 +150,9 @@ public class SchoolBlock extends SchoolBlockGen<Cluster> {
 			c.o(age_.getSeasonStartDate());
 	}
 
-	protected void _seasonSummer(Wrap<Boolean> c) {
-		if(age_ != null)
-			c.o(age_.getSeasonSummer());
-	}
-
-	protected void _seasonWinter(Wrap<Boolean> c) {
-		if(age_ != null)
-			c.o(age_.getSeasonWinter());
-	}
-
 	protected void _yearEnrollmentFee(Wrap<BigDecimal> c) {
 		if(age_ != null)
 			c.o(age_.getYearEnrollmentFee());
-	}
-
-	protected void _seasonShortName(Wrap<String> c) {
-		if(age_ != null)
-			c.o(age_.getSeasonShortName());
-	}
-
-	protected void _seasonCompleteName(Wrap<String> c) {
-		if(age_ != null)
-			c.o(age_.getSeasonCompleteName());
 	}
 
 	protected void _sessionStartDate(Wrap<LocalDate> c) {

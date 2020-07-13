@@ -252,6 +252,7 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 			o.htmSessionId("PUTCopy");
 			o.htmUserId("PUTCopy");
 			o.htmUserKey("PUTCopy");
+			o.htmSeasonStartDate("PUTCopy");
 		} g("div");
 	}
 
@@ -280,6 +281,7 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 			o.htmSessionId("PATCH");
 			o.htmUserId("PATCH");
 			o.htmUserKey("PATCH");
+			o.htmSeasonStartDate("PATCH");
 		} g("div");
 	}
 
@@ -311,6 +313,7 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 			o.htmUserId("Search");
 			o.htmUserKey("Search");
 			o.htmObjectTitle("Search");
+			o.htmSeasonStartDate("Search");
 		} g("div");
 	}
 

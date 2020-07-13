@@ -205,25 +205,25 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 		if(inscription_ != null)
 			c.o(inscription_.getAnneeCle());
 	}
-
-	/**
-	 * {@inheritDoc}
-	 * Var.enUS: seasonKey
-	 * Indexe: true
-	 * Stocke: true
-	 * Description.frFR: La saison scolaire de l'paiement scolaire. 
-	 * Description.enUS: The school season of the school child. 
-	 * NomAffichage.frFR: saisons
-	 * NomAffichage.enUS: seasons
-	 * r: inscription
-	 * r.enUS: enrollment
-	 * r: SaisonCle
-	 * r.enUS: SeasonKey
-	 */          
-	protected void _saisonCle(Couverture<Long> c) {
-		if(inscription_ != null)
-			c.o(inscription_.getSaisonCle());
-	}
+//
+//	/**
+//	 * {@inheritDoc}
+//	 * Var.enUS: seasonKey
+//	 * Indexe: true
+//	 * Stocke: true
+//	 * Description.frFR: La saison scolaire de l'paiement scolaire. 
+//	 * Description.enUS: The school season of the school child. 
+//	 * NomAffichage.frFR: saisons
+//	 * NomAffichage.enUS: seasons
+//	 * r: inscription
+//	 * r.enUS: enrollment
+//	 * r: SaisonCle
+//	 * r.enUS: SeasonKey
+//	 */          
+//	protected void _saisonCle(Couverture<Long> c) {
+//		if(inscription_ != null)
+//			c.o(inscription_.getSaisonCle());
+//	}
 
 	/**
 	 * {@inheritDoc}
@@ -545,40 +545,40 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 		if(inscription_ != null)
 			c.o(inscription_.getSaisonDateDebut());
 	}
-
-	/**
-	 * {@inheritDoc}
-	 * Var.enUS: seasonSummer
-	 * Indexe: true
-	 * Stocke: true
-	 * NomAffichage.frFR: été
-	 * NomAffichage.enUS: summer
-	 * r: SaisonEte
-	 * r.enUS: SeasonSummer
-	 * r: inscription
-	 * r.enUS: enrollment
-	 */                   
-	protected void _saisonEte(Couverture<Boolean> c) {
-		if(inscription_ != null)
-			c.o(inscription_.getSaisonEte());
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * Var.enUS: seasonWinter
-	 * Indexe: true
-	 * Stocke: true
-	 * NomAffichage.frFR: hiver
-	 * NomAffichage.enUS: winter
-	 * r: SaisonHiver
-	 * r.enUS: SeasonWinter
-	 * r: inscription
-	 * r.enUS: enrollment
-	 */                   
-	protected void _saisonHiver(Couverture<Boolean> c) {
-		if(inscription_ != null)
-			c.o(inscription_.getSaisonHiver());
-	}
+//
+//	/**
+//	 * {@inheritDoc}
+//	 * Var.enUS: seasonSummer
+//	 * Indexe: true
+//	 * Stocke: true
+//	 * NomAffichage.frFR: été
+//	 * NomAffichage.enUS: summer
+//	 * r: SaisonEte
+//	 * r.enUS: SeasonSummer
+//	 * r: inscription
+//	 * r.enUS: enrollment
+//	 */                   
+//	protected void _saisonEte(Couverture<Boolean> c) {
+//		if(inscription_ != null)
+//			c.o(inscription_.getSaisonEte());
+//	}
+//
+//	/**
+//	 * {@inheritDoc}
+//	 * Var.enUS: seasonWinter
+//	 * Indexe: true
+//	 * Stocke: true
+//	 * NomAffichage.frFR: hiver
+//	 * NomAffichage.enUS: winter
+//	 * r: SaisonHiver
+//	 * r.enUS: SeasonWinter
+//	 * r: inscription
+//	 * r.enUS: enrollment
+//	 */                   
+//	protected void _saisonHiver(Couverture<Boolean> c) {
+//		if(inscription_ != null)
+//			c.o(inscription_.getSaisonHiver());
+//	}
 
 	/**
 	 * {@inheritDoc}
