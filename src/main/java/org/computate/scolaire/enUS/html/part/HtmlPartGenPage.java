@@ -73,9 +73,11 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 		if(htmlPart != null && htmlPart.getObjectTitle() != null)
 			c.o(htmlPart.getObjectTitle());
 		else if(htmlPart != null)
-			c.o("");
+			c.o("HTML parts");
 		else if(listHtmlPart == null || listHtmlPart.size() == 0)
 			c.o("no HTML part found");
+		else
+			c.o("HTML parts");
 	}
 
 	@Override protected void _pageUri(Wrap<String> c) {

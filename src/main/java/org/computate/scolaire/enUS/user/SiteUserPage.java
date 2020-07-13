@@ -141,9 +141,23 @@ public class SiteUserPage extends SiteUserPageGen<SiteUserGenPage> {
 
 	@Override public void htmlBodySiteUserGenPage() {
 		super.htmlBodySiteUserGenPage();
+		SiteConfig siteConfig = siteRequest_.getSiteConfig_();
 
-		writeConfigurePayments(1);
-		writeConfigurePayments(2);
+		{ e("div").a("class", "w3-margin-top ").f();
+			e("h1").a("class", "w3-block w3-gray w3-padding w3-center ").f().sx("Manage username and password").g("h1");
+			{ e("div").a("class", "w3-margin ").f();
+				e("a").a("target", "_blank").a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ").a("href", siteConfig.getAuthUrl() + "/realms/", siteConfig.getAuthRealm(), "/account").f().sx("Manage user profile").g("a");
+			} g("div");
+		} g("div");
+
+		{ e("div").a("class", "w3-margin-top ").f();
+			e("h1").a("class", "w3-block w3-gray w3-padding w3-center ").f().sx("Manage payments").g("h1");
+			{ e("div").a("class", "w3-margin ").f();
+				writeConfigurePayments(1);
+				writeConfigurePayments(2);
+			} g("div");
+		} g("div");
+
 		writeSchoolReports();
 	}
 
@@ -151,6 +165,7 @@ public class SiteUserPage extends SiteUserPageGen<SiteUserGenPage> {
 		SiteConfig siteConfig = siteRequest_.getSiteConfig_();
 		String authorizeApiLoginId = (String)siteConfig.obtainSiteConfig("authorizeApiLoginId" + schoolNumber);
 		String authorizeTransactionKey = (String)siteConfig.obtainSiteConfig("authorizeTransactionKey" + schoolNumber);
+		String schoolLocation = (String)siteConfig.obtainSiteConfig("schoolLocation" + schoolNumber);
 
 		if(authorizeApiLoginId != null && authorizeTransactionKey != null) {
 			SiteUser siteUser = siteRequest_.getSiteUser();
@@ -207,22 +222,11 @@ public class SiteUserPage extends SiteUserPageGen<SiteUserGenPage> {
 							System.err.println(profilePageResponse.getMessages().getMessage().stream().findFirst().map(m -> String.format("%s %s", m.getCode(), m.getText())).orElse("GetHostedProfilePageRequest failed. "));
 						}
 						else {
-							{ e("h1").f();
-								{ e("a").a("href", "/user").a("class", "w3-bar-item w3-btn w3-center w3-block w3-gray w3-hover-gray ").f();
-									if(contextIconCssClasses != null)
-										e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
-									e("span").a("class", " ").f().sx("make payments").g("span");
-								} g("a");
-							} g("h1");
 							{ e("div").a("class", "").f();
-								e("div").a("class", "w3-large font-weight-bold ").f().sx("Manage username and password").g("div");
-								e("a").a("target", "_blank").a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ").a("href", siteConfig.getAuthUrl() + "/realms/", siteConfig.getAuthRealm(), "/account").f().sx("Manage user profile").g("a");
-							} g("div");
-							{ e("div").a("class", "").f();
-								e("div").a("class", "w3-large font-weight-bold ").f().sx("Configure payment profile with authorize.net").g("div");
+								e("div").a("class", "w3-large font-weight-bold ").f().sx("Configure payment profile for the ", schoolLocation, " location").g("div");
 								{ e("form").a("method", "post").a("target", "_blank").a("action", siteConfig.getAuthorizeUrl() + "/customer/manage").f();
 									e("input").a("type", "hidden").a("name", "token").a("value", profilePageResponse.getToken()).fg();
-									e("button").a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ").a("type", "submit").f().sx("Manage payment profile").g("button");
+									e("button").a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ").a("type", "submit").f().sx("Manage ", schoolLocation, " payment profile").g("button");
 								} g("form");
 							} g("div");
 						}

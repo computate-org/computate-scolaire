@@ -75,9 +75,11 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 		if(blocScolaire != null && blocScolaire.getBlocNomComplet() != null)
 			c.o(blocScolaire.getBlocNomComplet());
 		else if(blocScolaire != null)
-			c.o("");
+			c.o("blocs");
 		else if(listeBlocScolaire == null || listeBlocScolaire.size() == 0)
 			c.o("aucun bloc trouvé");
+		else
+			c.o("blocs");
 	}
 
 	@Override protected void _pageUri(Couverture<String> c) {

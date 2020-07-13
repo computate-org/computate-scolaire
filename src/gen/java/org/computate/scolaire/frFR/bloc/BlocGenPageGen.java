@@ -33,7 +33,7 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import org.computate.scolaire.frFR.bloc.BlocScolaire;
 
 /**	
- * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.bloc.BlocGenPage&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
+ * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.bloc.BlocGenPage&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr. </a>
  * <br/>
  **/
 public abstract class BlocGenPageGen<DEV> extends ClusterPage {
@@ -43,7 +43,7 @@ public abstract class BlocGenPageGen<DEV> extends ClusterPage {
 	// listeBlocScolaire //
 	///////////////////////
 
-	/**	L'entité « listeBlocScolaire »
+	/**	 L'entité listeBlocScolaire
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -51,9 +51,9 @@ public abstract class BlocGenPageGen<DEV> extends ClusterPage {
 	@JsonIgnore
 	public Couverture<ListeRecherche<BlocScolaire>> listeBlocScolaireCouverture = new Couverture<ListeRecherche<BlocScolaire>>().p(this).c(ListeRecherche.class).var("listeBlocScolaire").o(listeBlocScolaire);
 
-	/**	<br/>L'entité « listeBlocScolaire »
+	/**	<br/> L'entité listeBlocScolaire
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.bloc.BlocGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:listeBlocScolaire">Trouver l'entité listeBlocScolaire dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.bloc.BlocGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:listeBlocScolaire">Trouver l'entité listeBlocScolaire dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -83,7 +83,7 @@ public abstract class BlocGenPageGen<DEV> extends ClusterPage {
 	// blocScolaire //
 	//////////////////
 
-	/**	L'entité « blocScolaire »
+	/**	 L'entité blocScolaire
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -91,9 +91,9 @@ public abstract class BlocGenPageGen<DEV> extends ClusterPage {
 	@JsonIgnore
 	public Couverture<BlocScolaire> blocScolaireCouverture = new Couverture<BlocScolaire>().p(this).c(BlocScolaire.class).var("blocScolaire").o(blocScolaire);
 
-	/**	<br/>L'entité « blocScolaire »
+	/**	<br/> L'entité blocScolaire
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.bloc.BlocGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:blocScolaire">Trouver l'entité blocScolaire dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.bloc.BlocGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:blocScolaire">Trouver l'entité blocScolaire dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/

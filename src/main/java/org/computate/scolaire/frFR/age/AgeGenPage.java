@@ -75,9 +75,11 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 		if(ageScolaire != null && ageScolaire.getAgeNomComplet() != null)
 			c.o(ageScolaire.getAgeNomComplet());
 		else if(ageScolaire != null)
-			c.o("");
+			c.o("âges");
 		else if(listeAgeScolaire == null || listeAgeScolaire.size() == 0)
 			c.o("aucun âge trouvé");
+		else
+			c.o("âges");
 	}
 
 	@Override protected void _pageUri(Couverture<String> c) {

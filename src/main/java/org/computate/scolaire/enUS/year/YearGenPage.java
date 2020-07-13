@@ -74,9 +74,11 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 		if(schoolYear != null && schoolYear.getYearCompleteName() != null)
 			c.o(schoolYear.getYearCompleteName());
 		else if(schoolYear != null)
-			c.o("");
+			c.o("years");
 		else if(listSchoolYear == null || listSchoolYear.size() == 0)
 			c.o("no year found");
+		else
+			c.o("years");
 	}
 
 	@Override protected void _pageUri(Wrap<String> c) {

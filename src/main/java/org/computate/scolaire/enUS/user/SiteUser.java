@@ -81,7 +81,7 @@ public class SiteUser extends SiteUserGen<Cluster> {
 
 	@Override()
 	protected void  _objectTitle(Wrap<String> c) {
-		c.o(userFullName + " " + userEmail + " " + userName);
+		c.o(siteRequest_.getUserFullName() + " " + userEmail + " " + userName);
 	}
 
 	public void  htmlBody() {

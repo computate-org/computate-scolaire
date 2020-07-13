@@ -617,6 +617,31 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 		c.o(b.toString());
 	}
 
+	protected void _enrollmentEmails(List<String> l) {
+		if(moms.size() == 0 && dads.size() == 0) {
+			for(SchoolGuardian o : guardians) {
+				String personEmail = o.getPersonEmail();
+				if(StringUtils.isNotBlank(personEmail)) {
+					l.add(o.getPersonEmail());
+				}
+			}
+		}
+		else {
+			for(SchoolMom o : moms) {
+				String personEmail = o.getPersonEmail();
+				if(StringUtils.isNotBlank(personEmail)) {
+					l.add(o.getPersonEmail());
+				}
+			}
+			for(SchoolDad o : dads) {
+				String personEmail = o.getPersonEmail();
+				if(StringUtils.isNotBlank(personEmail)) {
+					l.add(o.getPersonEmail());
+				}
+			}
+		}
+	}
+
 	protected void _enrollmentParentEmails(Wrap<String> c) {
 		StringBuilder b = new StringBuilder();
 		if(moms.size() == 0 && dads.size() == 0) {

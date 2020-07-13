@@ -75,9 +75,11 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 		if(anneeScolaire != null && anneeScolaire.getAnneeNomComplet() != null)
 			c.o(anneeScolaire.getAnneeNomComplet());
 		else if(anneeScolaire != null)
-			c.o("");
+			c.o("années");
 		else if(listeAnneeScolaire == null || listeAnneeScolaire.size() == 0)
 			c.o("aucune année trouvée");
+		else
+			c.o("années");
 	}
 
 	@Override protected void _pageUri(Couverture<String> c) {

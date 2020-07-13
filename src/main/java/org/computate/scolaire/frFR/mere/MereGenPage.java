@@ -75,9 +75,11 @@ public class MereGenPage extends MereGenPageGen<ClusterPage> {
 		if(mereScolaire != null && mereScolaire.getMereNomComplet() != null)
 			c.o(mereScolaire.getMereNomComplet());
 		else if(mereScolaire != null)
-			c.o("");
+			c.o("mères");
 		else if(listeMereScolaire == null || listeMereScolaire.size() == 0)
 			c.o("aucune mère trouvée");
+		else
+			c.o("mères");
 	}
 
 	@Override protected void _pageUri(Couverture<String> c) {

@@ -35,7 +35,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 
 /**	
- * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.user.SiteUserPage&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
+ * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.user.SiteUserPage&fq=classeEtendGen_indexed_boolean:true">Find the class  in Solr. </a>
  * <br/>
  **/
 public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
@@ -45,7 +45,7 @@ public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
 	// pageDesignSearch //
 	//////////////////////
 
-	/**	L'entité « pageDesignSearch »
+	/**	 The entity pageDesignSearch
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<PageDesign>(). 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -53,11 +53,11 @@ public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
 	@JsonIgnore
 	public Wrap<SearchList<PageDesign>> pageDesignSearchWrap = new Wrap<SearchList<PageDesign>>().p(this).c(SearchList.class).var("pageDesignSearch").o(pageDesignSearch);
 
-	/**	<br/>L'entité « pageDesignSearch »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<PageDesign>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.user.SiteUserPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:pageDesignSearch">Trouver l'entité pageDesignSearch dans Solr</a>
+	/**	<br/> The entity pageDesignSearch
+	 *  It is constructed before being initialized with the constructor by default SearchList<PageDesign>(). 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.user.SiteUserPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:pageDesignSearch">Find the entity pageDesignSearch in Solr</a>
 	 * <br/>
-	 * @param pageDesignSearch est l'entité déjà construit. 
+	 * @param pageDesignSearch is the entity already constructed. 
 	 **/
 	protected abstract void _pageDesignSearch(SearchList<PageDesign> l);
 
@@ -82,7 +82,7 @@ public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
 	// pageDesigns //
 	/////////////////
 
-	/**	L'entité « pageDesigns »
+	/**	 The entity pageDesigns
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -90,11 +90,11 @@ public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
 	@JsonIgnore
 	public Wrap<List<PageDesign>> pageDesignsWrap = new Wrap<List<PageDesign>>().p(this).c(List.class).var("pageDesigns").o(pageDesigns);
 
-	/**	<br/>L'entité « pageDesigns »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.user.SiteUserPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:pageDesigns">Trouver l'entité pageDesigns dans Solr</a>
+	/**	<br/> The entity pageDesigns
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.user.SiteUserPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:pageDesigns">Find the entity pageDesigns in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _pageDesigns(Wrap<List<PageDesign>> c);
 
@@ -131,7 +131,7 @@ public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
 	// yearSearch //
 	////////////////
 
-	/**	L'entité « yearSearch »
+	/**	 The entity yearSearch
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<SchoolYear>(). 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -139,11 +139,11 @@ public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
 	@JsonIgnore
 	public Wrap<SearchList<SchoolYear>> yearSearchWrap = new Wrap<SearchList<SchoolYear>>().p(this).c(SearchList.class).var("yearSearch").o(yearSearch);
 
-	/**	<br/>L'entité « yearSearch »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<SchoolYear>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.user.SiteUserPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:yearSearch">Trouver l'entité yearSearch dans Solr</a>
+	/**	<br/> The entity yearSearch
+	 *  It is constructed before being initialized with the constructor by default SearchList<SchoolYear>(). 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.user.SiteUserPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:yearSearch">Find the entity yearSearch in Solr</a>
 	 * <br/>
-	 * @param yearSearch est l'entité déjà construit. 
+	 * @param yearSearch is the entity already constructed. 
 	 **/
 	protected abstract void _yearSearch(SearchList<SchoolYear> l);
 
@@ -168,7 +168,7 @@ public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
 	// years //
 	///////////
 
-	/**	L'entité « years »
+	/**	 The entity years
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -176,11 +176,11 @@ public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
 	@JsonIgnore
 	public Wrap<List<SchoolYear>> yearsWrap = new Wrap<List<SchoolYear>>().p(this).c(List.class).var("years").o(years);
 
-	/**	<br/>L'entité « years »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.user.SiteUserPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:years">Trouver l'entité years dans Solr</a>
+	/**	<br/> The entity years
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.user.SiteUserPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:years">Find the entity years in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _years(Wrap<List<SchoolYear>> c);
 
@@ -217,7 +217,7 @@ public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
 	// schoolYears //
 	/////////////////
 
-	/**	L'entité « schoolYears »
+	/**	 The entity schoolYears
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<SchoolYear>(). 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -225,11 +225,11 @@ public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
 	@JsonIgnore
 	public Wrap<List<SchoolYear>> schoolYearsWrap = new Wrap<List<SchoolYear>>().p(this).c(List.class).var("schoolYears").o(schoolYears);
 
-	/**	<br/>L'entité « schoolYears »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<SchoolYear>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.user.SiteUserPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolYears">Trouver l'entité schoolYears dans Solr</a>
+	/**	<br/> The entity schoolYears
+	 *  It is constructed before being initialized with the constructor by default List<SchoolYear>(). 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.user.SiteUserPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolYears">Find the entity schoolYears in Solr</a>
 	 * <br/>
-	 * @param schoolYears est l'entité déjà construit. 
+	 * @param schoolYears is the entity already constructed. 
 	 **/
 	protected abstract void _schoolYears(List<SchoolYear> l);
 

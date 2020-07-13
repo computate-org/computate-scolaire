@@ -74,9 +74,11 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 		if(schoolBlock != null && schoolBlock.getBlockCompleteName() != null)
 			c.o(schoolBlock.getBlockCompleteName());
 		else if(schoolBlock != null)
-			c.o("");
+			c.o("blocks");
 		else if(listSchoolBlock == null || listSchoolBlock.size() == 0)
 			c.o("no block found");
+		else
+			c.o("blocks");
 	}
 
 	@Override protected void _pageUri(Wrap<String> c) {

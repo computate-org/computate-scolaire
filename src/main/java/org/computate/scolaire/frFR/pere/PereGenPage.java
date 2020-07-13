@@ -75,9 +75,11 @@ public class PereGenPage extends PereGenPageGen<ClusterPage> {
 		if(pereScolaire != null && pereScolaire.getPereNomComplet() != null)
 			c.o(pereScolaire.getPereNomComplet());
 		else if(pereScolaire != null)
-			c.o("");
+			c.o("pères");
 		else if(listePereScolaire == null || listePereScolaire.size() == 0)
 			c.o("aucun père trouvé");
+		else
+			c.o("pères");
 	}
 
 	@Override protected void _pageUri(Couverture<String> c) {

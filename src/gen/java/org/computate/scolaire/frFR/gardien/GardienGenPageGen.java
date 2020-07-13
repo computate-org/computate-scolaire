@@ -33,7 +33,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 
 /**	
- * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.gardien.GardienGenPage&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
+ * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.gardien.GardienGenPage&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr. </a>
  * <br/>
  **/
 public abstract class GardienGenPageGen<DEV> extends ClusterPage {
@@ -43,7 +43,7 @@ public abstract class GardienGenPageGen<DEV> extends ClusterPage {
 	// listeGardienScolaire //
 	//////////////////////////
 
-	/**	L'entité « listeGardienScolaire »
+	/**	 L'entité listeGardienScolaire
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -51,9 +51,9 @@ public abstract class GardienGenPageGen<DEV> extends ClusterPage {
 	@JsonIgnore
 	public Couverture<ListeRecherche<GardienScolaire>> listeGardienScolaireCouverture = new Couverture<ListeRecherche<GardienScolaire>>().p(this).c(ListeRecherche.class).var("listeGardienScolaire").o(listeGardienScolaire);
 
-	/**	<br/>L'entité « listeGardienScolaire »
+	/**	<br/> L'entité listeGardienScolaire
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.gardien.GardienGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:listeGardienScolaire">Trouver l'entité listeGardienScolaire dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.gardien.GardienGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:listeGardienScolaire">Trouver l'entité listeGardienScolaire dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -83,7 +83,7 @@ public abstract class GardienGenPageGen<DEV> extends ClusterPage {
 	// gardienScolaire //
 	/////////////////////
 
-	/**	L'entité « gardienScolaire »
+	/**	 L'entité gardienScolaire
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -91,9 +91,9 @@ public abstract class GardienGenPageGen<DEV> extends ClusterPage {
 	@JsonIgnore
 	public Couverture<GardienScolaire> gardienScolaireCouverture = new Couverture<GardienScolaire>().p(this).c(GardienScolaire.class).var("gardienScolaire").o(gardienScolaire);
 
-	/**	<br/>L'entité « gardienScolaire »
+	/**	<br/> L'entité gardienScolaire
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.gardien.GardienGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:gardienScolaire">Trouver l'entité gardienScolaire dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.gardien.GardienGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:gardienScolaire">Trouver l'entité gardienScolaire dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/

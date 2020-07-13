@@ -1198,7 +1198,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 		Router siteRouter = siteContextEnUS.getRouter();
 
 		StaticHandler staticHandler = StaticHandler.create().setCachingEnabled(false).setFilesReadOnly(true);
-		if("scolaire-dev.computate.org".equals(siteConfig.getSiteHostName())) {
+		if(siteConfig.getSiteHostName().contains("scolaire-dev.")) {
 			staticHandler.setAllowRootFileSystemAccess(true);
 			staticHandler.setWebRoot("/usr/local/src/computate-scolaire-static");
 		}

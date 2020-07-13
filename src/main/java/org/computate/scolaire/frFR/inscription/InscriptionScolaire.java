@@ -1950,6 +1950,55 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 
 	/**       
 	 * {@inheritDoc}
+	 * Var.enUS: enrollmentEmails
+	 * Indexe: true
+	 * Stocke: true
+	 * r: MereScolaire
+	 * r.enUS: SchoolMom
+	 * r: PereScolaire
+	 * r.enUS: SchoolDad
+	 * r: GardienScolaire
+	 * r.enUS: SchoolGuardian
+	 * r: meres
+	 * r.enUS: moms
+	 * r: peres
+	 * r.enUS: dads
+	 * r: gardien
+	 * r.enUS: guardian
+	 * r: PersonneNomCompletPrefere
+	 * r.enUS: PersonCompleteNamePreferred
+	 * r: PersonneMail
+	 * r.enUS: PersonEmail
+	 * r: personneMail
+	 * r.enUS: personEmail
+	 */     
+	protected void _inscriptionMails(List<String> l) {
+		if(meres.size() == 0 && peres.size() == 0) {
+			for(GardienScolaire o : gardiens) {
+				String personneMail = o.getPersonneMail();
+				if(StringUtils.isNotBlank(personneMail)) {
+					l.add(o.getPersonneMail());
+				}
+			}
+		}
+		else {
+			for(MereScolaire o : meres) {
+				String personneMail = o.getPersonneMail();
+				if(StringUtils.isNotBlank(personneMail)) {
+					l.add(o.getPersonneMail());
+				}
+			}
+			for(PereScolaire o : peres) {
+				String personneMail = o.getPersonneMail();
+				if(StringUtils.isNotBlank(personneMail)) {
+					l.add(o.getPersonneMail());
+				}
+			}
+		}
+	}
+
+	/**       
+	 * {@inheritDoc}
 	 * Var.enUS: enrollmentParentEmails
 	 * Stocke: true
 	 * r: MereScolaire

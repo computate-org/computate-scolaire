@@ -66,7 +66,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 
 /**	
- * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
+ * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true">Find the class  in Solr. </a>
  * <br/>
  **/
 public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
@@ -85,6 +85,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	public static final String SchoolEnrollment_NameActual = "current enrollment";
 	public static final String SchoolEnrollment_AllName = "all the enrollments";
 	public static final String SchoolEnrollment_SearchAllNameBy = "search enrollments by ";
+	public static final String SchoolEnrollment_Title = "enrollments";
 	public static final String SchoolEnrollment_ThePluralName = "the enrollments";
 	public static final String SchoolEnrollment_NoNameFound = "no enrollment found";
 	public static final String SchoolEnrollment_NameVar = "enrollment";
@@ -100,7 +101,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// enrollmentKey //
 	///////////////////
 
-	/**	L'entité « enrollmentKey »
+	/**	 The entity enrollmentKey
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
@@ -109,11 +110,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<Long> enrollmentKeyWrap = new Wrap<Long>().p(this).c(Long.class).var("enrollmentKey").o(enrollmentKey);
 
-	/**	<br/>L'entité « enrollmentKey »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentKey">Trouver l'entité enrollmentKey dans Solr</a>
+	/**	<br/> The entity enrollmentKey
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentKey">Find the entity enrollmentKey in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _enrollmentKey(Wrap<Long> c);
 
@@ -169,7 +170,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// yearKey //
 	/////////////
 
-	/**	L'entité « yearKey »
+	/**	 The entity yearKey
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
@@ -178,11 +179,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<Long> yearKeyWrap = new Wrap<Long>().p(this).c(Long.class).var("yearKey").o(yearKey);
 
-	/**	<br/>L'entité « yearKey »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:yearKey">Trouver l'entité yearKey dans Solr</a>
+	/**	<br/> The entity yearKey
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:yearKey">Find the entity yearKey in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _yearKey(Wrap<Long> c);
 
@@ -238,7 +239,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// yearSearch //
 	////////////////
 
-	/**	L'entité « yearSearch »
+	/**	 The entity yearSearch
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<SchoolYear>(). 
 	 */
 	@JsonIgnore
@@ -247,11 +248,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<SearchList<SchoolYear>> yearSearchWrap = new Wrap<SearchList<SchoolYear>>().p(this).c(SearchList.class).var("yearSearch").o(yearSearch);
 
-	/**	<br/>L'entité « yearSearch »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<SchoolYear>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:yearSearch">Trouver l'entité yearSearch dans Solr</a>
+	/**	<br/> The entity yearSearch
+	 *  It is constructed before being initialized with the constructor by default SearchList<SchoolYear>(). 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:yearSearch">Find the entity yearSearch in Solr</a>
 	 * <br/>
-	 * @param yearSearch est l'entité déjà construit. 
+	 * @param yearSearch is the entity already constructed. 
 	 **/
 	protected abstract void _yearSearch(SearchList<SchoolYear> l);
 
@@ -276,7 +277,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// year_ //
 	///////////
 
-	/**	L'entité « year_ »
+	/**	 The entity year_
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonIgnore
@@ -285,11 +286,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<SchoolYear> year_Wrap = new Wrap<SchoolYear>().p(this).c(SchoolYear.class).var("year_").o(year_);
 
-	/**	<br/>L'entité « year_ »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:year_">Trouver l'entité year_ dans Solr</a>
+	/**	<br/> The entity year_
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:year_">Find the entity year_ in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _year_(Wrap<SchoolYear> c);
 
@@ -315,7 +316,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// blockKeys //
 	///////////////
 
-	/**	L'entité « blockKeys »
+	/**	 The entity blockKeys
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
@@ -324,11 +325,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<List<Long>> blockKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("blockKeys").o(blockKeys);
 
-	/**	<br/>L'entité « blockKeys »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:blockKeys">Trouver l'entité blockKeys dans Solr</a>
+	/**	<br/> The entity blockKeys
+	 *  It is constructed before being initialized with the constructor by default List<Long>(). 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:blockKeys">Find the entity blockKeys in Solr</a>
 	 * <br/>
-	 * @param blockKeys est l'entité déjà construit. 
+	 * @param blockKeys is the entity already constructed. 
 	 **/
 	protected abstract void _blockKeys(List<Long> o);
 
@@ -476,7 +477,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// blockSearch //
 	/////////////////
 
-	/**	L'entité « blockSearch »
+	/**	 The entity blockSearch
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<SchoolBlock>(). 
 	 */
 	@JsonIgnore
@@ -485,11 +486,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<SearchList<SchoolBlock>> blockSearchWrap = new Wrap<SearchList<SchoolBlock>>().p(this).c(SearchList.class).var("blockSearch").o(blockSearch);
 
-	/**	<br/>L'entité « blockSearch »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<SchoolBlock>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:blockSearch">Trouver l'entité blockSearch dans Solr</a>
+	/**	<br/> The entity blockSearch
+	 *  It is constructed before being initialized with the constructor by default SearchList<SchoolBlock>(). 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:blockSearch">Find the entity blockSearch in Solr</a>
 	 * <br/>
-	 * @param blockSearch est l'entité déjà construit. 
+	 * @param blockSearch is the entity already constructed. 
 	 **/
 	protected abstract void _blockSearch(SearchList<SchoolBlock> l);
 
@@ -514,7 +515,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// blocks_ //
 	/////////////
 
-	/**	L'entité « blocks_ »
+	/**	 The entity blocks_
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonIgnore
@@ -523,11 +524,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<List<SchoolBlock>> blocks_Wrap = new Wrap<List<SchoolBlock>>().p(this).c(List.class).var("blocks_").o(blocks_);
 
-	/**	<br/>L'entité « blocks_ »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:blocks_">Trouver l'entité blocks_ dans Solr</a>
+	/**	<br/> The entity blocks_
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:blocks_">Find the entity blocks_ in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _blocks_(Wrap<List<SchoolBlock>> c);
 
@@ -564,7 +565,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// seasons_ //
 	//////////////
 
-	/**	L'entité « seasons_ »
+	/**	 The entity seasons_
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<SchoolSeason>(). 
 	 */
 	@JsonIgnore
@@ -573,11 +574,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<List<SchoolSeason>> seasons_Wrap = new Wrap<List<SchoolSeason>>().p(this).c(List.class).var("seasons_").o(seasons_);
 
-	/**	<br/>L'entité « seasons_ »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<SchoolSeason>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:seasons_">Trouver l'entité seasons_ dans Solr</a>
+	/**	<br/> The entity seasons_
+	 *  It is constructed before being initialized with the constructor by default List<SchoolSeason>(). 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:seasons_">Find the entity seasons_ in Solr</a>
 	 * <br/>
-	 * @param seasons_ est l'entité déjà construit. 
+	 * @param seasons_ is the entity already constructed. 
 	 **/
 	protected abstract void _seasons_(List<SchoolSeason> c);
 
@@ -612,7 +613,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// block_ //
 	////////////
 
-	/**	L'entité « block_ »
+	/**	 The entity block_
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonIgnore
@@ -621,11 +622,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<SchoolBlock> block_Wrap = new Wrap<SchoolBlock>().p(this).c(SchoolBlock.class).var("block_").o(block_);
 
-	/**	<br/>L'entité « block_ »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:block_">Trouver l'entité block_ dans Solr</a>
+	/**	<br/> The entity block_
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:block_">Find the entity block_ in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _block_(Wrap<SchoolBlock> c);
 
@@ -651,7 +652,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// schoolKey //
 	///////////////
 
-	/**	L'entité « schoolKey »
+	/**	 The entity schoolKey
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
@@ -660,11 +661,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<Long> schoolKeyWrap = new Wrap<Long>().p(this).c(Long.class).var("schoolKey").o(schoolKey);
 
-	/**	<br/>L'entité « schoolKey »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolKey">Trouver l'entité schoolKey dans Solr</a>
+	/**	<br/> The entity schoolKey
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolKey">Find the entity schoolKey in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _schoolKey(Wrap<Long> c);
 
@@ -720,7 +721,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// seasonKey //
 	///////////////
 
-	/**	L'entité « seasonKey »
+	/**	 The entity seasonKey
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
@@ -729,11 +730,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<Long> seasonKeyWrap = new Wrap<Long>().p(this).c(Long.class).var("seasonKey").o(seasonKey);
 
-	/**	<br/>L'entité « seasonKey »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:seasonKey">Trouver l'entité seasonKey dans Solr</a>
+	/**	<br/> The entity seasonKey
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:seasonKey">Find the entity seasonKey in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _seasonKey(Wrap<Long> c);
 
@@ -789,7 +790,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// sessionKey //
 	////////////////
 
-	/**	L'entité « sessionKey »
+	/**	 The entity sessionKey
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
@@ -798,11 +799,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<Long> sessionKeyWrap = new Wrap<Long>().p(this).c(Long.class).var("sessionKey").o(sessionKey);
 
-	/**	<br/>L'entité « sessionKey »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:sessionKey">Trouver l'entité sessionKey dans Solr</a>
+	/**	<br/> The entity sessionKey
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:sessionKey">Find the entity sessionKey in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _sessionKey(Wrap<Long> c);
 
@@ -858,7 +859,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// ageKey //
 	////////////
 
-	/**	L'entité « ageKey »
+	/**	 The entity ageKey
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
@@ -867,11 +868,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<Long> ageKeyWrap = new Wrap<Long>().p(this).c(Long.class).var("ageKey").o(ageKey);
 
-	/**	<br/>L'entité « ageKey »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:ageKey">Trouver l'entité ageKey dans Solr</a>
+	/**	<br/> The entity ageKey
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:ageKey">Find the entity ageKey in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _ageKey(Wrap<Long> c);
 
@@ -927,7 +928,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// blockKey //
 	//////////////
 
-	/**	L'entité « blockKey »
+	/**	 The entity blockKey
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
@@ -936,11 +937,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<Long> blockKeyWrap = new Wrap<Long>().p(this).c(Long.class).var("blockKey").o(blockKey);
 
-	/**	<br/>L'entité « blockKey »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:blockKey">Trouver l'entité blockKey dans Solr</a>
+	/**	<br/> The entity blockKey
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:blockKey">Find the entity blockKey in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _blockKey(Wrap<Long> c);
 
@@ -996,7 +997,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// childKey //
 	//////////////
 
-	/**	L'entité « childKey »
+	/**	 The entity childKey
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
@@ -1005,11 +1006,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<Long> childKeyWrap = new Wrap<Long>().p(this).c(Long.class).var("childKey").o(childKey);
 
-	/**	<br/>L'entité « childKey »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:childKey">Trouver l'entité childKey dans Solr</a>
+	/**	<br/> The entity childKey
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:childKey">Find the entity childKey in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _childKey(Wrap<Long> c);
 
@@ -1136,7 +1137,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// momKeys //
 	/////////////
 
-	/**	L'entité « momKeys »
+	/**	 The entity momKeys
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
@@ -1145,11 +1146,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<List<Long>> momKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("momKeys").o(momKeys);
 
-	/**	<br/>L'entité « momKeys »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:momKeys">Trouver l'entité momKeys dans Solr</a>
+	/**	<br/> The entity momKeys
+	 *  It is constructed before being initialized with the constructor by default List<Long>(). 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:momKeys">Find the entity momKeys in Solr</a>
 	 * <br/>
-	 * @param momKeys est l'entité déjà construit. 
+	 * @param momKeys is the entity already constructed. 
 	 **/
 	protected abstract void _momKeys(List<Long> o);
 
@@ -1294,7 +1295,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// dadKeys //
 	/////////////
 
-	/**	L'entité « dadKeys »
+	/**	 The entity dadKeys
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
@@ -1303,11 +1304,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<List<Long>> dadKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("dadKeys").o(dadKeys);
 
-	/**	<br/>L'entité « dadKeys »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:dadKeys">Trouver l'entité dadKeys dans Solr</a>
+	/**	<br/> The entity dadKeys
+	 *  It is constructed before being initialized with the constructor by default List<Long>(). 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:dadKeys">Find the entity dadKeys in Solr</a>
 	 * <br/>
-	 * @param dadKeys est l'entité déjà construit. 
+	 * @param dadKeys is the entity already constructed. 
 	 **/
 	protected abstract void _dadKeys(List<Long> o);
 
@@ -1452,7 +1453,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// guardianKeys //
 	//////////////////
 
-	/**	L'entité « guardianKeys »
+	/**	 The entity guardianKeys
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
@@ -1461,11 +1462,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<List<Long>> guardianKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("guardianKeys").o(guardianKeys);
 
-	/**	<br/>L'entité « guardianKeys »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:guardianKeys">Trouver l'entité guardianKeys dans Solr</a>
+	/**	<br/> The entity guardianKeys
+	 *  It is constructed before being initialized with the constructor by default List<Long>(). 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:guardianKeys">Find the entity guardianKeys in Solr</a>
 	 * <br/>
-	 * @param guardianKeys est l'entité déjà construit. 
+	 * @param guardianKeys is the entity already constructed. 
 	 **/
 	protected abstract void _guardianKeys(List<Long> o);
 
@@ -1610,7 +1611,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// paymentKeys //
 	/////////////////
 
-	/**	L'entité « paymentKeys »
+	/**	 The entity paymentKeys
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
@@ -1619,11 +1620,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<List<Long>> paymentKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("paymentKeys").o(paymentKeys);
 
-	/**	<br/>L'entité « paymentKeys »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:paymentKeys">Trouver l'entité paymentKeys dans Solr</a>
+	/**	<br/> The entity paymentKeys
+	 *  It is constructed before being initialized with the constructor by default List<Long>(). 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:paymentKeys">Find the entity paymentKeys in Solr</a>
 	 * <br/>
-	 * @param paymentKeys est l'entité déjà construit. 
+	 * @param paymentKeys is the entity already constructed. 
 	 **/
 	protected abstract void _paymentKeys(List<Long> o);
 
@@ -1771,7 +1772,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// enrollmentFormKey //
 	///////////////////////
 
-	/**	L'entité « enrollmentFormKey »
+	/**	 The entity enrollmentFormKey
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
@@ -1780,11 +1781,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<Long> enrollmentFormKeyWrap = new Wrap<Long>().p(this).c(Long.class).var("enrollmentFormKey").o(enrollmentFormKey);
 
-	/**	<br/>L'entité « enrollmentFormKey »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentFormKey">Trouver l'entité enrollmentFormKey dans Solr</a>
+	/**	<br/> The entity enrollmentFormKey
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentFormKey">Find the entity enrollmentFormKey in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _enrollmentFormKey(Wrap<Long> c);
 
@@ -1840,7 +1841,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// userKeys //
 	//////////////
 
-	/**	L'entité « userKeys »
+	/**	 The entity userKeys
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
@@ -1849,11 +1850,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<List<Long>> userKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("userKeys").o(userKeys);
 
-	/**	<br/>L'entité « userKeys »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:userKeys">Trouver l'entité userKeys dans Solr</a>
+	/**	<br/> The entity userKeys
+	 *  It is constructed before being initialized with the constructor by default List<Long>(). 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:userKeys">Find the entity userKeys in Solr</a>
 	 * <br/>
-	 * @param userKeys est l'entité déjà construit. 
+	 * @param userKeys is the entity already constructed. 
 	 **/
 	protected abstract void _userKeys(List<Long> l);
 
@@ -2001,7 +2002,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// educationSort //
 	///////////////////
 
-	/**	L'entité « educationSort »
+	/**	 The entity educationSort
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
@@ -2010,11 +2011,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<Integer> educationSortWrap = new Wrap<Integer>().p(this).c(Integer.class).var("educationSort").o(educationSort);
 
-	/**	<br/>L'entité « educationSort »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:educationSort">Trouver l'entité educationSort dans Solr</a>
+	/**	<br/> The entity educationSort
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:educationSort">Find the entity educationSort in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _educationSort(Wrap<Integer> c);
 
@@ -2070,7 +2071,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// schoolSort //
 	////////////////
 
-	/**	L'entité « schoolSort »
+	/**	 The entity schoolSort
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
@@ -2079,11 +2080,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<Integer> schoolSortWrap = new Wrap<Integer>().p(this).c(Integer.class).var("schoolSort").o(schoolSort);
 
-	/**	<br/>L'entité « schoolSort »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolSort">Trouver l'entité schoolSort dans Solr</a>
+	/**	<br/> The entity schoolSort
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolSort">Find the entity schoolSort in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _schoolSort(Wrap<Integer> c);
 
@@ -2139,7 +2140,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// yearSort //
 	//////////////
 
-	/**	L'entité « yearSort »
+	/**	 The entity yearSort
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
@@ -2148,11 +2149,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<Integer> yearSortWrap = new Wrap<Integer>().p(this).c(Integer.class).var("yearSort").o(yearSort);
 
-	/**	<br/>L'entité « yearSort »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:yearSort">Trouver l'entité yearSort dans Solr</a>
+	/**	<br/> The entity yearSort
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:yearSort">Find the entity yearSort in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _yearSort(Wrap<Integer> c);
 
@@ -2208,7 +2209,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// seasonSort //
 	////////////////
 
-	/**	L'entité « seasonSort »
+	/**	 The entity seasonSort
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
@@ -2217,11 +2218,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<Integer> seasonSortWrap = new Wrap<Integer>().p(this).c(Integer.class).var("seasonSort").o(seasonSort);
 
-	/**	<br/>L'entité « seasonSort »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:seasonSort">Trouver l'entité seasonSort dans Solr</a>
+	/**	<br/> The entity seasonSort
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:seasonSort">Find the entity seasonSort in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _seasonSort(Wrap<Integer> c);
 
@@ -2277,7 +2278,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// sessionSort //
 	/////////////////
 
-	/**	L'entité « sessionSort »
+	/**	 The entity sessionSort
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
@@ -2286,11 +2287,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<Integer> sessionSortWrap = new Wrap<Integer>().p(this).c(Integer.class).var("sessionSort").o(sessionSort);
 
-	/**	<br/>L'entité « sessionSort »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:sessionSort">Trouver l'entité sessionSort dans Solr</a>
+	/**	<br/> The entity sessionSort
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:sessionSort">Find the entity sessionSort in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _sessionSort(Wrap<Integer> c);
 
@@ -2346,7 +2347,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// ageSort //
 	/////////////
 
-	/**	L'entité « ageSort »
+	/**	 The entity ageSort
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
@@ -2355,11 +2356,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<Integer> ageSortWrap = new Wrap<Integer>().p(this).c(Integer.class).var("ageSort").o(ageSort);
 
-	/**	<br/>L'entité « ageSort »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:ageSort">Trouver l'entité ageSort dans Solr</a>
+	/**	<br/> The entity ageSort
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:ageSort">Find the entity ageSort in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _ageSort(Wrap<Integer> c);
 
@@ -2415,7 +2416,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// childSearch //
 	/////////////////
 
-	/**	L'entité « childSearch »
+	/**	 The entity childSearch
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<SchoolChild>(). 
 	 */
 	@JsonIgnore
@@ -2424,11 +2425,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<SearchList<SchoolChild>> childSearchWrap = new Wrap<SearchList<SchoolChild>>().p(this).c(SearchList.class).var("childSearch").o(childSearch);
 
-	/**	<br/>L'entité « childSearch »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<SchoolChild>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:childSearch">Trouver l'entité childSearch dans Solr</a>
+	/**	<br/> The entity childSearch
+	 *  It is constructed before being initialized with the constructor by default SearchList<SchoolChild>(). 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:childSearch">Find the entity childSearch in Solr</a>
 	 * <br/>
-	 * @param childSearch est l'entité déjà construit. 
+	 * @param childSearch is the entity already constructed. 
 	 **/
 	protected abstract void _childSearch(SearchList<SchoolChild> l);
 
@@ -2453,7 +2454,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// child_ //
 	////////////
 
-	/**	L'entité « child_ »
+	/**	 The entity child_
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonIgnore
@@ -2462,11 +2463,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<SchoolChild> child_Wrap = new Wrap<SchoolChild>().p(this).c(SchoolChild.class).var("child_").o(child_);
 
-	/**	<br/>L'entité « child_ »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:child_">Trouver l'entité child_ dans Solr</a>
+	/**	<br/> The entity child_
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:child_">Find the entity child_ in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _child_(Wrap<SchoolChild> c);
 
@@ -2492,7 +2493,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// momSearch //
 	///////////////
 
-	/**	L'entité « momSearch »
+	/**	 The entity momSearch
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<SchoolMom>(). 
 	 */
 	@JsonIgnore
@@ -2501,11 +2502,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<SearchList<SchoolMom>> momSearchWrap = new Wrap<SearchList<SchoolMom>>().p(this).c(SearchList.class).var("momSearch").o(momSearch);
 
-	/**	<br/>L'entité « momSearch »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<SchoolMom>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:momSearch">Trouver l'entité momSearch dans Solr</a>
+	/**	<br/> The entity momSearch
+	 *  It is constructed before being initialized with the constructor by default SearchList<SchoolMom>(). 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:momSearch">Find the entity momSearch in Solr</a>
 	 * <br/>
-	 * @param momSearch est l'entité déjà construit. 
+	 * @param momSearch is the entity already constructed. 
 	 **/
 	protected abstract void _momSearch(SearchList<SchoolMom> l);
 
@@ -2530,7 +2531,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// moms //
 	//////////
 
-	/**	L'entité « moms »
+	/**	 The entity moms
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonIgnore
@@ -2539,11 +2540,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<List<SchoolMom>> momsWrap = new Wrap<List<SchoolMom>>().p(this).c(List.class).var("moms").o(moms);
 
-	/**	<br/>L'entité « moms »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:moms">Trouver l'entité moms dans Solr</a>
+	/**	<br/> The entity moms
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:moms">Find the entity moms in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _moms(Wrap<List<SchoolMom>> c);
 
@@ -2580,7 +2581,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// dadSearch //
 	///////////////
 
-	/**	L'entité « dadSearch »
+	/**	 The entity dadSearch
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<SchoolDad>(). 
 	 */
 	@JsonIgnore
@@ -2589,11 +2590,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<SearchList<SchoolDad>> dadSearchWrap = new Wrap<SearchList<SchoolDad>>().p(this).c(SearchList.class).var("dadSearch").o(dadSearch);
 
-	/**	<br/>L'entité « dadSearch »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<SchoolDad>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:dadSearch">Trouver l'entité dadSearch dans Solr</a>
+	/**	<br/> The entity dadSearch
+	 *  It is constructed before being initialized with the constructor by default SearchList<SchoolDad>(). 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:dadSearch">Find the entity dadSearch in Solr</a>
 	 * <br/>
-	 * @param dadSearch est l'entité déjà construit. 
+	 * @param dadSearch is the entity already constructed. 
 	 **/
 	protected abstract void _dadSearch(SearchList<SchoolDad> l);
 
@@ -2618,7 +2619,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// dads //
 	//////////
 
-	/**	L'entité « dads »
+	/**	 The entity dads
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonIgnore
@@ -2627,11 +2628,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<List<SchoolDad>> dadsWrap = new Wrap<List<SchoolDad>>().p(this).c(List.class).var("dads").o(dads);
 
-	/**	<br/>L'entité « dads »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:dads">Trouver l'entité dads dans Solr</a>
+	/**	<br/> The entity dads
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:dads">Find the entity dads in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _dads(Wrap<List<SchoolDad>> c);
 
@@ -2668,7 +2669,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// guardianSearch //
 	////////////////////
 
-	/**	L'entité « guardianSearch »
+	/**	 The entity guardianSearch
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<SchoolGuardian>(). 
 	 */
 	@JsonIgnore
@@ -2677,11 +2678,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<SearchList<SchoolGuardian>> guardianSearchWrap = new Wrap<SearchList<SchoolGuardian>>().p(this).c(SearchList.class).var("guardianSearch").o(guardianSearch);
 
-	/**	<br/>L'entité « guardianSearch »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<SchoolGuardian>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:guardianSearch">Trouver l'entité guardianSearch dans Solr</a>
+	/**	<br/> The entity guardianSearch
+	 *  It is constructed before being initialized with the constructor by default SearchList<SchoolGuardian>(). 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:guardianSearch">Find the entity guardianSearch in Solr</a>
 	 * <br/>
-	 * @param guardianSearch est l'entité déjà construit. 
+	 * @param guardianSearch is the entity already constructed. 
 	 **/
 	protected abstract void _guardianSearch(SearchList<SchoolGuardian> l);
 
@@ -2706,7 +2707,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// guardians //
 	///////////////
 
-	/**	L'entité « guardians »
+	/**	 The entity guardians
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonIgnore
@@ -2715,11 +2716,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<List<SchoolGuardian>> guardiansWrap = new Wrap<List<SchoolGuardian>>().p(this).c(List.class).var("guardians").o(guardians);
 
-	/**	<br/>L'entité « guardians »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:guardians">Trouver l'entité guardians dans Solr</a>
+	/**	<br/> The entity guardians
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:guardians">Find the entity guardians in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _guardians(Wrap<List<SchoolGuardian>> c);
 
@@ -2756,7 +2757,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// paymentSearch //
 	///////////////////
 
-	/**	L'entité « paymentSearch »
+	/**	 The entity paymentSearch
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<SchoolPayment>(). 
 	 */
 	@JsonIgnore
@@ -2765,11 +2766,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<SearchList<SchoolPayment>> paymentSearchWrap = new Wrap<SearchList<SchoolPayment>>().p(this).c(SearchList.class).var("paymentSearch").o(paymentSearch);
 
-	/**	<br/>L'entité « paymentSearch »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<SchoolPayment>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:paymentSearch">Trouver l'entité paymentSearch dans Solr</a>
+	/**	<br/> The entity paymentSearch
+	 *  It is constructed before being initialized with the constructor by default SearchList<SchoolPayment>(). 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:paymentSearch">Find the entity paymentSearch in Solr</a>
 	 * <br/>
-	 * @param paymentSearch est l'entité déjà construit. 
+	 * @param paymentSearch is the entity already constructed. 
 	 **/
 	protected abstract void _paymentSearch(SearchList<SchoolPayment> l);
 
@@ -2794,7 +2795,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// childFirstName //
 	////////////////////
 
-	/**	L'entité « childFirstName »
+	/**	 The entity childFirstName
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -2802,11 +2803,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<String> childFirstNameWrap = new Wrap<String>().p(this).c(String.class).var("childFirstName").o(childFirstName);
 
-	/**	<br/>L'entité « childFirstName »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:childFirstName">Trouver l'entité childFirstName dans Solr</a>
+	/**	<br/> The entity childFirstName
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:childFirstName">Find the entity childFirstName in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _childFirstName(Wrap<String> c);
 
@@ -2856,7 +2857,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// childFirstNamePreferred //
 	/////////////////////////////
 
-	/**	L'entité « childFirstNamePreferred »
+	/**	 The entity childFirstNamePreferred
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -2864,11 +2865,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<String> childFirstNamePreferredWrap = new Wrap<String>().p(this).c(String.class).var("childFirstNamePreferred").o(childFirstNamePreferred);
 
-	/**	<br/>L'entité « childFirstNamePreferred »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:childFirstNamePreferred">Trouver l'entité childFirstNamePreferred dans Solr</a>
+	/**	<br/> The entity childFirstNamePreferred
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:childFirstNamePreferred">Find the entity childFirstNamePreferred in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _childFirstNamePreferred(Wrap<String> c);
 
@@ -2918,7 +2919,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// childFamilyName //
 	/////////////////////
 
-	/**	L'entité « childFamilyName »
+	/**	 The entity childFamilyName
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -2926,11 +2927,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<String> childFamilyNameWrap = new Wrap<String>().p(this).c(String.class).var("childFamilyName").o(childFamilyName);
 
-	/**	<br/>L'entité « childFamilyName »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:childFamilyName">Trouver l'entité childFamilyName dans Solr</a>
+	/**	<br/> The entity childFamilyName
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:childFamilyName">Find the entity childFamilyName in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _childFamilyName(Wrap<String> c);
 
@@ -2980,7 +2981,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// momFirstName //
 	//////////////////
 
-	/**	L'entité « momFirstName »
+	/**	 The entity momFirstName
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -2988,11 +2989,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<String> momFirstNameWrap = new Wrap<String>().p(this).c(String.class).var("momFirstName").o(momFirstName);
 
-	/**	<br/>L'entité « momFirstName »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:momFirstName">Trouver l'entité momFirstName dans Solr</a>
+	/**	<br/> The entity momFirstName
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:momFirstName">Find the entity momFirstName in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _momFirstName(Wrap<String> c);
 
@@ -3042,7 +3043,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// momFirstNamePreferred //
 	///////////////////////////
 
-	/**	L'entité « momFirstNamePreferred »
+	/**	 The entity momFirstNamePreferred
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -3050,11 +3051,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<String> momFirstNamePreferredWrap = new Wrap<String>().p(this).c(String.class).var("momFirstNamePreferred").o(momFirstNamePreferred);
 
-	/**	<br/>L'entité « momFirstNamePreferred »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:momFirstNamePreferred">Trouver l'entité momFirstNamePreferred dans Solr</a>
+	/**	<br/> The entity momFirstNamePreferred
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:momFirstNamePreferred">Find the entity momFirstNamePreferred in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _momFirstNamePreferred(Wrap<String> c);
 
@@ -3104,7 +3105,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// momCompleteNamePreferred //
 	//////////////////////////////
 
-	/**	L'entité « momCompleteNamePreferred »
+	/**	 The entity momCompleteNamePreferred
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -3112,11 +3113,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<String> momCompleteNamePreferredWrap = new Wrap<String>().p(this).c(String.class).var("momCompleteNamePreferred").o(momCompleteNamePreferred);
 
-	/**	<br/>L'entité « momCompleteNamePreferred »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:momCompleteNamePreferred">Trouver l'entité momCompleteNamePreferred dans Solr</a>
+	/**	<br/> The entity momCompleteNamePreferred
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:momCompleteNamePreferred">Find the entity momCompleteNamePreferred in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _momCompleteNamePreferred(Wrap<String> c);
 
@@ -3166,7 +3167,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// dadFirstName //
 	//////////////////
 
-	/**	L'entité « dadFirstName »
+	/**	 The entity dadFirstName
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -3174,11 +3175,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<String> dadFirstNameWrap = new Wrap<String>().p(this).c(String.class).var("dadFirstName").o(dadFirstName);
 
-	/**	<br/>L'entité « dadFirstName »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:dadFirstName">Trouver l'entité dadFirstName dans Solr</a>
+	/**	<br/> The entity dadFirstName
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:dadFirstName">Find the entity dadFirstName in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _dadFirstName(Wrap<String> c);
 
@@ -3228,7 +3229,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// dadFirstNamePreferred //
 	///////////////////////////
 
-	/**	L'entité « dadFirstNamePreferred »
+	/**	 The entity dadFirstNamePreferred
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -3236,11 +3237,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<String> dadFirstNamePreferredWrap = new Wrap<String>().p(this).c(String.class).var("dadFirstNamePreferred").o(dadFirstNamePreferred);
 
-	/**	<br/>L'entité « dadFirstNamePreferred »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:dadFirstNamePreferred">Trouver l'entité dadFirstNamePreferred dans Solr</a>
+	/**	<br/> The entity dadFirstNamePreferred
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:dadFirstNamePreferred">Find the entity dadFirstNamePreferred in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _dadFirstNamePreferred(Wrap<String> c);
 
@@ -3290,7 +3291,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// dadCompleteNamePreferred //
 	//////////////////////////////
 
-	/**	L'entité « dadCompleteNamePreferred »
+	/**	 The entity dadCompleteNamePreferred
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -3298,11 +3299,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<String> dadCompleteNamePreferredWrap = new Wrap<String>().p(this).c(String.class).var("dadCompleteNamePreferred").o(dadCompleteNamePreferred);
 
-	/**	<br/>L'entité « dadCompleteNamePreferred »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:dadCompleteNamePreferred">Trouver l'entité dadCompleteNamePreferred dans Solr</a>
+	/**	<br/> The entity dadCompleteNamePreferred
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:dadCompleteNamePreferred">Find the entity dadCompleteNamePreferred in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _dadCompleteNamePreferred(Wrap<String> c);
 
@@ -3352,7 +3353,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// childCompleteName //
 	///////////////////////
 
-	/**	L'entité « childCompleteName »
+	/**	 The entity childCompleteName
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -3360,11 +3361,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<String> childCompleteNameWrap = new Wrap<String>().p(this).c(String.class).var("childCompleteName").o(childCompleteName);
 
-	/**	<br/>L'entité « childCompleteName »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:childCompleteName">Trouver l'entité childCompleteName dans Solr</a>
+	/**	<br/> The entity childCompleteName
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:childCompleteName">Find the entity childCompleteName in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _childCompleteName(Wrap<String> c);
 
@@ -3484,7 +3485,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// childCompleteNamePreferred //
 	////////////////////////////////
 
-	/**	L'entité « childCompleteNamePreferred »
+	/**	 The entity childCompleteNamePreferred
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -3492,11 +3493,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<String> childCompleteNamePreferredWrap = new Wrap<String>().p(this).c(String.class).var("childCompleteNamePreferred").o(childCompleteNamePreferred);
 
-	/**	<br/>L'entité « childCompleteNamePreferred »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:childCompleteNamePreferred">Trouver l'entité childCompleteNamePreferred dans Solr</a>
+	/**	<br/> The entity childCompleteNamePreferred
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:childCompleteNamePreferred">Find the entity childCompleteNamePreferred in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _childCompleteNamePreferred(Wrap<String> c);
 
@@ -3616,7 +3617,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// childBirthDate //
 	////////////////////
 
-	/**	L'entité « childBirthDate »
+	/**	 The entity childBirthDate
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonDeserialize(using = LocalDateDeserializer.class)
@@ -3627,11 +3628,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<LocalDate> childBirthDateWrap = new Wrap<LocalDate>().p(this).c(LocalDate.class).var("childBirthDate").o(childBirthDate);
 
-	/**	<br/>L'entité « childBirthDate »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:childBirthDate">Trouver l'entité childBirthDate dans Solr</a>
+	/**	<br/> The entity childBirthDate
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:childBirthDate">Find the entity childBirthDate in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _childBirthDate(Wrap<LocalDate> c);
 
@@ -3758,7 +3759,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// childBirthDateYear //
 	////////////////////////
 
-	/**	L'entité « childBirthDateYear »
+	/**	 The entity childBirthDateYear
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
@@ -3767,11 +3768,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<Integer> childBirthDateYearWrap = new Wrap<Integer>().p(this).c(Integer.class).var("childBirthDateYear").o(childBirthDateYear);
 
-	/**	<br/>L'entité « childBirthDateYear »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:childBirthDateYear">Trouver l'entité childBirthDateYear dans Solr</a>
+	/**	<br/> The entity childBirthDateYear
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:childBirthDateYear">Find the entity childBirthDateYear in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _childBirthDateYear(Wrap<Integer> c);
 
@@ -3827,7 +3828,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// childBirthDateMonthOfYear //
 	///////////////////////////////
 
-	/**	L'entité « childBirthDateMonthOfYear »
+	/**	 The entity childBirthDateMonthOfYear
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -3835,11 +3836,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<String> childBirthDateMonthOfYearWrap = new Wrap<String>().p(this).c(String.class).var("childBirthDateMonthOfYear").o(childBirthDateMonthOfYear);
 
-	/**	<br/>L'entité « childBirthDateMonthOfYear »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:childBirthDateMonthOfYear">Trouver l'entité childBirthDateMonthOfYear dans Solr</a>
+	/**	<br/> The entity childBirthDateMonthOfYear
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:childBirthDateMonthOfYear">Find the entity childBirthDateMonthOfYear in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _childBirthDateMonthOfYear(Wrap<String> c);
 
@@ -3889,7 +3890,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// childBirthDateDayOfWeek //
 	/////////////////////////////
 
-	/**	L'entité « childBirthDateDayOfWeek »
+	/**	 The entity childBirthDateDayOfWeek
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -3897,11 +3898,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<String> childBirthDateDayOfWeekWrap = new Wrap<String>().p(this).c(String.class).var("childBirthDateDayOfWeek").o(childBirthDateDayOfWeek);
 
-	/**	<br/>L'entité « childBirthDateDayOfWeek »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:childBirthDateDayOfWeek">Trouver l'entité childBirthDateDayOfWeek dans Solr</a>
+	/**	<br/> The entity childBirthDateDayOfWeek
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:childBirthDateDayOfWeek">Find the entity childBirthDateDayOfWeek in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _childBirthDateDayOfWeek(Wrap<String> c);
 
@@ -3951,7 +3952,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// childBirthMonth //
 	/////////////////////
 
-	/**	L'entité « childBirthMonth »
+	/**	 The entity childBirthMonth
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
@@ -3960,11 +3961,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<Integer> childBirthMonthWrap = new Wrap<Integer>().p(this).c(Integer.class).var("childBirthMonth").o(childBirthMonth);
 
-	/**	<br/>L'entité « childBirthMonth »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:childBirthMonth">Trouver l'entité childBirthMonth dans Solr</a>
+	/**	<br/> The entity childBirthMonth
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:childBirthMonth">Find the entity childBirthMonth in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _childBirthMonth(Wrap<Integer> c);
 
@@ -4020,7 +4021,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// childBirthDay //
 	///////////////////
 
-	/**	L'entité « childBirthDay »
+	/**	 The entity childBirthDay
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
@@ -4029,11 +4030,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<Integer> childBirthDayWrap = new Wrap<Integer>().p(this).c(Integer.class).var("childBirthDay").o(childBirthDay);
 
-	/**	<br/>L'entité « childBirthDay »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:childBirthDay">Trouver l'entité childBirthDay dans Solr</a>
+	/**	<br/> The entity childBirthDay
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:childBirthDay">Find the entity childBirthDay in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _childBirthDay(Wrap<Integer> c);
 
@@ -4089,7 +4090,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// schoolName //
 	////////////////
 
-	/**	L'entité « schoolName »
+	/**	 The entity schoolName
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -4097,11 +4098,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<String> schoolNameWrap = new Wrap<String>().p(this).c(String.class).var("schoolName").o(schoolName);
 
-	/**	<br/>L'entité « schoolName »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolName">Trouver l'entité schoolName dans Solr</a>
+	/**	<br/> The entity schoolName
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolName">Find the entity schoolName in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _schoolName(Wrap<String> c);
 
@@ -4151,7 +4152,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// schoolCompleteName //
 	////////////////////////
 
-	/**	L'entité « schoolCompleteName »
+	/**	 The entity schoolCompleteName
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -4159,11 +4160,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<String> schoolCompleteNameWrap = new Wrap<String>().p(this).c(String.class).var("schoolCompleteName").o(schoolCompleteName);
 
-	/**	<br/>L'entité « schoolCompleteName »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolCompleteName">Trouver l'entité schoolCompleteName dans Solr</a>
+	/**	<br/> The entity schoolCompleteName
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolCompleteName">Find the entity schoolCompleteName in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _schoolCompleteName(Wrap<String> c);
 
@@ -4213,7 +4214,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// schoolLocation //
 	////////////////////
 
-	/**	L'entité « schoolLocation »
+	/**	 The entity schoolLocation
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -4221,11 +4222,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<String> schoolLocationWrap = new Wrap<String>().p(this).c(String.class).var("schoolLocation").o(schoolLocation);
 
-	/**	<br/>L'entité « schoolLocation »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolLocation">Trouver l'entité schoolLocation dans Solr</a>
+	/**	<br/> The entity schoolLocation
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolLocation">Find the entity schoolLocation in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _schoolLocation(Wrap<String> c);
 
@@ -4275,7 +4276,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// schoolAddress //
 	///////////////////
 
-	/**	L'entité « schoolAddress »
+	/**	 The entity schoolAddress
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -4283,11 +4284,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<String> schoolAddressWrap = new Wrap<String>().p(this).c(String.class).var("schoolAddress").o(schoolAddress);
 
-	/**	<br/>L'entité « schoolAddress »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolAddress">Trouver l'entité schoolAddress dans Solr</a>
+	/**	<br/> The entity schoolAddress
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolAddress">Find the entity schoolAddress in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _schoolAddress(Wrap<String> c);
 
@@ -4407,7 +4408,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// schoolPhoneNumber //
 	///////////////////////
 
-	/**	L'entité « schoolPhoneNumber »
+	/**	 The entity schoolPhoneNumber
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -4415,11 +4416,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<String> schoolPhoneNumberWrap = new Wrap<String>().p(this).c(String.class).var("schoolPhoneNumber").o(schoolPhoneNumber);
 
-	/**	<br/>L'entité « schoolPhoneNumber »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolPhoneNumber">Trouver l'entité schoolPhoneNumber dans Solr</a>
+	/**	<br/> The entity schoolPhoneNumber
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolPhoneNumber">Find the entity schoolPhoneNumber in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _schoolPhoneNumber(Wrap<String> c);
 
@@ -4469,7 +4470,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// schoolNumber //
 	//////////////////
 
-	/**	L'entité « schoolNumber »
+	/**	 The entity schoolNumber
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
@@ -4478,11 +4479,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<Integer> schoolNumberWrap = new Wrap<Integer>().p(this).c(Integer.class).var("schoolNumber").o(schoolNumber);
 
-	/**	<br/>L'entité « schoolNumber »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolNumber">Trouver l'entité schoolNumber dans Solr</a>
+	/**	<br/> The entity schoolNumber
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolNumber">Find the entity schoolNumber in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _schoolNumber(Wrap<Integer> c);
 
@@ -4538,7 +4539,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// schoolAdministratorName //
 	/////////////////////////////
 
-	/**	L'entité « schoolAdministratorName »
+	/**	 The entity schoolAdministratorName
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -4546,11 +4547,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<String> schoolAdministratorNameWrap = new Wrap<String>().p(this).c(String.class).var("schoolAdministratorName").o(schoolAdministratorName);
 
-	/**	<br/>L'entité « schoolAdministratorName »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolAdministratorName">Trouver l'entité schoolAdministratorName dans Solr</a>
+	/**	<br/> The entity schoolAdministratorName
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolAdministratorName">Find the entity schoolAdministratorName in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _schoolAdministratorName(Wrap<String> c);
 
@@ -4600,7 +4601,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// yearStart //
 	///////////////
 
-	/**	L'entité « yearStart »
+	/**	 The entity yearStart
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
@@ -4609,11 +4610,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<Integer> yearStartWrap = new Wrap<Integer>().p(this).c(Integer.class).var("yearStart").o(yearStart);
 
-	/**	<br/>L'entité « yearStart »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:yearStart">Trouver l'entité yearStart dans Solr</a>
+	/**	<br/> The entity yearStart
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:yearStart">Find the entity yearStart in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _yearStart(Wrap<Integer> c);
 
@@ -4669,7 +4670,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// yearEnd //
 	/////////////
 
-	/**	L'entité « yearEnd »
+	/**	 The entity yearEnd
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
@@ -4678,11 +4679,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<Integer> yearEndWrap = new Wrap<Integer>().p(this).c(Integer.class).var("yearEnd").o(yearEnd);
 
-	/**	<br/>L'entité « yearEnd »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:yearEnd">Trouver l'entité yearEnd dans Solr</a>
+	/**	<br/> The entity yearEnd
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:yearEnd">Find the entity yearEnd in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _yearEnd(Wrap<Integer> c);
 
@@ -4738,7 +4739,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// seasonStartDate //
 	/////////////////////
 
-	/**	L'entité « seasonStartDate »
+	/**	 The entity seasonStartDate
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonDeserialize(using = LocalDateDeserializer.class)
@@ -4749,11 +4750,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<LocalDate> seasonStartDateWrap = new Wrap<LocalDate>().p(this).c(LocalDate.class).var("seasonStartDate").o(seasonStartDate);
 
-	/**	<br/>L'entité « seasonStartDate »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:seasonStartDate">Trouver l'entité seasonStartDate dans Solr</a>
+	/**	<br/> The entity seasonStartDate
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:seasonStartDate">Find the entity seasonStartDate in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _seasonStartDate(Wrap<LocalDate> c);
 
@@ -4819,7 +4820,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// seasonSummer //
 	//////////////////
 
-	/**	L'entité « seasonSummer »
+	/**	 The entity seasonSummer
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -4827,11 +4828,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<Boolean> seasonSummerWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("seasonSummer").o(seasonSummer);
 
-	/**	<br/>L'entité « seasonSummer »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:seasonSummer">Trouver l'entité seasonSummer dans Solr</a>
+	/**	<br/> The entity seasonSummer
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:seasonSummer">Find the entity seasonSummer in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _seasonSummer(Wrap<Boolean> c);
 
@@ -4886,7 +4887,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// seasonWinter //
 	//////////////////
 
-	/**	L'entité « seasonWinter »
+	/**	 The entity seasonWinter
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -4894,11 +4895,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<Boolean> seasonWinterWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("seasonWinter").o(seasonWinter);
 
-	/**	<br/>L'entité « seasonWinter »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:seasonWinter">Trouver l'entité seasonWinter dans Solr</a>
+	/**	<br/> The entity seasonWinter
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:seasonWinter">Find the entity seasonWinter in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _seasonWinter(Wrap<Boolean> c);
 
@@ -4953,7 +4954,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// yearEnrollmentFee //
 	///////////////////////
 
-	/**	L'entité « yearEnrollmentFee »
+	/**	 The entity yearEnrollmentFee
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
@@ -4962,11 +4963,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<BigDecimal> yearEnrollmentFeeWrap = new Wrap<BigDecimal>().p(this).c(BigDecimal.class).var("yearEnrollmentFee").o(yearEnrollmentFee);
 
-	/**	<br/>L'entité « yearEnrollmentFee »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:yearEnrollmentFee">Trouver l'entité yearEnrollmentFee dans Solr</a>
+	/**	<br/> The entity yearEnrollmentFee
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:yearEnrollmentFee">Find the entity yearEnrollmentFee in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _yearEnrollmentFee(Wrap<BigDecimal> c);
 
@@ -5033,7 +5034,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// seasonCompleteName //
 	////////////////////////
 
-	/**	L'entité « seasonCompleteName »
+	/**	 The entity seasonCompleteName
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -5041,11 +5042,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<String> seasonCompleteNameWrap = new Wrap<String>().p(this).c(String.class).var("seasonCompleteName").o(seasonCompleteName);
 
-	/**	<br/>L'entité « seasonCompleteName »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:seasonCompleteName">Trouver l'entité seasonCompleteName dans Solr</a>
+	/**	<br/> The entity seasonCompleteName
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:seasonCompleteName">Find the entity seasonCompleteName in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _seasonCompleteName(Wrap<String> c);
 
@@ -5095,7 +5096,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// sessionStartDate //
 	//////////////////////
 
-	/**	L'entité « sessionStartDate »
+	/**	 The entity sessionStartDate
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonDeserialize(using = LocalDateDeserializer.class)
@@ -5106,11 +5107,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<LocalDate> sessionStartDateWrap = new Wrap<LocalDate>().p(this).c(LocalDate.class).var("sessionStartDate").o(sessionStartDate);
 
-	/**	<br/>L'entité « sessionStartDate »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:sessionStartDate">Trouver l'entité sessionStartDate dans Solr</a>
+	/**	<br/> The entity sessionStartDate
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:sessionStartDate">Find the entity sessionStartDate in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _sessionStartDate(Wrap<LocalDate> c);
 
@@ -5176,7 +5177,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// sessionEndDate //
 	////////////////////
 
-	/**	L'entité « sessionEndDate »
+	/**	 The entity sessionEndDate
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonDeserialize(using = LocalDateDeserializer.class)
@@ -5187,11 +5188,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<LocalDate> sessionEndDateWrap = new Wrap<LocalDate>().p(this).c(LocalDate.class).var("sessionEndDate").o(sessionEndDate);
 
-	/**	<br/>L'entité « sessionEndDate »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:sessionEndDate">Trouver l'entité sessionEndDate dans Solr</a>
+	/**	<br/> The entity sessionEndDate
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:sessionEndDate">Find the entity sessionEndDate in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _sessionEndDate(Wrap<LocalDate> c);
 
@@ -5257,7 +5258,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// ageCompleteName //
 	/////////////////////
 
-	/**	L'entité « ageCompleteName »
+	/**	 The entity ageCompleteName
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -5265,11 +5266,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<String> ageCompleteNameWrap = new Wrap<String>().p(this).c(String.class).var("ageCompleteName").o(ageCompleteName);
 
-	/**	<br/>L'entité « ageCompleteName »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:ageCompleteName">Trouver l'entité ageCompleteName dans Solr</a>
+	/**	<br/> The entity ageCompleteName
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:ageCompleteName">Find the entity ageCompleteName in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _ageCompleteName(Wrap<String> c);
 
@@ -5319,7 +5320,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// ageStart //
 	//////////////
 
-	/**	L'entité « ageStart »
+	/**	 The entity ageStart
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
@@ -5328,11 +5329,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<Integer> ageStartWrap = new Wrap<Integer>().p(this).c(Integer.class).var("ageStart").o(ageStart);
 
-	/**	<br/>L'entité « ageStart »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:ageStart">Trouver l'entité ageStart dans Solr</a>
+	/**	<br/> The entity ageStart
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:ageStart">Find the entity ageStart in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _ageStart(Wrap<Integer> c);
 
@@ -5388,7 +5389,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// ageEnd //
 	////////////
 
-	/**	L'entité « ageEnd »
+	/**	 The entity ageEnd
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
@@ -5397,11 +5398,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<Integer> ageEndWrap = new Wrap<Integer>().p(this).c(Integer.class).var("ageEnd").o(ageEnd);
 
-	/**	<br/>L'entité « ageEnd »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:ageEnd">Trouver l'entité ageEnd dans Solr</a>
+	/**	<br/> The entity ageEnd
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:ageEnd">Find the entity ageEnd in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _ageEnd(Wrap<Integer> c);
 
@@ -5457,7 +5458,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// blockStartTime //
 	////////////////////
 
-	/**	L'entité « blockStartTime »
+	/**	 The entity blockStartTime
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
@@ -5466,11 +5467,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<LocalTime> blockStartTimeWrap = new Wrap<LocalTime>().p(this).c(LocalTime.class).var("blockStartTime").o(blockStartTime);
 
-	/**	<br/>L'entité « blockStartTime »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:blockStartTime">Trouver l'entité blockStartTime dans Solr</a>
+	/**	<br/> The entity blockStartTime
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:blockStartTime">Find the entity blockStartTime in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _blockStartTime(Wrap<LocalTime> c);
 
@@ -5529,7 +5530,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// blockEndTime //
 	//////////////////
 
-	/**	L'entité « blockEndTime »
+	/**	 The entity blockEndTime
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
@@ -5538,11 +5539,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<LocalTime> blockEndTimeWrap = new Wrap<LocalTime>().p(this).c(LocalTime.class).var("blockEndTime").o(blockEndTime);
 
-	/**	<br/>L'entité « blockEndTime »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:blockEndTime">Trouver l'entité blockEndTime dans Solr</a>
+	/**	<br/> The entity blockEndTime
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:blockEndTime">Find the entity blockEndTime in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _blockEndTime(Wrap<LocalTime> c);
 
@@ -5601,7 +5602,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// blockPricePerMonth //
 	////////////////////////
 
-	/**	L'entité « blockPricePerMonth »
+	/**	 The entity blockPricePerMonth
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
@@ -5610,11 +5611,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<BigDecimal> blockPricePerMonthWrap = new Wrap<BigDecimal>().p(this).c(BigDecimal.class).var("blockPricePerMonth").o(blockPricePerMonth);
 
-	/**	<br/>L'entité « blockPricePerMonth »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:blockPricePerMonth">Trouver l'entité blockPricePerMonth dans Solr</a>
+	/**	<br/> The entity blockPricePerMonth
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:blockPricePerMonth">Find the entity blockPricePerMonth in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _blockPricePerMonth(Wrap<BigDecimal> c);
 
@@ -5681,7 +5682,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// blockSunday //
 	/////////////////
 
-	/**	L'entité « blockSunday »
+	/**	 The entity blockSunday
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -5689,11 +5690,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<Boolean> blockSundayWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("blockSunday").o(blockSunday);
 
-	/**	<br/>L'entité « blockSunday »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:blockSunday">Trouver l'entité blockSunday dans Solr</a>
+	/**	<br/> The entity blockSunday
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:blockSunday">Find the entity blockSunday in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _blockSunday(Wrap<Boolean> c);
 
@@ -5748,7 +5749,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// blockMonday //
 	/////////////////
 
-	/**	L'entité « blockMonday »
+	/**	 The entity blockMonday
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -5756,11 +5757,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<Boolean> blockMondayWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("blockMonday").o(blockMonday);
 
-	/**	<br/>L'entité « blockMonday »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:blockMonday">Trouver l'entité blockMonday dans Solr</a>
+	/**	<br/> The entity blockMonday
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:blockMonday">Find the entity blockMonday in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _blockMonday(Wrap<Boolean> c);
 
@@ -5815,7 +5816,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// blockTuesday //
 	//////////////////
 
-	/**	L'entité « blockTuesday »
+	/**	 The entity blockTuesday
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -5823,11 +5824,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<Boolean> blockTuesdayWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("blockTuesday").o(blockTuesday);
 
-	/**	<br/>L'entité « blockTuesday »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:blockTuesday">Trouver l'entité blockTuesday dans Solr</a>
+	/**	<br/> The entity blockTuesday
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:blockTuesday">Find the entity blockTuesday in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _blockTuesday(Wrap<Boolean> c);
 
@@ -5882,7 +5883,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// blockWednesday //
 	////////////////////
 
-	/**	L'entité « blockWednesday »
+	/**	 The entity blockWednesday
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -5890,11 +5891,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<Boolean> blockWednesdayWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("blockWednesday").o(blockWednesday);
 
-	/**	<br/>L'entité « blockWednesday »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:blockWednesday">Trouver l'entité blockWednesday dans Solr</a>
+	/**	<br/> The entity blockWednesday
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:blockWednesday">Find the entity blockWednesday in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _blockWednesday(Wrap<Boolean> c);
 
@@ -5949,7 +5950,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// blockThursday //
 	///////////////////
 
-	/**	L'entité « blockThursday »
+	/**	 The entity blockThursday
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -5957,11 +5958,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<Boolean> blockThursdayWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("blockThursday").o(blockThursday);
 
-	/**	<br/>L'entité « blockThursday »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:blockThursday">Trouver l'entité blockThursday dans Solr</a>
+	/**	<br/> The entity blockThursday
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:blockThursday">Find the entity blockThursday in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _blockThursday(Wrap<Boolean> c);
 
@@ -6016,7 +6017,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// blockFriday //
 	/////////////////
 
-	/**	L'entité « blockFriday »
+	/**	 The entity blockFriday
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -6024,11 +6025,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<Boolean> blockFridayWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("blockFriday").o(blockFriday);
 
-	/**	<br/>L'entité « blockFriday »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:blockFriday">Trouver l'entité blockFriday dans Solr</a>
+	/**	<br/> The entity blockFriday
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:blockFriday">Find the entity blockFriday in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _blockFriday(Wrap<Boolean> c);
 
@@ -6083,7 +6084,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// blockSaturday //
 	///////////////////
 
-	/**	L'entité « blockSaturday »
+	/**	 The entity blockSaturday
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -6091,11 +6092,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<Boolean> blockSaturdayWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("blockSaturday").o(blockSaturday);
 
-	/**	<br/>L'entité « blockSaturday »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:blockSaturday">Trouver l'entité blockSaturday dans Solr</a>
+	/**	<br/> The entity blockSaturday
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:blockSaturday">Find the entity blockSaturday in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _blockSaturday(Wrap<Boolean> c);
 
@@ -6150,7 +6151,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// blockTotalPrice //
 	/////////////////////
 
-	/**	L'entité « blockTotalPrice »
+	/**	 The entity blockTotalPrice
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
@@ -6159,11 +6160,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<BigDecimal> blockTotalPriceWrap = new Wrap<BigDecimal>().p(this).c(BigDecimal.class).var("blockTotalPrice").o(blockTotalPrice);
 
-	/**	<br/>L'entité « blockTotalPrice »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:blockTotalPrice">Trouver l'entité blockTotalPrice dans Solr</a>
+	/**	<br/> The entity blockTotalPrice
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:blockTotalPrice">Find the entity blockTotalPrice in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _blockTotalPrice(Wrap<BigDecimal> c);
 
@@ -6230,7 +6231,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// blockAdminName //
 	////////////////////
 
-	/**	L'entité « blockAdminName »
+	/**	 The entity blockAdminName
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -6238,11 +6239,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<String> blockAdminNameWrap = new Wrap<String>().p(this).c(String.class).var("blockAdminName").o(blockAdminName);
 
-	/**	<br/>L'entité « blockAdminName »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:blockAdminName">Trouver l'entité blockAdminName dans Solr</a>
+	/**	<br/> The entity blockAdminName
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:blockAdminName">Find the entity blockAdminName in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _blockAdminName(Wrap<String> c);
 
@@ -6292,7 +6293,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// blockShortName //
 	////////////////////
 
-	/**	L'entité « blockShortName »
+	/**	 The entity blockShortName
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -6300,11 +6301,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<String> blockShortNameWrap = new Wrap<String>().p(this).c(String.class).var("blockShortName").o(blockShortName);
 
-	/**	<br/>L'entité « blockShortName »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:blockShortName">Trouver l'entité blockShortName dans Solr</a>
+	/**	<br/> The entity blockShortName
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:blockShortName">Find the entity blockShortName in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _blockShortName(Wrap<String> c);
 
@@ -6354,7 +6355,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// blockCompleteName //
 	///////////////////////
 
-	/**	L'entité « blockCompleteName »
+	/**	 The entity blockCompleteName
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -6362,11 +6363,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<String> blockCompleteNameWrap = new Wrap<String>().p(this).c(String.class).var("blockCompleteName").o(blockCompleteName);
 
-	/**	<br/>L'entité « blockCompleteName »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:blockCompleteName">Trouver l'entité blockCompleteName dans Solr</a>
+	/**	<br/> The entity blockCompleteName
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:blockCompleteName">Find the entity blockCompleteName in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _blockCompleteName(Wrap<String> c);
 
@@ -6416,7 +6417,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// enrollmentApproved //
 	////////////////////////
 
-	/**	L'entité « enrollmentApproved »
+	/**	 The entity enrollmentApproved
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -6424,11 +6425,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<Boolean> enrollmentApprovedWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("enrollmentApproved").o(enrollmentApproved);
 
-	/**	<br/>L'entité « enrollmentApproved »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentApproved">Trouver l'entité enrollmentApproved dans Solr</a>
+	/**	<br/> The entity enrollmentApproved
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentApproved">Find the entity enrollmentApproved in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _enrollmentApproved(Wrap<Boolean> c);
 
@@ -6548,7 +6549,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// enrollmentImmunizations //
 	/////////////////////////////
 
-	/**	L'entité « enrollmentImmunizations »
+	/**	 The entity enrollmentImmunizations
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -6556,11 +6557,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<Boolean> enrollmentImmunizationsWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("enrollmentImmunizations").o(enrollmentImmunizations);
 
-	/**	<br/>L'entité « enrollmentImmunizations »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentImmunizations">Trouver l'entité enrollmentImmunizations dans Solr</a>
+	/**	<br/> The entity enrollmentImmunizations
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentImmunizations">Find the entity enrollmentImmunizations in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _enrollmentImmunizations(Wrap<Boolean> c);
 
@@ -6680,7 +6681,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// familyMarried //
 	///////////////////
 
-	/**	L'entité « familyMarried »
+	/**	 The entity familyMarried
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -6688,11 +6689,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<Boolean> familyMarriedWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("familyMarried").o(familyMarried);
 
-	/**	<br/>L'entité « familyMarried »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:familyMarried">Trouver l'entité familyMarried dans Solr</a>
+	/**	<br/> The entity familyMarried
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:familyMarried">Find the entity familyMarried in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _familyMarried(Wrap<Boolean> c);
 
@@ -6812,7 +6813,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// familySeparated //
 	/////////////////////
 
-	/**	L'entité « familySeparated »
+	/**	 The entity familySeparated
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -6820,11 +6821,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<Boolean> familySeparatedWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("familySeparated").o(familySeparated);
 
-	/**	<br/>L'entité « familySeparated »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:familySeparated">Trouver l'entité familySeparated dans Solr</a>
+	/**	<br/> The entity familySeparated
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:familySeparated">Find the entity familySeparated in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _familySeparated(Wrap<Boolean> c);
 
@@ -6944,7 +6945,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// familyDivorced //
 	////////////////////
 
-	/**	L'entité « familyDivorced »
+	/**	 The entity familyDivorced
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -6952,11 +6953,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<Boolean> familyDivorcedWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("familyDivorced").o(familyDivorced);
 
-	/**	<br/>L'entité « familyDivorced »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:familyDivorced">Trouver l'entité familyDivorced dans Solr</a>
+	/**	<br/> The entity familyDivorced
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:familyDivorced">Find the entity familyDivorced in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _familyDivorced(Wrap<Boolean> c);
 
@@ -7076,7 +7077,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// familyAddress //
 	///////////////////
 
-	/**	L'entité « familyAddress »
+	/**	 The entity familyAddress
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -7084,11 +7085,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<String> familyAddressWrap = new Wrap<String>().p(this).c(String.class).var("familyAddress").o(familyAddress);
 
-	/**	<br/>L'entité « familyAddress »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:familyAddress">Trouver l'entité familyAddress dans Solr</a>
+	/**	<br/> The entity familyAddress
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:familyAddress">Find the entity familyAddress in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _familyAddress(Wrap<String> c);
 
@@ -7206,7 +7207,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// familyHowDoYouKnowTheSchool //
 	/////////////////////////////////
 
-	/**	L'entité « familyHowDoYouKnowTheSchool »
+	/**	 The entity familyHowDoYouKnowTheSchool
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -7214,11 +7215,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<String> familyHowDoYouKnowTheSchoolWrap = new Wrap<String>().p(this).c(String.class).var("familyHowDoYouKnowTheSchool").o(familyHowDoYouKnowTheSchool);
 
-	/**	<br/>L'entité « familyHowDoYouKnowTheSchool »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:familyHowDoYouKnowTheSchool">Trouver l'entité familyHowDoYouKnowTheSchool dans Solr</a>
+	/**	<br/> The entity familyHowDoYouKnowTheSchool
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:familyHowDoYouKnowTheSchool">Find the entity familyHowDoYouKnowTheSchool in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _familyHowDoYouKnowTheSchool(Wrap<String> c);
 
@@ -7336,7 +7337,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// enrollmentSpecialConsiderations //
 	/////////////////////////////////////
 
-	/**	L'entité « enrollmentSpecialConsiderations »
+	/**	 The entity enrollmentSpecialConsiderations
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -7344,11 +7345,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<String> enrollmentSpecialConsiderationsWrap = new Wrap<String>().p(this).c(String.class).var("enrollmentSpecialConsiderations").o(enrollmentSpecialConsiderations);
 
-	/**	<br/>L'entité « enrollmentSpecialConsiderations »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentSpecialConsiderations">Trouver l'entité enrollmentSpecialConsiderations dans Solr</a>
+	/**	<br/> The entity enrollmentSpecialConsiderations
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentSpecialConsiderations">Find the entity enrollmentSpecialConsiderations in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _enrollmentSpecialConsiderations(Wrap<String> c);
 
@@ -7466,7 +7467,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// childMedicalConditions //
 	////////////////////////////
 
-	/**	L'entité « childMedicalConditions »
+	/**	 The entity childMedicalConditions
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -7474,11 +7475,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<String> childMedicalConditionsWrap = new Wrap<String>().p(this).c(String.class).var("childMedicalConditions").o(childMedicalConditions);
 
-	/**	<br/>L'entité « childMedicalConditions »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:childMedicalConditions">Trouver l'entité childMedicalConditions dans Solr</a>
+	/**	<br/> The entity childMedicalConditions
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:childMedicalConditions">Find the entity childMedicalConditions in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _childMedicalConditions(Wrap<String> c);
 
@@ -7596,7 +7597,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// childPreviousSchoolsAttended //
 	//////////////////////////////////
 
-	/**	L'entité « childPreviousSchoolsAttended »
+	/**	 The entity childPreviousSchoolsAttended
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -7604,11 +7605,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<String> childPreviousSchoolsAttendedWrap = new Wrap<String>().p(this).c(String.class).var("childPreviousSchoolsAttended").o(childPreviousSchoolsAttended);
 
-	/**	<br/>L'entité « childPreviousSchoolsAttended »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:childPreviousSchoolsAttended">Trouver l'entité childPreviousSchoolsAttended dans Solr</a>
+	/**	<br/> The entity childPreviousSchoolsAttended
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:childPreviousSchoolsAttended">Find the entity childPreviousSchoolsAttended in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _childPreviousSchoolsAttended(Wrap<String> c);
 
@@ -7726,7 +7727,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// childDescription //
 	//////////////////////
 
-	/**	L'entité « childDescription »
+	/**	 The entity childDescription
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -7734,11 +7735,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<String> childDescriptionWrap = new Wrap<String>().p(this).c(String.class).var("childDescription").o(childDescription);
 
-	/**	<br/>L'entité « childDescription »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:childDescription">Trouver l'entité childDescription dans Solr</a>
+	/**	<br/> The entity childDescription
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:childDescription">Find the entity childDescription in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _childDescription(Wrap<String> c);
 
@@ -7856,7 +7857,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// childObjectives //
 	/////////////////////
 
-	/**	L'entité « childObjectives »
+	/**	 The entity childObjectives
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -7864,11 +7865,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<String> childObjectivesWrap = new Wrap<String>().p(this).c(String.class).var("childObjectives").o(childObjectives);
 
-	/**	<br/>L'entité « childObjectives »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:childObjectives">Trouver l'entité childObjectives dans Solr</a>
+	/**	<br/> The entity childObjectives
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:childObjectives">Find the entity childObjectives in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _childObjectives(Wrap<String> c);
 
@@ -7986,7 +7987,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// childPottyTrained //
 	///////////////////////
 
-	/**	L'entité « childPottyTrained »
+	/**	 The entity childPottyTrained
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -7994,11 +7995,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<Boolean> childPottyTrainedWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("childPottyTrained").o(childPottyTrained);
 
-	/**	<br/>L'entité « childPottyTrained »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:childPottyTrained">Trouver l'entité childPottyTrained dans Solr</a>
+	/**	<br/> The entity childPottyTrained
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:childPottyTrained">Find the entity childPottyTrained in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _childPottyTrained(Wrap<Boolean> c);
 
@@ -8118,7 +8119,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// enrollmentGroupName //
 	/////////////////////////
 
-	/**	L'entité « enrollmentGroupName »
+	/**	 The entity enrollmentGroupName
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -8126,11 +8127,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<String> enrollmentGroupNameWrap = new Wrap<String>().p(this).c(String.class).var("enrollmentGroupName").o(enrollmentGroupName);
 
-	/**	<br/>L'entité « enrollmentGroupName »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentGroupName">Trouver l'entité enrollmentGroupName dans Solr</a>
+	/**	<br/> The entity enrollmentGroupName
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentGroupName">Find the entity enrollmentGroupName in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _enrollmentGroupName(Wrap<String> c);
 
@@ -8250,7 +8251,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// enrollmentPaymentEachMonth //
 	////////////////////////////////
 
-	/**	L'entité « enrollmentPaymentEachMonth »
+	/**	 The entity enrollmentPaymentEachMonth
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -8258,11 +8259,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<Boolean> enrollmentPaymentEachMonthWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("enrollmentPaymentEachMonth").o(enrollmentPaymentEachMonth);
 
-	/**	<br/>L'entité « enrollmentPaymentEachMonth »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentPaymentEachMonth">Trouver l'entité enrollmentPaymentEachMonth dans Solr</a>
+	/**	<br/> The entity enrollmentPaymentEachMonth
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentPaymentEachMonth">Find the entity enrollmentPaymentEachMonth in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _enrollmentPaymentEachMonth(Wrap<Boolean> c);
 
@@ -8382,7 +8383,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// enrollmentPaymentComplete //
 	///////////////////////////////
 
-	/**	L'entité « enrollmentPaymentComplete »
+	/**	 The entity enrollmentPaymentComplete
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -8390,11 +8391,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<Boolean> enrollmentPaymentCompleteWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("enrollmentPaymentComplete").o(enrollmentPaymentComplete);
 
-	/**	<br/>L'entité « enrollmentPaymentComplete »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentPaymentComplete">Trouver l'entité enrollmentPaymentComplete dans Solr</a>
+	/**	<br/> The entity enrollmentPaymentComplete
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentPaymentComplete">Find the entity enrollmentPaymentComplete in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _enrollmentPaymentComplete(Wrap<Boolean> c);
 
@@ -8514,7 +8515,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// customerProfileId //
 	///////////////////////
 
-	/**	L'entité « customerProfileId »
+	/**	 The entity customerProfileId
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -8522,11 +8523,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<String> customerProfileIdWrap = new Wrap<String>().p(this).c(String.class).var("customerProfileId").o(customerProfileId);
 
-	/**	<br/>L'entité « customerProfileId »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:customerProfileId">Trouver l'entité customerProfileId dans Solr</a>
+	/**	<br/> The entity customerProfileId
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:customerProfileId">Find the entity customerProfileId in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _customerProfileId(Wrap<String> c);
 
@@ -8646,7 +8647,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// enrollmentChargeDate //
 	//////////////////////////
 
-	/**	L'entité « enrollmentChargeDate »
+	/**	 The entity enrollmentChargeDate
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonDeserialize(using = LocalDateDeserializer.class)
@@ -8657,11 +8658,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<LocalDate> enrollmentChargeDateWrap = new Wrap<LocalDate>().p(this).c(LocalDate.class).var("enrollmentChargeDate").o(enrollmentChargeDate);
 
-	/**	<br/>L'entité « enrollmentChargeDate »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentChargeDate">Trouver l'entité enrollmentChargeDate dans Solr</a>
+	/**	<br/> The entity enrollmentChargeDate
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentChargeDate">Find the entity enrollmentChargeDate in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _enrollmentChargeDate(Wrap<LocalDate> c);
 
@@ -8785,7 +8786,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// createdYear //
 	/////////////////
 
-	/**	L'entité « createdYear »
+	/**	 The entity createdYear
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
@@ -8794,11 +8795,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<Integer> createdYearWrap = new Wrap<Integer>().p(this).c(Integer.class).var("createdYear").o(createdYear);
 
-	/**	<br/>L'entité « createdYear »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:createdYear">Trouver l'entité createdYear dans Solr</a>
+	/**	<br/> The entity createdYear
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:createdYear">Find the entity createdYear in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _createdYear(Wrap<Integer> c);
 
@@ -8854,7 +8855,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// createdDayOfWeek //
 	//////////////////////
 
-	/**	L'entité « createdDayOfWeek »
+	/**	 The entity createdDayOfWeek
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -8862,11 +8863,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<String> createdDayOfWeekWrap = new Wrap<String>().p(this).c(String.class).var("createdDayOfWeek").o(createdDayOfWeek);
 
-	/**	<br/>L'entité « createdDayOfWeek »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:createdDayOfWeek">Trouver l'entité createdDayOfWeek dans Solr</a>
+	/**	<br/> The entity createdDayOfWeek
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:createdDayOfWeek">Find the entity createdDayOfWeek in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _createdDayOfWeek(Wrap<String> c);
 
@@ -8916,7 +8917,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// createdMonthOfYear //
 	////////////////////////
 
-	/**	L'entité « createdMonthOfYear »
+	/**	 The entity createdMonthOfYear
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -8924,11 +8925,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<String> createdMonthOfYearWrap = new Wrap<String>().p(this).c(String.class).var("createdMonthOfYear").o(createdMonthOfYear);
 
-	/**	<br/>L'entité « createdMonthOfYear »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:createdMonthOfYear">Trouver l'entité createdMonthOfYear dans Solr</a>
+	/**	<br/> The entity createdMonthOfYear
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:createdMonthOfYear">Find the entity createdMonthOfYear in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _createdMonthOfYear(Wrap<String> c);
 
@@ -8978,7 +8979,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// createdHourOfDay //
 	//////////////////////
 
-	/**	L'entité « createdHourOfDay »
+	/**	 The entity createdHourOfDay
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -8986,11 +8987,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<String> createdHourOfDayWrap = new Wrap<String>().p(this).c(String.class).var("createdHourOfDay").o(createdHourOfDay);
 
-	/**	<br/>L'entité « createdHourOfDay »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:createdHourOfDay">Trouver l'entité createdHourOfDay dans Solr</a>
+	/**	<br/> The entity createdHourOfDay
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:createdHourOfDay">Find the entity createdHourOfDay in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _createdHourOfDay(Wrap<String> c);
 
@@ -9040,7 +9041,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// enrollmentDaysOfWeek //
 	//////////////////////////
 
-	/**	L'entité « enrollmentDaysOfWeek »
+	/**	 The entity enrollmentDaysOfWeek
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<String>(). 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -9048,11 +9049,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<List<String>> enrollmentDaysOfWeekWrap = new Wrap<List<String>>().p(this).c(List.class).var("enrollmentDaysOfWeek").o(enrollmentDaysOfWeek);
 
-	/**	<br/>L'entité « enrollmentDaysOfWeek »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<String>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentDaysOfWeek">Trouver l'entité enrollmentDaysOfWeek dans Solr</a>
+	/**	<br/> The entity enrollmentDaysOfWeek
+	 *  It is constructed before being initialized with the constructor by default List<String>(). 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentDaysOfWeek">Find the entity enrollmentDaysOfWeek in Solr</a>
 	 * <br/>
-	 * @param enrollmentDaysOfWeek est l'entité déjà construit. 
+	 * @param enrollmentDaysOfWeek is the entity already constructed. 
 	 **/
 	protected abstract void _enrollmentDaysOfWeek(List<String> l);
 
@@ -9119,7 +9120,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// enrollmentParentNames //
 	///////////////////////////
 
-	/**	L'entité « enrollmentParentNames »
+	/**	 The entity enrollmentParentNames
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -9127,11 +9128,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<String> enrollmentParentNamesWrap = new Wrap<String>().p(this).c(String.class).var("enrollmentParentNames").o(enrollmentParentNames);
 
-	/**	<br/>L'entité « enrollmentParentNames »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentParentNames">Trouver l'entité enrollmentParentNames dans Solr</a>
+	/**	<br/> The entity enrollmentParentNames
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentParentNames">Find the entity enrollmentParentNames in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _enrollmentParentNames(Wrap<String> c);
 
@@ -9243,11 +9244,90 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		} g("div");
 	}
 
+	//////////////////////
+	// enrollmentEmails //
+	//////////////////////
+
+	/**	 The entity enrollmentEmails
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<String>(). 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected List<String> enrollmentEmails = new ArrayList<String>();
+	@JsonIgnore
+	public Wrap<List<String>> enrollmentEmailsWrap = new Wrap<List<String>>().p(this).c(List.class).var("enrollmentEmails").o(enrollmentEmails);
+
+	/**	<br/> The entity enrollmentEmails
+	 *  It is constructed before being initialized with the constructor by default List<String>(). 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentEmails">Find the entity enrollmentEmails in Solr</a>
+	 * <br/>
+	 * @param enrollmentEmails is the entity already constructed. 
+	 **/
+	protected abstract void _enrollmentEmails(List<String> l);
+
+	public List<String> getEnrollmentEmails() {
+		return enrollmentEmails;
+	}
+
+	public void setEnrollmentEmails(List<String> enrollmentEmails) {
+		this.enrollmentEmails = enrollmentEmails;
+		this.enrollmentEmailsWrap.alreadyInitialized = true;
+	}
+	public SchoolEnrollment addEnrollmentEmails(String...objets) {
+		for(String o : objets) {
+			addEnrollmentEmails(o);
+		}
+		return (SchoolEnrollment)this;
+	}
+	public SchoolEnrollment addEnrollmentEmails(String o) {
+		if(o != null && !enrollmentEmails.contains(o))
+			this.enrollmentEmails.add(o);
+		return (SchoolEnrollment)this;
+	}
+	public SchoolEnrollment setEnrollmentEmails(JsonArray objets) {
+		enrollmentEmails.clear();
+		for(int i = 0; i < objets.size(); i++) {
+			String o = objets.getString(i);
+			addEnrollmentEmails(o);
+		}
+		return (SchoolEnrollment)this;
+	}
+	protected SchoolEnrollment enrollmentEmailsInit() {
+		if(!enrollmentEmailsWrap.alreadyInitialized) {
+			_enrollmentEmails(enrollmentEmails);
+		}
+		enrollmentEmailsWrap.alreadyInitialized(true);
+		return (SchoolEnrollment)this;
+	}
+
+	public List<String> solrEnrollmentEmails() {
+		return enrollmentEmails;
+	}
+
+	public String strEnrollmentEmails() {
+		return enrollmentEmails == null ? "" : enrollmentEmails.toString();
+	}
+
+	public String jsonEnrollmentEmails() {
+		return enrollmentEmails == null ? "" : enrollmentEmails.toString();
+	}
+
+	public String nomAffichageEnrollmentEmails() {
+		return null;
+	}
+
+	public String htmTooltipEnrollmentEmails() {
+		return null;
+	}
+
+	public String htmEnrollmentEmails() {
+		return enrollmentEmails == null ? "" : StringEscapeUtils.escapeHtml4(strEnrollmentEmails());
+	}
+
 	////////////////////////////
 	// enrollmentParentEmails //
 	////////////////////////////
 
-	/**	L'entité « enrollmentParentEmails »
+	/**	 The entity enrollmentParentEmails
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -9255,11 +9335,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<String> enrollmentParentEmailsWrap = new Wrap<String>().p(this).c(String.class).var("enrollmentParentEmails").o(enrollmentParentEmails);
 
-	/**	<br/>L'entité « enrollmentParentEmails »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentParentEmails">Trouver l'entité enrollmentParentEmails dans Solr</a>
+	/**	<br/> The entity enrollmentParentEmails
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentParentEmails">Find the entity enrollmentParentEmails in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _enrollmentParentEmails(Wrap<String> c);
 
@@ -9309,7 +9389,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// enrollmentParentNameLines //
 	///////////////////////////////
 
-	/**	L'entité « enrollmentParentNameLines »
+	/**	 The entity enrollmentParentNameLines
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -9317,11 +9397,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<String> enrollmentParentNameLinesWrap = new Wrap<String>().p(this).c(String.class).var("enrollmentParentNameLines").o(enrollmentParentNameLines);
 
-	/**	<br/>L'entité « enrollmentParentNameLines »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentParentNameLines">Trouver l'entité enrollmentParentNameLines dans Solr</a>
+	/**	<br/> The entity enrollmentParentNameLines
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentParentNameLines">Find the entity enrollmentParentNameLines in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _enrollmentParentNameLines(Wrap<String> c);
 
@@ -9371,7 +9451,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// enrollmentParentEmailLines //
 	////////////////////////////////
 
-	/**	L'entité « enrollmentParentEmailLines »
+	/**	 The entity enrollmentParentEmailLines
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -9379,11 +9459,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<String> enrollmentParentEmailLinesWrap = new Wrap<String>().p(this).c(String.class).var("enrollmentParentEmailLines").o(enrollmentParentEmailLines);
 
-	/**	<br/>L'entité « enrollmentParentEmailLines »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentParentEmailLines">Trouver l'entité enrollmentParentEmailLines dans Solr</a>
+	/**	<br/> The entity enrollmentParentEmailLines
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentParentEmailLines">Find the entity enrollmentParentEmailLines in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _enrollmentParentEmailLines(Wrap<String> c);
 
@@ -9433,7 +9513,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// enrollmentParentDetailLines //
 	/////////////////////////////////
 
-	/**	L'entité « enrollmentParentDetailLines »
+	/**	 The entity enrollmentParentDetailLines
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -9441,11 +9521,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<String> enrollmentParentDetailLinesWrap = new Wrap<String>().p(this).c(String.class).var("enrollmentParentDetailLines").o(enrollmentParentDetailLines);
 
-	/**	<br/>L'entité « enrollmentParentDetailLines »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentParentDetailLines">Trouver l'entité enrollmentParentDetailLines dans Solr</a>
+	/**	<br/> The entity enrollmentParentDetailLines
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentParentDetailLines">Find the entity enrollmentParentDetailLines in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _enrollmentParentDetailLines(Wrap<String> c);
 
@@ -9495,7 +9575,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// enrollmentPickupDetailLines //
 	/////////////////////////////////
 
-	/**	L'entité « enrollmentPickupDetailLines »
+	/**	 The entity enrollmentPickupDetailLines
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -9503,11 +9583,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<String> enrollmentPickupDetailLinesWrap = new Wrap<String>().p(this).c(String.class).var("enrollmentPickupDetailLines").o(enrollmentPickupDetailLines);
 
-	/**	<br/>L'entité « enrollmentPickupDetailLines »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentPickupDetailLines">Trouver l'entité enrollmentPickupDetailLines dans Solr</a>
+	/**	<br/> The entity enrollmentPickupDetailLines
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentPickupDetailLines">Find the entity enrollmentPickupDetailLines in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _enrollmentPickupDetailLines(Wrap<String> c);
 
@@ -9557,7 +9637,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// enrollmentEmergencyContactDetailLines //
 	///////////////////////////////////////////
 
-	/**	L'entité « enrollmentEmergencyContactDetailLines »
+	/**	 The entity enrollmentEmergencyContactDetailLines
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -9565,11 +9645,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<String> enrollmentEmergencyContactDetailLinesWrap = new Wrap<String>().p(this).c(String.class).var("enrollmentEmergencyContactDetailLines").o(enrollmentEmergencyContactDetailLines);
 
-	/**	<br/>L'entité « enrollmentEmergencyContactDetailLines »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentEmergencyContactDetailLines">Trouver l'entité enrollmentEmergencyContactDetailLines dans Solr</a>
+	/**	<br/> The entity enrollmentEmergencyContactDetailLines
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentEmergencyContactDetailLines">Find the entity enrollmentEmergencyContactDetailLines in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _enrollmentEmergencyContactDetailLines(Wrap<String> c);
 
@@ -9619,7 +9699,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// enrollmentSignature1 //
 	//////////////////////////
 
-	/**	L'entité « enrollmentSignature1 »
+	/**	 The entity enrollmentSignature1
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -9627,11 +9707,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<String> enrollmentSignature1Wrap = new Wrap<String>().p(this).c(String.class).var("enrollmentSignature1").o(enrollmentSignature1);
 
-	/**	<br/>L'entité « enrollmentSignature1 »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentSignature1">Trouver l'entité enrollmentSignature1 dans Solr</a>
+	/**	<br/> The entity enrollmentSignature1
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentSignature1">Find the entity enrollmentSignature1 in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _enrollmentSignature1(Wrap<String> c);
 
@@ -9757,7 +9837,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// enrollmentSignature2 //
 	//////////////////////////
 
-	/**	L'entité « enrollmentSignature2 »
+	/**	 The entity enrollmentSignature2
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -9765,11 +9845,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<String> enrollmentSignature2Wrap = new Wrap<String>().p(this).c(String.class).var("enrollmentSignature2").o(enrollmentSignature2);
 
-	/**	<br/>L'entité « enrollmentSignature2 »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentSignature2">Trouver l'entité enrollmentSignature2 dans Solr</a>
+	/**	<br/> The entity enrollmentSignature2
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentSignature2">Find the entity enrollmentSignature2 in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _enrollmentSignature2(Wrap<String> c);
 
@@ -9895,7 +9975,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// enrollmentSignature3 //
 	//////////////////////////
 
-	/**	L'entité « enrollmentSignature3 »
+	/**	 The entity enrollmentSignature3
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -9903,11 +9983,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<String> enrollmentSignature3Wrap = new Wrap<String>().p(this).c(String.class).var("enrollmentSignature3").o(enrollmentSignature3);
 
-	/**	<br/>L'entité « enrollmentSignature3 »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentSignature3">Trouver l'entité enrollmentSignature3 dans Solr</a>
+	/**	<br/> The entity enrollmentSignature3
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentSignature3">Find the entity enrollmentSignature3 in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _enrollmentSignature3(Wrap<String> c);
 
@@ -10033,7 +10113,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// enrollmentSignature4 //
 	//////////////////////////
 
-	/**	L'entité « enrollmentSignature4 »
+	/**	 The entity enrollmentSignature4
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -10041,11 +10121,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<String> enrollmentSignature4Wrap = new Wrap<String>().p(this).c(String.class).var("enrollmentSignature4").o(enrollmentSignature4);
 
-	/**	<br/>L'entité « enrollmentSignature4 »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentSignature4">Trouver l'entité enrollmentSignature4 dans Solr</a>
+	/**	<br/> The entity enrollmentSignature4
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentSignature4">Find the entity enrollmentSignature4 in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _enrollmentSignature4(Wrap<String> c);
 
@@ -10171,7 +10251,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// enrollmentSignature5 //
 	//////////////////////////
 
-	/**	L'entité « enrollmentSignature5 »
+	/**	 The entity enrollmentSignature5
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -10179,11 +10259,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<String> enrollmentSignature5Wrap = new Wrap<String>().p(this).c(String.class).var("enrollmentSignature5").o(enrollmentSignature5);
 
-	/**	<br/>L'entité « enrollmentSignature5 »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentSignature5">Trouver l'entité enrollmentSignature5 dans Solr</a>
+	/**	<br/> The entity enrollmentSignature5
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentSignature5">Find the entity enrollmentSignature5 in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _enrollmentSignature5(Wrap<String> c);
 
@@ -10309,7 +10389,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// enrollmentSignature6 //
 	//////////////////////////
 
-	/**	L'entité « enrollmentSignature6 »
+	/**	 The entity enrollmentSignature6
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -10317,11 +10397,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<String> enrollmentSignature6Wrap = new Wrap<String>().p(this).c(String.class).var("enrollmentSignature6").o(enrollmentSignature6);
 
-	/**	<br/>L'entité « enrollmentSignature6 »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentSignature6">Trouver l'entité enrollmentSignature6 dans Solr</a>
+	/**	<br/> The entity enrollmentSignature6
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentSignature6">Find the entity enrollmentSignature6 in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _enrollmentSignature6(Wrap<String> c);
 
@@ -10447,7 +10527,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// enrollmentSignature7 //
 	//////////////////////////
 
-	/**	L'entité « enrollmentSignature7 »
+	/**	 The entity enrollmentSignature7
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -10455,11 +10535,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<String> enrollmentSignature7Wrap = new Wrap<String>().p(this).c(String.class).var("enrollmentSignature7").o(enrollmentSignature7);
 
-	/**	<br/>L'entité « enrollmentSignature7 »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentSignature7">Trouver l'entité enrollmentSignature7 dans Solr</a>
+	/**	<br/> The entity enrollmentSignature7
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentSignature7">Find the entity enrollmentSignature7 in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _enrollmentSignature7(Wrap<String> c);
 
@@ -10585,7 +10665,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// enrollmentSignature8 //
 	//////////////////////////
 
-	/**	L'entité « enrollmentSignature8 »
+	/**	 The entity enrollmentSignature8
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -10593,11 +10673,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<String> enrollmentSignature8Wrap = new Wrap<String>().p(this).c(String.class).var("enrollmentSignature8").o(enrollmentSignature8);
 
-	/**	<br/>L'entité « enrollmentSignature8 »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentSignature8">Trouver l'entité enrollmentSignature8 dans Solr</a>
+	/**	<br/> The entity enrollmentSignature8
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentSignature8">Find the entity enrollmentSignature8 in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _enrollmentSignature8(Wrap<String> c);
 
@@ -10723,7 +10803,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// enrollmentSignature9 //
 	//////////////////////////
 
-	/**	L'entité « enrollmentSignature9 »
+	/**	 The entity enrollmentSignature9
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -10731,11 +10811,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<String> enrollmentSignature9Wrap = new Wrap<String>().p(this).c(String.class).var("enrollmentSignature9").o(enrollmentSignature9);
 
-	/**	<br/>L'entité « enrollmentSignature9 »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentSignature9">Trouver l'entité enrollmentSignature9 dans Solr</a>
+	/**	<br/> The entity enrollmentSignature9
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentSignature9">Find the entity enrollmentSignature9 in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _enrollmentSignature9(Wrap<String> c);
 
@@ -10861,7 +10941,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// enrollmentSignature10 //
 	///////////////////////////
 
-	/**	L'entité « enrollmentSignature10 »
+	/**	 The entity enrollmentSignature10
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -10869,11 +10949,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<String> enrollmentSignature10Wrap = new Wrap<String>().p(this).c(String.class).var("enrollmentSignature10").o(enrollmentSignature10);
 
-	/**	<br/>L'entité « enrollmentSignature10 »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentSignature10">Trouver l'entité enrollmentSignature10 dans Solr</a>
+	/**	<br/> The entity enrollmentSignature10
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentSignature10">Find the entity enrollmentSignature10 in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _enrollmentSignature10(Wrap<String> c);
 
@@ -10999,7 +11079,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// enrollmentDate1 //
 	/////////////////////
 
-	/**	L'entité « enrollmentDate1 »
+	/**	 The entity enrollmentDate1
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonDeserialize(using = LocalDateDeserializer.class)
@@ -11010,11 +11090,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<LocalDate> enrollmentDate1Wrap = new Wrap<LocalDate>().p(this).c(LocalDate.class).var("enrollmentDate1").o(enrollmentDate1);
 
-	/**	<br/>L'entité « enrollmentDate1 »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentDate1">Trouver l'entité enrollmentDate1 dans Solr</a>
+	/**	<br/> The entity enrollmentDate1
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentDate1">Find the entity enrollmentDate1 in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _enrollmentDate1(Wrap<LocalDate> c);
 
@@ -11138,7 +11218,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// enrollmentDate2 //
 	/////////////////////
 
-	/**	L'entité « enrollmentDate2 »
+	/**	 The entity enrollmentDate2
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonDeserialize(using = LocalDateDeserializer.class)
@@ -11149,11 +11229,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<LocalDate> enrollmentDate2Wrap = new Wrap<LocalDate>().p(this).c(LocalDate.class).var("enrollmentDate2").o(enrollmentDate2);
 
-	/**	<br/>L'entité « enrollmentDate2 »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentDate2">Trouver l'entité enrollmentDate2 dans Solr</a>
+	/**	<br/> The entity enrollmentDate2
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentDate2">Find the entity enrollmentDate2 in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _enrollmentDate2(Wrap<LocalDate> c);
 
@@ -11277,7 +11357,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// enrollmentDate3 //
 	/////////////////////
 
-	/**	L'entité « enrollmentDate3 »
+	/**	 The entity enrollmentDate3
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonDeserialize(using = LocalDateDeserializer.class)
@@ -11288,11 +11368,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<LocalDate> enrollmentDate3Wrap = new Wrap<LocalDate>().p(this).c(LocalDate.class).var("enrollmentDate3").o(enrollmentDate3);
 
-	/**	<br/>L'entité « enrollmentDate3 »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentDate3">Trouver l'entité enrollmentDate3 dans Solr</a>
+	/**	<br/> The entity enrollmentDate3
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentDate3">Find the entity enrollmentDate3 in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _enrollmentDate3(Wrap<LocalDate> c);
 
@@ -11416,7 +11496,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// enrollmentDate4 //
 	/////////////////////
 
-	/**	L'entité « enrollmentDate4 »
+	/**	 The entity enrollmentDate4
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonDeserialize(using = LocalDateDeserializer.class)
@@ -11427,11 +11507,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<LocalDate> enrollmentDate4Wrap = new Wrap<LocalDate>().p(this).c(LocalDate.class).var("enrollmentDate4").o(enrollmentDate4);
 
-	/**	<br/>L'entité « enrollmentDate4 »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentDate4">Trouver l'entité enrollmentDate4 dans Solr</a>
+	/**	<br/> The entity enrollmentDate4
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentDate4">Find the entity enrollmentDate4 in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _enrollmentDate4(Wrap<LocalDate> c);
 
@@ -11555,7 +11635,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// enrollmentDate5 //
 	/////////////////////
 
-	/**	L'entité « enrollmentDate5 »
+	/**	 The entity enrollmentDate5
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonDeserialize(using = LocalDateDeserializer.class)
@@ -11566,11 +11646,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<LocalDate> enrollmentDate5Wrap = new Wrap<LocalDate>().p(this).c(LocalDate.class).var("enrollmentDate5").o(enrollmentDate5);
 
-	/**	<br/>L'entité « enrollmentDate5 »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentDate5">Trouver l'entité enrollmentDate5 dans Solr</a>
+	/**	<br/> The entity enrollmentDate5
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentDate5">Find the entity enrollmentDate5 in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _enrollmentDate5(Wrap<LocalDate> c);
 
@@ -11694,7 +11774,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// enrollmentDate6 //
 	/////////////////////
 
-	/**	L'entité « enrollmentDate6 »
+	/**	 The entity enrollmentDate6
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonDeserialize(using = LocalDateDeserializer.class)
@@ -11705,11 +11785,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<LocalDate> enrollmentDate6Wrap = new Wrap<LocalDate>().p(this).c(LocalDate.class).var("enrollmentDate6").o(enrollmentDate6);
 
-	/**	<br/>L'entité « enrollmentDate6 »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentDate6">Trouver l'entité enrollmentDate6 dans Solr</a>
+	/**	<br/> The entity enrollmentDate6
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentDate6">Find the entity enrollmentDate6 in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _enrollmentDate6(Wrap<LocalDate> c);
 
@@ -11833,7 +11913,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// enrollmentDate7 //
 	/////////////////////
 
-	/**	L'entité « enrollmentDate7 »
+	/**	 The entity enrollmentDate7
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonDeserialize(using = LocalDateDeserializer.class)
@@ -11844,11 +11924,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<LocalDate> enrollmentDate7Wrap = new Wrap<LocalDate>().p(this).c(LocalDate.class).var("enrollmentDate7").o(enrollmentDate7);
 
-	/**	<br/>L'entité « enrollmentDate7 »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentDate7">Trouver l'entité enrollmentDate7 dans Solr</a>
+	/**	<br/> The entity enrollmentDate7
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentDate7">Find the entity enrollmentDate7 in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _enrollmentDate7(Wrap<LocalDate> c);
 
@@ -11972,7 +12052,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// enrollmentDate8 //
 	/////////////////////
 
-	/**	L'entité « enrollmentDate8 »
+	/**	 The entity enrollmentDate8
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonDeserialize(using = LocalDateDeserializer.class)
@@ -11983,11 +12063,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<LocalDate> enrollmentDate8Wrap = new Wrap<LocalDate>().p(this).c(LocalDate.class).var("enrollmentDate8").o(enrollmentDate8);
 
-	/**	<br/>L'entité « enrollmentDate8 »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentDate8">Trouver l'entité enrollmentDate8 dans Solr</a>
+	/**	<br/> The entity enrollmentDate8
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentDate8">Find the entity enrollmentDate8 in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _enrollmentDate8(Wrap<LocalDate> c);
 
@@ -12111,7 +12191,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// enrollmentDate9 //
 	/////////////////////
 
-	/**	L'entité « enrollmentDate9 »
+	/**	 The entity enrollmentDate9
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonDeserialize(using = LocalDateDeserializer.class)
@@ -12122,11 +12202,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<LocalDate> enrollmentDate9Wrap = new Wrap<LocalDate>().p(this).c(LocalDate.class).var("enrollmentDate9").o(enrollmentDate9);
 
-	/**	<br/>L'entité « enrollmentDate9 »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentDate9">Trouver l'entité enrollmentDate9 dans Solr</a>
+	/**	<br/> The entity enrollmentDate9
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentDate9">Find the entity enrollmentDate9 in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _enrollmentDate9(Wrap<LocalDate> c);
 
@@ -12250,7 +12330,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// enrollmentDate10 //
 	//////////////////////
 
-	/**	L'entité « enrollmentDate10 »
+	/**	 The entity enrollmentDate10
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonDeserialize(using = LocalDateDeserializer.class)
@@ -12261,11 +12341,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<LocalDate> enrollmentDate10Wrap = new Wrap<LocalDate>().p(this).c(LocalDate.class).var("enrollmentDate10").o(enrollmentDate10);
 
-	/**	<br/>L'entité « enrollmentDate10 »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentDate10">Trouver l'entité enrollmentDate10 dans Solr</a>
+	/**	<br/> The entity enrollmentDate10
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentDate10">Find the entity enrollmentDate10 in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _enrollmentDate10(Wrap<LocalDate> c);
 
@@ -12389,7 +12469,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// enrollmentEnrollments //
 	///////////////////////////
 
-	/**	L'entité « enrollmentEnrollments »
+	/**	 The entity enrollmentEnrollments
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<SchoolEnrollment>(). 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -12397,11 +12477,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<List<SchoolEnrollment>> enrollmentEnrollmentsWrap = new Wrap<List<SchoolEnrollment>>().p(this).c(List.class).var("enrollmentEnrollments").o(enrollmentEnrollments);
 
-	/**	<br/>L'entité « enrollmentEnrollments »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<SchoolEnrollment>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentEnrollments">Trouver l'entité enrollmentEnrollments dans Solr</a>
+	/**	<br/> The entity enrollmentEnrollments
+	 *  It is constructed before being initialized with the constructor by default List<SchoolEnrollment>(). 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentEnrollments">Find the entity enrollmentEnrollments in Solr</a>
 	 * <br/>
-	 * @param enrollmentEnrollments est l'entité déjà construit. 
+	 * @param enrollmentEnrollments is the entity already constructed. 
 	 **/
 	protected abstract void _enrollmentEnrollments(List<SchoolEnrollment> l);
 
@@ -12436,7 +12516,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// childImmunizationsReceived //
 	////////////////////////////////
 
-	/**	L'entité « childImmunizationsReceived »
+	/**	 The entity childImmunizationsReceived
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -12444,11 +12524,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<String> childImmunizationsReceivedWrap = new Wrap<String>().p(this).c(String.class).var("childImmunizationsReceived").o(childImmunizationsReceived);
 
-	/**	<br/>L'entité « childImmunizationsReceived »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:childImmunizationsReceived">Trouver l'entité childImmunizationsReceived dans Solr</a>
+	/**	<br/> The entity childImmunizationsReceived
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:childImmunizationsReceived">Find the entity childImmunizationsReceived in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _childImmunizationsReceived(Wrap<String> c);
 
@@ -12498,7 +12578,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// childPhotosApproved //
 	/////////////////////////
 
-	/**	L'entité « childPhotosApproved »
+	/**	 The entity childPhotosApproved
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -12506,11 +12586,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<String> childPhotosApprovedWrap = new Wrap<String>().p(this).c(String.class).var("childPhotosApproved").o(childPhotosApproved);
 
-	/**	<br/>L'entité « childPhotosApproved »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:childPhotosApproved">Trouver l'entité childPhotosApproved dans Solr</a>
+	/**	<br/> The entity childPhotosApproved
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:childPhotosApproved">Find the entity childPhotosApproved in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _childPhotosApproved(Wrap<String> c);
 
@@ -12560,7 +12640,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// enrollmentNumber //
 	//////////////////////
 
-	/**	L'entité « enrollmentNumber »
+	/**	 The entity enrollmentNumber
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
@@ -12569,11 +12649,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<Integer> enrollmentNumberWrap = new Wrap<Integer>().p(this).c(Integer.class).var("enrollmentNumber").o(enrollmentNumber);
 
-	/**	<br/>L'entité « enrollmentNumber »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentNumber">Trouver l'entité enrollmentNumber dans Solr</a>
+	/**	<br/> The entity enrollmentNumber
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentNumber">Find the entity enrollmentNumber in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _enrollmentNumber(Wrap<Integer> c);
 
@@ -12629,7 +12709,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	// enrollmentCompleteName //
 	////////////////////////////
 
-	/**	L'entité « enrollmentCompleteName »
+	/**	 The entity enrollmentCompleteName
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -12637,11 +12717,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Wrap<String> enrollmentCompleteNameWrap = new Wrap<String>().p(this).c(String.class).var("enrollmentCompleteName").o(enrollmentCompleteName);
 
-	/**	<br/>L'entité « enrollmentCompleteName »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentCompleteName">Trouver l'entité enrollmentCompleteName dans Solr</a>
+	/**	<br/> The entity enrollmentCompleteName
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentCompleteName">Find the entity enrollmentCompleteName in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _enrollmentCompleteName(Wrap<String> c);
 
@@ -12818,6 +12898,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		createdHourOfDayInit();
 		enrollmentDaysOfWeekInit();
 		enrollmentParentNamesInit();
+		enrollmentEmailsInit();
 		enrollmentParentEmailsInit();
 		enrollmentParentNameLinesInit();
 		enrollmentParentEmailLinesInit();
@@ -13121,6 +13202,8 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				return oSchoolEnrollment.enrollmentDaysOfWeek;
 			case "enrollmentParentNames":
 				return oSchoolEnrollment.enrollmentParentNames;
+			case "enrollmentEmails":
+				return oSchoolEnrollment.enrollmentEmails;
 			case "enrollmentParentEmails":
 				return oSchoolEnrollment.enrollmentParentEmails;
 			case "enrollmentParentNameLines":
@@ -14060,6 +14143,12 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 					oSchoolEnrollment.setEnrollmentParentNames(enrollmentParentNames);
 			}
 
+			if(saves.contains("enrollmentEmails")) {
+				List<String> enrollmentEmails = (List<String>)solrDocument.get("enrollmentEmails_stored_strings");
+				if(enrollmentEmails != null)
+					oSchoolEnrollment.enrollmentEmails.addAll(enrollmentEmails);
+			}
+
 			if(saves.contains("enrollmentParentEmails")) {
 				String enrollmentParentEmails = (String)solrDocument.get("enrollmentParentEmails_stored_string");
 				if(enrollmentParentEmails != null)
@@ -14708,6 +14797,14 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		if(enrollmentParentNames != null) {
 			document.addField("enrollmentParentNames_stored_string", enrollmentParentNames);
 		}
+		if(enrollmentEmails != null) {
+			for(java.lang.String o : enrollmentEmails) {
+				document.addField("enrollmentEmails_indexed_strings", o);
+			}
+			for(java.lang.String o : enrollmentEmails) {
+				document.addField("enrollmentEmails_stored_strings", o);
+			}
+		}
 		if(enrollmentParentEmails != null) {
 			document.addField("enrollmentParentEmails_stored_string", enrollmentParentEmails);
 		}
@@ -15019,6 +15116,8 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				return "createdHourOfDay_indexed_string";
 			case "enrollmentDaysOfWeek":
 				return "enrollmentDaysOfWeek_indexed_strings";
+			case "enrollmentEmails":
+				return "enrollmentEmails_indexed_strings";
 			case "enrollmentDate1":
 				return "enrollmentDate1_indexed_date";
 			case "enrollmentDate2":
@@ -15455,6 +15554,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		String enrollmentParentNames = (String)solrDocument.get("enrollmentParentNames_stored_string");
 		if(enrollmentParentNames != null)
 			oSchoolEnrollment.setEnrollmentParentNames(enrollmentParentNames);
+
+		List<String> enrollmentEmails = (List<String>)solrDocument.get("enrollmentEmails_stored_strings");
+		if(enrollmentEmails != null)
+			oSchoolEnrollment.enrollmentEmails.addAll(enrollmentEmails);
 
 		String enrollmentParentEmails = (String)solrDocument.get("enrollmentParentEmails_stored_string");
 		if(enrollmentParentEmails != null)

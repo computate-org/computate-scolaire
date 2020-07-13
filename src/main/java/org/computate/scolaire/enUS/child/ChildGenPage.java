@@ -74,9 +74,11 @@ public class ChildGenPage extends ChildGenPageGen<ClusterPage> {
 		if(schoolChild != null && schoolChild.getChildCompleteName() != null)
 			c.o(schoolChild.getChildCompleteName());
 		else if(schoolChild != null)
-			c.o("");
+			c.o("children");
 		else if(listSchoolChild == null || listSchoolChild.size() == 0)
 			c.o("no child found");
+		else
+			c.o("children");
 	}
 
 	@Override protected void _pageUri(Wrap<String> c) {

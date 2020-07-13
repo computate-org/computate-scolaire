@@ -53,7 +53,7 @@ import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 
 /**	
- * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
+ * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true">Find the class  in Solr. </a>
  * <br/>
  **/
 public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
@@ -63,7 +63,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	// pageDesign //
 	////////////////
 
-	/**	L'entité « pageDesign »
+	/**	 The entity pageDesign
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -71,11 +71,11 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	@JsonIgnore
 	public Wrap<PageDesign> pageDesignWrap = new Wrap<PageDesign>().p(this).c(PageDesign.class).var("pageDesign").o(pageDesign);
 
-	/**	<br/>L'entité « pageDesign »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:pageDesign">Trouver l'entité pageDesign dans Solr</a>
+	/**	<br/> The entity pageDesign
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:pageDesign">Find the entity pageDesign in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _pageDesign(Wrap<PageDesign> c);
 
@@ -103,7 +103,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	// designId //
 	//////////////
 
-	/**	L'entité « designId »
+	/**	 The entity designId
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -111,11 +111,11 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	@JsonIgnore
 	public Wrap<String> designIdWrap = new Wrap<String>().p(this).c(String.class).var("designId").o(designId);
 
-	/**	<br/>L'entité « designId »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:designId">Trouver l'entité designId dans Solr</a>
+	/**	<br/> The entity designId
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:designId">Find the entity designId in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _designId(Wrap<String> c);
 
@@ -165,7 +165,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	// enrollmentSearch //
 	//////////////////////
 
-	/**	L'entité « enrollmentSearch »
+	/**	 The entity enrollmentSearch
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<SchoolEnrollment>(). 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -173,11 +173,11 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	@JsonIgnore
 	public Wrap<SearchList<SchoolEnrollment>> enrollmentSearchWrap = new Wrap<SearchList<SchoolEnrollment>>().p(this).c(SearchList.class).var("enrollmentSearch").o(enrollmentSearch);
 
-	/**	<br/>L'entité « enrollmentSearch »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<SchoolEnrollment>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentSearch">Trouver l'entité enrollmentSearch dans Solr</a>
+	/**	<br/> The entity enrollmentSearch
+	 *  It is constructed before being initialized with the constructor by default SearchList<SchoolEnrollment>(). 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentSearch">Find the entity enrollmentSearch in Solr</a>
 	 * <br/>
-	 * @param enrollmentSearch est l'entité déjà construit. 
+	 * @param enrollmentSearch is the entity already constructed. 
 	 **/
 	protected abstract void _enrollmentSearch(SearchList<SchoolEnrollment> l);
 
@@ -202,7 +202,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	// schoolEnrollment //
 	//////////////////////
 
-	/**	L'entité « schoolEnrollment »
+	/**	 The entity schoolEnrollment
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -210,11 +210,11 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	@JsonIgnore
 	public Wrap<SchoolEnrollment> schoolEnrollmentWrap = new Wrap<SchoolEnrollment>().p(this).c(SchoolEnrollment.class).var("schoolEnrollment").o(schoolEnrollment);
 
-	/**	<br/>L'entité « schoolEnrollment »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolEnrollment">Trouver l'entité schoolEnrollment dans Solr</a>
+	/**	<br/> The entity schoolEnrollment
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolEnrollment">Find the entity schoolEnrollment in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _schoolEnrollment(Wrap<SchoolEnrollment> c);
 
@@ -242,7 +242,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	// enrollments //
 	/////////////////
 
-	/**	L'entité « enrollments »
+	/**	 The entity enrollments
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -250,11 +250,11 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	@JsonIgnore
 	public Wrap<List<SchoolEnrollment>> enrollmentsWrap = new Wrap<List<SchoolEnrollment>>().p(this).c(List.class).var("enrollments").o(enrollments);
 
-	/**	<br/>L'entité « enrollments »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollments">Trouver l'entité enrollments dans Solr</a>
+	/**	<br/> The entity enrollments
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollments">Find the entity enrollments in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _enrollments(Wrap<List<SchoolEnrollment>> c);
 
@@ -291,7 +291,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	// enrollmentBlocks //
 	//////////////////////
 
-	/**	L'entité « enrollmentBlocks »
+	/**	 The entity enrollmentBlocks
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<SchoolEnrollment>(). 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -299,11 +299,11 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	@JsonIgnore
 	public Wrap<List<SchoolEnrollment>> enrollmentBlocksWrap = new Wrap<List<SchoolEnrollment>>().p(this).c(List.class).var("enrollmentBlocks").o(enrollmentBlocks);
 
-	/**	<br/>L'entité « enrollmentBlocks »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<SchoolEnrollment>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentBlocks">Trouver l'entité enrollmentBlocks dans Solr</a>
+	/**	<br/> The entity enrollmentBlocks
+	 *  It is constructed before being initialized with the constructor by default List<SchoolEnrollment>(). 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentBlocks">Find the entity enrollmentBlocks in Solr</a>
 	 * <br/>
-	 * @param enrollmentBlocks est l'entité déjà construit. 
+	 * @param enrollmentBlocks is the entity already constructed. 
 	 **/
 	protected abstract void _enrollmentBlocks(List<SchoolEnrollment> c);
 
@@ -338,7 +338,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	// enrollmentBlock //
 	/////////////////////
 
-	/**	L'entité « enrollmentBlock »
+	/**	 The entity enrollmentBlock
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -346,11 +346,11 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	@JsonIgnore
 	public Wrap<SchoolEnrollment> enrollmentBlockWrap = new Wrap<SchoolEnrollment>().p(this).c(SchoolEnrollment.class).var("enrollmentBlock").o(enrollmentBlock);
 
-	/**	<br/>L'entité « enrollmentBlock »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentBlock">Trouver l'entité enrollmentBlock dans Solr</a>
+	/**	<br/> The entity enrollmentBlock
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentBlock">Find the entity enrollmentBlock in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _enrollmentBlock(Wrap<SchoolEnrollment> c);
 
@@ -378,7 +378,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	// enrollmentEnrollment //
 	//////////////////////////
 
-	/**	L'entité « enrollmentEnrollment »
+	/**	 The entity enrollmentEnrollment
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -386,11 +386,11 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	@JsonIgnore
 	public Wrap<SchoolEnrollment> enrollmentEnrollmentWrap = new Wrap<SchoolEnrollment>().p(this).c(SchoolEnrollment.class).var("enrollmentEnrollment").o(enrollmentEnrollment);
 
-	/**	<br/>L'entité « enrollmentEnrollment »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentEnrollment">Trouver l'entité enrollmentEnrollment dans Solr</a>
+	/**	<br/> The entity enrollmentEnrollment
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentEnrollment">Find the entity enrollmentEnrollment in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _enrollmentEnrollment(Wrap<SchoolEnrollment> c);
 
@@ -418,7 +418,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	// yearSearch //
 	////////////////
 
-	/**	L'entité « yearSearch »
+	/**	 The entity yearSearch
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<SchoolYear>(). 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -426,11 +426,11 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	@JsonIgnore
 	public Wrap<SearchList<SchoolYear>> yearSearchWrap = new Wrap<SearchList<SchoolYear>>().p(this).c(SearchList.class).var("yearSearch").o(yearSearch);
 
-	/**	<br/>L'entité « yearSearch »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<SchoolYear>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:yearSearch">Trouver l'entité yearSearch dans Solr</a>
+	/**	<br/> The entity yearSearch
+	 *  It is constructed before being initialized with the constructor by default SearchList<SchoolYear>(). 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:yearSearch">Find the entity yearSearch in Solr</a>
 	 * <br/>
-	 * @param yearSearch est l'entité déjà construit. 
+	 * @param yearSearch is the entity already constructed. 
 	 **/
 	protected abstract void _yearSearch(SearchList<SchoolYear> l);
 
@@ -455,7 +455,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	// year_ //
 	///////////
 
-	/**	L'entité « year_ »
+	/**	 The entity year_
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -463,11 +463,11 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	@JsonIgnore
 	public Wrap<SchoolYear> year_Wrap = new Wrap<SchoolYear>().p(this).c(SchoolYear.class).var("year_").o(year_);
 
-	/**	<br/>L'entité « year_ »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:year_">Trouver l'entité year_ dans Solr</a>
+	/**	<br/> The entity year_
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:year_">Find the entity year_ in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _year_(Wrap<SchoolYear> c);
 
@@ -493,7 +493,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	// yearKey //
 	/////////////
 
-	/**	L'entité « yearKey »
+	/**	 The entity yearKey
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
@@ -502,11 +502,11 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	@JsonIgnore
 	public Wrap<Long> yearKeyWrap = new Wrap<Long>().p(this).c(Long.class).var("yearKey").o(yearKey);
 
-	/**	<br/>L'entité « yearKey »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:yearKey">Trouver l'entité yearKey dans Solr</a>
+	/**	<br/> The entity yearKey
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:yearKey">Find the entity yearKey in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _yearKey(Wrap<Long> c);
 
@@ -562,7 +562,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	// schoolSearch //
 	//////////////////
 
-	/**	L'entité « schoolSearch »
+	/**	 The entity schoolSearch
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<School>(). 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -570,11 +570,11 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	@JsonIgnore
 	public Wrap<SearchList<School>> schoolSearchWrap = new Wrap<SearchList<School>>().p(this).c(SearchList.class).var("schoolSearch").o(schoolSearch);
 
-	/**	<br/>L'entité « schoolSearch »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<School>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolSearch">Trouver l'entité schoolSearch dans Solr</a>
+	/**	<br/> The entity schoolSearch
+	 *  It is constructed before being initialized with the constructor by default SearchList<School>(). 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolSearch">Find the entity schoolSearch in Solr</a>
 	 * <br/>
-	 * @param schoolSearch est l'entité déjà construit. 
+	 * @param schoolSearch is the entity already constructed. 
 	 **/
 	protected abstract void _schoolSearch(SearchList<School> l);
 
@@ -599,7 +599,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	// school_ //
 	/////////////
 
-	/**	L'entité « school_ »
+	/**	 The entity school_
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -607,11 +607,11 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	@JsonIgnore
 	public Wrap<School> school_Wrap = new Wrap<School>().p(this).c(School.class).var("school_").o(school_);
 
-	/**	<br/>L'entité « school_ »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:school_">Trouver l'entité school_ dans Solr</a>
+	/**	<br/> The entity school_
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:school_">Find the entity school_ in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _school_(Wrap<School> c);
 
@@ -637,7 +637,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	// emailFrom //
 	///////////////
 
-	/**	L'entité « emailFrom »
+	/**	 The entity emailFrom
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -645,11 +645,11 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	@JsonIgnore
 	public Wrap<String> emailFromWrap = new Wrap<String>().p(this).c(String.class).var("emailFrom").o(emailFrom);
 
-	/**	<br/>L'entité « emailFrom »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:emailFrom">Trouver l'entité emailFrom dans Solr</a>
+	/**	<br/> The entity emailFrom
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:emailFrom">Find the entity emailFrom in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _emailFrom(Wrap<String> c);
 
@@ -699,7 +699,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	// emailToSchool //
 	///////////////////
 
-	/**	L'entité « emailToSchool »
+	/**	 The entity emailToSchool
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -707,11 +707,11 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	@JsonIgnore
 	public Wrap<String> emailToSchoolWrap = new Wrap<String>().p(this).c(String.class).var("emailToSchool").o(emailToSchool);
 
-	/**	<br/>L'entité « emailToSchool »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:emailToSchool">Trouver l'entité emailToSchool dans Solr</a>
+	/**	<br/> The entity emailToSchool
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:emailToSchool">Find the entity emailToSchool in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _emailToSchool(Wrap<String> c);
 
@@ -761,7 +761,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	// emailToAddress //
 	////////////////////
 
-	/**	L'entité « emailToAddress »
+	/**	 The entity emailToAddress
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -769,11 +769,11 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	@JsonIgnore
 	public Wrap<String> emailToAddressWrap = new Wrap<String>().p(this).c(String.class).var("emailToAddress").o(emailToAddress);
 
-	/**	<br/>L'entité « emailToAddress »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:emailToAddress">Trouver l'entité emailToAddress dans Solr</a>
+	/**	<br/> The entity emailToAddress
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:emailToAddress">Find the entity emailToAddress in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _emailToAddress(Wrap<String> c);
 
@@ -823,7 +823,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	// emailToName //
 	/////////////////
 
-	/**	L'entité « emailToName »
+	/**	 The entity emailToName
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -831,11 +831,11 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	@JsonIgnore
 	public Wrap<String> emailToNameWrap = new Wrap<String>().p(this).c(String.class).var("emailToName").o(emailToName);
 
-	/**	<br/>L'entité « emailToName »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:emailToName">Trouver l'entité emailToName dans Solr</a>
+	/**	<br/> The entity emailToName
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:emailToName">Find the entity emailToName in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _emailToName(Wrap<String> c);
 
@@ -885,7 +885,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	// emailMessage //
 	//////////////////
 
-	/**	L'entité « emailMessage »
+	/**	 The entity emailMessage
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -893,11 +893,11 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	@JsonIgnore
 	public Wrap<String> emailMessageWrap = new Wrap<String>().p(this).c(String.class).var("emailMessage").o(emailMessage);
 
-	/**	<br/>L'entité « emailMessage »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:emailMessage">Trouver l'entité emailMessage dans Solr</a>
+	/**	<br/> The entity emailMessage
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:emailMessage">Find the entity emailMessage in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _emailMessage(Wrap<String> c);
 
@@ -947,7 +947,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	// schoolKey //
 	///////////////
 
-	/**	L'entité « schoolKey »
+	/**	 The entity schoolKey
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
@@ -956,11 +956,11 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	@JsonIgnore
 	public Wrap<Long> schoolKeyWrap = new Wrap<Long>().p(this).c(Long.class).var("schoolKey").o(schoolKey);
 
-	/**	<br/>L'entité « schoolKey »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolKey">Trouver l'entité schoolKey dans Solr</a>
+	/**	<br/> The entity schoolKey
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolKey">Find the entity schoolKey in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _schoolKey(Wrap<Long> c);
 
@@ -1016,7 +1016,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	// schoolName //
 	////////////////
 
-	/**	L'entité « schoolName »
+	/**	 The entity schoolName
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -1024,11 +1024,11 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	@JsonIgnore
 	public Wrap<String> schoolNameWrap = new Wrap<String>().p(this).c(String.class).var("schoolName").o(schoolName);
 
-	/**	<br/>L'entité « schoolName »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolName">Trouver l'entité schoolName dans Solr</a>
+	/**	<br/> The entity schoolName
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolName">Find the entity schoolName in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _schoolName(Wrap<String> c);
 
@@ -1078,7 +1078,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	// schoolCompleteName //
 	////////////////////////
 
-	/**	L'entité « schoolCompleteName »
+	/**	 The entity schoolCompleteName
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -1086,11 +1086,11 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	@JsonIgnore
 	public Wrap<String> schoolCompleteNameWrap = new Wrap<String>().p(this).c(String.class).var("schoolCompleteName").o(schoolCompleteName);
 
-	/**	<br/>L'entité « schoolCompleteName »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolCompleteName">Trouver l'entité schoolCompleteName dans Solr</a>
+	/**	<br/> The entity schoolCompleteName
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolCompleteName">Find the entity schoolCompleteName in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _schoolCompleteName(Wrap<String> c);
 
@@ -1140,7 +1140,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	// schoolLocation //
 	////////////////////
 
-	/**	L'entité « schoolLocation »
+	/**	 The entity schoolLocation
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -1148,11 +1148,11 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	@JsonIgnore
 	public Wrap<String> schoolLocationWrap = new Wrap<String>().p(this).c(String.class).var("schoolLocation").o(schoolLocation);
 
-	/**	<br/>L'entité « schoolLocation »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolLocation">Trouver l'entité schoolLocation dans Solr</a>
+	/**	<br/> The entity schoolLocation
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolLocation">Find the entity schoolLocation in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _schoolLocation(Wrap<String> c);
 
@@ -1202,7 +1202,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	// schoolAddress //
 	///////////////////
 
-	/**	L'entité « schoolAddress »
+	/**	 The entity schoolAddress
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -1210,11 +1210,11 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	@JsonIgnore
 	public Wrap<String> schoolAddressWrap = new Wrap<String>().p(this).c(String.class).var("schoolAddress").o(schoolAddress);
 
-	/**	<br/>L'entité « schoolAddress »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolAddress">Trouver l'entité schoolAddress dans Solr</a>
+	/**	<br/> The entity schoolAddress
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolAddress">Find the entity schoolAddress in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _schoolAddress(Wrap<String> c);
 
@@ -1264,7 +1264,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	// schoolPhoneNumber //
 	///////////////////////
 
-	/**	L'entité « schoolPhoneNumber »
+	/**	 The entity schoolPhoneNumber
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -1272,11 +1272,11 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	@JsonIgnore
 	public Wrap<String> schoolPhoneNumberWrap = new Wrap<String>().p(this).c(String.class).var("schoolPhoneNumber").o(schoolPhoneNumber);
 
-	/**	<br/>L'entité « schoolPhoneNumber »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolPhoneNumber">Trouver l'entité schoolPhoneNumber dans Solr</a>
+	/**	<br/> The entity schoolPhoneNumber
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolPhoneNumber">Find the entity schoolPhoneNumber in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _schoolPhoneNumber(Wrap<String> c);
 
@@ -1326,7 +1326,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	// schoolAdministratorName //
 	/////////////////////////////
 
-	/**	L'entité « schoolAdministratorName »
+	/**	 The entity schoolAdministratorName
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -1334,11 +1334,11 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	@JsonIgnore
 	public Wrap<String> schoolAdministratorNameWrap = new Wrap<String>().p(this).c(String.class).var("schoolAdministratorName").o(schoolAdministratorName);
 
-	/**	<br/>L'entité « schoolAdministratorName »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolAdministratorName">Trouver l'entité schoolAdministratorName dans Solr</a>
+	/**	<br/> The entity schoolAdministratorName
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolAdministratorName">Find the entity schoolAdministratorName in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _schoolAdministratorName(Wrap<String> c);
 
@@ -1388,7 +1388,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	// yearStart //
 	///////////////
 
-	/**	L'entité « yearStart »
+	/**	 The entity yearStart
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
@@ -1397,11 +1397,11 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	@JsonIgnore
 	public Wrap<Integer> yearStartWrap = new Wrap<Integer>().p(this).c(Integer.class).var("yearStart").o(yearStart);
 
-	/**	<br/>L'entité « yearStart »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:yearStart">Trouver l'entité yearStart dans Solr</a>
+	/**	<br/> The entity yearStart
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:yearStart">Find the entity yearStart in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _yearStart(Wrap<Integer> c);
 
@@ -1457,7 +1457,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	// yearEnd //
 	/////////////
 
-	/**	L'entité « yearEnd »
+	/**	 The entity yearEnd
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
@@ -1466,11 +1466,11 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	@JsonIgnore
 	public Wrap<Integer> yearEndWrap = new Wrap<Integer>().p(this).c(Integer.class).var("yearEnd").o(yearEnd);
 
-	/**	<br/>L'entité « yearEnd »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:yearEnd">Trouver l'entité yearEnd dans Solr</a>
+	/**	<br/> The entity yearEnd
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:yearEnd">Find the entity yearEnd in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _yearEnd(Wrap<Integer> c);
 
@@ -1526,7 +1526,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	// seasonStartDate //
 	/////////////////////
 
-	/**	L'entité « seasonStartDate »
+	/**	 The entity seasonStartDate
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonDeserialize(using = LocalDateDeserializer.class)
@@ -1537,11 +1537,11 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	@JsonIgnore
 	public Wrap<LocalDate> seasonStartDateWrap = new Wrap<LocalDate>().p(this).c(LocalDate.class).var("seasonStartDate").o(seasonStartDate);
 
-	/**	<br/>L'entité « seasonStartDate »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:seasonStartDate">Trouver l'entité seasonStartDate dans Solr</a>
+	/**	<br/> The entity seasonStartDate
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:seasonStartDate">Find the entity seasonStartDate in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _seasonStartDate(Wrap<LocalDate> c);
 
@@ -1607,7 +1607,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	// mom_ //
 	//////////
 
-	/**	L'entité « mom_ »
+	/**	 The entity mom_
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -1615,11 +1615,11 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	@JsonIgnore
 	public Wrap<SchoolMom> mom_Wrap = new Wrap<SchoolMom>().p(this).c(SchoolMom.class).var("mom_").o(mom_);
 
-	/**	<br/>L'entité « mom_ »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:mom_">Trouver l'entité mom_ dans Solr</a>
+	/**	<br/> The entity mom_
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:mom_">Find the entity mom_ in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _mom_(Wrap<SchoolMom> c);
 
@@ -1645,7 +1645,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	// dad_ //
 	//////////
 
-	/**	L'entité « dad_ »
+	/**	 The entity dad_
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -1653,11 +1653,11 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	@JsonIgnore
 	public Wrap<SchoolDad> dad_Wrap = new Wrap<SchoolDad>().p(this).c(SchoolDad.class).var("dad_").o(dad_);
 
-	/**	<br/>L'entité « dad_ »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:dad_">Trouver l'entité dad_ dans Solr</a>
+	/**	<br/> The entity dad_
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:dad_">Find the entity dad_ in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _dad_(Wrap<SchoolDad> c);
 
@@ -1683,7 +1683,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	// guardian_ //
 	///////////////
 
-	/**	L'entité « guardian_ »
+	/**	 The entity guardian_
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -1691,11 +1691,11 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	@JsonIgnore
 	public Wrap<SchoolGuardian> guardian_Wrap = new Wrap<SchoolGuardian>().p(this).c(SchoolGuardian.class).var("guardian_").o(guardian_);
 
-	/**	<br/>L'entité « guardian_ »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:guardian_">Trouver l'entité guardian_ dans Solr</a>
+	/**	<br/> The entity guardian_
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:guardian_">Find the entity guardian_ in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _guardian_(Wrap<SchoolGuardian> c);
 
@@ -1721,7 +1721,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	// blockSearch //
 	/////////////////
 
-	/**	L'entité « blockSearch »
+	/**	 The entity blockSearch
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<SchoolBlock>(). 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -1729,11 +1729,11 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	@JsonIgnore
 	public Wrap<SearchList<SchoolBlock>> blockSearchWrap = new Wrap<SearchList<SchoolBlock>>().p(this).c(SearchList.class).var("blockSearch").o(blockSearch);
 
-	/**	<br/>L'entité « blockSearch »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<SchoolBlock>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:blockSearch">Trouver l'entité blockSearch dans Solr</a>
+	/**	<br/> The entity blockSearch
+	 *  It is constructed before being initialized with the constructor by default SearchList<SchoolBlock>(). 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:blockSearch">Find the entity blockSearch in Solr</a>
 	 * <br/>
-	 * @param blockSearch est l'entité déjà construit. 
+	 * @param blockSearch is the entity already constructed. 
 	 **/
 	protected abstract void _blockSearch(SearchList<SchoolBlock> l);
 
@@ -1758,7 +1758,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	// blocks //
 	////////////
 
-	/**	L'entité « blocks »
+	/**	 The entity blocks
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -1766,11 +1766,11 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	@JsonIgnore
 	public Wrap<List<SchoolBlock>> blocksWrap = new Wrap<List<SchoolBlock>>().p(this).c(List.class).var("blocks").o(blocks);
 
-	/**	<br/>L'entité « blocks »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:blocks">Trouver l'entité blocks dans Solr</a>
+	/**	<br/> The entity blocks
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:blocks">Find the entity blocks in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _blocks(Wrap<List<SchoolBlock>> c);
 
@@ -1807,7 +1807,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	// seasonBlocks //
 	//////////////////
 
-	/**	L'entité « seasonBlocks »
+	/**	 The entity seasonBlocks
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<SchoolBlock>(). 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -1815,11 +1815,11 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	@JsonIgnore
 	public Wrap<List<SchoolBlock>> seasonBlocksWrap = new Wrap<List<SchoolBlock>>().p(this).c(List.class).var("seasonBlocks").o(seasonBlocks);
 
-	/**	<br/>L'entité « seasonBlocks »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<SchoolBlock>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:seasonBlocks">Trouver l'entité seasonBlocks dans Solr</a>
+	/**	<br/> The entity seasonBlocks
+	 *  It is constructed before being initialized with the constructor by default List<SchoolBlock>(). 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:seasonBlocks">Find the entity seasonBlocks in Solr</a>
 	 * <br/>
-	 * @param seasonBlocks est l'entité déjà construit. 
+	 * @param seasonBlocks is the entity already constructed. 
 	 **/
 	protected abstract void _seasonBlocks(List<SchoolBlock> l);
 
@@ -1854,7 +1854,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	// seasonBlock //
 	/////////////////
 
-	/**	L'entité « seasonBlock »
+	/**	 The entity seasonBlock
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -1862,11 +1862,11 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	@JsonIgnore
 	public Wrap<SchoolBlock> seasonBlockWrap = new Wrap<SchoolBlock>().p(this).c(SchoolBlock.class).var("seasonBlock").o(seasonBlock);
 
-	/**	<br/>L'entité « seasonBlock »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:seasonBlock">Trouver l'entité seasonBlock dans Solr</a>
+	/**	<br/> The entity seasonBlock
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:seasonBlock">Find the entity seasonBlock in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _seasonBlock(Wrap<SchoolBlock> c);
 
@@ -1894,7 +1894,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	// sessionBlock //
 	//////////////////
 
-	/**	L'entité « sessionBlock »
+	/**	 The entity sessionBlock
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -1902,11 +1902,11 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	@JsonIgnore
 	public Wrap<SchoolBlock> sessionBlockWrap = new Wrap<SchoolBlock>().p(this).c(SchoolBlock.class).var("sessionBlock").o(sessionBlock);
 
-	/**	<br/>L'entité « sessionBlock »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:sessionBlock">Trouver l'entité sessionBlock dans Solr</a>
+	/**	<br/> The entity sessionBlock
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:sessionBlock">Find the entity sessionBlock in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _sessionBlock(Wrap<SchoolBlock> c);
 
@@ -1934,7 +1934,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	// ageBlock //
 	//////////////
 
-	/**	L'entité « ageBlock »
+	/**	 The entity ageBlock
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -1942,11 +1942,11 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	@JsonIgnore
 	public Wrap<SchoolBlock> ageBlockWrap = new Wrap<SchoolBlock>().p(this).c(SchoolBlock.class).var("ageBlock").o(ageBlock);
 
-	/**	<br/>L'entité « ageBlock »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:ageBlock">Trouver l'entité ageBlock dans Solr</a>
+	/**	<br/> The entity ageBlock
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:ageBlock">Find the entity ageBlock in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _ageBlock(Wrap<SchoolBlock> c);
 
@@ -1974,7 +1974,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	// blockBlock //
 	////////////////
 
-	/**	L'entité « blockBlock »
+	/**	 The entity blockBlock
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -1982,11 +1982,11 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	@JsonIgnore
 	public Wrap<SchoolBlock> blockBlockWrap = new Wrap<SchoolBlock>().p(this).c(SchoolBlock.class).var("blockBlock").o(blockBlock);
 
-	/**	<br/>L'entité « blockBlock »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:blockBlock">Trouver l'entité blockBlock dans Solr</a>
+	/**	<br/> The entity blockBlock
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:blockBlock">Find the entity blockBlock in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _blockBlock(Wrap<SchoolBlock> c);
 
@@ -2014,7 +2014,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	// htmlPartSearch //
 	////////////////////
 
-	/**	L'entité « htmlPartSearch »
+	/**	 The entity htmlPartSearch
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<HtmlPart>(). 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -2022,11 +2022,11 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	@JsonIgnore
 	public Wrap<SearchList<HtmlPart>> htmlPartSearchWrap = new Wrap<SearchList<HtmlPart>>().p(this).c(SearchList.class).var("htmlPartSearch").o(htmlPartSearch);
 
-	/**	<br/>L'entité « htmlPartSearch »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<HtmlPart>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:htmlPartSearch">Trouver l'entité htmlPartSearch dans Solr</a>
+	/**	<br/> The entity htmlPartSearch
+	 *  It is constructed before being initialized with the constructor by default SearchList<HtmlPart>(). 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:htmlPartSearch">Find the entity htmlPartSearch in Solr</a>
 	 * <br/>
-	 * @param htmlPartSearch est l'entité déjà construit. 
+	 * @param htmlPartSearch is the entity already constructed. 
 	 **/
 	protected abstract void _htmlPartSearch(SearchList<HtmlPart> l);
 
@@ -2051,7 +2051,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	// htmlPartList //
 	//////////////////
 
-	/**	L'entité « htmlPartList »
+	/**	 The entity htmlPartList
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -2059,11 +2059,11 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	@JsonIgnore
 	public Wrap<List<HtmlPart>> htmlPartListWrap = new Wrap<List<HtmlPart>>().p(this).c(List.class).var("htmlPartList").o(htmlPartList);
 
-	/**	<br/>L'entité « htmlPartList »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:htmlPartList">Trouver l'entité htmlPartList dans Solr</a>
+	/**	<br/> The entity htmlPartList
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:htmlPartList">Find the entity htmlPartList in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _htmlPartList(Wrap<List<HtmlPart>> c);
 

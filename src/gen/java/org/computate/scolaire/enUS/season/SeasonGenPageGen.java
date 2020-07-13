@@ -33,7 +33,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 
 /**	
- * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.season.SeasonGenPage&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
+ * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.season.SeasonGenPage&fq=classeEtendGen_indexed_boolean:true">Find the class  in Solr. </a>
  * <br/>
  **/
 public abstract class SeasonGenPageGen<DEV> extends ClusterPage {
@@ -43,7 +43,7 @@ public abstract class SeasonGenPageGen<DEV> extends ClusterPage {
 	// listSchoolSeason //
 	//////////////////////
 
-	/**	L'entité « listSchoolSeason »
+	/**	 The entity listSchoolSeason
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -51,11 +51,11 @@ public abstract class SeasonGenPageGen<DEV> extends ClusterPage {
 	@JsonIgnore
 	public Wrap<SearchList<SchoolSeason>> listSchoolSeasonWrap = new Wrap<SearchList<SchoolSeason>>().p(this).c(SearchList.class).var("listSchoolSeason").o(listSchoolSeason);
 
-	/**	<br/>L'entité « listSchoolSeason »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.season.SeasonGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:listSchoolSeason">Trouver l'entité listSchoolSeason dans Solr</a>
+	/**	<br/> The entity listSchoolSeason
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.season.SeasonGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:listSchoolSeason">Find the entity listSchoolSeason in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _listSchoolSeason(Wrap<SearchList<SchoolSeason>> c);
 
@@ -83,7 +83,7 @@ public abstract class SeasonGenPageGen<DEV> extends ClusterPage {
 	// schoolSeason //
 	//////////////////
 
-	/**	L'entité « schoolSeason »
+	/**	 The entity schoolSeason
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -91,11 +91,11 @@ public abstract class SeasonGenPageGen<DEV> extends ClusterPage {
 	@JsonIgnore
 	public Wrap<SchoolSeason> schoolSeasonWrap = new Wrap<SchoolSeason>().p(this).c(SchoolSeason.class).var("schoolSeason").o(schoolSeason);
 
-	/**	<br/>L'entité « schoolSeason »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.season.SeasonGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolSeason">Trouver l'entité schoolSeason dans Solr</a>
+	/**	<br/> The entity schoolSeason
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.season.SeasonGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolSeason">Find the entity schoolSeason in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _schoolSeason(Wrap<SchoolSeason> c);
 

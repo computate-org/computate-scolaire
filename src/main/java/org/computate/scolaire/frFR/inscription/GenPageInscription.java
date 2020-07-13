@@ -109,9 +109,11 @@ public class GenPageInscription extends GenPageInscriptionGen<ClusterPage> {
 		if(inscriptionScolaire != null && inscriptionScolaire.getInscriptionNomComplet() != null)
 			c.o(inscriptionScolaire.getInscriptionNomComplet());
 		else if(inscriptionScolaire != null)
-			c.o("");
+			c.o("inscriptions");
 		else if(listeInscriptionScolaire == null || listeInscriptionScolaire.size() == 0)
 			c.o("aucune inscription trouvée");
+		else
+			c.o("inscriptions");
 	}
 
 	@Override protected void _pageUri(Couverture<String> c) {

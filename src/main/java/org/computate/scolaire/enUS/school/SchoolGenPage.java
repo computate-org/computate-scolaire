@@ -74,9 +74,11 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 		if(school != null && school.getSchoolCompleteName() != null)
 			c.o(school.getSchoolCompleteName());
 		else if(school != null)
-			c.o("");
+			c.o("schools");
 		else if(listSchool == null || listSchool.size() == 0)
 			c.o("no school found");
+		else
+			c.o("schools");
 	}
 
 	@Override protected void _pageUri(Wrap<String> c) {

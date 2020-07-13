@@ -75,9 +75,11 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 		if(saisonScolaire != null && saisonScolaire.getSaisonNomComplet() != null)
 			c.o(saisonScolaire.getSaisonNomComplet());
 		else if(saisonScolaire != null)
-			c.o("");
+			c.o("saisons");
 		else if(listeSaisonScolaire == null || listeSaisonScolaire.size() == 0)
 			c.o("aucune saison trouvée");
+		else
+			c.o("saisons");
 	}
 
 	@Override protected void _pageUri(Couverture<String> c) {

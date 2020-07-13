@@ -75,9 +75,11 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 		if(paiementScolaire != null && paiementScolaire.getPaiementNomComplet() != null)
 			c.o(paiementScolaire.getPaiementNomComplet());
 		else if(paiementScolaire != null)
-			c.o("");
+			c.o("paiements");
 		else if(listePaiementScolaire == null || listePaiementScolaire.size() == 0)
 			c.o("aucun paiement trouvé");
+		else
+			c.o("paiements");
 	}
 
 	@Override protected void _pageUri(Couverture<String> c) {

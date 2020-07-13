@@ -33,7 +33,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 
 /**	
- * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.annee.AnneeGenPage&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
+ * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.annee.AnneeGenPage&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr. </a>
  * <br/>
  **/
 public abstract class AnneeGenPageGen<DEV> extends ClusterPage {
@@ -43,7 +43,7 @@ public abstract class AnneeGenPageGen<DEV> extends ClusterPage {
 	// listeAnneeScolaire //
 	////////////////////////
 
-	/**	L'entité « listeAnneeScolaire »
+	/**	 L'entité listeAnneeScolaire
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -51,9 +51,9 @@ public abstract class AnneeGenPageGen<DEV> extends ClusterPage {
 	@JsonIgnore
 	public Couverture<ListeRecherche<AnneeScolaire>> listeAnneeScolaireCouverture = new Couverture<ListeRecherche<AnneeScolaire>>().p(this).c(ListeRecherche.class).var("listeAnneeScolaire").o(listeAnneeScolaire);
 
-	/**	<br/>L'entité « listeAnneeScolaire »
+	/**	<br/> L'entité listeAnneeScolaire
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.annee.AnneeGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:listeAnneeScolaire">Trouver l'entité listeAnneeScolaire dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.annee.AnneeGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:listeAnneeScolaire">Trouver l'entité listeAnneeScolaire dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -83,7 +83,7 @@ public abstract class AnneeGenPageGen<DEV> extends ClusterPage {
 	// anneeScolaire //
 	///////////////////
 
-	/**	L'entité « anneeScolaire »
+	/**	 L'entité anneeScolaire
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -91,9 +91,9 @@ public abstract class AnneeGenPageGen<DEV> extends ClusterPage {
 	@JsonIgnore
 	public Couverture<AnneeScolaire> anneeScolaireCouverture = new Couverture<AnneeScolaire>().p(this).c(AnneeScolaire.class).var("anneeScolaire").o(anneeScolaire);
 
-	/**	<br/>L'entité « anneeScolaire »
+	/**	<br/> L'entité anneeScolaire
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.annee.AnneeGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:anneeScolaire">Trouver l'entité anneeScolaire dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.annee.AnneeGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:anneeScolaire">Trouver l'entité anneeScolaire dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/

@@ -3076,6 +3076,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 												jsonObject.put("utilisateurPrenom", principalJson.getString("given_name"));
 												jsonObject.put("utilisateurNomFamille", principalJson.getString("family_name"));
 												jsonObject.put("utilisateurId", principalJson.getString("sub"));
+												jsonObject.put("utilisateurMail", principalJson.getString("email"));
 												utilisateurDesignPageDefinir(requeteSite, jsonObject, false);
 
 												RequeteSiteFrFR requeteSite2 = new RequeteSiteFrFR();

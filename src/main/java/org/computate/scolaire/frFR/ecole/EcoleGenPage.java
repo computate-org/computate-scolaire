@@ -75,9 +75,11 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 		if(ecole != null && ecole.getEcoleNomComplet() != null)
 			c.o(ecole.getEcoleNomComplet());
 		else if(ecole != null)
-			c.o("");
+			c.o("écoles");
 		else if(listeEcole == null || listeEcole.size() == 0)
 			c.o("aucune école trouvée");
+		else
+			c.o("écoles");
 	}
 
 	@Override protected void _pageUri(Couverture<String> c) {

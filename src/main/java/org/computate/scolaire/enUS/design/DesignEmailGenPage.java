@@ -214,9 +214,11 @@ public class DesignEmailGenPage extends DesignEmailGenPageGen<ClusterPage> {
 		if(pageDesign != null && pageDesign.getPageDesignCompleteName() != null)
 			c.o(pageDesign.getPageDesignCompleteName());
 		else if(pageDesign != null)
-			c.o("");
+			c.o("page designs");
 		else if(listPageDesign == null || listPageDesign.size() == 0)
 			c.o("no page design found");
+		else
+			c.o("page designs");
 	}
 
 	@Override protected void _pageUri(Wrap<String> c) {

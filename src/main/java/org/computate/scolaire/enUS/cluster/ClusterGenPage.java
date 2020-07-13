@@ -72,9 +72,11 @@ public class ClusterGenPage extends ClusterGenPageGen<PageLayout> {
 		if(cluster != null && cluster.getObjectTitle() != null)
 			c.o(cluster.getObjectTitle());
 		else if(cluster != null)
-			c.o("");
+			c.o("clusters");
 		else if(listCluster == null || listCluster.size() == 0)
 			c.o("no cluster found");
+		else
+			c.o("clusters");
 	}
 
 	@Override protected void _pageUri(Wrap<String> c) {

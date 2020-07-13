@@ -3352,6 +3352,7 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 												jsonObject.put("utilisateurPrenom", principalJson.getString("given_name"));
 												jsonObject.put("utilisateurNomFamille", principalJson.getString("family_name"));
 												jsonObject.put("utilisateurId", principalJson.getString("sub"));
+												jsonObject.put("utilisateurMail", principalJson.getString("email"));
 												utilisateurPaiementScolaireDefinir(requeteSite, jsonObject, false);
 
 												RequeteSiteFrFR requeteSite2 = new RequeteSiteFrFR();

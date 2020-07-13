@@ -2032,7 +2032,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 		Router siteRouteur = siteContexteFrFR.getRouteur();
 
 		StaticHandler gestionnaireStatic = StaticHandler.create().setCachingEnabled(false).setFilesReadOnly(true);
-		if("scolaire-dev.computate.org".equals(configSite.getSiteNomHote())) {
+		if(configSite.getSiteNomHote().contains("scolaire-dev.")) {
 			gestionnaireStatic.setAllowRootFileSystemAccess(true);
 			gestionnaireStatic.setWebRoot("/usr/local/src/computate-scolaire-static");
 		}

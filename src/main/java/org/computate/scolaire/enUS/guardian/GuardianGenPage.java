@@ -73,9 +73,11 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 		if(schoolGuardian != null && schoolGuardian.getGuardianCompleteName() != null)
 			c.o(schoolGuardian.getGuardianCompleteName());
 		else if(schoolGuardian != null)
-			c.o("");
+			c.o("guardians");
 		else if(listSchoolGuardian == null || listSchoolGuardian.size() == 0)
 			c.o("no guardian found");
+		else
+			c.o("guardians");
 	}
 
 	@Override protected void _pageUri(Wrap<String> c) {

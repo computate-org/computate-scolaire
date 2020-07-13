@@ -54,7 +54,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 
 /**	
- * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true">Trouver la classe childCompleteName dans Solr</a>
+ * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true">Trouver la classe childCompleteName dans Solr. </a>
  * <br/>
  **/
 public abstract class EnfantScolaireGen<DEV> extends Cluster {
@@ -75,6 +75,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	public static final String EnfantScolaire_TousNom = "tous les enfants";
 	public static final String EnfantScolaire_RechercherTousNomPar = "rechercher enfants par ";
 	public static final String EnfantScolaire_RechercherTousNom = "rechercher enfants";
+	public static final String EnfantScolaire_Titre = "enfants";
 	public static final String EnfantScolaire_LesNom = "les enfants";
 	public static final String EnfantScolaire_AucunNomTrouve = "aucun enfant trouvé";
 	public static final String EnfantScolaire_NomVar = "enfant";
@@ -89,7 +90,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	// enfantCle //
 	///////////////
 
-	/**	L'entité « enfantCle »
+	/**	 L'entité enfantCle
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
@@ -98,9 +99,9 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Couverture<Long> enfantCleCouverture = new Couverture<Long>().p(this).c(Long.class).var("enfantCle").o(enfantCle);
 
-	/**	<br/>L'entité « enfantCle »
+	/**	<br/> L'entité enfantCle
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:enfantCle">Trouver l'entité enfantCle dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:enfantCle">Trouver l'entité enfantCle dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -158,7 +159,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	// inscriptionCles //
 	/////////////////////
 
-	/**	L'entité « inscriptionCles »
+	/**	 L'entité inscriptionCles
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
@@ -167,9 +168,9 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Couverture<List<Long>> inscriptionClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("inscriptionCles").o(inscriptionCles);
 
-	/**	<br/>L'entité « inscriptionCles »
+	/**	<br/> L'entité inscriptionCles
 	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:inscriptionCles">Trouver l'entité inscriptionCles dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:inscriptionCles">Trouver l'entité inscriptionCles dans Solr</a>
 	 * <br/>
 	 * @param inscriptionCles est l'entité déjà construit. 
 	 **/
@@ -316,7 +317,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	// familleTri //
 	////////////////
 
-	/**	L'entité « familleTri »
+	/**	 L'entité familleTri
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
@@ -325,9 +326,9 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Couverture<Integer> familleTriCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("familleTri").o(familleTri);
 
-	/**	<br/>L'entité « familleTri »
+	/**	<br/> L'entité familleTri
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:familleTri">Trouver l'entité familleTri dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:familleTri">Trouver l'entité familleTri dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -385,7 +386,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	// enfantTri //
 	///////////////
 
-	/**	L'entité « enfantTri »
+	/**	 L'entité enfantTri
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
@@ -394,9 +395,9 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Couverture<Integer> enfantTriCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("enfantTri").o(enfantTri);
 
-	/**	<br/>L'entité « enfantTri »
+	/**	<br/> L'entité enfantTri
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:enfantTri">Trouver l'entité enfantTri dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:enfantTri">Trouver l'entité enfantTri dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -454,7 +455,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	// inscriptionRecherche //
 	//////////////////////////
 
-	/**	L'entité « inscriptionRecherche »
+	/**	 L'entité inscriptionRecherche
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut ListeRecherche<InscriptionScolaire>(). 
 	 */
 	@JsonIgnore
@@ -463,9 +464,9 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Couverture<ListeRecherche<InscriptionScolaire>> inscriptionRechercheCouverture = new Couverture<ListeRecherche<InscriptionScolaire>>().p(this).c(ListeRecherche.class).var("inscriptionRecherche").o(inscriptionRecherche);
 
-	/**	<br/>L'entité « inscriptionRecherche »
+	/**	<br/> L'entité inscriptionRecherche
 	 * Il est construit avant d'être initialisé avec le constructeur par défaut ListeRecherche<InscriptionScolaire>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:inscriptionRecherche">Trouver l'entité inscriptionRecherche dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:inscriptionRecherche">Trouver l'entité inscriptionRecherche dans Solr</a>
 	 * <br/>
 	 * @param inscriptionRecherche est l'entité déjà construit. 
 	 **/
@@ -492,7 +493,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	// inscriptions //
 	//////////////////
 
-	/**	L'entité « inscriptions »
+	/**	 L'entité inscriptions
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<InscriptionScolaire>(). 
 	 */
 	@JsonIgnore
@@ -501,9 +502,9 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Couverture<List<InscriptionScolaire>> inscriptionsCouverture = new Couverture<List<InscriptionScolaire>>().p(this).c(List.class).var("inscriptions").o(inscriptions);
 
-	/**	<br/>L'entité « inscriptions »
+	/**	<br/> L'entité inscriptions
 	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<InscriptionScolaire>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:inscriptions">Trouver l'entité inscriptions dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:inscriptions">Trouver l'entité inscriptions dans Solr</a>
 	 * <br/>
 	 * @param inscriptions est l'entité déjà construit. 
 	 **/
@@ -540,7 +541,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	// utilisateurCles //
 	/////////////////////
 
-	/**	L'entité « utilisateurCles »
+	/**	 L'entité utilisateurCles
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
@@ -549,9 +550,9 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Couverture<List<Long>> utilisateurClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("utilisateurCles").o(utilisateurCles);
 
-	/**	<br/>L'entité « utilisateurCles »
+	/**	<br/> L'entité utilisateurCles
 	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:utilisateurCles">Trouver l'entité utilisateurCles dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:utilisateurCles">Trouver l'entité utilisateurCles dans Solr</a>
 	 * <br/>
 	 * @param utilisateurCles est l'entité déjà construit. 
 	 **/
@@ -627,7 +628,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	// ecoleCles //
 	///////////////
 
-	/**	L'entité « ecoleCles »
+	/**	 L'entité ecoleCles
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
@@ -636,9 +637,9 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Couverture<List<Long>> ecoleClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("ecoleCles").o(ecoleCles);
 
-	/**	<br/>L'entité « ecoleCles »
+	/**	<br/> L'entité ecoleCles
 	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:ecoleCles">Trouver l'entité ecoleCles dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:ecoleCles">Trouver l'entité ecoleCles dans Solr</a>
 	 * <br/>
 	 * @param ecoleCles est l'entité déjà construit. 
 	 **/
@@ -714,7 +715,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	// anneeCles //
 	///////////////
 
-	/**	L'entité « anneeCles »
+	/**	 L'entité anneeCles
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
@@ -723,9 +724,9 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Couverture<List<Long>> anneeClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("anneeCles").o(anneeCles);
 
-	/**	<br/>L'entité « anneeCles »
+	/**	<br/> L'entité anneeCles
 	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:anneeCles">Trouver l'entité anneeCles dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:anneeCles">Trouver l'entité anneeCles dans Solr</a>
 	 * <br/>
 	 * @param anneeCles est l'entité déjà construit. 
 	 **/
@@ -801,7 +802,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	// saisonCles //
 	////////////////
 
-	/**	L'entité « saisonCles »
+	/**	 L'entité saisonCles
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
@@ -810,9 +811,9 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Couverture<List<Long>> saisonClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("saisonCles").o(saisonCles);
 
-	/**	<br/>L'entité « saisonCles »
+	/**	<br/> L'entité saisonCles
 	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:saisonCles">Trouver l'entité saisonCles dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:saisonCles">Trouver l'entité saisonCles dans Solr</a>
 	 * <br/>
 	 * @param saisonCles est l'entité déjà construit. 
 	 **/
@@ -888,7 +889,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	// sessionCles //
 	/////////////////
 
-	/**	L'entité « sessionCles »
+	/**	 L'entité sessionCles
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
@@ -897,9 +898,9 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Couverture<List<Long>> sessionClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("sessionCles").o(sessionCles);
 
-	/**	<br/>L'entité « sessionCles »
+	/**	<br/> L'entité sessionCles
 	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:sessionCles">Trouver l'entité sessionCles dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:sessionCles">Trouver l'entité sessionCles dans Solr</a>
 	 * <br/>
 	 * @param sessionCles est l'entité déjà construit. 
 	 **/
@@ -975,7 +976,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	// ageCles //
 	/////////////
 
-	/**	L'entité « ageCles »
+	/**	 L'entité ageCles
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
@@ -984,9 +985,9 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Couverture<List<Long>> ageClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("ageCles").o(ageCles);
 
-	/**	<br/>L'entité « ageCles »
+	/**	<br/> L'entité ageCles
 	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:ageCles">Trouver l'entité ageCles dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:ageCles">Trouver l'entité ageCles dans Solr</a>
 	 * <br/>
 	 * @param ageCles est l'entité déjà construit. 
 	 **/
@@ -1062,7 +1063,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	// personnePrenom //
 	////////////////////
 
-	/**	L'entité « personnePrenom »
+	/**	 L'entité personnePrenom
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -1070,9 +1071,9 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Couverture<String> personnePrenomCouverture = new Couverture<String>().p(this).c(String.class).var("personnePrenom").o(personnePrenom);
 
-	/**	<br/>L'entité « personnePrenom »
+	/**	<br/> L'entité personnePrenom
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:personnePrenom">Trouver l'entité personnePrenom dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:personnePrenom">Trouver l'entité personnePrenom dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -1194,7 +1195,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	// personnePrenomPrefere //
 	///////////////////////////
 
-	/**	L'entité « personnePrenomPrefere »
+	/**	 L'entité personnePrenomPrefere
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -1202,9 +1203,9 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Couverture<String> personnePrenomPrefereCouverture = new Couverture<String>().p(this).c(String.class).var("personnePrenomPrefere").o(personnePrenomPrefere);
 
-	/**	<br/>L'entité « personnePrenomPrefere »
+	/**	<br/> L'entité personnePrenomPrefere
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:personnePrenomPrefere">Trouver l'entité personnePrenomPrefere dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:personnePrenomPrefere">Trouver l'entité personnePrenomPrefere dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -1326,7 +1327,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	// familleNom //
 	////////////////
 
-	/**	L'entité « familleNom »
+	/**	 L'entité familleNom
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -1334,9 +1335,9 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Couverture<String> familleNomCouverture = new Couverture<String>().p(this).c(String.class).var("familleNom").o(familleNom);
 
-	/**	<br/>L'entité « familleNom »
+	/**	<br/> L'entité familleNom
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:familleNom">Trouver l'entité familleNom dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:familleNom">Trouver l'entité familleNom dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -1458,7 +1459,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	// personneNomComplet //
 	////////////////////////
 
-	/**	L'entité « personneNomComplet »
+	/**	 L'entité personneNomComplet
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -1466,9 +1467,9 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Couverture<String> personneNomCompletCouverture = new Couverture<String>().p(this).c(String.class).var("personneNomComplet").o(personneNomComplet);
 
-	/**	<br/>L'entité « personneNomComplet »
+	/**	<br/> L'entité personneNomComplet
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:personneNomComplet">Trouver l'entité personneNomComplet dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:personneNomComplet">Trouver l'entité personneNomComplet dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -1520,7 +1521,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	// personneNomCompletPrefere //
 	///////////////////////////////
 
-	/**	L'entité « personneNomCompletPrefere »
+	/**	 L'entité personneNomCompletPrefere
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -1528,9 +1529,9 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Couverture<String> personneNomCompletPrefereCouverture = new Couverture<String>().p(this).c(String.class).var("personneNomCompletPrefere").o(personneNomCompletPrefere);
 
-	/**	<br/>L'entité « personneNomCompletPrefere »
+	/**	<br/> L'entité personneNomCompletPrefere
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:personneNomCompletPrefere">Trouver l'entité personneNomCompletPrefere dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:personneNomCompletPrefere">Trouver l'entité personneNomCompletPrefere dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -1582,7 +1583,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	// personneNomFormel //
 	///////////////////////
 
-	/**	L'entité « personneNomFormel »
+	/**	 L'entité personneNomFormel
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -1590,9 +1591,9 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Couverture<String> personneNomFormelCouverture = new Couverture<String>().p(this).c(String.class).var("personneNomFormel").o(personneNomFormel);
 
-	/**	<br/>L'entité « personneNomFormel »
+	/**	<br/> L'entité personneNomFormel
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:personneNomFormel">Trouver l'entité personneNomFormel dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:personneNomFormel">Trouver l'entité personneNomFormel dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -1644,7 +1645,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	// personneDateNaissance //
 	///////////////////////////
 
-	/**	L'entité « personneDateNaissance »
+	/**	 L'entité personneDateNaissance
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonDeserialize(using = LocalDateDeserializer.class)
@@ -1655,9 +1656,9 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Couverture<LocalDate> personneDateNaissanceCouverture = new Couverture<LocalDate>().p(this).c(LocalDate.class).var("personneDateNaissance").o(personneDateNaissance);
 
-	/**	<br/>L'entité « personneDateNaissance »
+	/**	<br/> L'entité personneDateNaissance
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:personneDateNaissance">Trouver l'entité personneDateNaissance dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:personneDateNaissance">Trouver l'entité personneDateNaissance dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -1786,7 +1787,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	// personneDateNaissanceDAnnee //
 	/////////////////////////////////
 
-	/**	L'entité « personneDateNaissanceDAnnee »
+	/**	 L'entité personneDateNaissanceDAnnee
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
@@ -1795,9 +1796,9 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Couverture<Integer> personneDateNaissanceDAnneeCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("personneDateNaissanceDAnnee").o(personneDateNaissanceDAnnee);
 
-	/**	<br/>L'entité « personneDateNaissanceDAnnee »
+	/**	<br/> L'entité personneDateNaissanceDAnnee
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:personneDateNaissanceDAnnee">Trouver l'entité personneDateNaissanceDAnnee dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:personneDateNaissanceDAnnee">Trouver l'entité personneDateNaissanceDAnnee dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -1855,7 +1856,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	// personneDateNaissanceMoisDAnnee //
 	/////////////////////////////////////
 
-	/**	L'entité « personneDateNaissanceMoisDAnnee »
+	/**	 L'entité personneDateNaissanceMoisDAnnee
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -1863,9 +1864,9 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Couverture<String> personneDateNaissanceMoisDAnneeCouverture = new Couverture<String>().p(this).c(String.class).var("personneDateNaissanceMoisDAnnee").o(personneDateNaissanceMoisDAnnee);
 
-	/**	<br/>L'entité « personneDateNaissanceMoisDAnnee »
+	/**	<br/> L'entité personneDateNaissanceMoisDAnnee
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:personneDateNaissanceMoisDAnnee">Trouver l'entité personneDateNaissanceMoisDAnnee dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:personneDateNaissanceMoisDAnnee">Trouver l'entité personneDateNaissanceMoisDAnnee dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -1917,7 +1918,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	// personneDateNaissanceJourDeSemaine //
 	////////////////////////////////////////
 
-	/**	L'entité « personneDateNaissanceJourDeSemaine »
+	/**	 L'entité personneDateNaissanceJourDeSemaine
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -1925,9 +1926,9 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Couverture<String> personneDateNaissanceJourDeSemaineCouverture = new Couverture<String>().p(this).c(String.class).var("personneDateNaissanceJourDeSemaine").o(personneDateNaissanceJourDeSemaine);
 
-	/**	<br/>L'entité « personneDateNaissanceJourDeSemaine »
+	/**	<br/> L'entité personneDateNaissanceJourDeSemaine
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:personneDateNaissanceJourDeSemaine">Trouver l'entité personneDateNaissanceJourDeSemaine dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:personneDateNaissanceJourDeSemaine">Trouver l'entité personneDateNaissanceJourDeSemaine dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -1979,7 +1980,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	// personneAgeEnSeptembre //
 	////////////////////////////
 
-	/**	L'entité « personneAgeEnSeptembre »
+	/**	 L'entité personneAgeEnSeptembre
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -1987,9 +1988,9 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Couverture<String> personneAgeEnSeptembreCouverture = new Couverture<String>().p(this).c(String.class).var("personneAgeEnSeptembre").o(personneAgeEnSeptembre);
 
-	/**	<br/>L'entité « personneAgeEnSeptembre »
+	/**	<br/> L'entité personneAgeEnSeptembre
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:personneAgeEnSeptembre">Trouver l'entité personneAgeEnSeptembre dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:personneAgeEnSeptembre">Trouver l'entité personneAgeEnSeptembre dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -2067,7 +2068,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	// photo //
 	///////////
 
-	/**	L'entité « photo »
+	/**	 L'entité photo
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -2075,9 +2076,9 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Couverture<String> photoCouverture = new Couverture<String>().p(this).c(String.class).var("photo").o(photo);
 
-	/**	<br/>L'entité « photo »
+	/**	<br/> L'entité photo
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:photo">Trouver l'entité photo dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:photo">Trouver l'entité photo dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -2193,7 +2194,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	// enfantNomComplet //
 	//////////////////////
 
-	/**	L'entité « enfantNomComplet »
+	/**	 L'entité enfantNomComplet
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -2201,9 +2202,9 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Couverture<String> enfantNomCompletCouverture = new Couverture<String>().p(this).c(String.class).var("enfantNomComplet").o(enfantNomComplet);
 
-	/**	<br/>L'entité « enfantNomComplet »
+	/**	<br/> L'entité enfantNomComplet
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:enfantNomComplet">Trouver l'entité enfantNomComplet dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:enfantNomComplet">Trouver l'entité enfantNomComplet dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/

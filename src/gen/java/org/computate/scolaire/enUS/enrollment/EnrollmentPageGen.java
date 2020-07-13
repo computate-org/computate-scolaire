@@ -33,7 +33,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 
 /**	
- * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentPage&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
+ * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentPage&fq=classeEtendGen_indexed_boolean:true">Find the class  in Solr. </a>
  * <br/>
  **/
 public abstract class EnrollmentPageGen<DEV> extends EnrollmentGenPage {
@@ -43,7 +43,7 @@ public abstract class EnrollmentPageGen<DEV> extends EnrollmentGenPage {
 	// listSchoolPayment //
 	///////////////////////
 
-	/**	L'entité « listSchoolPayment »
+	/**	 The entity listSchoolPayment
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<SchoolPayment>(). 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -51,11 +51,11 @@ public abstract class EnrollmentPageGen<DEV> extends EnrollmentGenPage {
 	@JsonIgnore
 	public Wrap<SearchList<SchoolPayment>> listSchoolPaymentWrap = new Wrap<SearchList<SchoolPayment>>().p(this).c(SearchList.class).var("listSchoolPayment").o(listSchoolPayment);
 
-	/**	<br/>L'entité « listSchoolPayment »
-	 * Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<SchoolPayment>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:listSchoolPayment">Trouver l'entité listSchoolPayment dans Solr</a>
+	/**	<br/> The entity listSchoolPayment
+	 *  It is constructed before being initialized with the constructor by default SearchList<SchoolPayment>(). 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:listSchoolPayment">Find the entity listSchoolPayment in Solr</a>
 	 * <br/>
-	 * @param listSchoolPayment est l'entité déjà construit. 
+	 * @param listSchoolPayment is the entity already constructed. 
 	 **/
 	protected abstract void _listSchoolPayment(SearchList<SchoolPayment> searchList);
 

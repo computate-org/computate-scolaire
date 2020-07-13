@@ -214,9 +214,11 @@ public class DesignPdfGenPage extends DesignPdfGenPageGen<ClusterPage> {
 		if(designPage != null && designPage.getDesignPageNomComplet() != null)
 			c.o(designPage.getDesignPageNomComplet());
 		else if(designPage != null)
-			c.o("");
+			c.o("design de pages");
 		else if(listeDesignPage == null || listeDesignPage.size() == 0)
 			c.o("aucun design de page trouvé");
+		else
+			c.o("design de pages");
 	}
 
 	@Override protected void _pageUri(Couverture<String> c) {

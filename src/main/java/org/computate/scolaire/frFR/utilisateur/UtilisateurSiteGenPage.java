@@ -74,9 +74,11 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPag
 		if(utilisateurSite != null && utilisateurSite.getObjetTitre() != null)
 			c.o(utilisateurSite.getObjetTitre());
 		else if(utilisateurSite != null)
-			c.o("");
+			c.o("utilisateurs du site");
 		else if(listeUtilisateurSite == null || listeUtilisateurSite.size() == 0)
 			c.o("aucun utilisateur du site trouvé");
+		else
+			c.o("utilisateurs du site");
 	}
 
 	@Override protected void _pageUri(Couverture<String> c) {

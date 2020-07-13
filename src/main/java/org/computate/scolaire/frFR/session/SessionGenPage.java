@@ -75,9 +75,11 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 		if(sessionScolaire != null && sessionScolaire.getSessionNomComplet() != null)
 			c.o(sessionScolaire.getSessionNomComplet());
 		else if(sessionScolaire != null)
-			c.o("");
+			c.o("sessions");
 		else if(listeSessionScolaire == null || listeSessionScolaire.size() == 0)
 			c.o("aucune session trouvée");
+		else
+			c.o("sessions");
 	}
 
 	@Override protected void _pageUri(Couverture<String> c) {

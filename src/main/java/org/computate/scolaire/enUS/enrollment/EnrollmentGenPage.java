@@ -109,9 +109,11 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 		if(schoolEnrollment != null && schoolEnrollment.getEnrollmentCompleteName() != null)
 			c.o(schoolEnrollment.getEnrollmentCompleteName());
 		else if(schoolEnrollment != null)
-			c.o("");
+			c.o("enrollments");
 		else if(listSchoolEnrollment == null || listSchoolEnrollment.size() == 0)
 			c.o("no enrollment found");
+		else
+			c.o("enrollments");
 	}
 
 	@Override protected void _pageUri(Wrap<String> c) {

@@ -120,7 +120,7 @@ authSslRequis=all
 sslJksChemin=/srv/heytate.com/server.jks
 sslJksMotDePasse="..."
 sitePort=10180
-solrUrl=http://localhost:10383/solr/scolaire_frfr
+solrUrl=http://localhost:8983/solr/scolaire_frfr
 apiContactMail=ctate@redhat.com
 siteEcrireMethodes=html
 siteEcrireMethodes=htmlMeta
@@ -187,7 +187,7 @@ authSslRequired=all
 sslJksPath=/srv/heytate.com/server.jks
 sslJksPassword="..."
 sitePort=10380
-solrUrl=http://localhost:10383/solr/scolaire_enus
+solrUrl=http://localhost:8983/solr/scolaire_enus
 apiContactEmail=ctate@redhat.com
 siteZone=America/Denver
 

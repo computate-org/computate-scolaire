@@ -33,7 +33,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 
 /**	
- * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.guardian.GuardianGenPage&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
+ * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.guardian.GuardianGenPage&fq=classeEtendGen_indexed_boolean:true">Find the class  in Solr. </a>
  * <br/>
  **/
 public abstract class GuardianGenPageGen<DEV> extends ClusterPage {
@@ -43,7 +43,7 @@ public abstract class GuardianGenPageGen<DEV> extends ClusterPage {
 	// listSchoolGuardian //
 	////////////////////////
 
-	/**	L'entité « listSchoolGuardian »
+	/**	 The entity listSchoolGuardian
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -51,11 +51,11 @@ public abstract class GuardianGenPageGen<DEV> extends ClusterPage {
 	@JsonIgnore
 	public Wrap<SearchList<SchoolGuardian>> listSchoolGuardianWrap = new Wrap<SearchList<SchoolGuardian>>().p(this).c(SearchList.class).var("listSchoolGuardian").o(listSchoolGuardian);
 
-	/**	<br/>L'entité « listSchoolGuardian »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.guardian.GuardianGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:listSchoolGuardian">Trouver l'entité listSchoolGuardian dans Solr</a>
+	/**	<br/> The entity listSchoolGuardian
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.guardian.GuardianGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:listSchoolGuardian">Find the entity listSchoolGuardian in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _listSchoolGuardian(Wrap<SearchList<SchoolGuardian>> c);
 
@@ -83,7 +83,7 @@ public abstract class GuardianGenPageGen<DEV> extends ClusterPage {
 	// schoolGuardian //
 	////////////////////
 
-	/**	L'entité « schoolGuardian »
+	/**	 The entity schoolGuardian
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -91,11 +91,11 @@ public abstract class GuardianGenPageGen<DEV> extends ClusterPage {
 	@JsonIgnore
 	public Wrap<SchoolGuardian> schoolGuardianWrap = new Wrap<SchoolGuardian>().p(this).c(SchoolGuardian.class).var("schoolGuardian").o(schoolGuardian);
 
-	/**	<br/>L'entité « schoolGuardian »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.guardian.GuardianGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolGuardian">Trouver l'entité schoolGuardian dans Solr</a>
+	/**	<br/> The entity schoolGuardian
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.guardian.GuardianGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolGuardian">Find the entity schoolGuardian in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _schoolGuardian(Wrap<SchoolGuardian> c);
 

@@ -103,7 +103,7 @@ public class UtilisateurSite extends UtilisateurSiteGen<Cluster> {
 	 * r.enUS: siteRequest_
 	 * r: UtilisateurNom
 	 * r.enUS: UserName
-	 */   
+	 */ 
 	protected void _utilisateurNom(Couverture<String> c) {
 		String o = requeteSite_.getUtilisateurNom();
 		c.o(o);
@@ -260,10 +260,14 @@ public class UtilisateurSite extends UtilisateurSiteGen<Cluster> {
 	 * r.enUS: userEmail
 	 * r: utilisateurNom
 	 * r.enUS: userName
-	 */ 
+	 * r: requeteSite
+	 * r.enUS: siteRequest
+	 * r: UtilisateurNomComplet
+	 * r.enUS: UserFullName
+	 */   
 	@Override 
 	protected void _objetTitre(Couverture<String> c) {
-		c.o(utilisateurNomComplet + " " + utilisateurMail + " " + utilisateurNom);
+		c.o(requeteSite_.getUtilisateurNomComplet() + " " + utilisateurMail + " " + utilisateurNom);
 	}
 
 	public void htmlBody() {

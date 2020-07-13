@@ -75,9 +75,11 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 		if(enfantScolaire != null && enfantScolaire.getEnfantNomComplet() != null)
 			c.o(enfantScolaire.getEnfantNomComplet());
 		else if(enfantScolaire != null)
-			c.o("");
+			c.o("enfants");
 		else if(listeEnfantScolaire == null || listeEnfantScolaire.size() == 0)
 			c.o("aucun enfant trouvé");
+		else
+			c.o("enfants");
 	}
 
 	@Override protected void _pageUri(Couverture<String> c) {

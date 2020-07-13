@@ -74,9 +74,11 @@ public class GardienGenPage extends GardienGenPageGen<ClusterPage> {
 		if(gardienScolaire != null && gardienScolaire.getGardienNomComplet() != null)
 			c.o(gardienScolaire.getGardienNomComplet());
 		else if(gardienScolaire != null)
-			c.o("");
+			c.o("gardiens");
 		else if(listeGardienScolaire == null || listeGardienScolaire.size() == 0)
 			c.o("aucun gardien trouvé");
+		else
+			c.o("gardiens");
 	}
 
 	@Override protected void _pageUri(Couverture<String> c) {

@@ -47,7 +47,7 @@ import org.apache.solr.common.SolrInputDocument;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
 /**	
- * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.design.DesignPage&fq=classeEtendGen_indexed_boolean:true">Trouver la classe designHidden dans Solr</a>
+ * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.design.DesignPage&fq=classeEtendGen_indexed_boolean:true">Trouver la classe designHidden dans Solr. </a>
  * <br/>
  **/
 public abstract class DesignPageGen<DEV> extends Cluster {
@@ -68,6 +68,7 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 	public static final String DesignPage_TousNom = "tous les design de pages";
 	public static final String DesignPage_RechercherTousNomPar = "rechercher design de pages par ";
 	public static final String DesignPage_RechercherTousNom = "rechercher design de pages";
+	public static final String DesignPage_Titre = "design de pages";
 	public static final String DesignPage_LesNom = "les design de pages";
 	public static final String DesignPage_AucunNomTrouve = "aucun design de page trouvé";
 	public static final String DesignPage_NomVar = "design-page";
@@ -83,7 +84,7 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 	// designPageCle //
 	///////////////////
 
-	/**	L'entité « designPageCle »
+	/**	 L'entité designPageCle
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
@@ -92,9 +93,9 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Couverture<Long> designPageCleCouverture = new Couverture<Long>().p(this).c(Long.class).var("designPageCle").o(designPageCle);
 
-	/**	<br/>L'entité « designPageCle »
+	/**	<br/> L'entité designPageCle
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.design.DesignPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:designPageCle">Trouver l'entité designPageCle dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.design.DesignPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:designPageCle">Trouver l'entité designPageCle dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -152,7 +153,7 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 	// designEnfantCles //
 	//////////////////////
 
-	/**	L'entité « designEnfantCles »
+	/**	 L'entité designEnfantCles
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
@@ -161,9 +162,9 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Couverture<List<Long>> designEnfantClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("designEnfantCles").o(designEnfantCles);
 
-	/**	<br/>L'entité « designEnfantCles »
+	/**	<br/> L'entité designEnfantCles
 	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.design.DesignPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:designEnfantCles">Trouver l'entité designEnfantCles dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.design.DesignPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:designEnfantCles">Trouver l'entité designEnfantCles dans Solr</a>
 	 * <br/>
 	 * @param designEnfantCles est l'entité déjà construit. 
 	 **/
@@ -239,7 +240,7 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 	// designParentCles //
 	//////////////////////
 
-	/**	L'entité « designParentCles »
+	/**	 L'entité designParentCles
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
@@ -248,9 +249,9 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Couverture<List<Long>> designParentClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("designParentCles").o(designParentCles);
 
-	/**	<br/>L'entité « designParentCles »
+	/**	<br/> L'entité designParentCles
 	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.design.DesignPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:designParentCles">Trouver l'entité designParentCles dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.design.DesignPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:designParentCles">Trouver l'entité designParentCles dans Solr</a>
 	 * <br/>
 	 * @param designParentCles est l'entité déjà construit. 
 	 **/
@@ -398,7 +399,7 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 	// partHtmlCles //
 	//////////////////
 
-	/**	L'entité « partHtmlCles »
+	/**	 L'entité partHtmlCles
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
@@ -407,9 +408,9 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Couverture<List<Long>> partHtmlClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("partHtmlCles").o(partHtmlCles);
 
-	/**	<br/>L'entité « partHtmlCles »
+	/**	<br/> L'entité partHtmlCles
 	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.design.DesignPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:partHtmlCles">Trouver l'entité partHtmlCles dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.design.DesignPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:partHtmlCles">Trouver l'entité partHtmlCles dans Solr</a>
 	 * <br/>
 	 * @param partHtmlCles est l'entité déjà construit. 
 	 **/
@@ -557,7 +558,7 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 	// designPageNomComplet //
 	//////////////////////////
 
-	/**	L'entité « designPageNomComplet »
+	/**	 L'entité designPageNomComplet
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -565,9 +566,9 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Couverture<String> designPageNomCompletCouverture = new Couverture<String>().p(this).c(String.class).var("designPageNomComplet").o(designPageNomComplet);
 
-	/**	<br/>L'entité « designPageNomComplet »
+	/**	<br/> L'entité designPageNomComplet
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.design.DesignPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:designPageNomComplet">Trouver l'entité designPageNomComplet dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.design.DesignPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:designPageNomComplet">Trouver l'entité designPageNomComplet dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -685,7 +686,7 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 	// designCache //
 	/////////////////
 
-	/**	L'entité « designCache »
+	/**	 L'entité designCache
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -693,9 +694,9 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Couverture<Boolean> designCacheCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("designCache").o(designCache);
 
-	/**	<br/>L'entité « designCache »
+	/**	<br/> L'entité designCache
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.design.DesignPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:designCache">Trouver l'entité designCache dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.design.DesignPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:designCache">Trouver l'entité designCache dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/

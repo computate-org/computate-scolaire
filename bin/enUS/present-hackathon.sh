@@ -34,13 +34,13 @@ echo 'The existing enrollment system runs on a Tomcat server on a physical machi
 computate "xdg-open 'https://console.pro-us-east-1.openshift.com/console/project/computateorg/overview';\
 echo 'Along with a Solr search engine, a Zookeeper cluster manager, computate.org which is my own website for teaching open source software development in multiple languages, Red Hat SSO, and a PostgreSQL database.  '"
 
-computate "xdg-open 'http://localhost:10383/solr/#/scolaire/query';\
+computate "xdg-open 'http://localhost:8983/solr/#/scolaire/query';\
 echo 'The secret there to a powerful API and helpful website is an open source search engine. Search engines are so powerful, that I also use a search engine to read and write my code for me. '"
 
-computate "xdg-open 'http://localhost:10383/solr/computate/select?q=*:*&sort=modifiee_indexed_date%20desc';\
+computate "xdg-open 'http://localhost:8983/solr/computate/select?q=*:*&sort=modifiee_indexed_date%20desc';\
 echo 'In fact, for my open source projects, every piece of code I write, as soon as I save it, is immediately loaded into a search engine. '"
 
-computate "xdg-open 'http://localhost:10383/solr/computate/select?q=*:*&sort=modifiee_indexed_date%20desc&fq=classeNomSimple_enUS_indexed_string:School';\
+computate "xdg-open 'http://localhost:8983/solr/computate/select?q=*:*&sort=modifiee_indexed_date%20desc&fq=classeNomSimple_enUS_indexed_string:School';\
 echo 'The reason for this, is that code describes systems and relationships, like school registration systems. With the help of a search engine, I can build entire websites and APIs, from its swagger spec, to its common objects, persistence, and documentation. Its all built from search records about the Java class, field and method information, but most importantly, the code comments. '"
 
 computate "xdg-open 'https://school.computate.org/api/school?fq=schoolLocation:Bountiful&fl=schoolAdministratorName,schoolName,schoolLocation,classSimpleName';\
@@ -64,13 +64,13 @@ echo 'And the school blocks for the start and end times, the days of the week an
 computate "xdg-open 'https://school.computate.org/api/year?fl=yearShortName,schoolCompleteName&fq=schoolLocation:Bountiful';\
 echo 'Now this school goes back many years. '"
 
-computate "xdg-open 'http://localhost:10383/solr/scolaire/select?q=*:*&json.facet={'"'"'"'"'"'"'Number of enrollments in 2017'"'"'"'"'"'"':'"'"'"'"'"'"'unique(id)'"'"'"'"'"'"'}&rows=0&fq=yearStart_indexed_int:2017';\
+computate "xdg-open 'http://localhost:8983/solr/scolaire/select?q=*:*&json.facet={'"'"'"'"'"'"'Number of enrollments in 2017'"'"'"'"'"'"':'"'"'"'"'"'"'unique(id)'"'"'"'"'"'"'}&rows=0&fq=yearStart_indexed_int:2017';\
 echo 'In 2017 the number of enrollments started at 231... '"
 
-computate "xdg-open 'http://localhost:10383/solr/scolaire/select?q=*:*&json.facet={'"'"'"'"'"'"'Number of enrollments in 2018'"'"'"'"'"'"':'"'"'"'"'"'"'unique(id)'"'"'"'"'"'"'}&rows=0&fq=yearStart_indexed_int:2018';\
+computate "xdg-open 'http://localhost:8983/solr/scolaire/select?q=*:*&json.facet={'"'"'"'"'"'"'Number of enrollments in 2018'"'"'"'"'"'"':'"'"'"'"'"'"'unique(id)'"'"'"'"'"'"'}&rows=0&fq=yearStart_indexed_int:2018';\
 echo 'Then in 2018, enrollments more than doubled to 501. '"
 
-computate "xdg-open 'http://localhost:10383/solr/scolaire/select?q=*:*&json.facet={'"'"'"'"'"'"'Number of enrollments in 2019'"'"'"'"'"'"':'"'"'"'"'"'"'unique(id)'"'"'"'"'"'"'}&rows=0&fq=yearStart_indexed_int:2019';\
+computate "xdg-open 'http://localhost:8983/solr/scolaire/select?q=*:*&json.facet={'"'"'"'"'"'"'Number of enrollments in 2019'"'"'"'"'"'"':'"'"'"'"'"'"'unique(id)'"'"'"'"'"'"'}&rows=0&fq=yearStart_indexed_int:2019';\
 echo 'And now in 2019, after just 2 months in, enrollments exceeded that too, and are already up to 524! And that is the power of open source software in business! '"
 
 computate "figlet -f slant 'Code Translation';\
@@ -78,7 +78,7 @@ xdg-open 'https://github.com/computate/computate-scolaire/blob/master/src/main/j
 echo 'Now Ill tell you something surprising, this School.java class was actually written in French first, and translated by open source software into English as a second language to work in both languages! '"
 
 computate "figlet -f slant 'Code APIs';\
-xdg-open 'http://localhost:10383/solr/computate/select?q=*:*&fq=classeNomSimple_enUS_indexed_string:School&sort=modifiee_indexed_date%20desc&json.facet={partIsClass:'"'"'"'"'"'"'sum(partEstClasse_indexed_boolean)'"'"'"'"'"'"',partIsMethod:'"'"'"'"'"'"'sum(partEstMethode_indexed_boolean)'"'"'"'"'"'"',partIsField:'"'"'"'"'"'"'sum(partEstChamp_indexed_boolean)'"'"'"'"'"'"',partIsEntity:'"'"'"'"'"'"'sum(partEstEntite_indexed_boolean)'"'"'"'"'"'"'}';\
+xdg-open 'http://localhost:8983/solr/computate/select?q=*:*&fq=classeNomSimple_enUS_indexed_string:School&sort=modifiee_indexed_date%20desc&json.facet={partIsClass:'"'"'"'"'"'"'sum(partEstClasse_indexed_boolean)'"'"'"'"'"'"',partIsMethod:'"'"'"'"'"'"'sum(partEstMethode_indexed_boolean)'"'"'"'"'"'"',partIsField:'"'"'"'"'"'"'sum(partEstChamp_indexed_boolean)'"'"'"'"'"'"',partIsEntity:'"'"'"'"'"'"'sum(partEstEntite_indexed_boolean)'"'"'"'"'"'"'}';\
 echo 'My search engine can tell me about thousands of facts about every individual piece of each Java class to build an API, a website, an OpenAPI swagger definition, getters and setters and so much more. '"
 
 computate "xdg-open 'https://raw.githubusercontent.com/computate/computate-scolaire/master/src/main/resources/openapi3-enUS.yaml';\

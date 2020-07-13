@@ -47,7 +47,7 @@ import org.apache.solr.common.SolrInputDocument;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
 /**	
- * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.html.part.PartHtml&fq=classeEtendGen_indexed_boolean:true">Trouver la classe sort10 dans Solr</a>
+ * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.html.part.PartHtml&fq=classeEtendGen_indexed_boolean:true">Trouver la classe sort10 dans Solr. </a>
  * <br/>
  **/
 public abstract class PartHtmlGen<DEV> extends Cluster {
@@ -68,6 +68,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	public static final String PartHtml_TousNom = "tous les part de HTMLs";
 	public static final String PartHtml_RechercherTousNomPar = "rechercher part de HTMLs par ";
 	public static final String PartHtml_RechercherTousNom = "rechercher part de HTMLs";
+	public static final String PartHtml_Titre = "part de HTMLs";
 	public static final String PartHtml_LesNom = "les part de HTMLs";
 	public static final String PartHtml_AucunNomTrouve = "aucun part de HTML trouvé";
 	public static final String PartHtml_NomVar = "part-html";
@@ -83,7 +84,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	// partHtmlCle //
 	/////////////////
 
-	/**	L'entité « partHtmlCle »
+	/**	 L'entité partHtmlCle
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
@@ -92,9 +93,9 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Couverture<Long> partHtmlCleCouverture = new Couverture<Long>().p(this).c(Long.class).var("partHtmlCle").o(partHtmlCle);
 
-	/**	<br/>L'entité « partHtmlCle »
+	/**	<br/> L'entité partHtmlCle
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.html.part.PartHtml&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:partHtmlCle">Trouver l'entité partHtmlCle dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.html.part.PartHtml&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:partHtmlCle">Trouver l'entité partHtmlCle dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -152,7 +153,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	// designPageCles //
 	////////////////////
 
-	/**	L'entité « designPageCles »
+	/**	 L'entité designPageCles
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
 	@JsonSerialize(contentUsing = ToStringSerializer.class)
@@ -161,9 +162,9 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Couverture<List<Long>> designPageClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("designPageCles").o(designPageCles);
 
-	/**	<br/>L'entité « designPageCles »
+	/**	<br/> L'entité designPageCles
 	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.html.part.PartHtml&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:designPageCles">Trouver l'entité designPageCles dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.html.part.PartHtml&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:designPageCles">Trouver l'entité designPageCles dans Solr</a>
 	 * <br/>
 	 * @param designPageCles est l'entité déjà construit. 
 	 **/
@@ -306,7 +307,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	// htmlLien //
 	//////////////
 
-	/**	L'entité « htmlLien »
+	/**	 L'entité htmlLien
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -314,9 +315,9 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Couverture<String> htmlLienCouverture = new Couverture<String>().p(this).c(String.class).var("htmlLien").o(htmlLien);
 
-	/**	<br/>L'entité « htmlLien »
+	/**	<br/> L'entité htmlLien
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.html.part.PartHtml&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:htmlLien">Trouver l'entité htmlLien dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.html.part.PartHtml&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:htmlLien">Trouver l'entité htmlLien dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -426,7 +427,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	// htmlElement //
 	/////////////////
 
-	/**	L'entité « htmlElement »
+	/**	 L'entité htmlElement
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -434,9 +435,9 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Couverture<String> htmlElementCouverture = new Couverture<String>().p(this).c(String.class).var("htmlElement").o(htmlElement);
 
-	/**	<br/>L'entité « htmlElement »
+	/**	<br/> L'entité htmlElement
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.html.part.PartHtml&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:htmlElement">Trouver l'entité htmlElement dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.html.part.PartHtml&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:htmlElement">Trouver l'entité htmlElement dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -546,7 +547,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	// htmlId //
 	////////////
 
-	/**	L'entité « htmlId »
+	/**	 L'entité htmlId
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -554,9 +555,9 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Couverture<String> htmlIdCouverture = new Couverture<String>().p(this).c(String.class).var("htmlId").o(htmlId);
 
-	/**	<br/>L'entité « htmlId »
+	/**	<br/> L'entité htmlId
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.html.part.PartHtml&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:htmlId">Trouver l'entité htmlId dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.html.part.PartHtml&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:htmlId">Trouver l'entité htmlId dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -666,7 +667,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	// htmlClasses //
 	/////////////////
 
-	/**	L'entité « htmlClasses »
+	/**	 L'entité htmlClasses
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -674,9 +675,9 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Couverture<String> htmlClassesCouverture = new Couverture<String>().p(this).c(String.class).var("htmlClasses").o(htmlClasses);
 
-	/**	<br/>L'entité « htmlClasses »
+	/**	<br/> L'entité htmlClasses
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.html.part.PartHtml&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:htmlClasses">Trouver l'entité htmlClasses dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.html.part.PartHtml&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:htmlClasses">Trouver l'entité htmlClasses dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -786,7 +787,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	// htmlStyle //
 	///////////////
 
-	/**	L'entité « htmlStyle »
+	/**	 L'entité htmlStyle
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -794,9 +795,9 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Couverture<String> htmlStyleCouverture = new Couverture<String>().p(this).c(String.class).var("htmlStyle").o(htmlStyle);
 
-	/**	<br/>L'entité « htmlStyle »
+	/**	<br/> L'entité htmlStyle
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.html.part.PartHtml&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:htmlStyle">Trouver l'entité htmlStyle dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.html.part.PartHtml&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:htmlStyle">Trouver l'entité htmlStyle dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -906,7 +907,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	// htmlAvant //
 	///////////////
 
-	/**	L'entité « htmlAvant »
+	/**	 L'entité htmlAvant
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -914,9 +915,9 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Couverture<String> htmlAvantCouverture = new Couverture<String>().p(this).c(String.class).var("htmlAvant").o(htmlAvant);
 
-	/**	<br/>L'entité « htmlAvant »
+	/**	<br/> L'entité htmlAvant
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.html.part.PartHtml&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:htmlAvant">Trouver l'entité htmlAvant dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.html.part.PartHtml&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:htmlAvant">Trouver l'entité htmlAvant dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -1024,7 +1025,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	// htmlApres //
 	///////////////
 
-	/**	L'entité « htmlApres »
+	/**	 L'entité htmlApres
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -1032,9 +1033,9 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Couverture<String> htmlApresCouverture = new Couverture<String>().p(this).c(String.class).var("htmlApres").o(htmlApres);
 
-	/**	<br/>L'entité « htmlApres »
+	/**	<br/> L'entité htmlApres
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.html.part.PartHtml&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:htmlApres">Trouver l'entité htmlApres dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.html.part.PartHtml&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:htmlApres">Trouver l'entité htmlApres dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -1142,7 +1143,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	// htmlTexte //
 	///////////////
 
-	/**	L'entité « htmlTexte »
+	/**	 L'entité htmlTexte
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -1150,9 +1151,9 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Couverture<String> htmlTexteCouverture = new Couverture<String>().p(this).c(String.class).var("htmlTexte").o(htmlTexte);
 
-	/**	<br/>L'entité « htmlTexte »
+	/**	<br/> L'entité htmlTexte
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.html.part.PartHtml&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:htmlTexte">Trouver l'entité htmlTexte dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.html.part.PartHtml&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:htmlTexte">Trouver l'entité htmlTexte dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -1260,7 +1261,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	// htmlVar //
 	/////////////
 
-	/**	L'entité « htmlVar »
+	/**	 L'entité htmlVar
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -1268,9 +1269,9 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Couverture<String> htmlVarCouverture = new Couverture<String>().p(this).c(String.class).var("htmlVar").o(htmlVar);
 
-	/**	<br/>L'entité « htmlVar »
+	/**	<br/> L'entité htmlVar
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.html.part.PartHtml&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:htmlVar">Trouver l'entité htmlVar dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.html.part.PartHtml&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:htmlVar">Trouver l'entité htmlVar dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -1380,7 +1381,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	// htmlVarSpan //
 	/////////////////
 
-	/**	L'entité « htmlVarSpan »
+	/**	 L'entité htmlVarSpan
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -1388,9 +1389,9 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Couverture<String> htmlVarSpanCouverture = new Couverture<String>().p(this).c(String.class).var("htmlVarSpan").o(htmlVarSpan);
 
-	/**	<br/>L'entité « htmlVarSpan »
+	/**	<br/> L'entité htmlVarSpan
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.html.part.PartHtml&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:htmlVarSpan">Trouver l'entité htmlVarSpan dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.html.part.PartHtml&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:htmlVarSpan">Trouver l'entité htmlVarSpan dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -1500,7 +1501,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	// htmlVarForm //
 	/////////////////
 
-	/**	L'entité « htmlVarForm »
+	/**	 L'entité htmlVarForm
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -1508,9 +1509,9 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Couverture<String> htmlVarFormCouverture = new Couverture<String>().p(this).c(String.class).var("htmlVarForm").o(htmlVarForm);
 
-	/**	<br/>L'entité « htmlVarForm »
+	/**	<br/> L'entité htmlVarForm
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.html.part.PartHtml&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:htmlVarForm">Trouver l'entité htmlVarForm dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.html.part.PartHtml&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:htmlVarForm">Trouver l'entité htmlVarForm dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -1620,7 +1621,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	// htmlVarInput //
 	//////////////////
 
-	/**	L'entité « htmlVarInput »
+	/**	 L'entité htmlVarInput
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -1628,9 +1629,9 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Couverture<String> htmlVarInputCouverture = new Couverture<String>().p(this).c(String.class).var("htmlVarInput").o(htmlVarInput);
 
-	/**	<br/>L'entité « htmlVarInput »
+	/**	<br/> L'entité htmlVarInput
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.html.part.PartHtml&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:htmlVarInput">Trouver l'entité htmlVarInput dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.html.part.PartHtml&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:htmlVarInput">Trouver l'entité htmlVarInput dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -1740,7 +1741,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	// htmlVarForEach //
 	////////////////////
 
-	/**	L'entité « htmlVarForEach »
+	/**	 L'entité htmlVarForEach
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -1748,9 +1749,9 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Couverture<String> htmlVarForEachCouverture = new Couverture<String>().p(this).c(String.class).var("htmlVarForEach").o(htmlVarForEach);
 
-	/**	<br/>L'entité « htmlVarForEach »
+	/**	<br/> L'entité htmlVarForEach
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.html.part.PartHtml&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:htmlVarForEach">Trouver l'entité htmlVarForEach dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.html.part.PartHtml&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:htmlVarForEach">Trouver l'entité htmlVarForEach dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -1860,7 +1861,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	// htmlExclure //
 	/////////////////
 
-	/**	L'entité « htmlExclure »
+	/**	 L'entité htmlExclure
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -1868,9 +1869,9 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Couverture<Boolean> htmlExclureCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("htmlExclure").o(htmlExclure);
 
-	/**	<br/>L'entité « htmlExclure »
+	/**	<br/> L'entité htmlExclure
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.html.part.PartHtml&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:htmlExclure">Trouver l'entité htmlExclure dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.html.part.PartHtml&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:htmlExclure">Trouver l'entité htmlExclure dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -1985,7 +1986,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	// pdfExclure //
 	////////////////
 
-	/**	L'entité « pdfExclure »
+	/**	 L'entité pdfExclure
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -1993,9 +1994,9 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Couverture<Boolean> pdfExclureCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("pdfExclure").o(pdfExclure);
 
-	/**	<br/>L'entité « pdfExclure »
+	/**	<br/> L'entité pdfExclure
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.html.part.PartHtml&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pdfExclure">Trouver l'entité pdfExclure dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.html.part.PartHtml&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pdfExclure">Trouver l'entité pdfExclure dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -2110,7 +2111,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	// connecterDeconnecter //
 	//////////////////////////
 
-	/**	L'entité « connecterDeconnecter »
+	/**	 L'entité connecterDeconnecter
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -2118,9 +2119,9 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Couverture<Boolean> connecterDeconnecterCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("connecterDeconnecter").o(connecterDeconnecter);
 
-	/**	<br/>L'entité « connecterDeconnecter »
+	/**	<br/> L'entité connecterDeconnecter
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.html.part.PartHtml&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:connecterDeconnecter">Trouver l'entité connecterDeconnecter dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.html.part.PartHtml&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:connecterDeconnecter">Trouver l'entité connecterDeconnecter dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -2235,7 +2236,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	// tri1 //
 	//////////
 
-	/**	L'entité « tri1 »
+	/**	 L'entité tri1
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
@@ -2244,9 +2245,9 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Couverture<Double> tri1Couverture = new Couverture<Double>().p(this).c(Double.class).var("tri1").o(tri1);
 
-	/**	<br/>L'entité « tri1 »
+	/**	<br/> L'entité tri1
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.html.part.PartHtml&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:tri1">Trouver l'entité tri1 dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.html.part.PartHtml&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:tri1">Trouver l'entité tri1 dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -2362,7 +2363,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	// tri2 //
 	//////////
 
-	/**	L'entité « tri2 »
+	/**	 L'entité tri2
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
@@ -2371,9 +2372,9 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Couverture<Double> tri2Couverture = new Couverture<Double>().p(this).c(Double.class).var("tri2").o(tri2);
 
-	/**	<br/>L'entité « tri2 »
+	/**	<br/> L'entité tri2
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.html.part.PartHtml&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:tri2">Trouver l'entité tri2 dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.html.part.PartHtml&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:tri2">Trouver l'entité tri2 dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -2489,7 +2490,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	// tri3 //
 	//////////
 
-	/**	L'entité « tri3 »
+	/**	 L'entité tri3
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
@@ -2498,9 +2499,9 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Couverture<Double> tri3Couverture = new Couverture<Double>().p(this).c(Double.class).var("tri3").o(tri3);
 
-	/**	<br/>L'entité « tri3 »
+	/**	<br/> L'entité tri3
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.html.part.PartHtml&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:tri3">Trouver l'entité tri3 dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.html.part.PartHtml&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:tri3">Trouver l'entité tri3 dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -2616,7 +2617,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	// tri4 //
 	//////////
 
-	/**	L'entité « tri4 »
+	/**	 L'entité tri4
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
@@ -2625,9 +2626,9 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Couverture<Double> tri4Couverture = new Couverture<Double>().p(this).c(Double.class).var("tri4").o(tri4);
 
-	/**	<br/>L'entité « tri4 »
+	/**	<br/> L'entité tri4
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.html.part.PartHtml&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:tri4">Trouver l'entité tri4 dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.html.part.PartHtml&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:tri4">Trouver l'entité tri4 dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -2743,7 +2744,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	// tri5 //
 	//////////
 
-	/**	L'entité « tri5 »
+	/**	 L'entité tri5
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
@@ -2752,9 +2753,9 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Couverture<Double> tri5Couverture = new Couverture<Double>().p(this).c(Double.class).var("tri5").o(tri5);
 
-	/**	<br/>L'entité « tri5 »
+	/**	<br/> L'entité tri5
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.html.part.PartHtml&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:tri5">Trouver l'entité tri5 dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.html.part.PartHtml&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:tri5">Trouver l'entité tri5 dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -2870,7 +2871,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	// tri6 //
 	//////////
 
-	/**	L'entité « tri6 »
+	/**	 L'entité tri6
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
@@ -2879,9 +2880,9 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Couverture<Double> tri6Couverture = new Couverture<Double>().p(this).c(Double.class).var("tri6").o(tri6);
 
-	/**	<br/>L'entité « tri6 »
+	/**	<br/> L'entité tri6
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.html.part.PartHtml&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:tri6">Trouver l'entité tri6 dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.html.part.PartHtml&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:tri6">Trouver l'entité tri6 dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -2997,7 +2998,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	// tri7 //
 	//////////
 
-	/**	L'entité « tri7 »
+	/**	 L'entité tri7
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
@@ -3006,9 +3007,9 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Couverture<Double> tri7Couverture = new Couverture<Double>().p(this).c(Double.class).var("tri7").o(tri7);
 
-	/**	<br/>L'entité « tri7 »
+	/**	<br/> L'entité tri7
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.html.part.PartHtml&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:tri7">Trouver l'entité tri7 dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.html.part.PartHtml&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:tri7">Trouver l'entité tri7 dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -3124,7 +3125,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	// tri8 //
 	//////////
 
-	/**	L'entité « tri8 »
+	/**	 L'entité tri8
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
@@ -3133,9 +3134,9 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Couverture<Double> tri8Couverture = new Couverture<Double>().p(this).c(Double.class).var("tri8").o(tri8);
 
-	/**	<br/>L'entité « tri8 »
+	/**	<br/> L'entité tri8
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.html.part.PartHtml&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:tri8">Trouver l'entité tri8 dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.html.part.PartHtml&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:tri8">Trouver l'entité tri8 dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -3251,7 +3252,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	// tri9 //
 	//////////
 
-	/**	L'entité « tri9 »
+	/**	 L'entité tri9
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
@@ -3260,9 +3261,9 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Couverture<Double> tri9Couverture = new Couverture<Double>().p(this).c(Double.class).var("tri9").o(tri9);
 
-	/**	<br/>L'entité « tri9 »
+	/**	<br/> L'entité tri9
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.html.part.PartHtml&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:tri9">Trouver l'entité tri9 dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.html.part.PartHtml&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:tri9">Trouver l'entité tri9 dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
@@ -3378,7 +3379,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	// tri10 //
 	///////////
 
-	/**	L'entité « tri10 »
+	/**	 L'entité tri10
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
@@ -3387,9 +3388,9 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	@JsonIgnore
 	public Couverture<Double> tri10Couverture = new Couverture<Double>().p(this).c(Double.class).var("tri10").o(tri10);
 
-	/**	<br/>L'entité « tri10 »
+	/**	<br/> L'entité tri10
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.html.part.PartHtml&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:tri10">Trouver l'entité tri10 dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.html.part.PartHtml&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:tri10">Trouver l'entité tri10 dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/

@@ -33,7 +33,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 
 /**	
- * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.block.BlockGenPage&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
+ * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.block.BlockGenPage&fq=classeEtendGen_indexed_boolean:true">Find the class  in Solr. </a>
  * <br/>
  **/
 public abstract class BlockGenPageGen<DEV> extends ClusterPage {
@@ -43,7 +43,7 @@ public abstract class BlockGenPageGen<DEV> extends ClusterPage {
 	// listSchoolBlock //
 	/////////////////////
 
-	/**	L'entité « listSchoolBlock »
+	/**	 The entity listSchoolBlock
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -51,11 +51,11 @@ public abstract class BlockGenPageGen<DEV> extends ClusterPage {
 	@JsonIgnore
 	public Wrap<SearchList<SchoolBlock>> listSchoolBlockWrap = new Wrap<SearchList<SchoolBlock>>().p(this).c(SearchList.class).var("listSchoolBlock").o(listSchoolBlock);
 
-	/**	<br/>L'entité « listSchoolBlock »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.block.BlockGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:listSchoolBlock">Trouver l'entité listSchoolBlock dans Solr</a>
+	/**	<br/> The entity listSchoolBlock
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.block.BlockGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:listSchoolBlock">Find the entity listSchoolBlock in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _listSchoolBlock(Wrap<SearchList<SchoolBlock>> c);
 
@@ -83,7 +83,7 @@ public abstract class BlockGenPageGen<DEV> extends ClusterPage {
 	// schoolBlock //
 	/////////////////
 
-	/**	L'entité « schoolBlock »
+	/**	 The entity schoolBlock
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -91,11 +91,11 @@ public abstract class BlockGenPageGen<DEV> extends ClusterPage {
 	@JsonIgnore
 	public Wrap<SchoolBlock> schoolBlockWrap = new Wrap<SchoolBlock>().p(this).c(SchoolBlock.class).var("schoolBlock").o(schoolBlock);
 
-	/**	<br/>L'entité « schoolBlock »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.block.BlockGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolBlock">Trouver l'entité schoolBlock dans Solr</a>
+	/**	<br/> The entity schoolBlock
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.block.BlockGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolBlock">Find the entity schoolBlock in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _schoolBlock(Wrap<SchoolBlock> c);
 

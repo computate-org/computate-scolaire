@@ -74,9 +74,11 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 		if(schoolMom != null && schoolMom.getMomCompleteName() != null)
 			c.o(schoolMom.getMomCompleteName());
 		else if(schoolMom != null)
-			c.o("");
+			c.o("moms");
 		else if(listSchoolMom == null || listSchoolMom.size() == 0)
 			c.o("no mom found");
+		else
+			c.o("moms");
 	}
 
 	@Override protected void _pageUri(Wrap<String> c) {

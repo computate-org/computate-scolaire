@@ -33,7 +33,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 
 /**	
- * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.payment.PaymentGenPage&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
+ * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.payment.PaymentGenPage&fq=classeEtendGen_indexed_boolean:true">Find the class  in Solr. </a>
  * <br/>
  **/
 public abstract class PaymentGenPageGen<DEV> extends ClusterPage {
@@ -43,7 +43,7 @@ public abstract class PaymentGenPageGen<DEV> extends ClusterPage {
 	// listSchoolPayment //
 	///////////////////////
 
-	/**	L'entité « listSchoolPayment »
+	/**	 The entity listSchoolPayment
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -51,11 +51,11 @@ public abstract class PaymentGenPageGen<DEV> extends ClusterPage {
 	@JsonIgnore
 	public Wrap<SearchList<SchoolPayment>> listSchoolPaymentWrap = new Wrap<SearchList<SchoolPayment>>().p(this).c(SearchList.class).var("listSchoolPayment").o(listSchoolPayment);
 
-	/**	<br/>L'entité « listSchoolPayment »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.payment.PaymentGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:listSchoolPayment">Trouver l'entité listSchoolPayment dans Solr</a>
+	/**	<br/> The entity listSchoolPayment
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.payment.PaymentGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:listSchoolPayment">Find the entity listSchoolPayment in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _listSchoolPayment(Wrap<SearchList<SchoolPayment>> c);
 
@@ -83,7 +83,7 @@ public abstract class PaymentGenPageGen<DEV> extends ClusterPage {
 	// schoolPayment //
 	///////////////////
 
-	/**	L'entité « schoolPayment »
+	/**	 The entity schoolPayment
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -91,11 +91,11 @@ public abstract class PaymentGenPageGen<DEV> extends ClusterPage {
 	@JsonIgnore
 	public Wrap<SchoolPayment> schoolPaymentWrap = new Wrap<SchoolPayment>().p(this).c(SchoolPayment.class).var("schoolPayment").o(schoolPayment);
 
-	/**	<br/>L'entité « schoolPayment »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:10383/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.payment.PaymentGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolPayment">Trouver l'entité schoolPayment dans Solr</a>
+	/**	<br/> The entity schoolPayment
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.payment.PaymentGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolPayment">Find the entity schoolPayment in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _schoolPayment(Wrap<SchoolPayment> c);
 

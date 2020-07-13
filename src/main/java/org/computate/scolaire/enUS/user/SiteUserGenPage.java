@@ -73,9 +73,11 @@ public class SiteUserGenPage extends SiteUserGenPageGen<ClusterPage> {
 		if(siteUser != null && siteUser.getObjectTitle() != null)
 			c.o(siteUser.getObjectTitle());
 		else if(siteUser != null)
-			c.o("");
+			c.o("site users");
 		else if(listSiteUser == null || listSiteUser.size() == 0)
 			c.o("no site user found");
+		else
+			c.o("site users");
 	}
 
 	@Override protected void _pageUri(Wrap<String> c) {

@@ -3587,6 +3587,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 												jsonObject.put("utilisateurPrenom", principalJson.getString("given_name"));
 												jsonObject.put("utilisateurNomFamille", principalJson.getString("family_name"));
 												jsonObject.put("utilisateurId", principalJson.getString("sub"));
+												jsonObject.put("utilisateurMail", principalJson.getString("email"));
 												utilisateurPartHtmlDefinir(requeteSite, jsonObject, false);
 
 												RequeteSiteFrFR requeteSite2 = new RequeteSiteFrFR();

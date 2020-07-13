@@ -74,9 +74,11 @@ public class DadGenPage extends DadGenPageGen<ClusterPage> {
 		if(schoolDad != null && schoolDad.getDadCompleteName() != null)
 			c.o(schoolDad.getDadCompleteName());
 		else if(schoolDad != null)
-			c.o("");
+			c.o("dads");
 		else if(listSchoolDad == null || listSchoolDad.size() == 0)
 			c.o("no dad found");
+		else
+			c.o("dads");
 	}
 
 	@Override protected void _pageUri(Wrap<String> c) {
