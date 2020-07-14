@@ -1,6 +1,7 @@
 package org.computate.scolaire.enUS.enrollment;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
@@ -213,11 +214,22 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 		c.o(guardianSearch.getList());
 	}
 
-	protected void _paymentSearch(SearchList<SchoolPayment> l) {
+	protected void _feeSearch(SearchList<SchoolPayment> l) {
 		l.setQuery("*:*");
 		l.addFilterQuery("enrollmentKey_indexed_long:" + pk);
 		l.addFilterQuery("chargeMonth_indexed_boolean:true");
 		l.add("json.facet", "{'paymentDateMax':'max(paymentDate_indexed_date)'}");
+		l.setC(SchoolPayment.class);
+		l.setStore(true);
+	}
+
+	protected void _paymentSearch(SearchList<SchoolPayment> l) {
+		l.setQuery("*:*");
+		l.addFilterQuery("enrollmentKey_indexed_long:" + pk);
+		l.add("json.facet", "{sum_paymentAmount:'sum(paymentAmount_indexed_double)'}");
+		l.add("json.facet", "{sum_chargeAmount:'sum(chargeAmount_indexed_double)'}");
+		l.add("json.facet", "{sum_chargeAmountDu:'sum(chargeAmountDu_indexed_double)'}");
+		l.add("json.facet", "{sum_chargeAmountFuture:'sum(chargeAmountFuture_indexed_double)'}");
 		l.setC(SchoolPayment.class);
 		l.setStore(true);
 	}
@@ -522,9 +534,45 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 	}
 
 	protected void _enrollmentChargeDate(Wrap<LocalDate> c) {
-		SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(paymentSearch.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(new SimpleOrderedMap());
+		SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(feeSearch.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(new SimpleOrderedMap());
 		LocalDate o = Optional.ofNullable((Date)facets.get("paymentDateMax")).map(d -> d.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate()).orElse(null);
 		c.o(o);
+	}
+
+	protected void _paymentFacets(Wrap<SimpleOrderedMap> c) {
+		c.o((SimpleOrderedMap)Optional.ofNullable(paymentSearch.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(new SimpleOrderedMap()));
+	}
+
+	protected void _paymentAmount(Wrap<BigDecimal> c) {
+		c.o(Optional.ofNullable((Double)paymentFacets.get("sum_paymentAmount")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2)));
+	}
+
+	protected void _chargeAmount(Wrap<BigDecimal> c) {
+		c.o(Optional.ofNullable((Double)paymentFacets.get("sum_chargeAmount")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2)));
+	}
+
+	protected void _chargeAmountFuture(Wrap<BigDecimal> c) {
+		c.o(Optional.ofNullable((Double)paymentFacets.get("sum_chargeAmountFuture")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2)));
+	}
+
+	protected void _chargeAmountDue(Wrap<BigDecimal> c) {
+		c.o(Optional.ofNullable((Double)paymentFacets.get("sum_chargeAmountDue")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2)));
+	}
+
+	protected void _chargesNow(Wrap<BigDecimal> c) {
+		c.o(chargeAmount.subtract(paymentAmount).subtract(chargeAmountFuture));
+	}
+
+	protected void _paymentsCurrent(Wrap<Boolean> c) {
+		c.o(chargesNow.compareTo(BigDecimal.ZERO) <= 0);
+	}
+
+	protected void _paymentsLate(Wrap<Boolean> c) {
+		c.o(chargesNow.subtract(chargeAmountDue).compareTo(BigDecimal.ZERO) > 0);
+	}
+
+	protected void _paymentsAhead(Wrap<Boolean> c) {
+		c.o(chargesNow.compareTo(BigDecimal.ZERO) < 0);
 	}
 
 	protected void _createdYear(Wrap<Integer> c) {
@@ -795,7 +843,7 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 	protected void _enrollmentCompleteName(Wrap<String> c) {
 		String o;
 		if(child_ != null)
-			o = String.format("enrollment for the child %s %s %s", child_.getPersonCompleteNamePreferred(), year_ == null ? "" : year_.getYearShortName(), schoolLocation);
+			o = String.format("enrollment for the child %s %s %s", child_.getPersonCompleteNamePreferred(), " ", year_ == null ? "" : year_.getYearShortName(), schoolLocation);
 		else
 			o = String.format("enrollment %s %s %s", pk, " ", year_ == null ? "" : year_.getYearShortName(), schoolLocation);
 		c.o(o);

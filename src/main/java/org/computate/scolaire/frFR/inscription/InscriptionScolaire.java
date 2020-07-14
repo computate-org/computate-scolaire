@@ -1,6 +1,7 @@
 package org.computate.scolaire.frFR.inscription;          
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
@@ -633,7 +634,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	}
 
 	/**
-	 * Var.enUS: paymentSearch
+	 * Var.enUS: feeSearch
 	 * r: inscriptionCle
 	 * r.enUS: enrollmentKey
 	 * r: PaiementScolaire
@@ -648,11 +649,40 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * r: fraisMois
 	 * r.enUS: chargeMonth
 	 */
-	protected void _paiementRecherche(ListeRecherche<PaiementScolaire> l) {
+	protected void _fraisRecherche(ListeRecherche<PaiementScolaire> l) {
 		l.setQuery("*:*");
 		l.addFilterQuery("inscriptionCle_indexed_long:" + pk);
 		l.addFilterQuery("fraisMois_indexed_boolean:true");
 		l.add("json.facet", "{'paiementDateMax':'max(paiementDate_indexed_date)'}");
+		l.setC(PaiementScolaire.class);
+		l.setStocker(true);
+	}
+
+	/**
+	 * Var.enUS: paymentSearch
+	 * Ignorer: true
+	 * r: inscriptionCle
+	 * r.enUS: enrollmentKey
+	 * r: PaiementScolaire
+	 * r.enUS: SchoolPayment
+	 * r: setStocker
+	 * r.enUS: setStore
+	 * r: paiementMontant
+	 * r.enUS: paymentAmount
+	 * r: fraisMontant
+	 * r.enUS: chargeAmount
+	 * r: fraisMontantDu
+	 * r.enUS: chargeAmountDue
+	 * r: fraisMontantFuture
+	 * r.enUS: chargeAmountFuture
+	 */
+	protected void _paiementRecherche(ListeRecherche<PaiementScolaire> l) {
+		l.setQuery("*:*");
+		l.addFilterQuery("inscriptionCle_indexed_long:" + pk);
+		l.add("json.facet", "{sum_paiementMontant:'sum(paiementMontant_indexed_double)'}");
+		l.add("json.facet", "{sum_fraisMontant:'sum(fraisMontant_indexed_double)'}");
+		l.add("json.facet", "{sum_fraisMontantDu:'sum(fraisMontantDu_indexed_double)'}");
+		l.add("json.facet", "{sum_fraisMontantFuture:'sum(fraisMontantFuture_indexed_double)'}");
 		l.setC(PaiementScolaire.class);
 		l.setStocker(true);
 	}
@@ -1752,8 +1782,8 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Indexe: true
 	 * Stocke: true
 	 * Definir: true
-	 * r: paiementRecherche
-	 * r.enUS: paymentSearch
+	 * r: fraisRecherche
+	 * r.enUS: feeSearch
 	 * r: requeteSite
 	 * r.enUS: siteRequest
 	 * r: ConfigSite
@@ -1762,9 +1792,131 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * r.enUS: paymentDateMax
 	 */
 	protected void _inscriptionDateFrais(Couverture<LocalDate> c) {
-		SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(paiementRecherche.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(new SimpleOrderedMap());
+		SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(fraisRecherche.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(new SimpleOrderedMap());
 		LocalDate o = Optional.ofNullable((Date)facets.get("paiementDateMax")).map(d -> d.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate()).orElse(null);
 		c.o(o);
+	}
+
+	/**       
+	 * {@inheritDoc}
+	 * Var.enUS: paymentFacets
+	 * r: paiementRecherche
+	 * r.enUS: paymentSearch
+	 */
+	protected void _paiementFacets(Couverture<SimpleOrderedMap> c) {
+		c.o((SimpleOrderedMap)Optional.ofNullable(paiementRecherche.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(new SimpleOrderedMap()));
+	}
+
+	/**       
+	 * {@inheritDoc}
+	 * Var.enUS: paymentAmount
+	 * Indexe: true
+	 * Stocke: true
+	 * r: paiementFacets
+	 * r.enUS: paymentFacets
+	 * r: paiementMontant
+	 * r.enUS: paymentAmount
+	 */
+	protected void _paiementMontant(Couverture<BigDecimal> c) {
+		c.o(Optional.ofNullable((Double)paiementFacets.get("sum_paiementMontant")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2)));
+	}
+
+	/**       
+	 * {@inheritDoc}
+	 * Var.enUS: chargeAmount
+	 * Indexe: true
+	 * Stocke: true
+	 * r: paiementFacets
+	 * r.enUS: paymentFacets
+	 * r: fraisMontant
+	 * r.enUS: chargeAmount
+	 */
+	protected void _fraisMontant(Couverture<BigDecimal> c) {
+		c.o(Optional.ofNullable((Double)paiementFacets.get("sum_fraisMontant")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2)));
+	}
+
+	/**       
+	 * {@inheritDoc}
+	 * Var.enUS: chargeAmountFuture
+	 * Indexe: true
+	 * Stocke: true
+	 * r: paiementFacets
+	 * r.enUS: paymentFacets
+	 * r: fraisMontantFuture
+	 * r.enUS: chargeAmountFuture
+	 */
+	protected void _fraisMontantFuture(Couverture<BigDecimal> c) {
+		c.o(Optional.ofNullable((Double)paiementFacets.get("sum_chargeAmountFuture")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2)));
+	}
+
+	/**       
+	 * {@inheritDoc}
+	 * Var.enUS: chargeAmountDue
+	 * Indexe: true
+	 * Stocke: true
+	 * r: paiementFacets
+	 * r.enUS: paymentFacets
+	 * r: fraisMontantDu
+	 * r.enUS: chargeAmountDue
+	 */
+	protected void _fraisMontantDu(Couverture<BigDecimal> c) {
+		c.o(Optional.ofNullable((Double)paiementFacets.get("sum_chargeAmountDue")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2)));
+	}
+
+	/**       
+	 * {@inheritDoc}
+	 * Var.enUS: chargesNow
+	 * Indexe: true
+	 * Stocke: true
+	 * r: paiementMontant
+	 * r.enUS: paymentAmount
+	 * r: fraisMontant
+	 * r.enUS: chargeAmount
+	 * r: fraisMontantFuture
+	 * r.enUS: chargeAmountFuture
+	 */
+	protected void _fraisMaintenant(Couverture<BigDecimal> c) {
+		c.o(fraisMontant.subtract(paiementMontant).subtract(fraisMontantFuture));
+	}
+
+	/**       
+	 * {@inheritDoc}
+	 * Var.enUS: paymentsCurrent
+	 * Indexe: true
+	 * Stocke: true
+	 * r: fraisMaintenant
+	 * r.enUS: chargesNow
+	 */
+	protected void _paiementsAJour(Couverture<Boolean> c) {
+		c.o(fraisMaintenant.compareTo(BigDecimal.ZERO) <= 0);
+	}
+
+	/**       
+	 * {@inheritDoc}
+	 * Var.enUS: paymentsLate
+	 * Indexe: true
+	 * Stocke: true
+	 * r: fraisMaintenant
+	 * r.enUS: chargesNow
+	 * r: fraisMontantDu
+	 * r.enUS: chargeAmountDue
+	 */
+	protected void _paiementsEnRetard(Couverture<Boolean> c) {
+		c.o(fraisMaintenant.subtract(fraisMontantDu).compareTo(BigDecimal.ZERO) > 0);
+	}
+
+	/**       
+	 * {@inheritDoc}
+	 * Var.enUS: paymentsAhead
+	 * Indexe: true
+	 * Stocke: true
+	 * r: fraisMaintenant
+	 * r.enUS: chargesNow
+	 * r: fraisMontantDu
+	 * r.enUS: chargeAmountDue
+	 */
+	protected void _paiementsEnAvance(Couverture<Boolean> c) {
+		c.o(fraisMaintenant.compareTo(BigDecimal.ZERO) < 0);
 	}
 
 	/**
