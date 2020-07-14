@@ -597,7 +597,8 @@ public class SchoolEnrollmentEnUSApiServiceImpl extends SchoolEnrollmentEnUSGenA
 					payment.setTransactionId(transactionSummary.getTransId());
 					payment.setCustomerProfileId(Optional.ofNullable(transactionSummary.getProfile()).map(CustomerProfileIdType::getCustomerProfileId).orElse(null));
 					payment.setTransactionStatus(transactionSummary.getTransactionStatus());
-					payment.setPaymentBy(String.format("%s %s", transactionSummary.getFirstName(), transactionSummary.getLastName()).trim());
+					if(transactionSummary.getFirstName() != null || transactionSummary.getLastName() != null)
+						payment.setPaymentBy(String.format("%s %s", transactionSummary.getFirstName(), transactionSummary.getLastName()).trim());
 					payment.setEnrollmentKey(enrollmentKey);
 
 					SiteRequestEnUS siteRequest2 = paymentService.generateSiteRequestEnUSForSchoolPayment(siteContext, null, JsonObject.mapFrom(payment));
