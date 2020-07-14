@@ -1112,6 +1112,8 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * r.enUS: paymentCash
 	 * r: paiementSysteme
 	 * r.enUS: paymentSystem
+	 * r: paiementECheck
+	 * r.enUS: paymentECheck
 	 * r: paiementDescription
 	 * r.enUS: paymentDescription
 	 * r: paiementValeur
@@ -1175,6 +1177,8 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 				o.append(" by cash");
 			if(BooleanUtils.isTrue(paiementSysteme))
 				o.append(" by authorize.net");
+			if(BooleanUtils.isTrue(paiementECheck))
+				o.append(" by e-check");
 		}
 		if(!StringUtils.isEmpty(paiementDescription))
 			o.append(" ").append(paiementDescription);
@@ -1206,6 +1210,8 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * r.enUS: paymentCash
 	 * r: paiementSysteme
 	 * r.enUS: paymentSystem
+	 * r: paiementECheck
+	 * r.enUS: paymentECheck
 	 * r: paiementDescription
 	 * r.enUS: paymentDescription
 	 * r: paiementValeur
@@ -1277,6 +1283,8 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 				o.append(" by cash");
 			if(BooleanUtils.isTrue(paiementSysteme))
 				o.append(" by authorize.net");
+			if(BooleanUtils.isTrue(paiementECheck))
+				o.append(" by e-check");
 		}
 		if(!StringUtils.isEmpty(paiementDescription))
 			o.append(" ").append(paiementDescription);
@@ -1304,6 +1312,8 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * r.enUS: paymentCash
 	 * r: paiementSysteme
 	 * r.enUS: paymentSystem
+	 * r: paiementECheck
+	 * r.enUS: paymentECheck
 	 * r: paiementDescription
 	 * r.enUS: paymentDescription
 	 * r: paiementValeur
@@ -1379,6 +1389,8 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 				o.append(" by cash");
 			if(BooleanUtils.isTrue(paiementSysteme))
 				o.append(" by authorize.net");
+			if(BooleanUtils.isTrue(paiementECheck))
+				o.append(" by e-check");
 		}
 		if(!StringUtils.isEmpty(paiementDescription))
 			o.append(" ").append(paiementDescription);

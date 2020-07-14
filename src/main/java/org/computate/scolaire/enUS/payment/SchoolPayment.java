@@ -312,6 +312,8 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 				o.append(" by cash");
 			if(BooleanUtils.isTrue(paymentSystem))
 				o.append(" by authorize.net");
+			if(BooleanUtils.isTrue(paymentECheck))
+				o.append(" by e-check");
 		}
 		if(!StringUtils.isEmpty(paymentDescription))
 			o.append(" ").append(paymentDescription);
@@ -350,6 +352,8 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 				o.append(" by cash");
 			if(BooleanUtils.isTrue(paymentSystem))
 				o.append(" by authorize.net");
+			if(BooleanUtils.isTrue(paymentECheck))
+				o.append(" by e-check");
 		}
 		if(!StringUtils.isEmpty(paymentDescription))
 			o.append(" ").append(paymentDescription);
@@ -392,6 +396,8 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 				o.append(" by cash");
 			if(BooleanUtils.isTrue(paymentSystem))
 				o.append(" by authorize.net");
+			if(BooleanUtils.isTrue(paymentECheck))
+				o.append(" by e-check");
 		}
 		if(!StringUtils.isEmpty(paymentDescription))
 			o.append(" ").append(paymentDescription);
