@@ -100,8 +100,8 @@ import org.computate.scolaire.frFR.saison.SaisonScolaire;
  * IconeGroupe: solid
  * IconeNom: edit
  * 
- * Role.frFR: SiteManager
- * Role.enUS: SiteManager
+ * Role.frFR: SiteAdmin
+ * Role.enUS: SiteAdmin
  * RoleSession: true
  * RoleUtilisateur: true
 */  
@@ -2444,21 +2444,27 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * VarTitre: true
 	 * NomAffichage.frFR: nom
 	 * NomAffichage.enUS: name
-	 * r: "inscription pour l'enfant %s"
-	 * r.enUS: "enrollment for the child %s"
-	 * r: "inscription %s"
-	 * r.enUS: "enrollment %s"
+	 * r: "inscription pour l'enfant %s %s %s"
+	 * r.enUS: "enrollment for the child %s %s %s"
+	 * r: "inscription %s %s %s"
+	 * r.enUS: "enrollment %s %s %s"
 	 * r: getPersonneNomCompletPrefere
 	 * r.enUS: getPersonCompleteNamePreferred
 	 * r: enfant_
 	 * r.enUS: child_
+	 * r: annee
+	 * r.enUS: year
+	 * r: AnneeNomCourt
+	 * r.enUS: YearShortName
+	 * r: ecoleEmplacement
+	 * r.enUS: schoolLocation
 	 */  
 	protected void _inscriptionNomComplet(Couverture<String> c) {
 		String o;
 		if(enfant_ != null)
-			o = String.format("inscription pour l'enfant %s", enfant_.getPersonneNomCompletPrefere());
+			o = String.format("inscription pour l'enfant %s %s %s", enfant_.getPersonneNomCompletPrefere(), " ", annee_ == null ? "" : annee_.getAnneeNomCourt(), ecoleEmplacement);
 		else
-			o = String.format("inscription %s", pk);
+			o = String.format("inscription %s %s %s", pk, " ", annee_ == null ? "" : annee_.getAnneeNomCourt(), ecoleEmplacement);
 		c.o(o);
 	}
 

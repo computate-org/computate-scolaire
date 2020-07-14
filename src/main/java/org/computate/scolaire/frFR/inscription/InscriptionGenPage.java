@@ -78,7 +78,7 @@ import org.apache.solr.client.solrj.SolrQuery.SortClause;
  **/
 public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 
-	public static final List<String> ROLES = Arrays.asList("SiteManager");
+	public static final List<String> ROLES = Arrays.asList("SiteAdmin");
 	public static final List<String> ROLE_READS = Arrays.asList("");
 
 	/**

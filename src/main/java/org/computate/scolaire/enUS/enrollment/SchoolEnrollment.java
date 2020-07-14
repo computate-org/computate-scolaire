@@ -38,11 +38,11 @@ import org.computate.scolaire.enUS.season.SchoolSeason;
  * Color: blue-gray
  * IconGroup: solid
  * IconName: edit
- * Role.enUS: SiteManager
+ * Role.enUS: SiteAdmin
  * ApiUri.enUS: /api/enrollment
  * ApiTag.enUS: Enrollment
  * AName.enUS: an enrollment
- * Role.frFR: SiteManager
+ * Role.frFR: SiteAdmin
  * ApiUri.frFR: /api/inscription
  * ApiTag.frFR: Inscription
  * AName.frFR: une inscription
@@ -795,9 +795,9 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 	protected void _enrollmentCompleteName(Wrap<String> c) {
 		String o;
 		if(child_ != null)
-			o = String.format("enrollment for the child %s", child_.getPersonCompleteNamePreferred());
+			o = String.format("enrollment for the child %s %s %s", child_.getPersonCompleteNamePreferred(), year_ == null ? "" : year_.getYearShortName(), schoolLocation);
 		else
-			o = String.format("enrollment %s", pk);
+			o = String.format("enrollment %s %s %s", pk, " ", year_ == null ? "" : year_.getYearShortName(), schoolLocation);
 		c.o(o);
 	}
 
