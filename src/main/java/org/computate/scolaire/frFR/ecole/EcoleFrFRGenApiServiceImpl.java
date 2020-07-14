@@ -109,7 +109,7 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 		try {
 			LOGGER.info(String.format("postEcole a démarré. "));
 
-			List<String> roles = Arrays.asList("SiteAdmin");
+			List<String> roles = Arrays.asList("SiteManager");
 			if(
 					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
 					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
@@ -512,7 +512,7 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 		try {
 			LOGGER.info(String.format("patchEcole a démarré. "));
 
-			List<String> roles = Arrays.asList("SiteAdmin");
+			List<String> roles = Arrays.asList("SiteManager");
 			if(
 					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
 					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
@@ -1269,7 +1269,7 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourEcole(siteContexte, operationRequete);
 		try {
 
-			List<String> roles = Arrays.asList("SiteAdmin");
+			List<String> roles = Arrays.asList("SiteManager");
 			List<String> roleLires = Arrays.asList("");
 			if(
 					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
@@ -1356,7 +1356,7 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourEcole(siteContexte, operationRequete);
 		try {
 
-			List<String> roles = Arrays.asList("SiteAdmin");
+			List<String> roles = Arrays.asList("SiteManager");
 			List<String> roleLires = Arrays.asList("");
 			if(
 					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
@@ -1484,7 +1484,7 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 		try {
 			LOGGER.info(String.format("putimportEcole a démarré. "));
 
-			List<String> roles = Arrays.asList("SiteAdmin");
+			List<String> roles = Arrays.asList("SiteManager");
 			if(
 					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
 					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
@@ -1669,7 +1669,7 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 		try {
 			LOGGER.info(String.format("putfusionEcole a démarré. "));
 
-			List<String> roles = Arrays.asList("SiteAdmin");
+			List<String> roles = Arrays.asList("SiteManager");
 			if(
 					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
 					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
@@ -1852,7 +1852,7 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 		try {
 			LOGGER.info(String.format("putcopieEcole a démarré. "));
 
-			List<String> roles = Arrays.asList("SiteAdmin");
+			List<String> roles = Arrays.asList("SiteManager");
 			if(
 					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
 					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
@@ -2278,7 +2278,7 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourEcole(siteContexte, operationRequete);
 		try {
 
-			List<String> roles = Arrays.asList("SiteAdmin");
+			List<String> roles = Arrays.asList("SiteManager");
 			List<String> roleLires = Arrays.asList("");
 			if(
 					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)

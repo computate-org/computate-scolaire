@@ -12,11 +12,11 @@ import org.computate.scolaire.enUS.wrap.Wrap;
  * Color: pink
  * IconGroup: regular
  * IconName: school
- * Role.enUS: SiteAdmin
+ * Role.enUS: SiteManager
  * ApiUri.enUS: /api/school
  * ApiTag.enUS: School
  * AName.enUS: a school
- * Role.frFR: SiteAdmin
+ * Role.frFR: SiteManager
  * ApiUri.frFR: /api/ecole
  * ApiTag.frFR: Ecole
  * AName.frFR: une école

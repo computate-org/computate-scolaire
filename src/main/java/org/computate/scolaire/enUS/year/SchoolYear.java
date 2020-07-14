@@ -18,11 +18,11 @@ import org.computate.scolaire.enUS.search.SearchList;
  * Color: orange
  * IconGroup: regular
  * IconName: calendar-check
- * Role.enUS: SiteAdmin
+ * Role.enUS: SiteManager
  * ApiUri.enUS: /api/year
  * ApiTag.enUS: Year
  * AName.enUS: a year
- * Role.frFR: SiteAdmin
+ * Role.frFR: SiteManager
  * ApiUri.frFR: /api/annee
  * ApiTag.frFR: Année
  * AName.frFR: une année

@@ -49,8 +49,8 @@ import org.computate.scolaire.frFR.couverture.Couverture;
  * IconeGroupe: regular
  * IconeNom: school
  * 
- * Role.frFR: SiteAdmin
- * Role.enUS: SiteAdmin
+ * Role.frFR: SiteManager
+ * Role.enUS: SiteManager
  */              
 public class Ecole extends EcoleGen<Cluster> {   
 

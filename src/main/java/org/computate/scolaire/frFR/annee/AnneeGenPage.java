@@ -43,7 +43,7 @@ import org.apache.solr.client.solrj.SolrQuery.SortClause;
  **/
 public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 
-	public static final List<String> ROLES = Arrays.asList("SiteAdmin");
+	public static final List<String> ROLES = Arrays.asList("SiteManager");
 	public static final List<String> ROLE_READS = Arrays.asList("");
 
 	/**
@@ -170,8 +170,6 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSessionDateDebut("Page");
 			o.htmSessionDateFin("Page");
-			o.htmAnneeDebut("Page");
-			o.htmAnneeFin("Page");
 			o.htmAnneeFraisInscription("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
@@ -194,8 +192,6 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSessionDateDebut("POST");
 			o.htmSessionDateFin("POST");
-			o.htmAnneeDebut("POST");
-			o.htmAnneeFin("POST");
 			o.htmAnneeFraisInscription("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
@@ -240,8 +236,6 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSessionDateDebut("PUTCopie");
 			o.htmSessionDateFin("PUTCopie");
-			o.htmAnneeDebut("PUTCopie");
-			o.htmAnneeFin("PUTCopie");
 			o.htmAnneeFraisInscription("PUTCopie");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
@@ -254,6 +248,8 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 			o.htmUtilisateurId("PUTCopie");
 			o.htmUtilisateurCle("PUTCopie");
 			o.htmSaisonDateDebut("PUTCopie");
+			o.htmAnneeDebut("PUTCopie");
+			o.htmAnneeFin("PUTCopie");
 		} g("div");
 	}
 
@@ -269,8 +265,6 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSessionDateDebut("PATCH");
 			o.htmSessionDateFin("PATCH");
-			o.htmAnneeDebut("PATCH");
-			o.htmAnneeFin("PATCH");
 			o.htmAnneeFraisInscription("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
@@ -283,6 +277,8 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 			o.htmUtilisateurId("PATCH");
 			o.htmUtilisateurCle("PATCH");
 			o.htmSaisonDateDebut("PATCH");
+			o.htmAnneeDebut("PATCH");
+			o.htmAnneeFin("PATCH");
 		} g("div");
 	}
 
@@ -300,8 +296,6 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSessionDateDebut("Recherche");
 			o.htmSessionDateFin("Recherche");
-			o.htmAnneeDebut("Recherche");
-			o.htmAnneeFin("Recherche");
 			o.htmAnneeFraisInscription("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
@@ -315,6 +309,8 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 			o.htmUtilisateurCle("Recherche");
 			o.htmObjetTitre("Recherche");
 			o.htmSaisonDateDebut("Recherche");
+			o.htmAnneeDebut("Recherche");
+			o.htmAnneeFin("Recherche");
 		} g("div");
 	}
 

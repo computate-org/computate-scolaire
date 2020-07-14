@@ -63,7 +63,7 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	protected static final Logger LOGGER = LoggerFactory.getLogger(PaiementScolaire.class);
 
-	public static final List<String> ROLES = Arrays.asList("SiteAdmin");
+	public static final List<String> ROLES = Arrays.asList("SiteManager");
 	public static final List<String> ROLE_READS = Arrays.asList("User");
 
 	public static final String PaiementScolaire_UnNom = "un paiement";
@@ -3675,6 +3675,131 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		} g("div");
 	}
 
+	////////////////////
+	// paiementECheck //
+	////////////////////
+
+	/**	 L'entité paiementECheck
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected Boolean paiementECheck;
+	@JsonIgnore
+	public Couverture<Boolean> paiementECheckCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("paiementECheck").o(paiementECheck);
+
+	/**	<br/> L'entité paiementECheck
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:paiementECheck">Trouver l'entité paiementECheck dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _paiementECheck(Couverture<Boolean> c);
+
+	public Boolean getPaiementECheck() {
+		return paiementECheck;
+	}
+
+	public void setPaiementECheck(Boolean paiementECheck) {
+		this.paiementECheck = paiementECheck;
+		this.paiementECheckCouverture.dejaInitialise = true;
+	}
+	public PaiementScolaire setPaiementECheck(String o) {
+		this.paiementECheck = Boolean.parseBoolean(o);
+		this.paiementECheckCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	protected PaiementScolaire paiementECheckInit() {
+		if(!paiementECheckCouverture.dejaInitialise) {
+			_paiementECheck(paiementECheckCouverture);
+			if(paiementECheck == null)
+				setPaiementECheck(paiementECheckCouverture.o);
+		}
+		paiementECheckCouverture.dejaInitialise(true);
+		return (PaiementScolaire)this;
+	}
+
+	public Boolean solrPaiementECheck() {
+		return paiementECheck;
+	}
+
+	public String strPaiementECheck() {
+		return paiementECheck == null ? "" : paiementECheck.toString();
+	}
+
+	public String jsonPaiementECheck() {
+		return paiementECheck == null ? "" : paiementECheck.toString();
+	}
+
+	public String nomAffichagePaiementECheck() {
+		return "e-check";
+	}
+
+	public String htmTooltipPaiementECheck() {
+		return null;
+	}
+
+	public String htmPaiementECheck() {
+		return paiementECheck == null ? "" : StringEscapeUtils.escapeHtml4(strPaiementECheck());
+	}
+
+	public void inputPaiementECheck(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
+		{
+			if("Page".equals(classeApiMethodeMethode)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classeApiMethodeMethode, "_paiementECheck")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classeApiMethodeMethode, "_paiementECheck");
+			}
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setPaiementECheck classPaiementScolaire inputPaiementScolaire", pk, "PaiementECheck w3-input w3-border ");
+				a("name", "setPaiementECheck");
+			} else {
+				a("class", "valeurPaiementECheck classPaiementScolaire inputPaiementScolaire", pk, "PaiementECheck w3-input w3-border ");
+				a("name", "paiementECheck");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setPaiementECheck', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_paiementECheck')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_paiementECheck')); }); ");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				if(getPaiementECheck() != null && getPaiementECheck())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
+
+		}
+	}
+
+	public void htmPaiementECheck(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PaiementScolairePaiementECheck").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", classeApiMethodeMethode, "_paiementECheck").a("class", "").f().sx("e-check").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputPaiementECheck(classeApiMethodeMethode);
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
 	/////////////////////
 	// paiementSysteme //
 	/////////////////////
@@ -5505,6 +5630,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		paiementMontantInit();
 		paiementEspecesInit();
 		paiementChequeInit();
+		paiementECheckInit();
 		paiementSystemeInit();
 		paiementParInit();
 		transactionIdInit();
@@ -5642,6 +5768,8 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				return oPaiementScolaire.paiementEspeces;
 			case "paiementCheque":
 				return oPaiementScolaire.paiementCheque;
+			case "paiementECheck":
+				return oPaiementScolaire.paiementECheck;
 			case "paiementSysteme":
 				return oPaiementScolaire.paiementSysteme;
 			case "paiementPar":
@@ -5781,6 +5909,11 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			case "paiementCheque":
 				if(val != null)
 					setPaiementCheque(val);
+				sauvegardes.add(var);
+				return val;
+			case "paiementECheck":
+				if(val != null)
+					setPaiementECheck(val);
 				sauvegardes.add(var);
 				return val;
 			case "paiementSysteme":
@@ -6100,6 +6233,12 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				Boolean paiementCheque = (Boolean)solrDocument.get("paiementCheque_stored_boolean");
 				if(paiementCheque != null)
 					oPaiementScolaire.setPaiementCheque(paiementCheque);
+			}
+
+			if(sauvegardes.contains("paiementECheck")) {
+				Boolean paiementECheck = (Boolean)solrDocument.get("paiementECheck_stored_boolean");
+				if(paiementECheck != null)
+					oPaiementScolaire.setPaiementECheck(paiementECheck);
 			}
 
 			if(sauvegardes.contains("paiementSysteme")) {
@@ -6430,6 +6569,10 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			document.addField("paiementCheque_indexed_boolean", paiementCheque);
 			document.addField("paiementCheque_stored_boolean", paiementCheque);
 		}
+		if(paiementECheck != null) {
+			document.addField("paiementECheck_indexed_boolean", paiementECheck);
+			document.addField("paiementECheck_stored_boolean", paiementECheck);
+		}
 		if(paiementSysteme != null) {
 			document.addField("paiementSysteme_indexed_boolean", paiementSysteme);
 			document.addField("paiementSysteme_stored_boolean", paiementSysteme);
@@ -6591,6 +6734,8 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				return "paiementEspeces_indexed_boolean";
 			case "paiementCheque":
 				return "paiementCheque_indexed_boolean";
+			case "paiementECheck":
+				return "paiementECheck_indexed_boolean";
 			case "paiementSysteme":
 				return "paiementSysteme_indexed_boolean";
 			case "paiementPar":
@@ -6806,6 +6951,10 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		if(paiementCheque != null)
 			oPaiementScolaire.setPaiementCheque(paiementCheque);
 
+		Boolean paiementECheck = (Boolean)solrDocument.get("paiementECheck_stored_boolean");
+		if(paiementECheck != null)
+			oPaiementScolaire.setPaiementECheck(paiementECheck);
+
 		Boolean paiementSysteme = (Boolean)solrDocument.get("paiementSysteme_stored_boolean");
 		if(paiementSysteme != null)
 			oPaiementScolaire.setPaiementSysteme(paiementSysteme);
@@ -6902,6 +7051,8 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				requeteApi.addVars("paiementEspeces");
 			if(!Objects.equals(paiementCheque, original.getPaiementCheque()))
 				requeteApi.addVars("paiementCheque");
+			if(!Objects.equals(paiementECheck, original.getPaiementECheck()))
+				requeteApi.addVars("paiementECheck");
 			if(!Objects.equals(paiementSysteme, original.getPaiementSysteme()))
 				requeteApi.addVars("paiementSysteme");
 			if(!Objects.equals(paiementPar, original.getPaiementPar()))
@@ -6939,7 +7090,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), inscriptionCle, enfantNomCompletPrefere, enfantDateNaissance, mereNomCompletPrefere, pereNomCompletPrefere, inscriptionPaimentChaqueMois, inscriptionPaimentComplet, paiementDescription, paiementDate, paiementMontant, paiementEspeces, paiementCheque, paiementSysteme, paiementPar, transactionId, customerProfileId, transactionStatus, paiementRecu, fraisMontant, fraisPremierDernier, fraisInscription, fraisMois, fraisRetard, fraisMontantDu, fraisMontantFuture, paiementNomCourt);
+		return Objects.hash(super.hashCode(), inscriptionCle, enfantNomCompletPrefere, enfantDateNaissance, mereNomCompletPrefere, pereNomCompletPrefere, inscriptionPaimentChaqueMois, inscriptionPaimentComplet, paiementDescription, paiementDate, paiementMontant, paiementEspeces, paiementCheque, paiementECheck, paiementSysteme, paiementPar, transactionId, customerProfileId, transactionStatus, paiementRecu, fraisMontant, fraisPremierDernier, fraisInscription, fraisMois, fraisRetard, fraisMontantDu, fraisMontantFuture, paiementNomCourt);
 	}
 
 	////////////
@@ -6965,6 +7116,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				&& Objects.equals( paiementMontant, that.paiementMontant )
 				&& Objects.equals( paiementEspeces, that.paiementEspeces )
 				&& Objects.equals( paiementCheque, that.paiementCheque )
+				&& Objects.equals( paiementECheck, that.paiementECheck )
 				&& Objects.equals( paiementSysteme, that.paiementSysteme )
 				&& Objects.equals( paiementPar, that.paiementPar )
 				&& Objects.equals( transactionId, that.transactionId )
@@ -7001,6 +7153,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		sb.append( ", paiementMontant: " ).append(paiementMontant);
 		sb.append( ", paiementEspeces: " ).append(paiementEspeces);
 		sb.append( ", paiementCheque: " ).append(paiementCheque);
+		sb.append( ", paiementECheck: " ).append(paiementECheck);
 		sb.append( ", paiementSysteme: " ).append(paiementSysteme);
 		sb.append( ", paiementPar: \"" ).append(paiementPar).append( "\"" );
 		sb.append( ", transactionId: \"" ).append(transactionId).append( "\"" );

@@ -19,11 +19,11 @@ import org.computate.scolaire.enUS.season.SchoolSeason;
  * Color: green
  * IconGroup: duotone
  * IconName: graduation-cap
- * Role.enUS: SiteAdmin
+ * Role.enUS: SiteManager
  * ApiUri.enUS: /api/session
  * ApiTag.enUS: Session
  * AName.enUS: a session
- * Role.frFR: SiteAdmin
+ * Role.frFR: SiteManager
  * ApiUri.frFR: /api/session
  * ApiTag.frFR: Session
  * AName.frFR: une session

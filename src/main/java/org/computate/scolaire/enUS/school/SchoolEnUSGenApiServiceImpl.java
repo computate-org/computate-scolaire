@@ -109,7 +109,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 		try {
 			LOGGER.info(String.format("postSchool started. "));
 
-			List<String> roles = Arrays.asList("SiteAdmin");
+			List<String> roles = Arrays.asList("SiteManager");
 			if(
 					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
 					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
@@ -512,7 +512,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 		try {
 			LOGGER.info(String.format("patchSchool started. "));
 
-			List<String> roles = Arrays.asList("SiteAdmin");
+			List<String> roles = Arrays.asList("SiteManager");
 			if(
 					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
 					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
@@ -1269,7 +1269,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchool(siteContext, operationRequest);
 		try {
 
-			List<String> roles = Arrays.asList("SiteAdmin");
+			List<String> roles = Arrays.asList("SiteManager");
 			List<String> roleLires = Arrays.asList("");
 			if(
 					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
@@ -1356,7 +1356,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchool(siteContext, operationRequest);
 		try {
 
-			List<String> roles = Arrays.asList("SiteAdmin");
+			List<String> roles = Arrays.asList("SiteManager");
 			List<String> roleLires = Arrays.asList("");
 			if(
 					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
@@ -1484,7 +1484,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 		try {
 			LOGGER.info(String.format("putimportSchool started. "));
 
-			List<String> roles = Arrays.asList("SiteAdmin");
+			List<String> roles = Arrays.asList("SiteManager");
 			if(
 					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
 					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
@@ -1669,7 +1669,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 		try {
 			LOGGER.info(String.format("putmergeSchool started. "));
 
-			List<String> roles = Arrays.asList("SiteAdmin");
+			List<String> roles = Arrays.asList("SiteManager");
 			if(
 					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
 					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
@@ -1852,7 +1852,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 		try {
 			LOGGER.info(String.format("putcopySchool started. "));
 
-			List<String> roles = Arrays.asList("SiteAdmin");
+			List<String> roles = Arrays.asList("SiteManager");
 			if(
 					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
 					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
@@ -2278,7 +2278,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchool(siteContext, operationRequest);
 		try {
 
-			List<String> roles = Arrays.asList("SiteAdmin");
+			List<String> roles = Arrays.asList("SiteManager");
 			List<String> roleLires = Arrays.asList("");
 			if(
 					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)

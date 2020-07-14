@@ -64,7 +64,7 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 public abstract class AnneeScolaireGen<DEV> extends Cluster {
 	protected static final Logger LOGGER = LoggerFactory.getLogger(AnneeScolaire.class);
 
-	public static final List<String> ROLES = Arrays.asList("SiteAdmin");
+	public static final List<String> ROLES = Arrays.asList("SiteManager");
 	public static final List<String> ROLE_READS = Arrays.asList("");
 
 	public static final String AnneeScolaire_UnNom = "une année";
@@ -1489,7 +1489,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 	}
 
 	public String nomAffichageSessionDateDebut() {
-		return "début de la session";
+		return "début de l'année";
 	}
 
 	public String htmTooltipSessionDateDebut() {
@@ -1524,7 +1524,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "AnneeScolaireSessionDateDebut").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-orange ").f();
-							e("label").a("for", classeApiMethodeMethode, "_sessionDateDebut").a("class", "").f().sx("début de la session").g("label");
+							e("label").a("for", classeApiMethodeMethode, "_sessionDateDebut").a("class", "").f().sx("début de l'année").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row  ").f();
 							{ e("div").a("class", "w3-cell ").f();
@@ -1751,7 +1751,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 	}
 
 	public String nomAffichageSessionDateFin() {
-		return "fin de la session";
+		return "fin de l'année";
 	}
 
 	public String htmTooltipSessionDateFin() {
@@ -1786,7 +1786,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "AnneeScolaireSessionDateFin").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-orange ").f();
-							e("label").a("for", classeApiMethodeMethode, "_sessionDateFin").a("class", "").f().sx("fin de la session").g("label");
+							e("label").a("for", classeApiMethodeMethode, "_sessionDateFin").a("class", "").f().sx("fin de l'année").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row  ").f();
 							{ e("div").a("class", "w3-cell ").f();

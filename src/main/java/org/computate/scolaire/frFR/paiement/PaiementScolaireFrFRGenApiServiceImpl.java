@@ -109,7 +109,7 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 		try {
 			LOGGER.info(String.format("postPaiementScolaire a démarré. "));
 
-			List<String> roles = Arrays.asList("SiteAdmin");
+			List<String> roles = Arrays.asList("SiteManager");
 			if(
 					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
 					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
@@ -493,6 +493,19 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 							});
 						}));
 						break;
+					case "paiementECheck":
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "paiementECheck", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur PaiementScolaire.paiementECheck a échoué", b.cause())));
+							});
+						}));
+						break;
 					case "paiementSysteme":
 						futures.add(Future.future(a -> {
 							tx.preparedQuery(SiteContexteFrFR.SQL_setD
@@ -701,7 +714,7 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 		try {
 			LOGGER.info(String.format("putimportPaiementScolaire a démarré. "));
 
-			List<String> roles = Arrays.asList("SiteAdmin");
+			List<String> roles = Arrays.asList("SiteManager");
 			if(
 					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
 					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
@@ -886,7 +899,7 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 		try {
 			LOGGER.info(String.format("putfusionPaiementScolaire a démarré. "));
 
-			List<String> roles = Arrays.asList("SiteAdmin");
+			List<String> roles = Arrays.asList("SiteManager");
 			if(
 					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
 					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
@@ -1069,7 +1082,7 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 		try {
 			LOGGER.info(String.format("putcopiePaiementScolaire a démarré. "));
 
-			List<String> roles = Arrays.asList("SiteAdmin");
+			List<String> roles = Arrays.asList("SiteManager");
 			if(
 					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
 					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
@@ -1464,6 +1477,19 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 							});
 						}));
 						break;
+					case "paiementECheck":
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "paiementECheck", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur PaiementScolaire.paiementECheck a échoué", b.cause())));
+							});
+						}));
+						break;
 					case "paiementSysteme":
 						futures.add(Future.future(a -> {
 							tx.preparedQuery(SiteContexteFrFR.SQL_setD
@@ -1670,7 +1696,7 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 		try {
 			LOGGER.info(String.format("patchPaiementScolaire a démarré. "));
 
-			List<String> roles = Arrays.asList("SiteAdmin");
+			List<String> roles = Arrays.asList("SiteManager");
 			if(
 					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
 					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
@@ -2355,6 +2381,34 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 							}));
 						}
 						break;
+					case "setPaiementECheck":
+						if(jsonObject.getBoolean(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "paiementECheck")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur PaiementScolaire.paiementECheck a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setPaiementECheck(jsonObject.getBoolean(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "paiementECheck", o2.jsonPaiementECheck())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur PaiementScolaire.paiementECheck a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
 					case "setPaiementSysteme":
 						if(jsonObject.getBoolean(methodeNom) == null) {
 							futures.add(Future.future(a -> {
@@ -2742,7 +2796,7 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourPaiementScolaire(siteContexte, operationRequete);
 		try {
 
-			List<String> roles = Arrays.asList("SiteAdmin");
+			List<String> roles = Arrays.asList("SiteManager");
 			List<String> roleLires = Arrays.asList("User");
 			if(
 					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
@@ -2829,7 +2883,7 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourPaiementScolaire(siteContexte, operationRequete);
 		try {
 
-			List<String> roles = Arrays.asList("SiteAdmin");
+			List<String> roles = Arrays.asList("SiteManager");
 			List<String> roleLires = Arrays.asList("User");
 			if(
 					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
@@ -2961,7 +3015,7 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourPaiementScolaire(siteContexte, operationRequete);
 		try {
 
-			List<String> roles = Arrays.asList("SiteAdmin");
+			List<String> roles = Arrays.asList("SiteManager");
 			List<String> roleLires = Arrays.asList("User");
 			if(
 					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)

@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.age;            
+package org.computate.scolaire.frFR.age;             
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -54,8 +54,8 @@ import org.computate.scolaire.frFR.session.SessionScolaire;
  * IconeGroupe: duotone
  * IconeNom: birthday-cake
  * 
- * Role.frFR: SiteAdmin
- * Role.enUS: SiteAdmin
+ * Role.frFR: SiteManager
+ * Role.enUS: SiteManager
 */                                            
 public class AgeScolaire extends AgeScolaireGen<Cluster> {
 

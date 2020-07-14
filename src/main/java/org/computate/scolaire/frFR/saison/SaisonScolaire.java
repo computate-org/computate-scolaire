@@ -58,8 +58,8 @@ import org.computate.scolaire.frFR.session.SessionScolaire;
  * IconeGroupe: regular
  * IconeNom: sun
  * 
- * Role.frFR: SiteAdmin
- * Role.enUS: SiteAdmin
+ * Role.frFR: SiteManager
+ * Role.enUS: SiteManager
 */                             
 public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 

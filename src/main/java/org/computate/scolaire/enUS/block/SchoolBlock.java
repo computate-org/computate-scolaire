@@ -20,11 +20,11 @@ import org.computate.scolaire.enUS.search.SearchList;
  * Color: indigo
  * IconGroup: regular
  * IconName: bell
- * Role.enUS: SiteAdmin
+ * Role.enUS: SiteManager
  * ApiUri.enUS: /api/block
  * ApiTag.enUS: Block
  * AName.enUS: a block
- * Role.frFR: SiteAdmin
+ * Role.frFR: SiteManager
  * ApiUri.frFR: /api/bloc
  * ApiTag.frFR: Bloc
  * AName.frFR: un bloc

@@ -18,11 +18,11 @@ import org.computate.scolaire.enUS.session.SchoolSession;
  * Color: blue
  * IconGroup: duotone
  * IconName: birthday-cake
- * Role.enUS: SiteAdmin
+ * Role.enUS: SiteManager
  * ApiUri.enUS: /api/age
  * ApiTag.enUS: Age
  * AName.enUS: an age
- * Role.frFR: SiteAdmin
+ * Role.frFR: SiteManager
  * ApiUri.frFR: /api/age
  * ApiTag.frFR: Age
  * AName.frFR: un âge

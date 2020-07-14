@@ -111,7 +111,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 		try {
 			LOGGER.info(String.format("postSessionScolaire a démarré. "));
 
-			List<String> roles = Arrays.asList("SiteAdmin");
+			List<String> roles = Arrays.asList("SiteManager");
 			if(
 					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
 					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
@@ -467,7 +467,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 		try {
 			LOGGER.info(String.format("putimportSessionScolaire a démarré. "));
 
-			List<String> roles = Arrays.asList("SiteAdmin");
+			List<String> roles = Arrays.asList("SiteManager");
 			if(
 					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
 					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
@@ -652,7 +652,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 		try {
 			LOGGER.info(String.format("putfusionSessionScolaire a démarré. "));
 
-			List<String> roles = Arrays.asList("SiteAdmin");
+			List<String> roles = Arrays.asList("SiteManager");
 			if(
 					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
 					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
@@ -835,7 +835,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 		try {
 			LOGGER.info(String.format("putcopieSessionScolaire a démarré. "));
 
-			List<String> roles = Arrays.asList("SiteAdmin");
+			List<String> roles = Arrays.asList("SiteManager");
 			if(
 					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
 					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
@@ -1195,7 +1195,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 		try {
 			LOGGER.info(String.format("patchSessionScolaire a démarré. "));
 
-			List<String> roles = Arrays.asList("SiteAdmin");
+			List<String> roles = Arrays.asList("SiteManager");
 			if(
 					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
 					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
@@ -1848,7 +1848,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourSessionScolaire(siteContexte, operationRequete);
 		try {
 
-			List<String> roles = Arrays.asList("SiteAdmin");
+			List<String> roles = Arrays.asList("SiteManager");
 			List<String> roleLires = Arrays.asList("");
 			if(
 					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
@@ -1935,7 +1935,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourSessionScolaire(siteContexte, operationRequete);
 		try {
 
-			List<String> roles = Arrays.asList("SiteAdmin");
+			List<String> roles = Arrays.asList("SiteManager");
 			List<String> roleLires = Arrays.asList("");
 			if(
 					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
@@ -2067,7 +2067,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourSessionScolaire(siteContexte, operationRequete);
 		try {
 
-			List<String> roles = Arrays.asList("SiteAdmin");
+			List<String> roles = Arrays.asList("SiteManager");
 			List<String> roleLires = Arrays.asList("");
 			if(
 					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)

@@ -100,8 +100,8 @@ import org.computate.scolaire.frFR.saison.SaisonScolaire;
  * IconeGroupe: solid
  * IconeNom: edit
  * 
- * Role.frFR: SiteAdmin
- * Role.enUS: SiteAdmin
+ * Role.frFR: SiteManager
+ * Role.enUS: SiteManager
  * RoleSession: true
  * RoleUtilisateur: true
 */  

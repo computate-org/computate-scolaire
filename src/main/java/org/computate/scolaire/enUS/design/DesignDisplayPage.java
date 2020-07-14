@@ -337,6 +337,7 @@ public class DesignDisplayPage extends DesignDisplayPageGen<DesignDisplayGenPage
 			l.addFilterQuery("yearKey_indexed_long:" + year_.getPk());
 			l.setC(SchoolBlock.class);
 			l.setStore(true);
+			l.setRows(100);
 			l.addSort("seasonStartDate_indexed_date", ORDER.asc);
 			l.addSort("sessionEndDate_indexed_date", ORDER.asc);
 			l.addSort("ageStart_indexed_int", ORDER.asc);

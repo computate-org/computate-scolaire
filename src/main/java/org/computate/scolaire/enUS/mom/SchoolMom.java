@@ -17,11 +17,11 @@ import org.computate.scolaire.enUS.search.SearchList;
  * Color: pink
  * IconGroup: regular
  * IconName: female
- * Role.enUS: SiteAdmin
+ * Role.enUS: SiteManager
  * ApiUri.enUS: /api/mom
  * ApiTag.enUS: Mom
  * AName.enUS: a mom
- * Role.frFR: SiteAdmin
+ * Role.frFR: SiteManager
  * ApiUri.frFR: /api/mere
  * ApiTag.frFR: Mère
  * AName.frFR: une mère

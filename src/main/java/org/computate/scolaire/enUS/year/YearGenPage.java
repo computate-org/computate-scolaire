@@ -42,7 +42,7 @@ import org.apache.solr.client.solrj.SolrQuery.SortClause;
  **/
 public class YearGenPage extends YearGenPageGen<ClusterPage> {
 
-	public static final List<String> ROLES = Arrays.asList("SiteAdmin");
+	public static final List<String> ROLES = Arrays.asList("SiteManager");
 	public static final List<String> ROLE_READS = Arrays.asList("");
 
 	/**
@@ -169,8 +169,6 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSessionStartDate("Page");
 			o.htmSessionEndDate("Page");
-			o.htmYearStart("Page");
-			o.htmYearEnd("Page");
 			o.htmYearEnrollmentFee("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
@@ -193,8 +191,6 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSessionStartDate("POST");
 			o.htmSessionEndDate("POST");
-			o.htmYearStart("POST");
-			o.htmYearEnd("POST");
 			o.htmYearEnrollmentFee("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
@@ -239,8 +235,6 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSessionStartDate("PUTCopy");
 			o.htmSessionEndDate("PUTCopy");
-			o.htmYearStart("PUTCopy");
-			o.htmYearEnd("PUTCopy");
 			o.htmYearEnrollmentFee("PUTCopy");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
@@ -253,6 +247,8 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 			o.htmUserId("PUTCopy");
 			o.htmUserKey("PUTCopy");
 			o.htmSeasonStartDate("PUTCopy");
+			o.htmYearStart("PUTCopy");
+			o.htmYearEnd("PUTCopy");
 		} g("div");
 	}
 
@@ -268,8 +264,6 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSessionStartDate("PATCH");
 			o.htmSessionEndDate("PATCH");
-			o.htmYearStart("PATCH");
-			o.htmYearEnd("PATCH");
 			o.htmYearEnrollmentFee("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
@@ -282,6 +276,8 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 			o.htmUserId("PATCH");
 			o.htmUserKey("PATCH");
 			o.htmSeasonStartDate("PATCH");
+			o.htmYearStart("PATCH");
+			o.htmYearEnd("PATCH");
 		} g("div");
 	}
 
@@ -299,8 +295,6 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSessionStartDate("Search");
 			o.htmSessionEndDate("Search");
-			o.htmYearStart("Search");
-			o.htmYearEnd("Search");
 			o.htmYearEnrollmentFee("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
@@ -314,6 +308,8 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 			o.htmUserKey("Search");
 			o.htmObjectTitle("Search");
 			o.htmSeasonStartDate("Search");
+			o.htmYearStart("Search");
+			o.htmYearEnd("Search");
 		} g("div");
 	}
 

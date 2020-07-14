@@ -20,11 +20,11 @@ import org.computate.scolaire.enUS.search.SearchList;
  * Color: light-blue
  * IconGroup: regular
  * IconName: male
- * Role.enUS: SiteAdmin
+ * Role.enUS: SiteManager
  * ApiUri.enUS: /api/dad
  * ApiTag.enUS: Dad
  * AName.enUS: a dad
- * Role.frFR: SiteAdmin
+ * Role.frFR: SiteManager
  * ApiUri.frFR: /api/pere
  * ApiTag.frFR: Père
  * AName.frFR: un père

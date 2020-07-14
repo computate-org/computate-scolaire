@@ -20,11 +20,11 @@ import org.computate.scolaire.enUS.session.SchoolSession;
  * Color: yellow
  * IconGroup: regular
  * IconName: sun
- * Role.enUS: SiteAdmin
+ * Role.enUS: SiteManager
  * ApiUri.enUS: /api/season
  * ApiTag.enUS: Season
  * AName.enUS: a season
- * Role.frFR: SiteAdmin
+ * Role.frFR: SiteManager
  * ApiUri.frFR: /api/saison
  * ApiTag.frFR: Saison
  * AName.frFR: une saison

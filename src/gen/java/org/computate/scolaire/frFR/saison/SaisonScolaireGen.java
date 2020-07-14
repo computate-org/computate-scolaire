@@ -63,7 +63,7 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 public abstract class SaisonScolaireGen<DEV> extends Cluster {
 	protected static final Logger LOGGER = LoggerFactory.getLogger(SaisonScolaire.class);
 
-	public static final List<String> ROLES = Arrays.asList("SiteAdmin");
+	public static final List<String> ROLES = Arrays.asList("SiteManager");
 	public static final List<String> ROLE_READS = Arrays.asList("");
 
 	public static final String SaisonScolaire_UnNom = "une saison";

@@ -61,8 +61,8 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * IconeGroupe: solid
  * IconeNom: search-dollar
  * 
- * Role.frFR: SiteAdmin
- * Role.enUS: SiteAdmin
+ * Role.frFR: SiteManager
+ * Role.enUS: SiteManager
  * RoleLire.frFR: User
  * RoleLire.enUS: User
  * 
@@ -842,12 +842,27 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: paymentSystem
+	 * Var.enUS: paymentECheck
 	 * Indexe: true
 	 * Stocke: true
 	 * Definir: true
 	 * HtmlLigne: 3
 	 * HtmlCellule: 5
+	 * NomAffichage.frFR: e-check
+	 * NomAffichage.enUS: e-check
+	 */                     
+	protected void _paiementECheck(Couverture<Boolean> c) {
+		c.o(false);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: paymentSystem
+	 * Indexe: true
+	 * Stocke: true
+	 * Definir: true
+	 * HtmlLigne: 3
+	 * HtmlCellule: 6
 	 * NomAffichage.frFR: authorize.net
 	 * NomAffichage.enUS: authorize.net
 	 */                     
@@ -1143,9 +1158,9 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 
 		StringBuilder o = new StringBuilder();
 		if(fraisMontant != null) {
-			if(inscription_ != null && fraisPremierDernier)
+			if(inscription_ != null && fraisPremierDernier && inscription_.getSessionDateDebut() != null && inscription_.getSessionDateFin() != null)
 				o.append(String.format("Frais de %s + %s", fd.format(inscription_.getSessionDateDebut().plusWeeks(1)), fd.format(inscription_.getSessionDateFin())));
-			else if(inscription_ != null && fraisInscription)
+			else if(inscription_ != null && fraisInscription && inscription_.getSessionDateDebut() != null && inscription_.getSessionDateFin() != null)
 				o.append(String.format("Frais d'inscription %s-%s", inscription_.getSessionDateDebut().getYear(), inscription_.getSessionDateFin().getYear()));
 			else if(inscription_ != null && fraisRetard)
 				o.append("");
@@ -1237,13 +1252,13 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 		StringBuilder o = new StringBuilder();
 
 		if(fraisMontant != null) {
-			if(inscription_ != null && fraisPremierDernier)
+			if(inscription_ != null && fraisPremierDernier && inscription_.getSessionDateDebut() != null && inscription_.getSessionDateFin() != null)
 				o.append(String.format("%s frais de %s + %s", fn.format(fraisMontant), fd.format(inscription_.getSessionDateDebut()), fd.format(inscription_.getSessionDateFin())));
-			else if(inscription_ != null && fraisInscription)
+			else if(inscription_ != null && fraisInscription && inscription_.getSessionDateDebut() != null && inscription_.getSessionDateFin() != null)
 				o.append(String.format("%s frais d'inscription %s-%s", fn.format(fraisMontant), fd.format(inscription_.getSessionDateDebut()), fd.format(inscription_.getSessionDateFin())));
-			else if(inscription_ != null && fraisRetard)
+			else if(inscription_ != null && fraisRetard && fraisMontant != null)
 				o.append(String.format("%s", fn.format(fraisMontant)));
-			else
+			else if(fraisMontant != null && paiementDate != null)
 				o.append(String.format("%s frais de %s", fn.format(fraisMontant), fd.format(paiementDate.plusMonths(1))));
 
 			if(enfantNomCompletPrefere != null)
@@ -1339,13 +1354,13 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 		if(fraisMontant != null) {
 			if(paiementDate != null)
 				o.append(" ").append(paiementDate.format(fd2));
-			if(inscription_ != null && fraisPremierDernier)
+			if(inscription_ != null && fraisPremierDernier && inscription_.getSessionDateDebut() != null && inscription_.getSessionDateFin() != null)
 				o.append(String.format("%s frais de %s + %s", fn.format(fraisMontant), fd.format(inscription_.getSessionDateDebut()), fd.format(inscription_.getSessionDateFin())));
-			else if(inscription_ != null && fraisInscription)
+			else if(inscription_ != null && fraisInscription && inscription_.getSessionDateDebut() != null && inscription_.getSessionDateFin() != null)
 				o.append(String.format("%s frais d'inscription %s-%s", fn.format(fraisMontant), fd.format(inscription_.getSessionDateDebut()), fd.format(inscription_.getSessionDateFin())));
-			else if(inscription_ != null && fraisRetard)
+			else if(inscription_ != null && fraisRetard && fraisMontant != null)
 				o.append(String.format("%s", fn.format(fraisMontant)));
-			else
+			else if(fraisMontant != null && paiementDate != null)
 				o.append(String.format("%s frais de %s", fn.format(fraisMontant), fd.format(paiementDate.plusMonths(1))));
 
 			if(enfantNomCompletPrefere != null)

@@ -43,7 +43,7 @@ import org.apache.solr.client.solrj.SolrQuery.SortClause;
  **/
 public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 
-	public static final List<String> ROLES = Arrays.asList("SiteAdmin");
+	public static final List<String> ROLES = Arrays.asList("SiteManager");
 	public static final List<String> ROLE_READS = Arrays.asList("User");
 
 	/**
@@ -154,6 +154,7 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 			o.htmPaiementMontant("Page");
 			o.htmPaiementEspeces("Page");
 			o.htmPaiementCheque("Page");
+			o.htmPaiementECheck("Page");
 			o.htmPaiementSysteme("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
@@ -196,6 +197,7 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 			o.htmPaiementMontant("POST");
 			o.htmPaiementEspeces("POST");
 			o.htmPaiementCheque("POST");
+			o.htmPaiementECheck("POST");
 			o.htmPaiementSysteme("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
@@ -260,6 +262,7 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 			o.htmPaiementMontant("PUTCopie");
 			o.htmPaiementEspeces("PUTCopie");
 			o.htmPaiementCheque("PUTCopie");
+			o.htmPaiementECheck("PUTCopie");
 			o.htmPaiementSysteme("PUTCopie");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
@@ -313,6 +316,7 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 			o.htmPaiementMontant("PATCH");
 			o.htmPaiementEspeces("PATCH");
 			o.htmPaiementCheque("PATCH");
+			o.htmPaiementECheck("PATCH");
 			o.htmPaiementSysteme("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
@@ -368,6 +372,7 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 			o.htmPaiementMontant("Recherche");
 			o.htmPaiementEspeces("Recherche");
 			o.htmPaiementCheque("Recherche");
+			o.htmPaiementECheck("Recherche");
 			o.htmPaiementSysteme("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();

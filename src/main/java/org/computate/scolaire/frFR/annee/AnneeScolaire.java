@@ -54,8 +54,8 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * IconeGroupe: regular
  * IconeNom: calendar-check
  * 
- * Role.frFR: SiteAdmin
- * Role.enUS: SiteAdmin
+ * Role.frFR: SiteManager
+ * Role.enUS: SiteManager
 */   
 public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 
@@ -328,8 +328,8 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	 * Definir: true
 	 * HtmlLigne: 3
 	 * HtmlCellule: 1
-	 * NomAffichage.frFR: début de la session
-	 * NomAffichage.enUS: start of the session
+	 * NomAffichage.frFR: début de l'année
+	 * NomAffichage.enUS: start of the year
 	 */                   
 	protected void _sessionDateDebut(Couverture<LocalDate> c) {}
 
@@ -372,8 +372,8 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	 * Definir: true
 	 * HtmlLigne: 3
 	 * HtmlCellule: 1
-	 * NomAffichage.frFR: fin de la session
-	 * NomAffichage.enUS: end of the session
+	 * NomAffichage.frFR: fin de l'année
+	 * NomAffichage.enUS: end of the year
 	 */                   
 	protected void _sessionDateFin(Couverture<LocalDate> c) {}
 
@@ -399,8 +399,6 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	 * Indexe: true
 	 * Stocke: true
 	 * Definir: true
-	 * HtmlLigne: 3
-	 * HtmlCelulle: 1
 	 * NomAffichage.frFR: début de l'année
 	 * NomAffichage.enUS: start of year
 	 * r: sessionDateDebut
@@ -417,8 +415,6 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	 * Indexe: true
 	 * Stocke: true
 	 * Definir: true
-	 * HtmlLigne: 3
-	 * HtmlCelulle: 2
 	 * NomAffichage.frFR: le fin de l'année
 	 * NomAffichage.enUS: end of year
 	 * r: sessionDateFin

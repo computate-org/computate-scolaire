@@ -42,7 +42,7 @@ import org.apache.solr.client.solrj.SolrQuery.SortClause;
  **/
 public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 
-	public static final List<String> ROLES = Arrays.asList("SiteAdmin");
+	public static final List<String> ROLES = Arrays.asList("SiteManager");
 	public static final List<String> ROLE_READS = Arrays.asList("User");
 
 	/**
@@ -153,6 +153,7 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 			o.htmPaymentAmount("Page");
 			o.htmPaymentCash("Page");
 			o.htmPaymentCheck("Page");
+			o.htmPaymentECheck("Page");
 			o.htmPaymentSystem("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
@@ -195,6 +196,7 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 			o.htmPaymentAmount("POST");
 			o.htmPaymentCash("POST");
 			o.htmPaymentCheck("POST");
+			o.htmPaymentECheck("POST");
 			o.htmPaymentSystem("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
@@ -259,6 +261,7 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 			o.htmPaymentAmount("PUTCopy");
 			o.htmPaymentCash("PUTCopy");
 			o.htmPaymentCheck("PUTCopy");
+			o.htmPaymentECheck("PUTCopy");
 			o.htmPaymentSystem("PUTCopy");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
@@ -312,6 +315,7 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 			o.htmPaymentAmount("PATCH");
 			o.htmPaymentCash("PATCH");
 			o.htmPaymentCheck("PATCH");
+			o.htmPaymentECheck("PATCH");
 			o.htmPaymentSystem("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
@@ -367,6 +371,7 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 			o.htmPaymentAmount("Search");
 			o.htmPaymentCash("Search");
 			o.htmPaymentCheck("Search");
+			o.htmPaymentECheck("Search");
 			o.htmPaymentSystem("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();

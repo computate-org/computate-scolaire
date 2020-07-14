@@ -25,11 +25,11 @@ import org.computate.scolaire.enUS.search.SearchList;
  * Color: green
  * IconGroup: solid
  * IconName: search-dollar
- * Role.enUS: SiteAdmin
+ * Role.enUS: SiteManager
  * ApiUri.enUS: /api/payment
  * ApiTag.enUS: Payment
  * AName.enUS: a payment
- * Role.frFR: SiteAdmin
+ * Role.frFR: SiteManager
  * ApiUri.frFR: /api/paiement
  * ApiTag.frFR: Paiement
  * AName.frFR: un paiement
@@ -233,6 +233,10 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 		c.o(false);
 	}
 
+	protected void _paymentECheck(Wrap<Boolean> c) {
+		c.o(false);
+	}
+
 	protected void _paymentSystem(Wrap<Boolean> c) {
 		c.o(false);
 	}
@@ -291,9 +295,9 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 
 		StringBuilder o = new StringBuilder();
 		if(chargeAmount != null) {
-			if(enrollment_ != null && chargeFirstLast)
+			if(enrollment_ != null && chargeFirstLast && enrollment_.getSessionStartDate() != null && enrollment_.getSessionEndDate() != null)
 				o.append(String.format("%s + %s tuition", fd.format(enrollment_.getSessionStartDate().plusWeeks(1)), fd.format(enrollment_.getSessionEndDate())));
-			else if(enrollment_ != null && chargeEnrollment)
+			else if(enrollment_ != null && chargeEnrollment && enrollment_.getSessionStartDate() != null && enrollment_.getSessionEndDate() != null)
 				o.append(String.format("%s-%s enrollment fee", enrollment_.getSessionStartDate().getYear(), enrollment_.getSessionEndDate().getYear()));
 			else if(enrollment_ != null && chargeLateFee)
 				o.append("");
@@ -321,13 +325,13 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 		StringBuilder o = new StringBuilder();
 
 		if(chargeAmount != null) {
-			if(enrollment_ != null && chargeFirstLast)
+			if(enrollment_ != null && chargeFirstLast && enrollment_.getSessionStartDate() != null && enrollment_.getSessionEndDate() != null)
 				o.append(String.format("%s %s + %s tuition", fn.format(chargeAmount), fd.format(enrollment_.getSessionStartDate()), fd.format(enrollment_.getSessionEndDate())));
-			else if(enrollment_ != null && chargeEnrollment)
+			else if(enrollment_ != null && chargeEnrollment && enrollment_.getSessionStartDate() != null && enrollment_.getSessionEndDate() != null)
 				o.append(String.format("%s %s-%s enrollment fee", fn.format(chargeAmount), fd.format(enrollment_.getSessionStartDate()), fd.format(enrollment_.getSessionEndDate())));
-			else if(enrollment_ != null && chargeLateFee)
+			else if(enrollment_ != null && chargeLateFee && chargeAmount != null)
 				o.append(String.format("%s", fn.format(chargeAmount)));
-			else
+			else if(chargeAmount != null && paymentDate != null)
 				o.append(String.format("%s %s tuition", fn.format(chargeAmount), fd.format(paymentDate.plusMonths(1))));
 
 			if(childCompleteNamePreferred != null)
@@ -363,13 +367,13 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 		if(chargeAmount != null) {
 			if(paymentDate != null)
 				o.append(" ").append(paymentDate.format(fd2));
-			if(enrollment_ != null && chargeFirstLast)
+			if(enrollment_ != null && chargeFirstLast && enrollment_.getSessionStartDate() != null && enrollment_.getSessionEndDate() != null)
 				o.append(String.format("%s frais de %s + %s", fn.format(chargeAmount), fd.format(enrollment_.getSessionStartDate()), fd.format(enrollment_.getSessionEndDate())));
-			else if(enrollment_ != null && chargeEnrollment)
+			else if(enrollment_ != null && chargeEnrollment && enrollment_.getSessionStartDate() != null && enrollment_.getSessionEndDate() != null)
 				o.append(String.format("%s frais d'inscription %s-%s", fn.format(chargeAmount), fd.format(enrollment_.getSessionStartDate()), fd.format(enrollment_.getSessionEndDate())));
-			else if(enrollment_ != null && chargeLateFee)
+			else if(enrollment_ != null && chargeLateFee && chargeAmount != null)
 				o.append(String.format("%s", fn.format(chargeAmount)));
-			else
+			else if(chargeAmount != null && paymentDate != null)
 				o.append(String.format("%s frais de %s", fn.format(chargeAmount), fd.format(paymentDate.plusMonths(1))));
 
 			if(childCompleteNamePreferred != null)

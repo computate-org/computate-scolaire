@@ -38,11 +38,11 @@ import org.computate.scolaire.enUS.season.SchoolSeason;
  * Color: blue-gray
  * IconGroup: solid
  * IconName: edit
- * Role.enUS: SiteAdmin
+ * Role.enUS: SiteManager
  * ApiUri.enUS: /api/enrollment
  * ApiTag.enUS: Enrollment
  * AName.enUS: an enrollment
- * Role.frFR: SiteAdmin
+ * Role.frFR: SiteManager
  * ApiUri.frFR: /api/inscription
  * ApiTag.frFR: Inscription
  * AName.frFR: une inscription

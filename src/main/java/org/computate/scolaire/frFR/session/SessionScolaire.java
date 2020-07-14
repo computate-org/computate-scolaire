@@ -55,8 +55,8 @@ import org.computate.scolaire.frFR.saison.SaisonScolaire;
  * IconeGroupe: duotone
  * IconeNom: graduation-cap
  * 
- * Role.frFR: SiteAdmin
- * Role.enUS: SiteAdmin
+ * Role.frFR: SiteManager
+ * Role.enUS: SiteManager
 */                                             
 public class SessionScolaire extends SessionScolaireGen<Cluster> {
 

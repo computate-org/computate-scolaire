@@ -97,18 +97,21 @@ public class EnrollmentPage extends EnrollmentPageGen<EnrollmentGenPage> {
 			} g("div");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile  ").f();
-				e("a")
-					.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-blue-gray ")
-					.a("href", "/refresh-enrollment/" + schoolEnrollment.getPk())
-					.f().sx("Refresh payments for this enrollment")
-				.g("a");
+			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile w3-padding ").f();
+				e("div").a("class", "").f().sx("It may take authorize.net a minute to record your payment in the system. You can refresh your authorize.net payments here: ").g("div");
+				{ e("div").a("class", "").f();
+					e("a")
+						.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-blue-gray ")
+						.a("href", "/refresh-enrollment/" + schoolEnrollment.getPk())
+						.f().sx("Refresh payments for this enrollment")
+					.g("a");
+				} g("div");
 			} g("div");
 			if(
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 					) {
-				{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile  ").f();
+				{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile w3-padding ").f();
 					{ e("div").a("class", "").f();
 						e("button")
 							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-blue-gray ")

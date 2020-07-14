@@ -24,11 +24,11 @@ import org.computate.scolaire.enUS.search.SearchList;
  * Color: orange
  * IconGroup: regular
  * IconName: child
- * Role.enUS: SiteAdmin
+ * Role.enUS: SiteManager
  * ApiUri.enUS: /api/child
  * ApiTag.enUS: Child
  * AName.enUS: a child
- * Role.frFR: SiteAdmin
+ * Role.frFR: SiteManager
  * ApiUri.frFR: /api/enfant
  * ApiTag.frFR: Enfant
  * AName.frFR: un enfant
