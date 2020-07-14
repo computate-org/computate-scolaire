@@ -843,7 +843,7 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 	protected void _enrollmentCompleteName(Wrap<String> c) {
 		String o;
 		if(child_ != null)
-			o = String.format("enrollment for the child %s %s %s", child_.getPersonCompleteNamePreferred(), " ", year_ == null ? "" : year_.getYearShortName(), schoolLocation);
+			o = String.format("enrollment for the child %s %s %s", child_.getPersonCompleteNamePreferred(), year_ == null ? "" : year_.getYearShortName(), schoolLocation);
 		else
 			o = String.format("enrollment %s %s %s", pk, " ", year_ == null ? "" : year_.getYearShortName(), schoolLocation);
 		c.o(o);

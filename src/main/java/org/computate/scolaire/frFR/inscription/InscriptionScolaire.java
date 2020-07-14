@@ -2614,7 +2614,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	protected void _inscriptionNomComplet(Couverture<String> c) {
 		String o;
 		if(enfant_ != null)
-			o = String.format("inscription pour l'enfant %s %s %s", enfant_.getPersonneNomCompletPrefere(), " ", annee_ == null ? "" : annee_.getAnneeNomCourt(), ecoleEmplacement);
+			o = String.format("inscription pour l'enfant %s %s %s", enfant_.getPersonneNomCompletPrefere(), annee_ == null ? "" : annee_.getAnneeNomCourt(), ecoleEmplacement);
 		else
 			o = String.format("inscription %s %s %s", pk, " ", annee_ == null ? "" : annee_.getAnneeNomCourt(), ecoleEmplacement);
 		c.o(o);
