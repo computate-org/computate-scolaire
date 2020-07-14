@@ -463,6 +463,7 @@ public class PageLayout extends PageLayoutGen<Object> {
 			e("div").a("class", "site-bar-item w3-bar-item ").f();
 				e("a").a("class", "").a("href", pageHomeUri).f();
 					e("span").a("class", "site-menu-item").f();
+						e("i").a("class", "far fa-home ").f().g("i");
 						sx("Home");
 					g("span");
 				g("a");
@@ -612,7 +613,7 @@ public class PageLayout extends PageLayoutGen<Object> {
 				{ e("div").a("class", "w3-dropdown-hover ").f();
 					{ e("div").a("class", "w3-button w3-hover-khaki ").f();
 							e("i").a("class", "far fa-puzzle-piece ").f().g("i");
-							sx("designs");
+							sx("HTML");
 					} g("div");
 					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
 						HtmlPartGenPage.htmlSuggestedHtmlPartGenPage(this, id, null);
@@ -640,7 +641,7 @@ public class PageLayout extends PageLayoutGen<Object> {
 				e("a").a("class", "w3-padding ").a("href", pageUserUri).f(); 
 					e("span").a("class", "site-menu-item").f();
 						e("i").a("class", "far fa-sign-in-alt ").f().g("i");
-						sx("Login");
+						sx("Login/Register");
 					g("span");
 				g("a");
 			g("div");

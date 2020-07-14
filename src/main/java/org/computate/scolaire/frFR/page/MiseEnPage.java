@@ -1008,6 +1008,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 			e("div").a("class", "site-bar-item w3-bar-item ").f();
 				e("a").a("class", "").a("href", pageAccueilUri).f();
 					e("span").a("class", "site-menu-item").f();
+						e("i").a("class", "far fa-home ").f().g("i");
 						sx("Accueil");
 					g("span");
 				g("a");
@@ -1157,7 +1158,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 				{ e("div").a("class", "w3-dropdown-hover ").f();
 					{ e("div").a("class", "w3-button w3-hover-khaki ").f();
 							e("i").a("class", "far fa-puzzle-piece ").f().g("i");
-							sx("designs");
+							sx("HTML");
 					} g("div");
 					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
 						PartHtmlGenPage.htmlSuggerePartHtmlGenPage(this, id, null);
@@ -1217,7 +1218,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	 * r: "Déconnexion"
 	 * r.enUS: "Logout"
 	 * r: "Connexion"
-	 * r.enUS: "Login"
+	 * r.enUS: "Login/Register"
 	 * r: "écoles"
 	 * r.enUS: "schools"
 	 * r: "années"
