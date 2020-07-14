@@ -12,9 +12,9 @@ import org.computate.scolaire.enUS.search.SearchList;
  * Api: true
  * Page: true
  * Saved: true
- * Color: yellow
+ * Color: khaki
  * IconGroup: regular
- * IconName: sun
+ * IconName: puzzle-piece
  * Role.enUS: SiteAdmin
  * ApiUri.enUS: /api/html-part
  * ApiTag.enUS: Html Part

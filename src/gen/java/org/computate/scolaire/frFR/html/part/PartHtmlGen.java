@@ -75,9 +75,9 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	public static final String PartHtml_DeNom = "de part de HTML";
 	public static final String PartHtml_NomAdjectifSingulier = "part de HTML";
 	public static final String PartHtml_NomAdjectifPluriel = "part de HTMLs";
-	public static final String PartHtml_Couleur = "yellow";
+	public static final String PartHtml_Couleur = "khaki";
 	public static final String PartHtml_IconeGroupe = "regular";
-	public static final String PartHtml_IconeNom = "sun";
+	public static final String PartHtml_IconeNom = "puzzle-piece";
 	public static final Integer PartHtml_Lignes = 300;
 
 	/////////////////
@@ -395,7 +395,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlHtmlLien").f();
 					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+						{ e("div").a("class", "w3-cell-row w3-khaki ").f();
 							e("label").a("for", classeApiMethodeMethode, "_htmlLien").a("class", "").f().sx("lien").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
@@ -408,7 +408,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
 											.a("tabindex", "-1")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-khaki ")
 										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_htmlLien')); $('#", classeApiMethodeMethode, "_htmlLien').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#PartHtmlForm :input[name=pk]').val() }], 'setHtmlLien', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_htmlLien')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_htmlLien')); }); ")
 											.f();
 											e("i").a("class", "far fa-eraser ").f().g("i");
@@ -515,7 +515,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlHtmlElement").f();
 					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+						{ e("div").a("class", "w3-cell-row w3-khaki ").f();
 							e("label").a("for", classeApiMethodeMethode, "_htmlElement").a("class", "").f().sx("HTML élément").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
@@ -528,7 +528,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
 											.a("tabindex", "-1")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-khaki ")
 										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_htmlElement')); $('#", classeApiMethodeMethode, "_htmlElement').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#PartHtmlForm :input[name=pk]').val() }], 'setHtmlElement', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_htmlElement')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_htmlElement')); }); ")
 											.f();
 											e("i").a("class", "far fa-eraser ").f().g("i");
@@ -635,7 +635,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlHtmlId").f();
 					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+						{ e("div").a("class", "w3-cell-row w3-khaki ").f();
 							e("label").a("for", classeApiMethodeMethode, "_htmlId").a("class", "").f().sx("HTML ID").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
@@ -648,7 +648,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
 											.a("tabindex", "-1")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-khaki ")
 										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_htmlId')); $('#", classeApiMethodeMethode, "_htmlId').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#PartHtmlForm :input[name=pk]').val() }], 'setHtmlId', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_htmlId')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_htmlId')); }); ")
 											.f();
 											e("i").a("class", "far fa-eraser ").f().g("i");
@@ -755,7 +755,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlHtmlClasses").f();
 					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+						{ e("div").a("class", "w3-cell-row w3-khaki ").f();
 							e("label").a("for", classeApiMethodeMethode, "_htmlClasses").a("class", "").f().sx("HTML classes").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
@@ -768,7 +768,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
 											.a("tabindex", "-1")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-khaki ")
 										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_htmlClasses')); $('#", classeApiMethodeMethode, "_htmlClasses').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#PartHtmlForm :input[name=pk]').val() }], 'setHtmlClasses', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_htmlClasses')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_htmlClasses')); }); ")
 											.f();
 											e("i").a("class", "far fa-eraser ").f().g("i");
@@ -875,7 +875,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlHtmlStyle").f();
 					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+						{ e("div").a("class", "w3-cell-row w3-khaki ").f();
 							e("label").a("for", classeApiMethodeMethode, "_htmlStyle").a("class", "").f().sx("HTML style").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
@@ -888,7 +888,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
 											.a("tabindex", "-1")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-khaki ")
 										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_htmlStyle')); $('#", classeApiMethodeMethode, "_htmlStyle').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#PartHtmlForm :input[name=pk]').val() }], 'setHtmlStyle', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_htmlStyle')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_htmlStyle')); }); ")
 											.f();
 											e("i").a("class", "far fa-eraser ").f().g("i");
@@ -993,7 +993,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlHtmlAvant").f();
 					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+						{ e("div").a("class", "w3-cell-row w3-khaki ").f();
 							e("label").a("for", classeApiMethodeMethode, "_htmlAvant").a("class", "").f().sx("HTML avant").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
@@ -1006,7 +1006,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
 											.a("tabindex", "-1")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-khaki ")
 										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_htmlAvant')); $('#", classeApiMethodeMethode, "_htmlAvant').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#PartHtmlForm :input[name=pk]').val() }], 'setHtmlAvant', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_htmlAvant')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_htmlAvant')); }); ")
 											.f();
 											e("i").a("class", "far fa-eraser ").f().g("i");
@@ -1111,7 +1111,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlHtmlApres").f();
 					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+						{ e("div").a("class", "w3-cell-row w3-khaki ").f();
 							e("label").a("for", classeApiMethodeMethode, "_htmlApres").a("class", "").f().sx("HTML après").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
@@ -1124,7 +1124,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
 											.a("tabindex", "-1")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-khaki ")
 										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_htmlApres')); $('#", classeApiMethodeMethode, "_htmlApres').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#PartHtmlForm :input[name=pk]').val() }], 'setHtmlApres', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_htmlApres')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_htmlApres')); }); ")
 											.f();
 											e("i").a("class", "far fa-eraser ").f().g("i");
@@ -1229,7 +1229,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlHtmlTexte").f();
 					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+						{ e("div").a("class", "w3-cell-row w3-khaki ").f();
 							e("label").a("for", classeApiMethodeMethode, "_htmlTexte").a("class", "").f().sx("texte").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
@@ -1242,7 +1242,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
 											.a("tabindex", "-1")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-khaki ")
 										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_htmlTexte')); $('#", classeApiMethodeMethode, "_htmlTexte').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#PartHtmlForm :input[name=pk]').val() }], 'setHtmlTexte', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_htmlTexte')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_htmlTexte')); }); ")
 											.f();
 											e("i").a("class", "far fa-eraser ").f().g("i");
@@ -1349,7 +1349,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlHtmlVar").f();
 					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+						{ e("div").a("class", "w3-cell-row w3-khaki ").f();
 							e("label").a("for", classeApiMethodeMethode, "_htmlVar").a("class", "").f().sx("var").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
@@ -1362,7 +1362,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
 											.a("tabindex", "-1")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-khaki ")
 										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_htmlVar')); $('#", classeApiMethodeMethode, "_htmlVar').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#PartHtmlForm :input[name=pk]').val() }], 'setHtmlVar', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_htmlVar')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_htmlVar')); }); ")
 											.f();
 											e("i").a("class", "far fa-eraser ").f().g("i");
@@ -1469,7 +1469,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlHtmlVarSpan").f();
 					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+						{ e("div").a("class", "w3-cell-row w3-khaki ").f();
 							e("label").a("for", classeApiMethodeMethode, "_htmlVarSpan").a("class", "").f().sx("var span").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
@@ -1482,7 +1482,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
 											.a("tabindex", "-1")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-khaki ")
 										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_htmlVarSpan')); $('#", classeApiMethodeMethode, "_htmlVarSpan').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#PartHtmlForm :input[name=pk]').val() }], 'setHtmlVarSpan', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_htmlVarSpan')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_htmlVarSpan')); }); ")
 											.f();
 											e("i").a("class", "far fa-eraser ").f().g("i");
@@ -1589,7 +1589,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlHtmlVarForm").f();
 					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+						{ e("div").a("class", "w3-cell-row w3-khaki ").f();
 							e("label").a("for", classeApiMethodeMethode, "_htmlVarForm").a("class", "").f().sx("var form").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
@@ -1602,7 +1602,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
 											.a("tabindex", "-1")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-khaki ")
 										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_htmlVarForm')); $('#", classeApiMethodeMethode, "_htmlVarForm').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#PartHtmlForm :input[name=pk]').val() }], 'setHtmlVarForm', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_htmlVarForm')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_htmlVarForm')); }); ")
 											.f();
 											e("i").a("class", "far fa-eraser ").f().g("i");
@@ -1709,7 +1709,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlHtmlVarInput").f();
 					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+						{ e("div").a("class", "w3-cell-row w3-khaki ").f();
 							e("label").a("for", classeApiMethodeMethode, "_htmlVarInput").a("class", "").f().sx("var input").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
@@ -1722,7 +1722,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
 											.a("tabindex", "-1")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-khaki ")
 										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_htmlVarInput')); $('#", classeApiMethodeMethode, "_htmlVarInput').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#PartHtmlForm :input[name=pk]').val() }], 'setHtmlVarInput', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_htmlVarInput')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_htmlVarInput')); }); ")
 											.f();
 											e("i").a("class", "far fa-eraser ").f().g("i");
@@ -1829,7 +1829,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlHtmlVarForEach").f();
 					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+						{ e("div").a("class", "w3-cell-row w3-khaki ").f();
 							e("label").a("for", classeApiMethodeMethode, "_htmlVarForEach").a("class", "").f().sx("var for each").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
@@ -1842,7 +1842,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
 											.a("tabindex", "-1")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-khaki ")
 										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_htmlVarForEach')); $('#", classeApiMethodeMethode, "_htmlVarForEach').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#PartHtmlForm :input[name=pk]').val() }], 'setHtmlVarForEach', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_htmlVarForEach')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_htmlVarForEach')); }); ")
 											.f();
 											e("i").a("class", "far fa-eraser ").f().g("i");
@@ -1967,7 +1967,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlHtmlExclure").f();
 					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+						{ e("div").a("class", "w3-cell-row w3-khaki ").f();
 							e("label").a("for", classeApiMethodeMethode, "_htmlExclure").a("class", "").f().sx("HTML exclure").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
@@ -2092,7 +2092,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlPdfExclure").f();
 					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+						{ e("div").a("class", "w3-cell-row w3-khaki ").f();
 							e("label").a("for", classeApiMethodeMethode, "_pdfExclure").a("class", "").f().sx("PDF exclure").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
@@ -2217,7 +2217,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlConnecterDeconnecter").f();
 					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+						{ e("div").a("class", "w3-cell-row w3-khaki ").f();
 							e("label").a("for", classeApiMethodeMethode, "_connecterDeconnecter").a("class", "").f().sx("se connecter / se deconnecter").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
@@ -2331,7 +2331,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlTri1").f();
 					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+						{ e("div").a("class", "w3-cell-row w3-khaki ").f();
 							e("label").a("for", classeApiMethodeMethode, "_tri1").a("class", "").f().sx("tri1").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
@@ -2344,7 +2344,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
 											.a("tabindex", "-1")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-khaki ")
 										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_tri1')); $('#", classeApiMethodeMethode, "_tri1').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#PartHtmlForm :input[name=pk]').val() }], 'setTri1', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_tri1')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_tri1')); }); ")
 											.f();
 											e("i").a("class", "far fa-eraser ").f().g("i");
@@ -2458,7 +2458,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlTri2").f();
 					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+						{ e("div").a("class", "w3-cell-row w3-khaki ").f();
 							e("label").a("for", classeApiMethodeMethode, "_tri2").a("class", "").f().sx("tri2").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
@@ -2471,7 +2471,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
 											.a("tabindex", "-1")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-khaki ")
 										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_tri2')); $('#", classeApiMethodeMethode, "_tri2').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#PartHtmlForm :input[name=pk]').val() }], 'setTri2', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_tri2')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_tri2')); }); ")
 											.f();
 											e("i").a("class", "far fa-eraser ").f().g("i");
@@ -2585,7 +2585,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlTri3").f();
 					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+						{ e("div").a("class", "w3-cell-row w3-khaki ").f();
 							e("label").a("for", classeApiMethodeMethode, "_tri3").a("class", "").f().sx("tri3").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
@@ -2598,7 +2598,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
 											.a("tabindex", "-1")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-khaki ")
 										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_tri3')); $('#", classeApiMethodeMethode, "_tri3').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#PartHtmlForm :input[name=pk]').val() }], 'setTri3', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_tri3')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_tri3')); }); ")
 											.f();
 											e("i").a("class", "far fa-eraser ").f().g("i");
@@ -2712,7 +2712,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlTri4").f();
 					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+						{ e("div").a("class", "w3-cell-row w3-khaki ").f();
 							e("label").a("for", classeApiMethodeMethode, "_tri4").a("class", "").f().sx("tri4").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
@@ -2725,7 +2725,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
 											.a("tabindex", "-1")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-khaki ")
 										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_tri4')); $('#", classeApiMethodeMethode, "_tri4').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#PartHtmlForm :input[name=pk]').val() }], 'setTri4', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_tri4')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_tri4')); }); ")
 											.f();
 											e("i").a("class", "far fa-eraser ").f().g("i");
@@ -2839,7 +2839,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlTri5").f();
 					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+						{ e("div").a("class", "w3-cell-row w3-khaki ").f();
 							e("label").a("for", classeApiMethodeMethode, "_tri5").a("class", "").f().sx("tri5").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
@@ -2852,7 +2852,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
 											.a("tabindex", "-1")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-khaki ")
 										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_tri5')); $('#", classeApiMethodeMethode, "_tri5').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#PartHtmlForm :input[name=pk]').val() }], 'setTri5', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_tri5')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_tri5')); }); ")
 											.f();
 											e("i").a("class", "far fa-eraser ").f().g("i");
@@ -2966,7 +2966,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlTri6").f();
 					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+						{ e("div").a("class", "w3-cell-row w3-khaki ").f();
 							e("label").a("for", classeApiMethodeMethode, "_tri6").a("class", "").f().sx("tri6").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
@@ -2979,7 +2979,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
 											.a("tabindex", "-1")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-khaki ")
 										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_tri6')); $('#", classeApiMethodeMethode, "_tri6').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#PartHtmlForm :input[name=pk]').val() }], 'setTri6', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_tri6')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_tri6')); }); ")
 											.f();
 											e("i").a("class", "far fa-eraser ").f().g("i");
@@ -3093,7 +3093,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlTri7").f();
 					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+						{ e("div").a("class", "w3-cell-row w3-khaki ").f();
 							e("label").a("for", classeApiMethodeMethode, "_tri7").a("class", "").f().sx("tri7").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
@@ -3106,7 +3106,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
 											.a("tabindex", "-1")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-khaki ")
 										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_tri7')); $('#", classeApiMethodeMethode, "_tri7').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#PartHtmlForm :input[name=pk]').val() }], 'setTri7', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_tri7')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_tri7')); }); ")
 											.f();
 											e("i").a("class", "far fa-eraser ").f().g("i");
@@ -3220,7 +3220,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlTri8").f();
 					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+						{ e("div").a("class", "w3-cell-row w3-khaki ").f();
 							e("label").a("for", classeApiMethodeMethode, "_tri8").a("class", "").f().sx("tri8").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
@@ -3233,7 +3233,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
 											.a("tabindex", "-1")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-khaki ")
 										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_tri8')); $('#", classeApiMethodeMethode, "_tri8').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#PartHtmlForm :input[name=pk]').val() }], 'setTri8', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_tri8')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_tri8')); }); ")
 											.f();
 											e("i").a("class", "far fa-eraser ").f().g("i");
@@ -3347,7 +3347,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlTri9").f();
 					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+						{ e("div").a("class", "w3-cell-row w3-khaki ").f();
 							e("label").a("for", classeApiMethodeMethode, "_tri9").a("class", "").f().sx("tri9").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
@@ -3360,7 +3360,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
 											.a("tabindex", "-1")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-khaki ")
 										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_tri9')); $('#", classeApiMethodeMethode, "_tri9').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#PartHtmlForm :input[name=pk]').val() }], 'setTri9', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_tri9')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_tri9')); }); ")
 											.f();
 											e("i").a("class", "far fa-eraser ").f().g("i");
@@ -3474,7 +3474,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlTri10").f();
 					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-yellow ").f();
+						{ e("div").a("class", "w3-cell-row w3-khaki ").f();
 							e("label").a("for", classeApiMethodeMethode, "_tri10").a("class", "").f().sx("tri10").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
@@ -3487,7 +3487,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
 											.a("tabindex", "-1")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-khaki ")
 										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_tri10')); $('#", classeApiMethodeMethode, "_tri10').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#PartHtmlForm :input[name=pk]').val() }], 'setTri10', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_tri10')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_tri10')); }); ")
 											.f();
 											e("i").a("class", "far fa-eraser ").f().g("i");

@@ -93,7 +93,7 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _contextIconName(Wrap<String> c) {
-			c.o("sun");
+			c.o("puzzle-piece");
 	}
 
 	@Override public void initDeepHtmlPartGenPage() {
@@ -473,7 +473,7 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 		if(listHtmlPart == null || listHtmlPart.size() == 0) {
 
 			{ e("h1").f();
-				{ e("a").a("href", "/html-part").a("class", "w3-bar-item w3-btn w3-center w3-block w3-yellow w3-hover-yellow ").f();
+				{ e("a").a("href", "/html-part").a("class", "w3-bar-item w3-btn w3-center w3-block w3-khaki w3-hover-khaki ").f();
 					if(contextIconCssClasses != null)
 						e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
 					e("span").a("class", " ").f().sx("HTML parts").g("span");
@@ -481,7 +481,7 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 			} g("h1");
 			e("div").a("class", "w3-padding-16 w3-card-4 w3-light-grey ").f();
 			{ e("h2").f();
-				{ e("span").a("class", "w3-bar-item w3-padding w3-center w3-block w3-yellow ").f();
+				{ e("span").a("class", "w3-bar-item w3-padding w3-center w3-block w3-khaki ").f();
 					if(contextIconCssClasses != null)
 						e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
 					e("span").a("class", " ").f().sx("no HTML part found").g("span");
@@ -492,7 +492,7 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 			siteRequest_.setRequestPk(o.getPk());
 			if(StringUtils.isNotEmpty(pageH1)) {
 				{ e("h1").f();
-					{ e("a").a("href", "/html-part").a("class", "w3-bar-item w3-btn w3-center w3-block w3-yellow w3-hover-yellow ").f();
+					{ e("a").a("href", "/html-part").a("class", "w3-bar-item w3-btn w3-center w3-block w3-khaki w3-hover-khaki ").f();
 						if(contextIconCssClasses != null)
 							e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
 						e("span").a("class", " ").f().sx(pageH1).g("span");
@@ -502,14 +502,14 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 			e("div").a("class", "w3-padding-16 w3-card-4 w3-light-grey ").f();
 			if(StringUtils.isNotEmpty(pageH2)) {
 				{ e("h2").f();
-					{ e("span").a("class", "w3-bar-item w3-padding w3-center w3-block w3-yellow ").f();
+					{ e("span").a("class", "w3-bar-item w3-padding w3-center w3-block w3-khaki ").f();
 						e("span").a("class", " ").f().sx(pageH2).g("span");
 					} g("span");
 				} g("h2");
 			}
 			if(StringUtils.isNotEmpty(pageH3)) {
 				{ e("h3").f();
-					{ e("span").a("class", "w3-bar-item w3-padding w3-center w3-block w3-yellow ").f();
+					{ e("span").a("class", "w3-bar-item w3-padding w3-center w3-block w3-khaki ").f();
 						e("span").a("class", " ").f().sx(pageH3).g("span");
 					} g("span");
 				} g("h3");
@@ -517,7 +517,7 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 		} else {
 
 			{ e("h1").f();
-				{ e("a").a("href", "/html-part").a("class", "w3-bar-item w3-btn w3-center w3-block w3-yellow w3-hover-yellow ").f();
+				{ e("a").a("href", "/html-part").a("class", "w3-bar-item w3-btn w3-center w3-block w3-khaki w3-hover-khaki ").f();
 					if(contextIconCssClasses != null)
 						e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
 					e("span").a("class", " ").f().sx(pageH1).g("span");
@@ -648,7 +648,7 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 	}
 
 	public void thead1HtmlPartGenPage() {
-		{ e("thead").a("class", "w3-yellow w3-hover-yellow ").f();
+		{ e("thead").a("class", "w3-khaki w3-hover-khaki ").f();
 			thead2HtmlPartGenPage();
 		} g("thead");
 	}
@@ -690,7 +690,7 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 				if(getColumnObjectTitle()) {
 					{ e("td").f();
 						{ e("a").a("href", uri).f();
-							e("i").a("class", "far fa-sun ").f().g("i");
+							e("i").a("class", "far fa-puzzle-piece ").f().g("i");
 							{ e("span").f();
 								sx(o.strObjectTitle());
 							} g("span");
@@ -702,7 +702,7 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 	}
 
 	public void tfoot1HtmlPartGenPage() {
-		{ e("tfoot").a("class", "w3-yellow w3-hover-yellow ").f();
+		{ e("tfoot").a("class", "w3-khaki w3-hover-khaki ").f();
 			tfoot2HtmlPartGenPage();
 		} g("tfoot");
 	}
@@ -738,7 +738,7 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 
 			if(listHtmlPart != null && listHtmlPart.size() == 1) {
 				{ e("button")
-					.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
+					.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-khaki ")
 						.a("id", "refreshThisHtmlPartGenPage")
 						.a("onclick", "patchHtmlPartVals( [ {name: 'fq', value: 'pk:' + " + siteRequest_.getRequestPk() + " } ], {}, function() { addGlow($('#refreshThisHtmlPartGenPage')); }, function() { addError($('#refreshThisHtmlPartGenPage')); }); return false; ").f();
 						e("i").a("class", "fas fa-sync-alt ").f().g("i");
@@ -747,7 +747,7 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 			}
 
 			{ e("button")
-				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-khaki ")
 				.a("onclick", "$('#postHtmlPartModal').show(); ")
 				.f();
 				e("i").a("class", "fas fa-file-plus ").f().g("i");
@@ -756,7 +756,7 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 			{ e("div").a("id", "postHtmlPartModal").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
-						{ e("header").a("class", "w3-container w3-yellow ").f();
+						{ e("header").a("class", "w3-container w3-khaki ").f();
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postHtmlPartModal').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Create an HTML part").g("h2");
 						} g("header");
@@ -769,7 +769,7 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 								htmlFormPOSTHtmlPart(o);
 							} g("div");
 							e("button")
-								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-yellow ")
+								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-khaki ")
 								.a("onclick", "postHtmlPart($('#postHtmlPartForm')); ")
 								.f().sx("Create an HTML part")
 							.g("button");
@@ -781,7 +781,7 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 
 
 			{ e("button")
-				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-khaki ")
 				.a("onclick", "$('#putimportHtmlPartModal').show(); ")
 				.f();
 				e("i").a("class", "fas fa-file-import ").f().g("i");
@@ -790,7 +790,7 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 			{ e("div").a("id", "putimportHtmlPartModal").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
-						{ e("header").a("class", "w3-container w3-yellow ").f();
+						{ e("header").a("class", "w3-container w3-khaki ").f();
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putimportHtmlPartModal').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Import HTML parts").g("h2");
 						} g("header");
@@ -803,7 +803,7 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 								htmlFormPUTImportHtmlPart(o);
 							} g("div");
 							e("button")
-								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-yellow ")
+								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-khaki ")
 								.a("onclick", "putimportHtmlPart($('#putimportHtmlPartForm')); ")
 								.f().sx("Import HTML parts")
 							.g("button");
@@ -815,7 +815,7 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 
 
 			{ e("button")
-				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-khaki ")
 				.a("onclick", "$('#putmergeHtmlPartModal').show(); ")
 				.f();
 				e("i").a("class", "fas fa-code-merge ").f().g("i");
@@ -824,7 +824,7 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 			{ e("div").a("id", "putmergeHtmlPartModal").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
-						{ e("header").a("class", "w3-container w3-yellow ").f();
+						{ e("header").a("class", "w3-container w3-khaki ").f();
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putmergeHtmlPartModal').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Merge HTML parts").g("h2");
 						} g("header");
@@ -837,7 +837,7 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 								htmlFormPUTMergeHtmlPart(o);
 							} g("div");
 							e("button")
-								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-yellow ")
+								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-khaki ")
 								.a("onclick", "putmergeHtmlPart($('#putmergeHtmlPartForm')); ")
 								.f().sx("Merge HTML parts")
 							.g("button");
@@ -849,7 +849,7 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 
 
 			{ e("button")
-				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-khaki ")
 				.a("onclick", "$('#putcopyHtmlPartModal').show(); ")
 				.f();
 				e("i").a("class", "fas fa-copy ").f().g("i");
@@ -858,7 +858,7 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 			{ e("div").a("id", "putcopyHtmlPartModal").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
-						{ e("header").a("class", "w3-container w3-yellow ").f();
+						{ e("header").a("class", "w3-container w3-khaki ").f();
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putcopyHtmlPartModal').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Duplicate HTML parts").g("h2");
 						} g("header");
@@ -871,7 +871,7 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 								htmlFormPUTCopyHtmlPart(o);
 							} g("div");
 							e("button")
-								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-yellow ")
+								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-khaki ")
 								.a("onclick", "putcopyHtmlPart($('#putcopyHtmlPartForm'), ", htmlPart == null ? "null" : htmlPart.getPk(), "); ")
 								.f().sx("Duplicate HTML parts")
 							.g("button");
@@ -883,7 +883,7 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 
 
 			{ e("button")
-				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
+				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-khaki ")
 				.a("onclick", "$('#patchHtmlPartModal').show(); ")
 				.f();
 				e("i").a("class", "fas fa-edit ").f().g("i");
@@ -892,7 +892,7 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 			{ e("div").a("id", "patchHtmlPartModal").a("class", "w3-modal w3-padding-32 ").f();
 				{ e("div").a("class", "w3-modal-content ").f();
 					{ e("div").a("class", "w3-card-4 ").f();
-						{ e("header").a("class", "w3-container w3-yellow ").f();
+						{ e("header").a("class", "w3-container w3-khaki ").f();
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchHtmlPartModal').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Modify HTML parts").g("h2");
 						} g("header");
@@ -905,7 +905,7 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 								htmlFormPATCHHtmlPart(o);
 							} g("form");
 							e("button")
-								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-yellow ")
+								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-khaki ")
 								.a("onclick", "patchHtmlPart(null, $('#patchHtmlPartFormValues'), ", Optional.ofNullable(htmlPart).map(HtmlPart::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
 								.f().sx("Modify HTML parts")
 							.g("button");
@@ -978,7 +978,7 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), HtmlPartGenPage.ROLES)
 					) {
 					{ p.e("div").a("class", "").f();
-						{ p.e("button").a("id", "refreshAllHtmlPartGenPage", id).a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ").a("onclick", "patchHtmlPartVals([], {}, function() { addGlow($('#refreshAllHtmlPartGenPage", id, "')); }, function() { addError($('#refreshAllHtmlPartGenPage", id, "')); }); ").f();
+						{ p.e("button").a("id", "refreshAllHtmlPartGenPage", id).a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-khaki ").a("onclick", "patchHtmlPartVals([], {}, function() { addGlow($('#refreshAllHtmlPartGenPage", id, "')); }, function() { addError($('#refreshAllHtmlPartGenPage", id, "')); }); ").f();
 							p.e("i").a("class", "fas fa-sync-alt ").f().g("i");
 							p.sx("refresh all the HTML parts");
 						} p.g("button");
@@ -1005,7 +1005,7 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 					p.a("value", query2);
 				p.fg();
 				{ p.e("button")
-					.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-yellow ")
+					.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-khaki ")
 					.a("onclick", "window.location.href = '/html-part?q=", query1, ":' + encodeURIComponent(this.previousElementSibling.value) + '", fqs, sorts, "&start=", start2, "&rows=", rows1, "'; ") 
 					.f();
 					p.e("i").a("class", "fas fa-search ").f().g("i");
@@ -1020,7 +1020,7 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 			} p.g("div");
 			{ p.e("div").a("class", "").f();
 				{ p.e("a").a("href", "/html-part").a("class", "").f();
-					p.e("i").a("class", "far fa-sun ").f().g("i");
+					p.e("i").a("class", "far fa-puzzle-piece ").f().g("i");
 					p.sx("see all the HTML parts");
 				} p.g("a");
 			} p.g("div");

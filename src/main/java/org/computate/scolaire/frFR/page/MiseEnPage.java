@@ -22,9 +22,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.lang3.reflect.MethodUtils;
 import org.apache.solr.common.SolrDocument;
-import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.html.part.HtmlPart;
-import org.computate.scolaire.enUS.user.SiteUser;
 import org.computate.scolaire.frFR.age.AgeGenPage;
 import org.computate.scolaire.frFR.annee.AnneeGenPage;
 import org.computate.scolaire.frFR.bloc.BlocGenPage;
@@ -36,6 +34,7 @@ import org.computate.scolaire.frFR.ecole.EcoleGenPage;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 import org.computate.scolaire.frFR.enfant.EnfantGenPage;
 import org.computate.scolaire.frFR.gardien.GardienGenPage;
+import org.computate.scolaire.frFR.html.part.PartHtmlGenPage;
 import org.computate.scolaire.frFR.inscription.InscriptionGenPage;
 import org.computate.scolaire.frFR.mere.MereGenPage;
 import org.computate.scolaire.frFR.page.part.PagePart;
@@ -43,8 +42,6 @@ import org.computate.scolaire.frFR.paiement.PaiementGenPage;
 import org.computate.scolaire.frFR.pere.PereGenPage;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
-import org.computate.scolaire.frFR.saison.SaisonGenPage;
-import org.computate.scolaire.frFR.session.SessionGenPage;
 import org.computate.scolaire.frFR.utilisateur.UtilisateurSite;
 import org.computate.scolaire.frFR.xml.OutilXml;
 
@@ -74,7 +71,8 @@ import net.authorize.api.controller.base.ApiOperationBase;
  */   
 public class MiseEnPage extends MiseEnPageGen<Object> {   
 
-	public static final List<String> ROLES = Arrays.asList("SiteAdmin");
+	public static final List<String> ROLES_MANAGER = Arrays.asList("SiteManager");
+	public static final List<String> ROLES_ADMIN = Arrays.asList("SiteAdmin");
 	public static final List<String> ROLE_READS = Arrays.asList("User");
 
 	/**
@@ -940,7 +938,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	 * r: "Déconnexion"
 	 * r.enUS: "Logout"
 	 * r: "Connexion"
-	 * r.enUS: "Login"
+	 * r.enUS: "Login/Signup"
 	 * r: "écoles"
 	 * r.enUS: "schools"
 	 * r: "années"
@@ -1001,6 +999,8 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	 * r.enUS: ChildGenPage.htmlSuggestedChildGenPage
 	 * r: DesignPageGenPage.htmlSuggereDesignPageGenPage
 	 * r.enUS: PageDesignGenPage.htmlSuggestedPageDesignGenPage
+	 * r: PartHtmlGenPage.htmlSuggerePartHtmlGenPage
+	 * r.enUS: HtmlPartGenPage.htmlSuggestedHtmlPartGenPage
 	 */ 
 	public void menu(String id)  {
 		e("div").a("class", "w3-bar w3-text-white w3-padding-bottom-8 w3-padding-top-8 ").a("style", "padding-left: 16px; padding-right: 16px; ").f();
@@ -1014,8 +1014,8 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 			g("div");
 
 			if(
-					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES_MANAGER)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES_MANAGER)
 					) {
 
 				{ e("div").a("class", "w3-dropdown-hover ").f();
@@ -1079,16 +1079,6 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 				} g("div");
 	
 				{ e("div").a("class", "w3-dropdown-hover ").f();
-					{ e("div").a("class", "w3-button w3-hover-khaki ").f();
-							e("i").a("class", "far fa-drafting-compass ").f().g("i");
-							sx("designs");
-					} g("div");
-					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
-						DesignPageGenPage.htmlSuggereDesignPageGenPage(this, id, null);
-					} g("div");
-				} g("div");
-	
-				{ e("div").a("class", "w3-dropdown-hover ").f();
 					{ e("div").a("class", "w3-button w3-hover-orange ").f();
 							e("i").a("class", "far fa-child ").f().g("i");
 							sx("enfants");
@@ -1148,6 +1138,32 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 					PaiementGenPage.htmlSuggerePaiementGenPage(this, id, null);
 				} g("div");
 			} g("div");
+
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES_ADMIN)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES_ADMIN)
+					) {
+	
+				{ e("div").a("class", "w3-dropdown-hover ").f();
+					{ e("div").a("class", "w3-button w3-hover-khaki ").f();
+							e("i").a("class", "far fa-drafting-compass ").f().g("i");
+							sx("designs");
+					} g("div");
+					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
+						DesignPageGenPage.htmlSuggereDesignPageGenPage(this, id, null);
+					} g("div");
+				} g("div");
+	
+				{ e("div").a("class", "w3-dropdown-hover ").f();
+					{ e("div").a("class", "w3-button w3-hover-khaki ").f();
+							e("i").a("class", "far fa-puzzle-piece ").f().g("i");
+							sx("designs");
+					} g("div");
+					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
+						PartHtmlGenPage.htmlSuggerePartHtmlGenPage(this, id, null);
+					} g("div");
+				} g("div");
+			}
 			ecrireConnecterDeconnecter();
 		g("div");
 	} 
@@ -1262,6 +1278,8 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	 * r.enUS: ChildGenPage.htmlSuggestedChildGenPage
 	 * r: DesignPageGenPage.htmlSuggereDesignPageGenPage
 	 * r.enUS: PageDesignGenPage.htmlSuggestedPageDesignGenPage
+	 * r: PartHtmlGenPage.htmlSuggerePartHtmlGenPage
+	 * r.enUS: HtmlPartGenPage.htmlSuggestedHtmlPartGenPage
 	 * r: xmlPile
 	 * r.enUS: xmlStack
 	 * r: XmlPile

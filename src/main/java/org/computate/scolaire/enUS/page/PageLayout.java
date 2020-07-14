@@ -21,9 +21,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.lang3.reflect.MethodUtils;
 import org.apache.solr.common.SolrDocument;
-import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.html.part.HtmlPart;
-import org.computate.scolaire.enUS.user.SiteUser;
 import org.computate.scolaire.enUS.age.AgeGenPage;
 import org.computate.scolaire.enUS.year.YearGenPage;
 import org.computate.scolaire.enUS.block.BlockGenPage;
@@ -35,6 +33,7 @@ import org.computate.scolaire.enUS.school.SchoolGenPage;
 import org.computate.scolaire.enUS.writer.AllWriter;
 import org.computate.scolaire.enUS.child.ChildGenPage;
 import org.computate.scolaire.enUS.guardian.GuardianGenPage;
+import org.computate.scolaire.enUS.html.part.HtmlPartGenPage;
 import org.computate.scolaire.enUS.enrollment.EnrollmentGenPage;
 import org.computate.scolaire.enUS.mom.MomGenPage;
 import org.computate.scolaire.enUS.page.part.PagePart;
@@ -42,8 +41,6 @@ import org.computate.scolaire.enUS.payment.PaymentGenPage;
 import org.computate.scolaire.enUS.dad.DadGenPage;
 import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
-import org.computate.scolaire.enUS.season.SeasonGenPage;
-import org.computate.scolaire.enUS.session.SessionGenPage;
 import org.computate.scolaire.enUS.user.SiteUser;
 import org.computate.scolaire.enUS.xml.UtilXml;
 import net.authorize.Environment;
@@ -71,7 +68,9 @@ import net.authorize.api.controller.base.ApiOperationBase;
  **/
 public class PageLayout extends PageLayoutGen<Object> {
 
-	public static final List<String> ROLES = Arrays.asList("SiteAdmin");
+	public static final List<String> ROLES_MANAGER = Arrays.asList("SiteManager");
+
+	public static final List<String> ROLES_ADMIN = Arrays.asList("SiteAdmin");
 
 	public static final List<String> ROLE_READS = Arrays.asList("User");
 
@@ -470,8 +469,8 @@ public class PageLayout extends PageLayoutGen<Object> {
 			g("div");
 
 			if(
-					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
-					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES_MANAGER)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES_MANAGER)
 					) {
 
 				{ e("div").a("class", "w3-dropdown-hover ").f();
@@ -535,16 +534,6 @@ public class PageLayout extends PageLayoutGen<Object> {
 				} g("div");
 	
 				{ e("div").a("class", "w3-dropdown-hover ").f();
-					{ e("div").a("class", "w3-button w3-hover-khaki ").f();
-							e("i").a("class", "far fa-drafting-compass ").f().g("i");
-							sx("designs");
-					} g("div");
-					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
-						PageDesignGenPage.htmlSuggestedPageDesignGenPage(this, id, null);
-					} g("div");
-				} g("div");
-	
-				{ e("div").a("class", "w3-dropdown-hover ").f();
 					{ e("div").a("class", "w3-button w3-hover-orange ").f();
 							e("i").a("class", "far fa-child ").f().g("i");
 							sx("children");
@@ -604,6 +593,32 @@ public class PageLayout extends PageLayoutGen<Object> {
 					PaymentGenPage.htmlSuggestedPaymentGenPage(this, id, null);
 				} g("div");
 			} g("div");
+
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES_ADMIN)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES_ADMIN)
+					) {
+	
+				{ e("div").a("class", "w3-dropdown-hover ").f();
+					{ e("div").a("class", "w3-button w3-hover-khaki ").f();
+							e("i").a("class", "far fa-drafting-compass ").f().g("i");
+							sx("designs");
+					} g("div");
+					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
+						PageDesignGenPage.htmlSuggestedPageDesignGenPage(this, id, null);
+					} g("div");
+				} g("div");
+	
+				{ e("div").a("class", "w3-dropdown-hover ").f();
+					{ e("div").a("class", "w3-button w3-hover-khaki ").f();
+							e("i").a("class", "far fa-puzzle-piece ").f().g("i");
+							sx("designs");
+					} g("div");
+					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
+						HtmlPartGenPage.htmlSuggestedHtmlPartGenPage(this, id, null);
+					} g("div");
+				} g("div");
+			}
 			writeLoginLogout();
 		g("div");
 	}

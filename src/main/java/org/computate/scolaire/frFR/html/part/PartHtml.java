@@ -47,9 +47,9 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * 
  * UnNom.frFR:un part de HTML
  * UnNom.enUS:an HTML part
- * Couleur: yellow
+ * Couleur: khaki
  * IconeGroupe: regular
- * IconeNom: sun
+ * IconeNom: puzzle-piece
  * NomVar.frFR: part-html
  * NomVar.enUS: html-part
  * Tri.asc: tri1

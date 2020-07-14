@@ -48,7 +48,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 
 /**	
- * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.page.MiseEnPage&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
+ * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.page.MiseEnPage&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr. </a>
  * <br/>
  **/
 public abstract class MiseEnPageGen<DEV> extends Object {
@@ -58,7 +58,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	// pageParts //
 	///////////////
 
-	/**	L'entité « pageParts »
+	/**	 L'entité pageParts
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<PagePart>(). 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -66,7 +66,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	@JsonIgnore
 	public Couverture<List<PagePart>> pagePartsCouverture = new Couverture<List<PagePart>>().p(this).c(List.class).var("pageParts").o(pageParts);
 
-	/**	<br/>L'entité « pageParts »
+	/**	<br/> L'entité pageParts
 	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<PagePart>(). 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.page.MiseEnPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pageParts">Trouver l'entité pageParts dans Solr</a>
 	 * <br/>
@@ -106,7 +106,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	// requeteSite_ //
 	//////////////////
 
-	/**	L'entité « requeteSite_ »
+	/**	 L'entité requeteSite_
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -114,7 +114,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	@JsonIgnore
 	public Couverture<RequeteSiteFrFR> requeteSite_Couverture = new Couverture<RequeteSiteFrFR>().p(this).c(RequeteSiteFrFR.class).var("requeteSite_").o(requeteSite_);
 
-	/**	<br/>L'entité « requeteSite_ »
+	/**	<br/> L'entité requeteSite_
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.page.MiseEnPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:requeteSite_">Trouver l'entité requeteSite_ dans Solr</a>
 	 * <br/>
@@ -144,7 +144,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	// siteUrlBase //
 	/////////////////
 
-	/**	L'entité « siteUrlBase »
+	/**	 L'entité siteUrlBase
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -152,7 +152,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	@JsonIgnore
 	public Couverture<String> siteUrlBaseCouverture = new Couverture<String>().p(this).c(String.class).var("siteUrlBase").o(siteUrlBase);
 
-	/**	<br/>L'entité « siteUrlBase »
+	/**	<br/> L'entité siteUrlBase
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.page.MiseEnPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:siteUrlBase">Trouver l'entité siteUrlBase dans Solr</a>
 	 * <br/>
@@ -206,7 +206,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	// statiqueUrlBase //
 	/////////////////////
 
-	/**	L'entité « statiqueUrlBase »
+	/**	 L'entité statiqueUrlBase
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -214,7 +214,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	@JsonIgnore
 	public Couverture<String> statiqueUrlBaseCouverture = new Couverture<String>().p(this).c(String.class).var("statiqueUrlBase").o(statiqueUrlBase);
 
-	/**	<br/>L'entité « statiqueUrlBase »
+	/**	<br/> L'entité statiqueUrlBase
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.page.MiseEnPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:statiqueUrlBase">Trouver l'entité statiqueUrlBase dans Solr</a>
 	 * <br/>
@@ -268,7 +268,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	// pageDocumentSolr //
 	//////////////////////
 
-	/**	L'entité « pageDocumentSolr »
+	/**	 L'entité pageDocumentSolr
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -276,7 +276,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	@JsonIgnore
 	public Couverture<SolrDocument> pageDocumentSolrCouverture = new Couverture<SolrDocument>().p(this).c(SolrDocument.class).var("pageDocumentSolr").o(pageDocumentSolr);
 
-	/**	<br/>L'entité « pageDocumentSolr »
+	/**	<br/> L'entité pageDocumentSolr
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.page.MiseEnPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pageDocumentSolr">Trouver l'entité pageDocumentSolr dans Solr</a>
 	 * <br/>
@@ -306,7 +306,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	// w //
 	///////
 
-	/**	L'entité « w »
+	/**	 L'entité w
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -314,7 +314,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	@JsonIgnore
 	public Couverture<ToutEcrivain> wCouverture = new Couverture<ToutEcrivain>().p(this).c(ToutEcrivain.class).var("w").o(w);
 
-	/**	<br/>L'entité « w »
+	/**	<br/> L'entité w
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.page.MiseEnPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:w">Trouver l'entité w dans Solr</a>
 	 * <br/>
@@ -346,7 +346,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	// contexteIconeGroupe //
 	/////////////////////////
 
-	/**	L'entité « contexteIconeGroupe »
+	/**	 L'entité contexteIconeGroupe
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -354,7 +354,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	@JsonIgnore
 	public Couverture<String> contexteIconeGroupeCouverture = new Couverture<String>().p(this).c(String.class).var("contexteIconeGroupe").o(contexteIconeGroupe);
 
-	/**	<br/>L'entité « contexteIconeGroupe »
+	/**	<br/> L'entité contexteIconeGroupe
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.page.MiseEnPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:contexteIconeGroupe">Trouver l'entité contexteIconeGroupe dans Solr</a>
 	 * <br/>
@@ -408,7 +408,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	// contexteIconeNom //
 	//////////////////////
 
-	/**	L'entité « contexteIconeNom »
+	/**	 L'entité contexteIconeNom
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -416,7 +416,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	@JsonIgnore
 	public Couverture<String> contexteIconeNomCouverture = new Couverture<String>().p(this).c(String.class).var("contexteIconeNom").o(contexteIconeNom);
 
-	/**	<br/>L'entité « contexteIconeNom »
+	/**	<br/> L'entité contexteIconeNom
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.page.MiseEnPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:contexteIconeNom">Trouver l'entité contexteIconeNom dans Solr</a>
 	 * <br/>
@@ -470,7 +470,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	// contexteIconeClassesCss //
 	/////////////////////////////
 
-	/**	L'entité « contexteIconeClassesCss »
+	/**	 L'entité contexteIconeClassesCss
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -478,7 +478,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	@JsonIgnore
 	public Couverture<String> contexteIconeClassesCssCouverture = new Couverture<String>().p(this).c(String.class).var("contexteIconeClassesCss").o(contexteIconeClassesCss);
 
-	/**	<br/>L'entité « contexteIconeClassesCss »
+	/**	<br/> L'entité contexteIconeClassesCss
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.page.MiseEnPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:contexteIconeClassesCss">Trouver l'entité contexteIconeClassesCss dans Solr</a>
 	 * <br/>
@@ -532,7 +532,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	// pageVisibleAuxBots //
 	////////////////////////
 
-	/**	L'entité « pageVisibleAuxBots »
+	/**	 L'entité pageVisibleAuxBots
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -540,7 +540,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	@JsonIgnore
 	public Couverture<Boolean> pageVisibleAuxBotsCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("pageVisibleAuxBots").o(pageVisibleAuxBots);
 
-	/**	<br/>L'entité « pageVisibleAuxBots »
+	/**	<br/> L'entité pageVisibleAuxBots
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.page.MiseEnPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pageVisibleAuxBots">Trouver l'entité pageVisibleAuxBots dans Solr</a>
 	 * <br/>
@@ -599,7 +599,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	// pageH1 //
 	////////////
 
-	/**	L'entité « pageH1 »
+	/**	 L'entité pageH1
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -607,7 +607,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	@JsonIgnore
 	public Couverture<String> pageH1Couverture = new Couverture<String>().p(this).c(String.class).var("pageH1").o(pageH1);
 
-	/**	<br/>L'entité « pageH1 »
+	/**	<br/> L'entité pageH1
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.page.MiseEnPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pageH1">Trouver l'entité pageH1 dans Solr</a>
 	 * <br/>
@@ -661,7 +661,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	// pageH2 //
 	////////////
 
-	/**	L'entité « pageH2 »
+	/**	 L'entité pageH2
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -669,7 +669,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	@JsonIgnore
 	public Couverture<String> pageH2Couverture = new Couverture<String>().p(this).c(String.class).var("pageH2").o(pageH2);
 
-	/**	<br/>L'entité « pageH2 »
+	/**	<br/> L'entité pageH2
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.page.MiseEnPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pageH2">Trouver l'entité pageH2 dans Solr</a>
 	 * <br/>
@@ -723,7 +723,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	// pageH3 //
 	////////////
 
-	/**	L'entité « pageH3 »
+	/**	 L'entité pageH3
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -731,7 +731,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	@JsonIgnore
 	public Couverture<String> pageH3Couverture = new Couverture<String>().p(this).c(String.class).var("pageH3").o(pageH3);
 
-	/**	<br/>L'entité « pageH3 »
+	/**	<br/> L'entité pageH3
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.page.MiseEnPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pageH3">Trouver l'entité pageH3 dans Solr</a>
 	 * <br/>
@@ -785,7 +785,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	// pageH1Court //
 	/////////////////
 
-	/**	L'entité « pageH1Court »
+	/**	 L'entité pageH1Court
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -793,7 +793,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	@JsonIgnore
 	public Couverture<String> pageH1CourtCouverture = new Couverture<String>().p(this).c(String.class).var("pageH1Court").o(pageH1Court);
 
-	/**	<br/>L'entité « pageH1Court »
+	/**	<br/> L'entité pageH1Court
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.page.MiseEnPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pageH1Court">Trouver l'entité pageH1Court dans Solr</a>
 	 * <br/>
@@ -847,7 +847,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	// pageH2Court //
 	/////////////////
 
-	/**	L'entité « pageH2Court »
+	/**	 L'entité pageH2Court
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -855,7 +855,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	@JsonIgnore
 	public Couverture<String> pageH2CourtCouverture = new Couverture<String>().p(this).c(String.class).var("pageH2Court").o(pageH2Court);
 
-	/**	<br/>L'entité « pageH2Court »
+	/**	<br/> L'entité pageH2Court
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.page.MiseEnPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pageH2Court">Trouver l'entité pageH2Court dans Solr</a>
 	 * <br/>
@@ -909,7 +909,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	// pageH3Court //
 	/////////////////
 
-	/**	L'entité « pageH3Court »
+	/**	 L'entité pageH3Court
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -917,7 +917,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	@JsonIgnore
 	public Couverture<String> pageH3CourtCouverture = new Couverture<String>().p(this).c(String.class).var("pageH3Court").o(pageH3Court);
 
-	/**	<br/>L'entité « pageH3Court »
+	/**	<br/> L'entité pageH3Court
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.page.MiseEnPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pageH3Court">Trouver l'entité pageH3Court dans Solr</a>
 	 * <br/>
@@ -971,7 +971,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	// pageTitre //
 	///////////////
 
-	/**	L'entité « pageTitre »
+	/**	 L'entité pageTitre
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -979,7 +979,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	@JsonIgnore
 	public Couverture<String> pageTitreCouverture = new Couverture<String>().p(this).c(String.class).var("pageTitre").o(pageTitre);
 
-	/**	<br/>L'entité « pageTitre »
+	/**	<br/> L'entité pageTitre
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.page.MiseEnPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pageTitre">Trouver l'entité pageTitre dans Solr</a>
 	 * <br/>
@@ -1033,7 +1033,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	// pageUri //
 	/////////////
 
-	/**	L'entité « pageUri »
+	/**	 L'entité pageUri
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -1041,7 +1041,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	@JsonIgnore
 	public Couverture<String> pageUriCouverture = new Couverture<String>().p(this).c(String.class).var("pageUri").o(pageUri);
 
-	/**	<br/>L'entité « pageUri »
+	/**	<br/> L'entité pageUri
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.page.MiseEnPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pageUri">Trouver l'entité pageUri dans Solr</a>
 	 * <br/>
@@ -1095,7 +1095,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	// pageUris //
 	//////////////
 
-	/**	L'entité « pageUris »
+	/**	 L'entité pageUris
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<String>(). 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -1103,7 +1103,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	@JsonIgnore
 	public Couverture<List<String>> pageUrisCouverture = new Couverture<List<String>>().p(this).c(List.class).var("pageUris").o(pageUris);
 
-	/**	<br/>L'entité « pageUris »
+	/**	<br/> L'entité pageUris
 	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<String>(). 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.page.MiseEnPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pageUris">Trouver l'entité pageUris dans Solr</a>
 	 * <br/>
@@ -1174,7 +1174,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	// pageUrl //
 	/////////////
 
-	/**	L'entité « pageUrl »
+	/**	 L'entité pageUrl
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -1182,7 +1182,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	@JsonIgnore
 	public Couverture<String> pageUrlCouverture = new Couverture<String>().p(this).c(String.class).var("pageUrl").o(pageUrl);
 
-	/**	<br/>L'entité « pageUrl »
+	/**	<br/> L'entité pageUrl
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.page.MiseEnPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pageUrl">Trouver l'entité pageUrl dans Solr</a>
 	 * <br/>
@@ -1236,7 +1236,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	// pageImageUri //
 	//////////////////
 
-	/**	L'entité « pageImageUri »
+	/**	 L'entité pageImageUri
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -1244,7 +1244,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	@JsonIgnore
 	public Couverture<String> pageImageUriCouverture = new Couverture<String>().p(this).c(String.class).var("pageImageUri").o(pageImageUri);
 
-	/**	<br/>L'entité « pageImageUri »
+	/**	<br/> L'entité pageImageUri
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.page.MiseEnPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pageImageUri">Trouver l'entité pageImageUri dans Solr</a>
 	 * <br/>
@@ -1298,7 +1298,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	// pageImageUrl //
 	//////////////////
 
-	/**	L'entité « pageImageUrl »
+	/**	 L'entité pageImageUrl
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -1306,7 +1306,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	@JsonIgnore
 	public Couverture<String> pageImageUrlCouverture = new Couverture<String>().p(this).c(String.class).var("pageImageUrl").o(pageImageUrl);
 
-	/**	<br/>L'entité « pageImageUrl »
+	/**	<br/> L'entité pageImageUrl
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.page.MiseEnPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pageImageUrl">Trouver l'entité pageImageUrl dans Solr</a>
 	 * <br/>
@@ -1360,7 +1360,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	// pageVideoId //
 	/////////////////
 
-	/**	L'entité « pageVideoId »
+	/**	 L'entité pageVideoId
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -1368,7 +1368,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	@JsonIgnore
 	public Couverture<String> pageVideoIdCouverture = new Couverture<String>().p(this).c(String.class).var("pageVideoId").o(pageVideoId);
 
-	/**	<br/>L'entité « pageVideoId »
+	/**	<br/> L'entité pageVideoId
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.page.MiseEnPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pageVideoId">Trouver l'entité pageVideoId dans Solr</a>
 	 * <br/>
@@ -1422,7 +1422,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	// pageVideoUrl //
 	//////////////////
 
-	/**	L'entité « pageVideoUrl »
+	/**	 L'entité pageVideoUrl
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -1430,7 +1430,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	@JsonIgnore
 	public Couverture<String> pageVideoUrlCouverture = new Couverture<String>().p(this).c(String.class).var("pageVideoUrl").o(pageVideoUrl);
 
-	/**	<br/>L'entité « pageVideoUrl »
+	/**	<br/> L'entité pageVideoUrl
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.page.MiseEnPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pageVideoUrl">Trouver l'entité pageVideoUrl dans Solr</a>
 	 * <br/>
@@ -1484,7 +1484,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	// pageVideoUrlEmbed //
 	///////////////////////
 
-	/**	L'entité « pageVideoUrlEmbed »
+	/**	 L'entité pageVideoUrlEmbed
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -1492,7 +1492,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	@JsonIgnore
 	public Couverture<String> pageVideoUrlEmbedCouverture = new Couverture<String>().p(this).c(String.class).var("pageVideoUrlEmbed").o(pageVideoUrlEmbed);
 
-	/**	<br/>L'entité « pageVideoUrlEmbed »
+	/**	<br/> L'entité pageVideoUrlEmbed
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.page.MiseEnPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pageVideoUrlEmbed">Trouver l'entité pageVideoUrlEmbed dans Solr</a>
 	 * <br/>
@@ -1546,7 +1546,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	// pageImageLargeur //
 	//////////////////////
 
-	/**	L'entité « pageImageLargeur »
+	/**	 L'entité pageImageLargeur
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
@@ -1555,7 +1555,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	@JsonIgnore
 	public Couverture<Integer> pageImageLargeurCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("pageImageLargeur").o(pageImageLargeur);
 
-	/**	<br/>L'entité « pageImageLargeur »
+	/**	<br/> L'entité pageImageLargeur
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.page.MiseEnPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pageImageLargeur">Trouver l'entité pageImageLargeur dans Solr</a>
 	 * <br/>
@@ -1615,7 +1615,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	// pageImageHauteur //
 	//////////////////////
 
-	/**	L'entité « pageImageHauteur »
+	/**	 L'entité pageImageHauteur
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
@@ -1624,7 +1624,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	@JsonIgnore
 	public Couverture<Integer> pageImageHauteurCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("pageImageHauteur").o(pageImageHauteur);
 
-	/**	<br/>L'entité « pageImageHauteur »
+	/**	<br/> L'entité pageImageHauteur
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.page.MiseEnPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pageImageHauteur">Trouver l'entité pageImageHauteur dans Solr</a>
 	 * <br/>
@@ -1684,7 +1684,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	// pageImageTypeContenu //
 	//////////////////////////
 
-	/**	L'entité « pageImageTypeContenu »
+	/**	 L'entité pageImageTypeContenu
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -1692,7 +1692,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	@JsonIgnore
 	public Couverture<String> pageImageTypeContenuCouverture = new Couverture<String>().p(this).c(String.class).var("pageImageTypeContenu").o(pageImageTypeContenu);
 
-	/**	<br/>L'entité « pageImageTypeContenu »
+	/**	<br/> L'entité pageImageTypeContenu
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.page.MiseEnPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pageImageTypeContenu">Trouver l'entité pageImageTypeContenu dans Solr</a>
 	 * <br/>
@@ -1746,7 +1746,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	// pageTypeContenu //
 	/////////////////////
 
-	/**	L'entité « pageTypeContenu »
+	/**	 L'entité pageTypeContenu
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -1754,7 +1754,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	@JsonIgnore
 	public Couverture<String> pageTypeContenuCouverture = new Couverture<String>().p(this).c(String.class).var("pageTypeContenu").o(pageTypeContenu);
 
-	/**	<br/>L'entité « pageTypeContenu »
+	/**	<br/> L'entité pageTypeContenu
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.page.MiseEnPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pageTypeContenu">Trouver l'entité pageTypeContenu dans Solr</a>
 	 * <br/>
@@ -1808,7 +1808,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	// pageCree //
 	//////////////
 
-	/**	L'entité « pageCree »
+	/**	 L'entité pageCree
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
@@ -1817,7 +1817,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	@JsonIgnore
 	public Couverture<LocalDateTime> pageCreeCouverture = new Couverture<LocalDateTime>().p(this).c(LocalDateTime.class).var("pageCree").o(pageCree);
 
-	/**	<br/>L'entité « pageCree »
+	/**	<br/> L'entité pageCree
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.page.MiseEnPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pageCree">Trouver l'entité pageCree dans Solr</a>
 	 * <br/>
@@ -1887,7 +1887,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	// pageModifiee //
 	//////////////////
 
-	/**	L'entité « pageModifiee »
+	/**	 L'entité pageModifiee
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
@@ -1896,7 +1896,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	@JsonIgnore
 	public Couverture<LocalDateTime> pageModifieeCouverture = new Couverture<LocalDateTime>().p(this).c(LocalDateTime.class).var("pageModifiee").o(pageModifiee);
 
-	/**	<br/>L'entité « pageModifiee »
+	/**	<br/> L'entité pageModifiee
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.page.MiseEnPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pageModifiee">Trouver l'entité pageModifiee dans Solr</a>
 	 * <br/>
@@ -1966,7 +1966,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	// pageMotsCles //
 	//////////////////
 
-	/**	L'entité « pageMotsCles »
+	/**	 L'entité pageMotsCles
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -1974,7 +1974,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	@JsonIgnore
 	public Couverture<String> pageMotsClesCouverture = new Couverture<String>().p(this).c(String.class).var("pageMotsCles").o(pageMotsCles);
 
-	/**	<br/>L'entité « pageMotsCles »
+	/**	<br/> L'entité pageMotsCles
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.page.MiseEnPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pageMotsCles">Trouver l'entité pageMotsCles dans Solr</a>
 	 * <br/>
@@ -2028,7 +2028,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	// pageDescription //
 	/////////////////////
 
-	/**	L'entité « pageDescription »
+	/**	 L'entité pageDescription
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -2036,7 +2036,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	@JsonIgnore
 	public Couverture<String> pageDescriptionCouverture = new Couverture<String>().p(this).c(String.class).var("pageDescription").o(pageDescription);
 
-	/**	<br/>L'entité « pageDescription »
+	/**	<br/> L'entité pageDescription
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.page.MiseEnPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pageDescription">Trouver l'entité pageDescription dans Solr</a>
 	 * <br/>
@@ -2090,7 +2090,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	// pageAccueilUri //
 	////////////////////
 
-	/**	L'entité « pageAccueilUri »
+	/**	 L'entité pageAccueilUri
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -2098,7 +2098,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	@JsonIgnore
 	public Couverture<String> pageAccueilUriCouverture = new Couverture<String>().p(this).c(String.class).var("pageAccueilUri").o(pageAccueilUri);
 
-	/**	<br/>L'entité « pageAccueilUri »
+	/**	<br/> L'entité pageAccueilUri
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.page.MiseEnPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pageAccueilUri">Trouver l'entité pageAccueilUri dans Solr</a>
 	 * <br/>
@@ -2152,7 +2152,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	// pageEcoleUri //
 	//////////////////
 
-	/**	L'entité « pageEcoleUri »
+	/**	 L'entité pageEcoleUri
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -2160,7 +2160,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	@JsonIgnore
 	public Couverture<String> pageEcoleUriCouverture = new Couverture<String>().p(this).c(String.class).var("pageEcoleUri").o(pageEcoleUri);
 
-	/**	<br/>L'entité « pageEcoleUri »
+	/**	<br/> L'entité pageEcoleUri
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.page.MiseEnPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pageEcoleUri">Trouver l'entité pageEcoleUri dans Solr</a>
 	 * <br/>
@@ -2214,7 +2214,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	// pageUtilisateurUri //
 	////////////////////////
 
-	/**	L'entité « pageUtilisateurUri »
+	/**	 L'entité pageUtilisateurUri
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -2222,7 +2222,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	@JsonIgnore
 	public Couverture<String> pageUtilisateurUriCouverture = new Couverture<String>().p(this).c(String.class).var("pageUtilisateurUri").o(pageUtilisateurUri);
 
-	/**	<br/>L'entité « pageUtilisateurUri »
+	/**	<br/> L'entité pageUtilisateurUri
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.page.MiseEnPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pageUtilisateurUri">Trouver l'entité pageUtilisateurUri dans Solr</a>
 	 * <br/>
@@ -2276,7 +2276,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	// pageDeconnexionUri //
 	////////////////////////
 
-	/**	L'entité « pageDeconnexionUri »
+	/**	 L'entité pageDeconnexionUri
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -2284,7 +2284,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	@JsonIgnore
 	public Couverture<String> pageDeconnexionUriCouverture = new Couverture<String>().p(this).c(String.class).var("pageDeconnexionUri").o(pageDeconnexionUri);
 
-	/**	<br/>L'entité « pageDeconnexionUri »
+	/**	<br/> L'entité pageDeconnexionUri
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.page.MiseEnPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pageDeconnexionUri">Trouver l'entité pageDeconnexionUri dans Solr</a>
 	 * <br/>
@@ -2338,7 +2338,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	// listeEcole //
 	////////////////
 
-	/**	L'entité « listeEcole »
+	/**	 L'entité listeEcole
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut ListeRecherche<Ecole>(). 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -2346,7 +2346,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	@JsonIgnore
 	public Couverture<ListeRecherche<Ecole>> listeEcoleCouverture = new Couverture<ListeRecherche<Ecole>>().p(this).c(ListeRecherche.class).var("listeEcole").o(listeEcole);
 
-	/**	<br/>L'entité « listeEcole »
+	/**	<br/> L'entité listeEcole
 	 * Il est construit avant d'être initialisé avec le constructeur par défaut ListeRecherche<Ecole>(). 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.page.MiseEnPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:listeEcole">Trouver l'entité listeEcole dans Solr</a>
 	 * <br/>
@@ -2375,7 +2375,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	// ecoles //
 	////////////
 
-	/**	L'entité « ecoles »
+	/**	 L'entité ecoles
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -2383,7 +2383,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	@JsonIgnore
 	public Couverture<List<Ecole>> ecolesCouverture = new Couverture<List<Ecole>>().p(this).c(List.class).var("ecoles").o(ecoles);
 
-	/**	<br/>L'entité « ecoles »
+	/**	<br/> L'entité ecoles
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.page.MiseEnPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:ecoles">Trouver l'entité ecoles dans Solr</a>
 	 * <br/>
@@ -2424,7 +2424,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	// ecole_ //
 	////////////
 
-	/**	L'entité « ecole_ »
+	/**	 L'entité ecole_
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -2432,7 +2432,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	@JsonIgnore
 	public Couverture<Ecole> ecole_Couverture = new Couverture<Ecole>().p(this).c(Ecole.class).var("ecole_").o(ecole_);
 
-	/**	<br/>L'entité « ecole_ »
+	/**	<br/> L'entité ecole_
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.page.MiseEnPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:ecole_">Trouver l'entité ecole_ dans Solr</a>
 	 * <br/>
@@ -2462,7 +2462,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	// anneeVal //
 	//////////////
 
-	/**	L'entité « anneeVal »
+	/**	 L'entité anneeVal
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
@@ -2471,7 +2471,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	@JsonIgnore
 	public Couverture<Integer> anneeValCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("anneeVal").o(anneeVal);
 
-	/**	<br/>L'entité « anneeVal »
+	/**	<br/> L'entité anneeVal
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.page.MiseEnPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:anneeVal">Trouver l'entité anneeVal dans Solr</a>
 	 * <br/>
