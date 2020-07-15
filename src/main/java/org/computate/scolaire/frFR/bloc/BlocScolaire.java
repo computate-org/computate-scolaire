@@ -3,8 +3,10 @@ package org.computate.scolaire.frFR.bloc;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.Locale;
 
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -832,10 +834,20 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 * Var.enUS: blockShortName
 	 * Indexe: true
 	 * Stocke: true
-	 * r: %s - %s %s à %s
-	 * r.enUS: %s %s at %s
-	 * r: %s - %s %s (%s€ par mois) à %s
-	 * r.enUS: %s - %s %s ($%s/month) at %s
+	 * r: "fr-FR"
+	 * r.enUS: "en-US"
+	 * r: "H'h'mm"
+	 * r.enUS: "a"
+	 * r: "%s - %s %s à %s"
+	 * r.enUS: "%s at %s"
+	 * r: "%s - %s %s (%s€ par mois) à %s"
+	 * r.enUS: "%s %s ($%s/month) at %s"
+	 * r: strBlocHeureDebut(), strBlocHeureFin(), weekdays
+	 * r.enUS: weekdays, blockStartStr
+	 * r: blocDebutStr
+	 * r.enUS: blockStartStr
+	 * r: blocHeureDebut
+	 * r.enUS: blockStartTime
 	 * r: strBlocHeureDebut
 	 * r.enUS: strBlockStartTime
 	 * r: strBlocHeureFin
@@ -879,6 +891,7 @@ public class BlocScolaire extends BlocScolaireGen<Cluster> {
 	 */   
 	protected void _blocNomCourt(Couverture<String> c) {
 		String o;
+		String blocDebutStr = blocHeureDebut == null ? "" : blocHeureDebut.format(DateTimeFormatter.ofPattern("H'h'mm", Locale.forLanguageTag("fr-FR")));
 		String weekdays = "";
 		if(BooleanUtils.isTrue(blocDimanche)) weekdays += " Dim";
 		if(BooleanUtils.isTrue(blocLundi)) weekdays += " Lun";

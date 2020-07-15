@@ -385,7 +385,7 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue ")
 											.a("id", classApiMethodMethod, "_ageKeys_add")
-											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Sending…'; postSchoolAgeVals({ sessionKey: [ \"", pk, "\" ] }, function() {}, function() { addError($('#", classApiMethodMethod, "ageKeys')); });")
+											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Sending…'; postSchoolAgeVals({ sessionKey: \"", pk, "\" }, function() {}, function() { addError($('#", classApiMethodMethod, "ageKeys')); });")
 											.f().sx("add an age")
 										.g("button");
 									} g("div");

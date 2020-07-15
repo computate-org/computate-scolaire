@@ -3,8 +3,10 @@ package org.computate.scolaire.enUS.block;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.Locale;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.computate.scolaire.enUS.age.SchoolAge;
@@ -236,6 +238,7 @@ public class SchoolBlock extends SchoolBlockGen<Cluster> {
 
 	protected void _blockShortName(Wrap<String> c) {
 		String o;
+		String blockStartStr = blockStartTime == null ? "" : blockStartTime.format(DateTimeFormatter.ofPattern("a", Locale.forLanguageTag("en-US")));
 		String weekdays = "";
 		if(BooleanUtils.isTrue(blockSunday)) weekdays += " Su";
 		if(BooleanUtils.isTrue(blockMonday)) weekdays += " Mo";
@@ -246,9 +249,9 @@ public class SchoolBlock extends SchoolBlockGen<Cluster> {
 		if(BooleanUtils.isTrue(blockSaturday)) weekdays += " Sa";
 		weekdays = StringUtils.replace(StringUtils.trim(weekdays), " ", "/");
 		if(blockPricePerMonth == null)
-			o = String.format("%s %s at %s", strBlockStartTime(), strBlockEndTime(), weekdays, schoolCompleteName);
+			o = String.format("%s at %s", weekdays, blockStartStr, schoolCompleteName);
 		else
-			o = String.format("%s - %s %s ($%s/month) at %s", strBlockStartTime(), strBlockEndTime(), weekdays, strBlockPricePerMonth(), schoolCompleteName);
+			o = String.format("%s %s ($%s/month) at %s", weekdays, blockStartStr, strBlockPricePerMonth(), schoolCompleteName);
 		c.o(o);
 	}
 

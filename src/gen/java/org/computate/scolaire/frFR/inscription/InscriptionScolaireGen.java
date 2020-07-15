@@ -1694,7 +1694,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
 											.a("id", classeApiMethodeMethode, "_paiementCles_ajouter")
-											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Envoi…'; postPaiementScolaireVals({ inscriptionCle: [ \"", pk, "\" ] }, function() {}, function() { ajouterErreur($('#", classeApiMethodeMethode, "paiementCles')); });")
+											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Envoi…'; postPaiementScolaireVals({ inscriptionCle: \"", pk, "\" }, function() {}, function() { ajouterErreur($('#", classeApiMethodeMethode, "paiementCles')); });")
 											.f().sx("ajouter un paiement")
 										.g("button");
 									} g("div");
@@ -8585,6 +8585,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	/**	 L'entité paiementFacets
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonIgnore
 	@JsonInclude(Include.NON_NULL)
 	protected SimpleOrderedMap paiementFacets;
 	@JsonIgnore
@@ -9759,6 +9760,68 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return inscriptionMails == null ? "" : StringEscapeUtils.escapeHtml4(strInscriptionMails());
 	}
 
+	/////////////////////
+	// inscriptionMail //
+	/////////////////////
+
+	/**	 L'entité inscriptionMail
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String inscriptionMail;
+	@JsonIgnore
+	public Couverture<String> inscriptionMailCouverture = new Couverture<String>().p(this).c(String.class).var("inscriptionMail").o(inscriptionMail);
+
+	/**	<br/> L'entité inscriptionMail
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:inscriptionMail">Trouver l'entité inscriptionMail dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _inscriptionMail(Couverture<String> c);
+
+	public String getInscriptionMail() {
+		return inscriptionMail;
+	}
+
+	public void setInscriptionMail(String inscriptionMail) {
+		this.inscriptionMail = inscriptionMail;
+		this.inscriptionMailCouverture.dejaInitialise = true;
+	}
+	protected InscriptionScolaire inscriptionMailInit() {
+		if(!inscriptionMailCouverture.dejaInitialise) {
+			_inscriptionMail(inscriptionMailCouverture);
+			if(inscriptionMail == null)
+				setInscriptionMail(inscriptionMailCouverture.o);
+		}
+		inscriptionMailCouverture.dejaInitialise(true);
+		return (InscriptionScolaire)this;
+	}
+
+	public String solrInscriptionMail() {
+		return inscriptionMail;
+	}
+
+	public String strInscriptionMail() {
+		return inscriptionMail == null ? "" : inscriptionMail;
+	}
+
+	public String jsonInscriptionMail() {
+		return inscriptionMail == null ? "" : inscriptionMail;
+	}
+
+	public String nomAffichageInscriptionMail() {
+		return null;
+	}
+
+	public String htmTooltipInscriptionMail() {
+		return null;
+	}
+
+	public String htmInscriptionMail() {
+		return inscriptionMail == null ? "" : StringEscapeUtils.escapeHtml4(strInscriptionMail());
+	}
+
 	/////////////////////////////
 	// inscriptionMailsParents //
 	/////////////////////////////
@@ -9819,6 +9882,209 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String htmInscriptionMailsParents() {
 		return inscriptionMailsParents == null ? "" : StringEscapeUtils.escapeHtml4(strInscriptionMailsParents());
+	}
+
+	/////////////////////////////////
+	// inscriptionNumeroTelephones //
+	/////////////////////////////////
+
+	/**	 L'entité inscriptionNumeroTelephones
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<String>(). 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected List<String> inscriptionNumeroTelephones = new ArrayList<String>();
+	@JsonIgnore
+	public Couverture<List<String>> inscriptionNumeroTelephonesCouverture = new Couverture<List<String>>().p(this).c(List.class).var("inscriptionNumeroTelephones").o(inscriptionNumeroTelephones);
+
+	/**	<br/> L'entité inscriptionNumeroTelephones
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<String>(). 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:inscriptionNumeroTelephones">Trouver l'entité inscriptionNumeroTelephones dans Solr</a>
+	 * <br/>
+	 * @param inscriptionNumeroTelephones est l'entité déjà construit. 
+	 **/
+	protected abstract void _inscriptionNumeroTelephones(List<String> l);
+
+	public List<String> getInscriptionNumeroTelephones() {
+		return inscriptionNumeroTelephones;
+	}
+
+	public void setInscriptionNumeroTelephones(List<String> inscriptionNumeroTelephones) {
+		this.inscriptionNumeroTelephones = inscriptionNumeroTelephones;
+		this.inscriptionNumeroTelephonesCouverture.dejaInitialise = true;
+	}
+	public InscriptionScolaire addInscriptionNumeroTelephones(String...objets) {
+		for(String o : objets) {
+			addInscriptionNumeroTelephones(o);
+		}
+		return (InscriptionScolaire)this;
+	}
+	public InscriptionScolaire addInscriptionNumeroTelephones(String o) {
+		if(o != null && !inscriptionNumeroTelephones.contains(o))
+			this.inscriptionNumeroTelephones.add(o);
+		return (InscriptionScolaire)this;
+	}
+	public InscriptionScolaire setInscriptionNumeroTelephones(JsonArray objets) {
+		inscriptionNumeroTelephones.clear();
+		for(int i = 0; i < objets.size(); i++) {
+			String o = objets.getString(i);
+			addInscriptionNumeroTelephones(o);
+		}
+		return (InscriptionScolaire)this;
+	}
+	protected InscriptionScolaire inscriptionNumeroTelephonesInit() {
+		if(!inscriptionNumeroTelephonesCouverture.dejaInitialise) {
+			_inscriptionNumeroTelephones(inscriptionNumeroTelephones);
+		}
+		inscriptionNumeroTelephonesCouverture.dejaInitialise(true);
+		return (InscriptionScolaire)this;
+	}
+
+	public List<String> solrInscriptionNumeroTelephones() {
+		return inscriptionNumeroTelephones;
+	}
+
+	public String strInscriptionNumeroTelephones() {
+		return inscriptionNumeroTelephones == null ? "" : inscriptionNumeroTelephones.toString();
+	}
+
+	public String jsonInscriptionNumeroTelephones() {
+		return inscriptionNumeroTelephones == null ? "" : inscriptionNumeroTelephones.toString();
+	}
+
+	public String nomAffichageInscriptionNumeroTelephones() {
+		return null;
+	}
+
+	public String htmTooltipInscriptionNumeroTelephones() {
+		return null;
+	}
+
+	public String htmInscriptionNumeroTelephones() {
+		return inscriptionNumeroTelephones == null ? "" : StringEscapeUtils.escapeHtml4(strInscriptionNumeroTelephones());
+	}
+
+	////////////////////////////////
+	// inscriptionNumeroTelephone //
+	////////////////////////////////
+
+	/**	 L'entité inscriptionNumeroTelephone
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String inscriptionNumeroTelephone;
+	@JsonIgnore
+	public Couverture<String> inscriptionNumeroTelephoneCouverture = new Couverture<String>().p(this).c(String.class).var("inscriptionNumeroTelephone").o(inscriptionNumeroTelephone);
+
+	/**	<br/> L'entité inscriptionNumeroTelephone
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:inscriptionNumeroTelephone">Trouver l'entité inscriptionNumeroTelephone dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _inscriptionNumeroTelephone(Couverture<String> c);
+
+	public String getInscriptionNumeroTelephone() {
+		return inscriptionNumeroTelephone;
+	}
+
+	public void setInscriptionNumeroTelephone(String inscriptionNumeroTelephone) {
+		this.inscriptionNumeroTelephone = inscriptionNumeroTelephone;
+		this.inscriptionNumeroTelephoneCouverture.dejaInitialise = true;
+	}
+	protected InscriptionScolaire inscriptionNumeroTelephoneInit() {
+		if(!inscriptionNumeroTelephoneCouverture.dejaInitialise) {
+			_inscriptionNumeroTelephone(inscriptionNumeroTelephoneCouverture);
+			if(inscriptionNumeroTelephone == null)
+				setInscriptionNumeroTelephone(inscriptionNumeroTelephoneCouverture.o);
+		}
+		inscriptionNumeroTelephoneCouverture.dejaInitialise(true);
+		return (InscriptionScolaire)this;
+	}
+
+	public String solrInscriptionNumeroTelephone() {
+		return inscriptionNumeroTelephone;
+	}
+
+	public String strInscriptionNumeroTelephone() {
+		return inscriptionNumeroTelephone == null ? "" : inscriptionNumeroTelephone;
+	}
+
+	public String jsonInscriptionNumeroTelephone() {
+		return inscriptionNumeroTelephone == null ? "" : inscriptionNumeroTelephone;
+	}
+
+	public String nomAffichageInscriptionNumeroTelephone() {
+		return null;
+	}
+
+	public String htmTooltipInscriptionNumeroTelephone() {
+		return null;
+	}
+
+	public String htmInscriptionNumeroTelephone() {
+		return inscriptionNumeroTelephone == null ? "" : StringEscapeUtils.escapeHtml4(strInscriptionNumeroTelephone());
+	}
+
+	//////////////////////////
+	// inscriptionNomParent //
+	//////////////////////////
+
+	/**	 L'entité inscriptionNomParent
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String inscriptionNomParent;
+	@JsonIgnore
+	public Couverture<String> inscriptionNomParentCouverture = new Couverture<String>().p(this).c(String.class).var("inscriptionNomParent").o(inscriptionNomParent);
+
+	/**	<br/> L'entité inscriptionNomParent
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:inscriptionNomParent">Trouver l'entité inscriptionNomParent dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _inscriptionNomParent(Couverture<String> c);
+
+	public String getInscriptionNomParent() {
+		return inscriptionNomParent;
+	}
+
+	public void setInscriptionNomParent(String inscriptionNomParent) {
+		this.inscriptionNomParent = inscriptionNomParent;
+		this.inscriptionNomParentCouverture.dejaInitialise = true;
+	}
+	protected InscriptionScolaire inscriptionNomParentInit() {
+		if(!inscriptionNomParentCouverture.dejaInitialise) {
+			_inscriptionNomParent(inscriptionNomParentCouverture);
+			if(inscriptionNomParent == null)
+				setInscriptionNomParent(inscriptionNomParentCouverture.o);
+		}
+		inscriptionNomParentCouverture.dejaInitialise(true);
+		return (InscriptionScolaire)this;
+	}
+
+	public String solrInscriptionNomParent() {
+		return inscriptionNomParent;
+	}
+
+	public String strInscriptionNomParent() {
+		return inscriptionNomParent == null ? "" : inscriptionNomParent;
+	}
+
+	public String jsonInscriptionNomParent() {
+		return inscriptionNomParent == null ? "" : inscriptionNomParent;
+	}
+
+	public String nomAffichageInscriptionNomParent() {
+		return null;
+	}
+
+	public String htmTooltipInscriptionNomParent() {
+		return null;
+	}
+
+	public String htmInscriptionNomParent() {
+		return inscriptionNomParent == null ? "" : StringEscapeUtils.escapeHtml4(strInscriptionNomParent());
 	}
 
 	////////////////////////////////
@@ -13351,7 +13617,11 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		inscriptionJoursDeSemaineInit();
 		inscriptionNomsParentsInit();
 		inscriptionMailsInit();
+		inscriptionMailInit();
 		inscriptionMailsParentsInit();
+		inscriptionNumeroTelephonesInit();
+		inscriptionNumeroTelephoneInit();
+		inscriptionNomParentInit();
 		inscriptionNomParentLignesInit();
 		inscriptionMailParentLignesInit();
 		inscriptionDetailParentLignesInit();
@@ -13670,8 +13940,16 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				return oInscriptionScolaire.inscriptionNomsParents;
 			case "inscriptionMails":
 				return oInscriptionScolaire.inscriptionMails;
+			case "inscriptionMail":
+				return oInscriptionScolaire.inscriptionMail;
 			case "inscriptionMailsParents":
 				return oInscriptionScolaire.inscriptionMailsParents;
+			case "inscriptionNumeroTelephones":
+				return oInscriptionScolaire.inscriptionNumeroTelephones;
+			case "inscriptionNumeroTelephone":
+				return oInscriptionScolaire.inscriptionNumeroTelephone;
+			case "inscriptionNomParent":
+				return oInscriptionScolaire.inscriptionNomParent;
 			case "inscriptionNomParentLignes":
 				return oInscriptionScolaire.inscriptionNomParentLignes;
 			case "inscriptionMailParentLignes":
@@ -14639,10 +14917,34 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 					oInscriptionScolaire.inscriptionMails.addAll(inscriptionMails);
 			}
 
+			if(sauvegardes.contains("inscriptionMail")) {
+				String inscriptionMail = (String)solrDocument.get("inscriptionMail_stored_string");
+				if(inscriptionMail != null)
+					oInscriptionScolaire.setInscriptionMail(inscriptionMail);
+			}
+
 			if(sauvegardes.contains("inscriptionMailsParents")) {
 				String inscriptionMailsParents = (String)solrDocument.get("inscriptionMailsParents_stored_string");
 				if(inscriptionMailsParents != null)
 					oInscriptionScolaire.setInscriptionMailsParents(inscriptionMailsParents);
+			}
+
+			if(sauvegardes.contains("inscriptionNumeroTelephones")) {
+				List<String> inscriptionNumeroTelephones = (List<String>)solrDocument.get("inscriptionNumeroTelephones_stored_strings");
+				if(inscriptionNumeroTelephones != null)
+					oInscriptionScolaire.inscriptionNumeroTelephones.addAll(inscriptionNumeroTelephones);
+			}
+
+			if(sauvegardes.contains("inscriptionNumeroTelephone")) {
+				String inscriptionNumeroTelephone = (String)solrDocument.get("inscriptionNumeroTelephone_stored_string");
+				if(inscriptionNumeroTelephone != null)
+					oInscriptionScolaire.setInscriptionNumeroTelephone(inscriptionNumeroTelephone);
+			}
+
+			if(sauvegardes.contains("inscriptionNomParent")) {
+				String inscriptionNomParent = (String)solrDocument.get("inscriptionNomParent_stored_string");
+				if(inscriptionNomParent != null)
+					oInscriptionScolaire.setInscriptionNomParent(inscriptionNomParent);
 			}
 
 			if(sauvegardes.contains("inscriptionNomParentLignes")) {
@@ -15311,8 +15613,28 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				document.addField("inscriptionMails_stored_strings", o);
 			}
 		}
+		if(inscriptionMail != null) {
+			document.addField("inscriptionMail_indexed_string", inscriptionMail);
+			document.addField("inscriptionMail_stored_string", inscriptionMail);
+		}
 		if(inscriptionMailsParents != null) {
 			document.addField("inscriptionMailsParents_stored_string", inscriptionMailsParents);
+		}
+		if(inscriptionNumeroTelephones != null) {
+			for(java.lang.String o : inscriptionNumeroTelephones) {
+				document.addField("inscriptionNumeroTelephones_indexed_strings", o);
+			}
+			for(java.lang.String o : inscriptionNumeroTelephones) {
+				document.addField("inscriptionNumeroTelephones_stored_strings", o);
+			}
+		}
+		if(inscriptionNumeroTelephone != null) {
+			document.addField("inscriptionNumeroTelephone_indexed_string", inscriptionNumeroTelephone);
+			document.addField("inscriptionNumeroTelephone_stored_string", inscriptionNumeroTelephone);
+		}
+		if(inscriptionNomParent != null) {
+			document.addField("inscriptionNomParent_indexed_string", inscriptionNomParent);
+			document.addField("inscriptionNomParent_stored_string", inscriptionNomParent);
 		}
 		if(inscriptionNomParentLignes != null) {
 			document.addField("inscriptionNomParentLignes_stored_string", inscriptionNomParentLignes);
@@ -15632,6 +15954,14 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				return "inscriptionJoursDeSemaine_indexed_strings";
 			case "inscriptionMails":
 				return "inscriptionMails_indexed_strings";
+			case "inscriptionMail":
+				return "inscriptionMail_indexed_string";
+			case "inscriptionNumeroTelephones":
+				return "inscriptionNumeroTelephones_indexed_strings";
+			case "inscriptionNumeroTelephone":
+				return "inscriptionNumeroTelephone_indexed_string";
+			case "inscriptionNomParent":
+				return "inscriptionNomParent_indexed_string";
 			case "inscriptionDate1":
 				return "inscriptionDate1_indexed_date";
 			case "inscriptionDate2":
@@ -16089,9 +16419,25 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(inscriptionMails != null)
 			oInscriptionScolaire.inscriptionMails.addAll(inscriptionMails);
 
+		String inscriptionMail = (String)solrDocument.get("inscriptionMail_stored_string");
+		if(inscriptionMail != null)
+			oInscriptionScolaire.setInscriptionMail(inscriptionMail);
+
 		String inscriptionMailsParents = (String)solrDocument.get("inscriptionMailsParents_stored_string");
 		if(inscriptionMailsParents != null)
 			oInscriptionScolaire.setInscriptionMailsParents(inscriptionMailsParents);
+
+		List<String> inscriptionNumeroTelephones = (List<String>)solrDocument.get("inscriptionNumeroTelephones_stored_strings");
+		if(inscriptionNumeroTelephones != null)
+			oInscriptionScolaire.inscriptionNumeroTelephones.addAll(inscriptionNumeroTelephones);
+
+		String inscriptionNumeroTelephone = (String)solrDocument.get("inscriptionNumeroTelephone_stored_string");
+		if(inscriptionNumeroTelephone != null)
+			oInscriptionScolaire.setInscriptionNumeroTelephone(inscriptionNumeroTelephone);
+
+		String inscriptionNomParent = (String)solrDocument.get("inscriptionNomParent_stored_string");
+		if(inscriptionNomParent != null)
+			oInscriptionScolaire.setInscriptionNomParent(inscriptionNomParent);
 
 		String inscriptionNomParentLignes = (String)solrDocument.get("inscriptionNomParentLignes_stored_string");
 		if(inscriptionNomParentLignes != null)

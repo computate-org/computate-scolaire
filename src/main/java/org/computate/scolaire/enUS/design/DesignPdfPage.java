@@ -429,12 +429,15 @@ public class DesignPdfPage extends DesignPdfPageGen<DesignPdfGenPage> {
 					}
 					while(i < size) {
 						block = blocks.get(i);
+						seasonStartDateCurrent = block.getSeasonStartDate();
+						sessionStartDateCurrent = block.getSessionStartDate();
+						ageStartCurrent = block.getAgeStart();
 						if(ObjectUtils.compare(ageStartCurrent, ageStartBefore) != 0) {
 							ageStartBefore = block.getAgeStart();
 							blockBlocks = block.getBlockBlocks();
 							ageBlocks.add(block);
 						}
-						if((i + 2) > size)
+						if((i + 1) > size)
 							break;
 						seasonStartDateCurrent = block.getSeasonStartDate();
 						sessionStartDateCurrent = block.getSessionStartDate();

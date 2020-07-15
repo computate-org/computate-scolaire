@@ -1687,7 +1687,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
 											.a("id", classApiMethodMethod, "_paymentKeys_add")
-											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Sending…'; postSchoolPaymentVals({ enrollmentKey: [ \"", pk, "\" ] }, function() {}, function() { addError($('#", classApiMethodMethod, "paymentKeys')); });")
+											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Sending…'; postSchoolPaymentVals({ enrollmentKey: \"", pk, "\" }, function() {}, function() { addError($('#", classApiMethodMethod, "paymentKeys')); });")
 											.f().sx("add a payment")
 										.g("button");
 									} g("div");
@@ -8563,6 +8563,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	/**	 The entity paymentFacets
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonIgnore
 	@JsonInclude(Include.NON_NULL)
 	protected SimpleOrderedMap paymentFacets;
 	@JsonIgnore
@@ -9736,6 +9737,68 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return enrollmentEmails == null ? "" : StringEscapeUtils.escapeHtml4(strEnrollmentEmails());
 	}
 
+	/////////////////////
+	// enrollmentEmail //
+	/////////////////////
+
+	/**	 The entity enrollmentEmail
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String enrollmentEmail;
+	@JsonIgnore
+	public Wrap<String> enrollmentEmailWrap = new Wrap<String>().p(this).c(String.class).var("enrollmentEmail").o(enrollmentEmail);
+
+	/**	<br/> The entity enrollmentEmail
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentEmail">Find the entity enrollmentEmail in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _enrollmentEmail(Wrap<String> c);
+
+	public String getEnrollmentEmail() {
+		return enrollmentEmail;
+	}
+
+	public void setEnrollmentEmail(String enrollmentEmail) {
+		this.enrollmentEmail = enrollmentEmail;
+		this.enrollmentEmailWrap.alreadyInitialized = true;
+	}
+	protected SchoolEnrollment enrollmentEmailInit() {
+		if(!enrollmentEmailWrap.alreadyInitialized) {
+			_enrollmentEmail(enrollmentEmailWrap);
+			if(enrollmentEmail == null)
+				setEnrollmentEmail(enrollmentEmailWrap.o);
+		}
+		enrollmentEmailWrap.alreadyInitialized(true);
+		return (SchoolEnrollment)this;
+	}
+
+	public String solrEnrollmentEmail() {
+		return enrollmentEmail;
+	}
+
+	public String strEnrollmentEmail() {
+		return enrollmentEmail == null ? "" : enrollmentEmail;
+	}
+
+	public String jsonEnrollmentEmail() {
+		return enrollmentEmail == null ? "" : enrollmentEmail;
+	}
+
+	public String nomAffichageEnrollmentEmail() {
+		return null;
+	}
+
+	public String htmTooltipEnrollmentEmail() {
+		return null;
+	}
+
+	public String htmEnrollmentEmail() {
+		return enrollmentEmail == null ? "" : StringEscapeUtils.escapeHtml4(strEnrollmentEmail());
+	}
+
 	////////////////////////////
 	// enrollmentParentEmails //
 	////////////////////////////
@@ -9796,6 +9859,209 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String htmEnrollmentParentEmails() {
 		return enrollmentParentEmails == null ? "" : StringEscapeUtils.escapeHtml4(strEnrollmentParentEmails());
+	}
+
+	////////////////////////////
+	// enrollmentPhoneNumbers //
+	////////////////////////////
+
+	/**	 The entity enrollmentPhoneNumbers
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<String>(). 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected List<String> enrollmentPhoneNumbers = new ArrayList<String>();
+	@JsonIgnore
+	public Wrap<List<String>> enrollmentPhoneNumbersWrap = new Wrap<List<String>>().p(this).c(List.class).var("enrollmentPhoneNumbers").o(enrollmentPhoneNumbers);
+
+	/**	<br/> The entity enrollmentPhoneNumbers
+	 *  It is constructed before being initialized with the constructor by default List<String>(). 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentPhoneNumbers">Find the entity enrollmentPhoneNumbers in Solr</a>
+	 * <br/>
+	 * @param enrollmentPhoneNumbers is the entity already constructed. 
+	 **/
+	protected abstract void _enrollmentPhoneNumbers(List<String> l);
+
+	public List<String> getEnrollmentPhoneNumbers() {
+		return enrollmentPhoneNumbers;
+	}
+
+	public void setEnrollmentPhoneNumbers(List<String> enrollmentPhoneNumbers) {
+		this.enrollmentPhoneNumbers = enrollmentPhoneNumbers;
+		this.enrollmentPhoneNumbersWrap.alreadyInitialized = true;
+	}
+	public SchoolEnrollment addEnrollmentPhoneNumbers(String...objets) {
+		for(String o : objets) {
+			addEnrollmentPhoneNumbers(o);
+		}
+		return (SchoolEnrollment)this;
+	}
+	public SchoolEnrollment addEnrollmentPhoneNumbers(String o) {
+		if(o != null && !enrollmentPhoneNumbers.contains(o))
+			this.enrollmentPhoneNumbers.add(o);
+		return (SchoolEnrollment)this;
+	}
+	public SchoolEnrollment setEnrollmentPhoneNumbers(JsonArray objets) {
+		enrollmentPhoneNumbers.clear();
+		for(int i = 0; i < objets.size(); i++) {
+			String o = objets.getString(i);
+			addEnrollmentPhoneNumbers(o);
+		}
+		return (SchoolEnrollment)this;
+	}
+	protected SchoolEnrollment enrollmentPhoneNumbersInit() {
+		if(!enrollmentPhoneNumbersWrap.alreadyInitialized) {
+			_enrollmentPhoneNumbers(enrollmentPhoneNumbers);
+		}
+		enrollmentPhoneNumbersWrap.alreadyInitialized(true);
+		return (SchoolEnrollment)this;
+	}
+
+	public List<String> solrEnrollmentPhoneNumbers() {
+		return enrollmentPhoneNumbers;
+	}
+
+	public String strEnrollmentPhoneNumbers() {
+		return enrollmentPhoneNumbers == null ? "" : enrollmentPhoneNumbers.toString();
+	}
+
+	public String jsonEnrollmentPhoneNumbers() {
+		return enrollmentPhoneNumbers == null ? "" : enrollmentPhoneNumbers.toString();
+	}
+
+	public String nomAffichageEnrollmentPhoneNumbers() {
+		return null;
+	}
+
+	public String htmTooltipEnrollmentPhoneNumbers() {
+		return null;
+	}
+
+	public String htmEnrollmentPhoneNumbers() {
+		return enrollmentPhoneNumbers == null ? "" : StringEscapeUtils.escapeHtml4(strEnrollmentPhoneNumbers());
+	}
+
+	///////////////////////////
+	// enrollmentPhoneNumber //
+	///////////////////////////
+
+	/**	 The entity enrollmentPhoneNumber
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String enrollmentPhoneNumber;
+	@JsonIgnore
+	public Wrap<String> enrollmentPhoneNumberWrap = new Wrap<String>().p(this).c(String.class).var("enrollmentPhoneNumber").o(enrollmentPhoneNumber);
+
+	/**	<br/> The entity enrollmentPhoneNumber
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentPhoneNumber">Find the entity enrollmentPhoneNumber in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _enrollmentPhoneNumber(Wrap<String> c);
+
+	public String getEnrollmentPhoneNumber() {
+		return enrollmentPhoneNumber;
+	}
+
+	public void setEnrollmentPhoneNumber(String enrollmentPhoneNumber) {
+		this.enrollmentPhoneNumber = enrollmentPhoneNumber;
+		this.enrollmentPhoneNumberWrap.alreadyInitialized = true;
+	}
+	protected SchoolEnrollment enrollmentPhoneNumberInit() {
+		if(!enrollmentPhoneNumberWrap.alreadyInitialized) {
+			_enrollmentPhoneNumber(enrollmentPhoneNumberWrap);
+			if(enrollmentPhoneNumber == null)
+				setEnrollmentPhoneNumber(enrollmentPhoneNumberWrap.o);
+		}
+		enrollmentPhoneNumberWrap.alreadyInitialized(true);
+		return (SchoolEnrollment)this;
+	}
+
+	public String solrEnrollmentPhoneNumber() {
+		return enrollmentPhoneNumber;
+	}
+
+	public String strEnrollmentPhoneNumber() {
+		return enrollmentPhoneNumber == null ? "" : enrollmentPhoneNumber;
+	}
+
+	public String jsonEnrollmentPhoneNumber() {
+		return enrollmentPhoneNumber == null ? "" : enrollmentPhoneNumber;
+	}
+
+	public String nomAffichageEnrollmentPhoneNumber() {
+		return null;
+	}
+
+	public String htmTooltipEnrollmentPhoneNumber() {
+		return null;
+	}
+
+	public String htmEnrollmentPhoneNumber() {
+		return enrollmentPhoneNumber == null ? "" : StringEscapeUtils.escapeHtml4(strEnrollmentPhoneNumber());
+	}
+
+	//////////////////////////
+	// enrollmentParentName //
+	//////////////////////////
+
+	/**	 The entity enrollmentParentName
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String enrollmentParentName;
+	@JsonIgnore
+	public Wrap<String> enrollmentParentNameWrap = new Wrap<String>().p(this).c(String.class).var("enrollmentParentName").o(enrollmentParentName);
+
+	/**	<br/> The entity enrollmentParentName
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentParentName">Find the entity enrollmentParentName in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _enrollmentParentName(Wrap<String> c);
+
+	public String getEnrollmentParentName() {
+		return enrollmentParentName;
+	}
+
+	public void setEnrollmentParentName(String enrollmentParentName) {
+		this.enrollmentParentName = enrollmentParentName;
+		this.enrollmentParentNameWrap.alreadyInitialized = true;
+	}
+	protected SchoolEnrollment enrollmentParentNameInit() {
+		if(!enrollmentParentNameWrap.alreadyInitialized) {
+			_enrollmentParentName(enrollmentParentNameWrap);
+			if(enrollmentParentName == null)
+				setEnrollmentParentName(enrollmentParentNameWrap.o);
+		}
+		enrollmentParentNameWrap.alreadyInitialized(true);
+		return (SchoolEnrollment)this;
+	}
+
+	public String solrEnrollmentParentName() {
+		return enrollmentParentName;
+	}
+
+	public String strEnrollmentParentName() {
+		return enrollmentParentName == null ? "" : enrollmentParentName;
+	}
+
+	public String jsonEnrollmentParentName() {
+		return enrollmentParentName == null ? "" : enrollmentParentName;
+	}
+
+	public String nomAffichageEnrollmentParentName() {
+		return null;
+	}
+
+	public String htmTooltipEnrollmentParentName() {
+		return null;
+	}
+
+	public String htmEnrollmentParentName() {
+		return enrollmentParentName == null ? "" : StringEscapeUtils.escapeHtml4(strEnrollmentParentName());
 	}
 
 	///////////////////////////////
@@ -13318,7 +13584,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		enrollmentDaysOfWeekInit();
 		enrollmentParentNamesInit();
 		enrollmentEmailsInit();
+		enrollmentEmailInit();
 		enrollmentParentEmailsInit();
+		enrollmentPhoneNumbersInit();
+		enrollmentPhoneNumberInit();
+		enrollmentParentNameInit();
 		enrollmentParentNameLinesInit();
 		enrollmentParentEmailLinesInit();
 		enrollmentParentDetailLinesInit();
@@ -13637,8 +13907,16 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				return oSchoolEnrollment.enrollmentParentNames;
 			case "enrollmentEmails":
 				return oSchoolEnrollment.enrollmentEmails;
+			case "enrollmentEmail":
+				return oSchoolEnrollment.enrollmentEmail;
 			case "enrollmentParentEmails":
 				return oSchoolEnrollment.enrollmentParentEmails;
+			case "enrollmentPhoneNumbers":
+				return oSchoolEnrollment.enrollmentPhoneNumbers;
+			case "enrollmentPhoneNumber":
+				return oSchoolEnrollment.enrollmentPhoneNumber;
+			case "enrollmentParentName":
+				return oSchoolEnrollment.enrollmentParentName;
 			case "enrollmentParentNameLines":
 				return oSchoolEnrollment.enrollmentParentNameLines;
 			case "enrollmentParentEmailLines":
@@ -14606,10 +14884,34 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 					oSchoolEnrollment.enrollmentEmails.addAll(enrollmentEmails);
 			}
 
+			if(saves.contains("enrollmentEmail")) {
+				String enrollmentEmail = (String)solrDocument.get("enrollmentEmail_stored_string");
+				if(enrollmentEmail != null)
+					oSchoolEnrollment.setEnrollmentEmail(enrollmentEmail);
+			}
+
 			if(saves.contains("enrollmentParentEmails")) {
 				String enrollmentParentEmails = (String)solrDocument.get("enrollmentParentEmails_stored_string");
 				if(enrollmentParentEmails != null)
 					oSchoolEnrollment.setEnrollmentParentEmails(enrollmentParentEmails);
+			}
+
+			if(saves.contains("enrollmentPhoneNumbers")) {
+				List<String> enrollmentPhoneNumbers = (List<String>)solrDocument.get("enrollmentPhoneNumbers_stored_strings");
+				if(enrollmentPhoneNumbers != null)
+					oSchoolEnrollment.enrollmentPhoneNumbers.addAll(enrollmentPhoneNumbers);
+			}
+
+			if(saves.contains("enrollmentPhoneNumber")) {
+				String enrollmentPhoneNumber = (String)solrDocument.get("enrollmentPhoneNumber_stored_string");
+				if(enrollmentPhoneNumber != null)
+					oSchoolEnrollment.setEnrollmentPhoneNumber(enrollmentPhoneNumber);
+			}
+
+			if(saves.contains("enrollmentParentName")) {
+				String enrollmentParentName = (String)solrDocument.get("enrollmentParentName_stored_string");
+				if(enrollmentParentName != null)
+					oSchoolEnrollment.setEnrollmentParentName(enrollmentParentName);
 			}
 
 			if(saves.contains("enrollmentParentNameLines")) {
@@ -15278,8 +15580,28 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				document.addField("enrollmentEmails_stored_strings", o);
 			}
 		}
+		if(enrollmentEmail != null) {
+			document.addField("enrollmentEmail_indexed_string", enrollmentEmail);
+			document.addField("enrollmentEmail_stored_string", enrollmentEmail);
+		}
 		if(enrollmentParentEmails != null) {
 			document.addField("enrollmentParentEmails_stored_string", enrollmentParentEmails);
+		}
+		if(enrollmentPhoneNumbers != null) {
+			for(java.lang.String o : enrollmentPhoneNumbers) {
+				document.addField("enrollmentPhoneNumbers_indexed_strings", o);
+			}
+			for(java.lang.String o : enrollmentPhoneNumbers) {
+				document.addField("enrollmentPhoneNumbers_stored_strings", o);
+			}
+		}
+		if(enrollmentPhoneNumber != null) {
+			document.addField("enrollmentPhoneNumber_indexed_string", enrollmentPhoneNumber);
+			document.addField("enrollmentPhoneNumber_stored_string", enrollmentPhoneNumber);
+		}
+		if(enrollmentParentName != null) {
+			document.addField("enrollmentParentName_indexed_string", enrollmentParentName);
+			document.addField("enrollmentParentName_stored_string", enrollmentParentName);
 		}
 		if(enrollmentParentNameLines != null) {
 			document.addField("enrollmentParentNameLines_stored_string", enrollmentParentNameLines);
@@ -15599,6 +15921,14 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				return "enrollmentDaysOfWeek_indexed_strings";
 			case "enrollmentEmails":
 				return "enrollmentEmails_indexed_strings";
+			case "enrollmentEmail":
+				return "enrollmentEmail_indexed_string";
+			case "enrollmentPhoneNumbers":
+				return "enrollmentPhoneNumbers_indexed_strings";
+			case "enrollmentPhoneNumber":
+				return "enrollmentPhoneNumber_indexed_string";
+			case "enrollmentParentName":
+				return "enrollmentParentName_indexed_string";
 			case "enrollmentDate1":
 				return "enrollmentDate1_indexed_date";
 			case "enrollmentDate2":
@@ -16056,9 +16386,25 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		if(enrollmentEmails != null)
 			oSchoolEnrollment.enrollmentEmails.addAll(enrollmentEmails);
 
+		String enrollmentEmail = (String)solrDocument.get("enrollmentEmail_stored_string");
+		if(enrollmentEmail != null)
+			oSchoolEnrollment.setEnrollmentEmail(enrollmentEmail);
+
 		String enrollmentParentEmails = (String)solrDocument.get("enrollmentParentEmails_stored_string");
 		if(enrollmentParentEmails != null)
 			oSchoolEnrollment.setEnrollmentParentEmails(enrollmentParentEmails);
+
+		List<String> enrollmentPhoneNumbers = (List<String>)solrDocument.get("enrollmentPhoneNumbers_stored_strings");
+		if(enrollmentPhoneNumbers != null)
+			oSchoolEnrollment.enrollmentPhoneNumbers.addAll(enrollmentPhoneNumbers);
+
+		String enrollmentPhoneNumber = (String)solrDocument.get("enrollmentPhoneNumber_stored_string");
+		if(enrollmentPhoneNumber != null)
+			oSchoolEnrollment.setEnrollmentPhoneNumber(enrollmentPhoneNumber);
+
+		String enrollmentParentName = (String)solrDocument.get("enrollmentParentName_stored_string");
+		if(enrollmentParentName != null)
+			oSchoolEnrollment.setEnrollmentParentName(enrollmentParentName);
 
 		String enrollmentParentNameLines = (String)solrDocument.get("enrollmentParentNameLines_stored_string");
 		if(enrollmentParentNameLines != null)

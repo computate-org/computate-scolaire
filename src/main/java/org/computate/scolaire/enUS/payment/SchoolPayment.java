@@ -25,11 +25,11 @@ import org.computate.scolaire.enUS.search.SearchList;
  * Color: green
  * IconGroup: solid
  * IconName: search-dollar
- * Role.enUS: SiteManager
+ * Role.enUS: SiteAdmin
  * ApiUri.enUS: /api/payment
  * ApiTag.enUS: Payment
  * AName.enUS: a payment
- * Role.frFR: SiteManager
+ * Role.frFR: SiteAdmin
  * ApiUri.frFR: /api/paiement
  * ApiTag.frFR: Paiement
  * AName.frFR: un paiement

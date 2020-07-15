@@ -61,8 +61,8 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * IconeGroupe: solid
  * IconeNom: search-dollar
  * 
- * Role.frFR: SiteManager
- * Role.enUS: SiteManager
+ * Role.frFR: SiteAdmin
+ * Role.enUS: SiteAdmin
  * RoleLire.frFR: User
  * RoleLire.enUS: User
  * 
@@ -101,7 +101,7 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * Description.enUS: The primary key of the school children in the database. 
 	 * NomAffichage.frFR: inscription
 	 * NomAffichage.enUS: enrollment
-	 */    
+	 */   
 	protected void _inscriptionCle(Couverture<Long> c) {}
 
 	/**

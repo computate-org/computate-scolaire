@@ -369,7 +369,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 										e("button")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
 											.a("id", classApiMethodMethod, "_yearKey_add")
-											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Sending…'; postSchoolYearVals({ seasonKeys: \"", pk, "\" }, function() {}, function() { addError($('#", classApiMethodMethod, "yearKey')); });")
+											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Sending…'; postSchoolYearVals({ seasonKeys: [ \"", pk, "\" ] }, function() {}, function() { addError($('#", classApiMethodMethod, "yearKey')); });")
 											.f().sx("add a year")
 										.g("button");
 									} g("div");

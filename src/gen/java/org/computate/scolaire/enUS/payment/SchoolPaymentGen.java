@@ -63,7 +63,7 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 public abstract class SchoolPaymentGen<DEV> extends Cluster {
 	protected static final Logger LOGGER = LoggerFactory.getLogger(SchoolPayment.class);
 
-	public static final List<String> ROLES = Arrays.asList("SiteManager");
+	public static final List<String> ROLES = Arrays.asList("SiteAdmin");
 	public static final List<String> ROLE_READS = Arrays.asList("User");
 
 	public static final String SchoolPayment_AName = "a payment";

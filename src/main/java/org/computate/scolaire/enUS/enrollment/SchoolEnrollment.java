@@ -670,6 +670,10 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 		}
 	}
 
+	protected void _enrollmentEmail(Wrap<String> c) {
+		c.o(enrollmentEmails.stream().findFirst().orElse(null));
+	}
+
 	protected void _enrollmentParentEmails(Wrap<String> c) {
 		StringBuilder b = new StringBuilder();
 		if(moms.size() == 0 && dads.size() == 0) {
@@ -699,6 +703,63 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 			}
 		}
 		c.o(b.toString());
+	}
+
+	protected void _enrollmentPhoneNumbers(List<String> l) {
+		if(moms.size() == 0 && dads.size() == 0) {
+			for(SchoolGuardian o : guardians) {
+				String personPhoneNumber = o.getPersonPhoneNumber();
+				if(StringUtils.isNotBlank(personPhoneNumber)) {
+					l.add(o.getPersonPhoneNumber());
+				}
+			}
+		}
+		else {
+			for(SchoolMom o : moms) {
+				String personPhoneNumber = o.getPersonPhoneNumber();
+				if(StringUtils.isNotBlank(personPhoneNumber)) {
+					l.add(o.getPersonPhoneNumber());
+				}
+			}
+			for(SchoolDad o : dads) {
+				String personPhoneNumber = o.getPersonPhoneNumber();
+				if(StringUtils.isNotBlank(personPhoneNumber)) {
+					l.add(o.getPersonPhoneNumber());
+				}
+			}
+		}
+	}
+
+	protected void _enrollmentPhoneNumber(Wrap<String> c) {
+		c.o(enrollmentPhoneNumbers.stream().findFirst().orElse(null));
+	}
+
+	protected void _enrollmentParentName(Wrap<String> c) {
+		if(moms.size() == 0 && dads.size() == 0) {
+			for(SchoolGuardian o : guardians) {
+				String personneNomCompletPrefere = o.getPersonCompleteNamePreferred();
+				if(StringUtils.isNotBlank(personneNomCompletPrefere)) {
+					c.o(o.getPersonCompleteNamePreferred());
+					return;
+				}
+			}
+		}
+		else {
+			for(SchoolMom o : moms) {
+				String personneNomCompletPrefere = o.getPersonCompleteNamePreferred();
+				if(StringUtils.isNotBlank(personneNomCompletPrefere)) {
+					c.o(o.getPersonCompleteNamePreferred());
+					return;
+				}
+			}
+			for(SchoolDad o : dads) {
+				String personneNomCompletPrefere = o.getPersonCompleteNamePreferred();
+				if(StringUtils.isNotBlank(personneNomCompletPrefere)) {
+					c.o(o.getPersonCompleteNamePreferred());
+					return;
+				}
+			}
+		}
 	}
 
 	protected void _enrollmentParentNameLines(Wrap<String> c) {

@@ -109,7 +109,7 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 		try {
 			LOGGER.info(String.format("postSchoolPayment started. "));
 
-			List<String> roles = Arrays.asList("SiteManager");
+			List<String> roles = Arrays.asList("SiteAdmin");
 			if(
 					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
 					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
@@ -714,7 +714,7 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 		try {
 			LOGGER.info(String.format("putimportSchoolPayment started. "));
 
-			List<String> roles = Arrays.asList("SiteManager");
+			List<String> roles = Arrays.asList("SiteAdmin");
 			if(
 					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
 					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
@@ -899,7 +899,7 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 		try {
 			LOGGER.info(String.format("putmergeSchoolPayment started. "));
 
-			List<String> roles = Arrays.asList("SiteManager");
+			List<String> roles = Arrays.asList("SiteAdmin");
 			if(
 					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
 					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
@@ -1082,7 +1082,7 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 		try {
 			LOGGER.info(String.format("putcopySchoolPayment started. "));
 
-			List<String> roles = Arrays.asList("SiteManager");
+			List<String> roles = Arrays.asList("SiteAdmin");
 			if(
 					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
 					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
@@ -1696,7 +1696,7 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 		try {
 			LOGGER.info(String.format("patchSchoolPayment started. "));
 
-			List<String> roles = Arrays.asList("SiteManager");
+			List<String> roles = Arrays.asList("SiteAdmin");
 			if(
 					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
 					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
@@ -2796,7 +2796,7 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolPayment(siteContext, operationRequest);
 		try {
 
-			List<String> roles = Arrays.asList("SiteManager");
+			List<String> roles = Arrays.asList("SiteAdmin");
 			List<String> roleLires = Arrays.asList("User");
 			if(
 					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
@@ -2883,7 +2883,7 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolPayment(siteContext, operationRequest);
 		try {
 
-			List<String> roles = Arrays.asList("SiteManager");
+			List<String> roles = Arrays.asList("SiteAdmin");
 			List<String> roleLires = Arrays.asList("User");
 			if(
 					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
@@ -3015,7 +3015,7 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolPayment(siteContext, operationRequest);
 		try {
 
-			List<String> roles = Arrays.asList("SiteManager");
+			List<String> roles = Arrays.asList("SiteAdmin");
 			List<String> roleLires = Arrays.asList("User");
 			if(
 					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)

@@ -411,7 +411,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Description.enUS: The primary key of the school emergency contacts in the database. 
 	 * NomAffichage.frFR: paiements
 	 * NomAffichage.enUS: payments
-	 */          
+	 */         
 	protected void _paiementCles(List<Long> o) {}
 
 	/**
@@ -1799,6 +1799,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 
 	/**       
 	 * {@inheritDoc}
+	 * Ignorer: true
 	 * Var.enUS: paymentFacets
 	 * r: paiementRecherche
 	 * r.enUS: paymentSearch
@@ -2151,6 +2152,18 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 
 	/**       
 	 * {@inheritDoc}
+	 * Var.enUS: enrollmentEmail
+	 * Indexe: true
+	 * Stocke: true
+	 * r: inscriptionMail
+	 * r.enUS: enrollmentEmail
+	 */     
+	protected void _inscriptionMail(Couverture<String> c) {
+		c.o(inscriptionMails.stream().findFirst().orElse(null));
+	}
+
+	/**       
+	 * {@inheritDoc}
 	 * Var.enUS: enrollmentParentEmails
 	 * Stocke: true
 	 * r: MereScolaire
@@ -2201,6 +2214,119 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 			}
 		}
 		c.o(b.toString());
+	}
+
+	/**       
+	 * {@inheritDoc}
+	 * Var.enUS: enrollmentPhoneNumbers
+	 * Indexe: true
+	 * Stocke: true
+	 * r: MereScolaire
+	 * r.enUS: SchoolMom
+	 * r: PereScolaire
+	 * r.enUS: SchoolDad
+	 * r: GardienScolaire
+	 * r.enUS: SchoolGuardian
+	 * r: meres
+	 * r.enUS: moms
+	 * r: peres
+	 * r.enUS: dads
+	 * r: gardien
+	 * r.enUS: guardian
+	 * r: PersonneNomCompletPrefere
+	 * r.enUS: PersonCompleteNamePreferred
+	 * r: PersonneNumeroTelephone
+	 * r.enUS: PersonPhoneNumber
+	 * r: personneNumeroTelephone
+	 * r.enUS: personPhoneNumber
+	 */     
+	protected void _inscriptionNumeroTelephones(List<String> l) {
+		if(meres.size() == 0 && peres.size() == 0) {
+			for(GardienScolaire o : gardiens) {
+				String personneNumeroTelephone = o.getPersonneNumeroTelephone();
+				if(StringUtils.isNotBlank(personneNumeroTelephone)) {
+					l.add(o.getPersonneNumeroTelephone());
+				}
+			}
+		}
+		else {
+			for(MereScolaire o : meres) {
+				String personneNumeroTelephone = o.getPersonneNumeroTelephone();
+				if(StringUtils.isNotBlank(personneNumeroTelephone)) {
+					l.add(o.getPersonneNumeroTelephone());
+				}
+			}
+			for(PereScolaire o : peres) {
+				String personneNumeroTelephone = o.getPersonneNumeroTelephone();
+				if(StringUtils.isNotBlank(personneNumeroTelephone)) {
+					l.add(o.getPersonneNumeroTelephone());
+				}
+			}
+		}
+	}
+
+	/**       
+	 * {@inheritDoc}
+	 * Var.enUS: enrollmentPhoneNumber
+	 * Indexe: true
+	 * Stocke: true
+	 * r: inscriptionNumeroTelephone
+	 * r.enUS: enrollmentPhoneNumber
+	 */     
+	protected void _inscriptionNumeroTelephone(Couverture<String> c) {
+		c.o(inscriptionNumeroTelephones.stream().findFirst().orElse(null));
+	}
+
+	/**       
+	 * {@inheritDoc}
+	 * Var.enUS: enrollmentParentName
+	 * Indexe: true
+	 * Stocke: true
+	 * r: MereScolaire
+	 * r.enUS: SchoolMom
+	 * r: PereScolaire
+	 * r.enUS: SchoolDad
+	 * r: GardienScolaire
+	 * r.enUS: SchoolGuardian
+	 * r: meres
+	 * r.enUS: moms
+	 * r: peres
+	 * r.enUS: dads
+	 * r: gardien
+	 * r.enUS: guardian
+	 * r: PersonneNomCompletPrefere
+	 * r.enUS: PersonCompleteNamePreferred
+	 * r: PersonneNumeroTelephone
+	 * r.enUS: PersonPhoneNumber
+	 * r: personneNumeroTelephone
+	 * r.enUS: personPhoneNumber
+	 */     
+	protected void _inscriptionNomParent(Couverture<String> c) {
+		if(meres.size() == 0 && peres.size() == 0) {
+			for(GardienScolaire o : gardiens) {
+				String personneNomCompletPrefere = o.getPersonneNomCompletPrefere();
+				if(StringUtils.isNotBlank(personneNomCompletPrefere)) {
+					c.o(o.getPersonneNomCompletPrefere());
+					return;
+				}
+			}
+		}
+		else {
+			for(MereScolaire o : meres) {
+				String personneNomCompletPrefere = o.getPersonneNomCompletPrefere();
+				if(StringUtils.isNotBlank(personneNomCompletPrefere)) {
+					c.o(o.getPersonneNomCompletPrefere());
+					return;
+				}
+			}
+			for(PereScolaire o : peres) {
+				String personneNomCompletPrefere = o.getPersonneNomCompletPrefere();
+				if(StringUtils.isNotBlank(personneNomCompletPrefere)) {
+					c.o(o.getPersonneNomCompletPrefere());
+					return;
+				}
+			}
+		}
 	}
 
 	/**
