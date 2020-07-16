@@ -300,13 +300,13 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 						configurerExecuteurTravailleurPartage().future().compose(e -> 
 							configurerWebsockets().future().compose(f -> 
 								configurerMail().future().compose(g -> 
-									configurerAuthorizeNetFrais().future().compose(h -> 
-										configurerAuthorizeNetPaiements(1).future().compose(i -> 
-											configurerAuthorizeNetPaiements(2).future().compose(j -> 
+//									configurerAuthorizeNetFrais().future().compose(h -> 
+//										configurerAuthorizeNetPaiements(1).future().compose(i -> 
+//											configurerAuthorizeNetPaiements(2).future().compose(j -> 
 												demarrerServeur().future()
-											)
-										)
-									)
+//											)
+//										)
+//									)
 								)
 							)
 						)

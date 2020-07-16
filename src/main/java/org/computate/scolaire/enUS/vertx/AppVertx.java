@@ -207,13 +207,13 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 						configureSharedWorkerExecutor().future().compose(e -> 
 							configureWebsockets().future().compose(f -> 
 								configureEmail().future().compose(g -> 
-									configureAuthorizeNetCharges().future().compose(h -> 
-										configureAuthorizeNetPayments(1).future().compose(i -> 
-											configureAuthorizeNetPayments(2).future().compose(j -> 
+//									configureAuthorizeNetCharges().future().compose(h -> 
+//										configureAuthorizeNetPayments(1).future().compose(i -> 
+//											configureAuthorizeNetPayments(2).future().compose(j -> 
 												startServer().future()
-											)
-										)
-									)
+//											)
+//										)
+//									)
 								)
 							)
 						)
