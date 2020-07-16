@@ -962,7 +962,7 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 			siteRequest2.setApiRequest_(siteRequest.getApiRequest_());
 			o.setSiteRequest_(siteRequest2);
 			futures.add(
-				putcopySchoolAgeFuture(siteRequest, JsonObject.mapFrom(o), a -> {
+				putcopySchoolAgeFuture(siteRequest2, JsonObject.mapFrom(o), a -> {
 					if(a.succeeded()) {
 					} else {
 						LOGGER.error(String.format("listPUTCopySchoolAge failed. ", a.cause()));

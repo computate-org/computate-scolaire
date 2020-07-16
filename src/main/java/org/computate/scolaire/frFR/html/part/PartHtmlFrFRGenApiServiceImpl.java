@@ -1195,7 +1195,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 			requeteSite2.setRequeteApi_(requeteSite.getRequeteApi_());
 			o.setRequeteSite_(requeteSite2);
 			futures.add(
-				putcopiePartHtmlFuture(requeteSite, JsonObject.mapFrom(o), a -> {
+				putcopiePartHtmlFuture(requeteSite2, JsonObject.mapFrom(o), a -> {
 					if(a.succeeded()) {
 					} else {
 						LOGGER.error(String.format("listePUTCopiePartHtml a échoué. ", a.cause()));

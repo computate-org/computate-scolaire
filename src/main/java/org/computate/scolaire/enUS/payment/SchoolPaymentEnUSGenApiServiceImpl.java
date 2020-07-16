@@ -1176,7 +1176,7 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 			siteRequest2.setApiRequest_(siteRequest.getApiRequest_());
 			o.setSiteRequest_(siteRequest2);
 			futures.add(
-				putcopySchoolPaymentFuture(siteRequest, JsonObject.mapFrom(o), a -> {
+				putcopySchoolPaymentFuture(siteRequest2, JsonObject.mapFrom(o), a -> {
 					if(a.succeeded()) {
 					} else {
 						LOGGER.error(String.format("listPUTCopySchoolPayment failed. ", a.cause()));

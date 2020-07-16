@@ -1007,7 +1007,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 			requeteSite2.setRequeteApi_(requeteSite.getRequeteApi_());
 			o.setRequeteSite_(requeteSite2);
 			futures.add(
-				putcopieBlocScolaireFuture(requeteSite, JsonObject.mapFrom(o), a -> {
+				putcopieBlocScolaireFuture(requeteSite2, JsonObject.mapFrom(o), a -> {
 					if(a.succeeded()) {
 					} else {
 						LOGGER.error(String.format("listePUTCopieBlocScolaire a échoué. ", a.cause()));

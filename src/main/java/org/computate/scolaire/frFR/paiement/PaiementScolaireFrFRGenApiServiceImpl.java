@@ -1176,7 +1176,7 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 			requeteSite2.setRequeteApi_(requeteSite.getRequeteApi_());
 			o.setRequeteSite_(requeteSite2);
 			futures.add(
-				putcopiePaiementScolaireFuture(requeteSite, JsonObject.mapFrom(o), a -> {
+				putcopiePaiementScolaireFuture(requeteSite2, JsonObject.mapFrom(o), a -> {
 					if(a.succeeded()) {
 					} else {
 						LOGGER.error(String.format("listePUTCopiePaiementScolaire a échoué. ", a.cause()));

@@ -856,7 +856,7 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 			siteRequest2.setApiRequest_(siteRequest.getApiRequest_());
 			o.setSiteRequest_(siteRequest2);
 			futures.add(
-				putcopySchoolChildFuture(siteRequest, JsonObject.mapFrom(o), a -> {
+				putcopySchoolChildFuture(siteRequest2, JsonObject.mapFrom(o), a -> {
 					if(a.succeeded()) {
 					} else {
 						LOGGER.error(String.format("listPUTCopySchoolChild failed. ", a.cause()));

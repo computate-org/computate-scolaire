@@ -1195,7 +1195,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 			siteRequest2.setApiRequest_(siteRequest.getApiRequest_());
 			o.setSiteRequest_(siteRequest2);
 			futures.add(
-				putcopyHtmlPartFuture(siteRequest, JsonObject.mapFrom(o), a -> {
+				putcopyHtmlPartFuture(siteRequest2, JsonObject.mapFrom(o), a -> {
 					if(a.succeeded()) {
 					} else {
 						LOGGER.error(String.format("listPUTCopyHtmlPart failed. ", a.cause()));

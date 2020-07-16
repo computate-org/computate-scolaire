@@ -753,7 +753,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 			siteRequest2.setApiRequest_(siteRequest.getApiRequest_());
 			o.setSiteRequest_(siteRequest2);
 			futures.add(
-				putcopyClusterFuture(siteRequest, JsonObject.mapFrom(o), a -> {
+				putcopyClusterFuture(siteRequest2, JsonObject.mapFrom(o), a -> {
 					if(a.succeeded()) {
 					} else {
 						LOGGER.error(String.format("listPUTCopyCluster failed. ", a.cause()));

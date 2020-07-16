@@ -365,7 +365,7 @@ public class SchoolEnrollmentEnUSApiServiceImpl extends SchoolEnrollmentEnUSGenA
 				}));
 			}
 			if(numMonths != null) {
-				for(long i = 0; i < numMonths; i++) {
+				for(long i = 1; i < numMonths; i++) {
 					LocalDate paymentDate = chargeStartDate.plusMonths(i);
 					if(!paymentsDue.contains(paymentDate)) {
 						SchoolPayment o = new SchoolPayment();

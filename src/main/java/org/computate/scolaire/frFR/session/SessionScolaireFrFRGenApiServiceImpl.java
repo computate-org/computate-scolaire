@@ -929,7 +929,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 			requeteSite2.setRequeteApi_(requeteSite.getRequeteApi_());
 			o.setRequeteSite_(requeteSite2);
 			futures.add(
-				putcopieSessionScolaireFuture(requeteSite, JsonObject.mapFrom(o), a -> {
+				putcopieSessionScolaireFuture(requeteSite2, JsonObject.mapFrom(o), a -> {
 					if(a.succeeded()) {
 					} else {
 						LOGGER.error(String.format("listePUTCopieSessionScolaire a échoué. ", a.cause()));

@@ -1576,7 +1576,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 			requeteSite2.setRequeteApi_(requeteSite.getRequeteApi_());
 			o.setRequeteSite_(requeteSite2);
 			futures.add(
-				putcopieInscriptionScolaireFuture(requeteSite, JsonObject.mapFrom(o), a -> {
+				putcopieInscriptionScolaireFuture(requeteSite2, JsonObject.mapFrom(o), a -> {
 					if(a.succeeded()) {
 					} else {
 						LOGGER.error(String.format("listePUTCopieInscriptionScolaire a échoué. ", a.cause()));

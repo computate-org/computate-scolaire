@@ -1946,7 +1946,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 			siteRequest2.setApiRequest_(siteRequest.getApiRequest_());
 			o.setSiteRequest_(siteRequest2);
 			futures.add(
-				putcopySchoolFuture(siteRequest, JsonObject.mapFrom(o), a -> {
+				putcopySchoolFuture(siteRequest2, JsonObject.mapFrom(o), a -> {
 					if(a.succeeded()) {
 					} else {
 						LOGGER.error(String.format("listPUTCopySchool failed. ", a.cause()));

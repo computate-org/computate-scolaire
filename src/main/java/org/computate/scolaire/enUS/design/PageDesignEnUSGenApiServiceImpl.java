@@ -947,7 +947,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 			siteRequest2.setApiRequest_(siteRequest.getApiRequest_());
 			o.setSiteRequest_(siteRequest2);
 			futures.add(
-				putcopyPageDesignFuture(siteRequest, JsonObject.mapFrom(o), a -> {
+				putcopyPageDesignFuture(siteRequest2, JsonObject.mapFrom(o), a -> {
 					if(a.succeeded()) {
 					} else {
 						LOGGER.error(String.format("listPUTCopyPageDesign failed. ", a.cause()));

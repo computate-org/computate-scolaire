@@ -934,7 +934,7 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 			requeteSite2.setRequeteApi_(requeteSite.getRequeteApi_());
 			o.setRequeteSite_(requeteSite2);
 			futures.add(
-				putcopiePereScolaireFuture(requeteSite, JsonObject.mapFrom(o), a -> {
+				putcopiePereScolaireFuture(requeteSite2, JsonObject.mapFrom(o), a -> {
 					if(a.succeeded()) {
 					} else {
 						LOGGER.error(String.format("listePUTCopiePereScolaire a échoué. ", a.cause()));

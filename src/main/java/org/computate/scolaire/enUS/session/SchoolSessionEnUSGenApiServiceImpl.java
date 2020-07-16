@@ -929,7 +929,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 			siteRequest2.setApiRequest_(siteRequest.getApiRequest_());
 			o.setSiteRequest_(siteRequest2);
 			futures.add(
-				putcopySchoolSessionFuture(siteRequest, JsonObject.mapFrom(o), a -> {
+				putcopySchoolSessionFuture(siteRequest2, JsonObject.mapFrom(o), a -> {
 					if(a.succeeded()) {
 					} else {
 						LOGGER.error(String.format("listPUTCopySchoolSession failed. ", a.cause()));

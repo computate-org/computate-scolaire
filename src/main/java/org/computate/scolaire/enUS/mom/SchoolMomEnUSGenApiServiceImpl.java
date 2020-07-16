@@ -934,7 +934,7 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 			siteRequest2.setApiRequest_(siteRequest.getApiRequest_());
 			o.setSiteRequest_(siteRequest2);
 			futures.add(
-				putcopySchoolMomFuture(siteRequest, JsonObject.mapFrom(o), a -> {
+				putcopySchoolMomFuture(siteRequest2, JsonObject.mapFrom(o), a -> {
 					if(a.succeeded()) {
 					} else {
 						LOGGER.error(String.format("listPUTCopySchoolMom failed. ", a.cause()));

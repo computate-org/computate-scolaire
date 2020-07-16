@@ -962,7 +962,7 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 			requeteSite2.setRequeteApi_(requeteSite.getRequeteApi_());
 			o.setRequeteSite_(requeteSite2);
 			futures.add(
-				putcopieAgeScolaireFuture(requeteSite, JsonObject.mapFrom(o), a -> {
+				putcopieAgeScolaireFuture(requeteSite2, JsonObject.mapFrom(o), a -> {
 					if(a.succeeded()) {
 					} else {
 						LOGGER.error(String.format("listePUTCopieAgeScolaire a échoué. ", a.cause()));

@@ -934,7 +934,7 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 			requeteSite2.setRequeteApi_(requeteSite.getRequeteApi_());
 			o.setRequeteSite_(requeteSite2);
 			futures.add(
-				putcopieMereScolaireFuture(requeteSite, JsonObject.mapFrom(o), a -> {
+				putcopieMereScolaireFuture(requeteSite2, JsonObject.mapFrom(o), a -> {
 					if(a.succeeded()) {
 					} else {
 						LOGGER.error(String.format("listePUTCopieMereScolaire a échoué. ", a.cause()));

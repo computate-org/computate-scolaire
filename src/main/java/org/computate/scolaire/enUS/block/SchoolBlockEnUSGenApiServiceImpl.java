@@ -1007,7 +1007,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 			siteRequest2.setApiRequest_(siteRequest.getApiRequest_());
 			o.setSiteRequest_(siteRequest2);
 			futures.add(
-				putcopySchoolBlockFuture(siteRequest, JsonObject.mapFrom(o), a -> {
+				putcopySchoolBlockFuture(siteRequest2, JsonObject.mapFrom(o), a -> {
 					if(a.succeeded()) {
 					} else {
 						LOGGER.error(String.format("listPUTCopySchoolBlock failed. ", a.cause()));

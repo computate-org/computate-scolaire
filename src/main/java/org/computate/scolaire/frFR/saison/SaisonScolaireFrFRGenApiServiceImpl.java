@@ -942,7 +942,7 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 			requeteSite2.setRequeteApi_(requeteSite.getRequeteApi_());
 			o.setRequeteSite_(requeteSite2);
 			futures.add(
-				putcopieSaisonScolaireFuture(requeteSite, JsonObject.mapFrom(o), a -> {
+				putcopieSaisonScolaireFuture(requeteSite2, JsonObject.mapFrom(o), a -> {
 					if(a.succeeded()) {
 					} else {
 						LOGGER.error(String.format("listePUTCopieSaisonScolaire a échoué. ", a.cause()));

@@ -1000,7 +1000,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 			requeteSite2.setRequeteApi_(requeteSite.getRequeteApi_());
 			o.setRequeteSite_(requeteSite2);
 			futures.add(
-				putcopieAnneeScolaireFuture(requeteSite, JsonObject.mapFrom(o), a -> {
+				putcopieAnneeScolaireFuture(requeteSite2, JsonObject.mapFrom(o), a -> {
 					if(a.succeeded()) {
 					} else {
 						LOGGER.error(String.format("listePUTCopieAnneeScolaire a échoué. ", a.cause()));
