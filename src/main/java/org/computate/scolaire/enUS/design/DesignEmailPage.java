@@ -832,6 +832,7 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 //		message.setSubject(String.format("Enrollment of %s for the %s", schoolEnrollment.getChildCompleteName(), schoolEnrollment.getSeasonCompleteName()));
 		message.setSubject(emailSubject);
 
+		LOGGER.info("Email from: {}, to: {}", message.getFrom(), String.join("; ", message.getTo()));
 		WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 		workerExecutor.executeBlocking(
 			blockingCodeHandler -> {
