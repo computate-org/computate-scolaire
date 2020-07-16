@@ -2191,7 +2191,9 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 			for(GardienScolaire o : gardiens) {
 				String personneMail = o.getPersonneMail();
 				if(StringUtils.isNotBlank(personneMail)) {
-					b.append(o.getPersonneNomCompletPrefere()).append(" <").append(o.getPersonneMail()).append(">, ");
+					if(b.length() > 0)
+						b.append(", ");
+					b.append(o.getPersonneNomCompletPrefere()).append(" <").append(o.getPersonneMail()).append(">");
 				}
 			}
 		}
@@ -2201,7 +2203,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 				if(StringUtils.isNotBlank(personneMail)) {
 					if(b.length() > 0)
 						b.append(", ");
-					b.append(o.getPersonneNomCompletPrefere()).append(" <").append(o.getPersonneMail()).append(">, ");
+					b.append(o.getPersonneNomCompletPrefere()).append(" <").append(o.getPersonneMail()).append(">");
 				}
 			}
 			for(PereScolaire o : peres) {
@@ -2209,7 +2211,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 				if(StringUtils.isNotBlank(personneMail)) {
 					if(b.length() > 0)
 						b.append(", ");
-					b.append(o.getPersonneNomCompletPrefere()).append(" <").append(o.getPersonneMail()).append(">, ");
+					b.append(o.getPersonneNomCompletPrefere()).append(" <").append(o.getPersonneMail()).append(">");
 				}
 			}
 		}
