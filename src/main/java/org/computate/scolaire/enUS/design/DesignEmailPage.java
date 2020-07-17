@@ -694,7 +694,6 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 		if("enrollment-sent".equals(pageDesignId)) {
 			StringBuilder b = new StringBuilder();
 			b.append(schoolEnrollment.getEnrollmentParentEmails());
-			b.append(school_.getSchoolEmailTo());
 			c.o(b.toString());
 		}
 		else {
