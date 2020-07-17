@@ -73,7 +73,7 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	protected static final Logger LOGGER = LoggerFactory.getLogger(InscriptionScolaire.class);
 
-	public static final List<String> ROLES = Arrays.asList("SiteAdmin");
+	public static final List<String> ROLES = Arrays.asList("SiteManager");
 	public static final List<String> ROLE_READS = Arrays.asList("");
 
 	public static final String InscriptionScolaire_UnNom = "une inscription";
@@ -98,6 +98,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public static final String InscriptionScolaire_Couleur = "blue-gray";
 	public static final String InscriptionScolaire_IconeGroupe = "solid";
 	public static final String InscriptionScolaire_IconeNom = "edit";
+	public static final Integer InscriptionScolaire_Lignes = 300;
 
 	////////////////////
 	// inscriptionCle //
