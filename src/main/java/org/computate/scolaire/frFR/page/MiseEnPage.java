@@ -1130,20 +1130,20 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 				} g("div");
 			} g("div");
 
-			{ e("div").a("class", "w3-dropdown-hover ").f();
-				{ e("div").a("class", "w3-button w3-hover-green ").f();
-						e("i").a("class", "fas fa-search-dollar ").f().g("i");
-						sx("paiements");
-				} g("div");
-				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
-					PaiementGenPage.htmlSuggerePaiementGenPage(this, id, null);
-				} g("div");
-			} g("div");
-
 			if(
 					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES_ADMIN)
 					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES_ADMIN)
 					) {
+
+				{ e("div").a("class", "w3-dropdown-hover ").f();
+					{ e("div").a("class", "w3-button w3-hover-green ").f();
+							e("i").a("class", "fas fa-search-dollar ").f().g("i");
+							sx("paiements");
+					} g("div");
+					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
+						PaiementGenPage.htmlSuggerePaiementGenPage(this, id, null);
+					} g("div");
+				} g("div");
 	
 				{ e("div").a("class", "w3-dropdown-hover ").f();
 					{ e("div").a("class", "w3-button w3-hover-khaki ").f();

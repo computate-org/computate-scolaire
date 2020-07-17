@@ -585,20 +585,20 @@ public class PageLayout extends PageLayoutGen<Object> {
 				} g("div");
 			} g("div");
 
-			{ e("div").a("class", "w3-dropdown-hover ").f();
-				{ e("div").a("class", "w3-button w3-hover-green ").f();
-						e("i").a("class", "fas fa-search-dollar ").f().g("i");
-						sx("payments");
-				} g("div");
-				{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
-					PaymentGenPage.htmlSuggestedPaymentGenPage(this, id, null);
-				} g("div");
-			} g("div");
-
 			if(
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES_ADMIN)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES_ADMIN)
 					) {
+
+				{ e("div").a("class", "w3-dropdown-hover ").f();
+					{ e("div").a("class", "w3-button w3-hover-green ").f();
+							e("i").a("class", "fas fa-search-dollar ").f().g("i");
+							sx("payments");
+					} g("div");
+					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
+						PaymentGenPage.htmlSuggestedPaymentGenPage(this, id, null);
+					} g("div");
+				} g("div");
 	
 				{ e("div").a("class", "w3-dropdown-hover ").f();
 					{ e("div").a("class", "w3-button w3-hover-khaki ").f();
