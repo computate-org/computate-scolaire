@@ -229,7 +229,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void inputEnrollmentKey(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
 				e("input")
 					.a("type", "text")
@@ -1263,7 +1266,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void inputChildCompleteNamePreferred(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "Facet: terms")
@@ -1402,7 +1408,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void inputChildBirthDate(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("class", "w3-input w3-border datepicker setChildBirthDate classSchoolPayment inputSchoolPayment", pk, "ChildBirthDate w3-input w3-border ")
@@ -1513,7 +1522,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void inputMomCompleteNamePreferred(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "r: inscription_")
@@ -1633,7 +1645,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void inputDadCompleteNamePreferred(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "r: inscription_")
@@ -2847,7 +2862,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void inputEnrollmentPaymentEachMonth(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			if("Page".equals(classApiMethodMethod)) {
 				e("input")
 					.a("type", "checkbox")
@@ -2972,7 +2990,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void inputEnrollmentPaymentComplete(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			if("Page".equals(classApiMethodMethod)) {
 				e("input")
 					.a("type", "checkbox")
@@ -3092,7 +3113,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void inputPaymentDescription(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "description")
@@ -3231,7 +3255,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void inputPaymentDate(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("class", "w3-input w3-border datepicker setPaymentDate classSchoolPayment inputSchoolPayment", pk, "PaymentDate w3-input w3-border ")
@@ -3360,7 +3387,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void inputPaymentAmount(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "payment amount")
@@ -3485,7 +3515,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void inputPaymentCash(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			if("Page".equals(classApiMethodMethod)) {
 				e("input")
 					.a("type", "checkbox")
@@ -3610,7 +3643,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void inputPaymentCheck(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			if("Page".equals(classApiMethodMethod)) {
 				e("input")
 					.a("type", "checkbox")
@@ -3735,7 +3771,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void inputPaymentECheck(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			if("Page".equals(classApiMethodMethod)) {
 				e("input")
 					.a("type", "checkbox")
@@ -3860,7 +3899,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void inputPaymentSystem(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			if("Page".equals(classApiMethodMethod)) {
 				e("input")
 					.a("type", "checkbox")
@@ -3980,7 +4022,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void inputPaymentBy(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "payment by/for")
@@ -4100,7 +4145,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void inputTransactionId(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "transaction ID")
@@ -4220,7 +4268,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void inputCustomerProfileId(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "customer profile ID")
@@ -4340,7 +4391,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void inputTransactionStatus(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "transaction status")
@@ -4465,7 +4519,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void inputPaymentRecieved(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			if("Page".equals(classApiMethodMethod)) {
 				e("input")
 					.a("type", "checkbox")
@@ -4603,7 +4660,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void inputChargeAmount(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "charge amount")
@@ -4728,7 +4788,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void inputChargeFirstLast(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			if("Page".equals(classApiMethodMethod)) {
 				e("input")
 					.a("type", "checkbox")
@@ -4853,7 +4916,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void inputChargeEnrollment(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			if("Page".equals(classApiMethodMethod)) {
 				e("input")
 					.a("type", "checkbox")
@@ -4978,7 +5044,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void inputChargeMonth(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			if("Page".equals(classApiMethodMethod)) {
 				e("input")
 					.a("type", "checkbox")
@@ -5103,7 +5172,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void inputChargeLateFee(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			if("Page".equals(classApiMethodMethod)) {
 				e("input")
 					.a("type", "checkbox")
@@ -5435,7 +5507,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void inputPaymentShortName(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "name")

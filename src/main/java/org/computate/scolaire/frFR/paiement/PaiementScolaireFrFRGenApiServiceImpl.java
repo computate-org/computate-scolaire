@@ -124,40 +124,41 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 							), new CaseInsensitiveHeaders()
 					)
 				));
-			}
+			} else {
 
-			utilisateurPaiementScolaire(requeteSite, b -> {
-				if(b.succeeded()) {
-					RequeteApi requeteApi = new RequeteApi();
-					requeteApi.setRows(1);
-					requeteApi.setNumFound(1L);
-					requeteApi.setNumPATCH(0L);
-					requeteApi.initLoinRequeteApi(requeteSite);
-					requeteSite.setRequeteApi_(requeteApi);
-					requeteSite.getVertx().eventBus().publish("websocketPaiementScolaire", JsonObject.mapFrom(requeteApi).toString());
-					postPaiementScolaireFuture(requeteSite, false, c -> {
-						if(c.succeeded()) {
-							PaiementScolaire paiementScolaire = c.result();
-							requeteApi.setPk(paiementScolaire.getPk());
-							postPaiementScolaireReponse(paiementScolaire, d -> {
-									if(d.succeeded()) {
-									gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-									LOGGER.info(String.format("postPaiementScolaire a réussi. "));
-								} else {
-									LOGGER.error(String.format("postPaiementScolaire a échoué. ", d.cause()));
-									erreurPaiementScolaire(requeteSite, gestionnaireEvenements, d);
-								}
-							});
-						} else {
-							LOGGER.error(String.format("postPaiementScolaire a échoué. ", c.cause()));
-							erreurPaiementScolaire(requeteSite, gestionnaireEvenements, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("postPaiementScolaire a échoué. ", b.cause()));
-					erreurPaiementScolaire(requeteSite, gestionnaireEvenements, b);
-				}
-			});
+				utilisateurPaiementScolaire(requeteSite, b -> {
+					if(b.succeeded()) {
+						RequeteApi requeteApi = new RequeteApi();
+						requeteApi.setRows(1);
+						requeteApi.setNumFound(1L);
+						requeteApi.setNumPATCH(0L);
+						requeteApi.initLoinRequeteApi(requeteSite);
+						requeteSite.setRequeteApi_(requeteApi);
+						requeteSite.getVertx().eventBus().publish("websocketPaiementScolaire", JsonObject.mapFrom(requeteApi).toString());
+						postPaiementScolaireFuture(requeteSite, false, c -> {
+							if(c.succeeded()) {
+								PaiementScolaire paiementScolaire = c.result();
+								requeteApi.setPk(paiementScolaire.getPk());
+								postPaiementScolaireReponse(paiementScolaire, d -> {
+										if(d.succeeded()) {
+										gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+										LOGGER.info(String.format("postPaiementScolaire a réussi. "));
+									} else {
+										LOGGER.error(String.format("postPaiementScolaire a échoué. ", d.cause()));
+										erreurPaiementScolaire(requeteSite, gestionnaireEvenements, d);
+									}
+								});
+							} else {
+								LOGGER.error(String.format("postPaiementScolaire a échoué. ", c.cause()));
+								erreurPaiementScolaire(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("postPaiementScolaire a échoué. ", b.cause()));
+						erreurPaiementScolaire(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("postPaiementScolaire a échoué. ", ex));
 			erreurPaiementScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
@@ -729,65 +730,66 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 							), new CaseInsensitiveHeaders()
 					)
 				));
-			}
+			} else {
 
-			utilisateurPaiementScolaire(requeteSite, b -> {
-				if(b.succeeded()) {
-					putimportPaiementScolaireReponse(requeteSite, c -> {
-						if(c.succeeded()) {
-							gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
-							WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
-							executeurTravailleur.executeBlocking(
-								blockingCodeHandler -> {
-									try {
-										RequeteApi requeteApi = new RequeteApi();
-										JsonArray jsonArray = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
-										requeteApi.setRows(jsonArray.size());
-										requeteApi.setNumFound(new Integer(jsonArray.size()).longValue());
-										requeteApi.setNumPATCH(0L);
-										requeteApi.initLoinRequeteApi(requeteSite);
-										requeteSite.setRequeteApi_(requeteApi);
-										requeteSite.getVertx().eventBus().publish("websocketPaiementScolaire", JsonObject.mapFrom(requeteApi).toString());
-										varsPaiementScolaire(requeteSite, d -> {
-											if(d.succeeded()) {
-												listePUTImportPaiementScolaire(requeteApi, requeteSite, e -> {
-													if(e.succeeded()) {
-														putimportPaiementScolaireReponse(requeteSite, f -> {
-															if(e.succeeded()) {
-																LOGGER.info(String.format("putimportPaiementScolaire a réussi. "));
-																blockingCodeHandler.handle(Future.succeededFuture(e.result()));
-															} else {
-																LOGGER.error(String.format("putimportPaiementScolaire a échoué. ", f.cause()));
-																erreurPaiementScolaire(requeteSite, null, f);
-															}
-														});
-													} else {
-														LOGGER.error(String.format("putimportPaiementScolaire a échoué. ", e.cause()));
-														erreurPaiementScolaire(requeteSite, null, e);
-													}
-												});
-											} else {
-												LOGGER.error(String.format("putimportPaiementScolaire a échoué. ", d.cause()));
-												erreurPaiementScolaire(requeteSite, null, d);
-											}
-										});
-									} catch(Exception ex) {
-										LOGGER.error(String.format("putimportPaiementScolaire a échoué. ", ex));
-										erreurPaiementScolaire(requeteSite, null, Future.failedFuture(ex));
+				utilisateurPaiementScolaire(requeteSite, b -> {
+					if(b.succeeded()) {
+						putimportPaiementScolaireReponse(requeteSite, c -> {
+							if(c.succeeded()) {
+								gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
+								WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
+								executeurTravailleur.executeBlocking(
+									blockingCodeHandler -> {
+										try {
+											RequeteApi requeteApi = new RequeteApi();
+											JsonArray jsonArray = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+											requeteApi.setRows(jsonArray.size());
+											requeteApi.setNumFound(new Integer(jsonArray.size()).longValue());
+											requeteApi.setNumPATCH(0L);
+											requeteApi.initLoinRequeteApi(requeteSite);
+											requeteSite.setRequeteApi_(requeteApi);
+											requeteSite.getVertx().eventBus().publish("websocketPaiementScolaire", JsonObject.mapFrom(requeteApi).toString());
+											varsPaiementScolaire(requeteSite, d -> {
+												if(d.succeeded()) {
+													listePUTImportPaiementScolaire(requeteApi, requeteSite, e -> {
+														if(e.succeeded()) {
+															putimportPaiementScolaireReponse(requeteSite, f -> {
+																if(e.succeeded()) {
+																	LOGGER.info(String.format("putimportPaiementScolaire a réussi. "));
+																	blockingCodeHandler.handle(Future.succeededFuture(e.result()));
+																} else {
+																	LOGGER.error(String.format("putimportPaiementScolaire a échoué. ", f.cause()));
+																	erreurPaiementScolaire(requeteSite, null, f);
+																}
+															});
+														} else {
+															LOGGER.error(String.format("putimportPaiementScolaire a échoué. ", e.cause()));
+															erreurPaiementScolaire(requeteSite, null, e);
+														}
+													});
+												} else {
+													LOGGER.error(String.format("putimportPaiementScolaire a échoué. ", d.cause()));
+													erreurPaiementScolaire(requeteSite, null, d);
+												}
+											});
+										} catch(Exception ex) {
+											LOGGER.error(String.format("putimportPaiementScolaire a échoué. ", ex));
+											erreurPaiementScolaire(requeteSite, null, Future.failedFuture(ex));
+										}
+									}, resultHandler -> {
 									}
-								}, resultHandler -> {
-								}
-							);
-						} else {
-							LOGGER.error(String.format("putimportPaiementScolaire a échoué. ", c.cause()));
-							erreurPaiementScolaire(requeteSite, gestionnaireEvenements, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("putimportPaiementScolaire a échoué. ", b.cause()));
-					erreurPaiementScolaire(requeteSite, gestionnaireEvenements, b);
-				}
-			});
+								);
+							} else {
+								LOGGER.error(String.format("putimportPaiementScolaire a échoué. ", c.cause()));
+								erreurPaiementScolaire(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("putimportPaiementScolaire a échoué. ", b.cause()));
+						erreurPaiementScolaire(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("putimportPaiementScolaire a échoué. ", ex));
 			erreurPaiementScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
@@ -914,65 +916,66 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 							), new CaseInsensitiveHeaders()
 					)
 				));
-			}
+			} else {
 
-			utilisateurPaiementScolaire(requeteSite, b -> {
-				if(b.succeeded()) {
-					putfusionPaiementScolaireReponse(requeteSite, c -> {
-						if(c.succeeded()) {
-							gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
-							WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
-							executeurTravailleur.executeBlocking(
-								blockingCodeHandler -> {
-									try {
-										RequeteApi requeteApi = new RequeteApi();
-										JsonArray jsonArray = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
-										requeteApi.setRows(jsonArray.size());
-										requeteApi.setNumFound(new Integer(jsonArray.size()).longValue());
-										requeteApi.setNumPATCH(0L);
-										requeteApi.initLoinRequeteApi(requeteSite);
-										requeteSite.setRequeteApi_(requeteApi);
-										requeteSite.getVertx().eventBus().publish("websocketPaiementScolaire", JsonObject.mapFrom(requeteApi).toString());
-										varsPaiementScolaire(requeteSite, d -> {
-											if(d.succeeded()) {
-												listePUTFusionPaiementScolaire(requeteApi, requeteSite, e -> {
-													if(e.succeeded()) {
-														putfusionPaiementScolaireReponse(requeteSite, f -> {
-															if(e.succeeded()) {
-																LOGGER.info(String.format("putfusionPaiementScolaire a réussi. "));
-																blockingCodeHandler.handle(Future.succeededFuture(e.result()));
-															} else {
-																LOGGER.error(String.format("putfusionPaiementScolaire a échoué. ", f.cause()));
-																erreurPaiementScolaire(requeteSite, null, f);
-															}
-														});
-													} else {
-														LOGGER.error(String.format("putfusionPaiementScolaire a échoué. ", e.cause()));
-														erreurPaiementScolaire(requeteSite, null, e);
-													}
-												});
-											} else {
-												LOGGER.error(String.format("putfusionPaiementScolaire a échoué. ", d.cause()));
-												erreurPaiementScolaire(requeteSite, null, d);
-											}
-										});
-									} catch(Exception ex) {
-										LOGGER.error(String.format("putfusionPaiementScolaire a échoué. ", ex));
-										erreurPaiementScolaire(requeteSite, null, Future.failedFuture(ex));
+				utilisateurPaiementScolaire(requeteSite, b -> {
+					if(b.succeeded()) {
+						putfusionPaiementScolaireReponse(requeteSite, c -> {
+							if(c.succeeded()) {
+								gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
+								WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
+								executeurTravailleur.executeBlocking(
+									blockingCodeHandler -> {
+										try {
+											RequeteApi requeteApi = new RequeteApi();
+											JsonArray jsonArray = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+											requeteApi.setRows(jsonArray.size());
+											requeteApi.setNumFound(new Integer(jsonArray.size()).longValue());
+											requeteApi.setNumPATCH(0L);
+											requeteApi.initLoinRequeteApi(requeteSite);
+											requeteSite.setRequeteApi_(requeteApi);
+											requeteSite.getVertx().eventBus().publish("websocketPaiementScolaire", JsonObject.mapFrom(requeteApi).toString());
+											varsPaiementScolaire(requeteSite, d -> {
+												if(d.succeeded()) {
+													listePUTFusionPaiementScolaire(requeteApi, requeteSite, e -> {
+														if(e.succeeded()) {
+															putfusionPaiementScolaireReponse(requeteSite, f -> {
+																if(e.succeeded()) {
+																	LOGGER.info(String.format("putfusionPaiementScolaire a réussi. "));
+																	blockingCodeHandler.handle(Future.succeededFuture(e.result()));
+																} else {
+																	LOGGER.error(String.format("putfusionPaiementScolaire a échoué. ", f.cause()));
+																	erreurPaiementScolaire(requeteSite, null, f);
+																}
+															});
+														} else {
+															LOGGER.error(String.format("putfusionPaiementScolaire a échoué. ", e.cause()));
+															erreurPaiementScolaire(requeteSite, null, e);
+														}
+													});
+												} else {
+													LOGGER.error(String.format("putfusionPaiementScolaire a échoué. ", d.cause()));
+													erreurPaiementScolaire(requeteSite, null, d);
+												}
+											});
+										} catch(Exception ex) {
+											LOGGER.error(String.format("putfusionPaiementScolaire a échoué. ", ex));
+											erreurPaiementScolaire(requeteSite, null, Future.failedFuture(ex));
+										}
+									}, resultHandler -> {
 									}
-								}, resultHandler -> {
-								}
-							);
-						} else {
-							LOGGER.error(String.format("putfusionPaiementScolaire a échoué. ", c.cause()));
-							erreurPaiementScolaire(requeteSite, gestionnaireEvenements, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("putfusionPaiementScolaire a échoué. ", b.cause()));
-					erreurPaiementScolaire(requeteSite, gestionnaireEvenements, b);
-				}
-			});
+								);
+							} else {
+								LOGGER.error(String.format("putfusionPaiementScolaire a échoué. ", c.cause()));
+								erreurPaiementScolaire(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("putfusionPaiementScolaire a échoué. ", b.cause()));
+						erreurPaiementScolaire(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("putfusionPaiementScolaire a échoué. ", ex));
 			erreurPaiementScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
@@ -1097,70 +1100,71 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 							), new CaseInsensitiveHeaders()
 					)
 				));
-			}
+			} else {
 
-			utilisateurPaiementScolaire(requeteSite, b -> {
-				if(b.succeeded()) {
-					putcopiePaiementScolaireReponse(requeteSite, c -> {
-						if(c.succeeded()) {
-							gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
-							WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
-							executeurTravailleur.executeBlocking(
-								blockingCodeHandler -> {
-									try {
-										recherchePaiementScolaire(requeteSite, false, true, "/api/paiement/copie", "PUTCopie", d -> {
-											if(d.succeeded()) {
-												ListeRecherche<PaiementScolaire> listePaiementScolaire = d.result();
-												RequeteApi requeteApi = new RequeteApi();
-												requeteApi.setRows(listePaiementScolaire.getRows());
-												requeteApi.setNumFound(listePaiementScolaire.getQueryResponse().getResults().getNumFound());
-												requeteApi.setNumPATCH(0L);
-												requeteApi.initLoinRequeteApi(requeteSite);
-												requeteSite.setRequeteApi_(requeteApi);
-												requeteSite.getVertx().eventBus().publish("websocketPaiementScolaire", JsonObject.mapFrom(requeteApi).toString());
-												try {
-													listePUTCopiePaiementScolaire(requeteApi, listePaiementScolaire, e -> {
-														if(e.succeeded()) {
-															putcopiePaiementScolaireReponse(requeteSite, f -> {
-																if(f.succeeded()) {
-																	LOGGER.info(String.format("putcopiePaiementScolaire a réussi. "));
-																	blockingCodeHandler.handle(Future.succeededFuture(f.result()));
-																} else {
-																	LOGGER.error(String.format("putcopiePaiementScolaire a échoué. ", f.cause()));
-																	erreurPaiementScolaire(requeteSite, null, f);
-																}
-															});
-														} else {
-															LOGGER.error(String.format("putcopiePaiementScolaire a échoué. ", e.cause()));
-															erreurPaiementScolaire(requeteSite, null, e);
-														}
-													});
-												} catch(Exception ex) {
-													LOGGER.error(String.format("putcopiePaiementScolaire a échoué. ", ex));
-													erreurPaiementScolaire(requeteSite, null, Future.failedFuture(ex));
+				utilisateurPaiementScolaire(requeteSite, b -> {
+					if(b.succeeded()) {
+						putcopiePaiementScolaireReponse(requeteSite, c -> {
+							if(c.succeeded()) {
+								gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
+								WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
+								executeurTravailleur.executeBlocking(
+									blockingCodeHandler -> {
+										try {
+											recherchePaiementScolaire(requeteSite, false, true, "/api/paiement/copie", "PUTCopie", d -> {
+												if(d.succeeded()) {
+													ListeRecherche<PaiementScolaire> listePaiementScolaire = d.result();
+													RequeteApi requeteApi = new RequeteApi();
+													requeteApi.setRows(listePaiementScolaire.getRows());
+													requeteApi.setNumFound(listePaiementScolaire.getQueryResponse().getResults().getNumFound());
+													requeteApi.setNumPATCH(0L);
+													requeteApi.initLoinRequeteApi(requeteSite);
+													requeteSite.setRequeteApi_(requeteApi);
+													requeteSite.getVertx().eventBus().publish("websocketPaiementScolaire", JsonObject.mapFrom(requeteApi).toString());
+													try {
+														listePUTCopiePaiementScolaire(requeteApi, listePaiementScolaire, e -> {
+															if(e.succeeded()) {
+																putcopiePaiementScolaireReponse(requeteSite, f -> {
+																	if(f.succeeded()) {
+																		LOGGER.info(String.format("putcopiePaiementScolaire a réussi. "));
+																		blockingCodeHandler.handle(Future.succeededFuture(f.result()));
+																	} else {
+																		LOGGER.error(String.format("putcopiePaiementScolaire a échoué. ", f.cause()));
+																		erreurPaiementScolaire(requeteSite, null, f);
+																	}
+																});
+															} else {
+																LOGGER.error(String.format("putcopiePaiementScolaire a échoué. ", e.cause()));
+																erreurPaiementScolaire(requeteSite, null, e);
+															}
+														});
+													} catch(Exception ex) {
+														LOGGER.error(String.format("putcopiePaiementScolaire a échoué. ", ex));
+														erreurPaiementScolaire(requeteSite, null, Future.failedFuture(ex));
+													}
+												} else {
+													LOGGER.error(String.format("putcopiePaiementScolaire a échoué. ", d.cause()));
+													erreurPaiementScolaire(requeteSite, null, d);
 												}
-											} else {
-												LOGGER.error(String.format("putcopiePaiementScolaire a échoué. ", d.cause()));
-												erreurPaiementScolaire(requeteSite, null, d);
-											}
-										});
-									} catch(Exception ex) {
-										LOGGER.error(String.format("putcopiePaiementScolaire a échoué. ", ex));
-										erreurPaiementScolaire(requeteSite, null, Future.failedFuture(ex));
+											});
+										} catch(Exception ex) {
+											LOGGER.error(String.format("putcopiePaiementScolaire a échoué. ", ex));
+											erreurPaiementScolaire(requeteSite, null, Future.failedFuture(ex));
+										}
+									}, resultHandler -> {
 									}
-								}, resultHandler -> {
-								}
-							);
-						} else {
-							LOGGER.error(String.format("putcopiePaiementScolaire a échoué. ", c.cause()));
-							erreurPaiementScolaire(requeteSite, gestionnaireEvenements, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("putcopiePaiementScolaire a échoué. ", b.cause()));
-					erreurPaiementScolaire(requeteSite, gestionnaireEvenements, b);
-				}
-			});
+								);
+							} else {
+								LOGGER.error(String.format("putcopiePaiementScolaire a échoué. ", c.cause()));
+								erreurPaiementScolaire(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("putcopiePaiementScolaire a échoué. ", b.cause()));
+						erreurPaiementScolaire(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("putcopiePaiementScolaire a échoué. ", ex));
 			erreurPaiementScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
@@ -1711,81 +1715,82 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 							), new CaseInsensitiveHeaders()
 					)
 				));
-			}
+			} else {
 
-			utilisateurPaiementScolaire(requeteSite, b -> {
-				if(b.succeeded()) {
-					patchPaiementScolaireReponse(requeteSite, c -> {
-						if(c.succeeded()) {
-							gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
-							WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
-							executeurTravailleur.executeBlocking(
-								blockingCodeHandler -> {
-									try {
-										recherchePaiementScolaire(requeteSite, false, true, "/api/paiement", "PATCH", d -> {
-											if(d.succeeded()) {
-												ListeRecherche<PaiementScolaire> listePaiementScolaire = d.result();
-												RequeteApi requeteApi = new RequeteApi();
-												requeteApi.setRows(listePaiementScolaire.getRows());
-												requeteApi.setNumFound(listePaiementScolaire.getQueryResponse().getResults().getNumFound());
-												requeteApi.setNumPATCH(0L);
-												requeteApi.initLoinRequeteApi(requeteSite);
-												requeteSite.setRequeteApi_(requeteApi);
-												requeteSite.getVertx().eventBus().publish("websocketPaiementScolaire", JsonObject.mapFrom(requeteApi).toString());
-												SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listePaiementScolaire.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
-												Date date = null;
-												if(facets != null)
-													date = (Date)facets.get("max_modifie");
-												String dt;
-												if(date == null)
-													dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
-												else
-													dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
-												listePaiementScolaire.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
+				utilisateurPaiementScolaire(requeteSite, b -> {
+					if(b.succeeded()) {
+						patchPaiementScolaireReponse(requeteSite, c -> {
+							if(c.succeeded()) {
+								gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
+								WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
+								executeurTravailleur.executeBlocking(
+									blockingCodeHandler -> {
+										try {
+											recherchePaiementScolaire(requeteSite, false, true, "/api/paiement", "PATCH", d -> {
+												if(d.succeeded()) {
+													ListeRecherche<PaiementScolaire> listePaiementScolaire = d.result();
+													RequeteApi requeteApi = new RequeteApi();
+													requeteApi.setRows(listePaiementScolaire.getRows());
+													requeteApi.setNumFound(listePaiementScolaire.getQueryResponse().getResults().getNumFound());
+													requeteApi.setNumPATCH(0L);
+													requeteApi.initLoinRequeteApi(requeteSite);
+													requeteSite.setRequeteApi_(requeteApi);
+													requeteSite.getVertx().eventBus().publish("websocketPaiementScolaire", JsonObject.mapFrom(requeteApi).toString());
+													SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listePaiementScolaire.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
+													Date date = null;
+													if(facets != null)
+														date = (Date)facets.get("max_modifie");
+													String dt;
+													if(date == null)
+														dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
+													else
+														dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
+													listePaiementScolaire.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
 
-												try {
-													listePATCHPaiementScolaire(requeteApi, listePaiementScolaire, dt, e -> {
-														if(e.succeeded()) {
-															patchPaiementScolaireReponse(requeteSite, f -> {
-																if(f.succeeded()) {
-																	LOGGER.info(String.format("patchPaiementScolaire a réussi. "));
-																	blockingCodeHandler.handle(Future.succeededFuture(f.result()));
-																} else {
-																	LOGGER.error(String.format("patchPaiementScolaire a échoué. ", f.cause()));
-																	erreurPaiementScolaire(requeteSite, null, f);
-																}
-															});
-														} else {
-															LOGGER.error(String.format("patchPaiementScolaire a échoué. ", e.cause()));
-															erreurPaiementScolaire(requeteSite, null, e);
-														}
-													});
-												} catch(Exception ex) {
-													LOGGER.error(String.format("patchPaiementScolaire a échoué. ", ex));
-													erreurPaiementScolaire(requeteSite, null, Future.failedFuture(ex));
+													try {
+														listePATCHPaiementScolaire(requeteApi, listePaiementScolaire, dt, e -> {
+															if(e.succeeded()) {
+																patchPaiementScolaireReponse(requeteSite, f -> {
+																	if(f.succeeded()) {
+																		LOGGER.info(String.format("patchPaiementScolaire a réussi. "));
+																		blockingCodeHandler.handle(Future.succeededFuture(f.result()));
+																	} else {
+																		LOGGER.error(String.format("patchPaiementScolaire a échoué. ", f.cause()));
+																		erreurPaiementScolaire(requeteSite, null, f);
+																	}
+																});
+															} else {
+																LOGGER.error(String.format("patchPaiementScolaire a échoué. ", e.cause()));
+																erreurPaiementScolaire(requeteSite, null, e);
+															}
+														});
+													} catch(Exception ex) {
+														LOGGER.error(String.format("patchPaiementScolaire a échoué. ", ex));
+														erreurPaiementScolaire(requeteSite, null, Future.failedFuture(ex));
+													}
+										} else {
+													LOGGER.error(String.format("patchPaiementScolaire a échoué. ", d.cause()));
+													erreurPaiementScolaire(requeteSite, null, d);
 												}
-											} else {
-												LOGGER.error(String.format("patchPaiementScolaire a échoué. ", d.cause()));
-												erreurPaiementScolaire(requeteSite, null, d);
-											}
-										});
-									} catch(Exception ex) {
-										LOGGER.error(String.format("patchPaiementScolaire a échoué. ", ex));
-										erreurPaiementScolaire(requeteSite, null, Future.failedFuture(ex));
+											});
+										} catch(Exception ex) {
+											LOGGER.error(String.format("patchPaiementScolaire a échoué. ", ex));
+											erreurPaiementScolaire(requeteSite, null, Future.failedFuture(ex));
+										}
+									}, resultHandler -> {
 									}
-								}, resultHandler -> {
-								}
-							);
-						} else {
-							LOGGER.error(String.format("patchPaiementScolaire a échoué. ", c.cause()));
-							erreurPaiementScolaire(requeteSite, gestionnaireEvenements, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("patchPaiementScolaire a échoué. ", b.cause()));
-					erreurPaiementScolaire(requeteSite, gestionnaireEvenements, b);
-				}
-			});
+								);
+							} else {
+								LOGGER.error(String.format("patchPaiementScolaire a échoué. ", c.cause()));
+								erreurPaiementScolaire(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("patchPaiementScolaire a échoué. ", b.cause()));
+						erreurPaiementScolaire(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("patchPaiementScolaire a échoué. ", ex));
 			erreurPaiementScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
@@ -2814,32 +2819,33 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 							), new CaseInsensitiveHeaders()
 					)
 				));
-			}
+			} else {
 
-			utilisateurPaiementScolaire(requeteSite, b -> {
-				if(b.succeeded()) {
-					recherchePaiementScolaire(requeteSite, false, true, "/api/paiement/{id}", "GET", c -> {
-						if(c.succeeded()) {
-							ListeRecherche<PaiementScolaire> listePaiementScolaire = c.result();
-							getPaiementScolaireReponse(listePaiementScolaire, d -> {
-								if(d.succeeded()) {
-									gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-									LOGGER.info(String.format("getPaiementScolaire a réussi. "));
-								} else {
-									LOGGER.error(String.format("getPaiementScolaire a échoué. ", d.cause()));
-									erreurPaiementScolaire(requeteSite, gestionnaireEvenements, d);
-								}
-							});
-						} else {
-							LOGGER.error(String.format("getPaiementScolaire a échoué. ", c.cause()));
-							erreurPaiementScolaire(requeteSite, gestionnaireEvenements, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("getPaiementScolaire a échoué. ", b.cause()));
-					erreurPaiementScolaire(requeteSite, gestionnaireEvenements, b);
-				}
-			});
+				utilisateurPaiementScolaire(requeteSite, b -> {
+					if(b.succeeded()) {
+						recherchePaiementScolaire(requeteSite, false, true, "/api/paiement/{id}", "GET", c -> {
+							if(c.succeeded()) {
+								ListeRecherche<PaiementScolaire> listePaiementScolaire = c.result();
+								getPaiementScolaireReponse(listePaiementScolaire, d -> {
+									if(d.succeeded()) {
+										gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+										LOGGER.info(String.format("getPaiementScolaire a réussi. "));
+									} else {
+										LOGGER.error(String.format("getPaiementScolaire a échoué. ", d.cause()));
+										erreurPaiementScolaire(requeteSite, gestionnaireEvenements, d);
+									}
+								});
+							} else {
+								LOGGER.error(String.format("getPaiementScolaire a échoué. ", c.cause()));
+								erreurPaiementScolaire(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("getPaiementScolaire a échoué. ", b.cause()));
+						erreurPaiementScolaire(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("getPaiementScolaire a échoué. ", ex));
 			erreurPaiementScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
@@ -2901,32 +2907,33 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 							), new CaseInsensitiveHeaders()
 					)
 				));
-			}
+			} else {
 
-			utilisateurPaiementScolaire(requeteSite, b -> {
-				if(b.succeeded()) {
-					recherchePaiementScolaire(requeteSite, false, true, "/api/paiement", "Recherche", c -> {
-						if(c.succeeded()) {
-							ListeRecherche<PaiementScolaire> listePaiementScolaire = c.result();
-							recherchePaiementScolaireReponse(listePaiementScolaire, d -> {
-								if(d.succeeded()) {
-									gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-									LOGGER.info(String.format("recherchePaiementScolaire a réussi. "));
-								} else {
-									LOGGER.error(String.format("recherchePaiementScolaire a échoué. ", d.cause()));
-									erreurPaiementScolaire(requeteSite, gestionnaireEvenements, d);
-								}
-							});
-						} else {
-							LOGGER.error(String.format("recherchePaiementScolaire a échoué. ", c.cause()));
-							erreurPaiementScolaire(requeteSite, gestionnaireEvenements, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("recherchePaiementScolaire a échoué. ", b.cause()));
-					erreurPaiementScolaire(requeteSite, gestionnaireEvenements, b);
-				}
-			});
+				utilisateurPaiementScolaire(requeteSite, b -> {
+					if(b.succeeded()) {
+						recherchePaiementScolaire(requeteSite, false, true, "/api/paiement", "Recherche", c -> {
+							if(c.succeeded()) {
+								ListeRecherche<PaiementScolaire> listePaiementScolaire = c.result();
+								recherchePaiementScolaireReponse(listePaiementScolaire, d -> {
+									if(d.succeeded()) {
+										gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+										LOGGER.info(String.format("recherchePaiementScolaire a réussi. "));
+									} else {
+										LOGGER.error(String.format("recherchePaiementScolaire a échoué. ", d.cause()));
+										erreurPaiementScolaire(requeteSite, gestionnaireEvenements, d);
+									}
+								});
+							} else {
+								LOGGER.error(String.format("recherchePaiementScolaire a échoué. ", c.cause()));
+								erreurPaiementScolaire(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("recherchePaiementScolaire a échoué. ", b.cause()));
+						erreurPaiementScolaire(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("recherchePaiementScolaire a échoué. ", ex));
 			erreurPaiementScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
@@ -3033,32 +3040,33 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 							), new CaseInsensitiveHeaders()
 					)
 				));
-			}
+			} else {
 
-			utilisateurPaiementScolaire(requeteSite, b -> {
-				if(b.succeeded()) {
-					recherchePaiementScolaire(requeteSite, false, true, "/paiement", "PageRecherche", c -> {
-						if(c.succeeded()) {
-							ListeRecherche<PaiementScolaire> listePaiementScolaire = c.result();
-							pagerecherchePaiementScolaireReponse(listePaiementScolaire, d -> {
-								if(d.succeeded()) {
-									gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-									LOGGER.info(String.format("pagerecherchePaiementScolaire a réussi. "));
-								} else {
-									LOGGER.error(String.format("pagerecherchePaiementScolaire a échoué. ", d.cause()));
-									erreurPaiementScolaire(requeteSite, gestionnaireEvenements, d);
-								}
-							});
-						} else {
-							LOGGER.error(String.format("pagerecherchePaiementScolaire a échoué. ", c.cause()));
-							erreurPaiementScolaire(requeteSite, gestionnaireEvenements, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("pagerecherchePaiementScolaire a échoué. ", b.cause()));
-					erreurPaiementScolaire(requeteSite, gestionnaireEvenements, b);
-				}
-			});
+				utilisateurPaiementScolaire(requeteSite, b -> {
+					if(b.succeeded()) {
+						recherchePaiementScolaire(requeteSite, false, true, "/paiement", "PageRecherche", c -> {
+							if(c.succeeded()) {
+								ListeRecherche<PaiementScolaire> listePaiementScolaire = c.result();
+								pagerecherchePaiementScolaireReponse(listePaiementScolaire, d -> {
+									if(d.succeeded()) {
+										gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+										LOGGER.info(String.format("pagerecherchePaiementScolaire a réussi. "));
+									} else {
+										LOGGER.error(String.format("pagerecherchePaiementScolaire a échoué. ", d.cause()));
+										erreurPaiementScolaire(requeteSite, gestionnaireEvenements, d);
+									}
+								});
+							} else {
+								LOGGER.error(String.format("pagerecherchePaiementScolaire a échoué. ", c.cause()));
+								erreurPaiementScolaire(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("pagerecherchePaiementScolaire a échoué. ", b.cause()));
+						erreurPaiementScolaire(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("pagerecherchePaiementScolaire a échoué. ", ex));
 			erreurPaiementScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));

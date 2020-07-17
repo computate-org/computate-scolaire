@@ -230,7 +230,10 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 	public void inputInscriptionCle(String classeApiMethodeMethode) {
 		PaiementScolaire s = (PaiementScolaire)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
 				e("input")
 					.a("type", "text")
@@ -1265,7 +1268,10 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 	public void inputEnfantNomCompletPrefere(String classeApiMethodeMethode) {
 		PaiementScolaire s = (PaiementScolaire)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "NomAffichage.enUS: ")
@@ -1405,7 +1411,10 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 	public void inputEnfantDateNaissance(String classeApiMethodeMethode) {
 		PaiementScolaire s = (PaiementScolaire)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("class", "w3-input w3-border datepicker setEnfantDateNaissance classPaiementScolaire inputPaiementScolaire", pk, "EnfantDateNaissance w3-input w3-border ")
@@ -1517,7 +1526,10 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 	public void inputMereNomCompletPrefere(String classeApiMethodeMethode) {
 		PaiementScolaire s = (PaiementScolaire)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "NomAffichage.enUS: ")
@@ -1638,7 +1650,10 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 	public void inputPereNomCompletPrefere(String classeApiMethodeMethode) {
 		PaiementScolaire s = (PaiementScolaire)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "NomAffichage.enUS: ")
@@ -2853,7 +2868,10 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 	public void inputInscriptionPaimentChaqueMois(String classeApiMethodeMethode) {
 		PaiementScolaire s = (PaiementScolaire)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			if("Page".equals(classeApiMethodeMethode)) {
 				e("input")
 					.a("type", "checkbox")
@@ -2978,7 +2996,10 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 	public void inputInscriptionPaimentComplet(String classeApiMethodeMethode) {
 		PaiementScolaire s = (PaiementScolaire)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			if("Page".equals(classeApiMethodeMethode)) {
 				e("input")
 					.a("type", "checkbox")
@@ -3098,7 +3119,10 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 	public void inputPaiementDescription(String classeApiMethodeMethode) {
 		PaiementScolaire s = (PaiementScolaire)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "description")
@@ -3238,7 +3262,10 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 	public void inputPaiementDate(String classeApiMethodeMethode) {
 		PaiementScolaire s = (PaiementScolaire)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("class", "w3-input w3-border datepicker setPaiementDate classPaiementScolaire inputPaiementScolaire", pk, "PaiementDate w3-input w3-border ")
@@ -3368,7 +3395,10 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 	public void inputPaiementMontant(String classeApiMethodeMethode) {
 		PaiementScolaire s = (PaiementScolaire)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "paiement montant")
@@ -3494,7 +3524,10 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 	public void inputPaiementEspeces(String classeApiMethodeMethode) {
 		PaiementScolaire s = (PaiementScolaire)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			if("Page".equals(classeApiMethodeMethode)) {
 				e("input")
 					.a("type", "checkbox")
@@ -3619,7 +3652,10 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 	public void inputPaiementCheque(String classeApiMethodeMethode) {
 		PaiementScolaire s = (PaiementScolaire)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			if("Page".equals(classeApiMethodeMethode)) {
 				e("input")
 					.a("type", "checkbox")
@@ -3744,7 +3780,10 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 	public void inputPaiementECheck(String classeApiMethodeMethode) {
 		PaiementScolaire s = (PaiementScolaire)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			if("Page".equals(classeApiMethodeMethode)) {
 				e("input")
 					.a("type", "checkbox")
@@ -3869,7 +3908,10 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 	public void inputPaiementSysteme(String classeApiMethodeMethode) {
 		PaiementScolaire s = (PaiementScolaire)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			if("Page".equals(classeApiMethodeMethode)) {
 				e("input")
 					.a("type", "checkbox")
@@ -3989,7 +4031,10 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 	public void inputPaiementPar(String classeApiMethodeMethode) {
 		PaiementScolaire s = (PaiementScolaire)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "paiement par/pour")
@@ -4110,7 +4155,10 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 	public void inputTransactionId(String classeApiMethodeMethode) {
 		PaiementScolaire s = (PaiementScolaire)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "transaction ID")
@@ -4231,7 +4279,10 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 	public void inputCustomerProfileId(String classeApiMethodeMethode) {
 		PaiementScolaire s = (PaiementScolaire)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "customer profile ID")
@@ -4352,7 +4403,10 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 	public void inputTransactionStatus(String classeApiMethodeMethode) {
 		PaiementScolaire s = (PaiementScolaire)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "état de transaction")
@@ -4478,7 +4532,10 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 	public void inputPaiementRecu(String classeApiMethodeMethode) {
 		PaiementScolaire s = (PaiementScolaire)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			if("Page".equals(classeApiMethodeMethode)) {
 				e("input")
 					.a("type", "checkbox")
@@ -4616,7 +4673,10 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 	public void inputFraisMontant(String classeApiMethodeMethode) {
 		PaiementScolaire s = (PaiementScolaire)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "frais montant")
@@ -4742,7 +4802,10 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 	public void inputFraisPremierDernier(String classeApiMethodeMethode) {
 		PaiementScolaire s = (PaiementScolaire)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			if("Page".equals(classeApiMethodeMethode)) {
 				e("input")
 					.a("type", "checkbox")
@@ -4867,7 +4930,10 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 	public void inputFraisInscription(String classeApiMethodeMethode) {
 		PaiementScolaire s = (PaiementScolaire)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			if("Page".equals(classeApiMethodeMethode)) {
 				e("input")
 					.a("type", "checkbox")
@@ -4992,7 +5058,10 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 	public void inputFraisMois(String classeApiMethodeMethode) {
 		PaiementScolaire s = (PaiementScolaire)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			if("Page".equals(classeApiMethodeMethode)) {
 				e("input")
 					.a("type", "checkbox")
@@ -5117,7 +5186,10 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 	public void inputFraisRetard(String classeApiMethodeMethode) {
 		PaiementScolaire s = (PaiementScolaire)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			if("Page".equals(classeApiMethodeMethode)) {
 				e("input")
 					.a("type", "checkbox")
@@ -5449,7 +5521,10 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 	public void inputPaiementNomCourt(String classeApiMethodeMethode) {
 		PaiementScolaire s = (PaiementScolaire)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "nom")
