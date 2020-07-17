@@ -24,11 +24,11 @@ import org.computate.scolaire.enUS.xml.UtilXml;
  * Color: gray
  * IconGroup: regular
  * IconName: fort-awesome
- * Role.enUS: SiteAdmin
+ * Role.enUS: SiteManager
  * ApiUri.enUS: /api/cluster
  * ApiTag.enUS: Cluster
  * AName.enUS: a cluster
- * Role.frFR: SiteAdmin
+ * Role.frFR: SiteManager
  * ApiUri.frFR: /api/cluster
  * ApiTag.frFR: Cluster
  * AName.frFR: un cluster

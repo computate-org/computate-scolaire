@@ -2100,7 +2100,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 				searchList.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR objectId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
 			}
 
-			List<String> roles = Arrays.asList("SiteAdmin");
+			List<String> roles = Arrays.asList("SiteManager");
 			if(
 					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
 					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)

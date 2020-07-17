@@ -60,8 +60,8 @@ import org.computate.scolaire.frFR.xml.OutilXml;
  * MotCle: classeNomSimpleCluster
  * 
  * RoleUtilisateur: true
- * Role.frFR: SiteAdmin
- * Role.enUS: SiteAdmin
+ * Role.frFR: SiteManager
+ * Role.enUS: SiteManager
  * RoleLire.frFR: User
  * RoleLire.enUS: User
  */               
