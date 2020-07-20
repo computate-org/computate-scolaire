@@ -3,6 +3,7 @@ package org.computate.scolaire.enUS.user;
 import java.util.List;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import org.computate.scolaire.enUS.wrap.Wrap;
+import org.computate.scolaire.enUS.enrollment.SchoolEnrollment;
 
 /**
  * Model: true
@@ -33,29 +34,23 @@ public class SiteUser extends SiteUserGen<Cluster> {
 
 	protected void _enrollmentKeys(List<Long> o) {}
 
+	protected void _enrollments_(Wrap<List<SchoolEnrollment>> o) {}
+
 	protected void _paymentKeys(List<Long> o) {}
 
 	protected void _userName(Wrap<String> c) {
-		String o = siteRequest_.getUserName();
-		c.o(o);
 	}
 
 	protected void _userEmail(Wrap<String> c) {
 	}
 
 	protected void _userFirstName(Wrap<String> c) {
-		String o = siteRequest_.getUserFirstName();
-		c.o(o);
 	}
 
 	protected void _userLastName(Wrap<String> c) {
-		String o = siteRequest_.getUserLastName();
-		c.o(o);
 	}
 
 	protected void _userFullName(Wrap<String> c) {
-		String o = siteRequest_.getUserFullName();
-		c.o(o);
 	}
 
 	protected void _userSite(Wrap<String> c) {
@@ -81,7 +76,7 @@ public class SiteUser extends SiteUserGen<Cluster> {
 
 	@Override()
 	protected void  _objectTitle(Wrap<String> c) {
-		c.o(siteRequest_.getUserFullName() + " " + userEmail + " " + userName);
+		c.o(userFullName + " " + userEmail + " " + userName);
 	}
 
 	public void  htmlBody() {

@@ -334,7 +334,10 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 
 	public void inputAgeCles(String classeApiMethodeMethode) {
 		SessionScolaire s = (SessionScolaire)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
 				e("input")
 					.a("type", "text")
@@ -816,7 +819,10 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 
 	public void inputSaisonCle(String classeApiMethodeMethode) {
 		SessionScolaire s = (SessionScolaire)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
 				e("input")
 					.a("type", "text")
@@ -1347,7 +1353,10 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 
 	public void inputEcoleAddresse(String classeApiMethodeMethode) {
 		SessionScolaire s = (SessionScolaire)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "addresse")
@@ -2237,7 +2246,10 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 
 	public void inputSessionDateDebut(String classeApiMethodeMethode) {
 		SessionScolaire s = (SessionScolaire)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("class", "w3-input w3-border datepicker setSessionDateDebut classSessionScolaire inputSessionScolaire", pk, "SessionDateDebut w3-input w3-border ")
@@ -2368,7 +2380,10 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 
 	public void inputSessionDateFin(String classeApiMethodeMethode) {
 		SessionScolaire s = (SessionScolaire)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("class", "w3-input w3-border datepicker setSessionDateFin classSessionScolaire inputSessionScolaire", pk, "SessionDateFin w3-input w3-border ")

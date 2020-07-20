@@ -246,12 +246,12 @@ public class SchoolEnrollmentEnUSApiServiceImpl extends SchoolEnrollmentEnUSGenA
 			futures.add(
 					enrollmentChargesFuture(o, a -> {
 					if(a.succeeded()) {
-						authorizeNetEnrollmentPaymentsFuture(o, c -> {
-							if(a.succeeded()) {
-							} else {
-								errorSchoolEnrollment(siteRequest, eventHandler, a);
-							}
-						});
+//						authorizeNetEnrollmentPaymentsFuture(o, c -> {
+//							if(a.succeeded()) {
+//							} else {
+//								errorSchoolEnrollment(siteRequest, eventHandler, a);
+//							}
+//						});
 					} else {
 						errorSchoolEnrollment(siteRequest, eventHandler, a);
 					}
@@ -297,7 +297,7 @@ public class SchoolEnrollmentEnUSApiServiceImpl extends SchoolEnrollmentEnUSGenA
 			LocalDate sessionStartDate = schoolEnrollment.getSessionStartDate();
 			LocalDate sessionEndDate = schoolEnrollment.getSessionEndDate();
 			LocalDate chargeStartDate = sessionStartDate == null ? null : (sessionStartDate.getDayOfMonth() < paymentDay ? sessionStartDate.withDayOfMonth(paymentDay).minusMonths(1) : sessionStartDate.withDayOfMonth(paymentDay));
-			LocalDate chargeEndDate = sessionEndDate == null ? null : (sessionEndDate.getDayOfMonth() < paymentDay ? sessionEndDate.withDayOfMonth(paymentDay).minusMonths(1) : sessionEndDate.withDayOfMonth(paymentDay));
+			LocalDate chargeEndDate = sessionEndDate == null ? null : (sessionEndDate.getDayOfMonth() < paymentDay ? sessionEndDate.withDayOfMonth(paymentDay).minusMonths(1) : sessionEndDate.withDayOfMonth(paymentDay).minusMonths(1));
 			BigDecimal blockPricePerMonth = schoolEnrollment.getBlockPricePerMonth();
 			BigDecimal yearEnrollmentFee = schoolEnrollment.getYearEnrollmentFee();
 			Long enrollmentKey = schoolEnrollment.getPk();
@@ -420,8 +420,51 @@ public class SchoolEnrollmentEnUSApiServiceImpl extends SchoolEnrollmentEnUSGenA
 
 	public Future<Void> authorizeNetEnrollmentPaymentsFuture(SchoolEnrollment schoolEnrollment, Handler<AsyncResult<Void>> eventHandler) {
 		SiteRequestEnUS siteRequest = schoolEnrollment.getSiteRequest_();
+		SiteConfig siteConfig = siteRequest.getSiteConfig_();
+		Promise<Void> promise = Promise.promise();
+		Integer schoolNumber = schoolEnrollment.getSchoolNumber();
+		MerchantAuthenticationType merchantAuthenticationType = new MerchantAuthenticationType();
+		String authorizeApiLoginId = (String)siteConfig.obtainSiteConfig("authorizeApiLoginId" + schoolNumber);
+		String authorizeTransactionKey = (String)siteConfig.obtainSiteConfig("authorizeTransactionKey" + schoolNumber);
+		merchantAuthenticationType.setName(authorizeApiLoginId);
+		merchantAuthenticationType.setTransactionKey(authorizeTransactionKey);
+		ApiOperationBase.setMerchantAuthentication(merchantAuthenticationType);
+		List<Future> futures = new ArrayList<>();
+
+		SearchList<SiteUser> searchList = new SearchList<SiteUser>();
+		searchList.setQuery("*:*");
+		searchList.setStore(true);
+		searchList.setC(SiteUser.class);
+		searchList.addFilterQuery("enrollmentKeys_indexed_long:" + schoolEnrollment.getPk());
+		searchList.initDeepSearchList(siteRequest);
+
+		searchList.getList().forEach(siteUser -> {
+			futures.add(Future.future(a -> {
+				authorizeNetEnrollmentUserPaymentsFuture(schoolEnrollment, siteUser, b -> {
+					if(b.succeeded())
+						a.handle(Future.succeededFuture());
+					else
+						a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.userKeys failed", b.cause())));
+				});
+			}));
+		});
+		CompositeFuture.all(futures).setHandler(a -> {
+			if(a.succeeded()) {
+				eventHandler.handle(Future.succeededFuture());
+				promise.complete();
+				LOGGER.info(String.format("transactions for enrollment %s loaded. ", schoolEnrollment.getPk()));
+			} else {
+				LOGGER.error(String.format("transactions for enrollment %s failed. ", schoolEnrollment.getPk()));
+				eventHandler.handle(Future.failedFuture(a.cause()));
+				promise.fail(a.cause());
+			}
+		});
+		return promise.future();
+	}
+
+	public Future<Void> authorizeNetEnrollmentUserPaymentsFuture(SchoolEnrollment schoolEnrollment, SiteUser siteUser, Handler<AsyncResult<Void>> eventHandler) {
+		SiteRequestEnUS siteRequest = schoolEnrollment.getSiteRequest_();
 		SiteContextEnUS siteContextEnUS = siteRequest.getSiteContext_();
-		SiteUser siteUser = siteRequest.getSiteUser();
 		SiteConfig siteConfig = siteRequest.getSiteConfig_();
 		Promise<Void> promise = Promise.promise();
 		Integer schoolNumber = schoolEnrollment.getSchoolNumber();

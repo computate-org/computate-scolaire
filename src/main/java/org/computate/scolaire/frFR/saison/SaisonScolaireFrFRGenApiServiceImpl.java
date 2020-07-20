@@ -126,40 +126,41 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 							), new CaseInsensitiveHeaders()
 					)
 				));
-			}
+			} else {
 
-			utilisateurSaisonScolaire(requeteSite, b -> {
-				if(b.succeeded()) {
-					RequeteApi requeteApi = new RequeteApi();
-					requeteApi.setRows(1);
-					requeteApi.setNumFound(1L);
-					requeteApi.setNumPATCH(0L);
-					requeteApi.initLoinRequeteApi(requeteSite);
-					requeteSite.setRequeteApi_(requeteApi);
-					requeteSite.getVertx().eventBus().publish("websocketSaisonScolaire", JsonObject.mapFrom(requeteApi).toString());
-					postSaisonScolaireFuture(requeteSite, false, c -> {
-						if(c.succeeded()) {
-							SaisonScolaire saisonScolaire = c.result();
-							requeteApi.setPk(saisonScolaire.getPk());
-							postSaisonScolaireReponse(saisonScolaire, d -> {
-									if(d.succeeded()) {
-									gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-									LOGGER.info(String.format("postSaisonScolaire a réussi. "));
-								} else {
-									LOGGER.error(String.format("postSaisonScolaire a échoué. ", d.cause()));
-									erreurSaisonScolaire(requeteSite, gestionnaireEvenements, d);
-								}
-							});
-						} else {
-							LOGGER.error(String.format("postSaisonScolaire a échoué. ", c.cause()));
-							erreurSaisonScolaire(requeteSite, gestionnaireEvenements, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("postSaisonScolaire a échoué. ", b.cause()));
-					erreurSaisonScolaire(requeteSite, gestionnaireEvenements, b);
-				}
-			});
+				utilisateurSaisonScolaire(requeteSite, b -> {
+					if(b.succeeded()) {
+						RequeteApi requeteApi = new RequeteApi();
+						requeteApi.setRows(1);
+						requeteApi.setNumFound(1L);
+						requeteApi.setNumPATCH(0L);
+						requeteApi.initLoinRequeteApi(requeteSite);
+						requeteSite.setRequeteApi_(requeteApi);
+						requeteSite.getVertx().eventBus().publish("websocketSaisonScolaire", JsonObject.mapFrom(requeteApi).toString());
+						postSaisonScolaireFuture(requeteSite, false, c -> {
+							if(c.succeeded()) {
+								SaisonScolaire saisonScolaire = c.result();
+								requeteApi.setPk(saisonScolaire.getPk());
+								postSaisonScolaireReponse(saisonScolaire, d -> {
+										if(d.succeeded()) {
+										gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+										LOGGER.info(String.format("postSaisonScolaire a réussi. "));
+									} else {
+										LOGGER.error(String.format("postSaisonScolaire a échoué. ", d.cause()));
+										erreurSaisonScolaire(requeteSite, gestionnaireEvenements, d);
+									}
+								});
+							} else {
+								LOGGER.error(String.format("postSaisonScolaire a échoué. ", c.cause()));
+								erreurSaisonScolaire(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("postSaisonScolaire a échoué. ", b.cause()));
+						erreurSaisonScolaire(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("postSaisonScolaire a échoué. ", ex));
 			erreurSaisonScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
@@ -495,65 +496,66 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 							), new CaseInsensitiveHeaders()
 					)
 				));
-			}
+			} else {
 
-			utilisateurSaisonScolaire(requeteSite, b -> {
-				if(b.succeeded()) {
-					putimportSaisonScolaireReponse(requeteSite, c -> {
-						if(c.succeeded()) {
-							gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
-							WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
-							executeurTravailleur.executeBlocking(
-								blockingCodeHandler -> {
-									try {
-										RequeteApi requeteApi = new RequeteApi();
-										JsonArray jsonArray = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
-										requeteApi.setRows(jsonArray.size());
-										requeteApi.setNumFound(new Integer(jsonArray.size()).longValue());
-										requeteApi.setNumPATCH(0L);
-										requeteApi.initLoinRequeteApi(requeteSite);
-										requeteSite.setRequeteApi_(requeteApi);
-										requeteSite.getVertx().eventBus().publish("websocketSaisonScolaire", JsonObject.mapFrom(requeteApi).toString());
-										varsSaisonScolaire(requeteSite, d -> {
-											if(d.succeeded()) {
-												listePUTImportSaisonScolaire(requeteApi, requeteSite, e -> {
-													if(e.succeeded()) {
-														putimportSaisonScolaireReponse(requeteSite, f -> {
-															if(e.succeeded()) {
-																LOGGER.info(String.format("putimportSaisonScolaire a réussi. "));
-																blockingCodeHandler.handle(Future.succeededFuture(e.result()));
-															} else {
-																LOGGER.error(String.format("putimportSaisonScolaire a échoué. ", f.cause()));
-																erreurSaisonScolaire(requeteSite, null, f);
-															}
-														});
-													} else {
-														LOGGER.error(String.format("putimportSaisonScolaire a échoué. ", e.cause()));
-														erreurSaisonScolaire(requeteSite, null, e);
-													}
-												});
-											} else {
-												LOGGER.error(String.format("putimportSaisonScolaire a échoué. ", d.cause()));
-												erreurSaisonScolaire(requeteSite, null, d);
-											}
-										});
-									} catch(Exception ex) {
-										LOGGER.error(String.format("putimportSaisonScolaire a échoué. ", ex));
-										erreurSaisonScolaire(requeteSite, null, Future.failedFuture(ex));
+				utilisateurSaisonScolaire(requeteSite, b -> {
+					if(b.succeeded()) {
+						putimportSaisonScolaireReponse(requeteSite, c -> {
+							if(c.succeeded()) {
+								gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
+								WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
+								executeurTravailleur.executeBlocking(
+									blockingCodeHandler -> {
+										try {
+											RequeteApi requeteApi = new RequeteApi();
+											JsonArray jsonArray = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+											requeteApi.setRows(jsonArray.size());
+											requeteApi.setNumFound(new Integer(jsonArray.size()).longValue());
+											requeteApi.setNumPATCH(0L);
+											requeteApi.initLoinRequeteApi(requeteSite);
+											requeteSite.setRequeteApi_(requeteApi);
+											requeteSite.getVertx().eventBus().publish("websocketSaisonScolaire", JsonObject.mapFrom(requeteApi).toString());
+											varsSaisonScolaire(requeteSite, d -> {
+												if(d.succeeded()) {
+													listePUTImportSaisonScolaire(requeteApi, requeteSite, e -> {
+														if(e.succeeded()) {
+															putimportSaisonScolaireReponse(requeteSite, f -> {
+																if(e.succeeded()) {
+																	LOGGER.info(String.format("putimportSaisonScolaire a réussi. "));
+																	blockingCodeHandler.handle(Future.succeededFuture(e.result()));
+																} else {
+																	LOGGER.error(String.format("putimportSaisonScolaire a échoué. ", f.cause()));
+																	erreurSaisonScolaire(requeteSite, null, f);
+																}
+															});
+														} else {
+															LOGGER.error(String.format("putimportSaisonScolaire a échoué. ", e.cause()));
+															erreurSaisonScolaire(requeteSite, null, e);
+														}
+													});
+												} else {
+													LOGGER.error(String.format("putimportSaisonScolaire a échoué. ", d.cause()));
+													erreurSaisonScolaire(requeteSite, null, d);
+												}
+											});
+										} catch(Exception ex) {
+											LOGGER.error(String.format("putimportSaisonScolaire a échoué. ", ex));
+											erreurSaisonScolaire(requeteSite, null, Future.failedFuture(ex));
+										}
+									}, resultHandler -> {
 									}
-								}, resultHandler -> {
-								}
-							);
-						} else {
-							LOGGER.error(String.format("putimportSaisonScolaire a échoué. ", c.cause()));
-							erreurSaisonScolaire(requeteSite, gestionnaireEvenements, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("putimportSaisonScolaire a échoué. ", b.cause()));
-					erreurSaisonScolaire(requeteSite, gestionnaireEvenements, b);
-				}
-			});
+								);
+							} else {
+								LOGGER.error(String.format("putimportSaisonScolaire a échoué. ", c.cause()));
+								erreurSaisonScolaire(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("putimportSaisonScolaire a échoué. ", b.cause()));
+						erreurSaisonScolaire(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("putimportSaisonScolaire a échoué. ", ex));
 			erreurSaisonScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
@@ -680,65 +682,66 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 							), new CaseInsensitiveHeaders()
 					)
 				));
-			}
+			} else {
 
-			utilisateurSaisonScolaire(requeteSite, b -> {
-				if(b.succeeded()) {
-					putfusionSaisonScolaireReponse(requeteSite, c -> {
-						if(c.succeeded()) {
-							gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
-							WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
-							executeurTravailleur.executeBlocking(
-								blockingCodeHandler -> {
-									try {
-										RequeteApi requeteApi = new RequeteApi();
-										JsonArray jsonArray = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
-										requeteApi.setRows(jsonArray.size());
-										requeteApi.setNumFound(new Integer(jsonArray.size()).longValue());
-										requeteApi.setNumPATCH(0L);
-										requeteApi.initLoinRequeteApi(requeteSite);
-										requeteSite.setRequeteApi_(requeteApi);
-										requeteSite.getVertx().eventBus().publish("websocketSaisonScolaire", JsonObject.mapFrom(requeteApi).toString());
-										varsSaisonScolaire(requeteSite, d -> {
-											if(d.succeeded()) {
-												listePUTFusionSaisonScolaire(requeteApi, requeteSite, e -> {
-													if(e.succeeded()) {
-														putfusionSaisonScolaireReponse(requeteSite, f -> {
-															if(e.succeeded()) {
-																LOGGER.info(String.format("putfusionSaisonScolaire a réussi. "));
-																blockingCodeHandler.handle(Future.succeededFuture(e.result()));
-															} else {
-																LOGGER.error(String.format("putfusionSaisonScolaire a échoué. ", f.cause()));
-																erreurSaisonScolaire(requeteSite, null, f);
-															}
-														});
-													} else {
-														LOGGER.error(String.format("putfusionSaisonScolaire a échoué. ", e.cause()));
-														erreurSaisonScolaire(requeteSite, null, e);
-													}
-												});
-											} else {
-												LOGGER.error(String.format("putfusionSaisonScolaire a échoué. ", d.cause()));
-												erreurSaisonScolaire(requeteSite, null, d);
-											}
-										});
-									} catch(Exception ex) {
-										LOGGER.error(String.format("putfusionSaisonScolaire a échoué. ", ex));
-										erreurSaisonScolaire(requeteSite, null, Future.failedFuture(ex));
+				utilisateurSaisonScolaire(requeteSite, b -> {
+					if(b.succeeded()) {
+						putfusionSaisonScolaireReponse(requeteSite, c -> {
+							if(c.succeeded()) {
+								gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
+								WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
+								executeurTravailleur.executeBlocking(
+									blockingCodeHandler -> {
+										try {
+											RequeteApi requeteApi = new RequeteApi();
+											JsonArray jsonArray = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+											requeteApi.setRows(jsonArray.size());
+											requeteApi.setNumFound(new Integer(jsonArray.size()).longValue());
+											requeteApi.setNumPATCH(0L);
+											requeteApi.initLoinRequeteApi(requeteSite);
+											requeteSite.setRequeteApi_(requeteApi);
+											requeteSite.getVertx().eventBus().publish("websocketSaisonScolaire", JsonObject.mapFrom(requeteApi).toString());
+											varsSaisonScolaire(requeteSite, d -> {
+												if(d.succeeded()) {
+													listePUTFusionSaisonScolaire(requeteApi, requeteSite, e -> {
+														if(e.succeeded()) {
+															putfusionSaisonScolaireReponse(requeteSite, f -> {
+																if(e.succeeded()) {
+																	LOGGER.info(String.format("putfusionSaisonScolaire a réussi. "));
+																	blockingCodeHandler.handle(Future.succeededFuture(e.result()));
+																} else {
+																	LOGGER.error(String.format("putfusionSaisonScolaire a échoué. ", f.cause()));
+																	erreurSaisonScolaire(requeteSite, null, f);
+																}
+															});
+														} else {
+															LOGGER.error(String.format("putfusionSaisonScolaire a échoué. ", e.cause()));
+															erreurSaisonScolaire(requeteSite, null, e);
+														}
+													});
+												} else {
+													LOGGER.error(String.format("putfusionSaisonScolaire a échoué. ", d.cause()));
+													erreurSaisonScolaire(requeteSite, null, d);
+												}
+											});
+										} catch(Exception ex) {
+											LOGGER.error(String.format("putfusionSaisonScolaire a échoué. ", ex));
+											erreurSaisonScolaire(requeteSite, null, Future.failedFuture(ex));
+										}
+									}, resultHandler -> {
 									}
-								}, resultHandler -> {
-								}
-							);
-						} else {
-							LOGGER.error(String.format("putfusionSaisonScolaire a échoué. ", c.cause()));
-							erreurSaisonScolaire(requeteSite, gestionnaireEvenements, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("putfusionSaisonScolaire a échoué. ", b.cause()));
-					erreurSaisonScolaire(requeteSite, gestionnaireEvenements, b);
-				}
-			});
+								);
+							} else {
+								LOGGER.error(String.format("putfusionSaisonScolaire a échoué. ", c.cause()));
+								erreurSaisonScolaire(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("putfusionSaisonScolaire a échoué. ", b.cause()));
+						erreurSaisonScolaire(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("putfusionSaisonScolaire a échoué. ", ex));
 			erreurSaisonScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
@@ -863,70 +866,71 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 							), new CaseInsensitiveHeaders()
 					)
 				));
-			}
+			} else {
 
-			utilisateurSaisonScolaire(requeteSite, b -> {
-				if(b.succeeded()) {
-					putcopieSaisonScolaireReponse(requeteSite, c -> {
-						if(c.succeeded()) {
-							gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
-							WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
-							executeurTravailleur.executeBlocking(
-								blockingCodeHandler -> {
-									try {
-										rechercheSaisonScolaire(requeteSite, false, true, "/api/saison/copie", "PUTCopie", d -> {
-											if(d.succeeded()) {
-												ListeRecherche<SaisonScolaire> listeSaisonScolaire = d.result();
-												RequeteApi requeteApi = new RequeteApi();
-												requeteApi.setRows(listeSaisonScolaire.getRows());
-												requeteApi.setNumFound(listeSaisonScolaire.getQueryResponse().getResults().getNumFound());
-												requeteApi.setNumPATCH(0L);
-												requeteApi.initLoinRequeteApi(requeteSite);
-												requeteSite.setRequeteApi_(requeteApi);
-												requeteSite.getVertx().eventBus().publish("websocketSaisonScolaire", JsonObject.mapFrom(requeteApi).toString());
-												try {
-													listePUTCopieSaisonScolaire(requeteApi, listeSaisonScolaire, e -> {
-														if(e.succeeded()) {
-															putcopieSaisonScolaireReponse(requeteSite, f -> {
-																if(f.succeeded()) {
-																	LOGGER.info(String.format("putcopieSaisonScolaire a réussi. "));
-																	blockingCodeHandler.handle(Future.succeededFuture(f.result()));
-																} else {
-																	LOGGER.error(String.format("putcopieSaisonScolaire a échoué. ", f.cause()));
-																	erreurSaisonScolaire(requeteSite, null, f);
-																}
-															});
-														} else {
-															LOGGER.error(String.format("putcopieSaisonScolaire a échoué. ", e.cause()));
-															erreurSaisonScolaire(requeteSite, null, e);
-														}
-													});
-												} catch(Exception ex) {
-													LOGGER.error(String.format("putcopieSaisonScolaire a échoué. ", ex));
-													erreurSaisonScolaire(requeteSite, null, Future.failedFuture(ex));
+				utilisateurSaisonScolaire(requeteSite, b -> {
+					if(b.succeeded()) {
+						putcopieSaisonScolaireReponse(requeteSite, c -> {
+							if(c.succeeded()) {
+								gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
+								WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
+								executeurTravailleur.executeBlocking(
+									blockingCodeHandler -> {
+										try {
+											rechercheSaisonScolaire(requeteSite, false, true, "/api/saison/copie", "PUTCopie", d -> {
+												if(d.succeeded()) {
+													ListeRecherche<SaisonScolaire> listeSaisonScolaire = d.result();
+													RequeteApi requeteApi = new RequeteApi();
+													requeteApi.setRows(listeSaisonScolaire.getRows());
+													requeteApi.setNumFound(listeSaisonScolaire.getQueryResponse().getResults().getNumFound());
+													requeteApi.setNumPATCH(0L);
+													requeteApi.initLoinRequeteApi(requeteSite);
+													requeteSite.setRequeteApi_(requeteApi);
+													requeteSite.getVertx().eventBus().publish("websocketSaisonScolaire", JsonObject.mapFrom(requeteApi).toString());
+													try {
+														listePUTCopieSaisonScolaire(requeteApi, listeSaisonScolaire, e -> {
+															if(e.succeeded()) {
+																putcopieSaisonScolaireReponse(requeteSite, f -> {
+																	if(f.succeeded()) {
+																		LOGGER.info(String.format("putcopieSaisonScolaire a réussi. "));
+																		blockingCodeHandler.handle(Future.succeededFuture(f.result()));
+																	} else {
+																		LOGGER.error(String.format("putcopieSaisonScolaire a échoué. ", f.cause()));
+																		erreurSaisonScolaire(requeteSite, null, f);
+																	}
+																});
+															} else {
+																LOGGER.error(String.format("putcopieSaisonScolaire a échoué. ", e.cause()));
+																erreurSaisonScolaire(requeteSite, null, e);
+															}
+														});
+													} catch(Exception ex) {
+														LOGGER.error(String.format("putcopieSaisonScolaire a échoué. ", ex));
+														erreurSaisonScolaire(requeteSite, null, Future.failedFuture(ex));
+													}
+												} else {
+													LOGGER.error(String.format("putcopieSaisonScolaire a échoué. ", d.cause()));
+													erreurSaisonScolaire(requeteSite, null, d);
 												}
-											} else {
-												LOGGER.error(String.format("putcopieSaisonScolaire a échoué. ", d.cause()));
-												erreurSaisonScolaire(requeteSite, null, d);
-											}
-										});
-									} catch(Exception ex) {
-										LOGGER.error(String.format("putcopieSaisonScolaire a échoué. ", ex));
-										erreurSaisonScolaire(requeteSite, null, Future.failedFuture(ex));
+											});
+										} catch(Exception ex) {
+											LOGGER.error(String.format("putcopieSaisonScolaire a échoué. ", ex));
+											erreurSaisonScolaire(requeteSite, null, Future.failedFuture(ex));
+										}
+									}, resultHandler -> {
 									}
-								}, resultHandler -> {
-								}
-							);
-						} else {
-							LOGGER.error(String.format("putcopieSaisonScolaire a échoué. ", c.cause()));
-							erreurSaisonScolaire(requeteSite, gestionnaireEvenements, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("putcopieSaisonScolaire a échoué. ", b.cause()));
-					erreurSaisonScolaire(requeteSite, gestionnaireEvenements, b);
-				}
-			});
+								);
+							} else {
+								LOGGER.error(String.format("putcopieSaisonScolaire a échoué. ", c.cause()));
+								erreurSaisonScolaire(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("putcopieSaisonScolaire a échoué. ", b.cause()));
+						erreurSaisonScolaire(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("putcopieSaisonScolaire a échoué. ", ex));
 			erreurSaisonScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
@@ -1236,81 +1240,82 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 							), new CaseInsensitiveHeaders()
 					)
 				));
-			}
+			} else {
 
-			utilisateurSaisonScolaire(requeteSite, b -> {
-				if(b.succeeded()) {
-					patchSaisonScolaireReponse(requeteSite, c -> {
-						if(c.succeeded()) {
-							gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
-							WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
-							executeurTravailleur.executeBlocking(
-								blockingCodeHandler -> {
-									try {
-										rechercheSaisonScolaire(requeteSite, false, true, "/api/saison", "PATCH", d -> {
-											if(d.succeeded()) {
-												ListeRecherche<SaisonScolaire> listeSaisonScolaire = d.result();
-												RequeteApi requeteApi = new RequeteApi();
-												requeteApi.setRows(listeSaisonScolaire.getRows());
-												requeteApi.setNumFound(listeSaisonScolaire.getQueryResponse().getResults().getNumFound());
-												requeteApi.setNumPATCH(0L);
-												requeteApi.initLoinRequeteApi(requeteSite);
-												requeteSite.setRequeteApi_(requeteApi);
-												requeteSite.getVertx().eventBus().publish("websocketSaisonScolaire", JsonObject.mapFrom(requeteApi).toString());
-												SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listeSaisonScolaire.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
-												Date date = null;
-												if(facets != null)
-													date = (Date)facets.get("max_modifie");
-												String dt;
-												if(date == null)
-													dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
-												else
-													dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
-												listeSaisonScolaire.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
+				utilisateurSaisonScolaire(requeteSite, b -> {
+					if(b.succeeded()) {
+						patchSaisonScolaireReponse(requeteSite, c -> {
+							if(c.succeeded()) {
+								gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
+								WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
+								executeurTravailleur.executeBlocking(
+									blockingCodeHandler -> {
+										try {
+											rechercheSaisonScolaire(requeteSite, false, true, "/api/saison", "PATCH", d -> {
+												if(d.succeeded()) {
+													ListeRecherche<SaisonScolaire> listeSaisonScolaire = d.result();
+													RequeteApi requeteApi = new RequeteApi();
+													requeteApi.setRows(listeSaisonScolaire.getRows());
+													requeteApi.setNumFound(listeSaisonScolaire.getQueryResponse().getResults().getNumFound());
+													requeteApi.setNumPATCH(0L);
+													requeteApi.initLoinRequeteApi(requeteSite);
+													requeteSite.setRequeteApi_(requeteApi);
+													requeteSite.getVertx().eventBus().publish("websocketSaisonScolaire", JsonObject.mapFrom(requeteApi).toString());
+													SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listeSaisonScolaire.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
+													Date date = null;
+													if(facets != null)
+														date = (Date)facets.get("max_modifie");
+													String dt;
+													if(date == null)
+														dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
+													else
+														dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
+													listeSaisonScolaire.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
 
-												try {
-													listePATCHSaisonScolaire(requeteApi, listeSaisonScolaire, dt, e -> {
-														if(e.succeeded()) {
-															patchSaisonScolaireReponse(requeteSite, f -> {
-																if(f.succeeded()) {
-																	LOGGER.info(String.format("patchSaisonScolaire a réussi. "));
-																	blockingCodeHandler.handle(Future.succeededFuture(f.result()));
-																} else {
-																	LOGGER.error(String.format("patchSaisonScolaire a échoué. ", f.cause()));
-																	erreurSaisonScolaire(requeteSite, null, f);
-																}
-															});
-														} else {
-															LOGGER.error(String.format("patchSaisonScolaire a échoué. ", e.cause()));
-															erreurSaisonScolaire(requeteSite, null, e);
-														}
-													});
-												} catch(Exception ex) {
-													LOGGER.error(String.format("patchSaisonScolaire a échoué. ", ex));
-													erreurSaisonScolaire(requeteSite, null, Future.failedFuture(ex));
+													try {
+														listePATCHSaisonScolaire(requeteApi, listeSaisonScolaire, dt, e -> {
+															if(e.succeeded()) {
+																patchSaisonScolaireReponse(requeteSite, f -> {
+																	if(f.succeeded()) {
+																		LOGGER.info(String.format("patchSaisonScolaire a réussi. "));
+																		blockingCodeHandler.handle(Future.succeededFuture(f.result()));
+																	} else {
+																		LOGGER.error(String.format("patchSaisonScolaire a échoué. ", f.cause()));
+																		erreurSaisonScolaire(requeteSite, null, f);
+																	}
+																});
+															} else {
+																LOGGER.error(String.format("patchSaisonScolaire a échoué. ", e.cause()));
+																erreurSaisonScolaire(requeteSite, null, e);
+															}
+														});
+													} catch(Exception ex) {
+														LOGGER.error(String.format("patchSaisonScolaire a échoué. ", ex));
+														erreurSaisonScolaire(requeteSite, null, Future.failedFuture(ex));
+													}
+										} else {
+													LOGGER.error(String.format("patchSaisonScolaire a échoué. ", d.cause()));
+													erreurSaisonScolaire(requeteSite, null, d);
 												}
-											} else {
-												LOGGER.error(String.format("patchSaisonScolaire a échoué. ", d.cause()));
-												erreurSaisonScolaire(requeteSite, null, d);
-											}
-										});
-									} catch(Exception ex) {
-										LOGGER.error(String.format("patchSaisonScolaire a échoué. ", ex));
-										erreurSaisonScolaire(requeteSite, null, Future.failedFuture(ex));
+											});
+										} catch(Exception ex) {
+											LOGGER.error(String.format("patchSaisonScolaire a échoué. ", ex));
+											erreurSaisonScolaire(requeteSite, null, Future.failedFuture(ex));
+										}
+									}, resultHandler -> {
 									}
-								}, resultHandler -> {
-								}
-							);
-						} else {
-							LOGGER.error(String.format("patchSaisonScolaire a échoué. ", c.cause()));
-							erreurSaisonScolaire(requeteSite, gestionnaireEvenements, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("patchSaisonScolaire a échoué. ", b.cause()));
-					erreurSaisonScolaire(requeteSite, gestionnaireEvenements, b);
-				}
-			});
+								);
+							} else {
+								LOGGER.error(String.format("patchSaisonScolaire a échoué. ", c.cause()));
+								erreurSaisonScolaire(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("patchSaisonScolaire a échoué. ", b.cause()));
+						erreurSaisonScolaire(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("patchSaisonScolaire a échoué. ", ex));
 			erreurSaisonScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
@@ -1920,32 +1925,33 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 							), new CaseInsensitiveHeaders()
 					)
 				));
-			}
+			} else {
 
-			utilisateurSaisonScolaire(requeteSite, b -> {
-				if(b.succeeded()) {
-					rechercheSaisonScolaire(requeteSite, false, true, "/api/saison/{id}", "GET", c -> {
-						if(c.succeeded()) {
-							ListeRecherche<SaisonScolaire> listeSaisonScolaire = c.result();
-							getSaisonScolaireReponse(listeSaisonScolaire, d -> {
-								if(d.succeeded()) {
-									gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-									LOGGER.info(String.format("getSaisonScolaire a réussi. "));
-								} else {
-									LOGGER.error(String.format("getSaisonScolaire a échoué. ", d.cause()));
-									erreurSaisonScolaire(requeteSite, gestionnaireEvenements, d);
-								}
-							});
-						} else {
-							LOGGER.error(String.format("getSaisonScolaire a échoué. ", c.cause()));
-							erreurSaisonScolaire(requeteSite, gestionnaireEvenements, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("getSaisonScolaire a échoué. ", b.cause()));
-					erreurSaisonScolaire(requeteSite, gestionnaireEvenements, b);
-				}
-			});
+				utilisateurSaisonScolaire(requeteSite, b -> {
+					if(b.succeeded()) {
+						rechercheSaisonScolaire(requeteSite, false, true, "/api/saison/{id}", "GET", c -> {
+							if(c.succeeded()) {
+								ListeRecherche<SaisonScolaire> listeSaisonScolaire = c.result();
+								getSaisonScolaireReponse(listeSaisonScolaire, d -> {
+									if(d.succeeded()) {
+										gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+										LOGGER.info(String.format("getSaisonScolaire a réussi. "));
+									} else {
+										LOGGER.error(String.format("getSaisonScolaire a échoué. ", d.cause()));
+										erreurSaisonScolaire(requeteSite, gestionnaireEvenements, d);
+									}
+								});
+							} else {
+								LOGGER.error(String.format("getSaisonScolaire a échoué. ", c.cause()));
+								erreurSaisonScolaire(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("getSaisonScolaire a échoué. ", b.cause()));
+						erreurSaisonScolaire(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("getSaisonScolaire a échoué. ", ex));
 			erreurSaisonScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
@@ -2007,32 +2013,33 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 							), new CaseInsensitiveHeaders()
 					)
 				));
-			}
+			} else {
 
-			utilisateurSaisonScolaire(requeteSite, b -> {
-				if(b.succeeded()) {
-					rechercheSaisonScolaire(requeteSite, false, true, "/api/saison", "Recherche", c -> {
-						if(c.succeeded()) {
-							ListeRecherche<SaisonScolaire> listeSaisonScolaire = c.result();
-							rechercheSaisonScolaireReponse(listeSaisonScolaire, d -> {
-								if(d.succeeded()) {
-									gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-									LOGGER.info(String.format("rechercheSaisonScolaire a réussi. "));
-								} else {
-									LOGGER.error(String.format("rechercheSaisonScolaire a échoué. ", d.cause()));
-									erreurSaisonScolaire(requeteSite, gestionnaireEvenements, d);
-								}
-							});
-						} else {
-							LOGGER.error(String.format("rechercheSaisonScolaire a échoué. ", c.cause()));
-							erreurSaisonScolaire(requeteSite, gestionnaireEvenements, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("rechercheSaisonScolaire a échoué. ", b.cause()));
-					erreurSaisonScolaire(requeteSite, gestionnaireEvenements, b);
-				}
-			});
+				utilisateurSaisonScolaire(requeteSite, b -> {
+					if(b.succeeded()) {
+						rechercheSaisonScolaire(requeteSite, false, true, "/api/saison", "Recherche", c -> {
+							if(c.succeeded()) {
+								ListeRecherche<SaisonScolaire> listeSaisonScolaire = c.result();
+								rechercheSaisonScolaireReponse(listeSaisonScolaire, d -> {
+									if(d.succeeded()) {
+										gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+										LOGGER.info(String.format("rechercheSaisonScolaire a réussi. "));
+									} else {
+										LOGGER.error(String.format("rechercheSaisonScolaire a échoué. ", d.cause()));
+										erreurSaisonScolaire(requeteSite, gestionnaireEvenements, d);
+									}
+								});
+							} else {
+								LOGGER.error(String.format("rechercheSaisonScolaire a échoué. ", c.cause()));
+								erreurSaisonScolaire(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("rechercheSaisonScolaire a échoué. ", b.cause()));
+						erreurSaisonScolaire(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("rechercheSaisonScolaire a échoué. ", ex));
 			erreurSaisonScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
@@ -2139,32 +2146,33 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 							), new CaseInsensitiveHeaders()
 					)
 				));
-			}
+			} else {
 
-			utilisateurSaisonScolaire(requeteSite, b -> {
-				if(b.succeeded()) {
-					rechercheSaisonScolaire(requeteSite, false, true, "/saison", "PageRecherche", c -> {
-						if(c.succeeded()) {
-							ListeRecherche<SaisonScolaire> listeSaisonScolaire = c.result();
-							pagerechercheSaisonScolaireReponse(listeSaisonScolaire, d -> {
-								if(d.succeeded()) {
-									gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-									LOGGER.info(String.format("pagerechercheSaisonScolaire a réussi. "));
-								} else {
-									LOGGER.error(String.format("pagerechercheSaisonScolaire a échoué. ", d.cause()));
-									erreurSaisonScolaire(requeteSite, gestionnaireEvenements, d);
-								}
-							});
-						} else {
-							LOGGER.error(String.format("pagerechercheSaisonScolaire a échoué. ", c.cause()));
-							erreurSaisonScolaire(requeteSite, gestionnaireEvenements, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("pagerechercheSaisonScolaire a échoué. ", b.cause()));
-					erreurSaisonScolaire(requeteSite, gestionnaireEvenements, b);
-				}
-			});
+				utilisateurSaisonScolaire(requeteSite, b -> {
+					if(b.succeeded()) {
+						rechercheSaisonScolaire(requeteSite, false, true, "/saison", "PageRecherche", c -> {
+							if(c.succeeded()) {
+								ListeRecherche<SaisonScolaire> listeSaisonScolaire = c.result();
+								pagerechercheSaisonScolaireReponse(listeSaisonScolaire, d -> {
+									if(d.succeeded()) {
+										gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+										LOGGER.info(String.format("pagerechercheSaisonScolaire a réussi. "));
+									} else {
+										LOGGER.error(String.format("pagerechercheSaisonScolaire a échoué. ", d.cause()));
+										erreurSaisonScolaire(requeteSite, gestionnaireEvenements, d);
+									}
+								});
+							} else {
+								LOGGER.error(String.format("pagerechercheSaisonScolaire a échoué. ", c.cause()));
+								erreurSaisonScolaire(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("pagerechercheSaisonScolaire a échoué. ", b.cause()));
+						erreurSaisonScolaire(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("pagerechercheSaisonScolaire a échoué. ", ex));
 			erreurSaisonScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));

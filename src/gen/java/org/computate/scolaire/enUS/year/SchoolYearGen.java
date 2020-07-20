@@ -160,7 +160,10 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 
 	public void inputSchoolKey(String classApiMethodMethod) {
 		SchoolYear s = (SchoolYear)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
 				e("input")
 					.a("type", "text")
@@ -557,7 +560,10 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 
 	public void inputAgeKeys(String classApiMethodMethod) {
 		SchoolYear s = (SchoolYear)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
 				e("input")
 					.a("type", "text")
@@ -1499,7 +1505,10 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 
 	public void inputSessionStartDate(String classApiMethodMethod) {
 		SchoolYear s = (SchoolYear)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("class", "w3-input w3-border datepicker setSessionStartDate classSchoolYear inputSchoolYear", pk, "SessionStartDate w3-input w3-border ")
@@ -1629,7 +1638,10 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 
 	public void inputSeasonStartDate(String classApiMethodMethod) {
 		SchoolYear s = (SchoolYear)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("class", "w3-input w3-border datepicker setSeasonStartDate classSchoolYear inputSchoolYear", pk, "SeasonStartDate w3-input w3-border ")
@@ -1759,7 +1771,10 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 
 	public void inputSessionEndDate(String classApiMethodMethod) {
 		SchoolYear s = (SchoolYear)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("class", "w3-input w3-border datepicker setSessionEndDate classSchoolYear inputSchoolYear", pk, "SessionEndDate w3-input w3-border ")
@@ -1877,7 +1892,10 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 
 	public void inputYearStart(String classApiMethodMethod) {
 		SchoolYear s = (SchoolYear)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "start of year")
@@ -2004,7 +2022,10 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 
 	public void inputYearEnd(String classApiMethodMethod) {
 		SchoolYear s = (SchoolYear)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "end of year")
@@ -2142,7 +2163,10 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 
 	public void inputYearEnrollmentFee(String classApiMethodMethod) {
 		SchoolYear s = (SchoolYear)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "enrollment fee")

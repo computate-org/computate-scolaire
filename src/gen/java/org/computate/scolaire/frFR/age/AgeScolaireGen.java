@@ -334,7 +334,10 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 
 	public void inputBlocCles(String classeApiMethodeMethode) {
 		AgeScolaire s = (AgeScolaire)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
 				e("input")
 					.a("type", "text")
@@ -1031,7 +1034,10 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 
 	public void inputAnneeCle(String classeApiMethodeMethode) {
 		AgeScolaire s = (AgeScolaire)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
 				e("input")
 					.a("type", "text")
@@ -1347,7 +1353,10 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 
 	public void inputEcoleAddresse(String classeApiMethodeMethode) {
 		AgeScolaire s = (AgeScolaire)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "addresse")
@@ -2253,7 +2262,10 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 
 	public void inputAgeDebut(String classeApiMethodeMethode) {
 		AgeScolaire s = (AgeScolaire)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "début du groupe d'âge")
@@ -2381,7 +2393,10 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 
 	public void inputAgeFin(String classeApiMethodeMethode) {
 		AgeScolaire s = (AgeScolaire)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "fin du groupe d'âge")

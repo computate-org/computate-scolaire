@@ -161,7 +161,10 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 
 	public void inputEcoleCle(String classeApiMethodeMethode) {
 		AnneeScolaire s = (AnneeScolaire)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
 				e("input")
 					.a("type", "text")
@@ -559,7 +562,10 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 
 	public void inputAgeCles(String classeApiMethodeMethode) {
 		AnneeScolaire s = (AnneeScolaire)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
 				e("input")
 					.a("type", "text")
@@ -1502,7 +1508,10 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 
 	public void inputSessionDateDebut(String classeApiMethodeMethode) {
 		AnneeScolaire s = (AnneeScolaire)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("class", "w3-input w3-border datepicker setSessionDateDebut classAnneeScolaire inputAnneeScolaire", pk, "SessionDateDebut w3-input w3-border ")
@@ -1633,7 +1642,10 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 
 	public void inputSaisonDateDebut(String classeApiMethodeMethode) {
 		AnneeScolaire s = (AnneeScolaire)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("class", "w3-input w3-border datepicker setSaisonDateDebut classAnneeScolaire inputAnneeScolaire", pk, "SaisonDateDebut w3-input w3-border ")
@@ -1764,7 +1776,10 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 
 	public void inputSessionDateFin(String classeApiMethodeMethode) {
 		AnneeScolaire s = (AnneeScolaire)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("class", "w3-input w3-border datepicker setSessionDateFin classAnneeScolaire inputAnneeScolaire", pk, "SessionDateFin w3-input w3-border ")
@@ -1883,7 +1898,10 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 
 	public void inputAnneeDebut(String classeApiMethodeMethode) {
 		AnneeScolaire s = (AnneeScolaire)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "début de l'année")
@@ -2011,7 +2029,10 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 
 	public void inputAnneeFin(String classeApiMethodeMethode) {
 		AnneeScolaire s = (AnneeScolaire)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "le fin de l'année")
@@ -2150,7 +2171,10 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 
 	public void inputAnneeFraisInscription(String classeApiMethodeMethode) {
 		AnneeScolaire s = (AnneeScolaire)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "frais d'inscription")

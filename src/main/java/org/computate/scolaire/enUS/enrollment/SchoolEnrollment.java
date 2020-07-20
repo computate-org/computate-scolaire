@@ -14,6 +14,7 @@ import java.util.Locale;
 import java.util.Optional;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.solr.client.solrj.SolrQuery.ORDER;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.util.SimpleOrderedMap;
 import org.computate.scolaire.enUS.year.SchoolYear;
@@ -228,8 +229,9 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 		l.addFilterQuery("enrollmentKey_indexed_long:" + pk);
 		l.add("json.facet", "{sum_paymentAmount:'sum(paymentAmount_indexed_double)'}");
 		l.add("json.facet", "{sum_chargeAmount:'sum(chargeAmount_indexed_double)'}");
-		l.add("json.facet", "{sum_chargeAmountDu:'sum(chargeAmountDu_indexed_double)'}");
+		l.add("json.facet", "{sum_chargeAmountDue:'sum(chargeAmountDue_indexed_double)'}");
 		l.add("json.facet", "{sum_chargeAmountFuture:'sum(chargeAmountFuture_indexed_double)'}");
+		l.addSort("paymentDate_indexed_date", ORDER.desc);
 		l.setC(SchoolPayment.class);
 		l.setStore(true);
 	}
@@ -543,6 +545,16 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 		c.o((SimpleOrderedMap)Optional.ofNullable(paymentSearch.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(new SimpleOrderedMap()));
 	}
 
+	protected void _paymentLastStr(Wrap<String> c) {
+		for(SchoolPayment p : paymentSearch.getList()) {
+			if(p.getPaymentAmount() != null) {
+				c.o(p.getPaymentShortName());
+				return;
+			}
+		}
+		c.o("none");
+	}
+
 	protected void _paymentAmount(Wrap<BigDecimal> c) {
 		c.o(Optional.ofNullable((Double)paymentFacets.get("sum_paymentAmount")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2)));
 	}
@@ -569,6 +581,13 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 
 	protected void _paymentsLate(Wrap<Boolean> c) {
 		c.o(chargesNow.subtract(chargeAmountDue).compareTo(BigDecimal.ZERO) > 0);
+	}
+
+	protected void _paymentsLateAmount(Wrap<BigDecimal> c) {
+		if(paymentsLate)
+			c.o(chargesNow.subtract(chargeAmountDue));
+		else
+			c.o(BigDecimal.ZERO);
 	}
 
 	protected void _paymentsAhead(Wrap<Boolean> c) {

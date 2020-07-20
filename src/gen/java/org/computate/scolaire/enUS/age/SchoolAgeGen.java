@@ -333,7 +333,10 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 
 	public void inputBlockKeys(String classApiMethodMethod) {
 		SchoolAge s = (SchoolAge)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
 				e("input")
 					.a("type", "text")
@@ -1029,7 +1032,10 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 
 	public void inputYearKey(String classApiMethodMethod) {
 		SchoolAge s = (SchoolAge)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
 				e("input")
 					.a("type", "text")
@@ -1344,7 +1350,10 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 
 	public void inputSchoolAddress(String classApiMethodMethod) {
 		SchoolAge s = (SchoolAge)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "address")
@@ -2249,7 +2258,10 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 
 	public void inputAgeStart(String classApiMethodMethod) {
 		SchoolAge s = (SchoolAge)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "start of the age group")
@@ -2376,7 +2388,10 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 
 	public void inputAgeEnd(String classApiMethodMethod) {
 		SchoolAge s = (SchoolAge)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "end of the age group")

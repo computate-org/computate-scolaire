@@ -329,6 +329,9 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 			l.addSort("childBirthMonth_indexed_int", ORDER.asc);
 			l.addSort("childBirthDay_indexed_int", ORDER.asc);
 		}
+		else if("email-phone-roster".equals(pageDesignId)) {
+			l.addSort("enrollmentGroupName_indexed_string", ORDER.asc);
+		}
 
 		for(String var : siteRequest_.getRequestVars().keySet()) {
 			String val = siteRequest_.getRequestVars().get(var);

@@ -318,7 +318,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 
 	public void inputInscriptionCles(String classeApiMethodeMethode) {
 		BlocScolaire s = (BlocScolaire)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
 				e("input")
 					.a("type", "text")
@@ -1002,7 +1005,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 
 	public void inputAgeCle(String classeApiMethodeMethode) {
 		BlocScolaire s = (BlocScolaire)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
 				e("input")
 					.a("type", "text")
@@ -1602,7 +1608,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 
 	public void inputEcoleAddresse(String classeApiMethodeMethode) {
 		BlocScolaire s = (BlocScolaire)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "addresse")
@@ -2649,7 +2658,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 
 	public void inputBlocHeureDebut(String classeApiMethodeMethode) {
 		BlocScolaire s = (BlocScolaire)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("class", "w3-input w3-border timepicker setBlocHeureDebut classBlocScolaire inputBlocScolaire", pk, "BlocHeureDebut w3-input w3-border ")
@@ -2769,7 +2781,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 
 	public void inputBlocHeureFin(String classeApiMethodeMethode) {
 		BlocScolaire s = (BlocScolaire)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("class", "w3-input w3-border timepicker setBlocHeureFin classBlocScolaire inputBlocScolaire", pk, "BlocHeureFin w3-input w3-border ")
@@ -2897,7 +2912,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 
 	public void inputBlocPrixParMois(String classeApiMethodeMethode) {
 		BlocScolaire s = (BlocScolaire)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "prix par mois")
@@ -3090,7 +3108,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 
 	public void inputBlocLundi(String classeApiMethodeMethode) {
 		BlocScolaire s = (BlocScolaire)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			if("Page".equals(classeApiMethodeMethode)) {
 				e("input")
 					.a("type", "checkbox")
@@ -3215,7 +3236,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 
 	public void inputBlocMardi(String classeApiMethodeMethode) {
 		BlocScolaire s = (BlocScolaire)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			if("Page".equals(classeApiMethodeMethode)) {
 				e("input")
 					.a("type", "checkbox")
@@ -3340,7 +3364,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 
 	public void inputBlocMercredi(String classeApiMethodeMethode) {
 		BlocScolaire s = (BlocScolaire)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			if("Page".equals(classeApiMethodeMethode)) {
 				e("input")
 					.a("type", "checkbox")
@@ -3465,7 +3492,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 
 	public void inputBlocJeudi(String classeApiMethodeMethode) {
 		BlocScolaire s = (BlocScolaire)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			if("Page".equals(classeApiMethodeMethode)) {
 				e("input")
 					.a("type", "checkbox")
@@ -3590,7 +3620,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 
 	public void inputBlocVendredi(String classeApiMethodeMethode) {
 		BlocScolaire s = (BlocScolaire)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			if("Page".equals(classeApiMethodeMethode)) {
 				e("input")
 					.a("type", "checkbox")

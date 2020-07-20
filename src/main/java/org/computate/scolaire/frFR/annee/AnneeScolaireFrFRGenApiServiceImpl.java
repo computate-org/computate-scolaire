@@ -128,40 +128,41 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 							), new CaseInsensitiveHeaders()
 					)
 				));
-			}
+			} else {
 
-			utilisateurAnneeScolaire(requeteSite, b -> {
-				if(b.succeeded()) {
-					RequeteApi requeteApi = new RequeteApi();
-					requeteApi.setRows(1);
-					requeteApi.setNumFound(1L);
-					requeteApi.setNumPATCH(0L);
-					requeteApi.initLoinRequeteApi(requeteSite);
-					requeteSite.setRequeteApi_(requeteApi);
-					requeteSite.getVertx().eventBus().publish("websocketAnneeScolaire", JsonObject.mapFrom(requeteApi).toString());
-					postAnneeScolaireFuture(requeteSite, false, c -> {
-						if(c.succeeded()) {
-							AnneeScolaire anneeScolaire = c.result();
-							requeteApi.setPk(anneeScolaire.getPk());
-							postAnneeScolaireReponse(anneeScolaire, d -> {
-									if(d.succeeded()) {
-									gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-									LOGGER.info(String.format("postAnneeScolaire a réussi. "));
-								} else {
-									LOGGER.error(String.format("postAnneeScolaire a échoué. ", d.cause()));
-									erreurAnneeScolaire(requeteSite, gestionnaireEvenements, d);
-								}
-							});
-						} else {
-							LOGGER.error(String.format("postAnneeScolaire a échoué. ", c.cause()));
-							erreurAnneeScolaire(requeteSite, gestionnaireEvenements, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("postAnneeScolaire a échoué. ", b.cause()));
-					erreurAnneeScolaire(requeteSite, gestionnaireEvenements, b);
-				}
-			});
+				utilisateurAnneeScolaire(requeteSite, b -> {
+					if(b.succeeded()) {
+						RequeteApi requeteApi = new RequeteApi();
+						requeteApi.setRows(1);
+						requeteApi.setNumFound(1L);
+						requeteApi.setNumPATCH(0L);
+						requeteApi.initLoinRequeteApi(requeteSite);
+						requeteSite.setRequeteApi_(requeteApi);
+						requeteSite.getVertx().eventBus().publish("websocketAnneeScolaire", JsonObject.mapFrom(requeteApi).toString());
+						postAnneeScolaireFuture(requeteSite, false, c -> {
+							if(c.succeeded()) {
+								AnneeScolaire anneeScolaire = c.result();
+								requeteApi.setPk(anneeScolaire.getPk());
+								postAnneeScolaireReponse(anneeScolaire, d -> {
+										if(d.succeeded()) {
+										gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+										LOGGER.info(String.format("postAnneeScolaire a réussi. "));
+									} else {
+										LOGGER.error(String.format("postAnneeScolaire a échoué. ", d.cause()));
+										erreurAnneeScolaire(requeteSite, gestionnaireEvenements, d);
+									}
+								});
+							} else {
+								LOGGER.error(String.format("postAnneeScolaire a échoué. ", c.cause()));
+								erreurAnneeScolaire(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("postAnneeScolaire a échoué. ", b.cause()));
+						erreurAnneeScolaire(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("postAnneeScolaire a échoué. ", ex));
 			erreurAnneeScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
@@ -553,65 +554,66 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 							), new CaseInsensitiveHeaders()
 					)
 				));
-			}
+			} else {
 
-			utilisateurAnneeScolaire(requeteSite, b -> {
-				if(b.succeeded()) {
-					putimportAnneeScolaireReponse(requeteSite, c -> {
-						if(c.succeeded()) {
-							gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
-							WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
-							executeurTravailleur.executeBlocking(
-								blockingCodeHandler -> {
-									try {
-										RequeteApi requeteApi = new RequeteApi();
-										JsonArray jsonArray = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
-										requeteApi.setRows(jsonArray.size());
-										requeteApi.setNumFound(new Integer(jsonArray.size()).longValue());
-										requeteApi.setNumPATCH(0L);
-										requeteApi.initLoinRequeteApi(requeteSite);
-										requeteSite.setRequeteApi_(requeteApi);
-										requeteSite.getVertx().eventBus().publish("websocketAnneeScolaire", JsonObject.mapFrom(requeteApi).toString());
-										varsAnneeScolaire(requeteSite, d -> {
-											if(d.succeeded()) {
-												listePUTImportAnneeScolaire(requeteApi, requeteSite, e -> {
-													if(e.succeeded()) {
-														putimportAnneeScolaireReponse(requeteSite, f -> {
-															if(e.succeeded()) {
-																LOGGER.info(String.format("putimportAnneeScolaire a réussi. "));
-																blockingCodeHandler.handle(Future.succeededFuture(e.result()));
-															} else {
-																LOGGER.error(String.format("putimportAnneeScolaire a échoué. ", f.cause()));
-																erreurAnneeScolaire(requeteSite, null, f);
-															}
-														});
-													} else {
-														LOGGER.error(String.format("putimportAnneeScolaire a échoué. ", e.cause()));
-														erreurAnneeScolaire(requeteSite, null, e);
-													}
-												});
-											} else {
-												LOGGER.error(String.format("putimportAnneeScolaire a échoué. ", d.cause()));
-												erreurAnneeScolaire(requeteSite, null, d);
-											}
-										});
-									} catch(Exception ex) {
-										LOGGER.error(String.format("putimportAnneeScolaire a échoué. ", ex));
-										erreurAnneeScolaire(requeteSite, null, Future.failedFuture(ex));
+				utilisateurAnneeScolaire(requeteSite, b -> {
+					if(b.succeeded()) {
+						putimportAnneeScolaireReponse(requeteSite, c -> {
+							if(c.succeeded()) {
+								gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
+								WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
+								executeurTravailleur.executeBlocking(
+									blockingCodeHandler -> {
+										try {
+											RequeteApi requeteApi = new RequeteApi();
+											JsonArray jsonArray = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+											requeteApi.setRows(jsonArray.size());
+											requeteApi.setNumFound(new Integer(jsonArray.size()).longValue());
+											requeteApi.setNumPATCH(0L);
+											requeteApi.initLoinRequeteApi(requeteSite);
+											requeteSite.setRequeteApi_(requeteApi);
+											requeteSite.getVertx().eventBus().publish("websocketAnneeScolaire", JsonObject.mapFrom(requeteApi).toString());
+											varsAnneeScolaire(requeteSite, d -> {
+												if(d.succeeded()) {
+													listePUTImportAnneeScolaire(requeteApi, requeteSite, e -> {
+														if(e.succeeded()) {
+															putimportAnneeScolaireReponse(requeteSite, f -> {
+																if(e.succeeded()) {
+																	LOGGER.info(String.format("putimportAnneeScolaire a réussi. "));
+																	blockingCodeHandler.handle(Future.succeededFuture(e.result()));
+																} else {
+																	LOGGER.error(String.format("putimportAnneeScolaire a échoué. ", f.cause()));
+																	erreurAnneeScolaire(requeteSite, null, f);
+																}
+															});
+														} else {
+															LOGGER.error(String.format("putimportAnneeScolaire a échoué. ", e.cause()));
+															erreurAnneeScolaire(requeteSite, null, e);
+														}
+													});
+												} else {
+													LOGGER.error(String.format("putimportAnneeScolaire a échoué. ", d.cause()));
+													erreurAnneeScolaire(requeteSite, null, d);
+												}
+											});
+										} catch(Exception ex) {
+											LOGGER.error(String.format("putimportAnneeScolaire a échoué. ", ex));
+											erreurAnneeScolaire(requeteSite, null, Future.failedFuture(ex));
+										}
+									}, resultHandler -> {
 									}
-								}, resultHandler -> {
-								}
-							);
-						} else {
-							LOGGER.error(String.format("putimportAnneeScolaire a échoué. ", c.cause()));
-							erreurAnneeScolaire(requeteSite, gestionnaireEvenements, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("putimportAnneeScolaire a échoué. ", b.cause()));
-					erreurAnneeScolaire(requeteSite, gestionnaireEvenements, b);
-				}
-			});
+								);
+							} else {
+								LOGGER.error(String.format("putimportAnneeScolaire a échoué. ", c.cause()));
+								erreurAnneeScolaire(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("putimportAnneeScolaire a échoué. ", b.cause()));
+						erreurAnneeScolaire(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("putimportAnneeScolaire a échoué. ", ex));
 			erreurAnneeScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
@@ -738,65 +740,66 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 							), new CaseInsensitiveHeaders()
 					)
 				));
-			}
+			} else {
 
-			utilisateurAnneeScolaire(requeteSite, b -> {
-				if(b.succeeded()) {
-					putfusionAnneeScolaireReponse(requeteSite, c -> {
-						if(c.succeeded()) {
-							gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
-							WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
-							executeurTravailleur.executeBlocking(
-								blockingCodeHandler -> {
-									try {
-										RequeteApi requeteApi = new RequeteApi();
-										JsonArray jsonArray = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
-										requeteApi.setRows(jsonArray.size());
-										requeteApi.setNumFound(new Integer(jsonArray.size()).longValue());
-										requeteApi.setNumPATCH(0L);
-										requeteApi.initLoinRequeteApi(requeteSite);
-										requeteSite.setRequeteApi_(requeteApi);
-										requeteSite.getVertx().eventBus().publish("websocketAnneeScolaire", JsonObject.mapFrom(requeteApi).toString());
-										varsAnneeScolaire(requeteSite, d -> {
-											if(d.succeeded()) {
-												listePUTFusionAnneeScolaire(requeteApi, requeteSite, e -> {
-													if(e.succeeded()) {
-														putfusionAnneeScolaireReponse(requeteSite, f -> {
-															if(e.succeeded()) {
-																LOGGER.info(String.format("putfusionAnneeScolaire a réussi. "));
-																blockingCodeHandler.handle(Future.succeededFuture(e.result()));
-															} else {
-																LOGGER.error(String.format("putfusionAnneeScolaire a échoué. ", f.cause()));
-																erreurAnneeScolaire(requeteSite, null, f);
-															}
-														});
-													} else {
-														LOGGER.error(String.format("putfusionAnneeScolaire a échoué. ", e.cause()));
-														erreurAnneeScolaire(requeteSite, null, e);
-													}
-												});
-											} else {
-												LOGGER.error(String.format("putfusionAnneeScolaire a échoué. ", d.cause()));
-												erreurAnneeScolaire(requeteSite, null, d);
-											}
-										});
-									} catch(Exception ex) {
-										LOGGER.error(String.format("putfusionAnneeScolaire a échoué. ", ex));
-										erreurAnneeScolaire(requeteSite, null, Future.failedFuture(ex));
+				utilisateurAnneeScolaire(requeteSite, b -> {
+					if(b.succeeded()) {
+						putfusionAnneeScolaireReponse(requeteSite, c -> {
+							if(c.succeeded()) {
+								gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
+								WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
+								executeurTravailleur.executeBlocking(
+									blockingCodeHandler -> {
+										try {
+											RequeteApi requeteApi = new RequeteApi();
+											JsonArray jsonArray = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+											requeteApi.setRows(jsonArray.size());
+											requeteApi.setNumFound(new Integer(jsonArray.size()).longValue());
+											requeteApi.setNumPATCH(0L);
+											requeteApi.initLoinRequeteApi(requeteSite);
+											requeteSite.setRequeteApi_(requeteApi);
+											requeteSite.getVertx().eventBus().publish("websocketAnneeScolaire", JsonObject.mapFrom(requeteApi).toString());
+											varsAnneeScolaire(requeteSite, d -> {
+												if(d.succeeded()) {
+													listePUTFusionAnneeScolaire(requeteApi, requeteSite, e -> {
+														if(e.succeeded()) {
+															putfusionAnneeScolaireReponse(requeteSite, f -> {
+																if(e.succeeded()) {
+																	LOGGER.info(String.format("putfusionAnneeScolaire a réussi. "));
+																	blockingCodeHandler.handle(Future.succeededFuture(e.result()));
+																} else {
+																	LOGGER.error(String.format("putfusionAnneeScolaire a échoué. ", f.cause()));
+																	erreurAnneeScolaire(requeteSite, null, f);
+																}
+															});
+														} else {
+															LOGGER.error(String.format("putfusionAnneeScolaire a échoué. ", e.cause()));
+															erreurAnneeScolaire(requeteSite, null, e);
+														}
+													});
+												} else {
+													LOGGER.error(String.format("putfusionAnneeScolaire a échoué. ", d.cause()));
+													erreurAnneeScolaire(requeteSite, null, d);
+												}
+											});
+										} catch(Exception ex) {
+											LOGGER.error(String.format("putfusionAnneeScolaire a échoué. ", ex));
+											erreurAnneeScolaire(requeteSite, null, Future.failedFuture(ex));
+										}
+									}, resultHandler -> {
 									}
-								}, resultHandler -> {
-								}
-							);
-						} else {
-							LOGGER.error(String.format("putfusionAnneeScolaire a échoué. ", c.cause()));
-							erreurAnneeScolaire(requeteSite, gestionnaireEvenements, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("putfusionAnneeScolaire a échoué. ", b.cause()));
-					erreurAnneeScolaire(requeteSite, gestionnaireEvenements, b);
-				}
-			});
+								);
+							} else {
+								LOGGER.error(String.format("putfusionAnneeScolaire a échoué. ", c.cause()));
+								erreurAnneeScolaire(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("putfusionAnneeScolaire a échoué. ", b.cause()));
+						erreurAnneeScolaire(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("putfusionAnneeScolaire a échoué. ", ex));
 			erreurAnneeScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
@@ -921,70 +924,71 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 							), new CaseInsensitiveHeaders()
 					)
 				));
-			}
+			} else {
 
-			utilisateurAnneeScolaire(requeteSite, b -> {
-				if(b.succeeded()) {
-					putcopieAnneeScolaireReponse(requeteSite, c -> {
-						if(c.succeeded()) {
-							gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
-							WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
-							executeurTravailleur.executeBlocking(
-								blockingCodeHandler -> {
-									try {
-										rechercheAnneeScolaire(requeteSite, false, true, "/api/annee/copie", "PUTCopie", d -> {
-											if(d.succeeded()) {
-												ListeRecherche<AnneeScolaire> listeAnneeScolaire = d.result();
-												RequeteApi requeteApi = new RequeteApi();
-												requeteApi.setRows(listeAnneeScolaire.getRows());
-												requeteApi.setNumFound(listeAnneeScolaire.getQueryResponse().getResults().getNumFound());
-												requeteApi.setNumPATCH(0L);
-												requeteApi.initLoinRequeteApi(requeteSite);
-												requeteSite.setRequeteApi_(requeteApi);
-												requeteSite.getVertx().eventBus().publish("websocketAnneeScolaire", JsonObject.mapFrom(requeteApi).toString());
-												try {
-													listePUTCopieAnneeScolaire(requeteApi, listeAnneeScolaire, e -> {
-														if(e.succeeded()) {
-															putcopieAnneeScolaireReponse(requeteSite, f -> {
-																if(f.succeeded()) {
-																	LOGGER.info(String.format("putcopieAnneeScolaire a réussi. "));
-																	blockingCodeHandler.handle(Future.succeededFuture(f.result()));
-																} else {
-																	LOGGER.error(String.format("putcopieAnneeScolaire a échoué. ", f.cause()));
-																	erreurAnneeScolaire(requeteSite, null, f);
-																}
-															});
-														} else {
-															LOGGER.error(String.format("putcopieAnneeScolaire a échoué. ", e.cause()));
-															erreurAnneeScolaire(requeteSite, null, e);
-														}
-													});
-												} catch(Exception ex) {
-													LOGGER.error(String.format("putcopieAnneeScolaire a échoué. ", ex));
-													erreurAnneeScolaire(requeteSite, null, Future.failedFuture(ex));
+				utilisateurAnneeScolaire(requeteSite, b -> {
+					if(b.succeeded()) {
+						putcopieAnneeScolaireReponse(requeteSite, c -> {
+							if(c.succeeded()) {
+								gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
+								WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
+								executeurTravailleur.executeBlocking(
+									blockingCodeHandler -> {
+										try {
+											rechercheAnneeScolaire(requeteSite, false, true, "/api/annee/copie", "PUTCopie", d -> {
+												if(d.succeeded()) {
+													ListeRecherche<AnneeScolaire> listeAnneeScolaire = d.result();
+													RequeteApi requeteApi = new RequeteApi();
+													requeteApi.setRows(listeAnneeScolaire.getRows());
+													requeteApi.setNumFound(listeAnneeScolaire.getQueryResponse().getResults().getNumFound());
+													requeteApi.setNumPATCH(0L);
+													requeteApi.initLoinRequeteApi(requeteSite);
+													requeteSite.setRequeteApi_(requeteApi);
+													requeteSite.getVertx().eventBus().publish("websocketAnneeScolaire", JsonObject.mapFrom(requeteApi).toString());
+													try {
+														listePUTCopieAnneeScolaire(requeteApi, listeAnneeScolaire, e -> {
+															if(e.succeeded()) {
+																putcopieAnneeScolaireReponse(requeteSite, f -> {
+																	if(f.succeeded()) {
+																		LOGGER.info(String.format("putcopieAnneeScolaire a réussi. "));
+																		blockingCodeHandler.handle(Future.succeededFuture(f.result()));
+																	} else {
+																		LOGGER.error(String.format("putcopieAnneeScolaire a échoué. ", f.cause()));
+																		erreurAnneeScolaire(requeteSite, null, f);
+																	}
+																});
+															} else {
+																LOGGER.error(String.format("putcopieAnneeScolaire a échoué. ", e.cause()));
+																erreurAnneeScolaire(requeteSite, null, e);
+															}
+														});
+													} catch(Exception ex) {
+														LOGGER.error(String.format("putcopieAnneeScolaire a échoué. ", ex));
+														erreurAnneeScolaire(requeteSite, null, Future.failedFuture(ex));
+													}
+												} else {
+													LOGGER.error(String.format("putcopieAnneeScolaire a échoué. ", d.cause()));
+													erreurAnneeScolaire(requeteSite, null, d);
 												}
-											} else {
-												LOGGER.error(String.format("putcopieAnneeScolaire a échoué. ", d.cause()));
-												erreurAnneeScolaire(requeteSite, null, d);
-											}
-										});
-									} catch(Exception ex) {
-										LOGGER.error(String.format("putcopieAnneeScolaire a échoué. ", ex));
-										erreurAnneeScolaire(requeteSite, null, Future.failedFuture(ex));
+											});
+										} catch(Exception ex) {
+											LOGGER.error(String.format("putcopieAnneeScolaire a échoué. ", ex));
+											erreurAnneeScolaire(requeteSite, null, Future.failedFuture(ex));
+										}
+									}, resultHandler -> {
 									}
-								}, resultHandler -> {
-								}
-							);
-						} else {
-							LOGGER.error(String.format("putcopieAnneeScolaire a échoué. ", c.cause()));
-							erreurAnneeScolaire(requeteSite, gestionnaireEvenements, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("putcopieAnneeScolaire a échoué. ", b.cause()));
-					erreurAnneeScolaire(requeteSite, gestionnaireEvenements, b);
-				}
-			});
+								);
+							} else {
+								LOGGER.error(String.format("putcopieAnneeScolaire a échoué. ", c.cause()));
+								erreurAnneeScolaire(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("putcopieAnneeScolaire a échoué. ", b.cause()));
+						erreurAnneeScolaire(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("putcopieAnneeScolaire a échoué. ", ex));
 			erreurAnneeScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
@@ -1339,81 +1343,82 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 							), new CaseInsensitiveHeaders()
 					)
 				));
-			}
+			} else {
 
-			utilisateurAnneeScolaire(requeteSite, b -> {
-				if(b.succeeded()) {
-					patchAnneeScolaireReponse(requeteSite, c -> {
-						if(c.succeeded()) {
-							gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
-							WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
-							executeurTravailleur.executeBlocking(
-								blockingCodeHandler -> {
-									try {
-										rechercheAnneeScolaire(requeteSite, false, true, "/api/annee", "PATCH", d -> {
-											if(d.succeeded()) {
-												ListeRecherche<AnneeScolaire> listeAnneeScolaire = d.result();
-												RequeteApi requeteApi = new RequeteApi();
-												requeteApi.setRows(listeAnneeScolaire.getRows());
-												requeteApi.setNumFound(listeAnneeScolaire.getQueryResponse().getResults().getNumFound());
-												requeteApi.setNumPATCH(0L);
-												requeteApi.initLoinRequeteApi(requeteSite);
-												requeteSite.setRequeteApi_(requeteApi);
-												requeteSite.getVertx().eventBus().publish("websocketAnneeScolaire", JsonObject.mapFrom(requeteApi).toString());
-												SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listeAnneeScolaire.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
-												Date date = null;
-												if(facets != null)
-													date = (Date)facets.get("max_modifie");
-												String dt;
-												if(date == null)
-													dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
-												else
-													dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
-												listeAnneeScolaire.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
+				utilisateurAnneeScolaire(requeteSite, b -> {
+					if(b.succeeded()) {
+						patchAnneeScolaireReponse(requeteSite, c -> {
+							if(c.succeeded()) {
+								gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
+								WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
+								executeurTravailleur.executeBlocking(
+									blockingCodeHandler -> {
+										try {
+											rechercheAnneeScolaire(requeteSite, false, true, "/api/annee", "PATCH", d -> {
+												if(d.succeeded()) {
+													ListeRecherche<AnneeScolaire> listeAnneeScolaire = d.result();
+													RequeteApi requeteApi = new RequeteApi();
+													requeteApi.setRows(listeAnneeScolaire.getRows());
+													requeteApi.setNumFound(listeAnneeScolaire.getQueryResponse().getResults().getNumFound());
+													requeteApi.setNumPATCH(0L);
+													requeteApi.initLoinRequeteApi(requeteSite);
+													requeteSite.setRequeteApi_(requeteApi);
+													requeteSite.getVertx().eventBus().publish("websocketAnneeScolaire", JsonObject.mapFrom(requeteApi).toString());
+													SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listeAnneeScolaire.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
+													Date date = null;
+													if(facets != null)
+														date = (Date)facets.get("max_modifie");
+													String dt;
+													if(date == null)
+														dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
+													else
+														dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
+													listeAnneeScolaire.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
 
-												try {
-													listePATCHAnneeScolaire(requeteApi, listeAnneeScolaire, dt, e -> {
-														if(e.succeeded()) {
-															patchAnneeScolaireReponse(requeteSite, f -> {
-																if(f.succeeded()) {
-																	LOGGER.info(String.format("patchAnneeScolaire a réussi. "));
-																	blockingCodeHandler.handle(Future.succeededFuture(f.result()));
-																} else {
-																	LOGGER.error(String.format("patchAnneeScolaire a échoué. ", f.cause()));
-																	erreurAnneeScolaire(requeteSite, null, f);
-																}
-															});
-														} else {
-															LOGGER.error(String.format("patchAnneeScolaire a échoué. ", e.cause()));
-															erreurAnneeScolaire(requeteSite, null, e);
-														}
-													});
-												} catch(Exception ex) {
-													LOGGER.error(String.format("patchAnneeScolaire a échoué. ", ex));
-													erreurAnneeScolaire(requeteSite, null, Future.failedFuture(ex));
+													try {
+														listePATCHAnneeScolaire(requeteApi, listeAnneeScolaire, dt, e -> {
+															if(e.succeeded()) {
+																patchAnneeScolaireReponse(requeteSite, f -> {
+																	if(f.succeeded()) {
+																		LOGGER.info(String.format("patchAnneeScolaire a réussi. "));
+																		blockingCodeHandler.handle(Future.succeededFuture(f.result()));
+																	} else {
+																		LOGGER.error(String.format("patchAnneeScolaire a échoué. ", f.cause()));
+																		erreurAnneeScolaire(requeteSite, null, f);
+																	}
+																});
+															} else {
+																LOGGER.error(String.format("patchAnneeScolaire a échoué. ", e.cause()));
+																erreurAnneeScolaire(requeteSite, null, e);
+															}
+														});
+													} catch(Exception ex) {
+														LOGGER.error(String.format("patchAnneeScolaire a échoué. ", ex));
+														erreurAnneeScolaire(requeteSite, null, Future.failedFuture(ex));
+													}
+										} else {
+													LOGGER.error(String.format("patchAnneeScolaire a échoué. ", d.cause()));
+													erreurAnneeScolaire(requeteSite, null, d);
 												}
-											} else {
-												LOGGER.error(String.format("patchAnneeScolaire a échoué. ", d.cause()));
-												erreurAnneeScolaire(requeteSite, null, d);
-											}
-										});
-									} catch(Exception ex) {
-										LOGGER.error(String.format("patchAnneeScolaire a échoué. ", ex));
-										erreurAnneeScolaire(requeteSite, null, Future.failedFuture(ex));
+											});
+										} catch(Exception ex) {
+											LOGGER.error(String.format("patchAnneeScolaire a échoué. ", ex));
+											erreurAnneeScolaire(requeteSite, null, Future.failedFuture(ex));
+										}
+									}, resultHandler -> {
 									}
-								}, resultHandler -> {
-								}
-							);
-						} else {
-							LOGGER.error(String.format("patchAnneeScolaire a échoué. ", c.cause()));
-							erreurAnneeScolaire(requeteSite, gestionnaireEvenements, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("patchAnneeScolaire a échoué. ", b.cause()));
-					erreurAnneeScolaire(requeteSite, gestionnaireEvenements, b);
-				}
-			});
+								);
+							} else {
+								LOGGER.error(String.format("patchAnneeScolaire a échoué. ", c.cause()));
+								erreurAnneeScolaire(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("patchAnneeScolaire a échoué. ", b.cause()));
+						erreurAnneeScolaire(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("patchAnneeScolaire a échoué. ", ex));
 			erreurAnneeScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
@@ -2226,32 +2231,33 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 							), new CaseInsensitiveHeaders()
 					)
 				));
-			}
+			} else {
 
-			utilisateurAnneeScolaire(requeteSite, b -> {
-				if(b.succeeded()) {
-					rechercheAnneeScolaire(requeteSite, false, true, "/api/annee/{id}", "GET", c -> {
-						if(c.succeeded()) {
-							ListeRecherche<AnneeScolaire> listeAnneeScolaire = c.result();
-							getAnneeScolaireReponse(listeAnneeScolaire, d -> {
-								if(d.succeeded()) {
-									gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-									LOGGER.info(String.format("getAnneeScolaire a réussi. "));
-								} else {
-									LOGGER.error(String.format("getAnneeScolaire a échoué. ", d.cause()));
-									erreurAnneeScolaire(requeteSite, gestionnaireEvenements, d);
-								}
-							});
-						} else {
-							LOGGER.error(String.format("getAnneeScolaire a échoué. ", c.cause()));
-							erreurAnneeScolaire(requeteSite, gestionnaireEvenements, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("getAnneeScolaire a échoué. ", b.cause()));
-					erreurAnneeScolaire(requeteSite, gestionnaireEvenements, b);
-				}
-			});
+				utilisateurAnneeScolaire(requeteSite, b -> {
+					if(b.succeeded()) {
+						rechercheAnneeScolaire(requeteSite, false, true, "/api/annee/{id}", "GET", c -> {
+							if(c.succeeded()) {
+								ListeRecherche<AnneeScolaire> listeAnneeScolaire = c.result();
+								getAnneeScolaireReponse(listeAnneeScolaire, d -> {
+									if(d.succeeded()) {
+										gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+										LOGGER.info(String.format("getAnneeScolaire a réussi. "));
+									} else {
+										LOGGER.error(String.format("getAnneeScolaire a échoué. ", d.cause()));
+										erreurAnneeScolaire(requeteSite, gestionnaireEvenements, d);
+									}
+								});
+							} else {
+								LOGGER.error(String.format("getAnneeScolaire a échoué. ", c.cause()));
+								erreurAnneeScolaire(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("getAnneeScolaire a échoué. ", b.cause()));
+						erreurAnneeScolaire(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("getAnneeScolaire a échoué. ", ex));
 			erreurAnneeScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
@@ -2313,32 +2319,33 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 							), new CaseInsensitiveHeaders()
 					)
 				));
-			}
+			} else {
 
-			utilisateurAnneeScolaire(requeteSite, b -> {
-				if(b.succeeded()) {
-					rechercheAnneeScolaire(requeteSite, false, true, "/api/annee", "Recherche", c -> {
-						if(c.succeeded()) {
-							ListeRecherche<AnneeScolaire> listeAnneeScolaire = c.result();
-							rechercheAnneeScolaireReponse(listeAnneeScolaire, d -> {
-								if(d.succeeded()) {
-									gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-									LOGGER.info(String.format("rechercheAnneeScolaire a réussi. "));
-								} else {
-									LOGGER.error(String.format("rechercheAnneeScolaire a échoué. ", d.cause()));
-									erreurAnneeScolaire(requeteSite, gestionnaireEvenements, d);
-								}
-							});
-						} else {
-							LOGGER.error(String.format("rechercheAnneeScolaire a échoué. ", c.cause()));
-							erreurAnneeScolaire(requeteSite, gestionnaireEvenements, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("rechercheAnneeScolaire a échoué. ", b.cause()));
-					erreurAnneeScolaire(requeteSite, gestionnaireEvenements, b);
-				}
-			});
+				utilisateurAnneeScolaire(requeteSite, b -> {
+					if(b.succeeded()) {
+						rechercheAnneeScolaire(requeteSite, false, true, "/api/annee", "Recherche", c -> {
+							if(c.succeeded()) {
+								ListeRecherche<AnneeScolaire> listeAnneeScolaire = c.result();
+								rechercheAnneeScolaireReponse(listeAnneeScolaire, d -> {
+									if(d.succeeded()) {
+										gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+										LOGGER.info(String.format("rechercheAnneeScolaire a réussi. "));
+									} else {
+										LOGGER.error(String.format("rechercheAnneeScolaire a échoué. ", d.cause()));
+										erreurAnneeScolaire(requeteSite, gestionnaireEvenements, d);
+									}
+								});
+							} else {
+								LOGGER.error(String.format("rechercheAnneeScolaire a échoué. ", c.cause()));
+								erreurAnneeScolaire(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("rechercheAnneeScolaire a échoué. ", b.cause()));
+						erreurAnneeScolaire(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("rechercheAnneeScolaire a échoué. ", ex));
 			erreurAnneeScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
@@ -2445,32 +2452,33 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 							), new CaseInsensitiveHeaders()
 					)
 				));
-			}
+			} else {
 
-			utilisateurAnneeScolaire(requeteSite, b -> {
-				if(b.succeeded()) {
-					rechercheAnneeScolaire(requeteSite, false, true, "/annee", "PageRecherche", c -> {
-						if(c.succeeded()) {
-							ListeRecherche<AnneeScolaire> listeAnneeScolaire = c.result();
-							pagerechercheAnneeScolaireReponse(listeAnneeScolaire, d -> {
-								if(d.succeeded()) {
-									gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-									LOGGER.info(String.format("pagerechercheAnneeScolaire a réussi. "));
-								} else {
-									LOGGER.error(String.format("pagerechercheAnneeScolaire a échoué. ", d.cause()));
-									erreurAnneeScolaire(requeteSite, gestionnaireEvenements, d);
-								}
-							});
-						} else {
-							LOGGER.error(String.format("pagerechercheAnneeScolaire a échoué. ", c.cause()));
-							erreurAnneeScolaire(requeteSite, gestionnaireEvenements, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("pagerechercheAnneeScolaire a échoué. ", b.cause()));
-					erreurAnneeScolaire(requeteSite, gestionnaireEvenements, b);
-				}
-			});
+				utilisateurAnneeScolaire(requeteSite, b -> {
+					if(b.succeeded()) {
+						rechercheAnneeScolaire(requeteSite, false, true, "/annee", "PageRecherche", c -> {
+							if(c.succeeded()) {
+								ListeRecherche<AnneeScolaire> listeAnneeScolaire = c.result();
+								pagerechercheAnneeScolaireReponse(listeAnneeScolaire, d -> {
+									if(d.succeeded()) {
+										gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+										LOGGER.info(String.format("pagerechercheAnneeScolaire a réussi. "));
+									} else {
+										LOGGER.error(String.format("pagerechercheAnneeScolaire a échoué. ", d.cause()));
+										erreurAnneeScolaire(requeteSite, gestionnaireEvenements, d);
+									}
+								});
+							} else {
+								LOGGER.error(String.format("pagerechercheAnneeScolaire a échoué. ", c.cause()));
+								erreurAnneeScolaire(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("pagerechercheAnneeScolaire a échoué. ", b.cause()));
+						erreurAnneeScolaire(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("pagerechercheAnneeScolaire a échoué. ", ex));
 			erreurAnneeScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));

@@ -1,9 +1,10 @@
-package org.computate.scolaire.frFR.utilisateur;        
+package org.computate.scolaire.frFR.utilisateur;           
 
 import java.util.List;
 
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.computate.scolaire.frFR.couverture.Couverture;
+import org.computate.scolaire.frFR.inscription.InscriptionScolaire;
 
 /**  
  * NomCanonique.enUS: org.computate.scolaire.enUS.user.SiteUser
@@ -80,6 +81,13 @@ public class UtilisateurSite extends UtilisateurSiteGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
+	 * Var.enUS: enrollments_
+	 * Ignorer: true
+	 */            
+	protected void _inscriptions_(Couverture<List<InscriptionScolaire>> o) {}
+
+	/**
+	 * {@inheritDoc}
 	 * Var.enUS: paymentKeys
 	 * Indexe: true
 	 * Stocke: true
@@ -103,10 +111,8 @@ public class UtilisateurSite extends UtilisateurSiteGen<Cluster> {
 	 * r.enUS: siteRequest_
 	 * r: UtilisateurNom
 	 * r.enUS: UserName
-	 */ 
+	 */  
 	protected void _utilisateurNom(Couverture<String> c) {
-		String o = requeteSite_.getUtilisateurNom();
-		c.o(o);
 	}
 
 	/**	
@@ -134,8 +140,6 @@ public class UtilisateurSite extends UtilisateurSiteGen<Cluster> {
 	 * r.enUS: UserFirstName
 	 */
 	protected void _utilisateurPrenom(Couverture<String> c) {
-		String o = requeteSite_.getUtilisateurPrenom();
-		c.o(o);
 	}
 
 	/**	
@@ -149,8 +153,6 @@ public class UtilisateurSite extends UtilisateurSiteGen<Cluster> {
 	 * r.enUS: UserLastName
 	 */         
 	protected void _utilisateurNomFamille(Couverture<String> c) {
-		String o = requeteSite_.getUtilisateurNomFamille();
-		c.o(o);
 	}
 
 	/**	
@@ -164,8 +166,6 @@ public class UtilisateurSite extends UtilisateurSiteGen<Cluster> {
 	 * r.enUS: UserFullName
 	 */ 
 	protected void _utilisateurNomComplet(Couverture<String> c) {
-		String o = requeteSite_.getUtilisateurNomComplet();
-		c.o(o);
 	}
 
 	/**	
@@ -262,12 +262,12 @@ public class UtilisateurSite extends UtilisateurSiteGen<Cluster> {
 	 * r.enUS: userName
 	 * r: requeteSite
 	 * r.enUS: siteRequest
-	 * r: UtilisateurNomComplet
-	 * r.enUS: UserFullName
+	 * r: utilisateurNomComplet
+	 * r.enUS: userFullName
 	 */   
 	@Override 
 	protected void _objetTitre(Couverture<String> c) {
-		c.o(requeteSite_.getUtilisateurNomComplet() + " " + utilisateurMail + " " + utilisateurNom);
+		c.o(utilisateurNomComplet + " " + utilisateurMail + " " + utilisateurNom);
 	}
 
 	public void htmlBody() {

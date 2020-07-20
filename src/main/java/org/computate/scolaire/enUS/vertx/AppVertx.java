@@ -27,6 +27,7 @@ import javax.xml.datatype.DatatypeFactory;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.solr.client.solrj.SolrQuery;
+import org.apache.solr.client.solrj.SolrQuery.ORDER;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.util.SimpleOrderedMap;
@@ -207,13 +208,13 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 						configureSharedWorkerExecutor().future().compose(e -> 
 							configureWebsockets().future().compose(f -> 
 								configureEmail().future().compose(g -> 
-//									configureAuthorizeNetCharges().future().compose(h -> 
+									configureAuthorizeNetCharges().future().compose(h -> 
 //										configureAuthorizeNetPayments(1).future().compose(i -> 
 //											configureAuthorizeNetPayments(2).future().compose(j -> 
 												startServer().future()
 //											)
 //										)
-//									)
+									)
 								)
 							)
 						)
@@ -784,7 +785,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 		Promise<Void> promise = Promise.promise();
 
 //		vertx.setPeriodic(1000 * 60 * 60 * 60, a -> {
-		vertx.setPeriodic(1000 * 60 * 60, a -> {
+		vertx.setPeriodic(1000 * 60, a -> {
 			WorkerExecutor executeurTravailleur = siteContextEnUS.getWorkerExecutor();
 			executeurTravailleur.executeBlocking(
 				blockingCodeHandler -> {
@@ -811,9 +812,13 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 						searchListEnrollment.setStore(true);
 						searchListEnrollment.setQuery("*:*");
 						searchListEnrollment.setC(SchoolEnrollment.class);
+						searchListEnrollment.addFilterQuery("deleted_indexed_boolean:false");
+						searchListEnrollment.addFilterQuery("archived_indexed_boolean:false");
 						searchListEnrollment.addFilterQuery("sessionStartDate_indexed_date:[* TO " + dateFormat.format(sessionStartDate) + "]");
 						searchListEnrollment.addFilterQuery("sessionEndDate_indexed_date:[" + dateFormat.format(sessionEndDate) + " TO *]");
 						searchListEnrollment.addFilterQuery("(*:* AND -enrollmentChargeDate_indexed_date:[* TO *] OR enrollmentChargeDate_indexed_date:[* TO " + dateFormat.format(enrollmentChargeDate) + "])");
+						searchListEnrollment.setRows(1);
+						searchListEnrollment.addSort("modified_indexed_date", ORDER.desc);
 						searchListEnrollment.initDeepSearchList(siteRequest);
 		
 
@@ -892,7 +897,19 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 			futures.add(
 				enrollmentService.enrollmentChargesFuture(o, a -> {
 					if(a.succeeded()) {
-						LOGGER.info("Create a charge succeeded. ");
+						enrollmentService.authorizeNetEnrollmentPaymentsFuture(o, b -> {
+							if(b.succeeded()) {
+								enrollmentService.patchSchoolEnrollmentFuture(o, false, c -> {
+									if(c.succeeded()) {
+										LOGGER.info("Create a charge succeeded. ");
+									} else {
+										errorAppVertx(siteRequest, c);
+									}
+								});
+							} else {
+								errorAppVertx(siteRequest, b);
+							}
+						});
 					} else {
 						errorAppVertx(siteRequest, a);
 					}
@@ -902,7 +919,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
 				if(listSchoolEnrollment.next()) {
-					futureAuthorizeNetEnrollmentCharges(listSchoolEnrollment, paymentService, enrollmentService, eventHandler);
+//					futureAuthorizeNetEnrollmentCharges(listSchoolEnrollment, paymentService, enrollmentService, eventHandler);
 					LOGGER.info("Create a list of charges has succeeded. ");
 				} else {
 					eventHandler.handle(Future.succeededFuture());
@@ -920,7 +937,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 		SiteConfig siteConfig = siteContextEnUS.getSiteConfig();
 		Promise<Void> promise = Promise.promise();
 
-		vertx.setPeriodic(1000 * 60 * 60, a -> {
+		vertx.setPeriodic(1000 * 60, a -> {
 			WorkerExecutor executeurTravailleur = siteContextEnUS.getWorkerExecutor();
 			executeurTravailleur.executeBlocking(
 				blockingCodeHandler -> {

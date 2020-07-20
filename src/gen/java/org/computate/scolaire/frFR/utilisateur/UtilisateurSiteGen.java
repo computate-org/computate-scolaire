@@ -328,6 +328,56 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		} g("div");
 	}
 
+	///////////////////
+	// inscriptions_ //
+	///////////////////
+
+	/**	 L'entité inscriptions_
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonIgnore
+	@JsonInclude(Include.NON_NULL)
+	protected List<InscriptionScolaire> inscriptions_;
+	@JsonIgnore
+	public Couverture<List<InscriptionScolaire>> inscriptions_Couverture = new Couverture<List<InscriptionScolaire>>().p(this).c(List.class).var("inscriptions_").o(inscriptions_);
+
+	/**	<br/> L'entité inscriptions_
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.utilisateur.UtilisateurSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:inscriptions_">Trouver l'entité inscriptions_ dans Solr</a>
+	 * <br/>
+	 * @param o est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _inscriptions_(Couverture<List<InscriptionScolaire>> o);
+
+	public List<InscriptionScolaire> getInscriptions_() {
+		return inscriptions_;
+	}
+
+	public void setInscriptions_(List<InscriptionScolaire> inscriptions_) {
+		this.inscriptions_ = inscriptions_;
+		this.inscriptions_Couverture.dejaInitialise = true;
+	}
+	public UtilisateurSite addInscriptions_(InscriptionScolaire...objets) {
+		for(InscriptionScolaire o : objets) {
+			addInscriptions_(o);
+		}
+		return (UtilisateurSite)this;
+	}
+	public UtilisateurSite addInscriptions_(InscriptionScolaire o) {
+		if(o != null && !inscriptions_.contains(o))
+			this.inscriptions_.add(o);
+		return (UtilisateurSite)this;
+	}
+	protected UtilisateurSite inscriptions_Init() {
+		if(!inscriptions_Couverture.dejaInitialise) {
+			_inscriptions_(inscriptions_Couverture);
+			if(inscriptions_ == null)
+				setInscriptions_(inscriptions_Couverture.o);
+		}
+		inscriptions_Couverture.dejaInitialise(true);
+		return (UtilisateurSite)this;
+	}
+
 	//////////////////
 	// paiementCles //
 	//////////////////
@@ -1697,6 +1747,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	public void initUtilisateurSite() {
 		utilisateurClesInit();
 		inscriptionClesInit();
+		inscriptions_Init();
 		paiementClesInit();
 		utilisateurNomInit();
 		utilisateurMailInit();
@@ -1751,6 +1802,8 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 				return oUtilisateurSite.utilisateurCles;
 			case "inscriptionCles":
 				return oUtilisateurSite.inscriptionCles;
+			case "inscriptions_":
+				return oUtilisateurSite.inscriptions_;
 			case "paiementCles":
 				return oUtilisateurSite.paiementCles;
 			case "utilisateurNom":

@@ -108,38 +108,40 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourMereScolaire(siteContexte, operationRequete, body);
 		try {
 			LOGGER.info(String.format("postMereScolaire a démarré. "));
-			utilisateurMereScolaire(requeteSite, b -> {
-				if(b.succeeded()) {
-					RequeteApi requeteApi = new RequeteApi();
-					requeteApi.setRows(1);
-					requeteApi.setNumFound(1L);
-					requeteApi.setNumPATCH(0L);
-					requeteApi.initLoinRequeteApi(requeteSite);
-					requeteSite.setRequeteApi_(requeteApi);
-					requeteSite.getVertx().eventBus().publish("websocketMereScolaire", JsonObject.mapFrom(requeteApi).toString());
-					postMereScolaireFuture(requeteSite, false, c -> {
-						if(c.succeeded()) {
-							MereScolaire mereScolaire = c.result();
-							requeteApi.setPk(mereScolaire.getPk());
-							postMereScolaireReponse(mereScolaire, d -> {
-									if(d.succeeded()) {
-									gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-									LOGGER.info(String.format("postMereScolaire a réussi. "));
-								} else {
-									LOGGER.error(String.format("postMereScolaire a échoué. ", d.cause()));
-									erreurMereScolaire(requeteSite, gestionnaireEvenements, d);
-								}
-							});
-						} else {
-							LOGGER.error(String.format("postMereScolaire a échoué. ", c.cause()));
-							erreurMereScolaire(requeteSite, gestionnaireEvenements, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("postMereScolaire a échoué. ", b.cause()));
-					erreurMereScolaire(requeteSite, gestionnaireEvenements, b);
-				}
-			});
+			{
+				utilisateurMereScolaire(requeteSite, b -> {
+					if(b.succeeded()) {
+						RequeteApi requeteApi = new RequeteApi();
+						requeteApi.setRows(1);
+						requeteApi.setNumFound(1L);
+						requeteApi.setNumPATCH(0L);
+						requeteApi.initLoinRequeteApi(requeteSite);
+						requeteSite.setRequeteApi_(requeteApi);
+						requeteSite.getVertx().eventBus().publish("websocketMereScolaire", JsonObject.mapFrom(requeteApi).toString());
+						postMereScolaireFuture(requeteSite, false, c -> {
+							if(c.succeeded()) {
+								MereScolaire mereScolaire = c.result();
+								requeteApi.setPk(mereScolaire.getPk());
+								postMereScolaireReponse(mereScolaire, d -> {
+										if(d.succeeded()) {
+										gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+										LOGGER.info(String.format("postMereScolaire a réussi. "));
+									} else {
+										LOGGER.error(String.format("postMereScolaire a échoué. ", d.cause()));
+										erreurMereScolaire(requeteSite, gestionnaireEvenements, d);
+									}
+								});
+							} else {
+								LOGGER.error(String.format("postMereScolaire a échoué. ", c.cause()));
+								erreurMereScolaire(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("postMereScolaire a échoué. ", b.cause()));
+						erreurMereScolaire(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("postMereScolaire a échoué. ", ex));
 			erreurMereScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
@@ -525,63 +527,65 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourMereScolaire(siteContexte, operationRequete, body);
 		try {
 			LOGGER.info(String.format("putimportMereScolaire a démarré. "));
-			utilisateurMereScolaire(requeteSite, b -> {
-				if(b.succeeded()) {
-					putimportMereScolaireReponse(requeteSite, c -> {
-						if(c.succeeded()) {
-							gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
-							WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
-							executeurTravailleur.executeBlocking(
-								blockingCodeHandler -> {
-									try {
-										RequeteApi requeteApi = new RequeteApi();
-										JsonArray jsonArray = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
-										requeteApi.setRows(jsonArray.size());
-										requeteApi.setNumFound(new Integer(jsonArray.size()).longValue());
-										requeteApi.setNumPATCH(0L);
-										requeteApi.initLoinRequeteApi(requeteSite);
-										requeteSite.setRequeteApi_(requeteApi);
-										requeteSite.getVertx().eventBus().publish("websocketMereScolaire", JsonObject.mapFrom(requeteApi).toString());
-										varsMereScolaire(requeteSite, d -> {
-											if(d.succeeded()) {
-												listePUTImportMereScolaire(requeteApi, requeteSite, e -> {
-													if(e.succeeded()) {
-														putimportMereScolaireReponse(requeteSite, f -> {
-															if(e.succeeded()) {
-																LOGGER.info(String.format("putimportMereScolaire a réussi. "));
-																blockingCodeHandler.handle(Future.succeededFuture(e.result()));
-															} else {
-																LOGGER.error(String.format("putimportMereScolaire a échoué. ", f.cause()));
-																erreurMereScolaire(requeteSite, null, f);
-															}
-														});
-													} else {
-														LOGGER.error(String.format("putimportMereScolaire a échoué. ", e.cause()));
-														erreurMereScolaire(requeteSite, null, e);
-													}
-												});
-											} else {
-												LOGGER.error(String.format("putimportMereScolaire a échoué. ", d.cause()));
-												erreurMereScolaire(requeteSite, null, d);
-											}
-										});
-									} catch(Exception ex) {
-										LOGGER.error(String.format("putimportMereScolaire a échoué. ", ex));
-										erreurMereScolaire(requeteSite, null, Future.failedFuture(ex));
+			{
+				utilisateurMereScolaire(requeteSite, b -> {
+					if(b.succeeded()) {
+						putimportMereScolaireReponse(requeteSite, c -> {
+							if(c.succeeded()) {
+								gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
+								WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
+								executeurTravailleur.executeBlocking(
+									blockingCodeHandler -> {
+										try {
+											RequeteApi requeteApi = new RequeteApi();
+											JsonArray jsonArray = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+											requeteApi.setRows(jsonArray.size());
+											requeteApi.setNumFound(new Integer(jsonArray.size()).longValue());
+											requeteApi.setNumPATCH(0L);
+											requeteApi.initLoinRequeteApi(requeteSite);
+											requeteSite.setRequeteApi_(requeteApi);
+											requeteSite.getVertx().eventBus().publish("websocketMereScolaire", JsonObject.mapFrom(requeteApi).toString());
+											varsMereScolaire(requeteSite, d -> {
+												if(d.succeeded()) {
+													listePUTImportMereScolaire(requeteApi, requeteSite, e -> {
+														if(e.succeeded()) {
+															putimportMereScolaireReponse(requeteSite, f -> {
+																if(e.succeeded()) {
+																	LOGGER.info(String.format("putimportMereScolaire a réussi. "));
+																	blockingCodeHandler.handle(Future.succeededFuture(e.result()));
+																} else {
+																	LOGGER.error(String.format("putimportMereScolaire a échoué. ", f.cause()));
+																	erreurMereScolaire(requeteSite, null, f);
+																}
+															});
+														} else {
+															LOGGER.error(String.format("putimportMereScolaire a échoué. ", e.cause()));
+															erreurMereScolaire(requeteSite, null, e);
+														}
+													});
+												} else {
+													LOGGER.error(String.format("putimportMereScolaire a échoué. ", d.cause()));
+													erreurMereScolaire(requeteSite, null, d);
+												}
+											});
+										} catch(Exception ex) {
+											LOGGER.error(String.format("putimportMereScolaire a échoué. ", ex));
+											erreurMereScolaire(requeteSite, null, Future.failedFuture(ex));
+										}
+									}, resultHandler -> {
 									}
-								}, resultHandler -> {
-								}
-							);
-						} else {
-							LOGGER.error(String.format("putimportMereScolaire a échoué. ", c.cause()));
-							erreurMereScolaire(requeteSite, gestionnaireEvenements, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("putimportMereScolaire a échoué. ", b.cause()));
-					erreurMereScolaire(requeteSite, gestionnaireEvenements, b);
-				}
-			});
+								);
+							} else {
+								LOGGER.error(String.format("putimportMereScolaire a échoué. ", c.cause()));
+								erreurMereScolaire(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("putimportMereScolaire a échoué. ", b.cause()));
+						erreurMereScolaire(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("putimportMereScolaire a échoué. ", ex));
 			erreurMereScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
@@ -692,63 +696,65 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourMereScolaire(siteContexte, operationRequete, body);
 		try {
 			LOGGER.info(String.format("putfusionMereScolaire a démarré. "));
-			utilisateurMereScolaire(requeteSite, b -> {
-				if(b.succeeded()) {
-					putfusionMereScolaireReponse(requeteSite, c -> {
-						if(c.succeeded()) {
-							gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
-							WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
-							executeurTravailleur.executeBlocking(
-								blockingCodeHandler -> {
-									try {
-										RequeteApi requeteApi = new RequeteApi();
-										JsonArray jsonArray = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
-										requeteApi.setRows(jsonArray.size());
-										requeteApi.setNumFound(new Integer(jsonArray.size()).longValue());
-										requeteApi.setNumPATCH(0L);
-										requeteApi.initLoinRequeteApi(requeteSite);
-										requeteSite.setRequeteApi_(requeteApi);
-										requeteSite.getVertx().eventBus().publish("websocketMereScolaire", JsonObject.mapFrom(requeteApi).toString());
-										varsMereScolaire(requeteSite, d -> {
-											if(d.succeeded()) {
-												listePUTFusionMereScolaire(requeteApi, requeteSite, e -> {
-													if(e.succeeded()) {
-														putfusionMereScolaireReponse(requeteSite, f -> {
-															if(e.succeeded()) {
-																LOGGER.info(String.format("putfusionMereScolaire a réussi. "));
-																blockingCodeHandler.handle(Future.succeededFuture(e.result()));
-															} else {
-																LOGGER.error(String.format("putfusionMereScolaire a échoué. ", f.cause()));
-																erreurMereScolaire(requeteSite, null, f);
-															}
-														});
-													} else {
-														LOGGER.error(String.format("putfusionMereScolaire a échoué. ", e.cause()));
-														erreurMereScolaire(requeteSite, null, e);
-													}
-												});
-											} else {
-												LOGGER.error(String.format("putfusionMereScolaire a échoué. ", d.cause()));
-												erreurMereScolaire(requeteSite, null, d);
-											}
-										});
-									} catch(Exception ex) {
-										LOGGER.error(String.format("putfusionMereScolaire a échoué. ", ex));
-										erreurMereScolaire(requeteSite, null, Future.failedFuture(ex));
+			{
+				utilisateurMereScolaire(requeteSite, b -> {
+					if(b.succeeded()) {
+						putfusionMereScolaireReponse(requeteSite, c -> {
+							if(c.succeeded()) {
+								gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
+								WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
+								executeurTravailleur.executeBlocking(
+									blockingCodeHandler -> {
+										try {
+											RequeteApi requeteApi = new RequeteApi();
+											JsonArray jsonArray = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+											requeteApi.setRows(jsonArray.size());
+											requeteApi.setNumFound(new Integer(jsonArray.size()).longValue());
+											requeteApi.setNumPATCH(0L);
+											requeteApi.initLoinRequeteApi(requeteSite);
+											requeteSite.setRequeteApi_(requeteApi);
+											requeteSite.getVertx().eventBus().publish("websocketMereScolaire", JsonObject.mapFrom(requeteApi).toString());
+											varsMereScolaire(requeteSite, d -> {
+												if(d.succeeded()) {
+													listePUTFusionMereScolaire(requeteApi, requeteSite, e -> {
+														if(e.succeeded()) {
+															putfusionMereScolaireReponse(requeteSite, f -> {
+																if(e.succeeded()) {
+																	LOGGER.info(String.format("putfusionMereScolaire a réussi. "));
+																	blockingCodeHandler.handle(Future.succeededFuture(e.result()));
+																} else {
+																	LOGGER.error(String.format("putfusionMereScolaire a échoué. ", f.cause()));
+																	erreurMereScolaire(requeteSite, null, f);
+																}
+															});
+														} else {
+															LOGGER.error(String.format("putfusionMereScolaire a échoué. ", e.cause()));
+															erreurMereScolaire(requeteSite, null, e);
+														}
+													});
+												} else {
+													LOGGER.error(String.format("putfusionMereScolaire a échoué. ", d.cause()));
+													erreurMereScolaire(requeteSite, null, d);
+												}
+											});
+										} catch(Exception ex) {
+											LOGGER.error(String.format("putfusionMereScolaire a échoué. ", ex));
+											erreurMereScolaire(requeteSite, null, Future.failedFuture(ex));
+										}
+									}, resultHandler -> {
 									}
-								}, resultHandler -> {
-								}
-							);
-						} else {
-							LOGGER.error(String.format("putfusionMereScolaire a échoué. ", c.cause()));
-							erreurMereScolaire(requeteSite, gestionnaireEvenements, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("putfusionMereScolaire a échoué. ", b.cause()));
-					erreurMereScolaire(requeteSite, gestionnaireEvenements, b);
-				}
-			});
+								);
+							} else {
+								LOGGER.error(String.format("putfusionMereScolaire a échoué. ", c.cause()));
+								erreurMereScolaire(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("putfusionMereScolaire a échoué. ", b.cause()));
+						erreurMereScolaire(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("putfusionMereScolaire a échoué. ", ex));
 			erreurMereScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
@@ -857,68 +863,70 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourMereScolaire(siteContexte, operationRequete, body);
 		try {
 			LOGGER.info(String.format("putcopieMereScolaire a démarré. "));
-			utilisateurMereScolaire(requeteSite, b -> {
-				if(b.succeeded()) {
-					putcopieMereScolaireReponse(requeteSite, c -> {
-						if(c.succeeded()) {
-							gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
-							WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
-							executeurTravailleur.executeBlocking(
-								blockingCodeHandler -> {
-									try {
-										rechercheMereScolaire(requeteSite, false, true, "/api/mere/copie", "PUTCopie", d -> {
-											if(d.succeeded()) {
-												ListeRecherche<MereScolaire> listeMereScolaire = d.result();
-												RequeteApi requeteApi = new RequeteApi();
-												requeteApi.setRows(listeMereScolaire.getRows());
-												requeteApi.setNumFound(listeMereScolaire.getQueryResponse().getResults().getNumFound());
-												requeteApi.setNumPATCH(0L);
-												requeteApi.initLoinRequeteApi(requeteSite);
-												requeteSite.setRequeteApi_(requeteApi);
-												requeteSite.getVertx().eventBus().publish("websocketMereScolaire", JsonObject.mapFrom(requeteApi).toString());
-												try {
-													listePUTCopieMereScolaire(requeteApi, listeMereScolaire, e -> {
-														if(e.succeeded()) {
-															putcopieMereScolaireReponse(requeteSite, f -> {
-																if(f.succeeded()) {
-																	LOGGER.info(String.format("putcopieMereScolaire a réussi. "));
-																	blockingCodeHandler.handle(Future.succeededFuture(f.result()));
-																} else {
-																	LOGGER.error(String.format("putcopieMereScolaire a échoué. ", f.cause()));
-																	erreurMereScolaire(requeteSite, null, f);
-																}
-															});
-														} else {
-															LOGGER.error(String.format("putcopieMereScolaire a échoué. ", e.cause()));
-															erreurMereScolaire(requeteSite, null, e);
-														}
-													});
-												} catch(Exception ex) {
-													LOGGER.error(String.format("putcopieMereScolaire a échoué. ", ex));
-													erreurMereScolaire(requeteSite, null, Future.failedFuture(ex));
+			{
+				utilisateurMereScolaire(requeteSite, b -> {
+					if(b.succeeded()) {
+						putcopieMereScolaireReponse(requeteSite, c -> {
+							if(c.succeeded()) {
+								gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
+								WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
+								executeurTravailleur.executeBlocking(
+									blockingCodeHandler -> {
+										try {
+											rechercheMereScolaire(requeteSite, false, true, "/api/mere/copie", "PUTCopie", d -> {
+												if(d.succeeded()) {
+													ListeRecherche<MereScolaire> listeMereScolaire = d.result();
+													RequeteApi requeteApi = new RequeteApi();
+													requeteApi.setRows(listeMereScolaire.getRows());
+													requeteApi.setNumFound(listeMereScolaire.getQueryResponse().getResults().getNumFound());
+													requeteApi.setNumPATCH(0L);
+													requeteApi.initLoinRequeteApi(requeteSite);
+													requeteSite.setRequeteApi_(requeteApi);
+													requeteSite.getVertx().eventBus().publish("websocketMereScolaire", JsonObject.mapFrom(requeteApi).toString());
+													try {
+														listePUTCopieMereScolaire(requeteApi, listeMereScolaire, e -> {
+															if(e.succeeded()) {
+																putcopieMereScolaireReponse(requeteSite, f -> {
+																	if(f.succeeded()) {
+																		LOGGER.info(String.format("putcopieMereScolaire a réussi. "));
+																		blockingCodeHandler.handle(Future.succeededFuture(f.result()));
+																	} else {
+																		LOGGER.error(String.format("putcopieMereScolaire a échoué. ", f.cause()));
+																		erreurMereScolaire(requeteSite, null, f);
+																	}
+																});
+															} else {
+																LOGGER.error(String.format("putcopieMereScolaire a échoué. ", e.cause()));
+																erreurMereScolaire(requeteSite, null, e);
+															}
+														});
+													} catch(Exception ex) {
+														LOGGER.error(String.format("putcopieMereScolaire a échoué. ", ex));
+														erreurMereScolaire(requeteSite, null, Future.failedFuture(ex));
+													}
+												} else {
+													LOGGER.error(String.format("putcopieMereScolaire a échoué. ", d.cause()));
+													erreurMereScolaire(requeteSite, null, d);
 												}
-											} else {
-												LOGGER.error(String.format("putcopieMereScolaire a échoué. ", d.cause()));
-												erreurMereScolaire(requeteSite, null, d);
-											}
-										});
-									} catch(Exception ex) {
-										LOGGER.error(String.format("putcopieMereScolaire a échoué. ", ex));
-										erreurMereScolaire(requeteSite, null, Future.failedFuture(ex));
+											});
+										} catch(Exception ex) {
+											LOGGER.error(String.format("putcopieMereScolaire a échoué. ", ex));
+											erreurMereScolaire(requeteSite, null, Future.failedFuture(ex));
+										}
+									}, resultHandler -> {
 									}
-								}, resultHandler -> {
-								}
-							);
-						} else {
-							LOGGER.error(String.format("putcopieMereScolaire a échoué. ", c.cause()));
-							erreurMereScolaire(requeteSite, gestionnaireEvenements, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("putcopieMereScolaire a échoué. ", b.cause()));
-					erreurMereScolaire(requeteSite, gestionnaireEvenements, b);
-				}
-			});
+								);
+							} else {
+								LOGGER.error(String.format("putcopieMereScolaire a échoué. ", c.cause()));
+								erreurMereScolaire(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("putcopieMereScolaire a échoué. ", b.cause()));
+						erreurMereScolaire(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("putcopieMereScolaire a échoué. ", ex));
 			erreurMereScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
@@ -1287,79 +1295,81 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourMereScolaire(siteContexte, operationRequete, body);
 		try {
 			LOGGER.info(String.format("patchMereScolaire a démarré. "));
-			utilisateurMereScolaire(requeteSite, b -> {
-				if(b.succeeded()) {
-					patchMereScolaireReponse(requeteSite, c -> {
-						if(c.succeeded()) {
-							gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
-							WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
-							executeurTravailleur.executeBlocking(
-								blockingCodeHandler -> {
-									try {
-										rechercheMereScolaire(requeteSite, false, true, "/api/mere", "PATCH", d -> {
-											if(d.succeeded()) {
-												ListeRecherche<MereScolaire> listeMereScolaire = d.result();
-												RequeteApi requeteApi = new RequeteApi();
-												requeteApi.setRows(listeMereScolaire.getRows());
-												requeteApi.setNumFound(listeMereScolaire.getQueryResponse().getResults().getNumFound());
-												requeteApi.setNumPATCH(0L);
-												requeteApi.initLoinRequeteApi(requeteSite);
-												requeteSite.setRequeteApi_(requeteApi);
-												requeteSite.getVertx().eventBus().publish("websocketMereScolaire", JsonObject.mapFrom(requeteApi).toString());
-												SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listeMereScolaire.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
-												Date date = null;
-												if(facets != null)
-													date = (Date)facets.get("max_modifie");
-												String dt;
-												if(date == null)
-													dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
-												else
-													dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
-												listeMereScolaire.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
+			{
+				utilisateurMereScolaire(requeteSite, b -> {
+					if(b.succeeded()) {
+						patchMereScolaireReponse(requeteSite, c -> {
+							if(c.succeeded()) {
+								gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
+								WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
+								executeurTravailleur.executeBlocking(
+									blockingCodeHandler -> {
+										try {
+											rechercheMereScolaire(requeteSite, false, true, "/api/mere", "PATCH", d -> {
+												if(d.succeeded()) {
+													ListeRecherche<MereScolaire> listeMereScolaire = d.result();
+													RequeteApi requeteApi = new RequeteApi();
+													requeteApi.setRows(listeMereScolaire.getRows());
+													requeteApi.setNumFound(listeMereScolaire.getQueryResponse().getResults().getNumFound());
+													requeteApi.setNumPATCH(0L);
+													requeteApi.initLoinRequeteApi(requeteSite);
+													requeteSite.setRequeteApi_(requeteApi);
+													requeteSite.getVertx().eventBus().publish("websocketMereScolaire", JsonObject.mapFrom(requeteApi).toString());
+													SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listeMereScolaire.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
+													Date date = null;
+													if(facets != null)
+														date = (Date)facets.get("max_modifie");
+													String dt;
+													if(date == null)
+														dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
+													else
+														dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
+													listeMereScolaire.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
 
-												try {
-													listePATCHMereScolaire(requeteApi, listeMereScolaire, dt, e -> {
-														if(e.succeeded()) {
-															patchMereScolaireReponse(requeteSite, f -> {
-																if(f.succeeded()) {
-																	LOGGER.info(String.format("patchMereScolaire a réussi. "));
-																	blockingCodeHandler.handle(Future.succeededFuture(f.result()));
-																} else {
-																	LOGGER.error(String.format("patchMereScolaire a échoué. ", f.cause()));
-																	erreurMereScolaire(requeteSite, null, f);
-																}
-															});
-														} else {
-															LOGGER.error(String.format("patchMereScolaire a échoué. ", e.cause()));
-															erreurMereScolaire(requeteSite, null, e);
-														}
-													});
-												} catch(Exception ex) {
-													LOGGER.error(String.format("patchMereScolaire a échoué. ", ex));
-													erreurMereScolaire(requeteSite, null, Future.failedFuture(ex));
+													try {
+														listePATCHMereScolaire(requeteApi, listeMereScolaire, dt, e -> {
+															if(e.succeeded()) {
+																patchMereScolaireReponse(requeteSite, f -> {
+																	if(f.succeeded()) {
+																		LOGGER.info(String.format("patchMereScolaire a réussi. "));
+																		blockingCodeHandler.handle(Future.succeededFuture(f.result()));
+																	} else {
+																		LOGGER.error(String.format("patchMereScolaire a échoué. ", f.cause()));
+																		erreurMereScolaire(requeteSite, null, f);
+																	}
+																});
+															} else {
+																LOGGER.error(String.format("patchMereScolaire a échoué. ", e.cause()));
+																erreurMereScolaire(requeteSite, null, e);
+															}
+														});
+													} catch(Exception ex) {
+														LOGGER.error(String.format("patchMereScolaire a échoué. ", ex));
+														erreurMereScolaire(requeteSite, null, Future.failedFuture(ex));
+													}
+										} else {
+													LOGGER.error(String.format("patchMereScolaire a échoué. ", d.cause()));
+													erreurMereScolaire(requeteSite, null, d);
 												}
-											} else {
-												LOGGER.error(String.format("patchMereScolaire a échoué. ", d.cause()));
-												erreurMereScolaire(requeteSite, null, d);
-											}
-										});
-									} catch(Exception ex) {
-										LOGGER.error(String.format("patchMereScolaire a échoué. ", ex));
-										erreurMereScolaire(requeteSite, null, Future.failedFuture(ex));
+											});
+										} catch(Exception ex) {
+											LOGGER.error(String.format("patchMereScolaire a échoué. ", ex));
+											erreurMereScolaire(requeteSite, null, Future.failedFuture(ex));
+										}
+									}, resultHandler -> {
 									}
-								}, resultHandler -> {
-								}
-							);
-						} else {
-							LOGGER.error(String.format("patchMereScolaire a échoué. ", c.cause()));
-							erreurMereScolaire(requeteSite, gestionnaireEvenements, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("patchMereScolaire a échoué. ", b.cause()));
-					erreurMereScolaire(requeteSite, gestionnaireEvenements, b);
-				}
-			});
+								);
+							} else {
+								LOGGER.error(String.format("patchMereScolaire a échoué. ", c.cause()));
+								erreurMereScolaire(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("patchMereScolaire a échoué. ", b.cause()));
+						erreurMereScolaire(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("patchMereScolaire a échoué. ", ex));
 			erreurMereScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
@@ -2088,30 +2098,32 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 	public void getMereScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourMereScolaire(siteContexte, operationRequete);
 		try {
-			utilisateurMereScolaire(requeteSite, b -> {
-				if(b.succeeded()) {
-					rechercheMereScolaire(requeteSite, false, true, "/api/mere/{id}", "GET", c -> {
-						if(c.succeeded()) {
-							ListeRecherche<MereScolaire> listeMereScolaire = c.result();
-							getMereScolaireReponse(listeMereScolaire, d -> {
-								if(d.succeeded()) {
-									gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-									LOGGER.info(String.format("getMereScolaire a réussi. "));
-								} else {
-									LOGGER.error(String.format("getMereScolaire a échoué. ", d.cause()));
-									erreurMereScolaire(requeteSite, gestionnaireEvenements, d);
-								}
-							});
-						} else {
-							LOGGER.error(String.format("getMereScolaire a échoué. ", c.cause()));
-							erreurMereScolaire(requeteSite, gestionnaireEvenements, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("getMereScolaire a échoué. ", b.cause()));
-					erreurMereScolaire(requeteSite, gestionnaireEvenements, b);
-				}
-			});
+			{
+				utilisateurMereScolaire(requeteSite, b -> {
+					if(b.succeeded()) {
+						rechercheMereScolaire(requeteSite, false, true, "/api/mere/{id}", "GET", c -> {
+							if(c.succeeded()) {
+								ListeRecherche<MereScolaire> listeMereScolaire = c.result();
+								getMereScolaireReponse(listeMereScolaire, d -> {
+									if(d.succeeded()) {
+										gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+										LOGGER.info(String.format("getMereScolaire a réussi. "));
+									} else {
+										LOGGER.error(String.format("getMereScolaire a échoué. ", d.cause()));
+										erreurMereScolaire(requeteSite, gestionnaireEvenements, d);
+									}
+								});
+							} else {
+								LOGGER.error(String.format("getMereScolaire a échoué. ", c.cause()));
+								erreurMereScolaire(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("getMereScolaire a échoué. ", b.cause()));
+						erreurMereScolaire(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("getMereScolaire a échoué. ", ex));
 			erreurMereScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
@@ -2154,30 +2166,32 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 	public void rechercheMereScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourMereScolaire(siteContexte, operationRequete);
 		try {
-			utilisateurMereScolaire(requeteSite, b -> {
-				if(b.succeeded()) {
-					rechercheMereScolaire(requeteSite, false, true, "/api/mere", "Recherche", c -> {
-						if(c.succeeded()) {
-							ListeRecherche<MereScolaire> listeMereScolaire = c.result();
-							rechercheMereScolaireReponse(listeMereScolaire, d -> {
-								if(d.succeeded()) {
-									gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-									LOGGER.info(String.format("rechercheMereScolaire a réussi. "));
-								} else {
-									LOGGER.error(String.format("rechercheMereScolaire a échoué. ", d.cause()));
-									erreurMereScolaire(requeteSite, gestionnaireEvenements, d);
-								}
-							});
-						} else {
-							LOGGER.error(String.format("rechercheMereScolaire a échoué. ", c.cause()));
-							erreurMereScolaire(requeteSite, gestionnaireEvenements, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("rechercheMereScolaire a échoué. ", b.cause()));
-					erreurMereScolaire(requeteSite, gestionnaireEvenements, b);
-				}
-			});
+			{
+				utilisateurMereScolaire(requeteSite, b -> {
+					if(b.succeeded()) {
+						rechercheMereScolaire(requeteSite, false, true, "/api/mere", "Recherche", c -> {
+							if(c.succeeded()) {
+								ListeRecherche<MereScolaire> listeMereScolaire = c.result();
+								rechercheMereScolaireReponse(listeMereScolaire, d -> {
+									if(d.succeeded()) {
+										gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+										LOGGER.info(String.format("rechercheMereScolaire a réussi. "));
+									} else {
+										LOGGER.error(String.format("rechercheMereScolaire a échoué. ", d.cause()));
+										erreurMereScolaire(requeteSite, gestionnaireEvenements, d);
+									}
+								});
+							} else {
+								LOGGER.error(String.format("rechercheMereScolaire a échoué. ", c.cause()));
+								erreurMereScolaire(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("rechercheMereScolaire a échoué. ", b.cause()));
+						erreurMereScolaire(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("rechercheMereScolaire a échoué. ", ex));
 			erreurMereScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
@@ -2260,30 +2274,32 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 	public void rechercheadminMereScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourMereScolaire(siteContexte, operationRequete);
 		try {
-			utilisateurMereScolaire(requeteSite, b -> {
-				if(b.succeeded()) {
-					rechercheMereScolaire(requeteSite, false, true, "/api/admin/mere", "RechercheAdmin", c -> {
-						if(c.succeeded()) {
-							ListeRecherche<MereScolaire> listeMereScolaire = c.result();
-							rechercheadminMereScolaireReponse(listeMereScolaire, d -> {
-								if(d.succeeded()) {
-									gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-									LOGGER.info(String.format("rechercheadminMereScolaire a réussi. "));
-								} else {
-									LOGGER.error(String.format("rechercheadminMereScolaire a échoué. ", d.cause()));
-									erreurMereScolaire(requeteSite, gestionnaireEvenements, d);
-								}
-							});
-						} else {
-							LOGGER.error(String.format("rechercheadminMereScolaire a échoué. ", c.cause()));
-							erreurMereScolaire(requeteSite, gestionnaireEvenements, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("rechercheadminMereScolaire a échoué. ", b.cause()));
-					erreurMereScolaire(requeteSite, gestionnaireEvenements, b);
-				}
-			});
+			{
+				utilisateurMereScolaire(requeteSite, b -> {
+					if(b.succeeded()) {
+						rechercheMereScolaire(requeteSite, false, true, "/api/admin/mere", "RechercheAdmin", c -> {
+							if(c.succeeded()) {
+								ListeRecherche<MereScolaire> listeMereScolaire = c.result();
+								rechercheadminMereScolaireReponse(listeMereScolaire, d -> {
+									if(d.succeeded()) {
+										gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+										LOGGER.info(String.format("rechercheadminMereScolaire a réussi. "));
+									} else {
+										LOGGER.error(String.format("rechercheadminMereScolaire a échoué. ", d.cause()));
+										erreurMereScolaire(requeteSite, gestionnaireEvenements, d);
+									}
+								});
+							} else {
+								LOGGER.error(String.format("rechercheadminMereScolaire a échoué. ", c.cause()));
+								erreurMereScolaire(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("rechercheadminMereScolaire a échoué. ", b.cause()));
+						erreurMereScolaire(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("rechercheadminMereScolaire a échoué. ", ex));
 			erreurMereScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
@@ -2371,30 +2387,32 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 	public void pagerechercheMereScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourMereScolaire(siteContexte, operationRequete);
 		try {
-			utilisateurMereScolaire(requeteSite, b -> {
-				if(b.succeeded()) {
-					rechercheMereScolaire(requeteSite, false, true, "/mere", "PageRecherche", c -> {
-						if(c.succeeded()) {
-							ListeRecherche<MereScolaire> listeMereScolaire = c.result();
-							pagerechercheMereScolaireReponse(listeMereScolaire, d -> {
-								if(d.succeeded()) {
-									gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-									LOGGER.info(String.format("pagerechercheMereScolaire a réussi. "));
-								} else {
-									LOGGER.error(String.format("pagerechercheMereScolaire a échoué. ", d.cause()));
-									erreurMereScolaire(requeteSite, gestionnaireEvenements, d);
-								}
-							});
-						} else {
-							LOGGER.error(String.format("pagerechercheMereScolaire a échoué. ", c.cause()));
-							erreurMereScolaire(requeteSite, gestionnaireEvenements, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("pagerechercheMereScolaire a échoué. ", b.cause()));
-					erreurMereScolaire(requeteSite, gestionnaireEvenements, b);
-				}
-			});
+			{
+				utilisateurMereScolaire(requeteSite, b -> {
+					if(b.succeeded()) {
+						rechercheMereScolaire(requeteSite, false, true, "/mere", "PageRecherche", c -> {
+							if(c.succeeded()) {
+								ListeRecherche<MereScolaire> listeMereScolaire = c.result();
+								pagerechercheMereScolaireReponse(listeMereScolaire, d -> {
+									if(d.succeeded()) {
+										gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+										LOGGER.info(String.format("pagerechercheMereScolaire a réussi. "));
+									} else {
+										LOGGER.error(String.format("pagerechercheMereScolaire a échoué. ", d.cause()));
+										erreurMereScolaire(requeteSite, gestionnaireEvenements, d);
+									}
+								});
+							} else {
+								LOGGER.error(String.format("pagerechercheMereScolaire a échoué. ", c.cause()));
+								erreurMereScolaire(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("pagerechercheMereScolaire a échoué. ", b.cause()));
+						erreurMereScolaire(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("pagerechercheMereScolaire a échoué. ", ex));
 			erreurMereScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));

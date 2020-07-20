@@ -126,40 +126,41 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 							), new CaseInsensitiveHeaders()
 					)
 				));
-			}
+			} else {
 
-			userSchoolSession(siteRequest, b -> {
-				if(b.succeeded()) {
-					ApiRequest apiRequest = new ApiRequest();
-					apiRequest.setRows(1);
-					apiRequest.setNumFound(1L);
-					apiRequest.setNumPATCH(0L);
-					apiRequest.initDeepApiRequest(siteRequest);
-					siteRequest.setApiRequest_(apiRequest);
-					siteRequest.getVertx().eventBus().publish("websocketSchoolSession", JsonObject.mapFrom(apiRequest).toString());
-					postSchoolSessionFuture(siteRequest, false, c -> {
-						if(c.succeeded()) {
-							SchoolSession schoolSession = c.result();
-							apiRequest.setPk(schoolSession.getPk());
-							postSchoolSessionResponse(schoolSession, d -> {
-									if(d.succeeded()) {
-									eventHandler.handle(Future.succeededFuture(d.result()));
-									LOGGER.info(String.format("postSchoolSession succeeded. "));
-								} else {
-									LOGGER.error(String.format("postSchoolSession failed. ", d.cause()));
-									errorSchoolSession(siteRequest, eventHandler, d);
-								}
-							});
-						} else {
-							LOGGER.error(String.format("postSchoolSession failed. ", c.cause()));
-							errorSchoolSession(siteRequest, eventHandler, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("postSchoolSession failed. ", b.cause()));
-					errorSchoolSession(siteRequest, eventHandler, b);
-				}
-			});
+				userSchoolSession(siteRequest, b -> {
+					if(b.succeeded()) {
+						ApiRequest apiRequest = new ApiRequest();
+						apiRequest.setRows(1);
+						apiRequest.setNumFound(1L);
+						apiRequest.setNumPATCH(0L);
+						apiRequest.initDeepApiRequest(siteRequest);
+						siteRequest.setApiRequest_(apiRequest);
+						siteRequest.getVertx().eventBus().publish("websocketSchoolSession", JsonObject.mapFrom(apiRequest).toString());
+						postSchoolSessionFuture(siteRequest, false, c -> {
+							if(c.succeeded()) {
+								SchoolSession schoolSession = c.result();
+								apiRequest.setPk(schoolSession.getPk());
+								postSchoolSessionResponse(schoolSession, d -> {
+										if(d.succeeded()) {
+										eventHandler.handle(Future.succeededFuture(d.result()));
+										LOGGER.info(String.format("postSchoolSession succeeded. "));
+									} else {
+										LOGGER.error(String.format("postSchoolSession failed. ", d.cause()));
+										errorSchoolSession(siteRequest, eventHandler, d);
+									}
+								});
+							} else {
+								LOGGER.error(String.format("postSchoolSession failed. ", c.cause()));
+								errorSchoolSession(siteRequest, eventHandler, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("postSchoolSession failed. ", b.cause()));
+						errorSchoolSession(siteRequest, eventHandler, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("postSchoolSession failed. ", ex));
 			errorSchoolSession(siteRequest, eventHandler, Future.failedFuture(ex));
@@ -482,65 +483,66 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 							), new CaseInsensitiveHeaders()
 					)
 				));
-			}
+			} else {
 
-			userSchoolSession(siteRequest, b -> {
-				if(b.succeeded()) {
-					putimportSchoolSessionResponse(siteRequest, c -> {
-						if(c.succeeded()) {
-							eventHandler.handle(Future.succeededFuture(c.result()));
-							WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
-							workerExecutor.executeBlocking(
-								blockingCodeHandler -> {
-									try {
-										ApiRequest apiRequest = new ApiRequest();
-										JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
-										apiRequest.setRows(jsonArray.size());
-										apiRequest.setNumFound(new Integer(jsonArray.size()).longValue());
-										apiRequest.setNumPATCH(0L);
-										apiRequest.initDeepApiRequest(siteRequest);
-										siteRequest.setApiRequest_(apiRequest);
-										siteRequest.getVertx().eventBus().publish("websocketSchoolSession", JsonObject.mapFrom(apiRequest).toString());
-										varsSchoolSession(siteRequest, d -> {
-											if(d.succeeded()) {
-												listPUTImportSchoolSession(apiRequest, siteRequest, e -> {
-													if(e.succeeded()) {
-														putimportSchoolSessionResponse(siteRequest, f -> {
-															if(e.succeeded()) {
-																LOGGER.info(String.format("putimportSchoolSession succeeded. "));
-																blockingCodeHandler.handle(Future.succeededFuture(e.result()));
-															} else {
-																LOGGER.error(String.format("putimportSchoolSession failed. ", f.cause()));
-																errorSchoolSession(siteRequest, null, f);
-															}
-														});
-													} else {
-														LOGGER.error(String.format("putimportSchoolSession failed. ", e.cause()));
-														errorSchoolSession(siteRequest, null, e);
-													}
-												});
-											} else {
-												LOGGER.error(String.format("putimportSchoolSession failed. ", d.cause()));
-												errorSchoolSession(siteRequest, null, d);
-											}
-										});
-									} catch(Exception ex) {
-										LOGGER.error(String.format("putimportSchoolSession failed. ", ex));
-										errorSchoolSession(siteRequest, null, Future.failedFuture(ex));
+				userSchoolSession(siteRequest, b -> {
+					if(b.succeeded()) {
+						putimportSchoolSessionResponse(siteRequest, c -> {
+							if(c.succeeded()) {
+								eventHandler.handle(Future.succeededFuture(c.result()));
+								WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
+								workerExecutor.executeBlocking(
+									blockingCodeHandler -> {
+										try {
+											ApiRequest apiRequest = new ApiRequest();
+											JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+											apiRequest.setRows(jsonArray.size());
+											apiRequest.setNumFound(new Integer(jsonArray.size()).longValue());
+											apiRequest.setNumPATCH(0L);
+											apiRequest.initDeepApiRequest(siteRequest);
+											siteRequest.setApiRequest_(apiRequest);
+											siteRequest.getVertx().eventBus().publish("websocketSchoolSession", JsonObject.mapFrom(apiRequest).toString());
+											varsSchoolSession(siteRequest, d -> {
+												if(d.succeeded()) {
+													listPUTImportSchoolSession(apiRequest, siteRequest, e -> {
+														if(e.succeeded()) {
+															putimportSchoolSessionResponse(siteRequest, f -> {
+																if(e.succeeded()) {
+																	LOGGER.info(String.format("putimportSchoolSession succeeded. "));
+																	blockingCodeHandler.handle(Future.succeededFuture(e.result()));
+																} else {
+																	LOGGER.error(String.format("putimportSchoolSession failed. ", f.cause()));
+																	errorSchoolSession(siteRequest, null, f);
+																}
+															});
+														} else {
+															LOGGER.error(String.format("putimportSchoolSession failed. ", e.cause()));
+															errorSchoolSession(siteRequest, null, e);
+														}
+													});
+												} else {
+													LOGGER.error(String.format("putimportSchoolSession failed. ", d.cause()));
+													errorSchoolSession(siteRequest, null, d);
+												}
+											});
+										} catch(Exception ex) {
+											LOGGER.error(String.format("putimportSchoolSession failed. ", ex));
+											errorSchoolSession(siteRequest, null, Future.failedFuture(ex));
+										}
+									}, resultHandler -> {
 									}
-								}, resultHandler -> {
-								}
-							);
-						} else {
-							LOGGER.error(String.format("putimportSchoolSession failed. ", c.cause()));
-							errorSchoolSession(siteRequest, eventHandler, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("putimportSchoolSession failed. ", b.cause()));
-					errorSchoolSession(siteRequest, eventHandler, b);
-				}
-			});
+								);
+							} else {
+								LOGGER.error(String.format("putimportSchoolSession failed. ", c.cause()));
+								errorSchoolSession(siteRequest, eventHandler, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("putimportSchoolSession failed. ", b.cause()));
+						errorSchoolSession(siteRequest, eventHandler, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("putimportSchoolSession failed. ", ex));
 			errorSchoolSession(siteRequest, eventHandler, Future.failedFuture(ex));
@@ -667,65 +669,66 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 							), new CaseInsensitiveHeaders()
 					)
 				));
-			}
+			} else {
 
-			userSchoolSession(siteRequest, b -> {
-				if(b.succeeded()) {
-					putmergeSchoolSessionResponse(siteRequest, c -> {
-						if(c.succeeded()) {
-							eventHandler.handle(Future.succeededFuture(c.result()));
-							WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
-							workerExecutor.executeBlocking(
-								blockingCodeHandler -> {
-									try {
-										ApiRequest apiRequest = new ApiRequest();
-										JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
-										apiRequest.setRows(jsonArray.size());
-										apiRequest.setNumFound(new Integer(jsonArray.size()).longValue());
-										apiRequest.setNumPATCH(0L);
-										apiRequest.initDeepApiRequest(siteRequest);
-										siteRequest.setApiRequest_(apiRequest);
-										siteRequest.getVertx().eventBus().publish("websocketSchoolSession", JsonObject.mapFrom(apiRequest).toString());
-										varsSchoolSession(siteRequest, d -> {
-											if(d.succeeded()) {
-												listPUTMergeSchoolSession(apiRequest, siteRequest, e -> {
-													if(e.succeeded()) {
-														putmergeSchoolSessionResponse(siteRequest, f -> {
-															if(e.succeeded()) {
-																LOGGER.info(String.format("putmergeSchoolSession succeeded. "));
-																blockingCodeHandler.handle(Future.succeededFuture(e.result()));
-															} else {
-																LOGGER.error(String.format("putmergeSchoolSession failed. ", f.cause()));
-																errorSchoolSession(siteRequest, null, f);
-															}
-														});
-													} else {
-														LOGGER.error(String.format("putmergeSchoolSession failed. ", e.cause()));
-														errorSchoolSession(siteRequest, null, e);
-													}
-												});
-											} else {
-												LOGGER.error(String.format("putmergeSchoolSession failed. ", d.cause()));
-												errorSchoolSession(siteRequest, null, d);
-											}
-										});
-									} catch(Exception ex) {
-										LOGGER.error(String.format("putmergeSchoolSession failed. ", ex));
-										errorSchoolSession(siteRequest, null, Future.failedFuture(ex));
+				userSchoolSession(siteRequest, b -> {
+					if(b.succeeded()) {
+						putmergeSchoolSessionResponse(siteRequest, c -> {
+							if(c.succeeded()) {
+								eventHandler.handle(Future.succeededFuture(c.result()));
+								WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
+								workerExecutor.executeBlocking(
+									blockingCodeHandler -> {
+										try {
+											ApiRequest apiRequest = new ApiRequest();
+											JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+											apiRequest.setRows(jsonArray.size());
+											apiRequest.setNumFound(new Integer(jsonArray.size()).longValue());
+											apiRequest.setNumPATCH(0L);
+											apiRequest.initDeepApiRequest(siteRequest);
+											siteRequest.setApiRequest_(apiRequest);
+											siteRequest.getVertx().eventBus().publish("websocketSchoolSession", JsonObject.mapFrom(apiRequest).toString());
+											varsSchoolSession(siteRequest, d -> {
+												if(d.succeeded()) {
+													listPUTMergeSchoolSession(apiRequest, siteRequest, e -> {
+														if(e.succeeded()) {
+															putmergeSchoolSessionResponse(siteRequest, f -> {
+																if(e.succeeded()) {
+																	LOGGER.info(String.format("putmergeSchoolSession succeeded. "));
+																	blockingCodeHandler.handle(Future.succeededFuture(e.result()));
+																} else {
+																	LOGGER.error(String.format("putmergeSchoolSession failed. ", f.cause()));
+																	errorSchoolSession(siteRequest, null, f);
+																}
+															});
+														} else {
+															LOGGER.error(String.format("putmergeSchoolSession failed. ", e.cause()));
+															errorSchoolSession(siteRequest, null, e);
+														}
+													});
+												} else {
+													LOGGER.error(String.format("putmergeSchoolSession failed. ", d.cause()));
+													errorSchoolSession(siteRequest, null, d);
+												}
+											});
+										} catch(Exception ex) {
+											LOGGER.error(String.format("putmergeSchoolSession failed. ", ex));
+											errorSchoolSession(siteRequest, null, Future.failedFuture(ex));
+										}
+									}, resultHandler -> {
 									}
-								}, resultHandler -> {
-								}
-							);
-						} else {
-							LOGGER.error(String.format("putmergeSchoolSession failed. ", c.cause()));
-							errorSchoolSession(siteRequest, eventHandler, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("putmergeSchoolSession failed. ", b.cause()));
-					errorSchoolSession(siteRequest, eventHandler, b);
-				}
-			});
+								);
+							} else {
+								LOGGER.error(String.format("putmergeSchoolSession failed. ", c.cause()));
+								errorSchoolSession(siteRequest, eventHandler, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("putmergeSchoolSession failed. ", b.cause()));
+						errorSchoolSession(siteRequest, eventHandler, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("putmergeSchoolSession failed. ", ex));
 			errorSchoolSession(siteRequest, eventHandler, Future.failedFuture(ex));
@@ -850,70 +853,71 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 							), new CaseInsensitiveHeaders()
 					)
 				));
-			}
+			} else {
 
-			userSchoolSession(siteRequest, b -> {
-				if(b.succeeded()) {
-					putcopySchoolSessionResponse(siteRequest, c -> {
-						if(c.succeeded()) {
-							eventHandler.handle(Future.succeededFuture(c.result()));
-							WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
-							workerExecutor.executeBlocking(
-								blockingCodeHandler -> {
-									try {
-										aSearchSchoolSession(siteRequest, false, true, "/api/session/copy", "PUTCopy", d -> {
-											if(d.succeeded()) {
-												SearchList<SchoolSession> listSchoolSession = d.result();
-												ApiRequest apiRequest = new ApiRequest();
-												apiRequest.setRows(listSchoolSession.getRows());
-												apiRequest.setNumFound(listSchoolSession.getQueryResponse().getResults().getNumFound());
-												apiRequest.setNumPATCH(0L);
-												apiRequest.initDeepApiRequest(siteRequest);
-												siteRequest.setApiRequest_(apiRequest);
-												siteRequest.getVertx().eventBus().publish("websocketSchoolSession", JsonObject.mapFrom(apiRequest).toString());
-												try {
-													listPUTCopySchoolSession(apiRequest, listSchoolSession, e -> {
-														if(e.succeeded()) {
-															putcopySchoolSessionResponse(siteRequest, f -> {
-																if(f.succeeded()) {
-																	LOGGER.info(String.format("putcopySchoolSession succeeded. "));
-																	blockingCodeHandler.handle(Future.succeededFuture(f.result()));
-																} else {
-																	LOGGER.error(String.format("putcopySchoolSession failed. ", f.cause()));
-																	errorSchoolSession(siteRequest, null, f);
-																}
-															});
-														} else {
-															LOGGER.error(String.format("putcopySchoolSession failed. ", e.cause()));
-															errorSchoolSession(siteRequest, null, e);
-														}
-													});
-												} catch(Exception ex) {
-													LOGGER.error(String.format("putcopySchoolSession failed. ", ex));
-													errorSchoolSession(siteRequest, null, Future.failedFuture(ex));
+				userSchoolSession(siteRequest, b -> {
+					if(b.succeeded()) {
+						putcopySchoolSessionResponse(siteRequest, c -> {
+							if(c.succeeded()) {
+								eventHandler.handle(Future.succeededFuture(c.result()));
+								WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
+								workerExecutor.executeBlocking(
+									blockingCodeHandler -> {
+										try {
+											aSearchSchoolSession(siteRequest, false, true, "/api/session/copy", "PUTCopy", d -> {
+												if(d.succeeded()) {
+													SearchList<SchoolSession> listSchoolSession = d.result();
+													ApiRequest apiRequest = new ApiRequest();
+													apiRequest.setRows(listSchoolSession.getRows());
+													apiRequest.setNumFound(listSchoolSession.getQueryResponse().getResults().getNumFound());
+													apiRequest.setNumPATCH(0L);
+													apiRequest.initDeepApiRequest(siteRequest);
+													siteRequest.setApiRequest_(apiRequest);
+													siteRequest.getVertx().eventBus().publish("websocketSchoolSession", JsonObject.mapFrom(apiRequest).toString());
+													try {
+														listPUTCopySchoolSession(apiRequest, listSchoolSession, e -> {
+															if(e.succeeded()) {
+																putcopySchoolSessionResponse(siteRequest, f -> {
+																	if(f.succeeded()) {
+																		LOGGER.info(String.format("putcopySchoolSession succeeded. "));
+																		blockingCodeHandler.handle(Future.succeededFuture(f.result()));
+																	} else {
+																		LOGGER.error(String.format("putcopySchoolSession failed. ", f.cause()));
+																		errorSchoolSession(siteRequest, null, f);
+																	}
+																});
+															} else {
+																LOGGER.error(String.format("putcopySchoolSession failed. ", e.cause()));
+																errorSchoolSession(siteRequest, null, e);
+															}
+														});
+													} catch(Exception ex) {
+														LOGGER.error(String.format("putcopySchoolSession failed. ", ex));
+														errorSchoolSession(siteRequest, null, Future.failedFuture(ex));
+													}
+												} else {
+													LOGGER.error(String.format("putcopySchoolSession failed. ", d.cause()));
+													errorSchoolSession(siteRequest, null, d);
 												}
-											} else {
-												LOGGER.error(String.format("putcopySchoolSession failed. ", d.cause()));
-												errorSchoolSession(siteRequest, null, d);
-											}
-										});
-									} catch(Exception ex) {
-										LOGGER.error(String.format("putcopySchoolSession failed. ", ex));
-										errorSchoolSession(siteRequest, null, Future.failedFuture(ex));
+											});
+										} catch(Exception ex) {
+											LOGGER.error(String.format("putcopySchoolSession failed. ", ex));
+											errorSchoolSession(siteRequest, null, Future.failedFuture(ex));
+										}
+									}, resultHandler -> {
 									}
-								}, resultHandler -> {
-								}
-							);
-						} else {
-							LOGGER.error(String.format("putcopySchoolSession failed. ", c.cause()));
-							errorSchoolSession(siteRequest, eventHandler, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("putcopySchoolSession failed. ", b.cause()));
-					errorSchoolSession(siteRequest, eventHandler, b);
-				}
-			});
+								);
+							} else {
+								LOGGER.error(String.format("putcopySchoolSession failed. ", c.cause()));
+								errorSchoolSession(siteRequest, eventHandler, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("putcopySchoolSession failed. ", b.cause()));
+						errorSchoolSession(siteRequest, eventHandler, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("putcopySchoolSession failed. ", ex));
 			errorSchoolSession(siteRequest, eventHandler, Future.failedFuture(ex));
@@ -1210,81 +1214,82 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 							), new CaseInsensitiveHeaders()
 					)
 				));
-			}
+			} else {
 
-			userSchoolSession(siteRequest, b -> {
-				if(b.succeeded()) {
-					patchSchoolSessionResponse(siteRequest, c -> {
-						if(c.succeeded()) {
-							eventHandler.handle(Future.succeededFuture(c.result()));
-							WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
-							workerExecutor.executeBlocking(
-								blockingCodeHandler -> {
-									try {
-										aSearchSchoolSession(siteRequest, false, true, "/api/session", "PATCH", d -> {
-											if(d.succeeded()) {
-												SearchList<SchoolSession> listSchoolSession = d.result();
-												ApiRequest apiRequest = new ApiRequest();
-												apiRequest.setRows(listSchoolSession.getRows());
-												apiRequest.setNumFound(listSchoolSession.getQueryResponse().getResults().getNumFound());
-												apiRequest.setNumPATCH(0L);
-												apiRequest.initDeepApiRequest(siteRequest);
-												siteRequest.setApiRequest_(apiRequest);
-												siteRequest.getVertx().eventBus().publish("websocketSchoolSession", JsonObject.mapFrom(apiRequest).toString());
-												SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listSchoolSession.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
-												Date date = null;
-												if(facets != null)
-													date = (Date)facets.get("max_modified");
-												String dt;
-												if(date == null)
-													dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
-												else
-													dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
-												listSchoolSession.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
+				userSchoolSession(siteRequest, b -> {
+					if(b.succeeded()) {
+						patchSchoolSessionResponse(siteRequest, c -> {
+							if(c.succeeded()) {
+								eventHandler.handle(Future.succeededFuture(c.result()));
+								WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
+								workerExecutor.executeBlocking(
+									blockingCodeHandler -> {
+										try {
+											aSearchSchoolSession(siteRequest, false, true, "/api/session", "PATCH", d -> {
+												if(d.succeeded()) {
+													SearchList<SchoolSession> listSchoolSession = d.result();
+													ApiRequest apiRequest = new ApiRequest();
+													apiRequest.setRows(listSchoolSession.getRows());
+													apiRequest.setNumFound(listSchoolSession.getQueryResponse().getResults().getNumFound());
+													apiRequest.setNumPATCH(0L);
+													apiRequest.initDeepApiRequest(siteRequest);
+													siteRequest.setApiRequest_(apiRequest);
+													siteRequest.getVertx().eventBus().publish("websocketSchoolSession", JsonObject.mapFrom(apiRequest).toString());
+													SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listSchoolSession.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
+													Date date = null;
+													if(facets != null)
+														date = (Date)facets.get("max_modified");
+													String dt;
+													if(date == null)
+														dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
+													else
+														dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
+													listSchoolSession.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
 
-												try {
-													listPATCHSchoolSession(apiRequest, listSchoolSession, dt, e -> {
-														if(e.succeeded()) {
-															patchSchoolSessionResponse(siteRequest, f -> {
-																if(f.succeeded()) {
-																	LOGGER.info(String.format("patchSchoolSession succeeded. "));
-																	blockingCodeHandler.handle(Future.succeededFuture(f.result()));
-																} else {
-																	LOGGER.error(String.format("patchSchoolSession failed. ", f.cause()));
-																	errorSchoolSession(siteRequest, null, f);
-																}
-															});
-														} else {
-															LOGGER.error(String.format("patchSchoolSession failed. ", e.cause()));
-															errorSchoolSession(siteRequest, null, e);
-														}
-													});
-												} catch(Exception ex) {
-													LOGGER.error(String.format("patchSchoolSession failed. ", ex));
-													errorSchoolSession(siteRequest, null, Future.failedFuture(ex));
+													try {
+														listPATCHSchoolSession(apiRequest, listSchoolSession, dt, e -> {
+															if(e.succeeded()) {
+																patchSchoolSessionResponse(siteRequest, f -> {
+																	if(f.succeeded()) {
+																		LOGGER.info(String.format("patchSchoolSession succeeded. "));
+																		blockingCodeHandler.handle(Future.succeededFuture(f.result()));
+																	} else {
+																		LOGGER.error(String.format("patchSchoolSession failed. ", f.cause()));
+																		errorSchoolSession(siteRequest, null, f);
+																	}
+																});
+															} else {
+																LOGGER.error(String.format("patchSchoolSession failed. ", e.cause()));
+																errorSchoolSession(siteRequest, null, e);
+															}
+														});
+													} catch(Exception ex) {
+														LOGGER.error(String.format("patchSchoolSession failed. ", ex));
+														errorSchoolSession(siteRequest, null, Future.failedFuture(ex));
+													}
+										} else {
+													LOGGER.error(String.format("patchSchoolSession failed. ", d.cause()));
+													errorSchoolSession(siteRequest, null, d);
 												}
-											} else {
-												LOGGER.error(String.format("patchSchoolSession failed. ", d.cause()));
-												errorSchoolSession(siteRequest, null, d);
-											}
-										});
-									} catch(Exception ex) {
-										LOGGER.error(String.format("patchSchoolSession failed. ", ex));
-										errorSchoolSession(siteRequest, null, Future.failedFuture(ex));
+											});
+										} catch(Exception ex) {
+											LOGGER.error(String.format("patchSchoolSession failed. ", ex));
+											errorSchoolSession(siteRequest, null, Future.failedFuture(ex));
+										}
+									}, resultHandler -> {
 									}
-								}, resultHandler -> {
-								}
-							);
-						} else {
-							LOGGER.error(String.format("patchSchoolSession failed. ", c.cause()));
-							errorSchoolSession(siteRequest, eventHandler, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("patchSchoolSession failed. ", b.cause()));
-					errorSchoolSession(siteRequest, eventHandler, b);
-				}
-			});
+								);
+							} else {
+								LOGGER.error(String.format("patchSchoolSession failed. ", c.cause()));
+								errorSchoolSession(siteRequest, eventHandler, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("patchSchoolSession failed. ", b.cause()));
+						errorSchoolSession(siteRequest, eventHandler, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("patchSchoolSession failed. ", ex));
 			errorSchoolSession(siteRequest, eventHandler, Future.failedFuture(ex));
@@ -1866,32 +1871,33 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 							), new CaseInsensitiveHeaders()
 					)
 				));
-			}
+			} else {
 
-			userSchoolSession(siteRequest, b -> {
-				if(b.succeeded()) {
-					aSearchSchoolSession(siteRequest, false, true, "/api/session/{id}", "GET", c -> {
-						if(c.succeeded()) {
-							SearchList<SchoolSession> listSchoolSession = c.result();
-							getSchoolSessionResponse(listSchoolSession, d -> {
-								if(d.succeeded()) {
-									eventHandler.handle(Future.succeededFuture(d.result()));
-									LOGGER.info(String.format("getSchoolSession succeeded. "));
-								} else {
-									LOGGER.error(String.format("getSchoolSession failed. ", d.cause()));
-									errorSchoolSession(siteRequest, eventHandler, d);
-								}
-							});
-						} else {
-							LOGGER.error(String.format("getSchoolSession failed. ", c.cause()));
-							errorSchoolSession(siteRequest, eventHandler, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("getSchoolSession failed. ", b.cause()));
-					errorSchoolSession(siteRequest, eventHandler, b);
-				}
-			});
+				userSchoolSession(siteRequest, b -> {
+					if(b.succeeded()) {
+						aSearchSchoolSession(siteRequest, false, true, "/api/session/{id}", "GET", c -> {
+							if(c.succeeded()) {
+								SearchList<SchoolSession> listSchoolSession = c.result();
+								getSchoolSessionResponse(listSchoolSession, d -> {
+									if(d.succeeded()) {
+										eventHandler.handle(Future.succeededFuture(d.result()));
+										LOGGER.info(String.format("getSchoolSession succeeded. "));
+									} else {
+										LOGGER.error(String.format("getSchoolSession failed. ", d.cause()));
+										errorSchoolSession(siteRequest, eventHandler, d);
+									}
+								});
+							} else {
+								LOGGER.error(String.format("getSchoolSession failed. ", c.cause()));
+								errorSchoolSession(siteRequest, eventHandler, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("getSchoolSession failed. ", b.cause()));
+						errorSchoolSession(siteRequest, eventHandler, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("getSchoolSession failed. ", ex));
 			errorSchoolSession(siteRequest, eventHandler, Future.failedFuture(ex));
@@ -1953,32 +1959,33 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 							), new CaseInsensitiveHeaders()
 					)
 				));
-			}
+			} else {
 
-			userSchoolSession(siteRequest, b -> {
-				if(b.succeeded()) {
-					aSearchSchoolSession(siteRequest, false, true, "/api/session", "Search", c -> {
-						if(c.succeeded()) {
-							SearchList<SchoolSession> listSchoolSession = c.result();
-							searchSchoolSessionResponse(listSchoolSession, d -> {
-								if(d.succeeded()) {
-									eventHandler.handle(Future.succeededFuture(d.result()));
-									LOGGER.info(String.format("searchSchoolSession succeeded. "));
-								} else {
-									LOGGER.error(String.format("searchSchoolSession failed. ", d.cause()));
-									errorSchoolSession(siteRequest, eventHandler, d);
-								}
-							});
-						} else {
-							LOGGER.error(String.format("searchSchoolSession failed. ", c.cause()));
-							errorSchoolSession(siteRequest, eventHandler, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("searchSchoolSession failed. ", b.cause()));
-					errorSchoolSession(siteRequest, eventHandler, b);
-				}
-			});
+				userSchoolSession(siteRequest, b -> {
+					if(b.succeeded()) {
+						aSearchSchoolSession(siteRequest, false, true, "/api/session", "Search", c -> {
+							if(c.succeeded()) {
+								SearchList<SchoolSession> listSchoolSession = c.result();
+								searchSchoolSessionResponse(listSchoolSession, d -> {
+									if(d.succeeded()) {
+										eventHandler.handle(Future.succeededFuture(d.result()));
+										LOGGER.info(String.format("searchSchoolSession succeeded. "));
+									} else {
+										LOGGER.error(String.format("searchSchoolSession failed. ", d.cause()));
+										errorSchoolSession(siteRequest, eventHandler, d);
+									}
+								});
+							} else {
+								LOGGER.error(String.format("searchSchoolSession failed. ", c.cause()));
+								errorSchoolSession(siteRequest, eventHandler, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("searchSchoolSession failed. ", b.cause()));
+						errorSchoolSession(siteRequest, eventHandler, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("searchSchoolSession failed. ", ex));
 			errorSchoolSession(siteRequest, eventHandler, Future.failedFuture(ex));
@@ -2085,32 +2092,33 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 							), new CaseInsensitiveHeaders()
 					)
 				));
-			}
+			} else {
 
-			userSchoolSession(siteRequest, b -> {
-				if(b.succeeded()) {
-					aSearchSchoolSession(siteRequest, false, true, "/session", "SearchPage", c -> {
-						if(c.succeeded()) {
-							SearchList<SchoolSession> listSchoolSession = c.result();
-							searchpageSchoolSessionResponse(listSchoolSession, d -> {
-								if(d.succeeded()) {
-									eventHandler.handle(Future.succeededFuture(d.result()));
-									LOGGER.info(String.format("searchpageSchoolSession succeeded. "));
-								} else {
-									LOGGER.error(String.format("searchpageSchoolSession failed. ", d.cause()));
-									errorSchoolSession(siteRequest, eventHandler, d);
-								}
-							});
-						} else {
-							LOGGER.error(String.format("searchpageSchoolSession failed. ", c.cause()));
-							errorSchoolSession(siteRequest, eventHandler, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("searchpageSchoolSession failed. ", b.cause()));
-					errorSchoolSession(siteRequest, eventHandler, b);
-				}
-			});
+				userSchoolSession(siteRequest, b -> {
+					if(b.succeeded()) {
+						aSearchSchoolSession(siteRequest, false, true, "/session", "SearchPage", c -> {
+							if(c.succeeded()) {
+								SearchList<SchoolSession> listSchoolSession = c.result();
+								searchpageSchoolSessionResponse(listSchoolSession, d -> {
+									if(d.succeeded()) {
+										eventHandler.handle(Future.succeededFuture(d.result()));
+										LOGGER.info(String.format("searchpageSchoolSession succeeded. "));
+									} else {
+										LOGGER.error(String.format("searchpageSchoolSession failed. ", d.cause()));
+										errorSchoolSession(siteRequest, eventHandler, d);
+									}
+								});
+							} else {
+								LOGGER.error(String.format("searchpageSchoolSession failed. ", c.cause()));
+								errorSchoolSession(siteRequest, eventHandler, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("searchpageSchoolSession failed. ", b.cause()));
+						errorSchoolSession(siteRequest, eventHandler, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("searchpageSchoolSession failed. ", ex));
 			errorSchoolSession(siteRequest, eventHandler, Future.failedFuture(ex));

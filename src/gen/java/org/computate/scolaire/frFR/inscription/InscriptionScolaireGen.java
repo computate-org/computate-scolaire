@@ -8619,6 +8619,68 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	/////////////////////
+	// paiementLastStr //
+	/////////////////////
+
+	/**	 L'entité paiementLastStr
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String paiementLastStr;
+	@JsonIgnore
+	public Couverture<String> paiementLastStrCouverture = new Couverture<String>().p(this).c(String.class).var("paiementLastStr").o(paiementLastStr);
+
+	/**	<br/> L'entité paiementLastStr
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:paiementLastStr">Trouver l'entité paiementLastStr dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _paiementLastStr(Couverture<String> c);
+
+	public String getPaiementLastStr() {
+		return paiementLastStr;
+	}
+
+	public void setPaiementLastStr(String paiementLastStr) {
+		this.paiementLastStr = paiementLastStr;
+		this.paiementLastStrCouverture.dejaInitialise = true;
+	}
+	protected InscriptionScolaire paiementLastStrInit() {
+		if(!paiementLastStrCouverture.dejaInitialise) {
+			_paiementLastStr(paiementLastStrCouverture);
+			if(paiementLastStr == null)
+				setPaiementLastStr(paiementLastStrCouverture.o);
+		}
+		paiementLastStrCouverture.dejaInitialise(true);
+		return (InscriptionScolaire)this;
+	}
+
+	public String solrPaiementLastStr() {
+		return paiementLastStr;
+	}
+
+	public String strPaiementLastStr() {
+		return paiementLastStr == null ? "" : paiementLastStr;
+	}
+
+	public String jsonPaiementLastStr() {
+		return paiementLastStr == null ? "" : paiementLastStr;
+	}
+
+	public String nomAffichagePaiementLastStr() {
+		return null;
+	}
+
+	public String htmTooltipPaiementLastStr() {
+		return null;
+	}
+
+	public String htmPaiementLastStr() {
+		return paiementLastStr == null ? "" : StringEscapeUtils.escapeHtml4(strPaiementLastStr());
+	}
+
+	/////////////////////
 	// paiementMontant //
 	/////////////////////
 
@@ -9150,6 +9212,86 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String htmPaiementsEnRetard() {
 		return paiementsEnRetard == null ? "" : StringEscapeUtils.escapeHtml4(strPaiementsEnRetard());
+	}
+
+	//////////////////////////////
+	// paiementsEnRetardMontant //
+	//////////////////////////////
+
+	/**	 L'entité paiementsEnRetardMontant
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected BigDecimal paiementsEnRetardMontant;
+	@JsonIgnore
+	public Couverture<BigDecimal> paiementsEnRetardMontantCouverture = new Couverture<BigDecimal>().p(this).c(BigDecimal.class).var("paiementsEnRetardMontant").o(paiementsEnRetardMontant);
+
+	/**	<br/> L'entité paiementsEnRetardMontant
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:paiementsEnRetardMontant">Trouver l'entité paiementsEnRetardMontant dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _paiementsEnRetardMontant(Couverture<BigDecimal> c);
+
+	public BigDecimal getPaiementsEnRetardMontant() {
+		return paiementsEnRetardMontant;
+	}
+
+	public void setPaiementsEnRetardMontant(BigDecimal paiementsEnRetardMontant) {
+		this.paiementsEnRetardMontant = paiementsEnRetardMontant;
+		this.paiementsEnRetardMontantCouverture.dejaInitialise = true;
+	}
+	public InscriptionScolaire setPaiementsEnRetardMontant(String o) {
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			this.paiementsEnRetardMontant = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.paiementsEnRetardMontantCouverture.dejaInitialise = true;
+		return (InscriptionScolaire)this;
+	}
+	public InscriptionScolaire setPaiementsEnRetardMontant(Double o) {
+			this.paiementsEnRetardMontant = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.paiementsEnRetardMontantCouverture.dejaInitialise = true;
+		return (InscriptionScolaire)this;
+	}
+	public InscriptionScolaire setPaiementsEnRetardMontant(Integer o) {
+			this.paiementsEnRetardMontant = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.paiementsEnRetardMontantCouverture.dejaInitialise = true;
+		return (InscriptionScolaire)this;
+	}
+	protected InscriptionScolaire paiementsEnRetardMontantInit() {
+		if(!paiementsEnRetardMontantCouverture.dejaInitialise) {
+			_paiementsEnRetardMontant(paiementsEnRetardMontantCouverture);
+			if(paiementsEnRetardMontant == null)
+				setPaiementsEnRetardMontant(paiementsEnRetardMontantCouverture.o);
+		}
+		paiementsEnRetardMontantCouverture.dejaInitialise(true);
+		return (InscriptionScolaire)this;
+	}
+
+	public Double solrPaiementsEnRetardMontant() {
+		return paiementsEnRetardMontant == null ? null : paiementsEnRetardMontant.doubleValue();
+	}
+
+	public String strPaiementsEnRetardMontant() {
+		return paiementsEnRetardMontant == null ? "" : paiementsEnRetardMontant.setScale(2).toString();
+	}
+
+	public String jsonPaiementsEnRetardMontant() {
+		return paiementsEnRetardMontant == null ? "" : paiementsEnRetardMontant.toString();
+	}
+
+	public String nomAffichagePaiementsEnRetardMontant() {
+		return null;
+	}
+
+	public String htmTooltipPaiementsEnRetardMontant() {
+		return null;
+	}
+
+	public String htmPaiementsEnRetardMontant() {
+		return paiementsEnRetardMontant == null ? "" : StringEscapeUtils.escapeHtml4(strPaiementsEnRetardMontant());
 	}
 
 	///////////////////////
@@ -13603,6 +13745,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		customerProfileIdInit();
 		inscriptionDateFraisInit();
 		paiementFacetsInit();
+		paiementLastStrInit();
 		paiementMontantInit();
 		fraisMontantInit();
 		fraisMontantFutureInit();
@@ -13610,6 +13753,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		fraisMaintenantInit();
 		paiementsAJourInit();
 		paiementsEnRetardInit();
+		paiementsEnRetardMontantInit();
 		paiementsEnAvanceInit();
 		creeDAnneeInit();
 		creeJourDeSemaineInit();
@@ -13911,6 +14055,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				return oInscriptionScolaire.inscriptionDateFrais;
 			case "paiementFacets":
 				return oInscriptionScolaire.paiementFacets;
+			case "paiementLastStr":
+				return oInscriptionScolaire.paiementLastStr;
 			case "paiementMontant":
 				return oInscriptionScolaire.paiementMontant;
 			case "fraisMontant":
@@ -13925,6 +14071,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				return oInscriptionScolaire.paiementsAJour;
 			case "paiementsEnRetard":
 				return oInscriptionScolaire.paiementsEnRetard;
+			case "paiementsEnRetardMontant":
+				return oInscriptionScolaire.paiementsEnRetardMontant;
 			case "paiementsEnAvance":
 				return oInscriptionScolaire.paiementsEnAvance;
 			case "creeDAnnee":
@@ -14828,6 +14976,12 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 					oInscriptionScolaire.setInscriptionDateFrais(inscriptionDateFrais);
 			}
 
+			if(sauvegardes.contains("paiementLastStr")) {
+				String paiementLastStr = (String)solrDocument.get("paiementLastStr_stored_string");
+				if(paiementLastStr != null)
+					oInscriptionScolaire.setPaiementLastStr(paiementLastStr);
+			}
+
 			if(sauvegardes.contains("paiementMontant")) {
 				Double paiementMontant = (Double)solrDocument.get("paiementMontant_stored_double");
 				if(paiementMontant != null)
@@ -14868,6 +15022,12 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				Boolean paiementsEnRetard = (Boolean)solrDocument.get("paiementsEnRetard_stored_boolean");
 				if(paiementsEnRetard != null)
 					oInscriptionScolaire.setPaiementsEnRetard(paiementsEnRetard);
+			}
+
+			if(sauvegardes.contains("paiementsEnRetardMontant")) {
+				Double paiementsEnRetardMontant = (Double)solrDocument.get("paiementsEnRetardMontant_stored_double");
+				if(paiementsEnRetardMontant != null)
+					oInscriptionScolaire.setPaiementsEnRetardMontant(paiementsEnRetardMontant);
 			}
 
 			if(sauvegardes.contains("paiementsEnAvance")) {
@@ -15547,6 +15707,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			document.addField("inscriptionDateFrais_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(inscriptionDateFrais.atStartOfDay(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toInstant().atZone(ZoneId.of("Z"))));
 			document.addField("inscriptionDateFrais_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(inscriptionDateFrais.atStartOfDay(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toInstant().atZone(ZoneId.of("Z"))));
 		}
+		if(paiementLastStr != null) {
+			document.addField("paiementLastStr_indexed_string", paiementLastStr);
+			document.addField("paiementLastStr_stored_string", paiementLastStr);
+		}
 		if(paiementMontant != null) {
 			document.addField("paiementMontant_indexed_double", paiementMontant.doubleValue());
 			document.addField("paiementMontant_stored_double", paiementMontant.doubleValue());
@@ -15574,6 +15738,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(paiementsEnRetard != null) {
 			document.addField("paiementsEnRetard_indexed_boolean", paiementsEnRetard);
 			document.addField("paiementsEnRetard_stored_boolean", paiementsEnRetard);
+		}
+		if(paiementsEnRetardMontant != null) {
+			document.addField("paiementsEnRetardMontant_indexed_double", paiementsEnRetardMontant.doubleValue());
+			document.addField("paiementsEnRetardMontant_stored_double", paiementsEnRetardMontant.doubleValue());
 		}
 		if(paiementsEnAvance != null) {
 			document.addField("paiementsEnAvance_indexed_boolean", paiementsEnAvance);
@@ -15927,6 +16095,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				return "customerProfileId_indexed_string";
 			case "inscriptionDateFrais":
 				return "inscriptionDateFrais_indexed_date";
+			case "paiementLastStr":
+				return "paiementLastStr_indexed_string";
 			case "paiementMontant":
 				return "paiementMontant_indexed_double";
 			case "fraisMontant":
@@ -15941,6 +16111,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				return "paiementsAJour_indexed_boolean";
 			case "paiementsEnRetard":
 				return "paiementsEnRetard_indexed_boolean";
+			case "paiementsEnRetardMontant":
+				return "paiementsEnRetardMontant_indexed_double";
 			case "paiementsEnAvance":
 				return "paiementsEnAvance_indexed_boolean";
 			case "creeDAnnee":
@@ -16360,6 +16532,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(inscriptionDateFrais != null)
 			oInscriptionScolaire.setInscriptionDateFrais(inscriptionDateFrais);
 
+		String paiementLastStr = (String)solrDocument.get("paiementLastStr_stored_string");
+		if(paiementLastStr != null)
+			oInscriptionScolaire.setPaiementLastStr(paiementLastStr);
+
 		Double paiementMontant = (Double)solrDocument.get("paiementMontant_stored_double");
 		if(paiementMontant != null)
 			oInscriptionScolaire.setPaiementMontant(paiementMontant);
@@ -16387,6 +16563,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		Boolean paiementsEnRetard = (Boolean)solrDocument.get("paiementsEnRetard_stored_boolean");
 		if(paiementsEnRetard != null)
 			oInscriptionScolaire.setPaiementsEnRetard(paiementsEnRetard);
+
+		Double paiementsEnRetardMontant = (Double)solrDocument.get("paiementsEnRetardMontant_stored_double");
+		if(paiementsEnRetardMontant != null)
+			oInscriptionScolaire.setPaiementsEnRetardMontant(paiementsEnRetardMontant);
 
 		Boolean paiementsEnAvance = (Boolean)solrDocument.get("paiementsEnAvance_stored_boolean");
 		if(paiementsEnAvance != null)

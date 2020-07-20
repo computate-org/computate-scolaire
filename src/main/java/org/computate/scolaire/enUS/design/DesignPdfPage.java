@@ -113,6 +113,9 @@ public class DesignPdfPage extends DesignPdfPageGen<DesignPdfGenPage> {
 			l.addSort("childBirthMonth_indexed_int", ORDER.asc);
 			l.addSort("childBirthDay_indexed_int", ORDER.asc);
 		}
+		else if("email-phone-roster".equals(designId)) {
+			l.addSort("enrollmentGroupName_indexed_string", ORDER.asc);
+		}
 
 		for(String var : siteRequest_.getRequestVars().keySet()) {
 			String val = siteRequest_.getRequestVars().get(var);

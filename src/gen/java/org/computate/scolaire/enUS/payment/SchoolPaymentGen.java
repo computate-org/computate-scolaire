@@ -244,6 +244,14 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 					.a("oninput", "suggestSchoolPaymentEnrollmentKey($(this).val() ? searchSchoolEnrollmentFilters($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'paymentKeys:" + pk + "'}", "], $('#listSchoolPaymentEnrollmentKey_", classApiMethodMethod, "'), ", pk, "); ")
 				.fg();
 
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
+				) {
+				sx(htmEnrollmentKey());
+			}
 		}
 	}
 
@@ -1288,6 +1296,14 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				a("value", strChildCompleteNamePreferred())
 			.fg();
 
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
+				) {
+				sx(htmChildCompleteNamePreferred());
+			}
 		}
 	}
 
@@ -1422,6 +1438,14 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				.a("value", childBirthDate == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy").format(childBirthDate))
 				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setChildBirthDate', s, function() { addGlow($('#", classApiMethodMethod, "_childBirthDate')); }, function() { addError($('#", classApiMethodMethod, "_childBirthDate')); }); } ")
 				.fg();
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
+				) {
+				sx(htmChildBirthDate());
+			}
 		}
 	}
 
@@ -1544,6 +1568,14 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				a("value", strMomCompleteNamePreferred())
 			.fg();
 
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
+				) {
+				sx(htmMomCompleteNamePreferred());
+			}
 		}
 	}
 
@@ -1667,6 +1699,14 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				a("value", strDadCompleteNamePreferred())
 			.fg();
 
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
+				) {
+				sx(htmDadCompleteNamePreferred());
+			}
 		}
 	}
 
@@ -2897,6 +2937,14 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				g("select");
 			}
 
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
+				) {
+				sx(htmEnrollmentPaymentEachMonth());
+			}
 		}
 	}
 
@@ -3025,6 +3073,14 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				g("select");
 			}
 
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
+				) {
+				sx(htmEnrollmentPaymentComplete());
+			}
 		}
 	}
 
@@ -3135,6 +3191,14 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				a("value", strPaymentDescription())
 			.fg();
 
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
+				) {
+				sx(htmPaymentDescription());
+			}
 		}
 	}
 
@@ -3269,6 +3333,14 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				.a("value", paymentDate == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy").format(paymentDate))
 				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setPaymentDate', s, function() { addGlow($('#", classApiMethodMethod, "_paymentDate')); }, function() { addError($('#", classApiMethodMethod, "_paymentDate')); }); } ")
 				.fg();
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
+				) {
+				sx(htmPaymentDate());
+			}
 		}
 	}
 
@@ -3409,6 +3481,14 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				a("value", strPaymentAmount())
 			.fg();
 
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
+				) {
+				sx(htmPaymentAmount());
+			}
 		}
 	}
 
@@ -3550,6 +3630,14 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				g("select");
 			}
 
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
+				) {
+				sx(htmPaymentCash());
+			}
 		}
 	}
 
@@ -3678,6 +3766,14 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				g("select");
 			}
 
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
+				) {
+				sx(htmPaymentCheck());
+			}
 		}
 	}
 
@@ -3806,6 +3902,14 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				g("select");
 			}
 
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
+				) {
+				sx(htmPaymentECheck());
+			}
 		}
 	}
 
@@ -3934,6 +4038,14 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				g("select");
 			}
 
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
+				) {
+				sx(htmPaymentSystem());
+			}
 		}
 	}
 
@@ -4044,6 +4156,14 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				a("value", strPaymentBy())
 			.fg();
 
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
+				) {
+				sx(htmPaymentBy());
+			}
 		}
 	}
 
@@ -4167,6 +4287,14 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				a("value", strTransactionId())
 			.fg();
 
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
+				) {
+				sx(htmTransactionId());
+			}
 		}
 	}
 
@@ -4290,6 +4418,14 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				a("value", strCustomerProfileId())
 			.fg();
 
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
+				) {
+				sx(htmCustomerProfileId());
+			}
 		}
 	}
 
@@ -4413,6 +4549,14 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				a("value", strTransactionStatus())
 			.fg();
 
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
+				) {
+				sx(htmTransactionStatus());
+			}
 		}
 	}
 
@@ -4554,6 +4698,14 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				g("select");
 			}
 
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
+				) {
+				sx(htmPaymentRecieved());
+			}
 		}
 	}
 
@@ -4682,6 +4834,14 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				a("value", strChargeAmount())
 			.fg();
 
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
+				) {
+				sx(htmChargeAmount());
+			}
 		}
 	}
 
@@ -4823,6 +4983,14 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				g("select");
 			}
 
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
+				) {
+				sx(htmChargeFirstLast());
+			}
 		}
 	}
 
@@ -4951,6 +5119,14 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				g("select");
 			}
 
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
+				) {
+				sx(htmChargeEnrollment());
+			}
 		}
 	}
 
@@ -5079,6 +5255,14 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				g("select");
 			}
 
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
+				) {
+				sx(htmChargeMonth());
+			}
 		}
 	}
 
@@ -5207,6 +5391,14 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				g("select");
 			}
 
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
+				) {
+				sx(htmChargeLateFee());
+			}
 		}
 	}
 
@@ -5529,6 +5721,14 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				a("value", strPaymentShortName())
 			.fg();
 
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
+				) {
+				sx(htmPaymentShortName());
+			}
 		}
 	}
 

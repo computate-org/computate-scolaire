@@ -1,17 +1,27 @@
 package org.computate.scolaire.enUS.user;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.solr.client.solrj.SolrQuery.ORDER;
 import org.apache.solr.client.solrj.util.ClientUtils;
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
 import org.computate.scolaire.enUS.enrollment.SchoolEnrollment;
+import org.computate.scolaire.enUS.enrollment.SchoolEnrollmentEnUSApiServiceImpl;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import org.computate.scolaire.enUS.search.SearchList;
 
+import io.vertx.core.AsyncResult;
+import io.vertx.core.CompositeFuture;
+import io.vertx.core.Future;
+import io.vertx.core.Handler;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
+import io.vertx.ext.web.api.OperationRequest;
+import io.vertx.ext.web.api.OperationResponse;
 import net.authorize.Environment;
 import net.authorize.api.contract.v1.CreateCustomerProfileRequest;
 import net.authorize.api.contract.v1.CreateCustomerProfileResponse;
@@ -130,6 +140,111 @@ public class SiteUserEnUSApiServiceImpl extends SiteUserEnUSGenApiServiceImpl {
 		}
 		else {
 			return false;
+		}
+	}
+
+	@Override public void searchpageSiteUserPageInit(SiteUserPage page, SearchList<SiteUser> listSiteUser) {
+		if(listSiteUser.size() == 1)
+			page.setEnrollments_(listSiteUser.first().getEnrollments_());
+	}
+
+	@Override
+	public void searchpageSiteUser(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSiteUser(siteContext, operationRequest);
+		try {
+			{
+				userSiteUser(siteRequest, b -> {
+					if(b.succeeded()) {
+						aSearchSiteUser(siteRequest, false, true, "/user", "SearchPage", c -> {
+							if(c.succeeded()) {
+								SearchList<SiteUser> listSiteUser = c.result();
+
+								if(listSiteUser.size() == 1) {
+									SiteUser siteUser = listSiteUser.first();
+									try {
+										SchoolEnrollmentEnUSApiServiceImpl enrollmentApi = new SchoolEnrollmentEnUSApiServiceImpl(siteContext);
+										SearchList<SchoolEnrollment> enrollmentSearch = new SearchList<>();
+										List<Future> futures = new ArrayList<>();
+
+										enrollmentSearch.setStore(true);
+										enrollmentSearch.setQuery("*:*");
+										enrollmentSearch.setC(SchoolEnrollment.class);
+										enrollmentSearch.setRows(1000);
+										enrollmentSearch.addFilterQuery("userKeys_indexed_longs:" + siteUser.getPk());
+								
+										enrollmentSearch.addSort("seasonStartDate_indexed_date", ORDER.asc);
+										enrollmentSearch.addSort("childCompleteNamePreferred_indexed_int", ORDER.asc);
+										
+										enrollmentSearch.initDeepForClass(siteRequest);
+
+										List<SchoolEnrollment> enrollments = enrollmentSearch.getList();
+										siteUser.setEnrollments_(enrollments);
+
+										enrollments.forEach(schoolEnrollment -> {
+											futures.add(
+
+												enrollmentApi.enrollmentChargesFuture(schoolEnrollment, d -> {
+													if(d.succeeded()) {
+														enrollmentApi.authorizeNetEnrollmentPaymentsFuture(schoolEnrollment, e -> {
+															if(e.succeeded()) {
+															} else {
+																LOGGER.error(String.format("refreshsearchpageSchoolEnrollment failed. ", e.cause()));
+																errorSiteUser(siteRequest, eventHandler, e);
+															}
+														});
+													} else {
+														LOGGER.error(String.format("refreshsearchpageSchoolEnrollment failed. ", d.cause()));
+														errorSiteUser(siteRequest, eventHandler, d);
+													}
+												})
+											);
+										});
+										CompositeFuture.all(futures).setHandler( a -> {
+											if(a.succeeded()) {
+												searchpageSiteUserResponse(listSiteUser, d -> {
+													if(d.succeeded()) {
+														eventHandler.handle(Future.succeededFuture(d.result()));
+														LOGGER.info(String.format("searchpageSiteUser succeeded. "));
+													} else {
+														LOGGER.error(String.format("searchpageSiteUser failed. ", d.cause()));
+														errorSiteUser(siteRequest, eventHandler, d);
+													}
+												});
+											} else {
+												LOGGER.error(String.format("listPATCHSiteUser failed. ", a.cause()));
+												errorSiteUser(listSiteUser.getSiteRequest_(), eventHandler, a);
+											}
+										});
+									} catch(Exception e) {
+										LOGGER.error(String.format("refreshsearchpageSchoolEnrollment failed. ", e));
+										errorSiteUser(siteRequest, eventHandler, Future.failedFuture(e));
+									}
+								}
+								else {
+									searchpageSiteUserResponse(listSiteUser, d -> {
+										if(d.succeeded()) {
+											eventHandler.handle(Future.succeededFuture(d.result()));
+											LOGGER.info(String.format("searchpageSiteUser succeeded. "));
+										} else {
+											LOGGER.error(String.format("searchpageSiteUser failed. ", d.cause()));
+											errorSiteUser(siteRequest, eventHandler, d);
+										}
+									});
+								}
+							} else {
+								LOGGER.error(String.format("searchpageSiteUser failed. ", c.cause()));
+								errorSiteUser(siteRequest, eventHandler, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("searchpageSiteUser failed. ", b.cause()));
+						errorSiteUser(siteRequest, eventHandler, b);
+					}
+				});
+			}
+		} catch(Exception ex) {
+			LOGGER.error(String.format("searchpageSiteUser failed. ", ex));
+			errorSiteUser(siteRequest, eventHandler, Future.failedFuture(ex));
 		}
 	}
 }

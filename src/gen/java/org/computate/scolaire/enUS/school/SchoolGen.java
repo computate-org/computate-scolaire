@@ -235,7 +235,10 @@ public abstract class SchoolGen<DEV> extends Cluster {
 
 	public void inputYearKeys(String classApiMethodMethod) {
 		School s = (School)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
 				e("input")
 					.a("type", "text")
@@ -937,7 +940,10 @@ public abstract class SchoolGen<DEV> extends Cluster {
 
 	public void inputSchoolName(String classApiMethodMethod) {
 		School s = (School)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "name of the school")
@@ -1057,7 +1063,10 @@ public abstract class SchoolGen<DEV> extends Cluster {
 
 	public void inputSchoolPhoneNumber(String classApiMethodMethod) {
 		School s = (School)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "phone number")
@@ -1184,7 +1193,10 @@ public abstract class SchoolGen<DEV> extends Cluster {
 
 	public void inputSchoolNumber(String classApiMethodMethod) {
 		School s = (School)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "school number")
@@ -1304,7 +1316,10 @@ public abstract class SchoolGen<DEV> extends Cluster {
 
 	public void inputSchoolAdministratorName(String classApiMethodMethod) {
 		School s = (School)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "administrator of the school")
@@ -1424,7 +1439,10 @@ public abstract class SchoolGen<DEV> extends Cluster {
 
 	public void inputSchoolEmail(String classApiMethodMethod) {
 		School s = (School)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "email")
@@ -1544,7 +1562,10 @@ public abstract class SchoolGen<DEV> extends Cluster {
 
 	public void inputSchoolEmailFrom(String classApiMethodMethod) {
 		School s = (School)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "emails from (1 only)")
@@ -1664,7 +1685,10 @@ public abstract class SchoolGen<DEV> extends Cluster {
 
 	public void inputSchoolEmailTo(String classApiMethodMethod) {
 		School s = (School)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "emails to (1 or more by ,)")
@@ -1784,7 +1808,10 @@ public abstract class SchoolGen<DEV> extends Cluster {
 
 	public void inputSchoolLocation(String classApiMethodMethod) {
 		School s = (School)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "location")
@@ -1904,7 +1931,10 @@ public abstract class SchoolGen<DEV> extends Cluster {
 
 	public void inputSchoolAddress(String classApiMethodMethod) {
 		School s = (School)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("textarea")
 				.a("placeholder", "address")
 				.a("id", classApiMethodMethod, "_schoolAddress");

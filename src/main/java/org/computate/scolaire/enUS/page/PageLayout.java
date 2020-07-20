@@ -2,6 +2,7 @@ package org.computate.scolaire.enUS.page;
 
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.net.URLEncoder;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -1233,7 +1234,7 @@ public class PageLayout extends PageLayoutGen<Object> {
 				// Settlement occurs every 24 hours, within 24 hours of your Transaction Cut-off Time.
 				// See: https://support.authorize.net/s/article/What-Are-the-Transaction-Types-That-Can-Be-Submitted
 				transactionRequest.setTransactionType(TransactionTypeEnum.AUTH_CAPTURE_TRANSACTION.value());
-				transactionRequest.setAmount(amount);
+				transactionRequest.setAmount(amount.multiply(BigDecimal.valueOf(1.03)).setScale(1, RoundingMode.CEILING));
 				ArrayOfLineItem lineItems = new ArrayOfLineItem();
 				LineItemType lineItem = new LineItemType();
 				DateTimeFormatter fd = DateTimeFormatter.ofPattern("MMM yyyy", Locale.US);
@@ -1259,21 +1260,27 @@ public class PageLayout extends PageLayoutGen<Object> {
 						throw new RuntimeException(hostedPaymentResponse.getMessages().getMessage().stream().findFirst().map(m -> String.format("%s %s", m.getCode(), m.getText())).orElse("GetHostedPaymentPageRequest failed. "));
 					}
 				}
-				{ e("div").a("class", "").f();
-					e("div").a("class", "w3-large font-weight-bold ").f().sx("Configure school payments with authorize.net").g("div");
-					{ e("form").a("method", "post").a("target", "_blank").a("action", siteConfig.getAuthorizeUrl() + "/customer/manage").f();
-						e("input").a("type", "hidden").a("name", "token").a("value", profilePageResponse.getToken()).fg();
-						e("button").a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ").a("type", "submit").f().sx("Manage payment profile").g("button");
-					} g("form");
-					e("div").a("class", "").f().sx("Click here to manage your payment profile with authorize.net. ").g("div");
-				} g("div");
-				{ e("div").a("class", "").f();
-					{ e("form").a("method", "post").a("target", "_blank").a("action", siteConfig.getAuthorizeUrl() + "/payment/payment").f();
+//				{ e("div").a("class", "").f();
+//					e("div").a("class", "w3-large font-weight-bold ").f().sx("Configure school payments with authorize.net").g("div");
+//					{ e("form").a("method", "post").a("target", "_blank").a("action", siteConfig.getAuthorizeUrl() + "/customer/manage").f();
+//						e("input").a("type", "hidden").a("name", "token").a("value", profilePageResponse.getToken()).fg();
+//						e("button").a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ").a("type", "submit").f().sx("Manage payment profile").g("button");
+//					} g("form");
+//					e("div").a("class", "").f().sx("Click here to manage your payment profile with authorize.net. ").g("div");
+//				} g("div");
+//				{ e("div").a("class", "").f();
+//					{ e("form").a("method", "post").a("target", "_blank").a("action", siteConfig.getAuthorizeUrl() + "/payment/payment").f();
+//						e("input").a("type", "hidden").a("name", "token").a("value", hostedPaymentResponse.getToken()).fg();
+//						e("button").a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ").a("type", "submit").f().sx("Make a payment").g("button");
+//					} g("form");
+//					e("div").a("class", "").f().sx("Click here to make a payment with authorize.net. ").g("div");
+//				} g("div");
+					{ e("form").a("style", "display: inline-block; ").a("method", "post").a("target", "_blank").a("action", siteConfig.getAuthorizeUrl() + "/payment/payment").f();
 						e("input").a("type", "hidden").a("name", "token").a("value", hostedPaymentResponse.getToken()).fg();
-						e("button").a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ").a("type", "submit").f().sx("Make a payment").g("button");
+						{ e("button").a("class", "w3-button w3-light-gray w3-text-purple text-decoration-underline ").a("style", "white-space: normal; text-align: left; ").a("type", "submit").f();
+							sx(String.format("Make a payment for $%s including the 3%% card processing fee", amount));
+						} g("button");
 					} g("form");
-					e("div").a("class", "").f().sx("Click here to make a payment with authorize.net. ").g("div");
-				} g("div");
 			}
 		}
 	}

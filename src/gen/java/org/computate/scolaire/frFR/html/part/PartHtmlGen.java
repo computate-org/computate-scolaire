@@ -238,7 +238,10 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 
 	public void inputDesignPageCles(String classeApiMethodeMethode) {
 		PartHtml s = (PartHtml)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
 				e("input")
 					.a("type", "text")
@@ -250,6 +253,12 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 					.a("oninput", "suggerePartHtmlDesignPageCles($(this).val() ? rechercherDesignPageFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'partHtmlCles:" + pk + "'}", "], $('#listPartHtmlDesignPageCles_", classeApiMethodeMethode, "'), ", pk, "); ")
 				.fg();
 
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+				sx(htmDesignPageCles());
+			}
 		}
 	}
 
@@ -367,7 +376,10 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 
 	public void inputHtmlLien(String classeApiMethodeMethode) {
 		PartHtml s = (PartHtml)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "lien")
@@ -386,6 +398,12 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				a("value", strHtmlLien())
 			.fg();
 
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+				sx(htmHtmlLien());
+			}
 		}
 	}
 
@@ -487,7 +505,10 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 
 	public void inputHtmlElement(String classeApiMethodeMethode) {
 		PartHtml s = (PartHtml)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "HTML élément")
@@ -506,6 +527,12 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				a("value", strHtmlElement())
 			.fg();
 
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+				sx(htmHtmlElement());
+			}
 		}
 	}
 
@@ -607,7 +634,10 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 
 	public void inputHtmlId(String classeApiMethodeMethode) {
 		PartHtml s = (PartHtml)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "HTML ID")
@@ -626,6 +656,12 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				a("value", strHtmlId())
 			.fg();
 
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+				sx(htmHtmlId());
+			}
 		}
 	}
 
@@ -727,7 +763,10 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 
 	public void inputHtmlClasses(String classeApiMethodeMethode) {
 		PartHtml s = (PartHtml)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "HTML classes")
@@ -746,6 +785,12 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				a("value", strHtmlClasses())
 			.fg();
 
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+				sx(htmHtmlClasses());
+			}
 		}
 	}
 
@@ -847,7 +892,10 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 
 	public void inputHtmlStyle(String classeApiMethodeMethode) {
 		PartHtml s = (PartHtml)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "HTML style")
@@ -866,6 +914,12 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				a("value", strHtmlStyle())
 			.fg();
 
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+				sx(htmHtmlStyle());
+			}
 		}
 	}
 
@@ -967,7 +1021,10 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 
 	public void inputHtmlAvant(String classeApiMethodeMethode) {
 		PartHtml s = (PartHtml)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("textarea")
 				.a("placeholder", "HTML avant")
 				.a("id", classeApiMethodeMethode, "_htmlAvant");
@@ -984,6 +1041,12 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				}
 			f().sx(strHtmlAvant()).g("textarea");
 
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+				sx(htmHtmlAvant());
+			}
 		}
 	}
 
@@ -1085,7 +1148,10 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 
 	public void inputHtmlApres(String classeApiMethodeMethode) {
 		PartHtml s = (PartHtml)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("textarea")
 				.a("placeholder", "HTML après")
 				.a("id", classeApiMethodeMethode, "_htmlApres");
@@ -1102,6 +1168,12 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				}
 			f().sx(strHtmlApres()).g("textarea");
 
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+				sx(htmHtmlApres());
+			}
 		}
 	}
 
@@ -1203,7 +1275,10 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 
 	public void inputHtmlTexte(String classeApiMethodeMethode) {
 		PartHtml s = (PartHtml)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("textarea")
 				.a("placeholder", "texte")
 				.a("id", classeApiMethodeMethode, "_htmlTexte");
@@ -1220,6 +1295,12 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				}
 			f().sx(strHtmlTexte()).g("textarea");
 
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+				sx(htmHtmlTexte());
+			}
 		}
 	}
 
@@ -1321,7 +1402,10 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 
 	public void inputHtmlVar(String classeApiMethodeMethode) {
 		PartHtml s = (PartHtml)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "var")
@@ -1340,6 +1424,12 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				a("value", strHtmlVar())
 			.fg();
 
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+				sx(htmHtmlVar());
+			}
 		}
 	}
 
@@ -1441,7 +1531,10 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 
 	public void inputHtmlVarSpan(String classeApiMethodeMethode) {
 		PartHtml s = (PartHtml)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "var span")
@@ -1460,6 +1553,12 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				a("value", strHtmlVarSpan())
 			.fg();
 
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+				sx(htmHtmlVarSpan());
+			}
 		}
 	}
 
@@ -1561,7 +1660,10 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 
 	public void inputHtmlVarForm(String classeApiMethodeMethode) {
 		PartHtml s = (PartHtml)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "var form")
@@ -1580,6 +1682,12 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				a("value", strHtmlVarForm())
 			.fg();
 
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+				sx(htmHtmlVarForm());
+			}
 		}
 	}
 
@@ -1681,7 +1789,10 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 
 	public void inputHtmlVarInput(String classeApiMethodeMethode) {
 		PartHtml s = (PartHtml)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "var input")
@@ -1700,6 +1811,12 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				a("value", strHtmlVarInput())
 			.fg();
 
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+				sx(htmHtmlVarInput());
+			}
 		}
 	}
 
@@ -1801,7 +1918,10 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 
 	public void inputHtmlVarForEach(String classeApiMethodeMethode) {
 		PartHtml s = (PartHtml)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "var for each")
@@ -1820,6 +1940,12 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				a("value", strHtmlVarForEach())
 			.fg();
 
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+				sx(htmHtmlVarForEach());
+			}
 		}
 	}
 
@@ -1926,7 +2052,10 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 
 	public void inputHtmlExclure(String classeApiMethodeMethode) {
 		PartHtml s = (PartHtml)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			if("Page".equals(classeApiMethodeMethode)) {
 				e("input")
 					.a("type", "checkbox")
@@ -1958,6 +2087,12 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				g("select");
 			}
 
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+				sx(htmHtmlExclure());
+			}
 		}
 	}
 
@@ -2051,7 +2186,10 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 
 	public void inputPdfExclure(String classeApiMethodeMethode) {
 		PartHtml s = (PartHtml)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			if("Page".equals(classeApiMethodeMethode)) {
 				e("input")
 					.a("type", "checkbox")
@@ -2083,6 +2221,12 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				g("select");
 			}
 
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+				sx(htmPdfExclure());
+			}
 		}
 	}
 
@@ -2176,7 +2320,10 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 
 	public void inputConnecterDeconnecter(String classeApiMethodeMethode) {
 		PartHtml s = (PartHtml)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			if("Page".equals(classeApiMethodeMethode)) {
 				e("input")
 					.a("type", "checkbox")
@@ -2208,6 +2355,12 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				g("select");
 			}
 
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+				sx(htmConnecterDeconnecter());
+			}
 		}
 	}
 
@@ -2303,7 +2456,10 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 
 	public void inputTri1(String classeApiMethodeMethode) {
 		PartHtml s = (PartHtml)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "tri1")
@@ -2322,6 +2478,12 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				a("value", strTri1())
 			.fg();
 
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+				sx(htmTri1());
+			}
 		}
 	}
 
@@ -2430,7 +2592,10 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 
 	public void inputTri2(String classeApiMethodeMethode) {
 		PartHtml s = (PartHtml)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "tri2")
@@ -2449,6 +2614,12 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				a("value", strTri2())
 			.fg();
 
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+				sx(htmTri2());
+			}
 		}
 	}
 
@@ -2557,7 +2728,10 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 
 	public void inputTri3(String classeApiMethodeMethode) {
 		PartHtml s = (PartHtml)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "tri3")
@@ -2576,6 +2750,12 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				a("value", strTri3())
 			.fg();
 
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+				sx(htmTri3());
+			}
 		}
 	}
 
@@ -2684,7 +2864,10 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 
 	public void inputTri4(String classeApiMethodeMethode) {
 		PartHtml s = (PartHtml)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "tri4")
@@ -2703,6 +2886,12 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				a("value", strTri4())
 			.fg();
 
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+				sx(htmTri4());
+			}
 		}
 	}
 
@@ -2811,7 +3000,10 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 
 	public void inputTri5(String classeApiMethodeMethode) {
 		PartHtml s = (PartHtml)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "tri5")
@@ -2830,6 +3022,12 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				a("value", strTri5())
 			.fg();
 
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+				sx(htmTri5());
+			}
 		}
 	}
 
@@ -2938,7 +3136,10 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 
 	public void inputTri6(String classeApiMethodeMethode) {
 		PartHtml s = (PartHtml)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "tri6")
@@ -2957,6 +3158,12 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				a("value", strTri6())
 			.fg();
 
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+				sx(htmTri6());
+			}
 		}
 	}
 
@@ -3065,7 +3272,10 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 
 	public void inputTri7(String classeApiMethodeMethode) {
 		PartHtml s = (PartHtml)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "tri7")
@@ -3084,6 +3294,12 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				a("value", strTri7())
 			.fg();
 
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+				sx(htmTri7());
+			}
 		}
 	}
 
@@ -3192,7 +3408,10 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 
 	public void inputTri8(String classeApiMethodeMethode) {
 		PartHtml s = (PartHtml)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "tri8")
@@ -3211,6 +3430,12 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				a("value", strTri8())
 			.fg();
 
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+				sx(htmTri8());
+			}
 		}
 	}
 
@@ -3319,7 +3544,10 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 
 	public void inputTri9(String classeApiMethodeMethode) {
 		PartHtml s = (PartHtml)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "tri9")
@@ -3338,6 +3566,12 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				a("value", strTri9())
 			.fg();
 
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+				sx(htmTri9());
+			}
 		}
 	}
 
@@ -3446,7 +3680,10 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 
 	public void inputTri10(String classeApiMethodeMethode) {
 		PartHtml s = (PartHtml)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "tri10")
@@ -3465,6 +3702,12 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				a("value", strTri10())
 			.fg();
 
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+				sx(htmTri10());
+			}
 		}
 	}
 

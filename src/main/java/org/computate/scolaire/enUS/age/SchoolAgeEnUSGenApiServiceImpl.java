@@ -128,40 +128,41 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 							), new CaseInsensitiveHeaders()
 					)
 				));
-			}
+			} else {
 
-			userSchoolAge(siteRequest, b -> {
-				if(b.succeeded()) {
-					ApiRequest apiRequest = new ApiRequest();
-					apiRequest.setRows(1);
-					apiRequest.setNumFound(1L);
-					apiRequest.setNumPATCH(0L);
-					apiRequest.initDeepApiRequest(siteRequest);
-					siteRequest.setApiRequest_(apiRequest);
-					siteRequest.getVertx().eventBus().publish("websocketSchoolAge", JsonObject.mapFrom(apiRequest).toString());
-					postSchoolAgeFuture(siteRequest, false, c -> {
-						if(c.succeeded()) {
-							SchoolAge schoolAge = c.result();
-							apiRequest.setPk(schoolAge.getPk());
-							postSchoolAgeResponse(schoolAge, d -> {
-									if(d.succeeded()) {
-									eventHandler.handle(Future.succeededFuture(d.result()));
-									LOGGER.info(String.format("postSchoolAge succeeded. "));
-								} else {
-									LOGGER.error(String.format("postSchoolAge failed. ", d.cause()));
-									errorSchoolAge(siteRequest, eventHandler, d);
-								}
-							});
-						} else {
-							LOGGER.error(String.format("postSchoolAge failed. ", c.cause()));
-							errorSchoolAge(siteRequest, eventHandler, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("postSchoolAge failed. ", b.cause()));
-					errorSchoolAge(siteRequest, eventHandler, b);
-				}
-			});
+				userSchoolAge(siteRequest, b -> {
+					if(b.succeeded()) {
+						ApiRequest apiRequest = new ApiRequest();
+						apiRequest.setRows(1);
+						apiRequest.setNumFound(1L);
+						apiRequest.setNumPATCH(0L);
+						apiRequest.initDeepApiRequest(siteRequest);
+						siteRequest.setApiRequest_(apiRequest);
+						siteRequest.getVertx().eventBus().publish("websocketSchoolAge", JsonObject.mapFrom(apiRequest).toString());
+						postSchoolAgeFuture(siteRequest, false, c -> {
+							if(c.succeeded()) {
+								SchoolAge schoolAge = c.result();
+								apiRequest.setPk(schoolAge.getPk());
+								postSchoolAgeResponse(schoolAge, d -> {
+										if(d.succeeded()) {
+										eventHandler.handle(Future.succeededFuture(d.result()));
+										LOGGER.info(String.format("postSchoolAge succeeded. "));
+									} else {
+										LOGGER.error(String.format("postSchoolAge failed. ", d.cause()));
+										errorSchoolAge(siteRequest, eventHandler, d);
+									}
+								});
+							} else {
+								LOGGER.error(String.format("postSchoolAge failed. ", c.cause()));
+								errorSchoolAge(siteRequest, eventHandler, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("postSchoolAge failed. ", b.cause()));
+						errorSchoolAge(siteRequest, eventHandler, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("postSchoolAge failed. ", ex));
 			errorSchoolAge(siteRequest, eventHandler, Future.failedFuture(ex));
@@ -515,65 +516,66 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 							), new CaseInsensitiveHeaders()
 					)
 				));
-			}
+			} else {
 
-			userSchoolAge(siteRequest, b -> {
-				if(b.succeeded()) {
-					putimportSchoolAgeResponse(siteRequest, c -> {
-						if(c.succeeded()) {
-							eventHandler.handle(Future.succeededFuture(c.result()));
-							WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
-							workerExecutor.executeBlocking(
-								blockingCodeHandler -> {
-									try {
-										ApiRequest apiRequest = new ApiRequest();
-										JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
-										apiRequest.setRows(jsonArray.size());
-										apiRequest.setNumFound(new Integer(jsonArray.size()).longValue());
-										apiRequest.setNumPATCH(0L);
-										apiRequest.initDeepApiRequest(siteRequest);
-										siteRequest.setApiRequest_(apiRequest);
-										siteRequest.getVertx().eventBus().publish("websocketSchoolAge", JsonObject.mapFrom(apiRequest).toString());
-										varsSchoolAge(siteRequest, d -> {
-											if(d.succeeded()) {
-												listPUTImportSchoolAge(apiRequest, siteRequest, e -> {
-													if(e.succeeded()) {
-														putimportSchoolAgeResponse(siteRequest, f -> {
-															if(e.succeeded()) {
-																LOGGER.info(String.format("putimportSchoolAge succeeded. "));
-																blockingCodeHandler.handle(Future.succeededFuture(e.result()));
-															} else {
-																LOGGER.error(String.format("putimportSchoolAge failed. ", f.cause()));
-																errorSchoolAge(siteRequest, null, f);
-															}
-														});
-													} else {
-														LOGGER.error(String.format("putimportSchoolAge failed. ", e.cause()));
-														errorSchoolAge(siteRequest, null, e);
-													}
-												});
-											} else {
-												LOGGER.error(String.format("putimportSchoolAge failed. ", d.cause()));
-												errorSchoolAge(siteRequest, null, d);
-											}
-										});
-									} catch(Exception ex) {
-										LOGGER.error(String.format("putimportSchoolAge failed. ", ex));
-										errorSchoolAge(siteRequest, null, Future.failedFuture(ex));
+				userSchoolAge(siteRequest, b -> {
+					if(b.succeeded()) {
+						putimportSchoolAgeResponse(siteRequest, c -> {
+							if(c.succeeded()) {
+								eventHandler.handle(Future.succeededFuture(c.result()));
+								WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
+								workerExecutor.executeBlocking(
+									blockingCodeHandler -> {
+										try {
+											ApiRequest apiRequest = new ApiRequest();
+											JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+											apiRequest.setRows(jsonArray.size());
+											apiRequest.setNumFound(new Integer(jsonArray.size()).longValue());
+											apiRequest.setNumPATCH(0L);
+											apiRequest.initDeepApiRequest(siteRequest);
+											siteRequest.setApiRequest_(apiRequest);
+											siteRequest.getVertx().eventBus().publish("websocketSchoolAge", JsonObject.mapFrom(apiRequest).toString());
+											varsSchoolAge(siteRequest, d -> {
+												if(d.succeeded()) {
+													listPUTImportSchoolAge(apiRequest, siteRequest, e -> {
+														if(e.succeeded()) {
+															putimportSchoolAgeResponse(siteRequest, f -> {
+																if(e.succeeded()) {
+																	LOGGER.info(String.format("putimportSchoolAge succeeded. "));
+																	blockingCodeHandler.handle(Future.succeededFuture(e.result()));
+																} else {
+																	LOGGER.error(String.format("putimportSchoolAge failed. ", f.cause()));
+																	errorSchoolAge(siteRequest, null, f);
+																}
+															});
+														} else {
+															LOGGER.error(String.format("putimportSchoolAge failed. ", e.cause()));
+															errorSchoolAge(siteRequest, null, e);
+														}
+													});
+												} else {
+													LOGGER.error(String.format("putimportSchoolAge failed. ", d.cause()));
+													errorSchoolAge(siteRequest, null, d);
+												}
+											});
+										} catch(Exception ex) {
+											LOGGER.error(String.format("putimportSchoolAge failed. ", ex));
+											errorSchoolAge(siteRequest, null, Future.failedFuture(ex));
+										}
+									}, resultHandler -> {
 									}
-								}, resultHandler -> {
-								}
-							);
-						} else {
-							LOGGER.error(String.format("putimportSchoolAge failed. ", c.cause()));
-							errorSchoolAge(siteRequest, eventHandler, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("putimportSchoolAge failed. ", b.cause()));
-					errorSchoolAge(siteRequest, eventHandler, b);
-				}
-			});
+								);
+							} else {
+								LOGGER.error(String.format("putimportSchoolAge failed. ", c.cause()));
+								errorSchoolAge(siteRequest, eventHandler, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("putimportSchoolAge failed. ", b.cause()));
+						errorSchoolAge(siteRequest, eventHandler, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("putimportSchoolAge failed. ", ex));
 			errorSchoolAge(siteRequest, eventHandler, Future.failedFuture(ex));
@@ -700,65 +702,66 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 							), new CaseInsensitiveHeaders()
 					)
 				));
-			}
+			} else {
 
-			userSchoolAge(siteRequest, b -> {
-				if(b.succeeded()) {
-					putmergeSchoolAgeResponse(siteRequest, c -> {
-						if(c.succeeded()) {
-							eventHandler.handle(Future.succeededFuture(c.result()));
-							WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
-							workerExecutor.executeBlocking(
-								blockingCodeHandler -> {
-									try {
-										ApiRequest apiRequest = new ApiRequest();
-										JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
-										apiRequest.setRows(jsonArray.size());
-										apiRequest.setNumFound(new Integer(jsonArray.size()).longValue());
-										apiRequest.setNumPATCH(0L);
-										apiRequest.initDeepApiRequest(siteRequest);
-										siteRequest.setApiRequest_(apiRequest);
-										siteRequest.getVertx().eventBus().publish("websocketSchoolAge", JsonObject.mapFrom(apiRequest).toString());
-										varsSchoolAge(siteRequest, d -> {
-											if(d.succeeded()) {
-												listPUTMergeSchoolAge(apiRequest, siteRequest, e -> {
-													if(e.succeeded()) {
-														putmergeSchoolAgeResponse(siteRequest, f -> {
-															if(e.succeeded()) {
-																LOGGER.info(String.format("putmergeSchoolAge succeeded. "));
-																blockingCodeHandler.handle(Future.succeededFuture(e.result()));
-															} else {
-																LOGGER.error(String.format("putmergeSchoolAge failed. ", f.cause()));
-																errorSchoolAge(siteRequest, null, f);
-															}
-														});
-													} else {
-														LOGGER.error(String.format("putmergeSchoolAge failed. ", e.cause()));
-														errorSchoolAge(siteRequest, null, e);
-													}
-												});
-											} else {
-												LOGGER.error(String.format("putmergeSchoolAge failed. ", d.cause()));
-												errorSchoolAge(siteRequest, null, d);
-											}
-										});
-									} catch(Exception ex) {
-										LOGGER.error(String.format("putmergeSchoolAge failed. ", ex));
-										errorSchoolAge(siteRequest, null, Future.failedFuture(ex));
+				userSchoolAge(siteRequest, b -> {
+					if(b.succeeded()) {
+						putmergeSchoolAgeResponse(siteRequest, c -> {
+							if(c.succeeded()) {
+								eventHandler.handle(Future.succeededFuture(c.result()));
+								WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
+								workerExecutor.executeBlocking(
+									blockingCodeHandler -> {
+										try {
+											ApiRequest apiRequest = new ApiRequest();
+											JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+											apiRequest.setRows(jsonArray.size());
+											apiRequest.setNumFound(new Integer(jsonArray.size()).longValue());
+											apiRequest.setNumPATCH(0L);
+											apiRequest.initDeepApiRequest(siteRequest);
+											siteRequest.setApiRequest_(apiRequest);
+											siteRequest.getVertx().eventBus().publish("websocketSchoolAge", JsonObject.mapFrom(apiRequest).toString());
+											varsSchoolAge(siteRequest, d -> {
+												if(d.succeeded()) {
+													listPUTMergeSchoolAge(apiRequest, siteRequest, e -> {
+														if(e.succeeded()) {
+															putmergeSchoolAgeResponse(siteRequest, f -> {
+																if(e.succeeded()) {
+																	LOGGER.info(String.format("putmergeSchoolAge succeeded. "));
+																	blockingCodeHandler.handle(Future.succeededFuture(e.result()));
+																} else {
+																	LOGGER.error(String.format("putmergeSchoolAge failed. ", f.cause()));
+																	errorSchoolAge(siteRequest, null, f);
+																}
+															});
+														} else {
+															LOGGER.error(String.format("putmergeSchoolAge failed. ", e.cause()));
+															errorSchoolAge(siteRequest, null, e);
+														}
+													});
+												} else {
+													LOGGER.error(String.format("putmergeSchoolAge failed. ", d.cause()));
+													errorSchoolAge(siteRequest, null, d);
+												}
+											});
+										} catch(Exception ex) {
+											LOGGER.error(String.format("putmergeSchoolAge failed. ", ex));
+											errorSchoolAge(siteRequest, null, Future.failedFuture(ex));
+										}
+									}, resultHandler -> {
 									}
-								}, resultHandler -> {
-								}
-							);
-						} else {
-							LOGGER.error(String.format("putmergeSchoolAge failed. ", c.cause()));
-							errorSchoolAge(siteRequest, eventHandler, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("putmergeSchoolAge failed. ", b.cause()));
-					errorSchoolAge(siteRequest, eventHandler, b);
-				}
-			});
+								);
+							} else {
+								LOGGER.error(String.format("putmergeSchoolAge failed. ", c.cause()));
+								errorSchoolAge(siteRequest, eventHandler, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("putmergeSchoolAge failed. ", b.cause()));
+						errorSchoolAge(siteRequest, eventHandler, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("putmergeSchoolAge failed. ", ex));
 			errorSchoolAge(siteRequest, eventHandler, Future.failedFuture(ex));
@@ -883,70 +886,71 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 							), new CaseInsensitiveHeaders()
 					)
 				));
-			}
+			} else {
 
-			userSchoolAge(siteRequest, b -> {
-				if(b.succeeded()) {
-					putcopySchoolAgeResponse(siteRequest, c -> {
-						if(c.succeeded()) {
-							eventHandler.handle(Future.succeededFuture(c.result()));
-							WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
-							workerExecutor.executeBlocking(
-								blockingCodeHandler -> {
-									try {
-										aSearchSchoolAge(siteRequest, false, true, "/api/age/copy", "PUTCopy", d -> {
-											if(d.succeeded()) {
-												SearchList<SchoolAge> listSchoolAge = d.result();
-												ApiRequest apiRequest = new ApiRequest();
-												apiRequest.setRows(listSchoolAge.getRows());
-												apiRequest.setNumFound(listSchoolAge.getQueryResponse().getResults().getNumFound());
-												apiRequest.setNumPATCH(0L);
-												apiRequest.initDeepApiRequest(siteRequest);
-												siteRequest.setApiRequest_(apiRequest);
-												siteRequest.getVertx().eventBus().publish("websocketSchoolAge", JsonObject.mapFrom(apiRequest).toString());
-												try {
-													listPUTCopySchoolAge(apiRequest, listSchoolAge, e -> {
-														if(e.succeeded()) {
-															putcopySchoolAgeResponse(siteRequest, f -> {
-																if(f.succeeded()) {
-																	LOGGER.info(String.format("putcopySchoolAge succeeded. "));
-																	blockingCodeHandler.handle(Future.succeededFuture(f.result()));
-																} else {
-																	LOGGER.error(String.format("putcopySchoolAge failed. ", f.cause()));
-																	errorSchoolAge(siteRequest, null, f);
-																}
-															});
-														} else {
-															LOGGER.error(String.format("putcopySchoolAge failed. ", e.cause()));
-															errorSchoolAge(siteRequest, null, e);
-														}
-													});
-												} catch(Exception ex) {
-													LOGGER.error(String.format("putcopySchoolAge failed. ", ex));
-													errorSchoolAge(siteRequest, null, Future.failedFuture(ex));
+				userSchoolAge(siteRequest, b -> {
+					if(b.succeeded()) {
+						putcopySchoolAgeResponse(siteRequest, c -> {
+							if(c.succeeded()) {
+								eventHandler.handle(Future.succeededFuture(c.result()));
+								WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
+								workerExecutor.executeBlocking(
+									blockingCodeHandler -> {
+										try {
+											aSearchSchoolAge(siteRequest, false, true, "/api/age/copy", "PUTCopy", d -> {
+												if(d.succeeded()) {
+													SearchList<SchoolAge> listSchoolAge = d.result();
+													ApiRequest apiRequest = new ApiRequest();
+													apiRequest.setRows(listSchoolAge.getRows());
+													apiRequest.setNumFound(listSchoolAge.getQueryResponse().getResults().getNumFound());
+													apiRequest.setNumPATCH(0L);
+													apiRequest.initDeepApiRequest(siteRequest);
+													siteRequest.setApiRequest_(apiRequest);
+													siteRequest.getVertx().eventBus().publish("websocketSchoolAge", JsonObject.mapFrom(apiRequest).toString());
+													try {
+														listPUTCopySchoolAge(apiRequest, listSchoolAge, e -> {
+															if(e.succeeded()) {
+																putcopySchoolAgeResponse(siteRequest, f -> {
+																	if(f.succeeded()) {
+																		LOGGER.info(String.format("putcopySchoolAge succeeded. "));
+																		blockingCodeHandler.handle(Future.succeededFuture(f.result()));
+																	} else {
+																		LOGGER.error(String.format("putcopySchoolAge failed. ", f.cause()));
+																		errorSchoolAge(siteRequest, null, f);
+																	}
+																});
+															} else {
+																LOGGER.error(String.format("putcopySchoolAge failed. ", e.cause()));
+																errorSchoolAge(siteRequest, null, e);
+															}
+														});
+													} catch(Exception ex) {
+														LOGGER.error(String.format("putcopySchoolAge failed. ", ex));
+														errorSchoolAge(siteRequest, null, Future.failedFuture(ex));
+													}
+												} else {
+													LOGGER.error(String.format("putcopySchoolAge failed. ", d.cause()));
+													errorSchoolAge(siteRequest, null, d);
 												}
-											} else {
-												LOGGER.error(String.format("putcopySchoolAge failed. ", d.cause()));
-												errorSchoolAge(siteRequest, null, d);
-											}
-										});
-									} catch(Exception ex) {
-										LOGGER.error(String.format("putcopySchoolAge failed. ", ex));
-										errorSchoolAge(siteRequest, null, Future.failedFuture(ex));
+											});
+										} catch(Exception ex) {
+											LOGGER.error(String.format("putcopySchoolAge failed. ", ex));
+											errorSchoolAge(siteRequest, null, Future.failedFuture(ex));
+										}
+									}, resultHandler -> {
 									}
-								}, resultHandler -> {
-								}
-							);
-						} else {
-							LOGGER.error(String.format("putcopySchoolAge failed. ", c.cause()));
-							errorSchoolAge(siteRequest, eventHandler, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("putcopySchoolAge failed. ", b.cause()));
-					errorSchoolAge(siteRequest, eventHandler, b);
-				}
-			});
+								);
+							} else {
+								LOGGER.error(String.format("putcopySchoolAge failed. ", c.cause()));
+								errorSchoolAge(siteRequest, eventHandler, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("putcopySchoolAge failed. ", b.cause()));
+						errorSchoolAge(siteRequest, eventHandler, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("putcopySchoolAge failed. ", ex));
 			errorSchoolAge(siteRequest, eventHandler, Future.failedFuture(ex));
@@ -1259,81 +1263,82 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 							), new CaseInsensitiveHeaders()
 					)
 				));
-			}
+			} else {
 
-			userSchoolAge(siteRequest, b -> {
-				if(b.succeeded()) {
-					patchSchoolAgeResponse(siteRequest, c -> {
-						if(c.succeeded()) {
-							eventHandler.handle(Future.succeededFuture(c.result()));
-							WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
-							workerExecutor.executeBlocking(
-								blockingCodeHandler -> {
-									try {
-										aSearchSchoolAge(siteRequest, false, true, "/api/age", "PATCH", d -> {
-											if(d.succeeded()) {
-												SearchList<SchoolAge> listSchoolAge = d.result();
-												ApiRequest apiRequest = new ApiRequest();
-												apiRequest.setRows(listSchoolAge.getRows());
-												apiRequest.setNumFound(listSchoolAge.getQueryResponse().getResults().getNumFound());
-												apiRequest.setNumPATCH(0L);
-												apiRequest.initDeepApiRequest(siteRequest);
-												siteRequest.setApiRequest_(apiRequest);
-												siteRequest.getVertx().eventBus().publish("websocketSchoolAge", JsonObject.mapFrom(apiRequest).toString());
-												SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listSchoolAge.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
-												Date date = null;
-												if(facets != null)
-													date = (Date)facets.get("max_modified");
-												String dt;
-												if(date == null)
-													dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
-												else
-													dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
-												listSchoolAge.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
+				userSchoolAge(siteRequest, b -> {
+					if(b.succeeded()) {
+						patchSchoolAgeResponse(siteRequest, c -> {
+							if(c.succeeded()) {
+								eventHandler.handle(Future.succeededFuture(c.result()));
+								WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
+								workerExecutor.executeBlocking(
+									blockingCodeHandler -> {
+										try {
+											aSearchSchoolAge(siteRequest, false, true, "/api/age", "PATCH", d -> {
+												if(d.succeeded()) {
+													SearchList<SchoolAge> listSchoolAge = d.result();
+													ApiRequest apiRequest = new ApiRequest();
+													apiRequest.setRows(listSchoolAge.getRows());
+													apiRequest.setNumFound(listSchoolAge.getQueryResponse().getResults().getNumFound());
+													apiRequest.setNumPATCH(0L);
+													apiRequest.initDeepApiRequest(siteRequest);
+													siteRequest.setApiRequest_(apiRequest);
+													siteRequest.getVertx().eventBus().publish("websocketSchoolAge", JsonObject.mapFrom(apiRequest).toString());
+													SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listSchoolAge.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
+													Date date = null;
+													if(facets != null)
+														date = (Date)facets.get("max_modified");
+													String dt;
+													if(date == null)
+														dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
+													else
+														dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
+													listSchoolAge.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
 
-												try {
-													listPATCHSchoolAge(apiRequest, listSchoolAge, dt, e -> {
-														if(e.succeeded()) {
-															patchSchoolAgeResponse(siteRequest, f -> {
-																if(f.succeeded()) {
-																	LOGGER.info(String.format("patchSchoolAge succeeded. "));
-																	blockingCodeHandler.handle(Future.succeededFuture(f.result()));
-																} else {
-																	LOGGER.error(String.format("patchSchoolAge failed. ", f.cause()));
-																	errorSchoolAge(siteRequest, null, f);
-																}
-															});
-														} else {
-															LOGGER.error(String.format("patchSchoolAge failed. ", e.cause()));
-															errorSchoolAge(siteRequest, null, e);
-														}
-													});
-												} catch(Exception ex) {
-													LOGGER.error(String.format("patchSchoolAge failed. ", ex));
-													errorSchoolAge(siteRequest, null, Future.failedFuture(ex));
+													try {
+														listPATCHSchoolAge(apiRequest, listSchoolAge, dt, e -> {
+															if(e.succeeded()) {
+																patchSchoolAgeResponse(siteRequest, f -> {
+																	if(f.succeeded()) {
+																		LOGGER.info(String.format("patchSchoolAge succeeded. "));
+																		blockingCodeHandler.handle(Future.succeededFuture(f.result()));
+																	} else {
+																		LOGGER.error(String.format("patchSchoolAge failed. ", f.cause()));
+																		errorSchoolAge(siteRequest, null, f);
+																	}
+																});
+															} else {
+																LOGGER.error(String.format("patchSchoolAge failed. ", e.cause()));
+																errorSchoolAge(siteRequest, null, e);
+															}
+														});
+													} catch(Exception ex) {
+														LOGGER.error(String.format("patchSchoolAge failed. ", ex));
+														errorSchoolAge(siteRequest, null, Future.failedFuture(ex));
+													}
+										} else {
+													LOGGER.error(String.format("patchSchoolAge failed. ", d.cause()));
+													errorSchoolAge(siteRequest, null, d);
 												}
-											} else {
-												LOGGER.error(String.format("patchSchoolAge failed. ", d.cause()));
-												errorSchoolAge(siteRequest, null, d);
-											}
-										});
-									} catch(Exception ex) {
-										LOGGER.error(String.format("patchSchoolAge failed. ", ex));
-										errorSchoolAge(siteRequest, null, Future.failedFuture(ex));
+											});
+										} catch(Exception ex) {
+											LOGGER.error(String.format("patchSchoolAge failed. ", ex));
+											errorSchoolAge(siteRequest, null, Future.failedFuture(ex));
+										}
+									}, resultHandler -> {
 									}
-								}, resultHandler -> {
-								}
-							);
-						} else {
-							LOGGER.error(String.format("patchSchoolAge failed. ", c.cause()));
-							errorSchoolAge(siteRequest, eventHandler, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("patchSchoolAge failed. ", b.cause()));
-					errorSchoolAge(siteRequest, eventHandler, b);
-				}
-			});
+								);
+							} else {
+								LOGGER.error(String.format("patchSchoolAge failed. ", c.cause()));
+								errorSchoolAge(siteRequest, eventHandler, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("patchSchoolAge failed. ", b.cause()));
+						errorSchoolAge(siteRequest, eventHandler, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("patchSchoolAge failed. ", ex));
 			errorSchoolAge(siteRequest, eventHandler, Future.failedFuture(ex));
@@ -1979,32 +1984,33 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 							), new CaseInsensitiveHeaders()
 					)
 				));
-			}
+			} else {
 
-			userSchoolAge(siteRequest, b -> {
-				if(b.succeeded()) {
-					aSearchSchoolAge(siteRequest, false, true, "/api/age/{id}", "GET", c -> {
-						if(c.succeeded()) {
-							SearchList<SchoolAge> listSchoolAge = c.result();
-							getSchoolAgeResponse(listSchoolAge, d -> {
-								if(d.succeeded()) {
-									eventHandler.handle(Future.succeededFuture(d.result()));
-									LOGGER.info(String.format("getSchoolAge succeeded. "));
-								} else {
-									LOGGER.error(String.format("getSchoolAge failed. ", d.cause()));
-									errorSchoolAge(siteRequest, eventHandler, d);
-								}
-							});
-						} else {
-							LOGGER.error(String.format("getSchoolAge failed. ", c.cause()));
-							errorSchoolAge(siteRequest, eventHandler, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("getSchoolAge failed. ", b.cause()));
-					errorSchoolAge(siteRequest, eventHandler, b);
-				}
-			});
+				userSchoolAge(siteRequest, b -> {
+					if(b.succeeded()) {
+						aSearchSchoolAge(siteRequest, false, true, "/api/age/{id}", "GET", c -> {
+							if(c.succeeded()) {
+								SearchList<SchoolAge> listSchoolAge = c.result();
+								getSchoolAgeResponse(listSchoolAge, d -> {
+									if(d.succeeded()) {
+										eventHandler.handle(Future.succeededFuture(d.result()));
+										LOGGER.info(String.format("getSchoolAge succeeded. "));
+									} else {
+										LOGGER.error(String.format("getSchoolAge failed. ", d.cause()));
+										errorSchoolAge(siteRequest, eventHandler, d);
+									}
+								});
+							} else {
+								LOGGER.error(String.format("getSchoolAge failed. ", c.cause()));
+								errorSchoolAge(siteRequest, eventHandler, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("getSchoolAge failed. ", b.cause()));
+						errorSchoolAge(siteRequest, eventHandler, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("getSchoolAge failed. ", ex));
 			errorSchoolAge(siteRequest, eventHandler, Future.failedFuture(ex));
@@ -2066,32 +2072,33 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 							), new CaseInsensitiveHeaders()
 					)
 				));
-			}
+			} else {
 
-			userSchoolAge(siteRequest, b -> {
-				if(b.succeeded()) {
-					aSearchSchoolAge(siteRequest, false, true, "/api/age", "Search", c -> {
-						if(c.succeeded()) {
-							SearchList<SchoolAge> listSchoolAge = c.result();
-							searchSchoolAgeResponse(listSchoolAge, d -> {
-								if(d.succeeded()) {
-									eventHandler.handle(Future.succeededFuture(d.result()));
-									LOGGER.info(String.format("searchSchoolAge succeeded. "));
-								} else {
-									LOGGER.error(String.format("searchSchoolAge failed. ", d.cause()));
-									errorSchoolAge(siteRequest, eventHandler, d);
-								}
-							});
-						} else {
-							LOGGER.error(String.format("searchSchoolAge failed. ", c.cause()));
-							errorSchoolAge(siteRequest, eventHandler, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("searchSchoolAge failed. ", b.cause()));
-					errorSchoolAge(siteRequest, eventHandler, b);
-				}
-			});
+				userSchoolAge(siteRequest, b -> {
+					if(b.succeeded()) {
+						aSearchSchoolAge(siteRequest, false, true, "/api/age", "Search", c -> {
+							if(c.succeeded()) {
+								SearchList<SchoolAge> listSchoolAge = c.result();
+								searchSchoolAgeResponse(listSchoolAge, d -> {
+									if(d.succeeded()) {
+										eventHandler.handle(Future.succeededFuture(d.result()));
+										LOGGER.info(String.format("searchSchoolAge succeeded. "));
+									} else {
+										LOGGER.error(String.format("searchSchoolAge failed. ", d.cause()));
+										errorSchoolAge(siteRequest, eventHandler, d);
+									}
+								});
+							} else {
+								LOGGER.error(String.format("searchSchoolAge failed. ", c.cause()));
+								errorSchoolAge(siteRequest, eventHandler, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("searchSchoolAge failed. ", b.cause()));
+						errorSchoolAge(siteRequest, eventHandler, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("searchSchoolAge failed. ", ex));
 			errorSchoolAge(siteRequest, eventHandler, Future.failedFuture(ex));
@@ -2198,32 +2205,33 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 							), new CaseInsensitiveHeaders()
 					)
 				));
-			}
+			} else {
 
-			userSchoolAge(siteRequest, b -> {
-				if(b.succeeded()) {
-					aSearchSchoolAge(siteRequest, false, true, "/age", "SearchPage", c -> {
-						if(c.succeeded()) {
-							SearchList<SchoolAge> listSchoolAge = c.result();
-							searchpageSchoolAgeResponse(listSchoolAge, d -> {
-								if(d.succeeded()) {
-									eventHandler.handle(Future.succeededFuture(d.result()));
-									LOGGER.info(String.format("searchpageSchoolAge succeeded. "));
-								} else {
-									LOGGER.error(String.format("searchpageSchoolAge failed. ", d.cause()));
-									errorSchoolAge(siteRequest, eventHandler, d);
-								}
-							});
-						} else {
-							LOGGER.error(String.format("searchpageSchoolAge failed. ", c.cause()));
-							errorSchoolAge(siteRequest, eventHandler, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("searchpageSchoolAge failed. ", b.cause()));
-					errorSchoolAge(siteRequest, eventHandler, b);
-				}
-			});
+				userSchoolAge(siteRequest, b -> {
+					if(b.succeeded()) {
+						aSearchSchoolAge(siteRequest, false, true, "/age", "SearchPage", c -> {
+							if(c.succeeded()) {
+								SearchList<SchoolAge> listSchoolAge = c.result();
+								searchpageSchoolAgeResponse(listSchoolAge, d -> {
+									if(d.succeeded()) {
+										eventHandler.handle(Future.succeededFuture(d.result()));
+										LOGGER.info(String.format("searchpageSchoolAge succeeded. "));
+									} else {
+										LOGGER.error(String.format("searchpageSchoolAge failed. ", d.cause()));
+										errorSchoolAge(siteRequest, eventHandler, d);
+									}
+								});
+							} else {
+								LOGGER.error(String.format("searchpageSchoolAge failed. ", c.cause()));
+								errorSchoolAge(siteRequest, eventHandler, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("searchpageSchoolAge failed. ", b.cause()));
+						errorSchoolAge(siteRequest, eventHandler, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("searchpageSchoolAge failed. ", ex));
 			errorSchoolAge(siteRequest, eventHandler, Future.failedFuture(ex));

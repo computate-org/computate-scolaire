@@ -8596,6 +8596,68 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return (SchoolEnrollment)this;
 	}
 
+	////////////////////
+	// paymentLastStr //
+	////////////////////
+
+	/**	 The entity paymentLastStr
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String paymentLastStr;
+	@JsonIgnore
+	public Wrap<String> paymentLastStrWrap = new Wrap<String>().p(this).c(String.class).var("paymentLastStr").o(paymentLastStr);
+
+	/**	<br/> The entity paymentLastStr
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:paymentLastStr">Find the entity paymentLastStr in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _paymentLastStr(Wrap<String> c);
+
+	public String getPaymentLastStr() {
+		return paymentLastStr;
+	}
+
+	public void setPaymentLastStr(String paymentLastStr) {
+		this.paymentLastStr = paymentLastStr;
+		this.paymentLastStrWrap.alreadyInitialized = true;
+	}
+	protected SchoolEnrollment paymentLastStrInit() {
+		if(!paymentLastStrWrap.alreadyInitialized) {
+			_paymentLastStr(paymentLastStrWrap);
+			if(paymentLastStr == null)
+				setPaymentLastStr(paymentLastStrWrap.o);
+		}
+		paymentLastStrWrap.alreadyInitialized(true);
+		return (SchoolEnrollment)this;
+	}
+
+	public String solrPaymentLastStr() {
+		return paymentLastStr;
+	}
+
+	public String strPaymentLastStr() {
+		return paymentLastStr == null ? "" : paymentLastStr;
+	}
+
+	public String jsonPaymentLastStr() {
+		return paymentLastStr == null ? "" : paymentLastStr;
+	}
+
+	public String nomAffichagePaymentLastStr() {
+		return null;
+	}
+
+	public String htmTooltipPaymentLastStr() {
+		return null;
+	}
+
+	public String htmPaymentLastStr() {
+		return paymentLastStr == null ? "" : StringEscapeUtils.escapeHtml4(strPaymentLastStr());
+	}
+
 	///////////////////
 	// paymentAmount //
 	///////////////////
@@ -9128,6 +9190,86 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String htmPaymentsLate() {
 		return paymentsLate == null ? "" : StringEscapeUtils.escapeHtml4(strPaymentsLate());
+	}
+
+	////////////////////////
+	// paymentsLateAmount //
+	////////////////////////
+
+	/**	 The entity paymentsLateAmount
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected BigDecimal paymentsLateAmount;
+	@JsonIgnore
+	public Wrap<BigDecimal> paymentsLateAmountWrap = new Wrap<BigDecimal>().p(this).c(BigDecimal.class).var("paymentsLateAmount").o(paymentsLateAmount);
+
+	/**	<br/> The entity paymentsLateAmount
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:paymentsLateAmount">Find the entity paymentsLateAmount in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _paymentsLateAmount(Wrap<BigDecimal> c);
+
+	public BigDecimal getPaymentsLateAmount() {
+		return paymentsLateAmount;
+	}
+
+	public void setPaymentsLateAmount(BigDecimal paymentsLateAmount) {
+		this.paymentsLateAmount = paymentsLateAmount;
+		this.paymentsLateAmountWrap.alreadyInitialized = true;
+	}
+	public SchoolEnrollment setPaymentsLateAmount(String o) {
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			this.paymentsLateAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.paymentsLateAmountWrap.alreadyInitialized = true;
+		return (SchoolEnrollment)this;
+	}
+	public SchoolEnrollment setPaymentsLateAmount(Double o) {
+			this.paymentsLateAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.paymentsLateAmountWrap.alreadyInitialized = true;
+		return (SchoolEnrollment)this;
+	}
+	public SchoolEnrollment setPaymentsLateAmount(Integer o) {
+			this.paymentsLateAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+		this.paymentsLateAmountWrap.alreadyInitialized = true;
+		return (SchoolEnrollment)this;
+	}
+	protected SchoolEnrollment paymentsLateAmountInit() {
+		if(!paymentsLateAmountWrap.alreadyInitialized) {
+			_paymentsLateAmount(paymentsLateAmountWrap);
+			if(paymentsLateAmount == null)
+				setPaymentsLateAmount(paymentsLateAmountWrap.o);
+		}
+		paymentsLateAmountWrap.alreadyInitialized(true);
+		return (SchoolEnrollment)this;
+	}
+
+	public Double solrPaymentsLateAmount() {
+		return paymentsLateAmount == null ? null : paymentsLateAmount.doubleValue();
+	}
+
+	public String strPaymentsLateAmount() {
+		return paymentsLateAmount == null ? "" : paymentsLateAmount.setScale(2).toString();
+	}
+
+	public String jsonPaymentsLateAmount() {
+		return paymentsLateAmount == null ? "" : paymentsLateAmount.toString();
+	}
+
+	public String nomAffichagePaymentsLateAmount() {
+		return null;
+	}
+
+	public String htmTooltipPaymentsLateAmount() {
+		return null;
+	}
+
+	public String htmPaymentsLateAmount() {
+		return paymentsLateAmount == null ? "" : StringEscapeUtils.escapeHtml4(strPaymentsLateAmount());
 	}
 
 	///////////////////
@@ -13570,6 +13712,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		customerProfileIdInit();
 		enrollmentChargeDateInit();
 		paymentFacetsInit();
+		paymentLastStrInit();
 		paymentAmountInit();
 		chargeAmountInit();
 		chargeAmountFutureInit();
@@ -13577,6 +13720,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		chargesNowInit();
 		paymentsCurrentInit();
 		paymentsLateInit();
+		paymentsLateAmountInit();
 		paymentsAheadInit();
 		createdYearInit();
 		createdDayOfWeekInit();
@@ -13878,6 +14022,8 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				return oSchoolEnrollment.enrollmentChargeDate;
 			case "paymentFacets":
 				return oSchoolEnrollment.paymentFacets;
+			case "paymentLastStr":
+				return oSchoolEnrollment.paymentLastStr;
 			case "paymentAmount":
 				return oSchoolEnrollment.paymentAmount;
 			case "chargeAmount":
@@ -13892,6 +14038,8 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				return oSchoolEnrollment.paymentsCurrent;
 			case "paymentsLate":
 				return oSchoolEnrollment.paymentsLate;
+			case "paymentsLateAmount":
+				return oSchoolEnrollment.paymentsLateAmount;
 			case "paymentsAhead":
 				return oSchoolEnrollment.paymentsAhead;
 			case "createdYear":
@@ -14795,6 +14943,12 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 					oSchoolEnrollment.setEnrollmentChargeDate(enrollmentChargeDate);
 			}
 
+			if(saves.contains("paymentLastStr")) {
+				String paymentLastStr = (String)solrDocument.get("paymentLastStr_stored_string");
+				if(paymentLastStr != null)
+					oSchoolEnrollment.setPaymentLastStr(paymentLastStr);
+			}
+
 			if(saves.contains("paymentAmount")) {
 				Double paymentAmount = (Double)solrDocument.get("paymentAmount_stored_double");
 				if(paymentAmount != null)
@@ -14835,6 +14989,12 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				Boolean paymentsLate = (Boolean)solrDocument.get("paymentsLate_stored_boolean");
 				if(paymentsLate != null)
 					oSchoolEnrollment.setPaymentsLate(paymentsLate);
+			}
+
+			if(saves.contains("paymentsLateAmount")) {
+				Double paymentsLateAmount = (Double)solrDocument.get("paymentsLateAmount_stored_double");
+				if(paymentsLateAmount != null)
+					oSchoolEnrollment.setPaymentsLateAmount(paymentsLateAmount);
 			}
 
 			if(saves.contains("paymentsAhead")) {
@@ -15514,6 +15674,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 			document.addField("enrollmentChargeDate_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(enrollmentChargeDate.atStartOfDay(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toInstant().atZone(ZoneId.of("Z"))));
 			document.addField("enrollmentChargeDate_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(enrollmentChargeDate.atStartOfDay(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toInstant().atZone(ZoneId.of("Z"))));
 		}
+		if(paymentLastStr != null) {
+			document.addField("paymentLastStr_indexed_string", paymentLastStr);
+			document.addField("paymentLastStr_stored_string", paymentLastStr);
+		}
 		if(paymentAmount != null) {
 			document.addField("paymentAmount_indexed_double", paymentAmount.doubleValue());
 			document.addField("paymentAmount_stored_double", paymentAmount.doubleValue());
@@ -15541,6 +15705,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		if(paymentsLate != null) {
 			document.addField("paymentsLate_indexed_boolean", paymentsLate);
 			document.addField("paymentsLate_stored_boolean", paymentsLate);
+		}
+		if(paymentsLateAmount != null) {
+			document.addField("paymentsLateAmount_indexed_double", paymentsLateAmount.doubleValue());
+			document.addField("paymentsLateAmount_stored_double", paymentsLateAmount.doubleValue());
 		}
 		if(paymentsAhead != null) {
 			document.addField("paymentsAhead_indexed_boolean", paymentsAhead);
@@ -15894,6 +16062,8 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				return "customerProfileId_indexed_string";
 			case "enrollmentChargeDate":
 				return "enrollmentChargeDate_indexed_date";
+			case "paymentLastStr":
+				return "paymentLastStr_indexed_string";
 			case "paymentAmount":
 				return "paymentAmount_indexed_double";
 			case "chargeAmount":
@@ -15908,6 +16078,8 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				return "paymentsCurrent_indexed_boolean";
 			case "paymentsLate":
 				return "paymentsLate_indexed_boolean";
+			case "paymentsLateAmount":
+				return "paymentsLateAmount_indexed_double";
 			case "paymentsAhead":
 				return "paymentsAhead_indexed_boolean";
 			case "createdYear":
@@ -16327,6 +16499,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		if(enrollmentChargeDate != null)
 			oSchoolEnrollment.setEnrollmentChargeDate(enrollmentChargeDate);
 
+		String paymentLastStr = (String)solrDocument.get("paymentLastStr_stored_string");
+		if(paymentLastStr != null)
+			oSchoolEnrollment.setPaymentLastStr(paymentLastStr);
+
 		Double paymentAmount = (Double)solrDocument.get("paymentAmount_stored_double");
 		if(paymentAmount != null)
 			oSchoolEnrollment.setPaymentAmount(paymentAmount);
@@ -16354,6 +16530,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		Boolean paymentsLate = (Boolean)solrDocument.get("paymentsLate_stored_boolean");
 		if(paymentsLate != null)
 			oSchoolEnrollment.setPaymentsLate(paymentsLate);
+
+		Double paymentsLateAmount = (Double)solrDocument.get("paymentsLateAmount_stored_double");
+		if(paymentsLateAmount != null)
+			oSchoolEnrollment.setPaymentsLateAmount(paymentsLateAmount);
 
 		Boolean paymentsAhead = (Boolean)solrDocument.get("paymentsAhead_stored_boolean");
 		if(paymentsAhead != null)

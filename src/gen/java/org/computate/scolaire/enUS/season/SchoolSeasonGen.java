@@ -317,7 +317,10 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 
 	public void inputYearKey(String classApiMethodMethod) {
 		SchoolSeason s = (SchoolSeason)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
 				e("input")
 					.a("type", "text")
@@ -471,7 +474,10 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 
 	public void inputSessionKeys(String classApiMethodMethod) {
 		SchoolSeason s = (SchoolSeason)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
 				e("input")
 					.a("type", "text")
@@ -1700,7 +1706,10 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 
 	public void inputSeasonStartDate(String classApiMethodMethod) {
 		SchoolSeason s = (SchoolSeason)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("class", "w3-input w3-border datepicker setSeasonStartDate classSchoolSeason inputSchoolSeason", pk, "SeasonStartDate w3-input w3-border ")
@@ -1816,7 +1825,10 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 
 	public void inputSeasonSummer(String classApiMethodMethod) {
 		SchoolSeason s = (SchoolSeason)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			if("Page".equals(classApiMethodMethod)) {
 				e("input")
 					.a("type", "checkbox")
@@ -1941,7 +1953,10 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 
 	public void inputSeasonWinter(String classApiMethodMethod) {
 		SchoolSeason s = (SchoolSeason)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			if("Page".equals(classApiMethodMethod)) {
 				e("input")
 					.a("type", "checkbox")
@@ -2066,7 +2081,10 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 
 	public void inputSeasonFuture(String classApiMethodMethod) {
 		SchoolSeason s = (SchoolSeason)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			if("Page".equals(classApiMethodMethod)) {
 				e("input")
 					.a("type", "checkbox")

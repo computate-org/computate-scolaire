@@ -237,7 +237,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 
 	public void inputPageDesignKeys(String classApiMethodMethod) {
 		HtmlPart s = (HtmlPart)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
 				e("input")
 					.a("type", "text")
@@ -249,6 +252,12 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 					.a("oninput", "suggestHtmlPartPageDesignKeys($(this).val() ? searchPageDesignFilters($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'htmlPartKeys:" + pk + "'}", "], $('#listHtmlPartPageDesignKeys_", classApiMethodMethod, "'), ", pk, "); ")
 				.fg();
 
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+				sx(htmPageDesignKeys());
+			}
 		}
 	}
 
@@ -366,7 +375,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 
 	public void inputHtmlLink(String classApiMethodMethod) {
 		HtmlPart s = (HtmlPart)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "link")
@@ -385,6 +397,12 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				a("value", strHtmlLink())
 			.fg();
 
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+				sx(htmHtmlLink());
+			}
 		}
 	}
 
@@ -486,7 +504,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 
 	public void inputHtmlElement(String classApiMethodMethod) {
 		HtmlPart s = (HtmlPart)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "HTML element")
@@ -505,6 +526,12 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				a("value", strHtmlElement())
 			.fg();
 
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+				sx(htmHtmlElement());
+			}
 		}
 	}
 
@@ -606,7 +633,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 
 	public void inputHtmlId(String classApiMethodMethod) {
 		HtmlPart s = (HtmlPart)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "HTML ID")
@@ -625,6 +655,12 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				a("value", strHtmlId())
 			.fg();
 
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+				sx(htmHtmlId());
+			}
 		}
 	}
 
@@ -726,7 +762,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 
 	public void inputHtmlClasses(String classApiMethodMethod) {
 		HtmlPart s = (HtmlPart)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "HTML classes")
@@ -745,6 +784,12 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				a("value", strHtmlClasses())
 			.fg();
 
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+				sx(htmHtmlClasses());
+			}
 		}
 	}
 
@@ -846,7 +891,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 
 	public void inputHtmlStyle(String classApiMethodMethod) {
 		HtmlPart s = (HtmlPart)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "HTML style")
@@ -865,6 +913,12 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				a("value", strHtmlStyle())
 			.fg();
 
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+				sx(htmHtmlStyle());
+			}
 		}
 	}
 
@@ -966,7 +1020,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 
 	public void inputHtmlBefore(String classApiMethodMethod) {
 		HtmlPart s = (HtmlPart)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("textarea")
 				.a("placeholder", "HTML before")
 				.a("id", classApiMethodMethod, "_htmlBefore");
@@ -983,6 +1040,12 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				}
 			f().sx(strHtmlBefore()).g("textarea");
 
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+				sx(htmHtmlBefore());
+			}
 		}
 	}
 
@@ -1084,7 +1147,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 
 	public void inputHtmlAfter(String classApiMethodMethod) {
 		HtmlPart s = (HtmlPart)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("textarea")
 				.a("placeholder", "HTML after")
 				.a("id", classApiMethodMethod, "_htmlAfter");
@@ -1101,6 +1167,12 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				}
 			f().sx(strHtmlAfter()).g("textarea");
 
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+				sx(htmHtmlAfter());
+			}
 		}
 	}
 
@@ -1202,7 +1274,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 
 	public void inputHtmlText(String classApiMethodMethod) {
 		HtmlPart s = (HtmlPart)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("textarea")
 				.a("placeholder", "text")
 				.a("id", classApiMethodMethod, "_htmlText");
@@ -1219,6 +1294,12 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				}
 			f().sx(strHtmlText()).g("textarea");
 
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+				sx(htmHtmlText());
+			}
 		}
 	}
 
@@ -1320,7 +1401,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 
 	public void inputHtmlVar(String classApiMethodMethod) {
 		HtmlPart s = (HtmlPart)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "var")
@@ -1339,6 +1423,12 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				a("value", strHtmlVar())
 			.fg();
 
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+				sx(htmHtmlVar());
+			}
 		}
 	}
 
@@ -1440,7 +1530,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 
 	public void inputHtmlVarSpan(String classApiMethodMethod) {
 		HtmlPart s = (HtmlPart)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "var span")
@@ -1459,6 +1552,12 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				a("value", strHtmlVarSpan())
 			.fg();
 
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+				sx(htmHtmlVarSpan());
+			}
 		}
 	}
 
@@ -1560,7 +1659,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 
 	public void inputHtmlVarForm(String classApiMethodMethod) {
 		HtmlPart s = (HtmlPart)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "var form")
@@ -1579,6 +1681,12 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				a("value", strHtmlVarForm())
 			.fg();
 
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+				sx(htmHtmlVarForm());
+			}
 		}
 	}
 
@@ -1680,7 +1788,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 
 	public void inputHtmlVarInput(String classApiMethodMethod) {
 		HtmlPart s = (HtmlPart)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "var input")
@@ -1699,6 +1810,12 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				a("value", strHtmlVarInput())
 			.fg();
 
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+				sx(htmHtmlVarInput());
+			}
 		}
 	}
 
@@ -1800,7 +1917,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 
 	public void inputHtmlVarForEach(String classApiMethodMethod) {
 		HtmlPart s = (HtmlPart)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "var for each")
@@ -1819,6 +1939,12 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				a("value", strHtmlVarForEach())
 			.fg();
 
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+				sx(htmHtmlVarForEach());
+			}
 		}
 	}
 
@@ -1925,7 +2051,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 
 	public void inputHtmlExclude(String classApiMethodMethod) {
 		HtmlPart s = (HtmlPart)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			if("Page".equals(classApiMethodMethod)) {
 				e("input")
 					.a("type", "checkbox")
@@ -1957,6 +2086,12 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				g("select");
 			}
 
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+				sx(htmHtmlExclude());
+			}
 		}
 	}
 
@@ -2050,7 +2185,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 
 	public void inputPdfExclude(String classApiMethodMethod) {
 		HtmlPart s = (HtmlPart)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			if("Page".equals(classApiMethodMethod)) {
 				e("input")
 					.a("type", "checkbox")
@@ -2082,6 +2220,12 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				g("select");
 			}
 
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+				sx(htmPdfExclude());
+			}
 		}
 	}
 
@@ -2175,7 +2319,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 
 	public void inputLoginLogout(String classApiMethodMethod) {
 		HtmlPart s = (HtmlPart)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			if("Page".equals(classApiMethodMethod)) {
 				e("input")
 					.a("type", "checkbox")
@@ -2207,6 +2354,12 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				g("select");
 			}
 
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+				sx(htmLoginLogout());
+			}
 		}
 	}
 
@@ -2302,7 +2455,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 
 	public void inputSort1(String classApiMethodMethod) {
 		HtmlPart s = (HtmlPart)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "sort1")
@@ -2321,6 +2477,12 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				a("value", strSort1())
 			.fg();
 
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+				sx(htmSort1());
+			}
 		}
 	}
 
@@ -2429,7 +2591,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 
 	public void inputSort2(String classApiMethodMethod) {
 		HtmlPart s = (HtmlPart)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "sort2")
@@ -2448,6 +2613,12 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				a("value", strSort2())
 			.fg();
 
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+				sx(htmSort2());
+			}
 		}
 	}
 
@@ -2556,7 +2727,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 
 	public void inputSort3(String classApiMethodMethod) {
 		HtmlPart s = (HtmlPart)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "sort3")
@@ -2575,6 +2749,12 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				a("value", strSort3())
 			.fg();
 
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+				sx(htmSort3());
+			}
 		}
 	}
 
@@ -2683,7 +2863,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 
 	public void inputSort4(String classApiMethodMethod) {
 		HtmlPart s = (HtmlPart)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "sort4")
@@ -2702,6 +2885,12 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				a("value", strSort4())
 			.fg();
 
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+				sx(htmSort4());
+			}
 		}
 	}
 
@@ -2810,7 +2999,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 
 	public void inputSort5(String classApiMethodMethod) {
 		HtmlPart s = (HtmlPart)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "sort5")
@@ -2829,6 +3021,12 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				a("value", strSort5())
 			.fg();
 
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+				sx(htmSort5());
+			}
 		}
 	}
 
@@ -2937,7 +3135,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 
 	public void inputSort6(String classApiMethodMethod) {
 		HtmlPart s = (HtmlPart)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "sort6")
@@ -2956,6 +3157,12 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				a("value", strSort6())
 			.fg();
 
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+				sx(htmSort6());
+			}
 		}
 	}
 
@@ -3064,7 +3271,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 
 	public void inputSort7(String classApiMethodMethod) {
 		HtmlPart s = (HtmlPart)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "sort7")
@@ -3083,6 +3293,12 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				a("value", strSort7())
 			.fg();
 
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+				sx(htmSort7());
+			}
 		}
 	}
 
@@ -3191,7 +3407,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 
 	public void inputSort8(String classApiMethodMethod) {
 		HtmlPart s = (HtmlPart)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "sort8")
@@ -3210,6 +3429,12 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				a("value", strSort8())
 			.fg();
 
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+				sx(htmSort8());
+			}
 		}
 	}
 
@@ -3318,7 +3543,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 
 	public void inputSort9(String classApiMethodMethod) {
 		HtmlPart s = (HtmlPart)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "sort9")
@@ -3337,6 +3565,12 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				a("value", strSort9())
 			.fg();
 
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+				sx(htmSort9());
+			}
 		}
 	}
 
@@ -3445,7 +3679,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 
 	public void inputSort10(String classApiMethodMethod) {
 		HtmlPart s = (HtmlPart)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "sort10")
@@ -3464,6 +3701,12 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				a("value", strSort10())
 			.fg();
 
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+				sx(htmSort10());
+			}
 		}
 	}
 

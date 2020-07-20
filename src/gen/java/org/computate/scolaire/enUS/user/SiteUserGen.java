@@ -326,6 +326,56 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 		} g("div");
 	}
 
+	//////////////////
+	// enrollments_ //
+	//////////////////
+
+	/**	 The entity enrollments_
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonIgnore
+	@JsonInclude(Include.NON_NULL)
+	protected List<SchoolEnrollment> enrollments_;
+	@JsonIgnore
+	public Wrap<List<SchoolEnrollment>> enrollments_Wrap = new Wrap<List<SchoolEnrollment>>().p(this).c(List.class).var("enrollments_").o(enrollments_);
+
+	/**	<br/> The entity enrollments_
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.user.SiteUser&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollments_">Find the entity enrollments_ in Solr</a>
+	 * <br/>
+	 * @param o is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _enrollments_(Wrap<List<SchoolEnrollment>> o);
+
+	public List<SchoolEnrollment> getEnrollments_() {
+		return enrollments_;
+	}
+
+	public void setEnrollments_(List<SchoolEnrollment> enrollments_) {
+		this.enrollments_ = enrollments_;
+		this.enrollments_Wrap.alreadyInitialized = true;
+	}
+	public SiteUser addEnrollments_(SchoolEnrollment...objets) {
+		for(SchoolEnrollment o : objets) {
+			addEnrollments_(o);
+		}
+		return (SiteUser)this;
+	}
+	public SiteUser addEnrollments_(SchoolEnrollment o) {
+		if(o != null && !enrollments_.contains(o))
+			this.enrollments_.add(o);
+		return (SiteUser)this;
+	}
+	protected SiteUser enrollments_Init() {
+		if(!enrollments_Wrap.alreadyInitialized) {
+			_enrollments_(enrollments_Wrap);
+			if(enrollments_ == null)
+				setEnrollments_(enrollments_Wrap.o);
+		}
+		enrollments_Wrap.alreadyInitialized(true);
+		return (SiteUser)this;
+	}
+
 	/////////////////
 	// paymentKeys //
 	/////////////////
@@ -1690,6 +1740,7 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 	public void initSiteUser() {
 		userKeysInit();
 		enrollmentKeysInit();
+		enrollments_Init();
 		paymentKeysInit();
 		userNameInit();
 		userEmailInit();
@@ -1744,6 +1795,8 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 				return oSiteUser.userKeys;
 			case "enrollmentKeys":
 				return oSiteUser.enrollmentKeys;
+			case "enrollments_":
+				return oSiteUser.enrollments_;
 			case "paymentKeys":
 				return oSiteUser.paymentKeys;
 			case "userName":

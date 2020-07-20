@@ -29,6 +29,7 @@ import javax.xml.datatype.DatatypeFactory;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.solr.client.solrj.SolrQuery;
+import org.apache.solr.client.solrj.SolrQuery.ORDER;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.util.SimpleOrderedMap;
@@ -300,13 +301,13 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 						configurerExecuteurTravailleurPartage().future().compose(e -> 
 							configurerWebsockets().future().compose(f -> 
 								configurerMail().future().compose(g -> 
-//									configurerAuthorizeNetFrais().future().compose(h -> 
+									configurerAuthorizeNetFrais().future().compose(h -> 
 //										configurerAuthorizeNetPaiements(1).future().compose(i -> 
 //											configurerAuthorizeNetPaiements(2).future().compose(j -> 
 												demarrerServeur().future()
 //											)
 //										)
-//									)
+									)
 								)
 							)
 						)
@@ -1158,6 +1159,12 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * 
 	 * enUS: Configure charges with Authorize.net. 
 	 * 
+	 * r: "modifie_indexed_date"
+	 * r.enUS: "modified_indexed_date"
+	 * r: "supprime_indexed_boolean"
+	 * r.enUS: "deleted_indexed_boolean"
+	 * r: "archive_indexed_boolean"
+	 * r.enUS: "archived_indexed_boolean"
 	 * r: "Commencer à peupler les frais nouveaux. "
 	 * r.enUS: "Start to populate the new charges. "
 	 * r: "Init SQL a réussi. "
@@ -1307,7 +1314,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 		Promise<Void> promise = Promise.promise();
 
 //		vertx.setPeriodic(1000 * 60 * 60 * 60, a -> {
-		vertx.setPeriodic(1000 * 60 * 60, a -> {
+		vertx.setPeriodic(1000 * 60, a -> {
 			WorkerExecutor executeurTravailleur = siteContexteFrFR.getExecuteurTravailleur();
 			executeurTravailleur.executeBlocking(
 				blockingCodeHandler -> {
@@ -1334,9 +1341,13 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 						listeRechercheInscription.setStocker(true);
 						listeRechercheInscription.setQuery("*:*");
 						listeRechercheInscription.setC(InscriptionScolaire.class);
+						listeRechercheInscription.addFilterQuery("supprime_indexed_boolean:false");
+						listeRechercheInscription.addFilterQuery("archive_indexed_boolean:false");
 						listeRechercheInscription.addFilterQuery("sessionDateDebut_indexed_date:[* TO " + dateFormat.format(sessionDateDebut) + "]");
 						listeRechercheInscription.addFilterQuery("sessionDateFin_indexed_date:[" + dateFormat.format(sessionDateFin) + " TO *]");
 						listeRechercheInscription.addFilterQuery("(*:* AND -inscriptionDateFrais_indexed_date:[* TO *] OR inscriptionDateFrais_indexed_date:[* TO " + dateFormat.format(inscriptionDateFrais) + "])");
+						listeRechercheInscription.setRows(1);
+						listeRechercheInscription.addSort("modifie_indexed_date", ORDER.desc);
 						listeRechercheInscription.initLoinListeRecherche(requeteSite);
 		
 
@@ -1414,6 +1425,8 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * Param2.var.enUS: paymentService
 	 * Param3.var.enUS: enrollmentService
 	 * Param4.var.enUS: eventHandler
+	 * r: patchInscriptionScolaireFuture
+	 * r.enUS: patchSchoolEnrollmentFuture
 	 * r: inscriptionFraisFuture
 	 * r.enUS: enrollmentChargesFuture
 	 * r: RequeteSiteFrFR
@@ -1422,6 +1435,8 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r.enUS: SiteRequest
 	 * r: listeInscriptionScolaire
 	 * r.enUS: listSchoolEnrollment
+	 * r: authorizeNetEnrollmentPaiementsFuture
+	 * r.enUS: authorizeNetEnrollmentPaymentsFuture
 	 * r: futureAuthorizeNetFraisInscription
 	 * r.enUS: futureAuthorizeNetEnrollmentCharges
 	 * r: futureAuthorizeNetFrais
@@ -1450,7 +1465,19 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 			futures.add(
 				inscriptionService.inscriptionFraisFuture(o, a -> {
 					if(a.succeeded()) {
-						LOGGER.info("Créer un frais a réussi. ");
+						inscriptionService.authorizeNetEnrollmentPaiementsFuture(o, b -> {
+							if(b.succeeded()) {
+								inscriptionService.patchInscriptionScolaireFuture(o, false, c -> {
+									if(c.succeeded()) {
+										LOGGER.info("Créer un frais a réussi. ");
+									} else {
+										erreurAppliVertx(requeteSite, c);
+									}
+								});
+							} else {
+								erreurAppliVertx(requeteSite, b);
+							}
+						});
 					} else {
 						erreurAppliVertx(requeteSite, a);
 					}
@@ -1460,7 +1487,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
 				if(listeInscriptionScolaire.next()) {
-					futureAuthorizeNetFraisInscription(listeInscriptionScolaire, paiementService, inscriptionService, gestionnaireEvenements);
+//					futureAuthorizeNetFraisInscription(listeInscriptionScolaire, paiementService, inscriptionService, gestionnaireEvenements);
 					LOGGER.info("Créer une liste de frais a réussi. ");
 				} else {
 					gestionnaireEvenements.handle(Future.succeededFuture());
@@ -1618,7 +1645,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 		ConfigSite configSite = siteContexteFrFR.getConfigSite();
 		Promise<Void> promise = Promise.promise();
 
-		vertx.setPeriodic(1000 * 60 * 60, a -> {
+		vertx.setPeriodic(1000 * 60, a -> {
 			WorkerExecutor executeurTravailleur = siteContexteFrFR.getExecuteurTravailleur();
 			executeurTravailleur.executeBlocking(
 				blockingCodeHandler -> {

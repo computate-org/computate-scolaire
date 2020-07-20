@@ -15,6 +15,7 @@ import java.util.Optional;
 
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.solr.client.solrj.SolrQuery.ORDER;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.util.SimpleOrderedMap;
 import org.computate.scolaire.frFR.annee.AnneeScolaire;
@@ -670,12 +671,14 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * r.enUS: setStore
 	 * r: paiementMontant
 	 * r.enUS: paymentAmount
-	 * r: fraisMontant
-	 * r.enUS: chargeAmount
 	 * r: fraisMontantDu
 	 * r.enUS: chargeAmountDue
 	 * r: fraisMontantFuture
 	 * r.enUS: chargeAmountFuture
+	 * r: fraisMontant
+	 * r.enUS: chargeAmount
+	 * r: paiementDate
+	 * r.enUS: paymentDate
 	 */
 	protected void _paiementRecherche(ListeRecherche<PaiementScolaire> l) {
 		l.setQuery("*:*");
@@ -684,6 +687,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 		l.add("json.facet", "{sum_fraisMontant:'sum(fraisMontant_indexed_double)'}");
 		l.add("json.facet", "{sum_fraisMontantDu:'sum(fraisMontantDu_indexed_double)'}");
 		l.add("json.facet", "{sum_fraisMontantFuture:'sum(fraisMontantFuture_indexed_double)'}");
+		l.addSort("paiementDate_indexed_date", ORDER.desc);
 		l.setC(PaiementScolaire.class);
 		l.setStocker(true);
 	}
@@ -1811,6 +1815,30 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 
 	/**       
 	 * {@inheritDoc}
+	 * Var.enUS: paymentLastStr
+	 * Indexe: true
+	 * Stocke: true
+	 * r: paiementRecherche
+	 * r.enUS: paymentSearch
+	 * r: PaiementMontant
+	 * r.enUS: PaymentAmount
+	 * r: PaiementNomCourt
+	 * r.enUS: PaymentShortName
+	 * r: PaiementScolaire
+	 * r.enUS: SchoolPayment
+	 */
+	protected void _paiementLastStr(Couverture<String> c) {
+		for(PaiementScolaire p : paiementRecherche.getList()) {
+			if(p.getPaiementMontant() != null) {
+				c.o(p.getPaiementNomCourt());
+				return;
+			}
+		}
+		c.o("none");
+	}
+
+	/**       
+	 * {@inheritDoc}
 	 * Var.enUS: paymentAmount
 	 * Indexe: true
 	 * Stocke: true
@@ -1905,6 +1933,25 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 */
 	protected void _paiementsEnRetard(Couverture<Boolean> c) {
 		c.o(fraisMaintenant.subtract(fraisMontantDu).compareTo(BigDecimal.ZERO) > 0);
+	}
+
+	/**       
+	 * {@inheritDoc}
+	 * Var.enUS: paymentsLateAmount
+	 * Indexe: true
+	 * Stocke: true
+	 * r: fraisMaintenant
+	 * r.enUS: chargesNow
+	 * r: fraisMontantDu
+	 * r.enUS: chargeAmountDue
+	 * r: paiementsEnRetard
+	 * r.enUS: paymentsLate
+	 */
+	protected void _paiementsEnRetardMontant(Couverture<BigDecimal> c) {
+		if(paiementsEnRetard)
+			c.o(fraisMaintenant.subtract(fraisMontantDu));
+		else
+			c.o(BigDecimal.ZERO);
 	}
 
 	/**       

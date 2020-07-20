@@ -122,38 +122,40 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourInscriptionScolaire(siteContexte, operationRequete, body);
 		try {
 			LOGGER.info(String.format("postInscriptionScolaire a démarré. "));
-			utilisateurInscriptionScolaire(requeteSite, b -> {
-				if(b.succeeded()) {
-					RequeteApi requeteApi = new RequeteApi();
-					requeteApi.setRows(1);
-					requeteApi.setNumFound(1L);
-					requeteApi.setNumPATCH(0L);
-					requeteApi.initLoinRequeteApi(requeteSite);
-					requeteSite.setRequeteApi_(requeteApi);
-					requeteSite.getVertx().eventBus().publish("websocketInscriptionScolaire", JsonObject.mapFrom(requeteApi).toString());
-					postInscriptionScolaireFuture(requeteSite, false, c -> {
-						if(c.succeeded()) {
-							InscriptionScolaire inscriptionScolaire = c.result();
-							requeteApi.setPk(inscriptionScolaire.getPk());
-							postInscriptionScolaireReponse(inscriptionScolaire, d -> {
-									if(d.succeeded()) {
-									gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-									LOGGER.info(String.format("postInscriptionScolaire a réussi. "));
-								} else {
-									LOGGER.error(String.format("postInscriptionScolaire a échoué. ", d.cause()));
-									erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, d);
-								}
-							});
-						} else {
-							LOGGER.error(String.format("postInscriptionScolaire a échoué. ", c.cause()));
-							erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("postInscriptionScolaire a échoué. ", b.cause()));
-					erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, b);
-				}
-			});
+			{
+				utilisateurInscriptionScolaire(requeteSite, b -> {
+					if(b.succeeded()) {
+						RequeteApi requeteApi = new RequeteApi();
+						requeteApi.setRows(1);
+						requeteApi.setNumFound(1L);
+						requeteApi.setNumPATCH(0L);
+						requeteApi.initLoinRequeteApi(requeteSite);
+						requeteSite.setRequeteApi_(requeteApi);
+						requeteSite.getVertx().eventBus().publish("websocketInscriptionScolaire", JsonObject.mapFrom(requeteApi).toString());
+						postInscriptionScolaireFuture(requeteSite, false, c -> {
+							if(c.succeeded()) {
+								InscriptionScolaire inscriptionScolaire = c.result();
+								requeteApi.setPk(inscriptionScolaire.getPk());
+								postInscriptionScolaireReponse(inscriptionScolaire, d -> {
+										if(d.succeeded()) {
+										gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+										LOGGER.info(String.format("postInscriptionScolaire a réussi. "));
+									} else {
+										LOGGER.error(String.format("postInscriptionScolaire a échoué. ", d.cause()));
+										erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, d);
+									}
+								});
+							} else {
+								LOGGER.error(String.format("postInscriptionScolaire a échoué. ", c.cause()));
+								erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("postInscriptionScolaire a échoué. ", b.cause()));
+						erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("postInscriptionScolaire a échoué. ", ex));
 			erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
@@ -1167,63 +1169,65 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourInscriptionScolaire(siteContexte, operationRequete, body);
 		try {
 			LOGGER.info(String.format("putimportInscriptionScolaire a démarré. "));
-			utilisateurInscriptionScolaire(requeteSite, b -> {
-				if(b.succeeded()) {
-					putimportInscriptionScolaireReponse(requeteSite, c -> {
-						if(c.succeeded()) {
-							gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
-							WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
-							executeurTravailleur.executeBlocking(
-								blockingCodeHandler -> {
-									try {
-										RequeteApi requeteApi = new RequeteApi();
-										JsonArray jsonArray = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
-										requeteApi.setRows(jsonArray.size());
-										requeteApi.setNumFound(new Integer(jsonArray.size()).longValue());
-										requeteApi.setNumPATCH(0L);
-										requeteApi.initLoinRequeteApi(requeteSite);
-										requeteSite.setRequeteApi_(requeteApi);
-										requeteSite.getVertx().eventBus().publish("websocketInscriptionScolaire", JsonObject.mapFrom(requeteApi).toString());
-										varsInscriptionScolaire(requeteSite, d -> {
-											if(d.succeeded()) {
-												listePUTImportInscriptionScolaire(requeteApi, requeteSite, e -> {
-													if(e.succeeded()) {
-														putimportInscriptionScolaireReponse(requeteSite, f -> {
-															if(e.succeeded()) {
-																LOGGER.info(String.format("putimportInscriptionScolaire a réussi. "));
-																blockingCodeHandler.handle(Future.succeededFuture(e.result()));
-															} else {
-																LOGGER.error(String.format("putimportInscriptionScolaire a échoué. ", f.cause()));
-																erreurInscriptionScolaire(requeteSite, null, f);
-															}
-														});
-													} else {
-														LOGGER.error(String.format("putimportInscriptionScolaire a échoué. ", e.cause()));
-														erreurInscriptionScolaire(requeteSite, null, e);
-													}
-												});
-											} else {
-												LOGGER.error(String.format("putimportInscriptionScolaire a échoué. ", d.cause()));
-												erreurInscriptionScolaire(requeteSite, null, d);
-											}
-										});
-									} catch(Exception ex) {
-										LOGGER.error(String.format("putimportInscriptionScolaire a échoué. ", ex));
-										erreurInscriptionScolaire(requeteSite, null, Future.failedFuture(ex));
+			{
+				utilisateurInscriptionScolaire(requeteSite, b -> {
+					if(b.succeeded()) {
+						putimportInscriptionScolaireReponse(requeteSite, c -> {
+							if(c.succeeded()) {
+								gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
+								WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
+								executeurTravailleur.executeBlocking(
+									blockingCodeHandler -> {
+										try {
+											RequeteApi requeteApi = new RequeteApi();
+											JsonArray jsonArray = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+											requeteApi.setRows(jsonArray.size());
+											requeteApi.setNumFound(new Integer(jsonArray.size()).longValue());
+											requeteApi.setNumPATCH(0L);
+											requeteApi.initLoinRequeteApi(requeteSite);
+											requeteSite.setRequeteApi_(requeteApi);
+											requeteSite.getVertx().eventBus().publish("websocketInscriptionScolaire", JsonObject.mapFrom(requeteApi).toString());
+											varsInscriptionScolaire(requeteSite, d -> {
+												if(d.succeeded()) {
+													listePUTImportInscriptionScolaire(requeteApi, requeteSite, e -> {
+														if(e.succeeded()) {
+															putimportInscriptionScolaireReponse(requeteSite, f -> {
+																if(e.succeeded()) {
+																	LOGGER.info(String.format("putimportInscriptionScolaire a réussi. "));
+																	blockingCodeHandler.handle(Future.succeededFuture(e.result()));
+																} else {
+																	LOGGER.error(String.format("putimportInscriptionScolaire a échoué. ", f.cause()));
+																	erreurInscriptionScolaire(requeteSite, null, f);
+																}
+															});
+														} else {
+															LOGGER.error(String.format("putimportInscriptionScolaire a échoué. ", e.cause()));
+															erreurInscriptionScolaire(requeteSite, null, e);
+														}
+													});
+												} else {
+													LOGGER.error(String.format("putimportInscriptionScolaire a échoué. ", d.cause()));
+													erreurInscriptionScolaire(requeteSite, null, d);
+												}
+											});
+										} catch(Exception ex) {
+											LOGGER.error(String.format("putimportInscriptionScolaire a échoué. ", ex));
+											erreurInscriptionScolaire(requeteSite, null, Future.failedFuture(ex));
+										}
+									}, resultHandler -> {
 									}
-								}, resultHandler -> {
-								}
-							);
-						} else {
-							LOGGER.error(String.format("putimportInscriptionScolaire a échoué. ", c.cause()));
-							erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("putimportInscriptionScolaire a échoué. ", b.cause()));
-					erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, b);
-				}
-			});
+								);
+							} else {
+								LOGGER.error(String.format("putimportInscriptionScolaire a échoué. ", c.cause()));
+								erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("putimportInscriptionScolaire a échoué. ", b.cause()));
+						erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("putimportInscriptionScolaire a échoué. ", ex));
 			erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
@@ -1334,63 +1338,65 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourInscriptionScolaire(siteContexte, operationRequete, body);
 		try {
 			LOGGER.info(String.format("putfusionInscriptionScolaire a démarré. "));
-			utilisateurInscriptionScolaire(requeteSite, b -> {
-				if(b.succeeded()) {
-					putfusionInscriptionScolaireReponse(requeteSite, c -> {
-						if(c.succeeded()) {
-							gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
-							WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
-							executeurTravailleur.executeBlocking(
-								blockingCodeHandler -> {
-									try {
-										RequeteApi requeteApi = new RequeteApi();
-										JsonArray jsonArray = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
-										requeteApi.setRows(jsonArray.size());
-										requeteApi.setNumFound(new Integer(jsonArray.size()).longValue());
-										requeteApi.setNumPATCH(0L);
-										requeteApi.initLoinRequeteApi(requeteSite);
-										requeteSite.setRequeteApi_(requeteApi);
-										requeteSite.getVertx().eventBus().publish("websocketInscriptionScolaire", JsonObject.mapFrom(requeteApi).toString());
-										varsInscriptionScolaire(requeteSite, d -> {
-											if(d.succeeded()) {
-												listePUTFusionInscriptionScolaire(requeteApi, requeteSite, e -> {
-													if(e.succeeded()) {
-														putfusionInscriptionScolaireReponse(requeteSite, f -> {
-															if(e.succeeded()) {
-																LOGGER.info(String.format("putfusionInscriptionScolaire a réussi. "));
-																blockingCodeHandler.handle(Future.succeededFuture(e.result()));
-															} else {
-																LOGGER.error(String.format("putfusionInscriptionScolaire a échoué. ", f.cause()));
-																erreurInscriptionScolaire(requeteSite, null, f);
-															}
-														});
-													} else {
-														LOGGER.error(String.format("putfusionInscriptionScolaire a échoué. ", e.cause()));
-														erreurInscriptionScolaire(requeteSite, null, e);
-													}
-												});
-											} else {
-												LOGGER.error(String.format("putfusionInscriptionScolaire a échoué. ", d.cause()));
-												erreurInscriptionScolaire(requeteSite, null, d);
-											}
-										});
-									} catch(Exception ex) {
-										LOGGER.error(String.format("putfusionInscriptionScolaire a échoué. ", ex));
-										erreurInscriptionScolaire(requeteSite, null, Future.failedFuture(ex));
+			{
+				utilisateurInscriptionScolaire(requeteSite, b -> {
+					if(b.succeeded()) {
+						putfusionInscriptionScolaireReponse(requeteSite, c -> {
+							if(c.succeeded()) {
+								gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
+								WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
+								executeurTravailleur.executeBlocking(
+									blockingCodeHandler -> {
+										try {
+											RequeteApi requeteApi = new RequeteApi();
+											JsonArray jsonArray = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+											requeteApi.setRows(jsonArray.size());
+											requeteApi.setNumFound(new Integer(jsonArray.size()).longValue());
+											requeteApi.setNumPATCH(0L);
+											requeteApi.initLoinRequeteApi(requeteSite);
+											requeteSite.setRequeteApi_(requeteApi);
+											requeteSite.getVertx().eventBus().publish("websocketInscriptionScolaire", JsonObject.mapFrom(requeteApi).toString());
+											varsInscriptionScolaire(requeteSite, d -> {
+												if(d.succeeded()) {
+													listePUTFusionInscriptionScolaire(requeteApi, requeteSite, e -> {
+														if(e.succeeded()) {
+															putfusionInscriptionScolaireReponse(requeteSite, f -> {
+																if(e.succeeded()) {
+																	LOGGER.info(String.format("putfusionInscriptionScolaire a réussi. "));
+																	blockingCodeHandler.handle(Future.succeededFuture(e.result()));
+																} else {
+																	LOGGER.error(String.format("putfusionInscriptionScolaire a échoué. ", f.cause()));
+																	erreurInscriptionScolaire(requeteSite, null, f);
+																}
+															});
+														} else {
+															LOGGER.error(String.format("putfusionInscriptionScolaire a échoué. ", e.cause()));
+															erreurInscriptionScolaire(requeteSite, null, e);
+														}
+													});
+												} else {
+													LOGGER.error(String.format("putfusionInscriptionScolaire a échoué. ", d.cause()));
+													erreurInscriptionScolaire(requeteSite, null, d);
+												}
+											});
+										} catch(Exception ex) {
+											LOGGER.error(String.format("putfusionInscriptionScolaire a échoué. ", ex));
+											erreurInscriptionScolaire(requeteSite, null, Future.failedFuture(ex));
+										}
+									}, resultHandler -> {
 									}
-								}, resultHandler -> {
-								}
-							);
-						} else {
-							LOGGER.error(String.format("putfusionInscriptionScolaire a échoué. ", c.cause()));
-							erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("putfusionInscriptionScolaire a échoué. ", b.cause()));
-					erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, b);
-				}
-			});
+								);
+							} else {
+								LOGGER.error(String.format("putfusionInscriptionScolaire a échoué. ", c.cause()));
+								erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("putfusionInscriptionScolaire a échoué. ", b.cause()));
+						erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("putfusionInscriptionScolaire a échoué. ", ex));
 			erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
@@ -1499,68 +1505,70 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourInscriptionScolaire(siteContexte, operationRequete, body);
 		try {
 			LOGGER.info(String.format("putcopieInscriptionScolaire a démarré. "));
-			utilisateurInscriptionScolaire(requeteSite, b -> {
-				if(b.succeeded()) {
-					putcopieInscriptionScolaireReponse(requeteSite, c -> {
-						if(c.succeeded()) {
-							gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
-							WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
-							executeurTravailleur.executeBlocking(
-								blockingCodeHandler -> {
-									try {
-										rechercheInscriptionScolaire(requeteSite, false, true, "/api/inscription/copie", "PUTCopie", d -> {
-											if(d.succeeded()) {
-												ListeRecherche<InscriptionScolaire> listeInscriptionScolaire = d.result();
-												RequeteApi requeteApi = new RequeteApi();
-												requeteApi.setRows(listeInscriptionScolaire.getRows());
-												requeteApi.setNumFound(listeInscriptionScolaire.getQueryResponse().getResults().getNumFound());
-												requeteApi.setNumPATCH(0L);
-												requeteApi.initLoinRequeteApi(requeteSite);
-												requeteSite.setRequeteApi_(requeteApi);
-												requeteSite.getVertx().eventBus().publish("websocketInscriptionScolaire", JsonObject.mapFrom(requeteApi).toString());
-												try {
-													listePUTCopieInscriptionScolaire(requeteApi, listeInscriptionScolaire, e -> {
-														if(e.succeeded()) {
-															putcopieInscriptionScolaireReponse(requeteSite, f -> {
-																if(f.succeeded()) {
-																	LOGGER.info(String.format("putcopieInscriptionScolaire a réussi. "));
-																	blockingCodeHandler.handle(Future.succeededFuture(f.result()));
-																} else {
-																	LOGGER.error(String.format("putcopieInscriptionScolaire a échoué. ", f.cause()));
-																	erreurInscriptionScolaire(requeteSite, null, f);
-																}
-															});
-														} else {
-															LOGGER.error(String.format("putcopieInscriptionScolaire a échoué. ", e.cause()));
-															erreurInscriptionScolaire(requeteSite, null, e);
-														}
-													});
-												} catch(Exception ex) {
-													LOGGER.error(String.format("putcopieInscriptionScolaire a échoué. ", ex));
-													erreurInscriptionScolaire(requeteSite, null, Future.failedFuture(ex));
+			{
+				utilisateurInscriptionScolaire(requeteSite, b -> {
+					if(b.succeeded()) {
+						putcopieInscriptionScolaireReponse(requeteSite, c -> {
+							if(c.succeeded()) {
+								gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
+								WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
+								executeurTravailleur.executeBlocking(
+									blockingCodeHandler -> {
+										try {
+											rechercheInscriptionScolaire(requeteSite, false, true, "/api/inscription/copie", "PUTCopie", d -> {
+												if(d.succeeded()) {
+													ListeRecherche<InscriptionScolaire> listeInscriptionScolaire = d.result();
+													RequeteApi requeteApi = new RequeteApi();
+													requeteApi.setRows(listeInscriptionScolaire.getRows());
+													requeteApi.setNumFound(listeInscriptionScolaire.getQueryResponse().getResults().getNumFound());
+													requeteApi.setNumPATCH(0L);
+													requeteApi.initLoinRequeteApi(requeteSite);
+													requeteSite.setRequeteApi_(requeteApi);
+													requeteSite.getVertx().eventBus().publish("websocketInscriptionScolaire", JsonObject.mapFrom(requeteApi).toString());
+													try {
+														listePUTCopieInscriptionScolaire(requeteApi, listeInscriptionScolaire, e -> {
+															if(e.succeeded()) {
+																putcopieInscriptionScolaireReponse(requeteSite, f -> {
+																	if(f.succeeded()) {
+																		LOGGER.info(String.format("putcopieInscriptionScolaire a réussi. "));
+																		blockingCodeHandler.handle(Future.succeededFuture(f.result()));
+																	} else {
+																		LOGGER.error(String.format("putcopieInscriptionScolaire a échoué. ", f.cause()));
+																		erreurInscriptionScolaire(requeteSite, null, f);
+																	}
+																});
+															} else {
+																LOGGER.error(String.format("putcopieInscriptionScolaire a échoué. ", e.cause()));
+																erreurInscriptionScolaire(requeteSite, null, e);
+															}
+														});
+													} catch(Exception ex) {
+														LOGGER.error(String.format("putcopieInscriptionScolaire a échoué. ", ex));
+														erreurInscriptionScolaire(requeteSite, null, Future.failedFuture(ex));
+													}
+												} else {
+													LOGGER.error(String.format("putcopieInscriptionScolaire a échoué. ", d.cause()));
+													erreurInscriptionScolaire(requeteSite, null, d);
 												}
-											} else {
-												LOGGER.error(String.format("putcopieInscriptionScolaire a échoué. ", d.cause()));
-												erreurInscriptionScolaire(requeteSite, null, d);
-											}
-										});
-									} catch(Exception ex) {
-										LOGGER.error(String.format("putcopieInscriptionScolaire a échoué. ", ex));
-										erreurInscriptionScolaire(requeteSite, null, Future.failedFuture(ex));
+											});
+										} catch(Exception ex) {
+											LOGGER.error(String.format("putcopieInscriptionScolaire a échoué. ", ex));
+											erreurInscriptionScolaire(requeteSite, null, Future.failedFuture(ex));
+										}
+									}, resultHandler -> {
 									}
-								}, resultHandler -> {
-								}
-							);
-						} else {
-							LOGGER.error(String.format("putcopieInscriptionScolaire a échoué. ", c.cause()));
-							erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("putcopieInscriptionScolaire a échoué. ", b.cause()));
-					erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, b);
-				}
-			});
+								);
+							} else {
+								LOGGER.error(String.format("putcopieInscriptionScolaire a échoué. ", c.cause()));
+								erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("putcopieInscriptionScolaire a échoué. ", b.cause()));
+						erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("putcopieInscriptionScolaire a échoué. ", ex));
 			erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
@@ -2472,79 +2480,81 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourInscriptionScolaire(siteContexte, operationRequete, body);
 		try {
 			LOGGER.info(String.format("patchInscriptionScolaire a démarré. "));
-			utilisateurInscriptionScolaire(requeteSite, b -> {
-				if(b.succeeded()) {
-					patchInscriptionScolaireReponse(requeteSite, c -> {
-						if(c.succeeded()) {
-							gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
-							WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
-							executeurTravailleur.executeBlocking(
-								blockingCodeHandler -> {
-									try {
-										rechercheInscriptionScolaire(requeteSite, false, true, "/api/inscription", "PATCH", d -> {
-											if(d.succeeded()) {
-												ListeRecherche<InscriptionScolaire> listeInscriptionScolaire = d.result();
-												RequeteApi requeteApi = new RequeteApi();
-												requeteApi.setRows(listeInscriptionScolaire.getRows());
-												requeteApi.setNumFound(listeInscriptionScolaire.getQueryResponse().getResults().getNumFound());
-												requeteApi.setNumPATCH(0L);
-												requeteApi.initLoinRequeteApi(requeteSite);
-												requeteSite.setRequeteApi_(requeteApi);
-												requeteSite.getVertx().eventBus().publish("websocketInscriptionScolaire", JsonObject.mapFrom(requeteApi).toString());
-												SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listeInscriptionScolaire.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
-												Date date = null;
-												if(facets != null)
-													date = (Date)facets.get("max_modifie");
-												String dt;
-												if(date == null)
-													dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
-												else
-													dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
-												listeInscriptionScolaire.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
+			{
+				utilisateurInscriptionScolaire(requeteSite, b -> {
+					if(b.succeeded()) {
+						patchInscriptionScolaireReponse(requeteSite, c -> {
+							if(c.succeeded()) {
+								gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
+								WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
+								executeurTravailleur.executeBlocking(
+									blockingCodeHandler -> {
+										try {
+											rechercheInscriptionScolaire(requeteSite, false, true, "/api/inscription", "PATCH", d -> {
+												if(d.succeeded()) {
+													ListeRecherche<InscriptionScolaire> listeInscriptionScolaire = d.result();
+													RequeteApi requeteApi = new RequeteApi();
+													requeteApi.setRows(listeInscriptionScolaire.getRows());
+													requeteApi.setNumFound(listeInscriptionScolaire.getQueryResponse().getResults().getNumFound());
+													requeteApi.setNumPATCH(0L);
+													requeteApi.initLoinRequeteApi(requeteSite);
+													requeteSite.setRequeteApi_(requeteApi);
+													requeteSite.getVertx().eventBus().publish("websocketInscriptionScolaire", JsonObject.mapFrom(requeteApi).toString());
+													SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listeInscriptionScolaire.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
+													Date date = null;
+													if(facets != null)
+														date = (Date)facets.get("max_modifie");
+													String dt;
+													if(date == null)
+														dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
+													else
+														dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
+													listeInscriptionScolaire.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
 
-												try {
-													listePATCHInscriptionScolaire(requeteApi, listeInscriptionScolaire, dt, e -> {
-														if(e.succeeded()) {
-															patchInscriptionScolaireReponse(requeteSite, f -> {
-																if(f.succeeded()) {
-																	LOGGER.info(String.format("patchInscriptionScolaire a réussi. "));
-																	blockingCodeHandler.handle(Future.succeededFuture(f.result()));
-																} else {
-																	LOGGER.error(String.format("patchInscriptionScolaire a échoué. ", f.cause()));
-																	erreurInscriptionScolaire(requeteSite, null, f);
-																}
-															});
-														} else {
-															LOGGER.error(String.format("patchInscriptionScolaire a échoué. ", e.cause()));
-															erreurInscriptionScolaire(requeteSite, null, e);
-														}
-													});
-												} catch(Exception ex) {
-													LOGGER.error(String.format("patchInscriptionScolaire a échoué. ", ex));
-													erreurInscriptionScolaire(requeteSite, null, Future.failedFuture(ex));
+													try {
+														listePATCHInscriptionScolaire(requeteApi, listeInscriptionScolaire, dt, e -> {
+															if(e.succeeded()) {
+																patchInscriptionScolaireReponse(requeteSite, f -> {
+																	if(f.succeeded()) {
+																		LOGGER.info(String.format("patchInscriptionScolaire a réussi. "));
+																		blockingCodeHandler.handle(Future.succeededFuture(f.result()));
+																	} else {
+																		LOGGER.error(String.format("patchInscriptionScolaire a échoué. ", f.cause()));
+																		erreurInscriptionScolaire(requeteSite, null, f);
+																	}
+																});
+															} else {
+																LOGGER.error(String.format("patchInscriptionScolaire a échoué. ", e.cause()));
+																erreurInscriptionScolaire(requeteSite, null, e);
+															}
+														});
+													} catch(Exception ex) {
+														LOGGER.error(String.format("patchInscriptionScolaire a échoué. ", ex));
+														erreurInscriptionScolaire(requeteSite, null, Future.failedFuture(ex));
+													}
+										} else {
+													LOGGER.error(String.format("patchInscriptionScolaire a échoué. ", d.cause()));
+													erreurInscriptionScolaire(requeteSite, null, d);
 												}
-											} else {
-												LOGGER.error(String.format("patchInscriptionScolaire a échoué. ", d.cause()));
-												erreurInscriptionScolaire(requeteSite, null, d);
-											}
-										});
-									} catch(Exception ex) {
-										LOGGER.error(String.format("patchInscriptionScolaire a échoué. ", ex));
-										erreurInscriptionScolaire(requeteSite, null, Future.failedFuture(ex));
+											});
+										} catch(Exception ex) {
+											LOGGER.error(String.format("patchInscriptionScolaire a échoué. ", ex));
+											erreurInscriptionScolaire(requeteSite, null, Future.failedFuture(ex));
+										}
+									}, resultHandler -> {
 									}
-								}, resultHandler -> {
-								}
-							);
-						} else {
-							LOGGER.error(String.format("patchInscriptionScolaire a échoué. ", c.cause()));
-							erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("patchInscriptionScolaire a échoué. ", b.cause()));
-					erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, b);
-				}
-			});
+								);
+							} else {
+								LOGGER.error(String.format("patchInscriptionScolaire a échoué. ", c.cause()));
+								erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("patchInscriptionScolaire a échoué. ", b.cause()));
+						erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("patchInscriptionScolaire a échoué. ", ex));
 			erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
@@ -5032,30 +5042,32 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 	public void getInscriptionScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourInscriptionScolaire(siteContexte, operationRequete);
 		try {
-			utilisateurInscriptionScolaire(requeteSite, b -> {
-				if(b.succeeded()) {
-					rechercheInscriptionScolaire(requeteSite, false, true, "/api/inscription/{id}", "GET", c -> {
-						if(c.succeeded()) {
-							ListeRecherche<InscriptionScolaire> listeInscriptionScolaire = c.result();
-							getInscriptionScolaireReponse(listeInscriptionScolaire, d -> {
-								if(d.succeeded()) {
-									gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-									LOGGER.info(String.format("getInscriptionScolaire a réussi. "));
-								} else {
-									LOGGER.error(String.format("getInscriptionScolaire a échoué. ", d.cause()));
-									erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, d);
-								}
-							});
-						} else {
-							LOGGER.error(String.format("getInscriptionScolaire a échoué. ", c.cause()));
-							erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("getInscriptionScolaire a échoué. ", b.cause()));
-					erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, b);
-				}
-			});
+			{
+				utilisateurInscriptionScolaire(requeteSite, b -> {
+					if(b.succeeded()) {
+						rechercheInscriptionScolaire(requeteSite, false, true, "/api/inscription/{id}", "GET", c -> {
+							if(c.succeeded()) {
+								ListeRecherche<InscriptionScolaire> listeInscriptionScolaire = c.result();
+								getInscriptionScolaireReponse(listeInscriptionScolaire, d -> {
+									if(d.succeeded()) {
+										gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+										LOGGER.info(String.format("getInscriptionScolaire a réussi. "));
+									} else {
+										LOGGER.error(String.format("getInscriptionScolaire a échoué. ", d.cause()));
+										erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, d);
+									}
+								});
+							} else {
+								LOGGER.error(String.format("getInscriptionScolaire a échoué. ", c.cause()));
+								erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("getInscriptionScolaire a échoué. ", b.cause()));
+						erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("getInscriptionScolaire a échoué. ", ex));
 			erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
@@ -5098,30 +5110,32 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 	public void rechercheInscriptionScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourInscriptionScolaire(siteContexte, operationRequete);
 		try {
-			utilisateurInscriptionScolaire(requeteSite, b -> {
-				if(b.succeeded()) {
-					rechercheInscriptionScolaire(requeteSite, false, true, "/api/inscription", "Recherche", c -> {
-						if(c.succeeded()) {
-							ListeRecherche<InscriptionScolaire> listeInscriptionScolaire = c.result();
-							rechercheInscriptionScolaireReponse(listeInscriptionScolaire, d -> {
-								if(d.succeeded()) {
-									gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-									LOGGER.info(String.format("rechercheInscriptionScolaire a réussi. "));
-								} else {
-									LOGGER.error(String.format("rechercheInscriptionScolaire a échoué. ", d.cause()));
-									erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, d);
-								}
-							});
-						} else {
-							LOGGER.error(String.format("rechercheInscriptionScolaire a échoué. ", c.cause()));
-							erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("rechercheInscriptionScolaire a échoué. ", b.cause()));
-					erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, b);
-				}
-			});
+			{
+				utilisateurInscriptionScolaire(requeteSite, b -> {
+					if(b.succeeded()) {
+						rechercheInscriptionScolaire(requeteSite, false, true, "/api/inscription", "Recherche", c -> {
+							if(c.succeeded()) {
+								ListeRecherche<InscriptionScolaire> listeInscriptionScolaire = c.result();
+								rechercheInscriptionScolaireReponse(listeInscriptionScolaire, d -> {
+									if(d.succeeded()) {
+										gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+										LOGGER.info(String.format("rechercheInscriptionScolaire a réussi. "));
+									} else {
+										LOGGER.error(String.format("rechercheInscriptionScolaire a échoué. ", d.cause()));
+										erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, d);
+									}
+								});
+							} else {
+								LOGGER.error(String.format("rechercheInscriptionScolaire a échoué. ", c.cause()));
+								erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("rechercheInscriptionScolaire a échoué. ", b.cause()));
+						erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("rechercheInscriptionScolaire a échoué. ", ex));
 			erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
@@ -5204,30 +5218,32 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 	public void rechercheadminInscriptionScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourInscriptionScolaire(siteContexte, operationRequete);
 		try {
-			utilisateurInscriptionScolaire(requeteSite, b -> {
-				if(b.succeeded()) {
-					rechercheInscriptionScolaire(requeteSite, false, true, "/api/admin/inscription", "RechercheAdmin", c -> {
-						if(c.succeeded()) {
-							ListeRecherche<InscriptionScolaire> listeInscriptionScolaire = c.result();
-							rechercheadminInscriptionScolaireReponse(listeInscriptionScolaire, d -> {
-								if(d.succeeded()) {
-									gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-									LOGGER.info(String.format("rechercheadminInscriptionScolaire a réussi. "));
-								} else {
-									LOGGER.error(String.format("rechercheadminInscriptionScolaire a échoué. ", d.cause()));
-									erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, d);
-								}
-							});
-						} else {
-							LOGGER.error(String.format("rechercheadminInscriptionScolaire a échoué. ", c.cause()));
-							erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("rechercheadminInscriptionScolaire a échoué. ", b.cause()));
-					erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, b);
-				}
-			});
+			{
+				utilisateurInscriptionScolaire(requeteSite, b -> {
+					if(b.succeeded()) {
+						rechercheInscriptionScolaire(requeteSite, false, true, "/api/admin/inscription", "RechercheAdmin", c -> {
+							if(c.succeeded()) {
+								ListeRecherche<InscriptionScolaire> listeInscriptionScolaire = c.result();
+								rechercheadminInscriptionScolaireReponse(listeInscriptionScolaire, d -> {
+									if(d.succeeded()) {
+										gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+										LOGGER.info(String.format("rechercheadminInscriptionScolaire a réussi. "));
+									} else {
+										LOGGER.error(String.format("rechercheadminInscriptionScolaire a échoué. ", d.cause()));
+										erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, d);
+									}
+								});
+							} else {
+								LOGGER.error(String.format("rechercheadminInscriptionScolaire a échoué. ", c.cause()));
+								erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("rechercheadminInscriptionScolaire a échoué. ", b.cause()));
+						erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("rechercheadminInscriptionScolaire a échoué. ", ex));
 			erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
@@ -5311,79 +5327,81 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourInscriptionScolaire(siteContexte, operationRequete, body);
 		try {
 			LOGGER.info(String.format("patchpaiementsInscriptionScolaire a démarré. "));
-			utilisateurInscriptionScolaire(requeteSite, b -> {
-				if(b.succeeded()) {
-					patchpaiementsInscriptionScolaireReponse(requeteSite, c -> {
-						if(c.succeeded()) {
-							gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
-							WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
-							executeurTravailleur.executeBlocking(
-								blockingCodeHandler -> {
-									try {
-										rechercheInscriptionScolaire(requeteSite, false, true, "/api/inscription", "PATCHPaiements", d -> {
-											if(d.succeeded()) {
-												ListeRecherche<InscriptionScolaire> listeInscriptionScolaire = d.result();
-												RequeteApi requeteApi = new RequeteApi();
-												requeteApi.setRows(listeInscriptionScolaire.getRows());
-												requeteApi.setNumFound(listeInscriptionScolaire.getQueryResponse().getResults().getNumFound());
-												requeteApi.setNumPATCH(0L);
-												requeteApi.initLoinRequeteApi(requeteSite);
-												requeteSite.setRequeteApi_(requeteApi);
-												requeteSite.getVertx().eventBus().publish("websocketInscriptionScolaire", JsonObject.mapFrom(requeteApi).toString());
-												SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listeInscriptionScolaire.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
-												Date date = null;
-												if(facets != null)
-													date = (Date)facets.get("max_modifie");
-												String dt;
-												if(date == null)
-													dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
-												else
-													dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
-												listeInscriptionScolaire.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
+			{
+				utilisateurInscriptionScolaire(requeteSite, b -> {
+					if(b.succeeded()) {
+						patchpaiementsInscriptionScolaireReponse(requeteSite, c -> {
+							if(c.succeeded()) {
+								gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
+								WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
+								executeurTravailleur.executeBlocking(
+									blockingCodeHandler -> {
+										try {
+											rechercheInscriptionScolaire(requeteSite, false, true, "/api/inscription", "PATCHPaiements", d -> {
+												if(d.succeeded()) {
+													ListeRecherche<InscriptionScolaire> listeInscriptionScolaire = d.result();
+													RequeteApi requeteApi = new RequeteApi();
+													requeteApi.setRows(listeInscriptionScolaire.getRows());
+													requeteApi.setNumFound(listeInscriptionScolaire.getQueryResponse().getResults().getNumFound());
+													requeteApi.setNumPATCH(0L);
+													requeteApi.initLoinRequeteApi(requeteSite);
+													requeteSite.setRequeteApi_(requeteApi);
+													requeteSite.getVertx().eventBus().publish("websocketInscriptionScolaire", JsonObject.mapFrom(requeteApi).toString());
+													SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listeInscriptionScolaire.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
+													Date date = null;
+													if(facets != null)
+														date = (Date)facets.get("max_modifie");
+													String dt;
+													if(date == null)
+														dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
+													else
+														dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
+													listeInscriptionScolaire.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
 
-												try {
-													listePATCHPaiementsInscriptionScolaire(requeteApi, listeInscriptionScolaire, dt, e -> {
-														if(e.succeeded()) {
-															patchpaiementsInscriptionScolaireReponse(requeteSite, f -> {
-																if(f.succeeded()) {
-																	LOGGER.info(String.format("patchpaiementsInscriptionScolaire a réussi. "));
-																	blockingCodeHandler.handle(Future.succeededFuture(f.result()));
-																} else {
-																	LOGGER.error(String.format("patchpaiementsInscriptionScolaire a échoué. ", f.cause()));
-																	erreurInscriptionScolaire(requeteSite, null, f);
-																}
-															});
-														} else {
-															LOGGER.error(String.format("patchpaiementsInscriptionScolaire a échoué. ", e.cause()));
-															erreurInscriptionScolaire(requeteSite, null, e);
-														}
-													});
-												} catch(Exception ex) {
-													LOGGER.error(String.format("patchpaiementsInscriptionScolaire a échoué. ", ex));
-													erreurInscriptionScolaire(requeteSite, null, Future.failedFuture(ex));
+													try {
+														listePATCHPaiementsInscriptionScolaire(requeteApi, listeInscriptionScolaire, dt, e -> {
+															if(e.succeeded()) {
+																patchpaiementsInscriptionScolaireReponse(requeteSite, f -> {
+																	if(f.succeeded()) {
+																		LOGGER.info(String.format("patchpaiementsInscriptionScolaire a réussi. "));
+																		blockingCodeHandler.handle(Future.succeededFuture(f.result()));
+																	} else {
+																		LOGGER.error(String.format("patchpaiementsInscriptionScolaire a échoué. ", f.cause()));
+																		erreurInscriptionScolaire(requeteSite, null, f);
+																	}
+																});
+															} else {
+																LOGGER.error(String.format("patchpaiementsInscriptionScolaire a échoué. ", e.cause()));
+																erreurInscriptionScolaire(requeteSite, null, e);
+															}
+														});
+													} catch(Exception ex) {
+														LOGGER.error(String.format("patchpaiementsInscriptionScolaire a échoué. ", ex));
+														erreurInscriptionScolaire(requeteSite, null, Future.failedFuture(ex));
+													}
+										} else {
+													LOGGER.error(String.format("patchpaiementsInscriptionScolaire a échoué. ", d.cause()));
+													erreurInscriptionScolaire(requeteSite, null, d);
 												}
-											} else {
-												LOGGER.error(String.format("patchpaiementsInscriptionScolaire a échoué. ", d.cause()));
-												erreurInscriptionScolaire(requeteSite, null, d);
-											}
-										});
-									} catch(Exception ex) {
-										LOGGER.error(String.format("patchpaiementsInscriptionScolaire a échoué. ", ex));
-										erreurInscriptionScolaire(requeteSite, null, Future.failedFuture(ex));
+											});
+										} catch(Exception ex) {
+											LOGGER.error(String.format("patchpaiementsInscriptionScolaire a échoué. ", ex));
+											erreurInscriptionScolaire(requeteSite, null, Future.failedFuture(ex));
+										}
+									}, resultHandler -> {
 									}
-								}, resultHandler -> {
-								}
-							);
-						} else {
-							LOGGER.error(String.format("patchpaiementsInscriptionScolaire a échoué. ", c.cause()));
-							erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("patchpaiementsInscriptionScolaire a échoué. ", b.cause()));
-					erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, b);
-				}
-			});
+								);
+							} else {
+								LOGGER.error(String.format("patchpaiementsInscriptionScolaire a échoué. ", c.cause()));
+								erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("patchpaiementsInscriptionScolaire a échoué. ", b.cause()));
+						erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("patchpaiementsInscriptionScolaire a échoué. ", ex));
 			erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
@@ -7876,30 +7894,32 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 	public void pagerechercheInscriptionScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourInscriptionScolaire(siteContexte, operationRequete);
 		try {
-			utilisateurInscriptionScolaire(requeteSite, b -> {
-				if(b.succeeded()) {
-					rechercheInscriptionScolaire(requeteSite, false, true, "/inscription", "PageRecherche", c -> {
-						if(c.succeeded()) {
-							ListeRecherche<InscriptionScolaire> listeInscriptionScolaire = c.result();
-							pagerechercheInscriptionScolaireReponse(listeInscriptionScolaire, d -> {
-								if(d.succeeded()) {
-									gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-									LOGGER.info(String.format("pagerechercheInscriptionScolaire a réussi. "));
-								} else {
-									LOGGER.error(String.format("pagerechercheInscriptionScolaire a échoué. ", d.cause()));
-									erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, d);
-								}
-							});
-						} else {
-							LOGGER.error(String.format("pagerechercheInscriptionScolaire a échoué. ", c.cause()));
-							erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("pagerechercheInscriptionScolaire a échoué. ", b.cause()));
-					erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, b);
-				}
-			});
+			{
+				utilisateurInscriptionScolaire(requeteSite, b -> {
+					if(b.succeeded()) {
+						rechercheInscriptionScolaire(requeteSite, false, true, "/inscription", "PageRecherche", c -> {
+							if(c.succeeded()) {
+								ListeRecherche<InscriptionScolaire> listeInscriptionScolaire = c.result();
+								pagerechercheInscriptionScolaireReponse(listeInscriptionScolaire, d -> {
+									if(d.succeeded()) {
+										gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+										LOGGER.info(String.format("pagerechercheInscriptionScolaire a réussi. "));
+									} else {
+										LOGGER.error(String.format("pagerechercheInscriptionScolaire a échoué. ", d.cause()));
+										erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, d);
+									}
+								});
+							} else {
+								LOGGER.error(String.format("pagerechercheInscriptionScolaire a échoué. ", c.cause()));
+								erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("pagerechercheInscriptionScolaire a échoué. ", b.cause()));
+						erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("pagerechercheInscriptionScolaire a échoué. ", ex));
 			erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
@@ -7907,6 +7927,8 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 	}
 
 
+	public void pagerechercheInscriptionScolairePageInit(InscriptionPage page, ListeRecherche<InscriptionScolaire> listeInscriptionScolaire) {
+	}
 	public void pagerechercheInscriptionScolaireReponse(ListeRecherche<InscriptionScolaire> listeInscriptionScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = listeInscriptionScolaire.getRequeteSite_();
 		try {
@@ -7944,6 +7966,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 			requeteSite.setW(w);
 			page.setListeInscriptionScolaire(listeInscriptionScolaire);
 			page.setRequeteSite_(requeteSite);
+			pagerechercheInscriptionScolairePageInit(page, listeInscriptionScolaire);
 			page.initLoinInscriptionPage(requeteSite);
 			page.html();
 			gestionnaireEvenements.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, requeteEnTetes)));
@@ -7964,30 +7987,32 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 	public void rechargerpagerechercheInscriptionScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourInscriptionScolaire(siteContexte, operationRequete);
 		try {
-			utilisateurInscriptionScolaire(requeteSite, b -> {
-				if(b.succeeded()) {
-					rechercheInscriptionScolaire(requeteSite, false, true, "/recharger-inscription", "RechargerPageRecherche", c -> {
-						if(c.succeeded()) {
-							ListeRecherche<InscriptionScolaire> listeInscriptionScolaire = c.result();
-							rechargerpagerechercheInscriptionScolaireReponse(listeInscriptionScolaire, d -> {
-								if(d.succeeded()) {
-									gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-									LOGGER.info(String.format("rechargerpagerechercheInscriptionScolaire a réussi. "));
-								} else {
-									LOGGER.error(String.format("rechargerpagerechercheInscriptionScolaire a échoué. ", d.cause()));
-									erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, d);
-								}
-							});
-						} else {
-							LOGGER.error(String.format("rechargerpagerechercheInscriptionScolaire a échoué. ", c.cause()));
-							erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("rechargerpagerechercheInscriptionScolaire a échoué. ", b.cause()));
-					erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, b);
-				}
-			});
+			{
+				utilisateurInscriptionScolaire(requeteSite, b -> {
+					if(b.succeeded()) {
+						rechercheInscriptionScolaire(requeteSite, false, true, "/recharger-inscription", "RechargerPageRecherche", c -> {
+							if(c.succeeded()) {
+								ListeRecherche<InscriptionScolaire> listeInscriptionScolaire = c.result();
+								rechargerpagerechercheInscriptionScolaireReponse(listeInscriptionScolaire, d -> {
+									if(d.succeeded()) {
+										gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+										LOGGER.info(String.format("rechargerpagerechercheInscriptionScolaire a réussi. "));
+									} else {
+										LOGGER.error(String.format("rechargerpagerechercheInscriptionScolaire a échoué. ", d.cause()));
+										erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, d);
+									}
+								});
+							} else {
+								LOGGER.error(String.format("rechargerpagerechercheInscriptionScolaire a échoué. ", c.cause()));
+								erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("rechargerpagerechercheInscriptionScolaire a échoué. ", b.cause()));
+						erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("rechargerpagerechercheInscriptionScolaire a échoué. ", ex));
 			erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
@@ -7995,6 +8020,8 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 	}
 
 
+	public void rechargerpagerechercheInscriptionScolairePageInit(PageInscription page, ListeRecherche<InscriptionScolaire> listeInscriptionScolaire) {
+	}
 	public void rechargerpagerechercheInscriptionScolaireReponse(ListeRecherche<InscriptionScolaire> listeInscriptionScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = listeInscriptionScolaire.getRequeteSite_();
 		try {
@@ -8032,6 +8059,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 			requeteSite.setW(w);
 			page.setListeInscriptionScolaire(listeInscriptionScolaire);
 			page.setRequeteSite_(requeteSite);
+			rechargerpagerechercheInscriptionScolairePageInit(page, listeInscriptionScolaire);
 			page.initLoinPageInscription(requeteSite);
 			page.html();
 			gestionnaireEvenements.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, requeteEnTetes)));
@@ -8334,6 +8362,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 												jsonObject.put("utilisateurNom", principalJson.getString("preferred_username"));
 												jsonObject.put("utilisateurPrenom", principalJson.getString("given_name"));
 												jsonObject.put("utilisateurNomFamille", principalJson.getString("family_name"));
+												jsonObject.put("utilisateurNomComplet", principalJson.getString("name"));
 												jsonObject.put("utilisateurId", principalJson.getString("sub"));
 												jsonObject.put("utilisateurMail", principalJson.getString("email"));
 												utilisateurInscriptionScolaireDefinir(requeteSite, jsonObject, false);

@@ -108,38 +108,40 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolMom(siteContext, operationRequest, body);
 		try {
 			LOGGER.info(String.format("postSchoolMom started. "));
-			userSchoolMom(siteRequest, b -> {
-				if(b.succeeded()) {
-					ApiRequest apiRequest = new ApiRequest();
-					apiRequest.setRows(1);
-					apiRequest.setNumFound(1L);
-					apiRequest.setNumPATCH(0L);
-					apiRequest.initDeepApiRequest(siteRequest);
-					siteRequest.setApiRequest_(apiRequest);
-					siteRequest.getVertx().eventBus().publish("websocketSchoolMom", JsonObject.mapFrom(apiRequest).toString());
-					postSchoolMomFuture(siteRequest, false, c -> {
-						if(c.succeeded()) {
-							SchoolMom schoolMom = c.result();
-							apiRequest.setPk(schoolMom.getPk());
-							postSchoolMomResponse(schoolMom, d -> {
-									if(d.succeeded()) {
-									eventHandler.handle(Future.succeededFuture(d.result()));
-									LOGGER.info(String.format("postSchoolMom succeeded. "));
-								} else {
-									LOGGER.error(String.format("postSchoolMom failed. ", d.cause()));
-									errorSchoolMom(siteRequest, eventHandler, d);
-								}
-							});
-						} else {
-							LOGGER.error(String.format("postSchoolMom failed. ", c.cause()));
-							errorSchoolMom(siteRequest, eventHandler, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("postSchoolMom failed. ", b.cause()));
-					errorSchoolMom(siteRequest, eventHandler, b);
-				}
-			});
+			{
+				userSchoolMom(siteRequest, b -> {
+					if(b.succeeded()) {
+						ApiRequest apiRequest = new ApiRequest();
+						apiRequest.setRows(1);
+						apiRequest.setNumFound(1L);
+						apiRequest.setNumPATCH(0L);
+						apiRequest.initDeepApiRequest(siteRequest);
+						siteRequest.setApiRequest_(apiRequest);
+						siteRequest.getVertx().eventBus().publish("websocketSchoolMom", JsonObject.mapFrom(apiRequest).toString());
+						postSchoolMomFuture(siteRequest, false, c -> {
+							if(c.succeeded()) {
+								SchoolMom schoolMom = c.result();
+								apiRequest.setPk(schoolMom.getPk());
+								postSchoolMomResponse(schoolMom, d -> {
+										if(d.succeeded()) {
+										eventHandler.handle(Future.succeededFuture(d.result()));
+										LOGGER.info(String.format("postSchoolMom succeeded. "));
+									} else {
+										LOGGER.error(String.format("postSchoolMom failed. ", d.cause()));
+										errorSchoolMom(siteRequest, eventHandler, d);
+									}
+								});
+							} else {
+								LOGGER.error(String.format("postSchoolMom failed. ", c.cause()));
+								errorSchoolMom(siteRequest, eventHandler, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("postSchoolMom failed. ", b.cause()));
+						errorSchoolMom(siteRequest, eventHandler, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("postSchoolMom failed. ", ex));
 			errorSchoolMom(siteRequest, eventHandler, Future.failedFuture(ex));
@@ -525,63 +527,65 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolMom(siteContext, operationRequest, body);
 		try {
 			LOGGER.info(String.format("putimportSchoolMom started. "));
-			userSchoolMom(siteRequest, b -> {
-				if(b.succeeded()) {
-					putimportSchoolMomResponse(siteRequest, c -> {
-						if(c.succeeded()) {
-							eventHandler.handle(Future.succeededFuture(c.result()));
-							WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
-							workerExecutor.executeBlocking(
-								blockingCodeHandler -> {
-									try {
-										ApiRequest apiRequest = new ApiRequest();
-										JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
-										apiRequest.setRows(jsonArray.size());
-										apiRequest.setNumFound(new Integer(jsonArray.size()).longValue());
-										apiRequest.setNumPATCH(0L);
-										apiRequest.initDeepApiRequest(siteRequest);
-										siteRequest.setApiRequest_(apiRequest);
-										siteRequest.getVertx().eventBus().publish("websocketSchoolMom", JsonObject.mapFrom(apiRequest).toString());
-										varsSchoolMom(siteRequest, d -> {
-											if(d.succeeded()) {
-												listPUTImportSchoolMom(apiRequest, siteRequest, e -> {
-													if(e.succeeded()) {
-														putimportSchoolMomResponse(siteRequest, f -> {
-															if(e.succeeded()) {
-																LOGGER.info(String.format("putimportSchoolMom succeeded. "));
-																blockingCodeHandler.handle(Future.succeededFuture(e.result()));
-															} else {
-																LOGGER.error(String.format("putimportSchoolMom failed. ", f.cause()));
-																errorSchoolMom(siteRequest, null, f);
-															}
-														});
-													} else {
-														LOGGER.error(String.format("putimportSchoolMom failed. ", e.cause()));
-														errorSchoolMom(siteRequest, null, e);
-													}
-												});
-											} else {
-												LOGGER.error(String.format("putimportSchoolMom failed. ", d.cause()));
-												errorSchoolMom(siteRequest, null, d);
-											}
-										});
-									} catch(Exception ex) {
-										LOGGER.error(String.format("putimportSchoolMom failed. ", ex));
-										errorSchoolMom(siteRequest, null, Future.failedFuture(ex));
+			{
+				userSchoolMom(siteRequest, b -> {
+					if(b.succeeded()) {
+						putimportSchoolMomResponse(siteRequest, c -> {
+							if(c.succeeded()) {
+								eventHandler.handle(Future.succeededFuture(c.result()));
+								WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
+								workerExecutor.executeBlocking(
+									blockingCodeHandler -> {
+										try {
+											ApiRequest apiRequest = new ApiRequest();
+											JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+											apiRequest.setRows(jsonArray.size());
+											apiRequest.setNumFound(new Integer(jsonArray.size()).longValue());
+											apiRequest.setNumPATCH(0L);
+											apiRequest.initDeepApiRequest(siteRequest);
+											siteRequest.setApiRequest_(apiRequest);
+											siteRequest.getVertx().eventBus().publish("websocketSchoolMom", JsonObject.mapFrom(apiRequest).toString());
+											varsSchoolMom(siteRequest, d -> {
+												if(d.succeeded()) {
+													listPUTImportSchoolMom(apiRequest, siteRequest, e -> {
+														if(e.succeeded()) {
+															putimportSchoolMomResponse(siteRequest, f -> {
+																if(e.succeeded()) {
+																	LOGGER.info(String.format("putimportSchoolMom succeeded. "));
+																	blockingCodeHandler.handle(Future.succeededFuture(e.result()));
+																} else {
+																	LOGGER.error(String.format("putimportSchoolMom failed. ", f.cause()));
+																	errorSchoolMom(siteRequest, null, f);
+																}
+															});
+														} else {
+															LOGGER.error(String.format("putimportSchoolMom failed. ", e.cause()));
+															errorSchoolMom(siteRequest, null, e);
+														}
+													});
+												} else {
+													LOGGER.error(String.format("putimportSchoolMom failed. ", d.cause()));
+													errorSchoolMom(siteRequest, null, d);
+												}
+											});
+										} catch(Exception ex) {
+											LOGGER.error(String.format("putimportSchoolMom failed. ", ex));
+											errorSchoolMom(siteRequest, null, Future.failedFuture(ex));
+										}
+									}, resultHandler -> {
 									}
-								}, resultHandler -> {
-								}
-							);
-						} else {
-							LOGGER.error(String.format("putimportSchoolMom failed. ", c.cause()));
-							errorSchoolMom(siteRequest, eventHandler, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("putimportSchoolMom failed. ", b.cause()));
-					errorSchoolMom(siteRequest, eventHandler, b);
-				}
-			});
+								);
+							} else {
+								LOGGER.error(String.format("putimportSchoolMom failed. ", c.cause()));
+								errorSchoolMom(siteRequest, eventHandler, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("putimportSchoolMom failed. ", b.cause()));
+						errorSchoolMom(siteRequest, eventHandler, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("putimportSchoolMom failed. ", ex));
 			errorSchoolMom(siteRequest, eventHandler, Future.failedFuture(ex));
@@ -692,63 +696,65 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolMom(siteContext, operationRequest, body);
 		try {
 			LOGGER.info(String.format("putmergeSchoolMom started. "));
-			userSchoolMom(siteRequest, b -> {
-				if(b.succeeded()) {
-					putmergeSchoolMomResponse(siteRequest, c -> {
-						if(c.succeeded()) {
-							eventHandler.handle(Future.succeededFuture(c.result()));
-							WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
-							workerExecutor.executeBlocking(
-								blockingCodeHandler -> {
-									try {
-										ApiRequest apiRequest = new ApiRequest();
-										JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
-										apiRequest.setRows(jsonArray.size());
-										apiRequest.setNumFound(new Integer(jsonArray.size()).longValue());
-										apiRequest.setNumPATCH(0L);
-										apiRequest.initDeepApiRequest(siteRequest);
-										siteRequest.setApiRequest_(apiRequest);
-										siteRequest.getVertx().eventBus().publish("websocketSchoolMom", JsonObject.mapFrom(apiRequest).toString());
-										varsSchoolMom(siteRequest, d -> {
-											if(d.succeeded()) {
-												listPUTMergeSchoolMom(apiRequest, siteRequest, e -> {
-													if(e.succeeded()) {
-														putmergeSchoolMomResponse(siteRequest, f -> {
-															if(e.succeeded()) {
-																LOGGER.info(String.format("putmergeSchoolMom succeeded. "));
-																blockingCodeHandler.handle(Future.succeededFuture(e.result()));
-															} else {
-																LOGGER.error(String.format("putmergeSchoolMom failed. ", f.cause()));
-																errorSchoolMom(siteRequest, null, f);
-															}
-														});
-													} else {
-														LOGGER.error(String.format("putmergeSchoolMom failed. ", e.cause()));
-														errorSchoolMom(siteRequest, null, e);
-													}
-												});
-											} else {
-												LOGGER.error(String.format("putmergeSchoolMom failed. ", d.cause()));
-												errorSchoolMom(siteRequest, null, d);
-											}
-										});
-									} catch(Exception ex) {
-										LOGGER.error(String.format("putmergeSchoolMom failed. ", ex));
-										errorSchoolMom(siteRequest, null, Future.failedFuture(ex));
+			{
+				userSchoolMom(siteRequest, b -> {
+					if(b.succeeded()) {
+						putmergeSchoolMomResponse(siteRequest, c -> {
+							if(c.succeeded()) {
+								eventHandler.handle(Future.succeededFuture(c.result()));
+								WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
+								workerExecutor.executeBlocking(
+									blockingCodeHandler -> {
+										try {
+											ApiRequest apiRequest = new ApiRequest();
+											JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+											apiRequest.setRows(jsonArray.size());
+											apiRequest.setNumFound(new Integer(jsonArray.size()).longValue());
+											apiRequest.setNumPATCH(0L);
+											apiRequest.initDeepApiRequest(siteRequest);
+											siteRequest.setApiRequest_(apiRequest);
+											siteRequest.getVertx().eventBus().publish("websocketSchoolMom", JsonObject.mapFrom(apiRequest).toString());
+											varsSchoolMom(siteRequest, d -> {
+												if(d.succeeded()) {
+													listPUTMergeSchoolMom(apiRequest, siteRequest, e -> {
+														if(e.succeeded()) {
+															putmergeSchoolMomResponse(siteRequest, f -> {
+																if(e.succeeded()) {
+																	LOGGER.info(String.format("putmergeSchoolMom succeeded. "));
+																	blockingCodeHandler.handle(Future.succeededFuture(e.result()));
+																} else {
+																	LOGGER.error(String.format("putmergeSchoolMom failed. ", f.cause()));
+																	errorSchoolMom(siteRequest, null, f);
+																}
+															});
+														} else {
+															LOGGER.error(String.format("putmergeSchoolMom failed. ", e.cause()));
+															errorSchoolMom(siteRequest, null, e);
+														}
+													});
+												} else {
+													LOGGER.error(String.format("putmergeSchoolMom failed. ", d.cause()));
+													errorSchoolMom(siteRequest, null, d);
+												}
+											});
+										} catch(Exception ex) {
+											LOGGER.error(String.format("putmergeSchoolMom failed. ", ex));
+											errorSchoolMom(siteRequest, null, Future.failedFuture(ex));
+										}
+									}, resultHandler -> {
 									}
-								}, resultHandler -> {
-								}
-							);
-						} else {
-							LOGGER.error(String.format("putmergeSchoolMom failed. ", c.cause()));
-							errorSchoolMom(siteRequest, eventHandler, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("putmergeSchoolMom failed. ", b.cause()));
-					errorSchoolMom(siteRequest, eventHandler, b);
-				}
-			});
+								);
+							} else {
+								LOGGER.error(String.format("putmergeSchoolMom failed. ", c.cause()));
+								errorSchoolMom(siteRequest, eventHandler, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("putmergeSchoolMom failed. ", b.cause()));
+						errorSchoolMom(siteRequest, eventHandler, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("putmergeSchoolMom failed. ", ex));
 			errorSchoolMom(siteRequest, eventHandler, Future.failedFuture(ex));
@@ -857,68 +863,70 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolMom(siteContext, operationRequest, body);
 		try {
 			LOGGER.info(String.format("putcopySchoolMom started. "));
-			userSchoolMom(siteRequest, b -> {
-				if(b.succeeded()) {
-					putcopySchoolMomResponse(siteRequest, c -> {
-						if(c.succeeded()) {
-							eventHandler.handle(Future.succeededFuture(c.result()));
-							WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
-							workerExecutor.executeBlocking(
-								blockingCodeHandler -> {
-									try {
-										aSearchSchoolMom(siteRequest, false, true, "/api/mom/copy", "PUTCopy", d -> {
-											if(d.succeeded()) {
-												SearchList<SchoolMom> listSchoolMom = d.result();
-												ApiRequest apiRequest = new ApiRequest();
-												apiRequest.setRows(listSchoolMom.getRows());
-												apiRequest.setNumFound(listSchoolMom.getQueryResponse().getResults().getNumFound());
-												apiRequest.setNumPATCH(0L);
-												apiRequest.initDeepApiRequest(siteRequest);
-												siteRequest.setApiRequest_(apiRequest);
-												siteRequest.getVertx().eventBus().publish("websocketSchoolMom", JsonObject.mapFrom(apiRequest).toString());
-												try {
-													listPUTCopySchoolMom(apiRequest, listSchoolMom, e -> {
-														if(e.succeeded()) {
-															putcopySchoolMomResponse(siteRequest, f -> {
-																if(f.succeeded()) {
-																	LOGGER.info(String.format("putcopySchoolMom succeeded. "));
-																	blockingCodeHandler.handle(Future.succeededFuture(f.result()));
-																} else {
-																	LOGGER.error(String.format("putcopySchoolMom failed. ", f.cause()));
-																	errorSchoolMom(siteRequest, null, f);
-																}
-															});
-														} else {
-															LOGGER.error(String.format("putcopySchoolMom failed. ", e.cause()));
-															errorSchoolMom(siteRequest, null, e);
-														}
-													});
-												} catch(Exception ex) {
-													LOGGER.error(String.format("putcopySchoolMom failed. ", ex));
-													errorSchoolMom(siteRequest, null, Future.failedFuture(ex));
+			{
+				userSchoolMom(siteRequest, b -> {
+					if(b.succeeded()) {
+						putcopySchoolMomResponse(siteRequest, c -> {
+							if(c.succeeded()) {
+								eventHandler.handle(Future.succeededFuture(c.result()));
+								WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
+								workerExecutor.executeBlocking(
+									blockingCodeHandler -> {
+										try {
+											aSearchSchoolMom(siteRequest, false, true, "/api/mom/copy", "PUTCopy", d -> {
+												if(d.succeeded()) {
+													SearchList<SchoolMom> listSchoolMom = d.result();
+													ApiRequest apiRequest = new ApiRequest();
+													apiRequest.setRows(listSchoolMom.getRows());
+													apiRequest.setNumFound(listSchoolMom.getQueryResponse().getResults().getNumFound());
+													apiRequest.setNumPATCH(0L);
+													apiRequest.initDeepApiRequest(siteRequest);
+													siteRequest.setApiRequest_(apiRequest);
+													siteRequest.getVertx().eventBus().publish("websocketSchoolMom", JsonObject.mapFrom(apiRequest).toString());
+													try {
+														listPUTCopySchoolMom(apiRequest, listSchoolMom, e -> {
+															if(e.succeeded()) {
+																putcopySchoolMomResponse(siteRequest, f -> {
+																	if(f.succeeded()) {
+																		LOGGER.info(String.format("putcopySchoolMom succeeded. "));
+																		blockingCodeHandler.handle(Future.succeededFuture(f.result()));
+																	} else {
+																		LOGGER.error(String.format("putcopySchoolMom failed. ", f.cause()));
+																		errorSchoolMom(siteRequest, null, f);
+																	}
+																});
+															} else {
+																LOGGER.error(String.format("putcopySchoolMom failed. ", e.cause()));
+																errorSchoolMom(siteRequest, null, e);
+															}
+														});
+													} catch(Exception ex) {
+														LOGGER.error(String.format("putcopySchoolMom failed. ", ex));
+														errorSchoolMom(siteRequest, null, Future.failedFuture(ex));
+													}
+												} else {
+													LOGGER.error(String.format("putcopySchoolMom failed. ", d.cause()));
+													errorSchoolMom(siteRequest, null, d);
 												}
-											} else {
-												LOGGER.error(String.format("putcopySchoolMom failed. ", d.cause()));
-												errorSchoolMom(siteRequest, null, d);
-											}
-										});
-									} catch(Exception ex) {
-										LOGGER.error(String.format("putcopySchoolMom failed. ", ex));
-										errorSchoolMom(siteRequest, null, Future.failedFuture(ex));
+											});
+										} catch(Exception ex) {
+											LOGGER.error(String.format("putcopySchoolMom failed. ", ex));
+											errorSchoolMom(siteRequest, null, Future.failedFuture(ex));
+										}
+									}, resultHandler -> {
 									}
-								}, resultHandler -> {
-								}
-							);
-						} else {
-							LOGGER.error(String.format("putcopySchoolMom failed. ", c.cause()));
-							errorSchoolMom(siteRequest, eventHandler, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("putcopySchoolMom failed. ", b.cause()));
-					errorSchoolMom(siteRequest, eventHandler, b);
-				}
-			});
+								);
+							} else {
+								LOGGER.error(String.format("putcopySchoolMom failed. ", c.cause()));
+								errorSchoolMom(siteRequest, eventHandler, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("putcopySchoolMom failed. ", b.cause()));
+						errorSchoolMom(siteRequest, eventHandler, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("putcopySchoolMom failed. ", ex));
 			errorSchoolMom(siteRequest, eventHandler, Future.failedFuture(ex));
@@ -1287,79 +1295,81 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolMom(siteContext, operationRequest, body);
 		try {
 			LOGGER.info(String.format("patchSchoolMom started. "));
-			userSchoolMom(siteRequest, b -> {
-				if(b.succeeded()) {
-					patchSchoolMomResponse(siteRequest, c -> {
-						if(c.succeeded()) {
-							eventHandler.handle(Future.succeededFuture(c.result()));
-							WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
-							workerExecutor.executeBlocking(
-								blockingCodeHandler -> {
-									try {
-										aSearchSchoolMom(siteRequest, false, true, "/api/mom", "PATCH", d -> {
-											if(d.succeeded()) {
-												SearchList<SchoolMom> listSchoolMom = d.result();
-												ApiRequest apiRequest = new ApiRequest();
-												apiRequest.setRows(listSchoolMom.getRows());
-												apiRequest.setNumFound(listSchoolMom.getQueryResponse().getResults().getNumFound());
-												apiRequest.setNumPATCH(0L);
-												apiRequest.initDeepApiRequest(siteRequest);
-												siteRequest.setApiRequest_(apiRequest);
-												siteRequest.getVertx().eventBus().publish("websocketSchoolMom", JsonObject.mapFrom(apiRequest).toString());
-												SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listSchoolMom.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
-												Date date = null;
-												if(facets != null)
-													date = (Date)facets.get("max_modified");
-												String dt;
-												if(date == null)
-													dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
-												else
-													dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
-												listSchoolMom.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
+			{
+				userSchoolMom(siteRequest, b -> {
+					if(b.succeeded()) {
+						patchSchoolMomResponse(siteRequest, c -> {
+							if(c.succeeded()) {
+								eventHandler.handle(Future.succeededFuture(c.result()));
+								WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
+								workerExecutor.executeBlocking(
+									blockingCodeHandler -> {
+										try {
+											aSearchSchoolMom(siteRequest, false, true, "/api/mom", "PATCH", d -> {
+												if(d.succeeded()) {
+													SearchList<SchoolMom> listSchoolMom = d.result();
+													ApiRequest apiRequest = new ApiRequest();
+													apiRequest.setRows(listSchoolMom.getRows());
+													apiRequest.setNumFound(listSchoolMom.getQueryResponse().getResults().getNumFound());
+													apiRequest.setNumPATCH(0L);
+													apiRequest.initDeepApiRequest(siteRequest);
+													siteRequest.setApiRequest_(apiRequest);
+													siteRequest.getVertx().eventBus().publish("websocketSchoolMom", JsonObject.mapFrom(apiRequest).toString());
+													SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listSchoolMom.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
+													Date date = null;
+													if(facets != null)
+														date = (Date)facets.get("max_modified");
+													String dt;
+													if(date == null)
+														dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
+													else
+														dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
+													listSchoolMom.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
 
-												try {
-													listPATCHSchoolMom(apiRequest, listSchoolMom, dt, e -> {
-														if(e.succeeded()) {
-															patchSchoolMomResponse(siteRequest, f -> {
-																if(f.succeeded()) {
-																	LOGGER.info(String.format("patchSchoolMom succeeded. "));
-																	blockingCodeHandler.handle(Future.succeededFuture(f.result()));
-																} else {
-																	LOGGER.error(String.format("patchSchoolMom failed. ", f.cause()));
-																	errorSchoolMom(siteRequest, null, f);
-																}
-															});
-														} else {
-															LOGGER.error(String.format("patchSchoolMom failed. ", e.cause()));
-															errorSchoolMom(siteRequest, null, e);
-														}
-													});
-												} catch(Exception ex) {
-													LOGGER.error(String.format("patchSchoolMom failed. ", ex));
-													errorSchoolMom(siteRequest, null, Future.failedFuture(ex));
+													try {
+														listPATCHSchoolMom(apiRequest, listSchoolMom, dt, e -> {
+															if(e.succeeded()) {
+																patchSchoolMomResponse(siteRequest, f -> {
+																	if(f.succeeded()) {
+																		LOGGER.info(String.format("patchSchoolMom succeeded. "));
+																		blockingCodeHandler.handle(Future.succeededFuture(f.result()));
+																	} else {
+																		LOGGER.error(String.format("patchSchoolMom failed. ", f.cause()));
+																		errorSchoolMom(siteRequest, null, f);
+																	}
+																});
+															} else {
+																LOGGER.error(String.format("patchSchoolMom failed. ", e.cause()));
+																errorSchoolMom(siteRequest, null, e);
+															}
+														});
+													} catch(Exception ex) {
+														LOGGER.error(String.format("patchSchoolMom failed. ", ex));
+														errorSchoolMom(siteRequest, null, Future.failedFuture(ex));
+													}
+										} else {
+													LOGGER.error(String.format("patchSchoolMom failed. ", d.cause()));
+													errorSchoolMom(siteRequest, null, d);
 												}
-											} else {
-												LOGGER.error(String.format("patchSchoolMom failed. ", d.cause()));
-												errorSchoolMom(siteRequest, null, d);
-											}
-										});
-									} catch(Exception ex) {
-										LOGGER.error(String.format("patchSchoolMom failed. ", ex));
-										errorSchoolMom(siteRequest, null, Future.failedFuture(ex));
+											});
+										} catch(Exception ex) {
+											LOGGER.error(String.format("patchSchoolMom failed. ", ex));
+											errorSchoolMom(siteRequest, null, Future.failedFuture(ex));
+										}
+									}, resultHandler -> {
 									}
-								}, resultHandler -> {
-								}
-							);
-						} else {
-							LOGGER.error(String.format("patchSchoolMom failed. ", c.cause()));
-							errorSchoolMom(siteRequest, eventHandler, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("patchSchoolMom failed. ", b.cause()));
-					errorSchoolMom(siteRequest, eventHandler, b);
-				}
-			});
+								);
+							} else {
+								LOGGER.error(String.format("patchSchoolMom failed. ", c.cause()));
+								errorSchoolMom(siteRequest, eventHandler, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("patchSchoolMom failed. ", b.cause()));
+						errorSchoolMom(siteRequest, eventHandler, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("patchSchoolMom failed. ", ex));
 			errorSchoolMom(siteRequest, eventHandler, Future.failedFuture(ex));
@@ -2088,30 +2098,32 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 	public void getSchoolMom(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolMom(siteContext, operationRequest);
 		try {
-			userSchoolMom(siteRequest, b -> {
-				if(b.succeeded()) {
-					aSearchSchoolMom(siteRequest, false, true, "/api/mom/{id}", "GET", c -> {
-						if(c.succeeded()) {
-							SearchList<SchoolMom> listSchoolMom = c.result();
-							getSchoolMomResponse(listSchoolMom, d -> {
-								if(d.succeeded()) {
-									eventHandler.handle(Future.succeededFuture(d.result()));
-									LOGGER.info(String.format("getSchoolMom succeeded. "));
-								} else {
-									LOGGER.error(String.format("getSchoolMom failed. ", d.cause()));
-									errorSchoolMom(siteRequest, eventHandler, d);
-								}
-							});
-						} else {
-							LOGGER.error(String.format("getSchoolMom failed. ", c.cause()));
-							errorSchoolMom(siteRequest, eventHandler, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("getSchoolMom failed. ", b.cause()));
-					errorSchoolMom(siteRequest, eventHandler, b);
-				}
-			});
+			{
+				userSchoolMom(siteRequest, b -> {
+					if(b.succeeded()) {
+						aSearchSchoolMom(siteRequest, false, true, "/api/mom/{id}", "GET", c -> {
+							if(c.succeeded()) {
+								SearchList<SchoolMom> listSchoolMom = c.result();
+								getSchoolMomResponse(listSchoolMom, d -> {
+									if(d.succeeded()) {
+										eventHandler.handle(Future.succeededFuture(d.result()));
+										LOGGER.info(String.format("getSchoolMom succeeded. "));
+									} else {
+										LOGGER.error(String.format("getSchoolMom failed. ", d.cause()));
+										errorSchoolMom(siteRequest, eventHandler, d);
+									}
+								});
+							} else {
+								LOGGER.error(String.format("getSchoolMom failed. ", c.cause()));
+								errorSchoolMom(siteRequest, eventHandler, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("getSchoolMom failed. ", b.cause()));
+						errorSchoolMom(siteRequest, eventHandler, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("getSchoolMom failed. ", ex));
 			errorSchoolMom(siteRequest, eventHandler, Future.failedFuture(ex));
@@ -2154,30 +2166,32 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 	public void searchSchoolMom(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolMom(siteContext, operationRequest);
 		try {
-			userSchoolMom(siteRequest, b -> {
-				if(b.succeeded()) {
-					aSearchSchoolMom(siteRequest, false, true, "/api/mom", "Search", c -> {
-						if(c.succeeded()) {
-							SearchList<SchoolMom> listSchoolMom = c.result();
-							searchSchoolMomResponse(listSchoolMom, d -> {
-								if(d.succeeded()) {
-									eventHandler.handle(Future.succeededFuture(d.result()));
-									LOGGER.info(String.format("searchSchoolMom succeeded. "));
-								} else {
-									LOGGER.error(String.format("searchSchoolMom failed. ", d.cause()));
-									errorSchoolMom(siteRequest, eventHandler, d);
-								}
-							});
-						} else {
-							LOGGER.error(String.format("searchSchoolMom failed. ", c.cause()));
-							errorSchoolMom(siteRequest, eventHandler, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("searchSchoolMom failed. ", b.cause()));
-					errorSchoolMom(siteRequest, eventHandler, b);
-				}
-			});
+			{
+				userSchoolMom(siteRequest, b -> {
+					if(b.succeeded()) {
+						aSearchSchoolMom(siteRequest, false, true, "/api/mom", "Search", c -> {
+							if(c.succeeded()) {
+								SearchList<SchoolMom> listSchoolMom = c.result();
+								searchSchoolMomResponse(listSchoolMom, d -> {
+									if(d.succeeded()) {
+										eventHandler.handle(Future.succeededFuture(d.result()));
+										LOGGER.info(String.format("searchSchoolMom succeeded. "));
+									} else {
+										LOGGER.error(String.format("searchSchoolMom failed. ", d.cause()));
+										errorSchoolMom(siteRequest, eventHandler, d);
+									}
+								});
+							} else {
+								LOGGER.error(String.format("searchSchoolMom failed. ", c.cause()));
+								errorSchoolMom(siteRequest, eventHandler, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("searchSchoolMom failed. ", b.cause()));
+						errorSchoolMom(siteRequest, eventHandler, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("searchSchoolMom failed. ", ex));
 			errorSchoolMom(siteRequest, eventHandler, Future.failedFuture(ex));
@@ -2260,30 +2274,32 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 	public void adminsearchSchoolMom(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolMom(siteContext, operationRequest);
 		try {
-			userSchoolMom(siteRequest, b -> {
-				if(b.succeeded()) {
-					aSearchSchoolMom(siteRequest, false, true, "/api/admin/mom", "AdminSearch", c -> {
-						if(c.succeeded()) {
-							SearchList<SchoolMom> listSchoolMom = c.result();
-							adminsearchSchoolMomResponse(listSchoolMom, d -> {
-								if(d.succeeded()) {
-									eventHandler.handle(Future.succeededFuture(d.result()));
-									LOGGER.info(String.format("adminsearchSchoolMom succeeded. "));
-								} else {
-									LOGGER.error(String.format("adminsearchSchoolMom failed. ", d.cause()));
-									errorSchoolMom(siteRequest, eventHandler, d);
-								}
-							});
-						} else {
-							LOGGER.error(String.format("adminsearchSchoolMom failed. ", c.cause()));
-							errorSchoolMom(siteRequest, eventHandler, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("adminsearchSchoolMom failed. ", b.cause()));
-					errorSchoolMom(siteRequest, eventHandler, b);
-				}
-			});
+			{
+				userSchoolMom(siteRequest, b -> {
+					if(b.succeeded()) {
+						aSearchSchoolMom(siteRequest, false, true, "/api/admin/mom", "AdminSearch", c -> {
+							if(c.succeeded()) {
+								SearchList<SchoolMom> listSchoolMom = c.result();
+								adminsearchSchoolMomResponse(listSchoolMom, d -> {
+									if(d.succeeded()) {
+										eventHandler.handle(Future.succeededFuture(d.result()));
+										LOGGER.info(String.format("adminsearchSchoolMom succeeded. "));
+									} else {
+										LOGGER.error(String.format("adminsearchSchoolMom failed. ", d.cause()));
+										errorSchoolMom(siteRequest, eventHandler, d);
+									}
+								});
+							} else {
+								LOGGER.error(String.format("adminsearchSchoolMom failed. ", c.cause()));
+								errorSchoolMom(siteRequest, eventHandler, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("adminsearchSchoolMom failed. ", b.cause()));
+						errorSchoolMom(siteRequest, eventHandler, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("adminsearchSchoolMom failed. ", ex));
 			errorSchoolMom(siteRequest, eventHandler, Future.failedFuture(ex));
@@ -2371,30 +2387,32 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 	public void searchpageSchoolMom(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolMom(siteContext, operationRequest);
 		try {
-			userSchoolMom(siteRequest, b -> {
-				if(b.succeeded()) {
-					aSearchSchoolMom(siteRequest, false, true, "/mom", "SearchPage", c -> {
-						if(c.succeeded()) {
-							SearchList<SchoolMom> listSchoolMom = c.result();
-							searchpageSchoolMomResponse(listSchoolMom, d -> {
-								if(d.succeeded()) {
-									eventHandler.handle(Future.succeededFuture(d.result()));
-									LOGGER.info(String.format("searchpageSchoolMom succeeded. "));
-								} else {
-									LOGGER.error(String.format("searchpageSchoolMom failed. ", d.cause()));
-									errorSchoolMom(siteRequest, eventHandler, d);
-								}
-							});
-						} else {
-							LOGGER.error(String.format("searchpageSchoolMom failed. ", c.cause()));
-							errorSchoolMom(siteRequest, eventHandler, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("searchpageSchoolMom failed. ", b.cause()));
-					errorSchoolMom(siteRequest, eventHandler, b);
-				}
-			});
+			{
+				userSchoolMom(siteRequest, b -> {
+					if(b.succeeded()) {
+						aSearchSchoolMom(siteRequest, false, true, "/mom", "SearchPage", c -> {
+							if(c.succeeded()) {
+								SearchList<SchoolMom> listSchoolMom = c.result();
+								searchpageSchoolMomResponse(listSchoolMom, d -> {
+									if(d.succeeded()) {
+										eventHandler.handle(Future.succeededFuture(d.result()));
+										LOGGER.info(String.format("searchpageSchoolMom succeeded. "));
+									} else {
+										LOGGER.error(String.format("searchpageSchoolMom failed. ", d.cause()));
+										errorSchoolMom(siteRequest, eventHandler, d);
+									}
+								});
+							} else {
+								LOGGER.error(String.format("searchpageSchoolMom failed. ", c.cause()));
+								errorSchoolMom(siteRequest, eventHandler, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("searchpageSchoolMom failed. ", b.cause()));
+						errorSchoolMom(siteRequest, eventHandler, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("searchpageSchoolMom failed. ", ex));
 			errorSchoolMom(siteRequest, eventHandler, Future.failedFuture(ex));

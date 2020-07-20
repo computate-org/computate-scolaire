@@ -124,40 +124,41 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 							), new CaseInsensitiveHeaders()
 					)
 				));
-			}
+			} else {
 
-			utilisateurEcole(requeteSite, b -> {
-				if(b.succeeded()) {
-					RequeteApi requeteApi = new RequeteApi();
-					requeteApi.setRows(1);
-					requeteApi.setNumFound(1L);
-					requeteApi.setNumPATCH(0L);
-					requeteApi.initLoinRequeteApi(requeteSite);
-					requeteSite.setRequeteApi_(requeteApi);
-					requeteSite.getVertx().eventBus().publish("websocketEcole", JsonObject.mapFrom(requeteApi).toString());
-					postEcoleFuture(requeteSite, false, c -> {
-						if(c.succeeded()) {
-							Ecole ecole = c.result();
-							requeteApi.setPk(ecole.getPk());
-							postEcoleReponse(ecole, d -> {
-									if(d.succeeded()) {
-									gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-									LOGGER.info(String.format("postEcole a réussi. "));
-								} else {
-									LOGGER.error(String.format("postEcole a échoué. ", d.cause()));
-									erreurEcole(requeteSite, gestionnaireEvenements, d);
-								}
-							});
-						} else {
-							LOGGER.error(String.format("postEcole a échoué. ", c.cause()));
-							erreurEcole(requeteSite, gestionnaireEvenements, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("postEcole a échoué. ", b.cause()));
-					erreurEcole(requeteSite, gestionnaireEvenements, b);
-				}
-			});
+				utilisateurEcole(requeteSite, b -> {
+					if(b.succeeded()) {
+						RequeteApi requeteApi = new RequeteApi();
+						requeteApi.setRows(1);
+						requeteApi.setNumFound(1L);
+						requeteApi.setNumPATCH(0L);
+						requeteApi.initLoinRequeteApi(requeteSite);
+						requeteSite.setRequeteApi_(requeteApi);
+						requeteSite.getVertx().eventBus().publish("websocketEcole", JsonObject.mapFrom(requeteApi).toString());
+						postEcoleFuture(requeteSite, false, c -> {
+							if(c.succeeded()) {
+								Ecole ecole = c.result();
+								requeteApi.setPk(ecole.getPk());
+								postEcoleReponse(ecole, d -> {
+										if(d.succeeded()) {
+										gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+										LOGGER.info(String.format("postEcole a réussi. "));
+									} else {
+										LOGGER.error(String.format("postEcole a échoué. ", d.cause()));
+										erreurEcole(requeteSite, gestionnaireEvenements, d);
+									}
+								});
+							} else {
+								LOGGER.error(String.format("postEcole a échoué. ", c.cause()));
+								erreurEcole(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("postEcole a échoué. ", b.cause()));
+						erreurEcole(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("postEcole a échoué. ", ex));
 			erreurEcole(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
@@ -527,81 +528,82 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 							), new CaseInsensitiveHeaders()
 					)
 				));
-			}
+			} else {
 
-			utilisateurEcole(requeteSite, b -> {
-				if(b.succeeded()) {
-					patchEcoleReponse(requeteSite, c -> {
-						if(c.succeeded()) {
-							gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
-							WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
-							executeurTravailleur.executeBlocking(
-								blockingCodeHandler -> {
-									try {
-										rechercheEcole(requeteSite, false, true, "/api/ecole", "PATCH", d -> {
-											if(d.succeeded()) {
-												ListeRecherche<Ecole> listeEcole = d.result();
-												RequeteApi requeteApi = new RequeteApi();
-												requeteApi.setRows(listeEcole.getRows());
-												requeteApi.setNumFound(listeEcole.getQueryResponse().getResults().getNumFound());
-												requeteApi.setNumPATCH(0L);
-												requeteApi.initLoinRequeteApi(requeteSite);
-												requeteSite.setRequeteApi_(requeteApi);
-												requeteSite.getVertx().eventBus().publish("websocketEcole", JsonObject.mapFrom(requeteApi).toString());
-												SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listeEcole.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
-												Date date = null;
-												if(facets != null)
-													date = (Date)facets.get("max_modifie");
-												String dt;
-												if(date == null)
-													dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
-												else
-													dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
-												listeEcole.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
+				utilisateurEcole(requeteSite, b -> {
+					if(b.succeeded()) {
+						patchEcoleReponse(requeteSite, c -> {
+							if(c.succeeded()) {
+								gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
+								WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
+								executeurTravailleur.executeBlocking(
+									blockingCodeHandler -> {
+										try {
+											rechercheEcole(requeteSite, false, true, "/api/ecole", "PATCH", d -> {
+												if(d.succeeded()) {
+													ListeRecherche<Ecole> listeEcole = d.result();
+													RequeteApi requeteApi = new RequeteApi();
+													requeteApi.setRows(listeEcole.getRows());
+													requeteApi.setNumFound(listeEcole.getQueryResponse().getResults().getNumFound());
+													requeteApi.setNumPATCH(0L);
+													requeteApi.initLoinRequeteApi(requeteSite);
+													requeteSite.setRequeteApi_(requeteApi);
+													requeteSite.getVertx().eventBus().publish("websocketEcole", JsonObject.mapFrom(requeteApi).toString());
+													SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listeEcole.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
+													Date date = null;
+													if(facets != null)
+														date = (Date)facets.get("max_modifie");
+													String dt;
+													if(date == null)
+														dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
+													else
+														dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
+													listeEcole.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
 
-												try {
-													listePATCHEcole(requeteApi, listeEcole, dt, e -> {
-														if(e.succeeded()) {
-															patchEcoleReponse(requeteSite, f -> {
-																if(f.succeeded()) {
-																	LOGGER.info(String.format("patchEcole a réussi. "));
-																	blockingCodeHandler.handle(Future.succeededFuture(f.result()));
-																} else {
-																	LOGGER.error(String.format("patchEcole a échoué. ", f.cause()));
-																	erreurEcole(requeteSite, null, f);
-																}
-															});
-														} else {
-															LOGGER.error(String.format("patchEcole a échoué. ", e.cause()));
-															erreurEcole(requeteSite, null, e);
-														}
-													});
-												} catch(Exception ex) {
-													LOGGER.error(String.format("patchEcole a échoué. ", ex));
-													erreurEcole(requeteSite, null, Future.failedFuture(ex));
+													try {
+														listePATCHEcole(requeteApi, listeEcole, dt, e -> {
+															if(e.succeeded()) {
+																patchEcoleReponse(requeteSite, f -> {
+																	if(f.succeeded()) {
+																		LOGGER.info(String.format("patchEcole a réussi. "));
+																		blockingCodeHandler.handle(Future.succeededFuture(f.result()));
+																	} else {
+																		LOGGER.error(String.format("patchEcole a échoué. ", f.cause()));
+																		erreurEcole(requeteSite, null, f);
+																	}
+																});
+															} else {
+																LOGGER.error(String.format("patchEcole a échoué. ", e.cause()));
+																erreurEcole(requeteSite, null, e);
+															}
+														});
+													} catch(Exception ex) {
+														LOGGER.error(String.format("patchEcole a échoué. ", ex));
+														erreurEcole(requeteSite, null, Future.failedFuture(ex));
+													}
+										} else {
+													LOGGER.error(String.format("patchEcole a échoué. ", d.cause()));
+													erreurEcole(requeteSite, null, d);
 												}
-											} else {
-												LOGGER.error(String.format("patchEcole a échoué. ", d.cause()));
-												erreurEcole(requeteSite, null, d);
-											}
-										});
-									} catch(Exception ex) {
-										LOGGER.error(String.format("patchEcole a échoué. ", ex));
-										erreurEcole(requeteSite, null, Future.failedFuture(ex));
+											});
+										} catch(Exception ex) {
+											LOGGER.error(String.format("patchEcole a échoué. ", ex));
+											erreurEcole(requeteSite, null, Future.failedFuture(ex));
+										}
+									}, resultHandler -> {
 									}
-								}, resultHandler -> {
-								}
-							);
-						} else {
-							LOGGER.error(String.format("patchEcole a échoué. ", c.cause()));
-							erreurEcole(requeteSite, gestionnaireEvenements, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("patchEcole a échoué. ", b.cause()));
-					erreurEcole(requeteSite, gestionnaireEvenements, b);
-				}
-			});
+								);
+							} else {
+								LOGGER.error(String.format("patchEcole a échoué. ", c.cause()));
+								erreurEcole(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("patchEcole a échoué. ", b.cause()));
+						erreurEcole(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("patchEcole a échoué. ", ex));
 			erreurEcole(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
@@ -1287,32 +1289,33 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 							), new CaseInsensitiveHeaders()
 					)
 				));
-			}
+			} else {
 
-			utilisateurEcole(requeteSite, b -> {
-				if(b.succeeded()) {
-					rechercheEcole(requeteSite, false, true, "/api/ecole/{id}", "GET", c -> {
-						if(c.succeeded()) {
-							ListeRecherche<Ecole> listeEcole = c.result();
-							getEcoleReponse(listeEcole, d -> {
-								if(d.succeeded()) {
-									gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-									LOGGER.info(String.format("getEcole a réussi. "));
-								} else {
-									LOGGER.error(String.format("getEcole a échoué. ", d.cause()));
-									erreurEcole(requeteSite, gestionnaireEvenements, d);
-								}
-							});
-						} else {
-							LOGGER.error(String.format("getEcole a échoué. ", c.cause()));
-							erreurEcole(requeteSite, gestionnaireEvenements, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("getEcole a échoué. ", b.cause()));
-					erreurEcole(requeteSite, gestionnaireEvenements, b);
-				}
-			});
+				utilisateurEcole(requeteSite, b -> {
+					if(b.succeeded()) {
+						rechercheEcole(requeteSite, false, true, "/api/ecole/{id}", "GET", c -> {
+							if(c.succeeded()) {
+								ListeRecherche<Ecole> listeEcole = c.result();
+								getEcoleReponse(listeEcole, d -> {
+									if(d.succeeded()) {
+										gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+										LOGGER.info(String.format("getEcole a réussi. "));
+									} else {
+										LOGGER.error(String.format("getEcole a échoué. ", d.cause()));
+										erreurEcole(requeteSite, gestionnaireEvenements, d);
+									}
+								});
+							} else {
+								LOGGER.error(String.format("getEcole a échoué. ", c.cause()));
+								erreurEcole(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("getEcole a échoué. ", b.cause()));
+						erreurEcole(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("getEcole a échoué. ", ex));
 			erreurEcole(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
@@ -1374,32 +1377,33 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 							), new CaseInsensitiveHeaders()
 					)
 				));
-			}
+			} else {
 
-			utilisateurEcole(requeteSite, b -> {
-				if(b.succeeded()) {
-					rechercheEcole(requeteSite, false, true, "/api/ecole", "Recherche", c -> {
-						if(c.succeeded()) {
-							ListeRecherche<Ecole> listeEcole = c.result();
-							rechercheEcoleReponse(listeEcole, d -> {
-								if(d.succeeded()) {
-									gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-									LOGGER.info(String.format("rechercheEcole a réussi. "));
-								} else {
-									LOGGER.error(String.format("rechercheEcole a échoué. ", d.cause()));
-									erreurEcole(requeteSite, gestionnaireEvenements, d);
-								}
-							});
-						} else {
-							LOGGER.error(String.format("rechercheEcole a échoué. ", c.cause()));
-							erreurEcole(requeteSite, gestionnaireEvenements, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("rechercheEcole a échoué. ", b.cause()));
-					erreurEcole(requeteSite, gestionnaireEvenements, b);
-				}
-			});
+				utilisateurEcole(requeteSite, b -> {
+					if(b.succeeded()) {
+						rechercheEcole(requeteSite, false, true, "/api/ecole", "Recherche", c -> {
+							if(c.succeeded()) {
+								ListeRecherche<Ecole> listeEcole = c.result();
+								rechercheEcoleReponse(listeEcole, d -> {
+									if(d.succeeded()) {
+										gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+										LOGGER.info(String.format("rechercheEcole a réussi. "));
+									} else {
+										LOGGER.error(String.format("rechercheEcole a échoué. ", d.cause()));
+										erreurEcole(requeteSite, gestionnaireEvenements, d);
+									}
+								});
+							} else {
+								LOGGER.error(String.format("rechercheEcole a échoué. ", c.cause()));
+								erreurEcole(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("rechercheEcole a échoué. ", b.cause()));
+						erreurEcole(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("rechercheEcole a échoué. ", ex));
 			erreurEcole(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
@@ -1499,65 +1503,66 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 							), new CaseInsensitiveHeaders()
 					)
 				));
-			}
+			} else {
 
-			utilisateurEcole(requeteSite, b -> {
-				if(b.succeeded()) {
-					putimportEcoleReponse(requeteSite, c -> {
-						if(c.succeeded()) {
-							gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
-							WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
-							executeurTravailleur.executeBlocking(
-								blockingCodeHandler -> {
-									try {
-										RequeteApi requeteApi = new RequeteApi();
-										JsonArray jsonArray = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
-										requeteApi.setRows(jsonArray.size());
-										requeteApi.setNumFound(new Integer(jsonArray.size()).longValue());
-										requeteApi.setNumPATCH(0L);
-										requeteApi.initLoinRequeteApi(requeteSite);
-										requeteSite.setRequeteApi_(requeteApi);
-										requeteSite.getVertx().eventBus().publish("websocketEcole", JsonObject.mapFrom(requeteApi).toString());
-										varsEcole(requeteSite, d -> {
-											if(d.succeeded()) {
-												listePUTImportEcole(requeteApi, requeteSite, e -> {
-													if(e.succeeded()) {
-														putimportEcoleReponse(requeteSite, f -> {
-															if(e.succeeded()) {
-																LOGGER.info(String.format("putimportEcole a réussi. "));
-																blockingCodeHandler.handle(Future.succeededFuture(e.result()));
-															} else {
-																LOGGER.error(String.format("putimportEcole a échoué. ", f.cause()));
-																erreurEcole(requeteSite, null, f);
-															}
-														});
-													} else {
-														LOGGER.error(String.format("putimportEcole a échoué. ", e.cause()));
-														erreurEcole(requeteSite, null, e);
-													}
-												});
-											} else {
-												LOGGER.error(String.format("putimportEcole a échoué. ", d.cause()));
-												erreurEcole(requeteSite, null, d);
-											}
-										});
-									} catch(Exception ex) {
-										LOGGER.error(String.format("putimportEcole a échoué. ", ex));
-										erreurEcole(requeteSite, null, Future.failedFuture(ex));
+				utilisateurEcole(requeteSite, b -> {
+					if(b.succeeded()) {
+						putimportEcoleReponse(requeteSite, c -> {
+							if(c.succeeded()) {
+								gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
+								WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
+								executeurTravailleur.executeBlocking(
+									blockingCodeHandler -> {
+										try {
+											RequeteApi requeteApi = new RequeteApi();
+											JsonArray jsonArray = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+											requeteApi.setRows(jsonArray.size());
+											requeteApi.setNumFound(new Integer(jsonArray.size()).longValue());
+											requeteApi.setNumPATCH(0L);
+											requeteApi.initLoinRequeteApi(requeteSite);
+											requeteSite.setRequeteApi_(requeteApi);
+											requeteSite.getVertx().eventBus().publish("websocketEcole", JsonObject.mapFrom(requeteApi).toString());
+											varsEcole(requeteSite, d -> {
+												if(d.succeeded()) {
+													listePUTImportEcole(requeteApi, requeteSite, e -> {
+														if(e.succeeded()) {
+															putimportEcoleReponse(requeteSite, f -> {
+																if(e.succeeded()) {
+																	LOGGER.info(String.format("putimportEcole a réussi. "));
+																	blockingCodeHandler.handle(Future.succeededFuture(e.result()));
+																} else {
+																	LOGGER.error(String.format("putimportEcole a échoué. ", f.cause()));
+																	erreurEcole(requeteSite, null, f);
+																}
+															});
+														} else {
+															LOGGER.error(String.format("putimportEcole a échoué. ", e.cause()));
+															erreurEcole(requeteSite, null, e);
+														}
+													});
+												} else {
+													LOGGER.error(String.format("putimportEcole a échoué. ", d.cause()));
+													erreurEcole(requeteSite, null, d);
+												}
+											});
+										} catch(Exception ex) {
+											LOGGER.error(String.format("putimportEcole a échoué. ", ex));
+											erreurEcole(requeteSite, null, Future.failedFuture(ex));
+										}
+									}, resultHandler -> {
 									}
-								}, resultHandler -> {
-								}
-							);
-						} else {
-							LOGGER.error(String.format("putimportEcole a échoué. ", c.cause()));
-							erreurEcole(requeteSite, gestionnaireEvenements, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("putimportEcole a échoué. ", b.cause()));
-					erreurEcole(requeteSite, gestionnaireEvenements, b);
-				}
-			});
+								);
+							} else {
+								LOGGER.error(String.format("putimportEcole a échoué. ", c.cause()));
+								erreurEcole(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("putimportEcole a échoué. ", b.cause()));
+						erreurEcole(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("putimportEcole a échoué. ", ex));
 			erreurEcole(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
@@ -1684,65 +1689,66 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 							), new CaseInsensitiveHeaders()
 					)
 				));
-			}
+			} else {
 
-			utilisateurEcole(requeteSite, b -> {
-				if(b.succeeded()) {
-					putfusionEcoleReponse(requeteSite, c -> {
-						if(c.succeeded()) {
-							gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
-							WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
-							executeurTravailleur.executeBlocking(
-								blockingCodeHandler -> {
-									try {
-										RequeteApi requeteApi = new RequeteApi();
-										JsonArray jsonArray = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
-										requeteApi.setRows(jsonArray.size());
-										requeteApi.setNumFound(new Integer(jsonArray.size()).longValue());
-										requeteApi.setNumPATCH(0L);
-										requeteApi.initLoinRequeteApi(requeteSite);
-										requeteSite.setRequeteApi_(requeteApi);
-										requeteSite.getVertx().eventBus().publish("websocketEcole", JsonObject.mapFrom(requeteApi).toString());
-										varsEcole(requeteSite, d -> {
-											if(d.succeeded()) {
-												listePUTFusionEcole(requeteApi, requeteSite, e -> {
-													if(e.succeeded()) {
-														putfusionEcoleReponse(requeteSite, f -> {
-															if(e.succeeded()) {
-																LOGGER.info(String.format("putfusionEcole a réussi. "));
-																blockingCodeHandler.handle(Future.succeededFuture(e.result()));
-															} else {
-																LOGGER.error(String.format("putfusionEcole a échoué. ", f.cause()));
-																erreurEcole(requeteSite, null, f);
-															}
-														});
-													} else {
-														LOGGER.error(String.format("putfusionEcole a échoué. ", e.cause()));
-														erreurEcole(requeteSite, null, e);
-													}
-												});
-											} else {
-												LOGGER.error(String.format("putfusionEcole a échoué. ", d.cause()));
-												erreurEcole(requeteSite, null, d);
-											}
-										});
-									} catch(Exception ex) {
-										LOGGER.error(String.format("putfusionEcole a échoué. ", ex));
-										erreurEcole(requeteSite, null, Future.failedFuture(ex));
+				utilisateurEcole(requeteSite, b -> {
+					if(b.succeeded()) {
+						putfusionEcoleReponse(requeteSite, c -> {
+							if(c.succeeded()) {
+								gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
+								WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
+								executeurTravailleur.executeBlocking(
+									blockingCodeHandler -> {
+										try {
+											RequeteApi requeteApi = new RequeteApi();
+											JsonArray jsonArray = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+											requeteApi.setRows(jsonArray.size());
+											requeteApi.setNumFound(new Integer(jsonArray.size()).longValue());
+											requeteApi.setNumPATCH(0L);
+											requeteApi.initLoinRequeteApi(requeteSite);
+											requeteSite.setRequeteApi_(requeteApi);
+											requeteSite.getVertx().eventBus().publish("websocketEcole", JsonObject.mapFrom(requeteApi).toString());
+											varsEcole(requeteSite, d -> {
+												if(d.succeeded()) {
+													listePUTFusionEcole(requeteApi, requeteSite, e -> {
+														if(e.succeeded()) {
+															putfusionEcoleReponse(requeteSite, f -> {
+																if(e.succeeded()) {
+																	LOGGER.info(String.format("putfusionEcole a réussi. "));
+																	blockingCodeHandler.handle(Future.succeededFuture(e.result()));
+																} else {
+																	LOGGER.error(String.format("putfusionEcole a échoué. ", f.cause()));
+																	erreurEcole(requeteSite, null, f);
+																}
+															});
+														} else {
+															LOGGER.error(String.format("putfusionEcole a échoué. ", e.cause()));
+															erreurEcole(requeteSite, null, e);
+														}
+													});
+												} else {
+													LOGGER.error(String.format("putfusionEcole a échoué. ", d.cause()));
+													erreurEcole(requeteSite, null, d);
+												}
+											});
+										} catch(Exception ex) {
+											LOGGER.error(String.format("putfusionEcole a échoué. ", ex));
+											erreurEcole(requeteSite, null, Future.failedFuture(ex));
+										}
+									}, resultHandler -> {
 									}
-								}, resultHandler -> {
-								}
-							);
-						} else {
-							LOGGER.error(String.format("putfusionEcole a échoué. ", c.cause()));
-							erreurEcole(requeteSite, gestionnaireEvenements, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("putfusionEcole a échoué. ", b.cause()));
-					erreurEcole(requeteSite, gestionnaireEvenements, b);
-				}
-			});
+								);
+							} else {
+								LOGGER.error(String.format("putfusionEcole a échoué. ", c.cause()));
+								erreurEcole(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("putfusionEcole a échoué. ", b.cause()));
+						erreurEcole(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("putfusionEcole a échoué. ", ex));
 			erreurEcole(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
@@ -1867,70 +1873,71 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 							), new CaseInsensitiveHeaders()
 					)
 				));
-			}
+			} else {
 
-			utilisateurEcole(requeteSite, b -> {
-				if(b.succeeded()) {
-					putcopieEcoleReponse(requeteSite, c -> {
-						if(c.succeeded()) {
-							gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
-							WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
-							executeurTravailleur.executeBlocking(
-								blockingCodeHandler -> {
-									try {
-										rechercheEcole(requeteSite, false, true, "/api/ecole/copie", "PUTCopie", d -> {
-											if(d.succeeded()) {
-												ListeRecherche<Ecole> listeEcole = d.result();
-												RequeteApi requeteApi = new RequeteApi();
-												requeteApi.setRows(listeEcole.getRows());
-												requeteApi.setNumFound(listeEcole.getQueryResponse().getResults().getNumFound());
-												requeteApi.setNumPATCH(0L);
-												requeteApi.initLoinRequeteApi(requeteSite);
-												requeteSite.setRequeteApi_(requeteApi);
-												requeteSite.getVertx().eventBus().publish("websocketEcole", JsonObject.mapFrom(requeteApi).toString());
-												try {
-													listePUTCopieEcole(requeteApi, listeEcole, e -> {
-														if(e.succeeded()) {
-															putcopieEcoleReponse(requeteSite, f -> {
-																if(f.succeeded()) {
-																	LOGGER.info(String.format("putcopieEcole a réussi. "));
-																	blockingCodeHandler.handle(Future.succeededFuture(f.result()));
-																} else {
-																	LOGGER.error(String.format("putcopieEcole a échoué. ", f.cause()));
-																	erreurEcole(requeteSite, null, f);
-																}
-															});
-														} else {
-															LOGGER.error(String.format("putcopieEcole a échoué. ", e.cause()));
-															erreurEcole(requeteSite, null, e);
-														}
-													});
-												} catch(Exception ex) {
-													LOGGER.error(String.format("putcopieEcole a échoué. ", ex));
-													erreurEcole(requeteSite, null, Future.failedFuture(ex));
+				utilisateurEcole(requeteSite, b -> {
+					if(b.succeeded()) {
+						putcopieEcoleReponse(requeteSite, c -> {
+							if(c.succeeded()) {
+								gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
+								WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
+								executeurTravailleur.executeBlocking(
+									blockingCodeHandler -> {
+										try {
+											rechercheEcole(requeteSite, false, true, "/api/ecole/copie", "PUTCopie", d -> {
+												if(d.succeeded()) {
+													ListeRecherche<Ecole> listeEcole = d.result();
+													RequeteApi requeteApi = new RequeteApi();
+													requeteApi.setRows(listeEcole.getRows());
+													requeteApi.setNumFound(listeEcole.getQueryResponse().getResults().getNumFound());
+													requeteApi.setNumPATCH(0L);
+													requeteApi.initLoinRequeteApi(requeteSite);
+													requeteSite.setRequeteApi_(requeteApi);
+													requeteSite.getVertx().eventBus().publish("websocketEcole", JsonObject.mapFrom(requeteApi).toString());
+													try {
+														listePUTCopieEcole(requeteApi, listeEcole, e -> {
+															if(e.succeeded()) {
+																putcopieEcoleReponse(requeteSite, f -> {
+																	if(f.succeeded()) {
+																		LOGGER.info(String.format("putcopieEcole a réussi. "));
+																		blockingCodeHandler.handle(Future.succeededFuture(f.result()));
+																	} else {
+																		LOGGER.error(String.format("putcopieEcole a échoué. ", f.cause()));
+																		erreurEcole(requeteSite, null, f);
+																	}
+																});
+															} else {
+																LOGGER.error(String.format("putcopieEcole a échoué. ", e.cause()));
+																erreurEcole(requeteSite, null, e);
+															}
+														});
+													} catch(Exception ex) {
+														LOGGER.error(String.format("putcopieEcole a échoué. ", ex));
+														erreurEcole(requeteSite, null, Future.failedFuture(ex));
+													}
+												} else {
+													LOGGER.error(String.format("putcopieEcole a échoué. ", d.cause()));
+													erreurEcole(requeteSite, null, d);
 												}
-											} else {
-												LOGGER.error(String.format("putcopieEcole a échoué. ", d.cause()));
-												erreurEcole(requeteSite, null, d);
-											}
-										});
-									} catch(Exception ex) {
-										LOGGER.error(String.format("putcopieEcole a échoué. ", ex));
-										erreurEcole(requeteSite, null, Future.failedFuture(ex));
+											});
+										} catch(Exception ex) {
+											LOGGER.error(String.format("putcopieEcole a échoué. ", ex));
+											erreurEcole(requeteSite, null, Future.failedFuture(ex));
+										}
+									}, resultHandler -> {
 									}
-								}, resultHandler -> {
-								}
-							);
-						} else {
-							LOGGER.error(String.format("putcopieEcole a échoué. ", c.cause()));
-							erreurEcole(requeteSite, gestionnaireEvenements, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("putcopieEcole a échoué. ", b.cause()));
-					erreurEcole(requeteSite, gestionnaireEvenements, b);
-				}
-			});
+								);
+							} else {
+								LOGGER.error(String.format("putcopieEcole a échoué. ", c.cause()));
+								erreurEcole(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("putcopieEcole a échoué. ", b.cause()));
+						erreurEcole(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("putcopieEcole a échoué. ", ex));
 			erreurEcole(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
@@ -2296,32 +2303,33 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 							), new CaseInsensitiveHeaders()
 					)
 				));
-			}
+			} else {
 
-			utilisateurEcole(requeteSite, b -> {
-				if(b.succeeded()) {
-					rechercheEcole(requeteSite, false, true, "/ecole", "PageRecherche", c -> {
-						if(c.succeeded()) {
-							ListeRecherche<Ecole> listeEcole = c.result();
-							pagerechercheEcoleReponse(listeEcole, d -> {
-								if(d.succeeded()) {
-									gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-									LOGGER.info(String.format("pagerechercheEcole a réussi. "));
-								} else {
-									LOGGER.error(String.format("pagerechercheEcole a échoué. ", d.cause()));
-									erreurEcole(requeteSite, gestionnaireEvenements, d);
-								}
-							});
-						} else {
-							LOGGER.error(String.format("pagerechercheEcole a échoué. ", c.cause()));
-							erreurEcole(requeteSite, gestionnaireEvenements, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("pagerechercheEcole a échoué. ", b.cause()));
-					erreurEcole(requeteSite, gestionnaireEvenements, b);
-				}
-			});
+				utilisateurEcole(requeteSite, b -> {
+					if(b.succeeded()) {
+						rechercheEcole(requeteSite, false, true, "/ecole", "PageRecherche", c -> {
+							if(c.succeeded()) {
+								ListeRecherche<Ecole> listeEcole = c.result();
+								pagerechercheEcoleReponse(listeEcole, d -> {
+									if(d.succeeded()) {
+										gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+										LOGGER.info(String.format("pagerechercheEcole a réussi. "));
+									} else {
+										LOGGER.error(String.format("pagerechercheEcole a échoué. ", d.cause()));
+										erreurEcole(requeteSite, gestionnaireEvenements, d);
+									}
+								});
+							} else {
+								LOGGER.error(String.format("pagerechercheEcole a échoué. ", c.cause()));
+								erreurEcole(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("pagerechercheEcole a échoué. ", b.cause()));
+						erreurEcole(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("pagerechercheEcole a échoué. ", ex));
 			erreurEcole(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));

@@ -27,6 +27,7 @@ import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import java.util.List;
 import org.computate.scolaire.enUS.search.SearchList;
+import org.computate.scolaire.enUS.enrollment.SchoolEnrollment;
 import org.apache.commons.lang3.math.NumberUtils;
 import java.util.Optional;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -260,6 +261,55 @@ public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
 		return (SiteUserPage)this;
 	}
 
+	//////////////////
+	// enrollments_ //
+	//////////////////
+
+	/**	 The entity enrollments_
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected List<SchoolEnrollment> enrollments_;
+	@JsonIgnore
+	public Wrap<List<SchoolEnrollment>> enrollments_Wrap = new Wrap<List<SchoolEnrollment>>().p(this).c(List.class).var("enrollments_").o(enrollments_);
+
+	/**	<br/> The entity enrollments_
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.user.SiteUserPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollments_">Find the entity enrollments_ in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _enrollments_(Wrap<List<SchoolEnrollment>> c);
+
+	public List<SchoolEnrollment> getEnrollments_() {
+		return enrollments_;
+	}
+
+	public void setEnrollments_(List<SchoolEnrollment> enrollments_) {
+		this.enrollments_ = enrollments_;
+		this.enrollments_Wrap.alreadyInitialized = true;
+	}
+	public SiteUserPage addEnrollments_(SchoolEnrollment...objets) {
+		for(SchoolEnrollment o : objets) {
+			addEnrollments_(o);
+		}
+		return (SiteUserPage)this;
+	}
+	public SiteUserPage addEnrollments_(SchoolEnrollment o) {
+		if(o != null && !enrollments_.contains(o))
+			this.enrollments_.add(o);
+		return (SiteUserPage)this;
+	}
+	protected SiteUserPage enrollments_Init() {
+		if(!enrollments_Wrap.alreadyInitialized) {
+			_enrollments_(enrollments_Wrap);
+			if(enrollments_ == null)
+				setEnrollments_(enrollments_Wrap.o);
+		}
+		enrollments_Wrap.alreadyInitialized(true);
+		return (SiteUserPage)this;
+	}
+
 	//////////////
 	// initDeep //
 	//////////////
@@ -286,6 +336,7 @@ public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
 		yearSearchInit();
 		yearsInit();
 		schoolYearsInit();
+		enrollments_Init();
 	}
 
 	@Override public void initDeepForClass(SiteRequestEnUS siteRequest_) {
@@ -338,6 +389,8 @@ public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
 				return oSiteUserPage.years;
 			case "schoolYears":
 				return oSiteUserPage.schoolYears;
+			case "enrollments_":
+				return oSiteUserPage.enrollments_;
 			default:
 				return super.obtainSiteUserGenPage(var);
 		}

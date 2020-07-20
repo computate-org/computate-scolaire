@@ -70,7 +70,7 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * Tri.desc: paiementPar
  * 
  * Lignes: 50
-*/   
+*/ 
 public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 
 	private LocalDate now;

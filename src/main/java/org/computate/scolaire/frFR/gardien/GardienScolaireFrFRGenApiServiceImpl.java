@@ -108,38 +108,40 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourGardienScolaire(siteContexte, operationRequete, body);
 		try {
 			LOGGER.info(String.format("postGardienScolaire a démarré. "));
-			utilisateurGardienScolaire(requeteSite, b -> {
-				if(b.succeeded()) {
-					RequeteApi requeteApi = new RequeteApi();
-					requeteApi.setRows(1);
-					requeteApi.setNumFound(1L);
-					requeteApi.setNumPATCH(0L);
-					requeteApi.initLoinRequeteApi(requeteSite);
-					requeteSite.setRequeteApi_(requeteApi);
-					requeteSite.getVertx().eventBus().publish("websocketGardienScolaire", JsonObject.mapFrom(requeteApi).toString());
-					postGardienScolaireFuture(requeteSite, false, c -> {
-						if(c.succeeded()) {
-							GardienScolaire gardienScolaire = c.result();
-							requeteApi.setPk(gardienScolaire.getPk());
-							postGardienScolaireReponse(gardienScolaire, d -> {
-									if(d.succeeded()) {
-									gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-									LOGGER.info(String.format("postGardienScolaire a réussi. "));
-								} else {
-									LOGGER.error(String.format("postGardienScolaire a échoué. ", d.cause()));
-									erreurGardienScolaire(requeteSite, gestionnaireEvenements, d);
-								}
-							});
-						} else {
-							LOGGER.error(String.format("postGardienScolaire a échoué. ", c.cause()));
-							erreurGardienScolaire(requeteSite, gestionnaireEvenements, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("postGardienScolaire a échoué. ", b.cause()));
-					erreurGardienScolaire(requeteSite, gestionnaireEvenements, b);
-				}
-			});
+			{
+				utilisateurGardienScolaire(requeteSite, b -> {
+					if(b.succeeded()) {
+						RequeteApi requeteApi = new RequeteApi();
+						requeteApi.setRows(1);
+						requeteApi.setNumFound(1L);
+						requeteApi.setNumPATCH(0L);
+						requeteApi.initLoinRequeteApi(requeteSite);
+						requeteSite.setRequeteApi_(requeteApi);
+						requeteSite.getVertx().eventBus().publish("websocketGardienScolaire", JsonObject.mapFrom(requeteApi).toString());
+						postGardienScolaireFuture(requeteSite, false, c -> {
+							if(c.succeeded()) {
+								GardienScolaire gardienScolaire = c.result();
+								requeteApi.setPk(gardienScolaire.getPk());
+								postGardienScolaireReponse(gardienScolaire, d -> {
+										if(d.succeeded()) {
+										gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+										LOGGER.info(String.format("postGardienScolaire a réussi. "));
+									} else {
+										LOGGER.error(String.format("postGardienScolaire a échoué. ", d.cause()));
+										erreurGardienScolaire(requeteSite, gestionnaireEvenements, d);
+									}
+								});
+							} else {
+								LOGGER.error(String.format("postGardienScolaire a échoué. ", c.cause()));
+								erreurGardienScolaire(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("postGardienScolaire a échoué. ", b.cause()));
+						erreurGardienScolaire(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("postGardienScolaire a échoué. ", ex));
 			erreurGardienScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
@@ -486,63 +488,65 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourGardienScolaire(siteContexte, operationRequete, body);
 		try {
 			LOGGER.info(String.format("putimportGardienScolaire a démarré. "));
-			utilisateurGardienScolaire(requeteSite, b -> {
-				if(b.succeeded()) {
-					putimportGardienScolaireReponse(requeteSite, c -> {
-						if(c.succeeded()) {
-							gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
-							WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
-							executeurTravailleur.executeBlocking(
-								blockingCodeHandler -> {
-									try {
-										RequeteApi requeteApi = new RequeteApi();
-										JsonArray jsonArray = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
-										requeteApi.setRows(jsonArray.size());
-										requeteApi.setNumFound(new Integer(jsonArray.size()).longValue());
-										requeteApi.setNumPATCH(0L);
-										requeteApi.initLoinRequeteApi(requeteSite);
-										requeteSite.setRequeteApi_(requeteApi);
-										requeteSite.getVertx().eventBus().publish("websocketGardienScolaire", JsonObject.mapFrom(requeteApi).toString());
-										varsGardienScolaire(requeteSite, d -> {
-											if(d.succeeded()) {
-												listePUTImportGardienScolaire(requeteApi, requeteSite, e -> {
-													if(e.succeeded()) {
-														putimportGardienScolaireReponse(requeteSite, f -> {
-															if(e.succeeded()) {
-																LOGGER.info(String.format("putimportGardienScolaire a réussi. "));
-																blockingCodeHandler.handle(Future.succeededFuture(e.result()));
-															} else {
-																LOGGER.error(String.format("putimportGardienScolaire a échoué. ", f.cause()));
-																erreurGardienScolaire(requeteSite, null, f);
-															}
-														});
-													} else {
-														LOGGER.error(String.format("putimportGardienScolaire a échoué. ", e.cause()));
-														erreurGardienScolaire(requeteSite, null, e);
-													}
-												});
-											} else {
-												LOGGER.error(String.format("putimportGardienScolaire a échoué. ", d.cause()));
-												erreurGardienScolaire(requeteSite, null, d);
-											}
-										});
-									} catch(Exception ex) {
-										LOGGER.error(String.format("putimportGardienScolaire a échoué. ", ex));
-										erreurGardienScolaire(requeteSite, null, Future.failedFuture(ex));
+			{
+				utilisateurGardienScolaire(requeteSite, b -> {
+					if(b.succeeded()) {
+						putimportGardienScolaireReponse(requeteSite, c -> {
+							if(c.succeeded()) {
+								gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
+								WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
+								executeurTravailleur.executeBlocking(
+									blockingCodeHandler -> {
+										try {
+											RequeteApi requeteApi = new RequeteApi();
+											JsonArray jsonArray = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+											requeteApi.setRows(jsonArray.size());
+											requeteApi.setNumFound(new Integer(jsonArray.size()).longValue());
+											requeteApi.setNumPATCH(0L);
+											requeteApi.initLoinRequeteApi(requeteSite);
+											requeteSite.setRequeteApi_(requeteApi);
+											requeteSite.getVertx().eventBus().publish("websocketGardienScolaire", JsonObject.mapFrom(requeteApi).toString());
+											varsGardienScolaire(requeteSite, d -> {
+												if(d.succeeded()) {
+													listePUTImportGardienScolaire(requeteApi, requeteSite, e -> {
+														if(e.succeeded()) {
+															putimportGardienScolaireReponse(requeteSite, f -> {
+																if(e.succeeded()) {
+																	LOGGER.info(String.format("putimportGardienScolaire a réussi. "));
+																	blockingCodeHandler.handle(Future.succeededFuture(e.result()));
+																} else {
+																	LOGGER.error(String.format("putimportGardienScolaire a échoué. ", f.cause()));
+																	erreurGardienScolaire(requeteSite, null, f);
+																}
+															});
+														} else {
+															LOGGER.error(String.format("putimportGardienScolaire a échoué. ", e.cause()));
+															erreurGardienScolaire(requeteSite, null, e);
+														}
+													});
+												} else {
+													LOGGER.error(String.format("putimportGardienScolaire a échoué. ", d.cause()));
+													erreurGardienScolaire(requeteSite, null, d);
+												}
+											});
+										} catch(Exception ex) {
+											LOGGER.error(String.format("putimportGardienScolaire a échoué. ", ex));
+											erreurGardienScolaire(requeteSite, null, Future.failedFuture(ex));
+										}
+									}, resultHandler -> {
 									}
-								}, resultHandler -> {
-								}
-							);
-						} else {
-							LOGGER.error(String.format("putimportGardienScolaire a échoué. ", c.cause()));
-							erreurGardienScolaire(requeteSite, gestionnaireEvenements, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("putimportGardienScolaire a échoué. ", b.cause()));
-					erreurGardienScolaire(requeteSite, gestionnaireEvenements, b);
-				}
-			});
+								);
+							} else {
+								LOGGER.error(String.format("putimportGardienScolaire a échoué. ", c.cause()));
+								erreurGardienScolaire(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("putimportGardienScolaire a échoué. ", b.cause()));
+						erreurGardienScolaire(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("putimportGardienScolaire a échoué. ", ex));
 			erreurGardienScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
@@ -653,63 +657,65 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourGardienScolaire(siteContexte, operationRequete, body);
 		try {
 			LOGGER.info(String.format("putfusionGardienScolaire a démarré. "));
-			utilisateurGardienScolaire(requeteSite, b -> {
-				if(b.succeeded()) {
-					putfusionGardienScolaireReponse(requeteSite, c -> {
-						if(c.succeeded()) {
-							gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
-							WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
-							executeurTravailleur.executeBlocking(
-								blockingCodeHandler -> {
-									try {
-										RequeteApi requeteApi = new RequeteApi();
-										JsonArray jsonArray = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
-										requeteApi.setRows(jsonArray.size());
-										requeteApi.setNumFound(new Integer(jsonArray.size()).longValue());
-										requeteApi.setNumPATCH(0L);
-										requeteApi.initLoinRequeteApi(requeteSite);
-										requeteSite.setRequeteApi_(requeteApi);
-										requeteSite.getVertx().eventBus().publish("websocketGardienScolaire", JsonObject.mapFrom(requeteApi).toString());
-										varsGardienScolaire(requeteSite, d -> {
-											if(d.succeeded()) {
-												listePUTFusionGardienScolaire(requeteApi, requeteSite, e -> {
-													if(e.succeeded()) {
-														putfusionGardienScolaireReponse(requeteSite, f -> {
-															if(e.succeeded()) {
-																LOGGER.info(String.format("putfusionGardienScolaire a réussi. "));
-																blockingCodeHandler.handle(Future.succeededFuture(e.result()));
-															} else {
-																LOGGER.error(String.format("putfusionGardienScolaire a échoué. ", f.cause()));
-																erreurGardienScolaire(requeteSite, null, f);
-															}
-														});
-													} else {
-														LOGGER.error(String.format("putfusionGardienScolaire a échoué. ", e.cause()));
-														erreurGardienScolaire(requeteSite, null, e);
-													}
-												});
-											} else {
-												LOGGER.error(String.format("putfusionGardienScolaire a échoué. ", d.cause()));
-												erreurGardienScolaire(requeteSite, null, d);
-											}
-										});
-									} catch(Exception ex) {
-										LOGGER.error(String.format("putfusionGardienScolaire a échoué. ", ex));
-										erreurGardienScolaire(requeteSite, null, Future.failedFuture(ex));
+			{
+				utilisateurGardienScolaire(requeteSite, b -> {
+					if(b.succeeded()) {
+						putfusionGardienScolaireReponse(requeteSite, c -> {
+							if(c.succeeded()) {
+								gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
+								WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
+								executeurTravailleur.executeBlocking(
+									blockingCodeHandler -> {
+										try {
+											RequeteApi requeteApi = new RequeteApi();
+											JsonArray jsonArray = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
+											requeteApi.setRows(jsonArray.size());
+											requeteApi.setNumFound(new Integer(jsonArray.size()).longValue());
+											requeteApi.setNumPATCH(0L);
+											requeteApi.initLoinRequeteApi(requeteSite);
+											requeteSite.setRequeteApi_(requeteApi);
+											requeteSite.getVertx().eventBus().publish("websocketGardienScolaire", JsonObject.mapFrom(requeteApi).toString());
+											varsGardienScolaire(requeteSite, d -> {
+												if(d.succeeded()) {
+													listePUTFusionGardienScolaire(requeteApi, requeteSite, e -> {
+														if(e.succeeded()) {
+															putfusionGardienScolaireReponse(requeteSite, f -> {
+																if(e.succeeded()) {
+																	LOGGER.info(String.format("putfusionGardienScolaire a réussi. "));
+																	blockingCodeHandler.handle(Future.succeededFuture(e.result()));
+																} else {
+																	LOGGER.error(String.format("putfusionGardienScolaire a échoué. ", f.cause()));
+																	erreurGardienScolaire(requeteSite, null, f);
+																}
+															});
+														} else {
+															LOGGER.error(String.format("putfusionGardienScolaire a échoué. ", e.cause()));
+															erreurGardienScolaire(requeteSite, null, e);
+														}
+													});
+												} else {
+													LOGGER.error(String.format("putfusionGardienScolaire a échoué. ", d.cause()));
+													erreurGardienScolaire(requeteSite, null, d);
+												}
+											});
+										} catch(Exception ex) {
+											LOGGER.error(String.format("putfusionGardienScolaire a échoué. ", ex));
+											erreurGardienScolaire(requeteSite, null, Future.failedFuture(ex));
+										}
+									}, resultHandler -> {
 									}
-								}, resultHandler -> {
-								}
-							);
-						} else {
-							LOGGER.error(String.format("putfusionGardienScolaire a échoué. ", c.cause()));
-							erreurGardienScolaire(requeteSite, gestionnaireEvenements, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("putfusionGardienScolaire a échoué. ", b.cause()));
-					erreurGardienScolaire(requeteSite, gestionnaireEvenements, b);
-				}
-			});
+								);
+							} else {
+								LOGGER.error(String.format("putfusionGardienScolaire a échoué. ", c.cause()));
+								erreurGardienScolaire(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("putfusionGardienScolaire a échoué. ", b.cause()));
+						erreurGardienScolaire(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("putfusionGardienScolaire a échoué. ", ex));
 			erreurGardienScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
@@ -818,68 +824,70 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourGardienScolaire(siteContexte, operationRequete, body);
 		try {
 			LOGGER.info(String.format("putcopieGardienScolaire a démarré. "));
-			utilisateurGardienScolaire(requeteSite, b -> {
-				if(b.succeeded()) {
-					putcopieGardienScolaireReponse(requeteSite, c -> {
-						if(c.succeeded()) {
-							gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
-							WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
-							executeurTravailleur.executeBlocking(
-								blockingCodeHandler -> {
-									try {
-										rechercheGardienScolaire(requeteSite, false, true, "/api/gardien/copie", "PUTCopie", d -> {
-											if(d.succeeded()) {
-												ListeRecherche<GardienScolaire> listeGardienScolaire = d.result();
-												RequeteApi requeteApi = new RequeteApi();
-												requeteApi.setRows(listeGardienScolaire.getRows());
-												requeteApi.setNumFound(listeGardienScolaire.getQueryResponse().getResults().getNumFound());
-												requeteApi.setNumPATCH(0L);
-												requeteApi.initLoinRequeteApi(requeteSite);
-												requeteSite.setRequeteApi_(requeteApi);
-												requeteSite.getVertx().eventBus().publish("websocketGardienScolaire", JsonObject.mapFrom(requeteApi).toString());
-												try {
-													listePUTCopieGardienScolaire(requeteApi, listeGardienScolaire, e -> {
-														if(e.succeeded()) {
-															putcopieGardienScolaireReponse(requeteSite, f -> {
-																if(f.succeeded()) {
-																	LOGGER.info(String.format("putcopieGardienScolaire a réussi. "));
-																	blockingCodeHandler.handle(Future.succeededFuture(f.result()));
-																} else {
-																	LOGGER.error(String.format("putcopieGardienScolaire a échoué. ", f.cause()));
-																	erreurGardienScolaire(requeteSite, null, f);
-																}
-															});
-														} else {
-															LOGGER.error(String.format("putcopieGardienScolaire a échoué. ", e.cause()));
-															erreurGardienScolaire(requeteSite, null, e);
-														}
-													});
-												} catch(Exception ex) {
-													LOGGER.error(String.format("putcopieGardienScolaire a échoué. ", ex));
-													erreurGardienScolaire(requeteSite, null, Future.failedFuture(ex));
+			{
+				utilisateurGardienScolaire(requeteSite, b -> {
+					if(b.succeeded()) {
+						putcopieGardienScolaireReponse(requeteSite, c -> {
+							if(c.succeeded()) {
+								gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
+								WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
+								executeurTravailleur.executeBlocking(
+									blockingCodeHandler -> {
+										try {
+											rechercheGardienScolaire(requeteSite, false, true, "/api/gardien/copie", "PUTCopie", d -> {
+												if(d.succeeded()) {
+													ListeRecherche<GardienScolaire> listeGardienScolaire = d.result();
+													RequeteApi requeteApi = new RequeteApi();
+													requeteApi.setRows(listeGardienScolaire.getRows());
+													requeteApi.setNumFound(listeGardienScolaire.getQueryResponse().getResults().getNumFound());
+													requeteApi.setNumPATCH(0L);
+													requeteApi.initLoinRequeteApi(requeteSite);
+													requeteSite.setRequeteApi_(requeteApi);
+													requeteSite.getVertx().eventBus().publish("websocketGardienScolaire", JsonObject.mapFrom(requeteApi).toString());
+													try {
+														listePUTCopieGardienScolaire(requeteApi, listeGardienScolaire, e -> {
+															if(e.succeeded()) {
+																putcopieGardienScolaireReponse(requeteSite, f -> {
+																	if(f.succeeded()) {
+																		LOGGER.info(String.format("putcopieGardienScolaire a réussi. "));
+																		blockingCodeHandler.handle(Future.succeededFuture(f.result()));
+																	} else {
+																		LOGGER.error(String.format("putcopieGardienScolaire a échoué. ", f.cause()));
+																		erreurGardienScolaire(requeteSite, null, f);
+																	}
+																});
+															} else {
+																LOGGER.error(String.format("putcopieGardienScolaire a échoué. ", e.cause()));
+																erreurGardienScolaire(requeteSite, null, e);
+															}
+														});
+													} catch(Exception ex) {
+														LOGGER.error(String.format("putcopieGardienScolaire a échoué. ", ex));
+														erreurGardienScolaire(requeteSite, null, Future.failedFuture(ex));
+													}
+												} else {
+													LOGGER.error(String.format("putcopieGardienScolaire a échoué. ", d.cause()));
+													erreurGardienScolaire(requeteSite, null, d);
 												}
-											} else {
-												LOGGER.error(String.format("putcopieGardienScolaire a échoué. ", d.cause()));
-												erreurGardienScolaire(requeteSite, null, d);
-											}
-										});
-									} catch(Exception ex) {
-										LOGGER.error(String.format("putcopieGardienScolaire a échoué. ", ex));
-										erreurGardienScolaire(requeteSite, null, Future.failedFuture(ex));
+											});
+										} catch(Exception ex) {
+											LOGGER.error(String.format("putcopieGardienScolaire a échoué. ", ex));
+											erreurGardienScolaire(requeteSite, null, Future.failedFuture(ex));
+										}
+									}, resultHandler -> {
 									}
-								}, resultHandler -> {
-								}
-							);
-						} else {
-							LOGGER.error(String.format("putcopieGardienScolaire a échoué. ", c.cause()));
-							erreurGardienScolaire(requeteSite, gestionnaireEvenements, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("putcopieGardienScolaire a échoué. ", b.cause()));
-					erreurGardienScolaire(requeteSite, gestionnaireEvenements, b);
-				}
-			});
+								);
+							} else {
+								LOGGER.error(String.format("putcopieGardienScolaire a échoué. ", c.cause()));
+								erreurGardienScolaire(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("putcopieGardienScolaire a échoué. ", b.cause()));
+						erreurGardienScolaire(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("putcopieGardienScolaire a échoué. ", ex));
 			erreurGardienScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
@@ -1209,79 +1217,81 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourGardienScolaire(siteContexte, operationRequete, body);
 		try {
 			LOGGER.info(String.format("patchGardienScolaire a démarré. "));
-			utilisateurGardienScolaire(requeteSite, b -> {
-				if(b.succeeded()) {
-					patchGardienScolaireReponse(requeteSite, c -> {
-						if(c.succeeded()) {
-							gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
-							WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
-							executeurTravailleur.executeBlocking(
-								blockingCodeHandler -> {
-									try {
-										rechercheGardienScolaire(requeteSite, false, true, "/api/gardien", "PATCH", d -> {
-											if(d.succeeded()) {
-												ListeRecherche<GardienScolaire> listeGardienScolaire = d.result();
-												RequeteApi requeteApi = new RequeteApi();
-												requeteApi.setRows(listeGardienScolaire.getRows());
-												requeteApi.setNumFound(listeGardienScolaire.getQueryResponse().getResults().getNumFound());
-												requeteApi.setNumPATCH(0L);
-												requeteApi.initLoinRequeteApi(requeteSite);
-												requeteSite.setRequeteApi_(requeteApi);
-												requeteSite.getVertx().eventBus().publish("websocketGardienScolaire", JsonObject.mapFrom(requeteApi).toString());
-												SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listeGardienScolaire.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
-												Date date = null;
-												if(facets != null)
-													date = (Date)facets.get("max_modifie");
-												String dt;
-												if(date == null)
-													dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
-												else
-													dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
-												listeGardienScolaire.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
+			{
+				utilisateurGardienScolaire(requeteSite, b -> {
+					if(b.succeeded()) {
+						patchGardienScolaireReponse(requeteSite, c -> {
+							if(c.succeeded()) {
+								gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
+								WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
+								executeurTravailleur.executeBlocking(
+									blockingCodeHandler -> {
+										try {
+											rechercheGardienScolaire(requeteSite, false, true, "/api/gardien", "PATCH", d -> {
+												if(d.succeeded()) {
+													ListeRecherche<GardienScolaire> listeGardienScolaire = d.result();
+													RequeteApi requeteApi = new RequeteApi();
+													requeteApi.setRows(listeGardienScolaire.getRows());
+													requeteApi.setNumFound(listeGardienScolaire.getQueryResponse().getResults().getNumFound());
+													requeteApi.setNumPATCH(0L);
+													requeteApi.initLoinRequeteApi(requeteSite);
+													requeteSite.setRequeteApi_(requeteApi);
+													requeteSite.getVertx().eventBus().publish("websocketGardienScolaire", JsonObject.mapFrom(requeteApi).toString());
+													SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listeGardienScolaire.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
+													Date date = null;
+													if(facets != null)
+														date = (Date)facets.get("max_modifie");
+													String dt;
+													if(date == null)
+														dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
+													else
+														dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
+													listeGardienScolaire.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
 
-												try {
-													listePATCHGardienScolaire(requeteApi, listeGardienScolaire, dt, e -> {
-														if(e.succeeded()) {
-															patchGardienScolaireReponse(requeteSite, f -> {
-																if(f.succeeded()) {
-																	LOGGER.info(String.format("patchGardienScolaire a réussi. "));
-																	blockingCodeHandler.handle(Future.succeededFuture(f.result()));
-																} else {
-																	LOGGER.error(String.format("patchGardienScolaire a échoué. ", f.cause()));
-																	erreurGardienScolaire(requeteSite, null, f);
-																}
-															});
-														} else {
-															LOGGER.error(String.format("patchGardienScolaire a échoué. ", e.cause()));
-															erreurGardienScolaire(requeteSite, null, e);
-														}
-													});
-												} catch(Exception ex) {
-													LOGGER.error(String.format("patchGardienScolaire a échoué. ", ex));
-													erreurGardienScolaire(requeteSite, null, Future.failedFuture(ex));
+													try {
+														listePATCHGardienScolaire(requeteApi, listeGardienScolaire, dt, e -> {
+															if(e.succeeded()) {
+																patchGardienScolaireReponse(requeteSite, f -> {
+																	if(f.succeeded()) {
+																		LOGGER.info(String.format("patchGardienScolaire a réussi. "));
+																		blockingCodeHandler.handle(Future.succeededFuture(f.result()));
+																	} else {
+																		LOGGER.error(String.format("patchGardienScolaire a échoué. ", f.cause()));
+																		erreurGardienScolaire(requeteSite, null, f);
+																	}
+																});
+															} else {
+																LOGGER.error(String.format("patchGardienScolaire a échoué. ", e.cause()));
+																erreurGardienScolaire(requeteSite, null, e);
+															}
+														});
+													} catch(Exception ex) {
+														LOGGER.error(String.format("patchGardienScolaire a échoué. ", ex));
+														erreurGardienScolaire(requeteSite, null, Future.failedFuture(ex));
+													}
+										} else {
+													LOGGER.error(String.format("patchGardienScolaire a échoué. ", d.cause()));
+													erreurGardienScolaire(requeteSite, null, d);
 												}
-											} else {
-												LOGGER.error(String.format("patchGardienScolaire a échoué. ", d.cause()));
-												erreurGardienScolaire(requeteSite, null, d);
-											}
-										});
-									} catch(Exception ex) {
-										LOGGER.error(String.format("patchGardienScolaire a échoué. ", ex));
-										erreurGardienScolaire(requeteSite, null, Future.failedFuture(ex));
+											});
+										} catch(Exception ex) {
+											LOGGER.error(String.format("patchGardienScolaire a échoué. ", ex));
+											erreurGardienScolaire(requeteSite, null, Future.failedFuture(ex));
+										}
+									}, resultHandler -> {
 									}
-								}, resultHandler -> {
-								}
-							);
-						} else {
-							LOGGER.error(String.format("patchGardienScolaire a échoué. ", c.cause()));
-							erreurGardienScolaire(requeteSite, gestionnaireEvenements, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("patchGardienScolaire a échoué. ", b.cause()));
-					erreurGardienScolaire(requeteSite, gestionnaireEvenements, b);
-				}
-			});
+								);
+							} else {
+								LOGGER.error(String.format("patchGardienScolaire a échoué. ", c.cause()));
+								erreurGardienScolaire(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("patchGardienScolaire a échoué. ", b.cause()));
+						erreurGardienScolaire(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("patchGardienScolaire a échoué. ", ex));
 			erreurGardienScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
@@ -1926,30 +1936,32 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 	public void getGardienScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourGardienScolaire(siteContexte, operationRequete);
 		try {
-			utilisateurGardienScolaire(requeteSite, b -> {
-				if(b.succeeded()) {
-					rechercheGardienScolaire(requeteSite, false, true, "/api/gardien/{id}", "GET", c -> {
-						if(c.succeeded()) {
-							ListeRecherche<GardienScolaire> listeGardienScolaire = c.result();
-							getGardienScolaireReponse(listeGardienScolaire, d -> {
-								if(d.succeeded()) {
-									gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-									LOGGER.info(String.format("getGardienScolaire a réussi. "));
-								} else {
-									LOGGER.error(String.format("getGardienScolaire a échoué. ", d.cause()));
-									erreurGardienScolaire(requeteSite, gestionnaireEvenements, d);
-								}
-							});
-						} else {
-							LOGGER.error(String.format("getGardienScolaire a échoué. ", c.cause()));
-							erreurGardienScolaire(requeteSite, gestionnaireEvenements, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("getGardienScolaire a échoué. ", b.cause()));
-					erreurGardienScolaire(requeteSite, gestionnaireEvenements, b);
-				}
-			});
+			{
+				utilisateurGardienScolaire(requeteSite, b -> {
+					if(b.succeeded()) {
+						rechercheGardienScolaire(requeteSite, false, true, "/api/gardien/{id}", "GET", c -> {
+							if(c.succeeded()) {
+								ListeRecherche<GardienScolaire> listeGardienScolaire = c.result();
+								getGardienScolaireReponse(listeGardienScolaire, d -> {
+									if(d.succeeded()) {
+										gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+										LOGGER.info(String.format("getGardienScolaire a réussi. "));
+									} else {
+										LOGGER.error(String.format("getGardienScolaire a échoué. ", d.cause()));
+										erreurGardienScolaire(requeteSite, gestionnaireEvenements, d);
+									}
+								});
+							} else {
+								LOGGER.error(String.format("getGardienScolaire a échoué. ", c.cause()));
+								erreurGardienScolaire(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("getGardienScolaire a échoué. ", b.cause()));
+						erreurGardienScolaire(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("getGardienScolaire a échoué. ", ex));
 			erreurGardienScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
@@ -1992,30 +2004,32 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 	public void rechercheGardienScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourGardienScolaire(siteContexte, operationRequete);
 		try {
-			utilisateurGardienScolaire(requeteSite, b -> {
-				if(b.succeeded()) {
-					rechercheGardienScolaire(requeteSite, false, true, "/api/gardien", "Recherche", c -> {
-						if(c.succeeded()) {
-							ListeRecherche<GardienScolaire> listeGardienScolaire = c.result();
-							rechercheGardienScolaireReponse(listeGardienScolaire, d -> {
-								if(d.succeeded()) {
-									gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-									LOGGER.info(String.format("rechercheGardienScolaire a réussi. "));
-								} else {
-									LOGGER.error(String.format("rechercheGardienScolaire a échoué. ", d.cause()));
-									erreurGardienScolaire(requeteSite, gestionnaireEvenements, d);
-								}
-							});
-						} else {
-							LOGGER.error(String.format("rechercheGardienScolaire a échoué. ", c.cause()));
-							erreurGardienScolaire(requeteSite, gestionnaireEvenements, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("rechercheGardienScolaire a échoué. ", b.cause()));
-					erreurGardienScolaire(requeteSite, gestionnaireEvenements, b);
-				}
-			});
+			{
+				utilisateurGardienScolaire(requeteSite, b -> {
+					if(b.succeeded()) {
+						rechercheGardienScolaire(requeteSite, false, true, "/api/gardien", "Recherche", c -> {
+							if(c.succeeded()) {
+								ListeRecherche<GardienScolaire> listeGardienScolaire = c.result();
+								rechercheGardienScolaireReponse(listeGardienScolaire, d -> {
+									if(d.succeeded()) {
+										gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+										LOGGER.info(String.format("rechercheGardienScolaire a réussi. "));
+									} else {
+										LOGGER.error(String.format("rechercheGardienScolaire a échoué. ", d.cause()));
+										erreurGardienScolaire(requeteSite, gestionnaireEvenements, d);
+									}
+								});
+							} else {
+								LOGGER.error(String.format("rechercheGardienScolaire a échoué. ", c.cause()));
+								erreurGardienScolaire(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("rechercheGardienScolaire a échoué. ", b.cause()));
+						erreurGardienScolaire(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("rechercheGardienScolaire a échoué. ", ex));
 			erreurGardienScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
@@ -2098,30 +2112,32 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 	public void rechercheadminGardienScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourGardienScolaire(siteContexte, operationRequete);
 		try {
-			utilisateurGardienScolaire(requeteSite, b -> {
-				if(b.succeeded()) {
-					rechercheGardienScolaire(requeteSite, false, true, "/api/admin/gardien", "RechercheAdmin", c -> {
-						if(c.succeeded()) {
-							ListeRecherche<GardienScolaire> listeGardienScolaire = c.result();
-							rechercheadminGardienScolaireReponse(listeGardienScolaire, d -> {
-								if(d.succeeded()) {
-									gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-									LOGGER.info(String.format("rechercheadminGardienScolaire a réussi. "));
-								} else {
-									LOGGER.error(String.format("rechercheadminGardienScolaire a échoué. ", d.cause()));
-									erreurGardienScolaire(requeteSite, gestionnaireEvenements, d);
-								}
-							});
-						} else {
-							LOGGER.error(String.format("rechercheadminGardienScolaire a échoué. ", c.cause()));
-							erreurGardienScolaire(requeteSite, gestionnaireEvenements, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("rechercheadminGardienScolaire a échoué. ", b.cause()));
-					erreurGardienScolaire(requeteSite, gestionnaireEvenements, b);
-				}
-			});
+			{
+				utilisateurGardienScolaire(requeteSite, b -> {
+					if(b.succeeded()) {
+						rechercheGardienScolaire(requeteSite, false, true, "/api/admin/gardien", "RechercheAdmin", c -> {
+							if(c.succeeded()) {
+								ListeRecherche<GardienScolaire> listeGardienScolaire = c.result();
+								rechercheadminGardienScolaireReponse(listeGardienScolaire, d -> {
+									if(d.succeeded()) {
+										gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+										LOGGER.info(String.format("rechercheadminGardienScolaire a réussi. "));
+									} else {
+										LOGGER.error(String.format("rechercheadminGardienScolaire a échoué. ", d.cause()));
+										erreurGardienScolaire(requeteSite, gestionnaireEvenements, d);
+									}
+								});
+							} else {
+								LOGGER.error(String.format("rechercheadminGardienScolaire a échoué. ", c.cause()));
+								erreurGardienScolaire(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("rechercheadminGardienScolaire a échoué. ", b.cause()));
+						erreurGardienScolaire(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("rechercheadminGardienScolaire a échoué. ", ex));
 			erreurGardienScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
@@ -2209,30 +2225,32 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 	public void pagerechercheGardienScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourGardienScolaire(siteContexte, operationRequete);
 		try {
-			utilisateurGardienScolaire(requeteSite, b -> {
-				if(b.succeeded()) {
-					rechercheGardienScolaire(requeteSite, false, true, "/gardien", "PageRecherche", c -> {
-						if(c.succeeded()) {
-							ListeRecherche<GardienScolaire> listeGardienScolaire = c.result();
-							pagerechercheGardienScolaireReponse(listeGardienScolaire, d -> {
-								if(d.succeeded()) {
-									gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
-									LOGGER.info(String.format("pagerechercheGardienScolaire a réussi. "));
-								} else {
-									LOGGER.error(String.format("pagerechercheGardienScolaire a échoué. ", d.cause()));
-									erreurGardienScolaire(requeteSite, gestionnaireEvenements, d);
-								}
-							});
-						} else {
-							LOGGER.error(String.format("pagerechercheGardienScolaire a échoué. ", c.cause()));
-							erreurGardienScolaire(requeteSite, gestionnaireEvenements, c);
-						}
-					});
-				} else {
-					LOGGER.error(String.format("pagerechercheGardienScolaire a échoué. ", b.cause()));
-					erreurGardienScolaire(requeteSite, gestionnaireEvenements, b);
-				}
-			});
+			{
+				utilisateurGardienScolaire(requeteSite, b -> {
+					if(b.succeeded()) {
+						rechercheGardienScolaire(requeteSite, false, true, "/gardien", "PageRecherche", c -> {
+							if(c.succeeded()) {
+								ListeRecherche<GardienScolaire> listeGardienScolaire = c.result();
+								pagerechercheGardienScolaireReponse(listeGardienScolaire, d -> {
+									if(d.succeeded()) {
+										gestionnaireEvenements.handle(Future.succeededFuture(d.result()));
+										LOGGER.info(String.format("pagerechercheGardienScolaire a réussi. "));
+									} else {
+										LOGGER.error(String.format("pagerechercheGardienScolaire a échoué. ", d.cause()));
+										erreurGardienScolaire(requeteSite, gestionnaireEvenements, d);
+									}
+								});
+							} else {
+								LOGGER.error(String.format("pagerechercheGardienScolaire a échoué. ", c.cause()));
+								erreurGardienScolaire(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("pagerechercheGardienScolaire a échoué. ", b.cause()));
+						erreurGardienScolaire(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			}
 		} catch(Exception ex) {
 			LOGGER.error(String.format("pagerechercheGardienScolaire a échoué. ", ex));
 			erreurGardienScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));

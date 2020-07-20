@@ -236,7 +236,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 
 	public void inputAnneeCles(String classeApiMethodeMethode) {
 		Ecole s = (Ecole)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
 				e("input")
 					.a("type", "text")
@@ -939,7 +942,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 
 	public void inputEcoleNom(String classeApiMethodeMethode) {
 		Ecole s = (Ecole)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "nom de l'école")
@@ -1060,7 +1066,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 
 	public void inputEcoleNumeroTelephone(String classeApiMethodeMethode) {
 		Ecole s = (Ecole)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "numéro de téléphone")
@@ -1188,7 +1197,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 
 	public void inputEcoleNumero(String classeApiMethodeMethode) {
 		Ecole s = (Ecole)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "école numéro")
@@ -1309,7 +1321,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 
 	public void inputEcoleAdministrateurNom(String classeApiMethodeMethode) {
 		Ecole s = (Ecole)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "administrateur de l'école")
@@ -1430,7 +1445,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 
 	public void inputEcoleMail(String classeApiMethodeMethode) {
 		Ecole s = (Ecole)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "mail")
@@ -1551,7 +1569,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 
 	public void inputEcoleMailDe(String classeApiMethodeMethode) {
 		Ecole s = (Ecole)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "mail de l'école de")
@@ -1672,7 +1693,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 
 	public void inputEcoleMailA(String classeApiMethodeMethode) {
 		Ecole s = (Ecole)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "mail de l'école à")
@@ -1793,7 +1817,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 
 	public void inputEcoleEmplacement(String classeApiMethodeMethode) {
 		Ecole s = (Ecole)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "l'emplacement")
@@ -1914,7 +1941,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 
 	public void inputEcoleAddresse(String classeApiMethodeMethode) {
 		Ecole s = (Ecole)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("textarea")
 				.a("placeholder", "addresse")
 				.a("title", "Description.enUS: ")

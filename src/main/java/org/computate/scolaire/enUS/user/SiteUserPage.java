@@ -1,6 +1,9 @@
 package org.computate.scolaire.enUS.user;
 
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.net.URLEncoder;
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -14,6 +17,7 @@ import org.apache.solr.client.solrj.SolrQuery.ORDER;
 import org.apache.solr.client.solrj.util.ClientUtils;
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.design.PageDesign;
+import org.computate.scolaire.enUS.enrollment.SchoolEnrollment;
 import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.year.SchoolYear;
@@ -139,24 +143,76 @@ public class SiteUserPage extends SiteUserPageGen<SiteUserGenPage> {
 	protected void _schoolYears(List<SchoolYear> l) {
 	}
 
+	protected void _enrollments_(Wrap<List<SchoolEnrollment>> c) {
+	}
+
 	@Override public void htmlBodySiteUserGenPage() {
-		super.htmlBodySiteUserGenPage();
 		SiteConfig siteConfig = siteRequest_.getSiteConfig_();
 
+		if(enrollments_ != null) {
+			e("h3").a("class", "w3-block w3-gray w3-padding w3-center ").f().sx("Enrollments and account info").g("h3");
+			{ e("div").a("class", "w3-margin w3-row ").f();
+				for(SchoolEnrollment enrollment : enrollments_) {
+					{ e("div").a("class", "w3-half w3-card ").f();
+						{ e("div").a("class", "w3-header w3-padding ").f();
+							{ e("div").a("class", "w3-block w3-purple w3-padding w3-center ").f();
+								e("a").a("href", enrollment.getPageUrlPk()).f().sx(enrollment.getEnrollmentCompleteName()).g("a");
+							} g("div");
+						} g("div");
+						{ e("table").a("class", "w3-padding w3-table ").f();
+							{ e("tr").a("class", "").f();
+								{ e("td").a("class", "w3-cell font-weight-bold ").f();
+									e("span").f().sx("Last payment").g("span");
+								} g("td");
+								{ e("td").a("class", "w3-cell w3-left ").f();
+									e("div").f().sx(enrollment.getPaymentLastStr()).g("div");
+								} g("td");
+							} g("tr");
+							{ e("tr").a("class", "").f();
+								{ e("td").a("class", "w3-cell font-weight-bold ").f();
+									e("span").f().sx("Balance").g("span");
+								} g("td");
+								{ e("td").a("class", "w3-cell w3-left ").f();
+									e("div").f().sx("$", enrollment.getChargesNow()).g("div");
+									if(enrollment.getPaymentsCurrent()) {
+										e("div").a("class", "w3-text-green ").f();
+										sx("You are current with all payments. Thank you! ");
+										g("div");
+									}
+									else {
+										{ e("div").a("class", "w3-text-green ").f();
+											if(enrollment.getPaymentsLate()) {
+												e("span").a("class", "w3-text-red ").f();
+												sx(String.format("You are late on payments for $%s. ", enrollment.getPaymentsLateAmount()));
+												g("span");
+											}
+											writeMakePayment(enrollment.getSchoolNumber(), enrollment.getChargesNow(), enrollment.getPk(), enrollment.getChildCompleteNamePreferred());
+										} g("div");
+									}
+								} g("td");
+							} g("tr");
+							{ e("tr").a("class", "").f();
+								{ e("td").a("class", "w3-cell font-weight-bold ").f();
+									e("span").f().sx("Credit card").g("span");
+								} g("td");
+								{ e("td").a("class", "w3-cell w3-left ").f();
+									writeConfigurePayments(enrollment.getSchoolNumber());
+								} g("td");
+							} g("tr");
+						} g("table");
+					} g("div");
+				}
+			} g("div");
+		}
+
 		{ e("div").a("class", "w3-margin-top ").f();
-			e("h1").a("class", "w3-block w3-gray w3-padding w3-center ").f().sx("Manage username and password").g("h1");
+			e("h3").a("class", "w3-block w3-gray w3-padding w3-center ").f().sx("Manage username and password").g("h3");
 			{ e("div").a("class", "w3-margin ").f();
 				e("a").a("target", "_blank").a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ").a("href", siteConfig.getAuthUrl() + "/realms/", siteConfig.getAuthRealm(), "/account").f().sx("Manage user profile").g("a");
 			} g("div");
 		} g("div");
 
-		{ e("div").a("class", "w3-margin-top ").f();
-			e("h1").a("class", "w3-block w3-gray w3-padding w3-center ").f().sx("Manage payments").g("h1");
-			{ e("div").a("class", "w3-margin ").f();
-				writeConfigurePayments(1);
-				writeConfigurePayments(2);
-			} g("div");
-		} g("div");
+		super.htmlBodySiteUserGenPage();
 
 		writeSchoolReports();
 	}
@@ -223,10 +279,10 @@ public class SiteUserPage extends SiteUserPageGen<SiteUserGenPage> {
 						}
 						else {
 							{ e("div").a("class", "").f();
-								e("div").a("class", "w3-large font-weight-bold ").f().sx("Configure payment profile for the ", schoolLocation, " location").g("div");
+//								e("div").a("class", "").f().sx("Configure payment profile for the ", schoolLocation, " location").g("div");
 								{ e("form").a("method", "post").a("target", "_blank").a("action", siteConfig.getAuthorizeUrl() + "/customer/manage").f();
 									e("input").a("type", "hidden").a("name", "token").a("value", profilePageResponse.getToken()).fg();
-									e("button").a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ").a("type", "submit").f().sx("Manage ", schoolLocation, " payment profile").g("button");
+									e("button").a("class", "w3-button w3-light-gray w3-text-purple text-decoration-underline ").a("type", "submit").f().sx("Edit credit card for ", schoolLocation, "").g("button");
 								} g("form");
 							} g("div");
 						}

@@ -317,7 +317,10 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 
 	public void inputEnrollmentKeys(String classApiMethodMethod) {
 		SchoolBlock s = (SchoolBlock)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
 				e("input")
 					.a("type", "text")
@@ -1000,7 +1003,10 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 
 	public void inputAgeKey(String classApiMethodMethod) {
 		SchoolBlock s = (SchoolBlock)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
 				e("input")
 					.a("type", "text")
@@ -1599,7 +1605,10 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 
 	public void inputSchoolAddress(String classApiMethodMethod) {
 		SchoolBlock s = (SchoolBlock)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "address")
@@ -2645,7 +2654,10 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 
 	public void inputBlockStartTime(String classApiMethodMethod) {
 		SchoolBlock s = (SchoolBlock)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("class", "w3-input w3-border timepicker setBlockStartTime classSchoolBlock inputSchoolBlock", pk, "BlockStartTime w3-input w3-border ")
@@ -2765,7 +2777,10 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 
 	public void inputBlockEndTime(String classApiMethodMethod) {
 		SchoolBlock s = (SchoolBlock)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("class", "w3-input w3-border timepicker setBlockEndTime classSchoolBlock inputSchoolBlock", pk, "BlockEndTime w3-input w3-border ")
@@ -2893,7 +2908,10 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 
 	public void inputBlockPricePerMonth(String classApiMethodMethod) {
 		SchoolBlock s = (SchoolBlock)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "price per month")
@@ -3085,7 +3103,10 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 
 	public void inputBlockMonday(String classApiMethodMethod) {
 		SchoolBlock s = (SchoolBlock)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			if("Page".equals(classApiMethodMethod)) {
 				e("input")
 					.a("type", "checkbox")
@@ -3210,7 +3231,10 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 
 	public void inputBlockTuesday(String classApiMethodMethod) {
 		SchoolBlock s = (SchoolBlock)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			if("Page".equals(classApiMethodMethod)) {
 				e("input")
 					.a("type", "checkbox")
@@ -3335,7 +3359,10 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 
 	public void inputBlockWednesday(String classApiMethodMethod) {
 		SchoolBlock s = (SchoolBlock)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			if("Page".equals(classApiMethodMethod)) {
 				e("input")
 					.a("type", "checkbox")
@@ -3460,7 +3487,10 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 
 	public void inputBlockThursday(String classApiMethodMethod) {
 		SchoolBlock s = (SchoolBlock)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			if("Page".equals(classApiMethodMethod)) {
 				e("input")
 					.a("type", "checkbox")
@@ -3585,7 +3615,10 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 
 	public void inputBlockFriday(String classApiMethodMethod) {
 		SchoolBlock s = (SchoolBlock)this;
-		{
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			if("Page".equals(classApiMethodMethod)) {
 				e("input")
 					.a("type", "checkbox")

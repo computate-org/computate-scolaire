@@ -318,7 +318,10 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 
 	public void inputAnneeCle(String classeApiMethodeMethode) {
 		SaisonScolaire s = (SaisonScolaire)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
 				e("input")
 					.a("type", "text")
@@ -473,7 +476,10 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 
 	public void inputSessionCles(String classeApiMethodeMethode) {
 		SaisonScolaire s = (SaisonScolaire)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
 				e("input")
 					.a("type", "text")
@@ -1703,7 +1709,10 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 
 	public void inputSaisonDateDebut(String classeApiMethodeMethode) {
 		SaisonScolaire s = (SaisonScolaire)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			e("input")
 				.a("type", "text")
 				.a("class", "w3-input w3-border datepicker setSaisonDateDebut classSaisonScolaire inputSaisonScolaire", pk, "SaisonDateDebut w3-input w3-border ")
@@ -1820,7 +1829,10 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 
 	public void inputSaisonEte(String classeApiMethodeMethode) {
 		SaisonScolaire s = (SaisonScolaire)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			if("Page".equals(classeApiMethodeMethode)) {
 				e("input")
 					.a("type", "checkbox")
@@ -1945,7 +1957,10 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 
 	public void inputSaisonHiver(String classeApiMethodeMethode) {
 		SaisonScolaire s = (SaisonScolaire)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			if("Page".equals(classeApiMethodeMethode)) {
 				e("input")
 					.a("type", "checkbox")
@@ -2070,7 +2085,10 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 
 	public void inputSaisonFuture(String classeApiMethodeMethode) {
 		SaisonScolaire s = (SaisonScolaire)this;
-		{
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
 			if("Page".equals(classeApiMethodeMethode)) {
 				e("input")
 					.a("type", "checkbox")
