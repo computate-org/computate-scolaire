@@ -105,6 +105,8 @@ public class SiteUserPage extends SiteUserPageGen<SiteUserGenPage> {
 				) {
 			l.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest_.getSessionId()).orElse("-----")));
 		}
+		l.addFilterQuery("archived_indexed_boolean:false");
+		l.addFilterQuery("deleted_indexed_boolean:false");
 	}
 
 	protected void _years(Wrap<List<SchoolYear>> c) {
