@@ -105,8 +105,6 @@ public class SiteUserPage extends SiteUserPageGen<SiteUserGenPage> {
 				) {
 			l.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest_.getSessionId()).orElse("-----")));
 		}
-		l.addFilterQuery("archived_indexed_boolean:false");
-		l.addFilterQuery("deleted_indexed_boolean:false");
 	}
 
 	protected void _years(Wrap<List<SchoolYear>> c) {
@@ -174,6 +172,8 @@ public class SiteUserPage extends SiteUserPageGen<SiteUserGenPage> {
 			l.setRows(1000);
 
 			l.addFilterQuery("yearStart_indexed_int:[" + LocalDate.now().plusMonths(1).minusYears(1).getYear() + " TO " + LocalDate.now().plusMonths(1).getYear() + "]");
+			l.addFilterQuery("archived_indexed_boolean:false");
+			l.addFilterQuery("deleted_indexed_boolean:false");
 	
 			for(String var : siteRequest_.getRequestVars().keySet()) {
 				String val = siteRequest_.getRequestVars().get(var);
