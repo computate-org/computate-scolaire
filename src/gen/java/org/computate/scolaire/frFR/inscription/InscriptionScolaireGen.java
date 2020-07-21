@@ -8042,6 +8042,68 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		} g("div");
 	}
 
+	//////////////////////////////
+	// inscriptionCouleurGroupe //
+	//////////////////////////////
+
+	/**	 L'entité inscriptionCouleurGroupe
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String inscriptionCouleurGroupe;
+	@JsonIgnore
+	public Couverture<String> inscriptionCouleurGroupeCouverture = new Couverture<String>().p(this).c(String.class).var("inscriptionCouleurGroupe").o(inscriptionCouleurGroupe);
+
+	/**	<br/> L'entité inscriptionCouleurGroupe
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:inscriptionCouleurGroupe">Trouver l'entité inscriptionCouleurGroupe dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _inscriptionCouleurGroupe(Couverture<String> c);
+
+	public String getInscriptionCouleurGroupe() {
+		return inscriptionCouleurGroupe;
+	}
+
+	public void setInscriptionCouleurGroupe(String inscriptionCouleurGroupe) {
+		this.inscriptionCouleurGroupe = inscriptionCouleurGroupe;
+		this.inscriptionCouleurGroupeCouverture.dejaInitialise = true;
+	}
+	protected InscriptionScolaire inscriptionCouleurGroupeInit() {
+		if(!inscriptionCouleurGroupeCouverture.dejaInitialise) {
+			_inscriptionCouleurGroupe(inscriptionCouleurGroupeCouverture);
+			if(inscriptionCouleurGroupe == null)
+				setInscriptionCouleurGroupe(inscriptionCouleurGroupeCouverture.o);
+		}
+		inscriptionCouleurGroupeCouverture.dejaInitialise(true);
+		return (InscriptionScolaire)this;
+	}
+
+	public String solrInscriptionCouleurGroupe() {
+		return inscriptionCouleurGroupe;
+	}
+
+	public String strInscriptionCouleurGroupe() {
+		return inscriptionCouleurGroupe == null ? "" : inscriptionCouleurGroupe;
+	}
+
+	public String jsonInscriptionCouleurGroupe() {
+		return inscriptionCouleurGroupe == null ? "" : inscriptionCouleurGroupe;
+	}
+
+	public String nomAffichageInscriptionCouleurGroupe() {
+		return "couleur du groupe";
+	}
+
+	public String htmTooltipInscriptionCouleurGroupe() {
+		return null;
+	}
+
+	public String htmInscriptionCouleurGroupe() {
+		return inscriptionCouleurGroupe == null ? "" : StringEscapeUtils.escapeHtml4(strInscriptionCouleurGroupe());
+	}
+
 	//////////////////////////////////
 	// inscriptionPaimentChaqueMois //
 	//////////////////////////////////
@@ -13320,6 +13382,147 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		} g("div");
 	}
 
+	////////////////////////
+	// inscriptionsAnnees //
+	////////////////////////
+
+	/**	 L'entité inscriptionsAnnees
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<InscriptionScolaire>(). 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected List<InscriptionScolaire> inscriptionsAnnees = new ArrayList<InscriptionScolaire>();
+	@JsonIgnore
+	public Couverture<List<InscriptionScolaire>> inscriptionsAnneesCouverture = new Couverture<List<InscriptionScolaire>>().p(this).c(List.class).var("inscriptionsAnnees").o(inscriptionsAnnees);
+
+	/**	<br/> L'entité inscriptionsAnnees
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<InscriptionScolaire>(). 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:inscriptionsAnnees">Trouver l'entité inscriptionsAnnees dans Solr</a>
+	 * <br/>
+	 * @param inscriptionsAnnees est l'entité déjà construit. 
+	 **/
+	protected abstract void _inscriptionsAnnees(List<InscriptionScolaire> l);
+
+	public List<InscriptionScolaire> getInscriptionsAnnees() {
+		return inscriptionsAnnees;
+	}
+
+	public void setInscriptionsAnnees(List<InscriptionScolaire> inscriptionsAnnees) {
+		this.inscriptionsAnnees = inscriptionsAnnees;
+		this.inscriptionsAnneesCouverture.dejaInitialise = true;
+	}
+	public InscriptionScolaire addInscriptionsAnnees(InscriptionScolaire...objets) {
+		for(InscriptionScolaire o : objets) {
+			addInscriptionsAnnees(o);
+		}
+		return (InscriptionScolaire)this;
+	}
+	public InscriptionScolaire addInscriptionsAnnees(InscriptionScolaire o) {
+		if(o != null && !inscriptionsAnnees.contains(o))
+			this.inscriptionsAnnees.add(o);
+		return (InscriptionScolaire)this;
+	}
+	protected InscriptionScolaire inscriptionsAnneesInit() {
+		if(!inscriptionsAnneesCouverture.dejaInitialise) {
+			_inscriptionsAnnees(inscriptionsAnnees);
+		}
+		inscriptionsAnneesCouverture.dejaInitialise(true);
+		return (InscriptionScolaire)this;
+	}
+
+	///////////////////////////
+	// inscriptionsApprouves //
+	///////////////////////////
+
+	/**	 L'entité inscriptionsApprouves
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<InscriptionScolaire>(). 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected List<InscriptionScolaire> inscriptionsApprouves = new ArrayList<InscriptionScolaire>();
+	@JsonIgnore
+	public Couverture<List<InscriptionScolaire>> inscriptionsApprouvesCouverture = new Couverture<List<InscriptionScolaire>>().p(this).c(List.class).var("inscriptionsApprouves").o(inscriptionsApprouves);
+
+	/**	<br/> L'entité inscriptionsApprouves
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<InscriptionScolaire>(). 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:inscriptionsApprouves">Trouver l'entité inscriptionsApprouves dans Solr</a>
+	 * <br/>
+	 * @param inscriptionsApprouves est l'entité déjà construit. 
+	 **/
+	protected abstract void _inscriptionsApprouves(List<InscriptionScolaire> l);
+
+	public List<InscriptionScolaire> getInscriptionsApprouves() {
+		return inscriptionsApprouves;
+	}
+
+	public void setInscriptionsApprouves(List<InscriptionScolaire> inscriptionsApprouves) {
+		this.inscriptionsApprouves = inscriptionsApprouves;
+		this.inscriptionsApprouvesCouverture.dejaInitialise = true;
+	}
+	public InscriptionScolaire addInscriptionsApprouves(InscriptionScolaire...objets) {
+		for(InscriptionScolaire o : objets) {
+			addInscriptionsApprouves(o);
+		}
+		return (InscriptionScolaire)this;
+	}
+	public InscriptionScolaire addInscriptionsApprouves(InscriptionScolaire o) {
+		if(o != null && !inscriptionsApprouves.contains(o))
+			this.inscriptionsApprouves.add(o);
+		return (InscriptionScolaire)this;
+	}
+	protected InscriptionScolaire inscriptionsApprouvesInit() {
+		if(!inscriptionsApprouvesCouverture.dejaInitialise) {
+			_inscriptionsApprouves(inscriptionsApprouves);
+		}
+		inscriptionsApprouvesCouverture.dejaInitialise(true);
+		return (InscriptionScolaire)this;
+	}
+
+	////////////////////////
+	// inscriptionsGroupe //
+	////////////////////////
+
+	/**	 L'entité inscriptionsGroupe
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<InscriptionScolaire>(). 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected List<InscriptionScolaire> inscriptionsGroupe = new ArrayList<InscriptionScolaire>();
+	@JsonIgnore
+	public Couverture<List<InscriptionScolaire>> inscriptionsGroupeCouverture = new Couverture<List<InscriptionScolaire>>().p(this).c(List.class).var("inscriptionsGroupe").o(inscriptionsGroupe);
+
+	/**	<br/> L'entité inscriptionsGroupe
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<InscriptionScolaire>(). 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:inscriptionsGroupe">Trouver l'entité inscriptionsGroupe dans Solr</a>
+	 * <br/>
+	 * @param inscriptionsGroupe est l'entité déjà construit. 
+	 **/
+	protected abstract void _inscriptionsGroupe(List<InscriptionScolaire> l);
+
+	public List<InscriptionScolaire> getInscriptionsGroupe() {
+		return inscriptionsGroupe;
+	}
+
+	public void setInscriptionsGroupe(List<InscriptionScolaire> inscriptionsGroupe) {
+		this.inscriptionsGroupe = inscriptionsGroupe;
+		this.inscriptionsGroupeCouverture.dejaInitialise = true;
+	}
+	public InscriptionScolaire addInscriptionsGroupe(InscriptionScolaire...objets) {
+		for(InscriptionScolaire o : objets) {
+			addInscriptionsGroupe(o);
+		}
+		return (InscriptionScolaire)this;
+	}
+	public InscriptionScolaire addInscriptionsGroupe(InscriptionScolaire o) {
+		if(o != null && !inscriptionsGroupe.contains(o))
+			this.inscriptionsGroupe.add(o);
+		return (InscriptionScolaire)this;
+	}
+	protected InscriptionScolaire inscriptionsGroupeInit() {
+		if(!inscriptionsGroupeCouverture.dejaInitialise) {
+			_inscriptionsGroupe(inscriptionsGroupe);
+		}
+		inscriptionsGroupeCouverture.dejaInitialise(true);
+		return (InscriptionScolaire)this;
+	}
+
 	/////////////////////////////
 	// inscriptionsInscription //
 	/////////////////////////////
@@ -13740,6 +13943,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		enfantObjectifsInit();
 		enfantPropreInit();
 		inscriptionNomGroupeInit();
+		inscriptionCouleurGroupeInit();
 		inscriptionPaimentChaqueMoisInit();
 		inscriptionPaimentCompletInit();
 		customerProfileIdInit();
@@ -13792,6 +13996,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		inscriptionDate8Init();
 		inscriptionDate9Init();
 		inscriptionDate10Init();
+		inscriptionsAnneesInit();
+		inscriptionsApprouvesInit();
+		inscriptionsGroupeInit();
 		inscriptionsInscriptionInit();
 		enfantImmunisationsRecuInit();
 		enfantPhotosApprouveInit();
@@ -14045,6 +14252,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				return oInscriptionScolaire.enfantPropre;
 			case "inscriptionNomGroupe":
 				return oInscriptionScolaire.inscriptionNomGroupe;
+			case "inscriptionCouleurGroupe":
+				return oInscriptionScolaire.inscriptionCouleurGroupe;
 			case "inscriptionPaimentChaqueMois":
 				return oInscriptionScolaire.inscriptionPaimentChaqueMois;
 			case "inscriptionPaimentComplet":
@@ -14149,6 +14358,12 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				return oInscriptionScolaire.inscriptionDate9;
 			case "inscriptionDate10":
 				return oInscriptionScolaire.inscriptionDate10;
+			case "inscriptionsAnnees":
+				return oInscriptionScolaire.inscriptionsAnnees;
+			case "inscriptionsApprouves":
+				return oInscriptionScolaire.inscriptionsApprouves;
+			case "inscriptionsGroupe":
+				return oInscriptionScolaire.inscriptionsGroupe;
 			case "inscriptionsInscription":
 				return oInscriptionScolaire.inscriptionsInscription;
 			case "enfantImmunisationsRecu":
@@ -14952,6 +15167,12 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 					oInscriptionScolaire.setInscriptionNomGroupe(inscriptionNomGroupe);
 			}
 
+			if(sauvegardes.contains("inscriptionCouleurGroupe")) {
+				String inscriptionCouleurGroupe = (String)solrDocument.get("inscriptionCouleurGroupe_stored_string");
+				if(inscriptionCouleurGroupe != null)
+					oInscriptionScolaire.setInscriptionCouleurGroupe(inscriptionCouleurGroupe);
+			}
+
 			if(sauvegardes.contains("inscriptionPaimentChaqueMois")) {
 				Boolean inscriptionPaimentChaqueMois = (Boolean)solrDocument.get("inscriptionPaimentChaqueMois_stored_boolean");
 				if(inscriptionPaimentChaqueMois != null)
@@ -15691,6 +15912,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			document.addField("inscriptionNomGroupe_indexed_string", inscriptionNomGroupe);
 			document.addField("inscriptionNomGroupe_stored_string", inscriptionNomGroupe);
 		}
+		if(inscriptionCouleurGroupe != null) {
+			document.addField("inscriptionCouleurGroupe_indexed_string", inscriptionCouleurGroupe);
+			document.addField("inscriptionCouleurGroupe_stored_string", inscriptionCouleurGroupe);
+		}
 		if(inscriptionPaimentChaqueMois != null) {
 			document.addField("inscriptionPaimentChaqueMois_indexed_boolean", inscriptionPaimentChaqueMois);
 			document.addField("inscriptionPaimentChaqueMois_stored_boolean", inscriptionPaimentChaqueMois);
@@ -16087,6 +16312,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				return "enfantPropre_indexed_boolean";
 			case "inscriptionNomGroupe":
 				return "inscriptionNomGroupe_indexed_string";
+			case "inscriptionCouleurGroupe":
+				return "inscriptionCouleurGroupe_indexed_string";
 			case "inscriptionPaimentChaqueMois":
 				return "inscriptionPaimentChaqueMois_indexed_boolean";
 			case "inscriptionPaimentComplet":
@@ -16515,6 +16742,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		String inscriptionNomGroupe = (String)solrDocument.get("inscriptionNomGroupe_stored_string");
 		if(inscriptionNomGroupe != null)
 			oInscriptionScolaire.setInscriptionNomGroupe(inscriptionNomGroupe);
+
+		String inscriptionCouleurGroupe = (String)solrDocument.get("inscriptionCouleurGroupe_stored_string");
+		if(inscriptionCouleurGroupe != null)
+			oInscriptionScolaire.setInscriptionCouleurGroupe(inscriptionCouleurGroupe);
 
 		Boolean inscriptionPaimentChaqueMois = (Boolean)solrDocument.get("inscriptionPaimentChaqueMois_stored_boolean");
 		if(inscriptionPaimentChaqueMois != null)

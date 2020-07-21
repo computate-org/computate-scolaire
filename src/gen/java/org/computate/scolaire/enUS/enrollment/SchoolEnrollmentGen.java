@@ -8022,6 +8022,68 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		} g("div");
 	}
 
+	//////////////////////////
+	// enrollmentGroupColor //
+	//////////////////////////
+
+	/**	 The entity enrollmentGroupColor
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String enrollmentGroupColor;
+	@JsonIgnore
+	public Wrap<String> enrollmentGroupColorWrap = new Wrap<String>().p(this).c(String.class).var("enrollmentGroupColor").o(enrollmentGroupColor);
+
+	/**	<br/> The entity enrollmentGroupColor
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentGroupColor">Find the entity enrollmentGroupColor in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _enrollmentGroupColor(Wrap<String> c);
+
+	public String getEnrollmentGroupColor() {
+		return enrollmentGroupColor;
+	}
+
+	public void setEnrollmentGroupColor(String enrollmentGroupColor) {
+		this.enrollmentGroupColor = enrollmentGroupColor;
+		this.enrollmentGroupColorWrap.alreadyInitialized = true;
+	}
+	protected SchoolEnrollment enrollmentGroupColorInit() {
+		if(!enrollmentGroupColorWrap.alreadyInitialized) {
+			_enrollmentGroupColor(enrollmentGroupColorWrap);
+			if(enrollmentGroupColor == null)
+				setEnrollmentGroupColor(enrollmentGroupColorWrap.o);
+		}
+		enrollmentGroupColorWrap.alreadyInitialized(true);
+		return (SchoolEnrollment)this;
+	}
+
+	public String solrEnrollmentGroupColor() {
+		return enrollmentGroupColor;
+	}
+
+	public String strEnrollmentGroupColor() {
+		return enrollmentGroupColor == null ? "" : enrollmentGroupColor;
+	}
+
+	public String jsonEnrollmentGroupColor() {
+		return enrollmentGroupColor == null ? "" : enrollmentGroupColor;
+	}
+
+	public String nomAffichageEnrollmentGroupColor() {
+		return "group color";
+	}
+
+	public String htmTooltipEnrollmentGroupColor() {
+		return null;
+	}
+
+	public String htmEnrollmentGroupColor() {
+		return enrollmentGroupColor == null ? "" : StringEscapeUtils.escapeHtml4(strEnrollmentGroupColor());
+	}
+
 	////////////////////////////////
 	// enrollmentPaymentEachMonth //
 	////////////////////////////////
@@ -13287,6 +13349,147 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		} g("div");
 	}
 
+	/////////////////////
+	// enrollmentYears //
+	/////////////////////
+
+	/**	 The entity enrollmentYears
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<SchoolEnrollment>(). 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected List<SchoolEnrollment> enrollmentYears = new ArrayList<SchoolEnrollment>();
+	@JsonIgnore
+	public Wrap<List<SchoolEnrollment>> enrollmentYearsWrap = new Wrap<List<SchoolEnrollment>>().p(this).c(List.class).var("enrollmentYears").o(enrollmentYears);
+
+	/**	<br/> The entity enrollmentYears
+	 *  It is constructed before being initialized with the constructor by default List<SchoolEnrollment>(). 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentYears">Find the entity enrollmentYears in Solr</a>
+	 * <br/>
+	 * @param enrollmentYears is the entity already constructed. 
+	 **/
+	protected abstract void _enrollmentYears(List<SchoolEnrollment> l);
+
+	public List<SchoolEnrollment> getEnrollmentYears() {
+		return enrollmentYears;
+	}
+
+	public void setEnrollmentYears(List<SchoolEnrollment> enrollmentYears) {
+		this.enrollmentYears = enrollmentYears;
+		this.enrollmentYearsWrap.alreadyInitialized = true;
+	}
+	public SchoolEnrollment addEnrollmentYears(SchoolEnrollment...objets) {
+		for(SchoolEnrollment o : objets) {
+			addEnrollmentYears(o);
+		}
+		return (SchoolEnrollment)this;
+	}
+	public SchoolEnrollment addEnrollmentYears(SchoolEnrollment o) {
+		if(o != null && !enrollmentYears.contains(o))
+			this.enrollmentYears.add(o);
+		return (SchoolEnrollment)this;
+	}
+	protected SchoolEnrollment enrollmentYearsInit() {
+		if(!enrollmentYearsWrap.alreadyInitialized) {
+			_enrollmentYears(enrollmentYears);
+		}
+		enrollmentYearsWrap.alreadyInitialized(true);
+		return (SchoolEnrollment)this;
+	}
+
+	/////////////////////////
+	// enrollmentApprovals //
+	/////////////////////////
+
+	/**	 The entity enrollmentApprovals
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<SchoolEnrollment>(). 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected List<SchoolEnrollment> enrollmentApprovals = new ArrayList<SchoolEnrollment>();
+	@JsonIgnore
+	public Wrap<List<SchoolEnrollment>> enrollmentApprovalsWrap = new Wrap<List<SchoolEnrollment>>().p(this).c(List.class).var("enrollmentApprovals").o(enrollmentApprovals);
+
+	/**	<br/> The entity enrollmentApprovals
+	 *  It is constructed before being initialized with the constructor by default List<SchoolEnrollment>(). 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentApprovals">Find the entity enrollmentApprovals in Solr</a>
+	 * <br/>
+	 * @param enrollmentApprovals is the entity already constructed. 
+	 **/
+	protected abstract void _enrollmentApprovals(List<SchoolEnrollment> l);
+
+	public List<SchoolEnrollment> getEnrollmentApprovals() {
+		return enrollmentApprovals;
+	}
+
+	public void setEnrollmentApprovals(List<SchoolEnrollment> enrollmentApprovals) {
+		this.enrollmentApprovals = enrollmentApprovals;
+		this.enrollmentApprovalsWrap.alreadyInitialized = true;
+	}
+	public SchoolEnrollment addEnrollmentApprovals(SchoolEnrollment...objets) {
+		for(SchoolEnrollment o : objets) {
+			addEnrollmentApprovals(o);
+		}
+		return (SchoolEnrollment)this;
+	}
+	public SchoolEnrollment addEnrollmentApprovals(SchoolEnrollment o) {
+		if(o != null && !enrollmentApprovals.contains(o))
+			this.enrollmentApprovals.add(o);
+		return (SchoolEnrollment)this;
+	}
+	protected SchoolEnrollment enrollmentApprovalsInit() {
+		if(!enrollmentApprovalsWrap.alreadyInitialized) {
+			_enrollmentApprovals(enrollmentApprovals);
+		}
+		enrollmentApprovalsWrap.alreadyInitialized(true);
+		return (SchoolEnrollment)this;
+	}
+
+	//////////////////////
+	// enrollmentGroups //
+	//////////////////////
+
+	/**	 The entity enrollmentGroups
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<SchoolEnrollment>(). 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected List<SchoolEnrollment> enrollmentGroups = new ArrayList<SchoolEnrollment>();
+	@JsonIgnore
+	public Wrap<List<SchoolEnrollment>> enrollmentGroupsWrap = new Wrap<List<SchoolEnrollment>>().p(this).c(List.class).var("enrollmentGroups").o(enrollmentGroups);
+
+	/**	<br/> The entity enrollmentGroups
+	 *  It is constructed before being initialized with the constructor by default List<SchoolEnrollment>(). 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentGroups">Find the entity enrollmentGroups in Solr</a>
+	 * <br/>
+	 * @param enrollmentGroups is the entity already constructed. 
+	 **/
+	protected abstract void _enrollmentGroups(List<SchoolEnrollment> l);
+
+	public List<SchoolEnrollment> getEnrollmentGroups() {
+		return enrollmentGroups;
+	}
+
+	public void setEnrollmentGroups(List<SchoolEnrollment> enrollmentGroups) {
+		this.enrollmentGroups = enrollmentGroups;
+		this.enrollmentGroupsWrap.alreadyInitialized = true;
+	}
+	public SchoolEnrollment addEnrollmentGroups(SchoolEnrollment...objets) {
+		for(SchoolEnrollment o : objets) {
+			addEnrollmentGroups(o);
+		}
+		return (SchoolEnrollment)this;
+	}
+	public SchoolEnrollment addEnrollmentGroups(SchoolEnrollment o) {
+		if(o != null && !enrollmentGroups.contains(o))
+			this.enrollmentGroups.add(o);
+		return (SchoolEnrollment)this;
+	}
+	protected SchoolEnrollment enrollmentGroupsInit() {
+		if(!enrollmentGroupsWrap.alreadyInitialized) {
+			_enrollmentGroups(enrollmentGroups);
+		}
+		enrollmentGroupsWrap.alreadyInitialized(true);
+		return (SchoolEnrollment)this;
+	}
+
 	///////////////////////////
 	// enrollmentEnrollments //
 	///////////////////////////
@@ -13707,6 +13910,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		childObjectivesInit();
 		childPottyTrainedInit();
 		enrollmentGroupNameInit();
+		enrollmentGroupColorInit();
 		enrollmentPaymentEachMonthInit();
 		enrollmentPaymentCompleteInit();
 		customerProfileIdInit();
@@ -13759,6 +13963,9 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		enrollmentDate8Init();
 		enrollmentDate9Init();
 		enrollmentDate10Init();
+		enrollmentYearsInit();
+		enrollmentApprovalsInit();
+		enrollmentGroupsInit();
 		enrollmentEnrollmentsInit();
 		childImmunizationsReceivedInit();
 		childPhotosApprovedInit();
@@ -14012,6 +14219,8 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				return oSchoolEnrollment.childPottyTrained;
 			case "enrollmentGroupName":
 				return oSchoolEnrollment.enrollmentGroupName;
+			case "enrollmentGroupColor":
+				return oSchoolEnrollment.enrollmentGroupColor;
 			case "enrollmentPaymentEachMonth":
 				return oSchoolEnrollment.enrollmentPaymentEachMonth;
 			case "enrollmentPaymentComplete":
@@ -14116,6 +14325,12 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				return oSchoolEnrollment.enrollmentDate9;
 			case "enrollmentDate10":
 				return oSchoolEnrollment.enrollmentDate10;
+			case "enrollmentYears":
+				return oSchoolEnrollment.enrollmentYears;
+			case "enrollmentApprovals":
+				return oSchoolEnrollment.enrollmentApprovals;
+			case "enrollmentGroups":
+				return oSchoolEnrollment.enrollmentGroups;
 			case "enrollmentEnrollments":
 				return oSchoolEnrollment.enrollmentEnrollments;
 			case "childImmunizationsReceived":
@@ -14919,6 +15134,12 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 					oSchoolEnrollment.setEnrollmentGroupName(enrollmentGroupName);
 			}
 
+			if(saves.contains("enrollmentGroupColor")) {
+				String enrollmentGroupColor = (String)solrDocument.get("enrollmentGroupColor_stored_string");
+				if(enrollmentGroupColor != null)
+					oSchoolEnrollment.setEnrollmentGroupColor(enrollmentGroupColor);
+			}
+
 			if(saves.contains("enrollmentPaymentEachMonth")) {
 				Boolean enrollmentPaymentEachMonth = (Boolean)solrDocument.get("enrollmentPaymentEachMonth_stored_boolean");
 				if(enrollmentPaymentEachMonth != null)
@@ -15658,6 +15879,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 			document.addField("enrollmentGroupName_indexed_string", enrollmentGroupName);
 			document.addField("enrollmentGroupName_stored_string", enrollmentGroupName);
 		}
+		if(enrollmentGroupColor != null) {
+			document.addField("enrollmentGroupColor_indexed_string", enrollmentGroupColor);
+			document.addField("enrollmentGroupColor_stored_string", enrollmentGroupColor);
+		}
 		if(enrollmentPaymentEachMonth != null) {
 			document.addField("enrollmentPaymentEachMonth_indexed_boolean", enrollmentPaymentEachMonth);
 			document.addField("enrollmentPaymentEachMonth_stored_boolean", enrollmentPaymentEachMonth);
@@ -16054,6 +16279,8 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				return "childPottyTrained_indexed_boolean";
 			case "enrollmentGroupName":
 				return "enrollmentGroupName_indexed_string";
+			case "enrollmentGroupColor":
+				return "enrollmentGroupColor_indexed_string";
 			case "enrollmentPaymentEachMonth":
 				return "enrollmentPaymentEachMonth_indexed_boolean";
 			case "enrollmentPaymentComplete":
@@ -16482,6 +16709,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		String enrollmentGroupName = (String)solrDocument.get("enrollmentGroupName_stored_string");
 		if(enrollmentGroupName != null)
 			oSchoolEnrollment.setEnrollmentGroupName(enrollmentGroupName);
+
+		String enrollmentGroupColor = (String)solrDocument.get("enrollmentGroupColor_stored_string");
+		if(enrollmentGroupColor != null)
+			oSchoolEnrollment.setEnrollmentGroupColor(enrollmentGroupColor);
 
 		Boolean enrollmentPaymentEachMonth = (Boolean)solrDocument.get("enrollmentPaymentEachMonth_stored_boolean");
 		if(enrollmentPaymentEachMonth != null)

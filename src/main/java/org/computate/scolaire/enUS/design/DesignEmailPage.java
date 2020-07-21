@@ -305,7 +305,7 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 		l.setC(SchoolEnrollment.class);
 		l.setRows(1000);
 
-		List<String> roles = Arrays.asList("SiteAdmin");
+		List<String> roles = Arrays.asList("SiteManager");
 		if(
 				!CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), roles)
 				&& !CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), roles)
@@ -329,7 +329,10 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 			l.addSort("childBirthMonth_indexed_int", ORDER.asc);
 			l.addSort("childBirthDay_indexed_int", ORDER.asc);
 		}
-		else if("email-phone-roster".equals(pageDesignId)) {
+		else if("email-roster".equals(pageDesignId)) {
+			l.addSort("enrollmentGroupName_indexed_string", ORDER.asc);
+		}
+		else if(StringUtils.equalsAny(pageDesignId, "group-names-roster", "group-details-roster")) {
 			l.addSort("enrollmentGroupName_indexed_string", ORDER.asc);
 		}
 
@@ -363,6 +366,8 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 		Integer size = enrollmentSearch.size();
 		Long blockKeyBefore = null;
 		Long blockKeyCurrent = null;
+		String groupBefore = null;
+		String groupCurrent = null;
 		SchoolEnrollment enrollment = null;
 		List<SchoolEnrollment> enrollmentEnrollments = null;
 		Integer enrollmentNumber = null;
@@ -375,21 +380,57 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 			while(i < size) {
 				enrollment = enrollments.get(i);
 				blockKeyCurrent = enrollment.getBlockKey();
-				if(blockKeyCurrent == null || ObjectUtils.compare(blockKeyCurrent, blockKeyBefore) != 0) {
-					blockKeyBefore = enrollment.getBlockKey();
-					enrollmentEnrollments = enrollment.getEnrollmentEnrollments();
-					enrollmentBlocks.add(enrollment);
-					enrollmentNumber = 1;
+				if(StringUtils.equalsAny(pageDesignId, "group-names-roster", "group-details-roster")) {
+					if(blockKeyCurrent == null || ObjectUtils.compare(blockKeyCurrent, blockKeyBefore) != 0) {
+						blockKeyBefore = enrollment.getBlockKey();
+						enrollmentGroups = enrollment.getEnrollmentGroups();
+						enrollmentBlocks.add(enrollment);
+					}
+					while(i < size) {
+						enrollment = enrollments.get(i);
+						groupCurrent = enrollment.getEnrollmentGroupName();
+						blockKeyCurrent = enrollment.getBlockKey();
+						if(groupBefore == null || ObjectUtils.compare(groupCurrent, groupBefore) != 0) {
+							groupBefore = enrollment.getEnrollmentGroupName();
+							enrollmentEnrollments = enrollment.getEnrollmentEnrollments();
+							enrollmentGroups.add(enrollment);
+							enrollmentNumber = 1;
+						}
+						if((i + 1) > size)
+							break;
+						enrollment.setEnrollmentKey(enrollment.getPk());
+						enrollment.setEnrollmentNumber(enrollmentNumber);
+						enrollmentEnrollments.add(enrollment);
+						enrollmentNumber++;
+						if(ObjectUtils.compare(blockKeyCurrent, blockKeyBefore) != 0)
+							break;
+						if(ObjectUtils.compare(groupCurrent, groupBefore) != 0)
+							break;
+						i++;
+					}
+					enrollment.setEnrollmentKey(enrollment.getPk());
+					enrollment.setEnrollmentNumber(enrollmentNumber);
+					enrollmentEnrollments.add(enrollment);
+					enrollmentNumber++;
+					i++;
 				}
-				if((i + 2) > size)
-					break;
-				enrollment.setEnrollmentKey(enrollment.getPk());
-				enrollment.setEnrollmentNumber(enrollmentNumber);
-				enrollmentEnrollments.add(enrollment);
-				enrollmentNumber++;
-				if(ObjectUtils.compare(blockKeyCurrent, blockKeyBefore) != 0)
-					break;
-				i++;
+				else {
+					if(blockKeyCurrent == null || ObjectUtils.compare(blockKeyCurrent, blockKeyBefore) != 0) {
+						blockKeyBefore = enrollment.getBlockKey();
+						enrollmentEnrollments = enrollment.getEnrollmentEnrollments();
+						enrollmentBlocks.add(enrollment);
+						enrollmentNumber = 1;
+					}
+					if((i + 1) > size)
+						break;
+					enrollment.setEnrollmentKey(enrollment.getPk());
+					enrollment.setEnrollmentNumber(enrollmentNumber);
+					enrollmentEnrollments.add(enrollment);
+					enrollmentNumber++;
+					if(ObjectUtils.compare(blockKeyCurrent, blockKeyBefore) != 0)
+						break;
+					i++;
+				}
 			}
 		}
 	}
@@ -397,7 +438,13 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 	protected void _enrollmentBlocks(List<SchoolEnrollment> c) {
 	}
 
+	protected void _enrollmentGroups(Wrap<List<SchoolEnrollment>> c) {
+	}
+
 	protected void _enrollmentBlock(Wrap<SchoolEnrollment> c) {
+	}
+
+	protected void _enrollmentGroup(Wrap<SchoolEnrollment> c) {
 	}
 
 	protected void _enrollmentEnrollment(Wrap<SchoolEnrollment> c) {

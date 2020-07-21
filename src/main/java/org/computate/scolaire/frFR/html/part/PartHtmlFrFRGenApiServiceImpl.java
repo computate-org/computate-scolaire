@@ -3255,6 +3255,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 	}
 
 
+	public void pagerecherchePartHtmlPageInit(PartHtmlPage page, ListeRecherche<PartHtml> listePartHtml) {
+	}
 	public void pagerecherchePartHtmlReponse(ListeRecherche<PartHtml> listePartHtml, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = listePartHtml.getRequeteSite_();
 		try {
@@ -3292,6 +3294,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 			requeteSite.setW(w);
 			page.setListePartHtml(listePartHtml);
 			page.setRequeteSite_(requeteSite);
+			pagerecherchePartHtmlPageInit(page, listePartHtml);
 			page.initLoinPartHtmlPage(requeteSite);
 			page.html();
 			gestionnaireEvenements.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, requeteEnTetes)));
@@ -3594,6 +3597,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 												jsonObject.put("utilisateurNom", principalJson.getString("preferred_username"));
 												jsonObject.put("utilisateurPrenom", principalJson.getString("given_name"));
 												jsonObject.put("utilisateurNomFamille", principalJson.getString("family_name"));
+												jsonObject.put("utilisateurNomComplet", principalJson.getString("name"));
 												jsonObject.put("utilisateurId", principalJson.getString("sub"));
 												jsonObject.put("utilisateurMail", principalJson.getString("email"));
 												utilisateurPartHtmlDefinir(requeteSite, jsonObject, false);

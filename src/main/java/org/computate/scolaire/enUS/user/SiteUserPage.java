@@ -1,9 +1,6 @@
 package org.computate.scolaire.enUS.user;
 
 import java.io.UnsupportedEncodingException;
-import java.math.BigDecimal;
-import java.math.MathContext;
-import java.math.RoundingMode;
 import java.net.URLEncoder;
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -12,9 +9,12 @@ import java.util.Objects;
 import java.util.Optional;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.solr.client.solrj.SolrQuery.ORDER;
 import org.apache.solr.client.solrj.util.ClientUtils;
+import org.computate.scolaire.enUS.child.SchoolChild;
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.design.PageDesign;
 import org.computate.scolaire.enUS.enrollment.SchoolEnrollment;
@@ -22,6 +22,7 @@ import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.year.SchoolYear;
 
+import io.vertx.ext.web.api.OperationRequest;
 import net.authorize.Environment;
 import net.authorize.api.contract.v1.ArrayOfSetting;
 import net.authorize.api.contract.v1.GetHostedProfilePageRequest;
@@ -95,7 +96,7 @@ public class SiteUserPage extends SiteUserPageGen<SiteUserGenPage> {
 		l.addSort("schoolName_indexed_string", ORDER.asc);
 		l.addSort("schoolLocation_indexed_string", ORDER.asc);
 		l.addSort("yearStart_indexed_int", ORDER.desc);
-		l.setRows(1000);
+		l.setRows(10000);
 
 		List<String> roles = Arrays.asList("SiteAdmin");
 		if(
@@ -143,11 +144,156 @@ public class SiteUserPage extends SiteUserPageGen<SiteUserGenPage> {
 	protected void _schoolYears(List<SchoolYear> l) {
 	}
 
+	protected void _enrollmentSearch(SearchList<SchoolEnrollment> l) {
+		if(siteRequest_.getUserRealmRoles().contains("SiteManager") || siteRequest_.getUserResourceRoles().contains("SiteManager")) {
+			l.setStore(true);
+			l.setQuery("*:*");
+			l.setC(SchoolEnrollment.class);
+			l.setRows(1000);
+	
+			List<String> roles = Arrays.asList("SiteManager");
+			if(
+					!CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), roles)
+					&& !CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), roles)
+					) {
+				l.addFilterQuery(
+					"sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest_.getSessionId()).orElse("-----"))
+							+ " OR userKeys_indexed_longs:" + Optional.ofNullable(siteRequest_.getUserKey()).orElse(0L)
+				);
+			}
+	
+			l.addSort("schoolName_indexed_string", ORDER.asc);
+			l.addSort("schoolLocation_indexed_string", ORDER.asc);
+			l.addSort("enrollmentApproved_indexed_date", ORDER.asc);
+			l.addSort("yearStart_indexed_int", ORDER.desc);
+			l.addSort("created_indexed_int", ORDER.desc);
+
+			l.addFields("schoolKey_stored_long", "enrollmentApproved_stored_boolean", "yearKey_stored_long", "yearStart_stored_int", "yearEnd_stored_int", "childCompleteNamePreferred_stored_string", "pageUrlPk_stored_string");
+			l.setRows(1000);
+
+			l.addFilterQuery("yearStart_indexed_int:[" + LocalDate.now().plusMonths(1).minusYears(1).getYear() + " TO " + LocalDate.now().plusMonths(1).getYear() + "]");
+	
+			for(String var : siteRequest_.getRequestVars().keySet()) {
+				String val = siteRequest_.getRequestVars().get(var);
+				if(!"design".equals(var)) {
+					String varIndexed = SchoolEnrollment.varIndexedSchoolEnrollment(var);
+					if(varIndexed != null)
+						l.addFilterQuery(varIndexed + ":" + ClientUtils.escapeQueryChars(val));
+				}
+			}
+		}
+	}
+
+	protected void _enrollmentSchools(List<SchoolEnrollment> c) {
+	}
+
+	protected void _enrollmentApprovals(Wrap<List<SchoolEnrollment>> c) {
+	}
+
+	protected void _enrollmentYears(Wrap<List<SchoolEnrollment>> c) {
+	}
+
+	protected void _enrollmentSchool(Wrap<SchoolEnrollment> c) {
+	}
+
+	protected void _enrollmentApproval(Wrap<SchoolEnrollment> c) {
+	}
+
+	protected void _enrollmentYear(Wrap<SchoolEnrollment> c) {
+	}
+
+	protected void _enrollmentEnrollment(Wrap<SchoolEnrollment> c) {
+	}
+
+	protected void _enrollments(Wrap<List<SchoolEnrollment>> c) {
+		Integer i = 0;
+		Integer size = enrollmentSearch.size();
+		Long schoolKeyBefore = null;
+		Long schoolKeyCurrent = null;
+		Boolean approvedBefore = null;
+		Boolean approvedCurrent = null;
+		Long yearKeyBefore = null;
+		Long yearKeyCurrent = null;
+		SchoolEnrollment enrollment = null;
+		List<SchoolEnrollment> enrollmentEnrollments = null;
+		Integer enrollmentNumber = null;
+
+		enrollments = enrollmentSearch.getList();
+		c.o(enrollments);
+		if(size > 0) {
+			enrollment = enrollments.get(i);
+			schoolKeyCurrent = enrollment.getSchoolKey();
+			approvedCurrent = enrollment.getEnrollmentApproved();
+			yearKeyCurrent = enrollment.getYearKey();
+			while(i < size) {
+				enrollment = enrollments.get(i);
+				schoolKeyCurrent = enrollment.getSchoolKey();
+				approvedCurrent = enrollment.getEnrollmentApproved();
+				yearKeyCurrent = enrollment.getYearKey();
+				if(schoolKeyBefore == null || ObjectUtils.compare(schoolKeyCurrent, schoolKeyBefore) != 0) {
+					schoolKeyBefore = enrollment.getSchoolKey();
+					approvedBefore = null;
+					yearKeyBefore = null;
+					enrollmentApprovals = enrollment.getEnrollmentApprovals();
+					enrollmentSchools.add(enrollment);
+				}
+				while(i < size) {
+					enrollment = enrollments.get(i);
+					schoolKeyCurrent = enrollment.getSchoolKey();
+					approvedCurrent = enrollment.getEnrollmentApproved();
+					yearKeyCurrent = enrollment.getYearKey();
+					if(approvedBefore == null || ObjectUtils.compare(approvedCurrent, approvedBefore) != 0) {
+						approvedBefore = enrollment.getEnrollmentApproved();
+						yearKeyBefore = null;
+						enrollmentYears = enrollment.getEnrollmentYears();
+						enrollmentApprovals.add(enrollment);
+					}
+					while(i < size) {
+						enrollment = enrollments.get(i);
+						schoolKeyCurrent = enrollment.getSchoolKey();
+						approvedCurrent = enrollment.getEnrollmentApproved();
+						yearKeyCurrent = enrollment.getYearKey();
+						if(yearKeyBefore == null || ObjectUtils.compare(yearKeyCurrent, yearKeyBefore) != 0) {
+							yearKeyBefore = enrollment.getYearKey();
+							enrollmentEnrollments = enrollment.getEnrollmentEnrollments();
+							enrollmentYears.add(enrollment);
+							enrollmentNumber = 1;
+						}
+						enrollment.setEnrollmentKey(enrollment.getPk());
+						enrollment.setEnrollmentNumber(enrollmentNumber);
+						enrollmentEnrollments.add(enrollment);
+						enrollmentNumber++;
+						i++;
+						if((i + 1) > size)
+							break;
+						enrollment = enrollments.get(i);
+						schoolKeyCurrent = enrollment.getSchoolKey();
+						approvedCurrent = enrollment.getEnrollmentApproved();
+						yearKeyCurrent = enrollment.getYearKey();
+						if(ObjectUtils.compare(approvedCurrent, approvedBefore) != 0)
+							break;
+						if(ObjectUtils.compare(schoolKeyCurrent, schoolKeyBefore) != 0)
+							break;
+					}
+					enrollment.setEnrollmentKey(enrollment.getPk());
+					enrollment.setEnrollmentNumber(enrollmentNumber);
+					if(ObjectUtils.compare(schoolKeyCurrent, schoolKeyBefore) != 0)
+						break;
+				}
+				enrollment.setEnrollmentKey(enrollment.getPk());
+				enrollment.setEnrollmentNumber(enrollmentNumber);
+			}
+		}
+	}
+
 	protected void _enrollments_(Wrap<List<SchoolEnrollment>> c) {
 	}
 
 	@Override public void htmlBodySiteUserGenPage() {
 		SiteConfig siteConfig = siteRequest_.getSiteConfig_();
+
+		writeSchoolEnrollments();
+		writeSchoolReports();
 
 		if(enrollments_ != null) {
 			e("h3").a("class", "w3-block w3-gray w3-padding w3-center ").f().sx("Enrollments and account info").g("h3");
@@ -213,8 +359,6 @@ public class SiteUserPage extends SiteUserPageGen<SiteUserGenPage> {
 		} g("div");
 
 		super.htmlBodySiteUserGenPage();
-
-		writeSchoolReports();
 	}
 
 	public void writeConfigurePayments(Integer schoolNumber) {
@@ -292,8 +436,99 @@ public class SiteUserPage extends SiteUserPageGen<SiteUserGenPage> {
 		}
 	}
 
+	public void writeSchoolEnrollments() {
+		if(siteRequest_.getUserRealmRoles().contains("SiteManager") || siteRequest_.getUserResourceRoles().contains("SiteManager")) {
+			{ e("h1").f();
+				{ e("a").a("href", "/user").a("class", "w3-bar-item w3-btn w3-center w3-block w3-gray w3-hover-gray ").f();
+					if(contextIconCssClasses != null)
+						e("i").a("class", contextIconCssClasses + " site-menu-icon ").f().g("i");
+					e("span").a("class", " ").f().sx("school enrollments").g("span");
+				} g("a");
+			} g("h1");
+			{ e("div").a("class", "w3-row w3-mobile ").f();
+				for(SchoolEnrollment enrollmentSchool : enrollmentSchools) {
+					{ e("div").a("class", "w3-half ").f();
+						{ e("fieldset").a("class", "").f();
+							e("legend").a("class", "font-weight-bold ").f().sx(enrollmentSchool.getSchoolLocation()).g("legend");
+							{ e("table").a("class", "w3-table ").f();
+								{ e("thead").a("class", "").f();
+									{ e("tr").a("class", "").f();
+										for(SchoolEnrollment enrollmentApproval : enrollmentSchool.getEnrollmentApprovals()) {
+											if(enrollmentApproval.getEnrollmentApproved()) {
+												for(SchoolEnrollment enrollmentYear : enrollmentApproval.getEnrollmentYears()) {
+													e("td").a("class", "font-weight-bold ").f().sx(enrollmentYear.getYearStart(), "-", enrollmentYear.getYearEnd()).g("td");
+												}
+											}
+											else {
+												e("td").a("class", "font-weight-bold ").f().sx("New").g("td");
+											}
+										}
+									} g("tr");
+								} g("thead");
+								{ e("tbody").a("class", "").f();
+									{ e("tr").a("class", "").f();
+										for(SchoolEnrollment enrollmentApproval : enrollmentSchool.getEnrollmentApprovals()) {
+											if(enrollmentApproval.getEnrollmentApproved()) {
+												for(SchoolEnrollment enrollmentYear : enrollmentApproval.getEnrollmentYears()) {
+													{ e("td").a("style", "padding: 0; ").a("class", "").f();
+														{ e("div").a("class", "").f();
+															{ e("table").a("class", "w3-table ").f();
+																for(SchoolEnrollment enrollmentEnrollment : enrollmentYear.getEnrollmentEnrollments()) {
+																	{ e("tr").a("class", "").f();
+																		{ e("td").a("style", "padding: 0; ").a("class", "").f();
+																			{ e("a").a("href", enrollmentEnrollment.getPageUrlPk()).f();
+																				e("span").a("class", "").f().sx(enrollmentEnrollment.getEnrollmentNumber(), ". ").g("span");
+																			} g("a");
+																		} g("td");
+																		{ e("td").a("style", "padding: 0; ").a("class", "").f();
+																			{ e("a").a("href", enrollmentEnrollment.getPageUrlPk()).f();
+																				e("span").a("class", "").f().sx(enrollmentEnrollment.getChildCompleteNamePreferred()).g("span");
+																			} g("a");
+																		} g("td");
+																	} g("tr");
+																}
+															} g("table");
+														} g("div");
+													} g("td");
+												}
+											}
+											else {
+												{ e("td").a("style", "padding: 0; ").a("class", "").f();
+													{ e("div").a("class", "").f();
+														{ e("table").a("class", "w3-table ").f();
+															for(SchoolEnrollment enrollmentYear : enrollmentApproval.getEnrollmentYears()) {
+																for(SchoolEnrollment enrollmentEnrollment : enrollmentYear.getEnrollmentEnrollments()) {
+																	{ e("tr").a("class", "").f();
+																		{ e("td").a("style", "padding: 0; ").a("class", "").f();
+																			{ e("a").a("href", enrollmentEnrollment.getPageUrlPk()).f();
+																				e("span").a("class", "").f().sx(enrollmentEnrollment.getEnrollmentNumber(), ". ").g("span");
+																			} g("a");
+																		} g("td");
+																		{ e("td").a("style", "padding: 0; ").a("class", "").f();
+																			{ e("a").a("href", enrollmentEnrollment.getPageUrlPk()).f();
+																				e("span").a("class", "").f().sx(enrollmentEnrollment.getChildCompleteNamePreferred()).g("span");
+																			} g("a");
+																		} g("td");
+																	} g("tr");
+																}
+															}
+														} g("table");
+													} g("div");
+												} g("td");
+											}
+										}
+									} g("tr");
+								} g("tbody");
+							} g("table");
+						} g("fieldset");
+					} g("div");
+				}
+			} g("div");
+		}
+	}
+
 	public void writeSchoolReports() {
-		if(siteRequest_.getUserRealmRoles().contains("SiteAdmin") || siteRequest_.getUserResourceRoles().contains("SiteAdmin")) {
+		if(siteRequest_.getUserRealmRoles().contains("SiteManager") || siteRequest_.getUserResourceRoles().contains("SiteManager")) {
 			{ e("h1").f();
 				{ e("a").a("href", "/user").a("class", "w3-bar-item w3-btn w3-center w3-block w3-gray w3-hover-gray ").f();
 					if(contextIconCssClasses != null)

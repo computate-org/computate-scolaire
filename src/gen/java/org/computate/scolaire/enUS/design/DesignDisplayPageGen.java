@@ -334,6 +334,55 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 		return (DesignDisplayPage)this;
 	}
 
+	//////////////////////
+	// enrollmentGroups //
+	//////////////////////
+
+	/**	 The entity enrollmentGroups
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected List<SchoolEnrollment> enrollmentGroups;
+	@JsonIgnore
+	public Wrap<List<SchoolEnrollment>> enrollmentGroupsWrap = new Wrap<List<SchoolEnrollment>>().p(this).c(List.class).var("enrollmentGroups").o(enrollmentGroups);
+
+	/**	<br/> The entity enrollmentGroups
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentGroups">Find the entity enrollmentGroups in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _enrollmentGroups(Wrap<List<SchoolEnrollment>> c);
+
+	public List<SchoolEnrollment> getEnrollmentGroups() {
+		return enrollmentGroups;
+	}
+
+	public void setEnrollmentGroups(List<SchoolEnrollment> enrollmentGroups) {
+		this.enrollmentGroups = enrollmentGroups;
+		this.enrollmentGroupsWrap.alreadyInitialized = true;
+	}
+	public DesignDisplayPage addEnrollmentGroups(SchoolEnrollment...objets) {
+		for(SchoolEnrollment o : objets) {
+			addEnrollmentGroups(o);
+		}
+		return (DesignDisplayPage)this;
+	}
+	public DesignDisplayPage addEnrollmentGroups(SchoolEnrollment o) {
+		if(o != null && !enrollmentGroups.contains(o))
+			this.enrollmentGroups.add(o);
+		return (DesignDisplayPage)this;
+	}
+	protected DesignDisplayPage enrollmentGroupsInit() {
+		if(!enrollmentGroupsWrap.alreadyInitialized) {
+			_enrollmentGroups(enrollmentGroupsWrap);
+			if(enrollmentGroups == null)
+				setEnrollmentGroups(enrollmentGroupsWrap.o);
+		}
+		enrollmentGroupsWrap.alreadyInitialized(true);
+		return (DesignDisplayPage)this;
+	}
+
 	/////////////////////
 	// enrollmentBlock //
 	/////////////////////
@@ -371,6 +420,46 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 		if(enrollmentBlock != null)
 			enrollmentBlock.initDeepForClass(siteRequest_);
 		enrollmentBlockWrap.alreadyInitialized(true);
+		return (DesignDisplayPage)this;
+	}
+
+	/////////////////////
+	// enrollmentGroup //
+	/////////////////////
+
+	/**	 The entity enrollmentGroup
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected SchoolEnrollment enrollmentGroup;
+	@JsonIgnore
+	public Wrap<SchoolEnrollment> enrollmentGroupWrap = new Wrap<SchoolEnrollment>().p(this).c(SchoolEnrollment.class).var("enrollmentGroup").o(enrollmentGroup);
+
+	/**	<br/> The entity enrollmentGroup
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentGroup">Find the entity enrollmentGroup in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _enrollmentGroup(Wrap<SchoolEnrollment> c);
+
+	public SchoolEnrollment getEnrollmentGroup() {
+		return enrollmentGroup;
+	}
+
+	public void setEnrollmentGroup(SchoolEnrollment enrollmentGroup) {
+		this.enrollmentGroup = enrollmentGroup;
+		this.enrollmentGroupWrap.alreadyInitialized = true;
+	}
+	protected DesignDisplayPage enrollmentGroupInit() {
+		if(!enrollmentGroupWrap.alreadyInitialized) {
+			_enrollmentGroup(enrollmentGroupWrap);
+			if(enrollmentGroup == null)
+				setEnrollmentGroup(enrollmentGroupWrap.o);
+		}
+		if(enrollmentGroup != null)
+			enrollmentGroup.initDeepForClass(siteRequest_);
+		enrollmentGroupWrap.alreadyInitialized(true);
 		return (DesignDisplayPage)this;
 	}
 
@@ -2123,7 +2212,9 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 		schoolEnrollmentInit();
 		enrollmentsInit();
 		enrollmentBlocksInit();
+		enrollmentGroupsInit();
 		enrollmentBlockInit();
+		enrollmentGroupInit();
 		enrollmentEnrollmentInit();
 		yearSearchInit();
 		year_Init();
@@ -2177,6 +2268,8 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 			schoolEnrollment.setSiteRequest_(siteRequest_);
 		if(enrollmentBlock != null)
 			enrollmentBlock.setSiteRequest_(siteRequest_);
+		if(enrollmentGroup != null)
+			enrollmentGroup.setSiteRequest_(siteRequest_);
 		if(enrollmentEnrollment != null)
 			enrollmentEnrollment.setSiteRequest_(siteRequest_);
 		if(yearSearch != null)
@@ -2233,8 +2326,12 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 				return oDesignDisplayPage.enrollments;
 			case "enrollmentBlocks":
 				return oDesignDisplayPage.enrollmentBlocks;
+			case "enrollmentGroups":
+				return oDesignDisplayPage.enrollmentGroups;
 			case "enrollmentBlock":
 				return oDesignDisplayPage.enrollmentBlock;
+			case "enrollmentGroup":
+				return oDesignDisplayPage.enrollmentGroup;
 			case "enrollmentEnrollment":
 				return oDesignDisplayPage.enrollmentEnrollment;
 			case "yearSearch":

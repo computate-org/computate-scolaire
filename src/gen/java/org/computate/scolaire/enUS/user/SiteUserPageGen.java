@@ -261,6 +261,397 @@ public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
 		return (SiteUserPage)this;
 	}
 
+	//////////////////////
+	// enrollmentSearch //
+	//////////////////////
+
+	/**	 The entity enrollmentSearch
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<SchoolEnrollment>(). 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected SearchList<SchoolEnrollment> enrollmentSearch = new SearchList<SchoolEnrollment>();
+	@JsonIgnore
+	public Wrap<SearchList<SchoolEnrollment>> enrollmentSearchWrap = new Wrap<SearchList<SchoolEnrollment>>().p(this).c(SearchList.class).var("enrollmentSearch").o(enrollmentSearch);
+
+	/**	<br/> The entity enrollmentSearch
+	 *  It is constructed before being initialized with the constructor by default SearchList<SchoolEnrollment>(). 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.user.SiteUserPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentSearch">Find the entity enrollmentSearch in Solr</a>
+	 * <br/>
+	 * @param enrollmentSearch is the entity already constructed. 
+	 **/
+	protected abstract void _enrollmentSearch(SearchList<SchoolEnrollment> l);
+
+	public SearchList<SchoolEnrollment> getEnrollmentSearch() {
+		return enrollmentSearch;
+	}
+
+	public void setEnrollmentSearch(SearchList<SchoolEnrollment> enrollmentSearch) {
+		this.enrollmentSearch = enrollmentSearch;
+		this.enrollmentSearchWrap.alreadyInitialized = true;
+	}
+	protected SiteUserPage enrollmentSearchInit() {
+		if(!enrollmentSearchWrap.alreadyInitialized) {
+			_enrollmentSearch(enrollmentSearch);
+		}
+		enrollmentSearch.initDeepForClass(siteRequest_);
+		enrollmentSearchWrap.alreadyInitialized(true);
+		return (SiteUserPage)this;
+	}
+
+	///////////////////////
+	// enrollmentSchools //
+	///////////////////////
+
+	/**	 The entity enrollmentSchools
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<SchoolEnrollment>(). 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected List<SchoolEnrollment> enrollmentSchools = new ArrayList<SchoolEnrollment>();
+	@JsonIgnore
+	public Wrap<List<SchoolEnrollment>> enrollmentSchoolsWrap = new Wrap<List<SchoolEnrollment>>().p(this).c(List.class).var("enrollmentSchools").o(enrollmentSchools);
+
+	/**	<br/> The entity enrollmentSchools
+	 *  It is constructed before being initialized with the constructor by default List<SchoolEnrollment>(). 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.user.SiteUserPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentSchools">Find the entity enrollmentSchools in Solr</a>
+	 * <br/>
+	 * @param enrollmentSchools is the entity already constructed. 
+	 **/
+	protected abstract void _enrollmentSchools(List<SchoolEnrollment> c);
+
+	public List<SchoolEnrollment> getEnrollmentSchools() {
+		return enrollmentSchools;
+	}
+
+	public void setEnrollmentSchools(List<SchoolEnrollment> enrollmentSchools) {
+		this.enrollmentSchools = enrollmentSchools;
+		this.enrollmentSchoolsWrap.alreadyInitialized = true;
+	}
+	public SiteUserPage addEnrollmentSchools(SchoolEnrollment...objets) {
+		for(SchoolEnrollment o : objets) {
+			addEnrollmentSchools(o);
+		}
+		return (SiteUserPage)this;
+	}
+	public SiteUserPage addEnrollmentSchools(SchoolEnrollment o) {
+		if(o != null && !enrollmentSchools.contains(o))
+			this.enrollmentSchools.add(o);
+		return (SiteUserPage)this;
+	}
+	protected SiteUserPage enrollmentSchoolsInit() {
+		if(!enrollmentSchoolsWrap.alreadyInitialized) {
+			_enrollmentSchools(enrollmentSchools);
+		}
+		enrollmentSchoolsWrap.alreadyInitialized(true);
+		return (SiteUserPage)this;
+	}
+
+	/////////////////////////
+	// enrollmentApprovals //
+	/////////////////////////
+
+	/**	 The entity enrollmentApprovals
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected List<SchoolEnrollment> enrollmentApprovals;
+	@JsonIgnore
+	public Wrap<List<SchoolEnrollment>> enrollmentApprovalsWrap = new Wrap<List<SchoolEnrollment>>().p(this).c(List.class).var("enrollmentApprovals").o(enrollmentApprovals);
+
+	/**	<br/> The entity enrollmentApprovals
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.user.SiteUserPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentApprovals">Find the entity enrollmentApprovals in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _enrollmentApprovals(Wrap<List<SchoolEnrollment>> c);
+
+	public List<SchoolEnrollment> getEnrollmentApprovals() {
+		return enrollmentApprovals;
+	}
+
+	public void setEnrollmentApprovals(List<SchoolEnrollment> enrollmentApprovals) {
+		this.enrollmentApprovals = enrollmentApprovals;
+		this.enrollmentApprovalsWrap.alreadyInitialized = true;
+	}
+	public SiteUserPage addEnrollmentApprovals(SchoolEnrollment...objets) {
+		for(SchoolEnrollment o : objets) {
+			addEnrollmentApprovals(o);
+		}
+		return (SiteUserPage)this;
+	}
+	public SiteUserPage addEnrollmentApprovals(SchoolEnrollment o) {
+		if(o != null && !enrollmentApprovals.contains(o))
+			this.enrollmentApprovals.add(o);
+		return (SiteUserPage)this;
+	}
+	protected SiteUserPage enrollmentApprovalsInit() {
+		if(!enrollmentApprovalsWrap.alreadyInitialized) {
+			_enrollmentApprovals(enrollmentApprovalsWrap);
+			if(enrollmentApprovals == null)
+				setEnrollmentApprovals(enrollmentApprovalsWrap.o);
+		}
+		enrollmentApprovalsWrap.alreadyInitialized(true);
+		return (SiteUserPage)this;
+	}
+
+	/////////////////////
+	// enrollmentYears //
+	/////////////////////
+
+	/**	 The entity enrollmentYears
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected List<SchoolEnrollment> enrollmentYears;
+	@JsonIgnore
+	public Wrap<List<SchoolEnrollment>> enrollmentYearsWrap = new Wrap<List<SchoolEnrollment>>().p(this).c(List.class).var("enrollmentYears").o(enrollmentYears);
+
+	/**	<br/> The entity enrollmentYears
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.user.SiteUserPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentYears">Find the entity enrollmentYears in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _enrollmentYears(Wrap<List<SchoolEnrollment>> c);
+
+	public List<SchoolEnrollment> getEnrollmentYears() {
+		return enrollmentYears;
+	}
+
+	public void setEnrollmentYears(List<SchoolEnrollment> enrollmentYears) {
+		this.enrollmentYears = enrollmentYears;
+		this.enrollmentYearsWrap.alreadyInitialized = true;
+	}
+	public SiteUserPage addEnrollmentYears(SchoolEnrollment...objets) {
+		for(SchoolEnrollment o : objets) {
+			addEnrollmentYears(o);
+		}
+		return (SiteUserPage)this;
+	}
+	public SiteUserPage addEnrollmentYears(SchoolEnrollment o) {
+		if(o != null && !enrollmentYears.contains(o))
+			this.enrollmentYears.add(o);
+		return (SiteUserPage)this;
+	}
+	protected SiteUserPage enrollmentYearsInit() {
+		if(!enrollmentYearsWrap.alreadyInitialized) {
+			_enrollmentYears(enrollmentYearsWrap);
+			if(enrollmentYears == null)
+				setEnrollmentYears(enrollmentYearsWrap.o);
+		}
+		enrollmentYearsWrap.alreadyInitialized(true);
+		return (SiteUserPage)this;
+	}
+
+	//////////////////////
+	// enrollmentSchool //
+	//////////////////////
+
+	/**	 The entity enrollmentSchool
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected SchoolEnrollment enrollmentSchool;
+	@JsonIgnore
+	public Wrap<SchoolEnrollment> enrollmentSchoolWrap = new Wrap<SchoolEnrollment>().p(this).c(SchoolEnrollment.class).var("enrollmentSchool").o(enrollmentSchool);
+
+	/**	<br/> The entity enrollmentSchool
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.user.SiteUserPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentSchool">Find the entity enrollmentSchool in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _enrollmentSchool(Wrap<SchoolEnrollment> c);
+
+	public SchoolEnrollment getEnrollmentSchool() {
+		return enrollmentSchool;
+	}
+
+	public void setEnrollmentSchool(SchoolEnrollment enrollmentSchool) {
+		this.enrollmentSchool = enrollmentSchool;
+		this.enrollmentSchoolWrap.alreadyInitialized = true;
+	}
+	protected SiteUserPage enrollmentSchoolInit() {
+		if(!enrollmentSchoolWrap.alreadyInitialized) {
+			_enrollmentSchool(enrollmentSchoolWrap);
+			if(enrollmentSchool == null)
+				setEnrollmentSchool(enrollmentSchoolWrap.o);
+		}
+		if(enrollmentSchool != null)
+			enrollmentSchool.initDeepForClass(siteRequest_);
+		enrollmentSchoolWrap.alreadyInitialized(true);
+		return (SiteUserPage)this;
+	}
+
+	////////////////////////
+	// enrollmentApproval //
+	////////////////////////
+
+	/**	 The entity enrollmentApproval
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected SchoolEnrollment enrollmentApproval;
+	@JsonIgnore
+	public Wrap<SchoolEnrollment> enrollmentApprovalWrap = new Wrap<SchoolEnrollment>().p(this).c(SchoolEnrollment.class).var("enrollmentApproval").o(enrollmentApproval);
+
+	/**	<br/> The entity enrollmentApproval
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.user.SiteUserPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentApproval">Find the entity enrollmentApproval in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _enrollmentApproval(Wrap<SchoolEnrollment> c);
+
+	public SchoolEnrollment getEnrollmentApproval() {
+		return enrollmentApproval;
+	}
+
+	public void setEnrollmentApproval(SchoolEnrollment enrollmentApproval) {
+		this.enrollmentApproval = enrollmentApproval;
+		this.enrollmentApprovalWrap.alreadyInitialized = true;
+	}
+	protected SiteUserPage enrollmentApprovalInit() {
+		if(!enrollmentApprovalWrap.alreadyInitialized) {
+			_enrollmentApproval(enrollmentApprovalWrap);
+			if(enrollmentApproval == null)
+				setEnrollmentApproval(enrollmentApprovalWrap.o);
+		}
+		if(enrollmentApproval != null)
+			enrollmentApproval.initDeepForClass(siteRequest_);
+		enrollmentApprovalWrap.alreadyInitialized(true);
+		return (SiteUserPage)this;
+	}
+
+	////////////////////
+	// enrollmentYear //
+	////////////////////
+
+	/**	 The entity enrollmentYear
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected SchoolEnrollment enrollmentYear;
+	@JsonIgnore
+	public Wrap<SchoolEnrollment> enrollmentYearWrap = new Wrap<SchoolEnrollment>().p(this).c(SchoolEnrollment.class).var("enrollmentYear").o(enrollmentYear);
+
+	/**	<br/> The entity enrollmentYear
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.user.SiteUserPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentYear">Find the entity enrollmentYear in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _enrollmentYear(Wrap<SchoolEnrollment> c);
+
+	public SchoolEnrollment getEnrollmentYear() {
+		return enrollmentYear;
+	}
+
+	public void setEnrollmentYear(SchoolEnrollment enrollmentYear) {
+		this.enrollmentYear = enrollmentYear;
+		this.enrollmentYearWrap.alreadyInitialized = true;
+	}
+	protected SiteUserPage enrollmentYearInit() {
+		if(!enrollmentYearWrap.alreadyInitialized) {
+			_enrollmentYear(enrollmentYearWrap);
+			if(enrollmentYear == null)
+				setEnrollmentYear(enrollmentYearWrap.o);
+		}
+		if(enrollmentYear != null)
+			enrollmentYear.initDeepForClass(siteRequest_);
+		enrollmentYearWrap.alreadyInitialized(true);
+		return (SiteUserPage)this;
+	}
+
+	//////////////////////////
+	// enrollmentEnrollment //
+	//////////////////////////
+
+	/**	 The entity enrollmentEnrollment
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected SchoolEnrollment enrollmentEnrollment;
+	@JsonIgnore
+	public Wrap<SchoolEnrollment> enrollmentEnrollmentWrap = new Wrap<SchoolEnrollment>().p(this).c(SchoolEnrollment.class).var("enrollmentEnrollment").o(enrollmentEnrollment);
+
+	/**	<br/> The entity enrollmentEnrollment
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.user.SiteUserPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentEnrollment">Find the entity enrollmentEnrollment in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _enrollmentEnrollment(Wrap<SchoolEnrollment> c);
+
+	public SchoolEnrollment getEnrollmentEnrollment() {
+		return enrollmentEnrollment;
+	}
+
+	public void setEnrollmentEnrollment(SchoolEnrollment enrollmentEnrollment) {
+		this.enrollmentEnrollment = enrollmentEnrollment;
+		this.enrollmentEnrollmentWrap.alreadyInitialized = true;
+	}
+	protected SiteUserPage enrollmentEnrollmentInit() {
+		if(!enrollmentEnrollmentWrap.alreadyInitialized) {
+			_enrollmentEnrollment(enrollmentEnrollmentWrap);
+			if(enrollmentEnrollment == null)
+				setEnrollmentEnrollment(enrollmentEnrollmentWrap.o);
+		}
+		if(enrollmentEnrollment != null)
+			enrollmentEnrollment.initDeepForClass(siteRequest_);
+		enrollmentEnrollmentWrap.alreadyInitialized(true);
+		return (SiteUserPage)this;
+	}
+
+	/////////////////
+	// enrollments //
+	/////////////////
+
+	/**	 The entity enrollments
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected List<SchoolEnrollment> enrollments;
+	@JsonIgnore
+	public Wrap<List<SchoolEnrollment>> enrollmentsWrap = new Wrap<List<SchoolEnrollment>>().p(this).c(List.class).var("enrollments").o(enrollments);
+
+	/**	<br/> The entity enrollments
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.user.SiteUserPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollments">Find the entity enrollments in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _enrollments(Wrap<List<SchoolEnrollment>> c);
+
+	public List<SchoolEnrollment> getEnrollments() {
+		return enrollments;
+	}
+
+	public void setEnrollments(List<SchoolEnrollment> enrollments) {
+		this.enrollments = enrollments;
+		this.enrollmentsWrap.alreadyInitialized = true;
+	}
+	public SiteUserPage addEnrollments(SchoolEnrollment...objets) {
+		for(SchoolEnrollment o : objets) {
+			addEnrollments(o);
+		}
+		return (SiteUserPage)this;
+	}
+	public SiteUserPage addEnrollments(SchoolEnrollment o) {
+		if(o != null && !enrollments.contains(o))
+			this.enrollments.add(o);
+		return (SiteUserPage)this;
+	}
+	protected SiteUserPage enrollmentsInit() {
+		if(!enrollmentsWrap.alreadyInitialized) {
+			_enrollments(enrollmentsWrap);
+			if(enrollments == null)
+				setEnrollments(enrollmentsWrap.o);
+		}
+		enrollmentsWrap.alreadyInitialized(true);
+		return (SiteUserPage)this;
+	}
+
 	//////////////////
 	// enrollments_ //
 	//////////////////
@@ -336,6 +727,15 @@ public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
 		yearSearchInit();
 		yearsInit();
 		schoolYearsInit();
+		enrollmentSearchInit();
+		enrollmentSchoolsInit();
+		enrollmentApprovalsInit();
+		enrollmentYearsInit();
+		enrollmentSchoolInit();
+		enrollmentApprovalInit();
+		enrollmentYearInit();
+		enrollmentEnrollmentInit();
+		enrollmentsInit();
 		enrollments_Init();
 	}
 
@@ -353,6 +753,16 @@ public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
 			pageDesignSearch.setSiteRequest_(siteRequest_);
 		if(yearSearch != null)
 			yearSearch.setSiteRequest_(siteRequest_);
+		if(enrollmentSearch != null)
+			enrollmentSearch.setSiteRequest_(siteRequest_);
+		if(enrollmentSchool != null)
+			enrollmentSchool.setSiteRequest_(siteRequest_);
+		if(enrollmentApproval != null)
+			enrollmentApproval.setSiteRequest_(siteRequest_);
+		if(enrollmentYear != null)
+			enrollmentYear.setSiteRequest_(siteRequest_);
+		if(enrollmentEnrollment != null)
+			enrollmentEnrollment.setSiteRequest_(siteRequest_);
 	}
 
 	public void siteRequestForClass(SiteRequestEnUS siteRequest_) {
@@ -389,6 +799,24 @@ public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
 				return oSiteUserPage.years;
 			case "schoolYears":
 				return oSiteUserPage.schoolYears;
+			case "enrollmentSearch":
+				return oSiteUserPage.enrollmentSearch;
+			case "enrollmentSchools":
+				return oSiteUserPage.enrollmentSchools;
+			case "enrollmentApprovals":
+				return oSiteUserPage.enrollmentApprovals;
+			case "enrollmentYears":
+				return oSiteUserPage.enrollmentYears;
+			case "enrollmentSchool":
+				return oSiteUserPage.enrollmentSchool;
+			case "enrollmentApproval":
+				return oSiteUserPage.enrollmentApproval;
+			case "enrollmentYear":
+				return oSiteUserPage.enrollmentYear;
+			case "enrollmentEnrollment":
+				return oSiteUserPage.enrollmentEnrollment;
+			case "enrollments":
+				return oSiteUserPage.enrollments;
 			case "enrollments_":
 				return oSiteUserPage.enrollments_;
 			default:

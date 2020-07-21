@@ -2403,6 +2403,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 	}
 
 
+	public void pagerechercheDesignPagePageInit(DesignPagePage page, ListeRecherche<DesignPage> listeDesignPage) {
+	}
 	public void pagerechercheDesignPageReponse(ListeRecherche<DesignPage> listeDesignPage, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = listeDesignPage.getRequeteSite_();
 		try {
@@ -2440,6 +2442,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 			requeteSite.setW(w);
 			page.setListeDesignPage(listeDesignPage);
 			page.setRequeteSite_(requeteSite);
+			pagerechercheDesignPagePageInit(page, listeDesignPage);
 			page.initLoinDesignPagePage(requeteSite);
 			page.html();
 			gestionnaireEvenements.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, requeteEnTetes)));
@@ -2493,6 +2496,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 	}
 
 
+	public void designaffichagepagerechercheDesignPagePageInit(DesignPageAffichage page, ListeRecherche<DesignPage> listeDesignPage) {
+	}
 	public void designaffichagepagerechercheDesignPageReponse(ListeRecherche<DesignPage> listeDesignPage, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = listeDesignPage.getRequeteSite_();
 		try {
@@ -2530,6 +2535,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 			requeteSite.setW(w);
 			page.setListeDesignPage(listeDesignPage);
 			page.setRequeteSite_(requeteSite);
+			designaffichagepagerechercheDesignPagePageInit(page, listeDesignPage);
 			page.initLoinDesignPageAffichage(requeteSite);
 			page.html();
 			gestionnaireEvenements.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, requeteEnTetes)));
@@ -2583,6 +2589,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 	}
 
 
+	public void designpdfpagerechercheDesignPagePageInit(DesignPdfPage page, ListeRecherche<DesignPage> listeDesignPage) {
+	}
 	public void designpdfpagerechercheDesignPageReponse(ListeRecherche<DesignPage> listeDesignPage, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = listeDesignPage.getRequeteSite_();
 		try {
@@ -2617,6 +2625,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 			requeteSite.setW(w);
 			page.setListeDesignPage(listeDesignPage);
 			page.setRequeteSite_(requeteSite);
+			designpdfpagerechercheDesignPagePageInit(page, listeDesignPage);
 			page.initLoinDesignPdfPage(requeteSite);
 			page.html();
 			gestionnaireEvenements.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, requeteEnTetes)));
@@ -2670,6 +2679,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 	}
 
 
+	public void designmailpagerechercheDesignPagePageInit(DesignMailPage page, ListeRecherche<DesignPage> listeDesignPage) {
+	}
 	public void designmailpagerechercheDesignPageReponse(ListeRecherche<DesignPage> listeDesignPage, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = listeDesignPage.getRequeteSite_();
 		try {
@@ -2704,6 +2715,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 			requeteSite.setW(w);
 			page.setListeDesignPage(listeDesignPage);
 			page.setRequeteSite_(requeteSite);
+			designmailpagerechercheDesignPagePageInit(page, listeDesignPage);
 			page.initLoinDesignMailPage(requeteSite);
 			page.html();
 			gestionnaireEvenements.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, requeteEnTetes)));
@@ -2757,6 +2769,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 	}
 
 
+	public void pageaccueilrecherchepageDesignPagePageInit(DesignPageAffichage page, ListeRecherche<DesignPage> listeDesignPage) {
+	}
 	public void pageaccueilrecherchepageDesignPageReponse(ListeRecherche<DesignPage> listeDesignPage, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = listeDesignPage.getRequeteSite_();
 		try {
@@ -2794,6 +2808,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 			requeteSite.setW(w);
 			page.setListeDesignPage(listeDesignPage);
 			page.setRequeteSite_(requeteSite);
+			pageaccueilrecherchepageDesignPagePageInit(page, listeDesignPage);
 			page.initLoinDesignPageAffichage(requeteSite);
 			page.html();
 			gestionnaireEvenements.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, requeteEnTetes)));
@@ -3096,6 +3111,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 												jsonObject.put("utilisateurNom", principalJson.getString("preferred_username"));
 												jsonObject.put("utilisateurPrenom", principalJson.getString("given_name"));
 												jsonObject.put("utilisateurNomFamille", principalJson.getString("family_name"));
+												jsonObject.put("utilisateurNomComplet", principalJson.getString("name"));
 												jsonObject.put("utilisateurId", principalJson.getString("sub"));
 												jsonObject.put("utilisateurMail", principalJson.getString("email"));
 												utilisateurDesignPageDefinir(requeteSite, jsonObject, false);

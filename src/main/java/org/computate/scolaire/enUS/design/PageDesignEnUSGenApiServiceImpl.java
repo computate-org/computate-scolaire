@@ -2403,6 +2403,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 	}
 
 
+	public void searchpagePageDesignPageInit(PageDesignPage page, SearchList<PageDesign> listPageDesign) {
+	}
 	public void searchpagePageDesignResponse(SearchList<PageDesign> listPageDesign, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = listPageDesign.getSiteRequest_();
 		try {
@@ -2440,6 +2442,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 			siteRequest.setW(w);
 			page.setListPageDesign(listPageDesign);
 			page.setSiteRequest_(siteRequest);
+			searchpagePageDesignPageInit(page, listPageDesign);
 			page.initDeepPageDesignPage(siteRequest);
 			page.html();
 			eventHandler.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, requestHeaders)));
@@ -2493,6 +2496,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 	}
 
 
+	public void designdisplaysearchpagePageDesignPageInit(DesignDisplayPage page, SearchList<PageDesign> listPageDesign) {
+	}
 	public void designdisplaysearchpagePageDesignResponse(SearchList<PageDesign> listPageDesign, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = listPageDesign.getSiteRequest_();
 		try {
@@ -2530,6 +2535,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 			siteRequest.setW(w);
 			page.setListPageDesign(listPageDesign);
 			page.setSiteRequest_(siteRequest);
+			designdisplaysearchpagePageDesignPageInit(page, listPageDesign);
 			page.initDeepDesignDisplayPage(siteRequest);
 			page.html();
 			eventHandler.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, requestHeaders)));
@@ -2583,6 +2589,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 	}
 
 
+	public void designpdfsearchpagePageDesignPageInit(DesignPdfPage page, SearchList<PageDesign> listPageDesign) {
+	}
 	public void designpdfsearchpagePageDesignResponse(SearchList<PageDesign> listPageDesign, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = listPageDesign.getSiteRequest_();
 		try {
@@ -2617,6 +2625,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 			siteRequest.setW(w);
 			page.setListPageDesign(listPageDesign);
 			page.setSiteRequest_(siteRequest);
+			designpdfsearchpagePageDesignPageInit(page, listPageDesign);
 			page.initDeepDesignPdfPage(siteRequest);
 			page.html();
 			eventHandler.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, requestHeaders)));
@@ -2670,6 +2679,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 	}
 
 
+	public void designemailsearchpagePageDesignPageInit(DesignEmailPage page, SearchList<PageDesign> listPageDesign) {
+	}
 	public void designemailsearchpagePageDesignResponse(SearchList<PageDesign> listPageDesign, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = listPageDesign.getSiteRequest_();
 		try {
@@ -2707,6 +2718,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 			siteRequest.setW(w);
 			page.setListPageDesign(listPageDesign);
 			page.setSiteRequest_(siteRequest);
+			designemailsearchpagePageDesignPageInit(page, listPageDesign);
 			page.initDeepDesignEmailPage(siteRequest);
 			page.html();
 			eventHandler.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, requestHeaders)));
@@ -2760,6 +2772,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 	}
 
 
+	public void homepagesearchpagePageDesignPageInit(DesignDisplayPage page, SearchList<PageDesign> listPageDesign) {
+	}
 	public void homepagesearchpagePageDesignResponse(SearchList<PageDesign> listPageDesign, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = listPageDesign.getSiteRequest_();
 		try {
@@ -2797,6 +2811,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 			siteRequest.setW(w);
 			page.setListPageDesign(listPageDesign);
 			page.setSiteRequest_(siteRequest);
+			homepagesearchpagePageDesignPageInit(page, listPageDesign);
 			page.initDeepDesignDisplayPage(siteRequest);
 			page.html();
 			eventHandler.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, requestHeaders)));
@@ -3099,6 +3114,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 												jsonObject.put("userName", jsonPrincipal.getString("preferred_username"));
 												jsonObject.put("userFirstName", jsonPrincipal.getString("given_name"));
 												jsonObject.put("userLastName", jsonPrincipal.getString("family_name"));
+												jsonObject.put("userCompleteName", jsonPrincipal.getString("name"));
 												jsonObject.put("userId", jsonPrincipal.getString("sub"));
 												jsonObject.put("userEmail", jsonPrincipal.getString("email"));
 												userPageDesignDefine(siteRequest, jsonObject, false);

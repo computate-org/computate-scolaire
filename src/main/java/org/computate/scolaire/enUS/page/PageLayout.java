@@ -1244,7 +1244,7 @@ public class PageLayout extends PageLayoutGen<Object> {
 				profile.setCustomerProfileId(customerProfileId);
 				transactionRequest.setProfile(profile);
 				OrderType order = new OrderType();
-				order.setDescription(String.format("%s payment for %s %s", enrollmentKey, childCompleteNamePreferred, fd.format(chargeEndDate)));
+				order.setDescription(StringUtils.truncate(String.format("%s payment for $%s%s %s %s", enrollmentKey, amount, " 3%", childCompleteNamePreferred, fd.format(chargeEndDate)), 255));
 				transactionRequest.setOrder(order);
 				hostedPaymentPageRequest.setTransactionRequest(transactionRequest);
 
@@ -1275,12 +1275,12 @@ public class PageLayout extends PageLayoutGen<Object> {
 //					} g("form");
 //					e("div").a("class", "").f().sx("Click here to make a payment with authorize.net. ").g("div");
 //				} g("div");
-					{ e("form").a("style", "display: inline-block; ").a("method", "post").a("target", "_blank").a("action", siteConfig.getAuthorizeUrl() + "/payment/payment").f();
-						e("input").a("type", "hidden").a("name", "token").a("value", hostedPaymentResponse.getToken()).fg();
-						{ e("button").a("class", "w3-button w3-light-gray w3-text-purple text-decoration-underline ").a("style", "white-space: normal; text-align: left; ").a("type", "submit").f();
-							sx(String.format("Make a payment for $%s including the 3%% card processing fee", amount));
-						} g("button");
-					} g("form");
+				{ e("form").a("style", "display: inline-block; ").a("method", "post").a("target", "_blank").a("action", siteConfig.getAuthorizeUrl() + "/payment/payment").f();
+					e("input").a("type", "hidden").a("name", "token").a("value", hostedPaymentResponse.getToken()).fg();
+					{ e("button").a("class", "w3-button w3-light-gray w3-text-purple text-decoration-underline ").a("style", "white-space: normal; text-align: left; ").a("type", "submit").f();
+						sx(String.format("Make a payment for $%s including the 3%% card processing fee", amount));
+					} g("button");
+				} g("form");
 			}
 		}
 	}

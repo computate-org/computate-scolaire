@@ -1,6 +1,7 @@
 package org.computate.scolaire.enUS.enrollment;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
@@ -589,12 +590,18 @@ public class SchoolEnrollmentEnUSApiServiceImpl extends SchoolEnrollmentEnUSGenA
 			GetTransactionDetailsResponse getResponse = controller.getApiResponse();
 			TransactionDetailsType transaction = getResponse.getTransaction();
 			String orderDescription = Optional.ofNullable(transaction).map(TransactionDetailsType::getOrder).map(OrderExType::getDescription).orElse("");
-			Matcher enrollmentKeyMatcher = Pattern.compile("^(\\d+) payment for ").matcher(orderDescription);
+			Matcher enrollmentKeyMatcher = Pattern.compile("^(\\d+) payment for (\\$[\\d\\.]+) (([\\d\\.]+)%)?").matcher(orderDescription);
 			Boolean enrollmentKeyFound = enrollmentKeyMatcher.find();
 			Long enrollmentKey = null;
+			BigDecimal paymentAmount = transactionSummary.getSettleAmount();
 
 			if(enrollmentKeyFound) {
 				String enrollmentKeyStr = enrollmentKeyMatcher.group(1);
+				String feePercentStr = enrollmentKeyMatcher.group(4);
+				if(NumberUtils.isCreatable(feePercentStr)) {
+					BigDecimal feePercent = new BigDecimal(feePercentStr).divide(BigDecimal.valueOf(100)).add(BigDecimal.ONE);
+					paymentAmount = paymentAmount.divide(feePercent).setScale(1, RoundingMode.CEILING);
+				}
 				if(NumberUtils.isCreatable(enrollmentKeyStr)) {
 					enrollmentKey = Long.parseLong(enrollmentKeyStr);
 					if(schoolEnrollment == null) {
@@ -634,7 +641,7 @@ public class SchoolEnrollmentEnUSApiServiceImpl extends SchoolEnrollmentEnUSGenA
 				if(searchList.size() == 0) {
 					SchoolPayment payment = new SchoolPayment();
 					payment.setSiteRequest_(siteRequest);
-					payment.setPaymentAmount(transactionSummary.getSettleAmount());
+					payment.setPaymentAmount(paymentAmount);
 					payment.setPaymentDate(paymentDate);
 					payment.setPaymentSystem(true);
 					payment.setTransactionId(transactionSummary.getTransId());

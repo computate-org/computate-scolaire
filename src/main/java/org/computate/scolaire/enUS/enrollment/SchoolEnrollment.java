@@ -524,6 +524,11 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 	protected void _enrollmentGroupName(Wrap<String> c) {
 	}
 
+	protected void _enrollmentGroupColor(Wrap<String> c) {
+		if(enrollmentGroupName != null)
+			c.o(StringUtils.lowerCase(StringUtils.substringBefore(enrollmentGroupName, " ")));
+	}
+
 	protected void _enrollmentPaymentEachMonth(Wrap<Boolean> c) {
 		c.o(false);
 	}
@@ -909,6 +914,12 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 
 	protected void _enrollmentDate10(Wrap<LocalDate> c) {
 	}
+
+	protected void _enrollmentYears(List<SchoolEnrollment> l) {}
+
+	protected void _enrollmentApprovals(List<SchoolEnrollment> l) {}
+
+	protected void _enrollmentGroups(List<SchoolEnrollment> l) {}
 
 	protected void _enrollmentEnrollments(List<SchoolEnrollment> l) {}
 

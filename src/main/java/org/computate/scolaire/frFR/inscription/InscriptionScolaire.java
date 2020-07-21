@@ -1739,6 +1739,21 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
+	 * Var.enUS: enrollmentGroupColor
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: couleur du groupe
+	 * NomAffichage.enUS: group color
+	 * r: inscriptionNomGroupe
+	 * r.enUS: enrollmentGroupName
+	 */                   
+	protected void _inscriptionCouleurGroupe(Couverture<String> c) {
+		if(inscriptionNomGroupe != null)
+			c.o(StringUtils.lowerCase(StringUtils.substringBefore(inscriptionNomGroupe, " ")));
+	}
+
+	/**
+	 * {@inheritDoc}
 	 * Var.enUS: enrollmentPaymentEachMonth
 	 * Indexe: true
 	 * Stocke: true
@@ -2721,6 +2736,21 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 */
 	protected void _inscriptionDate10(Couverture<LocalDate> c) {
 	}
+
+	/**
+	 * Var.enUS: enrollmentYears
+	 */
+	protected void _inscriptionsAnnees(List<InscriptionScolaire> l) {}
+
+	/**
+	 * Var.enUS: enrollmentApprovals
+	 */
+	protected void _inscriptionsApprouves(List<InscriptionScolaire> l) {}
+
+	/**
+	 * Var.enUS: enrollmentGroups
+	 */
+	protected void _inscriptionsGroupe(List<InscriptionScolaire> l) {}
 
 	/**
 	 * Var.enUS: enrollmentEnrollments
