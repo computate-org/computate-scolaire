@@ -122,7 +122,7 @@ public class SchoolMom extends SchoolMomGen<Cluster> {
 	}
 
 	@Override()
-	public void  setPersonEmail(String personneMail) {
+	public void  setPersonEmail(String personEmail) {
 		if(personEmail != null)
 			super.setPersonEmail(personEmail.toLowerCase());
 	}

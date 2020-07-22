@@ -125,7 +125,7 @@ public class SchoolGuardian extends SchoolGuardianGen<Cluster> {
 	}
 
 	@Override()
-	public void  setPersonEmail(String personneMail) {
+	public void  setPersonEmail(String personEmail) {
 		if(personEmail != null)
 			super.setPersonEmail(personEmail.toLowerCase());
 	}

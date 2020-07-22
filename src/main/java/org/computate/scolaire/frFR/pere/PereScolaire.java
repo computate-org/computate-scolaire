@@ -412,7 +412,7 @@ public class PereScolaire extends PereScolaireGen<Cluster> {
 	}
 	/**
 	 * Var.enUS: setPersonEmail
-	 * Param1.var.personEmail
+	 * Param1.var.enUS: personEmail
 	 * r: personneMail
 	 * r.enUS: personEmail
 	 * r: PersonneMail
