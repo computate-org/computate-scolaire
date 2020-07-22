@@ -2180,6 +2180,8 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 	}
 
 
+	public void searchpageSchoolSeasonPageInit(SeasonPage page, SearchList<SchoolSeason> listSchoolSeason) {
+	}
 	public void searchpageSchoolSeasonResponse(SearchList<SchoolSeason> listSchoolSeason, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = listSchoolSeason.getSiteRequest_();
 		try {
@@ -2217,6 +2219,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 			siteRequest.setW(w);
 			page.setListSchoolSeason(listSchoolSeason);
 			page.setSiteRequest_(siteRequest);
+			searchpageSchoolSeasonPageInit(page, listSchoolSeason);
 			page.initDeepSeasonPage(siteRequest);
 			page.html();
 			eventHandler.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, requestHeaders)));
@@ -2519,6 +2522,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 												jsonObject.put("userName", jsonPrincipal.getString("preferred_username"));
 												jsonObject.put("userFirstName", jsonPrincipal.getString("given_name"));
 												jsonObject.put("userLastName", jsonPrincipal.getString("family_name"));
+												jsonObject.put("userCompleteName", jsonPrincipal.getString("name"));
 												jsonObject.put("userId", jsonPrincipal.getString("sub"));
 												jsonObject.put("userEmail", jsonPrincipal.getString("email"));
 												userSchoolSeasonDefine(siteRequest, jsonObject, false);

@@ -404,6 +404,18 @@ public class GardienScolaire extends GardienScolaireGen<Cluster> {
 	 */                   
 	protected void _personneMail(Couverture<String> c) {
 	}
+	/**
+	 * Var.enUS: setPersonEmail
+	 * Param1.var.personEmail
+	 * r: personneMail
+	 * r.enUS: personEmail
+	 * r: PersonneMail
+	 * r.enUS: PersonEmail
+	 */
+	@Override public void setPersonneMail(String personneMail) {
+		if(personneMail != null)
+			super.setPersonneMail(personneMail.toLowerCase());
+	}
 
 	/**
 	 * {@inheritDoc}

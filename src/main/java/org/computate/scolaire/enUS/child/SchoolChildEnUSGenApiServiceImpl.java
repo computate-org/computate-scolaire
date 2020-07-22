@@ -2096,6 +2096,8 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 	}
 
 
+	public void searchpageSchoolChildPageInit(ChildPage page, SearchList<SchoolChild> listSchoolChild) {
+	}
 	public void searchpageSchoolChildResponse(SearchList<SchoolChild> listSchoolChild, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = listSchoolChild.getSiteRequest_();
 		try {
@@ -2133,6 +2135,7 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 			siteRequest.setW(w);
 			page.setListSchoolChild(listSchoolChild);
 			page.setSiteRequest_(siteRequest);
+			searchpageSchoolChildPageInit(page, listSchoolChild);
 			page.initDeepChildPage(siteRequest);
 			page.html();
 			eventHandler.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, requestHeaders)));
@@ -2435,6 +2438,7 @@ public class SchoolChildEnUSGenApiServiceImpl implements SchoolChildEnUSGenApiSe
 												jsonObject.put("userName", jsonPrincipal.getString("preferred_username"));
 												jsonObject.put("userFirstName", jsonPrincipal.getString("given_name"));
 												jsonObject.put("userLastName", jsonPrincipal.getString("family_name"));
+												jsonObject.put("userCompleteName", jsonPrincipal.getString("name"));
 												jsonObject.put("userId", jsonPrincipal.getString("sub"));
 												jsonObject.put("userEmail", jsonPrincipal.getString("email"));
 												userSchoolChildDefine(siteRequest, jsonObject, false);

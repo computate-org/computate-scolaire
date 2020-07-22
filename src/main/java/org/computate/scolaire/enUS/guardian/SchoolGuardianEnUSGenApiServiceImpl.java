@@ -2258,6 +2258,8 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 	}
 
 
+	public void searchpageSchoolGuardianPageInit(GuardianPage page, SearchList<SchoolGuardian> listSchoolGuardian) {
+	}
 	public void searchpageSchoolGuardianResponse(SearchList<SchoolGuardian> listSchoolGuardian, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = listSchoolGuardian.getSiteRequest_();
 		try {
@@ -2295,6 +2297,7 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 			siteRequest.setW(w);
 			page.setListSchoolGuardian(listSchoolGuardian);
 			page.setSiteRequest_(siteRequest);
+			searchpageSchoolGuardianPageInit(page, listSchoolGuardian);
 			page.initDeepGuardianPage(siteRequest);
 			page.html();
 			eventHandler.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, requestHeaders)));
@@ -2597,6 +2600,7 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 												jsonObject.put("userName", jsonPrincipal.getString("preferred_username"));
 												jsonObject.put("userFirstName", jsonPrincipal.getString("given_name"));
 												jsonObject.put("userLastName", jsonPrincipal.getString("family_name"));
+												jsonObject.put("userCompleteName", jsonPrincipal.getString("name"));
 												jsonObject.put("userId", jsonPrincipal.getString("sub"));
 												jsonObject.put("userEmail", jsonPrincipal.getString("email"));
 												userSchoolGuardianDefine(siteRequest, jsonObject, false);

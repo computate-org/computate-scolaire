@@ -2450,6 +2450,8 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 	}
 
 
+	public void pagerechercheBlocScolairePageInit(BlocPage page, ListeRecherche<BlocScolaire> listeBlocScolaire) {
+	}
 	public void pagerechercheBlocScolaireReponse(ListeRecherche<BlocScolaire> listeBlocScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = listeBlocScolaire.getRequeteSite_();
 		try {
@@ -2487,6 +2489,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 			requeteSite.setW(w);
 			page.setListeBlocScolaire(listeBlocScolaire);
 			page.setRequeteSite_(requeteSite);
+			pagerechercheBlocScolairePageInit(page, listeBlocScolaire);
 			page.initLoinBlocPage(requeteSite);
 			page.html();
 			gestionnaireEvenements.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, requeteEnTetes)));
@@ -2789,6 +2792,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 												jsonObject.put("utilisateurNom", principalJson.getString("preferred_username"));
 												jsonObject.put("utilisateurPrenom", principalJson.getString("given_name"));
 												jsonObject.put("utilisateurNomFamille", principalJson.getString("family_name"));
+												jsonObject.put("utilisateurNomComplet", principalJson.getString("name"));
 												jsonObject.put("utilisateurId", principalJson.getString("sub"));
 												jsonObject.put("utilisateurMail", principalJson.getString("email"));
 												utilisateurBlocScolaireDefinir(requeteSite, jsonObject, false);

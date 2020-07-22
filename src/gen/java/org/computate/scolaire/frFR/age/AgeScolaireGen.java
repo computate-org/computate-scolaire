@@ -350,6 +350,13 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 					.a("oninput", "suggereAgeScolaireBlocCles($(this).val() ? rechercherBlocScolaireFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'ageCle:" + pk + "'}", "], $('#listAgeScolaireBlocCles_", classeApiMethodeMethode, "'), ", pk, "); ")
 				.fg();
 
+		} else {
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+				sx(htmBlocCles());
+			}
 		}
 	}
 
@@ -1050,6 +1057,13 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 					.a("oninput", "suggereAgeScolaireAnneeCle($(this).val() ? rechercherAnneeScolaireFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'ageCles:" + pk + "'}", "], $('#listAgeScolaireAnneeCle_", classeApiMethodeMethode, "'), ", pk, "); ")
 				.fg();
 
+		} else {
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+				sx(htmAnneeCle());
+			}
 		}
 	}
 
@@ -1376,6 +1390,13 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 				a("value", strEcoleAddresse())
 			.fg();
 
+		} else {
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+				sx(htmEcoleAddresse());
+			}
 		}
 	}
 
@@ -1393,7 +1414,10 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 
 								inputEcoleAddresse(classeApiMethodeMethode);
 							} g("div");
-							{
+							if(
+									CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+									) {
 								if("Page".equals(classeApiMethodeMethode)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
@@ -2285,6 +2309,13 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 				a("value", strAgeDebut())
 			.fg();
 
+		} else {
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+				sx(htmAgeDebut());
+			}
 		}
 	}
 
@@ -2302,7 +2333,10 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 
 								inputAgeDebut(classeApiMethodeMethode);
 							} g("div");
-							{
+							if(
+									CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+									) {
 								if("Page".equals(classeApiMethodeMethode)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
@@ -2416,6 +2450,13 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 				a("value", strAgeFin())
 			.fg();
 
+		} else {
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+				sx(htmAgeFin());
+			}
 		}
 	}
 
@@ -2433,7 +2474,10 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 
 								inputAgeFin(classeApiMethodeMethode);
 							} g("div");
-							{
+							if(
+									CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+									) {
 								if("Page".equals(classeApiMethodeMethode)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")

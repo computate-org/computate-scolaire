@@ -2420,6 +2420,8 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 	}
 
 
+	public void searchpageSchoolMomPageInit(MomPage page, SearchList<SchoolMom> listSchoolMom) {
+	}
 	public void searchpageSchoolMomResponse(SearchList<SchoolMom> listSchoolMom, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = listSchoolMom.getSiteRequest_();
 		try {
@@ -2457,6 +2459,7 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 			siteRequest.setW(w);
 			page.setListSchoolMom(listSchoolMom);
 			page.setSiteRequest_(siteRequest);
+			searchpageSchoolMomPageInit(page, listSchoolMom);
 			page.initDeepMomPage(siteRequest);
 			page.html();
 			eventHandler.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, requestHeaders)));
@@ -2759,6 +2762,7 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 												jsonObject.put("userName", jsonPrincipal.getString("preferred_username"));
 												jsonObject.put("userFirstName", jsonPrincipal.getString("given_name"));
 												jsonObject.put("userLastName", jsonPrincipal.getString("family_name"));
+												jsonObject.put("userCompleteName", jsonPrincipal.getString("name"));
 												jsonObject.put("userId", jsonPrincipal.getString("sub"));
 												jsonObject.put("userEmail", jsonPrincipal.getString("email"));
 												userSchoolMomDefine(siteRequest, jsonObject, false);

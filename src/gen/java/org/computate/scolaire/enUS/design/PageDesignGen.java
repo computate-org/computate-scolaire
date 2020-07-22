@@ -658,10 +658,10 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 
 								inputPageDesignCompleteName(classApiMethodMethod);
 							} g("div");
-								if(
-										CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
-										|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
-										) {
+							if(
+									CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+									) {
 								if("Page".equals(classApiMethodMethod)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")

@@ -250,6 +250,13 @@ public abstract class SchoolGen<DEV> extends Cluster {
 					.a("oninput", "suggestSchoolYearKeys($(this).val() ? searchSchoolYearFilters($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'schoolKey:" + pk + "'}", "], $('#listSchoolYearKeys_", classApiMethodMethod, "'), ", pk, "); ")
 				.fg();
 
+		} else {
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+				sx(htmYearKeys());
+			}
 		}
 	}
 
@@ -962,6 +969,13 @@ public abstract class SchoolGen<DEV> extends Cluster {
 				a("value", strSchoolName())
 			.fg();
 
+		} else {
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+				sx(htmSchoolName());
+			}
 		}
 	}
 
@@ -979,7 +993,10 @@ public abstract class SchoolGen<DEV> extends Cluster {
 
 								inputSchoolName(classApiMethodMethod);
 							} g("div");
-							{
+							if(
+									CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+									) {
 								if("Page".equals(classApiMethodMethod)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
@@ -1085,6 +1102,13 @@ public abstract class SchoolGen<DEV> extends Cluster {
 				a("value", strSchoolPhoneNumber())
 			.fg();
 
+		} else {
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+				sx(htmSchoolPhoneNumber());
+			}
 		}
 	}
 
@@ -1102,7 +1126,10 @@ public abstract class SchoolGen<DEV> extends Cluster {
 
 								inputSchoolPhoneNumber(classApiMethodMethod);
 							} g("div");
-							{
+							if(
+									CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+									) {
 								if("Page".equals(classApiMethodMethod)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
@@ -1215,6 +1242,13 @@ public abstract class SchoolGen<DEV> extends Cluster {
 				a("value", strSchoolNumber())
 			.fg();
 
+		} else {
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+				sx(htmSchoolNumber());
+			}
 		}
 	}
 
@@ -1232,7 +1266,10 @@ public abstract class SchoolGen<DEV> extends Cluster {
 
 								inputSchoolNumber(classApiMethodMethod);
 							} g("div");
-							{
+							if(
+									CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+									) {
 								if("Page".equals(classApiMethodMethod)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
@@ -1338,6 +1375,13 @@ public abstract class SchoolGen<DEV> extends Cluster {
 				a("value", strSchoolAdministratorName())
 			.fg();
 
+		} else {
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+				sx(htmSchoolAdministratorName());
+			}
 		}
 	}
 
@@ -1355,7 +1399,10 @@ public abstract class SchoolGen<DEV> extends Cluster {
 
 								inputSchoolAdministratorName(classApiMethodMethod);
 							} g("div");
-							{
+							if(
+									CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+									) {
 								if("Page".equals(classApiMethodMethod)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
@@ -1461,6 +1508,13 @@ public abstract class SchoolGen<DEV> extends Cluster {
 				a("value", strSchoolEmail())
 			.fg();
 
+		} else {
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+				sx(htmSchoolEmail());
+			}
 		}
 	}
 
@@ -1478,7 +1532,10 @@ public abstract class SchoolGen<DEV> extends Cluster {
 
 								inputSchoolEmail(classApiMethodMethod);
 							} g("div");
-							{
+							if(
+									CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+									) {
 								if("Page".equals(classApiMethodMethod)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
@@ -1584,6 +1641,13 @@ public abstract class SchoolGen<DEV> extends Cluster {
 				a("value", strSchoolEmailFrom())
 			.fg();
 
+		} else {
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+				sx(htmSchoolEmailFrom());
+			}
 		}
 	}
 
@@ -1601,7 +1665,10 @@ public abstract class SchoolGen<DEV> extends Cluster {
 
 								inputSchoolEmailFrom(classApiMethodMethod);
 							} g("div");
-							{
+							if(
+									CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+									) {
 								if("Page".equals(classApiMethodMethod)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
@@ -1707,6 +1774,13 @@ public abstract class SchoolGen<DEV> extends Cluster {
 				a("value", strSchoolEmailTo())
 			.fg();
 
+		} else {
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+				sx(htmSchoolEmailTo());
+			}
 		}
 	}
 
@@ -1724,7 +1798,10 @@ public abstract class SchoolGen<DEV> extends Cluster {
 
 								inputSchoolEmailTo(classApiMethodMethod);
 							} g("div");
-							{
+							if(
+									CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+									) {
 								if("Page".equals(classApiMethodMethod)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
@@ -1830,6 +1907,13 @@ public abstract class SchoolGen<DEV> extends Cluster {
 				a("value", strSchoolLocation())
 			.fg();
 
+		} else {
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+				sx(htmSchoolLocation());
+			}
 		}
 	}
 
@@ -1847,7 +1931,10 @@ public abstract class SchoolGen<DEV> extends Cluster {
 
 								inputSchoolLocation(classApiMethodMethod);
 							} g("div");
-							{
+							if(
+									CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+									) {
 								if("Page".equals(classApiMethodMethod)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
@@ -1951,6 +2038,13 @@ public abstract class SchoolGen<DEV> extends Cluster {
 				}
 			f().sx(strSchoolAddress()).g("textarea");
 
+		} else {
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+				sx(htmSchoolAddress());
+			}
 		}
 	}
 
@@ -1968,7 +2062,10 @@ public abstract class SchoolGen<DEV> extends Cluster {
 
 								inputSchoolAddress(classApiMethodMethod);
 							} g("div");
-							{
+							if(
+									CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+									) {
 								if("Page".equals(classApiMethodMethod)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")

@@ -1508,6 +1508,8 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 	}
 
 
+	public void searchpageClusterPageInit(ClusterPage page, SearchList<Cluster> listCluster) {
+	}
 	public void searchpageClusterResponse(SearchList<Cluster> listCluster, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = listCluster.getSiteRequest_();
 		try {
@@ -1545,6 +1547,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 			siteRequest.setW(w);
 			page.setListCluster(listCluster);
 			page.setSiteRequest_(siteRequest);
+			searchpageClusterPageInit(page, listCluster);
 			page.initDeepClusterPage(siteRequest);
 			page.html();
 			eventHandler.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, requestHeaders)));
@@ -1847,6 +1850,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 												jsonObject.put("userName", jsonPrincipal.getString("preferred_username"));
 												jsonObject.put("userFirstName", jsonPrincipal.getString("given_name"));
 												jsonObject.put("userLastName", jsonPrincipal.getString("family_name"));
+												jsonObject.put("userCompleteName", jsonPrincipal.getString("name"));
 												jsonObject.put("userId", jsonPrincipal.getString("sub"));
 												jsonObject.put("userEmail", jsonPrincipal.getString("email"));
 												userClusterDefine(siteRequest, jsonObject, false);

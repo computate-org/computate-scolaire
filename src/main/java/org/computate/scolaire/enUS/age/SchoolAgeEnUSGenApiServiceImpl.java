@@ -2239,6 +2239,8 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 	}
 
 
+	public void searchpageSchoolAgePageInit(AgePage page, SearchList<SchoolAge> listSchoolAge) {
+	}
 	public void searchpageSchoolAgeResponse(SearchList<SchoolAge> listSchoolAge, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = listSchoolAge.getSiteRequest_();
 		try {
@@ -2276,6 +2278,7 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 			siteRequest.setW(w);
 			page.setListSchoolAge(listSchoolAge);
 			page.setSiteRequest_(siteRequest);
+			searchpageSchoolAgePageInit(page, listSchoolAge);
 			page.initDeepAgePage(siteRequest);
 			page.html();
 			eventHandler.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, requestHeaders)));
@@ -2578,6 +2581,7 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 												jsonObject.put("userName", jsonPrincipal.getString("preferred_username"));
 												jsonObject.put("userFirstName", jsonPrincipal.getString("given_name"));
 												jsonObject.put("userLastName", jsonPrincipal.getString("family_name"));
+												jsonObject.put("userCompleteName", jsonPrincipal.getString("name"));
 												jsonObject.put("userId", jsonPrincipal.getString("sub"));
 												jsonObject.put("userEmail", jsonPrincipal.getString("email"));
 												userSchoolAgeDefine(siteRequest, jsonObject, false);

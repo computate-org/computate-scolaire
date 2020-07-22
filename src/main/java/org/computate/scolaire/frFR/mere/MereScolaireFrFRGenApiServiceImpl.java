@@ -2420,6 +2420,8 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 	}
 
 
+	public void pagerechercheMereScolairePageInit(MerePage page, ListeRecherche<MereScolaire> listeMereScolaire) {
+	}
 	public void pagerechercheMereScolaireReponse(ListeRecherche<MereScolaire> listeMereScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = listeMereScolaire.getRequeteSite_();
 		try {
@@ -2457,6 +2459,7 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 			requeteSite.setW(w);
 			page.setListeMereScolaire(listeMereScolaire);
 			page.setRequeteSite_(requeteSite);
+			pagerechercheMereScolairePageInit(page, listeMereScolaire);
 			page.initLoinMerePage(requeteSite);
 			page.html();
 			gestionnaireEvenements.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, requeteEnTetes)));
@@ -2759,6 +2762,7 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 												jsonObject.put("utilisateurNom", principalJson.getString("preferred_username"));
 												jsonObject.put("utilisateurPrenom", principalJson.getString("given_name"));
 												jsonObject.put("utilisateurNomFamille", principalJson.getString("family_name"));
+												jsonObject.put("utilisateurNomComplet", principalJson.getString("name"));
 												jsonObject.put("utilisateurId", principalJson.getString("sub"));
 												jsonObject.put("utilisateurMail", principalJson.getString("email"));
 												utilisateurMereScolaireDefinir(requeteSite, jsonObject, false);

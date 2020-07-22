@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.solr.client.solrj.SolrQuery.ORDER;
 import org.apache.solr.client.solrj.util.ClientUtils;
 import org.computate.scolaire.enUS.config.SiteConfig;
@@ -55,7 +56,7 @@ public class SiteUserEnUSApiServiceImpl extends SiteUserEnUSGenApiServiceImpl {
 			enrollmentList.addFilterQuery(
 					"sessionId_indexed_string:" + ClientUtils.escapeQueryChars(sessionIdBefore) 
 					+ " OR sessionId_indexed_string:" + ClientUtils.escapeQueryChars(sessionId)
-					+ " OR enrollmentEmails_indexed_strings:" + ClientUtils.escapeQueryChars(jsonObject.getString(patch ? "setUserEmail" : "userEmail"))
+					+ " OR enrollmentEmails_indexed_strings:" + ClientUtils.escapeQueryChars(StringUtils.lowerCase(jsonObject.getString(patch ? "setUserEmail" : "userEmail")))
 					);
 //			enrollmentList.addFilterQuery("!userId_indexed_string:[* TO *]");
 			enrollmentList.initDeepForClass(siteRequest);

@@ -422,7 +422,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 
 								inputHtmlLink(classApiMethodMethod);
 							} g("div");
-							{
+							if(
+									CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+									) {
 								if("Page".equals(classApiMethodMethod)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
@@ -552,7 +555,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 
 								inputHtmlElement(classApiMethodMethod);
 							} g("div");
-							{
+							if(
+									CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+									) {
 								if("Page".equals(classApiMethodMethod)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
@@ -682,7 +688,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 
 								inputHtmlId(classApiMethodMethod);
 							} g("div");
-							{
+							if(
+									CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+									) {
 								if("Page".equals(classApiMethodMethod)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
@@ -812,7 +821,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 
 								inputHtmlClasses(classApiMethodMethod);
 							} g("div");
-							{
+							if(
+									CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+									) {
 								if("Page".equals(classApiMethodMethod)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
@@ -942,7 +954,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 
 								inputHtmlStyle(classApiMethodMethod);
 							} g("div");
-							{
+							if(
+									CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+									) {
 								if("Page".equals(classApiMethodMethod)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
@@ -1070,7 +1085,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 
 								inputHtmlBefore(classApiMethodMethod);
 							} g("div");
-							{
+							if(
+									CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+									) {
 								if("Page".equals(classApiMethodMethod)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
@@ -1198,7 +1216,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 
 								inputHtmlAfter(classApiMethodMethod);
 							} g("div");
-							{
+							if(
+									CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+									) {
 								if("Page".equals(classApiMethodMethod)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
@@ -1326,7 +1347,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 
 								inputHtmlText(classApiMethodMethod);
 							} g("div");
-							{
+							if(
+									CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+									) {
 								if("Page".equals(classApiMethodMethod)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
@@ -1456,7 +1480,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 
 								inputHtmlVar(classApiMethodMethod);
 							} g("div");
-							{
+							if(
+									CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+									) {
 								if("Page".equals(classApiMethodMethod)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
@@ -1586,7 +1613,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 
 								inputHtmlVarSpan(classApiMethodMethod);
 							} g("div");
-							{
+							if(
+									CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+									) {
 								if("Page".equals(classApiMethodMethod)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
@@ -1716,7 +1746,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 
 								inputHtmlVarForm(classApiMethodMethod);
 							} g("div");
-							{
+							if(
+									CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+									) {
 								if("Page".equals(classApiMethodMethod)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
@@ -1846,7 +1879,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 
 								inputHtmlVarInput(classApiMethodMethod);
 							} g("div");
-							{
+							if(
+									CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+									) {
 								if("Page".equals(classApiMethodMethod)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
@@ -1976,7 +2012,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 
 								inputHtmlVarForEach(classApiMethodMethod);
 							} g("div");
-							{
+							if(
+									CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+									) {
 								if("Page".equals(classApiMethodMethod)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
@@ -2518,7 +2557,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 
 								inputSort1(classApiMethodMethod);
 							} g("div");
-							{
+							if(
+									CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+									) {
 								if("Page".equals(classApiMethodMethod)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
@@ -2655,7 +2697,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 
 								inputSort2(classApiMethodMethod);
 							} g("div");
-							{
+							if(
+									CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+									) {
 								if("Page".equals(classApiMethodMethod)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
@@ -2792,7 +2837,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 
 								inputSort3(classApiMethodMethod);
 							} g("div");
-							{
+							if(
+									CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+									) {
 								if("Page".equals(classApiMethodMethod)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
@@ -2929,7 +2977,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 
 								inputSort4(classApiMethodMethod);
 							} g("div");
-							{
+							if(
+									CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+									) {
 								if("Page".equals(classApiMethodMethod)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
@@ -3066,7 +3117,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 
 								inputSort5(classApiMethodMethod);
 							} g("div");
-							{
+							if(
+									CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+									) {
 								if("Page".equals(classApiMethodMethod)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
@@ -3203,7 +3257,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 
 								inputSort6(classApiMethodMethod);
 							} g("div");
-							{
+							if(
+									CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+									) {
 								if("Page".equals(classApiMethodMethod)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
@@ -3340,7 +3397,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 
 								inputSort7(classApiMethodMethod);
 							} g("div");
-							{
+							if(
+									CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+									) {
 								if("Page".equals(classApiMethodMethod)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
@@ -3477,7 +3537,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 
 								inputSort8(classApiMethodMethod);
 							} g("div");
-							{
+							if(
+									CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+									) {
 								if("Page".equals(classApiMethodMethod)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
@@ -3614,7 +3677,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 
 								inputSort9(classApiMethodMethod);
 							} g("div");
-							{
+							if(
+									CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+									) {
 								if("Page".equals(classApiMethodMethod)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
@@ -3751,7 +3817,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 
 								inputSort10(classApiMethodMethod);
 							} g("div");
-							{
+							if(
+									CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+									) {
 								if("Page".equals(classApiMethodMethod)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")

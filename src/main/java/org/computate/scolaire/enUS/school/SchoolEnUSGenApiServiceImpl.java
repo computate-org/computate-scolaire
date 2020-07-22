@@ -2337,6 +2337,8 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 	}
 
 
+	public void searchpageSchoolPageInit(SchoolPage page, SearchList<School> listSchool) {
+	}
 	public void searchpageSchoolResponse(SearchList<School> listSchool, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = listSchool.getSiteRequest_();
 		try {
@@ -2374,6 +2376,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 			siteRequest.setW(w);
 			page.setListSchool(listSchool);
 			page.setSiteRequest_(siteRequest);
+			searchpageSchoolPageInit(page, listSchool);
 			page.initDeepSchoolPage(siteRequest);
 			page.html();
 			eventHandler.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, requestHeaders)));
@@ -2676,6 +2679,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 												jsonObject.put("userName", jsonPrincipal.getString("preferred_username"));
 												jsonObject.put("userFirstName", jsonPrincipal.getString("given_name"));
 												jsonObject.put("userLastName", jsonPrincipal.getString("family_name"));
+												jsonObject.put("userCompleteName", jsonPrincipal.getString("name"));
 												jsonObject.put("userId", jsonPrincipal.getString("sub"));
 												jsonObject.put("userEmail", jsonPrincipal.getString("email"));
 												userSchoolDefine(siteRequest, jsonObject, false);

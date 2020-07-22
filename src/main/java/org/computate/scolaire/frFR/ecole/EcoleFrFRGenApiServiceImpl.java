@@ -2337,6 +2337,8 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 	}
 
 
+	public void pagerechercheEcolePageInit(EcolePage page, ListeRecherche<Ecole> listeEcole) {
+	}
 	public void pagerechercheEcoleReponse(ListeRecherche<Ecole> listeEcole, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = listeEcole.getRequeteSite_();
 		try {
@@ -2374,6 +2376,7 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 			requeteSite.setW(w);
 			page.setListeEcole(listeEcole);
 			page.setRequeteSite_(requeteSite);
+			pagerechercheEcolePageInit(page, listeEcole);
 			page.initLoinEcolePage(requeteSite);
 			page.html();
 			gestionnaireEvenements.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, requeteEnTetes)));
@@ -2676,6 +2679,7 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 												jsonObject.put("utilisateurNom", principalJson.getString("preferred_username"));
 												jsonObject.put("utilisateurPrenom", principalJson.getString("given_name"));
 												jsonObject.put("utilisateurNomFamille", principalJson.getString("family_name"));
+												jsonObject.put("utilisateurNomComplet", principalJson.getString("name"));
 												jsonObject.put("utilisateurId", principalJson.getString("sub"));
 												jsonObject.put("utilisateurMail", principalJson.getString("email"));
 												utilisateurEcoleDefinir(requeteSite, jsonObject, false);

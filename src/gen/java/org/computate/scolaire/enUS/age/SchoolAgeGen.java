@@ -348,6 +348,13 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 					.a("oninput", "suggestSchoolAgeBlockKeys($(this).val() ? searchSchoolBlockFilters($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'ageKey:" + pk + "'}", "], $('#listSchoolAgeBlockKeys_", classApiMethodMethod, "'), ", pk, "); ")
 				.fg();
 
+		} else {
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+				sx(htmBlockKeys());
+			}
 		}
 	}
 
@@ -1047,6 +1054,13 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 					.a("oninput", "suggestSchoolAgeYearKey($(this).val() ? searchSchoolYearFilters($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'ageKeys:" + pk + "'}", "], $('#listSchoolAgeYearKey_", classApiMethodMethod, "'), ", pk, "); ")
 				.fg();
 
+		} else {
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+				sx(htmYearKey());
+			}
 		}
 	}
 
@@ -1372,6 +1386,13 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 				a("value", strSchoolAddress())
 			.fg();
 
+		} else {
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+				sx(htmSchoolAddress());
+			}
 		}
 	}
 
@@ -1389,7 +1410,10 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 
 								inputSchoolAddress(classApiMethodMethod);
 							} g("div");
-							{
+							if(
+									CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+									) {
 								if("Page".equals(classApiMethodMethod)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
@@ -2280,6 +2304,13 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 				a("value", strAgeStart())
 			.fg();
 
+		} else {
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+				sx(htmAgeStart());
+			}
 		}
 	}
 
@@ -2297,7 +2328,10 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 
 								inputAgeStart(classApiMethodMethod);
 							} g("div");
-							{
+							if(
+									CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+									) {
 								if("Page".equals(classApiMethodMethod)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
@@ -2410,6 +2444,13 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 				a("value", strAgeEnd())
 			.fg();
 
+		} else {
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+				sx(htmAgeEnd());
+			}
 		}
 	}
 
@@ -2427,7 +2468,10 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 
 								inputAgeEnd(classApiMethodMethod);
 							} g("div");
-							{
+							if(
+									CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+									) {
 								if("Page".equals(classApiMethodMethod)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")

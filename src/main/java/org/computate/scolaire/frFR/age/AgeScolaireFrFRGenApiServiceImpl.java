@@ -2239,6 +2239,8 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 	}
 
 
+	public void pagerechercheAgeScolairePageInit(AgePage page, ListeRecherche<AgeScolaire> listeAgeScolaire) {
+	}
 	public void pagerechercheAgeScolaireReponse(ListeRecherche<AgeScolaire> listeAgeScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = listeAgeScolaire.getRequeteSite_();
 		try {
@@ -2276,6 +2278,7 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 			requeteSite.setW(w);
 			page.setListeAgeScolaire(listeAgeScolaire);
 			page.setRequeteSite_(requeteSite);
+			pagerechercheAgeScolairePageInit(page, listeAgeScolaire);
 			page.initLoinAgePage(requeteSite);
 			page.html();
 			gestionnaireEvenements.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, requeteEnTetes)));
@@ -2578,6 +2581,7 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 												jsonObject.put("utilisateurNom", principalJson.getString("preferred_username"));
 												jsonObject.put("utilisateurPrenom", principalJson.getString("given_name"));
 												jsonObject.put("utilisateurNomFamille", principalJson.getString("family_name"));
+												jsonObject.put("utilisateurNomComplet", principalJson.getString("name"));
 												jsonObject.put("utilisateurId", principalJson.getString("sub"));
 												jsonObject.put("utilisateurMail", principalJson.getString("email"));
 												utilisateurAgeScolaireDefinir(requeteSite, jsonObject, false);

@@ -2420,6 +2420,8 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 	}
 
 
+	public void searchpageSchoolDadPageInit(DadPage page, SearchList<SchoolDad> listSchoolDad) {
+	}
 	public void searchpageSchoolDadResponse(SearchList<SchoolDad> listSchoolDad, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = listSchoolDad.getSiteRequest_();
 		try {
@@ -2457,6 +2459,7 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 			siteRequest.setW(w);
 			page.setListSchoolDad(listSchoolDad);
 			page.setSiteRequest_(siteRequest);
+			searchpageSchoolDadPageInit(page, listSchoolDad);
 			page.initDeepDadPage(siteRequest);
 			page.html();
 			eventHandler.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, requestHeaders)));
@@ -2759,6 +2762,7 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 												jsonObject.put("userName", jsonPrincipal.getString("preferred_username"));
 												jsonObject.put("userFirstName", jsonPrincipal.getString("given_name"));
 												jsonObject.put("userLastName", jsonPrincipal.getString("family_name"));
+												jsonObject.put("userCompleteName", jsonPrincipal.getString("name"));
 												jsonObject.put("userId", jsonPrincipal.getString("sub"));
 												jsonObject.put("userEmail", jsonPrincipal.getString("email"));
 												userSchoolDadDefine(siteRequest, jsonObject, false);

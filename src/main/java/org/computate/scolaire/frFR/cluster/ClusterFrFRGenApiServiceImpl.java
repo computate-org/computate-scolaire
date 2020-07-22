@@ -1508,6 +1508,8 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 	}
 
 
+	public void pagerechercheClusterPageInit(ClusterPage page, ListeRecherche<Cluster> listeCluster) {
+	}
 	public void pagerechercheClusterReponse(ListeRecherche<Cluster> listeCluster, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = listeCluster.getRequeteSite_();
 		try {
@@ -1545,6 +1547,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 			requeteSite.setW(w);
 			page.setListeCluster(listeCluster);
 			page.setRequeteSite_(requeteSite);
+			pagerechercheClusterPageInit(page, listeCluster);
 			page.initLoinClusterPage(requeteSite);
 			page.html();
 			gestionnaireEvenements.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, requeteEnTetes)));
@@ -1847,6 +1850,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 												jsonObject.put("utilisateurNom", principalJson.getString("preferred_username"));
 												jsonObject.put("utilisateurPrenom", principalJson.getString("given_name"));
 												jsonObject.put("utilisateurNomFamille", principalJson.getString("family_name"));
+												jsonObject.put("utilisateurNomComplet", principalJson.getString("name"));
 												jsonObject.put("utilisateurId", principalJson.getString("sub"));
 												jsonObject.put("utilisateurMail", principalJson.getString("email"));
 												utilisateurClusterDefinir(requeteSite, jsonObject, false);

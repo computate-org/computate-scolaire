@@ -124,6 +124,12 @@ public class SchoolDad extends SchoolDadGen<Cluster> {
 	protected void _personEmail(Wrap<String> c) {
 	}
 
+	@Override()
+	public void  setPersonEmail(String personneMail) {
+		if(personEmail != null)
+			super.setPersonEmail(personEmail.toLowerCase());
+	}
+
 	protected void _personRelation(Wrap<String> c) {
 		c.o("père");
 	}

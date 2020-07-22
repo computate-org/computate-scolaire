@@ -2486,6 +2486,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 	}
 
 
+	public void searchpageSchoolYearPageInit(YearPage page, SearchList<SchoolYear> listSchoolYear) {
+	}
 	public void searchpageSchoolYearResponse(SearchList<SchoolYear> listSchoolYear, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = listSchoolYear.getSiteRequest_();
 		try {
@@ -2523,6 +2525,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 			siteRequest.setW(w);
 			page.setListSchoolYear(listSchoolYear);
 			page.setSiteRequest_(siteRequest);
+			searchpageSchoolYearPageInit(page, listSchoolYear);
 			page.initDeepYearPage(siteRequest);
 			page.html();
 			eventHandler.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, requestHeaders)));
@@ -2825,6 +2828,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 												jsonObject.put("userName", jsonPrincipal.getString("preferred_username"));
 												jsonObject.put("userFirstName", jsonPrincipal.getString("given_name"));
 												jsonObject.put("userLastName", jsonPrincipal.getString("family_name"));
+												jsonObject.put("userCompleteName", jsonPrincipal.getString("name"));
 												jsonObject.put("userId", jsonPrincipal.getString("sub"));
 												jsonObject.put("userEmail", jsonPrincipal.getString("email"));
 												userSchoolYearDefine(siteRequest, jsonObject, false);

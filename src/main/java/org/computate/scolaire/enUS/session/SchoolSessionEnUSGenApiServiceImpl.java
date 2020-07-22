@@ -2126,6 +2126,8 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 	}
 
 
+	public void searchpageSchoolSessionPageInit(SessionPage page, SearchList<SchoolSession> listSchoolSession) {
+	}
 	public void searchpageSchoolSessionResponse(SearchList<SchoolSession> listSchoolSession, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = listSchoolSession.getSiteRequest_();
 		try {
@@ -2163,6 +2165,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 			siteRequest.setW(w);
 			page.setListSchoolSession(listSchoolSession);
 			page.setSiteRequest_(siteRequest);
+			searchpageSchoolSessionPageInit(page, listSchoolSession);
 			page.initDeepSessionPage(siteRequest);
 			page.html();
 			eventHandler.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, requestHeaders)));
@@ -2465,6 +2468,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 												jsonObject.put("userName", jsonPrincipal.getString("preferred_username"));
 												jsonObject.put("userFirstName", jsonPrincipal.getString("given_name"));
 												jsonObject.put("userLastName", jsonPrincipal.getString("family_name"));
+												jsonObject.put("userCompleteName", jsonPrincipal.getString("name"));
 												jsonObject.put("userId", jsonPrincipal.getString("sub"));
 												jsonObject.put("userEmail", jsonPrincipal.getString("email"));
 												userSchoolSessionDefine(siteRequest, jsonObject, false);

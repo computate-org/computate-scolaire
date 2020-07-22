@@ -370,7 +370,9 @@ public class SiteUserPage extends SiteUserPageGen<SiteUserGenPage> {
 			} g("div");
 		} g("div");
 
-		super.htmlBodySiteUserGenPage();
+		if(siteRequest_.getUserRealmRoles().contains("SiteManager") || siteRequest_.getUserResourceRoles().contains("SiteManager")) {
+			super.htmlBodySiteUserGenPage();
+		}
 	}
 
 	public void writeConfigurePayments(Integer schoolNumber) {

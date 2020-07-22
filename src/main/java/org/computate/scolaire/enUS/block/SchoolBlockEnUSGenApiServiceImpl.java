@@ -2450,6 +2450,8 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 	}
 
 
+	public void searchpageSchoolBlockPageInit(BlockPage page, SearchList<SchoolBlock> listSchoolBlock) {
+	}
 	public void searchpageSchoolBlockResponse(SearchList<SchoolBlock> listSchoolBlock, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = listSchoolBlock.getSiteRequest_();
 		try {
@@ -2487,6 +2489,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 			siteRequest.setW(w);
 			page.setListSchoolBlock(listSchoolBlock);
 			page.setSiteRequest_(siteRequest);
+			searchpageSchoolBlockPageInit(page, listSchoolBlock);
 			page.initDeepBlockPage(siteRequest);
 			page.html();
 			eventHandler.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, requestHeaders)));
@@ -2789,6 +2792,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 												jsonObject.put("userName", jsonPrincipal.getString("preferred_username"));
 												jsonObject.put("userFirstName", jsonPrincipal.getString("given_name"));
 												jsonObject.put("userLastName", jsonPrincipal.getString("family_name"));
+												jsonObject.put("userCompleteName", jsonPrincipal.getString("name"));
 												jsonObject.put("userId", jsonPrincipal.getString("sub"));
 												jsonObject.put("userEmail", jsonPrincipal.getString("email"));
 												userSchoolBlockDefine(siteRequest, jsonObject, false);
