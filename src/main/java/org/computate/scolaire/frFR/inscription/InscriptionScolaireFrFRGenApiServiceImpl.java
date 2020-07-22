@@ -637,6 +637,19 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 							});
 						}));
 						break;
+					case "photo":
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "photo", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.photo a échoué", b.cause())));
+							});
+						}));
+						break;
 					case "familleMarie":
 						futures.add(Future.future(a -> {
 							tx.preparedQuery(SiteContexteFrFR.SQL_setD
@@ -1947,6 +1960,19 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 									a.handle(Future.succeededFuture());
 								else
 									a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionImmunisations a échoué", b.cause())));
+							});
+						}));
+						break;
+					case "photo":
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "photo", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.photo a échoué", b.cause())));
 							});
 						}));
 						break;
@@ -3952,6 +3978,34 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 										a.handle(Future.succeededFuture());
 									else
 										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionImmunisations a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setPhoto":
+						if(jsonObject.getString(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "photo")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.photo a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setPhoto(jsonObject.getString(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "photo", o2.jsonPhoto())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.photo a échoué", b.cause())));
 								});
 							}));
 						}
@@ -6799,6 +6853,34 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 										a.handle(Future.succeededFuture());
 									else
 										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionImmunisations a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setPhoto":
+						if(jsonObject.getString(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "photo")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.photo a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setPhoto(jsonObject.getString(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "photo", o2.jsonPhoto())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.photo a échoué", b.cause())));
 								});
 							}));
 						}

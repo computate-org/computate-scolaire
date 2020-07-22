@@ -484,6 +484,9 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 		c.o(false);
 	}
 
+	protected void _photo(Wrap<String> c) {
+	}
+
 	protected void _familyMarried(Wrap<Boolean> c) {
 		c.o(false);
 	}

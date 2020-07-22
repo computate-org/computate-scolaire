@@ -1535,8 +1535,8 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * NomAffichage.frFR: approuvé
 	 * NomAffichage.enUS: approved
 	 * Definir: true
-	 * HtmlLigne: 3
-	 * HtmlCellule: 1
+	 * HtmlLigne: 4
+	 * HtmlCellule: 5
 	 */                   
 	protected void _inscriptionApprouve(Couverture<Boolean> c) {
 		c.o(false);
@@ -1550,11 +1550,25 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * NomAffichage.frFR: vacciné
 	 * NomAffichage.enUS: immunized
 	 * Definir: true
-	 * HtmlLigne: 3
-	 * HtmlCellule: 2
+	 * HtmlLigne: 4
+	 * HtmlCellule: 4
 	 */                   
 	protected void _inscriptionImmunisations(Couverture<Boolean> c) {
 		c.o(false);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Stocke: true
+	 * NomAffichage.frFR: photo
+	 * NomAffichage.enUS: photo
+	 * Definir: true
+	 * HtmlLigne: 3
+	 * HtmlCellule: 3
+	 * ImageBase64Url.frFR: /photo
+	 * ImageBase64Url.enUS: /photo
+	 */               
+	protected void _photo(Couverture<String> c) {
 	}
 
 	/**

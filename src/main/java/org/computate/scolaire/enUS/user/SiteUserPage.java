@@ -3,6 +3,8 @@ package org.computate.scolaire.enUS.user;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.time.LocalDate;
+import java.time.temporal.TemporalAdjuster;
+import java.time.temporal.TemporalAdjusters;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -87,10 +89,14 @@ public class SiteUserPage extends SiteUserPageGen<SiteUserGenPage> {
 	}
 
 	protected void _yearSearch(SearchList<SchoolYear> l) {
+		LocalDate now = LocalDate.now();
+		LocalDate yearEndDate = now.with(TemporalAdjusters.firstDayOfMonth()).withMonth(6);
+		yearEndDate = now.isBefore(yearEndDate) ? yearEndDate : yearEndDate.plusYears(1);
+
 		l.setQuery("*:*");
 		l.addFilterQuery("deleted_indexed_boolean:false");
 		l.addFilterQuery("archived_indexed_boolean:false");
-		l.addFilterQuery("yearStart_indexed_int:[" + LocalDate.now().plusMonths(1).minusYears(1).getYear() + " TO " + LocalDate.now().plusMonths(1).getYear() + "]");
+		l.addFilterQuery("yearEnd_indexed_int:" + yearEndDate.getYear());
 		l.setC(SchoolYear.class);
 		l.setStore(true);
 		l.addSort("schoolName_indexed_string", ORDER.asc);
@@ -171,7 +177,11 @@ public class SiteUserPage extends SiteUserPageGen<SiteUserGenPage> {
 			l.addFields("schoolKey_stored_long", "enrollmentApproved_stored_boolean", "yearKey_stored_long", "yearStart_stored_int", "yearEnd_stored_int", "childCompleteNamePreferred_stored_string", "pageUrlPk_stored_string");
 			l.setRows(1000);
 
-			l.addFilterQuery("yearStart_indexed_int:[" + LocalDate.now().plusMonths(1).minusYears(1).getYear() + " TO " + LocalDate.now().plusMonths(1).getYear() + "]");
+			LocalDate now = LocalDate.now();
+			LocalDate yearEndDate = now.with(TemporalAdjusters.firstDayOfMonth()).withMonth(6);
+			yearEndDate = now.isBefore(yearEndDate) ? yearEndDate : yearEndDate.plusYears(1);
+
+			l.addFilterQuery("yearEnd_indexed_int:" + yearEndDate.getYear());
 			l.addFilterQuery("archived_indexed_boolean:false");
 			l.addFilterQuery("deleted_indexed_boolean:false");
 	
@@ -447,7 +457,7 @@ public class SiteUserPage extends SiteUserPageGen<SiteUserGenPage> {
 					e("span").a("class", " ").f().sx("school enrollments").g("span");
 				} g("a");
 			} g("h1");
-			{ e("div").a("class", "w3-row w3-mobile ").f();
+			{ e("div").a("class", "w3-row w3-mobile w3-margin ").f();
 				for(SchoolEnrollment enrollmentSchool : enrollmentSchools) {
 					{ e("div").a("class", "w3-half ").f();
 						{ e("fieldset").a("class", "").f();
@@ -479,11 +489,6 @@ public class SiteUserPage extends SiteUserPageGen<SiteUserGenPage> {
 																	{ e("tr").a("class", "").f();
 																		{ e("td").a("style", "padding: 0; ").a("class", "").f();
 																			{ e("a").a("href", enrollmentEnrollment.getPageUrlPk()).f();
-																				e("span").a("class", "").f().sx(enrollmentEnrollment.getEnrollmentNumber(), ". ").g("span");
-																			} g("a");
-																		} g("td");
-																		{ e("td").a("style", "padding: 0; ").a("class", "").f();
-																			{ e("a").a("href", enrollmentEnrollment.getPageUrlPk()).f();
 																				e("span").a("class", "").f().sx(enrollmentEnrollment.getChildCompleteNamePreferred()).g("span");
 																			} g("a");
 																		} g("td");
@@ -501,11 +506,6 @@ public class SiteUserPage extends SiteUserPageGen<SiteUserGenPage> {
 															for(SchoolEnrollment enrollmentYear : enrollmentApproval.getEnrollmentYears()) {
 																for(SchoolEnrollment enrollmentEnrollment : enrollmentYear.getEnrollmentEnrollments()) {
 																	{ e("tr").a("class", "").f();
-																		{ e("td").a("style", "padding: 0; ").a("class", "").f();
-																			{ e("a").a("href", enrollmentEnrollment.getPageUrlPk()).f();
-																				e("span").a("class", "").f().sx(enrollmentEnrollment.getEnrollmentNumber(), ". ").g("span");
-																			} g("a");
-																		} g("td");
 																		{ e("td").a("style", "padding: 0; ").a("class", "").f();
 																			{ e("a").a("href", enrollmentEnrollment.getPageUrlPk()).f();
 																				e("span").a("class", "").f().sx(enrollmentEnrollment.getChildCompleteNamePreferred()).g("span");
@@ -538,9 +538,9 @@ public class SiteUserPage extends SiteUserPageGen<SiteUserGenPage> {
 					e("span").a("class", " ").f().sx("school reports").g("span");
 				} g("a");
 			} g("h1");
-			{ e("div").a("class", "").f();
+			{ e("div").a("class", "w3-row w3-margin ").f();
 				for(SchoolYear schoolYear : schoolYears) {
-					{ e("div").a("class", "w3-cell-row w3-mobile w3-center w3-margin ").f();
+					{ e("div").a("class", "w3-half w3-mobile w3-center ").f();
 						e("div").a("class", "w3-large font-weight-bold ").f().sx(schoolYear.getSchoolName()).g("div");
 						e("div").a("class", "w3-xxlarge font-weight-bold ").f().sx(schoolYear.getSchoolLocation()).g("div");
 						{ e("div").a("class", "w3-cell-row ").f();

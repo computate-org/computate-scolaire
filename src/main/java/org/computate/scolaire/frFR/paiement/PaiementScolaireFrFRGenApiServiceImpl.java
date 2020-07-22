@@ -3074,6 +3074,8 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 	}
 
 
+	public void pagerecherchePaiementScolairePageInit(PaiementPage page, ListeRecherche<PaiementScolaire> listePaiementScolaire) {
+	}
 	public void pagerecherchePaiementScolaireReponse(ListeRecherche<PaiementScolaire> listePaiementScolaire, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = listePaiementScolaire.getRequeteSite_();
 		try {
@@ -3111,6 +3113,7 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 			requeteSite.setW(w);
 			page.setListePaiementScolaire(listePaiementScolaire);
 			page.setRequeteSite_(requeteSite);
+			pagerecherchePaiementScolairePageInit(page, listePaiementScolaire);
 			page.initLoinPaiementPage(requeteSite);
 			page.html();
 			gestionnaireEvenements.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, requeteEnTetes)));
@@ -3413,6 +3416,7 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 												jsonObject.put("utilisateurNom", principalJson.getString("preferred_username"));
 												jsonObject.put("utilisateurPrenom", principalJson.getString("given_name"));
 												jsonObject.put("utilisateurNomFamille", principalJson.getString("family_name"));
+												jsonObject.put("utilisateurNomComplet", principalJson.getString("name"));
 												jsonObject.put("utilisateurId", principalJson.getString("sub"));
 												jsonObject.put("utilisateurMail", principalJson.getString("email"));
 												utilisateurPaiementScolaireDefinir(requeteSite, jsonObject, false);

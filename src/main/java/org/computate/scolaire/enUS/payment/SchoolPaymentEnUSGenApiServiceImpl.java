@@ -3074,6 +3074,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 	}
 
 
+	public void searchpageSchoolPaymentPageInit(PaymentPage page, SearchList<SchoolPayment> listSchoolPayment) {
+	}
 	public void searchpageSchoolPaymentResponse(SearchList<SchoolPayment> listSchoolPayment, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = listSchoolPayment.getSiteRequest_();
 		try {
@@ -3111,6 +3113,7 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 			siteRequest.setW(w);
 			page.setListSchoolPayment(listSchoolPayment);
 			page.setSiteRequest_(siteRequest);
+			searchpageSchoolPaymentPageInit(page, listSchoolPayment);
 			page.initDeepPaymentPage(siteRequest);
 			page.html();
 			eventHandler.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, requestHeaders)));
@@ -3413,6 +3416,7 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 												jsonObject.put("userName", jsonPrincipal.getString("preferred_username"));
 												jsonObject.put("userFirstName", jsonPrincipal.getString("given_name"));
 												jsonObject.put("userLastName", jsonPrincipal.getString("family_name"));
+												jsonObject.put("userCompleteName", jsonPrincipal.getString("name"));
 												jsonObject.put("userId", jsonPrincipal.getString("sub"));
 												jsonObject.put("userEmail", jsonPrincipal.getString("email"));
 												userSchoolPaymentDefine(siteRequest, jsonObject, false);

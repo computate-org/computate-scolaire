@@ -257,8 +257,7 @@ public class GenPageInscription extends GenPageInscriptionGen<ClusterPage> {
 			o.htmSupprime("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmInscriptionApprouve("Page");
-			o.htmInscriptionImmunisations("Page");
+			o.htmPhoto("Page");
 			o.htmInscriptionNomGroupe("Page");
 			o.htmCustomerProfileId("Page");
 		} g("div");
@@ -266,6 +265,8 @@ public class GenPageInscription extends GenPageInscriptionGen<ClusterPage> {
 			o.htmInscriptionPaimentComplet("Page");
 			o.htmEnfantPropre("Page");
 			o.htmInscriptionPaimentChaqueMois("Page");
+			o.htmInscriptionImmunisations("Page");
+			o.htmInscriptionApprouve("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmFamilleMarie("Page");
@@ -314,8 +315,7 @@ public class GenPageInscription extends GenPageInscriptionGen<ClusterPage> {
 			o.htmSupprime("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmInscriptionApprouve("POST");
-			o.htmInscriptionImmunisations("POST");
+			o.htmPhoto("POST");
 			o.htmInscriptionNomGroupe("POST");
 			o.htmCustomerProfileId("POST");
 		} g("div");
@@ -323,6 +323,8 @@ public class GenPageInscription extends GenPageInscriptionGen<ClusterPage> {
 			o.htmInscriptionPaimentComplet("POST");
 			o.htmEnfantPropre("POST");
 			o.htmInscriptionPaimentChaqueMois("POST");
+			o.htmInscriptionImmunisations("POST");
+			o.htmInscriptionApprouve("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmFamilleMarie("POST");
@@ -393,8 +395,7 @@ public class GenPageInscription extends GenPageInscriptionGen<ClusterPage> {
 			o.htmSupprime("PUTCopie");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmInscriptionApprouve("PUTCopie");
-			o.htmInscriptionImmunisations("PUTCopie");
+			o.htmPhoto("PUTCopie");
 			o.htmInscriptionNomGroupe("PUTCopie");
 			o.htmCustomerProfileId("PUTCopie");
 		} g("div");
@@ -402,6 +403,8 @@ public class GenPageInscription extends GenPageInscriptionGen<ClusterPage> {
 			o.htmInscriptionPaimentComplet("PUTCopie");
 			o.htmEnfantPropre("PUTCopie");
 			o.htmInscriptionPaimentChaqueMois("PUTCopie");
+			o.htmInscriptionImmunisations("PUTCopie");
+			o.htmInscriptionApprouve("PUTCopie");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmFamilleMarie("PUTCopie");
@@ -480,8 +483,7 @@ public class GenPageInscription extends GenPageInscriptionGen<ClusterPage> {
 			o.htmSupprime("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmInscriptionApprouve("PATCH");
-			o.htmInscriptionImmunisations("PATCH");
+			o.htmPhoto("PATCH");
 			o.htmInscriptionNomGroupe("PATCH");
 			o.htmCustomerProfileId("PATCH");
 		} g("div");
@@ -489,6 +491,8 @@ public class GenPageInscription extends GenPageInscriptionGen<ClusterPage> {
 			o.htmInscriptionPaimentComplet("PATCH");
 			o.htmEnfantPropre("PATCH");
 			o.htmInscriptionPaimentChaqueMois("PATCH");
+			o.htmInscriptionImmunisations("PATCH");
+			o.htmInscriptionApprouve("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmFamilleMarie("PATCH");
@@ -569,8 +573,6 @@ public class GenPageInscription extends GenPageInscriptionGen<ClusterPage> {
 			o.htmSupprime("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmInscriptionApprouve("Recherche");
-			o.htmInscriptionImmunisations("Recherche");
 			o.htmInscriptionNomGroupe("Recherche");
 			o.htmCustomerProfileId("Recherche");
 		} g("div");
@@ -578,6 +580,8 @@ public class GenPageInscription extends GenPageInscriptionGen<ClusterPage> {
 			o.htmInscriptionPaimentComplet("Recherche");
 			o.htmEnfantPropre("Recherche");
 			o.htmInscriptionPaimentChaqueMois("Recherche");
+			o.htmInscriptionImmunisations("Recherche");
+			o.htmInscriptionApprouve("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmFamilleMarie("Recherche");

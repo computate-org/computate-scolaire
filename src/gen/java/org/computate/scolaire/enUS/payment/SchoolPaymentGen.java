@@ -244,6 +244,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 					.a("oninput", "suggestSchoolPaymentEnrollmentKey($(this).val() ? searchSchoolEnrollmentFilters($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'paymentKeys:" + pk + "'}", "], $('#listSchoolPaymentEnrollmentKey_", classApiMethodMethod, "'), ", pk, "); ")
 				.fg();
 
+		} else {
 			if(
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
@@ -1296,6 +1297,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				a("value", strChildCompleteNamePreferred())
 			.fg();
 
+		} else {
 			if(
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
@@ -1321,7 +1323,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 								inputChildCompleteNamePreferred(classApiMethodMethod);
 							} g("div");
-							{
+							if(
+									CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+									) {
 								if("Page".equals(classApiMethodMethod)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
@@ -1438,6 +1443,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				.a("value", childBirthDate == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy").format(childBirthDate))
 				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setChildBirthDate', s, function() { addGlow($('#", classApiMethodMethod, "_childBirthDate')); }, function() { addError($('#", classApiMethodMethod, "_childBirthDate')); }); } ")
 				.fg();
+		} else {
 			if(
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
@@ -1462,7 +1468,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell ").f();
 								inputChildBirthDate(classApiMethodMethod);
 							} g("div");
-							{
+							if(
+									CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+									) {
 								if("Page".equals(classApiMethodMethod)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
@@ -1568,6 +1577,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				a("value", strMomCompleteNamePreferred())
 			.fg();
 
+		} else {
 			if(
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
@@ -1593,7 +1603,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 								inputMomCompleteNamePreferred(classApiMethodMethod);
 							} g("div");
-							{
+							if(
+									CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+									) {
 								if("Page".equals(classApiMethodMethod)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
@@ -1699,6 +1712,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				a("value", strDadCompleteNamePreferred())
 			.fg();
 
+		} else {
 			if(
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
@@ -1724,7 +1738,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 								inputDadCompleteNamePreferred(classApiMethodMethod);
 							} g("div");
-							{
+							if(
+									CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+									) {
 								if("Page".equals(classApiMethodMethod)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
@@ -2937,6 +2954,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				g("select");
 			}
 
+		} else {
 			if(
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
@@ -3073,6 +3091,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				g("select");
 			}
 
+		} else {
 			if(
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
@@ -3191,6 +3210,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				a("value", strPaymentDescription())
 			.fg();
 
+		} else {
 			if(
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
@@ -3216,7 +3236,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 								inputPaymentDescription(classApiMethodMethod);
 							} g("div");
-							{
+							if(
+									CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+									) {
 								if("Page".equals(classApiMethodMethod)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
@@ -3333,6 +3356,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				.a("value", paymentDate == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy").format(paymentDate))
 				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setPaymentDate', s, function() { addGlow($('#", classApiMethodMethod, "_paymentDate')); }, function() { addError($('#", classApiMethodMethod, "_paymentDate')); }); } ")
 				.fg();
+		} else {
 			if(
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
@@ -3357,7 +3381,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell ").f();
 								inputPaymentDate(classApiMethodMethod);
 							} g("div");
-							{
+							if(
+									CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+									) {
 								if("Page".equals(classApiMethodMethod)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
@@ -3481,6 +3508,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				a("value", strPaymentAmount())
 			.fg();
 
+		} else {
 			if(
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
@@ -3506,7 +3534,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 								inputPaymentAmount(classApiMethodMethod);
 							} g("div");
-							{
+							if(
+									CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+									) {
 								if("Page".equals(classApiMethodMethod)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
@@ -3630,6 +3661,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				g("select");
 			}
 
+		} else {
 			if(
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
@@ -3766,6 +3798,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				g("select");
 			}
 
+		} else {
 			if(
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
@@ -3902,6 +3935,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				g("select");
 			}
 
+		} else {
 			if(
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
@@ -4038,6 +4072,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				g("select");
 			}
 
+		} else {
 			if(
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
@@ -4156,6 +4191,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				a("value", strPaymentBy())
 			.fg();
 
+		} else {
 			if(
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
@@ -4181,7 +4217,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 								inputPaymentBy(classApiMethodMethod);
 							} g("div");
-							{
+							if(
+									CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+									) {
 								if("Page".equals(classApiMethodMethod)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
@@ -4287,6 +4326,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				a("value", strTransactionId())
 			.fg();
 
+		} else {
 			if(
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
@@ -4312,7 +4352,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 								inputTransactionId(classApiMethodMethod);
 							} g("div");
-							{
+							if(
+									CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+									) {
 								if("Page".equals(classApiMethodMethod)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
@@ -4418,6 +4461,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				a("value", strCustomerProfileId())
 			.fg();
 
+		} else {
 			if(
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
@@ -4443,7 +4487,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 								inputCustomerProfileId(classApiMethodMethod);
 							} g("div");
-							{
+							if(
+									CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+									) {
 								if("Page".equals(classApiMethodMethod)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
@@ -4549,6 +4596,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				a("value", strTransactionStatus())
 			.fg();
 
+		} else {
 			if(
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
@@ -4574,7 +4622,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 								inputTransactionStatus(classApiMethodMethod);
 							} g("div");
-							{
+							if(
+									CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+									) {
 								if("Page".equals(classApiMethodMethod)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
@@ -4698,6 +4749,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				g("select");
 			}
 
+		} else {
 			if(
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
@@ -4834,6 +4886,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				a("value", strChargeAmount())
 			.fg();
 
+		} else {
 			if(
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
@@ -4859,7 +4912,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 								inputChargeAmount(classApiMethodMethod);
 							} g("div");
-							{
+							if(
+									CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+									) {
 								if("Page".equals(classApiMethodMethod)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")
@@ -4983,6 +5039,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				g("select");
 			}
 
+		} else {
 			if(
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
@@ -5119,6 +5176,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				g("select");
 			}
 
+		} else {
 			if(
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
@@ -5255,6 +5313,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				g("select");
 			}
 
+		} else {
 			if(
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
@@ -5391,6 +5450,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				g("select");
 			}
 
+		} else {
 			if(
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
@@ -5721,6 +5781,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				a("value", strPaymentShortName())
 			.fg();
 
+		} else {
 			if(
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
@@ -5746,7 +5807,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 								inputPaymentShortName(classApiMethodMethod);
 							} g("div");
-							{
+							if(
+									CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+									) {
 								if("Page".equals(classApiMethodMethod)) {
 									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
 										{ e("button")

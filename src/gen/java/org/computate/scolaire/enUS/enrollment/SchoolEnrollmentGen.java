@@ -6452,6 +6452,132 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		} g("div");
 	}
 
+	///////////
+	// photo //
+	///////////
+
+	/**	 The entity photo
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String photo;
+	@JsonIgnore
+	public Wrap<String> photoWrap = new Wrap<String>().p(this).c(String.class).var("photo").o(photo);
+
+	/**	<br/> The entity photo
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:photo">Find the entity photo in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _photo(Wrap<String> c);
+
+	public String getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(String photo) {
+		this.photo = photo;
+		this.photoWrap.alreadyInitialized = true;
+	}
+	protected SchoolEnrollment photoInit() {
+		if(!photoWrap.alreadyInitialized) {
+			_photo(photoWrap);
+			if(photo == null)
+				setPhoto(photoWrap.o);
+		}
+		photoWrap.alreadyInitialized(true);
+		return (SchoolEnrollment)this;
+	}
+
+	public String solrPhoto() {
+		return photo;
+	}
+
+	public String strPhoto() {
+		return photo == null ? "" : photo;
+	}
+
+	public String jsonPhoto() {
+		return photo == null ? "" : photo;
+	}
+
+	public String nomAffichagePhoto() {
+		return "photo";
+	}
+
+	public String htmTooltipPhoto() {
+		return null;
+	}
+
+	public String htmPhoto() {
+		return photo == null ? "" : StringEscapeUtils.escapeHtml4(strPhoto());
+	}
+
+	public void inputPhoto(String classApiMethodMethod) {
+		SchoolEnrollment s = (SchoolEnrollment)this;
+		if(
+				userKeys.contains(siteRequest_.getUserKey())
+				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+				|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+		) {
+			e("div").a("class", "imageBase64Div1SchoolEnrollment_photo").a("id", "imageBase64Div1SchoolEnrollment", pk, "photo").f();
+				e("h5").f().sx("Upload image").g("h5"); 
+				e("form").a("method", "POST").a("enctype", "multipart/form-data").a("action", "/photo").a("class", "").f();
+				e("input").a("type", "hidden").a("name", "pk").a("value", pk).fg(); 
+				e("input").a("type", "hidden").a("name", "classSimpleName").a("value", "SchoolEnrollment").fg(); 
+				e("input").a("name", "file").a("type", "file").a("onchange", "$.ajax({ type: 'POST', enctype: 'multipart/form-data', url: '/photo', data: new FormData(this.form), processData: false, contentType: false}); ").fg(); 
+				g("form");
+				e("img").a("id", "imageBase64ImgSchoolEnrollment", pk, "photo");
+					a("class", "imgSchoolEnrollment", pk, "Photo w3-image ");
+					a("src", StringUtils.isBlank(photo) ? "data:image/png;base64," : photo).a("alt", "");
+				fg();
+			g("div");
+		} else {
+			sx(htmPhoto());
+		}
+	}
+
+	public void htmPhoto(String classApiMethodMethod) {
+		SchoolEnrollment s = (SchoolEnrollment)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolEnrollmentPhoto").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-blue-gray ").f();
+							e("label").a("for", classApiMethodMethod, "_photo").a("class", "").f().sx("photo").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputPhoto(classApiMethodMethod);
+							} g("div");
+							if(
+									userKeys.contains(siteRequest_.getUserKey())
+									|| Objects.equals(sessionId, siteRequest_.getSessionId())
+									|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+							) {
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-blue-gray ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_photo')); $('#", classApiMethodMethod, "_photo').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setPhoto', null, function() { addGlow($('#", classApiMethodMethod, "_photo')); }, function() { addError($('#", classApiMethodMethod, "_photo')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
 	///////////////////
 	// familyMarried //
 	///////////////////
@@ -13898,6 +14024,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		blockCompleteNameInit();
 		enrollmentApprovedInit();
 		enrollmentImmunizationsInit();
+		photoInit();
 		familyMarriedInit();
 		familySeparatedInit();
 		familyDivorcedInit();
@@ -14195,6 +14322,8 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				return oSchoolEnrollment.enrollmentApproved;
 			case "enrollmentImmunizations":
 				return oSchoolEnrollment.enrollmentImmunizations;
+			case "photo":
+				return oSchoolEnrollment.photo;
 			case "familyMarried":
 				return oSchoolEnrollment.familyMarried;
 			case "familySeparated":
@@ -14460,6 +14589,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 			case "enrollmentImmunizations":
 				if(val != null)
 					setEnrollmentImmunizations(val);
+				saves.add(var);
+				return val;
+			case "photo":
+				if(val != null)
+					setPhoto(val);
 				saves.add(var);
 				return val;
 			case "familyMarried":
@@ -15060,6 +15194,12 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				Boolean enrollmentImmunizations = (Boolean)solrDocument.get("enrollmentImmunizations_stored_boolean");
 				if(enrollmentImmunizations != null)
 					oSchoolEnrollment.setEnrollmentImmunizations(enrollmentImmunizations);
+			}
+
+			if(saves.contains("photo")) {
+				String photo = (String)solrDocument.get("photo_stored_string");
+				if(photo != null)
+					oSchoolEnrollment.setPhoto(photo);
 			}
 
 			if(saves.contains("familyMarried")) {
@@ -15829,6 +15969,9 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		if(enrollmentImmunizations != null) {
 			document.addField("enrollmentImmunizations_indexed_boolean", enrollmentImmunizations);
 			document.addField("enrollmentImmunizations_stored_boolean", enrollmentImmunizations);
+		}
+		if(photo != null) {
+			document.addField("photo_stored_string", photo);
 		}
 		if(familyMarried != null) {
 			document.addField("familyMarried_indexed_boolean", familyMarried);
@@ -16662,6 +16805,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		if(enrollmentImmunizations != null)
 			oSchoolEnrollment.setEnrollmentImmunizations(enrollmentImmunizations);
 
+		String photo = (String)solrDocument.get("photo_stored_string");
+		if(photo != null)
+			oSchoolEnrollment.setPhoto(photo);
+
 		Boolean familyMarried = (Boolean)solrDocument.get("familyMarried_stored_boolean");
 		if(familyMarried != null)
 			oSchoolEnrollment.setFamilyMarried(familyMarried);
@@ -16970,6 +17117,8 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				apiRequest.addVars("enrollmentApproved");
 			if(!Objects.equals(enrollmentImmunizations, original.getEnrollmentImmunizations()))
 				apiRequest.addVars("enrollmentImmunizations");
+			if(!Objects.equals(photo, original.getPhoto()))
+				apiRequest.addVars("photo");
 			if(!Objects.equals(familyMarried, original.getFamilyMarried()))
 				apiRequest.addVars("familyMarried");
 			if(!Objects.equals(familySeparated, original.getFamilySeparated()))
@@ -17053,7 +17202,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), yearKey, blockKeys, childKey, momKeys, dadKeys, guardianKeys, paymentKeys, userKeys, childCompleteName, childCompleteNamePreferred, childBirthDate, schoolAddress, enrollmentApproved, enrollmentImmunizations, familyMarried, familySeparated, familyDivorced, familyAddress, familyHowDoYouKnowTheSchool, enrollmentSpecialConsiderations, childMedicalConditions, childPreviousSchoolsAttended, childDescription, childObjectives, childPottyTrained, enrollmentGroupName, enrollmentPaymentEachMonth, enrollmentPaymentComplete, customerProfileId, enrollmentChargeDate, enrollmentParentNames, enrollmentSignature1, enrollmentSignature2, enrollmentSignature3, enrollmentSignature4, enrollmentSignature5, enrollmentSignature6, enrollmentSignature7, enrollmentSignature8, enrollmentSignature9, enrollmentSignature10, enrollmentDate1, enrollmentDate2, enrollmentDate3, enrollmentDate4, enrollmentDate5, enrollmentDate6, enrollmentDate7, enrollmentDate8, enrollmentDate9, enrollmentDate10);
+		return Objects.hash(super.hashCode(), yearKey, blockKeys, childKey, momKeys, dadKeys, guardianKeys, paymentKeys, userKeys, childCompleteName, childCompleteNamePreferred, childBirthDate, schoolAddress, enrollmentApproved, enrollmentImmunizations, photo, familyMarried, familySeparated, familyDivorced, familyAddress, familyHowDoYouKnowTheSchool, enrollmentSpecialConsiderations, childMedicalConditions, childPreviousSchoolsAttended, childDescription, childObjectives, childPottyTrained, enrollmentGroupName, enrollmentPaymentEachMonth, enrollmentPaymentComplete, customerProfileId, enrollmentChargeDate, enrollmentParentNames, enrollmentSignature1, enrollmentSignature2, enrollmentSignature3, enrollmentSignature4, enrollmentSignature5, enrollmentSignature6, enrollmentSignature7, enrollmentSignature8, enrollmentSignature9, enrollmentSignature10, enrollmentDate1, enrollmentDate2, enrollmentDate3, enrollmentDate4, enrollmentDate5, enrollmentDate6, enrollmentDate7, enrollmentDate8, enrollmentDate9, enrollmentDate10);
 	}
 
 	////////////
@@ -17081,6 +17230,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				&& Objects.equals( schoolAddress, that.schoolAddress )
 				&& Objects.equals( enrollmentApproved, that.enrollmentApproved )
 				&& Objects.equals( enrollmentImmunizations, that.enrollmentImmunizations )
+				&& Objects.equals( photo, that.photo )
 				&& Objects.equals( familyMarried, that.familyMarried )
 				&& Objects.equals( familySeparated, that.familySeparated )
 				&& Objects.equals( familyDivorced, that.familyDivorced )
@@ -17142,6 +17292,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		sb.append( ", schoolAddress: \"" ).append(schoolAddress).append( "\"" );
 		sb.append( ", enrollmentApproved: " ).append(enrollmentApproved);
 		sb.append( ", enrollmentImmunizations: " ).append(enrollmentImmunizations);
+		sb.append( ", photo: \"" ).append(photo).append( "\"" );
 		sb.append( ", familyMarried: " ).append(familyMarried);
 		sb.append( ", familySeparated: " ).append(familySeparated);
 		sb.append( ", familyDivorced: " ).append(familyDivorced);

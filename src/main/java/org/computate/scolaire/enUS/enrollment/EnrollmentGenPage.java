@@ -257,8 +257,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 			o.htmDeleted("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmEnrollmentApproved("Page");
-			o.htmEnrollmentImmunizations("Page");
+			o.htmPhoto("Page");
 			o.htmEnrollmentGroupName("Page");
 			o.htmCustomerProfileId("Page");
 		} g("div");
@@ -266,6 +265,8 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 			o.htmEnrollmentPaymentComplete("Page");
 			o.htmChildPottyTrained("Page");
 			o.htmEnrollmentPaymentEachMonth("Page");
+			o.htmEnrollmentImmunizations("Page");
+			o.htmEnrollmentApproved("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmFamilyMarried("Page");
@@ -314,8 +315,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 			o.htmDeleted("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmEnrollmentApproved("POST");
-			o.htmEnrollmentImmunizations("POST");
+			o.htmPhoto("POST");
 			o.htmEnrollmentGroupName("POST");
 			o.htmCustomerProfileId("POST");
 		} g("div");
@@ -323,6 +323,8 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 			o.htmEnrollmentPaymentComplete("POST");
 			o.htmChildPottyTrained("POST");
 			o.htmEnrollmentPaymentEachMonth("POST");
+			o.htmEnrollmentImmunizations("POST");
+			o.htmEnrollmentApproved("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmFamilyMarried("POST");
@@ -393,8 +395,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 			o.htmDeleted("PUTCopy");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmEnrollmentApproved("PUTCopy");
-			o.htmEnrollmentImmunizations("PUTCopy");
+			o.htmPhoto("PUTCopy");
 			o.htmEnrollmentGroupName("PUTCopy");
 			o.htmCustomerProfileId("PUTCopy");
 		} g("div");
@@ -402,6 +403,8 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 			o.htmEnrollmentPaymentComplete("PUTCopy");
 			o.htmChildPottyTrained("PUTCopy");
 			o.htmEnrollmentPaymentEachMonth("PUTCopy");
+			o.htmEnrollmentImmunizations("PUTCopy");
+			o.htmEnrollmentApproved("PUTCopy");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmFamilyMarried("PUTCopy");
@@ -480,8 +483,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 			o.htmDeleted("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmEnrollmentApproved("PATCH");
-			o.htmEnrollmentImmunizations("PATCH");
+			o.htmPhoto("PATCH");
 			o.htmEnrollmentGroupName("PATCH");
 			o.htmCustomerProfileId("PATCH");
 		} g("div");
@@ -489,6 +491,8 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 			o.htmEnrollmentPaymentComplete("PATCH");
 			o.htmChildPottyTrained("PATCH");
 			o.htmEnrollmentPaymentEachMonth("PATCH");
+			o.htmEnrollmentImmunizations("PATCH");
+			o.htmEnrollmentApproved("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmFamilyMarried("PATCH");
@@ -569,8 +573,6 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 			o.htmDeleted("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmEnrollmentApproved("Search");
-			o.htmEnrollmentImmunizations("Search");
 			o.htmEnrollmentGroupName("Search");
 			o.htmCustomerProfileId("Search");
 		} g("div");
@@ -578,6 +580,8 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 			o.htmEnrollmentPaymentComplete("Search");
 			o.htmChildPottyTrained("Search");
 			o.htmEnrollmentPaymentEachMonth("Search");
+			o.htmEnrollmentImmunizations("Search");
+			o.htmEnrollmentApproved("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmFamilyMarried("Search");
