@@ -26,6 +26,9 @@ import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import org.computate.scolaire.enUS.user.SiteUser;
 
+/**
+ * CanonicalName: org.computate.scolaire.frFR.recherche.ListeRecherche
+ **/
 public class SearchList<DEV> extends SearchListGen<DEV> {
 
 	protected void _c(Wrap<Class<DEV>> c) {
@@ -678,7 +681,6 @@ public class SearchList<DEV> extends SearchListGen<DEV> {
 		} catch (UnsupportedEncodingException e) {
 			ExceptionUtils.rethrow(e);
 		}
-		sb.append(list.toString());
 		Long numFound = Optional.ofNullable(getQueryResponse()).map(QueryResponse::getResults).map(SolrDocumentList::getNumFound).orElse(null);
 		if(numFound != null)
 			sb.append("numFound: ").append(numFound).append("\n");

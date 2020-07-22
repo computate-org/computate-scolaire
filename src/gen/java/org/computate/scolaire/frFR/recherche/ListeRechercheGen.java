@@ -3,14 +3,17 @@ package org.computate.scolaire.frFR.recherche;
 import java.util.Arrays;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import org.apache.solr.common.SolrDocumentList;
+import java.util.HashMap;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 import org.computate.scolaire.frFR.requete.api.RequeteApi;
 import org.apache.commons.lang3.StringUtils;
 import java.text.NumberFormat;
 import io.vertx.core.logging.LoggerFactory;
+import java.util.ArrayList;
 import org.computate.scolaire.frFR.couverture.Couverture;
 import org.apache.commons.collections.CollectionUtils;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.lang.Boolean;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
@@ -21,6 +24,7 @@ import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.apache.commons.text.StringEscapeUtils;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import java.util.List;
@@ -29,9 +33,11 @@ import org.apache.commons.lang3.math.NumberUtils;
 import java.util.Optional;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import java.lang.Class;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 
 /**	
- * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.recherche.ListeRecherche&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
+ * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.recherche.ListeRecherche&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr. </a>
  * <br/>
  **/
 public abstract class ListeRechercheGen<DEV> {
@@ -41,7 +47,7 @@ public abstract class ListeRechercheGen<DEV> {
 	// c //
 	///////
 
-	/**	L'entité « c »
+	/**	 L'entité c
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -49,7 +55,7 @@ public abstract class ListeRechercheGen<DEV> {
 	@JsonIgnore
 	public Couverture<Class<DEV>> cCouverture = new Couverture<Class<DEV>>().p(this).c(Class.class).var("c").o(c);
 
-	/**	<br/>L'entité « c »
+	/**	<br/> L'entité c
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.recherche.ListeRecherche&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:c">Trouver l'entité c dans Solr</a>
 	 * <br/>
@@ -79,7 +85,7 @@ public abstract class ListeRechercheGen<DEV> {
 	// requeteSite_ //
 	//////////////////
 
-	/**	L'entité « requeteSite_ »
+	/**	 L'entité requeteSite_
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonIgnore
@@ -88,7 +94,7 @@ public abstract class ListeRechercheGen<DEV> {
 	@JsonIgnore
 	public Couverture<RequeteSiteFrFR> requeteSite_Couverture = new Couverture<RequeteSiteFrFR>().p(this).c(RequeteSiteFrFR.class).var("requeteSite_").o(requeteSite_);
 
-	/**	<br/>L'entité « requeteSite_ »
+	/**	<br/> L'entité requeteSite_
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.recherche.ListeRecherche&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:requeteSite_">Trouver l'entité requeteSite_ dans Solr</a>
 	 * <br/>
@@ -118,7 +124,7 @@ public abstract class ListeRechercheGen<DEV> {
 	// stocker //
 	/////////////
 
-	/**	L'entité « stocker »
+	/**	 L'entité stocker
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -126,7 +132,7 @@ public abstract class ListeRechercheGen<DEV> {
 	@JsonIgnore
 	public Couverture<Boolean> stockerCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("stocker").o(stocker);
 
-	/**	<br/>L'entité « stocker »
+	/**	<br/> L'entité stocker
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.recherche.ListeRecherche&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:stocker">Trouver l'entité stocker dans Solr</a>
 	 * <br/>
@@ -185,7 +191,7 @@ public abstract class ListeRechercheGen<DEV> {
 	// peupler //
 	/////////////
 
-	/**	L'entité « peupler »
+	/**	 L'entité peupler
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -193,7 +199,7 @@ public abstract class ListeRechercheGen<DEV> {
 	@JsonIgnore
 	public Couverture<Boolean> peuplerCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("peupler").o(peupler);
 
-	/**	<br/>L'entité « peupler »
+	/**	<br/> L'entité peupler
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.recherche.ListeRecherche&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:peupler">Trouver l'entité peupler dans Solr</a>
 	 * <br/>
@@ -252,15 +258,15 @@ public abstract class ListeRechercheGen<DEV> {
 	// fields //
 	////////////
 
-	/**	L'entité « fields »
+	/**	 L'entité fields
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<String>(). 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected List<String> fields = new java.util.ArrayList<java.lang.String>();
+	protected List<String> fields = new ArrayList<String>();
 	@JsonIgnore
 	public Couverture<List<String>> fieldsCouverture = new Couverture<List<String>>().p(this).c(List.class).var("fields").o(fields);
 
-	/**	<br/>L'entité « fields »
+	/**	<br/> L'entité fields
 	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<String>(). 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.recherche.ListeRecherche&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:fields">Trouver l'entité fields dans Solr</a>
 	 * <br/>
@@ -331,7 +337,7 @@ public abstract class ListeRechercheGen<DEV> {
 	// solrQuery //
 	///////////////
 
-	/**	L'entité « solrQuery »
+	/**	 L'entité solrQuery
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SolrQuery(). 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -339,7 +345,7 @@ public abstract class ListeRechercheGen<DEV> {
 	@JsonIgnore
 	public Couverture<SolrQuery> solrQueryCouverture = new Couverture<SolrQuery>().p(this).c(SolrQuery.class).var("solrQuery").o(solrQuery);
 
-	/**	<br/>L'entité « solrQuery »
+	/**	<br/> L'entité solrQuery
 	 * Il est construit avant d'être initialisé avec le constructeur par défaut SolrQuery(). 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.recherche.ListeRecherche&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:solrQuery">Trouver l'entité solrQuery dans Solr</a>
 	 * <br/>
@@ -367,7 +373,7 @@ public abstract class ListeRechercheGen<DEV> {
 	// queryResponse //
 	///////////////////
 
-	/**	L'entité « queryResponse »
+	/**	 L'entité queryResponse
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -375,7 +381,7 @@ public abstract class ListeRechercheGen<DEV> {
 	@JsonIgnore
 	public Couverture<QueryResponse> queryResponseCouverture = new Couverture<QueryResponse>().p(this).c(QueryResponse.class).var("queryResponse").o(queryResponse);
 
-	/**	<br/>L'entité « queryResponse »
+	/**	<br/> L'entité queryResponse
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.recherche.ListeRecherche&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:queryResponse">Trouver l'entité queryResponse dans Solr</a>
 	 * <br/>
@@ -405,7 +411,7 @@ public abstract class ListeRechercheGen<DEV> {
 	// solrDocumentList //
 	//////////////////////
 
-	/**	L'entité « solrDocumentList »
+	/**	 L'entité solrDocumentList
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -413,7 +419,7 @@ public abstract class ListeRechercheGen<DEV> {
 	@JsonIgnore
 	public Couverture<SolrDocumentList> solrDocumentListCouverture = new Couverture<SolrDocumentList>().p(this).c(SolrDocumentList.class).var("solrDocumentList").o(solrDocumentList);
 
-	/**	<br/>L'entité « solrDocumentList »
+	/**	<br/> L'entité solrDocumentList
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.recherche.ListeRecherche&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:solrDocumentList">Trouver l'entité solrDocumentList dans Solr</a>
 	 * <br/>
@@ -443,15 +449,15 @@ public abstract class ListeRechercheGen<DEV> {
 	// list //
 	//////////
 
-	/**	L'entité « list »
+	/**	 L'entité list
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<DEV>(). 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected List<DEV> list = new java.util.ArrayList<DEV>();
+	protected List<DEV> list = new ArrayList<DEV>();
 	@JsonIgnore
 	public Couverture<List<DEV>> listCouverture = new Couverture<List<DEV>>().p(this).c(List.class).var("list").o(list);
 
-	/**	<br/>L'entité « list »
+	/**	<br/> L'entité list
 	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<DEV>(). 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.recherche.ListeRecherche&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:list">Trouver l'entité list dans Solr</a>
 	 * <br/>

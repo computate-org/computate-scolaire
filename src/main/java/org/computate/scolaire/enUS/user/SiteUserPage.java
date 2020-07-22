@@ -164,7 +164,7 @@ public class SiteUserPage extends SiteUserPageGen<SiteUserGenPage> {
 	
 			l.addSort("schoolName_indexed_string", ORDER.asc);
 			l.addSort("schoolLocation_indexed_string", ORDER.asc);
-			l.addSort("enrollmentApproved_indexed_date", ORDER.asc);
+			l.addSort("enrollmentApproved_indexed_boolean", ORDER.asc);
 			l.addSort("yearStart_indexed_int", ORDER.desc);
 			l.addSort("created_indexed_int", ORDER.desc);
 
