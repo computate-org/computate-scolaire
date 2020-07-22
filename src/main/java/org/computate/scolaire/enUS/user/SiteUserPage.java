@@ -294,8 +294,8 @@ public class SiteUserPage extends SiteUserPageGen<SiteUserGenPage> {
 	@Override public void htmlBodySiteUserGenPage() {
 		SiteConfig siteConfig = siteRequest_.getSiteConfig_();
 
-		writeSchoolEnrollments();
 		writeSchoolReports();
+		writeSchoolEnrollments();
 
 		if(enrollments_ != null) {
 			e("h3").a("class", "w3-block w3-gray w3-padding w3-center ").f().sx("Enrollments and account info").g("h3");
