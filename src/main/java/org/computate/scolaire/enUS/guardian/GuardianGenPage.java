@@ -157,6 +157,8 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 			o.htmPersonRelation("Page");
 			o.htmPersonEmergencyContact("Page");
 			o.htmPersonPickup("Page");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPhoto("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
@@ -185,6 +187,8 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 			o.htmPersonRelation("POST");
 			o.htmPersonEmergencyContact("POST");
 			o.htmPersonPickup("POST");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPhoto("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
@@ -235,6 +239,8 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 			o.htmPersonRelation("PUTCopy");
 			o.htmPersonEmergencyContact("PUTCopy");
 			o.htmPersonPickup("PUTCopy");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPhoto("PUTCopy");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
@@ -267,6 +273,8 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 			o.htmPersonRelation("PATCH");
 			o.htmPersonEmergencyContact("PATCH");
 			o.htmPersonPickup("PATCH");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPhoto("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();

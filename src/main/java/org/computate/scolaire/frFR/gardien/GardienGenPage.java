@@ -158,6 +158,8 @@ public class GardienGenPage extends GardienGenPageGen<ClusterPage> {
 			o.htmPersonneRelation("Page");
 			o.htmPersonneContactUrgence("Page");
 			o.htmPersonneChercher("Page");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPhoto("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
@@ -186,6 +188,8 @@ public class GardienGenPage extends GardienGenPageGen<ClusterPage> {
 			o.htmPersonneRelation("POST");
 			o.htmPersonneContactUrgence("POST");
 			o.htmPersonneChercher("POST");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPhoto("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
@@ -236,6 +240,8 @@ public class GardienGenPage extends GardienGenPageGen<ClusterPage> {
 			o.htmPersonneRelation("PUTCopie");
 			o.htmPersonneContactUrgence("PUTCopie");
 			o.htmPersonneChercher("PUTCopie");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPhoto("PUTCopie");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
@@ -268,6 +274,8 @@ public class GardienGenPage extends GardienGenPageGen<ClusterPage> {
 			o.htmPersonneRelation("PATCH");
 			o.htmPersonneContactUrgence("PATCH");
 			o.htmPersonneChercher("PATCH");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPhoto("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();

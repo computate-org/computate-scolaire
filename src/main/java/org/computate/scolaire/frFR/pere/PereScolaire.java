@@ -509,7 +509,7 @@ public class PereScolaire extends PereScolaireGen<Cluster> {
 	 * NomAffichage.frFR: photo
 	 * NomAffichage.enUS: photo
 	 * Definir: true
-	 * HtmlLigne: 4
+	 * HtmlLigne: 5
 	 * HtmlCellule: 5
 	 * ImageBase64Url.frFR: /photo
 	 * ImageBase64Url.enUS: /photo

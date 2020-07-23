@@ -490,8 +490,8 @@ public class GardienScolaire extends GardienScolaireGen<Cluster> {
 	 * NomAffichage.frFR: photo
 	 * NomAffichage.enUS: photo
 	 * Definir: true
-	 * HtmlLigne: 4
-	 * HtmlCellule: 5
+	 * HtmlLigne: 5
+	 * HtmlCellule: 1
 	 * ImageBase64Url.frFR: /photo
 	 * ImageBase64Url.enUS: /photo
 	 */                
