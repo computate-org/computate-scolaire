@@ -653,6 +653,43 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 														rc.response().end("{}");
 													}
 												}
+
+												if("SchoolEnrollment".equals(classSimpleName)) {
+													SchoolEnrollmentEnUSApiServiceImpl service = new SchoolEnrollmentEnUSApiServiceImpl(siteContextEnUS);
+													JsonObject json = new JsonObject();
+													json.put("setPhoto", str);
+													SiteRequestEnUS requeteSite = service.generateSiteRequestEnUSForSchoolEnrollment(siteContextEnUS, null, json);
+
+													ApiRequest apiRequest = new ApiRequest();
+													apiRequest.setRows(1);
+													apiRequest.setNumFound(1l);
+													apiRequest.setNumPATCH(0L);
+													apiRequest.initDeepApiRequest(requeteSite);
+													requeteSite.setApiRequest_(apiRequest);
+													requeteSite.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest).toString());
+									
+													SearchList<SchoolEnrollment> searchList = new SearchList<SchoolEnrollment>();
+													searchList.setStore(true);
+													searchList.setQuery("*:*");
+													searchList.setC(SchoolEnrollment.class);
+													searchList.addFilterQuery("pk_indexed_long:" + pk);
+													searchList.initDeepForClass(requeteSite);
+									
+													if(searchList.size() == 1) {
+														SchoolEnrollment o = searchList.getList().stream().findFirst().orElse(null);
+														service.patchSchoolEnrollmentFuture(o, false, e -> {
+															if(e.succeeded()) {
+																rc.response().end("{}");
+															}
+															else {
+																LOGGER.error(configureOpenApiPhotoError, e.cause());
+																rc.fail(500, e.cause());
+															}
+														});
+													} else {
+														rc.response().end("{}");
+													}
+												}
 											} catch(Exception ex) {
 												LOGGER.error(configureOpenApiPhotoError, ex);
 												rc.fail(500, ex);

@@ -538,6 +538,8 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r.enUS: generateSiteRequestEnUSForSchoolDad
 	 * r: genererRequeteSiteFrFRPourGardienScolaire
 	 * r.enUS: generateSiteRequestEnUSForSchoolGuardian
+	 * r: genererRequeteSiteFrFRPourInscriptionScolaire
+	 * r.enUS: generateSiteRequestEnUSForSchoolEnrollment
 	 * r: RequeteSiteFrFR
 	 * r.enUS: SiteRequestEnUS
 	 * r: setStocker
@@ -554,6 +556,8 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r.enUS: "SchoolDad"
 	 * r: "GardienScolaire"
 	 * r.enUS: "SchoolGuardian"
+	 * r: "InscriptionScolaire"
+	 * r.enUS: "SchoolEnrollment"
 	 * r: EnfantScolaireFrFRApiServiceImpl
 	 * r.enUS: SchoolChildEnUSApiServiceImpl
 	 * r: MereScolaireFrFRApiServiceImpl
@@ -562,6 +566,8 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r.enUS: SchoolDadEnUSApiServiceImpl
 	 * r: GardienScolaireFrFRApiServiceImpl
 	 * r.enUS: SchoolGuardianEnUSApiServiceImpl
+	 * r: InscriptionScolaireFrFRApiServiceImpl
+	 * r.enUS: SchoolEnrollmentEnUSApiServiceImpl
 	 * r: EnfantScolaire
 	 * r.enUS: SchoolChild
 	 * r: MereScolaire
@@ -570,6 +576,8 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r.enUS: SchoolDad
 	 * r: GardienScolaire
 	 * r.enUS: SchoolGuardian
+	 * r: InscriptionScolaire
+	 * r.enUS: SchoolEnrollment
 	 * r: ListeRecherche
 	 * r.enUS: SearchList
 	 * r: "fichier"
@@ -938,6 +946,43 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 													if(listeRecherche.size() == 1) {
 														GardienScolaire o = listeRecherche.getList().stream().findFirst().orElse(null);
 														service.patchGardienScolaireFuture(o, false, e -> {
+															if(e.succeeded()) {
+																rc.response().end("{}");
+															}
+															else {
+																LOGGER.error(configurerOpenApiPhotoErreur, e.cause());
+																rc.fail(500, e.cause());
+															}
+														});
+													} else {
+														rc.response().end("{}");
+													}
+												}
+
+												if("InscriptionScolaire".equals(classeNomSimple)) {
+													InscriptionScolaireFrFRApiServiceImpl service = new InscriptionScolaireFrFRApiServiceImpl(siteContexteFrFR);
+													JsonObject json = new JsonObject();
+													json.put("setPhoto", str);
+													RequeteSiteFrFR requeteSite = service.genererRequeteSiteFrFRPourInscriptionScolaire(siteContexteFrFR, null, json);
+
+													RequeteApi requeteApi = new RequeteApi();
+													requeteApi.setRows(1);
+													requeteApi.setNumFound(1l);
+													requeteApi.setNumPATCH(0L);
+													requeteApi.initLoinRequeteApi(requeteSite);
+													requeteSite.setRequeteApi_(requeteApi);
+													requeteSite.getVertx().eventBus().publish("websocketInscriptionScolaire", JsonObject.mapFrom(requeteApi).toString());
+									
+													ListeRecherche<InscriptionScolaire> listeRecherche = new ListeRecherche<InscriptionScolaire>();
+													listeRecherche.setStocker(true);
+													listeRecherche.setQuery("*:*");
+													listeRecherche.setC(InscriptionScolaire.class);
+													listeRecherche.addFilterQuery("pk_indexed_long:" + pk);
+													listeRecherche.initLoinPourClasse(requeteSite);
+									
+													if(listeRecherche.size() == 1) {
+														InscriptionScolaire o = listeRecherche.getList().stream().findFirst().orElse(null);
+														service.patchInscriptionScolaireFuture(o, false, e -> {
 															if(e.succeeded()) {
 																rc.response().end("{}");
 															}

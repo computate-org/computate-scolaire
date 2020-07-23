@@ -75,7 +75,7 @@ public class SiteUserPage extends SiteUserPageGen<SiteUserGenPage> {
 		l.addSort("pageDesignCompleteName_indexed_string", ORDER.asc);
 		l.setRows(1000);
 
-		List<String> roles = Arrays.asList("SiteAdmin");
+		List<String> roles = Arrays.asList("SiteManager");
 		if(
 				!CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), roles)
 				&& !CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), roles)
@@ -326,7 +326,10 @@ public class SiteUserPage extends SiteUserPageGen<SiteUserGenPage> {
 									e("span").f().sx("Last payment").g("span");
 								} g("td");
 								{ e("td").a("class", "w3-cell w3-left ").f();
-									e("div").f().sx(enrollment.getPaymentLastStr()).g("div");
+									{ e("div").f();
+										e("span").f().sx(enrollment.getPaymentLastStr()).g("span");
+										e("a").a("href", siteConfig.getSiteBaseUrl(), "/payment?fq=enrollmentKey:", enrollment.getPk()).f().sx("See all payments").g("a");
+									} g("div");
 								} g("td");
 							} g("tr");
 							{ e("tr").a("class", "").f();

@@ -1219,7 +1219,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	 * r: "Déconnexion"
 	 * r.enUS: "Logout"
 	 * r: "Connexion"
-	 * r.enUS: "Login/Register"
+	 * r.enUS: "Login"
 	 * r: "écoles"
 	 * r.enUS: "schools"
 	 * r: "années"
