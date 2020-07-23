@@ -328,7 +328,9 @@ public class SiteUserPage extends SiteUserPageGen<SiteUserGenPage> {
 								{ e("td").a("class", "w3-cell w3-left ").f();
 									{ e("div").f();
 										e("span").f().sx(enrollment.getPaymentLastStr()).g("span");
-										e("a").a("href", siteConfig.getSiteBaseUrl(), "/payment?fq=enrollmentKey:", enrollment.getPk()).f().sx("See all payments").g("a");
+									} g("div");
+									{ e("div").f();
+										e("a").a("class", "w3-text-purple ").a("href", siteConfig.getSiteBaseUrl(), "/payment?fq=enrollmentKey:", enrollment.getPk()).f().sx("See all payments").g("a");
 									} g("div");
 								} g("td");
 							} g("tr");
