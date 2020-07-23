@@ -2142,7 +2142,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 				{ e("form").a("style", "display: inline-block; ").a("method", "post").a("target", "_blank").a("action", configSite.getAuthorizeUrl() + "/payment/payment").f();
 					e("input").a("type", "hidden").a("name", "token").a("value", hostedPaymentResponse.getToken()).fg();
 					{ e("button").a("class", "w3-button w3-light-gray w3-text-purple text-decoration-underline ").a("style", "white-space: normal; text-align: left; ").a("type", "submit").f();
-						sx(String.format("Make a payment for $%s including the 3%% card processing fee", amount));
+						sx("Make a payment by credit for a 3% fee. Cash, check, or e-check are always accepted as well. ");
 					} g("button");
 				} g("form");
 			}
