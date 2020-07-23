@@ -3473,7 +3473,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 	}
 
 	public String nomAffichagePaymentAmount() {
-		return "payment amount";
+		return "payment history";
 	}
 
 	public String htmTooltipPaymentAmount() {
@@ -3492,7 +3492,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				) {
 			e("input")
 				.a("type", "text")
-				.a("placeholder", "payment amount")
+				.a("placeholder", "payment history")
 				.a("id", classApiMethodMethod, "_paymentAmount");
 				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
 					a("class", "setPaymentAmount classSchoolPayment inputSchoolPayment", pk, "PaymentAmount w3-input w3-border ");
@@ -3527,7 +3527,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolPaymentPaymentAmount").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row w3-green ").f();
-							e("label").a("for", classApiMethodMethod, "_paymentAmount").a("class", "").f().sx("payment amount").g("label");
+							e("label").a("for", classApiMethodMethod, "_paymentAmount").a("class", "").f().sx("payment history").g("label");
 						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
@@ -5483,6 +5483,87 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		} g("div");
 	}
 
+	/////////////////
+	// paymentNext //
+	/////////////////
+
+	/**	 The entity paymentNext
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonDeserialize(using = LocalDateDeserializer.class)
+	@JsonSerialize(using = LocalDateSerializer.class)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+	@JsonInclude(Include.NON_NULL)
+	protected LocalDate paymentNext;
+	@JsonIgnore
+	public Wrap<LocalDate> paymentNextWrap = new Wrap<LocalDate>().p(this).c(LocalDate.class).var("paymentNext").o(paymentNext);
+
+	/**	<br/> The entity paymentNext
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.payment.SchoolPayment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:paymentNext">Find the entity paymentNext in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _paymentNext(Wrap<LocalDate> c);
+
+	public LocalDate getPaymentNext() {
+		return paymentNext;
+	}
+
+	public void setPaymentNext(LocalDate paymentNext) {
+		this.paymentNext = paymentNext;
+		this.paymentNextWrap.alreadyInitialized = true;
+	}
+	public SchoolPayment setPaymentNext(Instant o) {
+		this.paymentNext = o == null ? null : LocalDate.from(o);
+		this.paymentNextWrap.alreadyInitialized = true;
+		return (SchoolPayment)this;
+	}
+	/** Example: 2011-12-03+01:00 **/
+	public SchoolPayment setPaymentNext(String o) {
+		this.paymentNext = o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		this.paymentNextWrap.alreadyInitialized = true;
+		return (SchoolPayment)this;
+	}
+	public SchoolPayment setPaymentNext(Date o) {
+		this.paymentNext = o == null ? null : o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
+		this.paymentNextWrap.alreadyInitialized = true;
+		return (SchoolPayment)this;
+	}
+	protected SchoolPayment paymentNextInit() {
+		if(!paymentNextWrap.alreadyInitialized) {
+			_paymentNext(paymentNextWrap);
+			if(paymentNext == null)
+				setPaymentNext(paymentNextWrap.o);
+		}
+		paymentNextWrap.alreadyInitialized(true);
+		return (SchoolPayment)this;
+	}
+
+	public Date solrPaymentNext() {
+		return paymentNext == null ? null : Date.from(paymentNext.atStartOfDay(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toInstant().atZone(ZoneId.of("Z")).toInstant());
+	}
+
+	public String strPaymentNext() {
+		return paymentNext == null ? "" : paymentNext.format(DateTimeFormatter.ofPattern("EEE MMM d, yyyy", Locale.forLanguageTag("en-US")));
+	}
+
+	public String jsonPaymentNext() {
+		return paymentNext == null ? "" : paymentNext.format(DateTimeFormatter.ISO_DATE);
+	}
+
+	public String nomAffichagePaymentNext() {
+		return "next payment date";
+	}
+
+	public String htmTooltipPaymentNext() {
+		return null;
+	}
+
+	public String htmPaymentNext() {
+		return paymentNext == null ? "" : StringEscapeUtils.escapeHtml4(strPaymentNext());
+	}
+
 	/////////////////////
 	// chargeAmountDue //
 	/////////////////////
@@ -5966,6 +6047,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		chargeEnrollmentInit();
 		chargeMonthInit();
 		chargeLateFeeInit();
+		paymentNextInit();
 		chargeAmountDueInit();
 		chargeAmountFutureInit();
 		paymentShortNameInit();
@@ -6116,6 +6198,8 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				return oSchoolPayment.chargeMonth;
 			case "chargeLateFee":
 				return oSchoolPayment.chargeLateFee;
+			case "paymentNext":
+				return oSchoolPayment.paymentNext;
 			case "chargeAmountDue":
 				return oSchoolPayment.chargeAmountDue;
 			case "chargeAmountFuture":
@@ -6631,6 +6715,12 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 					oSchoolPayment.setChargeLateFee(chargeLateFee);
 			}
 
+			if(saves.contains("paymentNext")) {
+				Date paymentNext = (Date)solrDocument.get("paymentNext_stored_date");
+				if(paymentNext != null)
+					oSchoolPayment.setPaymentNext(paymentNext);
+			}
+
 			if(saves.contains("chargeAmountDue")) {
 				Double chargeAmountDue = (Double)solrDocument.get("chargeAmountDue_stored_double");
 				if(chargeAmountDue != null)
@@ -6941,6 +7031,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 			document.addField("chargeLateFee_indexed_boolean", chargeLateFee);
 			document.addField("chargeLateFee_stored_boolean", chargeLateFee);
 		}
+		if(paymentNext != null) {
+			document.addField("paymentNext_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(paymentNext.atStartOfDay(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toInstant().atZone(ZoneId.of("Z"))));
+			document.addField("paymentNext_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(paymentNext.atStartOfDay(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toInstant().atZone(ZoneId.of("Z"))));
+		}
 		if(chargeAmountDue != null) {
 			document.addField("chargeAmountDue_indexed_double", chargeAmountDue.doubleValue());
 			document.addField("chargeAmountDue_stored_double", chargeAmountDue.doubleValue());
@@ -7082,6 +7176,8 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				return "chargeMonth_indexed_boolean";
 			case "chargeLateFee":
 				return "chargeLateFee_indexed_boolean";
+			case "paymentNext":
+				return "paymentNext_indexed_date";
 			case "chargeAmountDue":
 				return "chargeAmountDue_indexed_double";
 			case "chargeAmountFuture":
@@ -7322,6 +7418,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		Boolean chargeLateFee = (Boolean)solrDocument.get("chargeLateFee_stored_boolean");
 		if(chargeLateFee != null)
 			oSchoolPayment.setChargeLateFee(chargeLateFee);
+
+		Date paymentNext = (Date)solrDocument.get("paymentNext_stored_date");
+		if(paymentNext != null)
+			oSchoolPayment.setPaymentNext(paymentNext);
 
 		Double chargeAmountDue = (Double)solrDocument.get("chargeAmountDue_stored_double");
 		if(chargeAmountDue != null)

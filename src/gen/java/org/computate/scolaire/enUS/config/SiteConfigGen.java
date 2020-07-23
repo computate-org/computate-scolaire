@@ -2,7 +2,6 @@ package org.computate.scolaire.enUS.config;
 
 import java.util.Arrays;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
-import java.util.Date;
 import java.util.HashMap;
 import org.computate.scolaire.enUS.writer.AllWriter;
 import org.computate.scolaire.enUS.request.api.ApiRequest;
@@ -15,12 +14,10 @@ import org.computate.scolaire.enUS.wrap.Wrap;
 import org.apache.commons.collections.CollectionUtils;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
-import java.util.Locale;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.lang.Boolean;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import java.lang.String;
-import java.time.ZoneOffset;
 import io.vertx.core.logging.Logger;
 import org.apache.commons.configuration2.INIConfiguration;
 import java.math.MathContext;
@@ -28,13 +25,8 @@ import org.computate.scolaire.enUS.cluster.Cluster;
 import org.apache.commons.text.StringEscapeUtils;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import java.time.Instant;
-import java.time.ZoneId;
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
-import java.time.temporal.ChronoUnit;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import org.apache.commons.lang3.math.NumberUtils;
 import java.util.Optional;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -44,7 +36,7 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 
 /**	
  * Loads the properties in the application config file into specific fields. 
- * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
+ * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true">Find the class  in Solr. </a>
  * <br/>
  **/
 public abstract class SiteConfigGen<DEV> extends Object {
@@ -54,7 +46,7 @@ public abstract class SiteConfigGen<DEV> extends Object {
 	// configPath //
 	////////////////
 
-	/**	L'entité « configPath »
+	/**	 The entity configPath
 The path to the config file of the site. 
 	 *	 is defined as null before being initialized. 
 	 */
@@ -63,12 +55,12 @@ The path to the config file of the site.
 	@JsonIgnore
 	public Wrap<String> configPathWrap = new Wrap<String>().p(this).c(String.class).var("configPath").o(configPath);
 
-	/**	<br/>L'entité « configPath »
+	/**	<br/> The entity configPath
 The path to the config file of the site. 
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:configPath">Trouver l'entité configPath dans Solr</a>
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:configPath">Find the entity configPath in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _configPath(Wrap<String> c);
 
@@ -94,7 +86,7 @@ The path to the config file of the site.
 	// config //
 	////////////
 
-	/**	L'entité « config »
+	/**	 The entity config
 The INI Configuration Object for the config file. 
 	 *	 is defined as null before being initialized. 
 	 */
@@ -103,12 +95,12 @@ The INI Configuration Object for the config file.
 	@JsonIgnore
 	public Wrap<INIConfiguration> configWrap = new Wrap<INIConfiguration>().p(this).c(INIConfiguration.class).var("config").o(config);
 
-	/**	<br/>L'entité « config »
+	/**	<br/> The entity config
 The INI Configuration Object for the config file. 
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:config">Trouver l'entité config dans Solr</a>
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:config">Find the entity config in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _config(Wrap<INIConfiguration> c);
 
@@ -134,7 +126,7 @@ The INI Configuration Object for the config file.
 	// siteIdentifier //
 	////////////////////
 
-	/**	L'entité « siteIdentifier »
+	/**	 The entity siteIdentifier
 The name of the principal group of settings of the config for this website. 
 	 *	 is defined as null before being initialized. 
 	 */
@@ -143,12 +135,12 @@ The name of the principal group of settings of the config for this website.
 	@JsonIgnore
 	public Wrap<String> siteIdentifierWrap = new Wrap<String>().p(this).c(String.class).var("siteIdentifier").o(siteIdentifier);
 
-	/**	<br/>L'entité « siteIdentifier »
+	/**	<br/> The entity siteIdentifier
 The name of the principal group of settings of the config for this website. 
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:siteIdentifier">Trouver l'entité siteIdentifier dans Solr</a>
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:siteIdentifier">Find the entity siteIdentifier in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _siteIdentifier(Wrap<String> c);
 
@@ -174,7 +166,7 @@ The name of the principal group of settings of the config for this website.
 	// prefixEscaped //
 	///////////////////
 
-	/**	L'entité « prefixEscaped »
+	/**	 The entity prefixEscaped
 The already escaped prefix to find the properties of the site. 
 	 *	 is defined as null before being initialized. 
 	 */
@@ -183,12 +175,12 @@ The already escaped prefix to find the properties of the site.
 	@JsonIgnore
 	public Wrap<String> prefixEscapedWrap = new Wrap<String>().p(this).c(String.class).var("prefixEscaped").o(prefixEscaped);
 
-	/**	<br/>L'entité « prefixEscaped »
+	/**	<br/> The entity prefixEscaped
 The already escaped prefix to find the properties of the site. 
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:prefixEscaped">Trouver l'entité prefixEscaped dans Solr</a>
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:prefixEscaped">Find the entity prefixEscaped in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _prefixEscaped(Wrap<String> c);
 
@@ -214,7 +206,7 @@ The already escaped prefix to find the properties of the site.
 	// appPath //
 	/////////////
 
-	/**	L'entité « appPath »
+	/**	 The entity appPath
 The path to the project of the site cloned from git. 
 	 *	 is defined as null before being initialized. 
 	 */
@@ -223,12 +215,12 @@ The path to the project of the site cloned from git.
 	@JsonIgnore
 	public Wrap<String> appPathWrap = new Wrap<String>().p(this).c(String.class).var("appPath").o(appPath);
 
-	/**	<br/>L'entité « appPath »
+	/**	<br/> The entity appPath
 The path to the project of the site cloned from git. 
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:appPath">Trouver l'entité appPath dans Solr</a>
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:appPath">Find the entity appPath in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _appPath(Wrap<String> c);
 
@@ -254,7 +246,7 @@ The path to the project of the site cloned from git.
 	// docRoot //
 	/////////////
 
-	/**	L'entité « docRoot »
+	/**	 The entity docRoot
 The path to the docroot for the project. 
 	 *	 is defined as null before being initialized. 
 	 */
@@ -263,12 +255,12 @@ The path to the docroot for the project.
 	@JsonIgnore
 	public Wrap<String> docRootWrap = new Wrap<String>().p(this).c(String.class).var("docRoot").o(docRoot);
 
-	/**	<br/>L'entité « docRoot »
+	/**	<br/> The entity docRoot
 The path to the docroot for the project. 
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:docRoot">Trouver l'entité docRoot dans Solr</a>
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:docRoot">Find the entity docRoot in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _docRoot(Wrap<String> c);
 
@@ -294,7 +286,7 @@ The path to the docroot for the project.
 	// companyName //
 	/////////////////
 
-	/**	L'entité « companyName »
+	/**	 The entity companyName
 The name of the company. 
 	 *	 is defined as null before being initialized. 
 	 */
@@ -303,12 +295,12 @@ The name of the company.
 	@JsonIgnore
 	public Wrap<String> companyNameWrap = new Wrap<String>().p(this).c(String.class).var("companyName").o(companyName);
 
-	/**	<br/>L'entité « companyName »
+	/**	<br/> The entity companyName
 The name of the company. 
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:companyName">Trouver l'entité companyName dans Solr</a>
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:companyName">Find the entity companyName in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _companyName(Wrap<String> c);
 
@@ -334,7 +326,7 @@ The name of the company.
 	// domainName //
 	////////////////
 
-	/**	L'entité « domainName »
+	/**	 The entity domainName
 The domain name of the site. 
 	 *	 is defined as null before being initialized. 
 	 */
@@ -343,12 +335,12 @@ The domain name of the site.
 	@JsonIgnore
 	public Wrap<String> domainNameWrap = new Wrap<String>().p(this).c(String.class).var("domainName").o(domainName);
 
-	/**	<br/>L'entité « domainName »
+	/**	<br/> The entity domainName
 The domain name of the site. 
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:domainName">Trouver l'entité domainName dans Solr</a>
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:domainName">Find the entity domainName in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _domainName(Wrap<String> c);
 
@@ -374,7 +366,7 @@ The domain name of the site.
 	// siteHostName //
 	//////////////////
 
-	/**	L'entité « siteHostName »
+	/**	 The entity siteHostName
 The host name of the site. 
 	 *	 is defined as null before being initialized. 
 	 */
@@ -383,12 +375,12 @@ The host name of the site.
 	@JsonIgnore
 	public Wrap<String> siteHostNameWrap = new Wrap<String>().p(this).c(String.class).var("siteHostName").o(siteHostName);
 
-	/**	<br/>L'entité « siteHostName »
+	/**	<br/> The entity siteHostName
 The host name of the site. 
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:siteHostName">Trouver l'entité siteHostName dans Solr</a>
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:siteHostName">Find the entity siteHostName in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _siteHostName(Wrap<String> c);
 
@@ -414,7 +406,7 @@ The host name of the site.
 	// sitePort //
 	//////////////
 
-	/**	L'entité « sitePort »
+	/**	 The entity sitePort
 The port of the site. 
 	 *	 is defined as null before being initialized. 
 	 */
@@ -424,12 +416,12 @@ The port of the site.
 	@JsonIgnore
 	public Wrap<Integer> sitePortWrap = new Wrap<Integer>().p(this).c(Integer.class).var("sitePort").o(sitePort);
 
-	/**	<br/>L'entité « sitePort »
+	/**	<br/> The entity sitePort
 The port of the site. 
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:sitePort">Trouver l'entité sitePort dans Solr</a>
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:sitePort">Find the entity sitePort in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _sitePort(Wrap<Integer> c);
 
@@ -461,7 +453,7 @@ The port of the site.
 	// authRealm //
 	///////////////
 
-	/**	L'entité « authRealm »
+	/**	 The entity authRealm
 The Keycloak realm of the site. 
 	 *	 is defined as null before being initialized. 
 	 */
@@ -470,12 +462,12 @@ The Keycloak realm of the site.
 	@JsonIgnore
 	public Wrap<String> authRealmWrap = new Wrap<String>().p(this).c(String.class).var("authRealm").o(authRealm);
 
-	/**	<br/>L'entité « authRealm »
+	/**	<br/> The entity authRealm
 The Keycloak realm of the site. 
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:authRealm">Trouver l'entité authRealm dans Solr</a>
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:authRealm">Find the entity authRealm in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _authRealm(Wrap<String> c);
 
@@ -501,7 +493,7 @@ The Keycloak realm of the site.
 	// authResource //
 	//////////////////
 
-	/**	L'entité « authResource »
+	/**	 The entity authResource
 The Keycloak client ID of the site. 
 	 *	 is defined as null before being initialized. 
 	 */
@@ -510,12 +502,12 @@ The Keycloak client ID of the site.
 	@JsonIgnore
 	public Wrap<String> authResourceWrap = new Wrap<String>().p(this).c(String.class).var("authResource").o(authResource);
 
-	/**	<br/>L'entité « authResource »
+	/**	<br/> The entity authResource
 The Keycloak client ID of the site. 
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:authResource">Trouver l'entité authResource dans Solr</a>
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:authResource">Find the entity authResource in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _authResource(Wrap<String> c);
 
@@ -541,7 +533,7 @@ The Keycloak client ID of the site.
 	// authSecret //
 	////////////////
 
-	/**	L'entité « authSecret »
+	/**	 The entity authSecret
 The Keycloak client secret of the site. 
 	 *	 is defined as null before being initialized. 
 	 */
@@ -550,12 +542,12 @@ The Keycloak client secret of the site.
 	@JsonIgnore
 	public Wrap<String> authSecretWrap = new Wrap<String>().p(this).c(String.class).var("authSecret").o(authSecret);
 
-	/**	<br/>L'entité « authSecret »
+	/**	<br/> The entity authSecret
 The Keycloak client secret of the site. 
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:authSecret">Trouver l'entité authSecret dans Solr</a>
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:authSecret">Find the entity authSecret in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _authSecret(Wrap<String> c);
 
@@ -581,7 +573,7 @@ The Keycloak client secret of the site.
 	// authSslRequired //
 	/////////////////////
 
-	/**	L'entité « authSslRequired »
+	/**	 The entity authSslRequired
 Whether SSL is required in Keycloak for the site. 
 	 *	 is defined as null before being initialized. 
 	 */
@@ -590,12 +582,12 @@ Whether SSL is required in Keycloak for the site.
 	@JsonIgnore
 	public Wrap<String> authSslRequiredWrap = new Wrap<String>().p(this).c(String.class).var("authSslRequired").o(authSslRequired);
 
-	/**	<br/>L'entité « authSslRequired »
+	/**	<br/> The entity authSslRequired
 Whether SSL is required in Keycloak for the site. 
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:authSslRequired">Trouver l'entité authSslRequired dans Solr</a>
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:authSslRequired">Find the entity authSslRequired in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _authSslRequired(Wrap<String> c);
 
@@ -621,7 +613,7 @@ Whether SSL is required in Keycloak for the site.
 	// sslJksPath //
 	////////////////
 
-	/**	L'entité « sslJksPath »
+	/**	 The entity sslJksPath
 The path to the Java keystore for the site. 
 	 *	 is defined as null before being initialized. 
 	 */
@@ -630,12 +622,12 @@ The path to the Java keystore for the site.
 	@JsonIgnore
 	public Wrap<String> sslJksPathWrap = new Wrap<String>().p(this).c(String.class).var("sslJksPath").o(sslJksPath);
 
-	/**	<br/>L'entité « sslJksPath »
+	/**	<br/> The entity sslJksPath
 The path to the Java keystore for the site. 
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:sslJksPath">Trouver l'entité sslJksPath dans Solr</a>
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:sslJksPath">Find the entity sslJksPath in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _sslJksPath(Wrap<String> c);
 
@@ -661,7 +653,7 @@ The path to the Java keystore for the site.
 	// sslJksPassword //
 	////////////////////
 
-	/**	L'entité « sslJksPassword »
+	/**	 The entity sslJksPassword
 The password for the Java keystore for the site. 
 	 *	 is defined as null before being initialized. 
 	 */
@@ -670,12 +662,12 @@ The password for the Java keystore for the site.
 	@JsonIgnore
 	public Wrap<String> sslJksPasswordWrap = new Wrap<String>().p(this).c(String.class).var("sslJksPassword").o(sslJksPassword);
 
-	/**	<br/>L'entité « sslJksPassword »
+	/**	<br/> The entity sslJksPassword
 The password for the Java keystore for the site. 
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:sslJksPassword">Trouver l'entité sslJksPassword dans Solr</a>
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:sslJksPassword">Find the entity sslJksPassword in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _sslJksPassword(Wrap<String> c);
 
@@ -701,7 +693,7 @@ The password for the Java keystore for the site.
 	// authUrl //
 	/////////////
 
-	/**	L'entité « authUrl »
+	/**	 The entity authUrl
 The URL to the Keycloak server. 
 	 *	 is defined as null before being initialized. 
 	 */
@@ -710,12 +702,12 @@ The URL to the Keycloak server.
 	@JsonIgnore
 	public Wrap<String> authUrlWrap = new Wrap<String>().p(this).c(String.class).var("authUrl").o(authUrl);
 
-	/**	<br/>L'entité « authUrl »
+	/**	<br/> The entity authUrl
 The URL to the Keycloak server. 
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:authUrl">Trouver l'entité authUrl dans Solr</a>
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:authUrl">Find the entity authUrl in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _authUrl(Wrap<String> c);
 
@@ -741,7 +733,7 @@ The URL to the Keycloak server.
 	// encryptionSalt //
 	////////////////////
 
-	/**	L'entité « encryptionSalt »
+	/**	 The entity encryptionSalt
 The encryption salt to use for all database encryption. 
 	 *	 is defined as null before being initialized. 
 	 */
@@ -750,12 +742,12 @@ The encryption salt to use for all database encryption.
 	@JsonIgnore
 	public Wrap<String> encryptionSaltWrap = new Wrap<String>().p(this).c(String.class).var("encryptionSalt").o(encryptionSalt);
 
-	/**	<br/>L'entité « encryptionSalt »
+	/**	<br/> The entity encryptionSalt
 The encryption salt to use for all database encryption. 
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:encryptionSalt">Trouver l'entité encryptionSalt dans Solr</a>
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:encryptionSalt">Find the entity encryptionSalt in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _encryptionSalt(Wrap<String> c);
 
@@ -781,7 +773,7 @@ The encryption salt to use for all database encryption.
 	// encryptionPassword //
 	////////////////////////
 
-	/**	L'entité « encryptionPassword »
+	/**	 The entity encryptionPassword
 The encryption password to use for all encryption of the database. 
 	 *	 is defined as null before being initialized. 
 	 */
@@ -790,12 +782,12 @@ The encryption password to use for all encryption of the database.
 	@JsonIgnore
 	public Wrap<String> encryptionPasswordWrap = new Wrap<String>().p(this).c(String.class).var("encryptionPassword").o(encryptionPassword);
 
-	/**	<br/>L'entité « encryptionPassword »
+	/**	<br/> The entity encryptionPassword
 The encryption password to use for all encryption of the database. 
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:encryptionPassword">Trouver l'entité encryptionPassword dans Solr</a>
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:encryptionPassword">Find the entity encryptionPassword in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _encryptionPassword(Wrap<String> c);
 
@@ -821,7 +813,7 @@ The encryption password to use for all encryption of the database.
 	// siteBaseUrl //
 	/////////////////
 
-	/**	L'entité « siteBaseUrl »
+	/**	 The entity siteBaseUrl
 The base URL for the URLs of the site. 
 	 *	 is defined as null before being initialized. 
 	 */
@@ -830,12 +822,12 @@ The base URL for the URLs of the site.
 	@JsonIgnore
 	public Wrap<String> siteBaseUrlWrap = new Wrap<String>().p(this).c(String.class).var("siteBaseUrl").o(siteBaseUrl);
 
-	/**	<br/>L'entité « siteBaseUrl »
+	/**	<br/> The entity siteBaseUrl
 The base URL for the URLs of the site. 
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:siteBaseUrl">Trouver l'entité siteBaseUrl dans Solr</a>
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:siteBaseUrl">Find the entity siteBaseUrl in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _siteBaseUrl(Wrap<String> c);
 
@@ -861,7 +853,7 @@ The base URL for the URLs of the site.
 	// siteDisplayName //
 	/////////////////////
 
-	/**	L'entité « siteDisplayName »
+	/**	 The entity siteDisplayName
 The display name of the site. 
 	 *	 is defined as null before being initialized. 
 	 */
@@ -870,12 +862,12 @@ The display name of the site.
 	@JsonIgnore
 	public Wrap<String> siteDisplayNameWrap = new Wrap<String>().p(this).c(String.class).var("siteDisplayName").o(siteDisplayName);
 
-	/**	<br/>L'entité « siteDisplayName »
+	/**	<br/> The entity siteDisplayName
 The display name of the site. 
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:siteDisplayName">Trouver l'entité siteDisplayName dans Solr</a>
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:siteDisplayName">Find the entity siteDisplayName in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _siteDisplayName(Wrap<String> c);
 
@@ -901,7 +893,7 @@ The display name of the site.
 	// jdbcDriverClass //
 	/////////////////////
 
-	/**	L'entité « jdbcDriverClass »
+	/**	 The entity jdbcDriverClass
 The class name of the JDBC driver class for the database. 
 	 *	 is defined as null before being initialized. 
 	 */
@@ -910,12 +902,12 @@ The class name of the JDBC driver class for the database.
 	@JsonIgnore
 	public Wrap<String> jdbcDriverClassWrap = new Wrap<String>().p(this).c(String.class).var("jdbcDriverClass").o(jdbcDriverClass);
 
-	/**	<br/>L'entité « jdbcDriverClass »
+	/**	<br/> The entity jdbcDriverClass
 The class name of the JDBC driver class for the database. 
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:jdbcDriverClass">Trouver l'entité jdbcDriverClass dans Solr</a>
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:jdbcDriverClass">Find the entity jdbcDriverClass in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _jdbcDriverClass(Wrap<String> c);
 
@@ -941,7 +933,7 @@ The class name of the JDBC driver class for the database.
 	// jdbcUsername //
 	//////////////////
 
-	/**	L'entité « jdbcUsername »
+	/**	 The entity jdbcUsername
 The username for the database. 
 	 *	 is defined as null before being initialized. 
 	 */
@@ -950,12 +942,12 @@ The username for the database.
 	@JsonIgnore
 	public Wrap<String> jdbcUsernameWrap = new Wrap<String>().p(this).c(String.class).var("jdbcUsername").o(jdbcUsername);
 
-	/**	<br/>L'entité « jdbcUsername »
+	/**	<br/> The entity jdbcUsername
 The username for the database. 
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:jdbcUsername">Trouver l'entité jdbcUsername dans Solr</a>
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:jdbcUsername">Find the entity jdbcUsername in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _jdbcUsername(Wrap<String> c);
 
@@ -981,7 +973,7 @@ The username for the database.
 	// jdbcPassword //
 	//////////////////
 
-	/**	L'entité « jdbcPassword »
+	/**	 The entity jdbcPassword
 The password for the database. 
 	 *	 is defined as null before being initialized. 
 	 */
@@ -990,12 +982,12 @@ The password for the database.
 	@JsonIgnore
 	public Wrap<String> jdbcPasswordWrap = new Wrap<String>().p(this).c(String.class).var("jdbcPassword").o(jdbcPassword);
 
-	/**	<br/>L'entité « jdbcPassword »
+	/**	<br/> The entity jdbcPassword
 The password for the database. 
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:jdbcPassword">Trouver l'entité jdbcPassword dans Solr</a>
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:jdbcPassword">Find the entity jdbcPassword in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _jdbcPassword(Wrap<String> c);
 
@@ -1021,7 +1013,7 @@ The password for the database.
 	// jdbcMaxPoolSize //
 	/////////////////////
 
-	/**	L'entité « jdbcMaxPoolSize »
+	/**	 The entity jdbcMaxPoolSize
 The max pool size for the database. 
 	 *	 is defined as null before being initialized. 
 	 */
@@ -1031,12 +1023,12 @@ The max pool size for the database.
 	@JsonIgnore
 	public Wrap<Integer> jdbcMaxPoolSizeWrap = new Wrap<Integer>().p(this).c(Integer.class).var("jdbcMaxPoolSize").o(jdbcMaxPoolSize);
 
-	/**	<br/>L'entité « jdbcMaxPoolSize »
+	/**	<br/> The entity jdbcMaxPoolSize
 The max pool size for the database. 
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:jdbcMaxPoolSize">Trouver l'entité jdbcMaxPoolSize dans Solr</a>
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:jdbcMaxPoolSize">Find the entity jdbcMaxPoolSize in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _jdbcMaxPoolSize(Wrap<Integer> c);
 
@@ -1068,7 +1060,7 @@ The max pool size for the database.
 	// jdbcMaxWaitQueueSize //
 	//////////////////////////
 
-	/**	L'entité « jdbcMaxWaitQueueSize »
+	/**	 The entity jdbcMaxWaitQueueSize
 Set the maximum connection request allowed in the wait queue, 
 	 *	any requests beyond the max size will result in an failure. 
 	 *	If the value is set to a negative number then the queue will be unbounded. 
@@ -1080,14 +1072,14 @@ Set the maximum connection request allowed in the wait queue,
 	@JsonIgnore
 	public Wrap<Integer> jdbcMaxWaitQueueSizeWrap = new Wrap<Integer>().p(this).c(Integer.class).var("jdbcMaxWaitQueueSize").o(jdbcMaxWaitQueueSize);
 
-	/**	<br/>L'entité « jdbcMaxWaitQueueSize »
+	/**	<br/> The entity jdbcMaxWaitQueueSize
 Set the maximum connection request allowed in the wait queue, 
 	 *	any requests beyond the max size will result in an failure. 
 	 *	If the value is set to a negative number then the queue will be unbounded. 
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:jdbcMaxWaitQueueSize">Trouver l'entité jdbcMaxWaitQueueSize dans Solr</a>
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:jdbcMaxWaitQueueSize">Find the entity jdbcMaxWaitQueueSize in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _jdbcMaxWaitQueueSize(Wrap<Integer> c);
 
@@ -1119,7 +1111,7 @@ Set the maximum connection request allowed in the wait queue,
 	// jdbcMinPoolSize //
 	/////////////////////
 
-	/**	L'entité « jdbcMinPoolSize »
+	/**	 The entity jdbcMinPoolSize
 The max pool size for the database. 
 	 *	 is defined as null before being initialized. 
 	 */
@@ -1129,12 +1121,12 @@ The max pool size for the database.
 	@JsonIgnore
 	public Wrap<Integer> jdbcMinPoolSizeWrap = new Wrap<Integer>().p(this).c(Integer.class).var("jdbcMinPoolSize").o(jdbcMinPoolSize);
 
-	/**	<br/>L'entité « jdbcMinPoolSize »
+	/**	<br/> The entity jdbcMinPoolSize
 The max pool size for the database. 
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:jdbcMinPoolSize">Trouver l'entité jdbcMinPoolSize dans Solr</a>
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:jdbcMinPoolSize">Find the entity jdbcMinPoolSize in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _jdbcMinPoolSize(Wrap<Integer> c);
 
@@ -1166,7 +1158,7 @@ The max pool size for the database.
 	// jdbcMaxStatements //
 	///////////////////////
 
-	/**	L'entité « jdbcMaxStatements »
+	/**	 The entity jdbcMaxStatements
 The max statements for the database. 
 	 *	 is defined as null before being initialized. 
 	 */
@@ -1176,12 +1168,12 @@ The max statements for the database.
 	@JsonIgnore
 	public Wrap<Integer> jdbcMaxStatementsWrap = new Wrap<Integer>().p(this).c(Integer.class).var("jdbcMaxStatements").o(jdbcMaxStatements);
 
-	/**	<br/>L'entité « jdbcMaxStatements »
+	/**	<br/> The entity jdbcMaxStatements
 The max statements for the database. 
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:jdbcMaxStatements">Trouver l'entité jdbcMaxStatements dans Solr</a>
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:jdbcMaxStatements">Find the entity jdbcMaxStatements in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _jdbcMaxStatements(Wrap<Integer> c);
 
@@ -1213,7 +1205,7 @@ The max statements for the database.
 	// jdbcMaxStatementsPerConnection //
 	////////////////////////////////////
 
-	/**	L'entité « jdbcMaxStatementsPerConnection »
+	/**	 The entity jdbcMaxStatementsPerConnection
 The max statements per connection for the database. 
 	 *	 is defined as null before being initialized. 
 	 */
@@ -1223,12 +1215,12 @@ The max statements per connection for the database.
 	@JsonIgnore
 	public Wrap<Integer> jdbcMaxStatementsPerConnectionWrap = new Wrap<Integer>().p(this).c(Integer.class).var("jdbcMaxStatementsPerConnection").o(jdbcMaxStatementsPerConnection);
 
-	/**	<br/>L'entité « jdbcMaxStatementsPerConnection »
+	/**	<br/> The entity jdbcMaxStatementsPerConnection
 The max statements per connection for the database. 
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:jdbcMaxStatementsPerConnection">Trouver l'entité jdbcMaxStatementsPerConnection dans Solr</a>
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:jdbcMaxStatementsPerConnection">Find the entity jdbcMaxStatementsPerConnection in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _jdbcMaxStatementsPerConnection(Wrap<Integer> c);
 
@@ -1260,7 +1252,7 @@ The max statements per connection for the database.
 	// jdbcMaxIdleTime //
 	/////////////////////
 
-	/**	L'entité « jdbcMaxIdleTime »
+	/**	 The entity jdbcMaxIdleTime
 The max idle time for the database. 
 	 *	 is defined as null before being initialized. 
 	 */
@@ -1270,12 +1262,12 @@ The max idle time for the database.
 	@JsonIgnore
 	public Wrap<Integer> jdbcMaxIdleTimeWrap = new Wrap<Integer>().p(this).c(Integer.class).var("jdbcMaxIdleTime").o(jdbcMaxIdleTime);
 
-	/**	<br/>L'entité « jdbcMaxIdleTime »
+	/**	<br/> The entity jdbcMaxIdleTime
 The max idle time for the database. 
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:jdbcMaxIdleTime">Trouver l'entité jdbcMaxIdleTime dans Solr</a>
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:jdbcMaxIdleTime">Find the entity jdbcMaxIdleTime in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _jdbcMaxIdleTime(Wrap<Integer> c);
 
@@ -1307,7 +1299,7 @@ The max idle time for the database.
 	// jdbcConnectTimeout //
 	////////////////////////
 
-	/**	L'entité « jdbcConnectTimeout »
+	/**	 The entity jdbcConnectTimeout
 The max idle time for the connection to the database. 
 	 *	 is defined as null before being initialized. 
 	 */
@@ -1317,12 +1309,12 @@ The max idle time for the connection to the database.
 	@JsonIgnore
 	public Wrap<Integer> jdbcConnectTimeoutWrap = new Wrap<Integer>().p(this).c(Integer.class).var("jdbcConnectTimeout").o(jdbcConnectTimeout);
 
-	/**	<br/>L'entité « jdbcConnectTimeout »
+	/**	<br/> The entity jdbcConnectTimeout
 The max idle time for the connection to the database. 
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:jdbcConnectTimeout">Trouver l'entité jdbcConnectTimeout dans Solr</a>
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:jdbcConnectTimeout">Find the entity jdbcConnectTimeout in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _jdbcConnectTimeout(Wrap<Integer> c);
 
@@ -1354,7 +1346,7 @@ The max idle time for the connection to the database.
 	// jdbcHost //
 	//////////////
 
-	/**	L'entité « jdbcHost »
+	/**	 The entity jdbcHost
 The JDBC URL to the database. 
 	 *	 is defined as null before being initialized. 
 	 */
@@ -1363,12 +1355,12 @@ The JDBC URL to the database.
 	@JsonIgnore
 	public Wrap<String> jdbcHostWrap = new Wrap<String>().p(this).c(String.class).var("jdbcHost").o(jdbcHost);
 
-	/**	<br/>L'entité « jdbcHost »
+	/**	<br/> The entity jdbcHost
 The JDBC URL to the database. 
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:jdbcHost">Trouver l'entité jdbcHost dans Solr</a>
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:jdbcHost">Find the entity jdbcHost in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _jdbcHost(Wrap<String> c);
 
@@ -1394,7 +1386,7 @@ The JDBC URL to the database.
 	// jdbcPort //
 	//////////////
 
-	/**	L'entité « jdbcPort »
+	/**	 The entity jdbcPort
 The JDBC URL to the database. 
 	 *	 is defined as null before being initialized. 
 	 */
@@ -1404,12 +1396,12 @@ The JDBC URL to the database.
 	@JsonIgnore
 	public Wrap<Integer> jdbcPortWrap = new Wrap<Integer>().p(this).c(Integer.class).var("jdbcPort").o(jdbcPort);
 
-	/**	<br/>L'entité « jdbcPort »
+	/**	<br/> The entity jdbcPort
 The JDBC URL to the database. 
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:jdbcPort">Trouver l'entité jdbcPort dans Solr</a>
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:jdbcPort">Find the entity jdbcPort in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _jdbcPort(Wrap<Integer> c);
 
@@ -1441,7 +1433,7 @@ The JDBC URL to the database.
 	// jdbcDatabase //
 	//////////////////
 
-	/**	L'entité « jdbcDatabase »
+	/**	 The entity jdbcDatabase
 The JDBC URL to the database. 
 	 *	 is defined as null before being initialized. 
 	 */
@@ -1450,12 +1442,12 @@ The JDBC URL to the database.
 	@JsonIgnore
 	public Wrap<String> jdbcDatabaseWrap = new Wrap<String>().p(this).c(String.class).var("jdbcDatabase").o(jdbcDatabase);
 
-	/**	<br/>L'entité « jdbcDatabase »
+	/**	<br/> The entity jdbcDatabase
 The JDBC URL to the database. 
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:jdbcDatabase">Trouver l'entité jdbcDatabase dans Solr</a>
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:jdbcDatabase">Find the entity jdbcDatabase in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _jdbcDatabase(Wrap<String> c);
 
@@ -1481,7 +1473,7 @@ The JDBC URL to the database.
 	// solrUrl //
 	/////////////
 
-	/**	L'entité « solrUrl »
+	/**	 The entity solrUrl
 The URL to the SOLR search engine. 
 	 *	 is defined as null before being initialized. 
 	 */
@@ -1490,12 +1482,12 @@ The URL to the SOLR search engine.
 	@JsonIgnore
 	public Wrap<String> solrUrlWrap = new Wrap<String>().p(this).c(String.class).var("solrUrl").o(solrUrl);
 
-	/**	<br/>L'entité « solrUrl »
+	/**	<br/> The entity solrUrl
 The URL to the SOLR search engine. 
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:solrUrl">Trouver l'entité solrUrl dans Solr</a>
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:solrUrl">Find the entity solrUrl in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _solrUrl(Wrap<String> c);
 
@@ -1521,7 +1513,7 @@ The URL to the SOLR search engine.
 	// solrUrlComputate //
 	//////////////////////
 
-	/**	L'entité « solrUrlComputate »
+	/**	 The entity solrUrlComputate
 The URL to the SOLR search engine for the computate project. 
 	 *	 is defined as null before being initialized. 
 	 */
@@ -1530,12 +1522,12 @@ The URL to the SOLR search engine for the computate project.
 	@JsonIgnore
 	public Wrap<String> solrUrlComputateWrap = new Wrap<String>().p(this).c(String.class).var("solrUrlComputate").o(solrUrlComputate);
 
-	/**	<br/>L'entité « solrUrlComputate »
+	/**	<br/> The entity solrUrlComputate
 The URL to the SOLR search engine for the computate project. 
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:solrUrlComputate">Trouver l'entité solrUrlComputate dans Solr</a>
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:solrUrlComputate">Find the entity solrUrlComputate in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _solrUrlComputate(Wrap<String> c);
 
@@ -1561,7 +1553,7 @@ The URL to the SOLR search engine for the computate project.
 	// accountFacebook //
 	/////////////////////
 
-	/**	L'entité « accountFacebook »
+	/**	 The entity accountFacebook
 The Facebook account for the site. 
 	 *	 is defined as null before being initialized. 
 	 */
@@ -1570,12 +1562,12 @@ The Facebook account for the site.
 	@JsonIgnore
 	public Wrap<String> accountFacebookWrap = new Wrap<String>().p(this).c(String.class).var("accountFacebook").o(accountFacebook);
 
-	/**	<br/>L'entité « accountFacebook »
+	/**	<br/> The entity accountFacebook
 The Facebook account for the site. 
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:accountFacebook">Trouver l'entité accountFacebook dans Solr</a>
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:accountFacebook">Find the entity accountFacebook in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _accountFacebook(Wrap<String> c);
 
@@ -1601,7 +1593,7 @@ The Facebook account for the site.
 	// accountTwitter //
 	////////////////////
 
-	/**	L'entité « accountTwitter »
+	/**	 The entity accountTwitter
 The Twitter account for the site. 
 	 *	 is defined as null before being initialized. 
 	 */
@@ -1610,12 +1602,12 @@ The Twitter account for the site.
 	@JsonIgnore
 	public Wrap<String> accountTwitterWrap = new Wrap<String>().p(this).c(String.class).var("accountTwitter").o(accountTwitter);
 
-	/**	<br/>L'entité « accountTwitter »
+	/**	<br/> The entity accountTwitter
 The Twitter account for the site. 
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:accountTwitter">Trouver l'entité accountTwitter dans Solr</a>
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:accountTwitter">Find the entity accountTwitter in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _accountTwitter(Wrap<String> c);
 
@@ -1641,7 +1633,7 @@ The Twitter account for the site.
 	// accountInstagram //
 	//////////////////////
 
-	/**	L'entité « accountInstagram »
+	/**	 The entity accountInstagram
 The Instagram account for the site. 
 	 *	 is defined as null before being initialized. 
 	 */
@@ -1650,12 +1642,12 @@ The Instagram account for the site.
 	@JsonIgnore
 	public Wrap<String> accountInstagramWrap = new Wrap<String>().p(this).c(String.class).var("accountInstagram").o(accountInstagram);
 
-	/**	<br/>L'entité « accountInstagram »
+	/**	<br/> The entity accountInstagram
 The Instagram account for the site. 
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:accountInstagram">Trouver l'entité accountInstagram dans Solr</a>
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:accountInstagram">Find the entity accountInstagram in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _accountInstagram(Wrap<String> c);
 
@@ -1681,7 +1673,7 @@ The Instagram account for the site.
 	// accountYoutube //
 	////////////////////
 
-	/**	L'entité « accountYoutube »
+	/**	 The entity accountYoutube
 The Youtube account for the site. 
 	 *	 is defined as null before being initialized. 
 	 */
@@ -1690,12 +1682,12 @@ The Youtube account for the site.
 	@JsonIgnore
 	public Wrap<String> accountYoutubeWrap = new Wrap<String>().p(this).c(String.class).var("accountYoutube").o(accountYoutube);
 
-	/**	<br/>L'entité « accountYoutube »
+	/**	<br/> The entity accountYoutube
 The Youtube account for the site. 
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:accountYoutube">Trouver l'entité accountYoutube dans Solr</a>
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:accountYoutube">Find the entity accountYoutube in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _accountYoutube(Wrap<String> c);
 
@@ -1721,7 +1713,7 @@ The Youtube account for the site.
 	// accountPinterest //
 	//////////////////////
 
-	/**	L'entité « accountPinterest »
+	/**	 The entity accountPinterest
 The Pinterest account for the site. 
 	 *	 is defined as null before being initialized. 
 	 */
@@ -1730,12 +1722,12 @@ The Pinterest account for the site.
 	@JsonIgnore
 	public Wrap<String> accountPinterestWrap = new Wrap<String>().p(this).c(String.class).var("accountPinterest").o(accountPinterest);
 
-	/**	<br/>L'entité « accountPinterest »
+	/**	<br/> The entity accountPinterest
 The Pinterest account for the site. 
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:accountPinterest">Trouver l'entité accountPinterest dans Solr</a>
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:accountPinterest">Find the entity accountPinterest in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _accountPinterest(Wrap<String> c);
 
@@ -1761,7 +1753,7 @@ The Pinterest account for the site.
 	// accountEmail //
 	//////////////////
 
-	/**	L'entité « accountEmail »
+	/**	 The entity accountEmail
 The Email account for the site. 
 	 *	 is defined as null before being initialized. 
 	 */
@@ -1770,12 +1762,12 @@ The Email account for the site.
 	@JsonIgnore
 	public Wrap<String> accountEmailWrap = new Wrap<String>().p(this).c(String.class).var("accountEmail").o(accountEmail);
 
-	/**	<br/>L'entité « accountEmail »
+	/**	<br/> The entity accountEmail
 The Email account for the site. 
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:accountEmail">Trouver l'entité accountEmail dans Solr</a>
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:accountEmail">Find the entity accountEmail in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _accountEmail(Wrap<String> c);
 
@@ -1801,7 +1793,7 @@ The Email account for the site.
 	// roleAdmin //
 	///////////////
 
-	/**	L'entité « roleAdmin »
+	/**	 The entity roleAdmin
 The OpenID Connect role for an administrator. 
 	 *	 is defined as null before being initialized. 
 	 */
@@ -1810,12 +1802,12 @@ The OpenID Connect role for an administrator.
 	@JsonIgnore
 	public Wrap<String> roleAdminWrap = new Wrap<String>().p(this).c(String.class).var("roleAdmin").o(roleAdmin);
 
-	/**	<br/>L'entité « roleAdmin »
+	/**	<br/> The entity roleAdmin
 The OpenID Connect role for an administrator. 
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:roleAdmin">Trouver l'entité roleAdmin dans Solr</a>
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:roleAdmin">Find the entity roleAdmin in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _roleAdmin(Wrap<String> c);
 
@@ -1841,7 +1833,7 @@ The OpenID Connect role for an administrator.
 	// emailAdmin //
 	////////////////
 
-	/**	L'entité « emailAdmin »
+	/**	 The entity emailAdmin
 The email address for the administrator of the site for the error reports. 
 	 *	 is defined as null before being initialized. 
 	 */
@@ -1850,12 +1842,12 @@ The email address for the administrator of the site for the error reports.
 	@JsonIgnore
 	public Wrap<String> emailAdminWrap = new Wrap<String>().p(this).c(String.class).var("emailAdmin").o(emailAdmin);
 
-	/**	<br/>L'entité « emailAdmin »
+	/**	<br/> The entity emailAdmin
 The email address for the administrator of the site for the error reports. 
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:emailAdmin">Trouver l'entité emailAdmin dans Solr</a>
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:emailAdmin">Find the entity emailAdmin in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _emailAdmin(Wrap<String> c);
 
@@ -1881,7 +1873,7 @@ The email address for the administrator of the site for the error reports.
 	// numberExecutors //
 	/////////////////////
 
-	/**	L'entité « numberExecutors »
+	/**	 The entity numberExecutors
 The number of executors for executing background tasks in the site. 
 	 *	 is defined as null before being initialized. 
 	 */
@@ -1891,12 +1883,12 @@ The number of executors for executing background tasks in the site.
 	@JsonIgnore
 	public Wrap<Integer> numberExecutorsWrap = new Wrap<Integer>().p(this).c(Integer.class).var("numberExecutors").o(numberExecutors);
 
-	/**	<br/>L'entité « numberExecutors »
+	/**	<br/> The entity numberExecutors
 The number of executors for executing background tasks in the site. 
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:numberExecutors">Trouver l'entité numberExecutors dans Solr</a>
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:numberExecutors">Find the entity numberExecutors in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _numberExecutors(Wrap<Integer> c);
 
@@ -1928,7 +1920,7 @@ The number of executors for executing background tasks in the site.
 	// openApiVersion //
 	////////////////////
 
-	/**	L'entité « openApiVersion »
+	/**	 The entity openApiVersion
 The version of OpenAPI used with Vert.x which should probably be 3.0. 
 	 *	 is defined as null before being initialized. 
 	 */
@@ -1937,12 +1929,12 @@ The version of OpenAPI used with Vert.x which should probably be 3.0.
 	@JsonIgnore
 	public Wrap<String> openApiVersionWrap = new Wrap<String>().p(this).c(String.class).var("openApiVersion").o(openApiVersion);
 
-	/**	<br/>L'entité « openApiVersion »
+	/**	<br/> The entity openApiVersion
 The version of OpenAPI used with Vert.x which should probably be 3.0. 
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:openApiVersion">Trouver l'entité openApiVersion dans Solr</a>
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:openApiVersion">Find the entity openApiVersion in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _openApiVersion(Wrap<String> c);
 
@@ -1968,7 +1960,7 @@ The version of OpenAPI used with Vert.x which should probably be 3.0.
 	// apiDescription //
 	////////////////////
 
-	/**	L'entité « apiDescription »
+	/**	 The entity apiDescription
 The description of your site API. 
 	 *	 is defined as null before being initialized. 
 	 */
@@ -1977,12 +1969,12 @@ The description of your site API.
 	@JsonIgnore
 	public Wrap<String> apiDescriptionWrap = new Wrap<String>().p(this).c(String.class).var("apiDescription").o(apiDescription);
 
-	/**	<br/>L'entité « apiDescription »
+	/**	<br/> The entity apiDescription
 The description of your site API. 
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:apiDescription">Trouver l'entité apiDescription dans Solr</a>
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:apiDescription">Find the entity apiDescription in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _apiDescription(Wrap<String> c);
 
@@ -2008,7 +2000,7 @@ The description of your site API.
 	// apiTitle //
 	//////////////
 
-	/**	L'entité « apiTitle »
+	/**	 The entity apiTitle
 The title of your site API. 
 	 *	 is defined as null before being initialized. 
 	 */
@@ -2017,12 +2009,12 @@ The title of your site API.
 	@JsonIgnore
 	public Wrap<String> apiTitleWrap = new Wrap<String>().p(this).c(String.class).var("apiTitle").o(apiTitle);
 
-	/**	<br/>L'entité « apiTitle »
+	/**	<br/> The entity apiTitle
 The title of your site API. 
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:apiTitle">Trouver l'entité apiTitle dans Solr</a>
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:apiTitle">Find the entity apiTitle in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _apiTitle(Wrap<String> c);
 
@@ -2048,7 +2040,7 @@ The title of your site API.
 	// apiTermsService //
 	/////////////////////
 
-	/**	L'entité « apiTermsService »
+	/**	 The entity apiTermsService
 The terms of service of your site API. 
 	 *	 is defined as null before being initialized. 
 	 */
@@ -2057,12 +2049,12 @@ The terms of service of your site API.
 	@JsonIgnore
 	public Wrap<String> apiTermsServiceWrap = new Wrap<String>().p(this).c(String.class).var("apiTermsService").o(apiTermsService);
 
-	/**	<br/>L'entité « apiTermsService »
+	/**	<br/> The entity apiTermsService
 The terms of service of your site API. 
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:apiTermsService">Trouver l'entité apiTermsService dans Solr</a>
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:apiTermsService">Find the entity apiTermsService in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _apiTermsService(Wrap<String> c);
 
@@ -2088,7 +2080,7 @@ The terms of service of your site API.
 	// apiVersion //
 	////////////////
 
-	/**	L'entité « apiVersion »
+	/**	 The entity apiVersion
 The version of your site API. 
 	 *	 is defined as null before being initialized. 
 	 */
@@ -2097,12 +2089,12 @@ The version of your site API.
 	@JsonIgnore
 	public Wrap<String> apiVersionWrap = new Wrap<String>().p(this).c(String.class).var("apiVersion").o(apiVersion);
 
-	/**	<br/>L'entité « apiVersion »
+	/**	<br/> The entity apiVersion
 The version of your site API. 
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:apiVersion">Trouver l'entité apiVersion dans Solr</a>
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:apiVersion">Find the entity apiVersion in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _apiVersion(Wrap<String> c);
 
@@ -2128,7 +2120,7 @@ The version of your site API.
 	// apiContactEmail //
 	/////////////////////
 
-	/**	L'entité « apiContactEmail »
+	/**	 The entity apiContactEmail
 The contact email of your site API. 
 	 *	 is defined as null before being initialized. 
 	 */
@@ -2137,12 +2129,12 @@ The contact email of your site API.
 	@JsonIgnore
 	public Wrap<String> apiContactEmailWrap = new Wrap<String>().p(this).c(String.class).var("apiContactEmail").o(apiContactEmail);
 
-	/**	<br/>L'entité « apiContactEmail »
+	/**	<br/> The entity apiContactEmail
 The contact email of your site API. 
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:apiContactEmail">Trouver l'entité apiContactEmail dans Solr</a>
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:apiContactEmail">Find the entity apiContactEmail in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _apiContactEmail(Wrap<String> c);
 
@@ -2168,7 +2160,7 @@ The contact email of your site API.
 	// apiLicenseName //
 	////////////////////
 
-	/**	L'entité « apiLicenseName »
+	/**	 The entity apiLicenseName
 The open source license name of your site API. 
 	 *	 is defined as null before being initialized. 
 	 */
@@ -2177,12 +2169,12 @@ The open source license name of your site API.
 	@JsonIgnore
 	public Wrap<String> apiLicenseNameWrap = new Wrap<String>().p(this).c(String.class).var("apiLicenseName").o(apiLicenseName);
 
-	/**	<br/>L'entité « apiLicenseName »
+	/**	<br/> The entity apiLicenseName
 The open source license name of your site API. 
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:apiLicenseName">Trouver l'entité apiLicenseName dans Solr</a>
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:apiLicenseName">Find the entity apiLicenseName in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _apiLicenseName(Wrap<String> c);
 
@@ -2208,7 +2200,7 @@ The open source license name of your site API.
 	// apiLicenseUrl //
 	///////////////////
 
-	/**	L'entité « apiLicenseUrl »
+	/**	 The entity apiLicenseUrl
 The open source license URL of your site API. 
 	 *	 is defined as null before being initialized. 
 	 */
@@ -2217,12 +2209,12 @@ The open source license URL of your site API.
 	@JsonIgnore
 	public Wrap<String> apiLicenseUrlWrap = new Wrap<String>().p(this).c(String.class).var("apiLicenseUrl").o(apiLicenseUrl);
 
-	/**	<br/>L'entité « apiLicenseUrl »
+	/**	<br/> The entity apiLicenseUrl
 The open source license URL of your site API. 
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:apiLicenseUrl">Trouver l'entité apiLicenseUrl dans Solr</a>
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:apiLicenseUrl">Find the entity apiLicenseUrl in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _apiLicenseUrl(Wrap<String> c);
 
@@ -2248,7 +2240,7 @@ The open source license URL of your site API.
 	// apiHostName //
 	/////////////////
 
-	/**	L'entité « apiHostName »
+	/**	 The entity apiHostName
 The host name of your site API. 
 	 *	 is defined as null before being initialized. 
 	 */
@@ -2257,12 +2249,12 @@ The host name of your site API.
 	@JsonIgnore
 	public Wrap<String> apiHostNameWrap = new Wrap<String>().p(this).c(String.class).var("apiHostName").o(apiHostName);
 
-	/**	<br/>L'entité « apiHostName »
+	/**	<br/> The entity apiHostName
 The host name of your site API. 
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:apiHostName">Trouver l'entité apiHostName dans Solr</a>
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:apiHostName">Find the entity apiHostName in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _apiHostName(Wrap<String> c);
 
@@ -2288,7 +2280,7 @@ The host name of your site API.
 	// apiBasePath //
 	/////////////////
 
-	/**	L'entité « apiBasePath »
+	/**	 The entity apiBasePath
 The base path of your site API. 
 	 *	 is defined as null before being initialized. 
 	 */
@@ -2297,12 +2289,12 @@ The base path of your site API.
 	@JsonIgnore
 	public Wrap<String> apiBasePathWrap = new Wrap<String>().p(this).c(String.class).var("apiBasePath").o(apiBasePath);
 
-	/**	<br/>L'entité « apiBasePath »
+	/**	<br/> The entity apiBasePath
 The base path of your site API. 
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:apiBasePath">Trouver l'entité apiBasePath dans Solr</a>
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:apiBasePath">Find the entity apiBasePath in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _apiBasePath(Wrap<String> c);
 
@@ -2328,7 +2320,7 @@ The base path of your site API.
 	// staticBaseUrl //
 	///////////////////
 
-	/**	L'entité « staticBaseUrl »
+	/**	 The entity staticBaseUrl
 The base URL of your static files. 
 	 *	 is defined as null before being initialized. 
 	 */
@@ -2337,12 +2329,12 @@ The base URL of your static files.
 	@JsonIgnore
 	public Wrap<String> staticBaseUrlWrap = new Wrap<String>().p(this).c(String.class).var("staticBaseUrl").o(staticBaseUrl);
 
-	/**	<br/>L'entité « staticBaseUrl »
+	/**	<br/> The entity staticBaseUrl
 The base URL of your static files. 
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:staticBaseUrl">Trouver l'entité staticBaseUrl dans Solr</a>
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:staticBaseUrl">Find the entity staticBaseUrl in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _staticBaseUrl(Wrap<String> c);
 
@@ -2368,7 +2360,7 @@ The base URL of your static files.
 	// emailHost //
 	///////////////
 
-	/**	L'entité « emailHost »
+	/**	 The entity emailHost
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -2376,11 +2368,11 @@ The base URL of your static files.
 	@JsonIgnore
 	public Wrap<String> emailHostWrap = new Wrap<String>().p(this).c(String.class).var("emailHost").o(emailHost);
 
-	/**	<br/>L'entité « emailHost »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:emailHost">Trouver l'entité emailHost dans Solr</a>
+	/**	<br/> The entity emailHost
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:emailHost">Find the entity emailHost in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _emailHost(Wrap<String> c);
 
@@ -2406,7 +2398,7 @@ The base URL of your static files.
 	// emailPort //
 	///////////////
 
-	/**	L'entité « emailPort »
+	/**	 The entity emailPort
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
@@ -2415,11 +2407,11 @@ The base URL of your static files.
 	@JsonIgnore
 	public Wrap<Integer> emailPortWrap = new Wrap<Integer>().p(this).c(Integer.class).var("emailPort").o(emailPort);
 
-	/**	<br/>L'entité « emailPort »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:emailPort">Trouver l'entité emailPort dans Solr</a>
+	/**	<br/> The entity emailPort
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:emailPort">Find the entity emailPort in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _emailPort(Wrap<Integer> c);
 
@@ -2451,7 +2443,7 @@ The base URL of your static files.
 	// emailUsername //
 	///////////////////
 
-	/**	L'entité « emailUsername »
+	/**	 The entity emailUsername
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -2459,11 +2451,11 @@ The base URL of your static files.
 	@JsonIgnore
 	public Wrap<String> emailUsernameWrap = new Wrap<String>().p(this).c(String.class).var("emailUsername").o(emailUsername);
 
-	/**	<br/>L'entité « emailUsername »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:emailUsername">Trouver l'entité emailUsername dans Solr</a>
+	/**	<br/> The entity emailUsername
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:emailUsername">Find the entity emailUsername in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _emailUsername(Wrap<String> c);
 
@@ -2489,7 +2481,7 @@ The base URL of your static files.
 	// emailPassword //
 	///////////////////
 
-	/**	L'entité « emailPassword »
+	/**	 The entity emailPassword
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -2497,11 +2489,11 @@ The base URL of your static files.
 	@JsonIgnore
 	public Wrap<String> emailPasswordWrap = new Wrap<String>().p(this).c(String.class).var("emailPassword").o(emailPassword);
 
-	/**	<br/>L'entité « emailPassword »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:emailPassword">Trouver l'entité emailPassword dans Solr</a>
+	/**	<br/> The entity emailPassword
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:emailPassword">Find the entity emailPassword in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _emailPassword(Wrap<String> c);
 
@@ -2527,7 +2519,7 @@ The base URL of your static files.
 	// emailFrom //
 	///////////////
 
-	/**	L'entité « emailFrom »
+	/**	 The entity emailFrom
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -2535,11 +2527,11 @@ The base URL of your static files.
 	@JsonIgnore
 	public Wrap<String> emailFromWrap = new Wrap<String>().p(this).c(String.class).var("emailFrom").o(emailFrom);
 
-	/**	<br/>L'entité « emailFrom »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:emailFrom">Trouver l'entité emailFrom dans Solr</a>
+	/**	<br/> The entity emailFrom
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:emailFrom">Find the entity emailFrom in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _emailFrom(Wrap<String> c);
 
@@ -2565,7 +2557,7 @@ The base URL of your static files.
 	// emailAuth //
 	///////////////
 
-	/**	L'entité « emailAuth »
+	/**	 The entity emailAuth
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -2573,11 +2565,11 @@ The base URL of your static files.
 	@JsonIgnore
 	public Wrap<Boolean> emailAuthWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("emailAuth").o(emailAuth);
 
-	/**	<br/>L'entité « emailAuth »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:emailAuth">Trouver l'entité emailAuth dans Solr</a>
+	/**	<br/> The entity emailAuth
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:emailAuth">Find the entity emailAuth in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _emailAuth(Wrap<Boolean> c);
 
@@ -2608,7 +2600,7 @@ The base URL of your static files.
 	// emailSsl //
 	//////////////
 
-	/**	L'entité « emailSsl »
+	/**	 The entity emailSsl
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -2616,11 +2608,11 @@ The base URL of your static files.
 	@JsonIgnore
 	public Wrap<Boolean> emailSslWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("emailSsl").o(emailSsl);
 
-	/**	<br/>L'entité « emailSsl »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:emailSsl">Trouver l'entité emailSsl dans Solr</a>
+	/**	<br/> The entity emailSsl
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:emailSsl">Find the entity emailSsl in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _emailSsl(Wrap<Boolean> c);
 
@@ -2651,7 +2643,7 @@ The base URL of your static files.
 	// siteZone //
 	//////////////
 
-	/**	L'entité « siteZone »
+	/**	 The entity siteZone
 The default timezone of the site. 
 	 *	 is defined as null before being initialized. 
 	 */
@@ -2660,12 +2652,12 @@ The default timezone of the site.
 	@JsonIgnore
 	public Wrap<String> siteZoneWrap = new Wrap<String>().p(this).c(String.class).var("siteZone").o(siteZone);
 
-	/**	<br/>L'entité « siteZone »
+	/**	<br/> The entity siteZone
 The default timezone of the site. 
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:siteZone">Trouver l'entité siteZone dans Solr</a>
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:siteZone">Find the entity siteZone in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _siteZone(Wrap<String> c);
 
@@ -2691,7 +2683,7 @@ The default timezone of the site.
 	// authorizeApiLoginId1 //
 	//////////////////////////
 
-	/**	L'entité « authorizeApiLoginId1 »
+	/**	 The entity authorizeApiLoginId1
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -2699,11 +2691,11 @@ The default timezone of the site.
 	@JsonIgnore
 	public Wrap<String> authorizeApiLoginId1Wrap = new Wrap<String>().p(this).c(String.class).var("authorizeApiLoginId1").o(authorizeApiLoginId1);
 
-	/**	<br/>L'entité « authorizeApiLoginId1 »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:authorizeApiLoginId1">Trouver l'entité authorizeApiLoginId1 dans Solr</a>
+	/**	<br/> The entity authorizeApiLoginId1
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:authorizeApiLoginId1">Find the entity authorizeApiLoginId1 in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _authorizeApiLoginId1(Wrap<String> c);
 
@@ -2729,7 +2721,7 @@ The default timezone of the site.
 	// authorizeTransactionKey1 //
 	//////////////////////////////
 
-	/**	L'entité « authorizeTransactionKey1 »
+	/**	 The entity authorizeTransactionKey1
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -2737,11 +2729,11 @@ The default timezone of the site.
 	@JsonIgnore
 	public Wrap<String> authorizeTransactionKey1Wrap = new Wrap<String>().p(this).c(String.class).var("authorizeTransactionKey1").o(authorizeTransactionKey1);
 
-	/**	<br/>L'entité « authorizeTransactionKey1 »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:authorizeTransactionKey1">Trouver l'entité authorizeTransactionKey1 dans Solr</a>
+	/**	<br/> The entity authorizeTransactionKey1
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:authorizeTransactionKey1">Find the entity authorizeTransactionKey1 in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _authorizeTransactionKey1(Wrap<String> c);
 
@@ -2767,7 +2759,7 @@ The default timezone of the site.
 	// schoolLocation1 //
 	/////////////////////
 
-	/**	L'entité « schoolLocation1 »
+	/**	 The entity schoolLocation1
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -2775,11 +2767,11 @@ The default timezone of the site.
 	@JsonIgnore
 	public Wrap<String> schoolLocation1Wrap = new Wrap<String>().p(this).c(String.class).var("schoolLocation1").o(schoolLocation1);
 
-	/**	<br/>L'entité « schoolLocation1 »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolLocation1">Trouver l'entité schoolLocation1 dans Solr</a>
+	/**	<br/> The entity schoolLocation1
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolLocation1">Find the entity schoolLocation1 in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _schoolLocation1(Wrap<String> c);
 
@@ -2805,7 +2797,7 @@ The default timezone of the site.
 	// authorizeApiLoginId2 //
 	//////////////////////////
 
-	/**	L'entité « authorizeApiLoginId2 »
+	/**	 The entity authorizeApiLoginId2
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -2813,11 +2805,11 @@ The default timezone of the site.
 	@JsonIgnore
 	public Wrap<String> authorizeApiLoginId2Wrap = new Wrap<String>().p(this).c(String.class).var("authorizeApiLoginId2").o(authorizeApiLoginId2);
 
-	/**	<br/>L'entité « authorizeApiLoginId2 »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:authorizeApiLoginId2">Trouver l'entité authorizeApiLoginId2 dans Solr</a>
+	/**	<br/> The entity authorizeApiLoginId2
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:authorizeApiLoginId2">Find the entity authorizeApiLoginId2 in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _authorizeApiLoginId2(Wrap<String> c);
 
@@ -2843,7 +2835,7 @@ The default timezone of the site.
 	// authorizeTransactionKey2 //
 	//////////////////////////////
 
-	/**	L'entité « authorizeTransactionKey2 »
+	/**	 The entity authorizeTransactionKey2
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -2851,11 +2843,11 @@ The default timezone of the site.
 	@JsonIgnore
 	public Wrap<String> authorizeTransactionKey2Wrap = new Wrap<String>().p(this).c(String.class).var("authorizeTransactionKey2").o(authorizeTransactionKey2);
 
-	/**	<br/>L'entité « authorizeTransactionKey2 »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:authorizeTransactionKey2">Trouver l'entité authorizeTransactionKey2 dans Solr</a>
+	/**	<br/> The entity authorizeTransactionKey2
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:authorizeTransactionKey2">Find the entity authorizeTransactionKey2 in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _authorizeTransactionKey2(Wrap<String> c);
 
@@ -2881,7 +2873,7 @@ The default timezone of the site.
 	// schoolLocation2 //
 	/////////////////////
 
-	/**	L'entité « schoolLocation2 »
+	/**	 The entity schoolLocation2
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -2889,11 +2881,11 @@ The default timezone of the site.
 	@JsonIgnore
 	public Wrap<String> schoolLocation2Wrap = new Wrap<String>().p(this).c(String.class).var("schoolLocation2").o(schoolLocation2);
 
-	/**	<br/>L'entité « schoolLocation2 »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolLocation2">Trouver l'entité schoolLocation2 dans Solr</a>
+	/**	<br/> The entity schoolLocation2
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolLocation2">Find the entity schoolLocation2 in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _schoolLocation2(Wrap<String> c);
 
@@ -2919,7 +2911,7 @@ The default timezone of the site.
 	// authorizeEnvironment //
 	//////////////////////////
 
-	/**	L'entité « authorizeEnvironment »
+	/**	 The entity authorizeEnvironment
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -2927,11 +2919,11 @@ The default timezone of the site.
 	@JsonIgnore
 	public Wrap<String> authorizeEnvironmentWrap = new Wrap<String>().p(this).c(String.class).var("authorizeEnvironment").o(authorizeEnvironment);
 
-	/**	<br/>L'entité « authorizeEnvironment »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:authorizeEnvironment">Trouver l'entité authorizeEnvironment dans Solr</a>
+	/**	<br/> The entity authorizeEnvironment
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:authorizeEnvironment">Find the entity authorizeEnvironment in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _authorizeEnvironment(Wrap<String> c);
 
@@ -2957,7 +2949,7 @@ The default timezone of the site.
 	// authorizeUrl //
 	//////////////////
 
-	/**	L'entité « authorizeUrl »
+	/**	 The entity authorizeUrl
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -2965,11 +2957,11 @@ The default timezone of the site.
 	@JsonIgnore
 	public Wrap<String> authorizeUrlWrap = new Wrap<String>().p(this).c(String.class).var("authorizeUrl").o(authorizeUrl);
 
-	/**	<br/>L'entité « authorizeUrl »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:authorizeUrl">Trouver l'entité authorizeUrl dans Solr</a>
+	/**	<br/> The entity authorizeUrl
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:authorizeUrl">Find the entity authorizeUrl in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _authorizeUrl(Wrap<String> c);
 
@@ -2995,7 +2987,7 @@ The default timezone of the site.
 	// paymentDay //
 	////////////////
 
-	/**	L'entité « paymentDay »
+	/**	 The entity paymentDay
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
@@ -3004,11 +2996,11 @@ The default timezone of the site.
 	@JsonIgnore
 	public Wrap<Integer> paymentDayWrap = new Wrap<Integer>().p(this).c(Integer.class).var("paymentDay").o(paymentDay);
 
-	/**	<br/>L'entité « paymentDay »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:paymentDay">Trouver l'entité paymentDay dans Solr</a>
+	/**	<br/> The entity paymentDay
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:paymentDay">Find the entity paymentDay in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _paymentDay(Wrap<Integer> c);
 
@@ -3033,58 +3025,6 @@ The default timezone of the site.
 				setPaymentDay(paymentDayWrap.o);
 		}
 		paymentDayWrap.alreadyInitialized(true);
-		return (SiteConfig)this;
-	}
-
-	/////////////////
-	// paymentNext //
-	/////////////////
-
-	/**	L'entité « paymentNext »
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonDeserialize(using = LocalDateDeserializer.class)
-	@JsonSerialize(using = LocalDateSerializer.class)
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-	@JsonInclude(Include.NON_NULL)
-	protected LocalDate paymentNext;
-	@JsonIgnore
-	public Wrap<LocalDate> paymentNextWrap = new Wrap<LocalDate>().p(this).c(LocalDate.class).var("paymentNext").o(paymentNext);
-
-	/**	<br/>L'entité « paymentNext »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:paymentNext">Trouver l'entité paymentNext dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _paymentNext(Wrap<LocalDate> c);
-
-	public LocalDate getPaymentNext() {
-		return paymentNext;
-	}
-
-	public void setPaymentNext(LocalDate paymentNext) {
-		this.paymentNext = paymentNext;
-		this.paymentNextWrap.alreadyInitialized = true;
-	}
-	public SiteConfig setPaymentNext(Instant o) {
-		this.paymentNext = o == null ? null : LocalDate.from(o);
-		this.paymentNextWrap.alreadyInitialized = true;
-		return (SiteConfig)this;
-	}
-	/** Example: 2011-12-03+01:00 **/
-	public SiteConfig setPaymentNext(String o) {
-		this.paymentNext = o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
-		this.paymentNextWrap.alreadyInitialized = true;
-		return (SiteConfig)this;
-	}
-	protected SiteConfig paymentNextInit() {
-		if(!paymentNextWrap.alreadyInitialized) {
-			_paymentNext(paymentNextWrap);
-			if(paymentNext == null)
-				setPaymentNext(paymentNextWrap.o);
-		}
-		paymentNextWrap.alreadyInitialized(true);
 		return (SiteConfig)this;
 	}
 
@@ -3180,7 +3120,6 @@ The default timezone of the site.
 		authorizeEnvironmentInit();
 		authorizeUrlInit();
 		paymentDayInit();
-		paymentNextInit();
 	}
 
 	public void initDeepForClass(SiteRequestEnUS siteRequest_) {
@@ -3353,8 +3292,6 @@ The default timezone of the site.
 				return oSiteConfig.authorizeUrl;
 			case "paymentDay":
 				return oSiteConfig.paymentDay;
-			case "paymentNext":
-				return oSiteConfig.paymentNext;
 			default:
 				return null;
 		}

@@ -38,7 +38,7 @@ public class PaymentPage extends PaymentPageGen<PaymentGenPage> {
 			if(sum_chargeAmount.subtract(sum_chargeAmountDue).subtract(sum_chargeAmountFuture).subtract(sum_paymentAmount).compareTo(BigDecimal.ZERO) > 0) {
 				BigDecimal amount = sum_chargeAmount.subtract(sum_chargeAmountFuture).subtract(sum_paymentAmount);
 				e("div").a("class", "w3-panel w3-red ").f();
-				sx(String.format("You are late on payments for $%s. ", amount));
+				sx(String.format("You are late on payments. "));
 				g("div");
 			}
 			BigDecimal amount = sum_chargeAmount.subtract(sum_paymentAmount).subtract(sum_chargeAmountFuture);

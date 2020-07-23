@@ -104,7 +104,7 @@ public class SiteUserPage extends SiteUserPageGen<SiteUserGenPage> {
 		l.addSort("yearStart_indexed_int", ORDER.desc);
 		l.setRows(10000);
 
-		List<String> roles = Arrays.asList("SiteAdmin");
+		List<String> roles = Arrays.asList("SiteManager");
 		if(
 				!CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), roles)
 				&& !CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), roles)
@@ -330,7 +330,7 @@ public class SiteUserPage extends SiteUserPageGen<SiteUserGenPage> {
 										e("span").f().sx(enrollment.getPaymentLastStr()).g("span");
 									} g("div");
 									{ e("div").f();
-										e("a").a("class", "w3-text-purple ").a("href", siteConfig.getSiteBaseUrl(), "/payment?fq=enrollmentKey:", enrollment.getPk()).f().sx("See all payments").g("a");
+										e("a").a("class", "w3-text-purple ").a("href", siteConfig.getSiteBaseUrl(), "/payment?fq=enrollmentKey:", enrollment.getPk()).f().sx("Payment history").g("a");
 									} g("div");
 								} g("td");
 							} g("tr");
@@ -349,7 +349,7 @@ public class SiteUserPage extends SiteUserPageGen<SiteUserGenPage> {
 										{ e("div").a("class", "w3-text-green ").f();
 											if(enrollment.getPaymentsLate()) {
 												e("span").a("class", "w3-text-red ").f();
-												sx(String.format("You are late on payments for $%s. ", enrollment.getPaymentsLateAmount()));
+												sx(String.format("You are late on payments. "));
 												g("span");
 											}
 											writeMakePayment(enrollment.getSchoolNumber(), enrollment.getChargesNow(), enrollment.getPk(), enrollment.getChildCompleteNamePreferred());

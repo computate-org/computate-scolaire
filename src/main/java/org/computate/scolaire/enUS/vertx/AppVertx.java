@@ -819,6 +819,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 	 **/
 	private Promise<Void> configureAuthorizeNetCharges() {
 		SiteConfig siteConfig = siteContextEnUS.getSiteConfig();
+		ZoneId zoneId = ZoneId.of(siteConfig.getSiteZone());
 		Promise<Void> promise = Promise.promise();
 
 //		vertx.setPeriodic(1000 * 60 * 60 * 60, a -> {
@@ -827,7 +828,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 			executeurTravailleur.executeBlocking(
 				blockingCodeHandler -> {
 					LOGGER.info("Start to populate the new charges. ");
-					ZonedDateTime start = ZonedDateTime.now();
+					ZonedDateTime start = ZonedDateTime.now(zoneId);
 					SiteRequestEnUS siteRequest = new SiteRequestEnUS();
 					siteRequest.setVertx(vertx);
 					siteRequest.setSiteContext_(siteContextEnUS);
@@ -839,11 +840,11 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 						SchoolPaymentEnUSApiServiceImpl paymentService = new SchoolPaymentEnUSApiServiceImpl(siteContextEnUS);
 						SchoolEnrollmentEnUSApiServiceImpl enrollmentService = new SchoolEnrollmentEnUSApiServiceImpl(siteContextEnUS);
 
-						ZonedDateTime sessionStartDate = ZonedDateTime.now().plusMonths(1);
+						ZonedDateTime sessionStartDate = ZonedDateTime.now(zoneId).plusMonths(1);
 						// Mar 26 is last late fee. 
 						// Mar 1 + 2 month = May 1 < May 20 last day
-						ZonedDateTime sessionEndDate = ZonedDateTime.now().plusMonths(2);
-						ZonedDateTime enrollmentChargeDate = ZonedDateTime.now().plusMonths(1);
+						ZonedDateTime sessionEndDate = ZonedDateTime.now(zoneId).plusMonths(2);
+						ZonedDateTime enrollmentChargeDate = ZonedDateTime.now(zoneId).plusMonths(1);
 
 						SearchList<SchoolEnrollment> searchListEnrollment = new SearchList<SchoolEnrollment>();
 						searchListEnrollment.setStore(true);
@@ -972,6 +973,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 	 **/
 	private Promise<Void> configureAuthorizeNetPayments(Integer schoolNumber) {
 		SiteConfig siteConfig = siteContextEnUS.getSiteConfig();
+		ZoneId zoneId = ZoneId.of(siteConfig.getSiteZone());
 		Promise<Void> promise = Promise.promise();
 
 		vertx.setPeriodic(1000 * 60, a -> {
@@ -979,7 +981,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 			executeurTravailleur.executeBlocking(
 				blockingCodeHandler -> {
 					LOGGER.info("Start to populate the new transactions. ");
-					ZonedDateTime start = ZonedDateTime.now();
+					ZonedDateTime start = ZonedDateTime.now(zoneId);
 					SiteRequestEnUS siteRequest = new SiteRequestEnUS();
 					siteRequest.setVertx(vertx);
 					siteRequest.setSiteContext_(siteContextEnUS);
@@ -1007,9 +1009,9 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 			
 							GetSettledBatchListRequest batchRequest = new GetSettledBatchListRequest();
 							batchRequest.setMerchantAuthentication(merchantAuthenticationType);
-							batchRequest.setFirstSettlementDate(datatypeFactory.newXMLGregorianCalendar(GregorianCalendar.from(LocalDate.now()
+							batchRequest.setFirstSettlementDate(datatypeFactory.newXMLGregorianCalendar(GregorianCalendar.from(LocalDate.now(zoneId)
 									.minusDays(7).atStartOfDay(ZoneId.of(siteConfig.getSiteZone())))));
-							batchRequest.setLastSettlementDate(datatypeFactory.newXMLGregorianCalendar(GregorianCalendar.from(LocalDate.now()
+							batchRequest.setLastSettlementDate(datatypeFactory.newXMLGregorianCalendar(GregorianCalendar.from(LocalDate.now(zoneId)
 									.plusDays(1).atStartOfDay(ZoneId.of(siteConfig.getSiteZone())))));
 			
 							GetSettledBatchListController batchController = new GetSettledBatchListController(batchRequest);

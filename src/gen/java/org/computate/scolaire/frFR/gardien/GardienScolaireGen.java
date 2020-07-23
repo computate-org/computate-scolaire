@@ -54,7 +54,7 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 public abstract class GardienScolaireGen<DEV> extends Cluster {
 	protected static final Logger LOGGER = LoggerFactory.getLogger(GardienScolaire.class);
 
-	public static final List<String> ROLES = Arrays.asList("SiteAdmin");
+	public static final List<String> ROLES = Arrays.asList("SiteManager");
 	public static final List<String> ROLE_READS = Arrays.asList("");
 
 	public static final String GardienScolaire_UnNom = "un gardien";

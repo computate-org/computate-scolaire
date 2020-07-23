@@ -20,11 +20,11 @@ import org.computate.scolaire.enUS.search.SearchList;
  * Color: yellow
  * IconGroup: regular
  * IconName: phone
- * Role.enUS: SiteAdmin
+ * Role.enUS: SiteManager
  * ApiUri.enUS: /api/guardian
  * ApiTag.enUS: Guardian
  * AName.enUS: a guardian
- * Role.frFR: SiteAdmin
+ * Role.frFR: SiteManager
  * ApiUri.frFR: /api/gardien
  * ApiTag.frFR: Gardien
  * AName.frFR: un gardien

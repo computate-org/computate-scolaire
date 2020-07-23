@@ -703,7 +703,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 					JsonObject queryParams = Optional.ofNullable(operationRequete).map(OperationRequest::getParams).map(or -> or.getJsonObject("query")).orElse(new JsonObject());
 					Long num = listeInscriptionScolaire.getQueryResponse().getResults().getNumFound();
 					String q = "*:*";
-					String query1 = "enfantConditionsMedicales";
+					String query1 = "objetTexte";
 					String query2 = "";
 					String query = "*:*";
 					for(String paramNom : queryParams.fieldNames()) {
@@ -1125,12 +1125,12 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 	 * r.enUS: addError
 	 * r: suggereInscriptionScolaireObjetSuggere
 	 * r.enUS: suggestSchoolEnrollmentObjectSuggest
-	 * r: texteInscriptionScolaireEnfantConditionsMedicales
-	 * r.enUS: textSchoolEnrollmentChildMedicalConditions
+	 * r: texteInscriptionScolaireObjetTexte
+	 * r.enUS: textSchoolEnrollmentObjectText
 	 * r: 'objetSuggere:'
 	 * r.enUS: 'objectSuggest:'
-	 * r: 'enfantConditionsMedicales:'
-	 * r.enUS: 'childMedicalConditions:'
+	 * r: 'objetTexte:'
+	 * r.enUS: 'objectText:'
 	 * r: '#suggereListInscriptionScolaire'
 	 * r.enUS: '#suggestListSchoolEnrollment'
 	 * r: "suggereListInscriptionScolaire"
@@ -1142,7 +1142,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 			OperationRequest operationRequete = requeteSite_.getOperationRequete();
 			JsonObject queryParams = Optional.ofNullable(operationRequete).map(OperationRequest::getParams).map(or -> or.getJsonObject("query")).orElse(new JsonObject());
 			String q = "*:*";
-			String query1 = "enfantConditionsMedicales";
+			String query1 = "objetTexte";
 			String query2 = "";
 			for(String paramNom : queryParams.fieldNames()) {
 				String entiteVar = null;
@@ -1215,13 +1215,13 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 					.a("id", "suggereInscriptionScolaire", id)
 					.a("autocomplete", "off")
 					.a("oninput", "suggereInscriptionScolaireObjetSuggere( [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() } ], $('#suggereListInscriptionScolaire", id, "'), ", p.getRequeteSite_().getRequetePk(), "); ")
-					.a("onkeyup", "if (event.keyCode === 13) { event.preventDefault(); window.location.href = '/inscription?q=", query1, ":' + encodeURIComponent(this.value) + '", fqs, sorts, "&start=", start2, "&rows=", rows1, "'; }"); 
+					.a("onkeyup", "if (event.keyCode === 13) { event.preventDefault(); window.location.href = 'objetTexte?q=", query1, ":' + encodeURIComponent(this.value) + '", fqs, sorts, "&start=", start2, "&rows=", rows1, "'; }"); 
 				if(listeInscriptionScolaire != null)
 					p.a("value", query2);
 				p.fg();
 				{ p.e("button")
 					.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-blue-gray ")
-					.a("onclick", "window.location.href = '/inscription?q=", query1, ":' + encodeURIComponent(this.previousElementSibling.value) + '", fqs, sorts, "&start=", start2, "&rows=", rows1, "'; ") 
+					.a("onclick", "window.location.href = 'objetTexte?q=", query1, ":' + encodeURIComponent(this.previousElementSibling.value) + '", fqs, sorts, "&start=", start2, "&rows=", rows1, "'; ") 
 					.f();
 					p.e("i").a("class", "fas fa-search ").f().g("i");
 				} p.g("button");

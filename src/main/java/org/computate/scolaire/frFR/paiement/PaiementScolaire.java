@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.computate.scolaire.frFR.cluster.Cluster;
+import org.computate.scolaire.frFR.config.ConfigSite;
 import org.computate.scolaire.frFR.couverture.Couverture;
 import org.computate.scolaire.frFR.inscription.InscriptionScolaire;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
@@ -805,7 +806,7 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * HtmlColonne: 4
 	 * Facet: sum
 	 * NomAffichage.frFR: paiement montant
-	 * NomAffichage.enUS: payment amount
+	 * NomAffichage.enUS: payment history
 	 */              
 	protected void _paiementMontant(Couverture<BigDecimal> c) {
 	}
@@ -1019,6 +1020,49 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
+	 * Var.enUS: paymentNext
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: date de paiement prochaîne
+	 * NomAffichage.enUS: next payment date
+	 * r: requeteSite
+	 * r.enUS: siteRequest
+	 * r: ConfigSite
+	 * r.enUS: SiteConfig
+	 * r: fraisMontant
+	 * r.enUS: chargeAmount
+	 * r: paiementDate
+	 * r.enUS: paymentDate
+	 * r: PaiementJour
+	 * r.enUS: PaymentDay
+	 * r: paiementJour
+	 * r.enUS: paymentDay
+	 * r: paiementProchain
+	 * r.enUS: paymentNext
+	 * r: PaiementProchain
+	 * r.enUS: PaymentNext
+	 * r: fraisPremierDernier
+	 * r.enUS: chargeFirstLast
+	 * r: fraisInscription
+	 * r.enUS: chargeEnrollment
+	 * r: PaiementJour
+	 * r.enUS: PaymentDay
+	 * r: paiementJour
+	 * r.enUS: paymentDay
+	 * r: ConfigSite
+	 * r.enUS: SiteConfig
+	 * r: configSite
+	 * r.enUS: siteConfig
+	 */                   
+	protected void _paiementProchain(Couverture<LocalDate> c) {
+		ConfigSite configSite = requeteSite_.getConfigSite_();
+		LocalDate now = LocalDate.now();
+		Integer paiementJour = configSite.getPaiementJour();
+		c.o(LocalDate.now().getDayOfMonth() < paiementJour ? now.withDayOfMonth(paiementJour) : now.plusMonths(1).withDayOfMonth(paiementJour));
+	}
+
+	/**
+	 * {@inheritDoc}
 	 * Var.enUS: chargeAmountDue
 	 * Indexe: true
 	 * Stocke: true
@@ -1047,10 +1091,17 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * r.enUS: chargeFirstLast
 	 * r: fraisInscription
 	 * r.enUS: chargeEnrollment
+	 * r: PaiementJour
+	 * r.enUS: PaymentDay
+	 * r: paiementJour
+	 * r.enUS: paymentDay
+	 * r: ConfigSite
+	 * r.enUS: SiteConfig
+	 * r: configSite
+	 * r.enUS: siteConfig
 	 */                   
 	protected void _fraisMontantDu(Couverture<BigDecimal> c) {
-		LocalDate paiementProchain = requeteSite_.getConfigSite_().getPaiementProchain();
-		if(fraisMontant != null && (fraisInscription || paiementDate != null && paiementDate.compareTo(paiementProchain.minusMonths(1)) >= 0 && paiementDate.compareTo(paiementProchain) < 0))
+		if(fraisMontant != null && (fraisInscription || paiementDate != null && paiementDate.compareTo(paiementProchain.minusMonths(1)) > 0 && paiementDate.compareTo(paiementProchain) <= 0))
 			c.o(fraisMontant);
 	}
 
@@ -1082,7 +1133,6 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * r.enUS: chargeEnrollment
 	 */                   
 	protected void _fraisMontantFuture(Couverture<BigDecimal> c) {
-		LocalDate paiementProchain = requeteSite_.getConfigSite_().getPaiementProchain();
 		if(fraisMontant != null && paiementDate != null && !fraisInscription && paiementDate.compareTo(paiementProchain) > 0)
 			c.o(fraisMontant);
 	}
@@ -1148,10 +1198,14 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * r.enUS: "%s + %s tuition"
 	 * r: "Frais d'inscription %s-%s"
 	 * r.enUS: "%s-%s enrollment fee"
+	 * r: "%s frais de retard"
+	 * r.enUS: "%s late fee"
 	 * r: "Paiement"
 	 * r.enUS: "Payment"
 	 * r: " pour %s"
 	 * r.enUS: " for %s"
+	 * r: "nouveau"
+	 * r.enUS: "new"
 	 */  
 	protected void _paiementNomCourt(Couverture<String> c) {
 		NumberFormat fn = NumberFormat.getCurrencyInstance(Locale.FRANCE);
@@ -1164,8 +1218,8 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 				o.append(String.format("Frais de %s + %s", fd.format(inscription_.getSessionDateDebut().plusWeeks(1)), fd.format(inscription_.getSessionDateFin())));
 			else if(inscription_ != null && fraisInscription && inscription_.getSessionDateDebut() != null && inscription_.getSessionDateFin() != null)
 				o.append(String.format("Frais d'inscription %s-%s", inscription_.getSessionDateDebut().getYear(), inscription_.getSessionDateFin().getYear()));
-			else if(inscription_ != null && fraisRetard)
-				o.append("");
+			else if(inscription_ != null && fraisRetard && fraisMontant != null)
+				o.append(String.format("%s frais de retard", fn.format(fraisMontant)));
 			else if(paiementDate != null)
 				o.append(String.format("Frais de %s", fd.format(paiementDate.plusMonths(1))));
 		}
@@ -1182,6 +1236,8 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 		}
 		if(!StringUtils.isEmpty(paiementDescription))
 			o.append(" ").append(paiementDescription);
+		if(o.length() == 0)
+			o.append("nouveau");
 		c.o(o.toString());
 	}
 
@@ -1246,10 +1302,14 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * r.enUS: "%s %s + %s tuition"
 	 * r: "%s frais d'inscription %s-%s"
 	 * r.enUS: "%s %s-%s enrollment fee"
+	 * r: "%s frais de retard"
+	 * r.enUS: "%s late fee"
 	 * r: " paiement"
 	 * r.enUS: " payment"
 	 * r: " pour %s"
 	 * r.enUS: " for %s"
+	 * r: "nouveau"
+	 * r.enUS: "new"
 	 */                              
 	protected void _paiementNomComplet(Couverture<String> c) {
 		NumberFormat fn = NumberFormat.getCurrencyInstance(Locale.FRANCE);
@@ -1263,7 +1323,7 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 			else if(inscription_ != null && fraisInscription && inscription_.getSessionDateDebut() != null && inscription_.getSessionDateFin() != null)
 				o.append(String.format("%s frais d'inscription %s-%s", fn.format(fraisMontant), fd.format(inscription_.getSessionDateDebut()), fd.format(inscription_.getSessionDateFin())));
 			else if(inscription_ != null && fraisRetard && fraisMontant != null)
-				o.append(String.format("%s", fn.format(fraisMontant)));
+				o.append(String.format("%s frais de retard", fn.format(fraisMontant)));
 			else if(fraisMontant != null && paiementDate != null)
 				o.append(String.format("%s frais de %s", fn.format(fraisMontant), fd.format(paiementDate.plusMonths(1))));
 
@@ -1288,6 +1348,8 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 		}
 		if(!StringUtils.isEmpty(paiementDescription))
 			o.append(" ").append(paiementDescription);
+		if(o.length() == 0)
+			o.append("nouveau");
 		c.o(o.toString());
 	}
 
@@ -1348,10 +1410,14 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * r.enUS: "%s + %s tuition"
 	 * r: "Frais d'inscription %s-%s"
 	 * r.enUS: "%s-%s enrollment fee"
+	 * r: "%s frais de retard"
+	 * r.enUS: "%s late fee"
 	 * r: "Paiement"
 	 * r.enUS: "Payment"
 	 * r: " pour %s"
 	 * r.enUS: " for %s"
+	 * r: "nouveau"
+	 * r.enUS: "new"
 	 */            
 	@Override
 	protected void _objetTexte(Couverture<String> c) {
@@ -1369,7 +1435,7 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 			else if(inscription_ != null && fraisInscription && inscription_.getSessionDateDebut() != null && inscription_.getSessionDateFin() != null)
 				o.append(String.format("%s frais d'inscription %s-%s", fn.format(fraisMontant), fd.format(inscription_.getSessionDateDebut()), fd.format(inscription_.getSessionDateFin())));
 			else if(inscription_ != null && fraisRetard && fraisMontant != null)
-				o.append(String.format("%s", fn.format(fraisMontant)));
+				o.append(String.format("%s frais de retard", fn.format(fraisMontant)));
 			else if(fraisMontant != null && paiementDate != null)
 				o.append(String.format("%s frais de %s", fn.format(fraisMontant), fd.format(paiementDate.plusMonths(1))));
 
@@ -1394,6 +1460,8 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 		}
 		if(!StringUtils.isEmpty(paiementDescription))
 			o.append(" ").append(paiementDescription);
+		if(o.length() == 0)
+			o.append("nouveau");
 		c.o(o.toString());
 	} 
 }

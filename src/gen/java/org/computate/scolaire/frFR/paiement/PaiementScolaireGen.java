@@ -5497,6 +5497,87 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		} g("div");
 	}
 
+	//////////////////////
+	// paiementProchain //
+	//////////////////////
+
+	/**	 L'entité paiementProchain
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonDeserialize(using = LocalDateDeserializer.class)
+	@JsonSerialize(using = LocalDateSerializer.class)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+	@JsonInclude(Include.NON_NULL)
+	protected LocalDate paiementProchain;
+	@JsonIgnore
+	public Couverture<LocalDate> paiementProchainCouverture = new Couverture<LocalDate>().p(this).c(LocalDate.class).var("paiementProchain").o(paiementProchain);
+
+	/**	<br/> L'entité paiementProchain
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:paiementProchain">Trouver l'entité paiementProchain dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _paiementProchain(Couverture<LocalDate> c);
+
+	public LocalDate getPaiementProchain() {
+		return paiementProchain;
+	}
+
+	public void setPaiementProchain(LocalDate paiementProchain) {
+		this.paiementProchain = paiementProchain;
+		this.paiementProchainCouverture.dejaInitialise = true;
+	}
+	public PaiementScolaire setPaiementProchain(Instant o) {
+		this.paiementProchain = o == null ? null : LocalDate.from(o);
+		this.paiementProchainCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	/** Example: 2011-12-03+01:00 **/
+	public PaiementScolaire setPaiementProchain(String o) {
+		this.paiementProchain = o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		this.paiementProchainCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	public PaiementScolaire setPaiementProchain(Date o) {
+		this.paiementProchain = o == null ? null : o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
+		this.paiementProchainCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	protected PaiementScolaire paiementProchainInit() {
+		if(!paiementProchainCouverture.dejaInitialise) {
+			_paiementProchain(paiementProchainCouverture);
+			if(paiementProchain == null)
+				setPaiementProchain(paiementProchainCouverture.o);
+		}
+		paiementProchainCouverture.dejaInitialise(true);
+		return (PaiementScolaire)this;
+	}
+
+	public Date solrPaiementProchain() {
+		return paiementProchain == null ? null : Date.from(paiementProchain.atStartOfDay(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toInstant().atZone(ZoneId.of("Z")).toInstant());
+	}
+
+	public String strPaiementProchain() {
+		return paiementProchain == null ? "" : paiementProchain.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.forLanguageTag("fr-FR")));
+	}
+
+	public String jsonPaiementProchain() {
+		return paiementProchain == null ? "" : paiementProchain.format(DateTimeFormatter.ISO_DATE);
+	}
+
+	public String nomAffichagePaiementProchain() {
+		return "date de paiement prochaîne";
+	}
+
+	public String htmTooltipPaiementProchain() {
+		return null;
+	}
+
+	public String htmPaiementProchain() {
+		return paiementProchain == null ? "" : StringEscapeUtils.escapeHtml4(strPaiementProchain());
+	}
+
 	////////////////////
 	// fraisMontantDu //
 	////////////////////
@@ -5981,6 +6062,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		fraisInscriptionInit();
 		fraisMoisInit();
 		fraisRetardInit();
+		paiementProchainInit();
 		fraisMontantDuInit();
 		fraisMontantFutureInit();
 		paiementNomCourtInit();
@@ -6131,6 +6213,8 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				return oPaiementScolaire.fraisMois;
 			case "fraisRetard":
 				return oPaiementScolaire.fraisRetard;
+			case "paiementProchain":
+				return oPaiementScolaire.paiementProchain;
 			case "fraisMontantDu":
 				return oPaiementScolaire.fraisMontantDu;
 			case "fraisMontantFuture":
@@ -6646,6 +6730,12 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 					oPaiementScolaire.setFraisRetard(fraisRetard);
 			}
 
+			if(sauvegardes.contains("paiementProchain")) {
+				Date paiementProchain = (Date)solrDocument.get("paiementProchain_stored_date");
+				if(paiementProchain != null)
+					oPaiementScolaire.setPaiementProchain(paiementProchain);
+			}
+
 			if(sauvegardes.contains("fraisMontantDu")) {
 				Double fraisMontantDu = (Double)solrDocument.get("fraisMontantDu_stored_double");
 				if(fraisMontantDu != null)
@@ -6956,6 +7046,10 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			document.addField("fraisRetard_indexed_boolean", fraisRetard);
 			document.addField("fraisRetard_stored_boolean", fraisRetard);
 		}
+		if(paiementProchain != null) {
+			document.addField("paiementProchain_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(paiementProchain.atStartOfDay(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toInstant().atZone(ZoneId.of("Z"))));
+			document.addField("paiementProchain_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(paiementProchain.atStartOfDay(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toInstant().atZone(ZoneId.of("Z"))));
+		}
 		if(fraisMontantDu != null) {
 			document.addField("fraisMontantDu_indexed_double", fraisMontantDu.doubleValue());
 			document.addField("fraisMontantDu_stored_double", fraisMontantDu.doubleValue());
@@ -7097,6 +7191,8 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				return "fraisMois_indexed_boolean";
 			case "fraisRetard":
 				return "fraisRetard_indexed_boolean";
+			case "paiementProchain":
+				return "paiementProchain_indexed_date";
 			case "fraisMontantDu":
 				return "fraisMontantDu_indexed_double";
 			case "fraisMontantFuture":
@@ -7337,6 +7433,10 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		Boolean fraisRetard = (Boolean)solrDocument.get("fraisRetard_stored_boolean");
 		if(fraisRetard != null)
 			oPaiementScolaire.setFraisRetard(fraisRetard);
+
+		Date paiementProchain = (Date)solrDocument.get("paiementProchain_stored_date");
+		if(paiementProchain != null)
+			oPaiementScolaire.setPaiementProchain(paiementProchain);
 
 		Double fraisMontantDu = (Double)solrDocument.get("fraisMontantDu_stored_double");
 		if(fraisMontantDu != null)

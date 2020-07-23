@@ -849,10 +849,4 @@ public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 			o = config.getInteger(prefixEscaped + c.var, 25);
 		c.o(o);
 	}
-
-	protected void _paymentNext(Wrap<LocalDate> c) {
-		LocalDate now = LocalDate.now();
-		LocalDate o = LocalDate.now().getDayOfMonth() < paymentDay ? now.withDayOfMonth(paymentDay) : now.plusMonths(1).withDayOfMonth(paymentDay);
-		c.o(o);
-	}
 }

@@ -1166,16 +1166,16 @@ public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {
 			o = config.getInteger(prefixeEchappe + c.var, 25);
 		c.o(o);
 	}
-
-	/**	
-	 * Var.enUS: paymentNext
-	 * r: paiementJour
-	 * r.enUS: paymentDay
-	 **/
-	protected void _paiementProchain(Couverture<LocalDate> c) {
-		LocalDate now = LocalDate.now();
-		LocalDate o = LocalDate.now().getDayOfMonth() < paiementJour ? now.withDayOfMonth(paiementJour) : now.plusMonths(1).withDayOfMonth(paiementJour);
-		c.o(o);
-	}
+//
+//	/**	
+//	 * Var.enUS: paymentNext
+//	 * r: paiementJour
+//	 * r.enUS: paymentDay
+//	 **/
+//	protected void _paiementProchain(Couverture<LocalDate> c) {
+//		LocalDate now = LocalDate.now();
+//		LocalDate o = LocalDate.now().getDayOfMonth() < paiementJour ? now.withDayOfMonth(paiementJour) : now.plusMonths(1).withDayOfMonth(paiementJour);
+//		c.o(o);
+//	}
 
 }

@@ -614,7 +614,7 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 				e("th").f().sx("payment date").g("th");
 			}
 			if(getColumnPaymentAmount()) {
-				e("th").f().sx("payment amount").g("th");
+				e("th").f().sx("payment history").g("th");
 			}
 			if(getColumnChargeAmount()) {
 				e("th").f().sx("charge amount").g("th");

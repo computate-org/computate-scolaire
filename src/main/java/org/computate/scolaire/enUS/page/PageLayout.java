@@ -1239,7 +1239,8 @@ public class PageLayout extends PageLayoutGen<Object> {
 				LineItemType lineItem = new LineItemType();
 				DateTimeFormatter fd = DateTimeFormatter.ofPattern("MMM yyyy", Locale.US);
 				LocalDate now = LocalDate.now();
-				LocalDate chargeEndDate = siteConfig.getPaymentNext();
+				Integer paymentDay = siteConfig.getPaymentDay();
+				LocalDate chargeEndDate = LocalDate.now().getDayOfMonth() < paymentDay ? now.withDayOfMonth(paymentDay) : now.plusMonths(1).withDayOfMonth(paymentDay);
 				CustomerProfilePaymentType profile = new CustomerProfilePaymentType();
 				profile.setCustomerProfileId(customerProfileId);
 				transactionRequest.setProfile(profile);

@@ -2010,6 +2010,10 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	 * r.enUS: SiteBaseUrl
 	 * r: PaiementProchain
 	 * r.enUS: PaymentNext
+	 * r: PaiementJour
+	 * r.enUS: PaymentDay
+	 * r: paiementJour
+	 * r.enUS: paymentDay
 	 */
 	public void writeMakePayment(Integer ecoleNumero, BigDecimal amount, Long enrollmentKey, String childCompleteNamePreferred) {
 		ConfigSite configSite = requeteSite_.getConfigSite_();
@@ -2098,7 +2102,8 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 				LineItemType lineItem = new LineItemType();
 				DateTimeFormatter fd = DateTimeFormatter.ofPattern("MMM yyyy", Locale.US);
 				LocalDate now = LocalDate.now();
-				LocalDate chargeEndDate = configSite.getPaiementProchain();
+				Integer paiementJour = configSite.getPaiementJour();
+				LocalDate chargeEndDate = LocalDate.now().getDayOfMonth() < paiementJour ? now.withDayOfMonth(paiementJour) : now.plusMonths(1).withDayOfMonth(paiementJour);
 				CustomerProfilePaymentType profile = new CustomerProfilePaymentType();
 				profile.setCustomerProfileId(customerProfileId);
 				transactionRequest.setProfile(profile);

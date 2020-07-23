@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.computate.scolaire.enUS.cluster.Cluster;
+import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.enrollment.SchoolEnrollment;
 import org.computate.scolaire.enUS.search.SearchList;
@@ -276,14 +277,19 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 		c.o(false);
 	}
 
+	protected void _paymentNext(Wrap<LocalDate> c) {
+		SiteConfig siteConfig = siteRequest_.getSiteConfig_();
+		LocalDate now = LocalDate.now();
+		Integer paymentDay = siteConfig.getPaymentDay();
+		c.o(LocalDate.now().getDayOfMonth() < paymentDay ? now.withDayOfMonth(paymentDay) : now.plusMonths(1).withDayOfMonth(paymentDay));
+	}
+
 	protected void _chargeAmountDue(Wrap<BigDecimal> c) {
-		LocalDate paymentNext = siteRequest_.getSiteConfig_().getPaymentNext();
-		if(chargeAmount != null && (chargeEnrollment || paymentDate != null && paymentDate.compareTo(paymentNext.minusMonths(1)) >= 0 && paymentDate.compareTo(paymentNext) < 0))
+		if(chargeAmount != null && (chargeEnrollment || paymentDate != null && paymentDate.compareTo(paymentNext.minusMonths(1)) > 0 && paymentDate.compareTo(paymentNext) <= 0))
 			c.o(chargeAmount);
 	}
 
 	protected void _chargeAmountFuture(Wrap<BigDecimal> c) {
-		LocalDate paymentNext = siteRequest_.getSiteConfig_().getPaymentNext();
 		if(chargeAmount != null && paymentDate != null && !chargeEnrollment && paymentDate.compareTo(paymentNext) > 0)
 			c.o(chargeAmount);
 	}
@@ -299,8 +305,8 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 				o.append(String.format("%s + %s tuition", fd.format(enrollment_.getSessionStartDate().plusWeeks(1)), fd.format(enrollment_.getSessionEndDate())));
 			else if(enrollment_ != null && chargeEnrollment && enrollment_.getSessionStartDate() != null && enrollment_.getSessionEndDate() != null)
 				o.append(String.format("%s-%s enrollment fee", enrollment_.getSessionStartDate().getYear(), enrollment_.getSessionEndDate().getYear()));
-			else if(enrollment_ != null && chargeLateFee)
-				o.append("");
+			else if(enrollment_ != null && chargeLateFee && chargeAmount != null)
+				o.append(String.format("%s late fee", fn.format(chargeAmount)));
 			else if(paymentDate != null)
 				o.append(String.format("%s tuition", fd.format(paymentDate.plusMonths(1))));
 		}
@@ -317,6 +323,8 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 		}
 		if(!StringUtils.isEmpty(paymentDescription))
 			o.append(" ").append(paymentDescription);
+		if(o.length() == 0)
+			o.append("new");
 		c.o(o.toString());
 	}
 
@@ -332,7 +340,7 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 			else if(enrollment_ != null && chargeEnrollment && enrollment_.getSessionStartDate() != null && enrollment_.getSessionEndDate() != null)
 				o.append(String.format("%s %s-%s enrollment fee", fn.format(chargeAmount), fd.format(enrollment_.getSessionStartDate()), fd.format(enrollment_.getSessionEndDate())));
 			else if(enrollment_ != null && chargeLateFee && chargeAmount != null)
-				o.append(String.format("%s", fn.format(chargeAmount)));
+				o.append(String.format("%s late fee", fn.format(chargeAmount)));
 			else if(chargeAmount != null && paymentDate != null)
 				o.append(String.format("%s %s tuition", fn.format(chargeAmount), fd.format(paymentDate.plusMonths(1))));
 
@@ -357,6 +365,8 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 		}
 		if(!StringUtils.isEmpty(paymentDescription))
 			o.append(" ").append(paymentDescription);
+		if(o.length() == 0)
+			o.append("new");
 		c.o(o.toString());
 	}
 
@@ -376,7 +386,7 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 			else if(enrollment_ != null && chargeEnrollment && enrollment_.getSessionStartDate() != null && enrollment_.getSessionEndDate() != null)
 				o.append(String.format("%s frais d'inscription %s-%s", fn.format(chargeAmount), fd.format(enrollment_.getSessionStartDate()), fd.format(enrollment_.getSessionEndDate())));
 			else if(enrollment_ != null && chargeLateFee && chargeAmount != null)
-				o.append(String.format("%s", fn.format(chargeAmount)));
+				o.append(String.format("%s late fee", fn.format(chargeAmount)));
 			else if(chargeAmount != null && paymentDate != null)
 				o.append(String.format("%s frais de %s", fn.format(chargeAmount), fd.format(paymentDate.plusMonths(1))));
 
@@ -401,6 +411,8 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 		}
 		if(!StringUtils.isEmpty(paymentDescription))
 			o.append(" ").append(paymentDescription);
+		if(o.length() == 0)
+			o.append("new");
 		c.o(o.toString());
 	}
 }
