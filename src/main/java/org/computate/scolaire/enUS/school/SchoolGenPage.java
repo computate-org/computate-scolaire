@@ -163,6 +163,9 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSchoolPhoneNumber("Page");
 			o.htmSchoolAddress("Page");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmSchoolForm("Page");
 			o.htmSchoolNumber("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
@@ -196,6 +199,9 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSchoolPhoneNumber("POST");
 			o.htmSchoolAddress("POST");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmSchoolForm("POST");
 			o.htmSchoolNumber("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
@@ -251,6 +257,9 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSchoolPhoneNumber("PUTCopy");
 			o.htmSchoolAddress("PUTCopy");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmSchoolForm("PUTCopy");
 			o.htmSchoolNumber("PUTCopy");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
@@ -288,6 +297,9 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSchoolPhoneNumber("PATCH");
 			o.htmSchoolAddress("PATCH");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmSchoolForm("PATCH");
 			o.htmSchoolNumber("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
@@ -327,6 +339,9 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSchoolPhoneNumber("Search");
 			o.htmSchoolAddress("Search");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmSchoolForm("Search");
 			o.htmSchoolNumber("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();

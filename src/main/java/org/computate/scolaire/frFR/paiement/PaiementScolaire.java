@@ -4,9 +4,8 @@ import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
@@ -73,8 +72,6 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * Lignes: 50
 */    
 public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
-
-	private LocalDate now;
 
 	/**
 	 * {@inheritDoc}
@@ -1056,7 +1053,8 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 */                   
 	protected void _paiementProchain(Couverture<LocalDate> c) {
 		ConfigSite configSite = requeteSite_.getConfigSite_();
-		LocalDate now = LocalDate.now();
+		ZoneId zoneId = ZoneId.of(configSite.getSiteZone());
+		LocalDate now = LocalDate.now(zoneId);
 		Integer paiementJour = configSite.getPaiementJour();
 		c.o(LocalDate.now().getDayOfMonth() < paiementJour ? now.withDayOfMonth(paiementJour) : now.plusMonths(1).withDayOfMonth(paiementJour));
 	}
@@ -1101,7 +1099,12 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * r.enUS: siteConfig
 	 */                   
 	protected void _fraisMontantDu(Couverture<BigDecimal> c) {
-		if(fraisMontant != null && (fraisInscription || paiementDate != null && paiementDate.compareTo(paiementProchain.minusMonths(1)) > 0 && paiementDate.compareTo(paiementProchain) <= 0))
+		ConfigSite configSite = requeteSite_.getConfigSite_();
+		ZoneId zoneId = ZoneId.of(configSite.getSiteZone());
+		LocalDate now = LocalDate.now(zoneId);
+		if(fraisMontant != null && (fraisInscription 
+				|| fraisPremierDernier && paiementDate.compareTo(now.minusDays(15)) >= 0
+				|| paiementDate != null && paiementDate.compareTo(paiementProchain.minusMonths(1)) > 0 && paiementDate.compareTo(paiementProchain) <= 0))
 			c.o(fraisMontant);
 	}
 
@@ -1133,7 +1136,13 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * r.enUS: chargeEnrollment
 	 */                   
 	protected void _fraisMontantFuture(Couverture<BigDecimal> c) {
-		if(fraisMontant != null && paiementDate != null && !fraisInscription && paiementDate.compareTo(paiementProchain) > 0)
+		ConfigSite configSite = requeteSite_.getConfigSite_();
+		ZoneId zoneId = ZoneId.of(configSite.getSiteZone());
+		LocalDate now = LocalDate.now(zoneId);
+		if(fraisMontant != null && paiementDate != null 
+				&& !fraisInscription 
+				&& !(fraisPremierDernier && paiementDate.compareTo(now.minusDays(15)) >= 0)
+				&& paiementDate.compareTo(paiementProchain) > 0)
 			c.o(fraisMontant);
 	}
 

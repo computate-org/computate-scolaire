@@ -1754,6 +1754,68 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		return ecoleNumeroTelephone == null ? "" : StringEscapeUtils.escapeHtml4(strEcoleNumeroTelephone());
 	}
 
+	///////////////
+	// ecoleForm //
+	///////////////
+
+	/**	 L'entité ecoleForm
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String ecoleForm;
+	@JsonIgnore
+	public Couverture<String> ecoleFormCouverture = new Couverture<String>().p(this).c(String.class).var("ecoleForm").o(ecoleForm);
+
+	/**	<br/> L'entité ecoleForm
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.bloc.BlocScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:ecoleForm">Trouver l'entité ecoleForm dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _ecoleForm(Couverture<String> c);
+
+	public String getEcoleForm() {
+		return ecoleForm;
+	}
+
+	public void setEcoleForm(String ecoleForm) {
+		this.ecoleForm = ecoleForm;
+		this.ecoleFormCouverture.dejaInitialise = true;
+	}
+	protected BlocScolaire ecoleFormInit() {
+		if(!ecoleFormCouverture.dejaInitialise) {
+			_ecoleForm(ecoleFormCouverture);
+			if(ecoleForm == null)
+				setEcoleForm(ecoleFormCouverture.o);
+		}
+		ecoleFormCouverture.dejaInitialise(true);
+		return (BlocScolaire)this;
+	}
+
+	public String solrEcoleForm() {
+		return ecoleForm;
+	}
+
+	public String strEcoleForm() {
+		return ecoleForm == null ? "" : ecoleForm;
+	}
+
+	public String jsonEcoleForm() {
+		return ecoleForm == null ? "" : ecoleForm;
+	}
+
+	public String nomAffichageEcoleForm() {
+		return null;
+	}
+
+	public String htmTooltipEcoleForm() {
+		return null;
+	}
+
+	public String htmEcoleForm() {
+		return ecoleForm == null ? "" : StringEscapeUtils.escapeHtml4(strEcoleForm());
+	}
+
 	/////////////////
 	// ecoleNumero //
 	/////////////////
@@ -4285,6 +4347,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		ecoleEmplacementInit();
 		ecoleAddresseInit();
 		ecoleNumeroTelephoneInit();
+		ecoleFormInit();
 		ecoleNumeroInit();
 		ecoleAdministrateurNomInit();
 		anneeDebutInit();
@@ -4398,6 +4461,8 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 				return oBlocScolaire.ecoleAddresse;
 			case "ecoleNumeroTelephone":
 				return oBlocScolaire.ecoleNumeroTelephone;
+			case "ecoleForm":
+				return oBlocScolaire.ecoleForm;
 			case "ecoleNumero":
 				return oBlocScolaire.ecoleNumero;
 			case "ecoleAdministrateurNom":
@@ -4681,6 +4746,12 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 				String ecoleNumeroTelephone = (String)solrDocument.get("ecoleNumeroTelephone_stored_string");
 				if(ecoleNumeroTelephone != null)
 					oBlocScolaire.setEcoleNumeroTelephone(ecoleNumeroTelephone);
+			}
+
+			if(sauvegardes.contains("ecoleForm")) {
+				String ecoleForm = (String)solrDocument.get("ecoleForm_stored_string");
+				if(ecoleForm != null)
+					oBlocScolaire.setEcoleForm(ecoleForm);
 			}
 
 			if(sauvegardes.contains("ecoleNumero")) {
@@ -4981,6 +5052,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 			document.addField("ecoleNumeroTelephone_indexed_string", ecoleNumeroTelephone);
 			document.addField("ecoleNumeroTelephone_stored_string", ecoleNumeroTelephone);
 		}
+		if(ecoleForm != null) {
+			document.addField("ecoleForm_indexed_string", ecoleForm);
+			document.addField("ecoleForm_stored_string", ecoleForm);
+		}
 		if(ecoleNumero != null) {
 			document.addField("ecoleNumero_indexed_int", ecoleNumero);
 			document.addField("ecoleNumero_stored_int", ecoleNumero);
@@ -5144,6 +5219,8 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 				return "ecoleAddresse_indexed_string";
 			case "ecoleNumeroTelephone":
 				return "ecoleNumeroTelephone_indexed_string";
+			case "ecoleForm":
+				return "ecoleForm_indexed_string";
 			case "ecoleNumero":
 				return "ecoleNumero_indexed_int";
 			case "ecoleAdministrateurNom":
@@ -5296,6 +5373,10 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		String ecoleNumeroTelephone = (String)solrDocument.get("ecoleNumeroTelephone_stored_string");
 		if(ecoleNumeroTelephone != null)
 			oBlocScolaire.setEcoleNumeroTelephone(ecoleNumeroTelephone);
+
+		String ecoleForm = (String)solrDocument.get("ecoleForm_stored_string");
+		if(ecoleForm != null)
+			oBlocScolaire.setEcoleForm(ecoleForm);
 
 		Integer ecoleNumero = (Integer)solrDocument.get("ecoleNumero_stored_int");
 		if(ecoleNumero != null)

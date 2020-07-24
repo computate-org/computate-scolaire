@@ -74,7 +74,7 @@ public class Ecole extends EcoleGen<Cluster> {
 	 * Indexe: true
 	 * Stocke: true
 	 * Attribuer: AnneeScolaire.ecoleCle
-	 * HtmlLigne: 7
+	 * HtmlLigne: 8
 	 * HtmlCellule: 1
 	 * Description.frFR: 
 	 * Description.enUS: 
@@ -205,12 +205,27 @@ public class Ecole extends EcoleGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
+	 * Var.enUS: schoolForm
+	 * Definir: true
+	 * Indexe: true
+	 * Stocke: true
+	 * HtmlLigne: 7
+	 * HtmlCellule: 1
+	 * NomAffichage.frFR: école formulaire
+	 * NomAffichage.enUS: school form name
+	 */
+	protected void _ecoleForm(Couverture<String> c) {
+		c.o("main-enrollment-form");
+	}
+
+	/**
+	 * {@inheritDoc}
 	 * Var.enUS: schoolNumber
 	 * Definir: true
 	 * Indexe: true
 	 * Stocke: true
-	 * HtmlLigne: 6
-	 * HtmlCellule: 3
+	 * HtmlLigne: 7
+	 * HtmlCellule: 2
 	 * NomAffichage.frFR: école numéro
 	 * NomAffichage.enUS: school number
 	 */

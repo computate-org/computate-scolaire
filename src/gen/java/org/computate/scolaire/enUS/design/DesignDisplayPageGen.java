@@ -25,6 +25,7 @@ import org.computate.scolaire.enUS.mom.SchoolMom;
 import java.util.Optional;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import org.computate.scolaire.enUS.payment.SchoolPayment;
 import java.util.HashMap;
 import org.computate.scolaire.enUS.html.part.HtmlPart;
 import java.text.NumberFormat;
@@ -719,6 +720,92 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 				setSchool_(school_Wrap.o);
 		}
 		school_Wrap.alreadyInitialized(true);
+		return (DesignDisplayPage)this;
+	}
+
+	///////////////////
+	// paymentSearch //
+	///////////////////
+
+	/**	 The entity paymentSearch
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<SchoolPayment>(). 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected SearchList<SchoolPayment> paymentSearch = new SearchList<SchoolPayment>();
+	@JsonIgnore
+	public Wrap<SearchList<SchoolPayment>> paymentSearchWrap = new Wrap<SearchList<SchoolPayment>>().p(this).c(SearchList.class).var("paymentSearch").o(paymentSearch);
+
+	/**	<br/> The entity paymentSearch
+	 *  It is constructed before being initialized with the constructor by default SearchList<SchoolPayment>(). 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:paymentSearch">Find the entity paymentSearch in Solr</a>
+	 * <br/>
+	 * @param paymentSearch is the entity already constructed. 
+	 **/
+	protected abstract void _paymentSearch(SearchList<SchoolPayment> l);
+
+	public SearchList<SchoolPayment> getPaymentSearch() {
+		return paymentSearch;
+	}
+
+	public void setPaymentSearch(SearchList<SchoolPayment> paymentSearch) {
+		this.paymentSearch = paymentSearch;
+		this.paymentSearchWrap.alreadyInitialized = true;
+	}
+	protected DesignDisplayPage paymentSearchInit() {
+		if(!paymentSearchWrap.alreadyInitialized) {
+			_paymentSearch(paymentSearch);
+		}
+		paymentSearch.initDeepForClass(siteRequest_);
+		paymentSearchWrap.alreadyInitialized(true);
+		return (DesignDisplayPage)this;
+	}
+
+	///////////////
+	// payments_ //
+	///////////////
+
+	/**	 The entity payments_
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected List<SchoolPayment> payments_;
+	@JsonIgnore
+	public Wrap<List<SchoolPayment>> payments_Wrap = new Wrap<List<SchoolPayment>>().p(this).c(List.class).var("payments_").o(payments_);
+
+	/**	<br/> The entity payments_
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:payments_">Find the entity payments_ in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _payments_(Wrap<List<SchoolPayment>> c);
+
+	public List<SchoolPayment> getPayments_() {
+		return payments_;
+	}
+
+	public void setPayments_(List<SchoolPayment> payments_) {
+		this.payments_ = payments_;
+		this.payments_Wrap.alreadyInitialized = true;
+	}
+	public DesignDisplayPage addPayments_(SchoolPayment...objets) {
+		for(SchoolPayment o : objets) {
+			addPayments_(o);
+		}
+		return (DesignDisplayPage)this;
+	}
+	public DesignDisplayPage addPayments_(SchoolPayment o) {
+		if(o != null && !payments_.contains(o))
+			this.payments_.add(o);
+		return (DesignDisplayPage)this;
+	}
+	protected DesignDisplayPage payments_Init() {
+		if(!payments_Wrap.alreadyInitialized) {
+			_payments_(payments_Wrap);
+			if(payments_ == null)
+				setPayments_(payments_Wrap.o);
+		}
+		payments_Wrap.alreadyInitialized(true);
 		return (DesignDisplayPage)this;
 	}
 
@@ -2221,6 +2308,8 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 		yearKeyInit();
 		schoolSearchInit();
 		school_Init();
+		paymentSearchInit();
+		payments_Init();
 		emailFromInit();
 		emailToSchoolInit();
 		emailToAddressInit();
@@ -2276,6 +2365,8 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 			yearSearch.setSiteRequest_(siteRequest_);
 		if(schoolSearch != null)
 			schoolSearch.setSiteRequest_(siteRequest_);
+		if(paymentSearch != null)
+			paymentSearch.setSiteRequest_(siteRequest_);
 		if(blockSearch != null)
 			blockSearch.setSiteRequest_(siteRequest_);
 		if(seasonBlock != null)
@@ -2344,6 +2435,10 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 				return oDesignDisplayPage.schoolSearch;
 			case "school_":
 				return oDesignDisplayPage.school_;
+			case "paymentSearch":
+				return oDesignDisplayPage.paymentSearch;
+			case "payments_":
+				return oDesignDisplayPage.payments_;
 			case "emailFrom":
 				return oDesignDisplayPage.emailFrom;
 			case "emailToSchool":

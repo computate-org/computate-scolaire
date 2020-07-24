@@ -1149,6 +1149,139 @@ public abstract class SchoolGen<DEV> extends Cluster {
 		} g("div");
 	}
 
+	////////////////
+	// schoolForm //
+	////////////////
+
+	/**	 The entity schoolForm
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String schoolForm;
+	@JsonIgnore
+	public Wrap<String> schoolFormWrap = new Wrap<String>().p(this).c(String.class).var("schoolForm").o(schoolForm);
+
+	/**	<br/> The entity schoolForm
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.school.School&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolForm">Find the entity schoolForm in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _schoolForm(Wrap<String> c);
+
+	public String getSchoolForm() {
+		return schoolForm;
+	}
+
+	public void setSchoolForm(String schoolForm) {
+		this.schoolForm = schoolForm;
+		this.schoolFormWrap.alreadyInitialized = true;
+	}
+	protected School schoolFormInit() {
+		if(!schoolFormWrap.alreadyInitialized) {
+			_schoolForm(schoolFormWrap);
+			if(schoolForm == null)
+				setSchoolForm(schoolFormWrap.o);
+		}
+		schoolFormWrap.alreadyInitialized(true);
+		return (School)this;
+	}
+
+	public String solrSchoolForm() {
+		return schoolForm;
+	}
+
+	public String strSchoolForm() {
+		return schoolForm == null ? "" : schoolForm;
+	}
+
+	public String jsonSchoolForm() {
+		return schoolForm == null ? "" : schoolForm;
+	}
+
+	public String nomAffichageSchoolForm() {
+		return "school form name";
+	}
+
+	public String htmTooltipSchoolForm() {
+		return null;
+	}
+
+	public String htmSchoolForm() {
+		return schoolForm == null ? "" : StringEscapeUtils.escapeHtml4(strSchoolForm());
+	}
+
+	public void inputSchoolForm(String classApiMethodMethod) {
+		School s = (School)this;
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "school form name")
+				.a("id", classApiMethodMethod, "_schoolForm");
+				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+					a("class", "setSchoolForm classSchool inputSchool", pk, "SchoolForm w3-input w3-border ");
+					a("name", "setSchoolForm");
+				} else {
+					a("class", "valueSchoolForm w3-input w3-border classSchool inputSchool", pk, "SchoolForm w3-input w3-border ");
+					a("name", "schoolForm");
+				}
+				if("Page".equals(classApiMethodMethod)) {
+					a("onclick", "removeGlow($(this)); ");
+					a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setSchoolForm', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_schoolForm')); }, function() { addError($('#", classApiMethodMethod, "_schoolForm')); }); ");
+				}
+				a("value", strSchoolForm())
+			.fg();
+
+		} else {
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+				sx(htmSchoolForm());
+			}
+		}
+	}
+
+	public void htmSchoolForm(String classApiMethodMethod) {
+		School s = (School)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolSchoolForm").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-pink ").f();
+							e("label").a("for", classApiMethodMethod, "_schoolForm").a("class", "").f().sx("school form name").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputSchoolForm(classApiMethodMethod);
+							} g("div");
+							if(
+									CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+									) {
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-pink ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_schoolForm')); $('#", classApiMethodMethod, "_schoolForm').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#SchoolForm :input[name=pk]').val() }], 'setSchoolForm', null, function() { addGlow($('#", classApiMethodMethod, "_schoolForm')); }, function() { addError($('#", classApiMethodMethod, "_schoolForm')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
 	//////////////////
 	// schoolNumber //
 	//////////////////
@@ -2241,6 +2374,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 		schoolSortInit();
 		schoolNameInit();
 		schoolPhoneNumberInit();
+		schoolFormInit();
 		schoolNumberInit();
 		schoolAdministratorNameInit();
 		schoolEmailInit();
@@ -2310,6 +2444,8 @@ public abstract class SchoolGen<DEV> extends Cluster {
 				return oSchool.schoolName;
 			case "schoolPhoneNumber":
 				return oSchool.schoolPhoneNumber;
+			case "schoolForm":
+				return oSchool.schoolForm;
 			case "schoolNumber":
 				return oSchool.schoolNumber;
 			case "schoolAdministratorName":
@@ -2392,6 +2528,11 @@ public abstract class SchoolGen<DEV> extends Cluster {
 			case "schoolPhoneNumber":
 				if(val != null)
 					setSchoolPhoneNumber(val);
+				saves.add(var);
+				return val;
+			case "schoolForm":
+				if(val != null)
+					setSchoolForm(val);
 				saves.add(var);
 				return val;
 			case "schoolNumber":
@@ -2508,6 +2649,12 @@ public abstract class SchoolGen<DEV> extends Cluster {
 				String schoolPhoneNumber = (String)solrDocument.get("schoolPhoneNumber_stored_string");
 				if(schoolPhoneNumber != null)
 					oSchool.setSchoolPhoneNumber(schoolPhoneNumber);
+			}
+
+			if(saves.contains("schoolForm")) {
+				String schoolForm = (String)solrDocument.get("schoolForm_stored_string");
+				if(schoolForm != null)
+					oSchool.setSchoolForm(schoolForm);
 			}
 
 			if(saves.contains("schoolNumber")) {
@@ -2698,6 +2845,10 @@ public abstract class SchoolGen<DEV> extends Cluster {
 			document.addField("schoolPhoneNumber_indexed_string", schoolPhoneNumber);
 			document.addField("schoolPhoneNumber_stored_string", schoolPhoneNumber);
 		}
+		if(schoolForm != null) {
+			document.addField("schoolForm_indexed_string", schoolForm);
+			document.addField("schoolForm_stored_string", schoolForm);
+		}
 		if(schoolNumber != null) {
 			document.addField("schoolNumber_indexed_int", schoolNumber);
 			document.addField("schoolNumber_stored_int", schoolNumber);
@@ -2779,6 +2930,8 @@ public abstract class SchoolGen<DEV> extends Cluster {
 				return "schoolName_indexed_string";
 			case "schoolPhoneNumber":
 				return "schoolPhoneNumber_indexed_string";
+			case "schoolForm":
+				return "schoolForm_indexed_string";
 			case "schoolNumber":
 				return "schoolNumber_indexed_int";
 			case "schoolAdministratorName":
@@ -2870,6 +3023,10 @@ public abstract class SchoolGen<DEV> extends Cluster {
 		if(schoolPhoneNumber != null)
 			oSchool.setSchoolPhoneNumber(schoolPhoneNumber);
 
+		String schoolForm = (String)solrDocument.get("schoolForm_stored_string");
+		if(schoolForm != null)
+			oSchool.setSchoolForm(schoolForm);
+
 		Integer schoolNumber = (Integer)solrDocument.get("schoolNumber_stored_int");
 		if(schoolNumber != null)
 			oSchool.setSchoolNumber(schoolNumber);
@@ -2924,6 +3081,8 @@ public abstract class SchoolGen<DEV> extends Cluster {
 				apiRequest.addVars("schoolName");
 			if(!Objects.equals(schoolPhoneNumber, original.getSchoolPhoneNumber()))
 				apiRequest.addVars("schoolPhoneNumber");
+			if(!Objects.equals(schoolForm, original.getSchoolForm()))
+				apiRequest.addVars("schoolForm");
 			if(!Objects.equals(schoolNumber, original.getSchoolNumber()))
 				apiRequest.addVars("schoolNumber");
 			if(!Objects.equals(schoolAdministratorName, original.getSchoolAdministratorName()))
@@ -2947,7 +3106,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), yearKeys, schoolName, schoolPhoneNumber, schoolNumber, schoolAdministratorName, schoolEmail, schoolEmailFrom, schoolEmailTo, schoolLocation, schoolAddress);
+		return Objects.hash(super.hashCode(), yearKeys, schoolName, schoolPhoneNumber, schoolForm, schoolNumber, schoolAdministratorName, schoolEmail, schoolEmailFrom, schoolEmailTo, schoolLocation, schoolAddress);
 	}
 
 	////////////
@@ -2964,6 +3123,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 				&& Objects.equals( yearKeys, that.yearKeys )
 				&& Objects.equals( schoolName, that.schoolName )
 				&& Objects.equals( schoolPhoneNumber, that.schoolPhoneNumber )
+				&& Objects.equals( schoolForm, that.schoolForm )
 				&& Objects.equals( schoolNumber, that.schoolNumber )
 				&& Objects.equals( schoolAdministratorName, that.schoolAdministratorName )
 				&& Objects.equals( schoolEmail, that.schoolEmail )
@@ -2984,6 +3144,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 		sb.append( "yearKeys: " ).append(yearKeys);
 		sb.append( ", schoolName: \"" ).append(schoolName).append( "\"" );
 		sb.append( ", schoolPhoneNumber: \"" ).append(schoolPhoneNumber).append( "\"" );
+		sb.append( ", schoolForm: \"" ).append(schoolForm).append( "\"" );
 		sb.append( ", schoolNumber: " ).append(schoolNumber);
 		sb.append( ", schoolAdministratorName: \"" ).append(schoolAdministratorName).append( "\"" );
 		sb.append( ", schoolEmail: \"" ).append(schoolEmail).append( "\"" );

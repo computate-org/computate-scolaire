@@ -111,6 +111,11 @@ public class SchoolSession extends SchoolSessionGen<Cluster> {
 			c.o((String)season_.getSchoolPhoneNumber());
 	}
 
+	protected void _schoolForm(Wrap<String> c) {
+		if(season_ != null)
+			c.o((String)season_.getSchoolForm());
+	}
+
 	protected void _schoolNumber(Wrap<Integer> c) {
 		if(season_ != null)
 			c.o((Integer)season_.getSchoolNumber());

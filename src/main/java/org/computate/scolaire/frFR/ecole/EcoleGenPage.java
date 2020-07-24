@@ -164,6 +164,9 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEcoleNumeroTelephone("Page");
 			o.htmEcoleAddresse("Page");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmEcoleForm("Page");
 			o.htmEcoleNumero("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
@@ -197,6 +200,9 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEcoleNumeroTelephone("POST");
 			o.htmEcoleAddresse("POST");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmEcoleForm("POST");
 			o.htmEcoleNumero("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
@@ -252,6 +258,9 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEcoleNumeroTelephone("PUTCopie");
 			o.htmEcoleAddresse("PUTCopie");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmEcoleForm("PUTCopie");
 			o.htmEcoleNumero("PUTCopie");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
@@ -289,6 +298,9 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEcoleNumeroTelephone("PATCH");
 			o.htmEcoleAddresse("PATCH");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmEcoleForm("PATCH");
 			o.htmEcoleNumero("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
@@ -328,6 +340,9 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEcoleNumeroTelephone("Recherche");
 			o.htmEcoleAddresse("Recherche");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmEcoleForm("Recherche");
 			o.htmEcoleNumero("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();

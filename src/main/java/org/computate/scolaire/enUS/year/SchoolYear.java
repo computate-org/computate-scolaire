@@ -93,6 +93,11 @@ public class SchoolYear extends SchoolYearGen<Cluster> {
 			c.o((String)school_.getSchoolPhoneNumber());
 	}
 
+	protected void _schoolForm(Wrap<String> c) {
+		if(school_ != null)
+			c.o((String)school_.getSchoolForm());
+	}
+
 	protected void _schoolNumber(Wrap<Integer> c) {
 		if(school_ != null)
 			c.o((Integer)school_.getSchoolNumber());

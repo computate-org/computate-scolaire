@@ -1495,6 +1495,68 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 		return schoolPhoneNumber == null ? "" : StringEscapeUtils.escapeHtml4(strSchoolPhoneNumber());
 	}
 
+	////////////////
+	// schoolForm //
+	////////////////
+
+	/**	 The entity schoolForm
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String schoolForm;
+	@JsonIgnore
+	public Wrap<String> schoolFormWrap = new Wrap<String>().p(this).c(String.class).var("schoolForm").o(schoolForm);
+
+	/**	<br/> The entity schoolForm
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.session.SchoolSession&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolForm">Find the entity schoolForm in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _schoolForm(Wrap<String> c);
+
+	public String getSchoolForm() {
+		return schoolForm;
+	}
+
+	public void setSchoolForm(String schoolForm) {
+		this.schoolForm = schoolForm;
+		this.schoolFormWrap.alreadyInitialized = true;
+	}
+	protected SchoolSession schoolFormInit() {
+		if(!schoolFormWrap.alreadyInitialized) {
+			_schoolForm(schoolFormWrap);
+			if(schoolForm == null)
+				setSchoolForm(schoolFormWrap.o);
+		}
+		schoolFormWrap.alreadyInitialized(true);
+		return (SchoolSession)this;
+	}
+
+	public String solrSchoolForm() {
+		return schoolForm;
+	}
+
+	public String strSchoolForm() {
+		return schoolForm == null ? "" : schoolForm;
+	}
+
+	public String jsonSchoolForm() {
+		return schoolForm == null ? "" : schoolForm;
+	}
+
+	public String nomAffichageSchoolForm() {
+		return null;
+	}
+
+	public String htmTooltipSchoolForm() {
+		return null;
+	}
+
+	public String htmSchoolForm() {
+		return schoolForm == null ? "" : StringEscapeUtils.escapeHtml4(strSchoolForm());
+	}
+
 	//////////////////
 	// schoolNumber //
 	//////////////////
@@ -2632,6 +2694,7 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 		schoolLocationInit();
 		schoolAddressInit();
 		schoolPhoneNumberInit();
+		schoolFormInit();
 		schoolNumberInit();
 		schoolAdministratorNameInit();
 		yearStartInit();
@@ -2722,6 +2785,8 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 				return oSchoolSession.schoolAddress;
 			case "schoolPhoneNumber":
 				return oSchoolSession.schoolPhoneNumber;
+			case "schoolForm":
+				return oSchoolSession.schoolForm;
 			case "schoolNumber":
 				return oSchoolSession.schoolNumber;
 			case "schoolAdministratorName":
@@ -2933,6 +2998,12 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 				String schoolPhoneNumber = (String)solrDocument.get("schoolPhoneNumber_stored_string");
 				if(schoolPhoneNumber != null)
 					oSchoolSession.setSchoolPhoneNumber(schoolPhoneNumber);
+			}
+
+			if(saves.contains("schoolForm")) {
+				String schoolForm = (String)solrDocument.get("schoolForm_stored_string");
+				if(schoolForm != null)
+					oSchoolSession.setSchoolForm(schoolForm);
 			}
 
 			if(saves.contains("schoolNumber")) {
@@ -3157,6 +3228,10 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 			document.addField("schoolPhoneNumber_indexed_string", schoolPhoneNumber);
 			document.addField("schoolPhoneNumber_stored_string", schoolPhoneNumber);
 		}
+		if(schoolForm != null) {
+			document.addField("schoolForm_indexed_string", schoolForm);
+			document.addField("schoolForm_stored_string", schoolForm);
+		}
 		if(schoolNumber != null) {
 			document.addField("schoolNumber_indexed_int", schoolNumber);
 			document.addField("schoolNumber_stored_int", schoolNumber);
@@ -3268,6 +3343,8 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 				return "schoolAddress_indexed_string";
 			case "schoolPhoneNumber":
 				return "schoolPhoneNumber_indexed_string";
+			case "schoolForm":
+				return "schoolForm_indexed_string";
 			case "schoolNumber":
 				return "schoolNumber_indexed_int";
 			case "schoolAdministratorName":
@@ -3388,6 +3465,10 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 		String schoolPhoneNumber = (String)solrDocument.get("schoolPhoneNumber_stored_string");
 		if(schoolPhoneNumber != null)
 			oSchoolSession.setSchoolPhoneNumber(schoolPhoneNumber);
+
+		String schoolForm = (String)solrDocument.get("schoolForm_stored_string");
+		if(schoolForm != null)
+			oSchoolSession.setSchoolForm(schoolForm);
 
 		Integer schoolNumber = (Integer)solrDocument.get("schoolNumber_stored_int");
 		if(schoolNumber != null)

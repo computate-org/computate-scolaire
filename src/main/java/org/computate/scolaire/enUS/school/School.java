@@ -54,6 +54,10 @@ public class School extends SchoolGen<Cluster> {
 	protected void _schoolPhoneNumber(Wrap<String> c) {
 	}
 
+	protected void _schoolForm(Wrap<String> c) {
+		c.o("main-enrollment-form");
+	}
+
 	protected void _schoolNumber(Wrap<Integer> c) {
 	}
 

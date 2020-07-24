@@ -1153,6 +1153,140 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		} g("div");
 	}
 
+	///////////////
+	// ecoleForm //
+	///////////////
+
+	/**	 L'entité ecoleForm
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String ecoleForm;
+	@JsonIgnore
+	public Couverture<String> ecoleFormCouverture = new Couverture<String>().p(this).c(String.class).var("ecoleForm").o(ecoleForm);
+
+	/**	<br/> L'entité ecoleForm
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.ecole.Ecole&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:ecoleForm">Trouver l'entité ecoleForm dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _ecoleForm(Couverture<String> c);
+
+	public String getEcoleForm() {
+		return ecoleForm;
+	}
+
+	public void setEcoleForm(String ecoleForm) {
+		this.ecoleForm = ecoleForm;
+		this.ecoleFormCouverture.dejaInitialise = true;
+	}
+	protected Ecole ecoleFormInit() {
+		if(!ecoleFormCouverture.dejaInitialise) {
+			_ecoleForm(ecoleFormCouverture);
+			if(ecoleForm == null)
+				setEcoleForm(ecoleFormCouverture.o);
+		}
+		ecoleFormCouverture.dejaInitialise(true);
+		return (Ecole)this;
+	}
+
+	public String solrEcoleForm() {
+		return ecoleForm;
+	}
+
+	public String strEcoleForm() {
+		return ecoleForm == null ? "" : ecoleForm;
+	}
+
+	public String jsonEcoleForm() {
+		return ecoleForm == null ? "" : ecoleForm;
+	}
+
+	public String nomAffichageEcoleForm() {
+		return "école formulaire";
+	}
+
+	public String htmTooltipEcoleForm() {
+		return null;
+	}
+
+	public String htmEcoleForm() {
+		return ecoleForm == null ? "" : StringEscapeUtils.escapeHtml4(strEcoleForm());
+	}
+
+	public void inputEcoleForm(String classeApiMethodeMethode) {
+		Ecole s = (Ecole)this;
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "école formulaire")
+				.a("title", "Description.enUS: ")
+				.a("id", classeApiMethodeMethode, "_ecoleForm");
+				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+					a("class", "setEcoleForm classEcole inputEcole", pk, "EcoleForm w3-input w3-border ");
+					a("name", "setEcoleForm");
+				} else {
+					a("class", "valeurEcoleForm w3-input w3-border classEcole inputEcole", pk, "EcoleForm w3-input w3-border ");
+					a("name", "ecoleForm");
+				}
+				if("Page".equals(classeApiMethodeMethode)) {
+					a("onclick", "enleverLueur($(this)); ");
+					a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setEcoleForm', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_ecoleForm')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_ecoleForm')); }); ");
+				}
+				a("value", strEcoleForm())
+			.fg();
+
+		} else {
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+				sx(htmEcoleForm());
+			}
+		}
+	}
+
+	public void htmEcoleForm(String classeApiMethodeMethode) {
+		Ecole s = (Ecole)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "EcoleEcoleForm").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-pink ").f();
+							e("label").a("for", classeApiMethodeMethode, "_ecoleForm").a("class", "").f().sx("école formulaire").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputEcoleForm(classeApiMethodeMethode);
+							} g("div");
+							if(
+									CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+									) {
+								if("Page".equals(classeApiMethodeMethode)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-pink ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_ecoleForm')); $('#", classeApiMethodeMethode, "_ecoleForm').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#EcoleForm :input[name=pk]').val() }], 'setEcoleForm', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_ecoleForm')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_ecoleForm')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
 	/////////////////
 	// ecoleNumero //
 	/////////////////
@@ -2252,6 +2386,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		ecoleTriInit();
 		ecoleNomInit();
 		ecoleNumeroTelephoneInit();
+		ecoleFormInit();
 		ecoleNumeroInit();
 		ecoleAdministrateurNomInit();
 		ecoleMailInit();
@@ -2321,6 +2456,8 @@ public abstract class EcoleGen<DEV> extends Cluster {
 				return oEcole.ecoleNom;
 			case "ecoleNumeroTelephone":
 				return oEcole.ecoleNumeroTelephone;
+			case "ecoleForm":
+				return oEcole.ecoleForm;
 			case "ecoleNumero":
 				return oEcole.ecoleNumero;
 			case "ecoleAdministrateurNom":
@@ -2403,6 +2540,11 @@ public abstract class EcoleGen<DEV> extends Cluster {
 			case "ecoleNumeroTelephone":
 				if(val != null)
 					setEcoleNumeroTelephone(val);
+				sauvegardes.add(var);
+				return val;
+			case "ecoleForm":
+				if(val != null)
+					setEcoleForm(val);
 				sauvegardes.add(var);
 				return val;
 			case "ecoleNumero":
@@ -2519,6 +2661,12 @@ public abstract class EcoleGen<DEV> extends Cluster {
 				String ecoleNumeroTelephone = (String)solrDocument.get("ecoleNumeroTelephone_stored_string");
 				if(ecoleNumeroTelephone != null)
 					oEcole.setEcoleNumeroTelephone(ecoleNumeroTelephone);
+			}
+
+			if(sauvegardes.contains("ecoleForm")) {
+				String ecoleForm = (String)solrDocument.get("ecoleForm_stored_string");
+				if(ecoleForm != null)
+					oEcole.setEcoleForm(ecoleForm);
 			}
 
 			if(sauvegardes.contains("ecoleNumero")) {
@@ -2709,6 +2857,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 			document.addField("ecoleNumeroTelephone_indexed_string", ecoleNumeroTelephone);
 			document.addField("ecoleNumeroTelephone_stored_string", ecoleNumeroTelephone);
 		}
+		if(ecoleForm != null) {
+			document.addField("ecoleForm_indexed_string", ecoleForm);
+			document.addField("ecoleForm_stored_string", ecoleForm);
+		}
 		if(ecoleNumero != null) {
 			document.addField("ecoleNumero_indexed_int", ecoleNumero);
 			document.addField("ecoleNumero_stored_int", ecoleNumero);
@@ -2790,6 +2942,8 @@ public abstract class EcoleGen<DEV> extends Cluster {
 				return "ecoleNom_indexed_string";
 			case "ecoleNumeroTelephone":
 				return "ecoleNumeroTelephone_indexed_string";
+			case "ecoleForm":
+				return "ecoleForm_indexed_string";
 			case "ecoleNumero":
 				return "ecoleNumero_indexed_int";
 			case "ecoleAdministrateurNom":
@@ -2881,6 +3035,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		if(ecoleNumeroTelephone != null)
 			oEcole.setEcoleNumeroTelephone(ecoleNumeroTelephone);
 
+		String ecoleForm = (String)solrDocument.get("ecoleForm_stored_string");
+		if(ecoleForm != null)
+			oEcole.setEcoleForm(ecoleForm);
+
 		Integer ecoleNumero = (Integer)solrDocument.get("ecoleNumero_stored_int");
 		if(ecoleNumero != null)
 			oEcole.setEcoleNumero(ecoleNumero);
@@ -2935,6 +3093,8 @@ public abstract class EcoleGen<DEV> extends Cluster {
 				requeteApi.addVars("ecoleNom");
 			if(!Objects.equals(ecoleNumeroTelephone, original.getEcoleNumeroTelephone()))
 				requeteApi.addVars("ecoleNumeroTelephone");
+			if(!Objects.equals(ecoleForm, original.getEcoleForm()))
+				requeteApi.addVars("ecoleForm");
 			if(!Objects.equals(ecoleNumero, original.getEcoleNumero()))
 				requeteApi.addVars("ecoleNumero");
 			if(!Objects.equals(ecoleAdministrateurNom, original.getEcoleAdministrateurNom()))
@@ -2958,7 +3118,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), anneeCles, ecoleNom, ecoleNumeroTelephone, ecoleNumero, ecoleAdministrateurNom, ecoleMail, ecoleMailDe, ecoleMailA, ecoleEmplacement, ecoleAddresse);
+		return Objects.hash(super.hashCode(), anneeCles, ecoleNom, ecoleNumeroTelephone, ecoleForm, ecoleNumero, ecoleAdministrateurNom, ecoleMail, ecoleMailDe, ecoleMailA, ecoleEmplacement, ecoleAddresse);
 	}
 
 	////////////
@@ -2975,6 +3135,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 				&& Objects.equals( anneeCles, that.anneeCles )
 				&& Objects.equals( ecoleNom, that.ecoleNom )
 				&& Objects.equals( ecoleNumeroTelephone, that.ecoleNumeroTelephone )
+				&& Objects.equals( ecoleForm, that.ecoleForm )
 				&& Objects.equals( ecoleNumero, that.ecoleNumero )
 				&& Objects.equals( ecoleAdministrateurNom, that.ecoleAdministrateurNom )
 				&& Objects.equals( ecoleMail, that.ecoleMail )
@@ -2995,6 +3156,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		sb.append( "anneeCles: " ).append(anneeCles);
 		sb.append( ", ecoleNom: \"" ).append(ecoleNom).append( "\"" );
 		sb.append( ", ecoleNumeroTelephone: \"" ).append(ecoleNumeroTelephone).append( "\"" );
+		sb.append( ", ecoleForm: \"" ).append(ecoleForm).append( "\"" );
 		sb.append( ", ecoleNumero: " ).append(ecoleNumero);
 		sb.append( ", ecoleAdministrateurNom: \"" ).append(ecoleAdministrateurNom).append( "\"" );
 		sb.append( ", ecoleMail: \"" ).append(ecoleMail).append( "\"" );

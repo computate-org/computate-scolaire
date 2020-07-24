@@ -4,9 +4,8 @@ import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
@@ -37,8 +36,6 @@ import org.computate.scolaire.enUS.search.SearchList;
  * CanonicalName: org.computate.scolaire.frFR.paiement.PaiementScolaire
  **/
 public class SchoolPayment extends SchoolPaymentGen<Cluster> {
-
-	private LocalDate now;
 
 	protected void _paymentKey(Wrap<Long> c) {
 		c.o(pk);
@@ -279,18 +276,30 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 
 	protected void _paymentNext(Wrap<LocalDate> c) {
 		SiteConfig siteConfig = siteRequest_.getSiteConfig_();
-		LocalDate now = LocalDate.now();
+		ZoneId zoneId = ZoneId.of(siteConfig.getSiteZone());
+		LocalDate now = LocalDate.now(zoneId);
 		Integer paymentDay = siteConfig.getPaymentDay();
 		c.o(LocalDate.now().getDayOfMonth() < paymentDay ? now.withDayOfMonth(paymentDay) : now.plusMonths(1).withDayOfMonth(paymentDay));
 	}
 
 	protected void _chargeAmountDue(Wrap<BigDecimal> c) {
-		if(chargeAmount != null && (chargeEnrollment || paymentDate != null && paymentDate.compareTo(paymentNext.minusMonths(1)) > 0 && paymentDate.compareTo(paymentNext) <= 0))
+		SiteConfig siteConfig = siteRequest_.getSiteConfig_();
+		ZoneId zoneId = ZoneId.of(siteConfig.getSiteZone());
+		LocalDate now = LocalDate.now(zoneId);
+		if(chargeAmount != null && (chargeEnrollment 
+				|| chargeFirstLast && paymentDate.compareTo(now.minusDays(15)) >= 0
+				|| paymentDate != null && paymentDate.compareTo(paymentNext.minusMonths(1)) > 0 && paymentDate.compareTo(paymentNext) <= 0))
 			c.o(chargeAmount);
 	}
 
 	protected void _chargeAmountFuture(Wrap<BigDecimal> c) {
-		if(chargeAmount != null && paymentDate != null && !chargeEnrollment && paymentDate.compareTo(paymentNext) > 0)
+		SiteConfig configSite = siteRequest_.getSiteConfig_();
+		ZoneId zoneId = ZoneId.of(configSite.getSiteZone());
+		LocalDate now = LocalDate.now(zoneId);
+		if(chargeAmount != null && paymentDate != null 
+				&& !chargeEnrollment 
+				&& !(chargeFirstLast && paymentDate.compareTo(now.minusDays(15)) >= 0)
+				&& paymentDate.compareTo(paymentNext) > 0)
 			c.o(chargeAmount);
 	}
 

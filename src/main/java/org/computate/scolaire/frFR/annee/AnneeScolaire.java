@@ -276,6 +276,21 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
+	 * Var.enUS: schoolForm
+	 * Indexe: true
+	 * Stocke: true
+	 * r: EcoleForm
+	 * r.enUS: SchoolForm
+	 * r: ecole
+	 * r.enUS: school
+	 */
+	protected void _ecoleForm(Couverture<String> c) {
+		if(ecole_ != null)
+			c.o((String)ecole_.getEcoleForm());
+	}
+
+	/**
+	 * {@inheritDoc}
 	 * Var.enUS: schoolNumber
 	 * Indexe: true
 	 * Stocke: true

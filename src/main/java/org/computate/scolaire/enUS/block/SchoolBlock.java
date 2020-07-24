@@ -127,6 +127,11 @@ public class SchoolBlock extends SchoolBlockGen<Cluster> {
 			c.o((String)age_.getSchoolPhoneNumber());
 	}
 
+	protected void _schoolForm(Wrap<String> c) {
+		if(age_ != null)
+			c.o((String)age_.getSchoolForm());
+	}
+
 	protected void _schoolNumber(Wrap<Integer> c) {
 		if(age_ != null)
 			c.o((Integer)age_.getSchoolNumber());

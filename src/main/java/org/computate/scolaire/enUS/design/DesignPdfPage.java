@@ -25,6 +25,7 @@ import org.computate.scolaire.enUS.enrollment.SchoolEnrollment;
 import org.computate.scolaire.enUS.guardian.SchoolGuardian;
 import org.computate.scolaire.enUS.html.part.HtmlPart;
 import org.computate.scolaire.enUS.mom.SchoolMom;
+import org.computate.scolaire.enUS.payment.SchoolPayment;
 import org.computate.scolaire.enUS.school.School;
 import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.wrap.Wrap;
@@ -100,6 +101,7 @@ public class DesignPdfPage extends DesignPdfPageGen<DesignPdfGenPage> {
 						+ " OR userKeys_indexed_longs:" + Optional.ofNullable(siteRequest_.getUserKey()).orElse(0L)
 			);
 		}
+		l.addFilterQuery("childFirstName_indexed_string:[* TO *]");
 
 		l.addSort("seasonStartDate_indexed_date", ORDER.asc);
 		l.addSort("sessionEndDate_indexed_date", ORDER.asc);
@@ -174,6 +176,10 @@ public class DesignPdfPage extends DesignPdfPageGen<DesignPdfGenPage> {
 					while(i < size) {
 						enrollment = enrollments.get(i);
 						groupCurrent = enrollment.getEnrollmentGroupName();
+						if(StringUtils.isBlank(groupCurrent)) {
+							groupCurrent = "none";
+							enrollment.setEnrollmentGroupName(groupCurrent);
+						}
 						blockKeyCurrent = enrollment.getBlockKey();
 						if(groupBefore == null || ObjectUtils.compare(groupCurrent, groupBefore) != 0) {
 							groupBefore = enrollment.getEnrollmentGroupName();
@@ -241,7 +247,7 @@ public class DesignPdfPage extends DesignPdfPageGen<DesignPdfGenPage> {
 		l.setC(SchoolYear.class);
 
 		Long yearKey = Optional.ofNullable(enrollmentSearch.first()).map(SchoolEnrollment::getYearKey).orElse(null);
-		if("main-enrollment-form".equals(designId) && yearKey != null) {
+		if(designId.endsWith("-enrollment-form") && yearKey != null) {
 			l.addFilterQuery("pk_indexed_long:" + yearKey);
 		} else {
 			for(String var : siteRequest_.getRequestVars().keySet()) {
@@ -256,7 +262,7 @@ public class DesignPdfPage extends DesignPdfPageGen<DesignPdfGenPage> {
 	}
 
 	protected void _year_(Wrap<SchoolYear> c) {
-		if("main-enrollment-form".equals(designId)) {
+		if(designId.endsWith("-enrollment-form")) {
 			if(yearSearch.size() == 0) {
 				throw new RuntimeException("No year was found for the query: " + siteRequest_.getOperationRequest().getParams().getJsonObject("query").encode());
 			}
@@ -280,7 +286,7 @@ public class DesignPdfPage extends DesignPdfPageGen<DesignPdfGenPage> {
 		l.setC(School.class);
 
 		Long schoolKey = Optional.ofNullable(enrollmentSearch.first()).map(SchoolEnrollment::getSchoolKey).orElse(null);
-		if("main-enrollment-form".equals(designId) && schoolKey != null) {
+		if(designId.endsWith("-enrollment-form") && schoolKey != null) {
 			l.addFilterQuery("pk_indexed_long:" + schoolKey);
 		} else {
 			for(String var : siteRequest_.getRequestVars().keySet()) {
@@ -295,7 +301,7 @@ public class DesignPdfPage extends DesignPdfPageGen<DesignPdfGenPage> {
 	}
 
 	protected void _school_(Wrap<School> c) {
-		if("main-enrollment-form".equals(designId)) {
+		if(designId.endsWith("-enrollment-form")) {
 			if(schoolSearch.size() == 0) {
 				throw new RuntimeException("No school was found for the query: " + siteRequest_.getOperationRequest().getParams().getJsonObject("query").encode());
 			}
@@ -306,6 +312,39 @@ public class DesignPdfPage extends DesignPdfPageGen<DesignPdfGenPage> {
 				throw new RuntimeException("More than one school was found for the query: " + siteRequest_.getOperationRequest().getParams().getJsonObject("query").encode());
 			}
 		}
+	}
+
+	protected void _paymentSearch(SearchList<SchoolPayment> l) {
+		if(designId.equals("receipts")) {
+			l.setStore(true);
+			l.setQuery("*:*");
+			l.setC(SchoolPayment.class);
+			l.setRows(1000);
+	
+			List<String> roles = Arrays.asList("SiteManager");
+			if(
+					!CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), roles)
+					&& !CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), roles)
+					) {
+				l.addFilterQuery(
+					"sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest_.getSessionId()).orElse("-----"))
+							+ " OR userKeys_indexed_longs:" + Optional.ofNullable(siteRequest_.getUserKey()).orElse(0L)
+				);
+			}
+	
+			for(String var : siteRequest_.getRequestVars().keySet()) {
+				String val = siteRequest_.getRequestVars().get(var);
+				if(!"design".equals(var)) {
+					String varIndexed = SchoolPayment.varIndexedSchoolPayment(var);
+					if(varIndexed != null)
+						l.addFilterQuery(varIndexed + ":" + ClientUtils.escapeQueryChars(val));
+				}
+			}
+		}
+	}
+
+	protected void _payments_(Wrap<List<SchoolPayment>> c) {
+		c.o(paymentSearch.getList());
 	}
 
 	/**
