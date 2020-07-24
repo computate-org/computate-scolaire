@@ -349,6 +349,9 @@ public class DesignPdfPage extends DesignPdfPageGen<DesignPdfGenPage> {
 		c.o(paymentSearch.getList());
 	}
 
+	protected void _payment_(Wrap<SchoolPayment> c) {
+	}
+
 	/**
 	 * {@inheritDoc}
 	 * 

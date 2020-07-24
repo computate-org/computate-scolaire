@@ -705,13 +705,13 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPag
 	 * r: ajouterErreur
 	 * r.enUS: addError
 	 * r: suggereUtilisateurSiteObjetSuggere
-	 * r.enUS: suggestSiteUserObjectSuggest
+	 * r.enUS: suggestSiteUser
 	 * r: texteUtilisateurSiteObjetTexte
-	 * r.enUS: textSiteUserObjectText
+	 * r.enUS: textSiteUser
 	 * r: 'objetSuggere:'
-	 * r.enUS: 'objectSuggest:'
+	 * r.enUS: ':'
 	 * r: 'objetTexte:'
-	 * r.enUS: 'objectText:'
+	 * r.enUS: ':'
 	 * r: '#suggereListUtilisateurSite'
 	 * r.enUS: '#suggestListSiteUser'
 	 * r: "suggereListUtilisateurSite"

@@ -980,13 +980,13 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 	 * r: ajouterErreur
 	 * r.enUS: addError
 	 * r: suggerePaiementScolaireObjetSuggere
-	 * r.enUS: suggestSchoolPaymentObjectSuggest
+	 * r.enUS: suggestSchoolPayment
 	 * r: textePaiementScolaireObjetTexte
-	 * r.enUS: textSchoolPaymentObjectText
+	 * r.enUS: textSchoolPayment
 	 * r: 'objetSuggere:'
-	 * r.enUS: 'objectSuggest:'
+	 * r.enUS: ':'
 	 * r: 'objetTexte:'
-	 * r.enUS: 'objectText:'
+	 * r.enUS: ':'
 	 * r: '#suggereListPaiementScolaire'
 	 * r.enUS: '#suggestListSchoolPayment'
 	 * r: "suggereListPaiementScolaire"

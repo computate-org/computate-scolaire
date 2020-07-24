@@ -71,6 +71,16 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 			c.o(enrollment_.getSchoolKey());
 	}
 
+	protected void _schoolAddress(Wrap<String> c) {
+		if(enrollment_ != null)
+			c.o(enrollment_.getSchoolAddress());
+	}
+
+	protected void _schoolPhoneNumber(Wrap<String> c) {
+		if(enrollment_ != null)
+			c.o(enrollment_.getSchoolPhoneNumber());
+	}
+
 	protected void _yearKey(Wrap<Long> c) {
 		if(enrollment_ != null)
 			c.o(enrollment_.getYearKey());
@@ -237,6 +247,17 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 
 	protected void _paymentSystem(Wrap<Boolean> c) {
 		c.o(false);
+	}
+
+	protected void _paymentType(Wrap<String> c) {
+		if(BooleanUtils.isTrue(paymentCheck))
+			c.o("check");
+		else if(BooleanUtils.isTrue(paymentCash))
+			c.o("cash");
+		else if(BooleanUtils.isTrue(paymentSystem))
+			c.o("authorize.net");
+		else if(BooleanUtils.isTrue(paymentECheck))
+			c.o("check");
 	}
 
 	protected void _paymentBy(Wrap<String> c) {

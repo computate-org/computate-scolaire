@@ -402,7 +402,7 @@ public class DadGenPage extends DadGenPageGen<ClusterPage> {
 					JsonObject queryParams = Optional.ofNullable(operationRequest).map(OperationRequest::getParams).map(or -> or.getJsonObject("query")).orElse(new JsonObject());
 					Long num = listSchoolDad.getQueryResponse().getResults().getNumFound();
 					String q = "*:*";
-					String query1 = "objectText";
+					String query1 = "";
 					String query2 = "";
 					String query = "*:*";
 					for(String paramName : queryParams.fieldNames()) {
@@ -802,7 +802,7 @@ public class DadGenPage extends DadGenPageGen<ClusterPage> {
 			OperationRequest operationRequest = siteRequest_.getOperationRequest();
 			JsonObject queryParams = Optional.ofNullable(operationRequest).map(OperationRequest::getParams).map(or -> or.getJsonObject("query")).orElse(new JsonObject());
 			String q = "*:*";
-			String query1 = "objectText";
+			String query1 = "";
 			String query2 = "";
 			for(String paramName : queryParams.fieldNames()) {
 				String entityVar = null;
@@ -873,7 +873,7 @@ public class DadGenPage extends DadGenPageGen<ClusterPage> {
 					.a("name", "suggestSchoolDad")
 					.a("id", "suggestSchoolDad", id)
 					.a("autocomplete", "off")
-					.a("oninput", "suggestSchoolDadObjectSuggest( [ { 'name': 'q', 'value': 'objectSuggest:' + $(this).val() } ], $('#suggestListSchoolDad", id, "'), ", p.getSiteRequest_().getRequestPk(), "); ")
+					.a("oninput", "suggestSchoolDad( [ { 'name': 'q', 'value': ':' + $(this).val() } ], $('#suggestListSchoolDad", id, "'), ", p.getSiteRequest_().getRequestPk(), "); ")
 					.a("onkeyup", "if (event.keyCode === 13) { event.preventDefault(); window.location.href = '/dad?q=", query1, ":' + encodeURIComponent(this.value) + '", fqs, sorts, "&start=", start2, "&rows=", rows1, "'; }"); 
 				if(listSchoolDad != null)
 					p.a("value", query2);

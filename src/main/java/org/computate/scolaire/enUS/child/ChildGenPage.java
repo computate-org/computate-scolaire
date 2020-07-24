@@ -365,7 +365,7 @@ public class ChildGenPage extends ChildGenPageGen<ClusterPage> {
 					JsonObject queryParams = Optional.ofNullable(operationRequest).map(OperationRequest::getParams).map(or -> or.getJsonObject("query")).orElse(new JsonObject());
 					Long num = listSchoolChild.getQueryResponse().getResults().getNumFound();
 					String q = "*:*";
-					String query1 = "objectText";
+					String query1 = "";
 					String query2 = "";
 					String query = "*:*";
 					for(String paramName : queryParams.fieldNames()) {
@@ -765,7 +765,7 @@ public class ChildGenPage extends ChildGenPageGen<ClusterPage> {
 			OperationRequest operationRequest = siteRequest_.getOperationRequest();
 			JsonObject queryParams = Optional.ofNullable(operationRequest).map(OperationRequest::getParams).map(or -> or.getJsonObject("query")).orElse(new JsonObject());
 			String q = "*:*";
-			String query1 = "objectText";
+			String query1 = "";
 			String query2 = "";
 			for(String paramName : queryParams.fieldNames()) {
 				String entityVar = null;
@@ -836,7 +836,7 @@ public class ChildGenPage extends ChildGenPageGen<ClusterPage> {
 					.a("name", "suggestSchoolChild")
 					.a("id", "suggestSchoolChild", id)
 					.a("autocomplete", "off")
-					.a("oninput", "suggestSchoolChildObjectSuggest( [ { 'name': 'q', 'value': 'objectSuggest:' + $(this).val() } ], $('#suggestListSchoolChild", id, "'), ", p.getSiteRequest_().getRequestPk(), "); ")
+					.a("oninput", "suggestSchoolChild( [ { 'name': 'q', 'value': ':' + $(this).val() } ], $('#suggestListSchoolChild", id, "'), ", p.getSiteRequest_().getRequestPk(), "); ")
 					.a("onkeyup", "if (event.keyCode === 13) { event.preventDefault(); window.location.href = '/child?q=", query1, ":' + encodeURIComponent(this.value) + '", fqs, sorts, "&start=", start2, "&rows=", rows1, "'; }"); 
 				if(listSchoolChild != null)
 					p.a("value", query2);

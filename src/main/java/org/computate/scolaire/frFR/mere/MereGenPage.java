@@ -824,13 +824,13 @@ public class MereGenPage extends MereGenPageGen<ClusterPage> {
 	 * r: ajouterErreur
 	 * r.enUS: addError
 	 * r: suggereMereScolaireObjetSuggere
-	 * r.enUS: suggestSchoolMomObjectSuggest
+	 * r.enUS: suggestSchoolMom
 	 * r: texteMereScolaireObjetTexte
-	 * r.enUS: textSchoolMomObjectText
+	 * r.enUS: textSchoolMom
 	 * r: 'objetSuggere:'
-	 * r.enUS: 'objectSuggest:'
+	 * r.enUS: ':'
 	 * r: 'objetTexte:'
-	 * r.enUS: 'objectText:'
+	 * r.enUS: ':'
 	 * r: '#suggereListMereScolaire'
 	 * r.enUS: '#suggestListSchoolMom'
 	 * r: "suggereListMereScolaire"

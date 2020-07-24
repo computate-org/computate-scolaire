@@ -171,10 +171,6 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * Var.enUS: schoolKey
 	 * Indexe: true
 	 * Stocke: true
-	 * Description.frFR: La clé primaire de l'école dans la base de données. 
-	 * Description.enUS: The primary key of the school in the database. 
-	 * NomAffichage.frFR: écoles
-	 * NomAffichage.enUS: schools
 	 * r: inscription
 	 * r.enUS: enrollment
 	 * r: EcoleCle
@@ -183,6 +179,36 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	protected void _ecoleCle(Couverture<Long> c) {
 		if(inscription_ != null)
 			c.o(inscription_.getEcoleCle());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: schoolAddress
+	 * Indexe: true
+	 * Stocke: true
+	 * r: inscription
+	 * r.enUS: enrollment
+	 * r: EcoleAddresse
+	 * r.enUS: SchoolAddress
+	 */
+	protected void _ecoleAddresse(Couverture<String> c) {
+		if(inscription_ != null)
+			c.o(inscription_.getEcoleAddresse());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: schoolPhoneNumber
+	 * Indexe: true
+	 * Stocke: true
+	 * r: inscription
+	 * r.enUS: enrollment
+	 * r: EcoleNumeroTelephone
+	 * r.enUS: SchoolPhoneNumber
+	 */
+	protected void _ecoleNumeroTelephone(Couverture<String> c) {
+		if(inscription_ != null)
+			c.o(inscription_.getEcoleNumeroTelephone());
 	}
 
 	/**
@@ -803,7 +829,7 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * HtmlColonne: 4
 	 * Facet: sum
 	 * NomAffichage.frFR: paiement montant
-	 * NomAffichage.enUS: payment history
+	 * NomAffichage.enUS: payment amount
 	 */              
 	protected void _paiementMontant(Couverture<BigDecimal> c) {
 	}
@@ -818,7 +844,7 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * HtmlCellule: 3
 	 * NomAffichage.frFR: espèces
 	 * NomAffichage.enUS: cash
-	 */                     
+	 */                   
 	protected void _paiementEspeces(Couverture<Boolean> c) {
 		c.o(false);
 	}
@@ -866,6 +892,41 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 */                     
 	protected void _paiementSysteme(Couverture<Boolean> c) {
 		c.o(false);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: paymentType
+	 * Indexe: true
+	 * Stocke: true
+	 * r: inscription
+	 * r.enUS: enrollment
+	 * r: EcoleNumeroTelephone
+	 * r.enUS: SchoolPhoneNumber
+	 * r: "cheque"
+	 * r.enUS: "check"
+	 * r: "e-cheque"
+	 * r.enUS: "check"
+	 * r: "espèces"
+	 * r.enUS: "cash"
+	 * r: paiementCheque
+	 * r.enUS: paymentCheck
+	 * r: paiementEspeces
+	 * r.enUS: paymentCash
+	 * r: paiementSysteme
+	 * r.enUS: paymentSystem
+	 * r: paiementECheck
+	 * r.enUS: paymentECheck
+	 */
+	protected void _paiementType(Couverture<String> c) {
+		if(BooleanUtils.isTrue(paiementCheque))
+			c.o("cheque");
+		else if(BooleanUtils.isTrue(paiementEspeces))
+			c.o("espèces");
+		else if(BooleanUtils.isTrue(paiementSysteme))
+			c.o("authorize.net");
+		else if(BooleanUtils.isTrue(paiementECheck))
+			c.o("e-cheque");
 	}
 
 	/**

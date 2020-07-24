@@ -474,7 +474,7 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 					JsonObject queryParams = Optional.ofNullable(operationRequest).map(OperationRequest::getParams).map(or -> or.getJsonObject("query")).orElse(new JsonObject());
 					Long num = listSchoolPayment.getQueryResponse().getResults().getNumFound();
 					String q = "*:*";
-					String query1 = "objectText";
+					String query1 = "";
 					String query2 = "";
 					String query = "*:*";
 					for(String paramName : queryParams.fieldNames()) {
@@ -614,7 +614,7 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 				e("th").f().sx("payment date").g("th");
 			}
 			if(getColumnPaymentAmount()) {
-				e("th").f().sx("payment history").g("th");
+				e("th").f().sx("payment amount").g("th");
 			}
 			if(getColumnChargeAmount()) {
 				e("th").f().sx("charge amount").g("th");
@@ -958,7 +958,7 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 			OperationRequest operationRequest = siteRequest_.getOperationRequest();
 			JsonObject queryParams = Optional.ofNullable(operationRequest).map(OperationRequest::getParams).map(or -> or.getJsonObject("query")).orElse(new JsonObject());
 			String q = "*:*";
-			String query1 = "objectText";
+			String query1 = "";
 			String query2 = "";
 			for(String paramName : queryParams.fieldNames()) {
 				String entityVar = null;
@@ -1029,7 +1029,7 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 					.a("name", "suggestSchoolPayment")
 					.a("id", "suggestSchoolPayment", id)
 					.a("autocomplete", "off")
-					.a("oninput", "suggestSchoolPaymentObjectSuggest( [ { 'name': 'q', 'value': 'objectSuggest:' + $(this).val() } ], $('#suggestListSchoolPayment", id, "'), ", p.getSiteRequest_().getRequestPk(), "); ")
+					.a("oninput", "suggestSchoolPayment( [ { 'name': 'q', 'value': ':' + $(this).val() } ], $('#suggestListSchoolPayment", id, "'), ", p.getSiteRequest_().getRequestPk(), "); ")
 					.a("onkeyup", "if (event.keyCode === 13) { event.preventDefault(); window.location.href = '/payment?q=", query1, ":' + encodeURIComponent(this.value) + '", fqs, sorts, "&start=", start2, "&rows=", rows1, "'; }"); 
 				if(listSchoolPayment != null)
 					p.a("value", query2);

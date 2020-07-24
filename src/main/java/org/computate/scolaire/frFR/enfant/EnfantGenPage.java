@@ -787,13 +787,13 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 	 * r: ajouterErreur
 	 * r.enUS: addError
 	 * r: suggereEnfantScolaireObjetSuggere
-	 * r.enUS: suggestSchoolChildObjectSuggest
+	 * r.enUS: suggestSchoolChild
 	 * r: texteEnfantScolaireObjetTexte
-	 * r.enUS: textSchoolChildObjectText
+	 * r.enUS: textSchoolChild
 	 * r: 'objetSuggere:'
-	 * r.enUS: 'objectSuggest:'
+	 * r.enUS: ':'
 	 * r: 'objetTexte:'
-	 * r.enUS: 'objectText:'
+	 * r.enUS: ':'
 	 * r: '#suggereListEnfantScolaire'
 	 * r.enUS: '#suggestListSchoolChild'
 	 * r: "suggereListEnfantScolaire"

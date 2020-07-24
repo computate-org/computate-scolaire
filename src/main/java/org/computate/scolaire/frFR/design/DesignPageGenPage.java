@@ -933,13 +933,13 @@ public class DesignPageGenPage extends DesignPageGenPageGen<ClusterPage> {
 	 * r: ajouterErreur
 	 * r.enUS: addError
 	 * r: suggereDesignPageObjetSuggere
-	 * r.enUS: suggestPageDesignObjectSuggest
+	 * r.enUS: suggestPageDesign
 	 * r: texteDesignPageObjetTexte
-	 * r.enUS: textPageDesignObjectText
+	 * r.enUS: textPageDesign
 	 * r: 'objetSuggere:'
-	 * r.enUS: 'objectSuggest:'
+	 * r.enUS: ':'
 	 * r: 'objetTexte:'
-	 * r.enUS: 'objectText:'
+	 * r.enUS: ':'
 	 * r: '#suggereListDesignPage'
 	 * r.enUS: '#suggestListPageDesign'
 	 * r: "suggereListDesignPage"

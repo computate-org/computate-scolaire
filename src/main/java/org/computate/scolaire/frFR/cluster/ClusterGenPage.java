@@ -714,13 +714,13 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 	 * r: ajouterErreur
 	 * r.enUS: addError
 	 * r: suggereClusterObjetSuggere
-	 * r.enUS: suggestClusterObjectSuggest
+	 * r.enUS: suggestCluster
 	 * r: texteClusterObjetTexte
-	 * r.enUS: textClusterObjectText
+	 * r.enUS: textCluster
 	 * r: 'objetSuggere:'
-	 * r.enUS: 'objectSuggest:'
+	 * r.enUS: ':'
 	 * r: 'objetTexte:'
-	 * r.enUS: 'objectText:'
+	 * r.enUS: ':'
 	 * r: '#suggereListCluster'
 	 * r.enUS: '#suggestListCluster'
 	 * r: "suggereListCluster"

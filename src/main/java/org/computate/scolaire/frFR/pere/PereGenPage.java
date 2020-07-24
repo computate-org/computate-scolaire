@@ -824,13 +824,13 @@ public class PereGenPage extends PereGenPageGen<ClusterPage> {
 	 * r: ajouterErreur
 	 * r.enUS: addError
 	 * r: suggerePereScolaireObjetSuggere
-	 * r.enUS: suggestSchoolDadObjectSuggest
+	 * r.enUS: suggestSchoolDad
 	 * r: textePereScolaireObjetTexte
-	 * r.enUS: textSchoolDadObjectText
+	 * r.enUS: textSchoolDad
 	 * r: 'objetSuggere:'
-	 * r.enUS: 'objectSuggest:'
+	 * r.enUS: ':'
 	 * r: 'objetTexte:'
-	 * r.enUS: 'objectText:'
+	 * r.enUS: ':'
 	 * r: '#suggereListPereScolaire'
 	 * r.enUS: '#suggestListSchoolDad'
 	 * r: "suggereListPereScolaire"

@@ -596,7 +596,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public String nomAffichageEcoleCle() {
-		return "écoles";
+		return null;
 	}
 
 	public String htmTooltipEcoleCle() {
@@ -605,6 +605,130 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 	public String htmEcoleCle() {
 		return ecoleCle == null ? "" : StringEscapeUtils.escapeHtml4(strEcoleCle());
+	}
+
+	///////////////////
+	// ecoleAddresse //
+	///////////////////
+
+	/**	 L'entité ecoleAddresse
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String ecoleAddresse;
+	@JsonIgnore
+	public Couverture<String> ecoleAddresseCouverture = new Couverture<String>().p(this).c(String.class).var("ecoleAddresse").o(ecoleAddresse);
+
+	/**	<br/> L'entité ecoleAddresse
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:ecoleAddresse">Trouver l'entité ecoleAddresse dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _ecoleAddresse(Couverture<String> c);
+
+	public String getEcoleAddresse() {
+		return ecoleAddresse;
+	}
+
+	public void setEcoleAddresse(String ecoleAddresse) {
+		this.ecoleAddresse = ecoleAddresse;
+		this.ecoleAddresseCouverture.dejaInitialise = true;
+	}
+	protected PaiementScolaire ecoleAddresseInit() {
+		if(!ecoleAddresseCouverture.dejaInitialise) {
+			_ecoleAddresse(ecoleAddresseCouverture);
+			if(ecoleAddresse == null)
+				setEcoleAddresse(ecoleAddresseCouverture.o);
+		}
+		ecoleAddresseCouverture.dejaInitialise(true);
+		return (PaiementScolaire)this;
+	}
+
+	public String solrEcoleAddresse() {
+		return ecoleAddresse;
+	}
+
+	public String strEcoleAddresse() {
+		return ecoleAddresse == null ? "" : ecoleAddresse;
+	}
+
+	public String jsonEcoleAddresse() {
+		return ecoleAddresse == null ? "" : ecoleAddresse;
+	}
+
+	public String nomAffichageEcoleAddresse() {
+		return null;
+	}
+
+	public String htmTooltipEcoleAddresse() {
+		return null;
+	}
+
+	public String htmEcoleAddresse() {
+		return ecoleAddresse == null ? "" : StringEscapeUtils.escapeHtml4(strEcoleAddresse());
+	}
+
+	//////////////////////////
+	// ecoleNumeroTelephone //
+	//////////////////////////
+
+	/**	 L'entité ecoleNumeroTelephone
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String ecoleNumeroTelephone;
+	@JsonIgnore
+	public Couverture<String> ecoleNumeroTelephoneCouverture = new Couverture<String>().p(this).c(String.class).var("ecoleNumeroTelephone").o(ecoleNumeroTelephone);
+
+	/**	<br/> L'entité ecoleNumeroTelephone
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:ecoleNumeroTelephone">Trouver l'entité ecoleNumeroTelephone dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _ecoleNumeroTelephone(Couverture<String> c);
+
+	public String getEcoleNumeroTelephone() {
+		return ecoleNumeroTelephone;
+	}
+
+	public void setEcoleNumeroTelephone(String ecoleNumeroTelephone) {
+		this.ecoleNumeroTelephone = ecoleNumeroTelephone;
+		this.ecoleNumeroTelephoneCouverture.dejaInitialise = true;
+	}
+	protected PaiementScolaire ecoleNumeroTelephoneInit() {
+		if(!ecoleNumeroTelephoneCouverture.dejaInitialise) {
+			_ecoleNumeroTelephone(ecoleNumeroTelephoneCouverture);
+			if(ecoleNumeroTelephone == null)
+				setEcoleNumeroTelephone(ecoleNumeroTelephoneCouverture.o);
+		}
+		ecoleNumeroTelephoneCouverture.dejaInitialise(true);
+		return (PaiementScolaire)this;
+	}
+
+	public String solrEcoleNumeroTelephone() {
+		return ecoleNumeroTelephone;
+	}
+
+	public String strEcoleNumeroTelephone() {
+		return ecoleNumeroTelephone == null ? "" : ecoleNumeroTelephone;
+	}
+
+	public String jsonEcoleNumeroTelephone() {
+		return ecoleNumeroTelephone == null ? "" : ecoleNumeroTelephone;
+	}
+
+	public String nomAffichageEcoleNumeroTelephone() {
+		return null;
+	}
+
+	public String htmTooltipEcoleNumeroTelephone() {
+		return null;
+	}
+
+	public String htmEcoleNumeroTelephone() {
+		return ecoleNumeroTelephone == null ? "" : StringEscapeUtils.escapeHtml4(strEcoleNumeroTelephone());
 	}
 
 	//////////////
@@ -4114,6 +4238,68 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		} g("div");
 	}
 
+	//////////////////
+	// paiementType //
+	//////////////////
+
+	/**	 L'entité paiementType
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String paiementType;
+	@JsonIgnore
+	public Couverture<String> paiementTypeCouverture = new Couverture<String>().p(this).c(String.class).var("paiementType").o(paiementType);
+
+	/**	<br/> L'entité paiementType
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:paiementType">Trouver l'entité paiementType dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _paiementType(Couverture<String> c);
+
+	public String getPaiementType() {
+		return paiementType;
+	}
+
+	public void setPaiementType(String paiementType) {
+		this.paiementType = paiementType;
+		this.paiementTypeCouverture.dejaInitialise = true;
+	}
+	protected PaiementScolaire paiementTypeInit() {
+		if(!paiementTypeCouverture.dejaInitialise) {
+			_paiementType(paiementTypeCouverture);
+			if(paiementType == null)
+				setPaiementType(paiementTypeCouverture.o);
+		}
+		paiementTypeCouverture.dejaInitialise(true);
+		return (PaiementScolaire)this;
+	}
+
+	public String solrPaiementType() {
+		return paiementType;
+	}
+
+	public String strPaiementType() {
+		return paiementType == null ? "" : paiementType;
+	}
+
+	public String jsonPaiementType() {
+		return paiementType == null ? "" : paiementType;
+	}
+
+	public String nomAffichagePaiementType() {
+		return null;
+	}
+
+	public String htmTooltipPaiementType() {
+		return null;
+	}
+
+	public String htmPaiementType() {
+		return paiementType == null ? "" : StringEscapeUtils.escapeHtml4(strPaiementType());
+	}
+
 	/////////////////
 	// paiementPar //
 	/////////////////
@@ -6016,6 +6202,8 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		ecoleNumeroInit();
 		utilisateurClesInit();
 		ecoleCleInit();
+		ecoleAddresseInit();
+		ecoleNumeroTelephoneInit();
 		anneeCleInit();
 		sessionCleInit();
 		ageCleInit();
@@ -6052,6 +6240,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		paiementChequeInit();
 		paiementECheckInit();
 		paiementSystemeInit();
+		paiementTypeInit();
 		paiementParInit();
 		transactionIdInit();
 		customerProfileIdInit();
@@ -6121,6 +6310,10 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				return oPaiementScolaire.utilisateurCles;
 			case "ecoleCle":
 				return oPaiementScolaire.ecoleCle;
+			case "ecoleAddresse":
+				return oPaiementScolaire.ecoleAddresse;
+			case "ecoleNumeroTelephone":
+				return oPaiementScolaire.ecoleNumeroTelephone;
 			case "anneeCle":
 				return oPaiementScolaire.anneeCle;
 			case "sessionCle":
@@ -6193,6 +6386,8 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				return oPaiementScolaire.paiementECheck;
 			case "paiementSysteme":
 				return oPaiementScolaire.paiementSysteme;
+			case "paiementType":
+				return oPaiementScolaire.paiementType;
 			case "paiementPar":
 				return oPaiementScolaire.paiementPar;
 			case "transactionId":
@@ -6454,6 +6649,18 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 					oPaiementScolaire.setEcoleCle(ecoleCle);
 			}
 
+			if(sauvegardes.contains("ecoleAddresse")) {
+				String ecoleAddresse = (String)solrDocument.get("ecoleAddresse_stored_string");
+				if(ecoleAddresse != null)
+					oPaiementScolaire.setEcoleAddresse(ecoleAddresse);
+			}
+
+			if(sauvegardes.contains("ecoleNumeroTelephone")) {
+				String ecoleNumeroTelephone = (String)solrDocument.get("ecoleNumeroTelephone_stored_string");
+				if(ecoleNumeroTelephone != null)
+					oPaiementScolaire.setEcoleNumeroTelephone(ecoleNumeroTelephone);
+			}
+
 			if(sauvegardes.contains("anneeCle")) {
 				Long anneeCle = (Long)solrDocument.get("anneeCle_stored_long");
 				if(anneeCle != null)
@@ -6670,6 +6877,12 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 					oPaiementScolaire.setPaiementSysteme(paiementSysteme);
 			}
 
+			if(sauvegardes.contains("paiementType")) {
+				String paiementType = (String)solrDocument.get("paiementType_stored_string");
+				if(paiementType != null)
+					oPaiementScolaire.setPaiementType(paiementType);
+			}
+
 			if(sauvegardes.contains("paiementPar")) {
 				String paiementPar = (String)solrDocument.get("paiementPar_stored_string");
 				if(paiementPar != null)
@@ -6850,6 +7063,14 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			document.addField("ecoleCle_indexed_long", ecoleCle);
 			document.addField("ecoleCle_stored_long", ecoleCle);
 		}
+		if(ecoleAddresse != null) {
+			document.addField("ecoleAddresse_indexed_string", ecoleAddresse);
+			document.addField("ecoleAddresse_stored_string", ecoleAddresse);
+		}
+		if(ecoleNumeroTelephone != null) {
+			document.addField("ecoleNumeroTelephone_indexed_string", ecoleNumeroTelephone);
+			document.addField("ecoleNumeroTelephone_stored_string", ecoleNumeroTelephone);
+		}
 		if(anneeCle != null) {
 			document.addField("anneeCle_indexed_long", anneeCle);
 			document.addField("anneeCle_stored_long", anneeCle);
@@ -7006,6 +7227,10 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			document.addField("paiementSysteme_indexed_boolean", paiementSysteme);
 			document.addField("paiementSysteme_stored_boolean", paiementSysteme);
 		}
+		if(paiementType != null) {
+			document.addField("paiementType_indexed_string", paiementType);
+			document.addField("paiementType_stored_string", paiementType);
+		}
 		if(paiementPar != null) {
 			document.addField("paiementPar_indexed_string", paiementPar);
 			document.addField("paiementPar_stored_string", paiementPar);
@@ -7099,6 +7324,10 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				return "utilisateurCles_indexed_longs";
 			case "ecoleCle":
 				return "ecoleCle_indexed_long";
+			case "ecoleAddresse":
+				return "ecoleAddresse_indexed_string";
+			case "ecoleNumeroTelephone":
+				return "ecoleNumeroTelephone_indexed_string";
 			case "anneeCle":
 				return "anneeCle_indexed_long";
 			case "sessionCle":
@@ -7171,6 +7400,8 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				return "paiementECheck_indexed_boolean";
 			case "paiementSysteme":
 				return "paiementSysteme_indexed_boolean";
+			case "paiementType":
+				return "paiementType_indexed_string";
 			case "paiementPar":
 				return "paiementPar_indexed_string";
 			case "transactionId":
@@ -7249,6 +7480,14 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		Long ecoleCle = (Long)solrDocument.get("ecoleCle_stored_long");
 		if(ecoleCle != null)
 			oPaiementScolaire.setEcoleCle(ecoleCle);
+
+		String ecoleAddresse = (String)solrDocument.get("ecoleAddresse_stored_string");
+		if(ecoleAddresse != null)
+			oPaiementScolaire.setEcoleAddresse(ecoleAddresse);
+
+		String ecoleNumeroTelephone = (String)solrDocument.get("ecoleNumeroTelephone_stored_string");
+		if(ecoleNumeroTelephone != null)
+			oPaiementScolaire.setEcoleNumeroTelephone(ecoleNumeroTelephone);
 
 		Long anneeCle = (Long)solrDocument.get("anneeCle_stored_long");
 		if(anneeCle != null)
@@ -7393,6 +7632,10 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		Boolean paiementSysteme = (Boolean)solrDocument.get("paiementSysteme_stored_boolean");
 		if(paiementSysteme != null)
 			oPaiementScolaire.setPaiementSysteme(paiementSysteme);
+
+		String paiementType = (String)solrDocument.get("paiementType_stored_string");
+		if(paiementType != null)
+			oPaiementScolaire.setPaiementType(paiementType);
 
 		String paiementPar = (String)solrDocument.get("paiementPar_stored_string");
 		if(paiementPar != null)

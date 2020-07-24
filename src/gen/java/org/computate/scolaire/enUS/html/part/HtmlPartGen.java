@@ -245,7 +245,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				e("input")
 					.a("type", "text")
 					.a("placeholder", "page designs")
-					.a("class", "valueObjectSuggest suggestPageDesignKeys w3-input w3-border w3-cell w3-cell-middle ")
+					.a("class", "value suggestPageDesignKeys w3-input w3-border w3-cell w3-cell-middle ")
 					.a("name", "setPageDesignKeys")
 					.a("id", classApiMethodMethod, "_pageDesignKeys")
 					.a("autocomplete", "off")

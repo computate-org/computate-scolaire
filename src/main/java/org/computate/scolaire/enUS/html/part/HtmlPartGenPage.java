@@ -528,7 +528,7 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 					JsonObject queryParams = Optional.ofNullable(operationRequest).map(OperationRequest::getParams).map(or -> or.getJsonObject("query")).orElse(new JsonObject());
 					Long num = listHtmlPart.getQueryResponse().getResults().getNumFound();
 					String q = "*:*";
-					String query1 = "objectText";
+					String query1 = "";
 					String query2 = "";
 					String query = "*:*";
 					for(String paramName : queryParams.fieldNames()) {
@@ -928,7 +928,7 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 			OperationRequest operationRequest = siteRequest_.getOperationRequest();
 			JsonObject queryParams = Optional.ofNullable(operationRequest).map(OperationRequest::getParams).map(or -> or.getJsonObject("query")).orElse(new JsonObject());
 			String q = "*:*";
-			String query1 = "objectText";
+			String query1 = "";
 			String query2 = "";
 			for(String paramName : queryParams.fieldNames()) {
 				String entityVar = null;
@@ -999,7 +999,7 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 					.a("name", "suggestHtmlPart")
 					.a("id", "suggestHtmlPart", id)
 					.a("autocomplete", "off")
-					.a("oninput", "suggestHtmlPartObjectSuggest( [ { 'name': 'q', 'value': 'objectSuggest:' + $(this).val() } ], $('#suggestListHtmlPart", id, "'), ", p.getSiteRequest_().getRequestPk(), "); ")
+					.a("oninput", "suggestHtmlPart( [ { 'name': 'q', 'value': ':' + $(this).val() } ], $('#suggestListHtmlPart", id, "'), ", p.getSiteRequest_().getRequestPk(), "); ")
 					.a("onkeyup", "if (event.keyCode === 13) { event.preventDefault(); window.location.href = '/html-part?q=", query1, ":' + encodeURIComponent(this.value) + '", fqs, sorts, "&start=", start2, "&rows=", rows1, "'; }"); 
 				if(listHtmlPart != null)
 					p.a("value", query2);

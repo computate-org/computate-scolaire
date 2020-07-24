@@ -950,13 +950,13 @@ public class PartHtmlGenPage extends PartHtmlGenPageGen<ClusterPage> {
 	 * r: ajouterErreur
 	 * r.enUS: addError
 	 * r: suggerePartHtmlObjetSuggere
-	 * r.enUS: suggestHtmlPartObjectSuggest
+	 * r.enUS: suggestHtmlPart
 	 * r: textePartHtmlObjetTexte
-	 * r.enUS: textHtmlPartObjectText
+	 * r.enUS: textHtmlPart
 	 * r: 'objetSuggere:'
-	 * r.enUS: 'objectSuggest:'
+	 * r.enUS: ':'
 	 * r: 'objetTexte:'
-	 * r.enUS: 'objectText:'
+	 * r.enUS: ':'
 	 * r: '#suggereListPartHtml'
 	 * r.enUS: '#suggestListHtmlPart'
 	 * r: "suggereListPartHtml"

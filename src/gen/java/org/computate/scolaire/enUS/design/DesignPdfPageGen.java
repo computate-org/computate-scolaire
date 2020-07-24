@@ -889,6 +889,44 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		return (DesignPdfPage)this;
 	}
 
+	//////////////
+	// payment_ //
+	//////////////
+
+	/**	 The entity payment_
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected SchoolPayment payment_;
+	@JsonIgnore
+	public Wrap<SchoolPayment> payment_Wrap = new Wrap<SchoolPayment>().p(this).c(SchoolPayment.class).var("payment_").o(payment_);
+
+	/**	<br/> The entity payment_
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignPdfPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:payment_">Find the entity payment_ in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _payment_(Wrap<SchoolPayment> c);
+
+	public SchoolPayment getPayment_() {
+		return payment_;
+	}
+
+	public void setPayment_(SchoolPayment payment_) {
+		this.payment_ = payment_;
+		this.payment_Wrap.alreadyInitialized = true;
+	}
+	protected DesignPdfPage payment_Init() {
+		if(!payment_Wrap.alreadyInitialized) {
+			_payment_(payment_Wrap);
+			if(payment_ == null)
+				setPayment_(payment_Wrap.o);
+		}
+		payment_Wrap.alreadyInitialized(true);
+		return (DesignPdfPage)this;
+	}
+
 	///////////////
 	// emailFrom //
 	///////////////
@@ -2392,6 +2430,7 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		school_Init();
 		paymentSearchInit();
 		payments_Init();
+		payment_Init();
 		emailFromInit();
 		emailToSchoolInit();
 		emailToAddressInit();
@@ -2529,6 +2568,8 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 				return oDesignPdfPage.paymentSearch;
 			case "payments_":
 				return oDesignPdfPage.payments_;
+			case "payment_":
+				return oDesignPdfPage.payment_;
 			case "emailFrom":
 				return oDesignPdfPage.emailFrom;
 			case "emailToSchool":

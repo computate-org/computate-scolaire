@@ -759,6 +759,9 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 		c.o(paymentSearch.getList());
 	}
 
+	protected void _payment_(Wrap<SchoolPayment> c) {
+	}
+
 	/**
 	 * {@inheritDoc}
 	 * 

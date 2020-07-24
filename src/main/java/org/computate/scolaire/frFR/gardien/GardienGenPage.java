@@ -806,13 +806,13 @@ public class GardienGenPage extends GardienGenPageGen<ClusterPage> {
 	 * r: ajouterErreur
 	 * r.enUS: addError
 	 * r: suggereGardienScolaireObjetSuggere
-	 * r.enUS: suggestSchoolGuardianObjectSuggest
+	 * r.enUS: suggestSchoolGuardian
 	 * r: texteGardienScolaireObjetTexte
-	 * r.enUS: textSchoolGuardianObjectText
+	 * r.enUS: textSchoolGuardian
 	 * r: 'objetSuggere:'
-	 * r.enUS: 'objectSuggest:'
+	 * r.enUS: ':'
 	 * r: 'objetTexte:'
-	 * r.enUS: 'objectText:'
+	 * r.enUS: ':'
 	 * r: '#suggereListGardienScolaire'
 	 * r.enUS: '#suggestListSchoolGuardian'
 	 * r: "suggereListGardienScolaire"
