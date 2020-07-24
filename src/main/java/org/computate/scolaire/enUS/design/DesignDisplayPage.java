@@ -65,7 +65,9 @@ public class DesignDisplayPage extends DesignDisplayPageGen<DesignDisplayGenPage
 						+ " OR userKeys_indexed_longs:" + Optional.ofNullable(siteRequest_.getUserKey()).orElse(0L)
 			);
 		}
-		l.addFilterQuery("childFirstName_indexed_string:[* TO *]");
+		if(!designId.endsWith("-enrollment-form")) {
+			l.addFilterQuery("childFirstName_indexed_string:[* TO *]");
+		}
 
 		l.addSort("seasonStartDate_indexed_date", ORDER.asc);
 		l.addSort("sessionEndDate_indexed_date", ORDER.asc);
