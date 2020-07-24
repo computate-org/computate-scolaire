@@ -1394,7 +1394,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 						listeRechercheInscription.addFilterQuery("archive_indexed_boolean:false");
 						listeRechercheInscription.addFilterQuery("sessionDateDebut_indexed_date:[* TO " + dateFormat.format(sessionDateDebut) + "]");
 						listeRechercheInscription.addFilterQuery("sessionDateFin_indexed_date:[" + dateFormat.format(sessionDateFin) + " TO *]");
-						listeRechercheInscription.addFilterQuery("(*:* AND -inscriptionDateFrais_indexed_date:[* TO *] OR inscriptionDateFrais_indexed_date:[* TO " + dateFormat.format(inscriptionDateFrais) + "])");
+//						listeRechercheInscription.addFilterQuery("(*:* AND -inscriptionDateFrais_indexed_date:[* TO *] OR inscriptionDateFrais_indexed_date:[* TO " + dateFormat.format(inscriptionDateFrais) + "])");
 						listeRechercheInscription.setRows(1);
 						listeRechercheInscription.addSort("modifie_indexed_date", ORDER.desc);
 						listeRechercheInscription.initLoinListeRecherche(requeteSite);
