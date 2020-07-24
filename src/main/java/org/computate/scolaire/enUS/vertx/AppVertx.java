@@ -859,7 +859,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 						searchListEnrollment.addFilterQuery("sessionEndDate_indexed_date:[" + dateFormat.format(sessionEndDate) + " TO *]");
 //						searchListEnrollment.addFilterQuery("(*:* AND -enrollmentChargeDate_indexed_date:[* TO *] OR enrollmentChargeDate_indexed_date:[* TO " + dateFormat.format(enrollmentChargeDate) + "])");
 						searchListEnrollment.setRows(1);
-						searchListEnrollment.addSort("modified_indexed_date", ORDER.desc);
+						searchListEnrollment.addSort("modified_indexed_date", ORDER.asc);
 						searchListEnrollment.initDeepSearchList(siteRequest);
 		
 
