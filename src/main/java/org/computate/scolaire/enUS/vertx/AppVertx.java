@@ -31,6 +31,8 @@ import org.apache.solr.client.solrj.SolrQuery.ORDER;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.util.SimpleOrderedMap;
+import org.computate.scolaire.enUS.request.SiteRequestEnUS;
+import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.computate.scolaire.enUS.age.SchoolAgeEnUSGenApiService;
 import org.computate.scolaire.enUS.year.SchoolYearEnUSGenApiService;
 import org.computate.scolaire.enUS.block.SchoolBlockEnUSGenApiService;
@@ -58,6 +60,7 @@ import org.computate.scolaire.enUS.mom.SchoolMomEnUSGenApiService;
 import org.computate.scolaire.enUS.payment.SchoolPayment;
 import org.computate.scolaire.enUS.payment.SchoolPaymentEnUSApiServiceImpl;
 import org.computate.scolaire.enUS.payment.SchoolPaymentEnUSGenApiService;
+import org.computate.scolaire.enUS.payment.SchoolPaymentEnUSGenApiServiceImpl;
 import org.computate.scolaire.enUS.dad.SchoolDad;
 import org.computate.scolaire.enUS.dad.SchoolDadEnUSApiServiceImpl;
 import org.computate.scolaire.enUS.dad.SchoolDadEnUSGenApiService;
@@ -945,6 +948,71 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 									}
 								});
 							} else {
+								errorAppVertx(siteRequest, b);
+							}
+							if(b.succeeded()) {
+								LOGGER.info("Creating payments for customer %s succeeded. ");
+								List<Future> futures2 = new ArrayList<>();
+		
+								SearchList<SchoolPayment> searchList2 = new SearchList<SchoolPayment>();
+								searchList2.setStore(true);
+								searchList2.setQuery("*:*");
+								searchList2.setC(SchoolPayment.class);
+								searchList2.addFilterQuery("enrollmentKey_indexed_long:" + o.getPk());
+								searchList2.setRows(100);
+								searchList2.initDeepSearchList(siteRequest);
+		
+								for(SchoolPayment o2 : searchList2.getList()) {
+									SchoolPaymentEnUSApiServiceImpl service = new SchoolPaymentEnUSApiServiceImpl(siteRequest.getSiteContext_());
+									SiteRequestEnUS siteRequest2 = paymentService.generateSiteRequestEnUSForSchoolPayment(siteContextEnUS, siteRequest.getOperationRequest(), new JsonObject());
+									ApiRequest apiRequest2 = new ApiRequest();
+									apiRequest2.setRows(1);
+									apiRequest2.setNumFound(1l);
+									apiRequest2.setNumPATCH(0L);
+									apiRequest2.initDeepApiRequest(siteRequest2);
+									siteRequest2.setApiRequest_(apiRequest2);
+									siteRequest2.getVertx().eventBus().publish("websocketSchoolPayment", JsonObject.mapFrom(apiRequest2).toString());
+		
+									o2.setSiteRequest_(siteRequest2);
+									futures2.add(
+										service.patchSchoolPaymentFuture(o2, false, c -> {
+											if(c.succeeded()) {
+											} else {
+												LOGGER.info(String.format("SchoolPayment %s failed. ", o2.getPk()));
+												eventHandler.handle(Future.failedFuture(c.cause()));
+											}
+										})
+									);
+								}
+
+								CompositeFuture.all(futures2).setHandler(f -> {
+									if(f.succeeded()) {
+										SiteRequestEnUS siteRequest2 = enrollmentService.generateSiteRequestEnUSForSchoolEnrollment(siteContextEnUS, siteRequest.getOperationRequest(), new JsonObject());
+										ApiRequest apiRequest2 = new ApiRequest();
+										apiRequest2.setRows(1);
+										apiRequest2.setNumFound(1l);
+										apiRequest2.setNumPATCH(0L);
+										apiRequest2.initDeepApiRequest(siteRequest2);
+										siteRequest2.setApiRequest_(apiRequest2);
+										siteRequest2.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest2).toString());
+			
+										o.setSiteRequest_(siteRequest2);
+
+										enrollmentService.patchSchoolEnrollmentFuture(o, false, g -> {
+											if(g.succeeded()) {
+												LOGGER.info("Refreshing enrollment succeeded. ");
+											} else {
+												LOGGER.error("Refreshing enrollment succeeded. ", g.cause());
+												errorAppVertx(siteRequest, g);
+											}
+										});
+									} else {
+										LOGGER.error("Refresh relations failed. ", f.cause());
+										errorAppVertx(siteRequest, f);
+									}
+								});
+							} else {
+								LOGGER.error(String.format("refreshsearchpageSchoolEnrollment failed. ", b.cause()));
 								errorAppVertx(siteRequest, b);
 							}
 						});

@@ -33,6 +33,8 @@ import org.apache.solr.client.solrj.SolrQuery.ORDER;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.util.SimpleOrderedMap;
+import org.computate.scolaire.enUS.request.SiteRequestEnUS;
+import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.computate.scolaire.frFR.age.AgeScolaireFrFRGenApiService;
 import org.computate.scolaire.frFR.annee.AnneeScolaireFrFRGenApiService;
 import org.computate.scolaire.frFR.bloc.BlocScolaireFrFRGenApiService;
@@ -60,6 +62,7 @@ import org.computate.scolaire.frFR.mere.MereScolaireFrFRGenApiService;
 import org.computate.scolaire.frFR.paiement.PaiementScolaire;
 import org.computate.scolaire.frFR.paiement.PaiementScolaireFrFRApiServiceImpl;
 import org.computate.scolaire.frFR.paiement.PaiementScolaireFrFRGenApiService;
+import org.computate.scolaire.frFR.paiement.PaiementScolaireFrFRGenApiServiceImpl;
 import org.computate.scolaire.frFR.pere.PereScolaire;
 import org.computate.scolaire.frFR.pere.PereScolaireFrFRApiServiceImpl;
 import org.computate.scolaire.frFR.pere.PereScolaireFrFRGenApiService;
@@ -1475,6 +1478,12 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r.enUS: patchSchoolEnrollmentFuture
 	 * r: inscriptionFraisFuture
 	 * r.enUS: enrollmentChargesFuture
+	 * r: genererRequeteSiteFrFRPourPaiementScolaire
+	 * r.enUS: generateSiteRequestEnUSForSchoolPayment
+	 * r: genererRequeteSiteFrFRPourInscriptionScolaire
+	 * r.enUS: generateSiteRequestEnUSForSchoolEnrollment
+	 * r: initLoinListeRecherche
+	 * r.enUS: initDeepSearchList
 	 * r: RequeteSiteFrFR
 	 * r.enUS: SiteRequestEnUS
 	 * r: RequeteSite
@@ -1489,6 +1498,24 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r.enUS: futureAuthorizeNetCharge
 	 * r: futureAuthorizeNetInscriptionPaiements
 	 * r.enUS: futureAuthorizeNetEnrollmentPayments
+	 * r: ListeRecherche
+	 * r.enUS: SearchList
+	 * r: PaiementScolaireFrFRApiServiceImpl
+	 * r.enUS: SchoolPaymentEnUSApiServiceImpl
+	 * r: getSiteContexte
+	 * r.enUS: getSiteContext
+	 * r: siteContexteFrFR
+	 * r.enUS: siteContextEnUS
+	 * r: OperationRequete
+	 * r.enUS: OperationRequest
+	 * r: initLoinRequeteApi
+	 * r.enUS: initDeepApiRequest
+	 * r: RequeteApi
+	 * r.enUS: ApiRequest
+	 * r: setStocker
+	 * r.enUS: setStore
+	 * r: PaiementScolaire
+	 * r.enUS: SchoolPayment
 	 * r: paiementService
 	 * r.enUS: paymentService
 	 * r: inscriptionService
@@ -1521,6 +1548,71 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 									}
 								});
 							} else {
+								erreurAppliVertx(requeteSite, b);
+							}
+							if(b.succeeded()) {
+								LOGGER.info("Creating payments for customer %s succeeded. ");
+								List<Future> futures2 = new ArrayList<>();
+		
+								ListeRecherche<PaiementScolaire> searchList2 = new ListeRecherche<PaiementScolaire>();
+								searchList2.setStocker(true);
+								searchList2.setQuery("*:*");
+								searchList2.setC(PaiementScolaire.class);
+								searchList2.addFilterQuery("enrollmentKey_indexed_long:" + o.getPk());
+								searchList2.setRows(100);
+								searchList2.initLoinListeRecherche(requeteSite);
+		
+								for(PaiementScolaire o2 : searchList2.getList()) {
+									PaiementScolaireFrFRApiServiceImpl service = new PaiementScolaireFrFRApiServiceImpl(requeteSite.getSiteContexte_());
+									RequeteSiteFrFR requeteSite2 = paiementService.genererRequeteSiteFrFRPourPaiementScolaire(siteContexteFrFR, requeteSite.getOperationRequete(), new JsonObject());
+									RequeteApi apiRequest2 = new RequeteApi();
+									apiRequest2.setRows(1);
+									apiRequest2.setNumFound(1l);
+									apiRequest2.setNumPATCH(0L);
+									apiRequest2.initLoinRequeteApi(requeteSite2);
+									requeteSite2.setRequeteApi_(apiRequest2);
+									requeteSite2.getVertx().eventBus().publish("websocketPaiementScolaire", JsonObject.mapFrom(apiRequest2).toString());
+		
+									o2.setRequeteSite_(requeteSite2);
+									futures2.add(
+										service.patchPaiementScolaireFuture(o2, false, c -> {
+											if(c.succeeded()) {
+											} else {
+												LOGGER.info(String.format("PaiementScolaire %s failed. ", o2.getPk()));
+												gestionnaireEvenements.handle(Future.failedFuture(c.cause()));
+											}
+										})
+									);
+								}
+
+								CompositeFuture.all(futures2).setHandler(f -> {
+									if(f.succeeded()) {
+										RequeteSiteFrFR requeteSite2 = inscriptionService.genererRequeteSiteFrFRPourInscriptionScolaire(siteContexteFrFR, requeteSite.getOperationRequete(), new JsonObject());
+										RequeteApi apiRequest2 = new RequeteApi();
+										apiRequest2.setRows(1);
+										apiRequest2.setNumFound(1l);
+										apiRequest2.setNumPATCH(0L);
+										apiRequest2.initLoinRequeteApi(requeteSite2);
+										requeteSite2.setRequeteApi_(apiRequest2);
+										requeteSite2.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest2).toString());
+			
+										o.setRequeteSite_(requeteSite2);
+
+										inscriptionService.patchInscriptionScolaireFuture(o, false, g -> {
+											if(g.succeeded()) {
+												LOGGER.info("Refreshing enrollment succeeded. ");
+											} else {
+												LOGGER.error("Refreshing enrollment succeeded. ", g.cause());
+												erreurAppliVertx(requeteSite, g);
+											}
+										});
+									} else {
+										LOGGER.error("Refresh relations failed. ", f.cause());
+										erreurAppliVertx(requeteSite, f);
+									}
+								});
+							} else {
+								LOGGER.error(String.format("refreshsearchpageSchoolEnrollment failed. ", b.cause()));
 								erreurAppliVertx(requeteSite, b);
 							}
 						});
