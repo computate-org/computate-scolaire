@@ -537,14 +537,6 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 			c.o(StringUtils.lowerCase(StringUtils.substringBefore(enrollmentGroupName, " ")));
 	}
 
-	protected void _enrollmentPaymentEachMonth(Wrap<Boolean> c) {
-		c.o(false);
-	}
-
-	protected void _enrollmentPaymentComplete(Wrap<Boolean> c) {
-		c.o(false);
-	}
-
 	protected void _customerProfileId(Wrap<String> c) {
 	}
 

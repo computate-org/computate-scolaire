@@ -159,7 +159,6 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPaymentDescription("Page");
 			o.htmPaymentBy("Page");
-			o.htmEnrollmentPaymentComplete("Page");
 			o.htmEnrollmentPaymentEachMonth("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
@@ -202,7 +201,6 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPaymentDescription("POST");
 			o.htmPaymentBy("POST");
-			o.htmEnrollmentPaymentComplete("POST");
 			o.htmEnrollmentPaymentEachMonth("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
@@ -267,7 +265,6 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPaymentDescription("PUTCopy");
 			o.htmPaymentBy("PUTCopy");
-			o.htmEnrollmentPaymentComplete("PUTCopy");
 			o.htmEnrollmentPaymentEachMonth("PUTCopy");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
@@ -321,7 +318,6 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPaymentDescription("PATCH");
 			o.htmPaymentBy("PATCH");
-			o.htmEnrollmentPaymentComplete("PATCH");
 			o.htmEnrollmentPaymentEachMonth("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
@@ -377,7 +373,6 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPaymentDescription("Search");
 			o.htmPaymentBy("Search");
-			o.htmEnrollmentPaymentComplete("Search");
 			o.htmEnrollmentPaymentEachMonth("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();

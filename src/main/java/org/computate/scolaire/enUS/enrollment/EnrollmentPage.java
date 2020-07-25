@@ -2,34 +2,15 @@ package org.computate.scolaire.enUS.enrollment;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.math.RoundingMode;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Locale;
 import java.util.Optional;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.util.SimpleOrderedMap;
-import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.payment.SchoolPayment;
 import org.computate.scolaire.enUS.search.SearchList;
-import org.computate.scolaire.enUS.user.SiteUser;
-
-import net.authorize.Environment;
-import net.authorize.api.contract.v1.ArrayOfLineItem;
-import net.authorize.api.contract.v1.ArrayOfSetting;
-import net.authorize.api.contract.v1.CustomerProfilePaymentType;
-import net.authorize.api.contract.v1.GetHostedPaymentPageRequest;
-import net.authorize.api.contract.v1.GetHostedPaymentPageResponse;
-import net.authorize.api.contract.v1.LineItemType;
-import net.authorize.api.contract.v1.MerchantAuthenticationType;
-import net.authorize.api.contract.v1.MessageTypeEnum;
-import net.authorize.api.contract.v1.OrderType;
-import net.authorize.api.contract.v1.SettingType;
-import net.authorize.api.contract.v1.TransactionRequestType;
-import net.authorize.api.contract.v1.TransactionTypeEnum;
-import net.authorize.api.controller.GetHostedPaymentPageController;
-import net.authorize.api.controller.base.ApiOperationBase;
 
 /**
  * Translate: false
@@ -69,10 +50,10 @@ public class EnrollmentPage extends EnrollmentPageGen<EnrollmentGenPage> {
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile  ").f();
 				SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listSchoolPayment.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(new SimpleOrderedMap());
-				BigDecimal sum_paymentAmount = Optional.ofNullable((Double)facets.get("sum_paymentAmount")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2));
-				BigDecimal sum_chargeAmount = Optional.ofNullable((Double)facets.get("sum_chargeAmount")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2));
-				BigDecimal sum_chargeAmountFuture = Optional.ofNullable((Double)facets.get("sum_chargeAmountFuture")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2));
-				BigDecimal sum_chargeAmountDue = Optional.ofNullable((Double)facets.get("sum_chargeAmountDue")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2));
+				BigDecimal sum_paymentAmount = Optional.ofNullable((Double)facets.get("sum_paymentAmount")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING));
+				BigDecimal sum_chargeAmount = Optional.ofNullable((Double)facets.get("sum_chargeAmount")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING));
+				BigDecimal sum_chargeAmountFuture = Optional.ofNullable((Double)facets.get("sum_chargeAmountFuture")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING));
+				BigDecimal sum_chargeAmountDue = Optional.ofNullable((Double)facets.get("sum_chargeAmountDue")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING));
 
 				{ e("div").a("class", "w3-padding ").f();
 					if(sum_chargeAmount.subtract(sum_paymentAmount).subtract(sum_chargeAmountFuture).compareTo(BigDecimal.ZERO) <= 0) {

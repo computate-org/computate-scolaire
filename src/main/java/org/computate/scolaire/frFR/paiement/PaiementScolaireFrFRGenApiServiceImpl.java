@@ -416,19 +416,6 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 							});
 						}));
 						break;
-					case "inscriptionPaimentComplet":
-						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "inscriptionPaimentComplet", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
-									, b
-							-> {
-								if(b.succeeded())
-									a.handle(Future.succeededFuture());
-								else
-									a.handle(Future.failedFuture(new Exception("valeur PaiementScolaire.inscriptionPaimentComplet a échoué", b.cause())));
-							});
-						}));
-						break;
 					case "paiementDescription":
 						futures.add(Future.future(a -> {
 							tx.preparedQuery(SiteContexteFrFR.SQL_setD
@@ -1403,19 +1390,6 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 							});
 						}));
 						break;
-					case "inscriptionPaimentComplet":
-						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "inscriptionPaimentComplet", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
-									, b
-							-> {
-								if(b.succeeded())
-									a.handle(Future.succeededFuture());
-								else
-									a.handle(Future.failedFuture(new Exception("valeur PaiementScolaire.inscriptionPaimentComplet a échoué", b.cause())));
-							});
-						}));
-						break;
 					case "paiementDescription":
 						futures.add(Future.future(a -> {
 							tx.preparedQuery(SiteContexteFrFR.SQL_setD
@@ -2214,34 +2188,6 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 										a.handle(Future.succeededFuture());
 									else
 										a.handle(Future.failedFuture(new Exception("valeur PaiementScolaire.inscriptionPaimentChaqueMois a échoué", b.cause())));
-								});
-							}));
-						}
-						break;
-					case "setInscriptionPaimentComplet":
-						if(jsonObject.getBoolean(methodeNom) == null) {
-							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "inscriptionPaimentComplet")
-										, b
-								-> {
-									if(b.succeeded())
-										a.handle(Future.succeededFuture());
-									else
-										a.handle(Future.failedFuture(new Exception("valeur PaiementScolaire.inscriptionPaimentComplet a échoué", b.cause())));
-								});
-							}));
-						} else {
-							o2.setInscriptionPaimentComplet(jsonObject.getBoolean(methodeNom));
-							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "inscriptionPaimentComplet", o2.jsonInscriptionPaimentComplet())
-										, b
-								-> {
-									if(b.succeeded())
-										a.handle(Future.succeededFuture());
-									else
-										a.handle(Future.failedFuture(new Exception("valeur PaiementScolaire.inscriptionPaimentComplet a échoué", b.cause())));
 								});
 							}));
 						}

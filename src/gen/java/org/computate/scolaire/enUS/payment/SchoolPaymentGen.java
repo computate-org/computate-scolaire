@@ -3111,143 +3111,6 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		} g("div");
 	}
 
-	///////////////////////////////
-	// enrollmentPaymentComplete //
-	///////////////////////////////
-
-	/**	 The entity enrollmentPaymentComplete
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonInclude(Include.NON_NULL)
-	protected Boolean enrollmentPaymentComplete;
-	@JsonIgnore
-	public Wrap<Boolean> enrollmentPaymentCompleteWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("enrollmentPaymentComplete").o(enrollmentPaymentComplete);
-
-	/**	<br/> The entity enrollmentPaymentComplete
-	 *  is defined as null before being initialized. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.payment.SchoolPayment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentPaymentComplete">Find the entity enrollmentPaymentComplete in Solr</a>
-	 * <br/>
-	 * @param c is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _enrollmentPaymentComplete(Wrap<Boolean> c);
-
-	public Boolean getEnrollmentPaymentComplete() {
-		return enrollmentPaymentComplete;
-	}
-
-	public void setEnrollmentPaymentComplete(Boolean enrollmentPaymentComplete) {
-		this.enrollmentPaymentComplete = enrollmentPaymentComplete;
-		this.enrollmentPaymentCompleteWrap.alreadyInitialized = true;
-	}
-	public SchoolPayment setEnrollmentPaymentComplete(String o) {
-		this.enrollmentPaymentComplete = Boolean.parseBoolean(o);
-		this.enrollmentPaymentCompleteWrap.alreadyInitialized = true;
-		return (SchoolPayment)this;
-	}
-	protected SchoolPayment enrollmentPaymentCompleteInit() {
-		if(!enrollmentPaymentCompleteWrap.alreadyInitialized) {
-			_enrollmentPaymentComplete(enrollmentPaymentCompleteWrap);
-			if(enrollmentPaymentComplete == null)
-				setEnrollmentPaymentComplete(enrollmentPaymentCompleteWrap.o);
-		}
-		enrollmentPaymentCompleteWrap.alreadyInitialized(true);
-		return (SchoolPayment)this;
-	}
-
-	public Boolean solrEnrollmentPaymentComplete() {
-		return enrollmentPaymentComplete;
-	}
-
-	public String strEnrollmentPaymentComplete() {
-		return enrollmentPaymentComplete == null ? "" : enrollmentPaymentComplete.toString();
-	}
-
-	public String jsonEnrollmentPaymentComplete() {
-		return enrollmentPaymentComplete == null ? "" : enrollmentPaymentComplete.toString();
-	}
-
-	public String nomAffichageEnrollmentPaymentComplete() {
-		return "complete payment";
-	}
-
-	public String htmTooltipEnrollmentPaymentComplete() {
-		return null;
-	}
-
-	public String htmEnrollmentPaymentComplete() {
-		return enrollmentPaymentComplete == null ? "" : StringEscapeUtils.escapeHtml4(strEnrollmentPaymentComplete());
-	}
-
-	public void inputEnrollmentPaymentComplete(String classApiMethodMethod) {
-		SchoolPayment s = (SchoolPayment)this;
-		if(
-				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
-				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
-				) {
-			if("Page".equals(classApiMethodMethod)) {
-				e("input")
-					.a("type", "checkbox")
-					.a("id", classApiMethodMethod, "_enrollmentPaymentComplete")
-					.a("value", "true");
-			} else {
-				e("select")
-					.a("id", classApiMethodMethod, "_enrollmentPaymentComplete");
-			}
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setEnrollmentPaymentComplete classSchoolPayment inputSchoolPayment", pk, "EnrollmentPaymentComplete w3-input w3-border ");
-				a("name", "setEnrollmentPaymentComplete");
-			} else {
-				a("class", "valueEnrollmentPaymentComplete classSchoolPayment inputSchoolPayment", pk, "EnrollmentPaymentComplete w3-input w3-border ");
-				a("name", "enrollmentPaymentComplete");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentPaymentComplete', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_enrollmentPaymentComplete')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentPaymentComplete')); }); ");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				if(getEnrollmentPaymentComplete() != null && getEnrollmentPaymentComplete())
-					a("checked", "checked");
-				fg();
-			} else {
-				f();
-				e("option").a("value", "").a("selected", "selected").f().g("option");
-				e("option").a("value", "true").f().sx("true").g("option");
-				e("option").a("value", "false").f().sx("false").g("option");
-				g("select");
-			}
-
-		} else {
-			if(
-					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
-					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
-					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
-					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
-				) {
-				sx(htmEnrollmentPaymentComplete());
-			}
-		}
-	}
-
-	public void htmEnrollmentPaymentComplete(String classApiMethodMethod) {
-		SchoolPayment s = (SchoolPayment)this;
-		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
-			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolPaymentEnrollmentPaymentComplete").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-green ").f();
-							e("label").a("for", classApiMethodMethod, "_enrollmentPaymentComplete").a("class", "").f().sx("complete payment").g("label");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
-							{ e("div").a("class", "w3-cell ").f();
-
-								inputEnrollmentPaymentComplete(classApiMethodMethod);
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("div");
-			} g("div");
-		} g("div");
-	}
-
 	////////////////////////
 	// paymentDescription //
 	////////////////////////
@@ -6217,7 +6080,6 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		blockPricePerMonthInit();
 		blockTotalPriceInit();
 		enrollmentPaymentEachMonthInit();
-		enrollmentPaymentCompleteInit();
 		paymentDescriptionInit();
 		paymentDateInit();
 		paymentAmountInit();
@@ -6355,8 +6217,6 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				return oSchoolPayment.blockTotalPrice;
 			case "enrollmentPaymentEachMonth":
 				return oSchoolPayment.enrollmentPaymentEachMonth;
-			case "enrollmentPaymentComplete":
-				return oSchoolPayment.enrollmentPaymentComplete;
 			case "paymentDescription":
 				return oSchoolPayment.paymentDescription;
 			case "paymentDate":
@@ -6482,11 +6342,6 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 			case "enrollmentPaymentEachMonth":
 				if(val != null)
 					setEnrollmentPaymentEachMonth(val);
-				saves.add(var);
-				return val;
-			case "enrollmentPaymentComplete":
-				if(val != null)
-					setEnrollmentPaymentComplete(val);
 				saves.add(var);
 				return val;
 			case "paymentDescription":
@@ -6812,12 +6667,6 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				Boolean enrollmentPaymentEachMonth = (Boolean)solrDocument.get("enrollmentPaymentEachMonth_stored_boolean");
 				if(enrollmentPaymentEachMonth != null)
 					oSchoolPayment.setEnrollmentPaymentEachMonth(enrollmentPaymentEachMonth);
-			}
-
-			if(saves.contains("enrollmentPaymentComplete")) {
-				Boolean enrollmentPaymentComplete = (Boolean)solrDocument.get("enrollmentPaymentComplete_stored_boolean");
-				if(enrollmentPaymentComplete != null)
-					oSchoolPayment.setEnrollmentPaymentComplete(enrollmentPaymentComplete);
 			}
 
 			if(saves.contains("paymentDescription")) {
@@ -7180,10 +7029,6 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 			document.addField("enrollmentPaymentEachMonth_indexed_boolean", enrollmentPaymentEachMonth);
 			document.addField("enrollmentPaymentEachMonth_stored_boolean", enrollmentPaymentEachMonth);
 		}
-		if(enrollmentPaymentComplete != null) {
-			document.addField("enrollmentPaymentComplete_indexed_boolean", enrollmentPaymentComplete);
-			document.addField("enrollmentPaymentComplete_stored_boolean", enrollmentPaymentComplete);
-		}
 		if(paymentDescription != null) {
 			document.addField("paymentDescription_indexed_string", paymentDescription);
 			document.addField("paymentDescription_stored_string", paymentDescription);
@@ -7369,8 +7214,6 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				return "blockTotalPrice_indexed_double";
 			case "enrollmentPaymentEachMonth":
 				return "enrollmentPaymentEachMonth_indexed_boolean";
-			case "enrollmentPaymentComplete":
-				return "enrollmentPaymentComplete_indexed_boolean";
 			case "paymentDescription":
 				return "paymentDescription_indexed_string";
 			case "paymentDate":
@@ -7586,10 +7429,6 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		if(enrollmentPaymentEachMonth != null)
 			oSchoolPayment.setEnrollmentPaymentEachMonth(enrollmentPaymentEachMonth);
 
-		Boolean enrollmentPaymentComplete = (Boolean)solrDocument.get("enrollmentPaymentComplete_stored_boolean");
-		if(enrollmentPaymentComplete != null)
-			oSchoolPayment.setEnrollmentPaymentComplete(enrollmentPaymentComplete);
-
 		String paymentDescription = (String)solrDocument.get("paymentDescription_stored_string");
 		if(paymentDescription != null)
 			oSchoolPayment.setPaymentDescription(paymentDescription);
@@ -7706,8 +7545,6 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				apiRequest.addVars("dadCompleteNamePreferred");
 			if(!Objects.equals(enrollmentPaymentEachMonth, original.getEnrollmentPaymentEachMonth()))
 				apiRequest.addVars("enrollmentPaymentEachMonth");
-			if(!Objects.equals(enrollmentPaymentComplete, original.getEnrollmentPaymentComplete()))
-				apiRequest.addVars("enrollmentPaymentComplete");
 			if(!Objects.equals(paymentDescription, original.getPaymentDescription()))
 				apiRequest.addVars("paymentDescription");
 			if(!Objects.equals(paymentDate, original.getPaymentDate()))
@@ -7757,7 +7594,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), enrollmentKey, childCompleteNamePreferred, childBirthDate, momCompleteNamePreferred, dadCompleteNamePreferred, enrollmentPaymentEachMonth, enrollmentPaymentComplete, paymentDescription, paymentDate, paymentAmount, paymentCash, paymentCheck, paymentECheck, paymentSystem, paymentBy, transactionId, customerProfileId, transactionStatus, paymentRecieved, chargeAmount, chargeFirstLast, chargeEnrollment, chargeMonth, chargeLateFee, chargeAmountDue, chargeAmountFuture, paymentShortName);
+		return Objects.hash(super.hashCode(), enrollmentKey, childCompleteNamePreferred, childBirthDate, momCompleteNamePreferred, dadCompleteNamePreferred, enrollmentPaymentEachMonth, paymentDescription, paymentDate, paymentAmount, paymentCash, paymentCheck, paymentECheck, paymentSystem, paymentBy, transactionId, customerProfileId, transactionStatus, paymentRecieved, chargeAmount, chargeFirstLast, chargeEnrollment, chargeMonth, chargeLateFee, chargeAmountDue, chargeAmountFuture, paymentShortName);
 	}
 
 	////////////
@@ -7777,7 +7614,6 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				&& Objects.equals( momCompleteNamePreferred, that.momCompleteNamePreferred )
 				&& Objects.equals( dadCompleteNamePreferred, that.dadCompleteNamePreferred )
 				&& Objects.equals( enrollmentPaymentEachMonth, that.enrollmentPaymentEachMonth )
-				&& Objects.equals( enrollmentPaymentComplete, that.enrollmentPaymentComplete )
 				&& Objects.equals( paymentDescription, that.paymentDescription )
 				&& Objects.equals( paymentDate, that.paymentDate )
 				&& Objects.equals( paymentAmount, that.paymentAmount )
@@ -7814,7 +7650,6 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		sb.append( ", momCompleteNamePreferred: \"" ).append(momCompleteNamePreferred).append( "\"" );
 		sb.append( ", dadCompleteNamePreferred: \"" ).append(dadCompleteNamePreferred).append( "\"" );
 		sb.append( ", enrollmentPaymentEachMonth: " ).append(enrollmentPaymentEachMonth);
-		sb.append( ", enrollmentPaymentComplete: " ).append(enrollmentPaymentComplete);
 		sb.append( ", paymentDescription: \"" ).append(paymentDescription).append( "\"" );
 		sb.append( ", paymentDate: " ).append(paymentDate);
 		sb.append( ", paymentAmount: " ).append(paymentAmount);

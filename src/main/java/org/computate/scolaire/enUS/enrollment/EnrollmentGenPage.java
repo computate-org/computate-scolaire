@@ -262,9 +262,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 			o.htmCustomerProfileId("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmEnrollmentPaymentComplete("Page");
 			o.htmChildPottyTrained("Page");
-			o.htmEnrollmentPaymentEachMonth("Page");
 			o.htmEnrollmentImmunizations("Page");
 			o.htmEnrollmentApproved("Page");
 		} g("div");
@@ -320,9 +318,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 			o.htmCustomerProfileId("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmEnrollmentPaymentComplete("POST");
 			o.htmChildPottyTrained("POST");
-			o.htmEnrollmentPaymentEachMonth("POST");
 			o.htmEnrollmentImmunizations("POST");
 			o.htmEnrollmentApproved("POST");
 		} g("div");
@@ -400,9 +396,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 			o.htmCustomerProfileId("PUTCopy");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmEnrollmentPaymentComplete("PUTCopy");
 			o.htmChildPottyTrained("PUTCopy");
-			o.htmEnrollmentPaymentEachMonth("PUTCopy");
 			o.htmEnrollmentImmunizations("PUTCopy");
 			o.htmEnrollmentApproved("PUTCopy");
 		} g("div");
@@ -488,9 +482,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 			o.htmCustomerProfileId("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmEnrollmentPaymentComplete("PATCH");
 			o.htmChildPottyTrained("PATCH");
-			o.htmEnrollmentPaymentEachMonth("PATCH");
 			o.htmEnrollmentImmunizations("PATCH");
 			o.htmEnrollmentApproved("PATCH");
 		} g("div");
@@ -577,9 +569,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 			o.htmCustomerProfileId("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmEnrollmentPaymentComplete("Search");
 			o.htmChildPottyTrained("Search");
-			o.htmEnrollmentPaymentEachMonth("Search");
 			o.htmEnrollmentImmunizations("Search");
 			o.htmEnrollmentApproved("Search");
 		} g("div");
@@ -702,7 +692,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 					JsonObject queryParams = Optional.ofNullable(operationRequest).map(OperationRequest::getParams).map(or -> or.getJsonObject("query")).orElse(new JsonObject());
 					Long num = listSchoolEnrollment.getQueryResponse().getResults().getNumFound();
 					String q = "*:*";
-					String query1 = "objectText";
+					String query1 = "";
 					String query2 = "";
 					String query = "*:*";
 					for(String paramName : queryParams.fieldNames()) {
@@ -1102,7 +1092,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 			OperationRequest operationRequest = siteRequest_.getOperationRequest();
 			JsonObject queryParams = Optional.ofNullable(operationRequest).map(OperationRequest::getParams).map(or -> or.getJsonObject("query")).orElse(new JsonObject());
 			String q = "*:*";
-			String query1 = "objectText";
+			String query1 = "";
 			String query2 = "";
 			for(String paramName : queryParams.fieldNames()) {
 				String entityVar = null;
@@ -1173,7 +1163,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 					.a("name", "suggestSchoolEnrollment")
 					.a("id", "suggestSchoolEnrollment", id)
 					.a("autocomplete", "off")
-					.a("oninput", "suggestSchoolEnrollmentObjectSuggest( [ { 'name': 'q', 'value': 'objectSuggest:' + $(this).val() } ], $('#suggestListSchoolEnrollment", id, "'), ", p.getSiteRequest_().getRequestPk(), "); ")
+					.a("oninput", "suggestSchoolEnrollment( [ { 'name': 'q', 'value': ':' + $(this).val() } ], $('#suggestListSchoolEnrollment", id, "'), ", p.getSiteRequest_().getRequestPk(), "); ")
 					.a("onkeyup", "if (event.keyCode === 13) { event.preventDefault(); window.location.href = '/enrollment?q=", query1, ":' + encodeURIComponent(this.value) + '", fqs, sorts, "&start=", start2, "&rows=", rows1, "'; }"); 
 				if(listSchoolEnrollment != null)
 					p.a("value", query2);

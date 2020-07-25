@@ -262,9 +262,7 @@ public class GenPageInscription extends GenPageInscriptionGen<ClusterPage> {
 			o.htmCustomerProfileId("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmInscriptionPaimentComplet("Page");
 			o.htmEnfantPropre("Page");
-			o.htmInscriptionPaimentChaqueMois("Page");
 			o.htmInscriptionImmunisations("Page");
 			o.htmInscriptionApprouve("Page");
 		} g("div");
@@ -320,9 +318,7 @@ public class GenPageInscription extends GenPageInscriptionGen<ClusterPage> {
 			o.htmCustomerProfileId("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmInscriptionPaimentComplet("POST");
 			o.htmEnfantPropre("POST");
-			o.htmInscriptionPaimentChaqueMois("POST");
 			o.htmInscriptionImmunisations("POST");
 			o.htmInscriptionApprouve("POST");
 		} g("div");
@@ -400,9 +396,7 @@ public class GenPageInscription extends GenPageInscriptionGen<ClusterPage> {
 			o.htmCustomerProfileId("PUTCopie");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmInscriptionPaimentComplet("PUTCopie");
 			o.htmEnfantPropre("PUTCopie");
-			o.htmInscriptionPaimentChaqueMois("PUTCopie");
 			o.htmInscriptionImmunisations("PUTCopie");
 			o.htmInscriptionApprouve("PUTCopie");
 		} g("div");
@@ -488,9 +482,7 @@ public class GenPageInscription extends GenPageInscriptionGen<ClusterPage> {
 			o.htmCustomerProfileId("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmInscriptionPaimentComplet("PATCH");
 			o.htmEnfantPropre("PATCH");
-			o.htmInscriptionPaimentChaqueMois("PATCH");
 			o.htmInscriptionImmunisations("PATCH");
 			o.htmInscriptionApprouve("PATCH");
 		} g("div");
@@ -577,9 +569,7 @@ public class GenPageInscription extends GenPageInscriptionGen<ClusterPage> {
 			o.htmCustomerProfileId("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmInscriptionPaimentComplet("Recherche");
 			o.htmEnfantPropre("Recherche");
-			o.htmInscriptionPaimentChaqueMois("Recherche");
 			o.htmInscriptionImmunisations("Recherche");
 			o.htmInscriptionApprouve("Recherche");
 		} g("div");

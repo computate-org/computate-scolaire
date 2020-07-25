@@ -413,7 +413,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				e("input")
 					.a("type", "text")
 					.a("placeholder", "blocks")
-					.a("class", "valueObjectSuggest suggestBlockKeys w3-input w3-border w3-cell w3-cell-middle ")
+					.a("class", "value suggestBlockKeys w3-input w3-border w3-cell w3-cell-middle ")
 					.a("name", "setBlockKeys")
 					.a("id", classApiMethodMethod, "_blockKeys")
 					.a("autocomplete", "off")
@@ -1007,7 +1007,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				e("input")
 					.a("type", "text")
 					.a("placeholder", "children")
-					.a("class", "valueObjectSuggest suggestChildKey w3-input w3-border w3-cell w3-cell-middle ")
+					.a("class", "value suggestChildKey w3-input w3-border w3-cell w3-cell-middle ")
 					.a("name", "setChildKey")
 					.a("id", classApiMethodMethod, "_childKey")
 					.a("autocomplete", "off")
@@ -1165,7 +1165,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				e("input")
 					.a("type", "text")
 					.a("placeholder", "moms")
-					.a("class", "valueObjectSuggest suggestMomKeys w3-input w3-border w3-cell w3-cell-middle ")
+					.a("class", "value suggestMomKeys w3-input w3-border w3-cell w3-cell-middle ")
 					.a("name", "setMomKeys")
 					.a("id", classApiMethodMethod, "_momKeys")
 					.a("autocomplete", "off")
@@ -1323,7 +1323,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				e("input")
 					.a("type", "text")
 					.a("placeholder", "dads")
-					.a("class", "valueObjectSuggest suggestDadKeys w3-input w3-border w3-cell w3-cell-middle ")
+					.a("class", "value suggestDadKeys w3-input w3-border w3-cell w3-cell-middle ")
 					.a("name", "setDadKeys")
 					.a("id", classApiMethodMethod, "_dadKeys")
 					.a("autocomplete", "off")
@@ -1481,7 +1481,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				e("input")
 					.a("type", "text")
 					.a("placeholder", "guardians")
-					.a("class", "valueObjectSuggest suggestGuardianKeys w3-input w3-border w3-cell w3-cell-middle ")
+					.a("class", "value suggestGuardianKeys w3-input w3-border w3-cell w3-cell-middle ")
 					.a("name", "setGuardianKeys")
 					.a("id", classApiMethodMethod, "_guardianKeys")
 					.a("autocomplete", "off")
@@ -1639,7 +1639,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				e("input")
 					.a("type", "text")
 					.a("placeholder", "payments")
-					.a("class", "valueObjectSuggest suggestPaymentKeys w3-input w3-border w3-cell w3-cell-middle ")
+					.a("class", "value suggestPaymentKeys w3-input w3-border w3-cell w3-cell-middle ")
 					.a("name", "setPaymentKeys")
 					.a("id", classApiMethodMethod, "_paymentKeys")
 					.a("autocomplete", "off")
@@ -1869,7 +1869,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				e("input")
 					.a("type", "text")
 					.a("placeholder", "users")
-					.a("class", "valueObjectSuggest suggestUserKeys w3-input w3-border w3-cell w3-cell-middle ")
+					.a("class", "value suggestUserKeys w3-input w3-border w3-cell w3-cell-middle ")
 					.a("name", "setUserKeys")
 					.a("id", classApiMethodMethod, "_userKeys")
 					.a("autocomplete", "off")
@@ -8272,270 +8272,6 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return enrollmentGroupColor == null ? "" : StringEscapeUtils.escapeHtml4(strEnrollmentGroupColor());
 	}
 
-	////////////////////////////////
-	// enrollmentPaymentEachMonth //
-	////////////////////////////////
-
-	/**	 The entity enrollmentPaymentEachMonth
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonInclude(Include.NON_NULL)
-	protected Boolean enrollmentPaymentEachMonth;
-	@JsonIgnore
-	public Wrap<Boolean> enrollmentPaymentEachMonthWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("enrollmentPaymentEachMonth").o(enrollmentPaymentEachMonth);
-
-	/**	<br/> The entity enrollmentPaymentEachMonth
-	 *  is defined as null before being initialized. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentPaymentEachMonth">Find the entity enrollmentPaymentEachMonth in Solr</a>
-	 * <br/>
-	 * @param c is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _enrollmentPaymentEachMonth(Wrap<Boolean> c);
-
-	public Boolean getEnrollmentPaymentEachMonth() {
-		return enrollmentPaymentEachMonth;
-	}
-
-	public void setEnrollmentPaymentEachMonth(Boolean enrollmentPaymentEachMonth) {
-		this.enrollmentPaymentEachMonth = enrollmentPaymentEachMonth;
-		this.enrollmentPaymentEachMonthWrap.alreadyInitialized = true;
-	}
-	public SchoolEnrollment setEnrollmentPaymentEachMonth(String o) {
-		this.enrollmentPaymentEachMonth = Boolean.parseBoolean(o);
-		this.enrollmentPaymentEachMonthWrap.alreadyInitialized = true;
-		return (SchoolEnrollment)this;
-	}
-	protected SchoolEnrollment enrollmentPaymentEachMonthInit() {
-		if(!enrollmentPaymentEachMonthWrap.alreadyInitialized) {
-			_enrollmentPaymentEachMonth(enrollmentPaymentEachMonthWrap);
-			if(enrollmentPaymentEachMonth == null)
-				setEnrollmentPaymentEachMonth(enrollmentPaymentEachMonthWrap.o);
-		}
-		enrollmentPaymentEachMonthWrap.alreadyInitialized(true);
-		return (SchoolEnrollment)this;
-	}
-
-	public Boolean solrEnrollmentPaymentEachMonth() {
-		return enrollmentPaymentEachMonth;
-	}
-
-	public String strEnrollmentPaymentEachMonth() {
-		return enrollmentPaymentEachMonth == null ? "" : enrollmentPaymentEachMonth.toString();
-	}
-
-	public String jsonEnrollmentPaymentEachMonth() {
-		return enrollmentPaymentEachMonth == null ? "" : enrollmentPaymentEachMonth.toString();
-	}
-
-	public String nomAffichageEnrollmentPaymentEachMonth() {
-		return "payment each month";
-	}
-
-	public String htmTooltipEnrollmentPaymentEachMonth() {
-		return null;
-	}
-
-	public String htmEnrollmentPaymentEachMonth() {
-		return enrollmentPaymentEachMonth == null ? "" : StringEscapeUtils.escapeHtml4(strEnrollmentPaymentEachMonth());
-	}
-
-	public void inputEnrollmentPaymentEachMonth(String classApiMethodMethod) {
-		SchoolEnrollment s = (SchoolEnrollment)this;
-		if(
-				userKeys.contains(siteRequest_.getUserKey())
-				|| Objects.equals(sessionId, siteRequest_.getSessionId())
-				|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
-				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
-		) {
-			if("Page".equals(classApiMethodMethod)) {
-				e("input")
-					.a("type", "checkbox")
-					.a("id", classApiMethodMethod, "_enrollmentPaymentEachMonth")
-					.a("value", "true");
-			} else {
-				e("select")
-					.a("id", classApiMethodMethod, "_enrollmentPaymentEachMonth");
-			}
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setEnrollmentPaymentEachMonth classSchoolEnrollment inputSchoolEnrollment", pk, "EnrollmentPaymentEachMonth w3-input w3-border ");
-				a("name", "setEnrollmentPaymentEachMonth");
-			} else {
-				a("class", "valueEnrollmentPaymentEachMonth classSchoolEnrollment inputSchoolEnrollment", pk, "EnrollmentPaymentEachMonth w3-input w3-border ");
-				a("name", "enrollmentPaymentEachMonth");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentPaymentEachMonth', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_enrollmentPaymentEachMonth')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentPaymentEachMonth')); }); ");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				if(getEnrollmentPaymentEachMonth() != null && getEnrollmentPaymentEachMonth())
-					a("checked", "checked");
-				fg();
-			} else {
-				f();
-				e("option").a("value", "").a("selected", "selected").f().g("option");
-				e("option").a("value", "true").f().sx("true").g("option");
-				e("option").a("value", "false").f().sx("false").g("option");
-				g("select");
-			}
-
-		} else {
-			sx(htmEnrollmentPaymentEachMonth());
-		}
-	}
-
-	public void htmEnrollmentPaymentEachMonth(String classApiMethodMethod) {
-		SchoolEnrollment s = (SchoolEnrollment)this;
-		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
-			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolEnrollmentEnrollmentPaymentEachMonth").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-blue-gray ").f();
-							e("label").a("for", classApiMethodMethod, "_enrollmentPaymentEachMonth").a("class", "").f().sx("payment each month").g("label");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
-							{ e("div").a("class", "w3-cell ").f();
-
-								inputEnrollmentPaymentEachMonth(classApiMethodMethod);
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("div");
-			} g("div");
-		} g("div");
-	}
-
-	///////////////////////////////
-	// enrollmentPaymentComplete //
-	///////////////////////////////
-
-	/**	 The entity enrollmentPaymentComplete
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonInclude(Include.NON_NULL)
-	protected Boolean enrollmentPaymentComplete;
-	@JsonIgnore
-	public Wrap<Boolean> enrollmentPaymentCompleteWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("enrollmentPaymentComplete").o(enrollmentPaymentComplete);
-
-	/**	<br/> The entity enrollmentPaymentComplete
-	 *  is defined as null before being initialized. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentPaymentComplete">Find the entity enrollmentPaymentComplete in Solr</a>
-	 * <br/>
-	 * @param c is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _enrollmentPaymentComplete(Wrap<Boolean> c);
-
-	public Boolean getEnrollmentPaymentComplete() {
-		return enrollmentPaymentComplete;
-	}
-
-	public void setEnrollmentPaymentComplete(Boolean enrollmentPaymentComplete) {
-		this.enrollmentPaymentComplete = enrollmentPaymentComplete;
-		this.enrollmentPaymentCompleteWrap.alreadyInitialized = true;
-	}
-	public SchoolEnrollment setEnrollmentPaymentComplete(String o) {
-		this.enrollmentPaymentComplete = Boolean.parseBoolean(o);
-		this.enrollmentPaymentCompleteWrap.alreadyInitialized = true;
-		return (SchoolEnrollment)this;
-	}
-	protected SchoolEnrollment enrollmentPaymentCompleteInit() {
-		if(!enrollmentPaymentCompleteWrap.alreadyInitialized) {
-			_enrollmentPaymentComplete(enrollmentPaymentCompleteWrap);
-			if(enrollmentPaymentComplete == null)
-				setEnrollmentPaymentComplete(enrollmentPaymentCompleteWrap.o);
-		}
-		enrollmentPaymentCompleteWrap.alreadyInitialized(true);
-		return (SchoolEnrollment)this;
-	}
-
-	public Boolean solrEnrollmentPaymentComplete() {
-		return enrollmentPaymentComplete;
-	}
-
-	public String strEnrollmentPaymentComplete() {
-		return enrollmentPaymentComplete == null ? "" : enrollmentPaymentComplete.toString();
-	}
-
-	public String jsonEnrollmentPaymentComplete() {
-		return enrollmentPaymentComplete == null ? "" : enrollmentPaymentComplete.toString();
-	}
-
-	public String nomAffichageEnrollmentPaymentComplete() {
-		return "complete payment";
-	}
-
-	public String htmTooltipEnrollmentPaymentComplete() {
-		return null;
-	}
-
-	public String htmEnrollmentPaymentComplete() {
-		return enrollmentPaymentComplete == null ? "" : StringEscapeUtils.escapeHtml4(strEnrollmentPaymentComplete());
-	}
-
-	public void inputEnrollmentPaymentComplete(String classApiMethodMethod) {
-		SchoolEnrollment s = (SchoolEnrollment)this;
-		if(
-				userKeys.contains(siteRequest_.getUserKey())
-				|| Objects.equals(sessionId, siteRequest_.getSessionId())
-				|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
-				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
-		) {
-			if("Page".equals(classApiMethodMethod)) {
-				e("input")
-					.a("type", "checkbox")
-					.a("id", classApiMethodMethod, "_enrollmentPaymentComplete")
-					.a("value", "true");
-			} else {
-				e("select")
-					.a("id", classApiMethodMethod, "_enrollmentPaymentComplete");
-			}
-			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-				a("class", "setEnrollmentPaymentComplete classSchoolEnrollment inputSchoolEnrollment", pk, "EnrollmentPaymentComplete w3-input w3-border ");
-				a("name", "setEnrollmentPaymentComplete");
-			} else {
-				a("class", "valueEnrollmentPaymentComplete classSchoolEnrollment inputSchoolEnrollment", pk, "EnrollmentPaymentComplete w3-input w3-border ");
-				a("name", "enrollmentPaymentComplete");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentPaymentComplete', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_enrollmentPaymentComplete')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentPaymentComplete')); }); ");
-			}
-			if("Page".equals(classApiMethodMethod)) {
-				if(getEnrollmentPaymentComplete() != null && getEnrollmentPaymentComplete())
-					a("checked", "checked");
-				fg();
-			} else {
-				f();
-				e("option").a("value", "").a("selected", "selected").f().g("option");
-				e("option").a("value", "true").f().sx("true").g("option");
-				e("option").a("value", "false").f().sx("false").g("option");
-				g("select");
-			}
-
-		} else {
-			sx(htmEnrollmentPaymentComplete());
-		}
-	}
-
-	public void htmEnrollmentPaymentComplete(String classApiMethodMethod) {
-		SchoolEnrollment s = (SchoolEnrollment)this;
-		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
-			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolEnrollmentEnrollmentPaymentComplete").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-blue-gray ").f();
-							e("label").a("for", classApiMethodMethod, "_enrollmentPaymentComplete").a("class", "").f().sx("complete payment").g("label");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
-							{ e("div").a("class", "w3-cell ").f();
-
-								inputEnrollmentPaymentComplete(classApiMethodMethod);
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("div");
-			} g("div");
-		} g("div");
-	}
-
 	///////////////////////
 	// customerProfileId //
 	///////////////////////
@@ -14101,8 +13837,6 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		childPottyTrainedInit();
 		enrollmentGroupNameInit();
 		enrollmentGroupColorInit();
-		enrollmentPaymentEachMonthInit();
-		enrollmentPaymentCompleteInit();
 		customerProfileIdInit();
 		enrollmentChargeDateInit();
 		paymentFacetsInit();
@@ -14415,10 +14149,6 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				return oSchoolEnrollment.enrollmentGroupName;
 			case "enrollmentGroupColor":
 				return oSchoolEnrollment.enrollmentGroupColor;
-			case "enrollmentPaymentEachMonth":
-				return oSchoolEnrollment.enrollmentPaymentEachMonth;
-			case "enrollmentPaymentComplete":
-				return oSchoolEnrollment.enrollmentPaymentComplete;
 			case "customerProfileId":
 				return oSchoolEnrollment.customerProfileId;
 			case "enrollmentChargeDate":
@@ -14719,16 +14449,6 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 			case "enrollmentGroupName":
 				if(val != null)
 					setEnrollmentGroupName(val);
-				saves.add(var);
-				return val;
-			case "enrollmentPaymentEachMonth":
-				if(val != null)
-					setEnrollmentPaymentEachMonth(val);
-				saves.add(var);
-				return val;
-			case "enrollmentPaymentComplete":
-				if(val != null)
-					setEnrollmentPaymentComplete(val);
 				saves.add(var);
 				return val;
 			case "customerProfileId":
@@ -15349,18 +15069,6 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				String enrollmentGroupColor = (String)solrDocument.get("enrollmentGroupColor_stored_string");
 				if(enrollmentGroupColor != null)
 					oSchoolEnrollment.setEnrollmentGroupColor(enrollmentGroupColor);
-			}
-
-			if(saves.contains("enrollmentPaymentEachMonth")) {
-				Boolean enrollmentPaymentEachMonth = (Boolean)solrDocument.get("enrollmentPaymentEachMonth_stored_boolean");
-				if(enrollmentPaymentEachMonth != null)
-					oSchoolEnrollment.setEnrollmentPaymentEachMonth(enrollmentPaymentEachMonth);
-			}
-
-			if(saves.contains("enrollmentPaymentComplete")) {
-				Boolean enrollmentPaymentComplete = (Boolean)solrDocument.get("enrollmentPaymentComplete_stored_boolean");
-				if(enrollmentPaymentComplete != null)
-					oSchoolEnrollment.setEnrollmentPaymentComplete(enrollmentPaymentComplete);
 			}
 
 			if(saves.contains("customerProfileId")) {
@@ -16101,14 +15809,6 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 			document.addField("enrollmentGroupColor_indexed_string", enrollmentGroupColor);
 			document.addField("enrollmentGroupColor_stored_string", enrollmentGroupColor);
 		}
-		if(enrollmentPaymentEachMonth != null) {
-			document.addField("enrollmentPaymentEachMonth_indexed_boolean", enrollmentPaymentEachMonth);
-			document.addField("enrollmentPaymentEachMonth_stored_boolean", enrollmentPaymentEachMonth);
-		}
-		if(enrollmentPaymentComplete != null) {
-			document.addField("enrollmentPaymentComplete_indexed_boolean", enrollmentPaymentComplete);
-			document.addField("enrollmentPaymentComplete_stored_boolean", enrollmentPaymentComplete);
-		}
 		if(customerProfileId != null) {
 			document.addField("customerProfileId_indexed_string", customerProfileId);
 			document.addField("customerProfileId_stored_string", customerProfileId);
@@ -16501,10 +16201,6 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				return "enrollmentGroupName_indexed_string";
 			case "enrollmentGroupColor":
 				return "enrollmentGroupColor_indexed_string";
-			case "enrollmentPaymentEachMonth":
-				return "enrollmentPaymentEachMonth_indexed_boolean";
-			case "enrollmentPaymentComplete":
-				return "enrollmentPaymentComplete_indexed_boolean";
 			case "customerProfileId":
 				return "customerProfileId_indexed_string";
 			case "enrollmentChargeDate":
@@ -16942,14 +16638,6 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		if(enrollmentGroupColor != null)
 			oSchoolEnrollment.setEnrollmentGroupColor(enrollmentGroupColor);
 
-		Boolean enrollmentPaymentEachMonth = (Boolean)solrDocument.get("enrollmentPaymentEachMonth_stored_boolean");
-		if(enrollmentPaymentEachMonth != null)
-			oSchoolEnrollment.setEnrollmentPaymentEachMonth(enrollmentPaymentEachMonth);
-
-		Boolean enrollmentPaymentComplete = (Boolean)solrDocument.get("enrollmentPaymentComplete_stored_boolean");
-		if(enrollmentPaymentComplete != null)
-			oSchoolEnrollment.setEnrollmentPaymentComplete(enrollmentPaymentComplete);
-
 		String customerProfileId = (String)solrDocument.get("customerProfileId_stored_string");
 		if(customerProfileId != null)
 			oSchoolEnrollment.setCustomerProfileId(customerProfileId);
@@ -17224,10 +16912,6 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				apiRequest.addVars("childPottyTrained");
 			if(!Objects.equals(enrollmentGroupName, original.getEnrollmentGroupName()))
 				apiRequest.addVars("enrollmentGroupName");
-			if(!Objects.equals(enrollmentPaymentEachMonth, original.getEnrollmentPaymentEachMonth()))
-				apiRequest.addVars("enrollmentPaymentEachMonth");
-			if(!Objects.equals(enrollmentPaymentComplete, original.getEnrollmentPaymentComplete()))
-				apiRequest.addVars("enrollmentPaymentComplete");
 			if(!Objects.equals(customerProfileId, original.getCustomerProfileId()))
 				apiRequest.addVars("customerProfileId");
 			if(!Objects.equals(enrollmentChargeDate, original.getEnrollmentChargeDate()))
@@ -17283,7 +16967,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), yearKey, blockKeys, childKey, momKeys, dadKeys, guardianKeys, paymentKeys, userKeys, childCompleteName, childCompleteNamePreferred, childBirthDate, schoolAddress, enrollmentApproved, enrollmentImmunizations, photo, familyMarried, familySeparated, familyDivorced, familyAddress, familyHowDoYouKnowTheSchool, enrollmentSpecialConsiderations, childMedicalConditions, childPreviousSchoolsAttended, childDescription, childObjectives, childPottyTrained, enrollmentGroupName, enrollmentPaymentEachMonth, enrollmentPaymentComplete, customerProfileId, enrollmentChargeDate, enrollmentParentNames, enrollmentSignature1, enrollmentSignature2, enrollmentSignature3, enrollmentSignature4, enrollmentSignature5, enrollmentSignature6, enrollmentSignature7, enrollmentSignature8, enrollmentSignature9, enrollmentSignature10, enrollmentDate1, enrollmentDate2, enrollmentDate3, enrollmentDate4, enrollmentDate5, enrollmentDate6, enrollmentDate7, enrollmentDate8, enrollmentDate9, enrollmentDate10);
+		return Objects.hash(super.hashCode(), yearKey, blockKeys, childKey, momKeys, dadKeys, guardianKeys, paymentKeys, userKeys, childCompleteName, childCompleteNamePreferred, childBirthDate, schoolAddress, enrollmentApproved, enrollmentImmunizations, photo, familyMarried, familySeparated, familyDivorced, familyAddress, familyHowDoYouKnowTheSchool, enrollmentSpecialConsiderations, childMedicalConditions, childPreviousSchoolsAttended, childDescription, childObjectives, childPottyTrained, enrollmentGroupName, customerProfileId, enrollmentChargeDate, enrollmentParentNames, enrollmentSignature1, enrollmentSignature2, enrollmentSignature3, enrollmentSignature4, enrollmentSignature5, enrollmentSignature6, enrollmentSignature7, enrollmentSignature8, enrollmentSignature9, enrollmentSignature10, enrollmentDate1, enrollmentDate2, enrollmentDate3, enrollmentDate4, enrollmentDate5, enrollmentDate6, enrollmentDate7, enrollmentDate8, enrollmentDate9, enrollmentDate10);
 	}
 
 	////////////
@@ -17324,8 +17008,6 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				&& Objects.equals( childObjectives, that.childObjectives )
 				&& Objects.equals( childPottyTrained, that.childPottyTrained )
 				&& Objects.equals( enrollmentGroupName, that.enrollmentGroupName )
-				&& Objects.equals( enrollmentPaymentEachMonth, that.enrollmentPaymentEachMonth )
-				&& Objects.equals( enrollmentPaymentComplete, that.enrollmentPaymentComplete )
 				&& Objects.equals( customerProfileId, that.customerProfileId )
 				&& Objects.equals( enrollmentChargeDate, that.enrollmentChargeDate )
 				&& Objects.equals( enrollmentParentNames, that.enrollmentParentNames )
@@ -17386,8 +17068,6 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		sb.append( ", childObjectives: \"" ).append(childObjectives).append( "\"" );
 		sb.append( ", childPottyTrained: " ).append(childPottyTrained);
 		sb.append( ", enrollmentGroupName: \"" ).append(enrollmentGroupName).append( "\"" );
-		sb.append( ", enrollmentPaymentEachMonth: " ).append(enrollmentPaymentEachMonth);
-		sb.append( ", enrollmentPaymentComplete: " ).append(enrollmentPaymentComplete);
 		sb.append( ", customerProfileId: \"" ).append(customerProfileId).append( "\"" );
 		sb.append( ", enrollmentChargeDate: " ).append(enrollmentChargeDate);
 		sb.append( ", enrollmentParentNames: \"" ).append(enrollmentParentNames).append( "\"" );

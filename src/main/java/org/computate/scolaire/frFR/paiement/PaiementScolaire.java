@@ -771,21 +771,21 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	protected void _inscriptionPaimentChaqueMois(Couverture<Boolean> c) {
 		c.o(false);
 	}
-
-	/**
-	 * {@inheritDoc}
-	 * Var.enUS: enrollmentPaymentComplete
-	 * Indexe: true
-	 * Stocke: true
-	 * NomAffichage.frFR: paiement complet
-	 * NomAffichage.enUS: complete payment
-	 * Definir: true
-	 * HtmlLigne: 4
-	 * HtmlCellule: 3
-	 */                       
-	protected void _inscriptionPaimentComplet(Couverture<Boolean> c) {
-		c.o(false);
-	}
+//
+//	/**
+//	 * {@inheritDoc}
+//	 * Var.enUS: enrollmentPaymentComplete
+//	 * Indexe: true
+//	 * Stocke: true
+//	 * NomAffichage.frFR: paiement complet
+//	 * NomAffichage.enUS: complete payment
+//	 * Definir: true
+//	 * HtmlLigne: 4
+//	 * HtmlCellule: 3
+//	 */                       
+//	protected void _inscriptionPaimentComplet(Couverture<Boolean> c) {
+//		c.o(false);
+//	}
 
 	/**
 	 * {@inheritDoc}

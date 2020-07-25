@@ -263,9 +263,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 			o.htmCustomerProfileId("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmInscriptionPaimentComplet("Page");
 			o.htmEnfantPropre("Page");
-			o.htmInscriptionPaimentChaqueMois("Page");
 			o.htmInscriptionImmunisations("Page");
 			o.htmInscriptionApprouve("Page");
 		} g("div");
@@ -321,9 +319,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 			o.htmCustomerProfileId("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmInscriptionPaimentComplet("POST");
 			o.htmEnfantPropre("POST");
-			o.htmInscriptionPaimentChaqueMois("POST");
 			o.htmInscriptionImmunisations("POST");
 			o.htmInscriptionApprouve("POST");
 		} g("div");
@@ -401,9 +397,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 			o.htmCustomerProfileId("PUTCopie");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmInscriptionPaimentComplet("PUTCopie");
 			o.htmEnfantPropre("PUTCopie");
-			o.htmInscriptionPaimentChaqueMois("PUTCopie");
 			o.htmInscriptionImmunisations("PUTCopie");
 			o.htmInscriptionApprouve("PUTCopie");
 		} g("div");
@@ -489,9 +483,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 			o.htmCustomerProfileId("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmInscriptionPaimentComplet("PATCH");
 			o.htmEnfantPropre("PATCH");
-			o.htmInscriptionPaimentChaqueMois("PATCH");
 			o.htmInscriptionImmunisations("PATCH");
 			o.htmInscriptionApprouve("PATCH");
 		} g("div");
@@ -578,9 +570,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 			o.htmCustomerProfileId("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmInscriptionPaimentComplet("Recherche");
 			o.htmEnfantPropre("Recherche");
-			o.htmInscriptionPaimentChaqueMois("Recherche");
 			o.htmInscriptionImmunisations("Recherche");
 			o.htmInscriptionApprouve("Recherche");
 		} g("div");
@@ -1124,13 +1114,13 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 	 * r: ajouterErreur
 	 * r.enUS: addError
 	 * r: suggereInscriptionScolaireObjetSuggere
-	 * r.enUS: suggestSchoolEnrollmentObjectSuggest
+	 * r.enUS: suggestSchoolEnrollment
 	 * r: texteInscriptionScolaireObjetTexte
-	 * r.enUS: textSchoolEnrollmentObjectText
+	 * r.enUS: textSchoolEnrollment
 	 * r: 'objetSuggere:'
-	 * r.enUS: 'objectSuggest:'
+	 * r.enUS: ':'
 	 * r: 'objetTexte:'
-	 * r.enUS: 'objectText:'
+	 * r.enUS: ':'
 	 * r: '#suggereListInscriptionScolaire'
 	 * r.enUS: '#suggestListSchoolEnrollment'
 	 * r: "suggereListInscriptionScolaire"

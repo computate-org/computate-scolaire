@@ -8292,270 +8292,6 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return inscriptionCouleurGroupe == null ? "" : StringEscapeUtils.escapeHtml4(strInscriptionCouleurGroupe());
 	}
 
-	//////////////////////////////////
-	// inscriptionPaimentChaqueMois //
-	//////////////////////////////////
-
-	/**	 L'entité inscriptionPaimentChaqueMois
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonInclude(Include.NON_NULL)
-	protected Boolean inscriptionPaimentChaqueMois;
-	@JsonIgnore
-	public Couverture<Boolean> inscriptionPaimentChaqueMoisCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("inscriptionPaimentChaqueMois").o(inscriptionPaimentChaqueMois);
-
-	/**	<br/> L'entité inscriptionPaimentChaqueMois
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:inscriptionPaimentChaqueMois">Trouver l'entité inscriptionPaimentChaqueMois dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _inscriptionPaimentChaqueMois(Couverture<Boolean> c);
-
-	public Boolean getInscriptionPaimentChaqueMois() {
-		return inscriptionPaimentChaqueMois;
-	}
-
-	public void setInscriptionPaimentChaqueMois(Boolean inscriptionPaimentChaqueMois) {
-		this.inscriptionPaimentChaqueMois = inscriptionPaimentChaqueMois;
-		this.inscriptionPaimentChaqueMoisCouverture.dejaInitialise = true;
-	}
-	public InscriptionScolaire setInscriptionPaimentChaqueMois(String o) {
-		this.inscriptionPaimentChaqueMois = Boolean.parseBoolean(o);
-		this.inscriptionPaimentChaqueMoisCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
-	}
-	protected InscriptionScolaire inscriptionPaimentChaqueMoisInit() {
-		if(!inscriptionPaimentChaqueMoisCouverture.dejaInitialise) {
-			_inscriptionPaimentChaqueMois(inscriptionPaimentChaqueMoisCouverture);
-			if(inscriptionPaimentChaqueMois == null)
-				setInscriptionPaimentChaqueMois(inscriptionPaimentChaqueMoisCouverture.o);
-		}
-		inscriptionPaimentChaqueMoisCouverture.dejaInitialise(true);
-		return (InscriptionScolaire)this;
-	}
-
-	public Boolean solrInscriptionPaimentChaqueMois() {
-		return inscriptionPaimentChaqueMois;
-	}
-
-	public String strInscriptionPaimentChaqueMois() {
-		return inscriptionPaimentChaqueMois == null ? "" : inscriptionPaimentChaqueMois.toString();
-	}
-
-	public String jsonInscriptionPaimentChaqueMois() {
-		return inscriptionPaimentChaqueMois == null ? "" : inscriptionPaimentChaqueMois.toString();
-	}
-
-	public String nomAffichageInscriptionPaimentChaqueMois() {
-		return "paiement chaque mois";
-	}
-
-	public String htmTooltipInscriptionPaimentChaqueMois() {
-		return null;
-	}
-
-	public String htmInscriptionPaimentChaqueMois() {
-		return inscriptionPaimentChaqueMois == null ? "" : StringEscapeUtils.escapeHtml4(strInscriptionPaimentChaqueMois());
-	}
-
-	public void inputInscriptionPaimentChaqueMois(String classeApiMethodeMethode) {
-		InscriptionScolaire s = (InscriptionScolaire)this;
-		if(
-				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
-				|| Objects.equals(sessionId, requeteSite_.getSessionId())
-				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-		) {
-			if("Page".equals(classeApiMethodeMethode)) {
-				e("input")
-					.a("type", "checkbox")
-					.a("id", classeApiMethodeMethode, "_inscriptionPaimentChaqueMois")
-					.a("value", "true");
-			} else {
-				e("select")
-					.a("id", classeApiMethodeMethode, "_inscriptionPaimentChaqueMois");
-			}
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setInscriptionPaimentChaqueMois classInscriptionScolaire inputInscriptionScolaire", pk, "InscriptionPaimentChaqueMois w3-input w3-border ");
-				a("name", "setInscriptionPaimentChaqueMois");
-			} else {
-				a("class", "valeurInscriptionPaimentChaqueMois classInscriptionScolaire inputInscriptionScolaire", pk, "InscriptionPaimentChaqueMois w3-input w3-border ");
-				a("name", "inscriptionPaimentChaqueMois");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionPaimentChaqueMois', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_inscriptionPaimentChaqueMois')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_inscriptionPaimentChaqueMois')); }); ");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				if(getInscriptionPaimentChaqueMois() != null && getInscriptionPaimentChaqueMois())
-					a("checked", "checked");
-				fg();
-			} else {
-				f();
-				e("option").a("value", "").a("selected", "selected").f().g("option");
-				e("option").a("value", "true").f().sx("true").g("option");
-				e("option").a("value", "false").f().sx("false").g("option");
-				g("select");
-			}
-
-		} else {
-			sx(htmInscriptionPaimentChaqueMois());
-		}
-	}
-
-	public void htmInscriptionPaimentChaqueMois(String classeApiMethodeMethode) {
-		InscriptionScolaire s = (InscriptionScolaire)this;
-		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
-			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggere", classeApiMethodeMethode, "InscriptionScolaireInscriptionPaimentChaqueMois").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-blue-gray ").f();
-							e("label").a("for", classeApiMethodeMethode, "_inscriptionPaimentChaqueMois").a("class", "").f().sx("paiement chaque mois").g("label");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
-							{ e("div").a("class", "w3-cell ").f();
-
-								inputInscriptionPaimentChaqueMois(classeApiMethodeMethode);
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("div");
-			} g("div");
-		} g("div");
-	}
-
-	///////////////////////////////
-	// inscriptionPaimentComplet //
-	///////////////////////////////
-
-	/**	 L'entité inscriptionPaimentComplet
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonInclude(Include.NON_NULL)
-	protected Boolean inscriptionPaimentComplet;
-	@JsonIgnore
-	public Couverture<Boolean> inscriptionPaimentCompletCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("inscriptionPaimentComplet").o(inscriptionPaimentComplet);
-
-	/**	<br/> L'entité inscriptionPaimentComplet
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:inscriptionPaimentComplet">Trouver l'entité inscriptionPaimentComplet dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _inscriptionPaimentComplet(Couverture<Boolean> c);
-
-	public Boolean getInscriptionPaimentComplet() {
-		return inscriptionPaimentComplet;
-	}
-
-	public void setInscriptionPaimentComplet(Boolean inscriptionPaimentComplet) {
-		this.inscriptionPaimentComplet = inscriptionPaimentComplet;
-		this.inscriptionPaimentCompletCouverture.dejaInitialise = true;
-	}
-	public InscriptionScolaire setInscriptionPaimentComplet(String o) {
-		this.inscriptionPaimentComplet = Boolean.parseBoolean(o);
-		this.inscriptionPaimentCompletCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
-	}
-	protected InscriptionScolaire inscriptionPaimentCompletInit() {
-		if(!inscriptionPaimentCompletCouverture.dejaInitialise) {
-			_inscriptionPaimentComplet(inscriptionPaimentCompletCouverture);
-			if(inscriptionPaimentComplet == null)
-				setInscriptionPaimentComplet(inscriptionPaimentCompletCouverture.o);
-		}
-		inscriptionPaimentCompletCouverture.dejaInitialise(true);
-		return (InscriptionScolaire)this;
-	}
-
-	public Boolean solrInscriptionPaimentComplet() {
-		return inscriptionPaimentComplet;
-	}
-
-	public String strInscriptionPaimentComplet() {
-		return inscriptionPaimentComplet == null ? "" : inscriptionPaimentComplet.toString();
-	}
-
-	public String jsonInscriptionPaimentComplet() {
-		return inscriptionPaimentComplet == null ? "" : inscriptionPaimentComplet.toString();
-	}
-
-	public String nomAffichageInscriptionPaimentComplet() {
-		return "paiement complet";
-	}
-
-	public String htmTooltipInscriptionPaimentComplet() {
-		return null;
-	}
-
-	public String htmInscriptionPaimentComplet() {
-		return inscriptionPaimentComplet == null ? "" : StringEscapeUtils.escapeHtml4(strInscriptionPaimentComplet());
-	}
-
-	public void inputInscriptionPaimentComplet(String classeApiMethodeMethode) {
-		InscriptionScolaire s = (InscriptionScolaire)this;
-		if(
-				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
-				|| Objects.equals(sessionId, requeteSite_.getSessionId())
-				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-		) {
-			if("Page".equals(classeApiMethodeMethode)) {
-				e("input")
-					.a("type", "checkbox")
-					.a("id", classeApiMethodeMethode, "_inscriptionPaimentComplet")
-					.a("value", "true");
-			} else {
-				e("select")
-					.a("id", classeApiMethodeMethode, "_inscriptionPaimentComplet");
-			}
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setInscriptionPaimentComplet classInscriptionScolaire inputInscriptionScolaire", pk, "InscriptionPaimentComplet w3-input w3-border ");
-				a("name", "setInscriptionPaimentComplet");
-			} else {
-				a("class", "valeurInscriptionPaimentComplet classInscriptionScolaire inputInscriptionScolaire", pk, "InscriptionPaimentComplet w3-input w3-border ");
-				a("name", "inscriptionPaimentComplet");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionPaimentComplet', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_inscriptionPaimentComplet')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_inscriptionPaimentComplet')); }); ");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				if(getInscriptionPaimentComplet() != null && getInscriptionPaimentComplet())
-					a("checked", "checked");
-				fg();
-			} else {
-				f();
-				e("option").a("value", "").a("selected", "selected").f().g("option");
-				e("option").a("value", "true").f().sx("true").g("option");
-				e("option").a("value", "false").f().sx("false").g("option");
-				g("select");
-			}
-
-		} else {
-			sx(htmInscriptionPaimentComplet());
-		}
-	}
-
-	public void htmInscriptionPaimentComplet(String classeApiMethodeMethode) {
-		InscriptionScolaire s = (InscriptionScolaire)this;
-		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
-			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggere", classeApiMethodeMethode, "InscriptionScolaireInscriptionPaimentComplet").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-blue-gray ").f();
-							e("label").a("for", classeApiMethodeMethode, "_inscriptionPaimentComplet").a("class", "").f().sx("paiement complet").g("label");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
-							{ e("div").a("class", "w3-cell ").f();
-
-								inputInscriptionPaimentComplet(classeApiMethodeMethode);
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("div");
-			} g("div");
-		} g("div");
-	}
-
 	///////////////////////
 	// customerProfileId //
 	///////////////////////
@@ -14134,8 +13870,6 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		enfantPropreInit();
 		inscriptionNomGroupeInit();
 		inscriptionCouleurGroupeInit();
-		inscriptionPaimentChaqueMoisInit();
-		inscriptionPaimentCompletInit();
 		customerProfileIdInit();
 		inscriptionDateFraisInit();
 		paiementFacetsInit();
@@ -14448,10 +14182,6 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				return oInscriptionScolaire.inscriptionNomGroupe;
 			case "inscriptionCouleurGroupe":
 				return oInscriptionScolaire.inscriptionCouleurGroupe;
-			case "inscriptionPaimentChaqueMois":
-				return oInscriptionScolaire.inscriptionPaimentChaqueMois;
-			case "inscriptionPaimentComplet":
-				return oInscriptionScolaire.inscriptionPaimentComplet;
 			case "customerProfileId":
 				return oInscriptionScolaire.customerProfileId;
 			case "inscriptionDateFrais":
@@ -14752,16 +14482,6 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			case "inscriptionNomGroupe":
 				if(val != null)
 					setInscriptionNomGroupe(val);
-				sauvegardes.add(var);
-				return val;
-			case "inscriptionPaimentChaqueMois":
-				if(val != null)
-					setInscriptionPaimentChaqueMois(val);
-				sauvegardes.add(var);
-				return val;
-			case "inscriptionPaimentComplet":
-				if(val != null)
-					setInscriptionPaimentComplet(val);
 				sauvegardes.add(var);
 				return val;
 			case "customerProfileId":
@@ -15382,18 +15102,6 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				String inscriptionCouleurGroupe = (String)solrDocument.get("inscriptionCouleurGroupe_stored_string");
 				if(inscriptionCouleurGroupe != null)
 					oInscriptionScolaire.setInscriptionCouleurGroupe(inscriptionCouleurGroupe);
-			}
-
-			if(sauvegardes.contains("inscriptionPaimentChaqueMois")) {
-				Boolean inscriptionPaimentChaqueMois = (Boolean)solrDocument.get("inscriptionPaimentChaqueMois_stored_boolean");
-				if(inscriptionPaimentChaqueMois != null)
-					oInscriptionScolaire.setInscriptionPaimentChaqueMois(inscriptionPaimentChaqueMois);
-			}
-
-			if(sauvegardes.contains("inscriptionPaimentComplet")) {
-				Boolean inscriptionPaimentComplet = (Boolean)solrDocument.get("inscriptionPaimentComplet_stored_boolean");
-				if(inscriptionPaimentComplet != null)
-					oInscriptionScolaire.setInscriptionPaimentComplet(inscriptionPaimentComplet);
 			}
 
 			if(sauvegardes.contains("customerProfileId")) {
@@ -16134,14 +15842,6 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			document.addField("inscriptionCouleurGroupe_indexed_string", inscriptionCouleurGroupe);
 			document.addField("inscriptionCouleurGroupe_stored_string", inscriptionCouleurGroupe);
 		}
-		if(inscriptionPaimentChaqueMois != null) {
-			document.addField("inscriptionPaimentChaqueMois_indexed_boolean", inscriptionPaimentChaqueMois);
-			document.addField("inscriptionPaimentChaqueMois_stored_boolean", inscriptionPaimentChaqueMois);
-		}
-		if(inscriptionPaimentComplet != null) {
-			document.addField("inscriptionPaimentComplet_indexed_boolean", inscriptionPaimentComplet);
-			document.addField("inscriptionPaimentComplet_stored_boolean", inscriptionPaimentComplet);
-		}
 		if(customerProfileId != null) {
 			document.addField("customerProfileId_indexed_string", customerProfileId);
 			document.addField("customerProfileId_stored_string", customerProfileId);
@@ -16534,10 +16234,6 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				return "inscriptionNomGroupe_indexed_string";
 			case "inscriptionCouleurGroupe":
 				return "inscriptionCouleurGroupe_indexed_string";
-			case "inscriptionPaimentChaqueMois":
-				return "inscriptionPaimentChaqueMois_indexed_boolean";
-			case "inscriptionPaimentComplet":
-				return "inscriptionPaimentComplet_indexed_boolean";
 			case "customerProfileId":
 				return "customerProfileId_indexed_string";
 			case "inscriptionDateFrais":
@@ -16975,14 +16671,6 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(inscriptionCouleurGroupe != null)
 			oInscriptionScolaire.setInscriptionCouleurGroupe(inscriptionCouleurGroupe);
 
-		Boolean inscriptionPaimentChaqueMois = (Boolean)solrDocument.get("inscriptionPaimentChaqueMois_stored_boolean");
-		if(inscriptionPaimentChaqueMois != null)
-			oInscriptionScolaire.setInscriptionPaimentChaqueMois(inscriptionPaimentChaqueMois);
-
-		Boolean inscriptionPaimentComplet = (Boolean)solrDocument.get("inscriptionPaimentComplet_stored_boolean");
-		if(inscriptionPaimentComplet != null)
-			oInscriptionScolaire.setInscriptionPaimentComplet(inscriptionPaimentComplet);
-
 		String customerProfileId = (String)solrDocument.get("customerProfileId_stored_string");
 		if(customerProfileId != null)
 			oInscriptionScolaire.setCustomerProfileId(customerProfileId);
@@ -17257,10 +16945,6 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				requeteApi.addVars("enfantPropre");
 			if(!Objects.equals(inscriptionNomGroupe, original.getInscriptionNomGroupe()))
 				requeteApi.addVars("inscriptionNomGroupe");
-			if(!Objects.equals(inscriptionPaimentChaqueMois, original.getInscriptionPaimentChaqueMois()))
-				requeteApi.addVars("inscriptionPaimentChaqueMois");
-			if(!Objects.equals(inscriptionPaimentComplet, original.getInscriptionPaimentComplet()))
-				requeteApi.addVars("inscriptionPaimentComplet");
 			if(!Objects.equals(customerProfileId, original.getCustomerProfileId()))
 				requeteApi.addVars("customerProfileId");
 			if(!Objects.equals(inscriptionDateFrais, original.getInscriptionDateFrais()))
@@ -17316,7 +17000,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), anneeCle, blocCles, enfantCle, mereCles, pereCles, gardienCles, paiementCles, utilisateurCles, enfantNomComplet, enfantNomCompletPrefere, enfantDateNaissance, ecoleAddresse, inscriptionApprouve, inscriptionImmunisations, photo, familleMarie, familleSepare, familleDivorce, familleAddresse, familleCommentVousConnaissezEcole, inscriptionConsiderationsSpeciales, enfantConditionsMedicales, enfantEcolesPrecedemmentFrequentees, enfantDescription, enfantObjectifs, enfantPropre, inscriptionNomGroupe, inscriptionPaimentChaqueMois, inscriptionPaimentComplet, customerProfileId, inscriptionDateFrais, inscriptionNomsParents, inscriptionSignature1, inscriptionSignature2, inscriptionSignature3, inscriptionSignature4, inscriptionSignature5, inscriptionSignature6, inscriptionSignature7, inscriptionSignature8, inscriptionSignature9, inscriptionSignature10, inscriptionDate1, inscriptionDate2, inscriptionDate3, inscriptionDate4, inscriptionDate5, inscriptionDate6, inscriptionDate7, inscriptionDate8, inscriptionDate9, inscriptionDate10);
+		return Objects.hash(super.hashCode(), anneeCle, blocCles, enfantCle, mereCles, pereCles, gardienCles, paiementCles, utilisateurCles, enfantNomComplet, enfantNomCompletPrefere, enfantDateNaissance, ecoleAddresse, inscriptionApprouve, inscriptionImmunisations, photo, familleMarie, familleSepare, familleDivorce, familleAddresse, familleCommentVousConnaissezEcole, inscriptionConsiderationsSpeciales, enfantConditionsMedicales, enfantEcolesPrecedemmentFrequentees, enfantDescription, enfantObjectifs, enfantPropre, inscriptionNomGroupe, customerProfileId, inscriptionDateFrais, inscriptionNomsParents, inscriptionSignature1, inscriptionSignature2, inscriptionSignature3, inscriptionSignature4, inscriptionSignature5, inscriptionSignature6, inscriptionSignature7, inscriptionSignature8, inscriptionSignature9, inscriptionSignature10, inscriptionDate1, inscriptionDate2, inscriptionDate3, inscriptionDate4, inscriptionDate5, inscriptionDate6, inscriptionDate7, inscriptionDate8, inscriptionDate9, inscriptionDate10);
 	}
 
 	////////////
@@ -17357,8 +17041,6 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				&& Objects.equals( enfantObjectifs, that.enfantObjectifs )
 				&& Objects.equals( enfantPropre, that.enfantPropre )
 				&& Objects.equals( inscriptionNomGroupe, that.inscriptionNomGroupe )
-				&& Objects.equals( inscriptionPaimentChaqueMois, that.inscriptionPaimentChaqueMois )
-				&& Objects.equals( inscriptionPaimentComplet, that.inscriptionPaimentComplet )
 				&& Objects.equals( customerProfileId, that.customerProfileId )
 				&& Objects.equals( inscriptionDateFrais, that.inscriptionDateFrais )
 				&& Objects.equals( inscriptionNomsParents, that.inscriptionNomsParents )
@@ -17419,8 +17101,6 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		sb.append( ", enfantObjectifs: \"" ).append(enfantObjectifs).append( "\"" );
 		sb.append( ", enfantPropre: " ).append(enfantPropre);
 		sb.append( ", inscriptionNomGroupe: \"" ).append(inscriptionNomGroupe).append( "\"" );
-		sb.append( ", inscriptionPaimentChaqueMois: " ).append(inscriptionPaimentChaqueMois);
-		sb.append( ", inscriptionPaimentComplet: " ).append(inscriptionPaimentComplet);
 		sb.append( ", customerProfileId: \"" ).append(customerProfileId).append( "\"" );
 		sb.append( ", inscriptionDateFrais: " ).append(inscriptionDateFrais);
 		sb.append( ", inscriptionNomsParents: \"" ).append(inscriptionNomsParents).append( "\"" );

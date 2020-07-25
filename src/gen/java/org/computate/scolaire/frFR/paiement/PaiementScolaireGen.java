@@ -3117,143 +3117,6 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		} g("div");
 	}
 
-	///////////////////////////////
-	// inscriptionPaimentComplet //
-	///////////////////////////////
-
-	/**	 L'entité inscriptionPaimentComplet
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonInclude(Include.NON_NULL)
-	protected Boolean inscriptionPaimentComplet;
-	@JsonIgnore
-	public Couverture<Boolean> inscriptionPaimentCompletCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("inscriptionPaimentComplet").o(inscriptionPaimentComplet);
-
-	/**	<br/> L'entité inscriptionPaimentComplet
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:inscriptionPaimentComplet">Trouver l'entité inscriptionPaimentComplet dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _inscriptionPaimentComplet(Couverture<Boolean> c);
-
-	public Boolean getInscriptionPaimentComplet() {
-		return inscriptionPaimentComplet;
-	}
-
-	public void setInscriptionPaimentComplet(Boolean inscriptionPaimentComplet) {
-		this.inscriptionPaimentComplet = inscriptionPaimentComplet;
-		this.inscriptionPaimentCompletCouverture.dejaInitialise = true;
-	}
-	public PaiementScolaire setInscriptionPaimentComplet(String o) {
-		this.inscriptionPaimentComplet = Boolean.parseBoolean(o);
-		this.inscriptionPaimentCompletCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
-	}
-	protected PaiementScolaire inscriptionPaimentCompletInit() {
-		if(!inscriptionPaimentCompletCouverture.dejaInitialise) {
-			_inscriptionPaimentComplet(inscriptionPaimentCompletCouverture);
-			if(inscriptionPaimentComplet == null)
-				setInscriptionPaimentComplet(inscriptionPaimentCompletCouverture.o);
-		}
-		inscriptionPaimentCompletCouverture.dejaInitialise(true);
-		return (PaiementScolaire)this;
-	}
-
-	public Boolean solrInscriptionPaimentComplet() {
-		return inscriptionPaimentComplet;
-	}
-
-	public String strInscriptionPaimentComplet() {
-		return inscriptionPaimentComplet == null ? "" : inscriptionPaimentComplet.toString();
-	}
-
-	public String jsonInscriptionPaimentComplet() {
-		return inscriptionPaimentComplet == null ? "" : inscriptionPaimentComplet.toString();
-	}
-
-	public String nomAffichageInscriptionPaimentComplet() {
-		return "paiement complet";
-	}
-
-	public String htmTooltipInscriptionPaimentComplet() {
-		return null;
-	}
-
-	public String htmInscriptionPaimentComplet() {
-		return inscriptionPaimentComplet == null ? "" : StringEscapeUtils.escapeHtml4(strInscriptionPaimentComplet());
-	}
-
-	public void inputInscriptionPaimentComplet(String classeApiMethodeMethode) {
-		PaiementScolaire s = (PaiementScolaire)this;
-		if(
-				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-				) {
-			if("Page".equals(classeApiMethodeMethode)) {
-				e("input")
-					.a("type", "checkbox")
-					.a("id", classeApiMethodeMethode, "_inscriptionPaimentComplet")
-					.a("value", "true");
-			} else {
-				e("select")
-					.a("id", classeApiMethodeMethode, "_inscriptionPaimentComplet");
-			}
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setInscriptionPaimentComplet classPaiementScolaire inputPaiementScolaire", pk, "InscriptionPaimentComplet w3-input w3-border ");
-				a("name", "setInscriptionPaimentComplet");
-			} else {
-				a("class", "valeurInscriptionPaimentComplet classPaiementScolaire inputPaiementScolaire", pk, "InscriptionPaimentComplet w3-input w3-border ");
-				a("name", "inscriptionPaimentComplet");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionPaimentComplet', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_inscriptionPaimentComplet')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_inscriptionPaimentComplet')); }); ");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				if(getInscriptionPaimentComplet() != null && getInscriptionPaimentComplet())
-					a("checked", "checked");
-				fg();
-			} else {
-				f();
-				e("option").a("value", "").a("selected", "selected").f().g("option");
-				e("option").a("value", "true").f().sx("true").g("option");
-				e("option").a("value", "false").f().sx("false").g("option");
-				g("select");
-			}
-
-		} else {
-			if(
-					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLE_READS)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLE_READS)
-				) {
-				sx(htmInscriptionPaimentComplet());
-			}
-		}
-	}
-
-	public void htmInscriptionPaimentComplet(String classeApiMethodeMethode) {
-		PaiementScolaire s = (PaiementScolaire)this;
-		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
-			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PaiementScolaireInscriptionPaimentComplet").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-green ").f();
-							e("label").a("for", classeApiMethodeMethode, "_inscriptionPaimentComplet").a("class", "").f().sx("paiement complet").g("label");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
-							{ e("div").a("class", "w3-cell ").f();
-
-								inputInscriptionPaimentComplet(classeApiMethodeMethode);
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("div");
-			} g("div");
-		} g("div");
-	}
-
 	/////////////////////////
 	// paiementDescription //
 	/////////////////////////
@@ -6232,7 +6095,6 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		blocPrixParMoisInit();
 		blocPrixTotalInit();
 		inscriptionPaimentChaqueMoisInit();
-		inscriptionPaimentCompletInit();
 		paiementDescriptionInit();
 		paiementDateInit();
 		paiementMontantInit();
@@ -6370,8 +6232,6 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				return oPaiementScolaire.blocPrixTotal;
 			case "inscriptionPaimentChaqueMois":
 				return oPaiementScolaire.inscriptionPaimentChaqueMois;
-			case "inscriptionPaimentComplet":
-				return oPaiementScolaire.inscriptionPaimentComplet;
 			case "paiementDescription":
 				return oPaiementScolaire.paiementDescription;
 			case "paiementDate":
@@ -6497,11 +6357,6 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			case "inscriptionPaimentChaqueMois":
 				if(val != null)
 					setInscriptionPaimentChaqueMois(val);
-				sauvegardes.add(var);
-				return val;
-			case "inscriptionPaimentComplet":
-				if(val != null)
-					setInscriptionPaimentComplet(val);
 				sauvegardes.add(var);
 				return val;
 			case "paiementDescription":
@@ -6827,12 +6682,6 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				Boolean inscriptionPaimentChaqueMois = (Boolean)solrDocument.get("inscriptionPaimentChaqueMois_stored_boolean");
 				if(inscriptionPaimentChaqueMois != null)
 					oPaiementScolaire.setInscriptionPaimentChaqueMois(inscriptionPaimentChaqueMois);
-			}
-
-			if(sauvegardes.contains("inscriptionPaimentComplet")) {
-				Boolean inscriptionPaimentComplet = (Boolean)solrDocument.get("inscriptionPaimentComplet_stored_boolean");
-				if(inscriptionPaimentComplet != null)
-					oPaiementScolaire.setInscriptionPaimentComplet(inscriptionPaimentComplet);
 			}
 
 			if(sauvegardes.contains("paiementDescription")) {
@@ -7195,10 +7044,6 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			document.addField("inscriptionPaimentChaqueMois_indexed_boolean", inscriptionPaimentChaqueMois);
 			document.addField("inscriptionPaimentChaqueMois_stored_boolean", inscriptionPaimentChaqueMois);
 		}
-		if(inscriptionPaimentComplet != null) {
-			document.addField("inscriptionPaimentComplet_indexed_boolean", inscriptionPaimentComplet);
-			document.addField("inscriptionPaimentComplet_stored_boolean", inscriptionPaimentComplet);
-		}
 		if(paiementDescription != null) {
 			document.addField("paiementDescription_indexed_string", paiementDescription);
 			document.addField("paiementDescription_stored_string", paiementDescription);
@@ -7384,8 +7229,6 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				return "blocPrixTotal_indexed_double";
 			case "inscriptionPaimentChaqueMois":
 				return "inscriptionPaimentChaqueMois_indexed_boolean";
-			case "inscriptionPaimentComplet":
-				return "inscriptionPaimentComplet_indexed_boolean";
 			case "paiementDescription":
 				return "paiementDescription_indexed_string";
 			case "paiementDate":
@@ -7601,10 +7444,6 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		if(inscriptionPaimentChaqueMois != null)
 			oPaiementScolaire.setInscriptionPaimentChaqueMois(inscriptionPaimentChaqueMois);
 
-		Boolean inscriptionPaimentComplet = (Boolean)solrDocument.get("inscriptionPaimentComplet_stored_boolean");
-		if(inscriptionPaimentComplet != null)
-			oPaiementScolaire.setInscriptionPaimentComplet(inscriptionPaimentComplet);
-
 		String paiementDescription = (String)solrDocument.get("paiementDescription_stored_string");
 		if(paiementDescription != null)
 			oPaiementScolaire.setPaiementDescription(paiementDescription);
@@ -7721,8 +7560,6 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				requeteApi.addVars("pereNomCompletPrefere");
 			if(!Objects.equals(inscriptionPaimentChaqueMois, original.getInscriptionPaimentChaqueMois()))
 				requeteApi.addVars("inscriptionPaimentChaqueMois");
-			if(!Objects.equals(inscriptionPaimentComplet, original.getInscriptionPaimentComplet()))
-				requeteApi.addVars("inscriptionPaimentComplet");
 			if(!Objects.equals(paiementDescription, original.getPaiementDescription()))
 				requeteApi.addVars("paiementDescription");
 			if(!Objects.equals(paiementDate, original.getPaiementDate()))
@@ -7772,7 +7609,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), inscriptionCle, enfantNomCompletPrefere, enfantDateNaissance, mereNomCompletPrefere, pereNomCompletPrefere, inscriptionPaimentChaqueMois, inscriptionPaimentComplet, paiementDescription, paiementDate, paiementMontant, paiementEspeces, paiementCheque, paiementECheck, paiementSysteme, paiementPar, transactionId, customerProfileId, transactionStatus, paiementRecu, fraisMontant, fraisPremierDernier, fraisInscription, fraisMois, fraisRetard, fraisMontantDu, fraisMontantFuture, paiementNomCourt);
+		return Objects.hash(super.hashCode(), inscriptionCle, enfantNomCompletPrefere, enfantDateNaissance, mereNomCompletPrefere, pereNomCompletPrefere, inscriptionPaimentChaqueMois, paiementDescription, paiementDate, paiementMontant, paiementEspeces, paiementCheque, paiementECheck, paiementSysteme, paiementPar, transactionId, customerProfileId, transactionStatus, paiementRecu, fraisMontant, fraisPremierDernier, fraisInscription, fraisMois, fraisRetard, fraisMontantDu, fraisMontantFuture, paiementNomCourt);
 	}
 
 	////////////
@@ -7792,7 +7629,6 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				&& Objects.equals( mereNomCompletPrefere, that.mereNomCompletPrefere )
 				&& Objects.equals( pereNomCompletPrefere, that.pereNomCompletPrefere )
 				&& Objects.equals( inscriptionPaimentChaqueMois, that.inscriptionPaimentChaqueMois )
-				&& Objects.equals( inscriptionPaimentComplet, that.inscriptionPaimentComplet )
 				&& Objects.equals( paiementDescription, that.paiementDescription )
 				&& Objects.equals( paiementDate, that.paiementDate )
 				&& Objects.equals( paiementMontant, that.paiementMontant )
@@ -7829,7 +7665,6 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		sb.append( ", mereNomCompletPrefere: \"" ).append(mereNomCompletPrefere).append( "\"" );
 		sb.append( ", pereNomCompletPrefere: \"" ).append(pereNomCompletPrefere).append( "\"" );
 		sb.append( ", inscriptionPaimentChaqueMois: " ).append(inscriptionPaimentChaqueMois);
-		sb.append( ", inscriptionPaimentComplet: " ).append(inscriptionPaimentComplet);
 		sb.append( ", paiementDescription: \"" ).append(paiementDescription).append( "\"" );
 		sb.append( ", paiementDate: " ).append(paiementDate);
 		sb.append( ", paiementMontant: " ).append(paiementMontant);

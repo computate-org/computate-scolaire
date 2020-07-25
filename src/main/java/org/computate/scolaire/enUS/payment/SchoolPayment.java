@@ -220,10 +220,6 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 		c.o(false);
 	}
 
-	protected void _enrollmentPaymentComplete(Wrap<Boolean> c) {
-		c.o(false);
-	}
-
 	protected void _paymentDescription(Wrap<String> c) {
 	}
 
