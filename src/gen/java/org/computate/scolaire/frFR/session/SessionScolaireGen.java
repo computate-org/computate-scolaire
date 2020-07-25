@@ -16,6 +16,7 @@ import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import java.time.ZoneOffset;
 import io.vertx.core.logging.Logger;
+import java.math.RoundingMode;
 import java.math.MathContext;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import java.util.Set;
@@ -2077,17 +2078,17 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 	public SessionScolaire setAnneeFraisInscription(String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
 		if(NumberUtils.isParsable(o))
-			this.anneeFraisInscription = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+			this.anneeFraisInscription = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
 		this.anneeFraisInscriptionCouverture.dejaInitialise = true;
 		return (SessionScolaire)this;
 	}
 	public SessionScolaire setAnneeFraisInscription(Double o) {
-			this.anneeFraisInscription = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+			this.anneeFraisInscription = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
 		this.anneeFraisInscriptionCouverture.dejaInitialise = true;
 		return (SessionScolaire)this;
 	}
 	public SessionScolaire setAnneeFraisInscription(Integer o) {
-			this.anneeFraisInscription = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+			this.anneeFraisInscription = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
 		this.anneeFraisInscriptionCouverture.dejaInitialise = true;
 		return (SessionScolaire)this;
 	}
@@ -2106,7 +2107,7 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strAnneeFraisInscription() {
-		return anneeFraisInscription == null ? "" : anneeFraisInscription.setScale(2).toString();
+		return anneeFraisInscription == null ? "" : anneeFraisInscription.setScale(2, RoundingMode.CEILING).toString();
 	}
 
 	public String jsonAnneeFraisInscription() {

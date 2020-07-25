@@ -16,6 +16,7 @@ import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import java.time.ZoneOffset;
 import io.vertx.core.logging.Logger;
+import java.math.RoundingMode;
 import java.math.MathContext;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import java.util.Set;
@@ -2073,17 +2074,17 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 	public SchoolSession setYearEnrollmentFee(String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
 		if(NumberUtils.isParsable(o))
-			this.yearEnrollmentFee = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+			this.yearEnrollmentFee = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
 		this.yearEnrollmentFeeWrap.alreadyInitialized = true;
 		return (SchoolSession)this;
 	}
 	public SchoolSession setYearEnrollmentFee(Double o) {
-			this.yearEnrollmentFee = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+			this.yearEnrollmentFee = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
 		this.yearEnrollmentFeeWrap.alreadyInitialized = true;
 		return (SchoolSession)this;
 	}
 	public SchoolSession setYearEnrollmentFee(Integer o) {
-			this.yearEnrollmentFee = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+			this.yearEnrollmentFee = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
 		this.yearEnrollmentFeeWrap.alreadyInitialized = true;
 		return (SchoolSession)this;
 	}
@@ -2102,7 +2103,7 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 	}
 
 	public String strYearEnrollmentFee() {
-		return yearEnrollmentFee == null ? "" : yearEnrollmentFee.setScale(2).toString();
+		return yearEnrollmentFee == null ? "" : yearEnrollmentFee.setScale(2, RoundingMode.CEILING).toString();
 	}
 
 	public String jsonYearEnrollmentFee() {

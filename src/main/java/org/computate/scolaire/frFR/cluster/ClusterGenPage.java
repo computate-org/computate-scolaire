@@ -30,6 +30,7 @@ import java.util.stream.Collectors;
 import java.util.Arrays;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.math.MathContext;
 import org.apache.commons.collections.CollectionUtils;
 import java.util.Objects;
@@ -714,13 +715,13 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 	 * r: ajouterErreur
 	 * r.enUS: addError
 	 * r: suggereClusterObjetSuggere
-	 * r.enUS: suggestCluster
+	 * r.enUS: suggestClusterObjectSuggest
 	 * r: texteClusterObjetTexte
-	 * r.enUS: textCluster
+	 * r.enUS: textClusterObjectText
 	 * r: 'objetSuggere:'
-	 * r.enUS: ':'
+	 * r.enUS: 'objectSuggest:'
 	 * r: 'objetTexte:'
-	 * r.enUS: ':'
+	 * r.enUS: 'objectText:'
 	 * r: '#suggereListCluster'
 	 * r.enUS: '#suggestListCluster'
 	 * r: "suggereListCluster"

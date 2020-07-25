@@ -31,6 +31,7 @@ import java.util.stream.Collectors;
 import java.util.Arrays;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.math.MathContext;
 import org.apache.commons.collections.CollectionUtils;
 import java.util.Objects;
@@ -66,6 +67,7 @@ import java.util.stream.Collectors;
 import java.util.Arrays;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.math.MathContext;
 import org.apache.commons.collections.CollectionUtils;
 import java.util.Objects;
@@ -101,6 +103,7 @@ import java.util.stream.Collectors;
 import java.util.Arrays;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.math.MathContext;
 import org.apache.commons.collections.CollectionUtils;
 import java.util.Objects;
@@ -136,6 +139,7 @@ import java.util.stream.Collectors;
 import java.util.Arrays;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.math.MathContext;
 import org.apache.commons.collections.CollectionUtils;
 import java.util.Objects;
@@ -171,6 +175,7 @@ import java.util.stream.Collectors;
 import java.util.Arrays;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.math.MathContext;
 import org.apache.commons.collections.CollectionUtils;
 import java.util.Objects;
@@ -933,13 +938,13 @@ public class DesignPageGenPage extends DesignPageGenPageGen<ClusterPage> {
 	 * r: ajouterErreur
 	 * r.enUS: addError
 	 * r: suggereDesignPageObjetSuggere
-	 * r.enUS: suggestPageDesign
+	 * r.enUS: suggestPageDesignObjectSuggest
 	 * r: texteDesignPageObjetTexte
-	 * r.enUS: textPageDesign
+	 * r.enUS: textPageDesignObjectText
 	 * r: 'objetSuggere:'
-	 * r.enUS: ':'
+	 * r.enUS: 'objectSuggest:'
 	 * r: 'objetTexte:'
-	 * r.enUS: ':'
+	 * r.enUS: 'objectText:'
 	 * r: '#suggereListDesignPage'
 	 * r.enUS: '#suggestListPageDesign'
 	 * r: "suggereListDesignPage"

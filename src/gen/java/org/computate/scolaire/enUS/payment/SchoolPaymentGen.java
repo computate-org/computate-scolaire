@@ -16,6 +16,7 @@ import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import java.time.ZoneOffset;
 import io.vertx.core.logging.Logger;
+import java.math.RoundingMode;
 import java.math.MathContext;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import java.util.Set;
@@ -2322,17 +2323,17 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 	public SchoolPayment setYearEnrollmentFee(String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
 		if(NumberUtils.isParsable(o))
-			this.yearEnrollmentFee = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+			this.yearEnrollmentFee = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
 		this.yearEnrollmentFeeWrap.alreadyInitialized = true;
 		return (SchoolPayment)this;
 	}
 	public SchoolPayment setYearEnrollmentFee(Double o) {
-			this.yearEnrollmentFee = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+			this.yearEnrollmentFee = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
 		this.yearEnrollmentFeeWrap.alreadyInitialized = true;
 		return (SchoolPayment)this;
 	}
 	public SchoolPayment setYearEnrollmentFee(Integer o) {
-			this.yearEnrollmentFee = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+			this.yearEnrollmentFee = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
 		this.yearEnrollmentFeeWrap.alreadyInitialized = true;
 		return (SchoolPayment)this;
 	}
@@ -2351,7 +2352,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 	}
 
 	public String strYearEnrollmentFee() {
-		return yearEnrollmentFee == null ? "" : yearEnrollmentFee.setScale(2).toString();
+		return yearEnrollmentFee == null ? "" : yearEnrollmentFee.setScale(2, RoundingMode.CEILING).toString();
 	}
 
 	public String jsonYearEnrollmentFee() {
@@ -2846,17 +2847,17 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 	public SchoolPayment setBlockPricePerMonth(String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
 		if(NumberUtils.isParsable(o))
-			this.blockPricePerMonth = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+			this.blockPricePerMonth = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
 		this.blockPricePerMonthWrap.alreadyInitialized = true;
 		return (SchoolPayment)this;
 	}
 	public SchoolPayment setBlockPricePerMonth(Double o) {
-			this.blockPricePerMonth = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+			this.blockPricePerMonth = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
 		this.blockPricePerMonthWrap.alreadyInitialized = true;
 		return (SchoolPayment)this;
 	}
 	public SchoolPayment setBlockPricePerMonth(Integer o) {
-			this.blockPricePerMonth = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+			this.blockPricePerMonth = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
 		this.blockPricePerMonthWrap.alreadyInitialized = true;
 		return (SchoolPayment)this;
 	}
@@ -2875,7 +2876,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 	}
 
 	public String strBlockPricePerMonth() {
-		return blockPricePerMonth == null ? "" : blockPricePerMonth.setScale(2).toString();
+		return blockPricePerMonth == null ? "" : blockPricePerMonth.setScale(2, RoundingMode.CEILING).toString();
 	}
 
 	public String jsonBlockPricePerMonth() {
@@ -2926,17 +2927,17 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 	public SchoolPayment setBlockTotalPrice(String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
 		if(NumberUtils.isParsable(o))
-			this.blockTotalPrice = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+			this.blockTotalPrice = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
 		this.blockTotalPriceWrap.alreadyInitialized = true;
 		return (SchoolPayment)this;
 	}
 	public SchoolPayment setBlockTotalPrice(Double o) {
-			this.blockTotalPrice = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+			this.blockTotalPrice = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
 		this.blockTotalPriceWrap.alreadyInitialized = true;
 		return (SchoolPayment)this;
 	}
 	public SchoolPayment setBlockTotalPrice(Integer o) {
-			this.blockTotalPrice = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+			this.blockTotalPrice = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
 		this.blockTotalPriceWrap.alreadyInitialized = true;
 		return (SchoolPayment)this;
 	}
@@ -2955,7 +2956,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 	}
 
 	public String strBlockTotalPrice() {
-		return blockTotalPrice == null ? "" : blockTotalPrice.setScale(2).toString();
+		return blockTotalPrice == null ? "" : blockTotalPrice.setScale(2, RoundingMode.CEILING).toString();
 	}
 
 	public String jsonBlockTotalPrice() {
@@ -3423,17 +3424,17 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 	public SchoolPayment setPaymentAmount(String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
 		if(NumberUtils.isParsable(o))
-			this.paymentAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+			this.paymentAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
 		this.paymentAmountWrap.alreadyInitialized = true;
 		return (SchoolPayment)this;
 	}
 	public SchoolPayment setPaymentAmount(Double o) {
-			this.paymentAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+			this.paymentAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
 		this.paymentAmountWrap.alreadyInitialized = true;
 		return (SchoolPayment)this;
 	}
 	public SchoolPayment setPaymentAmount(Integer o) {
-			this.paymentAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+			this.paymentAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
 		this.paymentAmountWrap.alreadyInitialized = true;
 		return (SchoolPayment)this;
 	}
@@ -3452,7 +3453,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 	}
 
 	public String strPaymentAmount() {
-		return paymentAmount == null ? "" : paymentAmount.setScale(2).toString();
+		return paymentAmount == null ? "" : paymentAmount.setScale(2, RoundingMode.CEILING).toString();
 	}
 
 	public String jsonPaymentAmount() {
@@ -4863,17 +4864,17 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 	public SchoolPayment setChargeAmount(String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
 		if(NumberUtils.isParsable(o))
-			this.chargeAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+			this.chargeAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
 		this.chargeAmountWrap.alreadyInitialized = true;
 		return (SchoolPayment)this;
 	}
 	public SchoolPayment setChargeAmount(Double o) {
-			this.chargeAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+			this.chargeAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
 		this.chargeAmountWrap.alreadyInitialized = true;
 		return (SchoolPayment)this;
 	}
 	public SchoolPayment setChargeAmount(Integer o) {
-			this.chargeAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+			this.chargeAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
 		this.chargeAmountWrap.alreadyInitialized = true;
 		return (SchoolPayment)this;
 	}
@@ -4892,7 +4893,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 	}
 
 	public String strChargeAmount() {
-		return chargeAmount == null ? "" : chargeAmount.setScale(2).toString();
+		return chargeAmount == null ? "" : chargeAmount.setScale(2, RoundingMode.CEILING).toString();
 	}
 
 	public String jsonChargeAmount() {
@@ -5645,17 +5646,17 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 	public SchoolPayment setChargeAmountDue(String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
 		if(NumberUtils.isParsable(o))
-			this.chargeAmountDue = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+			this.chargeAmountDue = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
 		this.chargeAmountDueWrap.alreadyInitialized = true;
 		return (SchoolPayment)this;
 	}
 	public SchoolPayment setChargeAmountDue(Double o) {
-			this.chargeAmountDue = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+			this.chargeAmountDue = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
 		this.chargeAmountDueWrap.alreadyInitialized = true;
 		return (SchoolPayment)this;
 	}
 	public SchoolPayment setChargeAmountDue(Integer o) {
-			this.chargeAmountDue = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+			this.chargeAmountDue = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
 		this.chargeAmountDueWrap.alreadyInitialized = true;
 		return (SchoolPayment)this;
 	}
@@ -5674,7 +5675,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 	}
 
 	public String strChargeAmountDue() {
-		return chargeAmountDue == null ? "" : chargeAmountDue.setScale(2).toString();
+		return chargeAmountDue == null ? "" : chargeAmountDue.setScale(2, RoundingMode.CEILING).toString();
 	}
 
 	public String jsonChargeAmountDue() {
@@ -5751,17 +5752,17 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 	public SchoolPayment setChargeAmountFuture(String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
 		if(NumberUtils.isParsable(o))
-			this.chargeAmountFuture = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+			this.chargeAmountFuture = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
 		this.chargeAmountFutureWrap.alreadyInitialized = true;
 		return (SchoolPayment)this;
 	}
 	public SchoolPayment setChargeAmountFuture(Double o) {
-			this.chargeAmountFuture = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+			this.chargeAmountFuture = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
 		this.chargeAmountFutureWrap.alreadyInitialized = true;
 		return (SchoolPayment)this;
 	}
 	public SchoolPayment setChargeAmountFuture(Integer o) {
-			this.chargeAmountFuture = new BigDecimal(o, MathContext.DECIMAL64).setScale(2);
+			this.chargeAmountFuture = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
 		this.chargeAmountFutureWrap.alreadyInitialized = true;
 		return (SchoolPayment)this;
 	}
@@ -5780,7 +5781,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 	}
 
 	public String strChargeAmountFuture() {
-		return chargeAmountFuture == null ? "" : chargeAmountFuture.setScale(2).toString();
+		return chargeAmountFuture == null ? "" : chargeAmountFuture.setScale(2, RoundingMode.CEILING).toString();
 	}
 
 	public String jsonChargeAmountFuture() {

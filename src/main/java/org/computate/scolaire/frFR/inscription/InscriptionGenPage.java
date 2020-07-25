@@ -31,6 +31,7 @@ import java.util.stream.Collectors;
 import java.util.Arrays;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.math.MathContext;
 import org.apache.commons.collections.CollectionUtils;
 import java.util.Objects;
@@ -66,6 +67,7 @@ import java.util.stream.Collectors;
 import java.util.Arrays;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.math.MathContext;
 import org.apache.commons.collections.CollectionUtils;
 import java.util.Objects;
@@ -263,7 +265,9 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 			o.htmCustomerProfileId("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmInscriptionPaimentComplet("Page");
 			o.htmEnfantPropre("Page");
+			o.htmInscriptionPaimentChaqueMois("Page");
 			o.htmInscriptionImmunisations("Page");
 			o.htmInscriptionApprouve("Page");
 		} g("div");
@@ -319,7 +323,9 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 			o.htmCustomerProfileId("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmInscriptionPaimentComplet("POST");
 			o.htmEnfantPropre("POST");
+			o.htmInscriptionPaimentChaqueMois("POST");
 			o.htmInscriptionImmunisations("POST");
 			o.htmInscriptionApprouve("POST");
 		} g("div");
@@ -397,7 +403,9 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 			o.htmCustomerProfileId("PUTCopie");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmInscriptionPaimentComplet("PUTCopie");
 			o.htmEnfantPropre("PUTCopie");
+			o.htmInscriptionPaimentChaqueMois("PUTCopie");
 			o.htmInscriptionImmunisations("PUTCopie");
 			o.htmInscriptionApprouve("PUTCopie");
 		} g("div");
@@ -483,7 +491,9 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 			o.htmCustomerProfileId("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmInscriptionPaimentComplet("PATCH");
 			o.htmEnfantPropre("PATCH");
+			o.htmInscriptionPaimentChaqueMois("PATCH");
 			o.htmInscriptionImmunisations("PATCH");
 			o.htmInscriptionApprouve("PATCH");
 		} g("div");
@@ -570,7 +580,9 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 			o.htmCustomerProfileId("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmInscriptionPaimentComplet("Recherche");
 			o.htmEnfantPropre("Recherche");
+			o.htmInscriptionPaimentChaqueMois("Recherche");
 			o.htmInscriptionImmunisations("Recherche");
 			o.htmInscriptionApprouve("Recherche");
 		} g("div");
@@ -1114,13 +1126,13 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 	 * r: ajouterErreur
 	 * r.enUS: addError
 	 * r: suggereInscriptionScolaireObjetSuggere
-	 * r.enUS: suggestSchoolEnrollment
+	 * r.enUS: suggestSchoolEnrollmentObjectSuggest
 	 * r: texteInscriptionScolaireObjetTexte
-	 * r.enUS: textSchoolEnrollment
+	 * r.enUS: textSchoolEnrollmentObjectText
 	 * r: 'objetSuggere:'
-	 * r.enUS: ':'
+	 * r.enUS: 'objectSuggest:'
 	 * r: 'objetTexte:'
-	 * r.enUS: ':'
+	 * r.enUS: 'objectText:'
 	 * r: '#suggereListInscriptionScolaire'
 	 * r.enUS: '#suggestListSchoolEnrollment'
 	 * r: "suggereListInscriptionScolaire"

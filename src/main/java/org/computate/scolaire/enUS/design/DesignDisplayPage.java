@@ -133,6 +133,7 @@ public class DesignDisplayPage extends DesignDisplayPageGen<DesignDisplayGenPage
 			while(i < size) {
 				enrollment = enrollments.get(i);
 				blockKeyCurrent = enrollment.getBlockKey();
+				groupCurrent = enrollment.getEnrollmentGroupName();
 				if(StringUtils.equalsAny(designId, "group-names-roster", "group-details-roster")) {
 					if(blockKeyCurrent == null || ObjectUtils.compare(blockKeyCurrent, blockKeyBefore) != 0) {
 						blockKeyBefore = enrollment.getBlockKey();
@@ -141,33 +142,35 @@ public class DesignDisplayPage extends DesignDisplayPageGen<DesignDisplayGenPage
 					}
 					while(i < size) {
 						enrollment = enrollments.get(i);
+						blockKeyCurrent = enrollment.getBlockKey();
 						groupCurrent = enrollment.getEnrollmentGroupName();
 						if(StringUtils.isBlank(groupCurrent)) {
 							groupCurrent = "none";
 							enrollment.setEnrollmentGroupName(groupCurrent);
 						}
-						blockKeyCurrent = enrollment.getBlockKey();
 						if(groupBefore == null || ObjectUtils.compare(groupCurrent, groupBefore) != 0) {
 							groupBefore = enrollment.getEnrollmentGroupName();
 							enrollmentEnrollments = enrollment.getEnrollmentEnrollments();
 							enrollmentGroups.add(enrollment);
 							enrollmentNumber = 1;
 						}
-						if((i + 1) > size)
-							break;
 						enrollment.setEnrollmentKey(enrollment.getPk());
 						enrollment.setEnrollmentNumber(enrollmentNumber);
 						enrollmentEnrollments.add(enrollment);
 						enrollmentNumber++;
+						i++;
+						if((i + 1) > size)
+							break;
+						enrollment = enrollments.get(i);
+						blockKeyCurrent = enrollment.getBlockKey();
+						groupCurrent = enrollment.getEnrollmentGroupName();
 						if(ObjectUtils.compare(blockKeyCurrent, blockKeyBefore) != 0)
 							break;
 						if(ObjectUtils.compare(groupCurrent, groupBefore) != 0)
 							break;
-						i++;
 					}
 					enrollment.setEnrollmentKey(enrollment.getPk());
 					enrollment.setEnrollmentNumber(enrollmentNumber);
-					enrollmentEnrollments.add(enrollment);
 					enrollmentNumber++;
 					i++;
 				}
@@ -496,29 +499,30 @@ public class DesignDisplayPage extends DesignDisplayPageGen<DesignDisplayGenPage
 							blockBlocks = block.getBlockBlocks();
 							ageBlocks.add(block);
 						}
+						blockBlocks.add(block);
+						block.setEnrollmentKey(schoolEnrollment.getPk());
+						block.setEnrollmentAttribute(schoolEnrollment.getBlockKeys().contains(block.getPk()));
+						i++;
 						if((i + 1) > size)
 							break;
+						block = blocks.get(i);
 						seasonStartDateCurrent = block.getSeasonStartDate();
 						sessionStartDateCurrent = block.getSessionStartDate();
 						ageStartCurrent = block.getAgeStart();
-						block.setEnrollmentKey(schoolEnrollment.getPk());
-						block.setEnrollmentAttribute(schoolEnrollment.getBlockKeys().contains(block.getPk()));
-						blockBlocks.add(block);
 						if(ObjectUtils.compare(seasonStartDateCurrent, seasonStartDateBefore) != 0)
 							break;
-						i++;
+						if(ObjectUtils.compare(seasonStartDateCurrent, seasonStartDateBefore) != 0)
+							break;
 					}
 					seasonStartDateCurrent = block.getSeasonStartDate();
 					sessionStartDateCurrent = block.getSessionStartDate();
 					ageStartCurrent = block.getAgeStart();
 					if(ObjectUtils.compare(seasonStartDateCurrent, seasonStartDateBefore) != 0)
 						break;
-					i++;
 				}
 				seasonStartDateCurrent = block.getSeasonStartDate();
 				sessionStartDateCurrent = block.getSessionStartDate();
 				ageStartCurrent = block.getAgeStart();
-				i++;
 			}
 		}
 	}

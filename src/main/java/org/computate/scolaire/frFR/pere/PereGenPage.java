@@ -31,6 +31,7 @@ import java.util.stream.Collectors;
 import java.util.Arrays;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.math.MathContext;
 import org.apache.commons.collections.CollectionUtils;
 import java.util.Objects;
@@ -824,13 +825,13 @@ public class PereGenPage extends PereGenPageGen<ClusterPage> {
 	 * r: ajouterErreur
 	 * r.enUS: addError
 	 * r: suggerePereScolaireObjetSuggere
-	 * r.enUS: suggestSchoolDad
+	 * r.enUS: suggestSchoolDadObjectSuggest
 	 * r: textePereScolaireObjetTexte
-	 * r.enUS: textSchoolDad
+	 * r.enUS: textSchoolDadObjectText
 	 * r: 'objetSuggere:'
-	 * r.enUS: ':'
+	 * r.enUS: 'objectSuggest:'
 	 * r: 'objetTexte:'
-	 * r.enUS: ':'
+	 * r.enUS: 'objectText:'
 	 * r: '#suggereListPereScolaire'
 	 * r.enUS: '#suggestListSchoolDad'
 	 * r: "suggereListPereScolaire"

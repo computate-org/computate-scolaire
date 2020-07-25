@@ -17,6 +17,7 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import io.vertx.core.logging.Logger;
+import java.math.RoundingMode;
 import org.computate.scolaire.frFR.cluster.ClusterPage;
 import org.computate.scolaire.frFR.enfant.EnfantScolaire;
 import java.math.MathContext;

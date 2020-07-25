@@ -23,6 +23,7 @@ import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import java.lang.String;
 import io.vertx.core.logging.Logger;
 import org.computate.scolaire.enUS.year.SchoolYear;
+import java.math.RoundingMode;
 import java.math.MathContext;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.enUS.cluster.Cluster;
@@ -243,7 +244,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 				e("input")
 					.a("type", "text")
 					.a("placeholder", "years")
-					.a("class", "valueObjectSuggest suggestYearKeys w3-input w3-border w3-cell w3-cell-middle ")
+					.a("class", "value suggestYearKeys w3-input w3-border w3-cell w3-cell-middle ")
 					.a("name", "setYearKeys")
 					.a("id", classApiMethodMethod, "_yearKeys")
 					.a("autocomplete", "off")

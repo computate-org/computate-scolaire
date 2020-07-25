@@ -24,6 +24,7 @@ import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import java.lang.String;
 import io.vertx.core.logging.Logger;
 import org.computate.scolaire.enUS.payment.SchoolPayment;
+import java.math.RoundingMode;
 import java.math.MathContext;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.enUS.cluster.Cluster;
@@ -262,7 +263,7 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 				e("input")
 					.a("type", "text")
 					.a("placeholder", "enrollments")
-					.a("class", "value suggestEnrollmentKeys w3-input w3-border w3-cell w3-cell-middle ")
+					.a("class", "valueObjectSuggest suggestEnrollmentKeys w3-input w3-border w3-cell w3-cell-middle ")
 					.a("name", "setEnrollmentKeys")
 					.a("id", classApiMethodMethod, "_enrollmentKeys")
 					.a("autocomplete", "off")
@@ -473,7 +474,7 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 				e("input")
 					.a("type", "text")
 					.a("placeholder", "payments")
-					.a("class", "value suggestPaymentKeys w3-input w3-border w3-cell w3-cell-middle ")
+					.a("class", "valueObjectSuggest suggestPaymentKeys w3-input w3-border w3-cell w3-cell-middle ")
 					.a("name", "setPaymentKeys")
 					.a("id", classApiMethodMethod, "_paymentKeys")
 					.a("autocomplete", "off")

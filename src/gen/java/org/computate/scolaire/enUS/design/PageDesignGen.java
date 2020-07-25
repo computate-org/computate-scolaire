@@ -23,6 +23,7 @@ import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import java.lang.String;
 import io.vertx.core.logging.Logger;
+import java.math.RoundingMode;
 import java.math.MathContext;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.enUS.cluster.Cluster;
@@ -332,7 +333,7 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 				e("input")
 					.a("type", "text")
 					.a("placeholder", "parent designs")
-					.a("class", "valueObjectSuggest suggestParentDesignKeys w3-input w3-border w3-cell w3-cell-middle ")
+					.a("class", "value suggestParentDesignKeys w3-input w3-border w3-cell w3-cell-middle ")
 					.a("name", "setParentDesignKeys")
 					.a("id", classApiMethodMethod, "_parentDesignKeys")
 					.a("autocomplete", "off")
@@ -491,7 +492,7 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 				e("input")
 					.a("type", "text")
 					.a("placeholder", "parts")
-					.a("class", "valueObjectSuggest suggestHtmlPartKeys w3-input w3-border w3-cell w3-cell-middle ")
+					.a("class", "value suggestHtmlPartKeys w3-input w3-border w3-cell w3-cell-middle ")
 					.a("name", "setHtmlPartKeys")
 					.a("id", classApiMethodMethod, "_htmlPartKeys")
 					.a("autocomplete", "off")

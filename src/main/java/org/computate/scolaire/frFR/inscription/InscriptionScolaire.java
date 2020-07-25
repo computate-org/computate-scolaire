@@ -107,7 +107,7 @@ import org.computate.scolaire.frFR.saison.SaisonScolaire;
  * Role.enUS: SiteManager
  * RoleSession: true
  * RoleUtilisateur: true
-*/   
+*/ 
 public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {       
 
 	/**
@@ -1779,6 +1779,36 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	protected void _inscriptionCouleurGroupe(Couverture<String> c) {
 		if(inscriptionNomGroupe != null)
 			c.o(StringUtils.lowerCase(StringUtils.substringBefore(inscriptionNomGroupe, " ")));
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: enrollmentPaymentEachMonth
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: paiement chaque mois
+	 * NomAffichage.enUS: payment each month
+	 * Definir: true
+	 * HtmlLigne: 4
+	 * HtmlCellule: 3
+	 */                   
+	protected void _inscriptionPaimentChaqueMois(Couverture<Boolean> c) {
+		c.o(false);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: enrollmentPaymentComplete
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: paiement complet
+	 * NomAffichage.enUS: complete payment
+	 * Definir: true
+	 * HtmlLigne: 4
+	 * HtmlCellule: 2
+	 */                       
+	protected void _inscriptionPaimentComplet(Couverture<Boolean> c) {
+		c.o(false);
 	}
 //
 //	/**

@@ -30,6 +30,7 @@ import java.util.stream.Collectors;
 import java.util.Arrays;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.math.MathContext;
 import org.apache.commons.collections.CollectionUtils;
 import java.util.Objects;
@@ -292,7 +293,7 @@ public class ClusterGenPage extends ClusterGenPageGen<PageLayout> {
 					JsonObject queryParams = Optional.ofNullable(operationRequest).map(OperationRequest::getParams).map(or -> or.getJsonObject("query")).orElse(new JsonObject());
 					Long num = listCluster.getQueryResponse().getResults().getNumFound();
 					String q = "*:*";
-					String query1 = "";
+					String query1 = "objectText";
 					String query2 = "";
 					String query = "*:*";
 					for(String paramName : queryParams.fieldNames()) {
@@ -692,7 +693,7 @@ public class ClusterGenPage extends ClusterGenPageGen<PageLayout> {
 			OperationRequest operationRequest = siteRequest_.getOperationRequest();
 			JsonObject queryParams = Optional.ofNullable(operationRequest).map(OperationRequest::getParams).map(or -> or.getJsonObject("query")).orElse(new JsonObject());
 			String q = "*:*";
-			String query1 = "";
+			String query1 = "objectText";
 			String query2 = "";
 			for(String paramName : queryParams.fieldNames()) {
 				String entityVar = null;
@@ -763,7 +764,7 @@ public class ClusterGenPage extends ClusterGenPageGen<PageLayout> {
 					.a("name", "suggestCluster")
 					.a("id", "suggestCluster", id)
 					.a("autocomplete", "off")
-					.a("oninput", "suggestCluster( [ { 'name': 'q', 'value': ':' + $(this).val() } ], $('#suggestListCluster", id, "'), ", p.getSiteRequest_().getRequestPk(), "); ")
+					.a("oninput", "suggestClusterObjectSuggest( [ { 'name': 'q', 'value': 'objectSuggest:' + $(this).val() } ], $('#suggestListCluster", id, "'), ", p.getSiteRequest_().getRequestPk(), "); ")
 					.a("onkeyup", "if (event.keyCode === 13) { event.preventDefault(); window.location.href = '/cluster?q=", query1, ":' + encodeURIComponent(this.value) + '", fqs, sorts, "&start=", start2, "&rows=", rows1, "'; }"); 
 				if(listCluster != null)
 					p.a("value", query2);

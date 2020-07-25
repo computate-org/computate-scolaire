@@ -18,6 +18,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import io.vertx.core.logging.Logger;
 import org.computate.scolaire.frFR.annee.AnneeScolaire;
+import java.math.RoundingMode;
 import org.computate.scolaire.frFR.cluster.ClusterPage;
 import java.math.MathContext;
 import org.computate.scolaire.frFR.cluster.Cluster;

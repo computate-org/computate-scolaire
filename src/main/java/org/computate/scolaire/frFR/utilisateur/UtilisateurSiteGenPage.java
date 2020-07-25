@@ -31,6 +31,7 @@ import java.util.stream.Collectors;
 import java.util.Arrays;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.math.MathContext;
 import org.apache.commons.collections.CollectionUtils;
 import java.util.Objects;
@@ -705,13 +706,13 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPag
 	 * r: ajouterErreur
 	 * r.enUS: addError
 	 * r: suggereUtilisateurSiteObjetSuggere
-	 * r.enUS: suggestSiteUser
+	 * r.enUS: suggestSiteUserObjectSuggest
 	 * r: texteUtilisateurSiteObjetTexte
-	 * r.enUS: textSiteUser
+	 * r.enUS: textSiteUserObjectText
 	 * r: 'objetSuggere:'
-	 * r.enUS: ':'
+	 * r.enUS: 'objectSuggest:'
 	 * r: 'objetTexte:'
-	 * r.enUS: ':'
+	 * r.enUS: 'objectText:'
 	 * r: '#suggereListUtilisateurSite'
 	 * r.enUS: '#suggestListSiteUser'
 	 * r: "suggereListUtilisateurSite"

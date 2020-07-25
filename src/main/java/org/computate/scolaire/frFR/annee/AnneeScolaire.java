@@ -283,7 +283,7 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	 * r.enUS: SchoolForm
 	 * r: ecole
 	 * r.enUS: school
-	 */
+	 */ 
 	protected void _ecoleForm(Couverture<String> c) {
 		if(ecole_ != null)
 			c.o((String)ecole_.getEcoleForm());

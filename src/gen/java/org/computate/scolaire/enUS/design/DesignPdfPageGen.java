@@ -11,6 +11,7 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import java.util.Locale;
 import java.time.ZoneOffset;
 import io.vertx.core.logging.Logger;
+import java.math.RoundingMode;
 import org.computate.scolaire.enUS.writer.AllWriter;
 import java.math.MathContext;
 import com.fasterxml.jackson.annotation.JsonFormat;

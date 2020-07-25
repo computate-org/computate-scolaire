@@ -43,6 +43,7 @@ import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.SolrDocument;
 import java.util.Collection;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Date;
 import java.time.format.DateTimeFormatter;
 import java.time.ZoneId;
@@ -803,6 +804,32 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 									a.handle(Future.succeededFuture());
 								else
 									a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionNomGroupe a échoué", b.cause())));
+							});
+						}));
+						break;
+					case "inscriptionPaimentChaqueMois":
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "inscriptionPaimentChaqueMois", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionPaimentChaqueMois a échoué", b.cause())));
+							});
+						}));
+						break;
+					case "inscriptionPaimentComplet":
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "inscriptionPaimentComplet", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionPaimentComplet a échoué", b.cause())));
 							});
 						}));
 						break;
@@ -2103,6 +2130,32 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 									a.handle(Future.succeededFuture());
 								else
 									a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionNomGroupe a échoué", b.cause())));
+							});
+						}));
+						break;
+					case "inscriptionPaimentChaqueMois":
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "inscriptionPaimentChaqueMois", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionPaimentChaqueMois a échoué", b.cause())));
+							});
+						}));
+						break;
+					case "inscriptionPaimentComplet":
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "inscriptionPaimentComplet", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionPaimentComplet a échoué", b.cause())));
 							});
 						}));
 						break;
@@ -4290,6 +4343,62 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 										a.handle(Future.succeededFuture());
 									else
 										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionNomGroupe a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setInscriptionPaimentChaqueMois":
+						if(jsonObject.getBoolean(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "inscriptionPaimentChaqueMois")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionPaimentChaqueMois a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setInscriptionPaimentChaqueMois(jsonObject.getBoolean(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "inscriptionPaimentChaqueMois", o2.jsonInscriptionPaimentChaqueMois())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionPaimentChaqueMois a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setInscriptionPaimentComplet":
+						if(jsonObject.getBoolean(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "inscriptionPaimentComplet")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionPaimentComplet a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setInscriptionPaimentComplet(jsonObject.getBoolean(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "inscriptionPaimentComplet", o2.jsonInscriptionPaimentComplet())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionPaimentComplet a échoué", b.cause())));
 								});
 							}));
 						}
@@ -7109,6 +7218,62 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 										a.handle(Future.succeededFuture());
 									else
 										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionNomGroupe a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setInscriptionPaimentChaqueMois":
+						if(jsonObject.getBoolean(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "inscriptionPaimentChaqueMois")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionPaimentChaqueMois a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setInscriptionPaimentChaqueMois(jsonObject.getBoolean(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "inscriptionPaimentChaqueMois", o2.jsonInscriptionPaimentChaqueMois())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionPaimentChaqueMois a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setInscriptionPaimentComplet":
+						if(jsonObject.getBoolean(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "inscriptionPaimentComplet")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionPaimentComplet a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setInscriptionPaimentComplet(jsonObject.getBoolean(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "inscriptionPaimentComplet", o2.jsonInscriptionPaimentComplet())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionPaimentComplet a échoué", b.cause())));
 								});
 							}));
 						}

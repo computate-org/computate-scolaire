@@ -31,6 +31,7 @@ import java.util.stream.Collectors;
 import java.util.Arrays;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.math.MathContext;
 import org.apache.commons.collections.CollectionUtils;
 import java.util.Objects;
@@ -787,13 +788,13 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 	 * r: ajouterErreur
 	 * r.enUS: addError
 	 * r: suggereEnfantScolaireObjetSuggere
-	 * r.enUS: suggestSchoolChild
+	 * r.enUS: suggestSchoolChildObjectSuggest
 	 * r: texteEnfantScolaireObjetTexte
-	 * r.enUS: textSchoolChild
+	 * r.enUS: textSchoolChildObjectText
 	 * r: 'objetSuggere:'
-	 * r.enUS: ':'
+	 * r.enUS: 'objectSuggest:'
 	 * r: 'objetTexte:'
-	 * r.enUS: ':'
+	 * r.enUS: 'objectText:'
 	 * r: '#suggereListEnfantScolaire'
 	 * r.enUS: '#suggestListSchoolChild'
 	 * r: "suggereListEnfantScolaire"
