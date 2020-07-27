@@ -17,22 +17,6 @@ import org.computate.scolaire.enUS.search.SearchList;
  **/
 public class EnrollmentPage extends EnrollmentPageGen<EnrollmentGenPage> {
 
-	protected void _listSchoolPayment(SearchList<SchoolPayment> searchList) {
-		if(listSchoolEnrollment != null && listSchoolEnrollment.size() == 1) {
-			SchoolEnrollment schoolEnrollment = listSchoolEnrollment.get(0);
-			searchList.setStore(true);
-			searchList.setQuery("*:*");
-			searchList.setC(SchoolPayment.class);
-			searchList.addFilterQuery("enrollmentKey_indexed_long:" + schoolEnrollment.getPk());
-			searchList.add("json.facet", "{max_modified:'max(modified_indexed_date)'}");
-			searchList.add("json.facet", "{terms_childCompleteNamePreferred:{terms:{field:childCompleteNamePreferred_indexed_string}}}");
-			searchList.add("json.facet", "{sum_paymentAmount:'sum(paymentAmount_indexed_double)'}");
-			searchList.add("json.facet", "{sum_chargeAmount:'sum(chargeAmount_indexed_double)'}");
-			searchList.add("json.facet", "{sum_chargeAmountDue:'sum(chargeAmountDue_indexed_double)'}");
-			searchList.add("json.facet", "{sum_chargeAmountFuture:'sum(chargeAmountFuture_indexed_double)'}");
-		}
-	}
-
 	@Override public void htmlFormPageSchoolEnrollment(SchoolEnrollment o) {
 		{ e("div").a("class", "w3-cell-row ").f();
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile  ").f();
@@ -49,30 +33,23 @@ public class EnrollmentPage extends EnrollmentPageGen<EnrollmentGenPage> {
 				} g("div");
 			} g("div");
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile  ").f();
-				SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listSchoolPayment.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(new SimpleOrderedMap());
-				BigDecimal sum_paymentAmount = Optional.ofNullable((Double)facets.get("sum_paymentAmount")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING));
-				BigDecimal sum_chargeAmount = Optional.ofNullable((Double)facets.get("sum_chargeAmount")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING));
-				BigDecimal sum_chargeAmountFuture = Optional.ofNullable((Double)facets.get("sum_chargeAmountFuture")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING));
-				BigDecimal sum_chargeAmountDue = Optional.ofNullable((Double)facets.get("sum_chargeAmountDue")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING));
 
 				{ e("div").a("class", "w3-padding ").f();
-					if(sum_chargeAmount.subtract(sum_paymentAmount).subtract(sum_chargeAmountFuture).compareTo(BigDecimal.ZERO) <= 0) {
+					if(o.getPaymentsCurrent()) {
 						e("div").a("class", "w3-panel w3-green ").f();
 						sx("You are current with all payments. Thank you! ");
 						g("div");
 					}
 					else {
-						if(sum_chargeAmount.subtract(sum_chargeAmountDue).subtract(sum_chargeAmountFuture).subtract(sum_paymentAmount).compareTo(BigDecimal.ZERO) > 0) {
-							BigDecimal amount = sum_chargeAmount.subtract(sum_chargeAmountFuture).subtract(sum_paymentAmount);
+						if(o.getPaymentsLate()) {
 							e("div").a("class", "w3-panel w3-red ").f();
 							sx(String.format("You are late on payments. "));
 							g("div");
 						}
-						BigDecimal amount = sum_chargeAmount.subtract(sum_paymentAmount).subtract(sum_chargeAmountFuture);
 						e("div").a("class", "w3-panel w3-blue ").f();
-						sx(String.format("Please pay the upcoming charges of $%s by the payment date to avoid any late fees. ", amount));
+						sx(String.format("Please pay the upcoming charges of $%s by the payment date to avoid any late fees. ", o.getChargesNow()));
 						g("div");
-						writeMakePayment(o.getSchoolNumber(), amount, schoolEnrollment.getPk(), schoolEnrollment.getChildCompleteNamePreferred());
+						writeMakePayment(o.getSchoolNumber(), o.getChargesNow(), schoolEnrollment.getPk(), schoolEnrollment.getChildCompleteNamePreferred());
 					}
 				} g("div");
 			} g("div");

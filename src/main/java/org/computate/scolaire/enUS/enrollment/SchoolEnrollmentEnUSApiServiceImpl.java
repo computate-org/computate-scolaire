@@ -210,57 +210,57 @@ public class SchoolEnrollmentEnUSApiServiceImpl extends SchoolEnrollmentEnUSGenA
 
 								enrollmentChargesFuture(schoolEnrollment, d -> {
 									if(d.succeeded()) {
-										authorizeNetEnrollmentPaymentsFuture(schoolEnrollment, e -> {
-											if(e.succeeded()) {
-												LOGGER.info("Creating payments for customer %s succeeded. ");
-												List<Future> futures = new ArrayList<>();
-						
-												SearchList<SchoolPayment> searchList2 = new SearchList<SchoolPayment>();
-												searchList2.setStore(true);
-												searchList2.setQuery("*:*");
-												searchList2.setC(SchoolPayment.class);
-												searchList2.addFilterQuery("enrollmentKey_indexed_long:" + schoolEnrollment.getPk());
-												searchList2.setRows(100);
-												searchList2.initDeepSearchList(siteRequest);
-						
-												for(SchoolPayment o2 : searchList2.getList()) {
-													SchoolPaymentEnUSGenApiServiceImpl service = new SchoolPaymentEnUSGenApiServiceImpl(siteRequest.getSiteContext_());
-													SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolEnrollment(siteContext, siteRequest.getOperationRequest(), new JsonObject());
-													ApiRequest apiRequest2 = new ApiRequest();
-													apiRequest2.setRows(1);
-													apiRequest2.setNumFound(1l);
-													apiRequest2.setNumPATCH(0L);
-													apiRequest2.initDeepApiRequest(siteRequest2);
-													siteRequest2.setApiRequest_(apiRequest2);
-													siteRequest2.getVertx().eventBus().publish("websocketSchoolPayment", JsonObject.mapFrom(apiRequest2).toString());
-						
-													o2.setSiteRequest_(siteRequest2);
-													futures.add(
-														service.patchSchoolPaymentFuture(o2, false, a -> {
-															if(a.succeeded()) {
-															} else {
-																LOGGER.info(String.format("SchoolPayment %s failed. ", o2.getPk()));
-																eventHandler.handle(Future.failedFuture(a.cause()));
-															}
-														})
-													);
-												}
-
-												CompositeFuture.all(futures).setHandler(f -> {
-													if(f.succeeded()) {
-														SiteRequestEnUS siteRequest2 = enrollmentService.generateSiteRequestEnUSForSchoolEnrollment(siteContext, siteRequest.getOperationRequest(), new JsonObject());
-														ApiRequest apiRequest2 = new ApiRequest();
-														apiRequest2.setRows(1);
-														apiRequest2.setNumFound(1l);
-														apiRequest2.setNumPATCH(0L);
-														apiRequest2.initDeepApiRequest(siteRequest2);
-														siteRequest2.setApiRequest_(apiRequest2);
-														siteRequest2.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest2).toString());
-							
-														schoolEnrollment.setSiteRequest_(siteRequest2);
-		
-														enrollmentService.patchSchoolEnrollmentFuture(schoolEnrollment, false, g -> {
-															if(g.succeeded()) {
+//										authorizeNetEnrollmentPaymentsFuture(schoolEnrollment, e -> {
+//											if(e.succeeded()) {
+//												LOGGER.info("Creating payments for customer %s succeeded. ");
+//												List<Future> futures = new ArrayList<>();
+//						
+//												SearchList<SchoolPayment> searchList2 = new SearchList<SchoolPayment>();
+//												searchList2.setStore(true);
+//												searchList2.setQuery("*:*");
+//												searchList2.setC(SchoolPayment.class);
+//												searchList2.addFilterQuery("enrollmentKey_indexed_long:" + schoolEnrollment.getPk());
+//												searchList2.setRows(100);
+//												searchList2.initDeepSearchList(siteRequest);
+//						
+//												for(SchoolPayment o2 : searchList2.getList()) {
+//													SchoolPaymentEnUSGenApiServiceImpl service = new SchoolPaymentEnUSGenApiServiceImpl(siteRequest.getSiteContext_());
+//													SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolEnrollment(siteContext, siteRequest.getOperationRequest(), new JsonObject());
+//													ApiRequest apiRequest2 = new ApiRequest();
+//													apiRequest2.setRows(1);
+//													apiRequest2.setNumFound(1l);
+//													apiRequest2.setNumPATCH(0L);
+//													apiRequest2.initDeepApiRequest(siteRequest2);
+//													siteRequest2.setApiRequest_(apiRequest2);
+//													siteRequest2.getVertx().eventBus().publish("websocketSchoolPayment", JsonObject.mapFrom(apiRequest2).toString());
+//						
+//													o2.setSiteRequest_(siteRequest2);
+//													futures.add(
+//														service.patchSchoolPaymentFuture(o2, false, a -> {
+//															if(a.succeeded()) {
+//															} else {
+//																LOGGER.info(String.format("SchoolPayment %s failed. ", o2.getPk()));
+//																eventHandler.handle(Future.failedFuture(a.cause()));
+//															}
+//														})
+//													);
+//												}
+//
+//												CompositeFuture.all(futures).setHandler(f -> {
+//													if(f.succeeded()) {
+//														SiteRequestEnUS siteRequest2 = enrollmentService.generateSiteRequestEnUSForSchoolEnrollment(siteContext, siteRequest.getOperationRequest(), new JsonObject());
+//														ApiRequest apiRequest2 = new ApiRequest();
+//														apiRequest2.setRows(1);
+//														apiRequest2.setNumFound(1l);
+//														apiRequest2.setNumPATCH(0L);
+//														apiRequest2.initDeepApiRequest(siteRequest2);
+//														siteRequest2.setApiRequest_(apiRequest2);
+//														siteRequest2.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest2).toString());
+//							
+//														schoolEnrollment.setSiteRequest_(siteRequest2);
+//		
+//														enrollmentService.patchSchoolEnrollmentFuture(schoolEnrollment, false, g -> {
+//															if(g.succeeded()) {
 																LOGGER.info("Refreshing enrollment succeeded. ");
 																refreshsearchpageSchoolEnrollmentResponse(listSchoolEnrollment, h -> {
 																	if(h.succeeded()) {
@@ -271,21 +271,21 @@ public class SchoolEnrollmentEnUSApiServiceImpl extends SchoolEnrollmentEnUSGenA
 																		errorSchoolEnrollment(siteRequest, eventHandler, h);
 																	}
 																});
-															} else {
-																LOGGER.error("Refreshing enrollment succeeded. ", g.cause());
-																errorSchoolEnrollment(siteRequest, eventHandler, g);
-															}
-														});
-													} else {
-														LOGGER.error("Refresh relations failed. ", f.cause());
-														errorSchoolEnrollment(siteRequest, eventHandler, f);
-													}
-												});
-											} else {
-												LOGGER.error(String.format("refreshsearchpageSchoolEnrollment failed. ", e.cause()));
-												errorSchoolEnrollment(siteRequest, eventHandler, e);
-											}
-										});
+//															} else {
+//																LOGGER.error("Refreshing enrollment succeeded. ", g.cause());
+//																errorSchoolEnrollment(siteRequest, eventHandler, g);
+//															}
+//														});
+//													} else {
+//														LOGGER.error("Refresh relations failed. ", f.cause());
+//														errorSchoolEnrollment(siteRequest, eventHandler, f);
+//													}
+//												});
+//											} else {
+//												LOGGER.error(String.format("refreshsearchpageSchoolEnrollment failed. ", e.cause()));
+//												errorSchoolEnrollment(siteRequest, eventHandler, e);
+//											}
+//										});
 									} else {
 										LOGGER.error(String.format("refreshsearchpageSchoolEnrollment failed. ", d.cause()));
 										errorSchoolEnrollment(siteRequest, eventHandler, d);

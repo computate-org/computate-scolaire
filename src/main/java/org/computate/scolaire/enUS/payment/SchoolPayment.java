@@ -306,7 +306,7 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 		if(chargeAmount != null && (chargeEnrollment 
 				|| chargeFirstLast && paymentDate.compareTo(now.plusDays(15)) <= 0
 //				|| paymentDate != null && paymentDate.compareTo(paymentNext.minusMonths(1)) > 0 && paymentDate.compareTo(paymentNext) <= 0))
-				|| paymentDate != null && paymentDate.compareTo(now.plusDays(15)) <= 0))
+				|| paymentDate != null && paymentDate.compareTo(now.plusDays(15)) <= 0) && paymentDate.compareTo(paymentNext.minusMonths(1)) > 0 && paymentDate.compareTo(paymentNext) <= 0)
 			c.o(chargeAmount);
 	}
 
@@ -317,7 +317,7 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 		if(chargeAmount != null && paymentDate != null 
 				&& !chargeEnrollment 
 				&& !(chargeFirstLast && paymentDate.compareTo(now.plusDays(15)) <= 0)
-				&& !(paymentDate != null && paymentDate.compareTo(now.plusDays(15)) <= 0))
+				&& paymentDate.compareTo(now.plusDays(15)) > 0)
 //				&& paymentDate.compareTo(paymentNext) > 0)
 			c.o(chargeAmount);
 	}

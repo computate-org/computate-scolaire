@@ -2004,7 +2004,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * r.enUS: chargesNow
 	 * r: fraisMontantDu
 	 * r.enUS: chargeAmountDue
-	 */
+	 */ 
 	protected void _paiementsEnRetard(Couverture<Boolean> c) {
 		c.o(fraisMaintenant.subtract(fraisMontantDu).compareTo(BigDecimal.ZERO) > 0);
 	}

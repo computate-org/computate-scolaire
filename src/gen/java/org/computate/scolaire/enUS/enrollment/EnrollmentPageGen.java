@@ -3,7 +3,6 @@ package org.computate.scolaire.enUS.enrollment;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import java.util.Arrays;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
-import org.computate.scolaire.enUS.payment.SchoolPayment;
 import java.util.HashMap;
 import org.apache.commons.lang3.StringUtils;
 import java.text.NumberFormat;
@@ -24,7 +23,6 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
-import org.computate.scolaire.enUS.search.SearchList;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.computate.scolaire.enUS.enrollment.EnrollmentGenPage;
 import java.util.Optional;
@@ -39,43 +37,6 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
  **/
 public abstract class EnrollmentPageGen<DEV> extends EnrollmentGenPage {
 	protected static final Logger LOGGER = LoggerFactory.getLogger(EnrollmentPage.class);
-
-	///////////////////////
-	// listSchoolPayment //
-	///////////////////////
-
-	/**	 The entity listSchoolPayment
-	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<SchoolPayment>(). 
-	 */
-	@JsonInclude(Include.NON_NULL)
-	protected SearchList<SchoolPayment> listSchoolPayment = new SearchList<SchoolPayment>();
-	@JsonIgnore
-	public Wrap<SearchList<SchoolPayment>> listSchoolPaymentWrap = new Wrap<SearchList<SchoolPayment>>().p(this).c(SearchList.class).var("listSchoolPayment").o(listSchoolPayment);
-
-	/**	<br/> The entity listSchoolPayment
-	 *  It is constructed before being initialized with the constructor by default SearchList<SchoolPayment>(). 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:listSchoolPayment">Find the entity listSchoolPayment in Solr</a>
-	 * <br/>
-	 * @param listSchoolPayment is the entity already constructed. 
-	 **/
-	protected abstract void _listSchoolPayment(SearchList<SchoolPayment> searchList);
-
-	public SearchList<SchoolPayment> getListSchoolPayment() {
-		return listSchoolPayment;
-	}
-
-	public void setListSchoolPayment(SearchList<SchoolPayment> listSchoolPayment) {
-		this.listSchoolPayment = listSchoolPayment;
-		this.listSchoolPaymentWrap.alreadyInitialized = true;
-	}
-	protected EnrollmentPage listSchoolPaymentInit() {
-		if(!listSchoolPaymentWrap.alreadyInitialized) {
-			_listSchoolPayment(listSchoolPayment);
-		}
-		listSchoolPayment.initDeepForClass(siteRequest_);
-		listSchoolPaymentWrap.alreadyInitialized(true);
-		return (EnrollmentPage)this;
-	}
 
 	//////////////
 	// initDeep //
@@ -98,7 +59,6 @@ public abstract class EnrollmentPageGen<DEV> extends EnrollmentGenPage {
 	}
 
 	public void initEnrollmentPage() {
-		listSchoolPaymentInit();
 	}
 
 	@Override public void initDeepForClass(SiteRequestEnUS siteRequest_) {
@@ -111,8 +71,6 @@ public abstract class EnrollmentPageGen<DEV> extends EnrollmentGenPage {
 
 	public void siteRequestEnrollmentPage(SiteRequestEnUS siteRequest_) {
 			super.siteRequestEnrollmentGenPage(siteRequest_);
-		if(listSchoolPayment != null)
-			listSchoolPayment.setSiteRequest_(siteRequest_);
 	}
 
 	public void siteRequestForClass(SiteRequestEnUS siteRequest_) {
@@ -139,8 +97,6 @@ public abstract class EnrollmentPageGen<DEV> extends EnrollmentGenPage {
 	public Object obtainEnrollmentPage(String var) {
 		EnrollmentPage oEnrollmentPage = (EnrollmentPage)this;
 		switch(var) {
-			case "listSchoolPayment":
-				return oEnrollmentPage.listSchoolPayment;
 			default:
 				return super.obtainEnrollmentGenPage(var);
 		}

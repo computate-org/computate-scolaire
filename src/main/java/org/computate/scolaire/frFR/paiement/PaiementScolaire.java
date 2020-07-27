@@ -1166,7 +1166,7 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 		if(fraisMontant != null && (fraisInscription 
 				|| fraisPremierDernier && paiementDate.compareTo(now.plusDays(15)) <= 0
 //				|| paiementDate != null && paiementDate.compareTo(paiementProchain.minusMonths(1)) > 0 && paiementDate.compareTo(paiementProchain) <= 0))
-				|| paiementDate != null && paiementDate.compareTo(now.plusDays(15)) <= 0))
+				|| paiementDate != null && paiementDate.compareTo(now.plusDays(15)) <= 0) && paiementDate.compareTo(paiementProchain.minusMonths(1)) > 0 && paiementDate.compareTo(paiementProchain) <= 0)
 			c.o(fraisMontant);
 	}
 
@@ -1204,7 +1204,7 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 		if(fraisMontant != null && paiementDate != null 
 				&& !fraisInscription 
 				&& !(fraisPremierDernier && paiementDate.compareTo(now.plusDays(15)) <= 0)
-				&& !(paiementDate != null && paiementDate.compareTo(now.plusDays(15)) <= 0))
+				&& paiementDate.compareTo(now.plusDays(15)) > 0)
 //				&& paiementDate.compareTo(paiementProchain) > 0)
 			c.o(fraisMontant);
 	}
