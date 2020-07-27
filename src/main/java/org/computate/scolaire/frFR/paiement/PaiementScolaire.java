@@ -1164,8 +1164,9 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 		ZoneId zoneId = ZoneId.of(configSite.getSiteZone());
 		LocalDate now = LocalDate.now(zoneId);
 		if(fraisMontant != null && (fraisInscription 
-				|| fraisPremierDernier && paiementDate.compareTo(now.minusDays(15)) >= 0
-				|| paiementDate != null && paiementDate.compareTo(paiementProchain.minusMonths(1)) > 0 && paiementDate.compareTo(paiementProchain) <= 0))
+				|| fraisPremierDernier && paiementDate.compareTo(now.plusDays(15)) <= 0
+//				|| paiementDate != null && paiementDate.compareTo(paiementProchain.minusMonths(1)) > 0 && paiementDate.compareTo(paiementProchain) <= 0))
+				|| paiementDate != null && paiementDate.compareTo(now.plusDays(15)) <= 0))
 			c.o(fraisMontant);
 	}
 
@@ -1202,8 +1203,9 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 		LocalDate now = LocalDate.now(zoneId);
 		if(fraisMontant != null && paiementDate != null 
 				&& !fraisInscription 
-				&& !(fraisPremierDernier && paiementDate.compareTo(now.minusDays(15)) >= 0)
-				&& paiementDate.compareTo(paiementProchain) > 0)
+				&& !(fraisPremierDernier && paiementDate.compareTo(now.plusDays(15)) <= 0)
+				&& !(paiementDate != null && paiementDate.compareTo(now.plusDays(15)) <= 0))
+//				&& paiementDate.compareTo(paiementProchain) > 0)
 			c.o(fraisMontant);
 	}
 

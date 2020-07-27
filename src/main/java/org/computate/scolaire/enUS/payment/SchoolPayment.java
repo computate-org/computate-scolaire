@@ -304,8 +304,9 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 		ZoneId zoneId = ZoneId.of(siteConfig.getSiteZone());
 		LocalDate now = LocalDate.now(zoneId);
 		if(chargeAmount != null && (chargeEnrollment 
-				|| chargeFirstLast && paymentDate.compareTo(now.minusDays(15)) >= 0
-				|| paymentDate != null && paymentDate.compareTo(paymentNext.minusMonths(1)) > 0 && paymentDate.compareTo(paymentNext) <= 0))
+				|| chargeFirstLast && paymentDate.compareTo(now.plusDays(15)) <= 0
+//				|| paymentDate != null && paymentDate.compareTo(paymentNext.minusMonths(1)) > 0 && paymentDate.compareTo(paymentNext) <= 0))
+				|| paymentDate != null && paymentDate.compareTo(now.plusDays(15)) <= 0))
 			c.o(chargeAmount);
 	}
 
@@ -315,8 +316,9 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 		LocalDate now = LocalDate.now(zoneId);
 		if(chargeAmount != null && paymentDate != null 
 				&& !chargeEnrollment 
-				&& !(chargeFirstLast && paymentDate.compareTo(now.minusDays(15)) >= 0)
-				&& paymentDate.compareTo(paymentNext) > 0)
+				&& !(chargeFirstLast && paymentDate.compareTo(now.plusDays(15)) <= 0)
+				&& !(paymentDate != null && paymentDate.compareTo(now.plusDays(15)) <= 0))
+//				&& paymentDate.compareTo(paymentNext) > 0)
 			c.o(chargeAmount);
 	}
 
