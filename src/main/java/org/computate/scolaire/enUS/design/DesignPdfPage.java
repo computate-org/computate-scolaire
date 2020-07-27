@@ -110,6 +110,7 @@ public class DesignPdfPage extends DesignPdfPageGen<DesignPdfGenPage> {
 		l.addSort("ageStart_indexed_int", ORDER.asc);
 		l.addSort("blockPricePerMonth_indexed_double", ORDER.asc);
 		l.addSort("blockStartTime_indexed_string", ORDER.asc);
+		l.addSort("childFirstNamePreferred_indexed_string", ORDER.asc);
 
 		if("name-roster".equals(designId)) {
 			l.addSort("childCompleteNamePreferred_indexed_string", ORDER.asc);
