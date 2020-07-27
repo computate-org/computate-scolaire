@@ -311,7 +311,7 @@ public class SiteUserPage extends SiteUserPageGen<SiteUserGenPage> {
 			e("h3").a("class", "w3-block w3-gray w3-padding w3-center ").f().sx("Enrollments and account info").g("h3");
 			{ e("div").a("class", "w3-margin w3-row ").f();
 				{ e("div").a("class", "").f();
-					sx("If you are not seeing the enrollments you are looking for, please send an email to: ", siteConfig.getEmailFrom());
+					sx("If you are not seeing the enrollments you are looking for, please reach out to the school. The contact information is at the bottom of the page. ");
 				} g("div");
 				for(SchoolEnrollment enrollment : enrollments_) {
 					{ e("div").a("class", "w3-half w3-card ").f();

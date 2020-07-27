@@ -779,6 +779,8 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	 * r.enUS: SchoolEmailFrom
 	 * r: EcoleEmplacement
 	 * r.enUS: SchoolLocation
+	 * r: EcoleMail
+	 * r.enUS: SchoolEmail
 	 * r: Ecole
 	 * r.enUS: School
 	 * r: ecole
@@ -859,7 +861,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 											g("div");
 											e("div").f();
 												e("span").a("class", "font-weight-bold ").f().sx("Email: ").g("span");
-												e("span").f().sx(ecole.getEcoleMailDe()).g("span");
+												e("span").f().sx(ecole.getEcoleMail()).g("span");
 											g("div");
 										g("div");
 										if(i == 2)
