@@ -423,7 +423,6 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 					enrollment.setEnrollmentKey(enrollment.getPk());
 					enrollment.setEnrollmentNumber(enrollmentNumber);
 					enrollmentNumber++;
-					i++;
 				}
 				else {
 					if(blockKeyCurrent == null || ObjectUtils.compare(blockKeyCurrent, blockKeyBefore) != 0) {
