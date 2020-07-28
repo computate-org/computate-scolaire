@@ -987,7 +987,7 @@ public class DesignPdfGenPage extends DesignPdfGenPageGen<ClusterPage> {
 					.a("name", "suggestPageDesign")
 					.a("id", "suggestPageDesign", id)
 					.a("autocomplete", "off")
-					.a("oninput", "suggestPageDesignObjectSuggest( [ { 'name': 'q', 'value': 'objectSuggest:' + $(this).val() } ], $('#suggestListPageDesign", id, "'), ", p.getSiteRequest_().getRequestPk(), "); ")
+					.a("oninput", "suggestPageDesignObjectSuggest( [ { 'name': 'q', 'value': 'objectSuggest:' + $(this).val() }, { 'name': 'rows', 'value': '10' }, { 'name': 'fl', 'value': 'pk,pageUrlId,pageDesignCompleteName' } ], $('#suggestListPageDesign", id, "'), ", p.getSiteRequest_().getRequestPk(), "); ")
 					.a("onkeyup", "if (event.keyCode === 13) { event.preventDefault(); window.location.href = '/pdf?q=", query1, ":' + encodeURIComponent(this.value) + '", fqs, sorts, "&start=", start2, "&rows=", rows1, "'; }"); 
 				if(listPageDesign != null)
 					p.a("value", query2);

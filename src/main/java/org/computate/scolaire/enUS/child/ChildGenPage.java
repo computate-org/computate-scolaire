@@ -837,7 +837,7 @@ public class ChildGenPage extends ChildGenPageGen<ClusterPage> {
 					.a("name", "suggestSchoolChild")
 					.a("id", "suggestSchoolChild", id)
 					.a("autocomplete", "off")
-					.a("oninput", "suggestSchoolChildObjectSuggest( [ { 'name': 'q', 'value': 'objectSuggest:' + $(this).val() } ], $('#suggestListSchoolChild", id, "'), ", p.getSiteRequest_().getRequestPk(), "); ")
+					.a("oninput", "suggestSchoolChildObjectSuggest( [ { 'name': 'q', 'value': 'objectSuggest:' + $(this).val() }, { 'name': 'rows', 'value': '10' }, { 'name': 'fl', 'value': 'pk,pageUrlId,childCompleteName' } ], $('#suggestListSchoolChild", id, "'), ", p.getSiteRequest_().getRequestPk(), "); ")
 					.a("onkeyup", "if (event.keyCode === 13) { event.preventDefault(); window.location.href = '/child?q=", query1, ":' + encodeURIComponent(this.value) + '", fqs, sorts, "&start=", start2, "&rows=", rows1, "'; }"); 
 				if(listSchoolChild != null)
 					p.a("value", query2);

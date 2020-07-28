@@ -874,7 +874,7 @@ public class DadGenPage extends DadGenPageGen<ClusterPage> {
 					.a("name", "suggestSchoolDad")
 					.a("id", "suggestSchoolDad", id)
 					.a("autocomplete", "off")
-					.a("oninput", "suggestSchoolDadObjectSuggest( [ { 'name': 'q', 'value': 'objectSuggest:' + $(this).val() } ], $('#suggestListSchoolDad", id, "'), ", p.getSiteRequest_().getRequestPk(), "); ")
+					.a("oninput", "suggestSchoolDadObjectSuggest( [ { 'name': 'q', 'value': 'objectSuggest:' + $(this).val() }, { 'name': 'rows', 'value': '10' }, { 'name': 'fl', 'value': 'pk,pageUrlId,dadCompleteName' } ], $('#suggestListSchoolDad", id, "'), ", p.getSiteRequest_().getRequestPk(), "); ")
 					.a("onkeyup", "if (event.keyCode === 13) { event.preventDefault(); window.location.href = '/dad?q=", query1, ":' + encodeURIComponent(this.value) + '", fqs, sorts, "&start=", start2, "&rows=", rows1, "'; }"); 
 				if(listSchoolDad != null)
 					p.a("value", query2);

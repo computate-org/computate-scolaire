@@ -847,7 +847,7 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 					.a("name", "suggestSchoolYear")
 					.a("id", "suggestSchoolYear", id)
 					.a("autocomplete", "off")
-					.a("oninput", "suggestSchoolYearObjectSuggest( [ { 'name': 'q', 'value': 'objectSuggest:' + $(this).val() } ], $('#suggestListSchoolYear", id, "'), ", p.getSiteRequest_().getRequestPk(), "); ")
+					.a("oninput", "suggestSchoolYearObjectSuggest( [ { 'name': 'q', 'value': 'objectSuggest:' + $(this).val() }, { 'name': 'rows', 'value': '10' }, { 'name': 'fl', 'value': 'pk,pageUrlId,yearCompleteName' } ], $('#suggestListSchoolYear", id, "'), ", p.getSiteRequest_().getRequestPk(), "); ")
 					.a("onkeyup", "if (event.keyCode === 13) { event.preventDefault(); window.location.href = '/year?q=", query1, ":' + encodeURIComponent(this.value) + '", fqs, sorts, "&start=", start2, "&rows=", rows1, "'; }"); 
 				if(listSchoolYear != null)
 					p.a("value", query2);

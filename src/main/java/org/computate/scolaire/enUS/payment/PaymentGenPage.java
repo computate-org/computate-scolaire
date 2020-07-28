@@ -1025,7 +1025,7 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 					.a("name", "suggestSchoolPayment")
 					.a("id", "suggestSchoolPayment", id)
 					.a("autocomplete", "off")
-					.a("oninput", "suggestSchoolPaymentObjectSuggest( [ { 'name': 'q', 'value': 'objectSuggest:' + $(this).val() } ], $('#suggestListSchoolPayment", id, "'), ", p.getSiteRequest_().getRequestPk(), "); ")
+					.a("oninput", "suggestSchoolPaymentObjectSuggest( [ { 'name': 'q', 'value': 'objectSuggest:' + $(this).val() }, { 'name': 'rows', 'value': '10' }, { 'name': 'fl', 'value': 'pk,pageUrlId,paymentCompleteName' } ], $('#suggestListSchoolPayment", id, "'), ", p.getSiteRequest_().getRequestPk(), "); ")
 					.a("onkeyup", "if (event.keyCode === 13) { event.preventDefault(); window.location.href = '/payment?q=", query1, ":' + encodeURIComponent(this.value) + '", fqs, sorts, "&start=", start2, "&rows=", rows1, "'; }"); 
 				if(listSchoolPayment != null)
 					p.a("value", query2);

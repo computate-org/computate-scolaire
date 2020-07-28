@@ -915,7 +915,7 @@ public class PereGenPage extends PereGenPageGen<ClusterPage> {
 					.a("name", "suggerePereScolaire")
 					.a("id", "suggerePereScolaire", id)
 					.a("autocomplete", "off")
-					.a("oninput", "suggerePereScolaireObjetSuggere( [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() } ], $('#suggereListPereScolaire", id, "'), ", p.getRequeteSite_().getRequetePk(), "); ")
+					.a("oninput", "suggerePereScolaireObjetSuggere( [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() }, { 'name': 'rows', 'value': '10' }, { 'name': 'fl', 'value': 'pk,pageUrlId,pereNomComplet' } ], $('#suggereListPereScolaire", id, "'), ", p.getRequeteSite_().getRequetePk(), "); ")
 					.a("onkeyup", "if (event.keyCode === 13) { event.preventDefault(); window.location.href = '/pere?q=", query1, ":' + encodeURIComponent(this.value) + '", fqs, sorts, "&start=", start2, "&rows=", rows1, "'; }"); 
 				if(listePereScolaire != null)
 					p.a("value", query2);

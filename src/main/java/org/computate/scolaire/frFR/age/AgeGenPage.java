@@ -877,7 +877,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 					.a("name", "suggereAgeScolaire")
 					.a("id", "suggereAgeScolaire", id)
 					.a("autocomplete", "off")
-					.a("oninput", "suggereAgeScolaireObjetSuggere( [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() } ], $('#suggereListAgeScolaire", id, "'), ", p.getRequeteSite_().getRequetePk(), "); ")
+					.a("oninput", "suggereAgeScolaireObjetSuggere( [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() }, { 'name': 'rows', 'value': '10' }, { 'name': 'fl', 'value': 'pk,pageUrlId,ageNomComplet' } ], $('#suggereListAgeScolaire", id, "'), ", p.getRequeteSite_().getRequetePk(), "); ")
 					.a("onkeyup", "if (event.keyCode === 13) { event.preventDefault(); window.location.href = '/age?q=", query1, ":' + encodeURIComponent(this.value) + '", fqs, sorts, "&start=", start2, "&rows=", rows1, "'; }"); 
 				if(listeAgeScolaire != null)
 					p.a("value", query2);

@@ -1176,7 +1176,7 @@ public class GenPageInscription extends GenPageInscriptionGen<ClusterPage> {
 					.a("name", "suggereInscriptionScolaire")
 					.a("id", "suggereInscriptionScolaire", id)
 					.a("autocomplete", "off")
-					.a("oninput", "suggereInscriptionScolaireObjetSuggere( [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() } ], $('#suggereListInscriptionScolaire", id, "'), ", p.getRequeteSite_().getRequetePk(), "); ")
+					.a("oninput", "suggereInscriptionScolaireObjetSuggere( [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() }, { 'name': 'rows', 'value': '10' }, { 'name': 'fl', 'value': 'pk,pageUrlId,inscriptionNomComplet' } ], $('#suggereListInscriptionScolaire", id, "'), ", p.getRequeteSite_().getRequetePk(), "); ")
 					.a("onkeyup", "if (event.keyCode === 13) { event.preventDefault(); window.location.href = '/recharger-inscription?q=", query1, ":' + encodeURIComponent(this.value) + '", fqs, sorts, "&start=", start2, "&rows=", rows1, "'; }"); 
 				if(listeInscriptionScolaire != null)
 					p.a("value", query2);

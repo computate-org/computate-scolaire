@@ -874,7 +874,7 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 					.a("name", "suggestSchoolMom")
 					.a("id", "suggestSchoolMom", id)
 					.a("autocomplete", "off")
-					.a("oninput", "suggestSchoolMomObjectSuggest( [ { 'name': 'q', 'value': 'objectSuggest:' + $(this).val() } ], $('#suggestListSchoolMom", id, "'), ", p.getSiteRequest_().getRequestPk(), "); ")
+					.a("oninput", "suggestSchoolMomObjectSuggest( [ { 'name': 'q', 'value': 'objectSuggest:' + $(this).val() }, { 'name': 'rows', 'value': '10' }, { 'name': 'fl', 'value': 'pk,pageUrlId,momCompleteName' } ], $('#suggestListSchoolMom", id, "'), ", p.getSiteRequest_().getRequestPk(), "); ")
 					.a("onkeyup", "if (event.keyCode === 13) { event.preventDefault(); window.location.href = '/mom?q=", query1, ":' + encodeURIComponent(this.value) + '", fqs, sorts, "&start=", start2, "&rows=", rows1, "'; }"); 
 				if(listSchoolMom != null)
 					p.a("value", query2);

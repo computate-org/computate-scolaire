@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.inscription;          
+package org.computate.scolaire.frFR.inscription;         
 
 import java.math.BigDecimal;
 import java.math.MathContext;

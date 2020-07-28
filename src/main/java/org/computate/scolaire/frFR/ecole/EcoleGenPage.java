@@ -931,7 +931,7 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 					.a("name", "suggereEcole")
 					.a("id", "suggereEcole", id)
 					.a("autocomplete", "off")
-					.a("oninput", "suggereEcoleObjetSuggere( [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() } ], $('#suggereListEcole", id, "'), ", p.getRequeteSite_().getRequetePk(), "); ")
+					.a("oninput", "suggereEcoleObjetSuggere( [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() }, { 'name': 'rows', 'value': '10' }, { 'name': 'fl', 'value': 'pk,pageUrlId,ecoleNomComplet' } ], $('#suggereListEcole", id, "'), ", p.getRequeteSite_().getRequetePk(), "); ")
 					.a("onkeyup", "if (event.keyCode === 13) { event.preventDefault(); window.location.href = '/ecole?q=", query1, ":' + encodeURIComponent(this.value) + '", fqs, sorts, "&start=", start2, "&rows=", rows1, "'; }"); 
 				if(listeEcole != null)
 					p.a("value", query2);

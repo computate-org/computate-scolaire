@@ -988,7 +988,7 @@ public class DesignMailGenPage extends DesignMailGenPageGen<ClusterPage> {
 					.a("name", "suggereDesignPage")
 					.a("id", "suggereDesignPage", id)
 					.a("autocomplete", "off")
-					.a("oninput", "suggereDesignPageObjetSuggere( [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() } ], $('#suggereListDesignPage", id, "'), ", p.getRequeteSite_().getRequetePk(), "); ")
+					.a("oninput", "suggereDesignPageObjetSuggere( [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() }, { 'name': 'rows', 'value': '10' }, { 'name': 'fl', 'value': 'pk,pageUrlId,designPageNomComplet' } ], $('#suggereListDesignPage", id, "'), ", p.getRequeteSite_().getRequetePk(), "); ")
 					.a("onkeyup", "if (event.keyCode === 13) { event.preventDefault(); window.location.href = '/mail?q=", query1, ":' + encodeURIComponent(this.value) + '", fqs, sorts, "&start=", start2, "&rows=", rows1, "'; }"); 
 				if(listeDesignPage != null)
 					p.a("value", query2);

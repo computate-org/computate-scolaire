@@ -244,7 +244,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 				e("input")
 					.a("type", "text")
 					.a("placeholder", "years")
-					.a("class", "value suggestYearKeys w3-input w3-border w3-cell w3-cell-middle ")
+					.a("class", "valueObjectSuggest suggestYearKeys w3-input w3-border w3-cell w3-cell-middle ")
 					.a("name", "setYearKeys")
 					.a("id", classApiMethodMethod, "_yearKeys")
 					.a("autocomplete", "off")

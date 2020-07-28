@@ -915,7 +915,7 @@ public class MereGenPage extends MereGenPageGen<ClusterPage> {
 					.a("name", "suggereMereScolaire")
 					.a("id", "suggereMereScolaire", id)
 					.a("autocomplete", "off")
-					.a("oninput", "suggereMereScolaireObjetSuggere( [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() } ], $('#suggereListMereScolaire", id, "'), ", p.getRequeteSite_().getRequetePk(), "); ")
+					.a("oninput", "suggereMereScolaireObjetSuggere( [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() }, { 'name': 'rows', 'value': '10' }, { 'name': 'fl', 'value': 'pk,pageUrlId,mereNomComplet' } ], $('#suggereListMereScolaire", id, "'), ", p.getRequeteSite_().getRequetePk(), "); ")
 					.a("onkeyup", "if (event.keyCode === 13) { event.preventDefault(); window.location.href = '/mere?q=", query1, ":' + encodeURIComponent(this.value) + '", fqs, sorts, "&start=", start2, "&rows=", rows1, "'; }"); 
 				if(listeMereScolaire != null)
 					p.a("value", query2);

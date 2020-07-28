@@ -908,7 +908,7 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 					.a("name", "suggereBlocScolaire")
 					.a("id", "suggereBlocScolaire", id)
 					.a("autocomplete", "off")
-					.a("oninput", "suggereBlocScolaireObjetSuggere( [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() } ], $('#suggereListBlocScolaire", id, "'), ", p.getRequeteSite_().getRequetePk(), "); ")
+					.a("oninput", "suggereBlocScolaireObjetSuggere( [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() }, { 'name': 'rows', 'value': '10' }, { 'name': 'fl', 'value': 'pk,pageUrlId,blocNomComplet' } ], $('#suggereListBlocScolaire", id, "'), ", p.getRequeteSite_().getRequetePk(), "); ")
 					.a("onkeyup", "if (event.keyCode === 13) { event.preventDefault(); window.location.href = '/bloc?q=", query1, ":' + encodeURIComponent(this.value) + '", fqs, sorts, "&start=", start2, "&rows=", rows1, "'; }"); 
 				if(listeBlocScolaire != null)
 					p.a("value", query2);
