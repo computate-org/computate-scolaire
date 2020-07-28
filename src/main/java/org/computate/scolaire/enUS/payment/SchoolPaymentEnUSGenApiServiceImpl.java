@@ -3546,10 +3546,6 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 	public void aSearchSchoolPaymentQ(String uri, String apiMethod, SearchList<SchoolPayment> searchList, String entityVar, String valueIndexed, String varIndexed) {
 		searchList.setQuery(varIndexed + ":" + ("*".equals(valueIndexed) ? valueIndexed : ClientUtils.escapeQueryChars(valueIndexed)));
 		if(!"*".equals(entityVar)) {
-			searchList.setHighlight(true);
-			searchList.setHighlightSnippets(3);
-			searchList.addHighlightField(varIndexed);
-			searchList.setParam("hl.encoder", "html");
 		}
 	}
 
@@ -3692,7 +3688,7 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 					eventHandler.handle(Future.failedFuture(e));
 				}
 			});
-			if(searchList.getSorts().size() == 0) {
+			if("*".equals(searchList.getQuery()) && searchList.getSorts().size() == 0) {
 				searchList.addSort("paymentDate_indexed_date", ORDER.desc);
 				searchList.addSort("paymentBy_indexed_string", ORDER.desc);
 			}

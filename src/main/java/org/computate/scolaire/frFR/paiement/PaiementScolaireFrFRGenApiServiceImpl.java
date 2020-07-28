@@ -3546,10 +3546,6 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 	public void recherchePaiementScolaireQ(String uri, String apiMethode, ListeRecherche<PaiementScolaire> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
 		listeRecherche.setQuery(varIndexe + ":" + ("*".equals(valeurIndexe) ? valeurIndexe : ClientUtils.escapeQueryChars(valeurIndexe)));
 		if(!"*".equals(entiteVar)) {
-			listeRecherche.setHighlight(true);
-			listeRecherche.setHighlightSnippets(3);
-			listeRecherche.addHighlightField(varIndexe);
-			listeRecherche.setParam("hl.encoder", "html");
 		}
 	}
 
@@ -3692,7 +3688,7 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 					gestionnaireEvenements.handle(Future.failedFuture(e));
 				}
 			});
-			if(listeRecherche.getSorts().size() == 0) {
+			if("*".equals(listeRecherche.getQuery()) && listeRecherche.getSorts().size() == 0) {
 				listeRecherche.addSort("paiementDate_indexed_date", ORDER.desc);
 				listeRecherche.addSort("paiementPar_indexed_string", ORDER.desc);
 			}

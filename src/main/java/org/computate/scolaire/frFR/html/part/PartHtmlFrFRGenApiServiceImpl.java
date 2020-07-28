@@ -3781,10 +3781,6 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 	public void recherchePartHtmlQ(String uri, String apiMethode, ListeRecherche<PartHtml> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
 		listeRecherche.setQuery(varIndexe + ":" + ("*".equals(valeurIndexe) ? valeurIndexe : ClientUtils.escapeQueryChars(valeurIndexe)));
 		if(!"*".equals(entiteVar)) {
-			listeRecherche.setHighlight(true);
-			listeRecherche.setHighlightSnippets(3);
-			listeRecherche.addHighlightField(varIndexe);
-			listeRecherche.setParam("hl.encoder", "html");
 		}
 	}
 
@@ -3922,7 +3918,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 					gestionnaireEvenements.handle(Future.failedFuture(e));
 				}
 			});
-			if(listeRecherche.getSorts().size() == 0) {
+			if("*".equals(listeRecherche.getQuery()) && listeRecherche.getSorts().size() == 0) {
 				listeRecherche.addSort("tri1_indexed_double", ORDER.asc);
 				listeRecherche.addSort("tri2_indexed_double", ORDER.asc);
 				listeRecherche.addSort("tri3_indexed_double", ORDER.asc);

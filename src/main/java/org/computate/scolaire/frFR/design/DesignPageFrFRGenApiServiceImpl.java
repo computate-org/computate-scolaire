@@ -3295,10 +3295,6 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 	public void rechercheDesignPageQ(String uri, String apiMethode, ListeRecherche<DesignPage> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
 		listeRecherche.setQuery(varIndexe + ":" + ("*".equals(valeurIndexe) ? valeurIndexe : ClientUtils.escapeQueryChars(valeurIndexe)));
 		if(!"*".equals(entiteVar)) {
-			listeRecherche.setHighlight(true);
-			listeRecherche.setHighlightSnippets(3);
-			listeRecherche.addHighlightField(varIndexe);
-			listeRecherche.setParam("hl.encoder", "html");
 		}
 	}
 
@@ -3436,7 +3432,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 					gestionnaireEvenements.handle(Future.failedFuture(e));
 				}
 			});
-			if(listeRecherche.getSorts().size() == 0) {
+			if("*".equals(listeRecherche.getQuery()) && listeRecherche.getSorts().size() == 0) {
 				listeRecherche.addSort("designPageNomComplet_indexed_string", ORDER.asc);
 			}
 			listeRecherche.initLoinPourClasse(requeteSite);
