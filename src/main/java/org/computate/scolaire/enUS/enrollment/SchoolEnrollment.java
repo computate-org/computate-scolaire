@@ -2,6 +2,7 @@ package org.computate.scolaire.enUS.enrollment;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
@@ -569,19 +570,19 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 	}
 
 	protected void _paymentAmount(Wrap<BigDecimal> c) {
-		c.o(Optional.ofNullable((Double)paymentFacets.get("sum_paymentAmount")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2)));
+		c.o(Optional.ofNullable((Double)paymentFacets.get("sum_paymentAmount")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING)));
 	}
 
 	protected void _chargeAmount(Wrap<BigDecimal> c) {
-		c.o(Optional.ofNullable((Double)paymentFacets.get("sum_chargeAmount")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2)));
+		c.o(Optional.ofNullable((Double)paymentFacets.get("sum_chargeAmount")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING)));
 	}
 
 	protected void _chargeAmountFuture(Wrap<BigDecimal> c) {
-		c.o(Optional.ofNullable((Double)paymentFacets.get("sum_chargeAmountFuture")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2)));
+		c.o(Optional.ofNullable((Double)paymentFacets.get("sum_chargeAmountFuture")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING)));
 	}
 
 	protected void _chargeAmountDue(Wrap<BigDecimal> c) {
-		c.o(Optional.ofNullable((Double)paymentFacets.get("sum_chargeAmountDue")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2)));
+		c.o(Optional.ofNullable((Double)paymentFacets.get("sum_chargeAmountDue")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING)));
 	}
 
 	protected void _chargesNow(Wrap<BigDecimal> c) {

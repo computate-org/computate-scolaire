@@ -1196,7 +1196,7 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * r.enUS: chargeFirstLast
 	 * r: fraisInscription
 	 * r.enUS: chargeEnrollment
-	 */                   
+	 */                  
 	protected void _fraisMontantFuture(Couverture<BigDecimal> c) {
 		ConfigSite configSite = requeteSite_.getConfigSite_();
 		ZoneId zoneId = ZoneId.of(configSite.getSiteZone());
