@@ -868,7 +868,7 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 					.a("name", "suggereSessionScolaire")
 					.a("id", "suggereSessionScolaire", id)
 					.a("autocomplete", "off")
-					.a("oninput", "suggereSessionScolaireObjetSuggere( [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() }, { 'name': 'rows', 'value': '10' }, { 'name': 'fl', 'value': 'pk,pageUrlId,sessionNomComplet' } ], $('#suggereListSessionScolaire", id, "'), ", p.getRequeteSite_().getRequetePk(), "); ")
+					.a("oninput", "suggereSessionScolaireObjetSuggere( [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() }, { 'name': 'rows', 'value': '10' }, { 'name': 'fl', 'value': 'pk,pageUrlPk,sessionNomComplet' } ], $('#suggereListSessionScolaire", id, "'), ", p.getRequeteSite_().getRequetePk(), "); ")
 					.a("onkeyup", "if (event.keyCode === 13) { event.preventDefault(); window.location.href = '/session?q=", query1, ":' + encodeURIComponent(this.value) + '", fqs, sorts, "&start=", start2, "&rows=", rows1, "'; }"); 
 				if(listeSessionScolaire != null)
 					p.a("value", query2);

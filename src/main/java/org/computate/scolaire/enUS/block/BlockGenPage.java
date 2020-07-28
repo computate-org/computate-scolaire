@@ -867,7 +867,7 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 					.a("name", "suggestSchoolBlock")
 					.a("id", "suggestSchoolBlock", id)
 					.a("autocomplete", "off")
-					.a("oninput", "suggestSchoolBlockObjectSuggest( [ { 'name': 'q', 'value': 'objectSuggest:' + $(this).val() }, { 'name': 'rows', 'value': '10' }, { 'name': 'fl', 'value': 'pk,pageUrlId,blockCompleteName' } ], $('#suggestListSchoolBlock", id, "'), ", p.getSiteRequest_().getRequestPk(), "); ")
+					.a("oninput", "suggestSchoolBlockObjectSuggest( [ { 'name': 'q', 'value': 'objectSuggest:' + $(this).val() }, { 'name': 'rows', 'value': '10' }, { 'name': 'fl', 'value': 'pk,pageUrlPk,blockCompleteName' } ], $('#suggestListSchoolBlock", id, "'), ", p.getSiteRequest_().getRequestPk(), "); ")
 					.a("onkeyup", "if (event.keyCode === 13) { event.preventDefault(); window.location.href = '/block?q=", query1, ":' + encodeURIComponent(this.value) + '", fqs, sorts, "&start=", start2, "&rows=", rows1, "'; }"); 
 				if(listSchoolBlock != null)
 					p.a("value", query2);

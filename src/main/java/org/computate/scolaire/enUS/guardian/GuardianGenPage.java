@@ -856,7 +856,7 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 					.a("name", "suggestSchoolGuardian")
 					.a("id", "suggestSchoolGuardian", id)
 					.a("autocomplete", "off")
-					.a("oninput", "suggestSchoolGuardianObjectSuggest( [ { 'name': 'q', 'value': 'objectSuggest:' + $(this).val() }, { 'name': 'rows', 'value': '10' }, { 'name': 'fl', 'value': 'pk,pageUrlId,guardianCompleteName' } ], $('#suggestListSchoolGuardian", id, "'), ", p.getSiteRequest_().getRequestPk(), "); ")
+					.a("oninput", "suggestSchoolGuardianObjectSuggest( [ { 'name': 'q', 'value': 'objectSuggest:' + $(this).val() }, { 'name': 'rows', 'value': '10' }, { 'name': 'fl', 'value': 'pk,pageUrlPk,guardianCompleteName' } ], $('#suggestListSchoolGuardian", id, "'), ", p.getSiteRequest_().getRequestPk(), "); ")
 					.a("onkeyup", "if (event.keyCode === 13) { event.preventDefault(); window.location.href = '/guardian?q=", query1, ":' + encodeURIComponent(this.value) + '", fqs, sorts, "&start=", start2, "&rows=", rows1, "'; }"); 
 				if(listSchoolGuardian != null)
 					p.a("value", query2);

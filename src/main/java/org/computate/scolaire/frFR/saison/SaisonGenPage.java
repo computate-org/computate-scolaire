@@ -871,7 +871,7 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 					.a("name", "suggereSaisonScolaire")
 					.a("id", "suggereSaisonScolaire", id)
 					.a("autocomplete", "off")
-					.a("oninput", "suggereSaisonScolaireObjetSuggere( [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() }, { 'name': 'rows', 'value': '10' }, { 'name': 'fl', 'value': 'pk,pageUrlId,saisonNomComplet' } ], $('#suggereListSaisonScolaire", id, "'), ", p.getRequeteSite_().getRequetePk(), "); ")
+					.a("oninput", "suggereSaisonScolaireObjetSuggere( [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() }, { 'name': 'rows', 'value': '10' }, { 'name': 'fl', 'value': 'pk,pageUrlPk,saisonNomComplet' } ], $('#suggereListSaisonScolaire", id, "'), ", p.getRequeteSite_().getRequetePk(), "); ")
 					.a("onkeyup", "if (event.keyCode === 13) { event.preventDefault(); window.location.href = '/saison?q=", query1, ":' + encodeURIComponent(this.value) + '", fqs, sorts, "&start=", start2, "&rows=", rows1, "'; }"); 
 				if(listeSaisonScolaire != null)
 					p.a("value", query2);
