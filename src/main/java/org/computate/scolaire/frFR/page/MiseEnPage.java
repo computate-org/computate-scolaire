@@ -847,7 +847,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 									for(int i = 0; i < ecoles.size(); i++) {
 										Ecole ecole = ecoles.get(i);
 
-										e("div").a("class", "w3-cell ").f();
+										e("div").a("class", "w3-cell w3-mobile ").f();
 											e("div").f();
 												e("span").a("class", "font-weight-bold ").f().sx(ecole.getEcoleEmplacement()).g("span");
 											g("div");

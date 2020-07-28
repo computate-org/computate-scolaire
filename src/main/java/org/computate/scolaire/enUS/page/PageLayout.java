@@ -412,7 +412,7 @@ public class PageLayout extends PageLayoutGen<Object> {
 									for(int i = 0; i < schools.size(); i++) {
 										School school = schools.get(i);
 
-										e("div").a("class", "w3-cell ").f();
+										e("div").a("class", "w3-cell w3-mobile ").f();
 											e("div").f();
 												e("span").a("class", "font-weight-bold ").f().sx(school.getSchoolLocation()).g("span");
 											g("div");
