@@ -336,7 +336,7 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 		else if("email-roster".equals(pageDesignId)) {
 			l.addSort("enrollmentGroupName_indexed_string", ORDER.asc);
 		}
-		else if(StringUtils.equalsAny(pageDesignId, "group-names-roster", "group-details-roster")) {
+		else if(StringUtils.equalsAny(pageDesignId, "payment-roster", "group-names-roster", "group-details-roster")) {
 			l.addSort("enrollmentGroupName_indexed_string", ORDER.asc);
 			l.addSort("childFirstNamePreferred_indexed_string", ORDER.asc);
 		}
@@ -386,7 +386,7 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 				enrollment = enrollments.get(i);
 				blockKeyCurrent = enrollment.getBlockKey();
 				groupCurrent = enrollment.getEnrollmentGroupName();
-				if(StringUtils.equalsAny(pageDesignId, "group-names-roster", "group-details-roster")) {
+				if(StringUtils.equalsAny(pageDesignId, "payment-roster", "group-names-roster", "group-details-roster")) {
 					if(blockKeyCurrent == null || ObjectUtils.compare(blockKeyCurrent, blockKeyBefore) != 0) {
 						blockKeyBefore = enrollment.getBlockKey();
 						enrollmentGroups = enrollment.getEnrollmentGroups();

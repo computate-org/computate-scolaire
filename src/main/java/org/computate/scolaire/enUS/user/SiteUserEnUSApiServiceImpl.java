@@ -189,8 +189,8 @@ public class SiteUserEnUSApiServiceImpl extends SiteUserEnUSGenApiServiceImpl {
 
 												enrollmentService.enrollmentChargesFuture(schoolEnrollment, d -> {
 													if(d.succeeded()) {
-														enrollmentService.authorizeNetEnrollmentPaymentsFuture(schoolEnrollment, e -> {
-															if(e.succeeded()) {
+//														enrollmentService.authorizeNetEnrollmentPaymentsFuture(schoolEnrollment, e -> {
+//															if(e.succeeded()) {
 																LOGGER.info("Creating payments for customer %s succeeded. ");
 																List<Future> futures2 = new ArrayList<>();
 										
@@ -241,10 +241,10 @@ public class SiteUserEnUSApiServiceImpl extends SiteUserEnUSGenApiServiceImpl {
 																		enrollmentService.patchSchoolEnrollmentFuture(schoolEnrollment, false, g -> {
 																			if(g.succeeded()) {
 																				LOGGER.info("Refreshing enrollment succeeded. ");
-																				if(e.succeeded()) {
+																				if(g.succeeded()) {
 																				} else {
-																					LOGGER.error(String.format("refreshsearchpageSchoolEnrollment failed. ", e.cause()));
-																					errorSiteUser(siteRequest, eventHandler, e);
+																					LOGGER.error(String.format("refreshsearchpageSchoolEnrollment failed. ", g.cause()));
+																					errorSiteUser(siteRequest, eventHandler, g);
 																				}
 																			} else {
 																				LOGGER.error("Refreshing enrollment succeeded. ", g.cause());
@@ -256,11 +256,11 @@ public class SiteUserEnUSApiServiceImpl extends SiteUserEnUSGenApiServiceImpl {
 																		errorSiteUser(siteRequest, eventHandler, f);
 																	}
 																});
-															} else {
-																LOGGER.error(String.format("refreshsearchpageSchoolEnrollment failed. ", e.cause()));
-																errorSiteUser(siteRequest, eventHandler, e);
-															}
-														});
+//															} else {
+//																LOGGER.error(String.format("refreshsearchpageSchoolEnrollment failed. ", e.cause()));
+//																errorSiteUser(siteRequest, eventHandler, e);
+//															}
+//														});
 													} else {
 														LOGGER.error(String.format("refreshsearchpageSchoolEnrollment failed. ", d.cause()));
 														errorSiteUser(siteRequest, eventHandler, d);

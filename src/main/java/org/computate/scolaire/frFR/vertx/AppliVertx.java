@@ -1538,19 +1538,8 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 			futures.add(
 				inscriptionService.inscriptionFraisFuture(o, a -> {
 					if(a.succeeded()) {
-						inscriptionService.authorizeNetEnrollmentPaiementsFuture(o, b -> {
-							if(b.succeeded()) {
-								inscriptionService.patchInscriptionScolaireFuture(o, false, c -> {
-									if(c.succeeded()) {
-										LOGGER.info("Créer un frais a réussi. ");
-									} else {
-										erreurAppliVertx(requeteSite, c);
-									}
-								});
-							} else {
-								erreurAppliVertx(requeteSite, b);
-							}
-							if(b.succeeded()) {
+//						inscriptionService.authorizeNetEnrollmentPaiementsFuture(o, b -> {
+//							if(b.succeeded()) {
 								LOGGER.info("Creating payments for customer %s succeeded. ");
 								List<Future> futures2 = new ArrayList<>();
 		
@@ -1611,11 +1600,11 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 										erreurAppliVertx(requeteSite, f);
 									}
 								});
-							} else {
-								LOGGER.error(String.format("refreshsearchpageSchoolEnrollment failed. ", b.cause()));
-								erreurAppliVertx(requeteSite, b);
-							}
-						});
+//							} else {
+//								LOGGER.error(String.format("refreshsearchpageSchoolEnrollment failed. ", b.cause()));
+//								erreurAppliVertx(requeteSite, b);
+//							}
+//						});
 					} else {
 						erreurAppliVertx(requeteSite, a);
 					}
