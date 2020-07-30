@@ -85,9 +85,14 @@ public class DesignDisplayPage extends DesignDisplayPageGen<DesignDisplayGenPage
 		else if("email-roster".equals(designId)) {
 			l.addSort("enrollmentGroupName_indexed_string", ORDER.asc);
 		}
-		else if(StringUtils.equalsAny(designId, "payment-roster", "group-names-roster", "group-details-roster")) {
+		else if(StringUtils.equalsAny(designId, "group-names-roster", "group-details-roster")) {
 			l.addSort("enrollmentGroupName_indexed_string", ORDER.asc);
 			l.addSort("childFirstNamePreferred_indexed_string", ORDER.asc);
+		}
+		else if(StringUtils.equalsAny(designId, "payment-roster")) {
+			l.addSort("enrollmentGroupName_indexed_string", ORDER.asc);
+			l.addSort("childFirstNamePreferred_indexed_string", ORDER.asc);
+			l.addFilterQuery("paymentsCurrent_indexed_boolean:false");
 		}
 
 		for(String var : siteRequest_.getRequestVars().keySet()) {

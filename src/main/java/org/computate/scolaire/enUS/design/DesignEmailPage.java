@@ -336,9 +336,14 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 		else if("email-roster".equals(pageDesignId)) {
 			l.addSort("enrollmentGroupName_indexed_string", ORDER.asc);
 		}
-		else if(StringUtils.equalsAny(pageDesignId, "payment-roster", "group-names-roster", "group-details-roster")) {
+		else if(StringUtils.equalsAny(pageDesignId, "group-names-roster", "group-details-roster")) {
 			l.addSort("enrollmentGroupName_indexed_string", ORDER.asc);
 			l.addSort("childFirstNamePreferred_indexed_string", ORDER.asc);
+		}
+		else if(StringUtils.equalsAny(pageDesignId, "payment-roster")) {
+			l.addSort("enrollmentGroupName_indexed_string", ORDER.asc);
+			l.addSort("childFirstNamePreferred_indexed_string", ORDER.asc);
+			l.addFilterQuery("paymentsCurrent_indexed_boolean:false");
 		}
 
 		for(String var : siteRequest_.getRequestVars().keySet()) {
