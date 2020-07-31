@@ -111,6 +111,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 	@Override
 	public void postDesignPage(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourDesignPage(siteContexte, operationRequete, body);
+		requeteSite.setRequeteUri("/api/design-page");
+		requeteSite.setRequeteMethode("POST");
 		try {
 			LOGGER.info(String.format("postDesignPage a démarré. "));
 
@@ -484,6 +486,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 	@Override
 	public void putimportDesignPage(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourDesignPage(siteContexte, operationRequete, body);
+		requeteSite.setRequeteUri("/api/design-page/import");
+		requeteSite.setRequeteMethode("PUTImport");
 		try {
 			LOGGER.info(String.format("putimportDesignPage a démarré. "));
 
@@ -670,6 +674,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 	@Override
 	public void putfusionDesignPage(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourDesignPage(siteContexte, operationRequete, body);
+		requeteSite.setRequeteUri("/api/design-page/fusion");
+		requeteSite.setRequeteMethode("PUTFusion");
 		try {
 			LOGGER.info(String.format("putfusionDesignPage a démarré. "));
 
@@ -854,6 +860,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 	@Override
 	public void putcopieDesignPage(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourDesignPage(siteContexte, operationRequete, body);
+		requeteSite.setRequeteUri("/api/design-page/copie");
+		requeteSite.setRequeteMethode("PUTCopie");
 		try {
 			LOGGER.info(String.format("putcopieDesignPage a démarré. "));
 
@@ -1224,6 +1232,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 	@Override
 	public void patchDesignPage(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourDesignPage(siteContexte, operationRequete, body);
+		requeteSite.setRequeteUri("/api/design-page");
+		requeteSite.setRequeteMethode("PATCH");
 		try {
 			LOGGER.info(String.format("patchDesignPage a démarré. "));
 
@@ -2081,6 +2091,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 	@Override
 	public void getDesignPage(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourDesignPage(siteContexte, operationRequete);
+		requeteSite.setRequeteUri("/api/design-page/{id}");
+		requeteSite.setRequeteMethode("GET");
 		try {
 			{
 				utilisateurDesignPage(requeteSite, b -> {
@@ -2149,6 +2161,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 	@Override
 	public void rechercheDesignPage(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourDesignPage(siteContexte, operationRequete);
+		requeteSite.setRequeteUri("/api/design-page");
+		requeteSite.setRequeteMethode("Recherche");
 		try {
 			{
 				utilisateurDesignPage(requeteSite, b -> {
@@ -2257,6 +2271,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 	@Override
 	public void rechercheadminDesignPage(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourDesignPage(siteContexte, operationRequete);
+		requeteSite.setRequeteUri("/api/admin/design-page");
+		requeteSite.setRequeteMethode("RechercheAdmin");
 		try {
 			{
 				utilisateurDesignPage(requeteSite, b -> {
@@ -2370,6 +2386,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 	@Override
 	public void pagerechercheDesignPage(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourDesignPage(siteContexte, operationRequete);
+		requeteSite.setRequeteUri("/design-page");
+		requeteSite.setRequeteMethode("PageRecherche");
 		try {
 			{
 				utilisateurDesignPage(requeteSite, b -> {
@@ -2463,6 +2481,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 	@Override
 	public void designaffichagepagerechercheDesignPage(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourDesignPage(siteContexte, operationRequete);
+		requeteSite.setRequeteUri("/page");
+		requeteSite.setRequeteMethode("DesignAffichagePageRecherche");
 		try {
 			{
 				utilisateurDesignPage(requeteSite, b -> {
@@ -2556,6 +2576,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 	@Override
 	public void designpdfpagerechercheDesignPage(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourDesignPage(siteContexte, operationRequete);
+		requeteSite.setRequeteUri("/pdf");
+		requeteSite.setRequeteMethode("DesignPdfPageRecherche");
 		try {
 			{
 				utilisateurDesignPage(requeteSite, b -> {
@@ -2646,6 +2668,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 	@Override
 	public void designmailpagerechercheDesignPage(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourDesignPage(siteContexte, operationRequete);
+		requeteSite.setRequeteUri("/mail");
+		requeteSite.setRequeteMethode("DesignMailPageRecherche");
 		try {
 			{
 				utilisateurDesignPage(requeteSite, b -> {
@@ -2736,6 +2760,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 	@Override
 	public void pageaccueilrecherchepageDesignPage(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourDesignPage(siteContexte, operationRequete);
+		requeteSite.setRequeteUri("/");
+		requeteSite.setRequeteMethode("PageAccueilRecherchePage");
 		try {
 			{
 				utilisateurDesignPage(requeteSite, b -> {
@@ -2903,16 +2929,19 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 
 	public void erreurDesignPage(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements, AsyncResult<?> resultatAsync) {
 		Throwable e = resultatAsync.cause();
+		JsonObject json = new JsonObject()
+				.put("erreur", new JsonObject()
+				.put("message", Optional.ofNullable(e).map(Throwable::getMessage).orElse(null))
+				.put("utilisateurNom", requeteSite.getUtilisateurNom())
+				.put("utilisateurNomComplet", requeteSite.getUtilisateurNomComplet())
+				.put("requeteUri", requeteSite.getRequeteUri())
+				.put("requeteMethode", requeteSite.getRequeteMethode())
+				.put("params", requeteSite.getOperationRequete().getParams())
+				);
 		ExceptionUtils.printRootCauseStackTrace(e);
 		OperationResponse reponseOperation = new OperationResponse(400, "BAD REQUEST", 
-			Buffer.buffer().appendString(
-				new JsonObject() {{
-					put("erreur", new JsonObject()
-						.put("message", Optional.ofNullable(e).map(Throwable::getMessage).orElse(null))
-					);
-				}}.encodePrettily()
-			)
-			, new CaseInsensitiveHeaders()
+				Buffer.buffer().appendString(json.encodePrettily())
+				, new CaseInsensitiveHeaders().add("Content-Type", "application/json")
 		);
 		ConfigSite configSite = requeteSite.getConfigSite_();
 		SiteContexteFrFR siteContexte = requeteSite.getSiteContexte_();
@@ -2921,7 +2950,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 		message.setFrom(configSite.getMailDe());
 		message.setTo(configSite.getMailAdmin());
 		if(e != null)
-			message.setText(ExceptionUtils.getStackTrace(e));
+			message.setText(String.format("%s\n\n%s", json.encodePrettily(), ExceptionUtils.getStackTrace(e)));
 		message.setSubject(String.format(configSite.getSiteUrlBase() + " " + Optional.ofNullable(e).map(Throwable::getMessage).orElse(null)));
 		WorkerExecutor workerExecutor = siteContexte.getExecuteurTravailleur();
 		workerExecutor.executeBlocking(
@@ -3460,6 +3489,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 							try {
 								o.definirPourClasse(definition.getString(0), definition.getString(1));
 							} catch(Exception e) {
+								LOGGER.error(String.format("definirDesignPage a échoué. ", e));
 								LOGGER.error(e);
 							}
 						}

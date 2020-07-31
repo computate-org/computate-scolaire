@@ -1356,6 +1356,8 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r.enUS: created
 	 * r: Paiement
 	 * r.enUS: Payment
+	 * r: fraisCrees
+	 * r.enUS: chargesCreated
 	 */ 
 	private Promise<Void> configurerAuthorizeNetFrais() {
 		ConfigSite configSite = siteContexteFrFR.getConfigSite();
@@ -1363,7 +1365,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 		Promise<Void> promise = Promise.promise();
 
 //		vertx.setPeriodic(1000 * 60 * 60 * 60, a -> {
-		vertx.setPeriodic(1000 * 60 * 4, a -> {
+		vertx.setPeriodic(1000 * 60 * 3, a -> {
 			WorkerExecutor executeurTravailleur = siteContexteFrFR.getExecuteurTravailleur();
 			executeurTravailleur.executeBlocking(
 				blockingCodeHandler -> {
@@ -1396,9 +1398,9 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 						listeRechercheInscription.addFilterQuery("sessionDateFin_indexed_date:[" + dateFormat.format(sessionDateFin) + " TO *]");
 //						listeRechercheInscription.addFilterQuery("(*:* AND -inscriptionDateFrais_indexed_date:[* TO *] OR inscriptionDateFrais_indexed_date:[* TO " + dateFormat.format(inscriptionDateFrais) + "])");
 						listeRechercheInscription.setRows(1);
+						listeRechercheInscription.addSort("fraisCrees_indexed_boolean", ORDER.asc);
 						listeRechercheInscription.addSort("modifie_indexed_date", ORDER.asc);
 						listeRechercheInscription.initLoinListeRecherche(requeteSite);
-		
 
 						futureAuthorizeNetFraisInscription(listeRechercheInscription, paiementService, inscriptionService, c -> {
 							if(c.succeeded()) {

@@ -41,12 +41,7 @@ public class PageDesign extends PageDesignGen<Cluster> {
 	protected void _htmlPartKeys(List<Long> o) {}
 
 	protected void _pageDesignCompleteName(Wrap<String> c) {
-		String o;
-//		if(yearCompleteName == null)
-			o = String.format("enrollment design");
-//		else
-//			o = String.format("enrollment design for the %s", yearCompleteName);
-		c.o(o);
+		c.o("enrollment design");
 	}
 
 	protected void _designHidden(Wrap<Boolean> c) {

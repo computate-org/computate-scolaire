@@ -270,7 +270,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "EcoleAnneeCles").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "?fq=ecoleCle:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-orange w3-hover-orange ").f();
+							{ e("a").a("href", "/annee?fq=ecoleCle:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-orange w3-hover-orange ").f();
 								e("i").a("class", "far fa-calendar-check ").f().g("i");
 								sx("années");
 							} g("a");

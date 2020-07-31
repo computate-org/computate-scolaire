@@ -352,7 +352,7 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "SaisonScolaireAnneeCle").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "?fq=saisonCles:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-orange w3-hover-orange ").f();
+							{ e("a").a("href", "/annee?fq=saisonCles:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-orange w3-hover-orange ").f();
 								e("i").a("class", "far fa-calendar-check ").f().g("i");
 								sx("année");
 							} g("a");
@@ -517,7 +517,7 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "SaisonScolaireSessionCles").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "?fq=saisonCle:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-green w3-hover-green ").f();
+							{ e("a").a("href", "/session?fq=saisonCle:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-green w3-hover-green ").f();
 								e("i").a("class", "fad fa-graduation-cap ").f().g("i");
 								sx("sessions");
 							} g("a");

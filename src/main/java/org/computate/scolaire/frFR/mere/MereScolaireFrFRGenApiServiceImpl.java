@@ -107,6 +107,8 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 	@Override
 	public void postMereScolaire(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourMereScolaire(siteContexte, operationRequete, body);
+		requeteSite.setRequeteUri("/api/mere");
+		requeteSite.setRequeteMethode("POST");
 		try {
 			LOGGER.info(String.format("postMereScolaire a démarré. "));
 			{
@@ -526,6 +528,8 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 	@Override
 	public void putimportMereScolaire(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourMereScolaire(siteContexte, operationRequete, body);
+		requeteSite.setRequeteUri("/api/mere/import");
+		requeteSite.setRequeteMethode("PUTImport");
 		try {
 			LOGGER.info(String.format("putimportMereScolaire a démarré. "));
 			{
@@ -695,6 +699,8 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 	@Override
 	public void putfusionMereScolaire(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourMereScolaire(siteContexte, operationRequete, body);
+		requeteSite.setRequeteUri("/api/mere/fusion");
+		requeteSite.setRequeteMethode("PUTFusion");
 		try {
 			LOGGER.info(String.format("putfusionMereScolaire a démarré. "));
 			{
@@ -862,6 +868,8 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 	@Override
 	public void putcopieMereScolaire(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourMereScolaire(siteContexte, operationRequete, body);
+		requeteSite.setRequeteUri("/api/mere/copie");
+		requeteSite.setRequeteMethode("PUTCopie");
 		try {
 			LOGGER.info(String.format("putcopieMereScolaire a démarré. "));
 			{
@@ -1294,6 +1302,8 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 	@Override
 	public void patchMereScolaire(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourMereScolaire(siteContexte, operationRequete, body);
+		requeteSite.setRequeteUri("/api/mere");
+		requeteSite.setRequeteMethode("PATCH");
 		try {
 			LOGGER.info(String.format("patchMereScolaire a démarré. "));
 			{
@@ -2098,6 +2108,8 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 	@Override
 	public void getMereScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourMereScolaire(siteContexte, operationRequete);
+		requeteSite.setRequeteUri("/api/mere/{id}");
+		requeteSite.setRequeteMethode("GET");
 		try {
 			{
 				utilisateurMereScolaire(requeteSite, b -> {
@@ -2166,6 +2178,8 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 	@Override
 	public void rechercheMereScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourMereScolaire(siteContexte, operationRequete);
+		requeteSite.setRequeteUri("/api/mere");
+		requeteSite.setRequeteMethode("Recherche");
 		try {
 			{
 				utilisateurMereScolaire(requeteSite, b -> {
@@ -2274,6 +2288,8 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 	@Override
 	public void rechercheadminMereScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourMereScolaire(siteContexte, operationRequete);
+		requeteSite.setRequeteUri("/api/admin/mere");
+		requeteSite.setRequeteMethode("RechercheAdmin");
 		try {
 			{
 				utilisateurMereScolaire(requeteSite, b -> {
@@ -2387,6 +2403,8 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 	@Override
 	public void pagerechercheMereScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourMereScolaire(siteContexte, operationRequete);
+		requeteSite.setRequeteUri("/mere");
+		requeteSite.setRequeteMethode("PageRecherche");
 		try {
 			{
 				utilisateurMereScolaire(requeteSite, b -> {
@@ -2554,16 +2572,19 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 
 	public void erreurMereScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements, AsyncResult<?> resultatAsync) {
 		Throwable e = resultatAsync.cause();
+		JsonObject json = new JsonObject()
+				.put("erreur", new JsonObject()
+				.put("message", Optional.ofNullable(e).map(Throwable::getMessage).orElse(null))
+				.put("utilisateurNom", requeteSite.getUtilisateurNom())
+				.put("utilisateurNomComplet", requeteSite.getUtilisateurNomComplet())
+				.put("requeteUri", requeteSite.getRequeteUri())
+				.put("requeteMethode", requeteSite.getRequeteMethode())
+				.put("params", requeteSite.getOperationRequete().getParams())
+				);
 		ExceptionUtils.printRootCauseStackTrace(e);
 		OperationResponse reponseOperation = new OperationResponse(400, "BAD REQUEST", 
-			Buffer.buffer().appendString(
-				new JsonObject() {{
-					put("erreur", new JsonObject()
-						.put("message", Optional.ofNullable(e).map(Throwable::getMessage).orElse(null))
-					);
-				}}.encodePrettily()
-			)
-			, new CaseInsensitiveHeaders()
+				Buffer.buffer().appendString(json.encodePrettily())
+				, new CaseInsensitiveHeaders().add("Content-Type", "application/json")
 		);
 		ConfigSite configSite = requeteSite.getConfigSite_();
 		SiteContexteFrFR siteContexte = requeteSite.getSiteContexte_();
@@ -2572,7 +2593,7 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 		message.setFrom(configSite.getMailDe());
 		message.setTo(configSite.getMailAdmin());
 		if(e != null)
-			message.setText(ExceptionUtils.getStackTrace(e));
+			message.setText(String.format("%s\n\n%s", json.encodePrettily(), ExceptionUtils.getStackTrace(e)));
 		message.setSubject(String.format(configSite.getSiteUrlBase() + " " + Optional.ofNullable(e).map(Throwable::getMessage).orElse(null)));
 		WorkerExecutor workerExecutor = siteContexte.getExecuteurTravailleur();
 		workerExecutor.executeBlocking(
@@ -3120,6 +3141,7 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 							try {
 								o.definirPourClasse(definition.getString(0), definition.getString(1));
 							} catch(Exception e) {
+								LOGGER.error(String.format("definirMereScolaire a échoué. ", e));
 								LOGGER.error(e);
 							}
 						}

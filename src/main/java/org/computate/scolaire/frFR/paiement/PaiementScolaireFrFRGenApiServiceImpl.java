@@ -107,6 +107,8 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 	@Override
 	public void postPaiementScolaire(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourPaiementScolaire(siteContexte, operationRequete, body);
+		requeteSite.setRequeteUri("/api/paiement");
+		requeteSite.setRequeteMethode("POST");
 		try {
 			LOGGER.info(String.format("postPaiementScolaire a démarré. "));
 
@@ -700,6 +702,8 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 	@Override
 	public void putimportPaiementScolaire(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourPaiementScolaire(siteContexte, operationRequete, body);
+		requeteSite.setRequeteUri("/api/paiement/import");
+		requeteSite.setRequeteMethode("PUTImport");
 		try {
 			LOGGER.info(String.format("putimportPaiementScolaire a démarré. "));
 
@@ -886,6 +890,8 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 	@Override
 	public void putfusionPaiementScolaire(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourPaiementScolaire(siteContexte, operationRequete, body);
+		requeteSite.setRequeteUri("/api/paiement/fusion");
+		requeteSite.setRequeteMethode("PUTFusion");
 		try {
 			LOGGER.info(String.format("putfusionPaiementScolaire a démarré. "));
 
@@ -1070,6 +1076,8 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 	@Override
 	public void putcopiePaiementScolaire(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourPaiementScolaire(siteContexte, operationRequete, body);
+		requeteSite.setRequeteUri("/api/paiement/copie");
+		requeteSite.setRequeteMethode("PUTCopie");
 		try {
 			LOGGER.info(String.format("putcopiePaiementScolaire a démarré. "));
 
@@ -1672,6 +1680,8 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 	@Override
 	public void patchPaiementScolaire(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourPaiementScolaire(siteContexte, operationRequete, body);
+		requeteSite.setRequeteUri("/api/paiement");
+		requeteSite.setRequeteMethode("PATCH");
 		try {
 			LOGGER.info(String.format("patchPaiementScolaire a démarré. "));
 
@@ -2746,6 +2756,8 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 	@Override
 	public void getPaiementScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourPaiementScolaire(siteContexte, operationRequete);
+		requeteSite.setRequeteUri("/api/paiement/{id}");
+		requeteSite.setRequeteMethode("GET");
 		try {
 
 			List<String> roles = Arrays.asList("SiteAdmin");
@@ -2834,6 +2846,8 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 	@Override
 	public void recherchePaiementScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourPaiementScolaire(siteContexte, operationRequete);
+		requeteSite.setRequeteUri("/api/paiement");
+		requeteSite.setRequeteMethode("Recherche");
 		try {
 
 			List<String> roles = Arrays.asList("SiteAdmin");
@@ -2967,6 +2981,8 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 	@Override
 	public void pagerecherchePaiementScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourPaiementScolaire(siteContexte, operationRequete);
+		requeteSite.setRequeteUri("/paiement");
+		requeteSite.setRequeteMethode("PageRecherche");
 		try {
 
 			List<String> roles = Arrays.asList("SiteAdmin");
@@ -3154,16 +3170,19 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 
 	public void erreurPaiementScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements, AsyncResult<?> resultatAsync) {
 		Throwable e = resultatAsync.cause();
+		JsonObject json = new JsonObject()
+				.put("erreur", new JsonObject()
+				.put("message", Optional.ofNullable(e).map(Throwable::getMessage).orElse(null))
+				.put("utilisateurNom", requeteSite.getUtilisateurNom())
+				.put("utilisateurNomComplet", requeteSite.getUtilisateurNomComplet())
+				.put("requeteUri", requeteSite.getRequeteUri())
+				.put("requeteMethode", requeteSite.getRequeteMethode())
+				.put("params", requeteSite.getOperationRequete().getParams())
+				);
 		ExceptionUtils.printRootCauseStackTrace(e);
 		OperationResponse reponseOperation = new OperationResponse(400, "BAD REQUEST", 
-			Buffer.buffer().appendString(
-				new JsonObject() {{
-					put("erreur", new JsonObject()
-						.put("message", Optional.ofNullable(e).map(Throwable::getMessage).orElse(null))
-					);
-				}}.encodePrettily()
-			)
-			, new CaseInsensitiveHeaders()
+				Buffer.buffer().appendString(json.encodePrettily())
+				, new CaseInsensitiveHeaders().add("Content-Type", "application/json")
 		);
 		ConfigSite configSite = requeteSite.getConfigSite_();
 		SiteContexteFrFR siteContexte = requeteSite.getSiteContexte_();
@@ -3172,7 +3191,7 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 		message.setFrom(configSite.getMailDe());
 		message.setTo(configSite.getMailAdmin());
 		if(e != null)
-			message.setText(ExceptionUtils.getStackTrace(e));
+			message.setText(String.format("%s\n\n%s", json.encodePrettily(), ExceptionUtils.getStackTrace(e)));
 		message.setSubject(String.format(configSite.getSiteUrlBase() + " " + Optional.ofNullable(e).map(Throwable::getMessage).orElse(null)));
 		WorkerExecutor workerExecutor = siteContexte.getExecuteurTravailleur();
 		workerExecutor.executeBlocking(
@@ -3717,6 +3736,7 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 							try {
 								o.definirPourClasse(definition.getString(0), definition.getString(1));
 							} catch(Exception e) {
+								LOGGER.error(String.format("definirPaiementScolaire a échoué. ", e));
 								LOGGER.error(e);
 							}
 						}

@@ -826,7 +826,7 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 		Promise<Void> promise = Promise.promise();
 
 //		vertx.setPeriodic(1000 * 60 * 60 * 60, a -> {
-		vertx.setPeriodic(1000 * 60 * 4, a -> {
+		vertx.setPeriodic(1000 * 60 * 3, a -> {
 			WorkerExecutor executeurTravailleur = siteContextEnUS.getWorkerExecutor();
 			executeurTravailleur.executeBlocking(
 				blockingCodeHandler -> {
@@ -859,9 +859,9 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 						searchListEnrollment.addFilterQuery("sessionEndDate_indexed_date:[" + dateFormat.format(sessionEndDate) + " TO *]");
 //						searchListEnrollment.addFilterQuery("(*:* AND -enrollmentChargeDate_indexed_date:[* TO *] OR enrollmentChargeDate_indexed_date:[* TO " + dateFormat.format(enrollmentChargeDate) + "])");
 						searchListEnrollment.setRows(1);
+						searchListEnrollment.addSort("chargesCreated_indexed_boolean", ORDER.asc);
 						searchListEnrollment.addSort("modified_indexed_date", ORDER.asc);
 						searchListEnrollment.initDeepSearchList(siteRequest);
-		
 
 						futureAuthorizeNetEnrollmentCharges(searchListEnrollment, paymentService, enrollmentService, c -> {
 							if(c.succeeded()) {

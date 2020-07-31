@@ -107,6 +107,8 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 	@Override
 	public void postGardienScolaire(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourGardienScolaire(siteContexte, operationRequete, body);
+		requeteSite.setRequeteUri("/api/gardien");
+		requeteSite.setRequeteMethode("POST");
 		try {
 			LOGGER.info(String.format("postGardienScolaire a démarré. "));
 			{
@@ -487,6 +489,8 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 	@Override
 	public void putimportGardienScolaire(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourGardienScolaire(siteContexte, operationRequete, body);
+		requeteSite.setRequeteUri("/api/gardien/import");
+		requeteSite.setRequeteMethode("PUTImport");
 		try {
 			LOGGER.info(String.format("putimportGardienScolaire a démarré. "));
 			{
@@ -656,6 +660,8 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 	@Override
 	public void putfusionGardienScolaire(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourGardienScolaire(siteContexte, operationRequete, body);
+		requeteSite.setRequeteUri("/api/gardien/fusion");
+		requeteSite.setRequeteMethode("PUTFusion");
 		try {
 			LOGGER.info(String.format("putfusionGardienScolaire a démarré. "));
 			{
@@ -823,6 +829,8 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 	@Override
 	public void putcopieGardienScolaire(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourGardienScolaire(siteContexte, operationRequete, body);
+		requeteSite.setRequeteUri("/api/gardien/copie");
+		requeteSite.setRequeteMethode("PUTCopie");
 		try {
 			LOGGER.info(String.format("putcopieGardienScolaire a démarré. "));
 			{
@@ -1216,6 +1224,8 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 	@Override
 	public void patchGardienScolaire(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourGardienScolaire(siteContexte, operationRequete, body);
+		requeteSite.setRequeteUri("/api/gardien");
+		requeteSite.setRequeteMethode("PATCH");
 		try {
 			LOGGER.info(String.format("patchGardienScolaire a démarré. "));
 			{
@@ -1936,6 +1946,8 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 	@Override
 	public void getGardienScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourGardienScolaire(siteContexte, operationRequete);
+		requeteSite.setRequeteUri("/api/gardien/{id}");
+		requeteSite.setRequeteMethode("GET");
 		try {
 			{
 				utilisateurGardienScolaire(requeteSite, b -> {
@@ -2004,6 +2016,8 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 	@Override
 	public void rechercheGardienScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourGardienScolaire(siteContexte, operationRequete);
+		requeteSite.setRequeteUri("/api/gardien");
+		requeteSite.setRequeteMethode("Recherche");
 		try {
 			{
 				utilisateurGardienScolaire(requeteSite, b -> {
@@ -2112,6 +2126,8 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 	@Override
 	public void rechercheadminGardienScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourGardienScolaire(siteContexte, operationRequete);
+		requeteSite.setRequeteUri("/api/admin/gardien");
+		requeteSite.setRequeteMethode("RechercheAdmin");
 		try {
 			{
 				utilisateurGardienScolaire(requeteSite, b -> {
@@ -2225,6 +2241,8 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 	@Override
 	public void pagerechercheGardienScolaire(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourGardienScolaire(siteContexte, operationRequete);
+		requeteSite.setRequeteUri("/gardien");
+		requeteSite.setRequeteMethode("PageRecherche");
 		try {
 			{
 				utilisateurGardienScolaire(requeteSite, b -> {
@@ -2392,16 +2410,19 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 
 	public void erreurGardienScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements, AsyncResult<?> resultatAsync) {
 		Throwable e = resultatAsync.cause();
+		JsonObject json = new JsonObject()
+				.put("erreur", new JsonObject()
+				.put("message", Optional.ofNullable(e).map(Throwable::getMessage).orElse(null))
+				.put("utilisateurNom", requeteSite.getUtilisateurNom())
+				.put("utilisateurNomComplet", requeteSite.getUtilisateurNomComplet())
+				.put("requeteUri", requeteSite.getRequeteUri())
+				.put("requeteMethode", requeteSite.getRequeteMethode())
+				.put("params", requeteSite.getOperationRequete().getParams())
+				);
 		ExceptionUtils.printRootCauseStackTrace(e);
 		OperationResponse reponseOperation = new OperationResponse(400, "BAD REQUEST", 
-			Buffer.buffer().appendString(
-				new JsonObject() {{
-					put("erreur", new JsonObject()
-						.put("message", Optional.ofNullable(e).map(Throwable::getMessage).orElse(null))
-					);
-				}}.encodePrettily()
-			)
-			, new CaseInsensitiveHeaders()
+				Buffer.buffer().appendString(json.encodePrettily())
+				, new CaseInsensitiveHeaders().add("Content-Type", "application/json")
 		);
 		ConfigSite configSite = requeteSite.getConfigSite_();
 		SiteContexteFrFR siteContexte = requeteSite.getSiteContexte_();
@@ -2410,7 +2431,7 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 		message.setFrom(configSite.getMailDe());
 		message.setTo(configSite.getMailAdmin());
 		if(e != null)
-			message.setText(ExceptionUtils.getStackTrace(e));
+			message.setText(String.format("%s\n\n%s", json.encodePrettily(), ExceptionUtils.getStackTrace(e)));
 		message.setSubject(String.format(configSite.getSiteUrlBase() + " " + Optional.ofNullable(e).map(Throwable::getMessage).orElse(null)));
 		WorkerExecutor workerExecutor = siteContexte.getExecuteurTravailleur();
 		workerExecutor.executeBlocking(
@@ -2958,6 +2979,7 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 							try {
 								o.definirPourClasse(definition.getString(0), definition.getString(1));
 							} catch(Exception e) {
+								LOGGER.error(String.format("definirGardienScolaire a échoué. ", e));
 								LOGGER.error(e);
 							}
 						}

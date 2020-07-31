@@ -353,7 +353,7 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "DesignPageDesignParentCles").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "?fq=designEnfantCles:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-khaki w3-hover-khaki ").f();
+							{ e("a").a("href", "/design-page?fq=designEnfantCles:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-khaki w3-hover-khaki ").f();
 								e("i").a("class", "far fa-drafting-compass ").f().g("i");
 								sx("designs parent");
 							} g("a");
@@ -512,7 +512,7 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "DesignPagePartHtmlCles").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "?fq=designPageCles:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-khaki w3-hover-khaki ").f();
+							{ e("a").a("href", "/part-html?fq=designPageCles:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-khaki w3-hover-khaki ").f();
 								e("i").a("class", "far fa-puzzle-piece ").f().g("i");
 								sx("parts");
 							} g("a");

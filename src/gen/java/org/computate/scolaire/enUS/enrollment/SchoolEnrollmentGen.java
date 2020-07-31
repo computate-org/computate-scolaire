@@ -9590,6 +9590,73 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return paymentsAhead == null ? "" : StringEscapeUtils.escapeHtml4(strPaymentsAhead());
 	}
 
+	////////////////////
+	// chargesCreated //
+	////////////////////
+
+	/**	 The entity chargesCreated
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected Boolean chargesCreated;
+	@JsonIgnore
+	public Wrap<Boolean> chargesCreatedWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("chargesCreated").o(chargesCreated);
+
+	/**	<br/> The entity chargesCreated
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:chargesCreated">Find the entity chargesCreated in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _chargesCreated(Wrap<Boolean> c);
+
+	public Boolean getChargesCreated() {
+		return chargesCreated;
+	}
+
+	public void setChargesCreated(Boolean chargesCreated) {
+		this.chargesCreated = chargesCreated;
+		this.chargesCreatedWrap.alreadyInitialized = true;
+	}
+	public SchoolEnrollment setChargesCreated(String o) {
+		this.chargesCreated = Boolean.parseBoolean(o);
+		this.chargesCreatedWrap.alreadyInitialized = true;
+		return (SchoolEnrollment)this;
+	}
+	protected SchoolEnrollment chargesCreatedInit() {
+		if(!chargesCreatedWrap.alreadyInitialized) {
+			_chargesCreated(chargesCreatedWrap);
+			if(chargesCreated == null)
+				setChargesCreated(chargesCreatedWrap.o);
+		}
+		chargesCreatedWrap.alreadyInitialized(true);
+		return (SchoolEnrollment)this;
+	}
+
+	public Boolean solrChargesCreated() {
+		return chargesCreated;
+	}
+
+	public String strChargesCreated() {
+		return chargesCreated == null ? "" : chargesCreated.toString();
+	}
+
+	public String jsonChargesCreated() {
+		return chargesCreated == null ? "" : chargesCreated.toString();
+	}
+
+	public String nomAffichageChargesCreated() {
+		return null;
+	}
+
+	public String htmTooltipChargesCreated() {
+		return null;
+	}
+
+	public String htmChargesCreated() {
+		return chargesCreated == null ? "" : StringEscapeUtils.escapeHtml4(strChargesCreated());
+	}
+
 	/////////////////
 	// createdYear //
 	/////////////////
@@ -14117,6 +14184,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		paymentsLateInit();
 		paymentsLateAmountInit();
 		paymentsAheadInit();
+		chargesCreatedInit();
 		createdYearInit();
 		createdDayOfWeekInit();
 		createdMonthOfYearInit();
@@ -14446,6 +14514,8 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				return oSchoolEnrollment.paymentsLateAmount;
 			case "paymentsAhead":
 				return oSchoolEnrollment.paymentsAhead;
+			case "chargesCreated":
+				return oSchoolEnrollment.chargesCreated;
 			case "createdYear":
 				return oSchoolEnrollment.createdYear;
 			case "createdDayOfWeek":
@@ -15436,6 +15506,12 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 					oSchoolEnrollment.setPaymentsAhead(paymentsAhead);
 			}
 
+			if(saves.contains("chargesCreated")) {
+				Boolean chargesCreated = (Boolean)solrDocument.get("chargesCreated_stored_boolean");
+				if(chargesCreated != null)
+					oSchoolEnrollment.setChargesCreated(chargesCreated);
+			}
+
 			if(saves.contains("createdYear")) {
 				Integer createdYear = (Integer)solrDocument.get("createdYear_stored_int");
 				if(createdYear != null)
@@ -16158,6 +16234,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 			document.addField("paymentsAhead_indexed_boolean", paymentsAhead);
 			document.addField("paymentsAhead_stored_boolean", paymentsAhead);
 		}
+		if(chargesCreated != null) {
+			document.addField("chargesCreated_indexed_boolean", chargesCreated);
+			document.addField("chargesCreated_stored_boolean", chargesCreated);
+		}
 		if(createdYear != null) {
 			document.addField("createdYear_indexed_int", createdYear);
 			document.addField("createdYear_stored_int", createdYear);
@@ -16530,6 +16610,8 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				return "paymentsLateAmount_indexed_double";
 			case "paymentsAhead":
 				return "paymentsAhead_indexed_boolean";
+			case "chargesCreated":
+				return "chargesCreated_indexed_boolean";
 			case "createdYear":
 				return "createdYear_indexed_int";
 			case "createdDayOfWeek":
@@ -16998,6 +17080,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		Boolean paymentsAhead = (Boolean)solrDocument.get("paymentsAhead_stored_boolean");
 		if(paymentsAhead != null)
 			oSchoolEnrollment.setPaymentsAhead(paymentsAhead);
+
+		Boolean chargesCreated = (Boolean)solrDocument.get("chargesCreated_stored_boolean");
+		if(chargesCreated != null)
+			oSchoolEnrollment.setChargesCreated(chargesCreated);
 
 		Integer createdYear = (Integer)solrDocument.get("createdYear_stored_int");
 		if(createdYear != null)

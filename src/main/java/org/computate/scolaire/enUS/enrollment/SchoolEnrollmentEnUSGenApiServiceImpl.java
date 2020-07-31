@@ -121,6 +121,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 	@Override
 	public void postSchoolEnrollment(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest, body);
+		siteRequest.setRequestUri("/api/enrollment");
+		siteRequest.setRequestMethod("POST");
 		try {
 			LOGGER.info(String.format("postSchoolEnrollment started. "));
 			{
@@ -1181,6 +1183,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 	@Override
 	public void putimportSchoolEnrollment(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest, body);
+		siteRequest.setRequestUri("/api/enrollment/import");
+		siteRequest.setRequestMethod("PUTImport");
 		try {
 			LOGGER.info(String.format("putimportSchoolEnrollment started. "));
 			{
@@ -1350,6 +1354,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 	@Override
 	public void putmergeSchoolEnrollment(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest, body);
+		siteRequest.setRequestUri("/api/enrollment/merge");
+		siteRequest.setRequestMethod("PUTMerge");
 		try {
 			LOGGER.info(String.format("putmergeSchoolEnrollment started. "));
 			{
@@ -1517,6 +1523,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 	@Override
 	public void putcopySchoolEnrollment(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest, body);
+		siteRequest.setRequestUri("/api/enrollment/copy");
+		siteRequest.setRequestMethod("PUTCopy");
 		try {
 			LOGGER.info(String.format("putcopySchoolEnrollment started. "));
 			{
@@ -2505,6 +2513,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 	@Override
 	public void patchSchoolEnrollment(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest, body);
+		siteRequest.setRequestUri("/api/enrollment");
+		siteRequest.setRequestMethod("PATCH");
 		try {
 			LOGGER.info(String.format("patchSchoolEnrollment started. "));
 			{
@@ -5096,6 +5106,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 	@Override
 	public void getSchoolEnrollment(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest);
+		siteRequest.setRequestUri("/api/enrollment/{id}");
+		siteRequest.setRequestMethod("GET");
 		try {
 			{
 				userSchoolEnrollment(siteRequest, b -> {
@@ -5164,6 +5176,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 	@Override
 	public void searchSchoolEnrollment(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest);
+		siteRequest.setRequestUri("/api/enrollment");
+		siteRequest.setRequestMethod("Search");
 		try {
 			{
 				userSchoolEnrollment(siteRequest, b -> {
@@ -5272,6 +5286,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 	@Override
 	public void adminsearchSchoolEnrollment(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest);
+		siteRequest.setRequestUri("/api/admin/enrollment");
+		siteRequest.setRequestMethod("AdminSearch");
 		try {
 			{
 				userSchoolEnrollment(siteRequest, b -> {
@@ -5380,6 +5396,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 	@Override
 	public void patchpaymentsSchoolEnrollment(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest, body);
+		siteRequest.setRequestUri("/enrollment/payments");
+		siteRequest.setRequestMethod("PATCHPayments");
 		try {
 			LOGGER.info(String.format("patchpaymentsSchoolEnrollment started. "));
 			{
@@ -7976,6 +7994,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 	@Override
 	public void searchpageSchoolEnrollment(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest);
+		siteRequest.setRequestUri("/enrollment");
+		siteRequest.setRequestMethod("SearchPage");
 		try {
 			{
 				userSchoolEnrollment(siteRequest, b -> {
@@ -8069,6 +8089,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 	@Override
 	public void refreshsearchpageSchoolEnrollment(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolEnrollment(siteContext, operationRequest);
+		siteRequest.setRequestUri("/refresh-enrollment");
+		siteRequest.setRequestMethod("RefreshSearchPage");
 		try {
 			{
 				userSchoolEnrollment(siteRequest, b -> {
@@ -8236,16 +8258,19 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 
 	public void errorSchoolEnrollment(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler, AsyncResult<?> resultAsync) {
 		Throwable e = resultAsync.cause();
+		JsonObject json = new JsonObject()
+				.put("error", new JsonObject()
+				.put("message", Optional.ofNullable(e).map(Throwable::getMessage).orElse(null))
+				.put("userName", siteRequest.getUserName())
+				.put("userFullName", siteRequest.getUserFullName())
+				.put("requestUri", siteRequest.getRequestUri())
+				.put("requestMethod", siteRequest.getRequestMethod())
+				.put("params", siteRequest.getOperationRequest().getParams())
+				);
 		ExceptionUtils.printRootCauseStackTrace(e);
 		OperationResponse responseOperation = new OperationResponse(400, "BAD REQUEST", 
-			Buffer.buffer().appendString(
-				new JsonObject() {{
-					put("error", new JsonObject()
-						.put("message", Optional.ofNullable(e).map(Throwable::getMessage).orElse(null))
-					);
-				}}.encodePrettily()
-			)
-			, new CaseInsensitiveHeaders()
+				Buffer.buffer().appendString(json.encodePrettily())
+				, new CaseInsensitiveHeaders().add("Content-Type", "application/json")
 		);
 		SiteConfig siteConfig = siteRequest.getSiteConfig_();
 		SiteContextEnUS siteContext = siteRequest.getSiteContext_();
@@ -8254,7 +8279,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 		message.setFrom(siteConfig.getEmailFrom());
 		message.setTo(siteConfig.getEmailAdmin());
 		if(e != null)
-			message.setText(ExceptionUtils.getStackTrace(e));
+			message.setText(String.format("%s\n\n%s", json.encodePrettily(), ExceptionUtils.getStackTrace(e)));
 		message.setSubject(String.format(siteConfig.getSiteBaseUrl() + " " + Optional.ofNullable(e).map(Throwable::getMessage).orElse(null)));
 		WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 		workerExecutor.executeBlocking(
@@ -8802,6 +8827,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							try {
 								o.defineForClass(definition.getString(0), definition.getString(1));
 							} catch(Exception e) {
+								LOGGER.error(String.format("defineSchoolEnrollment failed. ", e));
 								LOGGER.error(e);
 							}
 						}

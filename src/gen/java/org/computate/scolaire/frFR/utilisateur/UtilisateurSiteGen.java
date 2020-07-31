@@ -289,7 +289,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "UtilisateurSiteInscriptionCles").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "?fq=utilisateurCles:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-blue-gray w3-hover-blue-gray ").f();
+							{ e("a").a("href", "/inscription?fq=utilisateurCles:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-blue-gray w3-hover-blue-gray ").f();
 								e("i").a("class", "fas fa-edit ").f().g("i");
 								sx("inscriptions");
 							} g("a");
@@ -501,7 +501,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "UtilisateurSitePaiementCles").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "?fq=utilisateurCles:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-green w3-hover-green ").f();
+							{ e("a").a("href", "/paiement?fq=utilisateurCles:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-green w3-hover-green ").f();
 								e("i").a("class", "fas fa-search-dollar ").f().g("i");
 								sx("paiements");
 							} g("a");

@@ -368,7 +368,7 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "SessionScolaireAgeCles").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "?fq=sessionCle:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-blue w3-hover-blue ").f();
+							{ e("a").a("href", "/age?fq=sessionCle:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-blue w3-hover-blue ").f();
 								e("i").a("class", "fad fa-birthday-cake ").f().g("i");
 								sx("âges");
 							} g("a");
@@ -860,7 +860,7 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "SessionScolaireSaisonCle").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "?fq=sessionCles:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-yellow w3-hover-yellow ").f();
+							{ e("a").a("href", "/saison?fq=sessionCles:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-yellow w3-hover-yellow ").f();
 								e("i").a("class", "far fa-sun ").f().g("i");
 								sx("saison");
 							} g("a");

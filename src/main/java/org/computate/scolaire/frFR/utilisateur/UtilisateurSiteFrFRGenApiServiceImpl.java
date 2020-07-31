@@ -109,6 +109,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 	@Override
 	public void rechercheUtilisateurSite(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourUtilisateurSite(siteContexte, operationRequete);
+		requeteSite.setRequeteUri("/api/utilisateur");
+		requeteSite.setRequeteMethode("Recherche");
 		try {
 			{
 				utilisateurUtilisateurSite(requeteSite, b -> {
@@ -217,6 +219,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 	@Override
 	public void patchUtilisateurSite(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourUtilisateurSite(siteContexte, operationRequete, body);
+		requeteSite.setRequeteUri("/api/utilisateur");
+		requeteSite.setRequeteMethode("PATCH");
 		try {
 			LOGGER.info(String.format("patchUtilisateurSite a démarré. "));
 			{
@@ -1056,6 +1060,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 	@Override
 	public void postUtilisateurSite(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourUtilisateurSite(siteContexte, operationRequete, body);
+		requeteSite.setRequeteUri("/api/utilisateur");
+		requeteSite.setRequeteMethode("POST");
 		try {
 			LOGGER.info(String.format("postUtilisateurSite a démarré. "));
 			{
@@ -1458,6 +1464,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 	@Override
 	public void pagerechercheUtilisateurSite(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourUtilisateurSite(siteContexte, operationRequete);
+		requeteSite.setRequeteUri("/utilisateur");
+		requeteSite.setRequeteMethode("PageRecherche");
 		try {
 			{
 				utilisateurUtilisateurSite(requeteSite, b -> {
@@ -1625,16 +1633,19 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 
 	public void erreurUtilisateurSite(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements, AsyncResult<?> resultatAsync) {
 		Throwable e = resultatAsync.cause();
+		JsonObject json = new JsonObject()
+				.put("erreur", new JsonObject()
+				.put("message", Optional.ofNullable(e).map(Throwable::getMessage).orElse(null))
+				.put("utilisateurNom", requeteSite.getUtilisateurNom())
+				.put("utilisateurNomComplet", requeteSite.getUtilisateurNomComplet())
+				.put("requeteUri", requeteSite.getRequeteUri())
+				.put("requeteMethode", requeteSite.getRequeteMethode())
+				.put("params", requeteSite.getOperationRequete().getParams())
+				);
 		ExceptionUtils.printRootCauseStackTrace(e);
 		OperationResponse reponseOperation = new OperationResponse(400, "BAD REQUEST", 
-			Buffer.buffer().appendString(
-				new JsonObject() {{
-					put("erreur", new JsonObject()
-						.put("message", Optional.ofNullable(e).map(Throwable::getMessage).orElse(null))
-					);
-				}}.encodePrettily()
-			)
-			, new CaseInsensitiveHeaders()
+				Buffer.buffer().appendString(json.encodePrettily())
+				, new CaseInsensitiveHeaders().add("Content-Type", "application/json")
 		);
 		ConfigSite configSite = requeteSite.getConfigSite_();
 		SiteContexteFrFR siteContexte = requeteSite.getSiteContexte_();
@@ -1643,7 +1654,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 		message.setFrom(configSite.getMailDe());
 		message.setTo(configSite.getMailAdmin());
 		if(e != null)
-			message.setText(ExceptionUtils.getStackTrace(e));
+			message.setText(String.format("%s\n\n%s", json.encodePrettily(), ExceptionUtils.getStackTrace(e)));
 		message.setSubject(String.format(configSite.getSiteUrlBase() + " " + Optional.ofNullable(e).map(Throwable::getMessage).orElse(null)));
 		WorkerExecutor workerExecutor = siteContexte.getExecuteurTravailleur();
 		workerExecutor.executeBlocking(
@@ -2191,6 +2202,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 							try {
 								o.definirPourClasse(definition.getString(0), definition.getString(1));
 							} catch(Exception e) {
+								LOGGER.error(String.format("definirUtilisateurSite a échoué. ", e));
 								LOGGER.error(e);
 							}
 						}

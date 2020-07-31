@@ -109,6 +109,8 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 	@Override
 	public void postSchoolSeason(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolSeason(siteContext, operationRequest, body);
+		siteRequest.setRequestUri("/api/season");
+		siteRequest.setRequestMethod("POST");
 		try {
 			LOGGER.info(String.format("postSchoolSeason started. "));
 
@@ -479,6 +481,8 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 	@Override
 	public void putimportSchoolSeason(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolSeason(siteContext, operationRequest, body);
+		siteRequest.setRequestUri("/api/season/import");
+		siteRequest.setRequestMethod("PUTImport");
 		try {
 			LOGGER.info(String.format("putimportSchoolSeason started. "));
 
@@ -665,6 +669,8 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 	@Override
 	public void putmergeSchoolSeason(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolSeason(siteContext, operationRequest, body);
+		siteRequest.setRequestUri("/api/season/merge");
+		siteRequest.setRequestMethod("PUTMerge");
 		try {
 			LOGGER.info(String.format("putmergeSchoolSeason started. "));
 
@@ -849,6 +855,8 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 	@Override
 	public void putcopySchoolSeason(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolSeason(siteContext, operationRequest, body);
+		siteRequest.setRequestUri("/api/season/copy");
+		siteRequest.setRequestMethod("PUTCopy");
 		try {
 			LOGGER.info(String.format("putcopySchoolSeason started. "));
 
@@ -1223,6 +1231,8 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 	@Override
 	public void patchSchoolSeason(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolSeason(siteContext, operationRequest, body);
+		siteRequest.setRequestUri("/api/season");
+		siteRequest.setRequestMethod("PATCH");
 		try {
 			LOGGER.info(String.format("patchSchoolSeason started. "));
 
@@ -1906,6 +1916,8 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 	@Override
 	public void getSchoolSeason(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolSeason(siteContext, operationRequest);
+		siteRequest.setRequestUri("/api/season/{id}");
+		siteRequest.setRequestMethod("GET");
 		try {
 
 			List<String> roles = Arrays.asList("SiteManager");
@@ -1994,6 +2006,8 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 	@Override
 	public void searchSchoolSeason(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolSeason(siteContext, operationRequest);
+		siteRequest.setRequestUri("/api/season");
+		siteRequest.setRequestMethod("Search");
 		try {
 
 			List<String> roles = Arrays.asList("SiteManager");
@@ -2127,6 +2141,8 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 	@Override
 	public void searchpageSchoolSeason(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolSeason(siteContext, operationRequest);
+		siteRequest.setRequestUri("/season");
+		siteRequest.setRequestMethod("SearchPage");
 		try {
 
 			List<String> roles = Arrays.asList("SiteManager");
@@ -2314,16 +2330,19 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 
 	public void errorSchoolSeason(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler, AsyncResult<?> resultAsync) {
 		Throwable e = resultAsync.cause();
+		JsonObject json = new JsonObject()
+				.put("error", new JsonObject()
+				.put("message", Optional.ofNullable(e).map(Throwable::getMessage).orElse(null))
+				.put("userName", siteRequest.getUserName())
+				.put("userFullName", siteRequest.getUserFullName())
+				.put("requestUri", siteRequest.getRequestUri())
+				.put("requestMethod", siteRequest.getRequestMethod())
+				.put("params", siteRequest.getOperationRequest().getParams())
+				);
 		ExceptionUtils.printRootCauseStackTrace(e);
 		OperationResponse responseOperation = new OperationResponse(400, "BAD REQUEST", 
-			Buffer.buffer().appendString(
-				new JsonObject() {{
-					put("error", new JsonObject()
-						.put("message", Optional.ofNullable(e).map(Throwable::getMessage).orElse(null))
-					);
-				}}.encodePrettily()
-			)
-			, new CaseInsensitiveHeaders()
+				Buffer.buffer().appendString(json.encodePrettily())
+				, new CaseInsensitiveHeaders().add("Content-Type", "application/json")
 		);
 		SiteConfig siteConfig = siteRequest.getSiteConfig_();
 		SiteContextEnUS siteContext = siteRequest.getSiteContext_();
@@ -2332,7 +2351,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 		message.setFrom(siteConfig.getEmailFrom());
 		message.setTo(siteConfig.getEmailAdmin());
 		if(e != null)
-			message.setText(ExceptionUtils.getStackTrace(e));
+			message.setText(String.format("%s\n\n%s", json.encodePrettily(), ExceptionUtils.getStackTrace(e)));
 		message.setSubject(String.format(siteConfig.getSiteBaseUrl() + " " + Optional.ofNullable(e).map(Throwable::getMessage).orElse(null)));
 		WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 		workerExecutor.executeBlocking(
@@ -2871,6 +2890,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 							try {
 								o.defineForClass(definition.getString(0), definition.getString(1));
 							} catch(Exception e) {
+								LOGGER.error(String.format("defineSchoolSeason failed. ", e));
 								LOGGER.error(e);
 							}
 						}

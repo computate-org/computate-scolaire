@@ -111,6 +111,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 	@Override
 	public void postSchoolYear(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolYear(siteContext, operationRequest, body);
+		siteRequest.setRequestUri("/api/year");
+		siteRequest.setRequestMethod("POST");
 		try {
 			LOGGER.info(String.format("postSchoolYear started. "));
 
@@ -537,6 +539,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 	@Override
 	public void putimportSchoolYear(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolYear(siteContext, operationRequest, body);
+		siteRequest.setRequestUri("/api/year/import");
+		siteRequest.setRequestMethod("PUTImport");
 		try {
 			LOGGER.info(String.format("putimportSchoolYear started. "));
 
@@ -723,6 +727,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 	@Override
 	public void putmergeSchoolYear(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolYear(siteContext, operationRequest, body);
+		siteRequest.setRequestUri("/api/year/merge");
+		siteRequest.setRequestMethod("PUTMerge");
 		try {
 			LOGGER.info(String.format("putmergeSchoolYear started. "));
 
@@ -907,6 +913,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 	@Override
 	public void putcopySchoolYear(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolYear(siteContext, operationRequest, body);
+		siteRequest.setRequestUri("/api/year/copy");
+		siteRequest.setRequestMethod("PUTCopy");
 		try {
 			LOGGER.info(String.format("putcopySchoolYear started. "));
 
@@ -1326,6 +1334,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 	@Override
 	public void patchSchoolYear(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolYear(siteContext, operationRequest, body);
+		siteRequest.setRequestUri("/api/year");
+		siteRequest.setRequestMethod("PATCH");
 		try {
 			LOGGER.info(String.format("patchSchoolYear started. "));
 
@@ -2212,6 +2222,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 	@Override
 	public void getSchoolYear(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolYear(siteContext, operationRequest);
+		siteRequest.setRequestUri("/api/year/{id}");
+		siteRequest.setRequestMethod("GET");
 		try {
 
 			List<String> roles = Arrays.asList("SiteManager");
@@ -2300,6 +2312,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 	@Override
 	public void searchSchoolYear(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolYear(siteContext, operationRequest);
+		siteRequest.setRequestUri("/api/year");
+		siteRequest.setRequestMethod("Search");
 		try {
 
 			List<String> roles = Arrays.asList("SiteManager");
@@ -2433,6 +2447,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 	@Override
 	public void searchpageSchoolYear(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolYear(siteContext, operationRequest);
+		siteRequest.setRequestUri("/year");
+		siteRequest.setRequestMethod("SearchPage");
 		try {
 
 			List<String> roles = Arrays.asList("SiteManager");
@@ -2620,16 +2636,19 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 
 	public void errorSchoolYear(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler, AsyncResult<?> resultAsync) {
 		Throwable e = resultAsync.cause();
+		JsonObject json = new JsonObject()
+				.put("error", new JsonObject()
+				.put("message", Optional.ofNullable(e).map(Throwable::getMessage).orElse(null))
+				.put("userName", siteRequest.getUserName())
+				.put("userFullName", siteRequest.getUserFullName())
+				.put("requestUri", siteRequest.getRequestUri())
+				.put("requestMethod", siteRequest.getRequestMethod())
+				.put("params", siteRequest.getOperationRequest().getParams())
+				);
 		ExceptionUtils.printRootCauseStackTrace(e);
 		OperationResponse responseOperation = new OperationResponse(400, "BAD REQUEST", 
-			Buffer.buffer().appendString(
-				new JsonObject() {{
-					put("error", new JsonObject()
-						.put("message", Optional.ofNullable(e).map(Throwable::getMessage).orElse(null))
-					);
-				}}.encodePrettily()
-			)
-			, new CaseInsensitiveHeaders()
+				Buffer.buffer().appendString(json.encodePrettily())
+				, new CaseInsensitiveHeaders().add("Content-Type", "application/json")
 		);
 		SiteConfig siteConfig = siteRequest.getSiteConfig_();
 		SiteContextEnUS siteContext = siteRequest.getSiteContext_();
@@ -2638,7 +2657,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 		message.setFrom(siteConfig.getEmailFrom());
 		message.setTo(siteConfig.getEmailAdmin());
 		if(e != null)
-			message.setText(ExceptionUtils.getStackTrace(e));
+			message.setText(String.format("%s\n\n%s", json.encodePrettily(), ExceptionUtils.getStackTrace(e)));
 		message.setSubject(String.format(siteConfig.getSiteBaseUrl() + " " + Optional.ofNullable(e).map(Throwable::getMessage).orElse(null)));
 		WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 		workerExecutor.executeBlocking(
@@ -3177,6 +3196,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 							try {
 								o.defineForClass(definition.getString(0), definition.getString(1));
 							} catch(Exception e) {
+								LOGGER.error(String.format("defineSchoolYear failed. ", e));
 								LOGGER.error(e);
 							}
 						}

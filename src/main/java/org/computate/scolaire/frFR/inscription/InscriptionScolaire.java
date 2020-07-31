@@ -2043,6 +2043,18 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 		c.o(fraisMaintenant.compareTo(BigDecimal.ZERO) < 0);
 	}
 
+	/**       
+	 * {@inheritDoc}
+	 * Var.enUS: chargesCreated
+	 * Indexe: true
+	 * Stocke: true
+	 * r: fraisMontant
+	 * r.enUS: chargeAmount
+	 */ 
+	protected void _fraisCrees(Couverture<Boolean> c) {
+		c.o(fraisMontant.compareTo(BigDecimal.ZERO) > 0);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 * Var.enUS: createdYear

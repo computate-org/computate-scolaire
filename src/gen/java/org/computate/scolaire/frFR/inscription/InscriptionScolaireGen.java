@@ -435,7 +435,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "InscriptionScolaireBlocCles").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "?fq=inscriptionCles:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-indigo w3-hover-indigo ").f();
+							{ e("a").a("href", "/bloc?fq=inscriptionCles:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-indigo w3-hover-indigo ").f();
 								e("i").a("class", "far fa-bell ").f().g("i");
 								sx("blocs");
 							} g("a");
@@ -1030,7 +1030,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "InscriptionScolaireEnfantCle").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "?fq=inscriptionCles:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-orange w3-hover-orange ").f();
+							{ e("a").a("href", "/enfant?fq=inscriptionCles:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-orange w3-hover-orange ").f();
 								e("i").a("class", "far fa-child ").f().g("i");
 								sx("enfants");
 							} g("a");
@@ -1189,7 +1189,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "InscriptionScolaireMereCles").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "?fq=inscriptionCles:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-pink w3-hover-pink ").f();
+							{ e("a").a("href", "/mere?fq=inscriptionCles:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-pink w3-hover-pink ").f();
 								e("i").a("class", "far fa-female ").f().g("i");
 								sx("mères");
 							} g("a");
@@ -1348,7 +1348,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "InscriptionScolairePereCles").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "?fq=inscriptionCles:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-light-blue w3-hover-light-blue ").f();
+							{ e("a").a("href", "/pere?fq=inscriptionCles:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-light-blue w3-hover-light-blue ").f();
 								e("i").a("class", "far fa-male ").f().g("i");
 								sx("pères");
 							} g("a");
@@ -1507,7 +1507,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "InscriptionScolaireGardienCles").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "?fq=inscriptionCles:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-yellow w3-hover-yellow ").f();
+							{ e("a").a("href", "/gardien?fq=inscriptionCles:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-yellow w3-hover-yellow ").f();
 								e("i").a("class", "far fa-phone ").f().g("i");
 								sx("gardiens");
 							} g("a");
@@ -1666,7 +1666,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "InscriptionScolairePaiementCles").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "?fq=inscriptionCle:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-green w3-hover-green ").f();
+							{ e("a").a("href", "/paiement?fq=inscriptionCle:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-green w3-hover-green ").f();
 								e("i").a("class", "fas fa-search-dollar ").f().g("i");
 								sx("paiements");
 							} g("a");
@@ -1897,7 +1897,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "InscriptionScolaireUtilisateurCles").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "?fq=inscriptionCles:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-gray w3-hover-gray ").f();
+							{ e("a").a("href", "/utilisateur?fq=inscriptionCles:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-gray w3-hover-gray ").f();
 								e("i").a("class", "far fa-user-cog ").f().g("i");
 								sx("utilisateurs");
 							} g("a");
@@ -9613,6 +9613,73 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	////////////////
+	// fraisCrees //
+	////////////////
+
+	/**	 L'entité fraisCrees
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected Boolean fraisCrees;
+	@JsonIgnore
+	public Couverture<Boolean> fraisCreesCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("fraisCrees").o(fraisCrees);
+
+	/**	<br/> L'entité fraisCrees
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:fraisCrees">Trouver l'entité fraisCrees dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _fraisCrees(Couverture<Boolean> c);
+
+	public Boolean getFraisCrees() {
+		return fraisCrees;
+	}
+
+	public void setFraisCrees(Boolean fraisCrees) {
+		this.fraisCrees = fraisCrees;
+		this.fraisCreesCouverture.dejaInitialise = true;
+	}
+	public InscriptionScolaire setFraisCrees(String o) {
+		this.fraisCrees = Boolean.parseBoolean(o);
+		this.fraisCreesCouverture.dejaInitialise = true;
+		return (InscriptionScolaire)this;
+	}
+	protected InscriptionScolaire fraisCreesInit() {
+		if(!fraisCreesCouverture.dejaInitialise) {
+			_fraisCrees(fraisCreesCouverture);
+			if(fraisCrees == null)
+				setFraisCrees(fraisCreesCouverture.o);
+		}
+		fraisCreesCouverture.dejaInitialise(true);
+		return (InscriptionScolaire)this;
+	}
+
+	public Boolean solrFraisCrees() {
+		return fraisCrees;
+	}
+
+	public String strFraisCrees() {
+		return fraisCrees == null ? "" : fraisCrees.toString();
+	}
+
+	public String jsonFraisCrees() {
+		return fraisCrees == null ? "" : fraisCrees.toString();
+	}
+
+	public String nomAffichageFraisCrees() {
+		return null;
+	}
+
+	public String htmTooltipFraisCrees() {
+		return null;
+	}
+
+	public String htmFraisCrees() {
+		return fraisCrees == null ? "" : StringEscapeUtils.escapeHtml4(strFraisCrees());
+	}
+
+	////////////////
 	// creeDAnnee //
 	////////////////
 
@@ -14150,6 +14217,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		paiementsEnRetardInit();
 		paiementsEnRetardMontantInit();
 		paiementsEnAvanceInit();
+		fraisCreesInit();
 		creeDAnneeInit();
 		creeJourDeSemaineInit();
 		creeMoisDAnneeInit();
@@ -14479,6 +14547,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				return oInscriptionScolaire.paiementsEnRetardMontant;
 			case "paiementsEnAvance":
 				return oInscriptionScolaire.paiementsEnAvance;
+			case "fraisCrees":
+				return oInscriptionScolaire.fraisCrees;
 			case "creeDAnnee":
 				return oInscriptionScolaire.creeDAnnee;
 			case "creeJourDeSemaine":
@@ -15469,6 +15539,12 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 					oInscriptionScolaire.setPaiementsEnAvance(paiementsEnAvance);
 			}
 
+			if(sauvegardes.contains("fraisCrees")) {
+				Boolean fraisCrees = (Boolean)solrDocument.get("fraisCrees_stored_boolean");
+				if(fraisCrees != null)
+					oInscriptionScolaire.setFraisCrees(fraisCrees);
+			}
+
 			if(sauvegardes.contains("creeDAnnee")) {
 				Integer creeDAnnee = (Integer)solrDocument.get("creeDAnnee_stored_int");
 				if(creeDAnnee != null)
@@ -16191,6 +16267,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			document.addField("paiementsEnAvance_indexed_boolean", paiementsEnAvance);
 			document.addField("paiementsEnAvance_stored_boolean", paiementsEnAvance);
 		}
+		if(fraisCrees != null) {
+			document.addField("fraisCrees_indexed_boolean", fraisCrees);
+			document.addField("fraisCrees_stored_boolean", fraisCrees);
+		}
 		if(creeDAnnee != null) {
 			document.addField("creeDAnnee_indexed_int", creeDAnnee);
 			document.addField("creeDAnnee_stored_int", creeDAnnee);
@@ -16563,6 +16643,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				return "paiementsEnRetardMontant_indexed_double";
 			case "paiementsEnAvance":
 				return "paiementsEnAvance_indexed_boolean";
+			case "fraisCrees":
+				return "fraisCrees_indexed_boolean";
 			case "creeDAnnee":
 				return "creeDAnnee_indexed_int";
 			case "creeJourDeSemaine":
@@ -17031,6 +17113,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		Boolean paiementsEnAvance = (Boolean)solrDocument.get("paiementsEnAvance_stored_boolean");
 		if(paiementsEnAvance != null)
 			oInscriptionScolaire.setPaiementsEnAvance(paiementsEnAvance);
+
+		Boolean fraisCrees = (Boolean)solrDocument.get("fraisCrees_stored_boolean");
+		if(fraisCrees != null)
+			oInscriptionScolaire.setFraisCrees(fraisCrees);
 
 		Integer creeDAnnee = (Integer)solrDocument.get("creeDAnnee_stored_int");
 		if(creeDAnnee != null)

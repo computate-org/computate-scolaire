@@ -107,6 +107,8 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 	@Override
 	public void postSchoolDad(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolDad(siteContext, operationRequest, body);
+		siteRequest.setRequestUri("/api/dad");
+		siteRequest.setRequestMethod("POST");
 		try {
 			LOGGER.info(String.format("postSchoolDad started. "));
 			{
@@ -526,6 +528,8 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 	@Override
 	public void putimportSchoolDad(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolDad(siteContext, operationRequest, body);
+		siteRequest.setRequestUri("/api/dad/import");
+		siteRequest.setRequestMethod("PUTImport");
 		try {
 			LOGGER.info(String.format("putimportSchoolDad started. "));
 			{
@@ -695,6 +699,8 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 	@Override
 	public void putmergeSchoolDad(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolDad(siteContext, operationRequest, body);
+		siteRequest.setRequestUri("/api/dad/merge");
+		siteRequest.setRequestMethod("PUTMerge");
 		try {
 			LOGGER.info(String.format("putmergeSchoolDad started. "));
 			{
@@ -862,6 +868,8 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 	@Override
 	public void putcopySchoolDad(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolDad(siteContext, operationRequest, body);
+		siteRequest.setRequestUri("/api/dad/copy");
+		siteRequest.setRequestMethod("PUTCopy");
 		try {
 			LOGGER.info(String.format("putcopySchoolDad started. "));
 			{
@@ -1294,6 +1302,8 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 	@Override
 	public void patchSchoolDad(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolDad(siteContext, operationRequest, body);
+		siteRequest.setRequestUri("/api/dad");
+		siteRequest.setRequestMethod("PATCH");
 		try {
 			LOGGER.info(String.format("patchSchoolDad started. "));
 			{
@@ -2098,6 +2108,8 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 	@Override
 	public void getSchoolDad(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolDad(siteContext, operationRequest);
+		siteRequest.setRequestUri("/api/dad/{id}");
+		siteRequest.setRequestMethod("GET");
 		try {
 			{
 				userSchoolDad(siteRequest, b -> {
@@ -2166,6 +2178,8 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 	@Override
 	public void searchSchoolDad(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolDad(siteContext, operationRequest);
+		siteRequest.setRequestUri("/api/dad");
+		siteRequest.setRequestMethod("Search");
 		try {
 			{
 				userSchoolDad(siteRequest, b -> {
@@ -2274,6 +2288,8 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 	@Override
 	public void adminsearchSchoolDad(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolDad(siteContext, operationRequest);
+		siteRequest.setRequestUri("/api/admin/dad");
+		siteRequest.setRequestMethod("AdminSearch");
 		try {
 			{
 				userSchoolDad(siteRequest, b -> {
@@ -2387,6 +2403,8 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 	@Override
 	public void searchpageSchoolDad(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchoolDad(siteContext, operationRequest);
+		siteRequest.setRequestUri("/dad");
+		siteRequest.setRequestMethod("SearchPage");
 		try {
 			{
 				userSchoolDad(siteRequest, b -> {
@@ -2554,16 +2572,19 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 
 	public void errorSchoolDad(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler, AsyncResult<?> resultAsync) {
 		Throwable e = resultAsync.cause();
+		JsonObject json = new JsonObject()
+				.put("error", new JsonObject()
+				.put("message", Optional.ofNullable(e).map(Throwable::getMessage).orElse(null))
+				.put("userName", siteRequest.getUserName())
+				.put("userFullName", siteRequest.getUserFullName())
+				.put("requestUri", siteRequest.getRequestUri())
+				.put("requestMethod", siteRequest.getRequestMethod())
+				.put("params", siteRequest.getOperationRequest().getParams())
+				);
 		ExceptionUtils.printRootCauseStackTrace(e);
 		OperationResponse responseOperation = new OperationResponse(400, "BAD REQUEST", 
-			Buffer.buffer().appendString(
-				new JsonObject() {{
-					put("error", new JsonObject()
-						.put("message", Optional.ofNullable(e).map(Throwable::getMessage).orElse(null))
-					);
-				}}.encodePrettily()
-			)
-			, new CaseInsensitiveHeaders()
+				Buffer.buffer().appendString(json.encodePrettily())
+				, new CaseInsensitiveHeaders().add("Content-Type", "application/json")
 		);
 		SiteConfig siteConfig = siteRequest.getSiteConfig_();
 		SiteContextEnUS siteContext = siteRequest.getSiteContext_();
@@ -2572,7 +2593,7 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 		message.setFrom(siteConfig.getEmailFrom());
 		message.setTo(siteConfig.getEmailAdmin());
 		if(e != null)
-			message.setText(ExceptionUtils.getStackTrace(e));
+			message.setText(String.format("%s\n\n%s", json.encodePrettily(), ExceptionUtils.getStackTrace(e)));
 		message.setSubject(String.format(siteConfig.getSiteBaseUrl() + " " + Optional.ofNullable(e).map(Throwable::getMessage).orElse(null)));
 		WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 		workerExecutor.executeBlocking(
@@ -3120,6 +3141,7 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 							try {
 								o.defineForClass(definition.getString(0), definition.getString(1));
 							} catch(Exception e) {
+								LOGGER.error(String.format("defineSchoolDad failed. ", e));
 								LOGGER.error(e);
 							}
 						}

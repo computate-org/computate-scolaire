@@ -195,7 +195,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "AnneeScolaireEcoleCle").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "?fq=anneeCles:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-pink w3-hover-pink ").f();
+							{ e("a").a("href", "/ecole?fq=anneeCles:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-pink w3-hover-pink ").f();
 								e("i").a("class", "far fa-school ").f().g("i");
 								sx("école");
 							} g("a");
@@ -603,7 +603,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "AnneeScolaireAgeCles").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "?fq=anneeCle:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-blue w3-hover-blue ").f();
+							{ e("a").a("href", "/age?fq=anneeCle:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-blue w3-hover-blue ").f();
 								e("i").a("class", "fad fa-birthday-cake ").f().g("i");
 								sx("âges");
 							} g("a");

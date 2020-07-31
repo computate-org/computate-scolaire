@@ -30,20 +30,23 @@ import io.vertx.ext.web.api.OperationRequest;
 import io.vertx.sqlclient.SqlConnection;
 import io.vertx.sqlclient.Transaction;
 
+/**
+ * CanonicalName: org.computate.scolaire.frFR.requete.RequeteSiteFrFR
+ **/
 public class SiteRequestEnUS extends SiteRequestEnUSGen<Object> implements Serializable {
 
 	private static final long serialVersionUID = -6737494107881513257L;
 
-	/**	
-	 *	The site context with global site information. 
+	/**
+	 * The site context with global site information. 
 	 **/
 	protected void _siteContext_(Wrap<SiteContextEnUS> c) {
 	}
 
 	private static final Pattern PATTERN_SESSION = Pattern.compile(".*vertx-web.session=(\\w+).*");
 
-	/**	
-	 *	The site configuration. 
+	/**
+	 * The site configuration. 
 	 **/
 	protected void _siteConfig_(Wrap<SiteConfig> c) {
 		SiteConfig o = siteContext_.getSiteConfig();
@@ -207,6 +210,12 @@ public class SiteRequestEnUS extends SiteRequestEnUSGen<Object> implements Seria
 	protected void _requestPk(Wrap<Long> c) {
 		if(operationRequest != null)
 			c.o(operationRequest.getParams().getLong("pk"));
+	}
+
+	protected void _requestUri(Wrap<String> c) {
+	}
+
+	protected void _requestMethod(Wrap<String> c) {
 	}
 
 	protected void _tx(Wrap<Transaction> c) {

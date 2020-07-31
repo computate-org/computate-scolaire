@@ -105,6 +105,8 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 	@Override
 	public void postCluster(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourCluster(siteContexte, operationRequete, body);
+		requeteSite.setRequeteUri("/api/cluster");
+		requeteSite.setRequeteMethode("POST");
 		try {
 			LOGGER.info(String.format("postCluster a démarré. "));
 			{
@@ -345,6 +347,8 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 	@Override
 	public void putimportCluster(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourCluster(siteContexte, operationRequete, body);
+		requeteSite.setRequeteUri("/api/cluster/import");
+		requeteSite.setRequeteMethode("PUTImport");
 		try {
 			LOGGER.info(String.format("putimportCluster a démarré. "));
 			{
@@ -514,6 +518,8 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 	@Override
 	public void putfusionCluster(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourCluster(siteContexte, operationRequete, body);
+		requeteSite.setRequeteUri("/api/cluster/fusion");
+		requeteSite.setRequeteMethode("PUTFusion");
 		try {
 			LOGGER.info(String.format("putfusionCluster a démarré. "));
 			{
@@ -681,6 +687,8 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 	@Override
 	public void putcopieCluster(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourCluster(siteContexte, operationRequete, body);
+		requeteSite.setRequeteUri("/api/cluster/copie");
+		requeteSite.setRequeteMethode("PUTCopie");
 		try {
 			LOGGER.info(String.format("putcopieCluster a démarré. "));
 			{
@@ -951,6 +959,8 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 	@Override
 	public void patchCluster(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourCluster(siteContexte, operationRequete, body);
+		requeteSite.setRequeteUri("/api/cluster");
+		requeteSite.setRequeteMethode("PATCH");
 		try {
 			LOGGER.info(String.format("patchCluster a démarré. "));
 			{
@@ -1294,6 +1304,8 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 	@Override
 	public void getCluster(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourCluster(siteContexte, operationRequete);
+		requeteSite.setRequeteUri("/api/cluster/{id}");
+		requeteSite.setRequeteMethode("GET");
 		try {
 			{
 				utilisateurCluster(requeteSite, b -> {
@@ -1362,6 +1374,8 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 	@Override
 	public void rechercheCluster(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourCluster(siteContexte, operationRequete);
+		requeteSite.setRequeteUri("/api/cluster");
+		requeteSite.setRequeteMethode("Recherche");
 		try {
 			{
 				utilisateurCluster(requeteSite, b -> {
@@ -1475,6 +1489,8 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 	@Override
 	public void pagerechercheCluster(OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourCluster(siteContexte, operationRequete);
+		requeteSite.setRequeteUri("/cluster");
+		requeteSite.setRequeteMethode("PageRecherche");
 		try {
 			{
 				utilisateurCluster(requeteSite, b -> {
@@ -1642,16 +1658,19 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 
 	public void erreurCluster(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements, AsyncResult<?> resultatAsync) {
 		Throwable e = resultatAsync.cause();
+		JsonObject json = new JsonObject()
+				.put("erreur", new JsonObject()
+				.put("message", Optional.ofNullable(e).map(Throwable::getMessage).orElse(null))
+				.put("utilisateurNom", requeteSite.getUtilisateurNom())
+				.put("utilisateurNomComplet", requeteSite.getUtilisateurNomComplet())
+				.put("requeteUri", requeteSite.getRequeteUri())
+				.put("requeteMethode", requeteSite.getRequeteMethode())
+				.put("params", requeteSite.getOperationRequete().getParams())
+				);
 		ExceptionUtils.printRootCauseStackTrace(e);
 		OperationResponse reponseOperation = new OperationResponse(400, "BAD REQUEST", 
-			Buffer.buffer().appendString(
-				new JsonObject() {{
-					put("erreur", new JsonObject()
-						.put("message", Optional.ofNullable(e).map(Throwable::getMessage).orElse(null))
-					);
-				}}.encodePrettily()
-			)
-			, new CaseInsensitiveHeaders()
+				Buffer.buffer().appendString(json.encodePrettily())
+				, new CaseInsensitiveHeaders().add("Content-Type", "application/json")
 		);
 		ConfigSite configSite = requeteSite.getConfigSite_();
 		SiteContexteFrFR siteContexte = requeteSite.getSiteContexte_();
@@ -1660,7 +1679,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 		message.setFrom(configSite.getMailDe());
 		message.setTo(configSite.getMailAdmin());
 		if(e != null)
-			message.setText(ExceptionUtils.getStackTrace(e));
+			message.setText(String.format("%s\n\n%s", json.encodePrettily(), ExceptionUtils.getStackTrace(e)));
 		message.setSubject(String.format(configSite.getSiteUrlBase() + " " + Optional.ofNullable(e).map(Throwable::getMessage).orElse(null)));
 		WorkerExecutor workerExecutor = siteContexte.getExecuteurTravailleur();
 		workerExecutor.executeBlocking(
@@ -2208,6 +2227,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 							try {
 								o.definirPourClasse(definition.getString(0), definition.getString(1));
 							} catch(Exception e) {
+								LOGGER.error(String.format("definirCluster a échoué. ", e));
 								LOGGER.error(e);
 							}
 						}

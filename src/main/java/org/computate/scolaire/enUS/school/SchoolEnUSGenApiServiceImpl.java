@@ -107,6 +107,8 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 	@Override
 	public void postSchool(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchool(siteContext, operationRequest, body);
+		siteRequest.setRequestUri("/api/school");
+		siteRequest.setRequestMethod("POST");
 		try {
 			LOGGER.info(String.format("postSchool started. "));
 
@@ -524,6 +526,8 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 	@Override
 	public void patchSchool(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchool(siteContext, operationRequest, body);
+		siteRequest.setRequestUri("/api/school");
+		siteRequest.setRequestMethod("PATCH");
 		try {
 			LOGGER.info(String.format("patchSchool started. "));
 
@@ -1311,6 +1315,8 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 	@Override
 	public void getSchool(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchool(siteContext, operationRequest);
+		siteRequest.setRequestUri("/api/school/{id}");
+		siteRequest.setRequestMethod("GET");
 		try {
 
 			List<String> roles = Arrays.asList("SiteManager");
@@ -1399,6 +1405,8 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 	@Override
 	public void searchSchool(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchool(siteContext, operationRequest);
+		siteRequest.setRequestUri("/api/school");
+		siteRequest.setRequestMethod("Search");
 		try {
 
 			List<String> roles = Arrays.asList("SiteManager");
@@ -1527,6 +1535,8 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 	@Override
 	public void putimportSchool(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchool(siteContext, operationRequest, body);
+		siteRequest.setRequestUri("/api/school/import");
+		siteRequest.setRequestMethod("PUTImport");
 		try {
 			LOGGER.info(String.format("putimportSchool started. "));
 
@@ -1713,6 +1723,8 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 	@Override
 	public void putmergeSchool(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchool(siteContext, operationRequest, body);
+		siteRequest.setRequestUri("/api/school/merge");
+		siteRequest.setRequestMethod("PUTMerge");
 		try {
 			LOGGER.info(String.format("putmergeSchool started. "));
 
@@ -1897,6 +1909,8 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 	@Override
 	public void putcopySchool(JsonObject body, OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchool(siteContext, operationRequest, body);
+		siteRequest.setRequestUri("/api/school/copy");
+		siteRequest.setRequestMethod("PUTCopy");
 		try {
 			LOGGER.info(String.format("putcopySchool started. "));
 
@@ -2338,6 +2352,8 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 	@Override
 	public void searchpageSchool(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForSchool(siteContext, operationRequest);
+		siteRequest.setRequestUri("/school");
+		siteRequest.setRequestMethod("SearchPage");
 		try {
 
 			List<String> roles = Arrays.asList("SiteManager");
@@ -2525,16 +2541,19 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 
 	public void errorSchool(SiteRequestEnUS siteRequest, Handler<AsyncResult<OperationResponse>> eventHandler, AsyncResult<?> resultAsync) {
 		Throwable e = resultAsync.cause();
+		JsonObject json = new JsonObject()
+				.put("error", new JsonObject()
+				.put("message", Optional.ofNullable(e).map(Throwable::getMessage).orElse(null))
+				.put("userName", siteRequest.getUserName())
+				.put("userFullName", siteRequest.getUserFullName())
+				.put("requestUri", siteRequest.getRequestUri())
+				.put("requestMethod", siteRequest.getRequestMethod())
+				.put("params", siteRequest.getOperationRequest().getParams())
+				);
 		ExceptionUtils.printRootCauseStackTrace(e);
 		OperationResponse responseOperation = new OperationResponse(400, "BAD REQUEST", 
-			Buffer.buffer().appendString(
-				new JsonObject() {{
-					put("error", new JsonObject()
-						.put("message", Optional.ofNullable(e).map(Throwable::getMessage).orElse(null))
-					);
-				}}.encodePrettily()
-			)
-			, new CaseInsensitiveHeaders()
+				Buffer.buffer().appendString(json.encodePrettily())
+				, new CaseInsensitiveHeaders().add("Content-Type", "application/json")
 		);
 		SiteConfig siteConfig = siteRequest.getSiteConfig_();
 		SiteContextEnUS siteContext = siteRequest.getSiteContext_();
@@ -2543,7 +2562,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 		message.setFrom(siteConfig.getEmailFrom());
 		message.setTo(siteConfig.getEmailAdmin());
 		if(e != null)
-			message.setText(ExceptionUtils.getStackTrace(e));
+			message.setText(String.format("%s\n\n%s", json.encodePrettily(), ExceptionUtils.getStackTrace(e)));
 		message.setSubject(String.format(siteConfig.getSiteBaseUrl() + " " + Optional.ofNullable(e).map(Throwable::getMessage).orElse(null)));
 		WorkerExecutor workerExecutor = siteContext.getWorkerExecutor();
 		workerExecutor.executeBlocking(
@@ -3082,6 +3101,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 							try {
 								o.defineForClass(definition.getString(0), definition.getString(1));
 							} catch(Exception e) {
+								LOGGER.error(String.format("defineSchool failed. ", e));
 								LOGGER.error(e);
 							}
 						}

@@ -406,6 +406,21 @@ public class RequeteSiteFrFR extends RequeteSiteFrFRGen<Object> implements Seria
 
 	/**
 	 * {@inheritDoc}
+	 * Var.enUS: requestUri
+	 **/
+	protected void _requeteUri(Couverture<String> c) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: requestMethod
+	 **/
+	protected void _requeteMethode(Couverture<String> c) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Ignorer: true
 	 **/
 	protected void _tx(Couverture<Transaction> c) {
 	}
@@ -413,6 +428,7 @@ public class RequeteSiteFrFR extends RequeteSiteFrFRGen<Object> implements Seria
 	/**
 	 * Var.enUS: sqlConnection
 	 * {@inheritDoc}
+	 * Ignorer: true
 	 **/
 	protected void _connexionSql(Couverture<SqlConnection> c) {
 	}
@@ -420,12 +436,14 @@ public class RequeteSiteFrFR extends RequeteSiteFrFRGen<Object> implements Seria
 	/**
 	 * {@inheritDoc}
 	 * Var.enUS: requestHeaders
+	 * Ignorer: true
 	 **/
 	protected void _requeteEnTetes(Couverture<CaseInsensitiveHeaders> c) {
 	}
 	
 	/**
 	 * Var.enUS: requestVars
+	 * Ignorer: true
 	 */
 	protected void _requeteVars(Map<String, String> m) {
 	}

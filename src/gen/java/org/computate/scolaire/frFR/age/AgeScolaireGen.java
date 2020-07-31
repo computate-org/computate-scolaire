@@ -368,7 +368,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "AgeScolaireBlocCles").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "?fq=ageCle:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-indigo w3-hover-indigo ").f();
+							{ e("a").a("href", "/bloc?fq=ageCle:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-indigo w3-hover-indigo ").f();
 								e("i").a("class", "far fa-bell ").f().g("i");
 								sx("blocs");
 							} g("a");
@@ -1075,7 +1075,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 				{ e("div").a("id", "suggere", classeApiMethodeMethode, "AgeScolaireAnneeCle").f();
 					{ e("div").a("class", "w3-card ").f();
 						{ e("div").a("class", "w3-cell-row ").f();
-							{ e("a").a("href", "?fq=ageCles:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-orange w3-hover-orange ").f();
+							{ e("a").a("href", "/annee?fq=ageCles:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-orange w3-hover-orange ").f();
 								e("i").a("class", "far fa-calendar-check ").f().g("i");
 								sx("année");
 							} g("a");

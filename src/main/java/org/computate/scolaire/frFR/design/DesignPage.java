@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.design;     
+package org.computate.scolaire.frFR.design;  
 
 import java.util.List;
 
@@ -189,12 +189,7 @@ public class DesignPage extends DesignPageGen<Cluster> {
 	 * r.enUS: "enrollment design"
 	 */ 
 	protected void _designPageNomComplet(Couverture<String> c) {
-		String o;
-//		if(anneeNomComplet == null)
-			o = String.format("design d'inscription");
-//		else
-//			o = String.format("design d'inscription pour l'%s", anneeNomComplet);
-		c.o(o);
+		c.o("design d'inscription");
 	}
 
 	/**
