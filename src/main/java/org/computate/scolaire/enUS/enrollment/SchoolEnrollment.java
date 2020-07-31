@@ -609,7 +609,7 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 	}
 
 	protected void _chargesCreated(Wrap<Boolean> c) {
-		c.o(chargeAmount.compareTo(BigDecimal.ZERO) > 0);
+		c.o(blockKeys.size() == 0 || chargeAmount.compareTo(BigDecimal.ZERO) > 0);
 	}
 
 	protected void _createdYear(Wrap<Integer> c) {

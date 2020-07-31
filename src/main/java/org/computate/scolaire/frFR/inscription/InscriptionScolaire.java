@@ -2050,9 +2050,11 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Stocke: true
 	 * r: fraisMontant
 	 * r.enUS: chargeAmount
+	 * r: blocCles
+	 * r.enUS: blockKeys
 	 */ 
 	protected void _fraisCrees(Couverture<Boolean> c) {
-		c.o(fraisMontant.compareTo(BigDecimal.ZERO) > 0);
+		c.o(blocCles.size() == 0 || fraisMontant.compareTo(BigDecimal.ZERO) > 0);
 	}
 
 	/**
