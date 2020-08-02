@@ -2329,8 +2329,8 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 				String personneMail = o.getPersonneMail();
 				if(StringUtils.isNotBlank(personneMail)) {
 					if(b.length() > 0)
-						b.append(", ");
-					b.append(o.getPersonneNomCompletPrefere()).append(" <").append(o.getPersonneMail()).append(">");
+						b.append("\n");
+					b.append(o.getPersonneNomCompletPrefere()).append(" <").append(o.getPersonneMail()).append(">;");
 				}
 			}
 		}
@@ -2339,16 +2339,16 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 				String personneMail = o.getPersonneMail();
 				if(StringUtils.isNotBlank(personneMail)) {
 					if(b.length() > 0)
-						b.append(", ");
-					b.append(o.getPersonneNomCompletPrefere()).append(" <").append(o.getPersonneMail()).append(">");
+						b.append("\n");
+					b.append(o.getPersonneNomCompletPrefere()).append(" <").append(o.getPersonneMail()).append(">;");
 				}
 			}
 			for(PereScolaire o : peres) {
 				String personneMail = o.getPersonneMail();
 				if(StringUtils.isNotBlank(personneMail)) {
 					if(b.length() > 0)
-						b.append(", ");
-					b.append(o.getPersonneNomCompletPrefere()).append(" <").append(o.getPersonneMail()).append(">");
+						b.append("\n");
+					b.append(o.getPersonneNomCompletPrefere()).append(" <").append(o.getPersonneMail()).append(">;");
 				}
 			}
 		}
