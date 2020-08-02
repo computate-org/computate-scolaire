@@ -718,8 +718,8 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 				String personEmail = o.getPersonEmail();
 				if(StringUtils.isNotBlank(personEmail)) {
 					if(b.length() > 0)
-						b.append(", ");
-					b.append(o.getPersonCompleteNamePreferred()).append(" <").append(o.getPersonEmail()).append(">");
+						b.append("\n");
+					b.append(o.getPersonCompleteNamePreferred()).append(" <").append(o.getPersonEmail()).append(">;");
 				}
 			}
 		}
@@ -728,16 +728,16 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 				String personEmail = o.getPersonEmail();
 				if(StringUtils.isNotBlank(personEmail)) {
 					if(b.length() > 0)
-						b.append(", ");
-					b.append(o.getPersonCompleteNamePreferred()).append(" <").append(o.getPersonEmail()).append(">");
+						b.append("\n");
+					b.append(o.getPersonCompleteNamePreferred()).append(" <").append(o.getPersonEmail()).append(">;");
 				}
 			}
 			for(SchoolDad o : dads) {
 				String personEmail = o.getPersonEmail();
 				if(StringUtils.isNotBlank(personEmail)) {
 					if(b.length() > 0)
-						b.append(", ");
-					b.append(o.getPersonCompleteNamePreferred()).append(" <").append(o.getPersonEmail()).append(">");
+						b.append("\n");
+					b.append(o.getPersonCompleteNamePreferred()).append(" <").append(o.getPersonEmail()).append(">;");
 				}
 			}
 		}
