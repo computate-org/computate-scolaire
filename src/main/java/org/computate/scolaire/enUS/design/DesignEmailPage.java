@@ -242,7 +242,7 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 	}
 
 	protected void _attachmentDesignSearch(SearchList<PageDesign> l) {
-		if(attachmentDesignId != null) {
+		if(attachmentDesignId != null && attachmentDesignId != null) {
 			l.setStore(true);
 			l.setQuery("*:*");
 			l.setC(PageDesign.class);
@@ -533,7 +533,7 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 		l.setC(School.class);
 
 		Long schoolKey = Optional.ofNullable(enrollmentSearch.first()).map(SchoolEnrollment::getSchoolKey).orElse(null);
-		if(attachmentDesignId.endsWith("-enrollment-form") && schoolKey != null) {
+		if(attachmentDesignId != null && attachmentDesignId.endsWith("-enrollment-form") && schoolKey != null) {
 			l.addFilterQuery("pk_indexed_long:" + schoolKey);
 		} else {
 			for(String var : siteRequest_.getRequestVars().keySet()) {
