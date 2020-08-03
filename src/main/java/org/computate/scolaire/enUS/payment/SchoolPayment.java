@@ -347,7 +347,7 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 		}
 		if(paymentAmount != null) {
 			o.append(" ").append(fn.format(paymentAmount));
-			o.append(" paiement");
+			o.append(" payment");
 			if(childCompleteNamePreferred != null)
 				o.append(String.format(" for %s", childCompleteNamePreferred));
 			if(BooleanUtils.isTrue(paymentCheck))
@@ -440,7 +440,7 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 		}
 		if(paymentAmount != null) {
 			o.append(" ").append(fn.format(paymentAmount));
-			o.append(" paiement");
+			o.append(" payment");
 			if(childCompleteNamePreferred != null)
 				o.append(String.format(" for %s", childCompleteNamePreferred));
 			if(BooleanUtils.isTrue(paymentCheck))
