@@ -239,32 +239,33 @@ public class EnrollmentPage extends EnrollmentPageGen<EnrollmentGenPage> {
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 					) {
+				LocalDate lateFeeDate = LocalDate.now().plusDays(15);
 				{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile w3-padding ").f();
 					{ e("div").a("class", "").f();
 						e("button")
 							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-blue-gray ")
-							.a("onclick", "postSchoolPaymentVals({enrollmentKey:'", schoolEnrollment.getPk(), "',chargeLateFee:true,chargeAmount:'5',paymentDescription:'Late pick-up/drop-off fee',paymentDate:'", LocalDate.now().toString(), "'}); ")
+							.a("onclick", "postSchoolPaymentVals({enrollmentKey:'", schoolEnrollment.getPk(), "',chargeLateFee:true,chargeAmount:'5',paymentDescription:'Late pick-up/drop-off fee',paymentDate:'", lateFeeDate.toString(), "'}); ")
 							.f().sx("Add a $5 late pick-up/drop-off fee")
 						.g("button");
 					} g("div");
 					{ e("div").a("class", "").f();
 						e("button")
 							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-blue-gray ")
-							.a("onclick", "postSchoolPaymentVals({enrollmentKey:'", schoolEnrollment.getPk(), "',chargeLateFee:true,chargeAmount:'10',paymentDescription:'Late pick-up/drop-off fee',paymentDate:'", LocalDate.now().toString(), "'}); ")
+							.a("onclick", "postSchoolPaymentVals({enrollmentKey:'", schoolEnrollment.getPk(), "',chargeLateFee:true,chargeAmount:'10',paymentDescription:'Late pick-up/drop-off fee',paymentDate:'", lateFeeDate.toString(), "'}); ")
 							.f().sx("Add a $10 late pick-up/drop-off fee")
 						.g("button");
 					} g("div");
 					{ e("div").a("class", "").f();
 						e("button")
 							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-blue-gray ")
-							.a("onclick", "postSchoolPaymentVals({enrollmentKey:'", schoolEnrollment.getPk(), "',chargeLateFee:true,chargeAmount:'15',paymentDescription:'Late pick-up/drop-off fee',paymentDate:'", LocalDate.now().toString(), "'}); ")
+							.a("onclick", "postSchoolPaymentVals({enrollmentKey:'", schoolEnrollment.getPk(), "',chargeLateFee:true,chargeAmount:'15',paymentDescription:'Late pick-up/drop-off fee',paymentDate:'", lateFeeDate.toString(), "'}); ")
 							.f().sx("Add a $15 late pick-up/drop-off fee")
 						.g("button");
 					} g("div");
 					{ e("div").a("class", "").f();
 						e("button")
 							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-blue-gray ")
-							.a("onclick", "postSchoolPaymentVals({enrollmentKey:'", schoolEnrollment.getPk(), "',chargeLateFee:true,chargeAmount:'20',paymentDescription:'Late pick-up/drop-off fee',paymentDate:'", LocalDate.now().toString(), "'}); ")
+							.a("onclick", "postSchoolPaymentVals({enrollmentKey:'", schoolEnrollment.getPk(), "',chargeLateFee:true,chargeAmount:'20',paymentDescription:'Late pick-up/drop-off fee',paymentDate:'", lateFeeDate.toString(), "'}); ")
 							.f().sx("Add a $20 late pick-up/drop-off fee")
 						.g("button");
 					} g("div");

@@ -416,7 +416,7 @@ public class SchoolEnrollmentEnUSApiServiceImpl extends SchoolEnrollmentEnUSGenA
 				chargeLateFeeList.setC(SchoolPayment.class);
 				chargeLateFeeList.addFilterQuery("enrollmentKey_indexed_long:" + schoolEnrollment.getPk());
 				chargeLateFeeList.addFilterQuery("chargeLateFee_indexed_boolean:true");
-//				chargeLateFeeList.addFilterQuery("paymentDate_indexed_date:[\"" + DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(lateFeeEndDate.atStartOfDay(zoneId).minusDays(1).toInstant().atZone(ZoneId.of("Z"))) + "\" TO \"" + DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(lateFeeEndDate.atStartOfDay(zoneId).plusDays(1).toInstant().atZone(ZoneId.of("Z"))) + "\"]");
+				chargeLateFeeList.addFilterQuery("paymentDate_indexed_date:[\"" + DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(lateFeeEndDate.atStartOfDay(zoneId).minusDays(1).toInstant().atZone(ZoneId.of("Z"))) + "\" TO \"" + DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(lateFeeEndDate.atStartOfDay(zoneId).plusDays(1).toInstant().atZone(ZoneId.of("Z"))) + "\"]");
 				chargeLateFeeList.add("json.facet", "{sum_chargeAmount:'sum(chargeAmount_indexed_double)'}");
 				chargeLateFeeList.setRows(0);
 				chargeLateFeeList.initDeepSearchList(siteRequest);

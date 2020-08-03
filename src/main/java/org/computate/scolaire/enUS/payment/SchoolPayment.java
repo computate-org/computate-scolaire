@@ -303,10 +303,10 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 		SiteConfig siteConfig = siteRequest_.getSiteConfig_();
 		ZoneId zoneId = ZoneId.of(siteConfig.getSiteZone());
 		LocalDate now = LocalDate.now(zoneId);
-		if(chargeAmount != null && (chargeEnrollment 
-				|| chargeFirstLast && paymentDate.compareTo(now.plusDays(15)) <= 0
+		if(chargeAmount != null && (chargeEnrollment && paymentDate.compareTo(now.plusDays(15)) <= 0 && paymentDate.compareTo(now) >= 0
+				|| chargeFirstLast && paymentDate.compareTo(now.plusDays(15)) <= 0 && paymentDate.compareTo(now) >= 0
 //				|| paymentDate != null && paymentDate.compareTo(paymentNext.minusMonths(1)) > 0 && paymentDate.compareTo(paymentNext) <= 0))
-				|| paymentDate != null && paymentDate.compareTo(now.plusDays(15)) <= 0) && paymentDate.compareTo(paymentNext.minusMonths(1)) > 0 && paymentDate.compareTo(paymentNext) <= 0)
+				|| paymentDate != null && paymentDate.compareTo(now.plusDays(15)) <= 0 && paymentDate.compareTo(now) >= 0) && paymentDate.compareTo(paymentNext.minusMonths(1)) > 0 && paymentDate.compareTo(paymentNext) <= 0)
 			c.o(chargeAmount);
 	}
 
@@ -315,7 +315,7 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 		ZoneId zoneId = ZoneId.of(configSite.getSiteZone());
 		LocalDate now = LocalDate.now(zoneId);
 		if(chargeAmount != null && paymentDate != null 
-				&& !chargeEnrollment 
+				&& !(chargeEnrollment && paymentDate.compareTo(now.plusDays(15)) <= 0)
 				&& !(chargeFirstLast && paymentDate.compareTo(now.plusDays(15)) <= 0)
 				&& paymentDate.compareTo(now.plusDays(15)) > 0)
 //				&& paymentDate.compareTo(paymentNext) > 0)
@@ -325,6 +325,7 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 	protected void _paymentShortName(Wrap<String> c) {
 		NumberFormat fn = NumberFormat.getCurrencyInstance(Locale.US);
 		DateTimeFormatter fd = DateTimeFormatter.ofPattern("MMMM", Locale.US);
+		DateTimeFormatter fd2 = DateTimeFormatter.ofPattern("MMM d yyyy", Locale.US);
 		fn.setMaximumFractionDigits(0);
 
 		StringBuilder o = new StringBuilder();
@@ -337,9 +338,18 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 				o.append(String.format("%s late fee", fn.format(chargeAmount)));
 			else if(paymentDate != null)
 				o.append(String.format("%s tuition", fd.format(paymentDate.plusMonths(1))));
+
+			if(childCompleteNamePreferred != null)
+				o.append(String.format(" for %s", childCompleteNamePreferred));
+		}
+		if(chargeAmount != null && paymentAmount != null) {
+			o.append(" and ");
 		}
 		if(paymentAmount != null) {
-			o.append("Payment");
+			o.append(" ").append(fn.format(paymentAmount));
+			o.append(" paiement");
+			if(childCompleteNamePreferred != null)
+				o.append(String.format(" for %s", childCompleteNamePreferred));
 			if(BooleanUtils.isTrue(paymentCheck))
 				o.append(" by check");
 			if(BooleanUtils.isTrue(paymentCash))
@@ -359,26 +369,30 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 	protected void _paymentCompleteName(Wrap<String> c) {
 		NumberFormat fn = NumberFormat.getCurrencyInstance(Locale.US);
 		DateTimeFormatter fd = DateTimeFormatter.ofPattern("MMMM yyyy", Locale.US);
+		DateTimeFormatter fd2 = DateTimeFormatter.ofPattern("MMM d yyyy", Locale.US);
 		fn.setMaximumFractionDigits(0);
 		StringBuilder o = new StringBuilder();
 
+		if(paymentDate != null)
+			o.append(paymentDate.format(fd2));
 		if(chargeAmount != null) {
 			if(enrollment_ != null && chargeFirstLast && enrollment_.getSessionStartDate() != null && enrollment_.getSessionEndDate() != null)
-				o.append(String.format("%s %s + %s tuition", fn.format(chargeAmount), fd.format(enrollment_.getSessionStartDate()), fd.format(enrollment_.getSessionEndDate())));
+				o.append(" ").append(String.format("%s %s + %s tuition", fn.format(chargeAmount), fd.format(enrollment_.getSessionStartDate()), fd.format(enrollment_.getSessionEndDate())));
 			else if(enrollment_ != null && chargeEnrollment && enrollment_.getSessionStartDate() != null && enrollment_.getSessionEndDate() != null)
-				o.append(String.format("%s %s-%s enrollment fee", fn.format(chargeAmount), fd.format(enrollment_.getSessionStartDate()), fd.format(enrollment_.getSessionEndDate())));
+				o.append(" ").append(String.format("%s %s-%s enrollment fee", fn.format(chargeAmount), fd.format(enrollment_.getSessionStartDate()), fd.format(enrollment_.getSessionEndDate())));
 			else if(enrollment_ != null && chargeLateFee && chargeAmount != null)
-				o.append(String.format("%s late fee", fn.format(chargeAmount)));
+				o.append(" ").append(String.format("%s late fee", fn.format(chargeAmount)));
 			else if(chargeAmount != null && paymentDate != null)
-				o.append(String.format("%s %s tuition", fn.format(chargeAmount), fd.format(paymentDate.plusMonths(1))));
+				o.append(" ").append(String.format("%s %s tuition", fn.format(chargeAmount), fd.format(paymentDate.plusMonths(1))));
 
 			if(childCompleteNamePreferred != null)
 				o.append(String.format(" for %s", childCompleteNamePreferred));
 		}
+		if(chargeAmount != null && paymentAmount != null) {
+			o.append(" and ");
+		}
 		if(paymentAmount != null) {
-			o.append(fn.format(paymentAmount));
-			if(paymentDate != null)
-				o.append(" ").append(strPaymentDate());
+			o.append(" ").append(fn.format(paymentAmount));
 			o.append(" payment");
 			if(childCompleteNamePreferred != null)
 				o.append(String.format(" for %s", childCompleteNamePreferred));
@@ -402,29 +416,30 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 	protected void  _objectText(Wrap<String> c) {
 		NumberFormat fn = NumberFormat.getCurrencyInstance(Locale.US);
 		DateTimeFormatter fd = DateTimeFormatter.ofPattern("MMMM yyyy", Locale.US);
-		DateTimeFormatter fd2 = DateTimeFormatter.ofPattern("EEEE EEE MMMM MMM d yyyy", Locale.US);
+		DateTimeFormatter fd2 = DateTimeFormatter.ofPattern("MMM d yyyy", Locale.US);
 		fn.setMaximumFractionDigits(0);
 		StringBuilder o = new StringBuilder();
 
+		if(paymentDate != null)
+			o.append(paymentDate.format(fd2));
 		if(chargeAmount != null) {
-			if(paymentDate != null)
-				o.append(" ").append(paymentDate.format(fd2));
 			if(enrollment_ != null && chargeFirstLast && enrollment_.getSessionStartDate() != null && enrollment_.getSessionEndDate() != null)
-				o.append(String.format("%s frais de %s + %s", fn.format(chargeAmount), fd.format(enrollment_.getSessionStartDate()), fd.format(enrollment_.getSessionEndDate())));
+				o.append(" ").append(String.format("%s frais de %s + %s", fn.format(chargeAmount), fd.format(enrollment_.getSessionStartDate()), fd.format(enrollment_.getSessionEndDate())));
 			else if(enrollment_ != null && chargeEnrollment && enrollment_.getSessionStartDate() != null && enrollment_.getSessionEndDate() != null)
-				o.append(String.format("%s frais d'inscription %s-%s", fn.format(chargeAmount), fd.format(enrollment_.getSessionStartDate()), fd.format(enrollment_.getSessionEndDate())));
+				o.append(" ").append(String.format("%s frais d'inscription %s-%s", fn.format(chargeAmount), fd.format(enrollment_.getSessionStartDate()), fd.format(enrollment_.getSessionEndDate())));
 			else if(enrollment_ != null && chargeLateFee && chargeAmount != null)
-				o.append(String.format("%s late fee", fn.format(chargeAmount)));
+				o.append(" ").append(String.format("%s late fee", fn.format(chargeAmount)));
 			else if(chargeAmount != null && paymentDate != null)
-				o.append(String.format("%s frais de %s", fn.format(chargeAmount), fd.format(paymentDate.plusMonths(1))));
+				o.append(" ").append(String.format("%s frais de %s", fn.format(chargeAmount), fd.format(paymentDate.plusMonths(1))));
 
 			if(childCompleteNamePreferred != null)
 				o.append(String.format(" for %s", childCompleteNamePreferred));
 		}
+		if(chargeAmount != null && paymentAmount != null) {
+			o.append(" and ");
+		}
 		if(paymentAmount != null) {
-			o.append(fn.format(paymentAmount));
-			if(paymentDate != null)
-				o.append(" ").append(paymentDate.format(fd2));
+			o.append(" ").append(fn.format(paymentAmount));
 			o.append(" paiement");
 			if(childCompleteNamePreferred != null)
 				o.append(String.format(" for %s", childCompleteNamePreferred));
