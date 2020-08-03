@@ -866,7 +866,7 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 			throw new RuntimeException("The request was not matched to a school. ");
 		ArrayList<String> tos = new ArrayList<>();
 		tos.addAll(Arrays.asList(emailToSchool.trim().split("\\s*,\\s*")));
-		tos.addAll(Arrays.asList(emailToAddress.trim().split("\\s*,\\s*")));
+		tos.addAll(Arrays.asList(emailToAddress.trim().split("\\s*;\\s*")));
 		message.setTo(tos);
 
 		if(pageDesign != null) {
