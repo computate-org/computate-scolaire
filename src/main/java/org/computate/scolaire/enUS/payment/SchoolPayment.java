@@ -303,10 +303,9 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 		SiteConfig siteConfig = siteRequest_.getSiteConfig_();
 		ZoneId zoneId = ZoneId.of(siteConfig.getSiteZone());
 		LocalDate now = LocalDate.now(zoneId);
-		if(chargeAmount != null && (chargeEnrollment && paymentDate.compareTo(now.plusDays(15)) <= 0 && paymentDate.compareTo(now) >= 0
-				|| chargeFirstLast && paymentDate.compareTo(now.plusDays(15)) <= 0 && paymentDate.compareTo(now) >= 0
-//				|| paymentDate != null && paymentDate.compareTo(paymentNext.minusMonths(1)) > 0 && paymentDate.compareTo(paymentNext) <= 0))
-				|| paymentDate != null && paymentDate.compareTo(now.plusDays(15)) <= 0 && paymentDate.compareTo(now) >= 0) && paymentDate.compareTo(paymentNext.minusMonths(1)) > 0 && paymentDate.compareTo(paymentNext) <= 0)
+		if(chargeAmount != null && (chargeEnrollment && paymentDate.compareTo(now.plusDays(15)) <= 0 && paymentDate.compareTo(now.minusDays(1)) >= 0
+				|| chargeFirstLast && paymentDate.compareTo(now.plusDays(15)) <= 0 && paymentDate.compareTo(now.minusDays(1)) >= 0
+				|| paymentDate != null && paymentDate.compareTo(now.plusDays(15)) <= 0 && paymentDate.compareTo(now.minusDays(1)) >= 0) && paymentDate.compareTo(paymentNext.minusMonths(1)) > 0 && paymentDate.compareTo(paymentNext) <= 0)
 			c.o(chargeAmount);
 	}
 
@@ -315,8 +314,6 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 		ZoneId zoneId = ZoneId.of(configSite.getSiteZone());
 		LocalDate now = LocalDate.now(zoneId);
 		if(chargeAmount != null && paymentDate != null 
-				&& !(chargeEnrollment && paymentDate.compareTo(now.plusDays(15)) <= 0)
-				&& !(chargeFirstLast && paymentDate.compareTo(now.plusDays(15)) <= 0)
 				&& paymentDate.compareTo(now.plusDays(15)) > 0)
 //				&& paymentDate.compareTo(paymentNext) > 0)
 			c.o(chargeAmount);

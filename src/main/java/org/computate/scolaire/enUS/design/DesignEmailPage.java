@@ -480,7 +480,7 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 		l.setC(SchoolYear.class);
 
 		Long yearKey = Optional.ofNullable(enrollmentSearch.first()).map(SchoolEnrollment::getYearKey).orElse(null);
-		if(attachmentDesignId.endsWith("-enrollment-form") && yearKey != null) {
+		if(attachmentDesignId != null && attachmentDesignId.endsWith("-enrollment-form") && yearKey != null) {
 			l.addFilterQuery("pk_indexed_long:" + yearKey);
 		} else {
 			for(String var : siteRequest_.getRequestVars().keySet()) {
