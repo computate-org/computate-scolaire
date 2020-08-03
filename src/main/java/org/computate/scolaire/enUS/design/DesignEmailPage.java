@@ -345,6 +345,10 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 			l.addSort("childFirstNamePreferred_indexed_string", ORDER.asc);
 			l.addFilterQuery("paymentsCurrent_indexed_boolean:false");
 		}
+		else if(pageDesignId.endsWith("-enrollment-form")) {
+			if(!siteRequest_.getRequestVars().containsKey("enrollmentKey"))
+				l.addFilterQuery("enrollmentKey_indexed_long:0");
+		}
 
 		for(String var : siteRequest_.getRequestVars().keySet()) {
 			String val = siteRequest_.getRequestVars().get(var);

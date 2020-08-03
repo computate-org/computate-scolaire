@@ -130,6 +130,10 @@ public class DesignPdfPage extends DesignPdfPageGen<DesignPdfGenPage> {
 			l.addSort("childFirstNamePreferred_indexed_string", ORDER.asc);
 			l.addFilterQuery("paymentsCurrent_indexed_boolean:false");
 		}
+		else if(designId.endsWith("-enrollment-form")) {
+			if(!siteRequest_.getRequestVars().containsKey("enrollmentKey"))
+				l.addFilterQuery("enrollmentKey_indexed_long:0");
+		}
 
 		for(String var : siteRequest_.getRequestVars().keySet()) {
 			String val = siteRequest_.getRequestVars().get(var);
