@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.design;  
+package org.computate.scolaire.frFR.design; 
 
 import java.util.List;
 

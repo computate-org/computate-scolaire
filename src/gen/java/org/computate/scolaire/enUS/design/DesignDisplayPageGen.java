@@ -101,66 +101,66 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 		return (DesignDisplayPage)this;
 	}
 
-	//////////////
-	// designId //
-	//////////////
+	//////////////////
+	// pageDesignId //
+	//////////////////
 
-	/**	 The entity designId
+	/**	 The entity pageDesignId
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected String designId;
+	protected String pageDesignId;
 	@JsonIgnore
-	public Wrap<String> designIdWrap = new Wrap<String>().p(this).c(String.class).var("designId").o(designId);
+	public Wrap<String> pageDesignIdWrap = new Wrap<String>().p(this).c(String.class).var("pageDesignId").o(pageDesignId);
 
-	/**	<br/> The entity designId
+	/**	<br/> The entity pageDesignId
 	 *  is defined as null before being initialized. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:designId">Find the entity designId in Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:pageDesignId">Find the entity pageDesignId in Solr</a>
 	 * <br/>
 	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
-	protected abstract void _designId(Wrap<String> c);
+	protected abstract void _pageDesignId(Wrap<String> c);
 
-	public String getDesignId() {
-		return designId;
+	public String getPageDesignId() {
+		return pageDesignId;
 	}
 
-	public void setDesignId(String designId) {
-		this.designId = designId;
-		this.designIdWrap.alreadyInitialized = true;
+	public void setPageDesignId(String pageDesignId) {
+		this.pageDesignId = pageDesignId;
+		this.pageDesignIdWrap.alreadyInitialized = true;
 	}
-	protected DesignDisplayPage designIdInit() {
-		if(!designIdWrap.alreadyInitialized) {
-			_designId(designIdWrap);
-			if(designId == null)
-				setDesignId(designIdWrap.o);
+	protected DesignDisplayPage pageDesignIdInit() {
+		if(!pageDesignIdWrap.alreadyInitialized) {
+			_pageDesignId(pageDesignIdWrap);
+			if(pageDesignId == null)
+				setPageDesignId(pageDesignIdWrap.o);
 		}
-		designIdWrap.alreadyInitialized(true);
+		pageDesignIdWrap.alreadyInitialized(true);
 		return (DesignDisplayPage)this;
 	}
 
-	public String solrDesignId() {
-		return designId;
+	public String solrPageDesignId() {
+		return pageDesignId;
 	}
 
-	public String strDesignId() {
-		return designId == null ? "" : designId;
+	public String strPageDesignId() {
+		return pageDesignId == null ? "" : pageDesignId;
 	}
 
-	public String jsonDesignId() {
-		return designId == null ? "" : designId;
+	public String jsonPageDesignId() {
+		return pageDesignId == null ? "" : pageDesignId;
 	}
 
-	public String nomAffichageDesignId() {
+	public String nomAffichagePageDesignId() {
 		return null;
 	}
 
-	public String htmTooltipDesignId() {
+	public String htmTooltipPageDesignId() {
 		return null;
 	}
 
-	public String htmDesignId() {
-		return designId == null ? "" : StringEscapeUtils.escapeHtml4(strDesignId());
+	public String htmPageDesignId() {
+		return pageDesignId == null ? "" : StringEscapeUtils.escapeHtml4(strPageDesignId());
 	}
 
 	//////////////////////
@@ -2333,7 +2333,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 
 	public void initDesignDisplayPage() {
 		pageDesignInit();
-		designIdInit();
+		pageDesignIdInit();
 		enrollmentSearchInit();
 		schoolEnrollmentInit();
 		enrollmentsInit();
@@ -2447,8 +2447,8 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 		switch(var) {
 			case "pageDesign":
 				return oDesignDisplayPage.pageDesign;
-			case "designId":
-				return oDesignDisplayPage.designId;
+			case "pageDesignId":
+				return oDesignDisplayPage.pageDesignId;
 			case "enrollmentSearch":
 				return oDesignDisplayPage.enrollmentSearch;
 			case "schoolEnrollment":

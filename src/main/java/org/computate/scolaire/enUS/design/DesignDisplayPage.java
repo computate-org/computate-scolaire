@@ -43,7 +43,7 @@ public class DesignDisplayPage extends DesignDisplayPageGen<DesignDisplayGenPage
 	 * {@inheritDoc}
 	 * 
 	 **/
-	protected void _designId(Wrap<String> c) {
+	protected void _pageDesignId(Wrap<String> c) {
 		if(pageDesign != null)
 			c.o(pageDesign.getObjectId());
 	}
@@ -65,7 +65,7 @@ public class DesignDisplayPage extends DesignDisplayPageGen<DesignDisplayGenPage
 						+ " OR userKeys_indexed_longs:" + Optional.ofNullable(siteRequest_.getUserKey()).orElse(0L)
 			);
 		}
-		if(!designId.endsWith("-enrollment-form")) {
+		if(!pageDesignId.endsWith("-enrollment-form")) {
 			l.addFilterQuery("childFirstName_indexed_string:[* TO *]");
 		}
 
@@ -75,26 +75,26 @@ public class DesignDisplayPage extends DesignDisplayPageGen<DesignDisplayGenPage
 		l.addSort("blockPricePerMonth_indexed_double", ORDER.asc);
 		l.addSort("blockStartTime_indexed_string", ORDER.asc);
 
-		if("name-roster".equals(designId)) {
+		if("name-roster".equals(pageDesignId)) {
 			l.addSort("childCompleteNamePreferred_indexed_string", ORDER.asc);
 		}
-		else if("birthday-roster".equals(designId)) {
+		else if("birthday-roster".equals(pageDesignId)) {
 			l.addSort("childBirthMonth_indexed_int", ORDER.asc);
 			l.addSort("childBirthDay_indexed_int", ORDER.asc);
 		}
-		else if("email-roster".equals(designId)) {
+		else if("email-roster".equals(pageDesignId)) {
 			l.addSort("enrollmentGroupName_indexed_string", ORDER.asc);
 		}
-		else if(StringUtils.equalsAny(designId, "group-names-roster", "group-details-roster")) {
+		else if(StringUtils.equalsAny(pageDesignId, "group-names-roster", "group-details-roster")) {
 			l.addSort("enrollmentGroupName_indexed_string", ORDER.asc);
 			l.addSort("childFirstNamePreferred_indexed_string", ORDER.asc);
 		}
-		else if(StringUtils.equalsAny(designId, "payment-roster")) {
+		else if(StringUtils.equalsAny(pageDesignId, "payment-roster")) {
 			l.addSort("enrollmentGroupName_indexed_string", ORDER.asc);
 			l.addSort("childFirstNamePreferred_indexed_string", ORDER.asc);
 			l.addFilterQuery("paymentsCurrent_indexed_boolean:false");
 		}
-		else if(designId.endsWith("-enrollment-form")) {
+		else if(pageDesignId.endsWith("-enrollment-form")) {
 			if(!siteRequest_.getRequestVars().containsKey("enrollmentKey"))
 				l.addFilterQuery("enrollmentKey_indexed_long:0");
 		}
@@ -144,7 +144,7 @@ public class DesignDisplayPage extends DesignDisplayPageGen<DesignDisplayGenPage
 				enrollment = enrollments.get(i);
 				blockKeyCurrent = enrollment.getBlockKey();
 				groupCurrent = enrollment.getEnrollmentGroupName();
-				if(StringUtils.equalsAny(designId, "payment-roster", "group-names-roster", "group-details-roster")) {
+				if(StringUtils.equalsAny(pageDesignId, "payment-roster", "group-names-roster", "group-details-roster")) {
 					if(blockKeyCurrent == null || ObjectUtils.compare(blockKeyCurrent, blockKeyBefore) != 0) {
 						blockKeyBefore = enrollment.getBlockKey();
 						enrollmentGroups = enrollment.getEnrollmentGroups();
@@ -225,7 +225,7 @@ public class DesignDisplayPage extends DesignDisplayPageGen<DesignDisplayGenPage
 		l.setC(SchoolYear.class);
 
 		Long yearKey = Optional.ofNullable(enrollmentSearch.first()).map(SchoolEnrollment::getYearKey).orElse(null);
-		if(designId.endsWith("-enrollment-form") && yearKey != null) {
+		if(pageDesignId.endsWith("-enrollment-form") && yearKey != null) {
 			l.addFilterQuery("pk_indexed_long:" + yearKey);
 		} else {
 			for(String var : siteRequest_.getRequestVars().keySet()) {
@@ -240,7 +240,7 @@ public class DesignDisplayPage extends DesignDisplayPageGen<DesignDisplayGenPage
 	}
 
 	protected void _year_(Wrap<SchoolYear> c) {
-		if(designId.endsWith("-enrollment-form")) {
+		if(pageDesignId.endsWith("-enrollment-form")) {
 			if(yearSearch.size() == 0) {
 				throw new RuntimeException("No year was found for the query: " + siteRequest_.getOperationRequest().getParams().getJsonObject("query").encode());
 			}
@@ -264,7 +264,7 @@ public class DesignDisplayPage extends DesignDisplayPageGen<DesignDisplayGenPage
 		l.setC(School.class);
 
 		Long schoolKey = Optional.ofNullable(enrollmentSearch.first()).map(SchoolEnrollment::getSchoolKey).orElse(null);
-		if(designId.endsWith("-enrollment-form") && schoolKey != null) {
+		if(pageDesignId.endsWith("-enrollment-form") && schoolKey != null) {
 			l.addFilterQuery("pk_indexed_long:" + schoolKey);
 		} else {
 			for(String var : siteRequest_.getRequestVars().keySet()) {
@@ -279,7 +279,7 @@ public class DesignDisplayPage extends DesignDisplayPageGen<DesignDisplayGenPage
 	}
 
 	protected void _school_(Wrap<School> c) {
-		if(designId.endsWith("-enrollment-form")) {
+		if(pageDesignId.endsWith("-enrollment-form")) {
 			if(schoolSearch.size() == 0) {
 				throw new RuntimeException("No school was found for the query: " + siteRequest_.getOperationRequest().getParams().getJsonObject("query").encode());
 			}
@@ -293,7 +293,7 @@ public class DesignDisplayPage extends DesignDisplayPageGen<DesignDisplayGenPage
 	}
 
 	protected void _paymentSearch(SearchList<SchoolPayment> l) {
-		if(designId.equals("receipts")) {
+		if(pageDesignId.equals("receipts")) {
 			l.setStore(true);
 			l.setQuery("*:*");
 			l.setC(SchoolPayment.class);

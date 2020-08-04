@@ -342,7 +342,7 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 				.fg();
 
 		} else {
-			sx(htmDesignParentCles());
+			e("span").a("class", "varDesignPage", pk, "DesignParentCles ").f().sx(htmDesignParentCles()).g("span");
 		}
 	}
 
@@ -501,7 +501,7 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 				.fg();
 
 		} else {
-			sx(htmPartHtmlCles());
+			e("span").a("class", "varDesignPage", pk, "PartHtmlCles ").f().sx(htmPartHtmlCles()).g("span");
 		}
 	}
 
@@ -642,7 +642,7 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 			.fg();
 
 		} else {
-			sx(htmDesignPageNomComplet());
+			e("span").a("class", "varDesignPage", pk, "DesignPageNomComplet ").f().sx(htmDesignPageNomComplet()).g("span");
 		}
 	}
 
@@ -788,7 +788,7 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 			}
 
 		} else {
-			sx(htmDesignCache());
+			e("span").a("class", "varDesignPage", pk, "DesignCache ").f().sx(htmDesignCache()).g("span");
 		}
 	}
 
@@ -1215,6 +1215,8 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		Object o = Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
 		if(o != null && o instanceof DesignPage) {
 			DesignPage original = (DesignPage)o;
+			if(!Objects.equals(designPageCle, original.getDesignPageCle()))
+				requeteApi.addVars("designPageCle");
 			if(!Objects.equals(designEnfantCles, original.getDesignEnfantCles()))
 				requeteApi.addVars("designEnfantCles");
 			if(!Objects.equals(designParentCles, original.getDesignParentCles()))
@@ -1234,7 +1236,7 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), designEnfantCles, designParentCles, partHtmlCles, designPageNomComplet, designCache);
+		return Objects.hash(super.hashCode(), designPageCle, designEnfantCles, designParentCles, partHtmlCles, designPageNomComplet, designCache);
 	}
 
 	////////////
@@ -1248,6 +1250,7 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 			return false;
 		DesignPage that = (DesignPage)o;
 		return super.equals(o)
+				&& Objects.equals( designPageCle, that.designPageCle )
 				&& Objects.equals( designEnfantCles, that.designEnfantCles )
 				&& Objects.equals( designParentCles, that.designParentCles )
 				&& Objects.equals( partHtmlCles, that.partHtmlCles )
@@ -1263,7 +1266,8 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString() + "\n");
 		sb.append("DesignPage { ");
-		sb.append( "designEnfantCles: " ).append(designEnfantCles);
+		sb.append( "designPageCle: " ).append(designPageCle);
+		sb.append( ", designEnfantCles: " ).append(designEnfantCles);
 		sb.append( ", designParentCles: " ).append(designParentCles);
 		sb.append( ", partHtmlCles: " ).append(partHtmlCles);
 		sb.append( ", designPageNomComplet: \"" ).append(designPageNomComplet).append( "\"" );

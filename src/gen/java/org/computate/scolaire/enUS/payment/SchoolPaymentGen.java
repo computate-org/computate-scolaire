@@ -252,7 +252,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
 				) {
-				sx(htmEnrollmentKey());
+				e("span").a("class", "varSchoolPayment", pk, "EnrollmentKey ").f().sx(htmEnrollmentKey()).g("span");
 			}
 		}
 	}
@@ -1429,7 +1429,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
 				) {
-				sx(htmChildCompleteNamePreferred());
+				e("span").a("class", "varSchoolPayment", pk, "ChildCompleteNamePreferred ").f().sx(htmChildCompleteNamePreferred()).g("span");
 			}
 		}
 	}
@@ -1575,7 +1575,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
 				) {
-				sx(htmChildBirthDate());
+				e("span").a("class", "varSchoolPayment", pk, "ChildBirthDate ").f().sx(htmChildBirthDate()).g("span");
 			}
 		}
 	}
@@ -1709,7 +1709,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
 				) {
-				sx(htmMomCompleteNamePreferred());
+				e("span").a("class", "varSchoolPayment", pk, "MomCompleteNamePreferred ").f().sx(htmMomCompleteNamePreferred()).g("span");
 			}
 		}
 	}
@@ -1844,7 +1844,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
 				) {
-				sx(htmDadCompleteNamePreferred());
+				e("span").a("class", "varSchoolPayment", pk, "DadCompleteNamePreferred ").f().sx(htmDadCompleteNamePreferred()).g("span");
 			}
 		}
 	}
@@ -3086,7 +3086,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
 				) {
-				sx(htmEnrollmentPaymentEachMonth());
+				e("span").a("class", "varSchoolPayment", pk, "EnrollmentPaymentEachMonth ").f().sx(htmEnrollmentPaymentEachMonth()).g("span");
 			}
 		}
 	}
@@ -3205,7 +3205,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
 				) {
-				sx(htmPaymentDescription());
+				e("span").a("class", "varSchoolPayment", pk, "PaymentDescription ").f().sx(htmPaymentDescription()).g("span");
 			}
 		}
 	}
@@ -3351,7 +3351,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
 				) {
-				sx(htmPaymentDate());
+				e("span").a("class", "varSchoolPayment", pk, "PaymentDate ").f().sx(htmPaymentDate()).g("span");
 			}
 		}
 	}
@@ -3503,7 +3503,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
 				) {
-				sx(htmPaymentAmount());
+				e("span").a("class", "varSchoolPayment", pk, "PaymentAmount ").f().sx(htmPaymentAmount()).g("span");
 			}
 		}
 	}
@@ -3656,7 +3656,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
 				) {
-				sx(htmPaymentCash());
+				e("span").a("class", "varSchoolPayment", pk, "PaymentCash ").f().sx(htmPaymentCash()).g("span");
 			}
 		}
 	}
@@ -3793,7 +3793,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
 				) {
-				sx(htmPaymentCheck());
+				e("span").a("class", "varSchoolPayment", pk, "PaymentCheck ").f().sx(htmPaymentCheck()).g("span");
 			}
 		}
 	}
@@ -3930,7 +3930,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
 				) {
-				sx(htmPaymentECheck());
+				e("span").a("class", "varSchoolPayment", pk, "PaymentECheck ").f().sx(htmPaymentECheck()).g("span");
 			}
 		}
 	}
@@ -4067,7 +4067,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
 				) {
-				sx(htmPaymentSystem());
+				e("span").a("class", "varSchoolPayment", pk, "PaymentSystem ").f().sx(htmPaymentSystem()).g("span");
 			}
 		}
 	}
@@ -4248,7 +4248,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
 				) {
-				sx(htmPaymentBy());
+				e("span").a("class", "varSchoolPayment", pk, "PaymentBy ").f().sx(htmPaymentBy()).g("span");
 			}
 		}
 	}
@@ -4383,7 +4383,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
 				) {
-				sx(htmTransactionId());
+				e("span").a("class", "varSchoolPayment", pk, "TransactionId ").f().sx(htmTransactionId()).g("span");
 			}
 		}
 	}
@@ -4518,7 +4518,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
 				) {
-				sx(htmCustomerProfileId());
+				e("span").a("class", "varSchoolPayment", pk, "CustomerProfileId ").f().sx(htmCustomerProfileId()).g("span");
 			}
 		}
 	}
@@ -4653,7 +4653,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
 				) {
-				sx(htmTransactionStatus());
+				e("span").a("class", "varSchoolPayment", pk, "TransactionStatus ").f().sx(htmTransactionStatus()).g("span");
 			}
 		}
 	}
@@ -4806,7 +4806,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
 				) {
-				sx(htmPaymentRecieved());
+				e("span").a("class", "varSchoolPayment", pk, "PaymentRecieved ").f().sx(htmPaymentRecieved()).g("span");
 			}
 		}
 	}
@@ -4943,7 +4943,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
 				) {
-				sx(htmChargeAmount());
+				e("span").a("class", "varSchoolPayment", pk, "ChargeAmount ").f().sx(htmChargeAmount()).g("span");
 			}
 		}
 	}
@@ -5096,7 +5096,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
 				) {
-				sx(htmChargeFirstLast());
+				e("span").a("class", "varSchoolPayment", pk, "ChargeFirstLast ").f().sx(htmChargeFirstLast()).g("span");
 			}
 		}
 	}
@@ -5233,7 +5233,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
 				) {
-				sx(htmChargeEnrollment());
+				e("span").a("class", "varSchoolPayment", pk, "ChargeEnrollment ").f().sx(htmChargeEnrollment()).g("span");
 			}
 		}
 	}
@@ -5370,7 +5370,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
 				) {
-				sx(htmChargeMonth());
+				e("span").a("class", "varSchoolPayment", pk, "ChargeMonth ").f().sx(htmChargeMonth()).g("span");
 			}
 		}
 	}
@@ -5507,7 +5507,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
 				) {
-				sx(htmChargeLateFee());
+				e("span").a("class", "varSchoolPayment", pk, "ChargeLateFee ").f().sx(htmChargeLateFee()).g("span");
 			}
 		}
 	}
@@ -5696,7 +5696,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void inputChargeAmountDue(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		sx(htmChargeAmountDue());
+		e("span").a("class", "varSchoolPayment", pk, "ChargeAmountDue ").f().sx(htmChargeAmountDue()).g("span");
 	}
 
 	public void htmChargeAmountDue(String classApiMethodMethod) {
@@ -5802,7 +5802,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public void inputChargeAmountFuture(String classApiMethodMethod) {
 		SchoolPayment s = (SchoolPayment)this;
-		sx(htmChargeAmountFuture());
+		e("span").a("class", "varSchoolPayment", pk, "ChargeAmountFuture ").f().sx(htmChargeAmountFuture()).g("span");
 	}
 
 	public void htmChargeAmountFuture(String classApiMethodMethod) {
@@ -5919,7 +5919,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
 				) {
-				sx(htmPaymentShortName());
+				e("span").a("class", "varSchoolPayment", pk, "PaymentShortName ").f().sx(htmPaymentShortName()).g("span");
 			}
 		}
 	}
@@ -7534,8 +7534,36 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		Object o = Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
 		if(o != null && o instanceof SchoolPayment) {
 			SchoolPayment original = (SchoolPayment)o;
+			if(!Objects.equals(paymentKey, original.getPaymentKey()))
+				apiRequest.addVars("paymentKey");
 			if(!Objects.equals(enrollmentKey, original.getEnrollmentKey()))
 				apiRequest.addVars("enrollmentKey");
+			if(!Objects.equals(schoolNumber, original.getSchoolNumber()))
+				apiRequest.addVars("schoolNumber");
+			if(!Objects.equals(userKeys, original.getUserKeys()))
+				apiRequest.addVars("userKeys");
+			if(!Objects.equals(schoolKey, original.getSchoolKey()))
+				apiRequest.addVars("schoolKey");
+			if(!Objects.equals(schoolAddress, original.getSchoolAddress()))
+				apiRequest.addVars("schoolAddress");
+			if(!Objects.equals(schoolPhoneNumber, original.getSchoolPhoneNumber()))
+				apiRequest.addVars("schoolPhoneNumber");
+			if(!Objects.equals(yearKey, original.getYearKey()))
+				apiRequest.addVars("yearKey");
+			if(!Objects.equals(sessionKey, original.getSessionKey()))
+				apiRequest.addVars("sessionKey");
+			if(!Objects.equals(ageKey, original.getAgeKey()))
+				apiRequest.addVars("ageKey");
+			if(!Objects.equals(blockKey, original.getBlockKey()))
+				apiRequest.addVars("blockKey");
+			if(!Objects.equals(childKey, original.getChildKey()))
+				apiRequest.addVars("childKey");
+			if(!Objects.equals(momKeys, original.getMomKeys()))
+				apiRequest.addVars("momKeys");
+			if(!Objects.equals(dadKeys, original.getDadKeys()))
+				apiRequest.addVars("dadKeys");
+			if(!Objects.equals(guardianKeys, original.getGuardianKeys()))
+				apiRequest.addVars("guardianKeys");
 			if(!Objects.equals(childCompleteNamePreferred, original.getChildCompleteNamePreferred()))
 				apiRequest.addVars("childCompleteNamePreferred");
 			if(!Objects.equals(childBirthDate, original.getChildBirthDate()))
@@ -7544,6 +7572,36 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				apiRequest.addVars("momCompleteNamePreferred");
 			if(!Objects.equals(dadCompleteNamePreferred, original.getDadCompleteNamePreferred()))
 				apiRequest.addVars("dadCompleteNamePreferred");
+			if(!Objects.equals(schoolName, original.getSchoolName()))
+				apiRequest.addVars("schoolName");
+			if(!Objects.equals(schoolCompleteName, original.getSchoolCompleteName()))
+				apiRequest.addVars("schoolCompleteName");
+			if(!Objects.equals(schoolLocation, original.getSchoolLocation()))
+				apiRequest.addVars("schoolLocation");
+			if(!Objects.equals(yearStart, original.getYearStart()))
+				apiRequest.addVars("yearStart");
+			if(!Objects.equals(yearEnd, original.getYearEnd()))
+				apiRequest.addVars("yearEnd");
+			if(!Objects.equals(seasonStartDate, original.getSeasonStartDate()))
+				apiRequest.addVars("seasonStartDate");
+			if(!Objects.equals(yearEnrollmentFee, original.getYearEnrollmentFee()))
+				apiRequest.addVars("yearEnrollmentFee");
+			if(!Objects.equals(sessionStartDate, original.getSessionStartDate()))
+				apiRequest.addVars("sessionStartDate");
+			if(!Objects.equals(sessionEndDate, original.getSessionEndDate()))
+				apiRequest.addVars("sessionEndDate");
+			if(!Objects.equals(ageStart, original.getAgeStart()))
+				apiRequest.addVars("ageStart");
+			if(!Objects.equals(ageEnd, original.getAgeEnd()))
+				apiRequest.addVars("ageEnd");
+			if(!Objects.equals(blockStartTime, original.getBlockStartTime()))
+				apiRequest.addVars("blockStartTime");
+			if(!Objects.equals(blockEndTime, original.getBlockEndTime()))
+				apiRequest.addVars("blockEndTime");
+			if(!Objects.equals(blockPricePerMonth, original.getBlockPricePerMonth()))
+				apiRequest.addVars("blockPricePerMonth");
+			if(!Objects.equals(blockTotalPrice, original.getBlockTotalPrice()))
+				apiRequest.addVars("blockTotalPrice");
 			if(!Objects.equals(enrollmentPaymentEachMonth, original.getEnrollmentPaymentEachMonth()))
 				apiRequest.addVars("enrollmentPaymentEachMonth");
 			if(!Objects.equals(paymentDescription, original.getPaymentDescription()))
@@ -7560,6 +7618,8 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				apiRequest.addVars("paymentECheck");
 			if(!Objects.equals(paymentSystem, original.getPaymentSystem()))
 				apiRequest.addVars("paymentSystem");
+			if(!Objects.equals(paymentType, original.getPaymentType()))
+				apiRequest.addVars("paymentType");
 			if(!Objects.equals(paymentBy, original.getPaymentBy()))
 				apiRequest.addVars("paymentBy");
 			if(!Objects.equals(transactionId, original.getTransactionId()))
@@ -7580,12 +7640,16 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				apiRequest.addVars("chargeMonth");
 			if(!Objects.equals(chargeLateFee, original.getChargeLateFee()))
 				apiRequest.addVars("chargeLateFee");
+			if(!Objects.equals(paymentNext, original.getPaymentNext()))
+				apiRequest.addVars("paymentNext");
 			if(!Objects.equals(chargeAmountDue, original.getChargeAmountDue()))
 				apiRequest.addVars("chargeAmountDue");
 			if(!Objects.equals(chargeAmountFuture, original.getChargeAmountFuture()))
 				apiRequest.addVars("chargeAmountFuture");
 			if(!Objects.equals(paymentShortName, original.getPaymentShortName()))
 				apiRequest.addVars("paymentShortName");
+			if(!Objects.equals(paymentCompleteName, original.getPaymentCompleteName()))
+				apiRequest.addVars("paymentCompleteName");
 			super.apiRequestCluster();
 		}
 	}
@@ -7595,7 +7659,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), enrollmentKey, childCompleteNamePreferred, childBirthDate, momCompleteNamePreferred, dadCompleteNamePreferred, enrollmentPaymentEachMonth, paymentDescription, paymentDate, paymentAmount, paymentCash, paymentCheck, paymentECheck, paymentSystem, paymentBy, transactionId, customerProfileId, transactionStatus, paymentRecieved, chargeAmount, chargeFirstLast, chargeEnrollment, chargeMonth, chargeLateFee, chargeAmountDue, chargeAmountFuture, paymentShortName);
+		return Objects.hash(super.hashCode(), paymentKey, enrollmentKey, schoolNumber, userKeys, schoolKey, schoolAddress, schoolPhoneNumber, yearKey, sessionKey, ageKey, blockKey, childKey, momKeys, dadKeys, guardianKeys, childCompleteNamePreferred, childBirthDate, momCompleteNamePreferred, dadCompleteNamePreferred, schoolName, schoolCompleteName, schoolLocation, yearStart, yearEnd, seasonStartDate, yearEnrollmentFee, sessionStartDate, sessionEndDate, ageStart, ageEnd, blockStartTime, blockEndTime, blockPricePerMonth, blockTotalPrice, enrollmentPaymentEachMonth, paymentDescription, paymentDate, paymentAmount, paymentCash, paymentCheck, paymentECheck, paymentSystem, paymentType, paymentBy, transactionId, customerProfileId, transactionStatus, paymentRecieved, chargeAmount, chargeFirstLast, chargeEnrollment, chargeMonth, chargeLateFee, paymentNext, chargeAmountDue, chargeAmountFuture, paymentShortName, paymentCompleteName);
 	}
 
 	////////////
@@ -7609,11 +7673,40 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 			return false;
 		SchoolPayment that = (SchoolPayment)o;
 		return super.equals(o)
+				&& Objects.equals( paymentKey, that.paymentKey )
 				&& Objects.equals( enrollmentKey, that.enrollmentKey )
+				&& Objects.equals( schoolNumber, that.schoolNumber )
+				&& Objects.equals( userKeys, that.userKeys )
+				&& Objects.equals( schoolKey, that.schoolKey )
+				&& Objects.equals( schoolAddress, that.schoolAddress )
+				&& Objects.equals( schoolPhoneNumber, that.schoolPhoneNumber )
+				&& Objects.equals( yearKey, that.yearKey )
+				&& Objects.equals( sessionKey, that.sessionKey )
+				&& Objects.equals( ageKey, that.ageKey )
+				&& Objects.equals( blockKey, that.blockKey )
+				&& Objects.equals( childKey, that.childKey )
+				&& Objects.equals( momKeys, that.momKeys )
+				&& Objects.equals( dadKeys, that.dadKeys )
+				&& Objects.equals( guardianKeys, that.guardianKeys )
 				&& Objects.equals( childCompleteNamePreferred, that.childCompleteNamePreferred )
 				&& Objects.equals( childBirthDate, that.childBirthDate )
 				&& Objects.equals( momCompleteNamePreferred, that.momCompleteNamePreferred )
 				&& Objects.equals( dadCompleteNamePreferred, that.dadCompleteNamePreferred )
+				&& Objects.equals( schoolName, that.schoolName )
+				&& Objects.equals( schoolCompleteName, that.schoolCompleteName )
+				&& Objects.equals( schoolLocation, that.schoolLocation )
+				&& Objects.equals( yearStart, that.yearStart )
+				&& Objects.equals( yearEnd, that.yearEnd )
+				&& Objects.equals( seasonStartDate, that.seasonStartDate )
+				&& Objects.equals( yearEnrollmentFee, that.yearEnrollmentFee )
+				&& Objects.equals( sessionStartDate, that.sessionStartDate )
+				&& Objects.equals( sessionEndDate, that.sessionEndDate )
+				&& Objects.equals( ageStart, that.ageStart )
+				&& Objects.equals( ageEnd, that.ageEnd )
+				&& Objects.equals( blockStartTime, that.blockStartTime )
+				&& Objects.equals( blockEndTime, that.blockEndTime )
+				&& Objects.equals( blockPricePerMonth, that.blockPricePerMonth )
+				&& Objects.equals( blockTotalPrice, that.blockTotalPrice )
 				&& Objects.equals( enrollmentPaymentEachMonth, that.enrollmentPaymentEachMonth )
 				&& Objects.equals( paymentDescription, that.paymentDescription )
 				&& Objects.equals( paymentDate, that.paymentDate )
@@ -7622,6 +7715,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				&& Objects.equals( paymentCheck, that.paymentCheck )
 				&& Objects.equals( paymentECheck, that.paymentECheck )
 				&& Objects.equals( paymentSystem, that.paymentSystem )
+				&& Objects.equals( paymentType, that.paymentType )
 				&& Objects.equals( paymentBy, that.paymentBy )
 				&& Objects.equals( transactionId, that.transactionId )
 				&& Objects.equals( customerProfileId, that.customerProfileId )
@@ -7632,9 +7726,11 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				&& Objects.equals( chargeEnrollment, that.chargeEnrollment )
 				&& Objects.equals( chargeMonth, that.chargeMonth )
 				&& Objects.equals( chargeLateFee, that.chargeLateFee )
+				&& Objects.equals( paymentNext, that.paymentNext )
 				&& Objects.equals( chargeAmountDue, that.chargeAmountDue )
 				&& Objects.equals( chargeAmountFuture, that.chargeAmountFuture )
-				&& Objects.equals( paymentShortName, that.paymentShortName );
+				&& Objects.equals( paymentShortName, that.paymentShortName )
+				&& Objects.equals( paymentCompleteName, that.paymentCompleteName );
 	}
 
 	//////////////
@@ -7645,11 +7741,40 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString() + "\n");
 		sb.append("SchoolPayment { ");
-		sb.append( "enrollmentKey: " ).append(enrollmentKey);
+		sb.append( "paymentKey: " ).append(paymentKey);
+		sb.append( ", enrollmentKey: " ).append(enrollmentKey);
+		sb.append( ", schoolNumber: " ).append(schoolNumber);
+		sb.append( ", userKeys: " ).append(userKeys);
+		sb.append( ", schoolKey: " ).append(schoolKey);
+		sb.append( ", schoolAddress: \"" ).append(schoolAddress).append( "\"" );
+		sb.append( ", schoolPhoneNumber: \"" ).append(schoolPhoneNumber).append( "\"" );
+		sb.append( ", yearKey: " ).append(yearKey);
+		sb.append( ", sessionKey: " ).append(sessionKey);
+		sb.append( ", ageKey: " ).append(ageKey);
+		sb.append( ", blockKey: " ).append(blockKey);
+		sb.append( ", childKey: " ).append(childKey);
+		sb.append( ", momKeys: " ).append(momKeys);
+		sb.append( ", dadKeys: " ).append(dadKeys);
+		sb.append( ", guardianKeys: " ).append(guardianKeys);
 		sb.append( ", childCompleteNamePreferred: \"" ).append(childCompleteNamePreferred).append( "\"" );
 		sb.append( ", childBirthDate: " ).append(childBirthDate);
 		sb.append( ", momCompleteNamePreferred: \"" ).append(momCompleteNamePreferred).append( "\"" );
 		sb.append( ", dadCompleteNamePreferred: \"" ).append(dadCompleteNamePreferred).append( "\"" );
+		sb.append( ", schoolName: \"" ).append(schoolName).append( "\"" );
+		sb.append( ", schoolCompleteName: \"" ).append(schoolCompleteName).append( "\"" );
+		sb.append( ", schoolLocation: \"" ).append(schoolLocation).append( "\"" );
+		sb.append( ", yearStart: " ).append(yearStart);
+		sb.append( ", yearEnd: " ).append(yearEnd);
+		sb.append( ", seasonStartDate: " ).append(seasonStartDate);
+		sb.append( ", yearEnrollmentFee: " ).append(yearEnrollmentFee);
+		sb.append( ", sessionStartDate: " ).append(sessionStartDate);
+		sb.append( ", sessionEndDate: " ).append(sessionEndDate);
+		sb.append( ", ageStart: " ).append(ageStart);
+		sb.append( ", ageEnd: " ).append(ageEnd);
+		sb.append( ", blockStartTime: " ).append(blockStartTime);
+		sb.append( ", blockEndTime: " ).append(blockEndTime);
+		sb.append( ", blockPricePerMonth: " ).append(blockPricePerMonth);
+		sb.append( ", blockTotalPrice: " ).append(blockTotalPrice);
 		sb.append( ", enrollmentPaymentEachMonth: " ).append(enrollmentPaymentEachMonth);
 		sb.append( ", paymentDescription: \"" ).append(paymentDescription).append( "\"" );
 		sb.append( ", paymentDate: " ).append(paymentDate);
@@ -7658,6 +7783,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		sb.append( ", paymentCheck: " ).append(paymentCheck);
 		sb.append( ", paymentECheck: " ).append(paymentECheck);
 		sb.append( ", paymentSystem: " ).append(paymentSystem);
+		sb.append( ", paymentType: \"" ).append(paymentType).append( "\"" );
 		sb.append( ", paymentBy: \"" ).append(paymentBy).append( "\"" );
 		sb.append( ", transactionId: \"" ).append(transactionId).append( "\"" );
 		sb.append( ", customerProfileId: \"" ).append(customerProfileId).append( "\"" );
@@ -7668,9 +7794,11 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		sb.append( ", chargeEnrollment: " ).append(chargeEnrollment);
 		sb.append( ", chargeMonth: " ).append(chargeMonth);
 		sb.append( ", chargeLateFee: " ).append(chargeLateFee);
+		sb.append( ", paymentNext: " ).append(paymentNext);
 		sb.append( ", chargeAmountDue: " ).append(chargeAmountDue);
 		sb.append( ", chargeAmountFuture: " ).append(chargeAmountFuture);
 		sb.append( ", paymentShortName: \"" ).append(paymentShortName).append( "\"" );
+		sb.append( ", paymentCompleteName: \"" ).append(paymentCompleteName).append( "\"" );
 		sb.append(" }");
 		return sb.toString();
 	}

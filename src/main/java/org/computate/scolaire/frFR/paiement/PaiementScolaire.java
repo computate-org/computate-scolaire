@@ -1163,8 +1163,8 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 		ConfigSite configSite = requeteSite_.getConfigSite_();
 		ZoneId zoneId = ZoneId.of(configSite.getSiteZone());
 		LocalDate now = LocalDate.now(zoneId);
-		if(fraisMontant != null && (fraisInscription && paiementDate.compareTo(now.plusDays(15)) <= 0 && paiementDate.compareTo(now.minusDays(1)) >= 0
-				|| fraisPremierDernier && paiementDate.compareTo(now.plusDays(15)) <= 0 && paiementDate.compareTo(now.minusDays(1)) >= 0
+		if(fraisMontant != null && (fraisInscription && paiementDate.compareTo(now.plusDays(15)) <= 0
+				|| fraisPremierDernier && paiementDate.compareTo(now.plusDays(15)) <= 0
 				|| paiementDate != null && paiementDate.compareTo(now.plusDays(15)) <= 0 && paiementDate.compareTo(now.minusDays(1)) >= 0) && paiementDate.compareTo(paiementProchain.minusMonths(1)) > 0 && paiementDate.compareTo(paiementProchain) <= 0)
 			c.o(fraisMontant);
 	}
