@@ -317,16 +317,16 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 						+ " OR userKeys_indexed_longs:" + Optional.ofNullable(siteRequest_.getUserKey()).orElse(0L)
 			);
 		}
-		if(!pageDesignId.endsWith("-enrollment-form") || pageDesign_.getDesignIgnoreEmptyChildName()) {
+		if(!pageDesignId.endsWith("-enrollment-form") || pageDesign_ != null && pageDesign_.getDesignIgnoreEmptyChildName()) {
 			l.addFilterQuery("childFirstName_indexed_string:[* TO *]");
 		}
-		if(StringUtils.equalsAny(pageDesignId, "paid-roster") || pageDesign_.getDesignIgnorePaymentsPastDue()) {
+		if(StringUtils.equalsAny(pageDesignId, "paid-roster") || pageDesign_ != null && pageDesign_.getDesignIgnorePaymentsPastDue()) {
 			l.addFilterQuery("paymentsPastDue_indexed_boolean:false");
 		}
-		if(StringUtils.equalsAny(pageDesignId, "not-paid-roster") || pageDesign_.getDesignIgnorePaymentsNotPastDue()) {
+		if(StringUtils.equalsAny(pageDesignId, "not-paid-roster") || pageDesign_ != null && pageDesign_.getDesignIgnorePaymentsNotPastDue()) {
 			l.addFilterQuery("paymentsPastDue_indexed_boolean:true");
 		}
-		if(pageDesignId.endsWith("-enrollment-form") || pageDesign_.getDesignFilterEnrollmentKey()) {
+		if(pageDesignId.endsWith("-enrollment-form") || pageDesign_ != null && pageDesign_.getDesignFilterEnrollmentKey()) {
 			if(!siteRequest_.getRequestVars().containsKey("enrollmentKey"))
 				l.addFilterQuery("enrollmentKey_indexed_long:0");
 		}
@@ -338,14 +338,14 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 		l.addSort("blockStartTime_indexed_string", ORDER.asc);
 
 		if(StringUtils.equalsAny(pageDesignId, "paid-roster", "not-paid-roster", "email-roster", "group-names-roster", "group-details-roster") 
-				|| pageDesign_.getDesignEnrollmentSortGroupName()) {
+				|| pageDesign_ != null && pageDesign_.getDesignEnrollmentSortGroupName()) {
 			l.addSort("enrollmentGroupName_indexed_string", ORDER.asc);
 		}
 		if(StringUtils.equalsAny(pageDesignId, "paid-roster", "not-paid-roster", "email-roster", "group-names-roster", "group-details-roster") 
-				|| pageDesign_.getDesignEnrollmentSortChildName()) {
+				|| pageDesign_ != null && pageDesign_.getDesignEnrollmentSortChildName()) {
 			l.addSort("childCompleteNamePreferred_indexed_string", ORDER.asc);
 		}
-		if("birthday-roster".equals(pageDesignId) || pageDesign_.getDesignEnrollmentSortMonthDayOfBirth()) {
+		if("birthday-roster".equals(pageDesignId) || pageDesign_ != null && pageDesign_.getDesignEnrollmentSortMonthDayOfBirth()) {
 			l.addSort("childBirthMonth_indexed_int", ORDER.asc);
 			l.addSort("childBirthDay_indexed_int", ORDER.asc);
 		}
