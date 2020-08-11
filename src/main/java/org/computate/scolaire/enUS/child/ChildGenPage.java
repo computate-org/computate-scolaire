@@ -53,7 +53,7 @@ public class ChildGenPage extends ChildGenPageGen<ClusterPage> {
 	protected void _listSchoolChild(Wrap<SearchList<SchoolChild>> c) {
 	}
 
-	protected void _schoolChild(Wrap<SchoolChild> c) {
+	protected void _schoolChild_(Wrap<SchoolChild> c) {
 		if(listSchoolChild != null && listSchoolChild.size() == 1)
 			c.o(listSchoolChild.get(0));
 	}
@@ -63,8 +63,8 @@ public class ChildGenPage extends ChildGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageH2(Wrap<String> c) {
-		if(schoolChild != null && schoolChild.getChildCompleteName() != null)
-			c.o(schoolChild.getChildCompleteName());
+		if(schoolChild_ != null && schoolChild_.getChildCompleteName() != null)
+			c.o(schoolChild_.getChildCompleteName());
 	}
 
 	@Override protected void _pageH3(Wrap<String> c) {
@@ -72,9 +72,9 @@ public class ChildGenPage extends ChildGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageTitle(Wrap<String> c) {
-		if(schoolChild != null && schoolChild.getChildCompleteName() != null)
-			c.o(schoolChild.getChildCompleteName());
-		else if(schoolChild != null)
+		if(schoolChild_ != null && schoolChild_.getChildCompleteName() != null)
+			c.o(schoolChild_.getChildCompleteName());
+		else if(schoolChild_ != null)
 			c.o("children");
 		else if(listSchoolChild == null || listSchoolChild.size() == 0)
 			c.o("no child found");
@@ -710,7 +710,7 @@ public class ChildGenPage extends ChildGenPageGen<ClusterPage> {
 							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-orange ")
-								.a("onclick", "putcopySchoolChild($('#putcopySchoolChildForm'), ", schoolChild == null ? "null" : schoolChild.getPk(), "); ")
+								.a("onclick", "putcopySchoolChild($('#putcopySchoolChildForm'), ", schoolChild_ == null ? "null" : schoolChild_.getPk(), "); ")
 								.f().sx("Duplicate children")
 							.g("button");
 
@@ -744,7 +744,7 @@ public class ChildGenPage extends ChildGenPageGen<ClusterPage> {
 							} g("form");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-orange ")
-								.a("onclick", "patchSchoolChild(null, $('#patchSchoolChildFormValues'), ", Optional.ofNullable(schoolChild).map(SchoolChild::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
+								.a("onclick", "patchSchoolChild(null, $('#patchSchoolChildFormValues'), ", Optional.ofNullable(schoolChild_).map(SchoolChild::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
 								.f().sx("Modify children")
 							.g("button");
 

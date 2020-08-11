@@ -54,7 +54,7 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPag
 	protected void _listeUtilisateurSite(Couverture<ListeRecherche<UtilisateurSite>> c) {
 	}
 
-	protected void _utilisateurSite(Couverture<UtilisateurSite> c) {
+	protected void _utilisateurSite_(Couverture<UtilisateurSite> c) {
 		if(listeUtilisateurSite != null && listeUtilisateurSite.size() == 1)
 			c.o(listeUtilisateurSite.get(0));
 	}
@@ -72,9 +72,9 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPag
 	}
 
 	@Override protected void _pageTitre(Couverture<String> c) {
-		if(utilisateurSite != null && utilisateurSite.getObjetTitre() != null)
-			c.o(utilisateurSite.getObjetTitre());
-		else if(utilisateurSite != null)
+		if(utilisateurSite_ != null && utilisateurSite_.getObjetTitre() != null)
+			c.o(utilisateurSite_.getObjetTitre());
+		else if(utilisateurSite_ != null)
 			c.o("utilisateurs du site");
 		else if(listeUtilisateurSite == null || listeUtilisateurSite.size() == 0)
 			c.o("aucun utilisateur du site trouvé");
@@ -629,7 +629,7 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPag
 							} g("form");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-gray ")
-								.a("onclick", "patchUtilisateurSite(null, $('#patchUtilisateurSiteFormulaireValeurs'), ", Optional.ofNullable(utilisateurSite).map(UtilisateurSite::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
+								.a("onclick", "patchUtilisateurSite(null, $('#patchUtilisateurSiteFormulaireValeurs'), ", Optional.ofNullable(utilisateurSite_).map(UtilisateurSite::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
 								.f().sx("Modifier utilisateurs du site")
 							.g("button");
 

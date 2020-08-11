@@ -277,7 +277,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
 					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 					) {
-				sx(htmInscriptionCles());
+				e("span").a("class", "varUtilisateurSite", pk, "InscriptionCles ").f().sx(htmInscriptionCles()).g("span");
 			}
 		}
 	}
@@ -489,7 +489,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
 					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 					) {
-				sx(htmPaiementCles());
+				e("span").a("class", "varUtilisateurSite", pk, "PaiementCles ").f().sx(htmPaiementCles()).g("span");
 			}
 		}
 	}
@@ -635,7 +635,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
 					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 					) {
-				sx(htmUtilisateurNom());
+				e("span").a("class", "varUtilisateurSite", pk, "UtilisateurNom ").f().sx(htmUtilisateurNom()).g("span");
 			}
 		}
 	}
@@ -765,7 +765,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
 					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 					) {
-				sx(htmUtilisateurMail());
+				e("span").a("class", "varUtilisateurSite", pk, "UtilisateurMail ").f().sx(htmUtilisateurMail()).g("span");
 			}
 		}
 	}
@@ -1144,7 +1144,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
 					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 					) {
-				sx(htmCustomerProfileId1());
+				e("span").a("class", "varUtilisateurSite", pk, "CustomerProfileId1 ").f().sx(htmCustomerProfileId1()).g("span");
 			}
 		}
 	}
@@ -1278,7 +1278,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
 					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 					) {
-				sx(htmCustomerProfileId2());
+				e("span").a("class", "varUtilisateurSite", pk, "CustomerProfileId2 ").f().sx(htmCustomerProfileId2()).g("span");
 			}
 		}
 	}
@@ -1429,7 +1429,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
 					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 					) {
-				sx(htmUtilisateurRecevoirCourriels());
+				e("span").a("class", "varUtilisateurSite", pk, "UtilisateurRecevoirCourriels ").f().sx(htmUtilisateurRecevoirCourriels()).g("span");
 			}
 		}
 	}
@@ -1564,7 +1564,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
 					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 					) {
-				sx(htmVoirArchive());
+				e("span").a("class", "varUtilisateurSite", pk, "VoirArchive ").f().sx(htmVoirArchive()).g("span");
 			}
 		}
 	}
@@ -1699,7 +1699,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
 					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 					) {
-				sx(htmVoirSupprime());
+				e("span").a("class", "varUtilisateurSite", pk, "VoirSupprime ").f().sx(htmVoirSupprime()).g("span");
 			}
 		}
 	}
@@ -2315,6 +2315,8 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		Object o = Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
 		if(o != null && o instanceof UtilisateurSite) {
 			UtilisateurSite original = (UtilisateurSite)o;
+			if(!Objects.equals(utilisateurCles, original.getUtilisateurCles()))
+				requeteApi.addVars("utilisateurCles");
 			if(!Objects.equals(inscriptionCles, original.getInscriptionCles()))
 				requeteApi.addVars("inscriptionCles");
 			if(!Objects.equals(paiementCles, original.getPaiementCles()))
@@ -2323,6 +2325,14 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 				requeteApi.addVars("utilisateurNom");
 			if(!Objects.equals(utilisateurMail, original.getUtilisateurMail()))
 				requeteApi.addVars("utilisateurMail");
+			if(!Objects.equals(utilisateurPrenom, original.getUtilisateurPrenom()))
+				requeteApi.addVars("utilisateurPrenom");
+			if(!Objects.equals(utilisateurNomFamille, original.getUtilisateurNomFamille()))
+				requeteApi.addVars("utilisateurNomFamille");
+			if(!Objects.equals(utilisateurNomComplet, original.getUtilisateurNomComplet()))
+				requeteApi.addVars("utilisateurNomComplet");
+			if(!Objects.equals(utilisateurSite, original.getUtilisateurSite()))
+				requeteApi.addVars("utilisateurSite");
 			if(!Objects.equals(customerProfileId1, original.getCustomerProfileId1()))
 				requeteApi.addVars("customerProfileId1");
 			if(!Objects.equals(customerProfileId2, original.getCustomerProfileId2()))
@@ -2342,7 +2352,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), inscriptionCles, paiementCles, utilisateurNom, utilisateurMail, customerProfileId1, customerProfileId2, utilisateurRecevoirCourriels, voirArchive, voirSupprime);
+		return Objects.hash(super.hashCode(), utilisateurCles, inscriptionCles, paiementCles, utilisateurNom, utilisateurMail, utilisateurPrenom, utilisateurNomFamille, utilisateurNomComplet, utilisateurSite, customerProfileId1, customerProfileId2, utilisateurRecevoirCourriels, voirArchive, voirSupprime);
 	}
 
 	////////////
@@ -2356,10 +2366,15 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 			return false;
 		UtilisateurSite that = (UtilisateurSite)o;
 		return super.equals(o)
+				&& Objects.equals( utilisateurCles, that.utilisateurCles )
 				&& Objects.equals( inscriptionCles, that.inscriptionCles )
 				&& Objects.equals( paiementCles, that.paiementCles )
 				&& Objects.equals( utilisateurNom, that.utilisateurNom )
 				&& Objects.equals( utilisateurMail, that.utilisateurMail )
+				&& Objects.equals( utilisateurPrenom, that.utilisateurPrenom )
+				&& Objects.equals( utilisateurNomFamille, that.utilisateurNomFamille )
+				&& Objects.equals( utilisateurNomComplet, that.utilisateurNomComplet )
+				&& Objects.equals( utilisateurSite, that.utilisateurSite )
 				&& Objects.equals( customerProfileId1, that.customerProfileId1 )
 				&& Objects.equals( customerProfileId2, that.customerProfileId2 )
 				&& Objects.equals( utilisateurRecevoirCourriels, that.utilisateurRecevoirCourriels )
@@ -2375,10 +2390,15 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString() + "\n");
 		sb.append("UtilisateurSite { ");
-		sb.append( "inscriptionCles: " ).append(inscriptionCles);
+		sb.append( "utilisateurCles: " ).append(utilisateurCles);
+		sb.append( ", inscriptionCles: " ).append(inscriptionCles);
 		sb.append( ", paiementCles: " ).append(paiementCles);
 		sb.append( ", utilisateurNom: \"" ).append(utilisateurNom).append( "\"" );
 		sb.append( ", utilisateurMail: \"" ).append(utilisateurMail).append( "\"" );
+		sb.append( ", utilisateurPrenom: \"" ).append(utilisateurPrenom).append( "\"" );
+		sb.append( ", utilisateurNomFamille: \"" ).append(utilisateurNomFamille).append( "\"" );
+		sb.append( ", utilisateurNomComplet: \"" ).append(utilisateurNomComplet).append( "\"" );
+		sb.append( ", utilisateurSite: \"" ).append(utilisateurSite).append( "\"" );
 		sb.append( ", customerProfileId1: \"" ).append(customerProfileId1).append( "\"" );
 		sb.append( ", customerProfileId2: \"" ).append(customerProfileId2).append( "\"" );
 		sb.append( ", utilisateurRecevoirCourriels: " ).append(utilisateurRecevoirCourriels);

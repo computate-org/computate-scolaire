@@ -42,6 +42,7 @@ import org.computate.scolaire.frFR.page.part.PagePart;
 import org.computate.scolaire.frFR.paiement.PaiementGenPage;
 import org.computate.scolaire.frFR.pere.PereGenPage;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
+import org.computate.scolaire.frFR.recu.RecuGenPage;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import org.computate.scolaire.frFR.utilisateur.UtilisateurSite;
 import org.computate.scolaire.frFR.xml.OutilXml;
@@ -968,6 +969,8 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	 * r.enUS: "children"
 	 * r: "designs"
 	 * r.enUS: "designs"
+	 * r: "reçus"
+	 * r.enUS: "receipts"
 	 * r: "/utilisateur/"
 	 * r.enUS: "/user/"
 	 * r: "ma page utilisateur"
@@ -1004,6 +1007,8 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	 * r.enUS: PageDesignGenPage.htmlSuggestedPageDesignGenPage
 	 * r: PartHtmlGenPage.htmlSuggerePartHtmlGenPage
 	 * r.enUS: HtmlPartGenPage.htmlSuggestedHtmlPartGenPage
+	 * r: RecuGenPage.htmlSuggereRecuGenPage
+	 * r.enUS: ReceiptGenPage.htmlSuggestedReceiptGenPage
 	 */ 
 	public void menu(String id)  {
 		e("div").a("class", "w3-bar w3-text-white w3-padding-bottom-8 w3-padding-top-8 ").a("style", "padding-left: 16px; padding-right: 16px; ").f();
@@ -1132,6 +1137,22 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 					InscriptionGenPage.htmlSuggereInscriptionGenPage(this, id, null);
 				} g("div");
 			} g("div");
+
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES_MANAGER)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES_MANAGER)
+					) {
+	
+				{ e("div").a("class", "w3-dropdown-hover ").f();
+					{ e("div").a("class", "w3-button w3-hover-light-green ").f();
+							e("i").a("class", "far fa-file-invoice-dollar ").f().g("i");
+							sx("reçus");
+					} g("div");
+					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
+						RecuGenPage.htmlSuggereRecuGenPage(this, id, null);
+					} g("div");
+				} g("div");
+			}
 
 			if(
 					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES_ADMIN)
@@ -1844,6 +1865,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 				String htmlVarInput = htmlPart.getHtmlVarInput();
 				String htmlVarForm = htmlPart.getHtmlVarForm();
 				String htmlVarForEach = htmlPart.getHtmlVarForEach();
+				String htmlIfVarEquals = htmlPart.getHtmlIfVarEquals();
 				Boolean pdfExclude = htmlPart.getPdfExclude();
 				Boolean htmlExclude = htmlPart.getHtmlExclude();
 

@@ -331,6 +331,8 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 								listeRecherche.setQuery("*:*");
 								listeRecherche.setStocker(true);
 								listeRecherche.setC(InscriptionScolaire.class);
+								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
@@ -808,6 +810,8 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 				listeRecherche.setStocker(true);
 				listeRecherche.setQuery("*:*");
 				listeRecherche.setC(PaiementScolaire.class);
+				listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+				listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 				listeRecherche.addFilterQuery("inheritPk_indexed_long:" + json.getString("pk"));
 				listeRecherche.initLoinPourClasse(requeteSite2);
 
@@ -994,6 +998,8 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 				listeRecherche.setStocker(true);
 				listeRecherche.setQuery("*:*");
 				listeRecherche.setC(PaiementScolaire.class);
+				listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+				listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 				listeRecherche.addFilterQuery("pk_indexed_long:" + json.getString("pk"));
 				listeRecherche.initLoinPourClasse(requeteSite2);
 
@@ -2007,6 +2013,8 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 								listeRecherche.setQuery("*:*");
 								listeRecherche.setStocker(true);
 								listeRecherche.setC(InscriptionScolaire.class);
+								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
@@ -2039,6 +2047,8 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 								listeRecherche.setQuery("*:*");
 								listeRecherche.setStocker(true);
 								listeRecherche.setC(InscriptionScolaire.class);
+								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
@@ -3646,6 +3656,8 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 			listeRecherche.add("json.facet", "{sum_paiementMontant:'sum(paiementMontant_indexed_double)'}");
 			listeRecherche.add("json.facet", "{sum_fraisMontant:'sum(fraisMontant_indexed_double)'}");
 			listeRecherche.add("json.facet", "{sum_fraisMontantDu:'sum(fraisMontantDu_indexed_double)'}");
+			listeRecherche.add("json.facet", "{sum_fraisMontantPasse:'sum(fraisMontantPasse_indexed_double)'}");
+			listeRecherche.add("json.facet", "{sum_fraisMontantNonPasse:'sum(fraisMontantNonPasse_indexed_double)'}");
 			listeRecherche.add("json.facet", "{sum_fraisMontantFuture:'sum(fraisMontantFuture_indexed_double)'}");
 
 			String id = operationRequete.getParams().getJsonObject("path").getString("id");

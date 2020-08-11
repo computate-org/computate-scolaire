@@ -529,6 +529,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 								listeRecherche.setQuery("*:*");
 								listeRecherche.setStocker(true);
 								listeRecherche.setC(InscriptionScolaire.class);
+								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
@@ -562,6 +564,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 									listeRecherche.setQuery("*:*");
 									listeRecherche.setStocker(true);
 									listeRecherche.setC(InscriptionScolaire.class);
+									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
@@ -588,6 +592,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						break;
 					case "setInscriptionCles":
 						JsonArray setInscriptionClesValeurs = jsonObject.getJsonArray(methodeNom);
+						JsonArray setInscriptionClesValeurs2 = new JsonArray();
 						if(setInscriptionClesValeurs != null) {
 							for(Integer i = 0; i <  setInscriptionClesValeurs.size(); i++) {
 								Long l = Long.parseLong(setInscriptionClesValeurs.getString(i));
@@ -596,9 +601,13 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 									listeRecherche.setQuery("*:*");
 									listeRecherche.setStocker(true);
 									listeRecherche.setC(InscriptionScolaire.class);
+									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l2 != null)
+										setInscriptionClesValeurs2.add(l2);
 									if(l2 != null && !o.getInscriptionCles().contains(l2)) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContexteFrFR.SQL_addA
@@ -621,7 +630,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						}
 						if(o.getInscriptionCles() != null) {
 							for(Long l :  o.getInscriptionCles()) {
-								if(l != null && (setInscriptionClesValeurs == null || !setInscriptionClesValeurs.contains(l))) {
+								if(l != null && (setInscriptionClesValeurs2 == null || !setInscriptionClesValeurs2.contains(l))) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
 												, Tuple.of(pk, "inscriptionCles", l, "utilisateurCles")
@@ -645,6 +654,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 								listeRecherche.setQuery("*:*");
 								listeRecherche.setStocker(true);
 								listeRecherche.setC(InscriptionScolaire.class);
+								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
@@ -676,6 +687,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 								listeRecherche.setQuery("*:*");
 								listeRecherche.setStocker(true);
 								listeRecherche.setC(PaiementScolaire.class);
+								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
@@ -709,6 +722,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 									listeRecherche.setQuery("*:*");
 									listeRecherche.setStocker(true);
 									listeRecherche.setC(PaiementScolaire.class);
+									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
@@ -735,6 +750,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						break;
 					case "setPaiementCles":
 						JsonArray setPaiementClesValeurs = jsonObject.getJsonArray(methodeNom);
+						JsonArray setPaiementClesValeurs2 = new JsonArray();
 						if(setPaiementClesValeurs != null) {
 							for(Integer i = 0; i <  setPaiementClesValeurs.size(); i++) {
 								Long l = Long.parseLong(setPaiementClesValeurs.getString(i));
@@ -743,9 +759,13 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 									listeRecherche.setQuery("*:*");
 									listeRecherche.setStocker(true);
 									listeRecherche.setC(PaiementScolaire.class);
+									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l2 != null)
+										setPaiementClesValeurs2.add(l2);
 									if(l2 != null && !o.getPaiementCles().contains(l2)) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContexteFrFR.SQL_addA
@@ -768,7 +788,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						}
 						if(o.getPaiementCles() != null) {
 							for(Long l :  o.getPaiementCles()) {
-								if(l != null && (setPaiementClesValeurs == null || !setPaiementClesValeurs.contains(l))) {
+								if(l != null && (setPaiementClesValeurs2 == null || !setPaiementClesValeurs2.contains(l))) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
 												, Tuple.of(pk, "paiementCles", l, "utilisateurCles")
@@ -792,6 +812,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 								listeRecherche.setQuery("*:*");
 								listeRecherche.setStocker(true);
 								listeRecherche.setC(PaiementScolaire.class);
+								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
@@ -1266,6 +1288,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 								listeRecherche.setQuery("*:*");
 								listeRecherche.setStocker(true);
 								listeRecherche.setC(InscriptionScolaire.class);
+								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
@@ -1296,6 +1320,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 								listeRecherche.setQuery("*:*");
 								listeRecherche.setStocker(true);
 								listeRecherche.setC(PaiementScolaire.class);
+								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);

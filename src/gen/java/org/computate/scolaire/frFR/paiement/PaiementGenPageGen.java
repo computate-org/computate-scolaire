@@ -80,43 +80,41 @@ public abstract class PaiementGenPageGen<DEV> extends ClusterPage {
 		return (PaiementGenPage)this;
 	}
 
-	//////////////////////
-	// paiementScolaire //
-	//////////////////////
+	///////////////////////
+	// paiementScolaire_ //
+	///////////////////////
 
-	/**	 L'entité paiementScolaire
+	/**	 L'entité paiementScolaire_
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected PaiementScolaire paiementScolaire;
+	protected PaiementScolaire paiementScolaire_;
 	@JsonIgnore
-	public Couverture<PaiementScolaire> paiementScolaireCouverture = new Couverture<PaiementScolaire>().p(this).c(PaiementScolaire.class).var("paiementScolaire").o(paiementScolaire);
+	public Couverture<PaiementScolaire> paiementScolaire_Couverture = new Couverture<PaiementScolaire>().p(this).c(PaiementScolaire.class).var("paiementScolaire_").o(paiementScolaire_);
 
-	/**	<br/> L'entité paiementScolaire
+	/**	<br/> L'entité paiementScolaire_
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:paiementScolaire">Trouver l'entité paiementScolaire dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:paiementScolaire_">Trouver l'entité paiementScolaire_ dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _paiementScolaire(Couverture<PaiementScolaire> c);
+	protected abstract void _paiementScolaire_(Couverture<PaiementScolaire> c);
 
-	public PaiementScolaire getPaiementScolaire() {
-		return paiementScolaire;
+	public PaiementScolaire getPaiementScolaire_() {
+		return paiementScolaire_;
 	}
 
-	public void setPaiementScolaire(PaiementScolaire paiementScolaire) {
-		this.paiementScolaire = paiementScolaire;
-		this.paiementScolaireCouverture.dejaInitialise = true;
+	public void setPaiementScolaire_(PaiementScolaire paiementScolaire_) {
+		this.paiementScolaire_ = paiementScolaire_;
+		this.paiementScolaire_Couverture.dejaInitialise = true;
 	}
-	protected PaiementGenPage paiementScolaireInit() {
-		if(!paiementScolaireCouverture.dejaInitialise) {
-			_paiementScolaire(paiementScolaireCouverture);
-			if(paiementScolaire == null)
-				setPaiementScolaire(paiementScolaireCouverture.o);
+	protected PaiementGenPage paiementScolaire_Init() {
+		if(!paiementScolaire_Couverture.dejaInitialise) {
+			_paiementScolaire_(paiementScolaire_Couverture);
+			if(paiementScolaire_ == null)
+				setPaiementScolaire_(paiementScolaire_Couverture.o);
 		}
-		if(paiementScolaire != null)
-			paiementScolaire.initLoinPourClasse(requeteSite_);
-		paiementScolaireCouverture.dejaInitialise(true);
+		paiementScolaire_Couverture.dejaInitialise(true);
 		return (PaiementGenPage)this;
 	}
 
@@ -142,7 +140,7 @@ public abstract class PaiementGenPageGen<DEV> extends ClusterPage {
 
 	public void initPaiementGenPage() {
 		listePaiementScolaireInit();
-		paiementScolaireInit();
+		paiementScolaire_Init();
 	}
 
 	@Override public void initLoinPourClasse(RequeteSiteFrFR requeteSite_) {
@@ -157,8 +155,6 @@ public abstract class PaiementGenPageGen<DEV> extends ClusterPage {
 			super.requeteSiteClusterPage(requeteSite_);
 		if(listePaiementScolaire != null)
 			listePaiementScolaire.setRequeteSite_(requeteSite_);
-		if(paiementScolaire != null)
-			paiementScolaire.setRequeteSite_(requeteSite_);
 	}
 
 	public void requeteSitePourClasse(RequeteSiteFrFR requeteSite_) {
@@ -187,8 +183,8 @@ public abstract class PaiementGenPageGen<DEV> extends ClusterPage {
 		switch(var) {
 			case "listePaiementScolaire":
 				return oPaiementGenPage.listePaiementScolaire;
-			case "paiementScolaire":
-				return oPaiementGenPage.paiementScolaire;
+			case "paiementScolaire_":
+				return oPaiementGenPage.paiementScolaire_;
 			default:
 				return super.obtenirClusterPage(var);
 		}

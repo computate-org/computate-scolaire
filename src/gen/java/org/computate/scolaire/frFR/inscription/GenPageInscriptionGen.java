@@ -80,43 +80,41 @@ public abstract class GenPageInscriptionGen<DEV> extends ClusterPage {
 		return (GenPageInscription)this;
 	}
 
-	/////////////////////////
-	// inscriptionScolaire //
-	/////////////////////////
+	//////////////////////////
+	// inscriptionScolaire_ //
+	//////////////////////////
 
-	/**	 L'entité inscriptionScolaire
+	/**	 L'entité inscriptionScolaire_
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected InscriptionScolaire inscriptionScolaire;
+	protected InscriptionScolaire inscriptionScolaire_;
 	@JsonIgnore
-	public Couverture<InscriptionScolaire> inscriptionScolaireCouverture = new Couverture<InscriptionScolaire>().p(this).c(InscriptionScolaire.class).var("inscriptionScolaire").o(inscriptionScolaire);
+	public Couverture<InscriptionScolaire> inscriptionScolaire_Couverture = new Couverture<InscriptionScolaire>().p(this).c(InscriptionScolaire.class).var("inscriptionScolaire_").o(inscriptionScolaire_);
 
-	/**	<br/> L'entité inscriptionScolaire
+	/**	<br/> L'entité inscriptionScolaire_
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.GenPageInscription&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:inscriptionScolaire">Trouver l'entité inscriptionScolaire dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.GenPageInscription&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:inscriptionScolaire_">Trouver l'entité inscriptionScolaire_ dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _inscriptionScolaire(Couverture<InscriptionScolaire> c);
+	protected abstract void _inscriptionScolaire_(Couverture<InscriptionScolaire> c);
 
-	public InscriptionScolaire getInscriptionScolaire() {
-		return inscriptionScolaire;
+	public InscriptionScolaire getInscriptionScolaire_() {
+		return inscriptionScolaire_;
 	}
 
-	public void setInscriptionScolaire(InscriptionScolaire inscriptionScolaire) {
-		this.inscriptionScolaire = inscriptionScolaire;
-		this.inscriptionScolaireCouverture.dejaInitialise = true;
+	public void setInscriptionScolaire_(InscriptionScolaire inscriptionScolaire_) {
+		this.inscriptionScolaire_ = inscriptionScolaire_;
+		this.inscriptionScolaire_Couverture.dejaInitialise = true;
 	}
-	protected GenPageInscription inscriptionScolaireInit() {
-		if(!inscriptionScolaireCouverture.dejaInitialise) {
-			_inscriptionScolaire(inscriptionScolaireCouverture);
-			if(inscriptionScolaire == null)
-				setInscriptionScolaire(inscriptionScolaireCouverture.o);
+	protected GenPageInscription inscriptionScolaire_Init() {
+		if(!inscriptionScolaire_Couverture.dejaInitialise) {
+			_inscriptionScolaire_(inscriptionScolaire_Couverture);
+			if(inscriptionScolaire_ == null)
+				setInscriptionScolaire_(inscriptionScolaire_Couverture.o);
 		}
-		if(inscriptionScolaire != null)
-			inscriptionScolaire.initLoinPourClasse(requeteSite_);
-		inscriptionScolaireCouverture.dejaInitialise(true);
+		inscriptionScolaire_Couverture.dejaInitialise(true);
 		return (GenPageInscription)this;
 	}
 
@@ -142,7 +140,7 @@ public abstract class GenPageInscriptionGen<DEV> extends ClusterPage {
 
 	public void initGenPageInscription() {
 		listeInscriptionScolaireInit();
-		inscriptionScolaireInit();
+		inscriptionScolaire_Init();
 	}
 
 	@Override public void initLoinPourClasse(RequeteSiteFrFR requeteSite_) {
@@ -157,8 +155,6 @@ public abstract class GenPageInscriptionGen<DEV> extends ClusterPage {
 			super.requeteSiteClusterPage(requeteSite_);
 		if(listeInscriptionScolaire != null)
 			listeInscriptionScolaire.setRequeteSite_(requeteSite_);
-		if(inscriptionScolaire != null)
-			inscriptionScolaire.setRequeteSite_(requeteSite_);
 	}
 
 	public void requeteSitePourClasse(RequeteSiteFrFR requeteSite_) {
@@ -187,8 +183,8 @@ public abstract class GenPageInscriptionGen<DEV> extends ClusterPage {
 		switch(var) {
 			case "listeInscriptionScolaire":
 				return oGenPageInscription.listeInscriptionScolaire;
-			case "inscriptionScolaire":
-				return oGenPageInscription.inscriptionScolaire;
+			case "inscriptionScolaire_":
+				return oGenPageInscription.inscriptionScolaire_;
 			default:
 				return super.obtenirClusterPage(var);
 		}

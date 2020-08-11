@@ -181,7 +181,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 				) {
-				sx(htmSchoolKey());
+				e("span").a("class", "varSchoolYear", pk, "SchoolKey ").f().sx(htmSchoolKey()).g("span");
 			}
 		}
 	}
@@ -588,7 +588,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 				) {
-				sx(htmAgeKeys());
+				e("span").a("class", "varSchoolYear", pk, "AgeKeys ").f().sx(htmAgeKeys()).g("span");
 			}
 		}
 	}
@@ -1601,7 +1601,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 				) {
-				sx(htmSessionStartDate());
+				e("span").a("class", "varSchoolYear", pk, "SessionStartDate ").f().sx(htmSessionStartDate()).g("span");
 			}
 		}
 	}
@@ -1744,7 +1744,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 				) {
-				sx(htmSeasonStartDate());
+				e("span").a("class", "varSchoolYear", pk, "SeasonStartDate ").f().sx(htmSeasonStartDate()).g("span");
 			}
 		}
 	}
@@ -1887,7 +1887,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 				) {
-				sx(htmSessionEndDate());
+				e("span").a("class", "varSchoolYear", pk, "SessionEndDate ").f().sx(htmSessionEndDate()).g("span");
 			}
 		}
 	}
@@ -2026,7 +2026,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 				) {
-				sx(htmYearStart());
+				e("span").a("class", "varSchoolYear", pk, "YearStart ").f().sx(htmYearStart()).g("span");
 			}
 		}
 	}
@@ -2166,7 +2166,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 				) {
-				sx(htmYearEnd());
+				e("span").a("class", "varSchoolYear", pk, "YearEnd ").f().sx(htmYearEnd()).g("span");
 			}
 		}
 	}
@@ -2317,7 +2317,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 				) {
-				sx(htmYearEnrollmentFee());
+				e("span").a("class", "varSchoolYear", pk, "YearEnrollmentFee ").f().sx(htmYearEnrollmentFee()).g("span");
 			}
 		}
 	}
@@ -3326,10 +3326,38 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 			SchoolYear original = (SchoolYear)o;
 			if(!Objects.equals(schoolKey, original.getSchoolKey()))
 				apiRequest.addVars("schoolKey");
+			if(!Objects.equals(yearKey, original.getYearKey()))
+				apiRequest.addVars("yearKey");
+			if(!Objects.equals(enrollmentKeys, original.getEnrollmentKeys()))
+				apiRequest.addVars("enrollmentKeys");
 			if(!Objects.equals(seasonKeys, original.getSeasonKeys()))
 				apiRequest.addVars("seasonKeys");
 			if(!Objects.equals(ageKeys, original.getAgeKeys()))
 				apiRequest.addVars("ageKeys");
+			if(!Objects.equals(educationSort, original.getEducationSort()))
+				apiRequest.addVars("educationSort");
+			if(!Objects.equals(schoolSort, original.getSchoolSort()))
+				apiRequest.addVars("schoolSort");
+			if(!Objects.equals(yearSort, original.getYearSort()))
+				apiRequest.addVars("yearSort");
+			if(!Objects.equals(schoolName, original.getSchoolName()))
+				apiRequest.addVars("schoolName");
+			if(!Objects.equals(schoolCompleteName, original.getSchoolCompleteName()))
+				apiRequest.addVars("schoolCompleteName");
+			if(!Objects.equals(schoolLocation, original.getSchoolLocation()))
+				apiRequest.addVars("schoolLocation");
+			if(!Objects.equals(schoolAddress, original.getSchoolAddress()))
+				apiRequest.addVars("schoolAddress");
+			if(!Objects.equals(schoolPhoneNumber, original.getSchoolPhoneNumber()))
+				apiRequest.addVars("schoolPhoneNumber");
+			if(!Objects.equals(schoolForm, original.getSchoolForm()))
+				apiRequest.addVars("schoolForm");
+			if(!Objects.equals(schoolNumber, original.getSchoolNumber()))
+				apiRequest.addVars("schoolNumber");
+			if(!Objects.equals(schoolAdministratorName, original.getSchoolAdministratorName()))
+				apiRequest.addVars("schoolAdministratorName");
+			if(!Objects.equals(enrollmentFormKey, original.getEnrollmentFormKey()))
+				apiRequest.addVars("enrollmentFormKey");
 			if(!Objects.equals(sessionStartDate, original.getSessionStartDate()))
 				apiRequest.addVars("sessionStartDate");
 			if(!Objects.equals(seasonStartDate, original.getSeasonStartDate()))
@@ -3342,6 +3370,10 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 				apiRequest.addVars("yearEnd");
 			if(!Objects.equals(yearEnrollmentFee, original.getYearEnrollmentFee()))
 				apiRequest.addVars("yearEnrollmentFee");
+			if(!Objects.equals(yearShortName, original.getYearShortName()))
+				apiRequest.addVars("yearShortName");
+			if(!Objects.equals(yearCompleteName, original.getYearCompleteName()))
+				apiRequest.addVars("yearCompleteName");
 			super.apiRequestCluster();
 		}
 	}
@@ -3351,7 +3383,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), schoolKey, seasonKeys, ageKeys, sessionStartDate, seasonStartDate, sessionEndDate, yearStart, yearEnd, yearEnrollmentFee);
+		return Objects.hash(super.hashCode(), schoolKey, yearKey, enrollmentKeys, seasonKeys, ageKeys, educationSort, schoolSort, yearSort, schoolName, schoolCompleteName, schoolLocation, schoolAddress, schoolPhoneNumber, schoolForm, schoolNumber, schoolAdministratorName, enrollmentFormKey, sessionStartDate, seasonStartDate, sessionEndDate, yearStart, yearEnd, yearEnrollmentFee, yearShortName, yearCompleteName);
 	}
 
 	////////////
@@ -3366,14 +3398,30 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 		SchoolYear that = (SchoolYear)o;
 		return super.equals(o)
 				&& Objects.equals( schoolKey, that.schoolKey )
+				&& Objects.equals( yearKey, that.yearKey )
+				&& Objects.equals( enrollmentKeys, that.enrollmentKeys )
 				&& Objects.equals( seasonKeys, that.seasonKeys )
 				&& Objects.equals( ageKeys, that.ageKeys )
+				&& Objects.equals( educationSort, that.educationSort )
+				&& Objects.equals( schoolSort, that.schoolSort )
+				&& Objects.equals( yearSort, that.yearSort )
+				&& Objects.equals( schoolName, that.schoolName )
+				&& Objects.equals( schoolCompleteName, that.schoolCompleteName )
+				&& Objects.equals( schoolLocation, that.schoolLocation )
+				&& Objects.equals( schoolAddress, that.schoolAddress )
+				&& Objects.equals( schoolPhoneNumber, that.schoolPhoneNumber )
+				&& Objects.equals( schoolForm, that.schoolForm )
+				&& Objects.equals( schoolNumber, that.schoolNumber )
+				&& Objects.equals( schoolAdministratorName, that.schoolAdministratorName )
+				&& Objects.equals( enrollmentFormKey, that.enrollmentFormKey )
 				&& Objects.equals( sessionStartDate, that.sessionStartDate )
 				&& Objects.equals( seasonStartDate, that.seasonStartDate )
 				&& Objects.equals( sessionEndDate, that.sessionEndDate )
 				&& Objects.equals( yearStart, that.yearStart )
 				&& Objects.equals( yearEnd, that.yearEnd )
-				&& Objects.equals( yearEnrollmentFee, that.yearEnrollmentFee );
+				&& Objects.equals( yearEnrollmentFee, that.yearEnrollmentFee )
+				&& Objects.equals( yearShortName, that.yearShortName )
+				&& Objects.equals( yearCompleteName, that.yearCompleteName );
 	}
 
 	//////////////
@@ -3385,14 +3433,30 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 		sb.append(super.toString() + "\n");
 		sb.append("SchoolYear { ");
 		sb.append( "schoolKey: " ).append(schoolKey);
+		sb.append( ", yearKey: " ).append(yearKey);
+		sb.append( ", enrollmentKeys: " ).append(enrollmentKeys);
 		sb.append( ", seasonKeys: " ).append(seasonKeys);
 		sb.append( ", ageKeys: " ).append(ageKeys);
+		sb.append( ", educationSort: " ).append(educationSort);
+		sb.append( ", schoolSort: " ).append(schoolSort);
+		sb.append( ", yearSort: " ).append(yearSort);
+		sb.append( ", schoolName: \"" ).append(schoolName).append( "\"" );
+		sb.append( ", schoolCompleteName: \"" ).append(schoolCompleteName).append( "\"" );
+		sb.append( ", schoolLocation: \"" ).append(schoolLocation).append( "\"" );
+		sb.append( ", schoolAddress: \"" ).append(schoolAddress).append( "\"" );
+		sb.append( ", schoolPhoneNumber: \"" ).append(schoolPhoneNumber).append( "\"" );
+		sb.append( ", schoolForm: \"" ).append(schoolForm).append( "\"" );
+		sb.append( ", schoolNumber: " ).append(schoolNumber);
+		sb.append( ", schoolAdministratorName: \"" ).append(schoolAdministratorName).append( "\"" );
+		sb.append( ", enrollmentFormKey: " ).append(enrollmentFormKey);
 		sb.append( ", sessionStartDate: " ).append(sessionStartDate);
 		sb.append( ", seasonStartDate: " ).append(seasonStartDate);
 		sb.append( ", sessionEndDate: " ).append(sessionEndDate);
 		sb.append( ", yearStart: " ).append(yearStart);
 		sb.append( ", yearEnd: " ).append(yearEnd);
 		sb.append( ", yearEnrollmentFee: " ).append(yearEnrollmentFee);
+		sb.append( ", yearShortName: \"" ).append(yearShortName).append( "\"" );
+		sb.append( ", yearCompleteName: \"" ).append(yearCompleteName).append( "\"" );
 		sb.append(" }");
 		return sb.toString();
 	}

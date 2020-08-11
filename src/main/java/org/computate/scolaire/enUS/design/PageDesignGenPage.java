@@ -197,7 +197,7 @@ public class PageDesignGenPage extends PageDesignGenPageGen<ClusterPage> {
 	protected void _listPageDesign(Wrap<SearchList<PageDesign>> c) {
 	}
 
-	protected void _pageDesign(Wrap<PageDesign> c) {
+	protected void _pageDesign_(Wrap<PageDesign> c) {
 		if(listPageDesign != null && listPageDesign.size() == 1)
 			c.o(listPageDesign.get(0));
 	}
@@ -207,8 +207,8 @@ public class PageDesignGenPage extends PageDesignGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageH2(Wrap<String> c) {
-		if(pageDesign != null && pageDesign.getPageDesignCompleteName() != null)
-			c.o(pageDesign.getPageDesignCompleteName());
+		if(pageDesign_ != null && pageDesign_.getPageDesignCompleteName() != null)
+			c.o(pageDesign_.getPageDesignCompleteName());
 	}
 
 	@Override protected void _pageH3(Wrap<String> c) {
@@ -216,9 +216,9 @@ public class PageDesignGenPage extends PageDesignGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageTitle(Wrap<String> c) {
-		if(pageDesign != null && pageDesign.getPageDesignCompleteName() != null)
-			c.o(pageDesign.getPageDesignCompleteName());
-		else if(pageDesign != null)
+		if(pageDesign_ != null && pageDesign_.getPageDesignCompleteName() != null)
+			c.o(pageDesign_.getPageDesignCompleteName());
+		else if(pageDesign_ != null)
 			c.o("page designs");
 		else if(listPageDesign == null || listPageDesign.size() == 0)
 			c.o("no page design found");
@@ -314,6 +314,16 @@ public class PageDesignGenPage extends PageDesignGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPageDesignCompleteName("Page");
 			o.htmDesignHidden("Page");
+			o.htmDesignAdmin("Page");
+			o.htmDesignIgnoreEmptyChildName("Page");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmDesignIgnorePaymentsNotPastDue("Page");
+			o.htmDesignIgnorePaymentsPastDue("Page");
+			o.htmDesignFilterEnrollmentKey("Page");
+			o.htmDesignEnrollmentSortChildName("Page");
+			o.htmDesignEnrollmentSortMonthDayOfBirth("Page");
+			o.htmDesignEnrollmentSortGroupName("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmParentDesignKeys("Page");
@@ -337,6 +347,16 @@ public class PageDesignGenPage extends PageDesignGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPageDesignCompleteName("POST");
 			o.htmDesignHidden("POST");
+			o.htmDesignAdmin("POST");
+			o.htmDesignIgnoreEmptyChildName("POST");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmDesignIgnorePaymentsNotPastDue("POST");
+			o.htmDesignIgnorePaymentsPastDue("POST");
+			o.htmDesignFilterEnrollmentKey("POST");
+			o.htmDesignEnrollmentSortChildName("POST");
+			o.htmDesignEnrollmentSortMonthDayOfBirth("POST");
+			o.htmDesignEnrollmentSortGroupName("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmParentDesignKeys("POST");
@@ -382,6 +402,16 @@ public class PageDesignGenPage extends PageDesignGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPageDesignCompleteName("PUTCopy");
 			o.htmDesignHidden("PUTCopy");
+			o.htmDesignAdmin("PUTCopy");
+			o.htmDesignIgnoreEmptyChildName("PUTCopy");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmDesignIgnorePaymentsNotPastDue("PUTCopy");
+			o.htmDesignIgnorePaymentsPastDue("PUTCopy");
+			o.htmDesignFilterEnrollmentKey("PUTCopy");
+			o.htmDesignEnrollmentSortChildName("PUTCopy");
+			o.htmDesignEnrollmentSortMonthDayOfBirth("PUTCopy");
+			o.htmDesignEnrollmentSortGroupName("PUTCopy");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmParentDesignKeys("PUTCopy");
@@ -409,6 +439,16 @@ public class PageDesignGenPage extends PageDesignGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPageDesignCompleteName("PATCH");
 			o.htmDesignHidden("PATCH");
+			o.htmDesignAdmin("PATCH");
+			o.htmDesignIgnoreEmptyChildName("PATCH");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmDesignIgnorePaymentsNotPastDue("PATCH");
+			o.htmDesignIgnorePaymentsPastDue("PATCH");
+			o.htmDesignFilterEnrollmentKey("PATCH");
+			o.htmDesignEnrollmentSortChildName("PATCH");
+			o.htmDesignEnrollmentSortMonthDayOfBirth("PATCH");
+			o.htmDesignEnrollmentSortGroupName("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmParentDesignKeys("PATCH");
@@ -438,6 +478,16 @@ public class PageDesignGenPage extends PageDesignGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPageDesignCompleteName("Search");
 			o.htmDesignHidden("Search");
+			o.htmDesignAdmin("Search");
+			o.htmDesignIgnoreEmptyChildName("Search");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmDesignIgnorePaymentsNotPastDue("Search");
+			o.htmDesignIgnorePaymentsPastDue("Search");
+			o.htmDesignFilterEnrollmentKey("Search");
+			o.htmDesignEnrollmentSortChildName("Search");
+			o.htmDesignEnrollmentSortMonthDayOfBirth("Search");
+			o.htmDesignEnrollmentSortGroupName("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmParentDesignKeys("Search");
@@ -860,7 +910,7 @@ public class PageDesignGenPage extends PageDesignGenPageGen<ClusterPage> {
 							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-khaki ")
-								.a("onclick", "putcopyPageDesign($('#putcopyPageDesignForm'), ", pageDesign == null ? "null" : pageDesign.getPk(), "); ")
+								.a("onclick", "putcopyPageDesign($('#putcopyPageDesignForm'), ", pageDesign_ == null ? "null" : pageDesign_.getPk(), "); ")
 								.f().sx("Duplicate page designs")
 							.g("button");
 
@@ -894,7 +944,7 @@ public class PageDesignGenPage extends PageDesignGenPageGen<ClusterPage> {
 							} g("form");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-khaki ")
-								.a("onclick", "patchPageDesign(null, $('#patchPageDesignFormValues'), ", Optional.ofNullable(pageDesign).map(PageDesign::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
+								.a("onclick", "patchPageDesign(null, $('#patchPageDesignFormValues'), ", Optional.ofNullable(pageDesign_).map(PageDesign::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
 								.f().sx("Modify page designs")
 							.g("button");
 

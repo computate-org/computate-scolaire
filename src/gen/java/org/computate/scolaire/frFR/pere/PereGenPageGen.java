@@ -80,43 +80,41 @@ public abstract class PereGenPageGen<DEV> extends ClusterPage {
 		return (PereGenPage)this;
 	}
 
-	//////////////////
-	// pereScolaire //
-	//////////////////
+	///////////////////
+	// pereScolaire_ //
+	///////////////////
 
-	/**	 L'entité pereScolaire
+	/**	 L'entité pereScolaire_
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected PereScolaire pereScolaire;
+	protected PereScolaire pereScolaire_;
 	@JsonIgnore
-	public Couverture<PereScolaire> pereScolaireCouverture = new Couverture<PereScolaire>().p(this).c(PereScolaire.class).var("pereScolaire").o(pereScolaire);
+	public Couverture<PereScolaire> pereScolaire_Couverture = new Couverture<PereScolaire>().p(this).c(PereScolaire.class).var("pereScolaire_").o(pereScolaire_);
 
-	/**	<br/> L'entité pereScolaire
+	/**	<br/> L'entité pereScolaire_
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.pere.PereGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pereScolaire">Trouver l'entité pereScolaire dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.pere.PereGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pereScolaire_">Trouver l'entité pereScolaire_ dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _pereScolaire(Couverture<PereScolaire> c);
+	protected abstract void _pereScolaire_(Couverture<PereScolaire> c);
 
-	public PereScolaire getPereScolaire() {
-		return pereScolaire;
+	public PereScolaire getPereScolaire_() {
+		return pereScolaire_;
 	}
 
-	public void setPereScolaire(PereScolaire pereScolaire) {
-		this.pereScolaire = pereScolaire;
-		this.pereScolaireCouverture.dejaInitialise = true;
+	public void setPereScolaire_(PereScolaire pereScolaire_) {
+		this.pereScolaire_ = pereScolaire_;
+		this.pereScolaire_Couverture.dejaInitialise = true;
 	}
-	protected PereGenPage pereScolaireInit() {
-		if(!pereScolaireCouverture.dejaInitialise) {
-			_pereScolaire(pereScolaireCouverture);
-			if(pereScolaire == null)
-				setPereScolaire(pereScolaireCouverture.o);
+	protected PereGenPage pereScolaire_Init() {
+		if(!pereScolaire_Couverture.dejaInitialise) {
+			_pereScolaire_(pereScolaire_Couverture);
+			if(pereScolaire_ == null)
+				setPereScolaire_(pereScolaire_Couverture.o);
 		}
-		if(pereScolaire != null)
-			pereScolaire.initLoinPourClasse(requeteSite_);
-		pereScolaireCouverture.dejaInitialise(true);
+		pereScolaire_Couverture.dejaInitialise(true);
 		return (PereGenPage)this;
 	}
 
@@ -142,7 +140,7 @@ public abstract class PereGenPageGen<DEV> extends ClusterPage {
 
 	public void initPereGenPage() {
 		listePereScolaireInit();
-		pereScolaireInit();
+		pereScolaire_Init();
 	}
 
 	@Override public void initLoinPourClasse(RequeteSiteFrFR requeteSite_) {
@@ -157,8 +155,6 @@ public abstract class PereGenPageGen<DEV> extends ClusterPage {
 			super.requeteSiteClusterPage(requeteSite_);
 		if(listePereScolaire != null)
 			listePereScolaire.setRequeteSite_(requeteSite_);
-		if(pereScolaire != null)
-			pereScolaire.setRequeteSite_(requeteSite_);
 	}
 
 	public void requeteSitePourClasse(RequeteSiteFrFR requeteSite_) {
@@ -187,8 +183,8 @@ public abstract class PereGenPageGen<DEV> extends ClusterPage {
 		switch(var) {
 			case "listePereScolaire":
 				return oPereGenPage.listePereScolaire;
-			case "pereScolaire":
-				return oPereGenPage.pereScolaire;
+			case "pereScolaire_":
+				return oPereGenPage.pereScolaire_;
 			default:
 				return super.obtenirClusterPage(var);
 		}

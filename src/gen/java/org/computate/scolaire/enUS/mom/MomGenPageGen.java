@@ -80,43 +80,41 @@ public abstract class MomGenPageGen<DEV> extends ClusterPage {
 		return (MomGenPage)this;
 	}
 
-	///////////////
-	// schoolMom //
-	///////////////
+	////////////////
+	// schoolMom_ //
+	////////////////
 
-	/**	 The entity schoolMom
+	/**	 The entity schoolMom_
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected SchoolMom schoolMom;
+	protected SchoolMom schoolMom_;
 	@JsonIgnore
-	public Wrap<SchoolMom> schoolMomWrap = new Wrap<SchoolMom>().p(this).c(SchoolMom.class).var("schoolMom").o(schoolMom);
+	public Wrap<SchoolMom> schoolMom_Wrap = new Wrap<SchoolMom>().p(this).c(SchoolMom.class).var("schoolMom_").o(schoolMom_);
 
-	/**	<br/> The entity schoolMom
+	/**	<br/> The entity schoolMom_
 	 *  is defined as null before being initialized. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.mom.MomGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolMom">Find the entity schoolMom in Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.mom.MomGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolMom_">Find the entity schoolMom_ in Solr</a>
 	 * <br/>
 	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
-	protected abstract void _schoolMom(Wrap<SchoolMom> c);
+	protected abstract void _schoolMom_(Wrap<SchoolMom> c);
 
-	public SchoolMom getSchoolMom() {
-		return schoolMom;
+	public SchoolMom getSchoolMom_() {
+		return schoolMom_;
 	}
 
-	public void setSchoolMom(SchoolMom schoolMom) {
-		this.schoolMom = schoolMom;
-		this.schoolMomWrap.alreadyInitialized = true;
+	public void setSchoolMom_(SchoolMom schoolMom_) {
+		this.schoolMom_ = schoolMom_;
+		this.schoolMom_Wrap.alreadyInitialized = true;
 	}
-	protected MomGenPage schoolMomInit() {
-		if(!schoolMomWrap.alreadyInitialized) {
-			_schoolMom(schoolMomWrap);
-			if(schoolMom == null)
-				setSchoolMom(schoolMomWrap.o);
+	protected MomGenPage schoolMom_Init() {
+		if(!schoolMom_Wrap.alreadyInitialized) {
+			_schoolMom_(schoolMom_Wrap);
+			if(schoolMom_ == null)
+				setSchoolMom_(schoolMom_Wrap.o);
 		}
-		if(schoolMom != null)
-			schoolMom.initDeepForClass(siteRequest_);
-		schoolMomWrap.alreadyInitialized(true);
+		schoolMom_Wrap.alreadyInitialized(true);
 		return (MomGenPage)this;
 	}
 
@@ -142,7 +140,7 @@ public abstract class MomGenPageGen<DEV> extends ClusterPage {
 
 	public void initMomGenPage() {
 		listSchoolMomInit();
-		schoolMomInit();
+		schoolMom_Init();
 	}
 
 	@Override public void initDeepForClass(SiteRequestEnUS siteRequest_) {
@@ -157,8 +155,6 @@ public abstract class MomGenPageGen<DEV> extends ClusterPage {
 			super.siteRequestClusterPage(siteRequest_);
 		if(listSchoolMom != null)
 			listSchoolMom.setSiteRequest_(siteRequest_);
-		if(schoolMom != null)
-			schoolMom.setSiteRequest_(siteRequest_);
 	}
 
 	public void siteRequestForClass(SiteRequestEnUS siteRequest_) {
@@ -187,8 +183,8 @@ public abstract class MomGenPageGen<DEV> extends ClusterPage {
 		switch(var) {
 			case "listSchoolMom":
 				return oMomGenPage.listSchoolMom;
-			case "schoolMom":
-				return oMomGenPage.schoolMom;
+			case "schoolMom_":
+				return oMomGenPage.schoolMom_;
 			default:
 				return super.obtainClusterPage(var);
 		}

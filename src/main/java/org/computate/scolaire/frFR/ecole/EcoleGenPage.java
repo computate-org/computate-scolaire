@@ -54,7 +54,7 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 	protected void _listeEcole(Couverture<ListeRecherche<Ecole>> c) {
 	}
 
-	protected void _ecole(Couverture<Ecole> c) {
+	protected void _ecole_(Couverture<Ecole> c) {
 		if(listeEcole != null && listeEcole.size() == 1)
 			c.o(listeEcole.get(0));
 	}
@@ -64,8 +64,8 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageH2(Couverture<String> c) {
-		if(ecole != null && ecole.getEcoleNomComplet() != null)
-			c.o(ecole.getEcoleNomComplet());
+		if(ecole_ != null && ecole_.getEcoleNomComplet() != null)
+			c.o(ecole_.getEcoleNomComplet());
 	}
 
 	@Override protected void _pageH3(Couverture<String> c) {
@@ -73,9 +73,9 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageTitre(Couverture<String> c) {
-		if(ecole != null && ecole.getEcoleNomComplet() != null)
-			c.o(ecole.getEcoleNomComplet());
-		else if(ecole != null)
+		if(ecole_ != null && ecole_.getEcoleNomComplet() != null)
+			c.o(ecole_.getEcoleNomComplet());
+		else if(ecole_ != null)
 			c.o("écoles");
 		else if(listeEcole == null || listeEcole.size() == 0)
 			c.o("aucune école trouvée");
@@ -107,6 +107,7 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 	@Override public void htmlScriptsEcoleGenPage() {
 		e("script").a("src", statiqueUrlBase, "/js/frFR/EcolePage.js").f().g("script");
 		e("script").a("src", statiqueUrlBase, "/js/frFR/AnneePage.js").f().g("script");
+		e("script").a("src", statiqueUrlBase, "/js/frFR/RecuPage.js").f().g("script");
 	}
 
 	@Override public void htmlScriptEcoleGenPage() {
@@ -133,6 +134,14 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 			tl(2, "suggereEcoleAnneeCles([{'name':'fq','value':'ecoleCle:' + pk}], $('#listEcoleAnneeCles_Page'), pk, true); ");
 		} else {
 			tl(2, "suggereEcoleAnneeCles([{'name':'fq','value':'ecoleCle:' + pk}], $('#listEcoleAnneeCles_Page'), pk, false); ");
+		}
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			tl(2, "suggereEcoleRecuCles([{'name':'fq','value':'ecoleCle:' + pk}], $('#listEcoleRecuCles_Page'), pk, true); ");
+		} else {
+			tl(2, "suggereEcoleRecuCles([{'name':'fq','value':'ecoleCle:' + pk}], $('#listEcoleRecuCles_Page'), pk, false); ");
 		}
 		tl(1, "}");
 		tl(1, "websocketEcole(websocketEcoleInner);");
@@ -172,6 +181,7 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmAnneeCles("Page");
+			o.htmRecuCles("Page");
 		} g("div");
 	}
 
@@ -208,6 +218,7 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmAnneeCles("POST");
+			o.htmRecuCles("POST");
 		} g("div");
 	}
 
@@ -266,6 +277,7 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmAnneeCles("PUTCopie");
+			o.htmRecuCles("PUTCopie");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInheritPk("PUTCopie");
@@ -306,6 +318,7 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmAnneeCles("PATCH");
+			o.htmRecuCles("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInheritPk("PATCH");
@@ -348,6 +361,7 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmAnneeCles("Recherche");
+			o.htmRecuCles("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInheritPk("Recherche");
@@ -696,7 +710,7 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 							} g("form");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-pink ")
-								.a("onclick", "patchEcole(null, $('#patchEcoleFormulaireValeurs'), ", Optional.ofNullable(ecole).map(Ecole::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
+								.a("onclick", "patchEcole(null, $('#patchEcoleFormulaireValeurs'), ", Optional.ofNullable(ecole_).map(Ecole::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
 								.f().sx("Modifier écoles")
 							.g("button");
 
@@ -798,7 +812,7 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-pink ")
-								.a("onclick", "putcopieEcole($('#putcopieEcoleForm'), ", ecole == null ? "null" : ecole.getPk(), "); ")
+								.a("onclick", "putcopieEcole($('#putcopieEcoleForm'), ", ecole_ == null ? "null" : ecole_.getPk(), "); ")
 								.f().sx("Dupliquer écoles")
 							.g("button");
 

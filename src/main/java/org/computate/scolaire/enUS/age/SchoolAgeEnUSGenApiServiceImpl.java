@@ -328,6 +328,8 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
 								searchList.setC(SchoolBlock.class);
+								searchList.addFilterQuery("deleted_indexed_boolean:false");
+								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								searchList.initDeepSearchList(siteRequest);
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
@@ -359,6 +361,8 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
 								searchList.setC(SchoolSession.class);
+								searchList.addFilterQuery("deleted_indexed_boolean:false");
+								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								searchList.initDeepSearchList(siteRequest);
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
@@ -390,6 +394,8 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
 								searchList.setC(SchoolYear.class);
+								searchList.addFilterQuery("deleted_indexed_boolean:false");
+								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								searchList.initDeepSearchList(siteRequest);
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
@@ -607,6 +613,8 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 				searchList.setStore(true);
 				searchList.setQuery("*:*");
 				searchList.setC(SchoolAge.class);
+				searchList.addFilterQuery("deleted_indexed_boolean:false");
+				searchList.addFilterQuery("archived_indexed_boolean:false");
 				searchList.addFilterQuery("inheritPk_indexed_long:" + json.getString("pk"));
 				searchList.initDeepForClass(siteRequest2);
 
@@ -793,6 +801,8 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 				searchList.setStore(true);
 				searchList.setQuery("*:*");
 				searchList.setC(SchoolAge.class);
+				searchList.addFilterQuery("deleted_indexed_boolean:false");
+				searchList.addFilterQuery("archived_indexed_boolean:false");
 				searchList.addFilterQuery("pk_indexed_long:" + json.getString("pk"));
 				searchList.initDeepForClass(siteRequest2);
 
@@ -1575,6 +1585,8 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
 								searchList.setC(SchoolBlock.class);
+								searchList.addFilterQuery("deleted_indexed_boolean:false");
+								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								searchList.initDeepSearchList(siteRequest);
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
@@ -1608,6 +1620,8 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 									searchList.setQuery("*:*");
 									searchList.setStore(true);
 									searchList.setC(SchoolBlock.class);
+									searchList.addFilterQuery("deleted_indexed_boolean:false");
+									searchList.addFilterQuery("archived_indexed_boolean:false");
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									searchList.initDeepSearchList(siteRequest);
 									Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
@@ -1634,6 +1648,7 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 						break;
 					case "setBlockKeys":
 						JsonArray setBlockKeysValues = jsonObject.getJsonArray(methodName);
+						JsonArray setBlockKeysValues2 = new JsonArray();
 						if(setBlockKeysValues != null) {
 							for(Integer i = 0; i <  setBlockKeysValues.size(); i++) {
 								Long l = Long.parseLong(setBlockKeysValues.getString(i));
@@ -1642,9 +1657,13 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 									searchList.setQuery("*:*");
 									searchList.setStore(true);
 									searchList.setC(SchoolBlock.class);
+									searchList.addFilterQuery("deleted_indexed_boolean:false");
+									searchList.addFilterQuery("archived_indexed_boolean:false");
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									searchList.initDeepSearchList(siteRequest);
 									Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l2 != null)
+										setBlockKeysValues2.add(l2);
 									if(l2 != null && !o.getBlockKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContextEnUS.SQL_addA
@@ -1667,7 +1686,7 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 						}
 						if(o.getBlockKeys() != null) {
 							for(Long l :  o.getBlockKeys()) {
-								if(l != null && (setBlockKeysValues == null || !setBlockKeysValues.contains(l))) {
+								if(l != null && (setBlockKeysValues == null || !setBlockKeysValues2.contains(l))) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContextEnUS.SQL_removeA
 												, Tuple.of(l, "ageKey", pk, "blockKeys")
@@ -1691,6 +1710,8 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
 								searchList.setC(SchoolBlock.class);
+								searchList.addFilterQuery("deleted_indexed_boolean:false");
+								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								searchList.initDeepSearchList(siteRequest);
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
@@ -1722,6 +1743,8 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
 								searchList.setC(SchoolSession.class);
+								searchList.addFilterQuery("deleted_indexed_boolean:false");
+								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								searchList.initDeepSearchList(siteRequest);
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
@@ -1754,6 +1777,8 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
 								searchList.setC(SchoolSession.class);
+								searchList.addFilterQuery("deleted_indexed_boolean:false");
+								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								searchList.initDeepSearchList(siteRequest);
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
@@ -1786,6 +1811,8 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
 								searchList.setC(SchoolYear.class);
+								searchList.addFilterQuery("deleted_indexed_boolean:false");
+								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								searchList.initDeepSearchList(siteRequest);
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
@@ -1818,6 +1845,8 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
 								searchList.setC(SchoolYear.class);
+								searchList.addFilterQuery("deleted_indexed_boolean:false");
+								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								searchList.initDeepSearchList(siteRequest);
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);

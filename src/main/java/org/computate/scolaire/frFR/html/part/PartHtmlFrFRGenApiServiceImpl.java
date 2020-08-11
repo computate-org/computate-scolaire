@@ -324,6 +324,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 								listeRecherche.setQuery("*:*");
 								listeRecherche.setStocker(true);
 								listeRecherche.setC(DesignPage.class);
+								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
@@ -500,6 +502,19 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 									a.handle(Future.succeededFuture());
 								else
 									a.handle(Future.failedFuture(new Exception("valeur PartHtml.htmlVarInput a échoué", b.cause())));
+							});
+						}));
+						break;
+					case "htmlIfVarEquals":
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "htmlIfVarEquals", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur PartHtml.htmlIfVarEquals a échoué", b.cause())));
 							});
 						}));
 						break;
@@ -840,6 +855,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 				listeRecherche.setStocker(true);
 				listeRecherche.setQuery("*:*");
 				listeRecherche.setC(PartHtml.class);
+				listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+				listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 				listeRecherche.addFilterQuery("inheritPk_indexed_long:" + json.getString("pk"));
 				listeRecherche.initLoinPourClasse(requeteSite2);
 
@@ -1026,6 +1043,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 				listeRecherche.setStocker(true);
 				listeRecherche.setQuery("*:*");
 				listeRecherche.setC(PartHtml.class);
+				listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+				listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 				listeRecherche.addFilterQuery("pk_indexed_long:" + json.getString("pk"));
 				listeRecherche.initLoinPourClasse(requeteSite2);
 
@@ -1522,6 +1541,19 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 									a.handle(Future.succeededFuture());
 								else
 									a.handle(Future.failedFuture(new Exception("valeur PartHtml.htmlVarInput a échoué", b.cause())));
+							});
+						}));
+						break;
+					case "htmlIfVarEquals":
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "htmlIfVarEquals", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur PartHtml.htmlIfVarEquals a échoué", b.cause())));
 							});
 						}));
 						break;
@@ -2075,6 +2107,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 								listeRecherche.setQuery("*:*");
 								listeRecherche.setStocker(true);
 								listeRecherche.setC(DesignPage.class);
+								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
@@ -2108,6 +2142,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 									listeRecherche.setQuery("*:*");
 									listeRecherche.setStocker(true);
 									listeRecherche.setC(DesignPage.class);
+									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
@@ -2134,6 +2170,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						break;
 					case "setDesignPageCles":
 						JsonArray setDesignPageClesValeurs = jsonObject.getJsonArray(methodeNom);
+						JsonArray setDesignPageClesValeurs2 = new JsonArray();
 						if(setDesignPageClesValeurs != null) {
 							for(Integer i = 0; i <  setDesignPageClesValeurs.size(); i++) {
 								Long l = Long.parseLong(setDesignPageClesValeurs.getString(i));
@@ -2142,9 +2179,13 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 									listeRecherche.setQuery("*:*");
 									listeRecherche.setStocker(true);
 									listeRecherche.setC(DesignPage.class);
+									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l2 != null)
+										setDesignPageClesValeurs2.add(l2);
 									if(l2 != null && !o.getDesignPageCles().contains(l2)) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContexteFrFR.SQL_addA
@@ -2167,7 +2208,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						}
 						if(o.getDesignPageCles() != null) {
 							for(Long l :  o.getDesignPageCles()) {
-								if(l != null && (setDesignPageClesValeurs == null || !setDesignPageClesValeurs.contains(l))) {
+								if(l != null && (setDesignPageClesValeurs2 == null || !setDesignPageClesValeurs2.contains(l))) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
 												, Tuple.of(pk, "designPageCles", l, "partHtmlCles")
@@ -2191,6 +2232,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 								listeRecherche.setQuery("*:*");
 								listeRecherche.setStocker(true);
 								listeRecherche.setC(DesignPage.class);
+								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
@@ -2546,6 +2589,34 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 										a.handle(Future.succeededFuture());
 									else
 										a.handle(Future.failedFuture(new Exception("valeur PartHtml.htmlVarInput a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setHtmlIfVarEquals":
+						if(jsonObject.getString(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "htmlIfVarEquals")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur PartHtml.htmlIfVarEquals a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setHtmlIfVarEquals(jsonObject.getString(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "htmlIfVarEquals", o2.jsonHtmlIfVarEquals())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur PartHtml.htmlIfVarEquals a échoué", b.cause())));
 								});
 							}));
 						}

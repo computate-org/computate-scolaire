@@ -80,43 +80,41 @@ public abstract class AgeGenPageGen<DEV> extends ClusterPage {
 		return (AgeGenPage)this;
 	}
 
-	/////////////////
-	// ageScolaire //
-	/////////////////
+	//////////////////
+	// ageScolaire_ //
+	//////////////////
 
-	/**	 L'entité ageScolaire
+	/**	 L'entité ageScolaire_
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected AgeScolaire ageScolaire;
+	protected AgeScolaire ageScolaire_;
 	@JsonIgnore
-	public Couverture<AgeScolaire> ageScolaireCouverture = new Couverture<AgeScolaire>().p(this).c(AgeScolaire.class).var("ageScolaire").o(ageScolaire);
+	public Couverture<AgeScolaire> ageScolaire_Couverture = new Couverture<AgeScolaire>().p(this).c(AgeScolaire.class).var("ageScolaire_").o(ageScolaire_);
 
-	/**	<br/> L'entité ageScolaire
+	/**	<br/> L'entité ageScolaire_
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.age.AgeGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:ageScolaire">Trouver l'entité ageScolaire dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.age.AgeGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:ageScolaire_">Trouver l'entité ageScolaire_ dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _ageScolaire(Couverture<AgeScolaire> c);
+	protected abstract void _ageScolaire_(Couverture<AgeScolaire> c);
 
-	public AgeScolaire getAgeScolaire() {
-		return ageScolaire;
+	public AgeScolaire getAgeScolaire_() {
+		return ageScolaire_;
 	}
 
-	public void setAgeScolaire(AgeScolaire ageScolaire) {
-		this.ageScolaire = ageScolaire;
-		this.ageScolaireCouverture.dejaInitialise = true;
+	public void setAgeScolaire_(AgeScolaire ageScolaire_) {
+		this.ageScolaire_ = ageScolaire_;
+		this.ageScolaire_Couverture.dejaInitialise = true;
 	}
-	protected AgeGenPage ageScolaireInit() {
-		if(!ageScolaireCouverture.dejaInitialise) {
-			_ageScolaire(ageScolaireCouverture);
-			if(ageScolaire == null)
-				setAgeScolaire(ageScolaireCouverture.o);
+	protected AgeGenPage ageScolaire_Init() {
+		if(!ageScolaire_Couverture.dejaInitialise) {
+			_ageScolaire_(ageScolaire_Couverture);
+			if(ageScolaire_ == null)
+				setAgeScolaire_(ageScolaire_Couverture.o);
 		}
-		if(ageScolaire != null)
-			ageScolaire.initLoinPourClasse(requeteSite_);
-		ageScolaireCouverture.dejaInitialise(true);
+		ageScolaire_Couverture.dejaInitialise(true);
 		return (AgeGenPage)this;
 	}
 
@@ -142,7 +140,7 @@ public abstract class AgeGenPageGen<DEV> extends ClusterPage {
 
 	public void initAgeGenPage() {
 		listeAgeScolaireInit();
-		ageScolaireInit();
+		ageScolaire_Init();
 	}
 
 	@Override public void initLoinPourClasse(RequeteSiteFrFR requeteSite_) {
@@ -157,8 +155,6 @@ public abstract class AgeGenPageGen<DEV> extends ClusterPage {
 			super.requeteSiteClusterPage(requeteSite_);
 		if(listeAgeScolaire != null)
 			listeAgeScolaire.setRequeteSite_(requeteSite_);
-		if(ageScolaire != null)
-			ageScolaire.setRequeteSite_(requeteSite_);
 	}
 
 	public void requeteSitePourClasse(RequeteSiteFrFR requeteSite_) {
@@ -187,8 +183,8 @@ public abstract class AgeGenPageGen<DEV> extends ClusterPage {
 		switch(var) {
 			case "listeAgeScolaire":
 				return oAgeGenPage.listeAgeScolaire;
-			case "ageScolaire":
-				return oAgeGenPage.ageScolaire;
+			case "ageScolaire_":
+				return oAgeGenPage.ageScolaire_;
 			default:
 				return super.obtenirClusterPage(var);
 		}

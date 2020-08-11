@@ -80,43 +80,41 @@ public abstract class DesignMailGenPageGen<DEV> extends ClusterPage {
 		return (DesignMailGenPage)this;
 	}
 
-	////////////////
-	// designPage //
-	////////////////
+	/////////////////
+	// designPage_ //
+	/////////////////
 
-	/**	 L'entité designPage
+	/**	 L'entité designPage_
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected DesignPage designPage;
+	protected DesignPage designPage_;
 	@JsonIgnore
-	public Couverture<DesignPage> designPageCouverture = new Couverture<DesignPage>().p(this).c(DesignPage.class).var("designPage").o(designPage);
+	public Couverture<DesignPage> designPage_Couverture = new Couverture<DesignPage>().p(this).c(DesignPage.class).var("designPage_").o(designPage_);
 
-	/**	<br/> L'entité designPage
+	/**	<br/> L'entité designPage_
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.design.DesignMailGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:designPage">Trouver l'entité designPage dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.design.DesignMailGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:designPage_">Trouver l'entité designPage_ dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _designPage(Couverture<DesignPage> c);
+	protected abstract void _designPage_(Couverture<DesignPage> c);
 
-	public DesignPage getDesignPage() {
-		return designPage;
+	public DesignPage getDesignPage_() {
+		return designPage_;
 	}
 
-	public void setDesignPage(DesignPage designPage) {
-		this.designPage = designPage;
-		this.designPageCouverture.dejaInitialise = true;
+	public void setDesignPage_(DesignPage designPage_) {
+		this.designPage_ = designPage_;
+		this.designPage_Couverture.dejaInitialise = true;
 	}
-	protected DesignMailGenPage designPageInit() {
-		if(!designPageCouverture.dejaInitialise) {
-			_designPage(designPageCouverture);
-			if(designPage == null)
-				setDesignPage(designPageCouverture.o);
+	protected DesignMailGenPage designPage_Init() {
+		if(!designPage_Couverture.dejaInitialise) {
+			_designPage_(designPage_Couverture);
+			if(designPage_ == null)
+				setDesignPage_(designPage_Couverture.o);
 		}
-		if(designPage != null)
-			designPage.initLoinPourClasse(requeteSite_);
-		designPageCouverture.dejaInitialise(true);
+		designPage_Couverture.dejaInitialise(true);
 		return (DesignMailGenPage)this;
 	}
 
@@ -142,7 +140,7 @@ public abstract class DesignMailGenPageGen<DEV> extends ClusterPage {
 
 	public void initDesignMailGenPage() {
 		listeDesignPageInit();
-		designPageInit();
+		designPage_Init();
 	}
 
 	@Override public void initLoinPourClasse(RequeteSiteFrFR requeteSite_) {
@@ -157,8 +155,6 @@ public abstract class DesignMailGenPageGen<DEV> extends ClusterPage {
 			super.requeteSiteClusterPage(requeteSite_);
 		if(listeDesignPage != null)
 			listeDesignPage.setRequeteSite_(requeteSite_);
-		if(designPage != null)
-			designPage.setRequeteSite_(requeteSite_);
 	}
 
 	public void requeteSitePourClasse(RequeteSiteFrFR requeteSite_) {
@@ -187,8 +183,8 @@ public abstract class DesignMailGenPageGen<DEV> extends ClusterPage {
 		switch(var) {
 			case "listeDesignPage":
 				return oDesignMailGenPage.listeDesignPage;
-			case "designPage":
-				return oDesignMailGenPage.designPage;
+			case "designPage_":
+				return oDesignMailGenPage.designPage_;
 			default:
 				return super.obtenirClusterPage(var);
 		}

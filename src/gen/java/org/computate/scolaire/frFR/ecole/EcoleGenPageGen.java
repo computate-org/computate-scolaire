@@ -80,43 +80,41 @@ public abstract class EcoleGenPageGen<DEV> extends ClusterPage {
 		return (EcoleGenPage)this;
 	}
 
-	///////////
-	// ecole //
-	///////////
+	////////////
+	// ecole_ //
+	////////////
 
-	/**	 L'entité ecole
+	/**	 L'entité ecole_
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected Ecole ecole;
+	protected Ecole ecole_;
 	@JsonIgnore
-	public Couverture<Ecole> ecoleCouverture = new Couverture<Ecole>().p(this).c(Ecole.class).var("ecole").o(ecole);
+	public Couverture<Ecole> ecole_Couverture = new Couverture<Ecole>().p(this).c(Ecole.class).var("ecole_").o(ecole_);
 
-	/**	<br/> L'entité ecole
+	/**	<br/> L'entité ecole_
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.ecole.EcoleGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:ecole">Trouver l'entité ecole dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.ecole.EcoleGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:ecole_">Trouver l'entité ecole_ dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _ecole(Couverture<Ecole> c);
+	protected abstract void _ecole_(Couverture<Ecole> c);
 
-	public Ecole getEcole() {
-		return ecole;
+	public Ecole getEcole_() {
+		return ecole_;
 	}
 
-	public void setEcole(Ecole ecole) {
-		this.ecole = ecole;
-		this.ecoleCouverture.dejaInitialise = true;
+	public void setEcole_(Ecole ecole_) {
+		this.ecole_ = ecole_;
+		this.ecole_Couverture.dejaInitialise = true;
 	}
-	protected EcoleGenPage ecoleInit() {
-		if(!ecoleCouverture.dejaInitialise) {
-			_ecole(ecoleCouverture);
-			if(ecole == null)
-				setEcole(ecoleCouverture.o);
+	protected EcoleGenPage ecole_Init() {
+		if(!ecole_Couverture.dejaInitialise) {
+			_ecole_(ecole_Couverture);
+			if(ecole_ == null)
+				setEcole_(ecole_Couverture.o);
 		}
-		if(ecole != null)
-			ecole.initLoinPourClasse(requeteSite_);
-		ecoleCouverture.dejaInitialise(true);
+		ecole_Couverture.dejaInitialise(true);
 		return (EcoleGenPage)this;
 	}
 
@@ -142,7 +140,7 @@ public abstract class EcoleGenPageGen<DEV> extends ClusterPage {
 
 	public void initEcoleGenPage() {
 		listeEcoleInit();
-		ecoleInit();
+		ecole_Init();
 	}
 
 	@Override public void initLoinPourClasse(RequeteSiteFrFR requeteSite_) {
@@ -157,8 +155,6 @@ public abstract class EcoleGenPageGen<DEV> extends ClusterPage {
 			super.requeteSiteClusterPage(requeteSite_);
 		if(listeEcole != null)
 			listeEcole.setRequeteSite_(requeteSite_);
-		if(ecole != null)
-			ecole.setRequeteSite_(requeteSite_);
 	}
 
 	public void requeteSitePourClasse(RequeteSiteFrFR requeteSite_) {
@@ -187,8 +183,8 @@ public abstract class EcoleGenPageGen<DEV> extends ClusterPage {
 		switch(var) {
 			case "listeEcole":
 				return oEcoleGenPage.listeEcole;
-			case "ecole":
-				return oEcoleGenPage.ecole;
+			case "ecole_":
+				return oEcoleGenPage.ecole_;
 			default:
 				return super.obtenirClusterPage(var);
 		}

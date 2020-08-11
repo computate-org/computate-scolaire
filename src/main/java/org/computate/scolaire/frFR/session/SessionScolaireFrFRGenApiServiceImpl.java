@@ -326,6 +326,8 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 								listeRecherche.setQuery("*:*");
 								listeRecherche.setStocker(true);
 								listeRecherche.setC(AgeScolaire.class);
+								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
@@ -357,6 +359,8 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 								listeRecherche.setQuery("*:*");
 								listeRecherche.setStocker(true);
 								listeRecherche.setC(SaisonScolaire.class);
+								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
@@ -574,6 +578,8 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 				listeRecherche.setStocker(true);
 				listeRecherche.setQuery("*:*");
 				listeRecherche.setC(SessionScolaire.class);
+				listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+				listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 				listeRecherche.addFilterQuery("inheritPk_indexed_long:" + json.getString("pk"));
 				listeRecherche.initLoinPourClasse(requeteSite2);
 
@@ -760,6 +766,8 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 				listeRecherche.setStocker(true);
 				listeRecherche.setQuery("*:*");
 				listeRecherche.setC(SessionScolaire.class);
+				listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+				listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 				listeRecherche.addFilterQuery("pk_indexed_long:" + json.getString("pk"));
 				listeRecherche.initLoinPourClasse(requeteSite2);
 
@@ -1526,6 +1534,8 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 								listeRecherche.setQuery("*:*");
 								listeRecherche.setStocker(true);
 								listeRecherche.setC(AgeScolaire.class);
+								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
@@ -1559,6 +1569,8 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 									listeRecherche.setQuery("*:*");
 									listeRecherche.setStocker(true);
 									listeRecherche.setC(AgeScolaire.class);
+									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
@@ -1585,6 +1597,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 						break;
 					case "setAgeCles":
 						JsonArray setAgeClesValeurs = jsonObject.getJsonArray(methodeNom);
+						JsonArray setAgeClesValeurs2 = new JsonArray();
 						if(setAgeClesValeurs != null) {
 							for(Integer i = 0; i <  setAgeClesValeurs.size(); i++) {
 								Long l = Long.parseLong(setAgeClesValeurs.getString(i));
@@ -1593,9 +1606,13 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 									listeRecherche.setQuery("*:*");
 									listeRecherche.setStocker(true);
 									listeRecherche.setC(AgeScolaire.class);
+									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l2 != null)
+										setAgeClesValeurs2.add(l2);
 									if(l2 != null && !o.getAgeCles().contains(l2)) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContexteFrFR.SQL_addA
@@ -1618,7 +1635,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 						}
 						if(o.getAgeCles() != null) {
 							for(Long l :  o.getAgeCles()) {
-								if(l != null && (setAgeClesValeurs == null || !setAgeClesValeurs.contains(l))) {
+								if(l != null && (setAgeClesValeurs2 == null || !setAgeClesValeurs2.contains(l))) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
 												, Tuple.of(pk, "ageCles", l, "sessionCle")
@@ -1642,6 +1659,8 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 								listeRecherche.setQuery("*:*");
 								listeRecherche.setStocker(true);
 								listeRecherche.setC(AgeScolaire.class);
+								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
@@ -1673,6 +1692,8 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 								listeRecherche.setQuery("*:*");
 								listeRecherche.setStocker(true);
 								listeRecherche.setC(SaisonScolaire.class);
+								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
@@ -1705,6 +1726,8 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 								listeRecherche.setQuery("*:*");
 								listeRecherche.setStocker(true);
 								listeRecherche.setC(SaisonScolaire.class);
+								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);

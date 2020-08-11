@@ -246,7 +246,7 @@ public abstract class ClusterGen<DEV> extends Object {
 
 	public void inputPk(String classeApiMethodeMethode) {
 		Cluster s = (Cluster)this;
-		s.sx(htmPk());
+		s.e("span").a("class", "varCluster", pk, "Pk ").f().sx(htmPk()).g("span");
 	}
 
 	public void htmPk(String classeApiMethodeMethode) {
@@ -370,7 +370,7 @@ public abstract class ClusterGen<DEV> extends Object {
 					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLE_READS)
 					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLE_READS)
 					) {
-				s.sx(htmInheritPk());
+				s.e("span").a("class", "varCluster", pk, "InheritPk ").f().sx(htmInheritPk()).g("span");
 			}
 		}
 	}
@@ -552,7 +552,7 @@ public abstract class ClusterGen<DEV> extends Object {
 
 	public void inputCree(String classeApiMethodeMethode) {
 		Cluster s = (Cluster)this;
-		s.sx(htmCree());
+		s.e("span").a("class", "varCluster", pk, "Cree ").f().sx(htmCree()).g("span");
 	}
 
 	public void htmCree(String classeApiMethodeMethode) {
@@ -656,7 +656,7 @@ public abstract class ClusterGen<DEV> extends Object {
 
 	public void inputModifie(String classeApiMethodeMethode) {
 		Cluster s = (Cluster)this;
-		s.sx(htmModifie());
+		s.e("span").a("class", "varCluster", pk, "Modifie ").f().sx(htmModifie()).g("span");
 	}
 
 	public void htmModifie(String classeApiMethodeMethode) {
@@ -790,7 +790,7 @@ public abstract class ClusterGen<DEV> extends Object {
 					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLE_READS)
 					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLE_READS)
 					) {
-				s.sx(htmArchive());
+				s.e("span").a("class", "varCluster", pk, "Archive ").f().sx(htmArchive()).g("span");
 			}
 		}
 	}
@@ -927,7 +927,7 @@ public abstract class ClusterGen<DEV> extends Object {
 					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLE_READS)
 					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLE_READS)
 					) {
-				s.sx(htmSupprime());
+				s.e("span").a("class", "varCluster", pk, "Supprime ").f().sx(htmSupprime()).g("span");
 			}
 		}
 	}
@@ -1220,7 +1220,7 @@ public abstract class ClusterGen<DEV> extends Object {
 
 	public void inputSessionId(String classeApiMethodeMethode) {
 		Cluster s = (Cluster)this;
-		s.sx(htmSessionId());
+		s.e("span").a("class", "varCluster", pk, "SessionId ").f().sx(htmSessionId()).g("span");
 	}
 
 	public void htmSessionId(String classeApiMethodeMethode) {
@@ -1305,7 +1305,7 @@ public abstract class ClusterGen<DEV> extends Object {
 
 	public void inputUtilisateurId(String classeApiMethodeMethode) {
 		Cluster s = (Cluster)this;
-		s.sx(htmUtilisateurId());
+		s.e("span").a("class", "varCluster", pk, "UtilisateurId ").f().sx(htmUtilisateurId()).g("span");
 	}
 
 	public void htmUtilisateurId(String classeApiMethodeMethode) {
@@ -1397,7 +1397,7 @@ public abstract class ClusterGen<DEV> extends Object {
 
 	public void inputUtilisateurCle(String classeApiMethodeMethode) {
 		Cluster s = (Cluster)this;
-		s.sx(htmUtilisateurCle());
+		s.e("span").a("class", "varCluster", pk, "UtilisateurCle ").f().sx(htmUtilisateurCle()).g("span");
 	}
 
 	public void htmUtilisateurCle(String classeApiMethodeMethode) {
@@ -1572,7 +1572,7 @@ public abstract class ClusterGen<DEV> extends Object {
 						{ s.e("div").a("class", "w3-cell-row  ").f();
 							{ s.e("div").a("class", "w3-cell ").f();
 								{ s.e("div").a("class", "w3-rest ").f();
-									s.e("span").f().sx(strObjetTitre()).g("span");
+									s.e("span").a("class", "varCluster", pk, "ObjetTitre ").f().sx(strObjetTitre()).g("span");
 								} s.g("div");
 							} s.g("div");
 						} s.g("div");
@@ -2802,8 +2802,12 @@ public abstract class ClusterGen<DEV> extends Object {
 		Object o = Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
 		if(o != null && o instanceof Cluster) {
 			Cluster original = (Cluster)o;
+			if(!Objects.equals(pk, original.getPk()))
+				requeteApi.addVars("pk");
 			if(!Objects.equals(inheritPk, original.getInheritPk()))
 				requeteApi.addVars("inheritPk");
+			if(!Objects.equals(id, original.getId()))
+				requeteApi.addVars("id");
 			if(!Objects.equals(cree, original.getCree()))
 				requeteApi.addVars("cree");
 			if(!Objects.equals(modifie, original.getModifie()))
@@ -2812,12 +2816,34 @@ public abstract class ClusterGen<DEV> extends Object {
 				requeteApi.addVars("archive");
 			if(!Objects.equals(supprime, original.getSupprime()))
 				requeteApi.addVars("supprime");
+			if(!Objects.equals(classeNomCanonique, original.getClasseNomCanonique()))
+				requeteApi.addVars("classeNomCanonique");
+			if(!Objects.equals(classeNomSimple, original.getClasseNomSimple()))
+				requeteApi.addVars("classeNomSimple");
+			if(!Objects.equals(classeNomsCanoniques, original.getClasseNomsCanoniques()))
+				requeteApi.addVars("classeNomsCanoniques");
 			if(!Objects.equals(sessionId, original.getSessionId()))
 				requeteApi.addVars("sessionId");
 			if(!Objects.equals(utilisateurId, original.getUtilisateurId()))
 				requeteApi.addVars("utilisateurId");
 			if(!Objects.equals(utilisateurCle, original.getUtilisateurCle()))
 				requeteApi.addVars("utilisateurCle");
+			if(!Objects.equals(sauvegardes, original.getSauvegardes()))
+				requeteApi.addVars("sauvegardes");
+			if(!Objects.equals(objetTitre, original.getObjetTitre()))
+				requeteApi.addVars("objetTitre");
+			if(!Objects.equals(objetId, original.getObjetId()))
+				requeteApi.addVars("objetId");
+			if(!Objects.equals(objetSuggere, original.getObjetSuggere()))
+				requeteApi.addVars("objetSuggere");
+			if(!Objects.equals(objetTexte, original.getObjetTexte()))
+				requeteApi.addVars("objetTexte");
+			if(!Objects.equals(pageUrlId, original.getPageUrlId()))
+				requeteApi.addVars("pageUrlId");
+			if(!Objects.equals(pageUrlPk, original.getPageUrlPk()))
+				requeteApi.addVars("pageUrlPk");
+			if(!Objects.equals(pageUrlApi, original.getPageUrlApi()))
+				requeteApi.addVars("pageUrlApi");
 		}
 	}
 
@@ -2826,7 +2852,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(inheritPk, cree, modifie, archive, supprime, sessionId, utilisateurId, utilisateurCle);
+		return Objects.hash(pk, inheritPk, id, cree, modifie, archive, supprime, classeNomCanonique, classeNomSimple, classeNomsCanoniques, sessionId, utilisateurId, utilisateurCle, sauvegardes, objetTitre, objetId, objetSuggere, objetTexte, pageUrlId, pageUrlPk, pageUrlApi);
 	}
 
 	////////////
@@ -2839,14 +2865,27 @@ public abstract class ClusterGen<DEV> extends Object {
 		if(!(o instanceof Cluster))
 			return false;
 		Cluster that = (Cluster)o;
-		return Objects.equals( inheritPk, that.inheritPk )
+		return Objects.equals( pk, that.pk )
+				&& Objects.equals( inheritPk, that.inheritPk )
+				&& Objects.equals( id, that.id )
 				&& Objects.equals( cree, that.cree )
 				&& Objects.equals( modifie, that.modifie )
 				&& Objects.equals( archive, that.archive )
 				&& Objects.equals( supprime, that.supprime )
+				&& Objects.equals( classeNomCanonique, that.classeNomCanonique )
+				&& Objects.equals( classeNomSimple, that.classeNomSimple )
+				&& Objects.equals( classeNomsCanoniques, that.classeNomsCanoniques )
 				&& Objects.equals( sessionId, that.sessionId )
 				&& Objects.equals( utilisateurId, that.utilisateurId )
-				&& Objects.equals( utilisateurCle, that.utilisateurCle );
+				&& Objects.equals( utilisateurCle, that.utilisateurCle )
+				&& Objects.equals( sauvegardes, that.sauvegardes )
+				&& Objects.equals( objetTitre, that.objetTitre )
+				&& Objects.equals( objetId, that.objetId )
+				&& Objects.equals( objetSuggere, that.objetSuggere )
+				&& Objects.equals( objetTexte, that.objetTexte )
+				&& Objects.equals( pageUrlId, that.pageUrlId )
+				&& Objects.equals( pageUrlPk, that.pageUrlPk )
+				&& Objects.equals( pageUrlApi, that.pageUrlApi );
 	}
 
 	//////////////
@@ -2856,14 +2895,27 @@ public abstract class ClusterGen<DEV> extends Object {
 	@Override public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("Cluster { ");
-		sb.append( "inheritPk: " ).append(inheritPk);
+		sb.append( "pk: " ).append(pk);
+		sb.append( ", inheritPk: " ).append(inheritPk);
+		sb.append( ", id: \"" ).append(id).append( "\"" );
 		sb.append( ", cree: " ).append(cree);
 		sb.append( ", modifie: " ).append(modifie);
 		sb.append( ", archive: " ).append(archive);
 		sb.append( ", supprime: " ).append(supprime);
+		sb.append( ", classeNomCanonique: \"" ).append(classeNomCanonique).append( "\"" );
+		sb.append( ", classeNomSimple: \"" ).append(classeNomSimple).append( "\"" );
+		sb.append( ", classeNomsCanoniques: " ).append(classeNomsCanoniques);
 		sb.append( ", sessionId: \"" ).append(sessionId).append( "\"" );
 		sb.append( ", utilisateurId: \"" ).append(utilisateurId).append( "\"" );
 		sb.append( ", utilisateurCle: " ).append(utilisateurCle);
+		sb.append( ", sauvegardes: " ).append(sauvegardes);
+		sb.append( ", objetTitre: \"" ).append(objetTitre).append( "\"" );
+		sb.append( ", objetId: \"" ).append(objetId).append( "\"" );
+		sb.append( ", objetSuggere: \"" ).append(objetSuggere).append( "\"" );
+		sb.append( ", objetTexte: \"" ).append(objetTexte).append( "\"" );
+		sb.append( ", pageUrlId: \"" ).append(pageUrlId).append( "\"" );
+		sb.append( ", pageUrlPk: \"" ).append(pageUrlPk).append( "\"" );
+		sb.append( ", pageUrlApi: \"" ).append(pageUrlApi).append( "\"" );
 		sb.append(" }");
 		return sb.toString();
 	}

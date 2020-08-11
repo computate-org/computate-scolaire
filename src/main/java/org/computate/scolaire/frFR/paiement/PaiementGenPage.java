@@ -54,7 +54,7 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 	protected void _listePaiementScolaire(Couverture<ListeRecherche<PaiementScolaire>> c) {
 	}
 
-	protected void _paiementScolaire(Couverture<PaiementScolaire> c) {
+	protected void _paiementScolaire_(Couverture<PaiementScolaire> c) {
 		if(listePaiementScolaire != null && listePaiementScolaire.size() == 1)
 			c.o(listePaiementScolaire.get(0));
 	}
@@ -64,8 +64,8 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageH2(Couverture<String> c) {
-		if(paiementScolaire != null && paiementScolaire.getPaiementNomComplet() != null)
-			c.o(paiementScolaire.getPaiementNomComplet());
+		if(paiementScolaire_ != null && paiementScolaire_.getPaiementNomComplet() != null)
+			c.o(paiementScolaire_.getPaiementNomComplet());
 	}
 
 	@Override protected void _pageH3(Couverture<String> c) {
@@ -73,9 +73,9 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageTitre(Couverture<String> c) {
-		if(paiementScolaire != null && paiementScolaire.getPaiementNomComplet() != null)
-			c.o(paiementScolaire.getPaiementNomComplet());
-		else if(paiementScolaire != null)
+		if(paiementScolaire_ != null && paiementScolaire_.getPaiementNomComplet() != null)
+			c.o(paiementScolaire_.getPaiementNomComplet());
+		else if(paiementScolaire_ != null)
 			c.o("paiements");
 		else if(listePaiementScolaire == null || listePaiementScolaire.size() == 0)
 			c.o("aucun paiement trouvé");
@@ -295,6 +295,8 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 			o.htmMereNomCompletPrefere("PUTCopie");
 			o.htmPereNomCompletPrefere("PUTCopie");
 			o.htmFraisMontantDu("PUTCopie");
+			o.htmFraisMontantPasse("PUTCopie");
+			o.htmFraisMontantNonPasse("PUTCopie");
 			o.htmFraisMontantFuture("PUTCopie");
 			o.htmPaiementNomCourt("PUTCopie");
 		} g("div");
@@ -348,6 +350,8 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 			o.htmMereNomCompletPrefere("PATCH");
 			o.htmPereNomCompletPrefere("PATCH");
 			o.htmFraisMontantDu("PATCH");
+			o.htmFraisMontantPasse("PATCH");
+			o.htmFraisMontantNonPasse("PATCH");
 			o.htmFraisMontantFuture("PATCH");
 			o.htmPaiementNomCourt("PATCH");
 		} g("div");
@@ -404,6 +408,8 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 			o.htmMereNomCompletPrefere("Recherche");
 			o.htmPereNomCompletPrefere("Recherche");
 			o.htmFraisMontantDu("Recherche");
+			o.htmFraisMontantPasse("Recherche");
+			o.htmFraisMontantNonPasse("Recherche");
 			o.htmFraisMontantFuture("Recherche");
 			o.htmPaiementNomCourt("Recherche");
 		} g("div");
@@ -899,7 +905,7 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-green ")
-								.a("onclick", "putcopiePaiementScolaire($('#putcopiePaiementScolaireForm'), ", paiementScolaire == null ? "null" : paiementScolaire.getPk(), "); ")
+								.a("onclick", "putcopiePaiementScolaire($('#putcopiePaiementScolaireForm'), ", paiementScolaire_ == null ? "null" : paiementScolaire_.getPk(), "); ")
 								.f().sx("Dupliquer paiements")
 							.g("button");
 
@@ -933,7 +939,7 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 							} g("form");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-green ")
-								.a("onclick", "patchPaiementScolaire(null, $('#patchPaiementScolaireFormulaireValeurs'), ", Optional.ofNullable(paiementScolaire).map(PaiementScolaire::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
+								.a("onclick", "patchPaiementScolaire(null, $('#patchPaiementScolaireFormulaireValeurs'), ", Optional.ofNullable(paiementScolaire_).map(PaiementScolaire::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
 								.f().sx("Modifier paiements")
 							.g("button");
 

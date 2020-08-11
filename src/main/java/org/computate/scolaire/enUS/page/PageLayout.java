@@ -41,6 +41,7 @@ import org.computate.scolaire.enUS.page.part.PagePart;
 import org.computate.scolaire.enUS.payment.PaymentGenPage;
 import org.computate.scolaire.enUS.dad.DadGenPage;
 import org.computate.scolaire.enUS.search.SearchList;
+import org.computate.scolaire.enUS.receipt.ReceiptGenPage;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import org.computate.scolaire.enUS.user.SiteUser;
 import org.computate.scolaire.enUS.xml.UtilXml;
@@ -587,6 +588,22 @@ public class PageLayout extends PageLayoutGen<Object> {
 			} g("div");
 
 			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES_MANAGER)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES_MANAGER)
+					) {
+	
+				{ e("div").a("class", "w3-dropdown-hover ").f();
+					{ e("div").a("class", "w3-button w3-hover-light-green ").f();
+							e("i").a("class", "far fa-file-invoice-dollar ").f().g("i");
+							sx("receipts");
+					} g("div");
+					{ e("div").a("class", "w3-dropdown-content w3-card-4 w3-padding ").f();
+						ReceiptGenPage.htmlSuggestedReceiptGenPage(this, id, null);
+					} g("div");
+				} g("div");
+			}
+
+			if(
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES_ADMIN)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES_ADMIN)
 					) {
@@ -1003,6 +1020,7 @@ public class PageLayout extends PageLayoutGen<Object> {
 				String htmlVarInput = htmlPart.getHtmlVarInput();
 				String htmlVarForm = htmlPart.getHtmlVarForm();
 				String htmlVarForEach = htmlPart.getHtmlVarForEach();
+				String htmlIfVarEquals = htmlPart.getHtmlIfVarEquals();
 				Boolean pdfExclude = htmlPart.getPdfExclude();
 				Boolean htmlExclude = htmlPart.getHtmlExclude();
 

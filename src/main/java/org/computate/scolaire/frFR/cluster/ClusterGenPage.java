@@ -53,7 +53,7 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 	protected void _listeCluster(Couverture<ListeRecherche<Cluster>> c) {
 	}
 
-	protected void _cluster(Couverture<Cluster> c) {
+	protected void _cluster_(Couverture<Cluster> c) {
 		if(listeCluster != null && listeCluster.size() == 1)
 			c.o(listeCluster.get(0));
 	}
@@ -71,9 +71,9 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 	}
 
 	@Override protected void _pageTitre(Couverture<String> c) {
-		if(cluster != null && cluster.getObjetTitre() != null)
-			c.o(cluster.getObjetTitre());
-		else if(cluster != null)
+		if(cluster_ != null && cluster_.getObjetTitre() != null)
+			c.o(cluster_.getObjetTitre());
+		else if(cluster_ != null)
 			c.o("clusters");
 		else if(listeCluster == null || listeCluster.size() == 0)
 			c.o("aucun cluster trouvé");
@@ -638,7 +638,7 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-gray ")
-								.a("onclick", "putcopieCluster($('#putcopieClusterForm'), ", cluster == null ? "null" : cluster.getPk(), "); ")
+								.a("onclick", "putcopieCluster($('#putcopieClusterForm'), ", cluster_ == null ? "null" : cluster_.getPk(), "); ")
 								.f().sx("Dupliquer clusters")
 							.g("button");
 
@@ -672,7 +672,7 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 							} g("form");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-gray ")
-								.a("onclick", "patchCluster(null, $('#patchClusterFormulaireValeurs'), ", Optional.ofNullable(cluster).map(Cluster::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
+								.a("onclick", "patchCluster(null, $('#patchClusterFormulaireValeurs'), ", Optional.ofNullable(cluster_).map(Cluster::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
 								.f().sx("Modifier clusters")
 							.g("button");
 

@@ -80,43 +80,41 @@ public abstract class PaymentGenPageGen<DEV> extends ClusterPage {
 		return (PaymentGenPage)this;
 	}
 
-	///////////////////
-	// schoolPayment //
-	///////////////////
+	////////////////////
+	// schoolPayment_ //
+	////////////////////
 
-	/**	 The entity schoolPayment
+	/**	 The entity schoolPayment_
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected SchoolPayment schoolPayment;
+	protected SchoolPayment schoolPayment_;
 	@JsonIgnore
-	public Wrap<SchoolPayment> schoolPaymentWrap = new Wrap<SchoolPayment>().p(this).c(SchoolPayment.class).var("schoolPayment").o(schoolPayment);
+	public Wrap<SchoolPayment> schoolPayment_Wrap = new Wrap<SchoolPayment>().p(this).c(SchoolPayment.class).var("schoolPayment_").o(schoolPayment_);
 
-	/**	<br/> The entity schoolPayment
+	/**	<br/> The entity schoolPayment_
 	 *  is defined as null before being initialized. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.payment.PaymentGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolPayment">Find the entity schoolPayment in Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.payment.PaymentGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolPayment_">Find the entity schoolPayment_ in Solr</a>
 	 * <br/>
 	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
-	protected abstract void _schoolPayment(Wrap<SchoolPayment> c);
+	protected abstract void _schoolPayment_(Wrap<SchoolPayment> c);
 
-	public SchoolPayment getSchoolPayment() {
-		return schoolPayment;
+	public SchoolPayment getSchoolPayment_() {
+		return schoolPayment_;
 	}
 
-	public void setSchoolPayment(SchoolPayment schoolPayment) {
-		this.schoolPayment = schoolPayment;
-		this.schoolPaymentWrap.alreadyInitialized = true;
+	public void setSchoolPayment_(SchoolPayment schoolPayment_) {
+		this.schoolPayment_ = schoolPayment_;
+		this.schoolPayment_Wrap.alreadyInitialized = true;
 	}
-	protected PaymentGenPage schoolPaymentInit() {
-		if(!schoolPaymentWrap.alreadyInitialized) {
-			_schoolPayment(schoolPaymentWrap);
-			if(schoolPayment == null)
-				setSchoolPayment(schoolPaymentWrap.o);
+	protected PaymentGenPage schoolPayment_Init() {
+		if(!schoolPayment_Wrap.alreadyInitialized) {
+			_schoolPayment_(schoolPayment_Wrap);
+			if(schoolPayment_ == null)
+				setSchoolPayment_(schoolPayment_Wrap.o);
 		}
-		if(schoolPayment != null)
-			schoolPayment.initDeepForClass(siteRequest_);
-		schoolPaymentWrap.alreadyInitialized(true);
+		schoolPayment_Wrap.alreadyInitialized(true);
 		return (PaymentGenPage)this;
 	}
 
@@ -142,7 +140,7 @@ public abstract class PaymentGenPageGen<DEV> extends ClusterPage {
 
 	public void initPaymentGenPage() {
 		listSchoolPaymentInit();
-		schoolPaymentInit();
+		schoolPayment_Init();
 	}
 
 	@Override public void initDeepForClass(SiteRequestEnUS siteRequest_) {
@@ -157,8 +155,6 @@ public abstract class PaymentGenPageGen<DEV> extends ClusterPage {
 			super.siteRequestClusterPage(siteRequest_);
 		if(listSchoolPayment != null)
 			listSchoolPayment.setSiteRequest_(siteRequest_);
-		if(schoolPayment != null)
-			schoolPayment.setSiteRequest_(siteRequest_);
 	}
 
 	public void siteRequestForClass(SiteRequestEnUS siteRequest_) {
@@ -187,8 +183,8 @@ public abstract class PaymentGenPageGen<DEV> extends ClusterPage {
 		switch(var) {
 			case "listSchoolPayment":
 				return oPaymentGenPage.listSchoolPayment;
-			case "schoolPayment":
-				return oPaymentGenPage.schoolPayment;
+			case "schoolPayment_":
+				return oPaymentGenPage.schoolPayment_;
 			default:
 				return super.obtainClusterPage(var);
 		}

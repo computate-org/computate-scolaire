@@ -54,7 +54,7 @@ public class PartHtmlGenPage extends PartHtmlGenPageGen<ClusterPage> {
 	protected void _listePartHtml(Couverture<ListeRecherche<PartHtml>> c) {
 	}
 
-	protected void _partHtml(Couverture<PartHtml> c) {
+	protected void _partHtml_(Couverture<PartHtml> c) {
 		if(listePartHtml != null && listePartHtml.size() == 1)
 			c.o(listePartHtml.get(0));
 	}
@@ -72,9 +72,9 @@ public class PartHtmlGenPage extends PartHtmlGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageTitre(Couverture<String> c) {
-		if(partHtml != null && partHtml.getObjetTitre() != null)
-			c.o(partHtml.getObjetTitre());
-		else if(partHtml != null)
+		if(partHtml_ != null && partHtml_.getObjetTitre() != null)
+			c.o(partHtml_.getObjetTitre());
+		else if(partHtml_ != null)
 			c.o("part de HTMLs");
 		else if(listePartHtml == null || listePartHtml.size() == 0)
 			c.o("aucun part de HTML trouvé");
@@ -175,6 +175,7 @@ public class PartHtmlGenPage extends PartHtmlGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmHtmlVarForm("Page");
 			o.htmHtmlVarInput("Page");
+			o.htmHtmlIfVarEquals("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmHtmlVarForEach("Page");
@@ -235,6 +236,7 @@ public class PartHtmlGenPage extends PartHtmlGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmHtmlVarForm("POST");
 			o.htmHtmlVarInput("POST");
+			o.htmHtmlIfVarEquals("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmHtmlVarForEach("POST");
@@ -317,6 +319,7 @@ public class PartHtmlGenPage extends PartHtmlGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmHtmlVarForm("PUTCopie");
 			o.htmHtmlVarInput("PUTCopie");
+			o.htmHtmlIfVarEquals("PUTCopie");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmHtmlVarForEach("PUTCopie");
@@ -381,6 +384,7 @@ public class PartHtmlGenPage extends PartHtmlGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmHtmlVarForm("PATCH");
 			o.htmHtmlVarInput("PATCH");
+			o.htmHtmlIfVarEquals("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmHtmlVarForEach("PATCH");
@@ -438,6 +442,7 @@ public class PartHtmlGenPage extends PartHtmlGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmHtmlVarForm("Recherche");
 			o.htmHtmlVarInput("Recherche");
+			o.htmHtmlIfVarEquals("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmHtmlVarForEach("Recherche");
@@ -874,7 +879,7 @@ public class PartHtmlGenPage extends PartHtmlGenPageGen<ClusterPage> {
 							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-khaki ")
-								.a("onclick", "putcopiePartHtml($('#putcopiePartHtmlForm'), ", partHtml == null ? "null" : partHtml.getPk(), "); ")
+								.a("onclick", "putcopiePartHtml($('#putcopiePartHtmlForm'), ", partHtml_ == null ? "null" : partHtml_.getPk(), "); ")
 								.f().sx("Dupliquer part de HTMLs")
 							.g("button");
 
@@ -908,7 +913,7 @@ public class PartHtmlGenPage extends PartHtmlGenPageGen<ClusterPage> {
 							} g("form");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-khaki ")
-								.a("onclick", "patchPartHtml(null, $('#patchPartHtmlFormulaireValeurs'), ", Optional.ofNullable(partHtml).map(PartHtml::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
+								.a("onclick", "patchPartHtml(null, $('#patchPartHtmlFormulaireValeurs'), ", Optional.ofNullable(partHtml_).map(PartHtml::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
 								.f().sx("Modifier part de HTMLs")
 							.g("button");
 

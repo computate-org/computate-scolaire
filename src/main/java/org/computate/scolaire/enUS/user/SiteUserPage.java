@@ -75,10 +75,22 @@ public class SiteUserPage extends SiteUserPageGen<SiteUserGenPage> {
 		l.addSort("pageDesignCompleteName_indexed_string", ORDER.asc);
 		l.setRows(1000);
 
-		List<String> roles = Arrays.asList("SiteManager");
+		List<String> rolesAdmin = Arrays.asList("SiteAdmin");
+		List<String> rolesManager = Arrays.asList("SiteManager");
 		if(
-				!CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), roles)
-				&& !CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), roles)
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), rolesManager)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), rolesManager)
+				) {
+			if(
+					!CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), rolesAdmin)
+					&& !CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), rolesAdmin)
+					) {
+				l.addFilterQuery("designAdmin_indexed_boolean:false");
+			}
+		}
+		if(
+				!CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), rolesManager)
+				&& !CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), rolesManager)
 				) {
 			l.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest_.getSessionId()).orElse("-----")));
 		}

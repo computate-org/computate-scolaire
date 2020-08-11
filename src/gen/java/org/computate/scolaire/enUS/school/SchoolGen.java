@@ -25,6 +25,7 @@ import io.vertx.core.logging.Logger;
 import org.computate.scolaire.enUS.year.SchoolYear;
 import java.math.RoundingMode;
 import java.math.MathContext;
+import org.computate.scolaire.enUS.receipt.SchoolReceipt;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import java.util.Set;
@@ -256,7 +257,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 				) {
-				sx(htmYearKeys());
+				e("span").a("class", "varSchool", pk, "YearKeys ").f().sx(htmYearKeys()).g("span");
 			}
 		}
 	}
@@ -300,6 +301,170 @@ public abstract class SchoolGen<DEV> extends Cluster {
 											.a("id", classApiMethodMethod, "_yearKeys_add")
 											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Sending…'; postSchoolYearVals({ schoolKey: \"", pk, "\" }, function() {}, function() { addError($('#", classApiMethodMethod, "yearKeys')); });")
 											.f().sx("add a year")
+										.g("button");
+									} g("div");
+								}
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	/////////////////
+	// receiptKeys //
+	/////////////////
+
+	/**	 The entity receiptKeys
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
+	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected List<Long> receiptKeys = new ArrayList<Long>();
+	@JsonIgnore
+	public Wrap<List<Long>> receiptKeysWrap = new Wrap<List<Long>>().p(this).c(List.class).var("receiptKeys").o(receiptKeys);
+
+	/**	<br/> The entity receiptKeys
+	 *  It is constructed before being initialized with the constructor by default List<Long>(). 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.school.School&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:receiptKeys">Find the entity receiptKeys in Solr</a>
+	 * <br/>
+	 * @param receiptKeys is the entity already constructed. 
+	 **/
+	protected abstract void _receiptKeys(List<Long> o);
+
+	public List<Long> getReceiptKeys() {
+		return receiptKeys;
+	}
+
+	public void setReceiptKeys(List<Long> receiptKeys) {
+		this.receiptKeys = receiptKeys;
+		this.receiptKeysWrap.alreadyInitialized = true;
+	}
+	public School addReceiptKeys(Long...objets) {
+		for(Long o : objets) {
+			addReceiptKeys(o);
+		}
+		return (School)this;
+	}
+	public School addReceiptKeys(Long o) {
+		if(o != null && !receiptKeys.contains(o))
+			this.receiptKeys.add(o);
+		return (School)this;
+	}
+	public School setReceiptKeys(JsonArray objets) {
+		receiptKeys.clear();
+		for(int i = 0; i < objets.size(); i++) {
+			Long o = objets.getLong(i);
+			addReceiptKeys(o);
+		}
+		return (School)this;
+	}
+	public School addReceiptKeys(String o) {
+		if(NumberUtils.isParsable(o)) {
+			Long p = Long.parseLong(o);
+			addReceiptKeys(p);
+		}
+		return (School)this;
+	}
+	protected School receiptKeysInit() {
+		if(!receiptKeysWrap.alreadyInitialized) {
+			_receiptKeys(receiptKeys);
+		}
+		receiptKeysWrap.alreadyInitialized(true);
+		return (School)this;
+	}
+
+	public List<Long> solrReceiptKeys() {
+		return receiptKeys;
+	}
+
+	public String strReceiptKeys() {
+		return receiptKeys == null ? "" : receiptKeys.toString();
+	}
+
+	public String jsonReceiptKeys() {
+		return receiptKeys == null ? "" : receiptKeys.toString();
+	}
+
+	public String nomAffichageReceiptKeys() {
+		return "receipts";
+	}
+
+	public String htmTooltipReceiptKeys() {
+		return null;
+	}
+
+	public String htmReceiptKeys() {
+		return receiptKeys == null ? "" : StringEscapeUtils.escapeHtml4(strReceiptKeys());
+	}
+
+	public void inputReceiptKeys(String classApiMethodMethod) {
+		School s = (School)this;
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+				e("input")
+					.a("type", "text")
+					.a("placeholder", "receipts")
+					.a("class", "valueObjectSuggest suggestReceiptKeys w3-input w3-border w3-cell w3-cell-middle ")
+					.a("name", "setReceiptKeys")
+					.a("id", classApiMethodMethod, "_receiptKeys")
+					.a("autocomplete", "off")
+					.a("oninput", "suggestSchoolReceiptKeys($(this).val() ? searchSchoolReceiptFilters($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'schoolKey:" + pk + "'}", "], $('#listSchoolReceiptKeys_", classApiMethodMethod, "'), ", pk, "); ")
+				.fg();
+
+		} else {
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+				e("span").a("class", "varSchool", pk, "ReceiptKeys ").f().sx(htmReceiptKeys()).g("span");
+			}
+		}
+	}
+
+	public void htmReceiptKeys(String classApiMethodMethod) {
+		School s = (School)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolReceiptKeys").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("a").a("href", "/receipt?fq=schoolKey:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-light-green w3-hover-light-green ").f();
+								e("i").a("class", "fas fa-file-invoice-dollar ").f().g("i");
+								sx("receipts");
+							} g("a");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("h5").a("class", "w3-cell ").f();
+								sx("relate receipts to this school");
+							} g("h5");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-cell-row ").f();
+
+								inputReceiptKeys(classApiMethodMethod);
+								} g("div");
+							} g("div");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSchoolReceiptKeys_", classApiMethodMethod).f();
+								} g("ul");
+								if(
+										CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), SchoolReceipt.ROLES)
+										|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), SchoolReceipt.ROLES)
+										) {
+									{ e("div").a("class", "w3-cell-row ").f();
+										e("button")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-light-green ")
+											.a("id", classApiMethodMethod, "_receiptKeys_add")
+											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Sending…'; postSchoolReceiptVals({ schoolKey: \"", pk, "\" }, function() {}, function() { addError($('#", classApiMethodMethod, "receiptKeys')); });")
+											.f().sx("add a receipt")
 										.g("button");
 									} g("div");
 								}
@@ -975,7 +1140,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 				) {
-				sx(htmSchoolName());
+				e("span").a("class", "varSchool", pk, "SchoolName ").f().sx(htmSchoolName()).g("span");
 			}
 		}
 	}
@@ -1108,7 +1273,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 				) {
-				sx(htmSchoolPhoneNumber());
+				e("span").a("class", "varSchool", pk, "SchoolPhoneNumber ").f().sx(htmSchoolPhoneNumber()).g("span");
 			}
 		}
 	}
@@ -1241,7 +1406,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 				) {
-				sx(htmSchoolForm());
+				e("span").a("class", "varSchool", pk, "SchoolForm ").f().sx(htmSchoolForm()).g("span");
 			}
 		}
 	}
@@ -1381,7 +1546,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 				) {
-				sx(htmSchoolNumber());
+				e("span").a("class", "varSchool", pk, "SchoolNumber ").f().sx(htmSchoolNumber()).g("span");
 			}
 		}
 	}
@@ -1514,7 +1679,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 				) {
-				sx(htmSchoolAdministratorName());
+				e("span").a("class", "varSchool", pk, "SchoolAdministratorName ").f().sx(htmSchoolAdministratorName()).g("span");
 			}
 		}
 	}
@@ -1647,7 +1812,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 				) {
-				sx(htmSchoolEmail());
+				e("span").a("class", "varSchool", pk, "SchoolEmail ").f().sx(htmSchoolEmail()).g("span");
 			}
 		}
 	}
@@ -1780,7 +1945,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 				) {
-				sx(htmSchoolEmailFrom());
+				e("span").a("class", "varSchool", pk, "SchoolEmailFrom ").f().sx(htmSchoolEmailFrom()).g("span");
 			}
 		}
 	}
@@ -1913,7 +2078,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 				) {
-				sx(htmSchoolEmailTo());
+				e("span").a("class", "varSchool", pk, "SchoolEmailTo ").f().sx(htmSchoolEmailTo()).g("span");
 			}
 		}
 	}
@@ -2046,7 +2211,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 				) {
-				sx(htmSchoolLocation());
+				e("span").a("class", "varSchool", pk, "SchoolLocation ").f().sx(htmSchoolLocation()).g("span");
 			}
 		}
 	}
@@ -2177,7 +2342,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 				) {
-				sx(htmSchoolAddress());
+				e("span").a("class", "varSchool", pk, "SchoolAddress ").f().sx(htmSchoolAddress()).g("span");
 			}
 		}
 	}
@@ -2366,6 +2531,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	public void initSchool() {
 		schoolKeyInit();
 		yearKeysInit();
+		receiptKeysInit();
 		seasonKeysInit();
 		sessionKeysInit();
 		ageGroupKeysInit();
@@ -2427,6 +2593,8 @@ public abstract class SchoolGen<DEV> extends Cluster {
 				return oSchool.schoolKey;
 			case "yearKeys":
 				return oSchool.yearKeys;
+			case "receiptKeys":
+				return oSchool.receiptKeys;
 			case "seasonKeys":
 				return oSchool.seasonKeys;
 			case "sessionKeys":
@@ -2492,6 +2660,11 @@ public abstract class SchoolGen<DEV> extends Cluster {
 		switch(var) {
 			case "yearKeys":
 				oSchool.addYearKeys((Long)val);
+				if(!saves.contains(var))
+					saves.add(var);
+				return val;
+			case "receiptKeys":
+				oSchool.addReceiptKeys((Long)val);
 				if(!saves.contains(var))
 					saves.add(var);
 				return val;
@@ -2597,6 +2770,10 @@ public abstract class SchoolGen<DEV> extends Cluster {
 			List<Long> yearKeys = (List<Long>)solrDocument.get("yearKeys_stored_longs");
 			if(yearKeys != null)
 				oSchool.yearKeys.addAll(yearKeys);
+
+			List<Long> receiptKeys = (List<Long>)solrDocument.get("receiptKeys_stored_longs");
+			if(receiptKeys != null)
+				oSchool.receiptKeys.addAll(receiptKeys);
 
 			if(saves.contains("seasonKeys")) {
 				List<Long> seasonKeys = (List<Long>)solrDocument.get("seasonKeys_stored_longs");
@@ -2790,6 +2967,14 @@ public abstract class SchoolGen<DEV> extends Cluster {
 				document.addField("yearKeys_stored_longs", o);
 			}
 		}
+		if(receiptKeys != null) {
+			for(java.lang.Long o : receiptKeys) {
+				document.addField("receiptKeys_indexed_longs", o);
+			}
+			for(java.lang.Long o : receiptKeys) {
+				document.addField("receiptKeys_stored_longs", o);
+			}
+		}
 		if(seasonKeys != null) {
 			for(java.lang.Long o : seasonKeys) {
 				document.addField("seasonKeys_indexed_longs", o);
@@ -2913,6 +3098,8 @@ public abstract class SchoolGen<DEV> extends Cluster {
 				return "schoolKey_indexed_long";
 			case "yearKeys":
 				return "yearKeys_indexed_longs";
+			case "receiptKeys":
+				return "receiptKeys_indexed_longs";
 			case "seasonKeys":
 				return "seasonKeys_indexed_longs";
 			case "sessionKeys":
@@ -2987,6 +3174,10 @@ public abstract class SchoolGen<DEV> extends Cluster {
 		List<Long> yearKeys = (List<Long>)solrDocument.get("yearKeys_stored_longs");
 		if(yearKeys != null)
 			oSchool.yearKeys.addAll(yearKeys);
+
+		List<Long> receiptKeys = (List<Long>)solrDocument.get("receiptKeys_stored_longs");
+		if(receiptKeys != null)
+			oSchool.receiptKeys.addAll(receiptKeys);
 
 		List<Long> seasonKeys = (List<Long>)solrDocument.get("seasonKeys_stored_longs");
 		if(seasonKeys != null)
@@ -3076,8 +3267,26 @@ public abstract class SchoolGen<DEV> extends Cluster {
 		Object o = Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
 		if(o != null && o instanceof School) {
 			School original = (School)o;
+			if(!Objects.equals(schoolKey, original.getSchoolKey()))
+				apiRequest.addVars("schoolKey");
 			if(!Objects.equals(yearKeys, original.getYearKeys()))
 				apiRequest.addVars("yearKeys");
+			if(!Objects.equals(receiptKeys, original.getReceiptKeys()))
+				apiRequest.addVars("receiptKeys");
+			if(!Objects.equals(seasonKeys, original.getSeasonKeys()))
+				apiRequest.addVars("seasonKeys");
+			if(!Objects.equals(sessionKeys, original.getSessionKeys()))
+				apiRequest.addVars("sessionKeys");
+			if(!Objects.equals(ageGroupKeys, original.getAgeGroupKeys()))
+				apiRequest.addVars("ageGroupKeys");
+			if(!Objects.equals(blockKeys, original.getBlockKeys()))
+				apiRequest.addVars("blockKeys");
+			if(!Objects.equals(childKeys, original.getChildKeys()))
+				apiRequest.addVars("childKeys");
+			if(!Objects.equals(educationSort, original.getEducationSort()))
+				apiRequest.addVars("educationSort");
+			if(!Objects.equals(schoolSort, original.getSchoolSort()))
+				apiRequest.addVars("schoolSort");
 			if(!Objects.equals(schoolName, original.getSchoolName()))
 				apiRequest.addVars("schoolName");
 			if(!Objects.equals(schoolPhoneNumber, original.getSchoolPhoneNumber()))
@@ -3098,6 +3307,10 @@ public abstract class SchoolGen<DEV> extends Cluster {
 				apiRequest.addVars("schoolLocation");
 			if(!Objects.equals(schoolAddress, original.getSchoolAddress()))
 				apiRequest.addVars("schoolAddress");
+			if(!Objects.equals(schoolShortName, original.getSchoolShortName()))
+				apiRequest.addVars("schoolShortName");
+			if(!Objects.equals(schoolCompleteName, original.getSchoolCompleteName()))
+				apiRequest.addVars("schoolCompleteName");
 			super.apiRequestCluster();
 		}
 	}
@@ -3107,7 +3320,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), yearKeys, schoolName, schoolPhoneNumber, schoolForm, schoolNumber, schoolAdministratorName, schoolEmail, schoolEmailFrom, schoolEmailTo, schoolLocation, schoolAddress);
+		return Objects.hash(super.hashCode(), schoolKey, yearKeys, receiptKeys, seasonKeys, sessionKeys, ageGroupKeys, blockKeys, childKeys, educationSort, schoolSort, schoolName, schoolPhoneNumber, schoolForm, schoolNumber, schoolAdministratorName, schoolEmail, schoolEmailFrom, schoolEmailTo, schoolLocation, schoolAddress, schoolShortName, schoolCompleteName);
 	}
 
 	////////////
@@ -3121,7 +3334,16 @@ public abstract class SchoolGen<DEV> extends Cluster {
 			return false;
 		School that = (School)o;
 		return super.equals(o)
+				&& Objects.equals( schoolKey, that.schoolKey )
 				&& Objects.equals( yearKeys, that.yearKeys )
+				&& Objects.equals( receiptKeys, that.receiptKeys )
+				&& Objects.equals( seasonKeys, that.seasonKeys )
+				&& Objects.equals( sessionKeys, that.sessionKeys )
+				&& Objects.equals( ageGroupKeys, that.ageGroupKeys )
+				&& Objects.equals( blockKeys, that.blockKeys )
+				&& Objects.equals( childKeys, that.childKeys )
+				&& Objects.equals( educationSort, that.educationSort )
+				&& Objects.equals( schoolSort, that.schoolSort )
 				&& Objects.equals( schoolName, that.schoolName )
 				&& Objects.equals( schoolPhoneNumber, that.schoolPhoneNumber )
 				&& Objects.equals( schoolForm, that.schoolForm )
@@ -3131,7 +3353,9 @@ public abstract class SchoolGen<DEV> extends Cluster {
 				&& Objects.equals( schoolEmailFrom, that.schoolEmailFrom )
 				&& Objects.equals( schoolEmailTo, that.schoolEmailTo )
 				&& Objects.equals( schoolLocation, that.schoolLocation )
-				&& Objects.equals( schoolAddress, that.schoolAddress );
+				&& Objects.equals( schoolAddress, that.schoolAddress )
+				&& Objects.equals( schoolShortName, that.schoolShortName )
+				&& Objects.equals( schoolCompleteName, that.schoolCompleteName );
 	}
 
 	//////////////
@@ -3142,7 +3366,16 @@ public abstract class SchoolGen<DEV> extends Cluster {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString() + "\n");
 		sb.append("School { ");
-		sb.append( "yearKeys: " ).append(yearKeys);
+		sb.append( "schoolKey: " ).append(schoolKey);
+		sb.append( ", yearKeys: " ).append(yearKeys);
+		sb.append( ", receiptKeys: " ).append(receiptKeys);
+		sb.append( ", seasonKeys: " ).append(seasonKeys);
+		sb.append( ", sessionKeys: " ).append(sessionKeys);
+		sb.append( ", ageGroupKeys: " ).append(ageGroupKeys);
+		sb.append( ", blockKeys: " ).append(blockKeys);
+		sb.append( ", childKeys: " ).append(childKeys);
+		sb.append( ", educationSort: " ).append(educationSort);
+		sb.append( ", schoolSort: " ).append(schoolSort);
 		sb.append( ", schoolName: \"" ).append(schoolName).append( "\"" );
 		sb.append( ", schoolPhoneNumber: \"" ).append(schoolPhoneNumber).append( "\"" );
 		sb.append( ", schoolForm: \"" ).append(schoolForm).append( "\"" );
@@ -3153,6 +3386,8 @@ public abstract class SchoolGen<DEV> extends Cluster {
 		sb.append( ", schoolEmailTo: \"" ).append(schoolEmailTo).append( "\"" );
 		sb.append( ", schoolLocation: \"" ).append(schoolLocation).append( "\"" );
 		sb.append( ", schoolAddress: \"" ).append(schoolAddress).append( "\"" );
+		sb.append( ", schoolShortName: \"" ).append(schoolShortName).append( "\"" );
+		sb.append( ", schoolCompleteName: \"" ).append(schoolCompleteName).append( "\"" );
 		sb.append(" }");
 		return sb.toString();
 	}

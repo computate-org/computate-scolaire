@@ -53,7 +53,7 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 	protected void _listSchoolBlock(Wrap<SearchList<SchoolBlock>> c) {
 	}
 
-	protected void _schoolBlock(Wrap<SchoolBlock> c) {
+	protected void _schoolBlock_(Wrap<SchoolBlock> c) {
 		if(listSchoolBlock != null && listSchoolBlock.size() == 1)
 			c.o(listSchoolBlock.get(0));
 	}
@@ -63,8 +63,8 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageH2(Wrap<String> c) {
-		if(schoolBlock != null && schoolBlock.getBlockCompleteName() != null)
-			c.o(schoolBlock.getBlockCompleteName());
+		if(schoolBlock_ != null && schoolBlock_.getBlockCompleteName() != null)
+			c.o(schoolBlock_.getBlockCompleteName());
 	}
 
 	@Override protected void _pageH3(Wrap<String> c) {
@@ -72,9 +72,9 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageTitle(Wrap<String> c) {
-		if(schoolBlock != null && schoolBlock.getBlockCompleteName() != null)
-			c.o(schoolBlock.getBlockCompleteName());
-		else if(schoolBlock != null)
+		if(schoolBlock_ != null && schoolBlock_.getBlockCompleteName() != null)
+			c.o(schoolBlock_.getBlockCompleteName());
+		else if(schoolBlock_ != null)
 			c.o("blocks");
 		else if(listSchoolBlock == null || listSchoolBlock.size() == 0)
 			c.o("no block found");
@@ -740,7 +740,7 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-indigo ")
-								.a("onclick", "putcopySchoolBlock($('#putcopySchoolBlockForm'), ", schoolBlock == null ? "null" : schoolBlock.getPk(), "); ")
+								.a("onclick", "putcopySchoolBlock($('#putcopySchoolBlockForm'), ", schoolBlock_ == null ? "null" : schoolBlock_.getPk(), "); ")
 								.f().sx("Duplicate blocks")
 							.g("button");
 
@@ -774,7 +774,7 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 							} g("form");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-indigo ")
-								.a("onclick", "patchSchoolBlock(null, $('#patchSchoolBlockFormValues'), ", Optional.ofNullable(schoolBlock).map(SchoolBlock::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
+								.a("onclick", "patchSchoolBlock(null, $('#patchSchoolBlockFormValues'), ", Optional.ofNullable(schoolBlock_).map(SchoolBlock::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
 								.f().sx("Modify blocks")
 							.g("button");
 

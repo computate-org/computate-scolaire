@@ -295,6 +295,20 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
+	 * Var.enUS: htmlIfVarEquals
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.enUS: if var equals
+	 * NomAffichage.frFR: if var equals
+	 * Definir: true
+	 * HtmlLigne: 9
+	 * HtmlCelulle: 3
+	 */            
+	protected void _htmlIfVarEquals(Couverture<String> c) {
+	}
+
+	/**
+	 * {@inheritDoc}
 	 * Var.enUS: htmlVarForEach
 	 * Indexe: true
 	 * Stocke: true

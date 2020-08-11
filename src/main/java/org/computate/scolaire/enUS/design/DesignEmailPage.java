@@ -3,6 +3,9 @@ package org.computate.scolaire.enUS.design;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,7 +23,9 @@ import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.solr.client.solrj.SolrQuery.ORDER;
+import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.client.solrj.util.ClientUtils;
+import org.apache.solr.common.util.SimpleOrderedMap;
 import org.computate.scolaire.enUS.block.SchoolBlock;
 import org.computate.scolaire.enUS.child.SchoolChild;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
@@ -30,6 +35,7 @@ import org.computate.scolaire.enUS.guardian.SchoolGuardian;
 import org.computate.scolaire.enUS.html.part.HtmlPart;
 import org.computate.scolaire.enUS.mom.SchoolMom;
 import org.computate.scolaire.enUS.payment.SchoolPayment;
+import org.computate.scolaire.enUS.receipt.SchoolReceipt;
 import org.computate.scolaire.enUS.school.School;
 import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.wrap.Wrap;
@@ -47,6 +53,7 @@ import io.vertx.core.buffer.Buffer;
 import io.vertx.ext.mail.MailAttachment;
 import io.vertx.ext.mail.MailClient;
 import io.vertx.ext.mail.MailMessage;
+import io.vertx.ext.web.api.OperationRequest;
 
 /**
  * Translate: false
@@ -78,18 +85,11 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 	 * {@inheritDoc}
 	 * 
 	 **/
-	protected void _pageDesign(Wrap<PageDesign> c) {
-		if(listPageDesign.size() == 1)
-			c.o(listPageDesign.get(0));
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * 
-	 **/
 	protected void _pageDesignId(Wrap<String> c) {
-		if(pageDesign != null)
-			c.o(pageDesign.getObjectId());
+		if(listPageDesign != null && listPageDesign.size() == 1)
+			setPageDesign_(listPageDesign.first());
+		if(pageDesign_ != null)
+			c.o(pageDesign_.getObjectId());
 		else
 			throw new RuntimeException("No page design found. ");
 	}
@@ -99,12 +99,12 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 	 * 
 	 **/
 	protected void _pageHtmlPartSearch(SearchList<HtmlPart> l) {
-		if(pageDesign != null) {
+		if(pageDesign_ != null) {
 			l.setQuery("*:*");
 
 			StringBuilder fq = new StringBuilder();
-			fq.append("pageDesignKeys_indexed_longs:").append(pageDesign.getPk());
-			for(Long k : pageDesign.getParentDesignKeys())
+			fq.append("pageDesignKeys_indexed_longs:").append(pageDesign_.getPk());
+			for(Long k : pageDesign_.getParentDesignKeys())
 				fq.append(" OR pageDesignKeys_indexed_longs:").append(k);
 
 			l.addFilterQuery(fq.toString());
@@ -301,6 +301,7 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 	/////////////////
 
 	protected void _enrollmentSearch(SearchList<SchoolEnrollment> l) {
+		OperationRequest operationRequest = siteRequest_.getOperationRequest();
 		l.setStore(true);
 		l.setQuery("*:*");
 		l.setC(SchoolEnrollment.class);
@@ -316,8 +317,18 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 						+ " OR userKeys_indexed_longs:" + Optional.ofNullable(siteRequest_.getUserKey()).orElse(0L)
 			);
 		}
-		if(!pageDesignId.endsWith("-enrollment-form")) {
+		if(!pageDesignId.endsWith("-enrollment-form") || pageDesign_.getDesignIgnoreEmptyChildName()) {
 			l.addFilterQuery("childFirstName_indexed_string:[* TO *]");
+		}
+		if(StringUtils.equalsAny(pageDesignId, "paid-roster") || pageDesign_.getDesignIgnorePaymentsPastDue()) {
+			l.addFilterQuery("paymentsPastDue_indexed_boolean:false");
+		}
+		if(StringUtils.equalsAny(pageDesignId, "not-paid-roster") || pageDesign_.getDesignIgnorePaymentsNotPastDue()) {
+			l.addFilterQuery("paymentsPastDue_indexed_boolean:true");
+		}
+		if(pageDesignId.endsWith("-enrollment-form") || pageDesign_.getDesignFilterEnrollmentKey()) {
+			if(!siteRequest_.getRequestVars().containsKey("enrollmentKey"))
+				l.addFilterQuery("enrollmentKey_indexed_long:0");
 		}
 
 		l.addSort("seasonStartDate_indexed_date", ORDER.asc);
@@ -326,28 +337,17 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 		l.addSort("blockPricePerMonth_indexed_double", ORDER.asc);
 		l.addSort("blockStartTime_indexed_string", ORDER.asc);
 
-		if("name-roster".equals(pageDesignId)) {
+		if(StringUtils.equalsAny(pageDesignId, "paid-roster", "not-paid-roster", "email-roster", "group-names-roster", "group-details-roster") 
+				|| pageDesign_.getDesignEnrollmentSortGroupName()) {
+			l.addSort("enrollmentGroupName_indexed_string", ORDER.asc);
+		}
+		if(StringUtils.equalsAny(pageDesignId, "paid-roster", "not-paid-roster", "email-roster", "group-names-roster", "group-details-roster") 
+				|| pageDesign_.getDesignEnrollmentSortChildName()) {
 			l.addSort("childCompleteNamePreferred_indexed_string", ORDER.asc);
 		}
-		else if("birthday-roster".equals(pageDesignId)) {
+		if("birthday-roster".equals(pageDesignId) || pageDesign_.getDesignEnrollmentSortMonthDayOfBirth()) {
 			l.addSort("childBirthMonth_indexed_int", ORDER.asc);
 			l.addSort("childBirthDay_indexed_int", ORDER.asc);
-		}
-		else if("email-roster".equals(pageDesignId)) {
-			l.addSort("enrollmentGroupName_indexed_string", ORDER.asc);
-		}
-		else if(StringUtils.equalsAny(pageDesignId, "group-names-roster", "group-details-roster")) {
-			l.addSort("enrollmentGroupName_indexed_string", ORDER.asc);
-			l.addSort("childFirstNamePreferred_indexed_string", ORDER.asc);
-		}
-		else if(StringUtils.equalsAny(pageDesignId, "payment-roster")) {
-			l.addSort("enrollmentGroupName_indexed_string", ORDER.asc);
-			l.addSort("childFirstNamePreferred_indexed_string", ORDER.asc);
-			l.addFilterQuery("paymentsCurrent_indexed_boolean:false");
-		}
-		else if(pageDesignId.endsWith("-enrollment-form")) {
-			if(!siteRequest_.getRequestVars().containsKey("enrollmentKey"))
-				l.addFilterQuery("enrollmentKey_indexed_long:0");
 		}
 
 		for(String var : siteRequest_.getRequestVars().keySet()) {
@@ -395,7 +395,7 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 				enrollment = enrollments.get(i);
 				blockKeyCurrent = enrollment.getBlockKey();
 				groupCurrent = enrollment.getEnrollmentGroupName();
-				if(StringUtils.equalsAny(pageDesignId, "payment-roster", "group-names-roster", "group-details-roster")) {
+				if(StringUtils.equalsAny(pageDesignId, "paid-roster", "not-paid-roster", "group-names-roster", "group-details-roster")) {
 					if(blockKeyCurrent == null || ObjectUtils.compare(blockKeyCurrent, blockKeyBefore) != 0) {
 						blockKeyBefore = enrollment.getBlockKey();
 						enrollmentGroups = enrollment.getEnrollmentGroups();
@@ -740,11 +740,11 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 	}
 
 	protected void _paymentSearch(SearchList<SchoolPayment> l) {
-		if(pageDesignId.equals("receipts")) {
+		if(pageDesignId.equals("payment-receipt")) {
 			l.setStore(true);
 			l.setQuery("*:*");
 			l.setC(SchoolPayment.class);
-			l.setRows(1000);
+			l.setRows(1);
 	
 			List<String> roles = Arrays.asList("SiteManager");
 			if(
@@ -756,6 +756,11 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 							+ " OR userKeys_indexed_longs:" + Optional.ofNullable(siteRequest_.getUserKey()).orElse(0L)
 				);
 			}
+			l.add("json.facet", "{sum_paymentAmount:'sum(paymentAmount_indexed_double)'}");
+			l.add("json.facet", "{sum_chargeAmount:'sum(chargeAmount_indexed_double)'}");
+			l.add("json.facet", "{sum_chargeAmountDue:'sum(chargeAmountDue_indexed_double)'}");
+			l.add("json.facet", "{sum_chargeAmountFuture:'sum(chargeAmountFuture_indexed_double)'}");
+			l.addFilterQuery("paymentAmount_indexed_double:[* TO *]");
 	
 			for(String var : siteRequest_.getRequestVars().keySet()) {
 				String val = siteRequest_.getRequestVars().get(var);
@@ -773,6 +778,109 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 	}
 
 	protected void _payment_(Wrap<SchoolPayment> c) {
+	}
+
+	protected void _paymentFacets(Wrap<SimpleOrderedMap> c) {
+		if(payments_.size() > 0)
+			c.o((SimpleOrderedMap)Optional.ofNullable(paymentSearch.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(new SimpleOrderedMap()));
+	}
+
+	protected void _paymentLastStr(Wrap<String> c) {
+		if(payments_.size() > 0) {
+			for(SchoolPayment p : paymentSearch.getList()) {
+				if(p.getPaymentAmount() != null) {
+					c.o(p.getPaymentShortName());
+					return;
+				}
+			}
+			c.o("none");
+		}
+	}
+
+	protected void _paymentAmount(Wrap<BigDecimal> c) {
+		if(payments_.size() > 0)
+			c.o(Optional.ofNullable((Double)paymentFacets.get("sum_paymentAmount")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING)));
+	}
+
+	protected void _chargeAmount(Wrap<BigDecimal> c) {
+		if(payments_.size() > 0)
+			c.o(Optional.ofNullable((Double)paymentFacets.get("sum_chargeAmount")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING)));
+	}
+
+	protected void _chargeAmountFuture(Wrap<BigDecimal> c) {
+		if(payments_.size() > 0)
+			c.o(Optional.ofNullable((Double)paymentFacets.get("sum_chargeAmountFuture")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING)));
+	}
+
+	protected void _chargeAmountDue(Wrap<BigDecimal> c) {
+		if(payments_.size() > 0)
+			c.o(Optional.ofNullable((Double)paymentFacets.get("sum_chargeAmountDue")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING)));
+	}
+
+	protected void _chargesNow(Wrap<BigDecimal> c) {
+		if(payments_.size() > 0)
+			c.o(chargeAmount.subtract(paymentAmount).subtract(chargeAmountFuture));
+	}
+
+	protected void _paymentsCurrent(Wrap<Boolean> c) {
+		if(payments_.size() > 0)
+			c.o(chargesNow.compareTo(BigDecimal.ZERO) <= 0);
+	}
+
+	protected void _paymentsLate(Wrap<Boolean> c) {
+		if(payments_.size() > 0)
+			c.o(chargesNow.subtract(chargeAmountDue).compareTo(BigDecimal.ZERO) > 0);
+	}
+
+	protected void _paymentsLateAmount(Wrap<BigDecimal> c) {
+		if(payments_.size() > 0) {
+			if(paymentsLate)
+				c.o(chargesNow.subtract(chargeAmountDue));
+			else
+				c.o(BigDecimal.ZERO);
+		}
+	}
+
+	protected void _paymentsAhead(Wrap<Boolean> c) {
+		if(payments_.size() > 0)
+			c.o(chargesNow.compareTo(BigDecimal.ZERO) < 0);
+	}
+
+	protected void _receiptSearch(SearchList<SchoolReceipt> l) {
+		if(pageDesignId.equals("custom-receipt")) {
+			l.setStore(true);
+			l.setQuery("*:*");
+			l.setC(SchoolReceipt.class);
+			l.setRows(1);
+	
+			List<String> roles = Arrays.asList("SiteManager");
+			if(
+					!CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), roles)
+					&& !CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), roles)
+					) {
+				l.addFilterQuery(
+					"sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest_.getSessionId()).orElse("-----"))
+							+ " OR userKeys_indexed_longs:" + Optional.ofNullable(siteRequest_.getUserKey()).orElse(0L)
+				);
+			}
+			l.addFilterQuery("paymentAmount_indexed_double:[* TO *]");
+	
+			for(String var : siteRequest_.getRequestVars().keySet()) {
+				String val = siteRequest_.getRequestVars().get(var);
+				if(!"design".equals(var)) {
+					String varIndexed = SchoolReceipt.varIndexedSchoolReceipt(var);
+					if(varIndexed != null)
+						l.addFilterQuery(varIndexed + ":" + ClientUtils.escapeQueryChars(val));
+				}
+			}
+		}
+	}
+
+	protected void _receipts_(Wrap<List<SchoolReceipt>> c) {
+		c.o(receiptSearch.getList());
+	}
+
+	protected void _receipt_(Wrap<SchoolReceipt> c) {
 	}
 
 	/**
@@ -873,7 +981,7 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 		tos.addAll(Arrays.asList(emailToAddress.trim().split("\\s*;\\s*")));
 		message.setTo(tos);
 
-		if(pageDesign != null) {
+		if(pageDesign_ != null) {
 			siteRequest_.setW(wPage);
 			setW(wPage);
 			if(pageHtmlPartList != null) {

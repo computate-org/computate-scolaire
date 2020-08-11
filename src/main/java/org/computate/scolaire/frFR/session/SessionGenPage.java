@@ -54,7 +54,7 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 	protected void _listeSessionScolaire(Couverture<ListeRecherche<SessionScolaire>> c) {
 	}
 
-	protected void _sessionScolaire(Couverture<SessionScolaire> c) {
+	protected void _sessionScolaire_(Couverture<SessionScolaire> c) {
 		if(listeSessionScolaire != null && listeSessionScolaire.size() == 1)
 			c.o(listeSessionScolaire.get(0));
 	}
@@ -64,8 +64,8 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageH2(Couverture<String> c) {
-		if(sessionScolaire != null && sessionScolaire.getSessionNomComplet() != null)
-			c.o(sessionScolaire.getSessionNomComplet());
+		if(sessionScolaire_ != null && sessionScolaire_.getSessionNomComplet() != null)
+			c.o(sessionScolaire_.getSessionNomComplet());
 	}
 
 	@Override protected void _pageH3(Couverture<String> c) {
@@ -73,9 +73,9 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageTitre(Couverture<String> c) {
-		if(sessionScolaire != null && sessionScolaire.getSessionNomComplet() != null)
-			c.o(sessionScolaire.getSessionNomComplet());
-		else if(sessionScolaire != null)
+		if(sessionScolaire_ != null && sessionScolaire_.getSessionNomComplet() != null)
+			c.o(sessionScolaire_.getSessionNomComplet());
+		else if(sessionScolaire_ != null)
 			c.o("sessions");
 		else if(listeSessionScolaire == null || listeSessionScolaire.size() == 0)
 			c.o("aucune session trouvée");
@@ -701,7 +701,7 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-green ")
-								.a("onclick", "putcopieSessionScolaire($('#putcopieSessionScolaireForm'), ", sessionScolaire == null ? "null" : sessionScolaire.getPk(), "); ")
+								.a("onclick", "putcopieSessionScolaire($('#putcopieSessionScolaireForm'), ", sessionScolaire_ == null ? "null" : sessionScolaire_.getPk(), "); ")
 								.f().sx("Dupliquer sessions")
 							.g("button");
 
@@ -735,7 +735,7 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 							} g("form");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-green ")
-								.a("onclick", "patchSessionScolaire(null, $('#patchSessionScolaireFormulaireValeurs'), ", Optional.ofNullable(sessionScolaire).map(SessionScolaire::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
+								.a("onclick", "patchSessionScolaire(null, $('#patchSessionScolaireFormulaireValeurs'), ", Optional.ofNullable(sessionScolaire_).map(SessionScolaire::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
 								.f().sx("Modifier sessions")
 							.g("button");
 

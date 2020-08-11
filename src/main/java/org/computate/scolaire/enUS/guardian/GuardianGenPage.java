@@ -53,7 +53,7 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 	protected void _listSchoolGuardian(Wrap<SearchList<SchoolGuardian>> c) {
 	}
 
-	protected void _schoolGuardian(Wrap<SchoolGuardian> c) {
+	protected void _schoolGuardian_(Wrap<SchoolGuardian> c) {
 		if(listSchoolGuardian != null && listSchoolGuardian.size() == 1)
 			c.o(listSchoolGuardian.get(0));
 	}
@@ -71,9 +71,9 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageTitle(Wrap<String> c) {
-		if(schoolGuardian != null && schoolGuardian.getGuardianCompleteName() != null)
-			c.o(schoolGuardian.getGuardianCompleteName());
-		else if(schoolGuardian != null)
+		if(schoolGuardian_ != null && schoolGuardian_.getGuardianCompleteName() != null)
+			c.o(schoolGuardian_.getGuardianCompleteName());
+		else if(schoolGuardian_ != null)
 			c.o("guardians");
 		else if(listSchoolGuardian == null || listSchoolGuardian.size() == 0)
 			c.o("no guardian found");
@@ -729,7 +729,7 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-yellow ")
-								.a("onclick", "putcopySchoolGuardian($('#putcopySchoolGuardianForm'), ", schoolGuardian == null ? "null" : schoolGuardian.getPk(), "); ")
+								.a("onclick", "putcopySchoolGuardian($('#putcopySchoolGuardianForm'), ", schoolGuardian_ == null ? "null" : schoolGuardian_.getPk(), "); ")
 								.f().sx("Duplicate guardians")
 							.g("button");
 
@@ -763,7 +763,7 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 							} g("form");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-yellow ")
-								.a("onclick", "patchSchoolGuardian(null, $('#patchSchoolGuardianFormValues'), ", Optional.ofNullable(schoolGuardian).map(SchoolGuardian::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
+								.a("onclick", "patchSchoolGuardian(null, $('#patchSchoolGuardianFormValues'), ", Optional.ofNullable(schoolGuardian_).map(SchoolGuardian::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
 								.f().sx("Modify guardians")
 							.g("button");
 

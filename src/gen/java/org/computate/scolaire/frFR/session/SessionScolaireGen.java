@@ -356,7 +356,7 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
 					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 				) {
-				sx(htmAgeCles());
+				e("span").a("class", "varSessionScolaire", pk, "AgeCles ").f().sx(htmAgeCles()).g("span");
 			}
 		}
 	}
@@ -848,7 +848,7 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
 					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 				) {
-				sx(htmSaisonCle());
+				e("span").a("class", "varSessionScolaire", pk, "SaisonCle ").f().sx(htmSaisonCle()).g("span");
 			}
 		}
 	}
@@ -1396,7 +1396,7 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
 					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 				) {
-				sx(htmEcoleAddresse());
+				e("span").a("class", "varSessionScolaire", pk, "EcoleAddresse ").f().sx(htmEcoleAddresse()).g("span");
 			}
 		}
 	}
@@ -2353,7 +2353,7 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
 					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 				) {
-				sx(htmSessionDateDebut());
+				e("span").a("class", "varSessionScolaire", pk, "SessionDateDebut ").f().sx(htmSessionDateDebut()).g("span");
 			}
 		}
 	}
@@ -2497,7 +2497,7 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
 					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 				) {
-				sx(htmSessionDateFin());
+				e("span").a("class", "varSessionScolaire", pk, "SessionDateFin ").f().sx(htmSessionDateFin()).g("span");
 			}
 		}
 	}
@@ -3545,16 +3545,68 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		Object o = Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
 		if(o != null && o instanceof SessionScolaire) {
 			SessionScolaire original = (SessionScolaire)o;
+			if(!Objects.equals(sessionCle, original.getSessionCle()))
+				requeteApi.addVars("sessionCle");
+			if(!Objects.equals(inscriptionCles, original.getInscriptionCles()))
+				requeteApi.addVars("inscriptionCles");
 			if(!Objects.equals(ageCles, original.getAgeCles()))
 				requeteApi.addVars("ageCles");
+			if(!Objects.equals(scolaireTri, original.getScolaireTri()))
+				requeteApi.addVars("scolaireTri");
+			if(!Objects.equals(ecoleTri, original.getEcoleTri()))
+				requeteApi.addVars("ecoleTri");
+			if(!Objects.equals(anneeTri, original.getAnneeTri()))
+				requeteApi.addVars("anneeTri");
+			if(!Objects.equals(saisonTri, original.getSaisonTri()))
+				requeteApi.addVars("saisonTri");
+			if(!Objects.equals(sessionTri, original.getSessionTri()))
+				requeteApi.addVars("sessionTri");
 			if(!Objects.equals(saisonCle, original.getSaisonCle()))
 				requeteApi.addVars("saisonCle");
+			if(!Objects.equals(ecoleCle, original.getEcoleCle()))
+				requeteApi.addVars("ecoleCle");
+			if(!Objects.equals(anneeCle, original.getAnneeCle()))
+				requeteApi.addVars("anneeCle");
+			if(!Objects.equals(ecoleNom, original.getEcoleNom()))
+				requeteApi.addVars("ecoleNom");
+			if(!Objects.equals(ecoleNomComplet, original.getEcoleNomComplet()))
+				requeteApi.addVars("ecoleNomComplet");
+			if(!Objects.equals(ecoleEmplacement, original.getEcoleEmplacement()))
+				requeteApi.addVars("ecoleEmplacement");
 			if(!Objects.equals(ecoleAddresse, original.getEcoleAddresse()))
 				requeteApi.addVars("ecoleAddresse");
+			if(!Objects.equals(ecoleNumeroTelephone, original.getEcoleNumeroTelephone()))
+				requeteApi.addVars("ecoleNumeroTelephone");
+			if(!Objects.equals(ecoleForm, original.getEcoleForm()))
+				requeteApi.addVars("ecoleForm");
+			if(!Objects.equals(ecoleNumero, original.getEcoleNumero()))
+				requeteApi.addVars("ecoleNumero");
+			if(!Objects.equals(ecoleAdministrateurNom, original.getEcoleAdministrateurNom()))
+				requeteApi.addVars("ecoleAdministrateurNom");
+			if(!Objects.equals(anneeDebut, original.getAnneeDebut()))
+				requeteApi.addVars("anneeDebut");
+			if(!Objects.equals(anneeFin, original.getAnneeFin()))
+				requeteApi.addVars("anneeFin");
+			if(!Objects.equals(saisonDateDebut, original.getSaisonDateDebut()))
+				requeteApi.addVars("saisonDateDebut");
+			if(!Objects.equals(saisonEte, original.getSaisonEte()))
+				requeteApi.addVars("saisonEte");
+			if(!Objects.equals(saisonHiver, original.getSaisonHiver()))
+				requeteApi.addVars("saisonHiver");
+			if(!Objects.equals(anneeFraisInscription, original.getAnneeFraisInscription()))
+				requeteApi.addVars("anneeFraisInscription");
+			if(!Objects.equals(saisonNomCourt, original.getSaisonNomCourt()))
+				requeteApi.addVars("saisonNomCourt");
+			if(!Objects.equals(saisonNomComplet, original.getSaisonNomComplet()))
+				requeteApi.addVars("saisonNomComplet");
 			if(!Objects.equals(sessionDateDebut, original.getSessionDateDebut()))
 				requeteApi.addVars("sessionDateDebut");
 			if(!Objects.equals(sessionDateFin, original.getSessionDateFin()))
 				requeteApi.addVars("sessionDateFin");
+			if(!Objects.equals(sessionNomCourt, original.getSessionNomCourt()))
+				requeteApi.addVars("sessionNomCourt");
+			if(!Objects.equals(sessionNomComplet, original.getSessionNomComplet()))
+				requeteApi.addVars("sessionNomComplet");
 			super.requeteApiCluster();
 		}
 	}
@@ -3564,7 +3616,7 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), ageCles, saisonCle, ecoleAddresse, sessionDateDebut, sessionDateFin);
+		return Objects.hash(super.hashCode(), sessionCle, inscriptionCles, ageCles, scolaireTri, ecoleTri, anneeTri, saisonTri, sessionTri, saisonCle, ecoleCle, anneeCle, ecoleNom, ecoleNomComplet, ecoleEmplacement, ecoleAddresse, ecoleNumeroTelephone, ecoleForm, ecoleNumero, ecoleAdministrateurNom, anneeDebut, anneeFin, saisonDateDebut, saisonEte, saisonHiver, anneeFraisInscription, saisonNomCourt, saisonNomComplet, sessionDateDebut, sessionDateFin, sessionNomCourt, sessionNomComplet);
 	}
 
 	////////////
@@ -3578,11 +3630,37 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 			return false;
 		SessionScolaire that = (SessionScolaire)o;
 		return super.equals(o)
+				&& Objects.equals( sessionCle, that.sessionCle )
+				&& Objects.equals( inscriptionCles, that.inscriptionCles )
 				&& Objects.equals( ageCles, that.ageCles )
+				&& Objects.equals( scolaireTri, that.scolaireTri )
+				&& Objects.equals( ecoleTri, that.ecoleTri )
+				&& Objects.equals( anneeTri, that.anneeTri )
+				&& Objects.equals( saisonTri, that.saisonTri )
+				&& Objects.equals( sessionTri, that.sessionTri )
 				&& Objects.equals( saisonCle, that.saisonCle )
+				&& Objects.equals( ecoleCle, that.ecoleCle )
+				&& Objects.equals( anneeCle, that.anneeCle )
+				&& Objects.equals( ecoleNom, that.ecoleNom )
+				&& Objects.equals( ecoleNomComplet, that.ecoleNomComplet )
+				&& Objects.equals( ecoleEmplacement, that.ecoleEmplacement )
 				&& Objects.equals( ecoleAddresse, that.ecoleAddresse )
+				&& Objects.equals( ecoleNumeroTelephone, that.ecoleNumeroTelephone )
+				&& Objects.equals( ecoleForm, that.ecoleForm )
+				&& Objects.equals( ecoleNumero, that.ecoleNumero )
+				&& Objects.equals( ecoleAdministrateurNom, that.ecoleAdministrateurNom )
+				&& Objects.equals( anneeDebut, that.anneeDebut )
+				&& Objects.equals( anneeFin, that.anneeFin )
+				&& Objects.equals( saisonDateDebut, that.saisonDateDebut )
+				&& Objects.equals( saisonEte, that.saisonEte )
+				&& Objects.equals( saisonHiver, that.saisonHiver )
+				&& Objects.equals( anneeFraisInscription, that.anneeFraisInscription )
+				&& Objects.equals( saisonNomCourt, that.saisonNomCourt )
+				&& Objects.equals( saisonNomComplet, that.saisonNomComplet )
 				&& Objects.equals( sessionDateDebut, that.sessionDateDebut )
-				&& Objects.equals( sessionDateFin, that.sessionDateFin );
+				&& Objects.equals( sessionDateFin, that.sessionDateFin )
+				&& Objects.equals( sessionNomCourt, that.sessionNomCourt )
+				&& Objects.equals( sessionNomComplet, that.sessionNomComplet );
 	}
 
 	//////////////
@@ -3593,11 +3671,37 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString() + "\n");
 		sb.append("SessionScolaire { ");
-		sb.append( "ageCles: " ).append(ageCles);
+		sb.append( "sessionCle: " ).append(sessionCle);
+		sb.append( ", inscriptionCles: " ).append(inscriptionCles);
+		sb.append( ", ageCles: " ).append(ageCles);
+		sb.append( ", scolaireTri: " ).append(scolaireTri);
+		sb.append( ", ecoleTri: " ).append(ecoleTri);
+		sb.append( ", anneeTri: " ).append(anneeTri);
+		sb.append( ", saisonTri: " ).append(saisonTri);
+		sb.append( ", sessionTri: " ).append(sessionTri);
 		sb.append( ", saisonCle: " ).append(saisonCle);
+		sb.append( ", ecoleCle: " ).append(ecoleCle);
+		sb.append( ", anneeCle: " ).append(anneeCle);
+		sb.append( ", ecoleNom: \"" ).append(ecoleNom).append( "\"" );
+		sb.append( ", ecoleNomComplet: \"" ).append(ecoleNomComplet).append( "\"" );
+		sb.append( ", ecoleEmplacement: \"" ).append(ecoleEmplacement).append( "\"" );
 		sb.append( ", ecoleAddresse: \"" ).append(ecoleAddresse).append( "\"" );
+		sb.append( ", ecoleNumeroTelephone: \"" ).append(ecoleNumeroTelephone).append( "\"" );
+		sb.append( ", ecoleForm: \"" ).append(ecoleForm).append( "\"" );
+		sb.append( ", ecoleNumero: " ).append(ecoleNumero);
+		sb.append( ", ecoleAdministrateurNom: \"" ).append(ecoleAdministrateurNom).append( "\"" );
+		sb.append( ", anneeDebut: " ).append(anneeDebut);
+		sb.append( ", anneeFin: " ).append(anneeFin);
+		sb.append( ", saisonDateDebut: " ).append(saisonDateDebut);
+		sb.append( ", saisonEte: " ).append(saisonEte);
+		sb.append( ", saisonHiver: " ).append(saisonHiver);
+		sb.append( ", anneeFraisInscription: " ).append(anneeFraisInscription);
+		sb.append( ", saisonNomCourt: \"" ).append(saisonNomCourt).append( "\"" );
+		sb.append( ", saisonNomComplet: \"" ).append(saisonNomComplet).append( "\"" );
 		sb.append( ", sessionDateDebut: " ).append(sessionDateDebut);
 		sb.append( ", sessionDateFin: " ).append(sessionDateFin);
+		sb.append( ", sessionNomCourt: \"" ).append(sessionNomCourt).append( "\"" );
+		sb.append( ", sessionNomComplet: \"" ).append(sessionNomComplet).append( "\"" );
 		sb.append(" }");
 		return sb.toString();
 	}

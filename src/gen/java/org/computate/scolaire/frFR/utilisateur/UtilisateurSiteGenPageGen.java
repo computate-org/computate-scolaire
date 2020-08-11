@@ -80,43 +80,41 @@ public abstract class UtilisateurSiteGenPageGen<DEV> extends ClusterPage {
 		return (UtilisateurSiteGenPage)this;
 	}
 
-	/////////////////////
-	// utilisateurSite //
-	/////////////////////
+	//////////////////////
+	// utilisateurSite_ //
+	//////////////////////
 
-	/**	 L'entité utilisateurSite
+	/**	 L'entité utilisateurSite_
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected UtilisateurSite utilisateurSite;
+	protected UtilisateurSite utilisateurSite_;
 	@JsonIgnore
-	public Couverture<UtilisateurSite> utilisateurSiteCouverture = new Couverture<UtilisateurSite>().p(this).c(UtilisateurSite.class).var("utilisateurSite").o(utilisateurSite);
+	public Couverture<UtilisateurSite> utilisateurSite_Couverture = new Couverture<UtilisateurSite>().p(this).c(UtilisateurSite.class).var("utilisateurSite_").o(utilisateurSite_);
 
-	/**	<br/> L'entité utilisateurSite
+	/**	<br/> L'entité utilisateurSite_
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.utilisateur.UtilisateurSiteGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:utilisateurSite">Trouver l'entité utilisateurSite dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.utilisateur.UtilisateurSiteGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:utilisateurSite_">Trouver l'entité utilisateurSite_ dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _utilisateurSite(Couverture<UtilisateurSite> c);
+	protected abstract void _utilisateurSite_(Couverture<UtilisateurSite> c);
 
-	public UtilisateurSite getUtilisateurSite() {
-		return utilisateurSite;
+	public UtilisateurSite getUtilisateurSite_() {
+		return utilisateurSite_;
 	}
 
-	public void setUtilisateurSite(UtilisateurSite utilisateurSite) {
-		this.utilisateurSite = utilisateurSite;
-		this.utilisateurSiteCouverture.dejaInitialise = true;
+	public void setUtilisateurSite_(UtilisateurSite utilisateurSite_) {
+		this.utilisateurSite_ = utilisateurSite_;
+		this.utilisateurSite_Couverture.dejaInitialise = true;
 	}
-	protected UtilisateurSiteGenPage utilisateurSiteInit() {
-		if(!utilisateurSiteCouverture.dejaInitialise) {
-			_utilisateurSite(utilisateurSiteCouverture);
-			if(utilisateurSite == null)
-				setUtilisateurSite(utilisateurSiteCouverture.o);
+	protected UtilisateurSiteGenPage utilisateurSite_Init() {
+		if(!utilisateurSite_Couverture.dejaInitialise) {
+			_utilisateurSite_(utilisateurSite_Couverture);
+			if(utilisateurSite_ == null)
+				setUtilisateurSite_(utilisateurSite_Couverture.o);
 		}
-		if(utilisateurSite != null)
-			utilisateurSite.initLoinPourClasse(requeteSite_);
-		utilisateurSiteCouverture.dejaInitialise(true);
+		utilisateurSite_Couverture.dejaInitialise(true);
 		return (UtilisateurSiteGenPage)this;
 	}
 
@@ -142,7 +140,7 @@ public abstract class UtilisateurSiteGenPageGen<DEV> extends ClusterPage {
 
 	public void initUtilisateurSiteGenPage() {
 		listeUtilisateurSiteInit();
-		utilisateurSiteInit();
+		utilisateurSite_Init();
 	}
 
 	@Override public void initLoinPourClasse(RequeteSiteFrFR requeteSite_) {
@@ -157,8 +155,6 @@ public abstract class UtilisateurSiteGenPageGen<DEV> extends ClusterPage {
 			super.requeteSiteClusterPage(requeteSite_);
 		if(listeUtilisateurSite != null)
 			listeUtilisateurSite.setRequeteSite_(requeteSite_);
-		if(utilisateurSite != null)
-			utilisateurSite.setRequeteSite_(requeteSite_);
 	}
 
 	public void requeteSitePourClasse(RequeteSiteFrFR requeteSite_) {
@@ -187,8 +183,8 @@ public abstract class UtilisateurSiteGenPageGen<DEV> extends ClusterPage {
 		switch(var) {
 			case "listeUtilisateurSite":
 				return oUtilisateurSiteGenPage.listeUtilisateurSite;
-			case "utilisateurSite":
-				return oUtilisateurSiteGenPage.utilisateurSite;
+			case "utilisateurSite_":
+				return oUtilisateurSiteGenPage.utilisateurSite_;
 			default:
 				return super.obtenirClusterPage(var);
 		}

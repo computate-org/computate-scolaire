@@ -54,7 +54,7 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 	protected void _listeSaisonScolaire(Couverture<ListeRecherche<SaisonScolaire>> c) {
 	}
 
-	protected void _saisonScolaire(Couverture<SaisonScolaire> c) {
+	protected void _saisonScolaire_(Couverture<SaisonScolaire> c) {
 		if(listeSaisonScolaire != null && listeSaisonScolaire.size() == 1)
 			c.o(listeSaisonScolaire.get(0));
 	}
@@ -64,8 +64,8 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageH2(Couverture<String> c) {
-		if(saisonScolaire != null && saisonScolaire.getSaisonNomComplet() != null)
-			c.o(saisonScolaire.getSaisonNomComplet());
+		if(saisonScolaire_ != null && saisonScolaire_.getSaisonNomComplet() != null)
+			c.o(saisonScolaire_.getSaisonNomComplet());
 	}
 
 	@Override protected void _pageH3(Couverture<String> c) {
@@ -73,9 +73,9 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageTitre(Couverture<String> c) {
-		if(saisonScolaire != null && saisonScolaire.getSaisonNomComplet() != null)
-			c.o(saisonScolaire.getSaisonNomComplet());
-		else if(saisonScolaire != null)
+		if(saisonScolaire_ != null && saisonScolaire_.getSaisonNomComplet() != null)
+			c.o(saisonScolaire_.getSaisonNomComplet());
+		else if(saisonScolaire_ != null)
 			c.o("saisons");
 		else if(listeSaisonScolaire == null || listeSaisonScolaire.size() == 0)
 			c.o("aucune saison trouvée");
@@ -704,7 +704,7 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-yellow ")
-								.a("onclick", "putcopieSaisonScolaire($('#putcopieSaisonScolaireForm'), ", saisonScolaire == null ? "null" : saisonScolaire.getPk(), "); ")
+								.a("onclick", "putcopieSaisonScolaire($('#putcopieSaisonScolaireForm'), ", saisonScolaire_ == null ? "null" : saisonScolaire_.getPk(), "); ")
 								.f().sx("Dupliquer saisons")
 							.g("button");
 
@@ -738,7 +738,7 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 							} g("form");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-yellow ")
-								.a("onclick", "patchSaisonScolaire(null, $('#patchSaisonScolaireFormulaireValeurs'), ", Optional.ofNullable(saisonScolaire).map(SaisonScolaire::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
+								.a("onclick", "patchSaisonScolaire(null, $('#patchSaisonScolaireFormulaireValeurs'), ", Optional.ofNullable(saisonScolaire_).map(SaisonScolaire::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
 								.f().sx("Modifier saisons")
 							.g("button");
 

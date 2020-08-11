@@ -80,43 +80,41 @@ public abstract class SessionGenPageGen<DEV> extends ClusterPage {
 		return (SessionGenPage)this;
 	}
 
-	/////////////////////
-	// sessionScolaire //
-	/////////////////////
+	//////////////////////
+	// sessionScolaire_ //
+	//////////////////////
 
-	/**	 L'entité sessionScolaire
+	/**	 L'entité sessionScolaire_
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected SessionScolaire sessionScolaire;
+	protected SessionScolaire sessionScolaire_;
 	@JsonIgnore
-	public Couverture<SessionScolaire> sessionScolaireCouverture = new Couverture<SessionScolaire>().p(this).c(SessionScolaire.class).var("sessionScolaire").o(sessionScolaire);
+	public Couverture<SessionScolaire> sessionScolaire_Couverture = new Couverture<SessionScolaire>().p(this).c(SessionScolaire.class).var("sessionScolaire_").o(sessionScolaire_);
 
-	/**	<br/> L'entité sessionScolaire
+	/**	<br/> L'entité sessionScolaire_
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.session.SessionGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:sessionScolaire">Trouver l'entité sessionScolaire dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.session.SessionGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:sessionScolaire_">Trouver l'entité sessionScolaire_ dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _sessionScolaire(Couverture<SessionScolaire> c);
+	protected abstract void _sessionScolaire_(Couverture<SessionScolaire> c);
 
-	public SessionScolaire getSessionScolaire() {
-		return sessionScolaire;
+	public SessionScolaire getSessionScolaire_() {
+		return sessionScolaire_;
 	}
 
-	public void setSessionScolaire(SessionScolaire sessionScolaire) {
-		this.sessionScolaire = sessionScolaire;
-		this.sessionScolaireCouverture.dejaInitialise = true;
+	public void setSessionScolaire_(SessionScolaire sessionScolaire_) {
+		this.sessionScolaire_ = sessionScolaire_;
+		this.sessionScolaire_Couverture.dejaInitialise = true;
 	}
-	protected SessionGenPage sessionScolaireInit() {
-		if(!sessionScolaireCouverture.dejaInitialise) {
-			_sessionScolaire(sessionScolaireCouverture);
-			if(sessionScolaire == null)
-				setSessionScolaire(sessionScolaireCouverture.o);
+	protected SessionGenPage sessionScolaire_Init() {
+		if(!sessionScolaire_Couverture.dejaInitialise) {
+			_sessionScolaire_(sessionScolaire_Couverture);
+			if(sessionScolaire_ == null)
+				setSessionScolaire_(sessionScolaire_Couverture.o);
 		}
-		if(sessionScolaire != null)
-			sessionScolaire.initLoinPourClasse(requeteSite_);
-		sessionScolaireCouverture.dejaInitialise(true);
+		sessionScolaire_Couverture.dejaInitialise(true);
 		return (SessionGenPage)this;
 	}
 
@@ -142,7 +140,7 @@ public abstract class SessionGenPageGen<DEV> extends ClusterPage {
 
 	public void initSessionGenPage() {
 		listeSessionScolaireInit();
-		sessionScolaireInit();
+		sessionScolaire_Init();
 	}
 
 	@Override public void initLoinPourClasse(RequeteSiteFrFR requeteSite_) {
@@ -157,8 +155,6 @@ public abstract class SessionGenPageGen<DEV> extends ClusterPage {
 			super.requeteSiteClusterPage(requeteSite_);
 		if(listeSessionScolaire != null)
 			listeSessionScolaire.setRequeteSite_(requeteSite_);
-		if(sessionScolaire != null)
-			sessionScolaire.setRequeteSite_(requeteSite_);
 	}
 
 	public void requeteSitePourClasse(RequeteSiteFrFR requeteSite_) {
@@ -187,8 +183,8 @@ public abstract class SessionGenPageGen<DEV> extends ClusterPage {
 		switch(var) {
 			case "listeSessionScolaire":
 				return oSessionGenPage.listeSessionScolaire;
-			case "sessionScolaire":
-				return oSessionGenPage.sessionScolaire;
+			case "sessionScolaire_":
+				return oSessionGenPage.sessionScolaire_;
 			default:
 				return super.obtenirClusterPage(var);
 		}

@@ -1384,7 +1384,10 @@ public class ApiEcrivain extends ApiEcrivainGen<Object> implements Comparable<Ap
 			wChemins.tl(3, "operationId: ", classeApiOperationIdMethode, (id ? "Id" : ""));
 			wChemins.tl(3, "x-vertx-event-bus: ", appliNom, "-", langueNom, "-", classeNomSimple);
 	
-			if(classeRoleUtilisateurMethode || classeRolesTrouves && BooleanUtils.isNotTrue(classeRoleSession) && BooleanUtils.isNotTrue(classePublicLire)) {
+			if(classeRoleUtilisateurMethode 
+					|| classeRolesTrouves && BooleanUtils.isNotTrue(classeRoleSession) && BooleanUtils.isNotTrue(classePublicLire)
+					|| classeRolesTrouves && BooleanUtils.isNotTrue(classeRoleSession) && BooleanUtils.isTrue(classePublicLire) && StringUtils.equalsAny(classeApiMethodeMethode, "POST", "PUT", "PATCH", "DELETE")
+					) {
 				wChemins.tl(3, "security:");
 				wChemins.tl(4, "- openIdConnect:");
 				wChemins.tl(5, "- DefaultAuthScope");

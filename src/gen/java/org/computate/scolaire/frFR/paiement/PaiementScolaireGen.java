@@ -3400,6 +3400,75 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		} g("div");
 	}
 
+	///////////////////
+	// paiementAnnee //
+	///////////////////
+
+	/**	 L'entité paiementAnnee
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected Integer paiementAnnee;
+	@JsonIgnore
+	public Couverture<Integer> paiementAnneeCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("paiementAnnee").o(paiementAnnee);
+
+	/**	<br/> L'entité paiementAnnee
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:paiementAnnee">Trouver l'entité paiementAnnee dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _paiementAnnee(Couverture<Integer> c);
+
+	public Integer getPaiementAnnee() {
+		return paiementAnnee;
+	}
+
+	public void setPaiementAnnee(Integer paiementAnnee) {
+		this.paiementAnnee = paiementAnnee;
+		this.paiementAnneeCouverture.dejaInitialise = true;
+	}
+	public PaiementScolaire setPaiementAnnee(String o) {
+		if(NumberUtils.isParsable(o))
+			this.paiementAnnee = Integer.parseInt(o);
+		this.paiementAnneeCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	protected PaiementScolaire paiementAnneeInit() {
+		if(!paiementAnneeCouverture.dejaInitialise) {
+			_paiementAnnee(paiementAnneeCouverture);
+			if(paiementAnnee == null)
+				setPaiementAnnee(paiementAnneeCouverture.o);
+		}
+		paiementAnneeCouverture.dejaInitialise(true);
+		return (PaiementScolaire)this;
+	}
+
+	public Integer solrPaiementAnnee() {
+		return paiementAnnee;
+	}
+
+	public String strPaiementAnnee() {
+		return paiementAnnee == null ? "" : paiementAnnee.toString();
+	}
+
+	public String jsonPaiementAnnee() {
+		return paiementAnnee == null ? "" : paiementAnnee.toString();
+	}
+
+	public String nomAffichagePaiementAnnee() {
+		return null;
+	}
+
+	public String htmTooltipPaiementAnnee() {
+		return null;
+	}
+
+	public String htmPaiementAnnee() {
+		return paiementAnnee == null ? "" : StringEscapeUtils.escapeHtml4(strPaiementAnnee());
+	}
+
 	/////////////////////
 	// paiementMontant //
 	/////////////////////
@@ -5547,6 +5616,87 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		} g("div");
 	}
 
+	/////////
+	// now //
+	/////////
+
+	/**	 L'entité now
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonDeserialize(using = LocalDateDeserializer.class)
+	@JsonSerialize(using = LocalDateSerializer.class)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+	@JsonInclude(Include.NON_NULL)
+	protected LocalDate now;
+	@JsonIgnore
+	public Couverture<LocalDate> nowCouverture = new Couverture<LocalDate>().p(this).c(LocalDate.class).var("now").o(now);
+
+	/**	<br/> L'entité now
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:now">Trouver l'entité now dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _now(Couverture<LocalDate> c);
+
+	public LocalDate getNow() {
+		return now;
+	}
+
+	public void setNow(LocalDate now) {
+		this.now = now;
+		this.nowCouverture.dejaInitialise = true;
+	}
+	public PaiementScolaire setNow(Instant o) {
+		this.now = o == null ? null : LocalDate.from(o);
+		this.nowCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	/** Example: 2011-12-03+01:00 **/
+	public PaiementScolaire setNow(String o) {
+		this.now = o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		this.nowCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	public PaiementScolaire setNow(Date o) {
+		this.now = o == null ? null : o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
+		this.nowCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	protected PaiementScolaire nowInit() {
+		if(!nowCouverture.dejaInitialise) {
+			_now(nowCouverture);
+			if(now == null)
+				setNow(nowCouverture.o);
+		}
+		nowCouverture.dejaInitialise(true);
+		return (PaiementScolaire)this;
+	}
+
+	public Date solrNow() {
+		return now == null ? null : Date.from(now.atStartOfDay(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toInstant().atZone(ZoneId.of("Z")).toInstant());
+	}
+
+	public String strNow() {
+		return now == null ? "" : now.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.forLanguageTag("fr-FR")));
+	}
+
+	public String jsonNow() {
+		return now == null ? "" : now.format(DateTimeFormatter.ISO_DATE);
+	}
+
+	public String nomAffichageNow() {
+		return null;
+	}
+
+	public String htmTooltipNow() {
+		return null;
+	}
+
+	public String htmNow() {
+		return now == null ? "" : StringEscapeUtils.escapeHtml4(strNow());
+	}
+
 	//////////////////////
 	// paiementProchain //
 	//////////////////////
@@ -5726,6 +5876,218 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell ").f();
 
 								inputFraisMontantDu(classeApiMethodeMethode);
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	///////////////////////
+	// fraisMontantPasse //
+	///////////////////////
+
+	/**	 L'entité fraisMontantPasse
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected BigDecimal fraisMontantPasse;
+	@JsonIgnore
+	public Couverture<BigDecimal> fraisMontantPasseCouverture = new Couverture<BigDecimal>().p(this).c(BigDecimal.class).var("fraisMontantPasse").o(fraisMontantPasse);
+
+	/**	<br/> L'entité fraisMontantPasse
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:fraisMontantPasse">Trouver l'entité fraisMontantPasse dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _fraisMontantPasse(Couverture<BigDecimal> c);
+
+	public BigDecimal getFraisMontantPasse() {
+		return fraisMontantPasse;
+	}
+
+	public void setFraisMontantPasse(BigDecimal fraisMontantPasse) {
+		this.fraisMontantPasse = fraisMontantPasse;
+		this.fraisMontantPasseCouverture.dejaInitialise = true;
+	}
+	public PaiementScolaire setFraisMontantPasse(String o) {
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			this.fraisMontantPasse = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+		this.fraisMontantPasseCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	public PaiementScolaire setFraisMontantPasse(Double o) {
+			this.fraisMontantPasse = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+		this.fraisMontantPasseCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	public PaiementScolaire setFraisMontantPasse(Integer o) {
+			this.fraisMontantPasse = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+		this.fraisMontantPasseCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	protected PaiementScolaire fraisMontantPasseInit() {
+		if(!fraisMontantPasseCouverture.dejaInitialise) {
+			_fraisMontantPasse(fraisMontantPasseCouverture);
+			if(fraisMontantPasse == null)
+				setFraisMontantPasse(fraisMontantPasseCouverture.o);
+		}
+		fraisMontantPasseCouverture.dejaInitialise(true);
+		return (PaiementScolaire)this;
+	}
+
+	public Double solrFraisMontantPasse() {
+		return fraisMontantPasse == null ? null : fraisMontantPasse.doubleValue();
+	}
+
+	public String strFraisMontantPasse() {
+		return fraisMontantPasse == null ? "" : fraisMontantPasse.setScale(2, RoundingMode.CEILING).toString();
+	}
+
+	public String jsonFraisMontantPasse() {
+		return fraisMontantPasse == null ? "" : fraisMontantPasse.toString();
+	}
+
+	public String nomAffichageFraisMontantPasse() {
+		return "frais montant du passé";
+	}
+
+	public String htmTooltipFraisMontantPasse() {
+		return null;
+	}
+
+	public String htmFraisMontantPasse() {
+		return fraisMontantPasse == null ? "" : StringEscapeUtils.escapeHtml4(strFraisMontantPasse());
+	}
+
+	public void inputFraisMontantPasse(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
+		e("span").a("class", "varPaiementScolaire", pk, "FraisMontantPasse ").f().sx(htmFraisMontantPasse()).g("span");
+	}
+
+	public void htmFraisMontantPasse(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PaiementScolaireFraisMontantPasse").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", classeApiMethodeMethode, "_fraisMontantPasse").a("class", "").f().sx("frais montant du passé").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputFraisMontantPasse(classeApiMethodeMethode);
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	//////////////////////////
+	// fraisMontantNonPasse //
+	//////////////////////////
+
+	/**	 L'entité fraisMontantNonPasse
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected BigDecimal fraisMontantNonPasse;
+	@JsonIgnore
+	public Couverture<BigDecimal> fraisMontantNonPasseCouverture = new Couverture<BigDecimal>().p(this).c(BigDecimal.class).var("fraisMontantNonPasse").o(fraisMontantNonPasse);
+
+	/**	<br/> L'entité fraisMontantNonPasse
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:fraisMontantNonPasse">Trouver l'entité fraisMontantNonPasse dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _fraisMontantNonPasse(Couverture<BigDecimal> c);
+
+	public BigDecimal getFraisMontantNonPasse() {
+		return fraisMontantNonPasse;
+	}
+
+	public void setFraisMontantNonPasse(BigDecimal fraisMontantNonPasse) {
+		this.fraisMontantNonPasse = fraisMontantNonPasse;
+		this.fraisMontantNonPasseCouverture.dejaInitialise = true;
+	}
+	public PaiementScolaire setFraisMontantNonPasse(String o) {
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			this.fraisMontantNonPasse = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+		this.fraisMontantNonPasseCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	public PaiementScolaire setFraisMontantNonPasse(Double o) {
+			this.fraisMontantNonPasse = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+		this.fraisMontantNonPasseCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	public PaiementScolaire setFraisMontantNonPasse(Integer o) {
+			this.fraisMontantNonPasse = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+		this.fraisMontantNonPasseCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	protected PaiementScolaire fraisMontantNonPasseInit() {
+		if(!fraisMontantNonPasseCouverture.dejaInitialise) {
+			_fraisMontantNonPasse(fraisMontantNonPasseCouverture);
+			if(fraisMontantNonPasse == null)
+				setFraisMontantNonPasse(fraisMontantNonPasseCouverture.o);
+		}
+		fraisMontantNonPasseCouverture.dejaInitialise(true);
+		return (PaiementScolaire)this;
+	}
+
+	public Double solrFraisMontantNonPasse() {
+		return fraisMontantNonPasse == null ? null : fraisMontantNonPasse.doubleValue();
+	}
+
+	public String strFraisMontantNonPasse() {
+		return fraisMontantNonPasse == null ? "" : fraisMontantNonPasse.setScale(2, RoundingMode.CEILING).toString();
+	}
+
+	public String jsonFraisMontantNonPasse() {
+		return fraisMontantNonPasse == null ? "" : fraisMontantNonPasse.toString();
+	}
+
+	public String nomAffichageFraisMontantNonPasse() {
+		return "frais montant pas du passé";
+	}
+
+	public String htmTooltipFraisMontantNonPasse() {
+		return null;
+	}
+
+	public String htmFraisMontantNonPasse() {
+		return fraisMontantNonPasse == null ? "" : StringEscapeUtils.escapeHtml4(strFraisMontantNonPasse());
+	}
+
+	public void inputFraisMontantNonPasse(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
+		e("span").a("class", "varPaiementScolaire", pk, "FraisMontantNonPasse ").f().sx(htmFraisMontantNonPasse()).g("span");
+	}
+
+	public void htmFraisMontantNonPasse(String classeApiMethodeMethode) {
+		PaiementScolaire s = (PaiementScolaire)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PaiementScolaireFraisMontantNonPasse").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", classeApiMethodeMethode, "_fraisMontantNonPasse").a("class", "").f().sx("frais montant pas du passé").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputFraisMontantNonPasse(classeApiMethodeMethode);
 							} g("div");
 						} g("div");
 					} g("div");
@@ -6098,6 +6460,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		inscriptionPaimentChaqueMoisInit();
 		paiementDescriptionInit();
 		paiementDateInit();
+		paiementAnneeInit();
 		paiementMontantInit();
 		paiementEspecesInit();
 		paiementChequeInit();
@@ -6114,8 +6477,11 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		fraisInscriptionInit();
 		fraisMoisInit();
 		fraisRetardInit();
+		nowInit();
 		paiementProchainInit();
 		fraisMontantDuInit();
+		fraisMontantPasseInit();
+		fraisMontantNonPasseInit();
 		fraisMontantFutureInit();
 		paiementNomCourtInit();
 		paiementNomCompletInit();
@@ -6237,6 +6603,8 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				return oPaiementScolaire.paiementDescription;
 			case "paiementDate":
 				return oPaiementScolaire.paiementDate;
+			case "paiementAnnee":
+				return oPaiementScolaire.paiementAnnee;
 			case "paiementMontant":
 				return oPaiementScolaire.paiementMontant;
 			case "paiementEspeces":
@@ -6269,10 +6637,16 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				return oPaiementScolaire.fraisMois;
 			case "fraisRetard":
 				return oPaiementScolaire.fraisRetard;
+			case "now":
+				return oPaiementScolaire.now;
 			case "paiementProchain":
 				return oPaiementScolaire.paiementProchain;
 			case "fraisMontantDu":
 				return oPaiementScolaire.fraisMontantDu;
+			case "fraisMontantPasse":
+				return oPaiementScolaire.fraisMontantPasse;
+			case "fraisMontantNonPasse":
+				return oPaiementScolaire.fraisMontantNonPasse;
 			case "fraisMontantFuture":
 				return oPaiementScolaire.fraisMontantFuture;
 			case "paiementNomCourt":
@@ -6448,6 +6822,16 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			case "fraisMontantDu":
 				if(val != null)
 					setFraisMontantDu(val);
+				sauvegardes.add(var);
+				return val;
+			case "fraisMontantPasse":
+				if(val != null)
+					setFraisMontantPasse(val);
+				sauvegardes.add(var);
+				return val;
+			case "fraisMontantNonPasse":
+				if(val != null)
+					setFraisMontantNonPasse(val);
 				sauvegardes.add(var);
 				return val;
 			case "fraisMontantFuture":
@@ -6697,6 +7081,12 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 					oPaiementScolaire.setPaiementDate(paiementDate);
 			}
 
+			if(sauvegardes.contains("paiementAnnee")) {
+				Integer paiementAnnee = (Integer)solrDocument.get("paiementAnnee_stored_int");
+				if(paiementAnnee != null)
+					oPaiementScolaire.setPaiementAnnee(paiementAnnee);
+			}
+
 			if(sauvegardes.contains("paiementMontant")) {
 				Double paiementMontant = (Double)solrDocument.get("paiementMontant_stored_double");
 				if(paiementMontant != null)
@@ -6803,6 +7193,18 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				Double fraisMontantDu = (Double)solrDocument.get("fraisMontantDu_stored_double");
 				if(fraisMontantDu != null)
 					oPaiementScolaire.setFraisMontantDu(fraisMontantDu);
+			}
+
+			if(sauvegardes.contains("fraisMontantPasse")) {
+				Double fraisMontantPasse = (Double)solrDocument.get("fraisMontantPasse_stored_double");
+				if(fraisMontantPasse != null)
+					oPaiementScolaire.setFraisMontantPasse(fraisMontantPasse);
+			}
+
+			if(sauvegardes.contains("fraisMontantNonPasse")) {
+				Double fraisMontantNonPasse = (Double)solrDocument.get("fraisMontantNonPasse_stored_double");
+				if(fraisMontantNonPasse != null)
+					oPaiementScolaire.setFraisMontantNonPasse(fraisMontantNonPasse);
 			}
 
 			if(sauvegardes.contains("fraisMontantFuture")) {
@@ -7053,6 +7455,10 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			document.addField("paiementDate_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(paiementDate.atStartOfDay(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toInstant().atZone(ZoneId.of("Z"))));
 			document.addField("paiementDate_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(paiementDate.atStartOfDay(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toInstant().atZone(ZoneId.of("Z"))));
 		}
+		if(paiementAnnee != null) {
+			document.addField("paiementAnnee_indexed_int", paiementAnnee);
+			document.addField("paiementAnnee_stored_int", paiementAnnee);
+		}
 		if(paiementMontant != null) {
 			document.addField("paiementMontant_indexed_double", paiementMontant.doubleValue());
 			document.addField("paiementMontant_stored_double", paiementMontant.doubleValue());
@@ -7124,6 +7530,14 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		if(fraisMontantDu != null) {
 			document.addField("fraisMontantDu_indexed_double", fraisMontantDu.doubleValue());
 			document.addField("fraisMontantDu_stored_double", fraisMontantDu.doubleValue());
+		}
+		if(fraisMontantPasse != null) {
+			document.addField("fraisMontantPasse_indexed_double", fraisMontantPasse.doubleValue());
+			document.addField("fraisMontantPasse_stored_double", fraisMontantPasse.doubleValue());
+		}
+		if(fraisMontantNonPasse != null) {
+			document.addField("fraisMontantNonPasse_indexed_double", fraisMontantNonPasse.doubleValue());
+			document.addField("fraisMontantNonPasse_stored_double", fraisMontantNonPasse.doubleValue());
 		}
 		if(fraisMontantFuture != null) {
 			document.addField("fraisMontantFuture_indexed_double", fraisMontantFuture.doubleValue());
@@ -7234,6 +7648,8 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				return "paiementDescription_indexed_string";
 			case "paiementDate":
 				return "paiementDate_indexed_date";
+			case "paiementAnnee":
+				return "paiementAnnee_indexed_int";
 			case "paiementMontant":
 				return "paiementMontant_indexed_double";
 			case "paiementEspeces":
@@ -7270,6 +7686,10 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				return "paiementProchain_indexed_date";
 			case "fraisMontantDu":
 				return "fraisMontantDu_indexed_double";
+			case "fraisMontantPasse":
+				return "fraisMontantPasse_indexed_double";
+			case "fraisMontantNonPasse":
+				return "fraisMontantNonPasse_indexed_double";
 			case "fraisMontantFuture":
 				return "fraisMontantFuture_indexed_double";
 			case "paiementNomCourt":
@@ -7453,6 +7873,10 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		if(paiementDate != null)
 			oPaiementScolaire.setPaiementDate(paiementDate);
 
+		Integer paiementAnnee = (Integer)solrDocument.get("paiementAnnee_stored_int");
+		if(paiementAnnee != null)
+			oPaiementScolaire.setPaiementAnnee(paiementAnnee);
+
 		Double paiementMontant = (Double)solrDocument.get("paiementMontant_stored_double");
 		if(paiementMontant != null)
 			oPaiementScolaire.setPaiementMontant(paiementMontant);
@@ -7524,6 +7948,14 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		Double fraisMontantDu = (Double)solrDocument.get("fraisMontantDu_stored_double");
 		if(fraisMontantDu != null)
 			oPaiementScolaire.setFraisMontantDu(fraisMontantDu);
+
+		Double fraisMontantPasse = (Double)solrDocument.get("fraisMontantPasse_stored_double");
+		if(fraisMontantPasse != null)
+			oPaiementScolaire.setFraisMontantPasse(fraisMontantPasse);
+
+		Double fraisMontantNonPasse = (Double)solrDocument.get("fraisMontantNonPasse_stored_double");
+		if(fraisMontantNonPasse != null)
+			oPaiementScolaire.setFraisMontantNonPasse(fraisMontantNonPasse);
 
 		Double fraisMontantFuture = (Double)solrDocument.get("fraisMontantFuture_stored_double");
 		if(fraisMontantFuture != null)
@@ -7623,6 +8055,8 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				requeteApi.addVars("paiementDescription");
 			if(!Objects.equals(paiementDate, original.getPaiementDate()))
 				requeteApi.addVars("paiementDate");
+			if(!Objects.equals(paiementAnnee, original.getPaiementAnnee()))
+				requeteApi.addVars("paiementAnnee");
 			if(!Objects.equals(paiementMontant, original.getPaiementMontant()))
 				requeteApi.addVars("paiementMontant");
 			if(!Objects.equals(paiementEspeces, original.getPaiementEspeces()))
@@ -7659,6 +8093,10 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				requeteApi.addVars("paiementProchain");
 			if(!Objects.equals(fraisMontantDu, original.getFraisMontantDu()))
 				requeteApi.addVars("fraisMontantDu");
+			if(!Objects.equals(fraisMontantPasse, original.getFraisMontantPasse()))
+				requeteApi.addVars("fraisMontantPasse");
+			if(!Objects.equals(fraisMontantNonPasse, original.getFraisMontantNonPasse()))
+				requeteApi.addVars("fraisMontantNonPasse");
 			if(!Objects.equals(fraisMontantFuture, original.getFraisMontantFuture()))
 				requeteApi.addVars("fraisMontantFuture");
 			if(!Objects.equals(paiementNomCourt, original.getPaiementNomCourt()))
@@ -7674,7 +8112,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), paiementCle, inscriptionCle, ecoleNumero, utilisateurCles, ecoleCle, ecoleAddresse, ecoleNumeroTelephone, anneeCle, sessionCle, ageCle, blocCle, enfantCle, mereCles, pereCles, gardienCles, enfantNomCompletPrefere, enfantDateNaissance, mereNomCompletPrefere, pereNomCompletPrefere, ecoleNom, ecoleNomComplet, ecoleEmplacement, anneeDebut, anneeFin, saisonDateDebut, anneeFraisInscription, sessionDateDebut, sessionDateFin, ageDebut, ageFin, blocHeureDebut, blocHeureFin, blocPrixParMois, blocPrixTotal, inscriptionPaimentChaqueMois, paiementDescription, paiementDate, paiementMontant, paiementEspeces, paiementCheque, paiementECheck, paiementSysteme, paiementType, paiementPar, transactionId, customerProfileId, transactionStatus, paiementRecu, fraisMontant, fraisPremierDernier, fraisInscription, fraisMois, fraisRetard, paiementProchain, fraisMontantDu, fraisMontantFuture, paiementNomCourt, paiementNomComplet);
+		return Objects.hash(super.hashCode(), paiementCle, inscriptionCle, ecoleNumero, utilisateurCles, ecoleCle, ecoleAddresse, ecoleNumeroTelephone, anneeCle, sessionCle, ageCle, blocCle, enfantCle, mereCles, pereCles, gardienCles, enfantNomCompletPrefere, enfantDateNaissance, mereNomCompletPrefere, pereNomCompletPrefere, ecoleNom, ecoleNomComplet, ecoleEmplacement, anneeDebut, anneeFin, saisonDateDebut, anneeFraisInscription, sessionDateDebut, sessionDateFin, ageDebut, ageFin, blocHeureDebut, blocHeureFin, blocPrixParMois, blocPrixTotal, inscriptionPaimentChaqueMois, paiementDescription, paiementDate, paiementAnnee, paiementMontant, paiementEspeces, paiementCheque, paiementECheck, paiementSysteme, paiementType, paiementPar, transactionId, customerProfileId, transactionStatus, paiementRecu, fraisMontant, fraisPremierDernier, fraisInscription, fraisMois, fraisRetard, paiementProchain, fraisMontantDu, fraisMontantPasse, fraisMontantNonPasse, fraisMontantFuture, paiementNomCourt, paiementNomComplet);
 	}
 
 	////////////
@@ -7725,6 +8163,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				&& Objects.equals( inscriptionPaimentChaqueMois, that.inscriptionPaimentChaqueMois )
 				&& Objects.equals( paiementDescription, that.paiementDescription )
 				&& Objects.equals( paiementDate, that.paiementDate )
+				&& Objects.equals( paiementAnnee, that.paiementAnnee )
 				&& Objects.equals( paiementMontant, that.paiementMontant )
 				&& Objects.equals( paiementEspeces, that.paiementEspeces )
 				&& Objects.equals( paiementCheque, that.paiementCheque )
@@ -7743,6 +8182,8 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				&& Objects.equals( fraisRetard, that.fraisRetard )
 				&& Objects.equals( paiementProchain, that.paiementProchain )
 				&& Objects.equals( fraisMontantDu, that.fraisMontantDu )
+				&& Objects.equals( fraisMontantPasse, that.fraisMontantPasse )
+				&& Objects.equals( fraisMontantNonPasse, that.fraisMontantNonPasse )
 				&& Objects.equals( fraisMontantFuture, that.fraisMontantFuture )
 				&& Objects.equals( paiementNomCourt, that.paiementNomCourt )
 				&& Objects.equals( paiementNomComplet, that.paiementNomComplet );
@@ -7793,6 +8234,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		sb.append( ", inscriptionPaimentChaqueMois: " ).append(inscriptionPaimentChaqueMois);
 		sb.append( ", paiementDescription: \"" ).append(paiementDescription).append( "\"" );
 		sb.append( ", paiementDate: " ).append(paiementDate);
+		sb.append( ", paiementAnnee: " ).append(paiementAnnee);
 		sb.append( ", paiementMontant: " ).append(paiementMontant);
 		sb.append( ", paiementEspeces: " ).append(paiementEspeces);
 		sb.append( ", paiementCheque: " ).append(paiementCheque);
@@ -7811,6 +8253,8 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		sb.append( ", fraisRetard: " ).append(fraisRetard);
 		sb.append( ", paiementProchain: " ).append(paiementProchain);
 		sb.append( ", fraisMontantDu: " ).append(fraisMontantDu);
+		sb.append( ", fraisMontantPasse: " ).append(fraisMontantPasse);
+		sb.append( ", fraisMontantNonPasse: " ).append(fraisMontantNonPasse);
 		sb.append( ", fraisMontantFuture: " ).append(fraisMontantFuture);
 		sb.append( ", paiementNomCourt: \"" ).append(paiementNomCourt).append( "\"" );
 		sb.append( ", paiementNomComplet: \"" ).append(paiementNomComplet).append( "\"" );

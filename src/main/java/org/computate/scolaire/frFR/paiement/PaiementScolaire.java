@@ -820,6 +820,19 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
+	 * Var.enUS: paymentYear
+	 * Indexe: true
+	 * Stocke: true
+	 * r: paiementDate
+	 * r.enUS: paymentDate
+	 */                
+	protected void _paiementAnnee(Couverture<Integer> c) {
+		if(paiementDate != null)
+			c.o(paiementDate.getYear());
+	}
+
+	/**
+	 * {@inheritDoc}
 	 * Var.enUS: paymentAmount
 	 * Indexe: true
 	 * Stocke: true
@@ -1078,6 +1091,22 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
+	 * r: ConfigSite
+	 * r.enUS: SiteConfig
+	 * r: configSite
+	 * r.enUS: siteConfig
+	 * r: requeteSite
+	 * r.enUS: siteRequest
+	 */                    
+	protected void _now(Couverture<LocalDate> c) {
+		ConfigSite configSite = requeteSite_.getConfigSite_();
+		ZoneId zoneId = ZoneId.of(configSite.getSiteZone());
+		LocalDate now = LocalDate.now(zoneId);
+		c.o(now);
+	}
+
+	/**
+	 * {@inheritDoc}
 	 * Var.enUS: paymentNext
 	 * Indexe: true
 	 * Stocke: true
@@ -1114,8 +1143,6 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 */                   
 	protected void _paiementProchain(Couverture<LocalDate> c) {
 		ConfigSite configSite = requeteSite_.getConfigSite_();
-		ZoneId zoneId = ZoneId.of(configSite.getSiteZone());
-		LocalDate now = LocalDate.now(zoneId);
 		Integer paiementJour = configSite.getPaiementJour();
 		c.o(LocalDate.now().getDayOfMonth() < paiementJour ? now.withDayOfMonth(paiementJour) : now.plusMonths(1).withDayOfMonth(paiementJour));
 	}
@@ -1160,12 +1187,97 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * r.enUS: siteConfig
 	 */                   
 	protected void _fraisMontantDu(Couverture<BigDecimal> c) {
-		ConfigSite configSite = requeteSite_.getConfigSite_();
-		ZoneId zoneId = ZoneId.of(configSite.getSiteZone());
-		LocalDate now = LocalDate.now(zoneId);
 		if(fraisMontant != null && (fraisInscription && paiementDate.compareTo(now.plusDays(15)) <= 0
 				|| fraisPremierDernier && paiementDate.compareTo(now.plusDays(15)) <= 0
 				|| paiementDate != null && paiementDate.compareTo(now.plusDays(15)) <= 0 && paiementDate.compareTo(now.minusDays(1)) >= 0) && paiementDate.compareTo(paiementProchain.minusMonths(1)) > 0 && paiementDate.compareTo(paiementProchain) <= 0)
+			c.o(fraisMontant);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: chargeAmountPassed
+	 * Indexe: true
+	 * Stocke: true
+	 * Definir: true
+	 * Facet: sum
+	 * Modifier: false
+	 * NomAffichage.frFR: frais montant du passé
+	 * NomAffichage.enUS: charge amount passed
+	 * r: requeteSite
+	 * r.enUS: siteRequest
+	 * r: ConfigSite
+	 * r.enUS: SiteConfig
+	 * r: fraisMontant
+	 * r.enUS: chargeAmount
+	 * r: paiementDate
+	 * r.enUS: paymentDate
+	 * r: PaiementJour
+	 * r.enUS: PaymentDay
+	 * r: paiementJour
+	 * r.enUS: paymentDay
+	 * r: paiementProchain
+	 * r.enUS: paymentNext
+	 * r: PaiementProchain
+	 * r.enUS: PaymentNext
+	 * r: fraisPremierDernier
+	 * r.enUS: chargeFirstLast
+	 * r: fraisInscription
+	 * r.enUS: chargeEnrollment
+	 * r: PaiementJour
+	 * r.enUS: PaymentDay
+	 * r: paiementJour
+	 * r.enUS: paymentDay
+	 * r: ConfigSite
+	 * r.enUS: SiteConfig
+	 * r: configSite
+	 * r.enUS: siteConfig
+	 */                   
+	protected void _fraisMontantPasse(Couverture<BigDecimal> c) {
+		if(fraisMontant != null && paiementDate != null && paiementDate.compareTo(now) < 0)
+			c.o(fraisMontant);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: chargeAmountNotPassed
+	 * Indexe: true
+	 * Stocke: true
+	 * Definir: true
+	 * Facet: sum
+	 * Modifier: false
+	 * NomAffichage.frFR: frais montant pas du passé
+	 * NomAffichage.enUS: charge amount not passed
+	 * r: requeteSite
+	 * r.enUS: siteRequest
+	 * r: ConfigSite
+	 * r.enUS: SiteConfig
+	 * r: fraisMontant
+	 * r.enUS: chargeAmount
+	 * r: paiementDate
+	 * r.enUS: paymentDate
+	 * r: PaiementJour
+	 * r.enUS: PaymentDay
+	 * r: paiementJour
+	 * r.enUS: paymentDay
+	 * r: paiementProchain
+	 * r.enUS: paymentNext
+	 * r: PaiementProchain
+	 * r.enUS: PaymentNext
+	 * r: fraisPremierDernier
+	 * r.enUS: chargeFirstLast
+	 * r: fraisInscription
+	 * r.enUS: chargeEnrollment
+	 * r: PaiementJour
+	 * r.enUS: PaymentDay
+	 * r: paiementJour
+	 * r.enUS: paymentDay
+	 * r: ConfigSite
+	 * r.enUS: SiteConfig
+	 * r: configSite
+	 * r.enUS: siteConfig
+	 */                   
+	protected void _fraisMontantNonPasse(Couverture<BigDecimal> c) {
+		if(fraisMontant != null && paiementDate != null && paiementDate.compareTo(now) >= 0)
 			c.o(fraisMontant);
 	}
 
@@ -1197,9 +1309,6 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * r.enUS: chargeEnrollment
 	 */                  
 	protected void _fraisMontantFuture(Couverture<BigDecimal> c) {
-		ConfigSite configSite = requeteSite_.getConfigSite_();
-		ZoneId zoneId = ZoneId.of(configSite.getSiteZone());
-		LocalDate now = LocalDate.now(zoneId);
 		if(fraisMontant != null && paiementDate != null 
 				&& paiementDate.compareTo(now.plusDays(15)) > 0)
 //				&& paiementDate.compareTo(paiementProchain) > 0)

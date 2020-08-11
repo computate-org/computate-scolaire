@@ -80,43 +80,41 @@ public abstract class HtmlPartGenPageGen<DEV> extends ClusterPage {
 		return (HtmlPartGenPage)this;
 	}
 
-	//////////////
-	// htmlPart //
-	//////////////
+	///////////////
+	// htmlPart_ //
+	///////////////
 
-	/**	 The entity htmlPart
+	/**	 The entity htmlPart_
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected HtmlPart htmlPart;
+	protected HtmlPart htmlPart_;
 	@JsonIgnore
-	public Wrap<HtmlPart> htmlPartWrap = new Wrap<HtmlPart>().p(this).c(HtmlPart.class).var("htmlPart").o(htmlPart);
+	public Wrap<HtmlPart> htmlPart_Wrap = new Wrap<HtmlPart>().p(this).c(HtmlPart.class).var("htmlPart_").o(htmlPart_);
 
-	/**	<br/> The entity htmlPart
+	/**	<br/> The entity htmlPart_
 	 *  is defined as null before being initialized. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.html.part.HtmlPartGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:htmlPart">Find the entity htmlPart in Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.html.part.HtmlPartGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:htmlPart_">Find the entity htmlPart_ in Solr</a>
 	 * <br/>
 	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
-	protected abstract void _htmlPart(Wrap<HtmlPart> c);
+	protected abstract void _htmlPart_(Wrap<HtmlPart> c);
 
-	public HtmlPart getHtmlPart() {
-		return htmlPart;
+	public HtmlPart getHtmlPart_() {
+		return htmlPart_;
 	}
 
-	public void setHtmlPart(HtmlPart htmlPart) {
-		this.htmlPart = htmlPart;
-		this.htmlPartWrap.alreadyInitialized = true;
+	public void setHtmlPart_(HtmlPart htmlPart_) {
+		this.htmlPart_ = htmlPart_;
+		this.htmlPart_Wrap.alreadyInitialized = true;
 	}
-	protected HtmlPartGenPage htmlPartInit() {
-		if(!htmlPartWrap.alreadyInitialized) {
-			_htmlPart(htmlPartWrap);
-			if(htmlPart == null)
-				setHtmlPart(htmlPartWrap.o);
+	protected HtmlPartGenPage htmlPart_Init() {
+		if(!htmlPart_Wrap.alreadyInitialized) {
+			_htmlPart_(htmlPart_Wrap);
+			if(htmlPart_ == null)
+				setHtmlPart_(htmlPart_Wrap.o);
 		}
-		if(htmlPart != null)
-			htmlPart.initDeepForClass(siteRequest_);
-		htmlPartWrap.alreadyInitialized(true);
+		htmlPart_Wrap.alreadyInitialized(true);
 		return (HtmlPartGenPage)this;
 	}
 
@@ -142,7 +140,7 @@ public abstract class HtmlPartGenPageGen<DEV> extends ClusterPage {
 
 	public void initHtmlPartGenPage() {
 		listHtmlPartInit();
-		htmlPartInit();
+		htmlPart_Init();
 	}
 
 	@Override public void initDeepForClass(SiteRequestEnUS siteRequest_) {
@@ -157,8 +155,6 @@ public abstract class HtmlPartGenPageGen<DEV> extends ClusterPage {
 			super.siteRequestClusterPage(siteRequest_);
 		if(listHtmlPart != null)
 			listHtmlPart.setSiteRequest_(siteRequest_);
-		if(htmlPart != null)
-			htmlPart.setSiteRequest_(siteRequest_);
 	}
 
 	public void siteRequestForClass(SiteRequestEnUS siteRequest_) {
@@ -187,8 +183,8 @@ public abstract class HtmlPartGenPageGen<DEV> extends ClusterPage {
 		switch(var) {
 			case "listHtmlPart":
 				return oHtmlPartGenPage.listHtmlPart;
-			case "htmlPart":
-				return oHtmlPartGenPage.htmlPart;
+			case "htmlPart_":
+				return oHtmlPartGenPage.htmlPart_;
 			default:
 				return super.obtainClusterPage(var);
 		}

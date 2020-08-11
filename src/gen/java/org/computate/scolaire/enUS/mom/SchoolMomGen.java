@@ -256,7 +256,7 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 				.fg();
 
 		} else {
-			sx(htmEnrollmentKeys());
+			e("span").a("class", "varSchoolMom", pk, "EnrollmentKeys ").f().sx(htmEnrollmentKeys()).g("span");
 		}
 	}
 
@@ -1142,7 +1142,7 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 			.fg();
 
 		} else {
-			sx(htmPersonFirstName());
+			e("span").a("class", "varSchoolMom", pk, "PersonFirstName ").f().sx(htmPersonFirstName()).g("span");
 		}
 	}
 
@@ -1274,7 +1274,7 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 			.fg();
 
 		} else {
-			sx(htmPersonFirstNamePreferred());
+			e("span").a("class", "varSchoolMom", pk, "PersonFirstNamePreferred ").f().sx(htmPersonFirstNamePreferred()).g("span");
 		}
 	}
 
@@ -1406,7 +1406,7 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 			.fg();
 
 		} else {
-			sx(htmFamilyName());
+			e("span").a("class", "varSchoolMom", pk, "FamilyName ").f().sx(htmFamilyName()).g("span");
 		}
 	}
 
@@ -1724,7 +1724,7 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 			.fg();
 
 		} else {
-			sx(htmPersonOccupation());
+			e("span").a("class", "varSchoolMom", pk, "PersonOccupation ").f().sx(htmPersonOccupation()).g("span");
 		}
 	}
 
@@ -1856,7 +1856,7 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 			.fg();
 
 		} else {
-			sx(htmPersonPhoneNumber());
+			e("span").a("class", "varSchoolMom", pk, "PersonPhoneNumber ").f().sx(htmPersonPhoneNumber()).g("span");
 		}
 	}
 
@@ -1988,7 +1988,7 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 			.fg();
 
 		} else {
-			sx(htmPersonEmail());
+			e("span").a("class", "varSchoolMom", pk, "PersonEmail ").f().sx(htmPersonEmail()).g("span");
 		}
 	}
 
@@ -2200,7 +2200,7 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 			}
 
 		} else {
-			sx(htmPersonSms());
+			e("span").a("class", "varSchoolMom", pk, "PersonSms ").f().sx(htmPersonSms()).g("span");
 		}
 	}
 
@@ -2332,7 +2332,7 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 			}
 
 		} else {
-			sx(htmPersonReceiveEmail());
+			e("span").a("class", "varSchoolMom", pk, "PersonReceiveEmail ").f().sx(htmPersonReceiveEmail()).g("span");
 		}
 	}
 
@@ -2464,7 +2464,7 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 			}
 
 		} else {
-			sx(htmPersonEmergencyContact());
+			e("span").a("class", "varSchoolMom", pk, "PersonEmergencyContact ").f().sx(htmPersonEmergencyContact()).g("span");
 		}
 	}
 
@@ -2596,7 +2596,7 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 			}
 
 		} else {
-			sx(htmPersonPickup());
+			e("span").a("class", "varSchoolMom", pk, "PersonPickup ").f().sx(htmPersonPickup()).g("span");
 		}
 	}
 
@@ -2704,7 +2704,7 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 				fg();
 			g("div");
 		} else {
-			sx(htmPhoto());
+			e("span").a("class", "varSchoolMom", pk, "Photo ").f().sx(htmPhoto()).g("span");
 		}
 	}
 
@@ -3651,20 +3651,46 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 		Object o = Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
 		if(o != null && o instanceof SchoolMom) {
 			SchoolMom original = (SchoolMom)o;
+			if(!Objects.equals(momKey, original.getMomKey()))
+				apiRequest.addVars("momKey");
 			if(!Objects.equals(enrollmentKeys, original.getEnrollmentKeys()))
 				apiRequest.addVars("enrollmentKeys");
+			if(!Objects.equals(familySort, original.getFamilySort()))
+				apiRequest.addVars("familySort");
+			if(!Objects.equals(schoolSort, original.getSchoolSort()))
+				apiRequest.addVars("schoolSort");
+			if(!Objects.equals(userKeys, original.getUserKeys()))
+				apiRequest.addVars("userKeys");
+			if(!Objects.equals(schoolKeys, original.getSchoolKeys()))
+				apiRequest.addVars("schoolKeys");
+			if(!Objects.equals(yearKeys, original.getYearKeys()))
+				apiRequest.addVars("yearKeys");
+			if(!Objects.equals(seasonKeys, original.getSeasonKeys()))
+				apiRequest.addVars("seasonKeys");
+			if(!Objects.equals(sessionKeys, original.getSessionKeys()))
+				apiRequest.addVars("sessionKeys");
+			if(!Objects.equals(ageKeys, original.getAgeKeys()))
+				apiRequest.addVars("ageKeys");
 			if(!Objects.equals(personFirstName, original.getPersonFirstName()))
 				apiRequest.addVars("personFirstName");
 			if(!Objects.equals(personFirstNamePreferred, original.getPersonFirstNamePreferred()))
 				apiRequest.addVars("personFirstNamePreferred");
 			if(!Objects.equals(familyName, original.getFamilyName()))
 				apiRequest.addVars("familyName");
+			if(!Objects.equals(personCompleteName, original.getPersonCompleteName()))
+				apiRequest.addVars("personCompleteName");
+			if(!Objects.equals(personCompleteNamePreferred, original.getPersonCompleteNamePreferred()))
+				apiRequest.addVars("personCompleteNamePreferred");
+			if(!Objects.equals(personFormalName, original.getPersonFormalName()))
+				apiRequest.addVars("personFormalName");
 			if(!Objects.equals(personOccupation, original.getPersonOccupation()))
 				apiRequest.addVars("personOccupation");
 			if(!Objects.equals(personPhoneNumber, original.getPersonPhoneNumber()))
 				apiRequest.addVars("personPhoneNumber");
 			if(!Objects.equals(personEmail, original.getPersonEmail()))
 				apiRequest.addVars("personEmail");
+			if(!Objects.equals(personRelation, original.getPersonRelation()))
+				apiRequest.addVars("personRelation");
 			if(!Objects.equals(personSms, original.getPersonSms()))
 				apiRequest.addVars("personSms");
 			if(!Objects.equals(personReceiveEmail, original.getPersonReceiveEmail()))
@@ -3675,6 +3701,8 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 				apiRequest.addVars("personPickup");
 			if(!Objects.equals(photo, original.getPhoto()))
 				apiRequest.addVars("photo");
+			if(!Objects.equals(momCompleteName, original.getMomCompleteName()))
+				apiRequest.addVars("momCompleteName");
 			super.apiRequestCluster();
 		}
 	}
@@ -3684,7 +3712,7 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), enrollmentKeys, personFirstName, personFirstNamePreferred, familyName, personOccupation, personPhoneNumber, personEmail, personSms, personReceiveEmail, personEmergencyContact, personPickup, photo);
+		return Objects.hash(super.hashCode(), momKey, enrollmentKeys, familySort, schoolSort, userKeys, schoolKeys, yearKeys, seasonKeys, sessionKeys, ageKeys, personFirstName, personFirstNamePreferred, familyName, personCompleteName, personCompleteNamePreferred, personFormalName, personOccupation, personPhoneNumber, personEmail, personRelation, personSms, personReceiveEmail, personEmergencyContact, personPickup, photo, momCompleteName);
 	}
 
 	////////////
@@ -3698,18 +3726,32 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 			return false;
 		SchoolMom that = (SchoolMom)o;
 		return super.equals(o)
+				&& Objects.equals( momKey, that.momKey )
 				&& Objects.equals( enrollmentKeys, that.enrollmentKeys )
+				&& Objects.equals( familySort, that.familySort )
+				&& Objects.equals( schoolSort, that.schoolSort )
+				&& Objects.equals( userKeys, that.userKeys )
+				&& Objects.equals( schoolKeys, that.schoolKeys )
+				&& Objects.equals( yearKeys, that.yearKeys )
+				&& Objects.equals( seasonKeys, that.seasonKeys )
+				&& Objects.equals( sessionKeys, that.sessionKeys )
+				&& Objects.equals( ageKeys, that.ageKeys )
 				&& Objects.equals( personFirstName, that.personFirstName )
 				&& Objects.equals( personFirstNamePreferred, that.personFirstNamePreferred )
 				&& Objects.equals( familyName, that.familyName )
+				&& Objects.equals( personCompleteName, that.personCompleteName )
+				&& Objects.equals( personCompleteNamePreferred, that.personCompleteNamePreferred )
+				&& Objects.equals( personFormalName, that.personFormalName )
 				&& Objects.equals( personOccupation, that.personOccupation )
 				&& Objects.equals( personPhoneNumber, that.personPhoneNumber )
 				&& Objects.equals( personEmail, that.personEmail )
+				&& Objects.equals( personRelation, that.personRelation )
 				&& Objects.equals( personSms, that.personSms )
 				&& Objects.equals( personReceiveEmail, that.personReceiveEmail )
 				&& Objects.equals( personEmergencyContact, that.personEmergencyContact )
 				&& Objects.equals( personPickup, that.personPickup )
-				&& Objects.equals( photo, that.photo );
+				&& Objects.equals( photo, that.photo )
+				&& Objects.equals( momCompleteName, that.momCompleteName );
 	}
 
 	//////////////
@@ -3720,18 +3762,32 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString() + "\n");
 		sb.append("SchoolMom { ");
-		sb.append( "enrollmentKeys: " ).append(enrollmentKeys);
+		sb.append( "momKey: " ).append(momKey);
+		sb.append( ", enrollmentKeys: " ).append(enrollmentKeys);
+		sb.append( ", familySort: " ).append(familySort);
+		sb.append( ", schoolSort: " ).append(schoolSort);
+		sb.append( ", userKeys: " ).append(userKeys);
+		sb.append( ", schoolKeys: " ).append(schoolKeys);
+		sb.append( ", yearKeys: " ).append(yearKeys);
+		sb.append( ", seasonKeys: " ).append(seasonKeys);
+		sb.append( ", sessionKeys: " ).append(sessionKeys);
+		sb.append( ", ageKeys: " ).append(ageKeys);
 		sb.append( ", personFirstName: \"" ).append(personFirstName).append( "\"" );
 		sb.append( ", personFirstNamePreferred: \"" ).append(personFirstNamePreferred).append( "\"" );
 		sb.append( ", familyName: \"" ).append(familyName).append( "\"" );
+		sb.append( ", personCompleteName: \"" ).append(personCompleteName).append( "\"" );
+		sb.append( ", personCompleteNamePreferred: \"" ).append(personCompleteNamePreferred).append( "\"" );
+		sb.append( ", personFormalName: \"" ).append(personFormalName).append( "\"" );
 		sb.append( ", personOccupation: \"" ).append(personOccupation).append( "\"" );
 		sb.append( ", personPhoneNumber: \"" ).append(personPhoneNumber).append( "\"" );
 		sb.append( ", personEmail: \"" ).append(personEmail).append( "\"" );
+		sb.append( ", personRelation: \"" ).append(personRelation).append( "\"" );
 		sb.append( ", personSms: " ).append(personSms);
 		sb.append( ", personReceiveEmail: " ).append(personReceiveEmail);
 		sb.append( ", personEmergencyContact: " ).append(personEmergencyContact);
 		sb.append( ", personPickup: " ).append(personPickup);
 		sb.append( ", photo: \"" ).append(photo).append( "\"" );
+		sb.append( ", momCompleteName: \"" ).append(momCompleteName).append( "\"" );
 		sb.append(" }");
 		return sb.toString();
 	}

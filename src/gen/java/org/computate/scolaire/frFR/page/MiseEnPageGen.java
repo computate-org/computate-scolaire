@@ -2854,6 +2854,46 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		Object o = Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
 		if(o != null && o instanceof MiseEnPage) {
 			MiseEnPage original = (MiseEnPage)o;
+			if(!Objects.equals(pageVisibleAuxBots, original.getPageVisibleAuxBots()))
+				requeteApi.addVars("pageVisibleAuxBots");
+			if(!Objects.equals(pageH1, original.getPageH1()))
+				requeteApi.addVars("pageH1");
+			if(!Objects.equals(pageH2, original.getPageH2()))
+				requeteApi.addVars("pageH2");
+			if(!Objects.equals(pageH3, original.getPageH3()))
+				requeteApi.addVars("pageH3");
+			if(!Objects.equals(pageTitre, original.getPageTitre()))
+				requeteApi.addVars("pageTitre");
+			if(!Objects.equals(pageUri, original.getPageUri()))
+				requeteApi.addVars("pageUri");
+			if(!Objects.equals(pageUris, original.getPageUris()))
+				requeteApi.addVars("pageUris");
+			if(!Objects.equals(pageUrl, original.getPageUrl()))
+				requeteApi.addVars("pageUrl");
+			if(!Objects.equals(pageImageUri, original.getPageImageUri()))
+				requeteApi.addVars("pageImageUri");
+			if(!Objects.equals(pageImageUrl, original.getPageImageUrl()))
+				requeteApi.addVars("pageImageUrl");
+			if(!Objects.equals(pageVideoId, original.getPageVideoId()))
+				requeteApi.addVars("pageVideoId");
+			if(!Objects.equals(pageVideoUrl, original.getPageVideoUrl()))
+				requeteApi.addVars("pageVideoUrl");
+			if(!Objects.equals(pageVideoUrlEmbed, original.getPageVideoUrlEmbed()))
+				requeteApi.addVars("pageVideoUrlEmbed");
+			if(!Objects.equals(pageImageLargeur, original.getPageImageLargeur()))
+				requeteApi.addVars("pageImageLargeur");
+			if(!Objects.equals(pageImageHauteur, original.getPageImageHauteur()))
+				requeteApi.addVars("pageImageHauteur");
+			if(!Objects.equals(pageImageTypeContenu, original.getPageImageTypeContenu()))
+				requeteApi.addVars("pageImageTypeContenu");
+			if(!Objects.equals(pageTypeContenu, original.getPageTypeContenu()))
+				requeteApi.addVars("pageTypeContenu");
+			if(!Objects.equals(pageCree, original.getPageCree()))
+				requeteApi.addVars("pageCree");
+			if(!Objects.equals(pageMotsCles, original.getPageMotsCles()))
+				requeteApi.addVars("pageMotsCles");
+			if(!Objects.equals(pageDescription, original.getPageDescription()))
+				requeteApi.addVars("pageDescription");
 		}
 	}
 
@@ -2862,7 +2902,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash();
+		return Objects.hash(pageVisibleAuxBots, pageH1, pageH2, pageH3, pageTitre, pageUri, pageUris, pageUrl, pageImageUri, pageImageUrl, pageVideoId, pageVideoUrl, pageVideoUrlEmbed, pageImageLargeur, pageImageHauteur, pageImageTypeContenu, pageTypeContenu, pageCree, pageMotsCles, pageDescription);
 	}
 
 	////////////
@@ -2875,7 +2915,26 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		if(!(o instanceof MiseEnPage))
 			return false;
 		MiseEnPage that = (MiseEnPage)o;
-		return true;
+		return Objects.equals( pageVisibleAuxBots, that.pageVisibleAuxBots )
+				&& Objects.equals( pageH1, that.pageH1 )
+				&& Objects.equals( pageH2, that.pageH2 )
+				&& Objects.equals( pageH3, that.pageH3 )
+				&& Objects.equals( pageTitre, that.pageTitre )
+				&& Objects.equals( pageUri, that.pageUri )
+				&& Objects.equals( pageUris, that.pageUris )
+				&& Objects.equals( pageUrl, that.pageUrl )
+				&& Objects.equals( pageImageUri, that.pageImageUri )
+				&& Objects.equals( pageImageUrl, that.pageImageUrl )
+				&& Objects.equals( pageVideoId, that.pageVideoId )
+				&& Objects.equals( pageVideoUrl, that.pageVideoUrl )
+				&& Objects.equals( pageVideoUrlEmbed, that.pageVideoUrlEmbed )
+				&& Objects.equals( pageImageLargeur, that.pageImageLargeur )
+				&& Objects.equals( pageImageHauteur, that.pageImageHauteur )
+				&& Objects.equals( pageImageTypeContenu, that.pageImageTypeContenu )
+				&& Objects.equals( pageTypeContenu, that.pageTypeContenu )
+				&& Objects.equals( pageCree, that.pageCree )
+				&& Objects.equals( pageMotsCles, that.pageMotsCles )
+				&& Objects.equals( pageDescription, that.pageDescription );
 	}
 
 	//////////////
@@ -2885,6 +2944,26 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	@Override public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("MiseEnPage { ");
+		sb.append( "pageVisibleAuxBots: " ).append(pageVisibleAuxBots);
+		sb.append( ", pageH1: \"" ).append(pageH1).append( "\"" );
+		sb.append( ", pageH2: \"" ).append(pageH2).append( "\"" );
+		sb.append( ", pageH3: \"" ).append(pageH3).append( "\"" );
+		sb.append( ", pageTitre: \"" ).append(pageTitre).append( "\"" );
+		sb.append( ", pageUri: \"" ).append(pageUri).append( "\"" );
+		sb.append( ", pageUris: " ).append(pageUris);
+		sb.append( ", pageUrl: \"" ).append(pageUrl).append( "\"" );
+		sb.append( ", pageImageUri: \"" ).append(pageImageUri).append( "\"" );
+		sb.append( ", pageImageUrl: \"" ).append(pageImageUrl).append( "\"" );
+		sb.append( ", pageVideoId: \"" ).append(pageVideoId).append( "\"" );
+		sb.append( ", pageVideoUrl: \"" ).append(pageVideoUrl).append( "\"" );
+		sb.append( ", pageVideoUrlEmbed: \"" ).append(pageVideoUrlEmbed).append( "\"" );
+		sb.append( ", pageImageLargeur: " ).append(pageImageLargeur);
+		sb.append( ", pageImageHauteur: " ).append(pageImageHauteur);
+		sb.append( ", pageImageTypeContenu: \"" ).append(pageImageTypeContenu).append( "\"" );
+		sb.append( ", pageTypeContenu: \"" ).append(pageTypeContenu).append( "\"" );
+		sb.append( ", pageCree: " ).append(pageCree);
+		sb.append( ", pageMotsCles: \"" ).append(pageMotsCles).append( "\"" );
+		sb.append( ", pageDescription: \"" ).append(pageDescription).append( "\"" );
 		sb.append(" }");
 		return sb.toString();
 	}

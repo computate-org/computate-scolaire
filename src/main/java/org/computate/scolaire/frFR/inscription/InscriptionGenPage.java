@@ -90,7 +90,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 	protected void _listeInscriptionScolaire(Couverture<ListeRecherche<InscriptionScolaire>> c) {
 	}
 
-	protected void _inscriptionScolaire(Couverture<InscriptionScolaire> c) {
+	protected void _inscriptionScolaire_(Couverture<InscriptionScolaire> c) {
 		if(listeInscriptionScolaire != null && listeInscriptionScolaire.size() == 1)
 			c.o(listeInscriptionScolaire.get(0));
 	}
@@ -100,8 +100,8 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageH2(Couverture<String> c) {
-		if(inscriptionScolaire != null && inscriptionScolaire.getInscriptionNomComplet() != null)
-			c.o(inscriptionScolaire.getInscriptionNomComplet());
+		if(inscriptionScolaire_ != null && inscriptionScolaire_.getInscriptionNomComplet() != null)
+			c.o(inscriptionScolaire_.getInscriptionNomComplet());
 	}
 
 	@Override protected void _pageH3(Couverture<String> c) {
@@ -109,9 +109,9 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageTitre(Couverture<String> c) {
-		if(inscriptionScolaire != null && inscriptionScolaire.getInscriptionNomComplet() != null)
-			c.o(inscriptionScolaire.getInscriptionNomComplet());
-		else if(inscriptionScolaire != null)
+		if(inscriptionScolaire_ != null && inscriptionScolaire_.getInscriptionNomComplet() != null)
+			c.o(inscriptionScolaire_.getInscriptionNomComplet());
+		else if(inscriptionScolaire_ != null)
 			c.o("inscriptions");
 		else if(listeInscriptionScolaire == null || listeInscriptionScolaire.size() == 0)
 			c.o("aucune inscription trouvée");
@@ -1049,7 +1049,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-blue-gray ")
-								.a("onclick", "putcopieInscriptionScolaire($('#putcopieInscriptionScolaireForm'), ", inscriptionScolaire == null ? "null" : inscriptionScolaire.getPk(), "); ")
+								.a("onclick", "putcopieInscriptionScolaire($('#putcopieInscriptionScolaireForm'), ", inscriptionScolaire_ == null ? "null" : inscriptionScolaire_.getPk(), "); ")
 								.f().sx("Dupliquer inscriptions")
 							.g("button");
 
@@ -1083,7 +1083,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 							} g("form");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-blue-gray ")
-								.a("onclick", "patchInscriptionScolaire(null, $('#patchInscriptionScolaireFormulaireValeurs'), ", Optional.ofNullable(inscriptionScolaire).map(InscriptionScolaire::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
+								.a("onclick", "patchInscriptionScolaire(null, $('#patchInscriptionScolaireFormulaireValeurs'), ", Optional.ofNullable(inscriptionScolaire_).map(InscriptionScolaire::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
 								.f().sx("Modifier inscriptions")
 							.g("button");
 

@@ -52,7 +52,7 @@ public class ClusterGenPage extends ClusterGenPageGen<PageLayout> {
 	protected void _listCluster(Wrap<SearchList<Cluster>> c) {
 	}
 
-	protected void _cluster(Wrap<Cluster> c) {
+	protected void _cluster_(Wrap<Cluster> c) {
 		if(listCluster != null && listCluster.size() == 1)
 			c.o(listCluster.get(0));
 	}
@@ -70,9 +70,9 @@ public class ClusterGenPage extends ClusterGenPageGen<PageLayout> {
 	}
 
 	@Override protected void _pageTitle(Wrap<String> c) {
-		if(cluster != null && cluster.getObjectTitle() != null)
-			c.o(cluster.getObjectTitle());
-		else if(cluster != null)
+		if(cluster_ != null && cluster_.getObjectTitle() != null)
+			c.o(cluster_.getObjectTitle());
+		else if(cluster_ != null)
 			c.o("clusters");
 		else if(listCluster == null || listCluster.size() == 0)
 			c.o("no cluster found");
@@ -637,7 +637,7 @@ public class ClusterGenPage extends ClusterGenPageGen<PageLayout> {
 							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-gray ")
-								.a("onclick", "putcopyCluster($('#putcopyClusterForm'), ", cluster == null ? "null" : cluster.getPk(), "); ")
+								.a("onclick", "putcopyCluster($('#putcopyClusterForm'), ", cluster_ == null ? "null" : cluster_.getPk(), "); ")
 								.f().sx("Duplicate clusters")
 							.g("button");
 
@@ -671,7 +671,7 @@ public class ClusterGenPage extends ClusterGenPageGen<PageLayout> {
 							} g("form");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-gray ")
-								.a("onclick", "patchCluster(null, $('#patchClusterFormValues'), ", Optional.ofNullable(cluster).map(Cluster::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
+								.a("onclick", "patchCluster(null, $('#patchClusterFormValues'), ", Optional.ofNullable(cluster_).map(Cluster::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
 								.f().sx("Modify clusters")
 							.g("button");
 

@@ -80,43 +80,41 @@ public abstract class GardienGenPageGen<DEV> extends ClusterPage {
 		return (GardienGenPage)this;
 	}
 
-	/////////////////////
-	// gardienScolaire //
-	/////////////////////
+	//////////////////////
+	// gardienScolaire_ //
+	//////////////////////
 
-	/**	 L'entité gardienScolaire
+	/**	 L'entité gardienScolaire_
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected GardienScolaire gardienScolaire;
+	protected GardienScolaire gardienScolaire_;
 	@JsonIgnore
-	public Couverture<GardienScolaire> gardienScolaireCouverture = new Couverture<GardienScolaire>().p(this).c(GardienScolaire.class).var("gardienScolaire").o(gardienScolaire);
+	public Couverture<GardienScolaire> gardienScolaire_Couverture = new Couverture<GardienScolaire>().p(this).c(GardienScolaire.class).var("gardienScolaire_").o(gardienScolaire_);
 
-	/**	<br/> L'entité gardienScolaire
+	/**	<br/> L'entité gardienScolaire_
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.gardien.GardienGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:gardienScolaire">Trouver l'entité gardienScolaire dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.gardien.GardienGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:gardienScolaire_">Trouver l'entité gardienScolaire_ dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _gardienScolaire(Couverture<GardienScolaire> c);
+	protected abstract void _gardienScolaire_(Couverture<GardienScolaire> c);
 
-	public GardienScolaire getGardienScolaire() {
-		return gardienScolaire;
+	public GardienScolaire getGardienScolaire_() {
+		return gardienScolaire_;
 	}
 
-	public void setGardienScolaire(GardienScolaire gardienScolaire) {
-		this.gardienScolaire = gardienScolaire;
-		this.gardienScolaireCouverture.dejaInitialise = true;
+	public void setGardienScolaire_(GardienScolaire gardienScolaire_) {
+		this.gardienScolaire_ = gardienScolaire_;
+		this.gardienScolaire_Couverture.dejaInitialise = true;
 	}
-	protected GardienGenPage gardienScolaireInit() {
-		if(!gardienScolaireCouverture.dejaInitialise) {
-			_gardienScolaire(gardienScolaireCouverture);
-			if(gardienScolaire == null)
-				setGardienScolaire(gardienScolaireCouverture.o);
+	protected GardienGenPage gardienScolaire_Init() {
+		if(!gardienScolaire_Couverture.dejaInitialise) {
+			_gardienScolaire_(gardienScolaire_Couverture);
+			if(gardienScolaire_ == null)
+				setGardienScolaire_(gardienScolaire_Couverture.o);
 		}
-		if(gardienScolaire != null)
-			gardienScolaire.initLoinPourClasse(requeteSite_);
-		gardienScolaireCouverture.dejaInitialise(true);
+		gardienScolaire_Couverture.dejaInitialise(true);
 		return (GardienGenPage)this;
 	}
 
@@ -142,7 +140,7 @@ public abstract class GardienGenPageGen<DEV> extends ClusterPage {
 
 	public void initGardienGenPage() {
 		listeGardienScolaireInit();
-		gardienScolaireInit();
+		gardienScolaire_Init();
 	}
 
 	@Override public void initLoinPourClasse(RequeteSiteFrFR requeteSite_) {
@@ -157,8 +155,6 @@ public abstract class GardienGenPageGen<DEV> extends ClusterPage {
 			super.requeteSiteClusterPage(requeteSite_);
 		if(listeGardienScolaire != null)
 			listeGardienScolaire.setRequeteSite_(requeteSite_);
-		if(gardienScolaire != null)
-			gardienScolaire.setRequeteSite_(requeteSite_);
 	}
 
 	public void requeteSitePourClasse(RequeteSiteFrFR requeteSite_) {
@@ -187,8 +183,8 @@ public abstract class GardienGenPageGen<DEV> extends ClusterPage {
 		switch(var) {
 			case "listeGardienScolaire":
 				return oGardienGenPage.listeGardienScolaire;
-			case "gardienScolaire":
-				return oGardienGenPage.gardienScolaire;
+			case "gardienScolaire_":
+				return oGardienGenPage.gardienScolaire_;
 			default:
 				return super.obtenirClusterPage(var);
 		}

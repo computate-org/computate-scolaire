@@ -53,7 +53,7 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 	protected void _listSchoolYear(Wrap<SearchList<SchoolYear>> c) {
 	}
 
-	protected void _schoolYear(Wrap<SchoolYear> c) {
+	protected void _schoolYear_(Wrap<SchoolYear> c) {
 		if(listSchoolYear != null && listSchoolYear.size() == 1)
 			c.o(listSchoolYear.get(0));
 	}
@@ -63,8 +63,8 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageH2(Wrap<String> c) {
-		if(schoolYear != null && schoolYear.getYearCompleteName() != null)
-			c.o(schoolYear.getYearCompleteName());
+		if(schoolYear_ != null && schoolYear_.getYearCompleteName() != null)
+			c.o(schoolYear_.getYearCompleteName());
 	}
 
 	@Override protected void _pageH3(Wrap<String> c) {
@@ -72,9 +72,9 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageTitle(Wrap<String> c) {
-		if(schoolYear != null && schoolYear.getYearCompleteName() != null)
-			c.o(schoolYear.getYearCompleteName());
-		else if(schoolYear != null)
+		if(schoolYear_ != null && schoolYear_.getYearCompleteName() != null)
+			c.o(schoolYear_.getYearCompleteName());
+		else if(schoolYear_ != null)
 			c.o("years");
 		else if(listSchoolYear == null || listSchoolYear.size() == 0)
 			c.o("no year found");
@@ -720,7 +720,7 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-orange ")
-								.a("onclick", "putcopySchoolYear($('#putcopySchoolYearForm'), ", schoolYear == null ? "null" : schoolYear.getPk(), "); ")
+								.a("onclick", "putcopySchoolYear($('#putcopySchoolYearForm'), ", schoolYear_ == null ? "null" : schoolYear_.getPk(), "); ")
 								.f().sx("Duplicate years")
 							.g("button");
 
@@ -754,7 +754,7 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 							} g("form");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-orange ")
-								.a("onclick", "patchSchoolYear(null, $('#patchSchoolYearFormValues'), ", Optional.ofNullable(schoolYear).map(SchoolYear::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
+								.a("onclick", "patchSchoolYear(null, $('#patchSchoolYearFormValues'), ", Optional.ofNullable(schoolYear_).map(SchoolYear::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
 								.f().sx("Modify years")
 							.g("button");
 

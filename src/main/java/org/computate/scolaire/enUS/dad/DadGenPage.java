@@ -53,7 +53,7 @@ public class DadGenPage extends DadGenPageGen<ClusterPage> {
 	protected void _listSchoolDad(Wrap<SearchList<SchoolDad>> c) {
 	}
 
-	protected void _schoolDad(Wrap<SchoolDad> c) {
+	protected void _schoolDad_(Wrap<SchoolDad> c) {
 		if(listSchoolDad != null && listSchoolDad.size() == 1)
 			c.o(listSchoolDad.get(0));
 	}
@@ -63,8 +63,8 @@ public class DadGenPage extends DadGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageH2(Wrap<String> c) {
-		if(schoolDad != null && schoolDad.getDadCompleteName() != null)
-			c.o(schoolDad.getDadCompleteName());
+		if(schoolDad_ != null && schoolDad_.getDadCompleteName() != null)
+			c.o(schoolDad_.getDadCompleteName());
 	}
 
 	@Override protected void _pageH3(Wrap<String> c) {
@@ -72,9 +72,9 @@ public class DadGenPage extends DadGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageTitle(Wrap<String> c) {
-		if(schoolDad != null && schoolDad.getDadCompleteName() != null)
-			c.o(schoolDad.getDadCompleteName());
-		else if(schoolDad != null)
+		if(schoolDad_ != null && schoolDad_.getDadCompleteName() != null)
+			c.o(schoolDad_.getDadCompleteName());
+		else if(schoolDad_ != null)
 			c.o("dads");
 		else if(listSchoolDad == null || listSchoolDad.size() == 0)
 			c.o("no dad found");
@@ -747,7 +747,7 @@ public class DadGenPage extends DadGenPageGen<ClusterPage> {
 							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-light-blue ")
-								.a("onclick", "putcopySchoolDad($('#putcopySchoolDadForm'), ", schoolDad == null ? "null" : schoolDad.getPk(), "); ")
+								.a("onclick", "putcopySchoolDad($('#putcopySchoolDadForm'), ", schoolDad_ == null ? "null" : schoolDad_.getPk(), "); ")
 								.f().sx("Duplicate dads")
 							.g("button");
 
@@ -781,7 +781,7 @@ public class DadGenPage extends DadGenPageGen<ClusterPage> {
 							} g("form");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-light-blue ")
-								.a("onclick", "patchSchoolDad(null, $('#patchSchoolDadFormValues'), ", Optional.ofNullable(schoolDad).map(SchoolDad::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
+								.a("onclick", "patchSchoolDad(null, $('#patchSchoolDadFormValues'), ", Optional.ofNullable(schoolDad_).map(SchoolDad::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
 								.f().sx("Modify dads")
 							.g("button");
 

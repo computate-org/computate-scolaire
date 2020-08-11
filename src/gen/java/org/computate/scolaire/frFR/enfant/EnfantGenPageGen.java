@@ -80,43 +80,41 @@ public abstract class EnfantGenPageGen<DEV> extends ClusterPage {
 		return (EnfantGenPage)this;
 	}
 
-	////////////////////
-	// enfantScolaire //
-	////////////////////
+	/////////////////////
+	// enfantScolaire_ //
+	/////////////////////
 
-	/**	 L'entité enfantScolaire
+	/**	 L'entité enfantScolaire_
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected EnfantScolaire enfantScolaire;
+	protected EnfantScolaire enfantScolaire_;
 	@JsonIgnore
-	public Couverture<EnfantScolaire> enfantScolaireCouverture = new Couverture<EnfantScolaire>().p(this).c(EnfantScolaire.class).var("enfantScolaire").o(enfantScolaire);
+	public Couverture<EnfantScolaire> enfantScolaire_Couverture = new Couverture<EnfantScolaire>().p(this).c(EnfantScolaire.class).var("enfantScolaire_").o(enfantScolaire_);
 
-	/**	<br/> L'entité enfantScolaire
+	/**	<br/> L'entité enfantScolaire_
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:enfantScolaire">Trouver l'entité enfantScolaire dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.enfant.EnfantGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:enfantScolaire_">Trouver l'entité enfantScolaire_ dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _enfantScolaire(Couverture<EnfantScolaire> c);
+	protected abstract void _enfantScolaire_(Couverture<EnfantScolaire> c);
 
-	public EnfantScolaire getEnfantScolaire() {
-		return enfantScolaire;
+	public EnfantScolaire getEnfantScolaire_() {
+		return enfantScolaire_;
 	}
 
-	public void setEnfantScolaire(EnfantScolaire enfantScolaire) {
-		this.enfantScolaire = enfantScolaire;
-		this.enfantScolaireCouverture.dejaInitialise = true;
+	public void setEnfantScolaire_(EnfantScolaire enfantScolaire_) {
+		this.enfantScolaire_ = enfantScolaire_;
+		this.enfantScolaire_Couverture.dejaInitialise = true;
 	}
-	protected EnfantGenPage enfantScolaireInit() {
-		if(!enfantScolaireCouverture.dejaInitialise) {
-			_enfantScolaire(enfantScolaireCouverture);
-			if(enfantScolaire == null)
-				setEnfantScolaire(enfantScolaireCouverture.o);
+	protected EnfantGenPage enfantScolaire_Init() {
+		if(!enfantScolaire_Couverture.dejaInitialise) {
+			_enfantScolaire_(enfantScolaire_Couverture);
+			if(enfantScolaire_ == null)
+				setEnfantScolaire_(enfantScolaire_Couverture.o);
 		}
-		if(enfantScolaire != null)
-			enfantScolaire.initLoinPourClasse(requeteSite_);
-		enfantScolaireCouverture.dejaInitialise(true);
+		enfantScolaire_Couverture.dejaInitialise(true);
 		return (EnfantGenPage)this;
 	}
 
@@ -142,7 +140,7 @@ public abstract class EnfantGenPageGen<DEV> extends ClusterPage {
 
 	public void initEnfantGenPage() {
 		listeEnfantScolaireInit();
-		enfantScolaireInit();
+		enfantScolaire_Init();
 	}
 
 	@Override public void initLoinPourClasse(RequeteSiteFrFR requeteSite_) {
@@ -157,8 +155,6 @@ public abstract class EnfantGenPageGen<DEV> extends ClusterPage {
 			super.requeteSiteClusterPage(requeteSite_);
 		if(listeEnfantScolaire != null)
 			listeEnfantScolaire.setRequeteSite_(requeteSite_);
-		if(enfantScolaire != null)
-			enfantScolaire.setRequeteSite_(requeteSite_);
 	}
 
 	public void requeteSitePourClasse(RequeteSiteFrFR requeteSite_) {
@@ -187,8 +183,8 @@ public abstract class EnfantGenPageGen<DEV> extends ClusterPage {
 		switch(var) {
 			case "listeEnfantScolaire":
 				return oEnfantGenPage.listeEnfantScolaire;
-			case "enfantScolaire":
-				return oEnfantGenPage.enfantScolaire;
+			case "enfantScolaire_":
+				return oEnfantGenPage.enfantScolaire_;
 			default:
 				return super.obtenirClusterPage(var);
 		}

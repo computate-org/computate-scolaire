@@ -80,43 +80,41 @@ public abstract class AnneeGenPageGen<DEV> extends ClusterPage {
 		return (AnneeGenPage)this;
 	}
 
-	///////////////////
-	// anneeScolaire //
-	///////////////////
+	////////////////////
+	// anneeScolaire_ //
+	////////////////////
 
-	/**	 L'entité anneeScolaire
+	/**	 L'entité anneeScolaire_
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected AnneeScolaire anneeScolaire;
+	protected AnneeScolaire anneeScolaire_;
 	@JsonIgnore
-	public Couverture<AnneeScolaire> anneeScolaireCouverture = new Couverture<AnneeScolaire>().p(this).c(AnneeScolaire.class).var("anneeScolaire").o(anneeScolaire);
+	public Couverture<AnneeScolaire> anneeScolaire_Couverture = new Couverture<AnneeScolaire>().p(this).c(AnneeScolaire.class).var("anneeScolaire_").o(anneeScolaire_);
 
-	/**	<br/> L'entité anneeScolaire
+	/**	<br/> L'entité anneeScolaire_
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.annee.AnneeGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:anneeScolaire">Trouver l'entité anneeScolaire dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.annee.AnneeGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:anneeScolaire_">Trouver l'entité anneeScolaire_ dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _anneeScolaire(Couverture<AnneeScolaire> c);
+	protected abstract void _anneeScolaire_(Couverture<AnneeScolaire> c);
 
-	public AnneeScolaire getAnneeScolaire() {
-		return anneeScolaire;
+	public AnneeScolaire getAnneeScolaire_() {
+		return anneeScolaire_;
 	}
 
-	public void setAnneeScolaire(AnneeScolaire anneeScolaire) {
-		this.anneeScolaire = anneeScolaire;
-		this.anneeScolaireCouverture.dejaInitialise = true;
+	public void setAnneeScolaire_(AnneeScolaire anneeScolaire_) {
+		this.anneeScolaire_ = anneeScolaire_;
+		this.anneeScolaire_Couverture.dejaInitialise = true;
 	}
-	protected AnneeGenPage anneeScolaireInit() {
-		if(!anneeScolaireCouverture.dejaInitialise) {
-			_anneeScolaire(anneeScolaireCouverture);
-			if(anneeScolaire == null)
-				setAnneeScolaire(anneeScolaireCouverture.o);
+	protected AnneeGenPage anneeScolaire_Init() {
+		if(!anneeScolaire_Couverture.dejaInitialise) {
+			_anneeScolaire_(anneeScolaire_Couverture);
+			if(anneeScolaire_ == null)
+				setAnneeScolaire_(anneeScolaire_Couverture.o);
 		}
-		if(anneeScolaire != null)
-			anneeScolaire.initLoinPourClasse(requeteSite_);
-		anneeScolaireCouverture.dejaInitialise(true);
+		anneeScolaire_Couverture.dejaInitialise(true);
 		return (AnneeGenPage)this;
 	}
 
@@ -142,7 +140,7 @@ public abstract class AnneeGenPageGen<DEV> extends ClusterPage {
 
 	public void initAnneeGenPage() {
 		listeAnneeScolaireInit();
-		anneeScolaireInit();
+		anneeScolaire_Init();
 	}
 
 	@Override public void initLoinPourClasse(RequeteSiteFrFR requeteSite_) {
@@ -157,8 +155,6 @@ public abstract class AnneeGenPageGen<DEV> extends ClusterPage {
 			super.requeteSiteClusterPage(requeteSite_);
 		if(listeAnneeScolaire != null)
 			listeAnneeScolaire.setRequeteSite_(requeteSite_);
-		if(anneeScolaire != null)
-			anneeScolaire.setRequeteSite_(requeteSite_);
 	}
 
 	public void requeteSitePourClasse(RequeteSiteFrFR requeteSite_) {
@@ -187,8 +183,8 @@ public abstract class AnneeGenPageGen<DEV> extends ClusterPage {
 		switch(var) {
 			case "listeAnneeScolaire":
 				return oAnneeGenPage.listeAnneeScolaire;
-			case "anneeScolaire":
-				return oAnneeGenPage.anneeScolaire;
+			case "anneeScolaire_":
+				return oAnneeGenPage.anneeScolaire_;
 			default:
 				return super.obtenirClusterPage(var);
 		}

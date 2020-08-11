@@ -30,6 +30,8 @@ public class School extends SchoolGen<Cluster> {
 
 	protected void _yearKeys(List<Long> o) {}
 
+	protected void _receiptKeys(List<Long> o) {}
+
 	protected void _seasonKeys(List<Long> o) {}
 
 	protected void _sessionKeys(List<Long> o) {}

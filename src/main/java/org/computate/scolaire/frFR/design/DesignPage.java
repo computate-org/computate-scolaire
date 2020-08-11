@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.design; 
+package org.computate.scolaire.frFR.design;  
 
 import java.util.List;
 
@@ -111,7 +111,7 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * Tri.asc: designPageNomComplet
  * 
  * Lignes: 100
-*/    
+*/   
 public class DesignPage extends DesignPageGen<Cluster> {
 
 	/**
@@ -146,7 +146,7 @@ public class DesignPage extends DesignPageGen<Cluster> {
 	 * Indexe: true
 	 * Stocke: true
 	 * Attribuer: DesignPage.designEnfantCles
-	 * HtmlLigne: 4
+	 * HtmlLigne: 5
 	 * HtmlCelulle: 1
 	 * NomAffichage.frFR: designs parent
 	 * NomAffichage.enUS: parent designs
@@ -160,7 +160,7 @@ public class DesignPage extends DesignPageGen<Cluster> {
 	 * Indexe: true
 	 * Stocke: true
 	 * Attribuer: PartHtml.designPageCles
-	 * HtmlLigne: 5
+	 * HtmlLigne: 6
 	 * HtmlCellule: 1
 	 * NomAffichage.frFR: parts
 	 * NomAffichage.enUS: parts
@@ -204,6 +204,126 @@ public class DesignPage extends DesignPageGen<Cluster> {
 	 * Stocke: true
 	 */                  
 	protected void _designCache(Couverture<Boolean> c) {
+		c.o(false);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: designAdmin
+	 * Definir: true
+	 * HtmlLigne: 3
+	 * HtmlCelulle: 3
+	 * NomAffichage.frFR: pour admin
+	 * NomAffichage.enUS: for admin
+	 * Indexe: true
+	 * Stocke: true
+	 */                 
+	protected void _designAdmin(Couverture<Boolean> c) {
+		c.o(false);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: designIgnoreEmptyChildName
+	 * Definir: true
+	 * HtmlLigne: 3
+	 * HtmlCelulle: 4
+	 * NomAffichage.frFR: ignorer nom d'enfant vide
+	 * NomAffichage.enUS: ignore empty child name
+	 * Indexe: true
+	 * Stocke: true
+	 */                  
+	protected void _designIgnorerNomEnfantVide(Couverture<Boolean> c) {
+		c.o(false);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: designIgnorePaymentsNotPastDue
+	 * Definir: true
+	 * HtmlLigne: 4
+	 * HtmlCelulle: 1
+	 * NomAffichage.frFR: ignorer inscriptions pas en souffrance
+	 * NomAffichage.enUS: ignore enrollments not past due
+	 * Indexe: true
+	 * Stocke: true
+	 */                  
+	protected void _designIgnorerPaiementsPasEnSouffrance(Couverture<Boolean> c) {
+		c.o(false);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: designIgnorePaymentsPastDue
+	 * Definir: true
+	 * HtmlLigne: 4
+	 * HtmlCelulle: 2
+	 * NomAffichage.frFR: ignorer inscriptions en souffrance
+	 * NomAffichage.enUS: ignore enrollments past due
+	 * Indexe: true
+	 * Stocke: true
+	 */                  
+	protected void _designIgnorerPaiementsEnSouffrance(Couverture<Boolean> c) {
+		c.o(false);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: designFilterEnrollmentKey
+	 * Definir: true
+	 * HtmlLigne: 4
+	 * HtmlCelulle: 3
+	 * NomAffichage.frFR: filtrer inscription clé
+	 * NomAffichage.enUS: filter enrollment key
+	 * Indexe: true
+	 * Stocke: true
+	 */                  
+	protected void _designFiltrerInscriptionCle(Couverture<Boolean> c) {
+		c.o(false);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: designEnrollmentSortChildName
+	 * Definir: true
+	 * HtmlLigne: 4
+	 * HtmlCelulle: 4
+	 * NomAffichage.frFR: inscription tri nom d'enfant
+	 * NomAffichage.enUS: enrollment sort child name
+	 * Indexe: true
+	 * Stocke: true
+	 */                  
+	protected void _designInscriptionTriNomEnfant(Couverture<Boolean> c) {
+		c.o(false);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: designEnrollmentSortMonthDayOfBirth
+	 * Definir: true
+	 * HtmlLigne: 4
+	 * HtmlCelulle: 5
+	 * NomAffichage.frFR: inscription tri mois jour de naissance
+	 * NomAffichage.enUS: enrollment sort month day of birth
+	 * Indexe: true
+	 * Stocke: true
+	 */                  
+	protected void _designInscriptionTriMoisJourDeNaissance(Couverture<Boolean> c) {
+		c.o(false);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: designEnrollmentSortGroupName
+	 * Definir: true
+	 * HtmlLigne: 4
+	 * HtmlCelulle: 6
+	 * NomAffichage.frFR: inscription tri nom de groupe
+	 * NomAffichage.enUS: enrollment sort group name
+	 * Indexe: true
+	 * Stocke: true
+	 */                  
+	protected void _designInscriptionTriNomGroupe(Couverture<Boolean> c) {
 		c.o(false);
 	}
 

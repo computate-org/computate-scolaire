@@ -139,7 +139,7 @@ public class EnrollmentPage extends EnrollmentPageGen<EnrollmentGenPage> {
 							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-blue-gray ")
-								.a("onclick", "putcopySchoolEnrollment($('#putcopySchoolEnrollmentForm'), ", schoolEnrollment == null ? "null" : schoolEnrollment.getPk(), "); ")
+								.a("onclick", "putcopySchoolEnrollment($('#putcopySchoolEnrollmentForm'), ", schoolEnrollment_ == null ? "null" : schoolEnrollment_.getPk(), "); ")
 								.f().sx("Duplicate enrollments")
 							.g("button");
 
@@ -173,7 +173,7 @@ public class EnrollmentPage extends EnrollmentPageGen<EnrollmentGenPage> {
 							} g("form");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-blue-gray ")
-								.a("onclick", "patchSchoolEnrollment(null, $('#patchSchoolEnrollmentFormValues'), ", Optional.ofNullable(schoolEnrollment).map(SchoolEnrollment::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
+								.a("onclick", "patchSchoolEnrollment(null, $('#patchSchoolEnrollmentFormValues'), ", Optional.ofNullable(schoolEnrollment_).map(SchoolEnrollment::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
 								.f().sx("Modify enrollments")
 							.g("button");
 
@@ -197,7 +197,7 @@ public class EnrollmentPage extends EnrollmentPageGen<EnrollmentGenPage> {
 			{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile  ").f();
 				{ e("div").a("class", "w3-padding ").f();
 					e("a").a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ")
-					.a("href", "/pdf/main-enrollment-form?var=enrollmentKey:", o.getPk(), "&var=emailDesignId:email-enrollment&var=emailSubject:Enrollment for ", urlEncode(schoolEnrollment.getChildCompleteNamePreferred()), "%20asks%20${schoolName}%20a%20question.&var=emailToAddress:' + encodeURIComponent($('#email-questions-email').val()) + '&var=emailToName:' + encodeURIComponent($('#email-questions-name').val()) + '&var=emailMessage:' + encodeURIComponent($('#email-questions-question')")
+					.a("href", "/pdf/main-enrollment-form?var=enrollmentKey:", o.getPk(), "&var=emailDesignId:email-enrollment&var=emailSubject:Enrollment for ", urlEncode(schoolEnrollment_.getChildCompleteNamePreferred()), "%20asks%20${schoolName}%20a%20question.&var=emailToAddress:' + encodeURIComponent($('#email-questions-email').val()) + '&var=emailToName:' + encodeURIComponent($('#email-questions-name').val()) + '&var=emailMessage:' + encodeURIComponent($('#email-questions-question')")
 //					.a("onclick", "window.location.href = '/email/enrollment-sent?var=enrollmentKey:", o.getPk(), "&var=emailDesignId:email-enrollment&var=emailSubject:Enrollment for ' + encodeURIComponent($('#childCompleteName').val()) + 'at ", urlEncode(school_.getSchoolCompleteName()), "&var=emailToAddress:' + encodeURIComponent($('#email-questions-email').val()) + '&var=emailToName:' + encodeURIComponent($('#email-questions-name').val()) + '&var=emailMessage:' + encodeURIComponent($('#email-questions-question').val()); ")
 					.f().sx("View enrollment PDF").g("a");
 				} g("div");
@@ -219,7 +219,7 @@ public class EnrollmentPage extends EnrollmentPageGen<EnrollmentGenPage> {
 						e("div").a("class", "w3-panel w3-blue ").f();
 						sx(String.format("Please pay the upcoming charges of $%s by the payment date to avoid any late fees. ", o.getChargesNow()));
 						g("div");
-						writeMakePayment(o.getSchoolNumber(), o.getChargesNow(), schoolEnrollment.getPk(), schoolEnrollment.getChildCompleteNamePreferred());
+						writeMakePayment(o.getSchoolNumber(), o.getChargesNow(), schoolEnrollment_.getPk(), schoolEnrollment_.getChildCompleteNamePreferred());
 					}
 				} g("div");
 			} g("div");
@@ -230,7 +230,7 @@ public class EnrollmentPage extends EnrollmentPageGen<EnrollmentGenPage> {
 				{ e("div").a("class", "").f();
 					e("a")
 						.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-blue-gray ")
-						.a("href", "/refresh-enrollment/" + schoolEnrollment.getPk())
+						.a("href", "/refresh-enrollment/" + schoolEnrollment_.getPk())
 						.f().sx("Refresh payments for this enrollment")
 					.g("a");
 				} g("div");
@@ -242,32 +242,32 @@ public class EnrollmentPage extends EnrollmentPageGen<EnrollmentGenPage> {
 				LocalDate lateFeeDate = LocalDate.now().plusDays(15);
 				{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile w3-padding ").f();
 					{ e("div").a("class", "").f();
-						e("button")
+						e("a")
 							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-blue-gray ")
-							.a("onclick", "postSchoolPaymentVals({enrollmentKey:'", schoolEnrollment.getPk(), "',chargeLateFee:true,chargeAmount:'5',paymentDescription:'Late pick-up/drop-off fee',paymentDate:'", lateFeeDate.toString(), "'}); ")
+							.a("href", "/refresh-enrollment/", schoolEnrollment_.getPk(), "?var=lateFeeAmount:5")
 							.f().sx("Add a $5 late pick-up/drop-off fee")
-						.g("button");
+						.g("a");
 					} g("div");
 					{ e("div").a("class", "").f();
-						e("button")
+						e("a")
 							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-blue-gray ")
-							.a("onclick", "postSchoolPaymentVals({enrollmentKey:'", schoolEnrollment.getPk(), "',chargeLateFee:true,chargeAmount:'10',paymentDescription:'Late pick-up/drop-off fee',paymentDate:'", lateFeeDate.toString(), "'}); ")
+							.a("href", "/refresh-enrollment/", schoolEnrollment_.getPk(), "?var=lateFeeAmount:10")
 							.f().sx("Add a $10 late pick-up/drop-off fee")
-						.g("button");
+						.g("a");
 					} g("div");
 					{ e("div").a("class", "").f();
-						e("button")
+						e("a")
 							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-blue-gray ")
-							.a("onclick", "postSchoolPaymentVals({enrollmentKey:'", schoolEnrollment.getPk(), "',chargeLateFee:true,chargeAmount:'15',paymentDescription:'Late pick-up/drop-off fee',paymentDate:'", lateFeeDate.toString(), "'}); ")
+							.a("href", "/refresh-enrollment/", schoolEnrollment_.getPk(), "?var=lateFeeAmount:15")
 							.f().sx("Add a $15 late pick-up/drop-off fee")
-						.g("button");
+						.g("a");
 					} g("div");
 					{ e("div").a("class", "").f();
-						e("button")
+						e("a")
 							.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-blue-gray ")
-							.a("onclick", "postSchoolPaymentVals({enrollmentKey:'", schoolEnrollment.getPk(), "',chargeLateFee:true,chargeAmount:'20',paymentDescription:'Late pick-up/drop-off fee',paymentDate:'", lateFeeDate.toString(), "'}); ")
+							.a("href", "/refresh-enrollment/", schoolEnrollment_.getPk(), "?var=lateFeeAmount:20")
 							.f().sx("Add a $20 late pick-up/drop-off fee")
-						.g("button");
+						.g("a");
 					} g("div");
 				} g("div");
 			}

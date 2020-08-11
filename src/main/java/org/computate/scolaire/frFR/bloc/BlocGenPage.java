@@ -54,7 +54,7 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 	protected void _listeBlocScolaire(Couverture<ListeRecherche<BlocScolaire>> c) {
 	}
 
-	protected void _blocScolaire(Couverture<BlocScolaire> c) {
+	protected void _blocScolaire_(Couverture<BlocScolaire> c) {
 		if(listeBlocScolaire != null && listeBlocScolaire.size() == 1)
 			c.o(listeBlocScolaire.get(0));
 	}
@@ -64,8 +64,8 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageH2(Couverture<String> c) {
-		if(blocScolaire != null && blocScolaire.getBlocNomComplet() != null)
-			c.o(blocScolaire.getBlocNomComplet());
+		if(blocScolaire_ != null && blocScolaire_.getBlocNomComplet() != null)
+			c.o(blocScolaire_.getBlocNomComplet());
 	}
 
 	@Override protected void _pageH3(Couverture<String> c) {
@@ -73,9 +73,9 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageTitre(Couverture<String> c) {
-		if(blocScolaire != null && blocScolaire.getBlocNomComplet() != null)
-			c.o(blocScolaire.getBlocNomComplet());
-		else if(blocScolaire != null)
+		if(blocScolaire_ != null && blocScolaire_.getBlocNomComplet() != null)
+			c.o(blocScolaire_.getBlocNomComplet());
+		else if(blocScolaire_ != null)
 			c.o("blocs");
 		else if(listeBlocScolaire == null || listeBlocScolaire.size() == 0)
 			c.o("aucun bloc trouvé");
@@ -741,7 +741,7 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-indigo ")
-								.a("onclick", "putcopieBlocScolaire($('#putcopieBlocScolaireForm'), ", blocScolaire == null ? "null" : blocScolaire.getPk(), "); ")
+								.a("onclick", "putcopieBlocScolaire($('#putcopieBlocScolaireForm'), ", blocScolaire_ == null ? "null" : blocScolaire_.getPk(), "); ")
 								.f().sx("Dupliquer blocs")
 							.g("button");
 
@@ -775,7 +775,7 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 							} g("form");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-indigo ")
-								.a("onclick", "patchBlocScolaire(null, $('#patchBlocScolaireFormulaireValeurs'), ", Optional.ofNullable(blocScolaire).map(BlocScolaire::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
+								.a("onclick", "patchBlocScolaire(null, $('#patchBlocScolaireFormulaireValeurs'), ", Optional.ofNullable(blocScolaire_).map(BlocScolaire::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
 								.f().sx("Modifier blocs")
 							.g("button");
 

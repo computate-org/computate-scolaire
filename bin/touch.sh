@@ -11,6 +11,7 @@ touch /usr/local/src/computate-scolaire/src/main/java/org/computate/scolaire/frF
 touch /usr/local/src/computate-scolaire/src/main/java/org/computate/scolaire/frFR/pere/PereScolaire.java
 touch /usr/local/src/computate-scolaire/src/main/java/org/computate/scolaire/frFR/gardien/GardienScolaire.java
 touch /usr/local/src/computate-scolaire/src/main/java/org/computate/scolaire/frFR/paiement/PaiementScolaire.java
+touch /usr/local/src/computate-scolaire/src/main/java/org/computate/scolaire/frFR/recu/RecuScolaire.java
 touch /usr/local/src/computate-scolaire/src/main/java/org/computate/scolaire/frFR/utilisateur/UtilisateurSite.java
 touch /usr/local/src/computate-scolaire/src/main/java/org/computate/scolaire/frFR/design/DesignPage.java
 touch /usr/local/src/computate-scolaire/src/main/java/org/computate/scolaire/frFR/html/part/PartHtml.java

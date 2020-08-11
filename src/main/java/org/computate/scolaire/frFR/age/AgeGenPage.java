@@ -54,7 +54,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 	protected void _listeAgeScolaire(Couverture<ListeRecherche<AgeScolaire>> c) {
 	}
 
-	protected void _ageScolaire(Couverture<AgeScolaire> c) {
+	protected void _ageScolaire_(Couverture<AgeScolaire> c) {
 		if(listeAgeScolaire != null && listeAgeScolaire.size() == 1)
 			c.o(listeAgeScolaire.get(0));
 	}
@@ -64,8 +64,8 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageH2(Couverture<String> c) {
-		if(ageScolaire != null && ageScolaire.getAgeNomComplet() != null)
-			c.o(ageScolaire.getAgeNomComplet());
+		if(ageScolaire_ != null && ageScolaire_.getAgeNomComplet() != null)
+			c.o(ageScolaire_.getAgeNomComplet());
 	}
 
 	@Override protected void _pageH3(Couverture<String> c) {
@@ -73,9 +73,9 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageTitre(Couverture<String> c) {
-		if(ageScolaire != null && ageScolaire.getAgeNomComplet() != null)
-			c.o(ageScolaire.getAgeNomComplet());
-		else if(ageScolaire != null)
+		if(ageScolaire_ != null && ageScolaire_.getAgeNomComplet() != null)
+			c.o(ageScolaire_.getAgeNomComplet());
+		else if(ageScolaire_ != null)
 			c.o("âges");
 		else if(listeAgeScolaire == null || listeAgeScolaire.size() == 0)
 			c.o("aucun âge trouvé");
@@ -710,7 +710,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-blue ")
-								.a("onclick", "putcopieAgeScolaire($('#putcopieAgeScolaireForm'), ", ageScolaire == null ? "null" : ageScolaire.getPk(), "); ")
+								.a("onclick", "putcopieAgeScolaire($('#putcopieAgeScolaireForm'), ", ageScolaire_ == null ? "null" : ageScolaire_.getPk(), "); ")
 								.f().sx("Dupliquer âges")
 							.g("button");
 
@@ -744,7 +744,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 							} g("form");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-blue ")
-								.a("onclick", "patchAgeScolaire(null, $('#patchAgeScolaireFormulaireValeurs'), ", Optional.ofNullable(ageScolaire).map(AgeScolaire::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
+								.a("onclick", "patchAgeScolaire(null, $('#patchAgeScolaireFormulaireValeurs'), ", Optional.ofNullable(ageScolaire_).map(AgeScolaire::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
 								.f().sx("Modifier âges")
 							.g("button");
 

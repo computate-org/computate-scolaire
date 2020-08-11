@@ -80,43 +80,41 @@ public abstract class SeasonGenPageGen<DEV> extends ClusterPage {
 		return (SeasonGenPage)this;
 	}
 
-	//////////////////
-	// schoolSeason //
-	//////////////////
+	///////////////////
+	// schoolSeason_ //
+	///////////////////
 
-	/**	 The entity schoolSeason
+	/**	 The entity schoolSeason_
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected SchoolSeason schoolSeason;
+	protected SchoolSeason schoolSeason_;
 	@JsonIgnore
-	public Wrap<SchoolSeason> schoolSeasonWrap = new Wrap<SchoolSeason>().p(this).c(SchoolSeason.class).var("schoolSeason").o(schoolSeason);
+	public Wrap<SchoolSeason> schoolSeason_Wrap = new Wrap<SchoolSeason>().p(this).c(SchoolSeason.class).var("schoolSeason_").o(schoolSeason_);
 
-	/**	<br/> The entity schoolSeason
+	/**	<br/> The entity schoolSeason_
 	 *  is defined as null before being initialized. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.season.SeasonGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolSeason">Find the entity schoolSeason in Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.season.SeasonGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolSeason_">Find the entity schoolSeason_ in Solr</a>
 	 * <br/>
 	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
-	protected abstract void _schoolSeason(Wrap<SchoolSeason> c);
+	protected abstract void _schoolSeason_(Wrap<SchoolSeason> c);
 
-	public SchoolSeason getSchoolSeason() {
-		return schoolSeason;
+	public SchoolSeason getSchoolSeason_() {
+		return schoolSeason_;
 	}
 
-	public void setSchoolSeason(SchoolSeason schoolSeason) {
-		this.schoolSeason = schoolSeason;
-		this.schoolSeasonWrap.alreadyInitialized = true;
+	public void setSchoolSeason_(SchoolSeason schoolSeason_) {
+		this.schoolSeason_ = schoolSeason_;
+		this.schoolSeason_Wrap.alreadyInitialized = true;
 	}
-	protected SeasonGenPage schoolSeasonInit() {
-		if(!schoolSeasonWrap.alreadyInitialized) {
-			_schoolSeason(schoolSeasonWrap);
-			if(schoolSeason == null)
-				setSchoolSeason(schoolSeasonWrap.o);
+	protected SeasonGenPage schoolSeason_Init() {
+		if(!schoolSeason_Wrap.alreadyInitialized) {
+			_schoolSeason_(schoolSeason_Wrap);
+			if(schoolSeason_ == null)
+				setSchoolSeason_(schoolSeason_Wrap.o);
 		}
-		if(schoolSeason != null)
-			schoolSeason.initDeepForClass(siteRequest_);
-		schoolSeasonWrap.alreadyInitialized(true);
+		schoolSeason_Wrap.alreadyInitialized(true);
 		return (SeasonGenPage)this;
 	}
 
@@ -142,7 +140,7 @@ public abstract class SeasonGenPageGen<DEV> extends ClusterPage {
 
 	public void initSeasonGenPage() {
 		listSchoolSeasonInit();
-		schoolSeasonInit();
+		schoolSeason_Init();
 	}
 
 	@Override public void initDeepForClass(SiteRequestEnUS siteRequest_) {
@@ -157,8 +155,6 @@ public abstract class SeasonGenPageGen<DEV> extends ClusterPage {
 			super.siteRequestClusterPage(siteRequest_);
 		if(listSchoolSeason != null)
 			listSchoolSeason.setSiteRequest_(siteRequest_);
-		if(schoolSeason != null)
-			schoolSeason.setSiteRequest_(siteRequest_);
 	}
 
 	public void siteRequestForClass(SiteRequestEnUS siteRequest_) {
@@ -187,8 +183,8 @@ public abstract class SeasonGenPageGen<DEV> extends ClusterPage {
 		switch(var) {
 			case "listSchoolSeason":
 				return oSeasonGenPage.listSchoolSeason;
-			case "schoolSeason":
-				return oSeasonGenPage.schoolSeason;
+			case "schoolSeason_":
+				return oSeasonGenPage.schoolSeason_;
 			default:
 				return super.obtainClusterPage(var);
 		}

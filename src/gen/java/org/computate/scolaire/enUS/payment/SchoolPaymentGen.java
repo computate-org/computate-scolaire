@@ -3392,6 +3392,75 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		} g("div");
 	}
 
+	/////////////////
+	// paymentYear //
+	/////////////////
+
+	/**	 The entity paymentYear
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected Integer paymentYear;
+	@JsonIgnore
+	public Wrap<Integer> paymentYearWrap = new Wrap<Integer>().p(this).c(Integer.class).var("paymentYear").o(paymentYear);
+
+	/**	<br/> The entity paymentYear
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.payment.SchoolPayment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:paymentYear">Find the entity paymentYear in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _paymentYear(Wrap<Integer> c);
+
+	public Integer getPaymentYear() {
+		return paymentYear;
+	}
+
+	public void setPaymentYear(Integer paymentYear) {
+		this.paymentYear = paymentYear;
+		this.paymentYearWrap.alreadyInitialized = true;
+	}
+	public SchoolPayment setPaymentYear(String o) {
+		if(NumberUtils.isParsable(o))
+			this.paymentYear = Integer.parseInt(o);
+		this.paymentYearWrap.alreadyInitialized = true;
+		return (SchoolPayment)this;
+	}
+	protected SchoolPayment paymentYearInit() {
+		if(!paymentYearWrap.alreadyInitialized) {
+			_paymentYear(paymentYearWrap);
+			if(paymentYear == null)
+				setPaymentYear(paymentYearWrap.o);
+		}
+		paymentYearWrap.alreadyInitialized(true);
+		return (SchoolPayment)this;
+	}
+
+	public Integer solrPaymentYear() {
+		return paymentYear;
+	}
+
+	public String strPaymentYear() {
+		return paymentYear == null ? "" : paymentYear.toString();
+	}
+
+	public String jsonPaymentYear() {
+		return paymentYear == null ? "" : paymentYear.toString();
+	}
+
+	public String nomAffichagePaymentYear() {
+		return null;
+	}
+
+	public String htmTooltipPaymentYear() {
+		return null;
+	}
+
+	public String htmPaymentYear() {
+		return paymentYear == null ? "" : StringEscapeUtils.escapeHtml4(strPaymentYear());
+	}
+
 	///////////////////
 	// paymentAmount //
 	///////////////////
@@ -5533,6 +5602,87 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		} g("div");
 	}
 
+	/////////
+	// now //
+	/////////
+
+	/**	 The entity now
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonDeserialize(using = LocalDateDeserializer.class)
+	@JsonSerialize(using = LocalDateSerializer.class)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+	@JsonInclude(Include.NON_NULL)
+	protected LocalDate now;
+	@JsonIgnore
+	public Wrap<LocalDate> nowWrap = new Wrap<LocalDate>().p(this).c(LocalDate.class).var("now").o(now);
+
+	/**	<br/> The entity now
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.payment.SchoolPayment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:now">Find the entity now in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _now(Wrap<LocalDate> c);
+
+	public LocalDate getNow() {
+		return now;
+	}
+
+	public void setNow(LocalDate now) {
+		this.now = now;
+		this.nowWrap.alreadyInitialized = true;
+	}
+	public SchoolPayment setNow(Instant o) {
+		this.now = o == null ? null : LocalDate.from(o);
+		this.nowWrap.alreadyInitialized = true;
+		return (SchoolPayment)this;
+	}
+	/** Example: 2011-12-03+01:00 **/
+	public SchoolPayment setNow(String o) {
+		this.now = o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		this.nowWrap.alreadyInitialized = true;
+		return (SchoolPayment)this;
+	}
+	public SchoolPayment setNow(Date o) {
+		this.now = o == null ? null : o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
+		this.nowWrap.alreadyInitialized = true;
+		return (SchoolPayment)this;
+	}
+	protected SchoolPayment nowInit() {
+		if(!nowWrap.alreadyInitialized) {
+			_now(nowWrap);
+			if(now == null)
+				setNow(nowWrap.o);
+		}
+		nowWrap.alreadyInitialized(true);
+		return (SchoolPayment)this;
+	}
+
+	public Date solrNow() {
+		return now == null ? null : Date.from(now.atStartOfDay(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toInstant().atZone(ZoneId.of("Z")).toInstant());
+	}
+
+	public String strNow() {
+		return now == null ? "" : now.format(DateTimeFormatter.ofPattern("EEE MMM d, yyyy", Locale.forLanguageTag("en-US")));
+	}
+
+	public String jsonNow() {
+		return now == null ? "" : now.format(DateTimeFormatter.ISO_DATE);
+	}
+
+	public String nomAffichageNow() {
+		return null;
+	}
+
+	public String htmTooltipNow() {
+		return null;
+	}
+
+	public String htmNow() {
+		return now == null ? "" : StringEscapeUtils.escapeHtml4(strNow());
+	}
+
 	/////////////////
 	// paymentNext //
 	/////////////////
@@ -5712,6 +5862,218 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 							{ e("div").a("class", "w3-cell ").f();
 
 								inputChargeAmountDue(classApiMethodMethod);
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	////////////////////////
+	// chargeAmountPassed //
+	////////////////////////
+
+	/**	 The entity chargeAmountPassed
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected BigDecimal chargeAmountPassed;
+	@JsonIgnore
+	public Wrap<BigDecimal> chargeAmountPassedWrap = new Wrap<BigDecimal>().p(this).c(BigDecimal.class).var("chargeAmountPassed").o(chargeAmountPassed);
+
+	/**	<br/> The entity chargeAmountPassed
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.payment.SchoolPayment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:chargeAmountPassed">Find the entity chargeAmountPassed in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _chargeAmountPassed(Wrap<BigDecimal> c);
+
+	public BigDecimal getChargeAmountPassed() {
+		return chargeAmountPassed;
+	}
+
+	public void setChargeAmountPassed(BigDecimal chargeAmountPassed) {
+		this.chargeAmountPassed = chargeAmountPassed;
+		this.chargeAmountPassedWrap.alreadyInitialized = true;
+	}
+	public SchoolPayment setChargeAmountPassed(String o) {
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			this.chargeAmountPassed = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+		this.chargeAmountPassedWrap.alreadyInitialized = true;
+		return (SchoolPayment)this;
+	}
+	public SchoolPayment setChargeAmountPassed(Double o) {
+			this.chargeAmountPassed = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+		this.chargeAmountPassedWrap.alreadyInitialized = true;
+		return (SchoolPayment)this;
+	}
+	public SchoolPayment setChargeAmountPassed(Integer o) {
+			this.chargeAmountPassed = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+		this.chargeAmountPassedWrap.alreadyInitialized = true;
+		return (SchoolPayment)this;
+	}
+	protected SchoolPayment chargeAmountPassedInit() {
+		if(!chargeAmountPassedWrap.alreadyInitialized) {
+			_chargeAmountPassed(chargeAmountPassedWrap);
+			if(chargeAmountPassed == null)
+				setChargeAmountPassed(chargeAmountPassedWrap.o);
+		}
+		chargeAmountPassedWrap.alreadyInitialized(true);
+		return (SchoolPayment)this;
+	}
+
+	public Double solrChargeAmountPassed() {
+		return chargeAmountPassed == null ? null : chargeAmountPassed.doubleValue();
+	}
+
+	public String strChargeAmountPassed() {
+		return chargeAmountPassed == null ? "" : chargeAmountPassed.setScale(2, RoundingMode.CEILING).toString();
+	}
+
+	public String jsonChargeAmountPassed() {
+		return chargeAmountPassed == null ? "" : chargeAmountPassed.toString();
+	}
+
+	public String nomAffichageChargeAmountPassed() {
+		return "charge amount passed";
+	}
+
+	public String htmTooltipChargeAmountPassed() {
+		return null;
+	}
+
+	public String htmChargeAmountPassed() {
+		return chargeAmountPassed == null ? "" : StringEscapeUtils.escapeHtml4(strChargeAmountPassed());
+	}
+
+	public void inputChargeAmountPassed(String classApiMethodMethod) {
+		SchoolPayment s = (SchoolPayment)this;
+		e("span").a("class", "varSchoolPayment", pk, "ChargeAmountPassed ").f().sx(htmChargeAmountPassed()).g("span");
+	}
+
+	public void htmChargeAmountPassed(String classApiMethodMethod) {
+		SchoolPayment s = (SchoolPayment)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolPaymentChargeAmountPassed").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", classApiMethodMethod, "_chargeAmountPassed").a("class", "").f().sx("charge amount passed").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputChargeAmountPassed(classApiMethodMethod);
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	///////////////////////////
+	// chargeAmountNotPassed //
+	///////////////////////////
+
+	/**	 The entity chargeAmountNotPassed
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected BigDecimal chargeAmountNotPassed;
+	@JsonIgnore
+	public Wrap<BigDecimal> chargeAmountNotPassedWrap = new Wrap<BigDecimal>().p(this).c(BigDecimal.class).var("chargeAmountNotPassed").o(chargeAmountNotPassed);
+
+	/**	<br/> The entity chargeAmountNotPassed
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.payment.SchoolPayment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:chargeAmountNotPassed">Find the entity chargeAmountNotPassed in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _chargeAmountNotPassed(Wrap<BigDecimal> c);
+
+	public BigDecimal getChargeAmountNotPassed() {
+		return chargeAmountNotPassed;
+	}
+
+	public void setChargeAmountNotPassed(BigDecimal chargeAmountNotPassed) {
+		this.chargeAmountNotPassed = chargeAmountNotPassed;
+		this.chargeAmountNotPassedWrap.alreadyInitialized = true;
+	}
+	public SchoolPayment setChargeAmountNotPassed(String o) {
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			this.chargeAmountNotPassed = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+		this.chargeAmountNotPassedWrap.alreadyInitialized = true;
+		return (SchoolPayment)this;
+	}
+	public SchoolPayment setChargeAmountNotPassed(Double o) {
+			this.chargeAmountNotPassed = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+		this.chargeAmountNotPassedWrap.alreadyInitialized = true;
+		return (SchoolPayment)this;
+	}
+	public SchoolPayment setChargeAmountNotPassed(Integer o) {
+			this.chargeAmountNotPassed = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+		this.chargeAmountNotPassedWrap.alreadyInitialized = true;
+		return (SchoolPayment)this;
+	}
+	protected SchoolPayment chargeAmountNotPassedInit() {
+		if(!chargeAmountNotPassedWrap.alreadyInitialized) {
+			_chargeAmountNotPassed(chargeAmountNotPassedWrap);
+			if(chargeAmountNotPassed == null)
+				setChargeAmountNotPassed(chargeAmountNotPassedWrap.o);
+		}
+		chargeAmountNotPassedWrap.alreadyInitialized(true);
+		return (SchoolPayment)this;
+	}
+
+	public Double solrChargeAmountNotPassed() {
+		return chargeAmountNotPassed == null ? null : chargeAmountNotPassed.doubleValue();
+	}
+
+	public String strChargeAmountNotPassed() {
+		return chargeAmountNotPassed == null ? "" : chargeAmountNotPassed.setScale(2, RoundingMode.CEILING).toString();
+	}
+
+	public String jsonChargeAmountNotPassed() {
+		return chargeAmountNotPassed == null ? "" : chargeAmountNotPassed.toString();
+	}
+
+	public String nomAffichageChargeAmountNotPassed() {
+		return "charge amount not passed";
+	}
+
+	public String htmTooltipChargeAmountNotPassed() {
+		return null;
+	}
+
+	public String htmChargeAmountNotPassed() {
+		return chargeAmountNotPassed == null ? "" : StringEscapeUtils.escapeHtml4(strChargeAmountNotPassed());
+	}
+
+	public void inputChargeAmountNotPassed(String classApiMethodMethod) {
+		SchoolPayment s = (SchoolPayment)this;
+		e("span").a("class", "varSchoolPayment", pk, "ChargeAmountNotPassed ").f().sx(htmChargeAmountNotPassed()).g("span");
+	}
+
+	public void htmChargeAmountNotPassed(String classApiMethodMethod) {
+		SchoolPayment s = (SchoolPayment)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolPaymentChargeAmountNotPassed").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-green ").f();
+							e("label").a("for", classApiMethodMethod, "_chargeAmountNotPassed").a("class", "").f().sx("charge amount not passed").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputChargeAmountNotPassed(classApiMethodMethod);
 							} g("div");
 						} g("div");
 					} g("div");
@@ -6083,6 +6445,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		enrollmentPaymentEachMonthInit();
 		paymentDescriptionInit();
 		paymentDateInit();
+		paymentYearInit();
 		paymentAmountInit();
 		paymentCashInit();
 		paymentCheckInit();
@@ -6099,8 +6462,11 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		chargeEnrollmentInit();
 		chargeMonthInit();
 		chargeLateFeeInit();
+		nowInit();
 		paymentNextInit();
 		chargeAmountDueInit();
+		chargeAmountPassedInit();
+		chargeAmountNotPassedInit();
 		chargeAmountFutureInit();
 		paymentShortNameInit();
 		paymentCompleteNameInit();
@@ -6222,6 +6588,8 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				return oSchoolPayment.paymentDescription;
 			case "paymentDate":
 				return oSchoolPayment.paymentDate;
+			case "paymentYear":
+				return oSchoolPayment.paymentYear;
 			case "paymentAmount":
 				return oSchoolPayment.paymentAmount;
 			case "paymentCash":
@@ -6254,10 +6622,16 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				return oSchoolPayment.chargeMonth;
 			case "chargeLateFee":
 				return oSchoolPayment.chargeLateFee;
+			case "now":
+				return oSchoolPayment.now;
 			case "paymentNext":
 				return oSchoolPayment.paymentNext;
 			case "chargeAmountDue":
 				return oSchoolPayment.chargeAmountDue;
+			case "chargeAmountPassed":
+				return oSchoolPayment.chargeAmountPassed;
+			case "chargeAmountNotPassed":
+				return oSchoolPayment.chargeAmountNotPassed;
 			case "chargeAmountFuture":
 				return oSchoolPayment.chargeAmountFuture;
 			case "paymentShortName":
@@ -6433,6 +6807,16 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 			case "chargeAmountDue":
 				if(val != null)
 					setChargeAmountDue(val);
+				saves.add(var);
+				return val;
+			case "chargeAmountPassed":
+				if(val != null)
+					setChargeAmountPassed(val);
+				saves.add(var);
+				return val;
+			case "chargeAmountNotPassed":
+				if(val != null)
+					setChargeAmountNotPassed(val);
 				saves.add(var);
 				return val;
 			case "chargeAmountFuture":
@@ -6682,6 +7066,12 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 					oSchoolPayment.setPaymentDate(paymentDate);
 			}
 
+			if(saves.contains("paymentYear")) {
+				Integer paymentYear = (Integer)solrDocument.get("paymentYear_stored_int");
+				if(paymentYear != null)
+					oSchoolPayment.setPaymentYear(paymentYear);
+			}
+
 			if(saves.contains("paymentAmount")) {
 				Double paymentAmount = (Double)solrDocument.get("paymentAmount_stored_double");
 				if(paymentAmount != null)
@@ -6788,6 +7178,18 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				Double chargeAmountDue = (Double)solrDocument.get("chargeAmountDue_stored_double");
 				if(chargeAmountDue != null)
 					oSchoolPayment.setChargeAmountDue(chargeAmountDue);
+			}
+
+			if(saves.contains("chargeAmountPassed")) {
+				Double chargeAmountPassed = (Double)solrDocument.get("chargeAmountPassed_stored_double");
+				if(chargeAmountPassed != null)
+					oSchoolPayment.setChargeAmountPassed(chargeAmountPassed);
+			}
+
+			if(saves.contains("chargeAmountNotPassed")) {
+				Double chargeAmountNotPassed = (Double)solrDocument.get("chargeAmountNotPassed_stored_double");
+				if(chargeAmountNotPassed != null)
+					oSchoolPayment.setChargeAmountNotPassed(chargeAmountNotPassed);
 			}
 
 			if(saves.contains("chargeAmountFuture")) {
@@ -7038,6 +7440,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 			document.addField("paymentDate_indexed_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(paymentDate.atStartOfDay(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toInstant().atZone(ZoneId.of("Z"))));
 			document.addField("paymentDate_stored_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(paymentDate.atStartOfDay(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toInstant().atZone(ZoneId.of("Z"))));
 		}
+		if(paymentYear != null) {
+			document.addField("paymentYear_indexed_int", paymentYear);
+			document.addField("paymentYear_stored_int", paymentYear);
+		}
 		if(paymentAmount != null) {
 			document.addField("paymentAmount_indexed_double", paymentAmount.doubleValue());
 			document.addField("paymentAmount_stored_double", paymentAmount.doubleValue());
@@ -7109,6 +7515,14 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		if(chargeAmountDue != null) {
 			document.addField("chargeAmountDue_indexed_double", chargeAmountDue.doubleValue());
 			document.addField("chargeAmountDue_stored_double", chargeAmountDue.doubleValue());
+		}
+		if(chargeAmountPassed != null) {
+			document.addField("chargeAmountPassed_indexed_double", chargeAmountPassed.doubleValue());
+			document.addField("chargeAmountPassed_stored_double", chargeAmountPassed.doubleValue());
+		}
+		if(chargeAmountNotPassed != null) {
+			document.addField("chargeAmountNotPassed_indexed_double", chargeAmountNotPassed.doubleValue());
+			document.addField("chargeAmountNotPassed_stored_double", chargeAmountNotPassed.doubleValue());
 		}
 		if(chargeAmountFuture != null) {
 			document.addField("chargeAmountFuture_indexed_double", chargeAmountFuture.doubleValue());
@@ -7219,6 +7633,8 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				return "paymentDescription_indexed_string";
 			case "paymentDate":
 				return "paymentDate_indexed_date";
+			case "paymentYear":
+				return "paymentYear_indexed_int";
 			case "paymentAmount":
 				return "paymentAmount_indexed_double";
 			case "paymentCash":
@@ -7255,6 +7671,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				return "paymentNext_indexed_date";
 			case "chargeAmountDue":
 				return "chargeAmountDue_indexed_double";
+			case "chargeAmountPassed":
+				return "chargeAmountPassed_indexed_double";
+			case "chargeAmountNotPassed":
+				return "chargeAmountNotPassed_indexed_double";
 			case "chargeAmountFuture":
 				return "chargeAmountFuture_indexed_double";
 			case "paymentShortName":
@@ -7438,6 +7858,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		if(paymentDate != null)
 			oSchoolPayment.setPaymentDate(paymentDate);
 
+		Integer paymentYear = (Integer)solrDocument.get("paymentYear_stored_int");
+		if(paymentYear != null)
+			oSchoolPayment.setPaymentYear(paymentYear);
+
 		Double paymentAmount = (Double)solrDocument.get("paymentAmount_stored_double");
 		if(paymentAmount != null)
 			oSchoolPayment.setPaymentAmount(paymentAmount);
@@ -7509,6 +7933,14 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		Double chargeAmountDue = (Double)solrDocument.get("chargeAmountDue_stored_double");
 		if(chargeAmountDue != null)
 			oSchoolPayment.setChargeAmountDue(chargeAmountDue);
+
+		Double chargeAmountPassed = (Double)solrDocument.get("chargeAmountPassed_stored_double");
+		if(chargeAmountPassed != null)
+			oSchoolPayment.setChargeAmountPassed(chargeAmountPassed);
+
+		Double chargeAmountNotPassed = (Double)solrDocument.get("chargeAmountNotPassed_stored_double");
+		if(chargeAmountNotPassed != null)
+			oSchoolPayment.setChargeAmountNotPassed(chargeAmountNotPassed);
 
 		Double chargeAmountFuture = (Double)solrDocument.get("chargeAmountFuture_stored_double");
 		if(chargeAmountFuture != null)
@@ -7608,6 +8040,8 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				apiRequest.addVars("paymentDescription");
 			if(!Objects.equals(paymentDate, original.getPaymentDate()))
 				apiRequest.addVars("paymentDate");
+			if(!Objects.equals(paymentYear, original.getPaymentYear()))
+				apiRequest.addVars("paymentYear");
 			if(!Objects.equals(paymentAmount, original.getPaymentAmount()))
 				apiRequest.addVars("paymentAmount");
 			if(!Objects.equals(paymentCash, original.getPaymentCash()))
@@ -7644,6 +8078,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				apiRequest.addVars("paymentNext");
 			if(!Objects.equals(chargeAmountDue, original.getChargeAmountDue()))
 				apiRequest.addVars("chargeAmountDue");
+			if(!Objects.equals(chargeAmountPassed, original.getChargeAmountPassed()))
+				apiRequest.addVars("chargeAmountPassed");
+			if(!Objects.equals(chargeAmountNotPassed, original.getChargeAmountNotPassed()))
+				apiRequest.addVars("chargeAmountNotPassed");
 			if(!Objects.equals(chargeAmountFuture, original.getChargeAmountFuture()))
 				apiRequest.addVars("chargeAmountFuture");
 			if(!Objects.equals(paymentShortName, original.getPaymentShortName()))
@@ -7659,7 +8097,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), paymentKey, enrollmentKey, schoolNumber, userKeys, schoolKey, schoolAddress, schoolPhoneNumber, yearKey, sessionKey, ageKey, blockKey, childKey, momKeys, dadKeys, guardianKeys, childCompleteNamePreferred, childBirthDate, momCompleteNamePreferred, dadCompleteNamePreferred, schoolName, schoolCompleteName, schoolLocation, yearStart, yearEnd, seasonStartDate, yearEnrollmentFee, sessionStartDate, sessionEndDate, ageStart, ageEnd, blockStartTime, blockEndTime, blockPricePerMonth, blockTotalPrice, enrollmentPaymentEachMonth, paymentDescription, paymentDate, paymentAmount, paymentCash, paymentCheck, paymentECheck, paymentSystem, paymentType, paymentBy, transactionId, customerProfileId, transactionStatus, paymentRecieved, chargeAmount, chargeFirstLast, chargeEnrollment, chargeMonth, chargeLateFee, paymentNext, chargeAmountDue, chargeAmountFuture, paymentShortName, paymentCompleteName);
+		return Objects.hash(super.hashCode(), paymentKey, enrollmentKey, schoolNumber, userKeys, schoolKey, schoolAddress, schoolPhoneNumber, yearKey, sessionKey, ageKey, blockKey, childKey, momKeys, dadKeys, guardianKeys, childCompleteNamePreferred, childBirthDate, momCompleteNamePreferred, dadCompleteNamePreferred, schoolName, schoolCompleteName, schoolLocation, yearStart, yearEnd, seasonStartDate, yearEnrollmentFee, sessionStartDate, sessionEndDate, ageStart, ageEnd, blockStartTime, blockEndTime, blockPricePerMonth, blockTotalPrice, enrollmentPaymentEachMonth, paymentDescription, paymentDate, paymentYear, paymentAmount, paymentCash, paymentCheck, paymentECheck, paymentSystem, paymentType, paymentBy, transactionId, customerProfileId, transactionStatus, paymentRecieved, chargeAmount, chargeFirstLast, chargeEnrollment, chargeMonth, chargeLateFee, paymentNext, chargeAmountDue, chargeAmountPassed, chargeAmountNotPassed, chargeAmountFuture, paymentShortName, paymentCompleteName);
 	}
 
 	////////////
@@ -7710,6 +8148,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				&& Objects.equals( enrollmentPaymentEachMonth, that.enrollmentPaymentEachMonth )
 				&& Objects.equals( paymentDescription, that.paymentDescription )
 				&& Objects.equals( paymentDate, that.paymentDate )
+				&& Objects.equals( paymentYear, that.paymentYear )
 				&& Objects.equals( paymentAmount, that.paymentAmount )
 				&& Objects.equals( paymentCash, that.paymentCash )
 				&& Objects.equals( paymentCheck, that.paymentCheck )
@@ -7728,6 +8167,8 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				&& Objects.equals( chargeLateFee, that.chargeLateFee )
 				&& Objects.equals( paymentNext, that.paymentNext )
 				&& Objects.equals( chargeAmountDue, that.chargeAmountDue )
+				&& Objects.equals( chargeAmountPassed, that.chargeAmountPassed )
+				&& Objects.equals( chargeAmountNotPassed, that.chargeAmountNotPassed )
 				&& Objects.equals( chargeAmountFuture, that.chargeAmountFuture )
 				&& Objects.equals( paymentShortName, that.paymentShortName )
 				&& Objects.equals( paymentCompleteName, that.paymentCompleteName );
@@ -7778,6 +8219,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		sb.append( ", enrollmentPaymentEachMonth: " ).append(enrollmentPaymentEachMonth);
 		sb.append( ", paymentDescription: \"" ).append(paymentDescription).append( "\"" );
 		sb.append( ", paymentDate: " ).append(paymentDate);
+		sb.append( ", paymentYear: " ).append(paymentYear);
 		sb.append( ", paymentAmount: " ).append(paymentAmount);
 		sb.append( ", paymentCash: " ).append(paymentCash);
 		sb.append( ", paymentCheck: " ).append(paymentCheck);
@@ -7796,6 +8238,8 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		sb.append( ", chargeLateFee: " ).append(chargeLateFee);
 		sb.append( ", paymentNext: " ).append(paymentNext);
 		sb.append( ", chargeAmountDue: " ).append(chargeAmountDue);
+		sb.append( ", chargeAmountPassed: " ).append(chargeAmountPassed);
+		sb.append( ", chargeAmountNotPassed: " ).append(chargeAmountNotPassed);
 		sb.append( ", chargeAmountFuture: " ).append(chargeAmountFuture);
 		sb.append( ", paymentShortName: \"" ).append(paymentShortName).append( "\"" );
 		sb.append( ", paymentCompleteName: \"" ).append(paymentCompleteName).append( "\"" );

@@ -198,7 +198,7 @@ public class DesignPageGenPage extends DesignPageGenPageGen<ClusterPage> {
 	protected void _listeDesignPage(Couverture<ListeRecherche<DesignPage>> c) {
 	}
 
-	protected void _designPage(Couverture<DesignPage> c) {
+	protected void _designPage_(Couverture<DesignPage> c) {
 		if(listeDesignPage != null && listeDesignPage.size() == 1)
 			c.o(listeDesignPage.get(0));
 	}
@@ -208,8 +208,8 @@ public class DesignPageGenPage extends DesignPageGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageH2(Couverture<String> c) {
-		if(designPage != null && designPage.getDesignPageNomComplet() != null)
-			c.o(designPage.getDesignPageNomComplet());
+		if(designPage_ != null && designPage_.getDesignPageNomComplet() != null)
+			c.o(designPage_.getDesignPageNomComplet());
 	}
 
 	@Override protected void _pageH3(Couverture<String> c) {
@@ -217,9 +217,9 @@ public class DesignPageGenPage extends DesignPageGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageTitre(Couverture<String> c) {
-		if(designPage != null && designPage.getDesignPageNomComplet() != null)
-			c.o(designPage.getDesignPageNomComplet());
-		else if(designPage != null)
+		if(designPage_ != null && designPage_.getDesignPageNomComplet() != null)
+			c.o(designPage_.getDesignPageNomComplet());
+		else if(designPage_ != null)
 			c.o("design de pages");
 		else if(listeDesignPage == null || listeDesignPage.size() == 0)
 			c.o("aucun design de page trouvé");
@@ -315,6 +315,16 @@ public class DesignPageGenPage extends DesignPageGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmDesignPageNomComplet("Page");
 			o.htmDesignCache("Page");
+			o.htmDesignAdmin("Page");
+			o.htmDesignIgnorerNomEnfantVide("Page");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmDesignIgnorerPaiementsPasEnSouffrance("Page");
+			o.htmDesignIgnorerPaiementsEnSouffrance("Page");
+			o.htmDesignFiltrerInscriptionCle("Page");
+			o.htmDesignInscriptionTriNomEnfant("Page");
+			o.htmDesignInscriptionTriMoisJourDeNaissance("Page");
+			o.htmDesignInscriptionTriNomGroupe("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmDesignParentCles("Page");
@@ -338,6 +348,16 @@ public class DesignPageGenPage extends DesignPageGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmDesignPageNomComplet("POST");
 			o.htmDesignCache("POST");
+			o.htmDesignAdmin("POST");
+			o.htmDesignIgnorerNomEnfantVide("POST");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmDesignIgnorerPaiementsPasEnSouffrance("POST");
+			o.htmDesignIgnorerPaiementsEnSouffrance("POST");
+			o.htmDesignFiltrerInscriptionCle("POST");
+			o.htmDesignInscriptionTriNomEnfant("POST");
+			o.htmDesignInscriptionTriMoisJourDeNaissance("POST");
+			o.htmDesignInscriptionTriNomGroupe("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmDesignParentCles("POST");
@@ -383,6 +403,16 @@ public class DesignPageGenPage extends DesignPageGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmDesignPageNomComplet("PUTCopie");
 			o.htmDesignCache("PUTCopie");
+			o.htmDesignAdmin("PUTCopie");
+			o.htmDesignIgnorerNomEnfantVide("PUTCopie");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmDesignIgnorerPaiementsPasEnSouffrance("PUTCopie");
+			o.htmDesignIgnorerPaiementsEnSouffrance("PUTCopie");
+			o.htmDesignFiltrerInscriptionCle("PUTCopie");
+			o.htmDesignInscriptionTriNomEnfant("PUTCopie");
+			o.htmDesignInscriptionTriMoisJourDeNaissance("PUTCopie");
+			o.htmDesignInscriptionTriNomGroupe("PUTCopie");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmDesignParentCles("PUTCopie");
@@ -410,6 +440,16 @@ public class DesignPageGenPage extends DesignPageGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmDesignPageNomComplet("PATCH");
 			o.htmDesignCache("PATCH");
+			o.htmDesignAdmin("PATCH");
+			o.htmDesignIgnorerNomEnfantVide("PATCH");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmDesignIgnorerPaiementsPasEnSouffrance("PATCH");
+			o.htmDesignIgnorerPaiementsEnSouffrance("PATCH");
+			o.htmDesignFiltrerInscriptionCle("PATCH");
+			o.htmDesignInscriptionTriNomEnfant("PATCH");
+			o.htmDesignInscriptionTriMoisJourDeNaissance("PATCH");
+			o.htmDesignInscriptionTriNomGroupe("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmDesignParentCles("PATCH");
@@ -439,6 +479,16 @@ public class DesignPageGenPage extends DesignPageGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmDesignPageNomComplet("Recherche");
 			o.htmDesignCache("Recherche");
+			o.htmDesignAdmin("Recherche");
+			o.htmDesignIgnorerNomEnfantVide("Recherche");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmDesignIgnorerPaiementsPasEnSouffrance("Recherche");
+			o.htmDesignIgnorerPaiementsEnSouffrance("Recherche");
+			o.htmDesignFiltrerInscriptionCle("Recherche");
+			o.htmDesignInscriptionTriNomEnfant("Recherche");
+			o.htmDesignInscriptionTriMoisJourDeNaissance("Recherche");
+			o.htmDesignInscriptionTriNomGroupe("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmDesignParentCles("Recherche");
@@ -861,7 +911,7 @@ public class DesignPageGenPage extends DesignPageGenPageGen<ClusterPage> {
 							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-khaki ")
-								.a("onclick", "putcopieDesignPage($('#putcopieDesignPageForm'), ", designPage == null ? "null" : designPage.getPk(), "); ")
+								.a("onclick", "putcopieDesignPage($('#putcopieDesignPageForm'), ", designPage_ == null ? "null" : designPage_.getPk(), "); ")
 								.f().sx("Dupliquer design de pages")
 							.g("button");
 
@@ -895,7 +945,7 @@ public class DesignPageGenPage extends DesignPageGenPageGen<ClusterPage> {
 							} g("form");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-khaki ")
-								.a("onclick", "patchDesignPage(null, $('#patchDesignPageFormulaireValeurs'), ", Optional.ofNullable(designPage).map(DesignPage::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
+								.a("onclick", "patchDesignPage(null, $('#patchDesignPageFormulaireValeurs'), ", Optional.ofNullable(designPage_).map(DesignPage::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
 								.f().sx("Modifier design de pages")
 							.g("button");
 

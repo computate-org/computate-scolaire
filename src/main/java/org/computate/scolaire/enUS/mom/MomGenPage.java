@@ -53,7 +53,7 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 	protected void _listSchoolMom(Wrap<SearchList<SchoolMom>> c) {
 	}
 
-	protected void _schoolMom(Wrap<SchoolMom> c) {
+	protected void _schoolMom_(Wrap<SchoolMom> c) {
 		if(listSchoolMom != null && listSchoolMom.size() == 1)
 			c.o(listSchoolMom.get(0));
 	}
@@ -63,8 +63,8 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageH2(Wrap<String> c) {
-		if(schoolMom != null && schoolMom.getMomCompleteName() != null)
-			c.o(schoolMom.getMomCompleteName());
+		if(schoolMom_ != null && schoolMom_.getMomCompleteName() != null)
+			c.o(schoolMom_.getMomCompleteName());
 	}
 
 	@Override protected void _pageH3(Wrap<String> c) {
@@ -72,9 +72,9 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageTitle(Wrap<String> c) {
-		if(schoolMom != null && schoolMom.getMomCompleteName() != null)
-			c.o(schoolMom.getMomCompleteName());
-		else if(schoolMom != null)
+		if(schoolMom_ != null && schoolMom_.getMomCompleteName() != null)
+			c.o(schoolMom_.getMomCompleteName());
+		else if(schoolMom_ != null)
 			c.o("moms");
 		else if(listSchoolMom == null || listSchoolMom.size() == 0)
 			c.o("no mom found");
@@ -747,7 +747,7 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-pink ")
-								.a("onclick", "putcopySchoolMom($('#putcopySchoolMomForm'), ", schoolMom == null ? "null" : schoolMom.getPk(), "); ")
+								.a("onclick", "putcopySchoolMom($('#putcopySchoolMomForm'), ", schoolMom_ == null ? "null" : schoolMom_.getPk(), "); ")
 								.f().sx("Duplicate moms")
 							.g("button");
 
@@ -781,7 +781,7 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 							} g("form");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-pink ")
-								.a("onclick", "patchSchoolMom(null, $('#patchSchoolMomFormValues'), ", Optional.ofNullable(schoolMom).map(SchoolMom::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
+								.a("onclick", "patchSchoolMom(null, $('#patchSchoolMomFormValues'), ", Optional.ofNullable(schoolMom_).map(SchoolMom::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
 								.f().sx("Modify moms")
 							.g("button");
 

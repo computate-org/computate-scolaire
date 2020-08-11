@@ -812,6 +812,1046 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 		} g("div");
 	}
 
+	/////////////////
+	// designAdmin //
+	/////////////////
+
+	/**	 The entity designAdmin
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected Boolean designAdmin;
+	@JsonIgnore
+	public Wrap<Boolean> designAdminWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("designAdmin").o(designAdmin);
+
+	/**	<br/> The entity designAdmin
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.PageDesign&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:designAdmin">Find the entity designAdmin in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _designAdmin(Wrap<Boolean> c);
+
+	public Boolean getDesignAdmin() {
+		return designAdmin;
+	}
+
+	public void setDesignAdmin(Boolean designAdmin) {
+		this.designAdmin = designAdmin;
+		this.designAdminWrap.alreadyInitialized = true;
+	}
+	public PageDesign setDesignAdmin(String o) {
+		this.designAdmin = Boolean.parseBoolean(o);
+		this.designAdminWrap.alreadyInitialized = true;
+		return (PageDesign)this;
+	}
+	protected PageDesign designAdminInit() {
+		if(!designAdminWrap.alreadyInitialized) {
+			_designAdmin(designAdminWrap);
+			if(designAdmin == null)
+				setDesignAdmin(designAdminWrap.o);
+		}
+		designAdminWrap.alreadyInitialized(true);
+		return (PageDesign)this;
+	}
+
+	public Boolean solrDesignAdmin() {
+		return designAdmin;
+	}
+
+	public String strDesignAdmin() {
+		return designAdmin == null ? "" : designAdmin.toString();
+	}
+
+	public String jsonDesignAdmin() {
+		return designAdmin == null ? "" : designAdmin.toString();
+	}
+
+	public String nomAffichageDesignAdmin() {
+		return "for admin";
+	}
+
+	public String htmTooltipDesignAdmin() {
+		return null;
+	}
+
+	public String htmDesignAdmin() {
+		return designAdmin == null ? "" : StringEscapeUtils.escapeHtml4(strDesignAdmin());
+	}
+
+	public void inputDesignAdmin(String classApiMethodMethod) {
+		PageDesign s = (PageDesign)this;
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			if("Page".equals(classApiMethodMethod)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classApiMethodMethod, "_designAdmin")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classApiMethodMethod, "_designAdmin");
+			}
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setDesignAdmin classPageDesign inputPageDesign", pk, "DesignAdmin w3-input w3-border ");
+				a("name", "setDesignAdmin");
+			} else {
+				a("class", "valueDesignAdmin classPageDesign inputPageDesign", pk, "DesignAdmin w3-input w3-border ");
+				a("name", "designAdmin");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setDesignAdmin', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_designAdmin')); }, function() { addError($('#", classApiMethodMethod, "_designAdmin')); }); ");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				if(getDesignAdmin() != null && getDesignAdmin())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
+
+		} else {
+			e("span").a("class", "varPageDesign", pk, "DesignAdmin ").f().sx(htmDesignAdmin()).g("span");
+		}
+	}
+
+	public void htmDesignAdmin(String classApiMethodMethod) {
+		PageDesign s = (PageDesign)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "PageDesignDesignAdmin").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-khaki ").f();
+							e("label").a("for", classApiMethodMethod, "_designAdmin").a("class", "").f().sx("for admin").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputDesignAdmin(classApiMethodMethod);
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	////////////////////////////////
+	// designIgnoreEmptyChildName //
+	////////////////////////////////
+
+	/**	 The entity designIgnoreEmptyChildName
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected Boolean designIgnoreEmptyChildName;
+	@JsonIgnore
+	public Wrap<Boolean> designIgnoreEmptyChildNameWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("designIgnoreEmptyChildName").o(designIgnoreEmptyChildName);
+
+	/**	<br/> The entity designIgnoreEmptyChildName
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.PageDesign&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:designIgnoreEmptyChildName">Find the entity designIgnoreEmptyChildName in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _designIgnoreEmptyChildName(Wrap<Boolean> c);
+
+	public Boolean getDesignIgnoreEmptyChildName() {
+		return designIgnoreEmptyChildName;
+	}
+
+	public void setDesignIgnoreEmptyChildName(Boolean designIgnoreEmptyChildName) {
+		this.designIgnoreEmptyChildName = designIgnoreEmptyChildName;
+		this.designIgnoreEmptyChildNameWrap.alreadyInitialized = true;
+	}
+	public PageDesign setDesignIgnoreEmptyChildName(String o) {
+		this.designIgnoreEmptyChildName = Boolean.parseBoolean(o);
+		this.designIgnoreEmptyChildNameWrap.alreadyInitialized = true;
+		return (PageDesign)this;
+	}
+	protected PageDesign designIgnoreEmptyChildNameInit() {
+		if(!designIgnoreEmptyChildNameWrap.alreadyInitialized) {
+			_designIgnoreEmptyChildName(designIgnoreEmptyChildNameWrap);
+			if(designIgnoreEmptyChildName == null)
+				setDesignIgnoreEmptyChildName(designIgnoreEmptyChildNameWrap.o);
+		}
+		designIgnoreEmptyChildNameWrap.alreadyInitialized(true);
+		return (PageDesign)this;
+	}
+
+	public Boolean solrDesignIgnoreEmptyChildName() {
+		return designIgnoreEmptyChildName;
+	}
+
+	public String strDesignIgnoreEmptyChildName() {
+		return designIgnoreEmptyChildName == null ? "" : designIgnoreEmptyChildName.toString();
+	}
+
+	public String jsonDesignIgnoreEmptyChildName() {
+		return designIgnoreEmptyChildName == null ? "" : designIgnoreEmptyChildName.toString();
+	}
+
+	public String nomAffichageDesignIgnoreEmptyChildName() {
+		return "ignore empty child name";
+	}
+
+	public String htmTooltipDesignIgnoreEmptyChildName() {
+		return null;
+	}
+
+	public String htmDesignIgnoreEmptyChildName() {
+		return designIgnoreEmptyChildName == null ? "" : StringEscapeUtils.escapeHtml4(strDesignIgnoreEmptyChildName());
+	}
+
+	public void inputDesignIgnoreEmptyChildName(String classApiMethodMethod) {
+		PageDesign s = (PageDesign)this;
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			if("Page".equals(classApiMethodMethod)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classApiMethodMethod, "_designIgnoreEmptyChildName")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classApiMethodMethod, "_designIgnoreEmptyChildName");
+			}
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setDesignIgnoreEmptyChildName classPageDesign inputPageDesign", pk, "DesignIgnoreEmptyChildName w3-input w3-border ");
+				a("name", "setDesignIgnoreEmptyChildName");
+			} else {
+				a("class", "valueDesignIgnoreEmptyChildName classPageDesign inputPageDesign", pk, "DesignIgnoreEmptyChildName w3-input w3-border ");
+				a("name", "designIgnoreEmptyChildName");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setDesignIgnoreEmptyChildName', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_designIgnoreEmptyChildName')); }, function() { addError($('#", classApiMethodMethod, "_designIgnoreEmptyChildName')); }); ");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				if(getDesignIgnoreEmptyChildName() != null && getDesignIgnoreEmptyChildName())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
+
+		} else {
+			e("span").a("class", "varPageDesign", pk, "DesignIgnoreEmptyChildName ").f().sx(htmDesignIgnoreEmptyChildName()).g("span");
+		}
+	}
+
+	public void htmDesignIgnoreEmptyChildName(String classApiMethodMethod) {
+		PageDesign s = (PageDesign)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "PageDesignDesignIgnoreEmptyChildName").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-khaki ").f();
+							e("label").a("for", classApiMethodMethod, "_designIgnoreEmptyChildName").a("class", "").f().sx("ignore empty child name").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputDesignIgnoreEmptyChildName(classApiMethodMethod);
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	////////////////////////////////////
+	// designIgnorePaymentsNotPastDue //
+	////////////////////////////////////
+
+	/**	 The entity designIgnorePaymentsNotPastDue
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected Boolean designIgnorePaymentsNotPastDue;
+	@JsonIgnore
+	public Wrap<Boolean> designIgnorePaymentsNotPastDueWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("designIgnorePaymentsNotPastDue").o(designIgnorePaymentsNotPastDue);
+
+	/**	<br/> The entity designIgnorePaymentsNotPastDue
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.PageDesign&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:designIgnorePaymentsNotPastDue">Find the entity designIgnorePaymentsNotPastDue in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _designIgnorePaymentsNotPastDue(Wrap<Boolean> c);
+
+	public Boolean getDesignIgnorePaymentsNotPastDue() {
+		return designIgnorePaymentsNotPastDue;
+	}
+
+	public void setDesignIgnorePaymentsNotPastDue(Boolean designIgnorePaymentsNotPastDue) {
+		this.designIgnorePaymentsNotPastDue = designIgnorePaymentsNotPastDue;
+		this.designIgnorePaymentsNotPastDueWrap.alreadyInitialized = true;
+	}
+	public PageDesign setDesignIgnorePaymentsNotPastDue(String o) {
+		this.designIgnorePaymentsNotPastDue = Boolean.parseBoolean(o);
+		this.designIgnorePaymentsNotPastDueWrap.alreadyInitialized = true;
+		return (PageDesign)this;
+	}
+	protected PageDesign designIgnorePaymentsNotPastDueInit() {
+		if(!designIgnorePaymentsNotPastDueWrap.alreadyInitialized) {
+			_designIgnorePaymentsNotPastDue(designIgnorePaymentsNotPastDueWrap);
+			if(designIgnorePaymentsNotPastDue == null)
+				setDesignIgnorePaymentsNotPastDue(designIgnorePaymentsNotPastDueWrap.o);
+		}
+		designIgnorePaymentsNotPastDueWrap.alreadyInitialized(true);
+		return (PageDesign)this;
+	}
+
+	public Boolean solrDesignIgnorePaymentsNotPastDue() {
+		return designIgnorePaymentsNotPastDue;
+	}
+
+	public String strDesignIgnorePaymentsNotPastDue() {
+		return designIgnorePaymentsNotPastDue == null ? "" : designIgnorePaymentsNotPastDue.toString();
+	}
+
+	public String jsonDesignIgnorePaymentsNotPastDue() {
+		return designIgnorePaymentsNotPastDue == null ? "" : designIgnorePaymentsNotPastDue.toString();
+	}
+
+	public String nomAffichageDesignIgnorePaymentsNotPastDue() {
+		return "ignore enrollments not past due";
+	}
+
+	public String htmTooltipDesignIgnorePaymentsNotPastDue() {
+		return null;
+	}
+
+	public String htmDesignIgnorePaymentsNotPastDue() {
+		return designIgnorePaymentsNotPastDue == null ? "" : StringEscapeUtils.escapeHtml4(strDesignIgnorePaymentsNotPastDue());
+	}
+
+	public void inputDesignIgnorePaymentsNotPastDue(String classApiMethodMethod) {
+		PageDesign s = (PageDesign)this;
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			if("Page".equals(classApiMethodMethod)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classApiMethodMethod, "_designIgnorePaymentsNotPastDue")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classApiMethodMethod, "_designIgnorePaymentsNotPastDue");
+			}
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setDesignIgnorePaymentsNotPastDue classPageDesign inputPageDesign", pk, "DesignIgnorePaymentsNotPastDue w3-input w3-border ");
+				a("name", "setDesignIgnorePaymentsNotPastDue");
+			} else {
+				a("class", "valueDesignIgnorePaymentsNotPastDue classPageDesign inputPageDesign", pk, "DesignIgnorePaymentsNotPastDue w3-input w3-border ");
+				a("name", "designIgnorePaymentsNotPastDue");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setDesignIgnorePaymentsNotPastDue', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_designIgnorePaymentsNotPastDue')); }, function() { addError($('#", classApiMethodMethod, "_designIgnorePaymentsNotPastDue')); }); ");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				if(getDesignIgnorePaymentsNotPastDue() != null && getDesignIgnorePaymentsNotPastDue())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
+
+		} else {
+			e("span").a("class", "varPageDesign", pk, "DesignIgnorePaymentsNotPastDue ").f().sx(htmDesignIgnorePaymentsNotPastDue()).g("span");
+		}
+	}
+
+	public void htmDesignIgnorePaymentsNotPastDue(String classApiMethodMethod) {
+		PageDesign s = (PageDesign)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "PageDesignDesignIgnorePaymentsNotPastDue").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-khaki ").f();
+							e("label").a("for", classApiMethodMethod, "_designIgnorePaymentsNotPastDue").a("class", "").f().sx("ignore enrollments not past due").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputDesignIgnorePaymentsNotPastDue(classApiMethodMethod);
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	/////////////////////////////////
+	// designIgnorePaymentsPastDue //
+	/////////////////////////////////
+
+	/**	 The entity designIgnorePaymentsPastDue
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected Boolean designIgnorePaymentsPastDue;
+	@JsonIgnore
+	public Wrap<Boolean> designIgnorePaymentsPastDueWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("designIgnorePaymentsPastDue").o(designIgnorePaymentsPastDue);
+
+	/**	<br/> The entity designIgnorePaymentsPastDue
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.PageDesign&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:designIgnorePaymentsPastDue">Find the entity designIgnorePaymentsPastDue in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _designIgnorePaymentsPastDue(Wrap<Boolean> c);
+
+	public Boolean getDesignIgnorePaymentsPastDue() {
+		return designIgnorePaymentsPastDue;
+	}
+
+	public void setDesignIgnorePaymentsPastDue(Boolean designIgnorePaymentsPastDue) {
+		this.designIgnorePaymentsPastDue = designIgnorePaymentsPastDue;
+		this.designIgnorePaymentsPastDueWrap.alreadyInitialized = true;
+	}
+	public PageDesign setDesignIgnorePaymentsPastDue(String o) {
+		this.designIgnorePaymentsPastDue = Boolean.parseBoolean(o);
+		this.designIgnorePaymentsPastDueWrap.alreadyInitialized = true;
+		return (PageDesign)this;
+	}
+	protected PageDesign designIgnorePaymentsPastDueInit() {
+		if(!designIgnorePaymentsPastDueWrap.alreadyInitialized) {
+			_designIgnorePaymentsPastDue(designIgnorePaymentsPastDueWrap);
+			if(designIgnorePaymentsPastDue == null)
+				setDesignIgnorePaymentsPastDue(designIgnorePaymentsPastDueWrap.o);
+		}
+		designIgnorePaymentsPastDueWrap.alreadyInitialized(true);
+		return (PageDesign)this;
+	}
+
+	public Boolean solrDesignIgnorePaymentsPastDue() {
+		return designIgnorePaymentsPastDue;
+	}
+
+	public String strDesignIgnorePaymentsPastDue() {
+		return designIgnorePaymentsPastDue == null ? "" : designIgnorePaymentsPastDue.toString();
+	}
+
+	public String jsonDesignIgnorePaymentsPastDue() {
+		return designIgnorePaymentsPastDue == null ? "" : designIgnorePaymentsPastDue.toString();
+	}
+
+	public String nomAffichageDesignIgnorePaymentsPastDue() {
+		return "ignore enrollments past due";
+	}
+
+	public String htmTooltipDesignIgnorePaymentsPastDue() {
+		return null;
+	}
+
+	public String htmDesignIgnorePaymentsPastDue() {
+		return designIgnorePaymentsPastDue == null ? "" : StringEscapeUtils.escapeHtml4(strDesignIgnorePaymentsPastDue());
+	}
+
+	public void inputDesignIgnorePaymentsPastDue(String classApiMethodMethod) {
+		PageDesign s = (PageDesign)this;
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			if("Page".equals(classApiMethodMethod)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classApiMethodMethod, "_designIgnorePaymentsPastDue")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classApiMethodMethod, "_designIgnorePaymentsPastDue");
+			}
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setDesignIgnorePaymentsPastDue classPageDesign inputPageDesign", pk, "DesignIgnorePaymentsPastDue w3-input w3-border ");
+				a("name", "setDesignIgnorePaymentsPastDue");
+			} else {
+				a("class", "valueDesignIgnorePaymentsPastDue classPageDesign inputPageDesign", pk, "DesignIgnorePaymentsPastDue w3-input w3-border ");
+				a("name", "designIgnorePaymentsPastDue");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setDesignIgnorePaymentsPastDue', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_designIgnorePaymentsPastDue')); }, function() { addError($('#", classApiMethodMethod, "_designIgnorePaymentsPastDue')); }); ");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				if(getDesignIgnorePaymentsPastDue() != null && getDesignIgnorePaymentsPastDue())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
+
+		} else {
+			e("span").a("class", "varPageDesign", pk, "DesignIgnorePaymentsPastDue ").f().sx(htmDesignIgnorePaymentsPastDue()).g("span");
+		}
+	}
+
+	public void htmDesignIgnorePaymentsPastDue(String classApiMethodMethod) {
+		PageDesign s = (PageDesign)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "PageDesignDesignIgnorePaymentsPastDue").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-khaki ").f();
+							e("label").a("for", classApiMethodMethod, "_designIgnorePaymentsPastDue").a("class", "").f().sx("ignore enrollments past due").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputDesignIgnorePaymentsPastDue(classApiMethodMethod);
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	///////////////////////////////
+	// designFilterEnrollmentKey //
+	///////////////////////////////
+
+	/**	 The entity designFilterEnrollmentKey
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected Boolean designFilterEnrollmentKey;
+	@JsonIgnore
+	public Wrap<Boolean> designFilterEnrollmentKeyWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("designFilterEnrollmentKey").o(designFilterEnrollmentKey);
+
+	/**	<br/> The entity designFilterEnrollmentKey
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.PageDesign&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:designFilterEnrollmentKey">Find the entity designFilterEnrollmentKey in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _designFilterEnrollmentKey(Wrap<Boolean> c);
+
+	public Boolean getDesignFilterEnrollmentKey() {
+		return designFilterEnrollmentKey;
+	}
+
+	public void setDesignFilterEnrollmentKey(Boolean designFilterEnrollmentKey) {
+		this.designFilterEnrollmentKey = designFilterEnrollmentKey;
+		this.designFilterEnrollmentKeyWrap.alreadyInitialized = true;
+	}
+	public PageDesign setDesignFilterEnrollmentKey(String o) {
+		this.designFilterEnrollmentKey = Boolean.parseBoolean(o);
+		this.designFilterEnrollmentKeyWrap.alreadyInitialized = true;
+		return (PageDesign)this;
+	}
+	protected PageDesign designFilterEnrollmentKeyInit() {
+		if(!designFilterEnrollmentKeyWrap.alreadyInitialized) {
+			_designFilterEnrollmentKey(designFilterEnrollmentKeyWrap);
+			if(designFilterEnrollmentKey == null)
+				setDesignFilterEnrollmentKey(designFilterEnrollmentKeyWrap.o);
+		}
+		designFilterEnrollmentKeyWrap.alreadyInitialized(true);
+		return (PageDesign)this;
+	}
+
+	public Boolean solrDesignFilterEnrollmentKey() {
+		return designFilterEnrollmentKey;
+	}
+
+	public String strDesignFilterEnrollmentKey() {
+		return designFilterEnrollmentKey == null ? "" : designFilterEnrollmentKey.toString();
+	}
+
+	public String jsonDesignFilterEnrollmentKey() {
+		return designFilterEnrollmentKey == null ? "" : designFilterEnrollmentKey.toString();
+	}
+
+	public String nomAffichageDesignFilterEnrollmentKey() {
+		return "filter enrollment key";
+	}
+
+	public String htmTooltipDesignFilterEnrollmentKey() {
+		return null;
+	}
+
+	public String htmDesignFilterEnrollmentKey() {
+		return designFilterEnrollmentKey == null ? "" : StringEscapeUtils.escapeHtml4(strDesignFilterEnrollmentKey());
+	}
+
+	public void inputDesignFilterEnrollmentKey(String classApiMethodMethod) {
+		PageDesign s = (PageDesign)this;
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			if("Page".equals(classApiMethodMethod)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classApiMethodMethod, "_designFilterEnrollmentKey")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classApiMethodMethod, "_designFilterEnrollmentKey");
+			}
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setDesignFilterEnrollmentKey classPageDesign inputPageDesign", pk, "DesignFilterEnrollmentKey w3-input w3-border ");
+				a("name", "setDesignFilterEnrollmentKey");
+			} else {
+				a("class", "valueDesignFilterEnrollmentKey classPageDesign inputPageDesign", pk, "DesignFilterEnrollmentKey w3-input w3-border ");
+				a("name", "designFilterEnrollmentKey");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setDesignFilterEnrollmentKey', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_designFilterEnrollmentKey')); }, function() { addError($('#", classApiMethodMethod, "_designFilterEnrollmentKey')); }); ");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				if(getDesignFilterEnrollmentKey() != null && getDesignFilterEnrollmentKey())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
+
+		} else {
+			e("span").a("class", "varPageDesign", pk, "DesignFilterEnrollmentKey ").f().sx(htmDesignFilterEnrollmentKey()).g("span");
+		}
+	}
+
+	public void htmDesignFilterEnrollmentKey(String classApiMethodMethod) {
+		PageDesign s = (PageDesign)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "PageDesignDesignFilterEnrollmentKey").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-khaki ").f();
+							e("label").a("for", classApiMethodMethod, "_designFilterEnrollmentKey").a("class", "").f().sx("filter enrollment key").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputDesignFilterEnrollmentKey(classApiMethodMethod);
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	///////////////////////////////////
+	// designEnrollmentSortChildName //
+	///////////////////////////////////
+
+	/**	 The entity designEnrollmentSortChildName
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected Boolean designEnrollmentSortChildName;
+	@JsonIgnore
+	public Wrap<Boolean> designEnrollmentSortChildNameWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("designEnrollmentSortChildName").o(designEnrollmentSortChildName);
+
+	/**	<br/> The entity designEnrollmentSortChildName
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.PageDesign&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:designEnrollmentSortChildName">Find the entity designEnrollmentSortChildName in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _designEnrollmentSortChildName(Wrap<Boolean> c);
+
+	public Boolean getDesignEnrollmentSortChildName() {
+		return designEnrollmentSortChildName;
+	}
+
+	public void setDesignEnrollmentSortChildName(Boolean designEnrollmentSortChildName) {
+		this.designEnrollmentSortChildName = designEnrollmentSortChildName;
+		this.designEnrollmentSortChildNameWrap.alreadyInitialized = true;
+	}
+	public PageDesign setDesignEnrollmentSortChildName(String o) {
+		this.designEnrollmentSortChildName = Boolean.parseBoolean(o);
+		this.designEnrollmentSortChildNameWrap.alreadyInitialized = true;
+		return (PageDesign)this;
+	}
+	protected PageDesign designEnrollmentSortChildNameInit() {
+		if(!designEnrollmentSortChildNameWrap.alreadyInitialized) {
+			_designEnrollmentSortChildName(designEnrollmentSortChildNameWrap);
+			if(designEnrollmentSortChildName == null)
+				setDesignEnrollmentSortChildName(designEnrollmentSortChildNameWrap.o);
+		}
+		designEnrollmentSortChildNameWrap.alreadyInitialized(true);
+		return (PageDesign)this;
+	}
+
+	public Boolean solrDesignEnrollmentSortChildName() {
+		return designEnrollmentSortChildName;
+	}
+
+	public String strDesignEnrollmentSortChildName() {
+		return designEnrollmentSortChildName == null ? "" : designEnrollmentSortChildName.toString();
+	}
+
+	public String jsonDesignEnrollmentSortChildName() {
+		return designEnrollmentSortChildName == null ? "" : designEnrollmentSortChildName.toString();
+	}
+
+	public String nomAffichageDesignEnrollmentSortChildName() {
+		return "enrollment sort child name";
+	}
+
+	public String htmTooltipDesignEnrollmentSortChildName() {
+		return null;
+	}
+
+	public String htmDesignEnrollmentSortChildName() {
+		return designEnrollmentSortChildName == null ? "" : StringEscapeUtils.escapeHtml4(strDesignEnrollmentSortChildName());
+	}
+
+	public void inputDesignEnrollmentSortChildName(String classApiMethodMethod) {
+		PageDesign s = (PageDesign)this;
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			if("Page".equals(classApiMethodMethod)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classApiMethodMethod, "_designEnrollmentSortChildName")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classApiMethodMethod, "_designEnrollmentSortChildName");
+			}
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setDesignEnrollmentSortChildName classPageDesign inputPageDesign", pk, "DesignEnrollmentSortChildName w3-input w3-border ");
+				a("name", "setDesignEnrollmentSortChildName");
+			} else {
+				a("class", "valueDesignEnrollmentSortChildName classPageDesign inputPageDesign", pk, "DesignEnrollmentSortChildName w3-input w3-border ");
+				a("name", "designEnrollmentSortChildName");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setDesignEnrollmentSortChildName', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_designEnrollmentSortChildName')); }, function() { addError($('#", classApiMethodMethod, "_designEnrollmentSortChildName')); }); ");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				if(getDesignEnrollmentSortChildName() != null && getDesignEnrollmentSortChildName())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
+
+		} else {
+			e("span").a("class", "varPageDesign", pk, "DesignEnrollmentSortChildName ").f().sx(htmDesignEnrollmentSortChildName()).g("span");
+		}
+	}
+
+	public void htmDesignEnrollmentSortChildName(String classApiMethodMethod) {
+		PageDesign s = (PageDesign)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "PageDesignDesignEnrollmentSortChildName").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-khaki ").f();
+							e("label").a("for", classApiMethodMethod, "_designEnrollmentSortChildName").a("class", "").f().sx("enrollment sort child name").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputDesignEnrollmentSortChildName(classApiMethodMethod);
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	/////////////////////////////////////////
+	// designEnrollmentSortMonthDayOfBirth //
+	/////////////////////////////////////////
+
+	/**	 The entity designEnrollmentSortMonthDayOfBirth
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected Boolean designEnrollmentSortMonthDayOfBirth;
+	@JsonIgnore
+	public Wrap<Boolean> designEnrollmentSortMonthDayOfBirthWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("designEnrollmentSortMonthDayOfBirth").o(designEnrollmentSortMonthDayOfBirth);
+
+	/**	<br/> The entity designEnrollmentSortMonthDayOfBirth
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.PageDesign&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:designEnrollmentSortMonthDayOfBirth">Find the entity designEnrollmentSortMonthDayOfBirth in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _designEnrollmentSortMonthDayOfBirth(Wrap<Boolean> c);
+
+	public Boolean getDesignEnrollmentSortMonthDayOfBirth() {
+		return designEnrollmentSortMonthDayOfBirth;
+	}
+
+	public void setDesignEnrollmentSortMonthDayOfBirth(Boolean designEnrollmentSortMonthDayOfBirth) {
+		this.designEnrollmentSortMonthDayOfBirth = designEnrollmentSortMonthDayOfBirth;
+		this.designEnrollmentSortMonthDayOfBirthWrap.alreadyInitialized = true;
+	}
+	public PageDesign setDesignEnrollmentSortMonthDayOfBirth(String o) {
+		this.designEnrollmentSortMonthDayOfBirth = Boolean.parseBoolean(o);
+		this.designEnrollmentSortMonthDayOfBirthWrap.alreadyInitialized = true;
+		return (PageDesign)this;
+	}
+	protected PageDesign designEnrollmentSortMonthDayOfBirthInit() {
+		if(!designEnrollmentSortMonthDayOfBirthWrap.alreadyInitialized) {
+			_designEnrollmentSortMonthDayOfBirth(designEnrollmentSortMonthDayOfBirthWrap);
+			if(designEnrollmentSortMonthDayOfBirth == null)
+				setDesignEnrollmentSortMonthDayOfBirth(designEnrollmentSortMonthDayOfBirthWrap.o);
+		}
+		designEnrollmentSortMonthDayOfBirthWrap.alreadyInitialized(true);
+		return (PageDesign)this;
+	}
+
+	public Boolean solrDesignEnrollmentSortMonthDayOfBirth() {
+		return designEnrollmentSortMonthDayOfBirth;
+	}
+
+	public String strDesignEnrollmentSortMonthDayOfBirth() {
+		return designEnrollmentSortMonthDayOfBirth == null ? "" : designEnrollmentSortMonthDayOfBirth.toString();
+	}
+
+	public String jsonDesignEnrollmentSortMonthDayOfBirth() {
+		return designEnrollmentSortMonthDayOfBirth == null ? "" : designEnrollmentSortMonthDayOfBirth.toString();
+	}
+
+	public String nomAffichageDesignEnrollmentSortMonthDayOfBirth() {
+		return "enrollment sort month day of birth";
+	}
+
+	public String htmTooltipDesignEnrollmentSortMonthDayOfBirth() {
+		return null;
+	}
+
+	public String htmDesignEnrollmentSortMonthDayOfBirth() {
+		return designEnrollmentSortMonthDayOfBirth == null ? "" : StringEscapeUtils.escapeHtml4(strDesignEnrollmentSortMonthDayOfBirth());
+	}
+
+	public void inputDesignEnrollmentSortMonthDayOfBirth(String classApiMethodMethod) {
+		PageDesign s = (PageDesign)this;
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			if("Page".equals(classApiMethodMethod)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classApiMethodMethod, "_designEnrollmentSortMonthDayOfBirth")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classApiMethodMethod, "_designEnrollmentSortMonthDayOfBirth");
+			}
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setDesignEnrollmentSortMonthDayOfBirth classPageDesign inputPageDesign", pk, "DesignEnrollmentSortMonthDayOfBirth w3-input w3-border ");
+				a("name", "setDesignEnrollmentSortMonthDayOfBirth");
+			} else {
+				a("class", "valueDesignEnrollmentSortMonthDayOfBirth classPageDesign inputPageDesign", pk, "DesignEnrollmentSortMonthDayOfBirth w3-input w3-border ");
+				a("name", "designEnrollmentSortMonthDayOfBirth");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setDesignEnrollmentSortMonthDayOfBirth', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_designEnrollmentSortMonthDayOfBirth')); }, function() { addError($('#", classApiMethodMethod, "_designEnrollmentSortMonthDayOfBirth')); }); ");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				if(getDesignEnrollmentSortMonthDayOfBirth() != null && getDesignEnrollmentSortMonthDayOfBirth())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
+
+		} else {
+			e("span").a("class", "varPageDesign", pk, "DesignEnrollmentSortMonthDayOfBirth ").f().sx(htmDesignEnrollmentSortMonthDayOfBirth()).g("span");
+		}
+	}
+
+	public void htmDesignEnrollmentSortMonthDayOfBirth(String classApiMethodMethod) {
+		PageDesign s = (PageDesign)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "PageDesignDesignEnrollmentSortMonthDayOfBirth").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-khaki ").f();
+							e("label").a("for", classApiMethodMethod, "_designEnrollmentSortMonthDayOfBirth").a("class", "").f().sx("enrollment sort month day of birth").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputDesignEnrollmentSortMonthDayOfBirth(classApiMethodMethod);
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	///////////////////////////////////
+	// designEnrollmentSortGroupName //
+	///////////////////////////////////
+
+	/**	 The entity designEnrollmentSortGroupName
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected Boolean designEnrollmentSortGroupName;
+	@JsonIgnore
+	public Wrap<Boolean> designEnrollmentSortGroupNameWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("designEnrollmentSortGroupName").o(designEnrollmentSortGroupName);
+
+	/**	<br/> The entity designEnrollmentSortGroupName
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.PageDesign&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:designEnrollmentSortGroupName">Find the entity designEnrollmentSortGroupName in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _designEnrollmentSortGroupName(Wrap<Boolean> c);
+
+	public Boolean getDesignEnrollmentSortGroupName() {
+		return designEnrollmentSortGroupName;
+	}
+
+	public void setDesignEnrollmentSortGroupName(Boolean designEnrollmentSortGroupName) {
+		this.designEnrollmentSortGroupName = designEnrollmentSortGroupName;
+		this.designEnrollmentSortGroupNameWrap.alreadyInitialized = true;
+	}
+	public PageDesign setDesignEnrollmentSortGroupName(String o) {
+		this.designEnrollmentSortGroupName = Boolean.parseBoolean(o);
+		this.designEnrollmentSortGroupNameWrap.alreadyInitialized = true;
+		return (PageDesign)this;
+	}
+	protected PageDesign designEnrollmentSortGroupNameInit() {
+		if(!designEnrollmentSortGroupNameWrap.alreadyInitialized) {
+			_designEnrollmentSortGroupName(designEnrollmentSortGroupNameWrap);
+			if(designEnrollmentSortGroupName == null)
+				setDesignEnrollmentSortGroupName(designEnrollmentSortGroupNameWrap.o);
+		}
+		designEnrollmentSortGroupNameWrap.alreadyInitialized(true);
+		return (PageDesign)this;
+	}
+
+	public Boolean solrDesignEnrollmentSortGroupName() {
+		return designEnrollmentSortGroupName;
+	}
+
+	public String strDesignEnrollmentSortGroupName() {
+		return designEnrollmentSortGroupName == null ? "" : designEnrollmentSortGroupName.toString();
+	}
+
+	public String jsonDesignEnrollmentSortGroupName() {
+		return designEnrollmentSortGroupName == null ? "" : designEnrollmentSortGroupName.toString();
+	}
+
+	public String nomAffichageDesignEnrollmentSortGroupName() {
+		return "enrollment sort group name";
+	}
+
+	public String htmTooltipDesignEnrollmentSortGroupName() {
+		return null;
+	}
+
+	public String htmDesignEnrollmentSortGroupName() {
+		return designEnrollmentSortGroupName == null ? "" : StringEscapeUtils.escapeHtml4(strDesignEnrollmentSortGroupName());
+	}
+
+	public void inputDesignEnrollmentSortGroupName(String classApiMethodMethod) {
+		PageDesign s = (PageDesign)this;
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			if("Page".equals(classApiMethodMethod)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classApiMethodMethod, "_designEnrollmentSortGroupName")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classApiMethodMethod, "_designEnrollmentSortGroupName");
+			}
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setDesignEnrollmentSortGroupName classPageDesign inputPageDesign", pk, "DesignEnrollmentSortGroupName w3-input w3-border ");
+				a("name", "setDesignEnrollmentSortGroupName");
+			} else {
+				a("class", "valueDesignEnrollmentSortGroupName classPageDesign inputPageDesign", pk, "DesignEnrollmentSortGroupName w3-input w3-border ");
+				a("name", "designEnrollmentSortGroupName");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setDesignEnrollmentSortGroupName', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_designEnrollmentSortGroupName')); }, function() { addError($('#", classApiMethodMethod, "_designEnrollmentSortGroupName')); }); ");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				if(getDesignEnrollmentSortGroupName() != null && getDesignEnrollmentSortGroupName())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
+
+		} else {
+			e("span").a("class", "varPageDesign", pk, "DesignEnrollmentSortGroupName ").f().sx(htmDesignEnrollmentSortGroupName()).g("span");
+		}
+	}
+
+	public void htmDesignEnrollmentSortGroupName(String classApiMethodMethod) {
+		PageDesign s = (PageDesign)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "PageDesignDesignEnrollmentSortGroupName").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-khaki ").f();
+							e("label").a("for", classApiMethodMethod, "_designEnrollmentSortGroupName").a("class", "").f().sx("enrollment sort group name").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputDesignEnrollmentSortGroupName(classApiMethodMethod);
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
 	//////////////
 	// initDeep //
 	//////////////
@@ -839,6 +1879,14 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 		htmlPartKeysInit();
 		pageDesignCompleteNameInit();
 		designHiddenInit();
+		designAdminInit();
+		designIgnoreEmptyChildNameInit();
+		designIgnorePaymentsNotPastDueInit();
+		designIgnorePaymentsPastDueInit();
+		designFilterEnrollmentKeyInit();
+		designEnrollmentSortChildNameInit();
+		designEnrollmentSortMonthDayOfBirthInit();
+		designEnrollmentSortGroupNameInit();
 	}
 
 	@Override public void initDeepForClass(SiteRequestEnUS siteRequest_) {
@@ -889,6 +1937,22 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 				return oPageDesign.pageDesignCompleteName;
 			case "designHidden":
 				return oPageDesign.designHidden;
+			case "designAdmin":
+				return oPageDesign.designAdmin;
+			case "designIgnoreEmptyChildName":
+				return oPageDesign.designIgnoreEmptyChildName;
+			case "designIgnorePaymentsNotPastDue":
+				return oPageDesign.designIgnorePaymentsNotPastDue;
+			case "designIgnorePaymentsPastDue":
+				return oPageDesign.designIgnorePaymentsPastDue;
+			case "designFilterEnrollmentKey":
+				return oPageDesign.designFilterEnrollmentKey;
+			case "designEnrollmentSortChildName":
+				return oPageDesign.designEnrollmentSortChildName;
+			case "designEnrollmentSortMonthDayOfBirth":
+				return oPageDesign.designEnrollmentSortMonthDayOfBirth;
+			case "designEnrollmentSortGroupName":
+				return oPageDesign.designEnrollmentSortGroupName;
 			default:
 				return super.obtainCluster(var);
 		}
@@ -965,6 +2029,46 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 					setDesignHidden(val);
 				saves.add(var);
 				return val;
+			case "designAdmin":
+				if(val != null)
+					setDesignAdmin(val);
+				saves.add(var);
+				return val;
+			case "designIgnoreEmptyChildName":
+				if(val != null)
+					setDesignIgnoreEmptyChildName(val);
+				saves.add(var);
+				return val;
+			case "designIgnorePaymentsNotPastDue":
+				if(val != null)
+					setDesignIgnorePaymentsNotPastDue(val);
+				saves.add(var);
+				return val;
+			case "designIgnorePaymentsPastDue":
+				if(val != null)
+					setDesignIgnorePaymentsPastDue(val);
+				saves.add(var);
+				return val;
+			case "designFilterEnrollmentKey":
+				if(val != null)
+					setDesignFilterEnrollmentKey(val);
+				saves.add(var);
+				return val;
+			case "designEnrollmentSortChildName":
+				if(val != null)
+					setDesignEnrollmentSortChildName(val);
+				saves.add(var);
+				return val;
+			case "designEnrollmentSortMonthDayOfBirth":
+				if(val != null)
+					setDesignEnrollmentSortMonthDayOfBirth(val);
+				saves.add(var);
+				return val;
+			case "designEnrollmentSortGroupName":
+				if(val != null)
+					setDesignEnrollmentSortGroupName(val);
+				saves.add(var);
+				return val;
 			default:
 				return super.defineCluster(var, val);
 		}
@@ -1010,6 +2114,54 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 				Boolean designHidden = (Boolean)solrDocument.get("designHidden_stored_boolean");
 				if(designHidden != null)
 					oPageDesign.setDesignHidden(designHidden);
+			}
+
+			if(saves.contains("designAdmin")) {
+				Boolean designAdmin = (Boolean)solrDocument.get("designAdmin_stored_boolean");
+				if(designAdmin != null)
+					oPageDesign.setDesignAdmin(designAdmin);
+			}
+
+			if(saves.contains("designIgnoreEmptyChildName")) {
+				Boolean designIgnoreEmptyChildName = (Boolean)solrDocument.get("designIgnoreEmptyChildName_stored_boolean");
+				if(designIgnoreEmptyChildName != null)
+					oPageDesign.setDesignIgnoreEmptyChildName(designIgnoreEmptyChildName);
+			}
+
+			if(saves.contains("designIgnorePaymentsNotPastDue")) {
+				Boolean designIgnorePaymentsNotPastDue = (Boolean)solrDocument.get("designIgnorePaymentsNotPastDue_stored_boolean");
+				if(designIgnorePaymentsNotPastDue != null)
+					oPageDesign.setDesignIgnorePaymentsNotPastDue(designIgnorePaymentsNotPastDue);
+			}
+
+			if(saves.contains("designIgnorePaymentsPastDue")) {
+				Boolean designIgnorePaymentsPastDue = (Boolean)solrDocument.get("designIgnorePaymentsPastDue_stored_boolean");
+				if(designIgnorePaymentsPastDue != null)
+					oPageDesign.setDesignIgnorePaymentsPastDue(designIgnorePaymentsPastDue);
+			}
+
+			if(saves.contains("designFilterEnrollmentKey")) {
+				Boolean designFilterEnrollmentKey = (Boolean)solrDocument.get("designFilterEnrollmentKey_stored_boolean");
+				if(designFilterEnrollmentKey != null)
+					oPageDesign.setDesignFilterEnrollmentKey(designFilterEnrollmentKey);
+			}
+
+			if(saves.contains("designEnrollmentSortChildName")) {
+				Boolean designEnrollmentSortChildName = (Boolean)solrDocument.get("designEnrollmentSortChildName_stored_boolean");
+				if(designEnrollmentSortChildName != null)
+					oPageDesign.setDesignEnrollmentSortChildName(designEnrollmentSortChildName);
+			}
+
+			if(saves.contains("designEnrollmentSortMonthDayOfBirth")) {
+				Boolean designEnrollmentSortMonthDayOfBirth = (Boolean)solrDocument.get("designEnrollmentSortMonthDayOfBirth_stored_boolean");
+				if(designEnrollmentSortMonthDayOfBirth != null)
+					oPageDesign.setDesignEnrollmentSortMonthDayOfBirth(designEnrollmentSortMonthDayOfBirth);
+			}
+
+			if(saves.contains("designEnrollmentSortGroupName")) {
+				Boolean designEnrollmentSortGroupName = (Boolean)solrDocument.get("designEnrollmentSortGroupName_stored_boolean");
+				if(designEnrollmentSortGroupName != null)
+					oPageDesign.setDesignEnrollmentSortGroupName(designEnrollmentSortGroupName);
 			}
 		}
 
@@ -1114,6 +2266,38 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 			document.addField("designHidden_indexed_boolean", designHidden);
 			document.addField("designHidden_stored_boolean", designHidden);
 		}
+		if(designAdmin != null) {
+			document.addField("designAdmin_indexed_boolean", designAdmin);
+			document.addField("designAdmin_stored_boolean", designAdmin);
+		}
+		if(designIgnoreEmptyChildName != null) {
+			document.addField("designIgnoreEmptyChildName_indexed_boolean", designIgnoreEmptyChildName);
+			document.addField("designIgnoreEmptyChildName_stored_boolean", designIgnoreEmptyChildName);
+		}
+		if(designIgnorePaymentsNotPastDue != null) {
+			document.addField("designIgnorePaymentsNotPastDue_indexed_boolean", designIgnorePaymentsNotPastDue);
+			document.addField("designIgnorePaymentsNotPastDue_stored_boolean", designIgnorePaymentsNotPastDue);
+		}
+		if(designIgnorePaymentsPastDue != null) {
+			document.addField("designIgnorePaymentsPastDue_indexed_boolean", designIgnorePaymentsPastDue);
+			document.addField("designIgnorePaymentsPastDue_stored_boolean", designIgnorePaymentsPastDue);
+		}
+		if(designFilterEnrollmentKey != null) {
+			document.addField("designFilterEnrollmentKey_indexed_boolean", designFilterEnrollmentKey);
+			document.addField("designFilterEnrollmentKey_stored_boolean", designFilterEnrollmentKey);
+		}
+		if(designEnrollmentSortChildName != null) {
+			document.addField("designEnrollmentSortChildName_indexed_boolean", designEnrollmentSortChildName);
+			document.addField("designEnrollmentSortChildName_stored_boolean", designEnrollmentSortChildName);
+		}
+		if(designEnrollmentSortMonthDayOfBirth != null) {
+			document.addField("designEnrollmentSortMonthDayOfBirth_indexed_boolean", designEnrollmentSortMonthDayOfBirth);
+			document.addField("designEnrollmentSortMonthDayOfBirth_stored_boolean", designEnrollmentSortMonthDayOfBirth);
+		}
+		if(designEnrollmentSortGroupName != null) {
+			document.addField("designEnrollmentSortGroupName_indexed_boolean", designEnrollmentSortGroupName);
+			document.addField("designEnrollmentSortGroupName_stored_boolean", designEnrollmentSortGroupName);
+		}
 		super.indexCluster(document);
 
 	}
@@ -1149,6 +2333,22 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 				return "pageDesignCompleteName_indexed_string";
 			case "designHidden":
 				return "designHidden_indexed_boolean";
+			case "designAdmin":
+				return "designAdmin_indexed_boolean";
+			case "designIgnoreEmptyChildName":
+				return "designIgnoreEmptyChildName_indexed_boolean";
+			case "designIgnorePaymentsNotPastDue":
+				return "designIgnorePaymentsNotPastDue_indexed_boolean";
+			case "designIgnorePaymentsPastDue":
+				return "designIgnorePaymentsPastDue_indexed_boolean";
+			case "designFilterEnrollmentKey":
+				return "designFilterEnrollmentKey_indexed_boolean";
+			case "designEnrollmentSortChildName":
+				return "designEnrollmentSortChildName_indexed_boolean";
+			case "designEnrollmentSortMonthDayOfBirth":
+				return "designEnrollmentSortMonthDayOfBirth_indexed_boolean";
+			case "designEnrollmentSortGroupName":
+				return "designEnrollmentSortGroupName_indexed_boolean";
 			default:
 				return Cluster.varIndexedCluster(entityVar);
 		}
@@ -1202,6 +2402,38 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 		if(designHidden != null)
 			oPageDesign.setDesignHidden(designHidden);
 
+		Boolean designAdmin = (Boolean)solrDocument.get("designAdmin_stored_boolean");
+		if(designAdmin != null)
+			oPageDesign.setDesignAdmin(designAdmin);
+
+		Boolean designIgnoreEmptyChildName = (Boolean)solrDocument.get("designIgnoreEmptyChildName_stored_boolean");
+		if(designIgnoreEmptyChildName != null)
+			oPageDesign.setDesignIgnoreEmptyChildName(designIgnoreEmptyChildName);
+
+		Boolean designIgnorePaymentsNotPastDue = (Boolean)solrDocument.get("designIgnorePaymentsNotPastDue_stored_boolean");
+		if(designIgnorePaymentsNotPastDue != null)
+			oPageDesign.setDesignIgnorePaymentsNotPastDue(designIgnorePaymentsNotPastDue);
+
+		Boolean designIgnorePaymentsPastDue = (Boolean)solrDocument.get("designIgnorePaymentsPastDue_stored_boolean");
+		if(designIgnorePaymentsPastDue != null)
+			oPageDesign.setDesignIgnorePaymentsPastDue(designIgnorePaymentsPastDue);
+
+		Boolean designFilterEnrollmentKey = (Boolean)solrDocument.get("designFilterEnrollmentKey_stored_boolean");
+		if(designFilterEnrollmentKey != null)
+			oPageDesign.setDesignFilterEnrollmentKey(designFilterEnrollmentKey);
+
+		Boolean designEnrollmentSortChildName = (Boolean)solrDocument.get("designEnrollmentSortChildName_stored_boolean");
+		if(designEnrollmentSortChildName != null)
+			oPageDesign.setDesignEnrollmentSortChildName(designEnrollmentSortChildName);
+
+		Boolean designEnrollmentSortMonthDayOfBirth = (Boolean)solrDocument.get("designEnrollmentSortMonthDayOfBirth_stored_boolean");
+		if(designEnrollmentSortMonthDayOfBirth != null)
+			oPageDesign.setDesignEnrollmentSortMonthDayOfBirth(designEnrollmentSortMonthDayOfBirth);
+
+		Boolean designEnrollmentSortGroupName = (Boolean)solrDocument.get("designEnrollmentSortGroupName_stored_boolean");
+		if(designEnrollmentSortGroupName != null)
+			oPageDesign.setDesignEnrollmentSortGroupName(designEnrollmentSortGroupName);
+
 		super.storeCluster(solrDocument);
 	}
 
@@ -1226,6 +2458,22 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 				apiRequest.addVars("pageDesignCompleteName");
 			if(!Objects.equals(designHidden, original.getDesignHidden()))
 				apiRequest.addVars("designHidden");
+			if(!Objects.equals(designAdmin, original.getDesignAdmin()))
+				apiRequest.addVars("designAdmin");
+			if(!Objects.equals(designIgnoreEmptyChildName, original.getDesignIgnoreEmptyChildName()))
+				apiRequest.addVars("designIgnoreEmptyChildName");
+			if(!Objects.equals(designIgnorePaymentsNotPastDue, original.getDesignIgnorePaymentsNotPastDue()))
+				apiRequest.addVars("designIgnorePaymentsNotPastDue");
+			if(!Objects.equals(designIgnorePaymentsPastDue, original.getDesignIgnorePaymentsPastDue()))
+				apiRequest.addVars("designIgnorePaymentsPastDue");
+			if(!Objects.equals(designFilterEnrollmentKey, original.getDesignFilterEnrollmentKey()))
+				apiRequest.addVars("designFilterEnrollmentKey");
+			if(!Objects.equals(designEnrollmentSortChildName, original.getDesignEnrollmentSortChildName()))
+				apiRequest.addVars("designEnrollmentSortChildName");
+			if(!Objects.equals(designEnrollmentSortMonthDayOfBirth, original.getDesignEnrollmentSortMonthDayOfBirth()))
+				apiRequest.addVars("designEnrollmentSortMonthDayOfBirth");
+			if(!Objects.equals(designEnrollmentSortGroupName, original.getDesignEnrollmentSortGroupName()))
+				apiRequest.addVars("designEnrollmentSortGroupName");
 			super.apiRequestCluster();
 		}
 	}
@@ -1235,7 +2483,7 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), pageDesignKey, childDesignKeys, parentDesignKeys, htmlPartKeys, pageDesignCompleteName, designHidden);
+		return Objects.hash(super.hashCode(), pageDesignKey, childDesignKeys, parentDesignKeys, htmlPartKeys, pageDesignCompleteName, designHidden, designAdmin, designIgnoreEmptyChildName, designIgnorePaymentsNotPastDue, designIgnorePaymentsPastDue, designFilterEnrollmentKey, designEnrollmentSortChildName, designEnrollmentSortMonthDayOfBirth, designEnrollmentSortGroupName);
 	}
 
 	////////////
@@ -1254,7 +2502,15 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 				&& Objects.equals( parentDesignKeys, that.parentDesignKeys )
 				&& Objects.equals( htmlPartKeys, that.htmlPartKeys )
 				&& Objects.equals( pageDesignCompleteName, that.pageDesignCompleteName )
-				&& Objects.equals( designHidden, that.designHidden );
+				&& Objects.equals( designHidden, that.designHidden )
+				&& Objects.equals( designAdmin, that.designAdmin )
+				&& Objects.equals( designIgnoreEmptyChildName, that.designIgnoreEmptyChildName )
+				&& Objects.equals( designIgnorePaymentsNotPastDue, that.designIgnorePaymentsNotPastDue )
+				&& Objects.equals( designIgnorePaymentsPastDue, that.designIgnorePaymentsPastDue )
+				&& Objects.equals( designFilterEnrollmentKey, that.designFilterEnrollmentKey )
+				&& Objects.equals( designEnrollmentSortChildName, that.designEnrollmentSortChildName )
+				&& Objects.equals( designEnrollmentSortMonthDayOfBirth, that.designEnrollmentSortMonthDayOfBirth )
+				&& Objects.equals( designEnrollmentSortGroupName, that.designEnrollmentSortGroupName );
 	}
 
 	//////////////
@@ -1271,6 +2527,14 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 		sb.append( ", htmlPartKeys: " ).append(htmlPartKeys);
 		sb.append( ", pageDesignCompleteName: \"" ).append(pageDesignCompleteName).append( "\"" );
 		sb.append( ", designHidden: " ).append(designHidden);
+		sb.append( ", designAdmin: " ).append(designAdmin);
+		sb.append( ", designIgnoreEmptyChildName: " ).append(designIgnoreEmptyChildName);
+		sb.append( ", designIgnorePaymentsNotPastDue: " ).append(designIgnorePaymentsNotPastDue);
+		sb.append( ", designIgnorePaymentsPastDue: " ).append(designIgnorePaymentsPastDue);
+		sb.append( ", designFilterEnrollmentKey: " ).append(designFilterEnrollmentKey);
+		sb.append( ", designEnrollmentSortChildName: " ).append(designEnrollmentSortChildName);
+		sb.append( ", designEnrollmentSortMonthDayOfBirth: " ).append(designEnrollmentSortMonthDayOfBirth);
+		sb.append( ", designEnrollmentSortGroupName: " ).append(designEnrollmentSortGroupName);
 		sb.append(" }");
 		return sb.toString();
 	}

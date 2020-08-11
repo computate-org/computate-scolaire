@@ -257,7 +257,7 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 				.fg();
 
 		} else {
-			sx(htmInscriptionCles());
+			e("span").a("class", "varMereScolaire", pk, "InscriptionCles ").f().sx(htmInscriptionCles()).g("span");
 		}
 	}
 
@@ -1143,7 +1143,7 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 			.fg();
 
 		} else {
-			sx(htmPersonnePrenom());
+			e("span").a("class", "varMereScolaire", pk, "PersonnePrenom ").f().sx(htmPersonnePrenom()).g("span");
 		}
 	}
 
@@ -1275,7 +1275,7 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 			.fg();
 
 		} else {
-			sx(htmPersonnePrenomPrefere());
+			e("span").a("class", "varMereScolaire", pk, "PersonnePrenomPrefere ").f().sx(htmPersonnePrenomPrefere()).g("span");
 		}
 	}
 
@@ -1407,7 +1407,7 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 			.fg();
 
 		} else {
-			sx(htmFamilleNom());
+			e("span").a("class", "varMereScolaire", pk, "FamilleNom ").f().sx(htmFamilleNom()).g("span");
 		}
 	}
 
@@ -1725,7 +1725,7 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 			.fg();
 
 		} else {
-			sx(htmPersonneOccupation());
+			e("span").a("class", "varMereScolaire", pk, "PersonneOccupation ").f().sx(htmPersonneOccupation()).g("span");
 		}
 	}
 
@@ -1857,7 +1857,7 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 			.fg();
 
 		} else {
-			sx(htmPersonneNumeroTelephone());
+			e("span").a("class", "varMereScolaire", pk, "PersonneNumeroTelephone ").f().sx(htmPersonneNumeroTelephone()).g("span");
 		}
 	}
 
@@ -1989,7 +1989,7 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 			.fg();
 
 		} else {
-			sx(htmPersonneMail());
+			e("span").a("class", "varMereScolaire", pk, "PersonneMail ").f().sx(htmPersonneMail()).g("span");
 		}
 	}
 
@@ -2201,7 +2201,7 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 			}
 
 		} else {
-			sx(htmPersonneSms());
+			e("span").a("class", "varMereScolaire", pk, "PersonneSms ").f().sx(htmPersonneSms()).g("span");
 		}
 	}
 
@@ -2333,7 +2333,7 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 			}
 
 		} else {
-			sx(htmPersonneRecevoirMail());
+			e("span").a("class", "varMereScolaire", pk, "PersonneRecevoirMail ").f().sx(htmPersonneRecevoirMail()).g("span");
 		}
 	}
 
@@ -2465,7 +2465,7 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 			}
 
 		} else {
-			sx(htmPersonneContactUrgence());
+			e("span").a("class", "varMereScolaire", pk, "PersonneContactUrgence ").f().sx(htmPersonneContactUrgence()).g("span");
 		}
 	}
 
@@ -2597,7 +2597,7 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 			}
 
 		} else {
-			sx(htmPersonneChercher());
+			e("span").a("class", "varMereScolaire", pk, "PersonneChercher ").f().sx(htmPersonneChercher()).g("span");
 		}
 	}
 
@@ -2705,7 +2705,7 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 				fg();
 			g("div");
 		} else {
-			sx(htmPhoto());
+			e("span").a("class", "varMereScolaire", pk, "Photo ").f().sx(htmPhoto()).g("span");
 		}
 	}
 
@@ -3652,20 +3652,46 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 		Object o = Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
 		if(o != null && o instanceof MereScolaire) {
 			MereScolaire original = (MereScolaire)o;
+			if(!Objects.equals(mereCle, original.getMereCle()))
+				requeteApi.addVars("mereCle");
 			if(!Objects.equals(inscriptionCles, original.getInscriptionCles()))
 				requeteApi.addVars("inscriptionCles");
+			if(!Objects.equals(familleTri, original.getFamilleTri()))
+				requeteApi.addVars("familleTri");
+			if(!Objects.equals(mereTri, original.getMereTri()))
+				requeteApi.addVars("mereTri");
+			if(!Objects.equals(utilisateurCles, original.getUtilisateurCles()))
+				requeteApi.addVars("utilisateurCles");
+			if(!Objects.equals(ecoleCles, original.getEcoleCles()))
+				requeteApi.addVars("ecoleCles");
+			if(!Objects.equals(anneeCles, original.getAnneeCles()))
+				requeteApi.addVars("anneeCles");
+			if(!Objects.equals(saisonCles, original.getSaisonCles()))
+				requeteApi.addVars("saisonCles");
+			if(!Objects.equals(sessionCles, original.getSessionCles()))
+				requeteApi.addVars("sessionCles");
+			if(!Objects.equals(ageCles, original.getAgeCles()))
+				requeteApi.addVars("ageCles");
 			if(!Objects.equals(personnePrenom, original.getPersonnePrenom()))
 				requeteApi.addVars("personnePrenom");
 			if(!Objects.equals(personnePrenomPrefere, original.getPersonnePrenomPrefere()))
 				requeteApi.addVars("personnePrenomPrefere");
 			if(!Objects.equals(familleNom, original.getFamilleNom()))
 				requeteApi.addVars("familleNom");
+			if(!Objects.equals(personneNomComplet, original.getPersonneNomComplet()))
+				requeteApi.addVars("personneNomComplet");
+			if(!Objects.equals(personneNomCompletPrefere, original.getPersonneNomCompletPrefere()))
+				requeteApi.addVars("personneNomCompletPrefere");
+			if(!Objects.equals(personneNomFormel, original.getPersonneNomFormel()))
+				requeteApi.addVars("personneNomFormel");
 			if(!Objects.equals(personneOccupation, original.getPersonneOccupation()))
 				requeteApi.addVars("personneOccupation");
 			if(!Objects.equals(personneNumeroTelephone, original.getPersonneNumeroTelephone()))
 				requeteApi.addVars("personneNumeroTelephone");
 			if(!Objects.equals(personneMail, original.getPersonneMail()))
 				requeteApi.addVars("personneMail");
+			if(!Objects.equals(personneRelation, original.getPersonneRelation()))
+				requeteApi.addVars("personneRelation");
 			if(!Objects.equals(personneSms, original.getPersonneSms()))
 				requeteApi.addVars("personneSms");
 			if(!Objects.equals(personneRecevoirMail, original.getPersonneRecevoirMail()))
@@ -3676,6 +3702,8 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 				requeteApi.addVars("personneChercher");
 			if(!Objects.equals(photo, original.getPhoto()))
 				requeteApi.addVars("photo");
+			if(!Objects.equals(mereNomComplet, original.getMereNomComplet()))
+				requeteApi.addVars("mereNomComplet");
 			super.requeteApiCluster();
 		}
 	}
@@ -3685,7 +3713,7 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), inscriptionCles, personnePrenom, personnePrenomPrefere, familleNom, personneOccupation, personneNumeroTelephone, personneMail, personneSms, personneRecevoirMail, personneContactUrgence, personneChercher, photo);
+		return Objects.hash(super.hashCode(), mereCle, inscriptionCles, familleTri, mereTri, utilisateurCles, ecoleCles, anneeCles, saisonCles, sessionCles, ageCles, personnePrenom, personnePrenomPrefere, familleNom, personneNomComplet, personneNomCompletPrefere, personneNomFormel, personneOccupation, personneNumeroTelephone, personneMail, personneRelation, personneSms, personneRecevoirMail, personneContactUrgence, personneChercher, photo, mereNomComplet);
 	}
 
 	////////////
@@ -3699,18 +3727,32 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 			return false;
 		MereScolaire that = (MereScolaire)o;
 		return super.equals(o)
+				&& Objects.equals( mereCle, that.mereCle )
 				&& Objects.equals( inscriptionCles, that.inscriptionCles )
+				&& Objects.equals( familleTri, that.familleTri )
+				&& Objects.equals( mereTri, that.mereTri )
+				&& Objects.equals( utilisateurCles, that.utilisateurCles )
+				&& Objects.equals( ecoleCles, that.ecoleCles )
+				&& Objects.equals( anneeCles, that.anneeCles )
+				&& Objects.equals( saisonCles, that.saisonCles )
+				&& Objects.equals( sessionCles, that.sessionCles )
+				&& Objects.equals( ageCles, that.ageCles )
 				&& Objects.equals( personnePrenom, that.personnePrenom )
 				&& Objects.equals( personnePrenomPrefere, that.personnePrenomPrefere )
 				&& Objects.equals( familleNom, that.familleNom )
+				&& Objects.equals( personneNomComplet, that.personneNomComplet )
+				&& Objects.equals( personneNomCompletPrefere, that.personneNomCompletPrefere )
+				&& Objects.equals( personneNomFormel, that.personneNomFormel )
 				&& Objects.equals( personneOccupation, that.personneOccupation )
 				&& Objects.equals( personneNumeroTelephone, that.personneNumeroTelephone )
 				&& Objects.equals( personneMail, that.personneMail )
+				&& Objects.equals( personneRelation, that.personneRelation )
 				&& Objects.equals( personneSms, that.personneSms )
 				&& Objects.equals( personneRecevoirMail, that.personneRecevoirMail )
 				&& Objects.equals( personneContactUrgence, that.personneContactUrgence )
 				&& Objects.equals( personneChercher, that.personneChercher )
-				&& Objects.equals( photo, that.photo );
+				&& Objects.equals( photo, that.photo )
+				&& Objects.equals( mereNomComplet, that.mereNomComplet );
 	}
 
 	//////////////
@@ -3721,18 +3763,32 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString() + "\n");
 		sb.append("MereScolaire { ");
-		sb.append( "inscriptionCles: " ).append(inscriptionCles);
+		sb.append( "mereCle: " ).append(mereCle);
+		sb.append( ", inscriptionCles: " ).append(inscriptionCles);
+		sb.append( ", familleTri: " ).append(familleTri);
+		sb.append( ", mereTri: " ).append(mereTri);
+		sb.append( ", utilisateurCles: " ).append(utilisateurCles);
+		sb.append( ", ecoleCles: " ).append(ecoleCles);
+		sb.append( ", anneeCles: " ).append(anneeCles);
+		sb.append( ", saisonCles: " ).append(saisonCles);
+		sb.append( ", sessionCles: " ).append(sessionCles);
+		sb.append( ", ageCles: " ).append(ageCles);
 		sb.append( ", personnePrenom: \"" ).append(personnePrenom).append( "\"" );
 		sb.append( ", personnePrenomPrefere: \"" ).append(personnePrenomPrefere).append( "\"" );
 		sb.append( ", familleNom: \"" ).append(familleNom).append( "\"" );
+		sb.append( ", personneNomComplet: \"" ).append(personneNomComplet).append( "\"" );
+		sb.append( ", personneNomCompletPrefere: \"" ).append(personneNomCompletPrefere).append( "\"" );
+		sb.append( ", personneNomFormel: \"" ).append(personneNomFormel).append( "\"" );
 		sb.append( ", personneOccupation: \"" ).append(personneOccupation).append( "\"" );
 		sb.append( ", personneNumeroTelephone: \"" ).append(personneNumeroTelephone).append( "\"" );
 		sb.append( ", personneMail: \"" ).append(personneMail).append( "\"" );
+		sb.append( ", personneRelation: \"" ).append(personneRelation).append( "\"" );
 		sb.append( ", personneSms: " ).append(personneSms);
 		sb.append( ", personneRecevoirMail: " ).append(personneRecevoirMail);
 		sb.append( ", personneContactUrgence: " ).append(personneContactUrgence);
 		sb.append( ", personneChercher: " ).append(personneChercher);
 		sb.append( ", photo: \"" ).append(photo).append( "\"" );
+		sb.append( ", mereNomComplet: \"" ).append(mereNomComplet).append( "\"" );
 		sb.append(" }");
 		return sb.toString();
 	}

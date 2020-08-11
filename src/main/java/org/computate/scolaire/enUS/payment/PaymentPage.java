@@ -17,9 +17,9 @@ import org.apache.solr.common.util.SimpleOrderedMap;
 public class PaymentPage extends PaymentPageGen<PaymentGenPage> {
 
 	@Override public void htmlFormPageSchoolPayment(SchoolPayment o) {
-		if(schoolPayment != null) {
+		if(schoolPayment_ != null) {
 			{ e("div").a("class", "").f();
-				{ e("a").a("href", "/pdf/receipts?var=paymentKey:", schoolPayment.getPk()).a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ").f();
+				{ e("a").a("href", "/pdf/payment-receipt?var=paymentKey:", schoolPayment_.getPk()).a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ").f();
 					sx("Print a receipt");
 				} g("a");
 			} g("div");

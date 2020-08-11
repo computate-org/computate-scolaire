@@ -80,43 +80,41 @@ public abstract class MereGenPageGen<DEV> extends ClusterPage {
 		return (MereGenPage)this;
 	}
 
-	//////////////////
-	// mereScolaire //
-	//////////////////
+	///////////////////
+	// mereScolaire_ //
+	///////////////////
 
-	/**	 L'entité mereScolaire
+	/**	 L'entité mereScolaire_
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected MereScolaire mereScolaire;
+	protected MereScolaire mereScolaire_;
 	@JsonIgnore
-	public Couverture<MereScolaire> mereScolaireCouverture = new Couverture<MereScolaire>().p(this).c(MereScolaire.class).var("mereScolaire").o(mereScolaire);
+	public Couverture<MereScolaire> mereScolaire_Couverture = new Couverture<MereScolaire>().p(this).c(MereScolaire.class).var("mereScolaire_").o(mereScolaire_);
 
-	/**	<br/> L'entité mereScolaire
+	/**	<br/> L'entité mereScolaire_
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.mere.MereGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:mereScolaire">Trouver l'entité mereScolaire dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.mere.MereGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:mereScolaire_">Trouver l'entité mereScolaire_ dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _mereScolaire(Couverture<MereScolaire> c);
+	protected abstract void _mereScolaire_(Couverture<MereScolaire> c);
 
-	public MereScolaire getMereScolaire() {
-		return mereScolaire;
+	public MereScolaire getMereScolaire_() {
+		return mereScolaire_;
 	}
 
-	public void setMereScolaire(MereScolaire mereScolaire) {
-		this.mereScolaire = mereScolaire;
-		this.mereScolaireCouverture.dejaInitialise = true;
+	public void setMereScolaire_(MereScolaire mereScolaire_) {
+		this.mereScolaire_ = mereScolaire_;
+		this.mereScolaire_Couverture.dejaInitialise = true;
 	}
-	protected MereGenPage mereScolaireInit() {
-		if(!mereScolaireCouverture.dejaInitialise) {
-			_mereScolaire(mereScolaireCouverture);
-			if(mereScolaire == null)
-				setMereScolaire(mereScolaireCouverture.o);
+	protected MereGenPage mereScolaire_Init() {
+		if(!mereScolaire_Couverture.dejaInitialise) {
+			_mereScolaire_(mereScolaire_Couverture);
+			if(mereScolaire_ == null)
+				setMereScolaire_(mereScolaire_Couverture.o);
 		}
-		if(mereScolaire != null)
-			mereScolaire.initLoinPourClasse(requeteSite_);
-		mereScolaireCouverture.dejaInitialise(true);
+		mereScolaire_Couverture.dejaInitialise(true);
 		return (MereGenPage)this;
 	}
 
@@ -142,7 +140,7 @@ public abstract class MereGenPageGen<DEV> extends ClusterPage {
 
 	public void initMereGenPage() {
 		listeMereScolaireInit();
-		mereScolaireInit();
+		mereScolaire_Init();
 	}
 
 	@Override public void initLoinPourClasse(RequeteSiteFrFR requeteSite_) {
@@ -157,8 +155,6 @@ public abstract class MereGenPageGen<DEV> extends ClusterPage {
 			super.requeteSiteClusterPage(requeteSite_);
 		if(listeMereScolaire != null)
 			listeMereScolaire.setRequeteSite_(requeteSite_);
-		if(mereScolaire != null)
-			mereScolaire.setRequeteSite_(requeteSite_);
 	}
 
 	public void requeteSitePourClasse(RequeteSiteFrFR requeteSite_) {
@@ -187,8 +183,8 @@ public abstract class MereGenPageGen<DEV> extends ClusterPage {
 		switch(var) {
 			case "listeMereScolaire":
 				return oMereGenPage.listeMereScolaire;
-			case "mereScolaire":
-				return oMereGenPage.mereScolaire;
+			case "mereScolaire_":
+				return oMereGenPage.mereScolaire_;
 			default:
 				return super.obtenirClusterPage(var);
 		}

@@ -17,6 +17,9 @@ import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import org.computate.scolaire.enUS.vertx.AppSwagger2;
 
+/**
+ * CanonicalName: org.computate.scolaire.frFR.ecrivain.ApiEcrivain
+ **/
 public class ApiWriter extends ApiWriterGen<Object> implements Comparable<ApiWriter> {
 
 	protected void _siteRequest_(Wrap<SiteRequestEnUS> c) {
@@ -582,7 +585,10 @@ public class ApiWriter extends ApiWriterGen<Object> implements Comparable<ApiWri
 			wPaths.tl(3, "operationId: ", classApiOperationIdMethod, (id ? "Id" : ""));
 			wPaths.tl(3, "x-vertx-event-bus: ", appName, "-", languageName, "-", classSimpleName);
 	
-			if(classRoleUserMethod || classRolesFound && BooleanUtils.isNotTrue(classRoleSession) && BooleanUtils.isNotTrue(classPublicRead)) {
+			if(classRoleUserMethod 
+					|| classRolesFound && BooleanUtils.isNotTrue(classRoleSession) && BooleanUtils.isNotTrue(classPublicRead)
+					|| classRolesFound && BooleanUtils.isNotTrue(classRoleSession) && BooleanUtils.isTrue(classPublicRead) && StringUtils.equalsAny(classApiMethodMethod, "POST", "PUT", "PATCH", "DELETE")
+					) {
 				wPaths.tl(3, "security:");
 				wPaths.tl(4, "- openIdConnect:");
 				wPaths.tl(5, "- DefaultAuthScope");

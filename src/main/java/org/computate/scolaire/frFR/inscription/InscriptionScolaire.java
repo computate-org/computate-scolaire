@@ -527,9 +527,10 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 		}
 		else {
 			l.setQuery("*:*");
-			l.addFilterQuery("pk_indexed_long:" + enfantCle);
+			l.addFilterQuery("inscriptionCles_indexed_longs:" + pk);
 			l.setC(EnfantScolaire.class);
 			l.setStocker(true);
+			l.addSort("pk_indexed_long", ORDER.asc);
 		}
 	}
 
@@ -539,7 +540,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * r: enfantRecherche
 	 * r.enUS: childSearch
 	 * Ignorer: true
-	 */                               
+	 */                              
 	protected void _enfant_(Couverture<EnfantScolaire> c) {
 		if(enfantRecherche.size() > 0) {
 			c.o(enfantRecherche.get(0));
@@ -563,6 +564,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 		l.addFilterQuery("inscriptionCles_indexed_longs:" + pk);
 		l.setC(MereScolaire.class);
 		l.setStocker(true);
+		l.addSort("pk_indexed_long", ORDER.asc);
 	}
 
 	/**  
@@ -593,6 +595,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 		l.addFilterQuery("inscriptionCles_indexed_longs:" + pk);
 		l.setC(PereScolaire.class);
 		l.setStocker(true);
+		l.addSort("pk_indexed_long", ORDER.asc);
 	}
 
 	/**  
@@ -623,6 +626,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 		l.addFilterQuery("inscriptionCles_indexed_longs:" + pk);
 		l.setC(GardienScolaire.class);
 		l.setStocker(true);
+		l.addSort("pk_indexed_long", ORDER.asc);
 	}
 
 	/**  
@@ -676,10 +680,12 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * r.enUS: chargeAmountDue
 	 * r: fraisMontantFuture
 	 * r.enUS: chargeAmountFuture
-	 * r: fraisMontant
-	 * r.enUS: chargeAmount
 	 * r: paiementDate
 	 * r.enUS: paymentDate
+	 * r: fraisMontantNonPasse
+	 * r.enUS: chargeAmountNotPassed
+	 * r: fraisMontant
+	 * r.enUS: chargeAmount
 	 */
 	protected void _paiementRecherche(ListeRecherche<PaiementScolaire> l) {
 		l.setQuery("*:*");
@@ -688,6 +694,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 		l.add("json.facet", "{sum_fraisMontant:'sum(fraisMontant_indexed_double)'}");
 		l.add("json.facet", "{sum_fraisMontantDu:'sum(fraisMontantDu_indexed_double)'}");
 		l.add("json.facet", "{sum_fraisMontantFuture:'sum(fraisMontantFuture_indexed_double)'}");
+		l.add("json.facet", "{sum_fraisMontantNonPasse:'sum(fraisMontantNonPasse_indexed_double)'}");
 		l.addSort("paiementDate_indexed_date", ORDER.desc);
 		l.setC(PaiementScolaire.class);
 		l.setStocker(true);
@@ -1890,6 +1897,31 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 
 	/**       
 	 * {@inheritDoc}
+	 * Var.enUS: paymentLastDate
+	 * Indexe: true
+	 * Stocke: true
+	 * r: paiementRecherche
+	 * r.enUS: paymentSearch
+	 * r: PaiementMontant
+	 * r.enUS: PaymentAmount
+	 * r: PaiementNomCourt
+	 * r.enUS: PaymentShortName
+	 * r: PaiementScolaire
+	 * r.enUS: SchoolPayment
+	 * r: PaiementDate
+	 * r.enUS: PaymentDate
+	 */
+	protected void _paiementLastDate(Couverture<LocalDate> c) {
+		for(PaiementScolaire p : paiementRecherche.getList()) {
+			if(p.getPaiementMontant() != null) {
+				c.o(p.getPaiementDate());
+				return;
+			}
+		}
+	}
+
+	/**       
+	 * {@inheritDoc}
 	 * Var.enUS: paymentLastStr
 	 * Indexe: true
 	 * Stocke: true
@@ -1951,7 +1983,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * r.enUS: chargeAmountFuture
 	 */
 	protected void _fraisMontantFuture(Couverture<BigDecimal> c) {
-		c.o(Optional.ofNullable((Double)paiementFacets.get("sum_chargeAmountFuture")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING)));
+		c.o(Optional.ofNullable((Double)paiementFacets.get("sum_fraisMontantFuture")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING)));
 	}
 
 	/**       
@@ -1965,7 +1997,21 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * r.enUS: chargeAmountDue
 	 */
 	protected void _fraisMontantDu(Couverture<BigDecimal> c) {
-		c.o(Optional.ofNullable((Double)paiementFacets.get("sum_chargeAmountDue")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING)));
+		c.o(Optional.ofNullable((Double)paiementFacets.get("sum_fraisMontantDu")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING)));
+	}
+
+	/**       
+	 * {@inheritDoc}
+	 * Var.enUS: chargeAmountNotPassed
+	 * Indexe: true
+	 * Stocke: true
+	 * r: paiementFacets
+	 * r.enUS: paymentFacets
+	 * r: fraisMontantNonPasse
+	 * r.enUS: chargeAmountNotPassed
+	 */
+	protected void _fraisMontantNonPasse(Couverture<BigDecimal> c) {
+		c.o(Optional.ofNullable((Double)paiementFacets.get("sum_fraisMontantNonPasse")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING)));
 	}
 
 	/**       
@@ -2041,6 +2087,53 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 */
 	protected void _paiementsEnAvance(Couverture<Boolean> c) {
 		c.o(fraisMaintenant.compareTo(BigDecimal.ZERO) < 0);
+	}
+
+	/**       
+	 * {@inheritDoc}
+	 * Var.enUS: paymentsPastDue
+	 * Indexe: true
+	 * Stocke: true
+	 * r: fraisMaintenant
+	 * r.enUS: chargesNow
+	 * r: fraisMontantDu
+	 * r.enUS: chargeAmountDue
+	 * r: fraisMontantNonPasse
+	 * r.enUS: chargeAmountNotPassed
+	 * r: fraisMontant
+	 * r.enUS: chargeAmount
+	 * r: paiementMontant
+	 * r.enUS: paymentAmount
+	 */ 
+	protected void _paiementsEnSouffrance(Couverture<Boolean> c) {
+		c.o(fraisMontant.subtract(paiementMontant).subtract(fraisMontantNonPasse).compareTo(BigDecimal.ZERO) > 0);
+	}
+
+	/**       
+	 * {@inheritDoc}
+	 * Var.enUS: paymentsPastDueAmount
+	 * Indexe: true
+	 * Stocke: true
+	 * r: fraisMaintenant
+	 * r.enUS: chargesNow
+	 * r: fraisMontantDu
+	 * r.enUS: chargeAmountDue
+	 * r: fraisMontantNonPasse
+	 * r.enUS: chargeAmountNotPassed
+	 * r: paiementsEnSuffrance
+	 * r.enUS: paymentsPastDue
+	 * r: fraisMontant
+	 * r.enUS: chargeAmount
+	 * r: paiementMontant
+	 * r.enUS: paymentAmount
+	 * r: paiementsEnSouffrance
+	 * r.enUS: paymentsPastDue
+	 */
+	protected void _paiementsEnSouffranceMontant(Couverture<BigDecimal> c) {
+		if(paiementsEnSouffrance)
+			c.o(fraisMontant.subtract(paiementMontant).subtract(fraisMontantNonPasse));
+		else
+			c.o(BigDecimal.ZERO);
 	}
 
 	/**       

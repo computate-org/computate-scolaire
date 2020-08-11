@@ -54,7 +54,7 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 	protected void _listeEnfantScolaire(Couverture<ListeRecherche<EnfantScolaire>> c) {
 	}
 
-	protected void _enfantScolaire(Couverture<EnfantScolaire> c) {
+	protected void _enfantScolaire_(Couverture<EnfantScolaire> c) {
 		if(listeEnfantScolaire != null && listeEnfantScolaire.size() == 1)
 			c.o(listeEnfantScolaire.get(0));
 	}
@@ -64,8 +64,8 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageH2(Couverture<String> c) {
-		if(enfantScolaire != null && enfantScolaire.getEnfantNomComplet() != null)
-			c.o(enfantScolaire.getEnfantNomComplet());
+		if(enfantScolaire_ != null && enfantScolaire_.getEnfantNomComplet() != null)
+			c.o(enfantScolaire_.getEnfantNomComplet());
 	}
 
 	@Override protected void _pageH3(Couverture<String> c) {
@@ -73,9 +73,9 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageTitre(Couverture<String> c) {
-		if(enfantScolaire != null && enfantScolaire.getEnfantNomComplet() != null)
-			c.o(enfantScolaire.getEnfantNomComplet());
-		else if(enfantScolaire != null)
+		if(enfantScolaire_ != null && enfantScolaire_.getEnfantNomComplet() != null)
+			c.o(enfantScolaire_.getEnfantNomComplet());
+		else if(enfantScolaire_ != null)
 			c.o("enfants");
 		else if(listeEnfantScolaire == null || listeEnfantScolaire.size() == 0)
 			c.o("aucun enfant trouvé");
@@ -711,7 +711,7 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-orange ")
-								.a("onclick", "putcopieEnfantScolaire($('#putcopieEnfantScolaireForm'), ", enfantScolaire == null ? "null" : enfantScolaire.getPk(), "); ")
+								.a("onclick", "putcopieEnfantScolaire($('#putcopieEnfantScolaireForm'), ", enfantScolaire_ == null ? "null" : enfantScolaire_.getPk(), "); ")
 								.f().sx("Dupliquer enfants")
 							.g("button");
 
@@ -745,7 +745,7 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 							} g("form");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-orange ")
-								.a("onclick", "patchEnfantScolaire(null, $('#patchEnfantScolaireFormulaireValeurs'), ", Optional.ofNullable(enfantScolaire).map(EnfantScolaire::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
+								.a("onclick", "patchEnfantScolaire(null, $('#patchEnfantScolaireFormulaireValeurs'), ", Optional.ofNullable(enfantScolaire_).map(EnfantScolaire::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
 								.f().sx("Modifier enfants")
 							.g("button");
 

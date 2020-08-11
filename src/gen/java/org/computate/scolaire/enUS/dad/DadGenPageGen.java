@@ -80,43 +80,41 @@ public abstract class DadGenPageGen<DEV> extends ClusterPage {
 		return (DadGenPage)this;
 	}
 
-	///////////////
-	// schoolDad //
-	///////////////
+	////////////////
+	// schoolDad_ //
+	////////////////
 
-	/**	 The entity schoolDad
+	/**	 The entity schoolDad_
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected SchoolDad schoolDad;
+	protected SchoolDad schoolDad_;
 	@JsonIgnore
-	public Wrap<SchoolDad> schoolDadWrap = new Wrap<SchoolDad>().p(this).c(SchoolDad.class).var("schoolDad").o(schoolDad);
+	public Wrap<SchoolDad> schoolDad_Wrap = new Wrap<SchoolDad>().p(this).c(SchoolDad.class).var("schoolDad_").o(schoolDad_);
 
-	/**	<br/> The entity schoolDad
+	/**	<br/> The entity schoolDad_
 	 *  is defined as null before being initialized. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.dad.DadGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolDad">Find the entity schoolDad in Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.dad.DadGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolDad_">Find the entity schoolDad_ in Solr</a>
 	 * <br/>
 	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
-	protected abstract void _schoolDad(Wrap<SchoolDad> c);
+	protected abstract void _schoolDad_(Wrap<SchoolDad> c);
 
-	public SchoolDad getSchoolDad() {
-		return schoolDad;
+	public SchoolDad getSchoolDad_() {
+		return schoolDad_;
 	}
 
-	public void setSchoolDad(SchoolDad schoolDad) {
-		this.schoolDad = schoolDad;
-		this.schoolDadWrap.alreadyInitialized = true;
+	public void setSchoolDad_(SchoolDad schoolDad_) {
+		this.schoolDad_ = schoolDad_;
+		this.schoolDad_Wrap.alreadyInitialized = true;
 	}
-	protected DadGenPage schoolDadInit() {
-		if(!schoolDadWrap.alreadyInitialized) {
-			_schoolDad(schoolDadWrap);
-			if(schoolDad == null)
-				setSchoolDad(schoolDadWrap.o);
+	protected DadGenPage schoolDad_Init() {
+		if(!schoolDad_Wrap.alreadyInitialized) {
+			_schoolDad_(schoolDad_Wrap);
+			if(schoolDad_ == null)
+				setSchoolDad_(schoolDad_Wrap.o);
 		}
-		if(schoolDad != null)
-			schoolDad.initDeepForClass(siteRequest_);
-		schoolDadWrap.alreadyInitialized(true);
+		schoolDad_Wrap.alreadyInitialized(true);
 		return (DadGenPage)this;
 	}
 
@@ -142,7 +140,7 @@ public abstract class DadGenPageGen<DEV> extends ClusterPage {
 
 	public void initDadGenPage() {
 		listSchoolDadInit();
-		schoolDadInit();
+		schoolDad_Init();
 	}
 
 	@Override public void initDeepForClass(SiteRequestEnUS siteRequest_) {
@@ -157,8 +155,6 @@ public abstract class DadGenPageGen<DEV> extends ClusterPage {
 			super.siteRequestClusterPage(siteRequest_);
 		if(listSchoolDad != null)
 			listSchoolDad.setSiteRequest_(siteRequest_);
-		if(schoolDad != null)
-			schoolDad.setSiteRequest_(siteRequest_);
 	}
 
 	public void siteRequestForClass(SiteRequestEnUS siteRequest_) {
@@ -187,8 +183,8 @@ public abstract class DadGenPageGen<DEV> extends ClusterPage {
 		switch(var) {
 			case "listSchoolDad":
 				return oDadGenPage.listSchoolDad;
-			case "schoolDad":
-				return oDadGenPage.schoolDad;
+			case "schoolDad_":
+				return oDadGenPage.schoolDad_;
 			default:
 				return super.obtainClusterPage(var);
 		}

@@ -53,7 +53,7 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 	protected void _listSchoolPayment(Wrap<SearchList<SchoolPayment>> c) {
 	}
 
-	protected void _schoolPayment(Wrap<SchoolPayment> c) {
+	protected void _schoolPayment_(Wrap<SchoolPayment> c) {
 		if(listSchoolPayment != null && listSchoolPayment.size() == 1)
 			c.o(listSchoolPayment.get(0));
 	}
@@ -63,8 +63,8 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageH2(Wrap<String> c) {
-		if(schoolPayment != null && schoolPayment.getPaymentCompleteName() != null)
-			c.o(schoolPayment.getPaymentCompleteName());
+		if(schoolPayment_ != null && schoolPayment_.getPaymentCompleteName() != null)
+			c.o(schoolPayment_.getPaymentCompleteName());
 	}
 
 	@Override protected void _pageH3(Wrap<String> c) {
@@ -72,9 +72,9 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageTitle(Wrap<String> c) {
-		if(schoolPayment != null && schoolPayment.getPaymentCompleteName() != null)
-			c.o(schoolPayment.getPaymentCompleteName());
-		else if(schoolPayment != null)
+		if(schoolPayment_ != null && schoolPayment_.getPaymentCompleteName() != null)
+			c.o(schoolPayment_.getPaymentCompleteName());
+		else if(schoolPayment_ != null)
 			c.o("payments");
 		else if(listSchoolPayment == null || listSchoolPayment.size() == 0)
 			c.o("no payment found");
@@ -294,6 +294,8 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 			o.htmMomCompleteNamePreferred("PUTCopy");
 			o.htmDadCompleteNamePreferred("PUTCopy");
 			o.htmChargeAmountDue("PUTCopy");
+			o.htmChargeAmountPassed("PUTCopy");
+			o.htmChargeAmountNotPassed("PUTCopy");
 			o.htmChargeAmountFuture("PUTCopy");
 			o.htmPaymentShortName("PUTCopy");
 		} g("div");
@@ -347,6 +349,8 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 			o.htmMomCompleteNamePreferred("PATCH");
 			o.htmDadCompleteNamePreferred("PATCH");
 			o.htmChargeAmountDue("PATCH");
+			o.htmChargeAmountPassed("PATCH");
+			o.htmChargeAmountNotPassed("PATCH");
 			o.htmChargeAmountFuture("PATCH");
 			o.htmPaymentShortName("PATCH");
 		} g("div");
@@ -403,6 +407,8 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 			o.htmMomCompleteNamePreferred("Search");
 			o.htmDadCompleteNamePreferred("Search");
 			o.htmChargeAmountDue("Search");
+			o.htmChargeAmountPassed("Search");
+			o.htmChargeAmountNotPassed("Search");
 			o.htmChargeAmountFuture("Search");
 			o.htmPaymentShortName("Search");
 		} g("div");
@@ -898,7 +904,7 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-green ")
-								.a("onclick", "putcopySchoolPayment($('#putcopySchoolPaymentForm'), ", schoolPayment == null ? "null" : schoolPayment.getPk(), "); ")
+								.a("onclick", "putcopySchoolPayment($('#putcopySchoolPaymentForm'), ", schoolPayment_ == null ? "null" : schoolPayment_.getPk(), "); ")
 								.f().sx("Duplicate payments")
 							.g("button");
 
@@ -932,7 +938,7 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 							} g("form");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-green ")
-								.a("onclick", "patchSchoolPayment(null, $('#patchSchoolPaymentFormValues'), ", Optional.ofNullable(schoolPayment).map(SchoolPayment::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
+								.a("onclick", "patchSchoolPayment(null, $('#patchSchoolPaymentFormValues'), ", Optional.ofNullable(schoolPayment_).map(SchoolPayment::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
 								.f().sx("Modify payments")
 							.g("button");
 

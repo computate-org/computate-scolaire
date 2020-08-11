@@ -54,7 +54,7 @@ public class MereGenPage extends MereGenPageGen<ClusterPage> {
 	protected void _listeMereScolaire(Couverture<ListeRecherche<MereScolaire>> c) {
 	}
 
-	protected void _mereScolaire(Couverture<MereScolaire> c) {
+	protected void _mereScolaire_(Couverture<MereScolaire> c) {
 		if(listeMereScolaire != null && listeMereScolaire.size() == 1)
 			c.o(listeMereScolaire.get(0));
 	}
@@ -64,8 +64,8 @@ public class MereGenPage extends MereGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageH2(Couverture<String> c) {
-		if(mereScolaire != null && mereScolaire.getMereNomComplet() != null)
-			c.o(mereScolaire.getMereNomComplet());
+		if(mereScolaire_ != null && mereScolaire_.getMereNomComplet() != null)
+			c.o(mereScolaire_.getMereNomComplet());
 	}
 
 	@Override protected void _pageH3(Couverture<String> c) {
@@ -73,9 +73,9 @@ public class MereGenPage extends MereGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageTitre(Couverture<String> c) {
-		if(mereScolaire != null && mereScolaire.getMereNomComplet() != null)
-			c.o(mereScolaire.getMereNomComplet());
-		else if(mereScolaire != null)
+		if(mereScolaire_ != null && mereScolaire_.getMereNomComplet() != null)
+			c.o(mereScolaire_.getMereNomComplet());
+		else if(mereScolaire_ != null)
 			c.o("mères");
 		else if(listeMereScolaire == null || listeMereScolaire.size() == 0)
 			c.o("aucune mère trouvée");
@@ -748,7 +748,7 @@ public class MereGenPage extends MereGenPageGen<ClusterPage> {
 							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-pink ")
-								.a("onclick", "putcopieMereScolaire($('#putcopieMereScolaireForm'), ", mereScolaire == null ? "null" : mereScolaire.getPk(), "); ")
+								.a("onclick", "putcopieMereScolaire($('#putcopieMereScolaireForm'), ", mereScolaire_ == null ? "null" : mereScolaire_.getPk(), "); ")
 								.f().sx("Dupliquer mères")
 							.g("button");
 
@@ -782,7 +782,7 @@ public class MereGenPage extends MereGenPageGen<ClusterPage> {
 							} g("form");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-pink ")
-								.a("onclick", "patchMereScolaire(null, $('#patchMereScolaireFormulaireValeurs'), ", Optional.ofNullable(mereScolaire).map(MereScolaire::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
+								.a("onclick", "patchMereScolaire(null, $('#patchMereScolaireFormulaireValeurs'), ", Optional.ofNullable(mereScolaire_).map(MereScolaire::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
 								.f().sx("Modifier mères")
 							.g("button");
 

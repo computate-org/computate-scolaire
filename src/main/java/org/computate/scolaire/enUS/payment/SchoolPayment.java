@@ -226,6 +226,11 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 	protected void _paymentDate(Wrap<LocalDate> c) {
 	}
 
+	protected void _paymentYear(Wrap<Integer> c) {
+		if(paymentDate != null)
+			c.o(paymentDate.getYear());
+	}
+
 	protected void _paymentAmount(Wrap<BigDecimal> c) {
 	}
 
@@ -291,28 +296,37 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 		c.o(false);
 	}
 
-	protected void _paymentNext(Wrap<LocalDate> c) {
+	protected void _now(Wrap<LocalDate> c) {
 		SiteConfig siteConfig = siteRequest_.getSiteConfig_();
 		ZoneId zoneId = ZoneId.of(siteConfig.getSiteZone());
 		LocalDate now = LocalDate.now(zoneId);
+		c.o(now);
+	}
+
+	protected void _paymentNext(Wrap<LocalDate> c) {
+		SiteConfig siteConfig = siteRequest_.getSiteConfig_();
 		Integer paymentDay = siteConfig.getPaymentDay();
 		c.o(LocalDate.now().getDayOfMonth() < paymentDay ? now.withDayOfMonth(paymentDay) : now.plusMonths(1).withDayOfMonth(paymentDay));
 	}
 
 	protected void _chargeAmountDue(Wrap<BigDecimal> c) {
-		SiteConfig siteConfig = siteRequest_.getSiteConfig_();
-		ZoneId zoneId = ZoneId.of(siteConfig.getSiteZone());
-		LocalDate now = LocalDate.now(zoneId);
 		if(chargeAmount != null && (chargeEnrollment && paymentDate.compareTo(now.plusDays(15)) <= 0
 				|| chargeFirstLast && paymentDate.compareTo(now.plusDays(15)) <= 0
 				|| paymentDate != null && paymentDate.compareTo(now.plusDays(15)) <= 0 && paymentDate.compareTo(now.minusDays(1)) >= 0) && paymentDate.compareTo(paymentNext.minusMonths(1)) > 0 && paymentDate.compareTo(paymentNext) <= 0)
 			c.o(chargeAmount);
 	}
 
+	protected void _chargeAmountPassed(Wrap<BigDecimal> c) {
+		if(chargeAmount != null && paymentDate != null && paymentDate.compareTo(now) < 0)
+			c.o(chargeAmount);
+	}
+
+	protected void _chargeAmountNotPassed(Wrap<BigDecimal> c) {
+		if(chargeAmount != null && paymentDate != null && paymentDate.compareTo(now) >= 0)
+			c.o(chargeAmount);
+	}
+
 	protected void _chargeAmountFuture(Wrap<BigDecimal> c) {
-		SiteConfig configSite = siteRequest_.getSiteConfig_();
-		ZoneId zoneId = ZoneId.of(configSite.getSiteZone());
-		LocalDate now = LocalDate.now(zoneId);
 		if(chargeAmount != null && paymentDate != null 
 				&& paymentDate.compareTo(now.plusDays(15)) > 0)
 //				&& paymentDate.compareTo(paymentNext) > 0)

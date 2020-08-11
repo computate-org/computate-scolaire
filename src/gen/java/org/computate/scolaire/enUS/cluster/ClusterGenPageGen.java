@@ -79,43 +79,41 @@ public abstract class ClusterGenPageGen<DEV> extends PageLayout {
 		return (ClusterGenPage)this;
 	}
 
-	/////////////
-	// cluster //
-	/////////////
+	//////////////
+	// cluster_ //
+	//////////////
 
-	/**	 The entity cluster
+	/**	 The entity cluster_
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected Cluster cluster;
+	protected Cluster cluster_;
 	@JsonIgnore
-	public Wrap<Cluster> clusterWrap = new Wrap<Cluster>().p(this).c(Cluster.class).var("cluster").o(cluster);
+	public Wrap<Cluster> cluster_Wrap = new Wrap<Cluster>().p(this).c(Cluster.class).var("cluster_").o(cluster_);
 
-	/**	<br/> The entity cluster
+	/**	<br/> The entity cluster_
 	 *  is defined as null before being initialized. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.cluster.ClusterGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:cluster">Find the entity cluster in Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.cluster.ClusterGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:cluster_">Find the entity cluster_ in Solr</a>
 	 * <br/>
 	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
-	protected abstract void _cluster(Wrap<Cluster> c);
+	protected abstract void _cluster_(Wrap<Cluster> c);
 
-	public Cluster getCluster() {
-		return cluster;
+	public Cluster getCluster_() {
+		return cluster_;
 	}
 
-	public void setCluster(Cluster cluster) {
-		this.cluster = cluster;
-		this.clusterWrap.alreadyInitialized = true;
+	public void setCluster_(Cluster cluster_) {
+		this.cluster_ = cluster_;
+		this.cluster_Wrap.alreadyInitialized = true;
 	}
-	protected ClusterGenPage clusterInit() {
-		if(!clusterWrap.alreadyInitialized) {
-			_cluster(clusterWrap);
-			if(cluster == null)
-				setCluster(clusterWrap.o);
+	protected ClusterGenPage cluster_Init() {
+		if(!cluster_Wrap.alreadyInitialized) {
+			_cluster_(cluster_Wrap);
+			if(cluster_ == null)
+				setCluster_(cluster_Wrap.o);
 		}
-		if(cluster != null)
-			cluster.initDeepForClass(siteRequest_);
-		clusterWrap.alreadyInitialized(true);
+		cluster_Wrap.alreadyInitialized(true);
 		return (ClusterGenPage)this;
 	}
 
@@ -141,7 +139,7 @@ public abstract class ClusterGenPageGen<DEV> extends PageLayout {
 
 	public void initClusterGenPage() {
 		listClusterInit();
-		clusterInit();
+		cluster_Init();
 	}
 
 	@Override public void initDeepForClass(SiteRequestEnUS siteRequest_) {
@@ -156,8 +154,6 @@ public abstract class ClusterGenPageGen<DEV> extends PageLayout {
 			super.siteRequestPageLayout(siteRequest_);
 		if(listCluster != null)
 			listCluster.setSiteRequest_(siteRequest_);
-		if(cluster != null)
-			cluster.setSiteRequest_(siteRequest_);
 	}
 
 	public void siteRequestForClass(SiteRequestEnUS siteRequest_) {
@@ -186,8 +182,8 @@ public abstract class ClusterGenPageGen<DEV> extends PageLayout {
 		switch(var) {
 			case "listCluster":
 				return oClusterGenPage.listCluster;
-			case "cluster":
-				return oClusterGenPage.cluster;
+			case "cluster_":
+				return oClusterGenPage.cluster_;
 			default:
 				return super.obtainPageLayout(var);
 		}

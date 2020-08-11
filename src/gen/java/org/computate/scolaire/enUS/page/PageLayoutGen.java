@@ -2854,6 +2854,46 @@ public abstract class PageLayoutGen<DEV> extends Object {
 		Object o = Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
 		if(o != null && o instanceof PageLayout) {
 			PageLayout original = (PageLayout)o;
+			if(!Objects.equals(pageVisibleToBots, original.getPageVisibleToBots()))
+				apiRequest.addVars("pageVisibleToBots");
+			if(!Objects.equals(pageH1, original.getPageH1()))
+				apiRequest.addVars("pageH1");
+			if(!Objects.equals(pageH2, original.getPageH2()))
+				apiRequest.addVars("pageH2");
+			if(!Objects.equals(pageH3, original.getPageH3()))
+				apiRequest.addVars("pageH3");
+			if(!Objects.equals(pageTitle, original.getPageTitle()))
+				apiRequest.addVars("pageTitle");
+			if(!Objects.equals(pageUri, original.getPageUri()))
+				apiRequest.addVars("pageUri");
+			if(!Objects.equals(pageUris, original.getPageUris()))
+				apiRequest.addVars("pageUris");
+			if(!Objects.equals(pageUrl, original.getPageUrl()))
+				apiRequest.addVars("pageUrl");
+			if(!Objects.equals(pageImageUri, original.getPageImageUri()))
+				apiRequest.addVars("pageImageUri");
+			if(!Objects.equals(pageImageUrl, original.getPageImageUrl()))
+				apiRequest.addVars("pageImageUrl");
+			if(!Objects.equals(pageVideoId, original.getPageVideoId()))
+				apiRequest.addVars("pageVideoId");
+			if(!Objects.equals(pageVideoUrl, original.getPageVideoUrl()))
+				apiRequest.addVars("pageVideoUrl");
+			if(!Objects.equals(pageVideoUrlEmbed, original.getPageVideoUrlEmbed()))
+				apiRequest.addVars("pageVideoUrlEmbed");
+			if(!Objects.equals(pageImageWidth, original.getPageImageWidth()))
+				apiRequest.addVars("pageImageWidth");
+			if(!Objects.equals(pageImageHeight, original.getPageImageHeight()))
+				apiRequest.addVars("pageImageHeight");
+			if(!Objects.equals(pageImageContentType, original.getPageImageContentType()))
+				apiRequest.addVars("pageImageContentType");
+			if(!Objects.equals(pageContentType, original.getPageContentType()))
+				apiRequest.addVars("pageContentType");
+			if(!Objects.equals(pageCreated, original.getPageCreated()))
+				apiRequest.addVars("pageCreated");
+			if(!Objects.equals(pageKeywords, original.getPageKeywords()))
+				apiRequest.addVars("pageKeywords");
+			if(!Objects.equals(pageDescription, original.getPageDescription()))
+				apiRequest.addVars("pageDescription");
 		}
 	}
 
@@ -2862,7 +2902,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash();
+		return Objects.hash(pageVisibleToBots, pageH1, pageH2, pageH3, pageTitle, pageUri, pageUris, pageUrl, pageImageUri, pageImageUrl, pageVideoId, pageVideoUrl, pageVideoUrlEmbed, pageImageWidth, pageImageHeight, pageImageContentType, pageContentType, pageCreated, pageKeywords, pageDescription);
 	}
 
 	////////////
@@ -2875,7 +2915,26 @@ public abstract class PageLayoutGen<DEV> extends Object {
 		if(!(o instanceof PageLayout))
 			return false;
 		PageLayout that = (PageLayout)o;
-		return true;
+		return Objects.equals( pageVisibleToBots, that.pageVisibleToBots )
+				&& Objects.equals( pageH1, that.pageH1 )
+				&& Objects.equals( pageH2, that.pageH2 )
+				&& Objects.equals( pageH3, that.pageH3 )
+				&& Objects.equals( pageTitle, that.pageTitle )
+				&& Objects.equals( pageUri, that.pageUri )
+				&& Objects.equals( pageUris, that.pageUris )
+				&& Objects.equals( pageUrl, that.pageUrl )
+				&& Objects.equals( pageImageUri, that.pageImageUri )
+				&& Objects.equals( pageImageUrl, that.pageImageUrl )
+				&& Objects.equals( pageVideoId, that.pageVideoId )
+				&& Objects.equals( pageVideoUrl, that.pageVideoUrl )
+				&& Objects.equals( pageVideoUrlEmbed, that.pageVideoUrlEmbed )
+				&& Objects.equals( pageImageWidth, that.pageImageWidth )
+				&& Objects.equals( pageImageHeight, that.pageImageHeight )
+				&& Objects.equals( pageImageContentType, that.pageImageContentType )
+				&& Objects.equals( pageContentType, that.pageContentType )
+				&& Objects.equals( pageCreated, that.pageCreated )
+				&& Objects.equals( pageKeywords, that.pageKeywords )
+				&& Objects.equals( pageDescription, that.pageDescription );
 	}
 
 	//////////////
@@ -2885,6 +2944,26 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	@Override public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("PageLayout { ");
+		sb.append( "pageVisibleToBots: " ).append(pageVisibleToBots);
+		sb.append( ", pageH1: \"" ).append(pageH1).append( "\"" );
+		sb.append( ", pageH2: \"" ).append(pageH2).append( "\"" );
+		sb.append( ", pageH3: \"" ).append(pageH3).append( "\"" );
+		sb.append( ", pageTitle: \"" ).append(pageTitle).append( "\"" );
+		sb.append( ", pageUri: \"" ).append(pageUri).append( "\"" );
+		sb.append( ", pageUris: " ).append(pageUris);
+		sb.append( ", pageUrl: \"" ).append(pageUrl).append( "\"" );
+		sb.append( ", pageImageUri: \"" ).append(pageImageUri).append( "\"" );
+		sb.append( ", pageImageUrl: \"" ).append(pageImageUrl).append( "\"" );
+		sb.append( ", pageVideoId: \"" ).append(pageVideoId).append( "\"" );
+		sb.append( ", pageVideoUrl: \"" ).append(pageVideoUrl).append( "\"" );
+		sb.append( ", pageVideoUrlEmbed: \"" ).append(pageVideoUrlEmbed).append( "\"" );
+		sb.append( ", pageImageWidth: " ).append(pageImageWidth);
+		sb.append( ", pageImageHeight: " ).append(pageImageHeight);
+		sb.append( ", pageImageContentType: \"" ).append(pageImageContentType).append( "\"" );
+		sb.append( ", pageContentType: \"" ).append(pageContentType).append( "\"" );
+		sb.append( ", pageCreated: " ).append(pageCreated);
+		sb.append( ", pageKeywords: \"" ).append(pageKeywords).append( "\"" );
+		sb.append( ", pageDescription: \"" ).append(pageDescription).append( "\"" );
 		sb.append(" }");
 		return sb.toString();
 	}

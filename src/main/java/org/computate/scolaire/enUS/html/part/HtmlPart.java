@@ -81,6 +81,9 @@ public class HtmlPart extends HtmlPartGen<Cluster> {
 	protected void _htmlVarInput(Wrap<String> c) {
 	}
 
+	protected void _htmlIfVarEquals(Wrap<String> c) {
+	}
+
 	protected void _htmlVarForEach(Wrap<String> c) {
 	}
 

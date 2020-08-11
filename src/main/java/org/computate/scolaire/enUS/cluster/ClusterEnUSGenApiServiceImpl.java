@@ -436,6 +436,8 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 				searchList.setStore(true);
 				searchList.setQuery("*:*");
 				searchList.setC(Cluster.class);
+				searchList.addFilterQuery("deleted_indexed_boolean:false");
+				searchList.addFilterQuery("archived_indexed_boolean:false");
 				searchList.addFilterQuery("inheritPk_indexed_long:" + json.getString("pk"));
 				searchList.initDeepForClass(siteRequest2);
 
@@ -605,6 +607,8 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 				searchList.setStore(true);
 				searchList.setQuery("*:*");
 				searchList.setC(Cluster.class);
+				searchList.addFilterQuery("deleted_indexed_boolean:false");
+				searchList.addFilterQuery("archived_indexed_boolean:false");
 				searchList.addFilterQuery("pk_indexed_long:" + json.getString("pk"));
 				searchList.initDeepForClass(siteRequest2);
 

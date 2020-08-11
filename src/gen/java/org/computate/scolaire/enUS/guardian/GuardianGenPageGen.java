@@ -80,43 +80,41 @@ public abstract class GuardianGenPageGen<DEV> extends ClusterPage {
 		return (GuardianGenPage)this;
 	}
 
-	////////////////////
-	// schoolGuardian //
-	////////////////////
+	/////////////////////
+	// schoolGuardian_ //
+	/////////////////////
 
-	/**	 The entity schoolGuardian
+	/**	 The entity schoolGuardian_
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected SchoolGuardian schoolGuardian;
+	protected SchoolGuardian schoolGuardian_;
 	@JsonIgnore
-	public Wrap<SchoolGuardian> schoolGuardianWrap = new Wrap<SchoolGuardian>().p(this).c(SchoolGuardian.class).var("schoolGuardian").o(schoolGuardian);
+	public Wrap<SchoolGuardian> schoolGuardian_Wrap = new Wrap<SchoolGuardian>().p(this).c(SchoolGuardian.class).var("schoolGuardian_").o(schoolGuardian_);
 
-	/**	<br/> The entity schoolGuardian
+	/**	<br/> The entity schoolGuardian_
 	 *  is defined as null before being initialized. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.guardian.GuardianGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolGuardian">Find the entity schoolGuardian in Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.guardian.GuardianGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolGuardian_">Find the entity schoolGuardian_ in Solr</a>
 	 * <br/>
 	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
-	protected abstract void _schoolGuardian(Wrap<SchoolGuardian> c);
+	protected abstract void _schoolGuardian_(Wrap<SchoolGuardian> c);
 
-	public SchoolGuardian getSchoolGuardian() {
-		return schoolGuardian;
+	public SchoolGuardian getSchoolGuardian_() {
+		return schoolGuardian_;
 	}
 
-	public void setSchoolGuardian(SchoolGuardian schoolGuardian) {
-		this.schoolGuardian = schoolGuardian;
-		this.schoolGuardianWrap.alreadyInitialized = true;
+	public void setSchoolGuardian_(SchoolGuardian schoolGuardian_) {
+		this.schoolGuardian_ = schoolGuardian_;
+		this.schoolGuardian_Wrap.alreadyInitialized = true;
 	}
-	protected GuardianGenPage schoolGuardianInit() {
-		if(!schoolGuardianWrap.alreadyInitialized) {
-			_schoolGuardian(schoolGuardianWrap);
-			if(schoolGuardian == null)
-				setSchoolGuardian(schoolGuardianWrap.o);
+	protected GuardianGenPage schoolGuardian_Init() {
+		if(!schoolGuardian_Wrap.alreadyInitialized) {
+			_schoolGuardian_(schoolGuardian_Wrap);
+			if(schoolGuardian_ == null)
+				setSchoolGuardian_(schoolGuardian_Wrap.o);
 		}
-		if(schoolGuardian != null)
-			schoolGuardian.initDeepForClass(siteRequest_);
-		schoolGuardianWrap.alreadyInitialized(true);
+		schoolGuardian_Wrap.alreadyInitialized(true);
 		return (GuardianGenPage)this;
 	}
 
@@ -142,7 +140,7 @@ public abstract class GuardianGenPageGen<DEV> extends ClusterPage {
 
 	public void initGuardianGenPage() {
 		listSchoolGuardianInit();
-		schoolGuardianInit();
+		schoolGuardian_Init();
 	}
 
 	@Override public void initDeepForClass(SiteRequestEnUS siteRequest_) {
@@ -157,8 +155,6 @@ public abstract class GuardianGenPageGen<DEV> extends ClusterPage {
 			super.siteRequestClusterPage(siteRequest_);
 		if(listSchoolGuardian != null)
 			listSchoolGuardian.setSiteRequest_(siteRequest_);
-		if(schoolGuardian != null)
-			schoolGuardian.setSiteRequest_(siteRequest_);
 	}
 
 	public void siteRequestForClass(SiteRequestEnUS siteRequest_) {
@@ -187,8 +183,8 @@ public abstract class GuardianGenPageGen<DEV> extends ClusterPage {
 		switch(var) {
 			case "listSchoolGuardian":
 				return oGuardianGenPage.listSchoolGuardian;
-			case "schoolGuardian":
-				return oGuardianGenPage.schoolGuardian;
+			case "schoolGuardian_":
+				return oGuardianGenPage.schoolGuardian_;
 			default:
 				return super.obtainClusterPage(var);
 		}

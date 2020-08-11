@@ -48,6 +48,38 @@ public class PageDesign extends PageDesignGen<Cluster> {
 		c.o(false);
 	}
 
+	protected void _designAdmin(Wrap<Boolean> c) {
+		c.o(false);
+	}
+
+	protected void _designIgnoreEmptyChildName(Wrap<Boolean> c) {
+		c.o(false);
+	}
+
+	protected void _designIgnorePaymentsNotPastDue(Wrap<Boolean> c) {
+		c.o(false);
+	}
+
+	protected void _designIgnorePaymentsPastDue(Wrap<Boolean> c) {
+		c.o(false);
+	}
+
+	protected void _designFilterEnrollmentKey(Wrap<Boolean> c) {
+		c.o(false);
+	}
+
+	protected void _designEnrollmentSortChildName(Wrap<Boolean> c) {
+		c.o(false);
+	}
+
+	protected void _designEnrollmentSortMonthDayOfBirth(Wrap<Boolean> c) {
+		c.o(false);
+	}
+
+	protected void _designEnrollmentSortGroupName(Wrap<Boolean> c) {
+		c.o(false);
+	}
+
 	@Override()
 	protected void  _objectTitle(Wrap<String> c) {
 		c.o(pageDesignCompleteName);

@@ -263,7 +263,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 				.fg();
 
 		} else {
-			sx(htmInscriptionCles());
+			e("span").a("class", "varEnfantScolaire", pk, "InscriptionCles ").f().sx(htmInscriptionCles()).g("span");
 		}
 	}
 
@@ -1149,7 +1149,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 			.fg();
 
 		} else {
-			sx(htmPersonnePrenom());
+			e("span").a("class", "varEnfantScolaire", pk, "PersonnePrenom ").f().sx(htmPersonnePrenom()).g("span");
 		}
 	}
 
@@ -1281,7 +1281,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 			.fg();
 
 		} else {
-			sx(htmPersonnePrenomPrefere());
+			e("span").a("class", "varEnfantScolaire", pk, "PersonnePrenomPrefere ").f().sx(htmPersonnePrenomPrefere()).g("span");
 		}
 	}
 
@@ -1413,7 +1413,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 			.fg();
 
 		} else {
-			sx(htmFamilleNom());
+			e("span").a("class", "varEnfantScolaire", pk, "FamilleNom ").f().sx(htmFamilleNom()).g("span");
 		}
 	}
 
@@ -1742,7 +1742,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 				.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonneDateNaissance', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_personneDateNaissance')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_personneDateNaissance')); }); } ")
 				.fg();
 		} else {
-			sx(htmPersonneDateNaissance());
+			e("span").a("class", "varEnfantScolaire", pk, "PersonneDateNaissance ").f().sx(htmPersonneDateNaissance()).g("span");
 		}
 	}
 
@@ -2055,7 +2055,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 						{ e("div").a("class", "w3-cell-row  ").f();
 							{ e("div").a("class", "w3-cell ").f();
 								{ e("div").a("class", "w3-rest ").f();
-									e("span").f().sx(strPersonneAgeEnSeptembre()).g("span");
+									e("span").a("class", "varEnfantScolaire", pk, "PersonneAgeEnSeptembre ").f().sx(strPersonneAgeEnSeptembre()).g("span");
 								} g("div");
 							} g("div");
 						} g("div");
@@ -2148,7 +2148,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 				fg();
 			g("div");
 		} else {
-			sx(htmPhoto());
+			e("span").a("class", "varEnfantScolaire", pk, "Photo ").f().sx(htmPhoto()).g("span");
 		}
 	}
 
@@ -3008,18 +3008,52 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 		Object o = Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
 		if(o != null && o instanceof EnfantScolaire) {
 			EnfantScolaire original = (EnfantScolaire)o;
+			if(!Objects.equals(enfantCle, original.getEnfantCle()))
+				requeteApi.addVars("enfantCle");
 			if(!Objects.equals(inscriptionCles, original.getInscriptionCles()))
 				requeteApi.addVars("inscriptionCles");
+			if(!Objects.equals(familleTri, original.getFamilleTri()))
+				requeteApi.addVars("familleTri");
+			if(!Objects.equals(enfantTri, original.getEnfantTri()))
+				requeteApi.addVars("enfantTri");
+			if(!Objects.equals(utilisateurCles, original.getUtilisateurCles()))
+				requeteApi.addVars("utilisateurCles");
+			if(!Objects.equals(ecoleCles, original.getEcoleCles()))
+				requeteApi.addVars("ecoleCles");
+			if(!Objects.equals(anneeCles, original.getAnneeCles()))
+				requeteApi.addVars("anneeCles");
+			if(!Objects.equals(saisonCles, original.getSaisonCles()))
+				requeteApi.addVars("saisonCles");
+			if(!Objects.equals(sessionCles, original.getSessionCles()))
+				requeteApi.addVars("sessionCles");
+			if(!Objects.equals(ageCles, original.getAgeCles()))
+				requeteApi.addVars("ageCles");
 			if(!Objects.equals(personnePrenom, original.getPersonnePrenom()))
 				requeteApi.addVars("personnePrenom");
 			if(!Objects.equals(personnePrenomPrefere, original.getPersonnePrenomPrefere()))
 				requeteApi.addVars("personnePrenomPrefere");
 			if(!Objects.equals(familleNom, original.getFamilleNom()))
 				requeteApi.addVars("familleNom");
+			if(!Objects.equals(personneNomComplet, original.getPersonneNomComplet()))
+				requeteApi.addVars("personneNomComplet");
+			if(!Objects.equals(personneNomCompletPrefere, original.getPersonneNomCompletPrefere()))
+				requeteApi.addVars("personneNomCompletPrefere");
+			if(!Objects.equals(personneNomFormel, original.getPersonneNomFormel()))
+				requeteApi.addVars("personneNomFormel");
 			if(!Objects.equals(personneDateNaissance, original.getPersonneDateNaissance()))
 				requeteApi.addVars("personneDateNaissance");
+			if(!Objects.equals(personneDateNaissanceDAnnee, original.getPersonneDateNaissanceDAnnee()))
+				requeteApi.addVars("personneDateNaissanceDAnnee");
+			if(!Objects.equals(personneDateNaissanceMoisDAnnee, original.getPersonneDateNaissanceMoisDAnnee()))
+				requeteApi.addVars("personneDateNaissanceMoisDAnnee");
+			if(!Objects.equals(personneDateNaissanceJourDeSemaine, original.getPersonneDateNaissanceJourDeSemaine()))
+				requeteApi.addVars("personneDateNaissanceJourDeSemaine");
+			if(!Objects.equals(personneAgeEnSeptembre, original.getPersonneAgeEnSeptembre()))
+				requeteApi.addVars("personneAgeEnSeptembre");
 			if(!Objects.equals(photo, original.getPhoto()))
 				requeteApi.addVars("photo");
+			if(!Objects.equals(enfantNomComplet, original.getEnfantNomComplet()))
+				requeteApi.addVars("enfantNomComplet");
 			super.requeteApiCluster();
 		}
 	}
@@ -3029,7 +3063,7 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), inscriptionCles, personnePrenom, personnePrenomPrefere, familleNom, personneDateNaissance, photo);
+		return Objects.hash(super.hashCode(), enfantCle, inscriptionCles, familleTri, enfantTri, utilisateurCles, ecoleCles, anneeCles, saisonCles, sessionCles, ageCles, personnePrenom, personnePrenomPrefere, familleNom, personneNomComplet, personneNomCompletPrefere, personneNomFormel, personneDateNaissance, personneDateNaissanceDAnnee, personneDateNaissanceMoisDAnnee, personneDateNaissanceJourDeSemaine, personneAgeEnSeptembre, photo, enfantNomComplet);
 	}
 
 	////////////
@@ -3043,12 +3077,29 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 			return false;
 		EnfantScolaire that = (EnfantScolaire)o;
 		return super.equals(o)
+				&& Objects.equals( enfantCle, that.enfantCle )
 				&& Objects.equals( inscriptionCles, that.inscriptionCles )
+				&& Objects.equals( familleTri, that.familleTri )
+				&& Objects.equals( enfantTri, that.enfantTri )
+				&& Objects.equals( utilisateurCles, that.utilisateurCles )
+				&& Objects.equals( ecoleCles, that.ecoleCles )
+				&& Objects.equals( anneeCles, that.anneeCles )
+				&& Objects.equals( saisonCles, that.saisonCles )
+				&& Objects.equals( sessionCles, that.sessionCles )
+				&& Objects.equals( ageCles, that.ageCles )
 				&& Objects.equals( personnePrenom, that.personnePrenom )
 				&& Objects.equals( personnePrenomPrefere, that.personnePrenomPrefere )
 				&& Objects.equals( familleNom, that.familleNom )
+				&& Objects.equals( personneNomComplet, that.personneNomComplet )
+				&& Objects.equals( personneNomCompletPrefere, that.personneNomCompletPrefere )
+				&& Objects.equals( personneNomFormel, that.personneNomFormel )
 				&& Objects.equals( personneDateNaissance, that.personneDateNaissance )
-				&& Objects.equals( photo, that.photo );
+				&& Objects.equals( personneDateNaissanceDAnnee, that.personneDateNaissanceDAnnee )
+				&& Objects.equals( personneDateNaissanceMoisDAnnee, that.personneDateNaissanceMoisDAnnee )
+				&& Objects.equals( personneDateNaissanceJourDeSemaine, that.personneDateNaissanceJourDeSemaine )
+				&& Objects.equals( personneAgeEnSeptembre, that.personneAgeEnSeptembre )
+				&& Objects.equals( photo, that.photo )
+				&& Objects.equals( enfantNomComplet, that.enfantNomComplet );
 	}
 
 	//////////////
@@ -3059,12 +3110,29 @@ public abstract class EnfantScolaireGen<DEV> extends Cluster {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString() + "\n");
 		sb.append("EnfantScolaire { ");
-		sb.append( "inscriptionCles: " ).append(inscriptionCles);
+		sb.append( "enfantCle: " ).append(enfantCle);
+		sb.append( ", inscriptionCles: " ).append(inscriptionCles);
+		sb.append( ", familleTri: " ).append(familleTri);
+		sb.append( ", enfantTri: " ).append(enfantTri);
+		sb.append( ", utilisateurCles: " ).append(utilisateurCles);
+		sb.append( ", ecoleCles: " ).append(ecoleCles);
+		sb.append( ", anneeCles: " ).append(anneeCles);
+		sb.append( ", saisonCles: " ).append(saisonCles);
+		sb.append( ", sessionCles: " ).append(sessionCles);
+		sb.append( ", ageCles: " ).append(ageCles);
 		sb.append( ", personnePrenom: \"" ).append(personnePrenom).append( "\"" );
 		sb.append( ", personnePrenomPrefere: \"" ).append(personnePrenomPrefere).append( "\"" );
 		sb.append( ", familleNom: \"" ).append(familleNom).append( "\"" );
+		sb.append( ", personneNomComplet: \"" ).append(personneNomComplet).append( "\"" );
+		sb.append( ", personneNomCompletPrefere: \"" ).append(personneNomCompletPrefere).append( "\"" );
+		sb.append( ", personneNomFormel: \"" ).append(personneNomFormel).append( "\"" );
 		sb.append( ", personneDateNaissance: " ).append(personneDateNaissance);
+		sb.append( ", personneDateNaissanceDAnnee: " ).append(personneDateNaissanceDAnnee);
+		sb.append( ", personneDateNaissanceMoisDAnnee: \"" ).append(personneDateNaissanceMoisDAnnee).append( "\"" );
+		sb.append( ", personneDateNaissanceJourDeSemaine: \"" ).append(personneDateNaissanceJourDeSemaine).append( "\"" );
+		sb.append( ", personneAgeEnSeptembre: \"" ).append(personneAgeEnSeptembre).append( "\"" );
 		sb.append( ", photo: \"" ).append(photo).append( "\"" );
+		sb.append( ", enfantNomComplet: \"" ).append(enfantNomComplet).append( "\"" );
 		sb.append(" }");
 		return sb.toString();
 	}

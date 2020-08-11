@@ -80,43 +80,41 @@ public abstract class PageDesignGenPageGen<DEV> extends ClusterPage {
 		return (PageDesignGenPage)this;
 	}
 
-	////////////////
-	// pageDesign //
-	////////////////
+	/////////////////
+	// pageDesign_ //
+	/////////////////
 
-	/**	 The entity pageDesign
+	/**	 The entity pageDesign_
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected PageDesign pageDesign;
+	protected PageDesign pageDesign_;
 	@JsonIgnore
-	public Wrap<PageDesign> pageDesignWrap = new Wrap<PageDesign>().p(this).c(PageDesign.class).var("pageDesign").o(pageDesign);
+	public Wrap<PageDesign> pageDesign_Wrap = new Wrap<PageDesign>().p(this).c(PageDesign.class).var("pageDesign_").o(pageDesign_);
 
-	/**	<br/> The entity pageDesign
+	/**	<br/> The entity pageDesign_
 	 *  is defined as null before being initialized. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.PageDesignGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:pageDesign">Find the entity pageDesign in Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.PageDesignGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:pageDesign_">Find the entity pageDesign_ in Solr</a>
 	 * <br/>
 	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
-	protected abstract void _pageDesign(Wrap<PageDesign> c);
+	protected abstract void _pageDesign_(Wrap<PageDesign> c);
 
-	public PageDesign getPageDesign() {
-		return pageDesign;
+	public PageDesign getPageDesign_() {
+		return pageDesign_;
 	}
 
-	public void setPageDesign(PageDesign pageDesign) {
-		this.pageDesign = pageDesign;
-		this.pageDesignWrap.alreadyInitialized = true;
+	public void setPageDesign_(PageDesign pageDesign_) {
+		this.pageDesign_ = pageDesign_;
+		this.pageDesign_Wrap.alreadyInitialized = true;
 	}
-	protected PageDesignGenPage pageDesignInit() {
-		if(!pageDesignWrap.alreadyInitialized) {
-			_pageDesign(pageDesignWrap);
-			if(pageDesign == null)
-				setPageDesign(pageDesignWrap.o);
+	protected PageDesignGenPage pageDesign_Init() {
+		if(!pageDesign_Wrap.alreadyInitialized) {
+			_pageDesign_(pageDesign_Wrap);
+			if(pageDesign_ == null)
+				setPageDesign_(pageDesign_Wrap.o);
 		}
-		if(pageDesign != null)
-			pageDesign.initDeepForClass(siteRequest_);
-		pageDesignWrap.alreadyInitialized(true);
+		pageDesign_Wrap.alreadyInitialized(true);
 		return (PageDesignGenPage)this;
 	}
 
@@ -142,7 +140,7 @@ public abstract class PageDesignGenPageGen<DEV> extends ClusterPage {
 
 	public void initPageDesignGenPage() {
 		listPageDesignInit();
-		pageDesignInit();
+		pageDesign_Init();
 	}
 
 	@Override public void initDeepForClass(SiteRequestEnUS siteRequest_) {
@@ -157,8 +155,6 @@ public abstract class PageDesignGenPageGen<DEV> extends ClusterPage {
 			super.siteRequestClusterPage(siteRequest_);
 		if(listPageDesign != null)
 			listPageDesign.setSiteRequest_(siteRequest_);
-		if(pageDesign != null)
-			pageDesign.setSiteRequest_(siteRequest_);
 	}
 
 	public void siteRequestForClass(SiteRequestEnUS siteRequest_) {
@@ -187,8 +183,8 @@ public abstract class PageDesignGenPageGen<DEV> extends ClusterPage {
 		switch(var) {
 			case "listPageDesign":
 				return oPageDesignGenPage.listPageDesign;
-			case "pageDesign":
-				return oPageDesignGenPage.pageDesign;
+			case "pageDesign_":
+				return oPageDesignGenPage.pageDesign_;
 			default:
 				return super.obtainClusterPage(var);
 		}

@@ -53,7 +53,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 	protected void _listSchoolAge(Wrap<SearchList<SchoolAge>> c) {
 	}
 
-	protected void _schoolAge(Wrap<SchoolAge> c) {
+	protected void _schoolAge_(Wrap<SchoolAge> c) {
 		if(listSchoolAge != null && listSchoolAge.size() == 1)
 			c.o(listSchoolAge.get(0));
 	}
@@ -63,8 +63,8 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageH2(Wrap<String> c) {
-		if(schoolAge != null && schoolAge.getAgeCompleteName() != null)
-			c.o(schoolAge.getAgeCompleteName());
+		if(schoolAge_ != null && schoolAge_.getAgeCompleteName() != null)
+			c.o(schoolAge_.getAgeCompleteName());
 	}
 
 	@Override protected void _pageH3(Wrap<String> c) {
@@ -72,9 +72,9 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageTitle(Wrap<String> c) {
-		if(schoolAge != null && schoolAge.getAgeCompleteName() != null)
-			c.o(schoolAge.getAgeCompleteName());
-		else if(schoolAge != null)
+		if(schoolAge_ != null && schoolAge_.getAgeCompleteName() != null)
+			c.o(schoolAge_.getAgeCompleteName());
+		else if(schoolAge_ != null)
 			c.o("ages");
 		else if(listSchoolAge == null || listSchoolAge.size() == 0)
 			c.o("no age found");
@@ -709,7 +709,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-blue ")
-								.a("onclick", "putcopySchoolAge($('#putcopySchoolAgeForm'), ", schoolAge == null ? "null" : schoolAge.getPk(), "); ")
+								.a("onclick", "putcopySchoolAge($('#putcopySchoolAgeForm'), ", schoolAge_ == null ? "null" : schoolAge_.getPk(), "); ")
 								.f().sx("Duplicate ages")
 							.g("button");
 
@@ -743,7 +743,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 							} g("form");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-blue ")
-								.a("onclick", "patchSchoolAge(null, $('#patchSchoolAgeFormValues'), ", Optional.ofNullable(schoolAge).map(SchoolAge::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
+								.a("onclick", "patchSchoolAge(null, $('#patchSchoolAgeFormValues'), ", Optional.ofNullable(schoolAge_).map(SchoolAge::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
 								.f().sx("Modify ages")
 							.g("button");
 

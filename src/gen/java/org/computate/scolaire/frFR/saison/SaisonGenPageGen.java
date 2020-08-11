@@ -80,43 +80,41 @@ public abstract class SaisonGenPageGen<DEV> extends ClusterPage {
 		return (SaisonGenPage)this;
 	}
 
-	////////////////////
-	// saisonScolaire //
-	////////////////////
+	/////////////////////
+	// saisonScolaire_ //
+	/////////////////////
 
-	/**	 L'entité saisonScolaire
+	/**	 L'entité saisonScolaire_
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected SaisonScolaire saisonScolaire;
+	protected SaisonScolaire saisonScolaire_;
 	@JsonIgnore
-	public Couverture<SaisonScolaire> saisonScolaireCouverture = new Couverture<SaisonScolaire>().p(this).c(SaisonScolaire.class).var("saisonScolaire").o(saisonScolaire);
+	public Couverture<SaisonScolaire> saisonScolaire_Couverture = new Couverture<SaisonScolaire>().p(this).c(SaisonScolaire.class).var("saisonScolaire_").o(saisonScolaire_);
 
-	/**	<br/> L'entité saisonScolaire
+	/**	<br/> L'entité saisonScolaire_
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.saison.SaisonGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:saisonScolaire">Trouver l'entité saisonScolaire dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.saison.SaisonGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:saisonScolaire_">Trouver l'entité saisonScolaire_ dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _saisonScolaire(Couverture<SaisonScolaire> c);
+	protected abstract void _saisonScolaire_(Couverture<SaisonScolaire> c);
 
-	public SaisonScolaire getSaisonScolaire() {
-		return saisonScolaire;
+	public SaisonScolaire getSaisonScolaire_() {
+		return saisonScolaire_;
 	}
 
-	public void setSaisonScolaire(SaisonScolaire saisonScolaire) {
-		this.saisonScolaire = saisonScolaire;
-		this.saisonScolaireCouverture.dejaInitialise = true;
+	public void setSaisonScolaire_(SaisonScolaire saisonScolaire_) {
+		this.saisonScolaire_ = saisonScolaire_;
+		this.saisonScolaire_Couverture.dejaInitialise = true;
 	}
-	protected SaisonGenPage saisonScolaireInit() {
-		if(!saisonScolaireCouverture.dejaInitialise) {
-			_saisonScolaire(saisonScolaireCouverture);
-			if(saisonScolaire == null)
-				setSaisonScolaire(saisonScolaireCouverture.o);
+	protected SaisonGenPage saisonScolaire_Init() {
+		if(!saisonScolaire_Couverture.dejaInitialise) {
+			_saisonScolaire_(saisonScolaire_Couverture);
+			if(saisonScolaire_ == null)
+				setSaisonScolaire_(saisonScolaire_Couverture.o);
 		}
-		if(saisonScolaire != null)
-			saisonScolaire.initLoinPourClasse(requeteSite_);
-		saisonScolaireCouverture.dejaInitialise(true);
+		saisonScolaire_Couverture.dejaInitialise(true);
 		return (SaisonGenPage)this;
 	}
 
@@ -142,7 +140,7 @@ public abstract class SaisonGenPageGen<DEV> extends ClusterPage {
 
 	public void initSaisonGenPage() {
 		listeSaisonScolaireInit();
-		saisonScolaireInit();
+		saisonScolaire_Init();
 	}
 
 	@Override public void initLoinPourClasse(RequeteSiteFrFR requeteSite_) {
@@ -157,8 +155,6 @@ public abstract class SaisonGenPageGen<DEV> extends ClusterPage {
 			super.requeteSiteClusterPage(requeteSite_);
 		if(listeSaisonScolaire != null)
 			listeSaisonScolaire.setRequeteSite_(requeteSite_);
-		if(saisonScolaire != null)
-			saisonScolaire.setRequeteSite_(requeteSite_);
 	}
 
 	public void requeteSitePourClasse(RequeteSiteFrFR requeteSite_) {
@@ -187,8 +183,8 @@ public abstract class SaisonGenPageGen<DEV> extends ClusterPage {
 		switch(var) {
 			case "listeSaisonScolaire":
 				return oSaisonGenPage.listeSaisonScolaire;
-			case "saisonScolaire":
-				return oSaisonGenPage.saisonScolaire;
+			case "saisonScolaire_":
+				return oSaisonGenPage.saisonScolaire_;
 			default:
 				return super.obtenirClusterPage(var);
 		}

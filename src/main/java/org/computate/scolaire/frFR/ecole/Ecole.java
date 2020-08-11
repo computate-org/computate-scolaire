@@ -85,6 +85,21 @@ public class Ecole extends EcoleGen<Cluster> {
 	
 	/**
 	 * {@inheritDoc}
+	 * Var.enUS: receiptKeys
+	 * Indexe: true
+	 * Stocke: true
+	 * Attribuer: RecuScolaire.ecoleCle
+	 * HtmlLigne: 8
+	 * HtmlCellule: 2
+	 * Description.frFR: 
+	 * Description.enUS: 
+	 * NomAffichage.frFR: reçus
+	 * NomAffichage.enUS: receipts
+	 */   
+	protected void _recuCles(List<Long> o) {}
+	
+	/**
+	 * {@inheritDoc}
 	 * Var.enUS: seasonKeys
 	 * Indexe: true
 	 * Stocke: true

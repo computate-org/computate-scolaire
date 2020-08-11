@@ -54,7 +54,7 @@ public class GardienGenPage extends GardienGenPageGen<ClusterPage> {
 	protected void _listeGardienScolaire(Couverture<ListeRecherche<GardienScolaire>> c) {
 	}
 
-	protected void _gardienScolaire(Couverture<GardienScolaire> c) {
+	protected void _gardienScolaire_(Couverture<GardienScolaire> c) {
 		if(listeGardienScolaire != null && listeGardienScolaire.size() == 1)
 			c.o(listeGardienScolaire.get(0));
 	}
@@ -72,9 +72,9 @@ public class GardienGenPage extends GardienGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageTitre(Couverture<String> c) {
-		if(gardienScolaire != null && gardienScolaire.getGardienNomComplet() != null)
-			c.o(gardienScolaire.getGardienNomComplet());
-		else if(gardienScolaire != null)
+		if(gardienScolaire_ != null && gardienScolaire_.getGardienNomComplet() != null)
+			c.o(gardienScolaire_.getGardienNomComplet());
+		else if(gardienScolaire_ != null)
 			c.o("gardiens");
 		else if(listeGardienScolaire == null || listeGardienScolaire.size() == 0)
 			c.o("aucun gardien trouvé");
@@ -730,7 +730,7 @@ public class GardienGenPage extends GardienGenPageGen<ClusterPage> {
 							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-yellow ")
-								.a("onclick", "putcopieGardienScolaire($('#putcopieGardienScolaireForm'), ", gardienScolaire == null ? "null" : gardienScolaire.getPk(), "); ")
+								.a("onclick", "putcopieGardienScolaire($('#putcopieGardienScolaireForm'), ", gardienScolaire_ == null ? "null" : gardienScolaire_.getPk(), "); ")
 								.f().sx("Dupliquer gardiens")
 							.g("button");
 
@@ -764,7 +764,7 @@ public class GardienGenPage extends GardienGenPageGen<ClusterPage> {
 							} g("form");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-yellow ")
-								.a("onclick", "patchGardienScolaire(null, $('#patchGardienScolaireFormulaireValeurs'), ", Optional.ofNullable(gardienScolaire).map(GardienScolaire::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
+								.a("onclick", "patchGardienScolaire(null, $('#patchGardienScolaireFormulaireValeurs'), ", Optional.ofNullable(gardienScolaire_).map(GardienScolaire::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
 								.f().sx("Modifier gardiens")
 							.g("button");
 

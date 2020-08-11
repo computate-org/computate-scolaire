@@ -245,7 +245,7 @@ public abstract class ClusterGen<DEV> extends Object {
 
 	public void inputPk(String classApiMethodMethod) {
 		Cluster s = (Cluster)this;
-		s.sx(htmPk());
+		s.e("span").a("class", "varCluster", pk, "Pk ").f().sx(htmPk()).g("span");
 	}
 
 	public void htmPk(String classApiMethodMethod) {
@@ -369,7 +369,7 @@ public abstract class ClusterGen<DEV> extends Object {
 					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
 					) {
-				s.sx(htmInheritPk());
+				s.e("span").a("class", "varCluster", pk, "InheritPk ").f().sx(htmInheritPk()).g("span");
 			}
 		}
 	}
@@ -551,7 +551,7 @@ public abstract class ClusterGen<DEV> extends Object {
 
 	public void inputCreated(String classApiMethodMethod) {
 		Cluster s = (Cluster)this;
-		s.sx(htmCreated());
+		s.e("span").a("class", "varCluster", pk, "Created ").f().sx(htmCreated()).g("span");
 	}
 
 	public void htmCreated(String classApiMethodMethod) {
@@ -655,7 +655,7 @@ public abstract class ClusterGen<DEV> extends Object {
 
 	public void inputModified(String classApiMethodMethod) {
 		Cluster s = (Cluster)this;
-		s.sx(htmModified());
+		s.e("span").a("class", "varCluster", pk, "Modified ").f().sx(htmModified()).g("span");
 	}
 
 	public void htmModified(String classApiMethodMethod) {
@@ -789,7 +789,7 @@ public abstract class ClusterGen<DEV> extends Object {
 					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
 					) {
-				s.sx(htmArchived());
+				s.e("span").a("class", "varCluster", pk, "Archived ").f().sx(htmArchived()).g("span");
 			}
 		}
 	}
@@ -926,7 +926,7 @@ public abstract class ClusterGen<DEV> extends Object {
 					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
 					) {
-				s.sx(htmDeleted());
+				s.e("span").a("class", "varCluster", pk, "Deleted ").f().sx(htmDeleted()).g("span");
 			}
 		}
 	}
@@ -1219,7 +1219,7 @@ public abstract class ClusterGen<DEV> extends Object {
 
 	public void inputSessionId(String classApiMethodMethod) {
 		Cluster s = (Cluster)this;
-		s.sx(htmSessionId());
+		s.e("span").a("class", "varCluster", pk, "SessionId ").f().sx(htmSessionId()).g("span");
 	}
 
 	public void htmSessionId(String classApiMethodMethod) {
@@ -1304,7 +1304,7 @@ public abstract class ClusterGen<DEV> extends Object {
 
 	public void inputUserId(String classApiMethodMethod) {
 		Cluster s = (Cluster)this;
-		s.sx(htmUserId());
+		s.e("span").a("class", "varCluster", pk, "UserId ").f().sx(htmUserId()).g("span");
 	}
 
 	public void htmUserId(String classApiMethodMethod) {
@@ -1396,7 +1396,7 @@ public abstract class ClusterGen<DEV> extends Object {
 
 	public void inputUserKey(String classApiMethodMethod) {
 		Cluster s = (Cluster)this;
-		s.sx(htmUserKey());
+		s.e("span").a("class", "varCluster", pk, "UserKey ").f().sx(htmUserKey()).g("span");
 	}
 
 	public void htmUserKey(String classApiMethodMethod) {
@@ -1571,7 +1571,7 @@ public abstract class ClusterGen<DEV> extends Object {
 						{ s.e("div").a("class", "w3-cell-row  ").f();
 							{ s.e("div").a("class", "w3-cell ").f();
 								{ s.e("div").a("class", "w3-rest ").f();
-									s.e("span").f().sx(strObjectTitle()).g("span");
+									s.e("span").a("class", "varCluster", pk, "ObjectTitle ").f().sx(strObjectTitle()).g("span");
 								} s.g("div");
 							} s.g("div");
 						} s.g("div");
@@ -2801,8 +2801,12 @@ public abstract class ClusterGen<DEV> extends Object {
 		Object o = Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
 		if(o != null && o instanceof Cluster) {
 			Cluster original = (Cluster)o;
+			if(!Objects.equals(pk, original.getPk()))
+				apiRequest.addVars("pk");
 			if(!Objects.equals(inheritPk, original.getInheritPk()))
 				apiRequest.addVars("inheritPk");
+			if(!Objects.equals(id, original.getId()))
+				apiRequest.addVars("id");
 			if(!Objects.equals(created, original.getCreated()))
 				apiRequest.addVars("created");
 			if(!Objects.equals(modified, original.getModified()))
@@ -2811,12 +2815,34 @@ public abstract class ClusterGen<DEV> extends Object {
 				apiRequest.addVars("archived");
 			if(!Objects.equals(deleted, original.getDeleted()))
 				apiRequest.addVars("deleted");
+			if(!Objects.equals(classCanonicalName, original.getClassCanonicalName()))
+				apiRequest.addVars("classCanonicalName");
+			if(!Objects.equals(classSimpleName, original.getClassSimpleName()))
+				apiRequest.addVars("classSimpleName");
+			if(!Objects.equals(classCanonicalNames, original.getClassCanonicalNames()))
+				apiRequest.addVars("classCanonicalNames");
 			if(!Objects.equals(sessionId, original.getSessionId()))
 				apiRequest.addVars("sessionId");
 			if(!Objects.equals(userId, original.getUserId()))
 				apiRequest.addVars("userId");
 			if(!Objects.equals(userKey, original.getUserKey()))
 				apiRequest.addVars("userKey");
+			if(!Objects.equals(saves, original.getSaves()))
+				apiRequest.addVars("saves");
+			if(!Objects.equals(objectTitle, original.getObjectTitle()))
+				apiRequest.addVars("objectTitle");
+			if(!Objects.equals(objectId, original.getObjectId()))
+				apiRequest.addVars("objectId");
+			if(!Objects.equals(objectSuggest, original.getObjectSuggest()))
+				apiRequest.addVars("objectSuggest");
+			if(!Objects.equals(objectText, original.getObjectText()))
+				apiRequest.addVars("objectText");
+			if(!Objects.equals(pageUrlId, original.getPageUrlId()))
+				apiRequest.addVars("pageUrlId");
+			if(!Objects.equals(pageUrlPk, original.getPageUrlPk()))
+				apiRequest.addVars("pageUrlPk");
+			if(!Objects.equals(pageUrlApi, original.getPageUrlApi()))
+				apiRequest.addVars("pageUrlApi");
 		}
 	}
 
@@ -2825,7 +2851,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(inheritPk, created, modified, archived, deleted, sessionId, userId, userKey);
+		return Objects.hash(pk, inheritPk, id, created, modified, archived, deleted, classCanonicalName, classSimpleName, classCanonicalNames, sessionId, userId, userKey, saves, objectTitle, objectId, objectSuggest, objectText, pageUrlId, pageUrlPk, pageUrlApi);
 	}
 
 	////////////
@@ -2838,14 +2864,27 @@ public abstract class ClusterGen<DEV> extends Object {
 		if(!(o instanceof Cluster))
 			return false;
 		Cluster that = (Cluster)o;
-		return Objects.equals( inheritPk, that.inheritPk )
+		return Objects.equals( pk, that.pk )
+				&& Objects.equals( inheritPk, that.inheritPk )
+				&& Objects.equals( id, that.id )
 				&& Objects.equals( created, that.created )
 				&& Objects.equals( modified, that.modified )
 				&& Objects.equals( archived, that.archived )
 				&& Objects.equals( deleted, that.deleted )
+				&& Objects.equals( classCanonicalName, that.classCanonicalName )
+				&& Objects.equals( classSimpleName, that.classSimpleName )
+				&& Objects.equals( classCanonicalNames, that.classCanonicalNames )
 				&& Objects.equals( sessionId, that.sessionId )
 				&& Objects.equals( userId, that.userId )
-				&& Objects.equals( userKey, that.userKey );
+				&& Objects.equals( userKey, that.userKey )
+				&& Objects.equals( saves, that.saves )
+				&& Objects.equals( objectTitle, that.objectTitle )
+				&& Objects.equals( objectId, that.objectId )
+				&& Objects.equals( objectSuggest, that.objectSuggest )
+				&& Objects.equals( objectText, that.objectText )
+				&& Objects.equals( pageUrlId, that.pageUrlId )
+				&& Objects.equals( pageUrlPk, that.pageUrlPk )
+				&& Objects.equals( pageUrlApi, that.pageUrlApi );
 	}
 
 	//////////////
@@ -2855,14 +2894,27 @@ public abstract class ClusterGen<DEV> extends Object {
 	@Override public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("Cluster { ");
-		sb.append( "inheritPk: " ).append(inheritPk);
+		sb.append( "pk: " ).append(pk);
+		sb.append( ", inheritPk: " ).append(inheritPk);
+		sb.append( ", id: \"" ).append(id).append( "\"" );
 		sb.append( ", created: " ).append(created);
 		sb.append( ", modified: " ).append(modified);
 		sb.append( ", archived: " ).append(archived);
 		sb.append( ", deleted: " ).append(deleted);
+		sb.append( ", classCanonicalName: \"" ).append(classCanonicalName).append( "\"" );
+		sb.append( ", classSimpleName: \"" ).append(classSimpleName).append( "\"" );
+		sb.append( ", classCanonicalNames: " ).append(classCanonicalNames);
 		sb.append( ", sessionId: \"" ).append(sessionId).append( "\"" );
 		sb.append( ", userId: \"" ).append(userId).append( "\"" );
 		sb.append( ", userKey: " ).append(userKey);
+		sb.append( ", saves: " ).append(saves);
+		sb.append( ", objectTitle: \"" ).append(objectTitle).append( "\"" );
+		sb.append( ", objectId: \"" ).append(objectId).append( "\"" );
+		sb.append( ", objectSuggest: \"" ).append(objectSuggest).append( "\"" );
+		sb.append( ", objectText: \"" ).append(objectText).append( "\"" );
+		sb.append( ", pageUrlId: \"" ).append(pageUrlId).append( "\"" );
+		sb.append( ", pageUrlPk: \"" ).append(pageUrlPk).append( "\"" );
+		sb.append( ", pageUrlApi: \"" ).append(pageUrlApi).append( "\"" );
 		sb.append(" }");
 		return sb.toString();
 	}

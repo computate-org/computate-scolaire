@@ -80,43 +80,41 @@ public abstract class EnrollmentGenPageGen<DEV> extends ClusterPage {
 		return (EnrollmentGenPage)this;
 	}
 
-	//////////////////////
-	// schoolEnrollment //
-	//////////////////////
+	///////////////////////
+	// schoolEnrollment_ //
+	///////////////////////
 
-	/**	 The entity schoolEnrollment
+	/**	 The entity schoolEnrollment_
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected SchoolEnrollment schoolEnrollment;
+	protected SchoolEnrollment schoolEnrollment_;
 	@JsonIgnore
-	public Wrap<SchoolEnrollment> schoolEnrollmentWrap = new Wrap<SchoolEnrollment>().p(this).c(SchoolEnrollment.class).var("schoolEnrollment").o(schoolEnrollment);
+	public Wrap<SchoolEnrollment> schoolEnrollment_Wrap = new Wrap<SchoolEnrollment>().p(this).c(SchoolEnrollment.class).var("schoolEnrollment_").o(schoolEnrollment_);
 
-	/**	<br/> The entity schoolEnrollment
+	/**	<br/> The entity schoolEnrollment_
 	 *  is defined as null before being initialized. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolEnrollment">Find the entity schoolEnrollment in Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.EnrollmentGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolEnrollment_">Find the entity schoolEnrollment_ in Solr</a>
 	 * <br/>
 	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
-	protected abstract void _schoolEnrollment(Wrap<SchoolEnrollment> c);
+	protected abstract void _schoolEnrollment_(Wrap<SchoolEnrollment> c);
 
-	public SchoolEnrollment getSchoolEnrollment() {
-		return schoolEnrollment;
+	public SchoolEnrollment getSchoolEnrollment_() {
+		return schoolEnrollment_;
 	}
 
-	public void setSchoolEnrollment(SchoolEnrollment schoolEnrollment) {
-		this.schoolEnrollment = schoolEnrollment;
-		this.schoolEnrollmentWrap.alreadyInitialized = true;
+	public void setSchoolEnrollment_(SchoolEnrollment schoolEnrollment_) {
+		this.schoolEnrollment_ = schoolEnrollment_;
+		this.schoolEnrollment_Wrap.alreadyInitialized = true;
 	}
-	protected EnrollmentGenPage schoolEnrollmentInit() {
-		if(!schoolEnrollmentWrap.alreadyInitialized) {
-			_schoolEnrollment(schoolEnrollmentWrap);
-			if(schoolEnrollment == null)
-				setSchoolEnrollment(schoolEnrollmentWrap.o);
+	protected EnrollmentGenPage schoolEnrollment_Init() {
+		if(!schoolEnrollment_Wrap.alreadyInitialized) {
+			_schoolEnrollment_(schoolEnrollment_Wrap);
+			if(schoolEnrollment_ == null)
+				setSchoolEnrollment_(schoolEnrollment_Wrap.o);
 		}
-		if(schoolEnrollment != null)
-			schoolEnrollment.initDeepForClass(siteRequest_);
-		schoolEnrollmentWrap.alreadyInitialized(true);
+		schoolEnrollment_Wrap.alreadyInitialized(true);
 		return (EnrollmentGenPage)this;
 	}
 
@@ -142,7 +140,7 @@ public abstract class EnrollmentGenPageGen<DEV> extends ClusterPage {
 
 	public void initEnrollmentGenPage() {
 		listSchoolEnrollmentInit();
-		schoolEnrollmentInit();
+		schoolEnrollment_Init();
 	}
 
 	@Override public void initDeepForClass(SiteRequestEnUS siteRequest_) {
@@ -157,8 +155,6 @@ public abstract class EnrollmentGenPageGen<DEV> extends ClusterPage {
 			super.siteRequestClusterPage(siteRequest_);
 		if(listSchoolEnrollment != null)
 			listSchoolEnrollment.setSiteRequest_(siteRequest_);
-		if(schoolEnrollment != null)
-			schoolEnrollment.setSiteRequest_(siteRequest_);
 	}
 
 	public void siteRequestForClass(SiteRequestEnUS siteRequest_) {
@@ -187,8 +183,8 @@ public abstract class EnrollmentGenPageGen<DEV> extends ClusterPage {
 		switch(var) {
 			case "listSchoolEnrollment":
 				return oEnrollmentGenPage.listSchoolEnrollment;
-			case "schoolEnrollment":
-				return oEnrollmentGenPage.schoolEnrollment;
+			case "schoolEnrollment_":
+				return oEnrollmentGenPage.schoolEnrollment_;
 			default:
 				return super.obtainClusterPage(var);
 		}

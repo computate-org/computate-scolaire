@@ -171,9 +171,10 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 		}
 		else {
 			l.setQuery("*:*");
-			l.addFilterQuery("pk_indexed_long:" + childKey);
+			l.addFilterQuery("enrollmentKeys_indexed_longs:" + pk);
 			l.setC(SchoolChild.class);
 			l.setStore(true);
+			l.addSort("pk_indexed_long", ORDER.asc);
 		}
 	}
 
@@ -188,6 +189,7 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 		l.addFilterQuery("enrollmentKeys_indexed_longs:" + pk);
 		l.setC(SchoolMom.class);
 		l.setStore(true);
+		l.addSort("pk_indexed_long", ORDER.asc);
 	}
 
 	protected void _moms(Wrap<List<SchoolMom>> c) {
@@ -199,6 +201,7 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 		l.addFilterQuery("enrollmentKeys_indexed_longs:" + pk);
 		l.setC(SchoolDad.class);
 		l.setStore(true);
+		l.addSort("pk_indexed_long", ORDER.asc);
 	}
 
 	protected void _dads(Wrap<List<SchoolDad>> c) {
@@ -210,6 +213,7 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 		l.addFilterQuery("enrollmentKeys_indexed_longs:" + pk);
 		l.setC(SchoolGuardian.class);
 		l.setStore(true);
+		l.addSort("pk_indexed_long", ORDER.asc);
 	}
 
 	protected void _guardians(Wrap<List<SchoolGuardian>> c) {
@@ -232,6 +236,7 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 		l.add("json.facet", "{sum_chargeAmount:'sum(chargeAmount_indexed_double)'}");
 		l.add("json.facet", "{sum_chargeAmountDue:'sum(chargeAmountDue_indexed_double)'}");
 		l.add("json.facet", "{sum_chargeAmountFuture:'sum(chargeAmountFuture_indexed_double)'}");
+		l.add("json.facet", "{sum_chargeAmountNotPassed:'sum(chargeAmountNotPassed_indexed_double)'}");
 		l.addSort("paymentDate_indexed_date", ORDER.desc);
 		l.setC(SchoolPayment.class);
 		l.setStore(true);
@@ -559,6 +564,15 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 		c.o((SimpleOrderedMap)Optional.ofNullable(paymentSearch.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(new SimpleOrderedMap()));
 	}
 
+	protected void _paymentLastDate(Wrap<LocalDate> c) {
+		for(SchoolPayment p : paymentSearch.getList()) {
+			if(p.getPaymentAmount() != null) {
+				c.o(p.getPaymentDate());
+				return;
+			}
+		}
+	}
+
 	protected void _paymentLastStr(Wrap<String> c) {
 		for(SchoolPayment p : paymentSearch.getList()) {
 			if(p.getPaymentAmount() != null) {
@@ -585,6 +599,10 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 		c.o(Optional.ofNullable((Double)paymentFacets.get("sum_chargeAmountDue")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING)));
 	}
 
+	protected void _chargeAmountNotPassed(Wrap<BigDecimal> c) {
+		c.o(Optional.ofNullable((Double)paymentFacets.get("sum_chargeAmountNotPassed")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING)));
+	}
+
 	protected void _chargesNow(Wrap<BigDecimal> c) {
 		c.o(chargeAmount.subtract(paymentAmount).subtract(chargeAmountFuture));
 	}
@@ -606,6 +624,17 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 
 	protected void _paymentsAhead(Wrap<Boolean> c) {
 		c.o(chargesNow.compareTo(BigDecimal.ZERO) < 0);
+	}
+
+	protected void _paymentsPastDue(Wrap<Boolean> c) {
+		c.o(chargeAmount.subtract(paymentAmount).subtract(chargeAmountNotPassed).compareTo(BigDecimal.ZERO) > 0);
+	}
+
+	protected void _paymentsPastDueAmount(Wrap<BigDecimal> c) {
+		if(paymentsPastDue)
+			c.o(chargeAmount.subtract(paymentAmount).subtract(chargeAmountNotPassed));
+		else
+			c.o(BigDecimal.ZERO);
 	}
 
 	protected void _chargesCreated(Wrap<Boolean> c) {

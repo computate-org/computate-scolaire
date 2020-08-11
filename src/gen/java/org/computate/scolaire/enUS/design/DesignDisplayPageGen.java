@@ -2,10 +2,12 @@ package org.computate.scolaire.enUS.design;
 
 import org.computate.scolaire.enUS.wrap.Wrap;
 import java.util.Arrays;
+import org.apache.solr.common.util.SimpleOrderedMap;
 import java.util.Date;
 import org.apache.commons.lang3.StringUtils;
 import java.lang.Integer;
 import org.computate.scolaire.enUS.block.SchoolBlock;
+import java.math.BigDecimal;
 import java.lang.Long;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import java.util.Locale;
@@ -35,15 +37,16 @@ import java.util.ArrayList;
 import org.apache.commons.collections.CollectionUtils;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.lang.Boolean;
 import java.lang.String;
 import org.computate.scolaire.enUS.dad.SchoolDad;
 import org.computate.scolaire.enUS.cluster.Cluster;
-import org.computate.scolaire.enUS.design.PageDesign;
 import org.computate.scolaire.enUS.school.School;
 import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.apache.commons.text.StringEscapeUtils;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import io.vertx.core.json.JsonArray;
+import org.computate.scolaire.enUS.receipt.SchoolReceipt;
 import java.time.temporal.ChronoUnit;
 import org.computate.scolaire.enUS.design.DesignDisplayGenPage;
 import org.computate.scolaire.enUS.search.SearchList;
@@ -60,46 +63,6 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
  **/
 public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	protected static final Logger LOGGER = LoggerFactory.getLogger(DesignDisplayPage.class);
-
-	////////////////
-	// pageDesign //
-	////////////////
-
-	/**	 The entity pageDesign
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonInclude(Include.NON_NULL)
-	protected PageDesign pageDesign;
-	@JsonIgnore
-	public Wrap<PageDesign> pageDesignWrap = new Wrap<PageDesign>().p(this).c(PageDesign.class).var("pageDesign").o(pageDesign);
-
-	/**	<br/> The entity pageDesign
-	 *  is defined as null before being initialized. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:pageDesign">Find the entity pageDesign in Solr</a>
-	 * <br/>
-	 * @param c is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _pageDesign(Wrap<PageDesign> c);
-
-	public PageDesign getPageDesign() {
-		return pageDesign;
-	}
-
-	public void setPageDesign(PageDesign pageDesign) {
-		this.pageDesign = pageDesign;
-		this.pageDesignWrap.alreadyInitialized = true;
-	}
-	protected DesignDisplayPage pageDesignInit() {
-		if(!pageDesignWrap.alreadyInitialized) {
-			_pageDesign(pageDesignWrap);
-			if(pageDesign == null)
-				setPageDesign(pageDesignWrap.o);
-		}
-		if(pageDesign != null)
-			pageDesign.initDeepForClass(siteRequest_);
-		pageDesignWrap.alreadyInitialized(true);
-		return (DesignDisplayPage)this;
-	}
 
 	//////////////////
 	// pageDesignId //
@@ -845,6 +808,911 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 				setPayment_(payment_Wrap.o);
 		}
 		payment_Wrap.alreadyInitialized(true);
+		return (DesignDisplayPage)this;
+	}
+
+	///////////////////
+	// paymentFacets //
+	///////////////////
+
+	/**	 The entity paymentFacets
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected SimpleOrderedMap paymentFacets;
+	@JsonIgnore
+	public Wrap<SimpleOrderedMap> paymentFacetsWrap = new Wrap<SimpleOrderedMap>().p(this).c(SimpleOrderedMap.class).var("paymentFacets").o(paymentFacets);
+
+	/**	<br/> The entity paymentFacets
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:paymentFacets">Find the entity paymentFacets in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _paymentFacets(Wrap<SimpleOrderedMap> c);
+
+	public SimpleOrderedMap getPaymentFacets() {
+		return paymentFacets;
+	}
+
+	public void setPaymentFacets(SimpleOrderedMap paymentFacets) {
+		this.paymentFacets = paymentFacets;
+		this.paymentFacetsWrap.alreadyInitialized = true;
+	}
+	protected DesignDisplayPage paymentFacetsInit() {
+		if(!paymentFacetsWrap.alreadyInitialized) {
+			_paymentFacets(paymentFacetsWrap);
+			if(paymentFacets == null)
+				setPaymentFacets(paymentFacetsWrap.o);
+		}
+		paymentFacetsWrap.alreadyInitialized(true);
+		return (DesignDisplayPage)this;
+	}
+
+	////////////////////
+	// paymentLastStr //
+	////////////////////
+
+	/**	 The entity paymentLastStr
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String paymentLastStr;
+	@JsonIgnore
+	public Wrap<String> paymentLastStrWrap = new Wrap<String>().p(this).c(String.class).var("paymentLastStr").o(paymentLastStr);
+
+	/**	<br/> The entity paymentLastStr
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:paymentLastStr">Find the entity paymentLastStr in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _paymentLastStr(Wrap<String> c);
+
+	public String getPaymentLastStr() {
+		return paymentLastStr;
+	}
+
+	public void setPaymentLastStr(String paymentLastStr) {
+		this.paymentLastStr = paymentLastStr;
+		this.paymentLastStrWrap.alreadyInitialized = true;
+	}
+	protected DesignDisplayPage paymentLastStrInit() {
+		if(!paymentLastStrWrap.alreadyInitialized) {
+			_paymentLastStr(paymentLastStrWrap);
+			if(paymentLastStr == null)
+				setPaymentLastStr(paymentLastStrWrap.o);
+		}
+		paymentLastStrWrap.alreadyInitialized(true);
+		return (DesignDisplayPage)this;
+	}
+
+	public String solrPaymentLastStr() {
+		return paymentLastStr;
+	}
+
+	public String strPaymentLastStr() {
+		return paymentLastStr == null ? "" : paymentLastStr;
+	}
+
+	public String jsonPaymentLastStr() {
+		return paymentLastStr == null ? "" : paymentLastStr;
+	}
+
+	public String nomAffichagePaymentLastStr() {
+		return null;
+	}
+
+	public String htmTooltipPaymentLastStr() {
+		return null;
+	}
+
+	public String htmPaymentLastStr() {
+		return paymentLastStr == null ? "" : StringEscapeUtils.escapeHtml4(strPaymentLastStr());
+	}
+
+	///////////////////
+	// paymentAmount //
+	///////////////////
+
+	/**	 The entity paymentAmount
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected BigDecimal paymentAmount;
+	@JsonIgnore
+	public Wrap<BigDecimal> paymentAmountWrap = new Wrap<BigDecimal>().p(this).c(BigDecimal.class).var("paymentAmount").o(paymentAmount);
+
+	/**	<br/> The entity paymentAmount
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:paymentAmount">Find the entity paymentAmount in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _paymentAmount(Wrap<BigDecimal> c);
+
+	public BigDecimal getPaymentAmount() {
+		return paymentAmount;
+	}
+
+	public void setPaymentAmount(BigDecimal paymentAmount) {
+		this.paymentAmount = paymentAmount;
+		this.paymentAmountWrap.alreadyInitialized = true;
+	}
+	public DesignDisplayPage setPaymentAmount(String o) {
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			this.paymentAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+		this.paymentAmountWrap.alreadyInitialized = true;
+		return (DesignDisplayPage)this;
+	}
+	public DesignDisplayPage setPaymentAmount(Double o) {
+			this.paymentAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+		this.paymentAmountWrap.alreadyInitialized = true;
+		return (DesignDisplayPage)this;
+	}
+	public DesignDisplayPage setPaymentAmount(Integer o) {
+			this.paymentAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+		this.paymentAmountWrap.alreadyInitialized = true;
+		return (DesignDisplayPage)this;
+	}
+	protected DesignDisplayPage paymentAmountInit() {
+		if(!paymentAmountWrap.alreadyInitialized) {
+			_paymentAmount(paymentAmountWrap);
+			if(paymentAmount == null)
+				setPaymentAmount(paymentAmountWrap.o);
+		}
+		paymentAmountWrap.alreadyInitialized(true);
+		return (DesignDisplayPage)this;
+	}
+
+	public Double solrPaymentAmount() {
+		return paymentAmount == null ? null : paymentAmount.doubleValue();
+	}
+
+	public String strPaymentAmount() {
+		return paymentAmount == null ? "" : paymentAmount.setScale(2, RoundingMode.CEILING).toString();
+	}
+
+	public String jsonPaymentAmount() {
+		return paymentAmount == null ? "" : paymentAmount.toString();
+	}
+
+	public String nomAffichagePaymentAmount() {
+		return null;
+	}
+
+	public String htmTooltipPaymentAmount() {
+		return null;
+	}
+
+	public String htmPaymentAmount() {
+		return paymentAmount == null ? "" : StringEscapeUtils.escapeHtml4(strPaymentAmount());
+	}
+
+	//////////////////
+	// chargeAmount //
+	//////////////////
+
+	/**	 The entity chargeAmount
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected BigDecimal chargeAmount;
+	@JsonIgnore
+	public Wrap<BigDecimal> chargeAmountWrap = new Wrap<BigDecimal>().p(this).c(BigDecimal.class).var("chargeAmount").o(chargeAmount);
+
+	/**	<br/> The entity chargeAmount
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:chargeAmount">Find the entity chargeAmount in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _chargeAmount(Wrap<BigDecimal> c);
+
+	public BigDecimal getChargeAmount() {
+		return chargeAmount;
+	}
+
+	public void setChargeAmount(BigDecimal chargeAmount) {
+		this.chargeAmount = chargeAmount;
+		this.chargeAmountWrap.alreadyInitialized = true;
+	}
+	public DesignDisplayPage setChargeAmount(String o) {
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			this.chargeAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+		this.chargeAmountWrap.alreadyInitialized = true;
+		return (DesignDisplayPage)this;
+	}
+	public DesignDisplayPage setChargeAmount(Double o) {
+			this.chargeAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+		this.chargeAmountWrap.alreadyInitialized = true;
+		return (DesignDisplayPage)this;
+	}
+	public DesignDisplayPage setChargeAmount(Integer o) {
+			this.chargeAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+		this.chargeAmountWrap.alreadyInitialized = true;
+		return (DesignDisplayPage)this;
+	}
+	protected DesignDisplayPage chargeAmountInit() {
+		if(!chargeAmountWrap.alreadyInitialized) {
+			_chargeAmount(chargeAmountWrap);
+			if(chargeAmount == null)
+				setChargeAmount(chargeAmountWrap.o);
+		}
+		chargeAmountWrap.alreadyInitialized(true);
+		return (DesignDisplayPage)this;
+	}
+
+	public Double solrChargeAmount() {
+		return chargeAmount == null ? null : chargeAmount.doubleValue();
+	}
+
+	public String strChargeAmount() {
+		return chargeAmount == null ? "" : chargeAmount.setScale(2, RoundingMode.CEILING).toString();
+	}
+
+	public String jsonChargeAmount() {
+		return chargeAmount == null ? "" : chargeAmount.toString();
+	}
+
+	public String nomAffichageChargeAmount() {
+		return null;
+	}
+
+	public String htmTooltipChargeAmount() {
+		return null;
+	}
+
+	public String htmChargeAmount() {
+		return chargeAmount == null ? "" : StringEscapeUtils.escapeHtml4(strChargeAmount());
+	}
+
+	////////////////////////
+	// chargeAmountFuture //
+	////////////////////////
+
+	/**	 The entity chargeAmountFuture
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected BigDecimal chargeAmountFuture;
+	@JsonIgnore
+	public Wrap<BigDecimal> chargeAmountFutureWrap = new Wrap<BigDecimal>().p(this).c(BigDecimal.class).var("chargeAmountFuture").o(chargeAmountFuture);
+
+	/**	<br/> The entity chargeAmountFuture
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:chargeAmountFuture">Find the entity chargeAmountFuture in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _chargeAmountFuture(Wrap<BigDecimal> c);
+
+	public BigDecimal getChargeAmountFuture() {
+		return chargeAmountFuture;
+	}
+
+	public void setChargeAmountFuture(BigDecimal chargeAmountFuture) {
+		this.chargeAmountFuture = chargeAmountFuture;
+		this.chargeAmountFutureWrap.alreadyInitialized = true;
+	}
+	public DesignDisplayPage setChargeAmountFuture(String o) {
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			this.chargeAmountFuture = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+		this.chargeAmountFutureWrap.alreadyInitialized = true;
+		return (DesignDisplayPage)this;
+	}
+	public DesignDisplayPage setChargeAmountFuture(Double o) {
+			this.chargeAmountFuture = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+		this.chargeAmountFutureWrap.alreadyInitialized = true;
+		return (DesignDisplayPage)this;
+	}
+	public DesignDisplayPage setChargeAmountFuture(Integer o) {
+			this.chargeAmountFuture = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+		this.chargeAmountFutureWrap.alreadyInitialized = true;
+		return (DesignDisplayPage)this;
+	}
+	protected DesignDisplayPage chargeAmountFutureInit() {
+		if(!chargeAmountFutureWrap.alreadyInitialized) {
+			_chargeAmountFuture(chargeAmountFutureWrap);
+			if(chargeAmountFuture == null)
+				setChargeAmountFuture(chargeAmountFutureWrap.o);
+		}
+		chargeAmountFutureWrap.alreadyInitialized(true);
+		return (DesignDisplayPage)this;
+	}
+
+	public Double solrChargeAmountFuture() {
+		return chargeAmountFuture == null ? null : chargeAmountFuture.doubleValue();
+	}
+
+	public String strChargeAmountFuture() {
+		return chargeAmountFuture == null ? "" : chargeAmountFuture.setScale(2, RoundingMode.CEILING).toString();
+	}
+
+	public String jsonChargeAmountFuture() {
+		return chargeAmountFuture == null ? "" : chargeAmountFuture.toString();
+	}
+
+	public String nomAffichageChargeAmountFuture() {
+		return null;
+	}
+
+	public String htmTooltipChargeAmountFuture() {
+		return null;
+	}
+
+	public String htmChargeAmountFuture() {
+		return chargeAmountFuture == null ? "" : StringEscapeUtils.escapeHtml4(strChargeAmountFuture());
+	}
+
+	/////////////////////
+	// chargeAmountDue //
+	/////////////////////
+
+	/**	 The entity chargeAmountDue
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected BigDecimal chargeAmountDue;
+	@JsonIgnore
+	public Wrap<BigDecimal> chargeAmountDueWrap = new Wrap<BigDecimal>().p(this).c(BigDecimal.class).var("chargeAmountDue").o(chargeAmountDue);
+
+	/**	<br/> The entity chargeAmountDue
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:chargeAmountDue">Find the entity chargeAmountDue in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _chargeAmountDue(Wrap<BigDecimal> c);
+
+	public BigDecimal getChargeAmountDue() {
+		return chargeAmountDue;
+	}
+
+	public void setChargeAmountDue(BigDecimal chargeAmountDue) {
+		this.chargeAmountDue = chargeAmountDue;
+		this.chargeAmountDueWrap.alreadyInitialized = true;
+	}
+	public DesignDisplayPage setChargeAmountDue(String o) {
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			this.chargeAmountDue = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+		this.chargeAmountDueWrap.alreadyInitialized = true;
+		return (DesignDisplayPage)this;
+	}
+	public DesignDisplayPage setChargeAmountDue(Double o) {
+			this.chargeAmountDue = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+		this.chargeAmountDueWrap.alreadyInitialized = true;
+		return (DesignDisplayPage)this;
+	}
+	public DesignDisplayPage setChargeAmountDue(Integer o) {
+			this.chargeAmountDue = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+		this.chargeAmountDueWrap.alreadyInitialized = true;
+		return (DesignDisplayPage)this;
+	}
+	protected DesignDisplayPage chargeAmountDueInit() {
+		if(!chargeAmountDueWrap.alreadyInitialized) {
+			_chargeAmountDue(chargeAmountDueWrap);
+			if(chargeAmountDue == null)
+				setChargeAmountDue(chargeAmountDueWrap.o);
+		}
+		chargeAmountDueWrap.alreadyInitialized(true);
+		return (DesignDisplayPage)this;
+	}
+
+	public Double solrChargeAmountDue() {
+		return chargeAmountDue == null ? null : chargeAmountDue.doubleValue();
+	}
+
+	public String strChargeAmountDue() {
+		return chargeAmountDue == null ? "" : chargeAmountDue.setScale(2, RoundingMode.CEILING).toString();
+	}
+
+	public String jsonChargeAmountDue() {
+		return chargeAmountDue == null ? "" : chargeAmountDue.toString();
+	}
+
+	public String nomAffichageChargeAmountDue() {
+		return null;
+	}
+
+	public String htmTooltipChargeAmountDue() {
+		return null;
+	}
+
+	public String htmChargeAmountDue() {
+		return chargeAmountDue == null ? "" : StringEscapeUtils.escapeHtml4(strChargeAmountDue());
+	}
+
+	////////////////
+	// chargesNow //
+	////////////////
+
+	/**	 The entity chargesNow
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected BigDecimal chargesNow;
+	@JsonIgnore
+	public Wrap<BigDecimal> chargesNowWrap = new Wrap<BigDecimal>().p(this).c(BigDecimal.class).var("chargesNow").o(chargesNow);
+
+	/**	<br/> The entity chargesNow
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:chargesNow">Find the entity chargesNow in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _chargesNow(Wrap<BigDecimal> c);
+
+	public BigDecimal getChargesNow() {
+		return chargesNow;
+	}
+
+	public void setChargesNow(BigDecimal chargesNow) {
+		this.chargesNow = chargesNow;
+		this.chargesNowWrap.alreadyInitialized = true;
+	}
+	public DesignDisplayPage setChargesNow(String o) {
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			this.chargesNow = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+		this.chargesNowWrap.alreadyInitialized = true;
+		return (DesignDisplayPage)this;
+	}
+	public DesignDisplayPage setChargesNow(Double o) {
+			this.chargesNow = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+		this.chargesNowWrap.alreadyInitialized = true;
+		return (DesignDisplayPage)this;
+	}
+	public DesignDisplayPage setChargesNow(Integer o) {
+			this.chargesNow = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+		this.chargesNowWrap.alreadyInitialized = true;
+		return (DesignDisplayPage)this;
+	}
+	protected DesignDisplayPage chargesNowInit() {
+		if(!chargesNowWrap.alreadyInitialized) {
+			_chargesNow(chargesNowWrap);
+			if(chargesNow == null)
+				setChargesNow(chargesNowWrap.o);
+		}
+		chargesNowWrap.alreadyInitialized(true);
+		return (DesignDisplayPage)this;
+	}
+
+	public Double solrChargesNow() {
+		return chargesNow == null ? null : chargesNow.doubleValue();
+	}
+
+	public String strChargesNow() {
+		return chargesNow == null ? "" : chargesNow.setScale(2, RoundingMode.CEILING).toString();
+	}
+
+	public String jsonChargesNow() {
+		return chargesNow == null ? "" : chargesNow.toString();
+	}
+
+	public String nomAffichageChargesNow() {
+		return null;
+	}
+
+	public String htmTooltipChargesNow() {
+		return null;
+	}
+
+	public String htmChargesNow() {
+		return chargesNow == null ? "" : StringEscapeUtils.escapeHtml4(strChargesNow());
+	}
+
+	/////////////////////
+	// paymentsCurrent //
+	/////////////////////
+
+	/**	 The entity paymentsCurrent
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected Boolean paymentsCurrent;
+	@JsonIgnore
+	public Wrap<Boolean> paymentsCurrentWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("paymentsCurrent").o(paymentsCurrent);
+
+	/**	<br/> The entity paymentsCurrent
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:paymentsCurrent">Find the entity paymentsCurrent in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _paymentsCurrent(Wrap<Boolean> c);
+
+	public Boolean getPaymentsCurrent() {
+		return paymentsCurrent;
+	}
+
+	public void setPaymentsCurrent(Boolean paymentsCurrent) {
+		this.paymentsCurrent = paymentsCurrent;
+		this.paymentsCurrentWrap.alreadyInitialized = true;
+	}
+	public DesignDisplayPage setPaymentsCurrent(String o) {
+		this.paymentsCurrent = Boolean.parseBoolean(o);
+		this.paymentsCurrentWrap.alreadyInitialized = true;
+		return (DesignDisplayPage)this;
+	}
+	protected DesignDisplayPage paymentsCurrentInit() {
+		if(!paymentsCurrentWrap.alreadyInitialized) {
+			_paymentsCurrent(paymentsCurrentWrap);
+			if(paymentsCurrent == null)
+				setPaymentsCurrent(paymentsCurrentWrap.o);
+		}
+		paymentsCurrentWrap.alreadyInitialized(true);
+		return (DesignDisplayPage)this;
+	}
+
+	public Boolean solrPaymentsCurrent() {
+		return paymentsCurrent;
+	}
+
+	public String strPaymentsCurrent() {
+		return paymentsCurrent == null ? "" : paymentsCurrent.toString();
+	}
+
+	public String jsonPaymentsCurrent() {
+		return paymentsCurrent == null ? "" : paymentsCurrent.toString();
+	}
+
+	public String nomAffichagePaymentsCurrent() {
+		return null;
+	}
+
+	public String htmTooltipPaymentsCurrent() {
+		return null;
+	}
+
+	public String htmPaymentsCurrent() {
+		return paymentsCurrent == null ? "" : StringEscapeUtils.escapeHtml4(strPaymentsCurrent());
+	}
+
+	//////////////////
+	// paymentsLate //
+	//////////////////
+
+	/**	 The entity paymentsLate
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected Boolean paymentsLate;
+	@JsonIgnore
+	public Wrap<Boolean> paymentsLateWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("paymentsLate").o(paymentsLate);
+
+	/**	<br/> The entity paymentsLate
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:paymentsLate">Find the entity paymentsLate in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _paymentsLate(Wrap<Boolean> c);
+
+	public Boolean getPaymentsLate() {
+		return paymentsLate;
+	}
+
+	public void setPaymentsLate(Boolean paymentsLate) {
+		this.paymentsLate = paymentsLate;
+		this.paymentsLateWrap.alreadyInitialized = true;
+	}
+	public DesignDisplayPage setPaymentsLate(String o) {
+		this.paymentsLate = Boolean.parseBoolean(o);
+		this.paymentsLateWrap.alreadyInitialized = true;
+		return (DesignDisplayPage)this;
+	}
+	protected DesignDisplayPage paymentsLateInit() {
+		if(!paymentsLateWrap.alreadyInitialized) {
+			_paymentsLate(paymentsLateWrap);
+			if(paymentsLate == null)
+				setPaymentsLate(paymentsLateWrap.o);
+		}
+		paymentsLateWrap.alreadyInitialized(true);
+		return (DesignDisplayPage)this;
+	}
+
+	public Boolean solrPaymentsLate() {
+		return paymentsLate;
+	}
+
+	public String strPaymentsLate() {
+		return paymentsLate == null ? "" : paymentsLate.toString();
+	}
+
+	public String jsonPaymentsLate() {
+		return paymentsLate == null ? "" : paymentsLate.toString();
+	}
+
+	public String nomAffichagePaymentsLate() {
+		return null;
+	}
+
+	public String htmTooltipPaymentsLate() {
+		return null;
+	}
+
+	public String htmPaymentsLate() {
+		return paymentsLate == null ? "" : StringEscapeUtils.escapeHtml4(strPaymentsLate());
+	}
+
+	////////////////////////
+	// paymentsLateAmount //
+	////////////////////////
+
+	/**	 The entity paymentsLateAmount
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected BigDecimal paymentsLateAmount;
+	@JsonIgnore
+	public Wrap<BigDecimal> paymentsLateAmountWrap = new Wrap<BigDecimal>().p(this).c(BigDecimal.class).var("paymentsLateAmount").o(paymentsLateAmount);
+
+	/**	<br/> The entity paymentsLateAmount
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:paymentsLateAmount">Find the entity paymentsLateAmount in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _paymentsLateAmount(Wrap<BigDecimal> c);
+
+	public BigDecimal getPaymentsLateAmount() {
+		return paymentsLateAmount;
+	}
+
+	public void setPaymentsLateAmount(BigDecimal paymentsLateAmount) {
+		this.paymentsLateAmount = paymentsLateAmount;
+		this.paymentsLateAmountWrap.alreadyInitialized = true;
+	}
+	public DesignDisplayPage setPaymentsLateAmount(String o) {
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			this.paymentsLateAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+		this.paymentsLateAmountWrap.alreadyInitialized = true;
+		return (DesignDisplayPage)this;
+	}
+	public DesignDisplayPage setPaymentsLateAmount(Double o) {
+			this.paymentsLateAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+		this.paymentsLateAmountWrap.alreadyInitialized = true;
+		return (DesignDisplayPage)this;
+	}
+	public DesignDisplayPage setPaymentsLateAmount(Integer o) {
+			this.paymentsLateAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+		this.paymentsLateAmountWrap.alreadyInitialized = true;
+		return (DesignDisplayPage)this;
+	}
+	protected DesignDisplayPage paymentsLateAmountInit() {
+		if(!paymentsLateAmountWrap.alreadyInitialized) {
+			_paymentsLateAmount(paymentsLateAmountWrap);
+			if(paymentsLateAmount == null)
+				setPaymentsLateAmount(paymentsLateAmountWrap.o);
+		}
+		paymentsLateAmountWrap.alreadyInitialized(true);
+		return (DesignDisplayPage)this;
+	}
+
+	public Double solrPaymentsLateAmount() {
+		return paymentsLateAmount == null ? null : paymentsLateAmount.doubleValue();
+	}
+
+	public String strPaymentsLateAmount() {
+		return paymentsLateAmount == null ? "" : paymentsLateAmount.setScale(2, RoundingMode.CEILING).toString();
+	}
+
+	public String jsonPaymentsLateAmount() {
+		return paymentsLateAmount == null ? "" : paymentsLateAmount.toString();
+	}
+
+	public String nomAffichagePaymentsLateAmount() {
+		return null;
+	}
+
+	public String htmTooltipPaymentsLateAmount() {
+		return null;
+	}
+
+	public String htmPaymentsLateAmount() {
+		return paymentsLateAmount == null ? "" : StringEscapeUtils.escapeHtml4(strPaymentsLateAmount());
+	}
+
+	///////////////////
+	// paymentsAhead //
+	///////////////////
+
+	/**	 The entity paymentsAhead
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected Boolean paymentsAhead;
+	@JsonIgnore
+	public Wrap<Boolean> paymentsAheadWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("paymentsAhead").o(paymentsAhead);
+
+	/**	<br/> The entity paymentsAhead
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:paymentsAhead">Find the entity paymentsAhead in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _paymentsAhead(Wrap<Boolean> c);
+
+	public Boolean getPaymentsAhead() {
+		return paymentsAhead;
+	}
+
+	public void setPaymentsAhead(Boolean paymentsAhead) {
+		this.paymentsAhead = paymentsAhead;
+		this.paymentsAheadWrap.alreadyInitialized = true;
+	}
+	public DesignDisplayPage setPaymentsAhead(String o) {
+		this.paymentsAhead = Boolean.parseBoolean(o);
+		this.paymentsAheadWrap.alreadyInitialized = true;
+		return (DesignDisplayPage)this;
+	}
+	protected DesignDisplayPage paymentsAheadInit() {
+		if(!paymentsAheadWrap.alreadyInitialized) {
+			_paymentsAhead(paymentsAheadWrap);
+			if(paymentsAhead == null)
+				setPaymentsAhead(paymentsAheadWrap.o);
+		}
+		paymentsAheadWrap.alreadyInitialized(true);
+		return (DesignDisplayPage)this;
+	}
+
+	public Boolean solrPaymentsAhead() {
+		return paymentsAhead;
+	}
+
+	public String strPaymentsAhead() {
+		return paymentsAhead == null ? "" : paymentsAhead.toString();
+	}
+
+	public String jsonPaymentsAhead() {
+		return paymentsAhead == null ? "" : paymentsAhead.toString();
+	}
+
+	public String nomAffichagePaymentsAhead() {
+		return null;
+	}
+
+	public String htmTooltipPaymentsAhead() {
+		return null;
+	}
+
+	public String htmPaymentsAhead() {
+		return paymentsAhead == null ? "" : StringEscapeUtils.escapeHtml4(strPaymentsAhead());
+	}
+
+	///////////////////
+	// receiptSearch //
+	///////////////////
+
+	/**	 The entity receiptSearch
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SearchList<SchoolReceipt>(). 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected SearchList<SchoolReceipt> receiptSearch = new SearchList<SchoolReceipt>();
+	@JsonIgnore
+	public Wrap<SearchList<SchoolReceipt>> receiptSearchWrap = new Wrap<SearchList<SchoolReceipt>>().p(this).c(SearchList.class).var("receiptSearch").o(receiptSearch);
+
+	/**	<br/> The entity receiptSearch
+	 *  It is constructed before being initialized with the constructor by default SearchList<SchoolReceipt>(). 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:receiptSearch">Find the entity receiptSearch in Solr</a>
+	 * <br/>
+	 * @param receiptSearch is the entity already constructed. 
+	 **/
+	protected abstract void _receiptSearch(SearchList<SchoolReceipt> l);
+
+	public SearchList<SchoolReceipt> getReceiptSearch() {
+		return receiptSearch;
+	}
+
+	public void setReceiptSearch(SearchList<SchoolReceipt> receiptSearch) {
+		this.receiptSearch = receiptSearch;
+		this.receiptSearchWrap.alreadyInitialized = true;
+	}
+	protected DesignDisplayPage receiptSearchInit() {
+		if(!receiptSearchWrap.alreadyInitialized) {
+			_receiptSearch(receiptSearch);
+		}
+		receiptSearch.initDeepForClass(siteRequest_);
+		receiptSearchWrap.alreadyInitialized(true);
+		return (DesignDisplayPage)this;
+	}
+
+	///////////////
+	// receipts_ //
+	///////////////
+
+	/**	 The entity receipts_
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected List<SchoolReceipt> receipts_;
+	@JsonIgnore
+	public Wrap<List<SchoolReceipt>> receipts_Wrap = new Wrap<List<SchoolReceipt>>().p(this).c(List.class).var("receipts_").o(receipts_);
+
+	/**	<br/> The entity receipts_
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:receipts_">Find the entity receipts_ in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _receipts_(Wrap<List<SchoolReceipt>> c);
+
+	public List<SchoolReceipt> getReceipts_() {
+		return receipts_;
+	}
+
+	public void setReceipts_(List<SchoolReceipt> receipts_) {
+		this.receipts_ = receipts_;
+		this.receipts_Wrap.alreadyInitialized = true;
+	}
+	public DesignDisplayPage addReceipts_(SchoolReceipt...objets) {
+		for(SchoolReceipt o : objets) {
+			addReceipts_(o);
+		}
+		return (DesignDisplayPage)this;
+	}
+	public DesignDisplayPage addReceipts_(SchoolReceipt o) {
+		if(o != null && !receipts_.contains(o))
+			this.receipts_.add(o);
+		return (DesignDisplayPage)this;
+	}
+	protected DesignDisplayPage receipts_Init() {
+		if(!receipts_Wrap.alreadyInitialized) {
+			_receipts_(receipts_Wrap);
+			if(receipts_ == null)
+				setReceipts_(receipts_Wrap.o);
+		}
+		receipts_Wrap.alreadyInitialized(true);
+		return (DesignDisplayPage)this;
+	}
+
+	//////////////
+	// receipt_ //
+	//////////////
+
+	/**	 The entity receipt_
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected SchoolReceipt receipt_;
+	@JsonIgnore
+	public Wrap<SchoolReceipt> receipt_Wrap = new Wrap<SchoolReceipt>().p(this).c(SchoolReceipt.class).var("receipt_").o(receipt_);
+
+	/**	<br/> The entity receipt_
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:receipt_">Find the entity receipt_ in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _receipt_(Wrap<SchoolReceipt> c);
+
+	public SchoolReceipt getReceipt_() {
+		return receipt_;
+	}
+
+	public void setReceipt_(SchoolReceipt receipt_) {
+		this.receipt_ = receipt_;
+		this.receipt_Wrap.alreadyInitialized = true;
+	}
+	protected DesignDisplayPage receipt_Init() {
+		if(!receipt_Wrap.alreadyInitialized) {
+			_receipt_(receipt_Wrap);
+			if(receipt_ == null)
+				setReceipt_(receipt_Wrap.o);
+		}
+		receipt_Wrap.alreadyInitialized(true);
 		return (DesignDisplayPage)this;
 	}
 
@@ -2332,7 +3200,6 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	}
 
 	public void initDesignDisplayPage() {
-		pageDesignInit();
 		pageDesignIdInit();
 		enrollmentSearchInit();
 		schoolEnrollmentInit();
@@ -2350,6 +3217,20 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 		paymentSearchInit();
 		payments_Init();
 		payment_Init();
+		paymentFacetsInit();
+		paymentLastStrInit();
+		paymentAmountInit();
+		chargeAmountInit();
+		chargeAmountFutureInit();
+		chargeAmountDueInit();
+		chargesNowInit();
+		paymentsCurrentInit();
+		paymentsLateInit();
+		paymentsLateAmountInit();
+		paymentsAheadInit();
+		receiptSearchInit();
+		receipts_Init();
+		receipt_Init();
 		emailFromInit();
 		emailToSchoolInit();
 		emailToAddressInit();
@@ -2389,8 +3270,6 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 
 	public void siteRequestDesignDisplayPage(SiteRequestEnUS siteRequest_) {
 			super.siteRequestDesignDisplayGenPage(siteRequest_);
-		if(pageDesign != null)
-			pageDesign.setSiteRequest_(siteRequest_);
 		if(enrollmentSearch != null)
 			enrollmentSearch.setSiteRequest_(siteRequest_);
 		if(schoolEnrollment != null)
@@ -2407,6 +3286,8 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 			schoolSearch.setSiteRequest_(siteRequest_);
 		if(paymentSearch != null)
 			paymentSearch.setSiteRequest_(siteRequest_);
+		if(receiptSearch != null)
+			receiptSearch.setSiteRequest_(siteRequest_);
 		if(blockSearch != null)
 			blockSearch.setSiteRequest_(siteRequest_);
 		if(seasonBlock != null)
@@ -2445,8 +3326,6 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	public Object obtainDesignDisplayPage(String var) {
 		DesignDisplayPage oDesignDisplayPage = (DesignDisplayPage)this;
 		switch(var) {
-			case "pageDesign":
-				return oDesignDisplayPage.pageDesign;
 			case "pageDesignId":
 				return oDesignDisplayPage.pageDesignId;
 			case "enrollmentSearch":
@@ -2481,6 +3360,34 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 				return oDesignDisplayPage.payments_;
 			case "payment_":
 				return oDesignDisplayPage.payment_;
+			case "paymentFacets":
+				return oDesignDisplayPage.paymentFacets;
+			case "paymentLastStr":
+				return oDesignDisplayPage.paymentLastStr;
+			case "paymentAmount":
+				return oDesignDisplayPage.paymentAmount;
+			case "chargeAmount":
+				return oDesignDisplayPage.chargeAmount;
+			case "chargeAmountFuture":
+				return oDesignDisplayPage.chargeAmountFuture;
+			case "chargeAmountDue":
+				return oDesignDisplayPage.chargeAmountDue;
+			case "chargesNow":
+				return oDesignDisplayPage.chargesNow;
+			case "paymentsCurrent":
+				return oDesignDisplayPage.paymentsCurrent;
+			case "paymentsLate":
+				return oDesignDisplayPage.paymentsLate;
+			case "paymentsLateAmount":
+				return oDesignDisplayPage.paymentsLateAmount;
+			case "paymentsAhead":
+				return oDesignDisplayPage.paymentsAhead;
+			case "receiptSearch":
+				return oDesignDisplayPage.receiptSearch;
+			case "receipts_":
+				return oDesignDisplayPage.receipts_;
+			case "receipt_":
+				return oDesignDisplayPage.receipt_;
 			case "emailFrom":
 				return oDesignDisplayPage.emailFrom;
 			case "emailToSchool":

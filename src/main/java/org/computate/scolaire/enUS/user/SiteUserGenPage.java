@@ -53,7 +53,7 @@ public class SiteUserGenPage extends SiteUserGenPageGen<ClusterPage> {
 	protected void _listSiteUser(Wrap<SearchList<SiteUser>> c) {
 	}
 
-	protected void _siteUser(Wrap<SiteUser> c) {
+	protected void _siteUser_(Wrap<SiteUser> c) {
 		if(listSiteUser != null && listSiteUser.size() == 1)
 			c.o(listSiteUser.get(0));
 	}
@@ -71,9 +71,9 @@ public class SiteUserGenPage extends SiteUserGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageTitle(Wrap<String> c) {
-		if(siteUser != null && siteUser.getObjectTitle() != null)
-			c.o(siteUser.getObjectTitle());
-		else if(siteUser != null)
+		if(siteUser_ != null && siteUser_.getObjectTitle() != null)
+			c.o(siteUser_.getObjectTitle());
+		else if(siteUser_ != null)
 			c.o("site users");
 		else if(listSiteUser == null || listSiteUser.size() == 0)
 			c.o("no site user found");
@@ -628,7 +628,7 @@ public class SiteUserGenPage extends SiteUserGenPageGen<ClusterPage> {
 							} g("form");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-gray ")
-								.a("onclick", "patchSiteUser(null, $('#patchSiteUserFormValues'), ", Optional.ofNullable(siteUser).map(SiteUser::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
+								.a("onclick", "patchSiteUser(null, $('#patchSiteUserFormValues'), ", Optional.ofNullable(siteUser_).map(SiteUser::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
 								.f().sx("Modify site users")
 							.g("button");
 

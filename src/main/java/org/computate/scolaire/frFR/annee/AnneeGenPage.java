@@ -54,7 +54,7 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 	protected void _listeAnneeScolaire(Couverture<ListeRecherche<AnneeScolaire>> c) {
 	}
 
-	protected void _anneeScolaire(Couverture<AnneeScolaire> c) {
+	protected void _anneeScolaire_(Couverture<AnneeScolaire> c) {
 		if(listeAnneeScolaire != null && listeAnneeScolaire.size() == 1)
 			c.o(listeAnneeScolaire.get(0));
 	}
@@ -64,8 +64,8 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageH2(Couverture<String> c) {
-		if(anneeScolaire != null && anneeScolaire.getAnneeNomComplet() != null)
-			c.o(anneeScolaire.getAnneeNomComplet());
+		if(anneeScolaire_ != null && anneeScolaire_.getAnneeNomComplet() != null)
+			c.o(anneeScolaire_.getAnneeNomComplet());
 	}
 
 	@Override protected void _pageH3(Couverture<String> c) {
@@ -73,9 +73,9 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageTitre(Couverture<String> c) {
-		if(anneeScolaire != null && anneeScolaire.getAnneeNomComplet() != null)
-			c.o(anneeScolaire.getAnneeNomComplet());
-		else if(anneeScolaire != null)
+		if(anneeScolaire_ != null && anneeScolaire_.getAnneeNomComplet() != null)
+			c.o(anneeScolaire_.getAnneeNomComplet());
+		else if(anneeScolaire_ != null)
 			c.o("années");
 		else if(listeAnneeScolaire == null || listeAnneeScolaire.size() == 0)
 			c.o("aucune année trouvée");
@@ -721,7 +721,7 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-orange ")
-								.a("onclick", "putcopieAnneeScolaire($('#putcopieAnneeScolaireForm'), ", anneeScolaire == null ? "null" : anneeScolaire.getPk(), "); ")
+								.a("onclick", "putcopieAnneeScolaire($('#putcopieAnneeScolaireForm'), ", anneeScolaire_ == null ? "null" : anneeScolaire_.getPk(), "); ")
 								.f().sx("Dupliquer années")
 							.g("button");
 
@@ -755,7 +755,7 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 							} g("form");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-orange ")
-								.a("onclick", "patchAnneeScolaire(null, $('#patchAnneeScolaireFormulaireValeurs'), ", Optional.ofNullable(anneeScolaire).map(AnneeScolaire::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
+								.a("onclick", "patchAnneeScolaire(null, $('#patchAnneeScolaireFormulaireValeurs'), ", Optional.ofNullable(anneeScolaire_).map(AnneeScolaire::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
 								.f().sx("Modifier années")
 							.g("button");
 

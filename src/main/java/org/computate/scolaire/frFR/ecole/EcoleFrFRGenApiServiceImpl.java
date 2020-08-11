@@ -2,6 +2,8 @@ package org.computate.scolaire.frFR.ecole;
 
 import org.computate.scolaire.frFR.annee.AnneeScolaireFrFRGenApiServiceImpl;
 import org.computate.scolaire.frFR.annee.AnneeScolaire;
+import org.computate.scolaire.frFR.recu.RecuScolaireFrFRGenApiServiceImpl;
+import org.computate.scolaire.frFR.recu.RecuScolaire;
 import org.computate.scolaire.frFR.config.ConfigSite;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
@@ -324,6 +326,8 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 								listeRecherche.setQuery("*:*");
 								listeRecherche.setStocker(true);
 								listeRecherche.setC(AnneeScolaire.class);
+								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
@@ -342,6 +346,38 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 									if(!pks.contains(l2)) {
 										pks.add(l2);
 										classes.add("AnneeScolaire");
+									}
+								}
+							}
+						}
+						break;
+					case "recuCles":
+						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
+							if(l != null) {
+								ListeRecherche<RecuScolaire> listeRecherche = new ListeRecherche<RecuScolaire>();
+								listeRecherche.setQuery("*:*");
+								listeRecherche.setStocker(true);
+								listeRecherche.setC(RecuScolaire.class);
+								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
+								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+								listeRecherche.initLoinListeRecherche(requeteSite);
+								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA
+												, Tuple.of(l2, "ecoleCle", pk, "recuCles")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("valeur Ecole.recuCles a échoué", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
+										classes.add("RecuScolaire");
 									}
 								}
 							}
@@ -847,6 +883,8 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 								listeRecherche.setQuery("*:*");
 								listeRecherche.setStocker(true);
 								listeRecherche.setC(AnneeScolaire.class);
+								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
@@ -880,6 +918,8 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 									listeRecherche.setQuery("*:*");
 									listeRecherche.setStocker(true);
 									listeRecherche.setC(AnneeScolaire.class);
+									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
@@ -906,6 +946,7 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 						break;
 					case "setAnneeCles":
 						JsonArray setAnneeClesValeurs = jsonObject.getJsonArray(methodeNom);
+						JsonArray setAnneeClesValeurs2 = new JsonArray();
 						if(setAnneeClesValeurs != null) {
 							for(Integer i = 0; i <  setAnneeClesValeurs.size(); i++) {
 								Long l = Long.parseLong(setAnneeClesValeurs.getString(i));
@@ -914,9 +955,13 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 									listeRecherche.setQuery("*:*");
 									listeRecherche.setStocker(true);
 									listeRecherche.setC(AnneeScolaire.class);
+									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l2 != null)
+										setAnneeClesValeurs2.add(l2);
 									if(l2 != null && !o.getAnneeCles().contains(l2)) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContexteFrFR.SQL_addA
@@ -939,7 +984,7 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 						}
 						if(o.getAnneeCles() != null) {
 							for(Long l :  o.getAnneeCles()) {
-								if(l != null && (setAnneeClesValeurs == null || !setAnneeClesValeurs.contains(l))) {
+								if(l != null && (setAnneeClesValeurs2 == null || !setAnneeClesValeurs2.contains(l))) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
 												, Tuple.of(pk, "anneeCles", l, "ecoleCle")
@@ -963,6 +1008,8 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 								listeRecherche.setQuery("*:*");
 								listeRecherche.setStocker(true);
 								listeRecherche.setC(AnneeScolaire.class);
+								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
@@ -981,6 +1028,164 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 									if(!pks.contains(l2)) {
 										pks.add(l2);
 										classes.add("AnneeScolaire");
+									}
+								}
+							}
+						}
+						break;
+					case "addRecuCles":
+						{
+							Long l = Long.parseLong(jsonObject.getString(methodeNom));
+							if(l != null) {
+								ListeRecherche<RecuScolaire> listeRecherche = new ListeRecherche<RecuScolaire>();
+								listeRecherche.setQuery("*:*");
+								listeRecherche.setStocker(true);
+								listeRecherche.setC(RecuScolaire.class);
+								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
+								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+								listeRecherche.initLoinListeRecherche(requeteSite);
+								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null && !o.getRecuCles().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA
+												, Tuple.of(l2, "ecoleCle", pk, "recuCles")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("valeur Ecole.recuCles a échoué", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
+										classes.add("RecuScolaire");
+									}
+								}
+							}
+						}
+						break;
+					case "addAllRecuCles":
+						JsonArray addAllRecuClesValeurs = jsonObject.getJsonArray(methodeNom);
+						if(addAllRecuClesValeurs != null) {
+							for(Integer i = 0; i <  addAllRecuClesValeurs.size(); i++) {
+								Long l = Long.parseLong(addAllRecuClesValeurs.getString(i));
+								if(l != null) {
+									ListeRecherche<RecuScolaire> listeRecherche = new ListeRecherche<RecuScolaire>();
+									listeRecherche.setQuery("*:*");
+									listeRecherche.setStocker(true);
+									listeRecherche.setC(RecuScolaire.class);
+									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
+									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+									listeRecherche.initLoinListeRecherche(requeteSite);
+									Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l2 != null && !o.getRecuCles().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA
+												, Tuple.of(l2, "ecoleCle", pk, "recuCles")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("valeur Ecole.recuCles a échoué", b.cause())));
+										});
+									}));
+										if(!pks.contains(l2)) {
+											pks.add(l2);
+											classes.add("RecuScolaire");
+										}
+									}
+								}
+							}
+						}
+						break;
+					case "setRecuCles":
+						JsonArray setRecuClesValeurs = jsonObject.getJsonArray(methodeNom);
+						JsonArray setRecuClesValeurs2 = new JsonArray();
+						if(setRecuClesValeurs != null) {
+							for(Integer i = 0; i <  setRecuClesValeurs.size(); i++) {
+								Long l = Long.parseLong(setRecuClesValeurs.getString(i));
+								if(l != null) {
+									ListeRecherche<RecuScolaire> listeRecherche = new ListeRecherche<RecuScolaire>();
+									listeRecherche.setQuery("*:*");
+									listeRecherche.setStocker(true);
+									listeRecherche.setC(RecuScolaire.class);
+									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
+									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+									listeRecherche.initLoinListeRecherche(requeteSite);
+									Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l2 != null)
+										setRecuClesValeurs2.add(l2);
+									if(l2 != null && !o.getRecuCles().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA
+												, Tuple.of(l2, "ecoleCle", pk, "recuCles")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("valeur Ecole.recuCles a échoué", b.cause())));
+										});
+									}));
+										if(!pks.contains(l2)) {
+											pks.add(l2);
+											classes.add("RecuScolaire");
+										}
+									}
+								}
+							}
+						}
+						if(o.getRecuCles() != null) {
+							for(Long l :  o.getRecuCles()) {
+								if(l != null && (setRecuClesValeurs == null || !setRecuClesValeurs2.contains(l))) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
+												, Tuple.of(l, "ecoleCle", pk, "recuCles")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("valeur Ecole.recuCles a échoué", b.cause())));
+										});
+									}));
+								}
+							}
+						}
+						break;
+					case "removeRecuCles":
+						{
+							Long l = Long.parseLong(jsonObject.getString(methodeNom));
+							if(l != null) {
+								ListeRecherche<RecuScolaire> listeRecherche = new ListeRecherche<RecuScolaire>();
+								listeRecherche.setQuery("*:*");
+								listeRecherche.setStocker(true);
+								listeRecherche.setC(RecuScolaire.class);
+								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
+								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+								listeRecherche.initLoinListeRecherche(requeteSite);
+								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null && o.getRecuCles().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
+												, Tuple.of(l2, "ecoleCle", pk, "recuCles")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("valeur Ecole.recuCles a échoué", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
+										classes.add("RecuScolaire");
 									}
 								}
 							}
@@ -1641,6 +1846,8 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 				listeRecherche.setStocker(true);
 				listeRecherche.setQuery("*:*");
 				listeRecherche.setC(Ecole.class);
+				listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+				listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 				listeRecherche.addFilterQuery("inheritPk_indexed_long:" + json.getString("pk"));
 				listeRecherche.initLoinPourClasse(requeteSite2);
 
@@ -1827,6 +2034,8 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 				listeRecherche.setStocker(true);
 				listeRecherche.setQuery("*:*");
 				listeRecherche.setC(Ecole.class);
+				listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+				listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 				listeRecherche.addFilterQuery("pk_indexed_long:" + json.getString("pk"));
 				listeRecherche.initLoinPourClasse(requeteSite2);
 
@@ -2167,6 +2376,25 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 							if(!pks.contains(l)) {
 								pks.add(l);
 								classes.add("AnneeScolaire");
+							}
+						}
+						break;
+					case "recuCles":
+						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_addA
+										, Tuple.of(l, "ecoleCle", pk, "recuCles")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur Ecole.recuCles a échoué", b.cause())));
+								});
+							}));
+							if(!pks.contains(l)) {
+								pks.add(l);
+								classes.add("RecuScolaire");
 							}
 						}
 						break;
@@ -3187,6 +3415,7 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 				listeRecherche.setC(Ecole.class);
 				listeRecherche.addFilterQuery("modifie_indexed_date:[" + DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(requeteSite.getRequeteApi_().getCree().toInstant(), ZoneId.of("UTC"))) + " TO *]");
 				listeRecherche.add("json.facet", "{anneeCles:{terms:{field:anneeCles_indexed_longs, limit:1000}}}");
+				listeRecherche.add("json.facet", "{recuCles:{terms:{field:recuCles_indexed_longs, limit:1000}}}");
 				listeRecherche.setRows(1000);
 				listeRecherche.initLoinListeRecherche(requeteSite);
 				List<Future> futures = new ArrayList<>();
@@ -3223,6 +3452,41 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 									if(a.succeeded()) {
 									} else {
 										LOGGER.info(String.format("AnneeScolaire %s a échoué. ", pk2));
+										gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
+									}
+								})
+							);
+						}
+					}
+
+					if("RecuScolaire".equals(classeNomSimple2) && pk2 != null) {
+						ListeRecherche<RecuScolaire> listeRecherche2 = new ListeRecherche<RecuScolaire>();
+						listeRecherche2.setStocker(true);
+						listeRecherche2.setQuery("*:*");
+						listeRecherche2.setC(RecuScolaire.class);
+						listeRecherche2.addFilterQuery("pk_indexed_long:" + pk2);
+						listeRecherche2.setRows(1);
+						listeRecherche2.initLoinListeRecherche(requeteSite);
+						RecuScolaire o2 = listeRecherche2.getList().stream().findFirst().orElse(null);
+
+						if(o2 != null) {
+							RecuScolaireFrFRGenApiServiceImpl service = new RecuScolaireFrFRGenApiServiceImpl(requeteSite.getSiteContexte_());
+							RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourEcole(siteContexte, requeteSite.getOperationRequete(), new JsonObject());
+							RequeteApi requeteApi2 = new RequeteApi();
+							requeteApi2.setRows(1);
+							requeteApi2.setNumFound(1l);
+							requeteApi2.setNumPATCH(0L);
+							requeteApi2.initLoinRequeteApi(requeteSite2);
+							requeteSite2.setRequeteApi_(requeteApi2);
+							requeteSite2.getVertx().eventBus().publish("websocketRecuScolaire", JsonObject.mapFrom(requeteApi2).toString());
+
+							o2.setPk(pk2);
+							o2.setRequeteSite_(requeteSite2);
+							futures.add(
+								service.patchRecuScolaireFuture(o2, false, a -> {
+									if(a.succeeded()) {
+									} else {
+										LOGGER.info(String.format("RecuScolaire %s a échoué. ", pk2));
 										gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
 									}
 								})

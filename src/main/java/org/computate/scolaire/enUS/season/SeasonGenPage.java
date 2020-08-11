@@ -53,7 +53,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 	protected void _listSchoolSeason(Wrap<SearchList<SchoolSeason>> c) {
 	}
 
-	protected void _schoolSeason(Wrap<SchoolSeason> c) {
+	protected void _schoolSeason_(Wrap<SchoolSeason> c) {
 		if(listSchoolSeason != null && listSchoolSeason.size() == 1)
 			c.o(listSchoolSeason.get(0));
 	}
@@ -63,8 +63,8 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageH2(Wrap<String> c) {
-		if(schoolSeason != null && schoolSeason.getSeasonCompleteName() != null)
-			c.o(schoolSeason.getSeasonCompleteName());
+		if(schoolSeason_ != null && schoolSeason_.getSeasonCompleteName() != null)
+			c.o(schoolSeason_.getSeasonCompleteName());
 	}
 
 	@Override protected void _pageH3(Wrap<String> c) {
@@ -72,9 +72,9 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageTitle(Wrap<String> c) {
-		if(schoolSeason != null && schoolSeason.getSeasonCompleteName() != null)
-			c.o(schoolSeason.getSeasonCompleteName());
-		else if(schoolSeason != null)
+		if(schoolSeason_ != null && schoolSeason_.getSeasonCompleteName() != null)
+			c.o(schoolSeason_.getSeasonCompleteName());
+		else if(schoolSeason_ != null)
 			c.o("seasons");
 		else if(listSchoolSeason == null || listSchoolSeason.size() == 0)
 			c.o("no season found");
@@ -703,7 +703,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-yellow ")
-								.a("onclick", "putcopySchoolSeason($('#putcopySchoolSeasonForm'), ", schoolSeason == null ? "null" : schoolSeason.getPk(), "); ")
+								.a("onclick", "putcopySchoolSeason($('#putcopySchoolSeasonForm'), ", schoolSeason_ == null ? "null" : schoolSeason_.getPk(), "); ")
 								.f().sx("Duplicate seasons")
 							.g("button");
 
@@ -737,7 +737,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 							} g("form");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-yellow ")
-								.a("onclick", "patchSchoolSeason(null, $('#patchSchoolSeasonFormValues'), ", Optional.ofNullable(schoolSeason).map(SchoolSeason::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
+								.a("onclick", "patchSchoolSeason(null, $('#patchSchoolSeasonFormValues'), ", Optional.ofNullable(schoolSeason_).map(SchoolSeason::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
 								.f().sx("Modify seasons")
 							.g("button");
 

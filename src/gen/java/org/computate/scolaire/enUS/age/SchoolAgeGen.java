@@ -354,7 +354,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 				) {
-				sx(htmBlockKeys());
+				e("span").a("class", "varSchoolAge", pk, "BlockKeys ").f().sx(htmBlockKeys()).g("span");
 			}
 		}
 	}
@@ -1060,7 +1060,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 				) {
-				sx(htmYearKey());
+				e("span").a("class", "varSchoolAge", pk, "YearKey ").f().sx(htmYearKey()).g("span");
 			}
 		}
 	}
@@ -1392,7 +1392,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 				) {
-				sx(htmSchoolAddress());
+				e("span").a("class", "varSchoolAge", pk, "SchoolAddress ").f().sx(htmSchoolAddress()).g("span");
 			}
 		}
 	}
@@ -2372,7 +2372,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 				) {
-				sx(htmAgeStart());
+				e("span").a("class", "varSchoolAge", pk, "AgeStart ").f().sx(htmAgeStart()).g("span");
 			}
 		}
 	}
@@ -2512,7 +2512,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 				) {
-				sx(htmAgeEnd());
+				e("span").a("class", "varSchoolAge", pk, "AgeEnd ").f().sx(htmAgeEnd()).g("span");
 			}
 		}
 	}
@@ -3564,18 +3564,68 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		Object o = Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
 		if(o != null && o instanceof SchoolAge) {
 			SchoolAge original = (SchoolAge)o;
+			if(!Objects.equals(ageKey, original.getAgeKey()))
+				apiRequest.addVars("ageKey");
+			if(!Objects.equals(enrollmentKeys, original.getEnrollmentKeys()))
+				apiRequest.addVars("enrollmentKeys");
 			if(!Objects.equals(blockKeys, original.getBlockKeys()))
 				apiRequest.addVars("blockKeys");
+			if(!Objects.equals(educationSort, original.getEducationSort()))
+				apiRequest.addVars("educationSort");
+			if(!Objects.equals(schoolSort, original.getSchoolSort()))
+				apiRequest.addVars("schoolSort");
+			if(!Objects.equals(yearSort, original.getYearSort()))
+				apiRequest.addVars("yearSort");
+			if(!Objects.equals(seasonSort, original.getSeasonSort()))
+				apiRequest.addVars("seasonSort");
+			if(!Objects.equals(sessionSort, original.getSessionSort()))
+				apiRequest.addVars("sessionSort");
 			if(!Objects.equals(sessionKey, original.getSessionKey()))
 				apiRequest.addVars("sessionKey");
+			if(!Objects.equals(schoolKey, original.getSchoolKey()))
+				apiRequest.addVars("schoolKey");
 			if(!Objects.equals(yearKey, original.getYearKey()))
 				apiRequest.addVars("yearKey");
+			if(!Objects.equals(schoolName, original.getSchoolName()))
+				apiRequest.addVars("schoolName");
+			if(!Objects.equals(schoolCompleteName, original.getSchoolCompleteName()))
+				apiRequest.addVars("schoolCompleteName");
+			if(!Objects.equals(schoolLocation, original.getSchoolLocation()))
+				apiRequest.addVars("schoolLocation");
 			if(!Objects.equals(schoolAddress, original.getSchoolAddress()))
 				apiRequest.addVars("schoolAddress");
+			if(!Objects.equals(schoolPhoneNumber, original.getSchoolPhoneNumber()))
+				apiRequest.addVars("schoolPhoneNumber");
+			if(!Objects.equals(schoolForm, original.getSchoolForm()))
+				apiRequest.addVars("schoolForm");
+			if(!Objects.equals(schoolNumber, original.getSchoolNumber()))
+				apiRequest.addVars("schoolNumber");
+			if(!Objects.equals(schoolAdministratorName, original.getSchoolAdministratorName()))
+				apiRequest.addVars("schoolAdministratorName");
+			if(!Objects.equals(yearStart, original.getYearStart()))
+				apiRequest.addVars("yearStart");
+			if(!Objects.equals(yearEnd, original.getYearEnd()))
+				apiRequest.addVars("yearEnd");
+			if(!Objects.equals(seasonStartDate, original.getSeasonStartDate()))
+				apiRequest.addVars("seasonStartDate");
+			if(!Objects.equals(yearEnrollmentFee, original.getYearEnrollmentFee()))
+				apiRequest.addVars("yearEnrollmentFee");
+			if(!Objects.equals(yearShortName, original.getYearShortName()))
+				apiRequest.addVars("yearShortName");
+			if(!Objects.equals(yearCompleteName, original.getYearCompleteName()))
+				apiRequest.addVars("yearCompleteName");
+			if(!Objects.equals(sessionStartDate, original.getSessionStartDate()))
+				apiRequest.addVars("sessionStartDate");
+			if(!Objects.equals(sessionEndDate, original.getSessionEndDate()))
+				apiRequest.addVars("sessionEndDate");
 			if(!Objects.equals(ageStart, original.getAgeStart()))
 				apiRequest.addVars("ageStart");
 			if(!Objects.equals(ageEnd, original.getAgeEnd()))
 				apiRequest.addVars("ageEnd");
+			if(!Objects.equals(ageShortName, original.getAgeShortName()))
+				apiRequest.addVars("ageShortName");
+			if(!Objects.equals(ageCompleteName, original.getAgeCompleteName()))
+				apiRequest.addVars("ageCompleteName");
 			super.apiRequestCluster();
 		}
 	}
@@ -3585,7 +3635,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), blockKeys, sessionKey, yearKey, schoolAddress, ageStart, ageEnd);
+		return Objects.hash(super.hashCode(), ageKey, enrollmentKeys, blockKeys, educationSort, schoolSort, yearSort, seasonSort, sessionSort, sessionKey, schoolKey, yearKey, schoolName, schoolCompleteName, schoolLocation, schoolAddress, schoolPhoneNumber, schoolForm, schoolNumber, schoolAdministratorName, yearStart, yearEnd, seasonStartDate, yearEnrollmentFee, yearShortName, yearCompleteName, sessionStartDate, sessionEndDate, ageStart, ageEnd, ageShortName, ageCompleteName);
 	}
 
 	////////////
@@ -3599,12 +3649,37 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 			return false;
 		SchoolAge that = (SchoolAge)o;
 		return super.equals(o)
+				&& Objects.equals( ageKey, that.ageKey )
+				&& Objects.equals( enrollmentKeys, that.enrollmentKeys )
 				&& Objects.equals( blockKeys, that.blockKeys )
+				&& Objects.equals( educationSort, that.educationSort )
+				&& Objects.equals( schoolSort, that.schoolSort )
+				&& Objects.equals( yearSort, that.yearSort )
+				&& Objects.equals( seasonSort, that.seasonSort )
+				&& Objects.equals( sessionSort, that.sessionSort )
 				&& Objects.equals( sessionKey, that.sessionKey )
+				&& Objects.equals( schoolKey, that.schoolKey )
 				&& Objects.equals( yearKey, that.yearKey )
+				&& Objects.equals( schoolName, that.schoolName )
+				&& Objects.equals( schoolCompleteName, that.schoolCompleteName )
+				&& Objects.equals( schoolLocation, that.schoolLocation )
 				&& Objects.equals( schoolAddress, that.schoolAddress )
+				&& Objects.equals( schoolPhoneNumber, that.schoolPhoneNumber )
+				&& Objects.equals( schoolForm, that.schoolForm )
+				&& Objects.equals( schoolNumber, that.schoolNumber )
+				&& Objects.equals( schoolAdministratorName, that.schoolAdministratorName )
+				&& Objects.equals( yearStart, that.yearStart )
+				&& Objects.equals( yearEnd, that.yearEnd )
+				&& Objects.equals( seasonStartDate, that.seasonStartDate )
+				&& Objects.equals( yearEnrollmentFee, that.yearEnrollmentFee )
+				&& Objects.equals( yearShortName, that.yearShortName )
+				&& Objects.equals( yearCompleteName, that.yearCompleteName )
+				&& Objects.equals( sessionStartDate, that.sessionStartDate )
+				&& Objects.equals( sessionEndDate, that.sessionEndDate )
 				&& Objects.equals( ageStart, that.ageStart )
-				&& Objects.equals( ageEnd, that.ageEnd );
+				&& Objects.equals( ageEnd, that.ageEnd )
+				&& Objects.equals( ageShortName, that.ageShortName )
+				&& Objects.equals( ageCompleteName, that.ageCompleteName );
 	}
 
 	//////////////
@@ -3615,12 +3690,37 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString() + "\n");
 		sb.append("SchoolAge { ");
-		sb.append( "blockKeys: " ).append(blockKeys);
+		sb.append( "ageKey: " ).append(ageKey);
+		sb.append( ", enrollmentKeys: " ).append(enrollmentKeys);
+		sb.append( ", blockKeys: " ).append(blockKeys);
+		sb.append( ", educationSort: " ).append(educationSort);
+		sb.append( ", schoolSort: " ).append(schoolSort);
+		sb.append( ", yearSort: " ).append(yearSort);
+		sb.append( ", seasonSort: " ).append(seasonSort);
+		sb.append( ", sessionSort: " ).append(sessionSort);
 		sb.append( ", sessionKey: " ).append(sessionKey);
+		sb.append( ", schoolKey: " ).append(schoolKey);
 		sb.append( ", yearKey: " ).append(yearKey);
+		sb.append( ", schoolName: \"" ).append(schoolName).append( "\"" );
+		sb.append( ", schoolCompleteName: \"" ).append(schoolCompleteName).append( "\"" );
+		sb.append( ", schoolLocation: \"" ).append(schoolLocation).append( "\"" );
 		sb.append( ", schoolAddress: \"" ).append(schoolAddress).append( "\"" );
+		sb.append( ", schoolPhoneNumber: \"" ).append(schoolPhoneNumber).append( "\"" );
+		sb.append( ", schoolForm: \"" ).append(schoolForm).append( "\"" );
+		sb.append( ", schoolNumber: " ).append(schoolNumber);
+		sb.append( ", schoolAdministratorName: \"" ).append(schoolAdministratorName).append( "\"" );
+		sb.append( ", yearStart: " ).append(yearStart);
+		sb.append( ", yearEnd: " ).append(yearEnd);
+		sb.append( ", seasonStartDate: " ).append(seasonStartDate);
+		sb.append( ", yearEnrollmentFee: " ).append(yearEnrollmentFee);
+		sb.append( ", yearShortName: \"" ).append(yearShortName).append( "\"" );
+		sb.append( ", yearCompleteName: \"" ).append(yearCompleteName).append( "\"" );
+		sb.append( ", sessionStartDate: " ).append(sessionStartDate);
+		sb.append( ", sessionEndDate: " ).append(sessionEndDate);
 		sb.append( ", ageStart: " ).append(ageStart);
 		sb.append( ", ageEnd: " ).append(ageEnd);
+		sb.append( ", ageShortName: \"" ).append(ageShortName).append( "\"" );
+		sb.append( ", ageCompleteName: \"" ).append(ageCompleteName).append( "\"" );
 		sb.append(" }");
 		return sb.toString();
 	}

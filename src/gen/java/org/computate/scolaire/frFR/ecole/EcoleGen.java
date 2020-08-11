@@ -25,6 +25,7 @@ import io.vertx.core.logging.Logger;
 import org.computate.scolaire.frFR.annee.AnneeScolaire;
 import java.math.RoundingMode;
 import java.math.MathContext;
+import org.computate.scolaire.frFR.recu.RecuScolaire;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import java.util.Set;
@@ -258,7 +259,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
 					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 				) {
-				sx(htmAnneeCles());
+				e("span").a("class", "varEcole", pk, "AnneeCles ").f().sx(htmAnneeCles()).g("span");
 			}
 		}
 	}
@@ -302,6 +303,171 @@ public abstract class EcoleGen<DEV> extends Cluster {
 											.a("id", classeApiMethodeMethode, "_anneeCles_ajouter")
 											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Envoi…'; postAnneeScolaireVals({ ecoleCle: \"", pk, "\" }, function() {}, function() { ajouterErreur($('#", classeApiMethodeMethode, "anneeCles')); });")
 											.f().sx("ajouter une année")
+										.g("button");
+									} g("div");
+								}
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	//////////////
+	// recuCles //
+	//////////////
+
+	/**	 L'entité recuCles
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
+	 */
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected List<Long> recuCles = new ArrayList<Long>();
+	@JsonIgnore
+	public Couverture<List<Long>> recuClesCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("recuCles").o(recuCles);
+
+	/**	<br/> L'entité recuCles
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.ecole.Ecole&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:recuCles">Trouver l'entité recuCles dans Solr</a>
+	 * <br/>
+	 * @param recuCles est l'entité déjà construit. 
+	 **/
+	protected abstract void _recuCles(List<Long> o);
+
+	public List<Long> getRecuCles() {
+		return recuCles;
+	}
+
+	public void setRecuCles(List<Long> recuCles) {
+		this.recuCles = recuCles;
+		this.recuClesCouverture.dejaInitialise = true;
+	}
+	public Ecole addRecuCles(Long...objets) {
+		for(Long o : objets) {
+			addRecuCles(o);
+		}
+		return (Ecole)this;
+	}
+	public Ecole addRecuCles(Long o) {
+		if(o != null && !recuCles.contains(o))
+			this.recuCles.add(o);
+		return (Ecole)this;
+	}
+	public Ecole setRecuCles(JsonArray objets) {
+		recuCles.clear();
+		for(int i = 0; i < objets.size(); i++) {
+			Long o = objets.getLong(i);
+			addRecuCles(o);
+		}
+		return (Ecole)this;
+	}
+	public Ecole addRecuCles(String o) {
+		if(NumberUtils.isParsable(o)) {
+			Long p = Long.parseLong(o);
+			addRecuCles(p);
+		}
+		return (Ecole)this;
+	}
+	protected Ecole recuClesInit() {
+		if(!recuClesCouverture.dejaInitialise) {
+			_recuCles(recuCles);
+		}
+		recuClesCouverture.dejaInitialise(true);
+		return (Ecole)this;
+	}
+
+	public List<Long> solrRecuCles() {
+		return recuCles;
+	}
+
+	public String strRecuCles() {
+		return recuCles == null ? "" : recuCles.toString();
+	}
+
+	public String jsonRecuCles() {
+		return recuCles == null ? "" : recuCles.toString();
+	}
+
+	public String nomAffichageRecuCles() {
+		return "reçus";
+	}
+
+	public String htmTooltipRecuCles() {
+		return null;
+	}
+
+	public String htmRecuCles() {
+		return recuCles == null ? "" : StringEscapeUtils.escapeHtml4(strRecuCles());
+	}
+
+	public void inputRecuCles(String classeApiMethodeMethode) {
+		Ecole s = (Ecole)this;
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
+				e("input")
+					.a("type", "text")
+					.a("placeholder", "reçus")
+					.a("title", "Description.enUS: ")
+					.a("class", "valeur suggereRecuCles w3-input w3-border w3-cell w3-cell-middle ")
+					.a("name", "setRecuCles")
+					.a("id", classeApiMethodeMethode, "_recuCles")
+					.a("autocomplete", "off")
+					.a("oninput", "suggereEcoleRecuCles($(this).val() ? rechercherRecuScolaireFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'ecoleCle:" + pk + "'}", "], $('#listEcoleRecuCles_", classeApiMethodeMethode, "'), ", pk, "); ")
+				.fg();
+
+		} else {
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+				e("span").a("class", "varEcole", pk, "RecuCles ").f().sx(htmRecuCles()).g("span");
+			}
+		}
+	}
+
+	public void htmRecuCles(String classeApiMethodeMethode) {
+		Ecole s = (Ecole)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "EcoleRecuCles").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("a").a("href", "/paiement?fq=ecoleCle:", pk).a("class", "w3-cell w3-btn w3-center h4 w3-block h4 w3-light-green w3-hover-light-green ").f();
+								e("i").a("class", "fas fa-file-invoice-dollar ").f().g("i");
+								sx("reçus");
+							} g("a");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row ").f();
+							{ e("h5").a("class", "w3-cell ").f();
+								sx("relier  a cette école");
+							} g("h5");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+								{ e("div").a("class", "w3-cell-row ").f();
+
+								inputRecuCles(classeApiMethodeMethode);
+								} g("div");
+							} g("div");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listEcoleRecuCles_", classeApiMethodeMethode).f();
+								} g("ul");
+								if(
+										CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), RecuScolaire.ROLES)
+										|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), RecuScolaire.ROLES)
+										) {
+									{ e("div").a("class", "w3-cell-row ").f();
+										e("button")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-light-green ")
+											.a("id", classeApiMethodeMethode, "_recuCles_ajouter")
+											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Envoi…'; postRecuScolaireVals({ ecoleCle: \"", pk, "\" }, function() {}, function() { ajouterErreur($('#", classeApiMethodeMethode, "recuCles')); });")
+											.f().sx("ajouter un reçu")
 										.g("button");
 									} g("div");
 								}
@@ -978,7 +1144,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
 					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 				) {
-				sx(htmEcoleNom());
+				e("span").a("class", "varEcole", pk, "EcoleNom ").f().sx(htmEcoleNom()).g("span");
 			}
 		}
 	}
@@ -1112,7 +1278,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
 					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 				) {
-				sx(htmEcoleNumeroTelephone());
+				e("span").a("class", "varEcole", pk, "EcoleNumeroTelephone ").f().sx(htmEcoleNumeroTelephone()).g("span");
 			}
 		}
 	}
@@ -1246,7 +1412,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
 					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 				) {
-				sx(htmEcoleForm());
+				e("span").a("class", "varEcole", pk, "EcoleForm ").f().sx(htmEcoleForm()).g("span");
 			}
 		}
 	}
@@ -1387,7 +1553,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
 					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 				) {
-				sx(htmEcoleNumero());
+				e("span").a("class", "varEcole", pk, "EcoleNumero ").f().sx(htmEcoleNumero()).g("span");
 			}
 		}
 	}
@@ -1521,7 +1687,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
 					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 				) {
-				sx(htmEcoleAdministrateurNom());
+				e("span").a("class", "varEcole", pk, "EcoleAdministrateurNom ").f().sx(htmEcoleAdministrateurNom()).g("span");
 			}
 		}
 	}
@@ -1655,7 +1821,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
 					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 				) {
-				sx(htmEcoleMail());
+				e("span").a("class", "varEcole", pk, "EcoleMail ").f().sx(htmEcoleMail()).g("span");
 			}
 		}
 	}
@@ -1789,7 +1955,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
 					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 				) {
-				sx(htmEcoleMailDe());
+				e("span").a("class", "varEcole", pk, "EcoleMailDe ").f().sx(htmEcoleMailDe()).g("span");
 			}
 		}
 	}
@@ -1923,7 +2089,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
 					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 				) {
-				sx(htmEcoleMailA());
+				e("span").a("class", "varEcole", pk, "EcoleMailA ").f().sx(htmEcoleMailA()).g("span");
 			}
 		}
 	}
@@ -2057,7 +2223,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
 					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 				) {
-				sx(htmEcoleEmplacement());
+				e("span").a("class", "varEcole", pk, "EcoleEmplacement ").f().sx(htmEcoleEmplacement()).g("span");
 			}
 		}
 	}
@@ -2189,7 +2355,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
 					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 				) {
-				sx(htmEcoleAddresse());
+				e("span").a("class", "varEcole", pk, "EcoleAddresse ").f().sx(htmEcoleAddresse()).g("span");
 			}
 		}
 	}
@@ -2378,6 +2544,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	public void initEcole() {
 		ecoleCleInit();
 		anneeClesInit();
+		recuClesInit();
 		saisonClesInit();
 		sessionClesInit();
 		groupeAgeClesInit();
@@ -2439,6 +2606,8 @@ public abstract class EcoleGen<DEV> extends Cluster {
 				return oEcole.ecoleCle;
 			case "anneeCles":
 				return oEcole.anneeCles;
+			case "recuCles":
+				return oEcole.recuCles;
 			case "saisonCles":
 				return oEcole.saisonCles;
 			case "sessionCles":
@@ -2504,6 +2673,11 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		switch(var) {
 			case "anneeCles":
 				oEcole.addAnneeCles((Long)val);
+				if(!sauvegardes.contains(var))
+					sauvegardes.add(var);
+				return val;
+			case "recuCles":
+				oEcole.addRecuCles((Long)val);
 				if(!sauvegardes.contains(var))
 					sauvegardes.add(var);
 				return val;
@@ -2609,6 +2783,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 			List<Long> anneeCles = (List<Long>)solrDocument.get("anneeCles_stored_longs");
 			if(anneeCles != null)
 				oEcole.anneeCles.addAll(anneeCles);
+
+			List<Long> recuCles = (List<Long>)solrDocument.get("recuCles_stored_longs");
+			if(recuCles != null)
+				oEcole.recuCles.addAll(recuCles);
 
 			if(sauvegardes.contains("saisonCles")) {
 				List<Long> saisonCles = (List<Long>)solrDocument.get("saisonCles_stored_longs");
@@ -2802,6 +2980,14 @@ public abstract class EcoleGen<DEV> extends Cluster {
 				document.addField("anneeCles_stored_longs", o);
 			}
 		}
+		if(recuCles != null) {
+			for(java.lang.Long o : recuCles) {
+				document.addField("recuCles_indexed_longs", o);
+			}
+			for(java.lang.Long o : recuCles) {
+				document.addField("recuCles_stored_longs", o);
+			}
+		}
 		if(saisonCles != null) {
 			for(java.lang.Long o : saisonCles) {
 				document.addField("saisonCles_indexed_longs", o);
@@ -2925,6 +3111,8 @@ public abstract class EcoleGen<DEV> extends Cluster {
 				return "ecoleCle_indexed_long";
 			case "anneeCles":
 				return "anneeCles_indexed_longs";
+			case "recuCles":
+				return "recuCles_indexed_longs";
 			case "saisonCles":
 				return "saisonCles_indexed_longs";
 			case "sessionCles":
@@ -2999,6 +3187,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		List<Long> anneeCles = (List<Long>)solrDocument.get("anneeCles_stored_longs");
 		if(anneeCles != null)
 			oEcole.anneeCles.addAll(anneeCles);
+
+		List<Long> recuCles = (List<Long>)solrDocument.get("recuCles_stored_longs");
+		if(recuCles != null)
+			oEcole.recuCles.addAll(recuCles);
 
 		List<Long> saisonCles = (List<Long>)solrDocument.get("saisonCles_stored_longs");
 		if(saisonCles != null)
@@ -3088,8 +3280,26 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		Object o = Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
 		if(o != null && o instanceof Ecole) {
 			Ecole original = (Ecole)o;
+			if(!Objects.equals(ecoleCle, original.getEcoleCle()))
+				requeteApi.addVars("ecoleCle");
 			if(!Objects.equals(anneeCles, original.getAnneeCles()))
 				requeteApi.addVars("anneeCles");
+			if(!Objects.equals(recuCles, original.getRecuCles()))
+				requeteApi.addVars("recuCles");
+			if(!Objects.equals(saisonCles, original.getSaisonCles()))
+				requeteApi.addVars("saisonCles");
+			if(!Objects.equals(sessionCles, original.getSessionCles()))
+				requeteApi.addVars("sessionCles");
+			if(!Objects.equals(groupeAgeCles, original.getGroupeAgeCles()))
+				requeteApi.addVars("groupeAgeCles");
+			if(!Objects.equals(blocCles, original.getBlocCles()))
+				requeteApi.addVars("blocCles");
+			if(!Objects.equals(enfantCles, original.getEnfantCles()))
+				requeteApi.addVars("enfantCles");
+			if(!Objects.equals(scolaireTri, original.getScolaireTri()))
+				requeteApi.addVars("scolaireTri");
+			if(!Objects.equals(ecoleTri, original.getEcoleTri()))
+				requeteApi.addVars("ecoleTri");
 			if(!Objects.equals(ecoleNom, original.getEcoleNom()))
 				requeteApi.addVars("ecoleNom");
 			if(!Objects.equals(ecoleNumeroTelephone, original.getEcoleNumeroTelephone()))
@@ -3110,6 +3320,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 				requeteApi.addVars("ecoleEmplacement");
 			if(!Objects.equals(ecoleAddresse, original.getEcoleAddresse()))
 				requeteApi.addVars("ecoleAddresse");
+			if(!Objects.equals(ecoleNomCourt, original.getEcoleNomCourt()))
+				requeteApi.addVars("ecoleNomCourt");
+			if(!Objects.equals(ecoleNomComplet, original.getEcoleNomComplet()))
+				requeteApi.addVars("ecoleNomComplet");
 			super.requeteApiCluster();
 		}
 	}
@@ -3119,7 +3333,7 @@ public abstract class EcoleGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), anneeCles, ecoleNom, ecoleNumeroTelephone, ecoleForm, ecoleNumero, ecoleAdministrateurNom, ecoleMail, ecoleMailDe, ecoleMailA, ecoleEmplacement, ecoleAddresse);
+		return Objects.hash(super.hashCode(), ecoleCle, anneeCles, recuCles, saisonCles, sessionCles, groupeAgeCles, blocCles, enfantCles, scolaireTri, ecoleTri, ecoleNom, ecoleNumeroTelephone, ecoleForm, ecoleNumero, ecoleAdministrateurNom, ecoleMail, ecoleMailDe, ecoleMailA, ecoleEmplacement, ecoleAddresse, ecoleNomCourt, ecoleNomComplet);
 	}
 
 	////////////
@@ -3133,7 +3347,16 @@ public abstract class EcoleGen<DEV> extends Cluster {
 			return false;
 		Ecole that = (Ecole)o;
 		return super.equals(o)
+				&& Objects.equals( ecoleCle, that.ecoleCle )
 				&& Objects.equals( anneeCles, that.anneeCles )
+				&& Objects.equals( recuCles, that.recuCles )
+				&& Objects.equals( saisonCles, that.saisonCles )
+				&& Objects.equals( sessionCles, that.sessionCles )
+				&& Objects.equals( groupeAgeCles, that.groupeAgeCles )
+				&& Objects.equals( blocCles, that.blocCles )
+				&& Objects.equals( enfantCles, that.enfantCles )
+				&& Objects.equals( scolaireTri, that.scolaireTri )
+				&& Objects.equals( ecoleTri, that.ecoleTri )
 				&& Objects.equals( ecoleNom, that.ecoleNom )
 				&& Objects.equals( ecoleNumeroTelephone, that.ecoleNumeroTelephone )
 				&& Objects.equals( ecoleForm, that.ecoleForm )
@@ -3143,7 +3366,9 @@ public abstract class EcoleGen<DEV> extends Cluster {
 				&& Objects.equals( ecoleMailDe, that.ecoleMailDe )
 				&& Objects.equals( ecoleMailA, that.ecoleMailA )
 				&& Objects.equals( ecoleEmplacement, that.ecoleEmplacement )
-				&& Objects.equals( ecoleAddresse, that.ecoleAddresse );
+				&& Objects.equals( ecoleAddresse, that.ecoleAddresse )
+				&& Objects.equals( ecoleNomCourt, that.ecoleNomCourt )
+				&& Objects.equals( ecoleNomComplet, that.ecoleNomComplet );
 	}
 
 	//////////////
@@ -3154,7 +3379,16 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString() + "\n");
 		sb.append("Ecole { ");
-		sb.append( "anneeCles: " ).append(anneeCles);
+		sb.append( "ecoleCle: " ).append(ecoleCle);
+		sb.append( ", anneeCles: " ).append(anneeCles);
+		sb.append( ", recuCles: " ).append(recuCles);
+		sb.append( ", saisonCles: " ).append(saisonCles);
+		sb.append( ", sessionCles: " ).append(sessionCles);
+		sb.append( ", groupeAgeCles: " ).append(groupeAgeCles);
+		sb.append( ", blocCles: " ).append(blocCles);
+		sb.append( ", enfantCles: " ).append(enfantCles);
+		sb.append( ", scolaireTri: " ).append(scolaireTri);
+		sb.append( ", ecoleTri: " ).append(ecoleTri);
 		sb.append( ", ecoleNom: \"" ).append(ecoleNom).append( "\"" );
 		sb.append( ", ecoleNumeroTelephone: \"" ).append(ecoleNumeroTelephone).append( "\"" );
 		sb.append( ", ecoleForm: \"" ).append(ecoleForm).append( "\"" );
@@ -3165,6 +3399,8 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		sb.append( ", ecoleMailA: \"" ).append(ecoleMailA).append( "\"" );
 		sb.append( ", ecoleEmplacement: \"" ).append(ecoleEmplacement).append( "\"" );
 		sb.append( ", ecoleAddresse: \"" ).append(ecoleAddresse).append( "\"" );
+		sb.append( ", ecoleNomCourt: \"" ).append(ecoleNomCourt).append( "\"" );
+		sb.append( ", ecoleNomComplet: \"" ).append(ecoleNomComplet).append( "\"" );
 		sb.append(" }");
 		return sb.toString();
 	}

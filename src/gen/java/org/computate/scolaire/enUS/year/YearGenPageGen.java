@@ -80,43 +80,41 @@ public abstract class YearGenPageGen<DEV> extends ClusterPage {
 		return (YearGenPage)this;
 	}
 
-	////////////////
-	// schoolYear //
-	////////////////
+	/////////////////
+	// schoolYear_ //
+	/////////////////
 
-	/**	 The entity schoolYear
+	/**	 The entity schoolYear_
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected SchoolYear schoolYear;
+	protected SchoolYear schoolYear_;
 	@JsonIgnore
-	public Wrap<SchoolYear> schoolYearWrap = new Wrap<SchoolYear>().p(this).c(SchoolYear.class).var("schoolYear").o(schoolYear);
+	public Wrap<SchoolYear> schoolYear_Wrap = new Wrap<SchoolYear>().p(this).c(SchoolYear.class).var("schoolYear_").o(schoolYear_);
 
-	/**	<br/> The entity schoolYear
+	/**	<br/> The entity schoolYear_
 	 *  is defined as null before being initialized. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.year.YearGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolYear">Find the entity schoolYear in Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.year.YearGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolYear_">Find the entity schoolYear_ in Solr</a>
 	 * <br/>
 	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
-	protected abstract void _schoolYear(Wrap<SchoolYear> c);
+	protected abstract void _schoolYear_(Wrap<SchoolYear> c);
 
-	public SchoolYear getSchoolYear() {
-		return schoolYear;
+	public SchoolYear getSchoolYear_() {
+		return schoolYear_;
 	}
 
-	public void setSchoolYear(SchoolYear schoolYear) {
-		this.schoolYear = schoolYear;
-		this.schoolYearWrap.alreadyInitialized = true;
+	public void setSchoolYear_(SchoolYear schoolYear_) {
+		this.schoolYear_ = schoolYear_;
+		this.schoolYear_Wrap.alreadyInitialized = true;
 	}
-	protected YearGenPage schoolYearInit() {
-		if(!schoolYearWrap.alreadyInitialized) {
-			_schoolYear(schoolYearWrap);
-			if(schoolYear == null)
-				setSchoolYear(schoolYearWrap.o);
+	protected YearGenPage schoolYear_Init() {
+		if(!schoolYear_Wrap.alreadyInitialized) {
+			_schoolYear_(schoolYear_Wrap);
+			if(schoolYear_ == null)
+				setSchoolYear_(schoolYear_Wrap.o);
 		}
-		if(schoolYear != null)
-			schoolYear.initDeepForClass(siteRequest_);
-		schoolYearWrap.alreadyInitialized(true);
+		schoolYear_Wrap.alreadyInitialized(true);
 		return (YearGenPage)this;
 	}
 
@@ -142,7 +140,7 @@ public abstract class YearGenPageGen<DEV> extends ClusterPage {
 
 	public void initYearGenPage() {
 		listSchoolYearInit();
-		schoolYearInit();
+		schoolYear_Init();
 	}
 
 	@Override public void initDeepForClass(SiteRequestEnUS siteRequest_) {
@@ -157,8 +155,6 @@ public abstract class YearGenPageGen<DEV> extends ClusterPage {
 			super.siteRequestClusterPage(siteRequest_);
 		if(listSchoolYear != null)
 			listSchoolYear.setSiteRequest_(siteRequest_);
-		if(schoolYear != null)
-			schoolYear.setSiteRequest_(siteRequest_);
 	}
 
 	public void siteRequestForClass(SiteRequestEnUS siteRequest_) {
@@ -187,8 +183,8 @@ public abstract class YearGenPageGen<DEV> extends ClusterPage {
 		switch(var) {
 			case "listSchoolYear":
 				return oYearGenPage.listSchoolYear;
-			case "schoolYear":
-				return oYearGenPage.schoolYear;
+			case "schoolYear_":
+				return oYearGenPage.schoolYear_;
 			default:
 				return super.obtainClusterPage(var);
 		}

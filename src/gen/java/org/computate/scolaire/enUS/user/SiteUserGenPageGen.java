@@ -80,43 +80,41 @@ public abstract class SiteUserGenPageGen<DEV> extends ClusterPage {
 		return (SiteUserGenPage)this;
 	}
 
-	//////////////
-	// siteUser //
-	//////////////
+	///////////////
+	// siteUser_ //
+	///////////////
 
-	/**	 The entity siteUser
+	/**	 The entity siteUser_
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected SiteUser siteUser;
+	protected SiteUser siteUser_;
 	@JsonIgnore
-	public Wrap<SiteUser> siteUserWrap = new Wrap<SiteUser>().p(this).c(SiteUser.class).var("siteUser").o(siteUser);
+	public Wrap<SiteUser> siteUser_Wrap = new Wrap<SiteUser>().p(this).c(SiteUser.class).var("siteUser_").o(siteUser_);
 
-	/**	<br/> The entity siteUser
+	/**	<br/> The entity siteUser_
 	 *  is defined as null before being initialized. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.user.SiteUserGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:siteUser">Find the entity siteUser in Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.user.SiteUserGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:siteUser_">Find the entity siteUser_ in Solr</a>
 	 * <br/>
 	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
-	protected abstract void _siteUser(Wrap<SiteUser> c);
+	protected abstract void _siteUser_(Wrap<SiteUser> c);
 
-	public SiteUser getSiteUser() {
-		return siteUser;
+	public SiteUser getSiteUser_() {
+		return siteUser_;
 	}
 
-	public void setSiteUser(SiteUser siteUser) {
-		this.siteUser = siteUser;
-		this.siteUserWrap.alreadyInitialized = true;
+	public void setSiteUser_(SiteUser siteUser_) {
+		this.siteUser_ = siteUser_;
+		this.siteUser_Wrap.alreadyInitialized = true;
 	}
-	protected SiteUserGenPage siteUserInit() {
-		if(!siteUserWrap.alreadyInitialized) {
-			_siteUser(siteUserWrap);
-			if(siteUser == null)
-				setSiteUser(siteUserWrap.o);
+	protected SiteUserGenPage siteUser_Init() {
+		if(!siteUser_Wrap.alreadyInitialized) {
+			_siteUser_(siteUser_Wrap);
+			if(siteUser_ == null)
+				setSiteUser_(siteUser_Wrap.o);
 		}
-		if(siteUser != null)
-			siteUser.initDeepForClass(siteRequest_);
-		siteUserWrap.alreadyInitialized(true);
+		siteUser_Wrap.alreadyInitialized(true);
 		return (SiteUserGenPage)this;
 	}
 
@@ -142,7 +140,7 @@ public abstract class SiteUserGenPageGen<DEV> extends ClusterPage {
 
 	public void initSiteUserGenPage() {
 		listSiteUserInit();
-		siteUserInit();
+		siteUser_Init();
 	}
 
 	@Override public void initDeepForClass(SiteRequestEnUS siteRequest_) {
@@ -157,8 +155,6 @@ public abstract class SiteUserGenPageGen<DEV> extends ClusterPage {
 			super.siteRequestClusterPage(siteRequest_);
 		if(listSiteUser != null)
 			listSiteUser.setSiteRequest_(siteRequest_);
-		if(siteUser != null)
-			siteUser.setSiteRequest_(siteRequest_);
 	}
 
 	public void siteRequestForClass(SiteRequestEnUS siteRequest_) {
@@ -187,8 +183,8 @@ public abstract class SiteUserGenPageGen<DEV> extends ClusterPage {
 		switch(var) {
 			case "listSiteUser":
 				return oSiteUserGenPage.listSiteUser;
-			case "siteUser":
-				return oSiteUserGenPage.siteUser;
+			case "siteUser_":
+				return oSiteUserGenPage.siteUser_;
 			default:
 				return super.obtainClusterPage(var);
 		}

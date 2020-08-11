@@ -80,43 +80,41 @@ public abstract class SchoolGenPageGen<DEV> extends ClusterPage {
 		return (SchoolGenPage)this;
 	}
 
-	////////////
-	// school //
-	////////////
+	/////////////
+	// school_ //
+	/////////////
 
-	/**	 The entity school
+	/**	 The entity school_
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected School school;
+	protected School school_;
 	@JsonIgnore
-	public Wrap<School> schoolWrap = new Wrap<School>().p(this).c(School.class).var("school").o(school);
+	public Wrap<School> school_Wrap = new Wrap<School>().p(this).c(School.class).var("school_").o(school_);
 
-	/**	<br/> The entity school
+	/**	<br/> The entity school_
 	 *  is defined as null before being initialized. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.school.SchoolGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:school">Find the entity school in Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.school.SchoolGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:school_">Find the entity school_ in Solr</a>
 	 * <br/>
 	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
-	protected abstract void _school(Wrap<School> c);
+	protected abstract void _school_(Wrap<School> c);
 
-	public School getSchool() {
-		return school;
+	public School getSchool_() {
+		return school_;
 	}
 
-	public void setSchool(School school) {
-		this.school = school;
-		this.schoolWrap.alreadyInitialized = true;
+	public void setSchool_(School school_) {
+		this.school_ = school_;
+		this.school_Wrap.alreadyInitialized = true;
 	}
-	protected SchoolGenPage schoolInit() {
-		if(!schoolWrap.alreadyInitialized) {
-			_school(schoolWrap);
-			if(school == null)
-				setSchool(schoolWrap.o);
+	protected SchoolGenPage school_Init() {
+		if(!school_Wrap.alreadyInitialized) {
+			_school_(school_Wrap);
+			if(school_ == null)
+				setSchool_(school_Wrap.o);
 		}
-		if(school != null)
-			school.initDeepForClass(siteRequest_);
-		schoolWrap.alreadyInitialized(true);
+		school_Wrap.alreadyInitialized(true);
 		return (SchoolGenPage)this;
 	}
 
@@ -142,7 +140,7 @@ public abstract class SchoolGenPageGen<DEV> extends ClusterPage {
 
 	public void initSchoolGenPage() {
 		listSchoolInit();
-		schoolInit();
+		school_Init();
 	}
 
 	@Override public void initDeepForClass(SiteRequestEnUS siteRequest_) {
@@ -157,8 +155,6 @@ public abstract class SchoolGenPageGen<DEV> extends ClusterPage {
 			super.siteRequestClusterPage(siteRequest_);
 		if(listSchool != null)
 			listSchool.setSiteRequest_(siteRequest_);
-		if(school != null)
-			school.setSiteRequest_(siteRequest_);
 	}
 
 	public void siteRequestForClass(SiteRequestEnUS siteRequest_) {
@@ -187,8 +183,8 @@ public abstract class SchoolGenPageGen<DEV> extends ClusterPage {
 		switch(var) {
 			case "listSchool":
 				return oSchoolGenPage.listSchool;
-			case "school":
-				return oSchoolGenPage.school;
+			case "school_":
+				return oSchoolGenPage.school_;
 			default:
 				return super.obtainClusterPage(var);
 		}

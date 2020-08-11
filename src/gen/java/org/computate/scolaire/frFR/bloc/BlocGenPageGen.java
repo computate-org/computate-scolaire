@@ -80,43 +80,41 @@ public abstract class BlocGenPageGen<DEV> extends ClusterPage {
 		return (BlocGenPage)this;
 	}
 
-	//////////////////
-	// blocScolaire //
-	//////////////////
+	///////////////////
+	// blocScolaire_ //
+	///////////////////
 
-	/**	 L'entité blocScolaire
+	/**	 L'entité blocScolaire_
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected BlocScolaire blocScolaire;
+	protected BlocScolaire blocScolaire_;
 	@JsonIgnore
-	public Couverture<BlocScolaire> blocScolaireCouverture = new Couverture<BlocScolaire>().p(this).c(BlocScolaire.class).var("blocScolaire").o(blocScolaire);
+	public Couverture<BlocScolaire> blocScolaire_Couverture = new Couverture<BlocScolaire>().p(this).c(BlocScolaire.class).var("blocScolaire_").o(blocScolaire_);
 
-	/**	<br/> L'entité blocScolaire
+	/**	<br/> L'entité blocScolaire_
 	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.bloc.BlocGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:blocScolaire">Trouver l'entité blocScolaire dans Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.bloc.BlocGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:blocScolaire_">Trouver l'entité blocScolaire_ dans Solr</a>
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _blocScolaire(Couverture<BlocScolaire> c);
+	protected abstract void _blocScolaire_(Couverture<BlocScolaire> c);
 
-	public BlocScolaire getBlocScolaire() {
-		return blocScolaire;
+	public BlocScolaire getBlocScolaire_() {
+		return blocScolaire_;
 	}
 
-	public void setBlocScolaire(BlocScolaire blocScolaire) {
-		this.blocScolaire = blocScolaire;
-		this.blocScolaireCouverture.dejaInitialise = true;
+	public void setBlocScolaire_(BlocScolaire blocScolaire_) {
+		this.blocScolaire_ = blocScolaire_;
+		this.blocScolaire_Couverture.dejaInitialise = true;
 	}
-	protected BlocGenPage blocScolaireInit() {
-		if(!blocScolaireCouverture.dejaInitialise) {
-			_blocScolaire(blocScolaireCouverture);
-			if(blocScolaire == null)
-				setBlocScolaire(blocScolaireCouverture.o);
+	protected BlocGenPage blocScolaire_Init() {
+		if(!blocScolaire_Couverture.dejaInitialise) {
+			_blocScolaire_(blocScolaire_Couverture);
+			if(blocScolaire_ == null)
+				setBlocScolaire_(blocScolaire_Couverture.o);
 		}
-		if(blocScolaire != null)
-			blocScolaire.initLoinPourClasse(requeteSite_);
-		blocScolaireCouverture.dejaInitialise(true);
+		blocScolaire_Couverture.dejaInitialise(true);
 		return (BlocGenPage)this;
 	}
 
@@ -142,7 +140,7 @@ public abstract class BlocGenPageGen<DEV> extends ClusterPage {
 
 	public void initBlocGenPage() {
 		listeBlocScolaireInit();
-		blocScolaireInit();
+		blocScolaire_Init();
 	}
 
 	@Override public void initLoinPourClasse(RequeteSiteFrFR requeteSite_) {
@@ -157,8 +155,6 @@ public abstract class BlocGenPageGen<DEV> extends ClusterPage {
 			super.requeteSiteClusterPage(requeteSite_);
 		if(listeBlocScolaire != null)
 			listeBlocScolaire.setRequeteSite_(requeteSite_);
-		if(blocScolaire != null)
-			blocScolaire.setRequeteSite_(requeteSite_);
 	}
 
 	public void requeteSitePourClasse(RequeteSiteFrFR requeteSite_) {
@@ -187,8 +183,8 @@ public abstract class BlocGenPageGen<DEV> extends ClusterPage {
 		switch(var) {
 			case "listeBlocScolaire":
 				return oBlocGenPage.listeBlocScolaire;
-			case "blocScolaire":
-				return oBlocGenPage.blocScolaire;
+			case "blocScolaire_":
+				return oBlocGenPage.blocScolaire_;
 			default:
 				return super.obtenirClusterPage(var);
 		}

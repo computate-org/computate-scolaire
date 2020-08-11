@@ -54,7 +54,7 @@ public class PereGenPage extends PereGenPageGen<ClusterPage> {
 	protected void _listePereScolaire(Couverture<ListeRecherche<PereScolaire>> c) {
 	}
 
-	protected void _pereScolaire(Couverture<PereScolaire> c) {
+	protected void _pereScolaire_(Couverture<PereScolaire> c) {
 		if(listePereScolaire != null && listePereScolaire.size() == 1)
 			c.o(listePereScolaire.get(0));
 	}
@@ -64,8 +64,8 @@ public class PereGenPage extends PereGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageH2(Couverture<String> c) {
-		if(pereScolaire != null && pereScolaire.getPereNomComplet() != null)
-			c.o(pereScolaire.getPereNomComplet());
+		if(pereScolaire_ != null && pereScolaire_.getPereNomComplet() != null)
+			c.o(pereScolaire_.getPereNomComplet());
 	}
 
 	@Override protected void _pageH3(Couverture<String> c) {
@@ -73,9 +73,9 @@ public class PereGenPage extends PereGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageTitre(Couverture<String> c) {
-		if(pereScolaire != null && pereScolaire.getPereNomComplet() != null)
-			c.o(pereScolaire.getPereNomComplet());
-		else if(pereScolaire != null)
+		if(pereScolaire_ != null && pereScolaire_.getPereNomComplet() != null)
+			c.o(pereScolaire_.getPereNomComplet());
+		else if(pereScolaire_ != null)
 			c.o("pères");
 		else if(listePereScolaire == null || listePereScolaire.size() == 0)
 			c.o("aucun père trouvé");
@@ -748,7 +748,7 @@ public class PereGenPage extends PereGenPageGen<ClusterPage> {
 							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-light-blue ")
-								.a("onclick", "putcopiePereScolaire($('#putcopiePereScolaireForm'), ", pereScolaire == null ? "null" : pereScolaire.getPk(), "); ")
+								.a("onclick", "putcopiePereScolaire($('#putcopiePereScolaireForm'), ", pereScolaire_ == null ? "null" : pereScolaire_.getPk(), "); ")
 								.f().sx("Dupliquer pères")
 							.g("button");
 
@@ -782,7 +782,7 @@ public class PereGenPage extends PereGenPageGen<ClusterPage> {
 							} g("form");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-light-blue ")
-								.a("onclick", "patchPereScolaire(null, $('#patchPereScolaireFormulaireValeurs'), ", Optional.ofNullable(pereScolaire).map(PereScolaire::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
+								.a("onclick", "patchPereScolaire(null, $('#patchPereScolaireFormulaireValeurs'), ", Optional.ofNullable(pereScolaire_).map(PereScolaire::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
 								.f().sx("Modifier pères")
 							.g("button");
 

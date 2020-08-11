@@ -80,43 +80,41 @@ public abstract class SessionGenPageGen<DEV> extends ClusterPage {
 		return (SessionGenPage)this;
 	}
 
-	///////////////////
-	// schoolSession //
-	///////////////////
+	////////////////////
+	// schoolSession_ //
+	////////////////////
 
-	/**	 The entity schoolSession
+	/**	 The entity schoolSession_
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
-	protected SchoolSession schoolSession;
+	protected SchoolSession schoolSession_;
 	@JsonIgnore
-	public Wrap<SchoolSession> schoolSessionWrap = new Wrap<SchoolSession>().p(this).c(SchoolSession.class).var("schoolSession").o(schoolSession);
+	public Wrap<SchoolSession> schoolSession_Wrap = new Wrap<SchoolSession>().p(this).c(SchoolSession.class).var("schoolSession_").o(schoolSession_);
 
-	/**	<br/> The entity schoolSession
+	/**	<br/> The entity schoolSession_
 	 *  is defined as null before being initialized. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.session.SessionGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolSession">Find the entity schoolSession in Solr</a>
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.session.SessionGenPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:schoolSession_">Find the entity schoolSession_ in Solr</a>
 	 * <br/>
 	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
-	protected abstract void _schoolSession(Wrap<SchoolSession> c);
+	protected abstract void _schoolSession_(Wrap<SchoolSession> c);
 
-	public SchoolSession getSchoolSession() {
-		return schoolSession;
+	public SchoolSession getSchoolSession_() {
+		return schoolSession_;
 	}
 
-	public void setSchoolSession(SchoolSession schoolSession) {
-		this.schoolSession = schoolSession;
-		this.schoolSessionWrap.alreadyInitialized = true;
+	public void setSchoolSession_(SchoolSession schoolSession_) {
+		this.schoolSession_ = schoolSession_;
+		this.schoolSession_Wrap.alreadyInitialized = true;
 	}
-	protected SessionGenPage schoolSessionInit() {
-		if(!schoolSessionWrap.alreadyInitialized) {
-			_schoolSession(schoolSessionWrap);
-			if(schoolSession == null)
-				setSchoolSession(schoolSessionWrap.o);
+	protected SessionGenPage schoolSession_Init() {
+		if(!schoolSession_Wrap.alreadyInitialized) {
+			_schoolSession_(schoolSession_Wrap);
+			if(schoolSession_ == null)
+				setSchoolSession_(schoolSession_Wrap.o);
 		}
-		if(schoolSession != null)
-			schoolSession.initDeepForClass(siteRequest_);
-		schoolSessionWrap.alreadyInitialized(true);
+		schoolSession_Wrap.alreadyInitialized(true);
 		return (SessionGenPage)this;
 	}
 
@@ -142,7 +140,7 @@ public abstract class SessionGenPageGen<DEV> extends ClusterPage {
 
 	public void initSessionGenPage() {
 		listSchoolSessionInit();
-		schoolSessionInit();
+		schoolSession_Init();
 	}
 
 	@Override public void initDeepForClass(SiteRequestEnUS siteRequest_) {
@@ -157,8 +155,6 @@ public abstract class SessionGenPageGen<DEV> extends ClusterPage {
 			super.siteRequestClusterPage(siteRequest_);
 		if(listSchoolSession != null)
 			listSchoolSession.setSiteRequest_(siteRequest_);
-		if(schoolSession != null)
-			schoolSession.setSiteRequest_(siteRequest_);
 	}
 
 	public void siteRequestForClass(SiteRequestEnUS siteRequest_) {
@@ -187,8 +183,8 @@ public abstract class SessionGenPageGen<DEV> extends ClusterPage {
 		switch(var) {
 			case "listSchoolSession":
 				return oSessionGenPage.listSchoolSession;
-			case "schoolSession":
-				return oSessionGenPage.schoolSession;
+			case "schoolSession_":
+				return oSessionGenPage.schoolSession_;
 			default:
 				return super.obtainClusterPage(var);
 		}

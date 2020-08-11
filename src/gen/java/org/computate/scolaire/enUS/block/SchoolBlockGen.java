@@ -338,7 +338,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 				) {
-				sx(htmEnrollmentKeys());
+				e("span").a("class", "varSchoolBlock", pk, "EnrollmentKeys ").f().sx(htmEnrollmentKeys()).g("span");
 			}
 		}
 	}
@@ -1031,7 +1031,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 				) {
-				sx(htmAgeKey());
+				e("span").a("class", "varSchoolBlock", pk, "AgeKey ").f().sx(htmAgeKey()).g("span");
 			}
 		}
 	}
@@ -1647,7 +1647,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 				) {
-				sx(htmSchoolAddress());
+				e("span").a("class", "varSchoolBlock", pk, "SchoolAddress ").f().sx(htmSchoolAddress()).g("span");
 			}
 		}
 	}
@@ -2759,7 +2759,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 				) {
-				sx(htmBlockStartTime());
+				e("span").a("class", "varSchoolBlock", pk, "BlockStartTime ").f().sx(htmBlockStartTime()).g("span");
 			}
 		}
 	}
@@ -2892,7 +2892,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 				) {
-				sx(htmBlockEndTime());
+				e("span").a("class", "varSchoolBlock", pk, "BlockEndTime ").f().sx(htmBlockEndTime()).g("span");
 			}
 		}
 	}
@@ -3042,7 +3042,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 				) {
-				sx(htmBlockPricePerMonth());
+				e("span").a("class", "varSchoolBlock", pk, "BlockPricePerMonth ").f().sx(htmBlockPricePerMonth()).g("span");
 			}
 		}
 	}
@@ -3260,7 +3260,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 				) {
-				sx(htmBlockMonday());
+				e("span").a("class", "varSchoolBlock", pk, "BlockMonday ").f().sx(htmBlockMonday()).g("span");
 			}
 		}
 	}
@@ -3395,7 +3395,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 				) {
-				sx(htmBlockTuesday());
+				e("span").a("class", "varSchoolBlock", pk, "BlockTuesday ").f().sx(htmBlockTuesday()).g("span");
 			}
 		}
 	}
@@ -3530,7 +3530,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 				) {
-				sx(htmBlockWednesday());
+				e("span").a("class", "varSchoolBlock", pk, "BlockWednesday ").f().sx(htmBlockWednesday()).g("span");
 			}
 		}
 	}
@@ -3665,7 +3665,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 				) {
-				sx(htmBlockThursday());
+				e("span").a("class", "varSchoolBlock", pk, "BlockThursday ").f().sx(htmBlockThursday()).g("span");
 			}
 		}
 	}
@@ -3800,7 +3800,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 				) {
-				sx(htmBlockFriday());
+				e("span").a("class", "varSchoolBlock", pk, "BlockFriday ").f().sx(htmBlockFriday()).g("span");
 			}
 		}
 	}
@@ -5490,18 +5490,76 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 		Object o = Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
 		if(o != null && o instanceof SchoolBlock) {
 			SchoolBlock original = (SchoolBlock)o;
+			if(!Objects.equals(blockKey, original.getBlockKey()))
+				apiRequest.addVars("blockKey");
+			if(!Objects.equals(childKey, original.getChildKey()))
+				apiRequest.addVars("childKey");
 			if(!Objects.equals(enrollmentKeys, original.getEnrollmentKeys()))
 				apiRequest.addVars("enrollmentKeys");
+			if(!Objects.equals(educationSort, original.getEducationSort()))
+				apiRequest.addVars("educationSort");
+			if(!Objects.equals(schoolSort, original.getSchoolSort()))
+				apiRequest.addVars("schoolSort");
+			if(!Objects.equals(yearSort, original.getYearSort()))
+				apiRequest.addVars("yearSort");
+			if(!Objects.equals(seasonSort, original.getSeasonSort()))
+				apiRequest.addVars("seasonSort");
+			if(!Objects.equals(sessionSort, original.getSessionSort()))
+				apiRequest.addVars("sessionSort");
+			if(!Objects.equals(ageSort, original.getAgeSort()))
+				apiRequest.addVars("ageSort");
 			if(!Objects.equals(ageKey, original.getAgeKey()))
 				apiRequest.addVars("ageKey");
+			if(!Objects.equals(schoolKey, original.getSchoolKey()))
+				apiRequest.addVars("schoolKey");
+			if(!Objects.equals(yearKey, original.getYearKey()))
+				apiRequest.addVars("yearKey");
+			if(!Objects.equals(sessionKey, original.getSessionKey()))
+				apiRequest.addVars("sessionKey");
+			if(!Objects.equals(schoolName, original.getSchoolName()))
+				apiRequest.addVars("schoolName");
+			if(!Objects.equals(schoolCompleteName, original.getSchoolCompleteName()))
+				apiRequest.addVars("schoolCompleteName");
+			if(!Objects.equals(schoolLocation, original.getSchoolLocation()))
+				apiRequest.addVars("schoolLocation");
 			if(!Objects.equals(schoolAddress, original.getSchoolAddress()))
 				apiRequest.addVars("schoolAddress");
+			if(!Objects.equals(schoolPhoneNumber, original.getSchoolPhoneNumber()))
+				apiRequest.addVars("schoolPhoneNumber");
+			if(!Objects.equals(schoolForm, original.getSchoolForm()))
+				apiRequest.addVars("schoolForm");
+			if(!Objects.equals(schoolNumber, original.getSchoolNumber()))
+				apiRequest.addVars("schoolNumber");
+			if(!Objects.equals(schoolAdministratorName, original.getSchoolAdministratorName()))
+				apiRequest.addVars("schoolAdministratorName");
+			if(!Objects.equals(yearStart, original.getYearStart()))
+				apiRequest.addVars("yearStart");
+			if(!Objects.equals(yearEnd, original.getYearEnd()))
+				apiRequest.addVars("yearEnd");
+			if(!Objects.equals(seasonStartDate, original.getSeasonStartDate()))
+				apiRequest.addVars("seasonStartDate");
+			if(!Objects.equals(yearEnrollmentFee, original.getYearEnrollmentFee()))
+				apiRequest.addVars("yearEnrollmentFee");
+			if(!Objects.equals(sessionStartDate, original.getSessionStartDate()))
+				apiRequest.addVars("sessionStartDate");
+			if(!Objects.equals(sessionEndDate, original.getSessionEndDate()))
+				apiRequest.addVars("sessionEndDate");
+			if(!Objects.equals(ageShortName, original.getAgeShortName()))
+				apiRequest.addVars("ageShortName");
+			if(!Objects.equals(ageCompleteName, original.getAgeCompleteName()))
+				apiRequest.addVars("ageCompleteName");
+			if(!Objects.equals(ageStart, original.getAgeStart()))
+				apiRequest.addVars("ageStart");
+			if(!Objects.equals(ageEnd, original.getAgeEnd()))
+				apiRequest.addVars("ageEnd");
 			if(!Objects.equals(blockStartTime, original.getBlockStartTime()))
 				apiRequest.addVars("blockStartTime");
 			if(!Objects.equals(blockEndTime, original.getBlockEndTime()))
 				apiRequest.addVars("blockEndTime");
 			if(!Objects.equals(blockPricePerMonth, original.getBlockPricePerMonth()))
 				apiRequest.addVars("blockPricePerMonth");
+			if(!Objects.equals(blockSunday, original.getBlockSunday()))
+				apiRequest.addVars("blockSunday");
 			if(!Objects.equals(blockMonday, original.getBlockMonday()))
 				apiRequest.addVars("blockMonday");
 			if(!Objects.equals(blockTuesday, original.getBlockTuesday()))
@@ -5512,6 +5570,16 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 				apiRequest.addVars("blockThursday");
 			if(!Objects.equals(blockFriday, original.getBlockFriday()))
 				apiRequest.addVars("blockFriday");
+			if(!Objects.equals(blockSaturday, original.getBlockSaturday()))
+				apiRequest.addVars("blockSaturday");
+			if(!Objects.equals(blockTotalPrice, original.getBlockTotalPrice()))
+				apiRequest.addVars("blockTotalPrice");
+			if(!Objects.equals(blockShortName, original.getBlockShortName()))
+				apiRequest.addVars("blockShortName");
+			if(!Objects.equals(blockAdminName, original.getBlockAdminName()))
+				apiRequest.addVars("blockAdminName");
+			if(!Objects.equals(blockCompleteName, original.getBlockCompleteName()))
+				apiRequest.addVars("blockCompleteName");
 			super.apiRequestCluster();
 		}
 	}
@@ -5521,7 +5589,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), enrollmentKeys, ageKey, schoolAddress, blockStartTime, blockEndTime, blockPricePerMonth, blockMonday, blockTuesday, blockWednesday, blockThursday, blockFriday);
+		return Objects.hash(super.hashCode(), blockKey, childKey, enrollmentKeys, educationSort, schoolSort, yearSort, seasonSort, sessionSort, ageSort, ageKey, schoolKey, yearKey, sessionKey, schoolName, schoolCompleteName, schoolLocation, schoolAddress, schoolPhoneNumber, schoolForm, schoolNumber, schoolAdministratorName, yearStart, yearEnd, seasonStartDate, yearEnrollmentFee, sessionStartDate, sessionEndDate, ageShortName, ageCompleteName, ageStart, ageEnd, blockStartTime, blockEndTime, blockPricePerMonth, blockSunday, blockMonday, blockTuesday, blockWednesday, blockThursday, blockFriday, blockSaturday, blockTotalPrice, blockShortName, blockAdminName, blockCompleteName);
 	}
 
 	////////////
@@ -5535,17 +5603,51 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 			return false;
 		SchoolBlock that = (SchoolBlock)o;
 		return super.equals(o)
+				&& Objects.equals( blockKey, that.blockKey )
+				&& Objects.equals( childKey, that.childKey )
 				&& Objects.equals( enrollmentKeys, that.enrollmentKeys )
+				&& Objects.equals( educationSort, that.educationSort )
+				&& Objects.equals( schoolSort, that.schoolSort )
+				&& Objects.equals( yearSort, that.yearSort )
+				&& Objects.equals( seasonSort, that.seasonSort )
+				&& Objects.equals( sessionSort, that.sessionSort )
+				&& Objects.equals( ageSort, that.ageSort )
 				&& Objects.equals( ageKey, that.ageKey )
+				&& Objects.equals( schoolKey, that.schoolKey )
+				&& Objects.equals( yearKey, that.yearKey )
+				&& Objects.equals( sessionKey, that.sessionKey )
+				&& Objects.equals( schoolName, that.schoolName )
+				&& Objects.equals( schoolCompleteName, that.schoolCompleteName )
+				&& Objects.equals( schoolLocation, that.schoolLocation )
 				&& Objects.equals( schoolAddress, that.schoolAddress )
+				&& Objects.equals( schoolPhoneNumber, that.schoolPhoneNumber )
+				&& Objects.equals( schoolForm, that.schoolForm )
+				&& Objects.equals( schoolNumber, that.schoolNumber )
+				&& Objects.equals( schoolAdministratorName, that.schoolAdministratorName )
+				&& Objects.equals( yearStart, that.yearStart )
+				&& Objects.equals( yearEnd, that.yearEnd )
+				&& Objects.equals( seasonStartDate, that.seasonStartDate )
+				&& Objects.equals( yearEnrollmentFee, that.yearEnrollmentFee )
+				&& Objects.equals( sessionStartDate, that.sessionStartDate )
+				&& Objects.equals( sessionEndDate, that.sessionEndDate )
+				&& Objects.equals( ageShortName, that.ageShortName )
+				&& Objects.equals( ageCompleteName, that.ageCompleteName )
+				&& Objects.equals( ageStart, that.ageStart )
+				&& Objects.equals( ageEnd, that.ageEnd )
 				&& Objects.equals( blockStartTime, that.blockStartTime )
 				&& Objects.equals( blockEndTime, that.blockEndTime )
 				&& Objects.equals( blockPricePerMonth, that.blockPricePerMonth )
+				&& Objects.equals( blockSunday, that.blockSunday )
 				&& Objects.equals( blockMonday, that.blockMonday )
 				&& Objects.equals( blockTuesday, that.blockTuesday )
 				&& Objects.equals( blockWednesday, that.blockWednesday )
 				&& Objects.equals( blockThursday, that.blockThursday )
-				&& Objects.equals( blockFriday, that.blockFriday );
+				&& Objects.equals( blockFriday, that.blockFriday )
+				&& Objects.equals( blockSaturday, that.blockSaturday )
+				&& Objects.equals( blockTotalPrice, that.blockTotalPrice )
+				&& Objects.equals( blockShortName, that.blockShortName )
+				&& Objects.equals( blockAdminName, that.blockAdminName )
+				&& Objects.equals( blockCompleteName, that.blockCompleteName );
 	}
 
 	//////////////
@@ -5556,17 +5658,51 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString() + "\n");
 		sb.append("SchoolBlock { ");
-		sb.append( "enrollmentKeys: " ).append(enrollmentKeys);
+		sb.append( "blockKey: " ).append(blockKey);
+		sb.append( ", childKey: " ).append(childKey);
+		sb.append( ", enrollmentKeys: " ).append(enrollmentKeys);
+		sb.append( ", educationSort: " ).append(educationSort);
+		sb.append( ", schoolSort: " ).append(schoolSort);
+		sb.append( ", yearSort: " ).append(yearSort);
+		sb.append( ", seasonSort: " ).append(seasonSort);
+		sb.append( ", sessionSort: " ).append(sessionSort);
+		sb.append( ", ageSort: " ).append(ageSort);
 		sb.append( ", ageKey: " ).append(ageKey);
+		sb.append( ", schoolKey: " ).append(schoolKey);
+		sb.append( ", yearKey: " ).append(yearKey);
+		sb.append( ", sessionKey: " ).append(sessionKey);
+		sb.append( ", schoolName: \"" ).append(schoolName).append( "\"" );
+		sb.append( ", schoolCompleteName: \"" ).append(schoolCompleteName).append( "\"" );
+		sb.append( ", schoolLocation: \"" ).append(schoolLocation).append( "\"" );
 		sb.append( ", schoolAddress: \"" ).append(schoolAddress).append( "\"" );
+		sb.append( ", schoolPhoneNumber: \"" ).append(schoolPhoneNumber).append( "\"" );
+		sb.append( ", schoolForm: \"" ).append(schoolForm).append( "\"" );
+		sb.append( ", schoolNumber: " ).append(schoolNumber);
+		sb.append( ", schoolAdministratorName: \"" ).append(schoolAdministratorName).append( "\"" );
+		sb.append( ", yearStart: " ).append(yearStart);
+		sb.append( ", yearEnd: " ).append(yearEnd);
+		sb.append( ", seasonStartDate: " ).append(seasonStartDate);
+		sb.append( ", yearEnrollmentFee: " ).append(yearEnrollmentFee);
+		sb.append( ", sessionStartDate: " ).append(sessionStartDate);
+		sb.append( ", sessionEndDate: " ).append(sessionEndDate);
+		sb.append( ", ageShortName: \"" ).append(ageShortName).append( "\"" );
+		sb.append( ", ageCompleteName: \"" ).append(ageCompleteName).append( "\"" );
+		sb.append( ", ageStart: " ).append(ageStart);
+		sb.append( ", ageEnd: " ).append(ageEnd);
 		sb.append( ", blockStartTime: " ).append(blockStartTime);
 		sb.append( ", blockEndTime: " ).append(blockEndTime);
 		sb.append( ", blockPricePerMonth: " ).append(blockPricePerMonth);
+		sb.append( ", blockSunday: " ).append(blockSunday);
 		sb.append( ", blockMonday: " ).append(blockMonday);
 		sb.append( ", blockTuesday: " ).append(blockTuesday);
 		sb.append( ", blockWednesday: " ).append(blockWednesday);
 		sb.append( ", blockThursday: " ).append(blockThursday);
 		sb.append( ", blockFriday: " ).append(blockFriday);
+		sb.append( ", blockSaturday: " ).append(blockSaturday);
+		sb.append( ", blockTotalPrice: " ).append(blockTotalPrice);
+		sb.append( ", blockShortName: \"" ).append(blockShortName).append( "\"" );
+		sb.append( ", blockAdminName: \"" ).append(blockAdminName).append( "\"" );
+		sb.append( ", blockCompleteName: \"" ).append(blockCompleteName).append( "\"" );
 		sb.append(" }");
 		return sb.toString();
 	}

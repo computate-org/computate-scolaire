@@ -89,7 +89,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 	protected void _listSchoolEnrollment(Wrap<SearchList<SchoolEnrollment>> c) {
 	}
 
-	protected void _schoolEnrollment(Wrap<SchoolEnrollment> c) {
+	protected void _schoolEnrollment_(Wrap<SchoolEnrollment> c) {
 		if(listSchoolEnrollment != null && listSchoolEnrollment.size() == 1)
 			c.o(listSchoolEnrollment.get(0));
 	}
@@ -99,8 +99,8 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageH2(Wrap<String> c) {
-		if(schoolEnrollment != null && schoolEnrollment.getEnrollmentCompleteName() != null)
-			c.o(schoolEnrollment.getEnrollmentCompleteName());
+		if(schoolEnrollment_ != null && schoolEnrollment_.getEnrollmentCompleteName() != null)
+			c.o(schoolEnrollment_.getEnrollmentCompleteName());
 	}
 
 	@Override protected void _pageH3(Wrap<String> c) {
@@ -108,9 +108,9 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 	}
 
 	@Override protected void _pageTitle(Wrap<String> c) {
-		if(schoolEnrollment != null && schoolEnrollment.getEnrollmentCompleteName() != null)
-			c.o(schoolEnrollment.getEnrollmentCompleteName());
-		else if(schoolEnrollment != null)
+		if(schoolEnrollment_ != null && schoolEnrollment_.getEnrollmentCompleteName() != null)
+			c.o(schoolEnrollment_.getEnrollmentCompleteName());
+		else if(schoolEnrollment_ != null)
 			c.o("enrollments");
 		else if(listSchoolEnrollment == null || listSchoolEnrollment.size() == 0)
 			c.o("no enrollment found");
@@ -1048,7 +1048,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 							} g("div");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-blue-gray ")
-								.a("onclick", "putcopySchoolEnrollment($('#putcopySchoolEnrollmentForm'), ", schoolEnrollment == null ? "null" : schoolEnrollment.getPk(), "); ")
+								.a("onclick", "putcopySchoolEnrollment($('#putcopySchoolEnrollmentForm'), ", schoolEnrollment_ == null ? "null" : schoolEnrollment_.getPk(), "); ")
 								.f().sx("Duplicate enrollments")
 							.g("button");
 
@@ -1082,7 +1082,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 							} g("form");
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-blue-gray ")
-								.a("onclick", "patchSchoolEnrollment(null, $('#patchSchoolEnrollmentFormValues'), ", Optional.ofNullable(schoolEnrollment).map(SchoolEnrollment::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
+								.a("onclick", "patchSchoolEnrollment(null, $('#patchSchoolEnrollmentFormValues'), ", Optional.ofNullable(schoolEnrollment_).map(SchoolEnrollment::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
 								.f().sx("Modify enrollments")
 							.g("button");
 
