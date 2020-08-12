@@ -40,10 +40,12 @@ public class SchoolReceipt extends SchoolReceiptGen<Cluster> {
 	}
 
 	protected void _schoolSearch(SearchList<School> l) {
-		l.setQuery("*:*");
-		l.addFilterQuery("pk_indexed_long:" + schoolKey);
-		l.setC(School.class);
-		l.setStore(true);
+		if(schoolKey != null) {
+			l.setQuery("*:*");
+			l.addFilterQuery("pk_indexed_long:" + schoolKey);
+			l.setC(School.class);
+			l.setStore(true);
+		}
 	}
 
 	protected void _school_(Wrap<School> c) {

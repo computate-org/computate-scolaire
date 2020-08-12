@@ -108,10 +108,12 @@ public class RecuScolaire extends RecuScolaireGen<Cluster> {
 	 * r.enUS: schoolKey
 	 */  
 	protected void _ecoleRecherche(ListeRecherche<Ecole> l) {
-		l.setQuery("*:*");
-		l.addFilterQuery("pk_indexed_long:" + ecoleCle);
-		l.setC(Ecole.class);
-		l.setStocker(true);
+		if(ecoleCle != null) {
+			l.setQuery("*:*");
+			l.addFilterQuery("pk_indexed_long:" + ecoleCle);
+			l.setC(Ecole.class);
+			l.setStocker(true);
+		}
 	}
 
 	/**
