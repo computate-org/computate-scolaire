@@ -527,7 +527,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 		}
 		else {
 			l.setQuery("*:*");
-			l.addFilterQuery("inscriptionCles_indexed_longs:" + pk);
+			l.addFilterQuery("pk_indexed_long:" + enfantCle);
 			l.setC(EnfantScolaire.class);
 			l.setStocker(true);
 			l.addSort("pk_indexed_long", ORDER.asc);

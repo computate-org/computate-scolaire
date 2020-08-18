@@ -171,7 +171,7 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 		}
 		else {
 			l.setQuery("*:*");
-			l.addFilterQuery("enrollmentKeys_indexed_longs:" + pk);
+			l.addFilterQuery("pk_indexed_long:" + childKey);
 			l.setC(SchoolChild.class);
 			l.setStore(true);
 			l.addSort("pk_indexed_long", ORDER.asc);
