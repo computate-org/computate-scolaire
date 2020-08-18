@@ -1737,6 +1737,7 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 						break;
 					case "setSessionKey":
 						{
+							o2.setSessionKey(jsonObject.getString(methodName));
 							Long l = o2.getSessionKey();
 							if(l != null && !l.equals(o.getSessionKey())) {
 								SearchList<SchoolSession> searchList = new SearchList<SchoolSession>();
@@ -1749,7 +1750,6 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 								searchList.initDeepSearchList(siteRequest);
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null) {
-									o2.setSessionKey(jsonObject.getString(methodName));
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContextEnUS.SQL_addA
 												, Tuple.of(l2, "ageKeys", pk, "sessionKey")
@@ -1771,6 +1771,7 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 						break;
 					case "removeSessionKey":
 						{
+							o2.setSessionKey(jsonObject.getString(methodName));
 							Long l = o2.getSessionKey();
 							if(l != null) {
 								SearchList<SchoolSession> searchList = new SearchList<SchoolSession>();
@@ -1782,8 +1783,7 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								searchList.initDeepSearchList(siteRequest);
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l2 != null && l2.equals(o.getSessionKey())) {
-									o2.setSessionKey(jsonObject.getString(methodName));
+								if(l2 != null) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContextEnUS.SQL_removeA
 												, Tuple.of(l2, "ageKeys", pk, "sessionKey")
@@ -1805,6 +1805,7 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 						break;
 					case "setYearKey":
 						{
+							o2.setYearKey(jsonObject.getString(methodName));
 							Long l = o2.getYearKey();
 							if(l != null && !l.equals(o.getYearKey())) {
 								SearchList<SchoolYear> searchList = new SearchList<SchoolYear>();
@@ -1817,7 +1818,6 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 								searchList.initDeepSearchList(siteRequest);
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null) {
-									o2.setYearKey(jsonObject.getString(methodName));
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContextEnUS.SQL_addA
 												, Tuple.of(l2, "ageKeys", pk, "yearKey")
@@ -1839,6 +1839,7 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 						break;
 					case "removeYearKey":
 						{
+							o2.setYearKey(jsonObject.getString(methodName));
 							Long l = o2.getYearKey();
 							if(l != null) {
 								SearchList<SchoolYear> searchList = new SearchList<SchoolYear>();
@@ -1850,8 +1851,7 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								searchList.initDeepSearchList(siteRequest);
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l2 != null && l2.equals(o.getYearKey())) {
-									o2.setYearKey(jsonObject.getString(methodName));
+								if(l2 != null) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContextEnUS.SQL_removeA
 												, Tuple.of(l2, "ageKeys", pk, "yearKey")

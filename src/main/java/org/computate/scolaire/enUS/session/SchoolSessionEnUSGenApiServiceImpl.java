@@ -1686,6 +1686,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 						break;
 					case "setSeasonKey":
 						{
+							o2.setSeasonKey(jsonObject.getString(methodName));
 							Long l = o2.getSeasonKey();
 							if(l != null) {
 								SearchList<SchoolSeason> searchList = new SearchList<SchoolSeason>();
@@ -1698,7 +1699,6 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 								searchList.initDeepSearchList(siteRequest);
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !l2.equals(o.getSeasonKey())) {
-									o2.setSeasonKey(jsonObject.getString(methodName));
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContextEnUS.SQL_addA
 												, Tuple.of(pk, "seasonKey", l2, "sessionKeys")
@@ -1720,6 +1720,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 						break;
 					case "removeSeasonKey":
 						{
+							o2.setSeasonKey(jsonObject.getString(methodName));
 							Long l = o2.getSeasonKey();
 							if(l != null) {
 								SearchList<SchoolSeason> searchList = new SearchList<SchoolSeason>();
@@ -1731,8 +1732,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								searchList.initDeepSearchList(siteRequest);
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l2 != null && l2.equals(o.getSeasonKey())) {
-									o2.setSeasonKey(jsonObject.getString(methodName));
+								if(l2 != null) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContextEnUS.SQL_removeA
 												, Tuple.of(pk, "seasonKey", l2, "sessionKeys")

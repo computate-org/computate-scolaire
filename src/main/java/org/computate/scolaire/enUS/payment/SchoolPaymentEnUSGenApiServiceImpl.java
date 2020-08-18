@@ -2007,6 +2007,7 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						break;
 					case "setEnrollmentKey":
 						{
+							o2.setEnrollmentKey(jsonObject.getString(methodName));
 							Long l = o2.getEnrollmentKey();
 							if(l != null) {
 								SearchList<SchoolEnrollment> searchList = new SearchList<SchoolEnrollment>();
@@ -2019,7 +2020,6 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 								searchList.initDeepSearchList(siteRequest);
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !l2.equals(o.getEnrollmentKey())) {
-									o2.setEnrollmentKey(jsonObject.getString(methodName));
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContextEnUS.SQL_addA
 												, Tuple.of(pk, "enrollmentKey", l2, "paymentKeys")
@@ -2041,6 +2041,7 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						break;
 					case "removeEnrollmentKey":
 						{
+							o2.setEnrollmentKey(jsonObject.getString(methodName));
 							Long l = o2.getEnrollmentKey();
 							if(l != null) {
 								SearchList<SchoolEnrollment> searchList = new SearchList<SchoolEnrollment>();
@@ -2052,8 +2053,7 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								searchList.initDeepSearchList(siteRequest);
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l2 != null && l2.equals(o.getEnrollmentKey())) {
-									o2.setEnrollmentKey(jsonObject.getString(methodName));
+								if(l2 != null) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContextEnUS.SQL_removeA
 												, Tuple.of(pk, "enrollmentKey", l2, "paymentKeys")

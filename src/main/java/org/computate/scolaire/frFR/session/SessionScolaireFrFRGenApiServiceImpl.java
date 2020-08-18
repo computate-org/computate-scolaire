@@ -1686,6 +1686,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 						break;
 					case "setSaisonCle":
 						{
+							o2.setSaisonCle(jsonObject.getString(methodeNom));
 							Long l = o2.getSaisonCle();
 							if(l != null) {
 								ListeRecherche<SaisonScolaire> listeRecherche = new ListeRecherche<SaisonScolaire>();
@@ -1698,7 +1699,6 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !l2.equals(o.getSaisonCle())) {
-									o2.setSaisonCle(jsonObject.getString(methodeNom));
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContexteFrFR.SQL_addA
 												, Tuple.of(pk, "saisonCle", l2, "sessionCles")
@@ -1720,6 +1720,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 						break;
 					case "removeSaisonCle":
 						{
+							o2.setSaisonCle(jsonObject.getString(methodeNom));
 							Long l = o2.getSaisonCle();
 							if(l != null) {
 								ListeRecherche<SaisonScolaire> listeRecherche = new ListeRecherche<SaisonScolaire>();
@@ -1731,8 +1732,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l2 != null && l2.equals(o.getSaisonCle())) {
-									o2.setSaisonCle(jsonObject.getString(methodeNom));
+								if(l2 != null) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
 												, Tuple.of(pk, "saisonCle", l2, "sessionCles")

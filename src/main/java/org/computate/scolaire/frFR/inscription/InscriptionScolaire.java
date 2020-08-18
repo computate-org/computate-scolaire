@@ -369,7 +369,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Description.enUS: The primary key of the school moms in the database. 
 	 * NomAffichage.frFR: mères
 	 * NomAffichage.enUS: moms
-	 */            
+	 */        
 	protected void _mereCles(List<Long> o) {}
 
 	/**

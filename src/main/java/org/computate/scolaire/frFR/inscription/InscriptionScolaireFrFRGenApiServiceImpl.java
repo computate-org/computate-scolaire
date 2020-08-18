@@ -2837,6 +2837,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						break;
 					case "setAnneeCle":
 						{
+							o2.setAnneeCle(jsonObject.getString(methodeNom));
 							Long l = o2.getAnneeCle();
 							if(l != null) {
 								ListeRecherche<AnneeScolaire> listeRecherche = new ListeRecherche<AnneeScolaire>();
@@ -2849,7 +2850,6 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !l2.equals(o.getAnneeCle())) {
-									o2.setAnneeCle(jsonObject.getString(methodeNom));
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContexteFrFR.SQL_addA
 												, Tuple.of(pk, "anneeCle", l2, "inscriptionCles")
@@ -2871,6 +2871,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						break;
 					case "removeAnneeCle":
 						{
+							o2.setAnneeCle(jsonObject.getString(methodeNom));
 							Long l = o2.getAnneeCle();
 							if(l != null) {
 								ListeRecherche<AnneeScolaire> listeRecherche = new ListeRecherche<AnneeScolaire>();
@@ -2882,8 +2883,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l2 != null && l2.equals(o.getAnneeCle())) {
-									o2.setAnneeCle(jsonObject.getString(methodeNom));
+								if(l2 != null) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
 												, Tuple.of(pk, "anneeCle", l2, "inscriptionCles")
@@ -3063,6 +3063,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						break;
 					case "setEnfantCle":
 						{
+							o2.setEnfantCle(jsonObject.getString(methodeNom));
 							Long l = o2.getEnfantCle();
 							if(l != null) {
 								ListeRecherche<EnfantScolaire> listeRecherche = new ListeRecherche<EnfantScolaire>();
@@ -3075,7 +3076,6 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !l2.equals(o.getEnfantCle())) {
-									o2.setEnfantCle(jsonObject.getString(methodeNom));
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContexteFrFR.SQL_addA
 												, Tuple.of(pk, "enfantCle", l2, "inscriptionCles")
@@ -3097,6 +3097,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						break;
 					case "removeEnfantCle":
 						{
+							o2.setEnfantCle(jsonObject.getString(methodeNom));
 							Long l = o2.getEnfantCle();
 							if(l != null) {
 								ListeRecherche<EnfantScolaire> listeRecherche = new ListeRecherche<EnfantScolaire>();
@@ -3108,8 +3109,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l2 != null && l2.equals(o.getEnfantCle())) {
-									o2.setEnfantCle(jsonObject.getString(methodeNom));
+								if(l2 != null) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
 												, Tuple.of(pk, "enfantCle", l2, "inscriptionCles")
@@ -5794,6 +5794,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						break;
 					case "setAnneeCle":
 						{
+							o2.setAnneeCle(jsonObject.getString(methodeNom));
 							Long l = o2.getAnneeCle();
 							if(l != null) {
 								ListeRecherche<AnneeScolaire> listeRecherche = new ListeRecherche<AnneeScolaire>();
@@ -5806,7 +5807,6 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !l2.equals(o.getAnneeCle())) {
-									o2.setAnneeCle(jsonObject.getString(methodeNom));
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContexteFrFR.SQL_addA
 												, Tuple.of(pk, "anneeCle", l2, "inscriptionCles")
@@ -5828,6 +5828,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						break;
 					case "removeAnneeCle":
 						{
+							o2.setAnneeCle(jsonObject.getString(methodeNom));
 							Long l = o2.getAnneeCle();
 							if(l != null) {
 								ListeRecherche<AnneeScolaire> listeRecherche = new ListeRecherche<AnneeScolaire>();
@@ -5839,8 +5840,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l2 != null && l2.equals(o.getAnneeCle())) {
-									o2.setAnneeCle(jsonObject.getString(methodeNom));
+								if(l2 != null) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
 												, Tuple.of(pk, "anneeCle", l2, "inscriptionCles")
@@ -6020,6 +6020,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						break;
 					case "setEnfantCle":
 						{
+							o2.setEnfantCle(jsonObject.getString(methodeNom));
 							Long l = o2.getEnfantCle();
 							if(l != null) {
 								ListeRecherche<EnfantScolaire> listeRecherche = new ListeRecherche<EnfantScolaire>();
@@ -6032,7 +6033,6 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !l2.equals(o.getEnfantCle())) {
-									o2.setEnfantCle(jsonObject.getString(methodeNom));
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContexteFrFR.SQL_addA
 												, Tuple.of(pk, "enfantCle", l2, "inscriptionCles")
@@ -6054,6 +6054,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						break;
 					case "removeEnfantCle":
 						{
+							o2.setEnfantCle(jsonObject.getString(methodeNom));
 							Long l = o2.getEnfantCle();
 							if(l != null) {
 								ListeRecherche<EnfantScolaire> listeRecherche = new ListeRecherche<EnfantScolaire>();
@@ -6065,8 +6066,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l2 != null && l2.equals(o.getEnfantCle())) {
-									o2.setEnfantCle(jsonObject.getString(methodeNom));
+								if(l2 != null) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
 												, Tuple.of(pk, "enfantCle", l2, "inscriptionCles")

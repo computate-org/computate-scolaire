@@ -1737,6 +1737,7 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 						break;
 					case "setSessionCle":
 						{
+							o2.setSessionCle(jsonObject.getString(methodeNom));
 							Long l = o2.getSessionCle();
 							if(l != null && !l.equals(o.getSessionCle())) {
 								ListeRecherche<SessionScolaire> listeRecherche = new ListeRecherche<SessionScolaire>();
@@ -1749,7 +1750,6 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null) {
-									o2.setSessionCle(jsonObject.getString(methodeNom));
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContexteFrFR.SQL_addA
 												, Tuple.of(l2, "ageCles", pk, "sessionCle")
@@ -1771,6 +1771,7 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 						break;
 					case "removeSessionCle":
 						{
+							o2.setSessionCle(jsonObject.getString(methodeNom));
 							Long l = o2.getSessionCle();
 							if(l != null) {
 								ListeRecherche<SessionScolaire> listeRecherche = new ListeRecherche<SessionScolaire>();
@@ -1782,8 +1783,7 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l2 != null && l2.equals(o.getSessionCle())) {
-									o2.setSessionCle(jsonObject.getString(methodeNom));
+								if(l2 != null) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
 												, Tuple.of(l2, "ageCles", pk, "sessionCle")
@@ -1805,6 +1805,7 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 						break;
 					case "setAnneeCle":
 						{
+							o2.setAnneeCle(jsonObject.getString(methodeNom));
 							Long l = o2.getAnneeCle();
 							if(l != null && !l.equals(o.getAnneeCle())) {
 								ListeRecherche<AnneeScolaire> listeRecherche = new ListeRecherche<AnneeScolaire>();
@@ -1817,7 +1818,6 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null) {
-									o2.setAnneeCle(jsonObject.getString(methodeNom));
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContexteFrFR.SQL_addA
 												, Tuple.of(l2, "ageCles", pk, "anneeCle")
@@ -1839,6 +1839,7 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 						break;
 					case "removeAnneeCle":
 						{
+							o2.setAnneeCle(jsonObject.getString(methodeNom));
 							Long l = o2.getAnneeCle();
 							if(l != null) {
 								ListeRecherche<AnneeScolaire> listeRecherche = new ListeRecherche<AnneeScolaire>();
@@ -1850,8 +1851,7 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l2 != null && l2.equals(o.getAnneeCle())) {
-									o2.setAnneeCle(jsonObject.getString(methodeNom));
+								if(l2 != null) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
 												, Tuple.of(l2, "ageCles", pk, "anneeCle")

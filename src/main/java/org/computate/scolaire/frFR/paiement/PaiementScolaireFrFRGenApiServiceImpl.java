@@ -2007,6 +2007,7 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 						break;
 					case "setInscriptionCle":
 						{
+							o2.setInscriptionCle(jsonObject.getString(methodeNom));
 							Long l = o2.getInscriptionCle();
 							if(l != null) {
 								ListeRecherche<InscriptionScolaire> listeRecherche = new ListeRecherche<InscriptionScolaire>();
@@ -2019,7 +2020,6 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !l2.equals(o.getInscriptionCle())) {
-									o2.setInscriptionCle(jsonObject.getString(methodeNom));
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContexteFrFR.SQL_addA
 												, Tuple.of(pk, "inscriptionCle", l2, "paiementCles")
@@ -2041,6 +2041,7 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 						break;
 					case "removeInscriptionCle":
 						{
+							o2.setInscriptionCle(jsonObject.getString(methodeNom));
 							Long l = o2.getInscriptionCle();
 							if(l != null) {
 								ListeRecherche<InscriptionScolaire> listeRecherche = new ListeRecherche<InscriptionScolaire>();
@@ -2052,8 +2053,7 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l2 != null && l2.equals(o.getInscriptionCle())) {
-									o2.setInscriptionCle(jsonObject.getString(methodeNom));
+								if(l2 != null) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
 												, Tuple.of(pk, "inscriptionCle", l2, "paiementCles")

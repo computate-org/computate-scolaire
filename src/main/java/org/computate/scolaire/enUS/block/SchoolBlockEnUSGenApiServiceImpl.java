@@ -1842,6 +1842,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 						break;
 					case "setAgeKey":
 						{
+							o2.setAgeKey(jsonObject.getString(methodName));
 							Long l = o2.getAgeKey();
 							if(l != null) {
 								SearchList<SchoolAge> searchList = new SearchList<SchoolAge>();
@@ -1854,7 +1855,6 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 								searchList.initDeepSearchList(siteRequest);
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !l2.equals(o.getAgeKey())) {
-									o2.setAgeKey(jsonObject.getString(methodName));
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContextEnUS.SQL_addA
 												, Tuple.of(pk, "ageKey", l2, "blockKeys")
@@ -1876,6 +1876,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 						break;
 					case "removeAgeKey":
 						{
+							o2.setAgeKey(jsonObject.getString(methodName));
 							Long l = o2.getAgeKey();
 							if(l != null) {
 								SearchList<SchoolAge> searchList = new SearchList<SchoolAge>();
@@ -1887,8 +1888,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 								searchList.initDeepSearchList(siteRequest);
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l2 != null && l2.equals(o.getAgeKey())) {
-									o2.setAgeKey(jsonObject.getString(methodName));
+								if(l2 != null) {
 									futures.add(Future.future(a -> {
 										tx.preparedQuery(SiteContextEnUS.SQL_removeA
 												, Tuple.of(pk, "ageKey", l2, "blockKeys")
