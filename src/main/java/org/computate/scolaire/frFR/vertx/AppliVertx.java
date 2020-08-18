@@ -175,7 +175,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r: utilisateur
 	 * r.enUS: user
 	 */
-	public static final String SQL_uniqueIndexC = "create unique index if not exists c_index_utilisateur on c(pk, nom_canonique, id_utilisateur); ";
+	public static final String SQL_uniqueIndexC = "create index if not exists c_index_utilisateur on c(nom_canonique, id_utilisateur); ";
 
 	/**
 	 * enUS: A SQL query for creating a database table "a" to store relations (like entity relations) between one other record in the "c" table with another record in the "c" table. 
@@ -197,7 +197,18 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r: cree
 	 * r.enUS: created
 	 */
-	public static final String SQL_uniqueIndexA = "create index if not exists a_index on a(pk1, pk2, current); ";
+	public static final String SQL_uniqueIndexA1 = "create index if not exists a_index_1 on a(pk1); ";
+
+	/**
+	 * enUS: A SQL query for creating an index on the "a" table based on fields for faster lookup. 
+	 * r: entite
+	 * r.enUS: entity
+	 * r: actuel
+	 * r.enUS: current
+	 * r: cree
+	 * r.enUS: created
+	 */
+	public static final String SQL_uniqueIndexA2 = "create index if not exists a_index_2 on a(pk2); ";
 
 	/**
 	 * enUS: A SQL query for creating a database table "d" to store String values to define fields in an instance of a class based on a record in the "c" table. 
@@ -223,7 +234,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r: chemin
 	 * r.enUS: path
 	 */
-	public static final String SQL_uniqueIndexD = "create index if not exists d_index on d(pk_c, current); ";
+	public static final String SQL_uniqueIndexD = "create index if not exists d_index on d(pk_c); ";
 
 	/**
 	 * enUS: A io.vertx.ext.jdbc.JDBCClient for connecting to the relational database PostgreSQL. 
@@ -414,14 +425,21 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 					if (b.succeeded()) {
 						pgPool.preparedQuery(SQL_createTableA, c -> {
 							if (c.succeeded()) {
-								pgPool.preparedQuery(SQL_uniqueIndexA, d -> {
+								pgPool.preparedQuery(SQL_uniqueIndexA1, d -> {
 									if (d.succeeded()) {
-										pgPool.preparedQuery(SQL_createTableD, e -> {
-											if (e.succeeded()) {
-												pgPool.preparedQuery(SQL_uniqueIndexD, f -> {
+										pgPool.preparedQuery(SQL_uniqueIndexA2, e -> {
+											if (d.succeeded()) {
+												pgPool.preparedQuery(SQL_createTableD, f -> {
 													if (f.succeeded()) {
-														LOGGER.info(configurerDonneesSuccesInit);
-														promise.complete();
+														pgPool.preparedQuery(SQL_uniqueIndexD, g -> {
+															if (g.succeeded()) {
+																LOGGER.info(configurerDonneesSuccesInit);
+																promise.complete();
+															} else {
+																LOGGER.error(configurerDonneesErreurInit, g.cause());
+																promise.fail(g.cause());
+															}
+														});
 													} else {
 														LOGGER.error(configurerDonneesErreurInit, f.cause());
 														promise.fail(f.cause());

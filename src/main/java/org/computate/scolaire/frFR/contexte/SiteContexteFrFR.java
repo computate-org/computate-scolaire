@@ -65,7 +65,7 @@ public class SiteContexteFrFR extends SiteContexteFrFRGen<Object> {
 	 * r: cree
 	 * r.enUS: created
 	 */
-	public static final String SQL_setD = "insert into d(pk_c, chemin, valeur, actuel, cree) values($1, $2, $3, true, now()) on conflict on constraint d_constraint do update set actuel=true, valeur=$3 returning pk, chemin, pk_c;\n";
+	public static final String SQL_setD = "insert into d(pk_c, chemin, valeur, cree) values($1, $2, $3, now()) on conflict on constraint d_constraint do update set valeur=$3 returning pk, chemin, pk_c;\n";
 
 	/**
 	 * r: chemin
@@ -77,7 +77,7 @@ public class SiteContexteFrFR extends SiteContexteFrFRGen<Object> {
 	 * r: cree
 	 * r.enUS: created
 	 */
-	public static final String SQL_removeD = "insert into d(pk_c, chemin, valeur, actuel, cree) values($1, $2, null, true, now()) on conflict on constraint d_constraint do update set actuel=false, valeur=null returning pk, chemin, pk_c;\n";
+	public static final String SQL_removeD = "delete from d where pk_c=$1 and chemin=$2;\n";
 
 	/**
 	 * Var.enUS: SQL_define
@@ -90,7 +90,7 @@ public class SiteContexteFrFR extends SiteContexteFrFRGen<Object> {
 	 * r: cree
 	 * r.enUS: created
 	 */
-	public static final String SQL_definir = "select chemin, valeur from d where d.pk_c=$1 and d.actuel union select 'cree', to_char(cree, 'YYYY-MM-DD\"T\"HH24:MI:SS.USOF\":00\"') from c where pk=$1;\n";
+	public static final String SQL_definir = "select chemin, valeur from d where d.pk_c=$1 union select 'cree', to_char(cree, 'YYYY-MM-DD\"T\"HH24:MI:SS.USOF\":00\"') from c where pk=$1;\n";
 	/**
 	 * Var.enUS: SQL_attribute
 	 * r: entite
@@ -100,7 +100,7 @@ public class SiteContexteFrFR extends SiteContexteFrFRGen<Object> {
 	 * r: cree
 	 * r.enUS: created
 	 */
-	public static final String SQL_attribuer = "select pk1, pk2, entite1, entite2 from a where (a.pk1=$1 or a.pk2=$2) and a.actuel=true;\n";
+	public static final String SQL_attribuer = "select pk1, pk2, entite1, entite2 from a where (a.pk1=$1 or a.pk2=$2) order by cree;\n";
 
 	/**
 	 * r: entite
@@ -110,7 +110,7 @@ public class SiteContexteFrFR extends SiteContexteFrFRGen<Object> {
 	 * r: cree
 	 * r.enUS: created
 	 */
-	public static final String SQL_addA = "insert into a(pk1, entite1, pk2, entite2, actuel, cree) values($1, $2, $3, $4, true, now()) on conflict on constraint a_constraint do update set actuel=true;\n";
+	public static final String SQL_addA = "insert into a(pk1, entite1, pk2, entite2, cree) values($1, $2, $3, $4, now()) on conflict on constraint a_constraint do nothing;\n";
 
 	/**
 	 * r: entite
@@ -120,7 +120,7 @@ public class SiteContexteFrFR extends SiteContexteFrFRGen<Object> {
 	 * r: cree
 	 * r.enUS: created
 	 */
-	public static final String SQL_removeA = "insert into a(pk1, entite1, pk2, entite2, actuel, cree) values($1, $2, $3, $4, false, now()) on conflict on constraint a_constraint do update set actuel=false;\n";
+	public static final String SQL_removeA = "delete from a where pk1=$1 and entite1=$2 and pk2=$3 and entite2=$4;\n";
 
 	protected void _vertx(Couverture<Vertx> c) {
 	}

@@ -1318,7 +1318,8 @@ public abstract class SchoolReceiptGen<DEV> extends Cluster {
 		SchoolReceipt oSchoolReceipt = (SchoolReceipt)this;
 		switch(var) {
 			case "schoolKey":
-				oSchoolReceipt.setSchoolKey((Long)val);
+				if(oSchoolReceipt.getSchoolKey() == null)
+					oSchoolReceipt.setSchoolKey((Long)val);
 				if(!saves.contains(var))
 					saves.add(var);
 				return val;

@@ -2710,7 +2710,8 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 		AnneeScolaire oAnneeScolaire = (AnneeScolaire)this;
 		switch(var) {
 			case "ecoleCle":
-				oAnneeScolaire.setEcoleCle((Long)val);
+				if(oAnneeScolaire.getEcoleCle() == null)
+					oAnneeScolaire.setEcoleCle((Long)val);
 				if(!sauvegardes.contains(var))
 					sauvegardes.add(var);
 				return val;

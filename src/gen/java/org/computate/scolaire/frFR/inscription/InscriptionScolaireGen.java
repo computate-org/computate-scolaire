@@ -14985,7 +14985,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		InscriptionScolaire oInscriptionScolaire = (InscriptionScolaire)this;
 		switch(var) {
 			case "anneeCle":
-				oInscriptionScolaire.setAnneeCle((Long)val);
+				if(oInscriptionScolaire.getAnneeCle() == null)
+					oInscriptionScolaire.setAnneeCle((Long)val);
 				if(!sauvegardes.contains(var))
 					sauvegardes.add(var);
 				return val;
@@ -14995,7 +14996,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 					sauvegardes.add(var);
 				return val;
 			case "enfantCle":
-				oInscriptionScolaire.setEnfantCle((Long)val);
+				if(oInscriptionScolaire.getEnfantCle() == null)
+					oInscriptionScolaire.setEnfantCle((Long)val);
 				if(!sauvegardes.contains(var))
 					sauvegardes.add(var);
 				return val;

@@ -4553,7 +4553,8 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 					sauvegardes.add(var);
 				return val;
 			case "ageCle":
-				oBlocScolaire.setAgeCle((Long)val);
+				if(oBlocScolaire.getAgeCle() == null)
+					oBlocScolaire.setAgeCle((Long)val);
 				if(!sauvegardes.contains(var))
 					sauvegardes.add(var);
 				return val;

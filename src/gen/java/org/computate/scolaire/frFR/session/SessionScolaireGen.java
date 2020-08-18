@@ -2853,7 +2853,8 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 					sauvegardes.add(var);
 				return val;
 			case "saisonCle":
-				oSessionScolaire.setSaisonCle((Long)val);
+				if(oSessionScolaire.getSaisonCle() == null)
+					oSessionScolaire.setSaisonCle((Long)val);
 				if(!sauvegardes.contains(var))
 					sauvegardes.add(var);
 				return val;

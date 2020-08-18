@@ -2547,7 +2547,8 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 		SaisonScolaire oSaisonScolaire = (SaisonScolaire)this;
 		switch(var) {
 			case "anneeCle":
-				oSaisonScolaire.setAnneeCle((Long)val);
+				if(oSaisonScolaire.getAnneeCle() == null)
+					oSaisonScolaire.setAnneeCle((Long)val);
 				if(!sauvegardes.contains(var))
 					sauvegardes.add(var);
 				return val;

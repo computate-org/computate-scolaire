@@ -20,6 +20,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.vertx.ext.web.api.contract.openapi3.OpenAPI3RouterFactory;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import io.vertx.core.logging.Logger;
+import java.math.RoundingMode;
 import java.math.MathContext;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import io.vertx.core.Vertx;
@@ -41,7 +42,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 
 /**	
- * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.contexte.SiteContexteFrFR&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
+ * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.contexte.SiteContexteFrFR&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr. </a>
  * <br/>
  **/
 public abstract class SiteContexteFrFRGen<DEV> extends Object {
@@ -51,7 +52,7 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 	// vertx //
 	///////////
 
-	/**	L'entité « vertx »
+	/**	 L'entité vertx
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -59,7 +60,7 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 	@JsonIgnore
 	public Couverture<Vertx> vertxCouverture = new Couverture<Vertx>().p(this).c(Vertx.class).var("vertx").o(vertx);
 
-	/**	<br/>L'entité « vertx »
+	/**	<br/> L'entité vertx
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.contexte.SiteContexteFrFR&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:vertx">Trouver l'entité vertx dans Solr</a>
 	 * <br/>
@@ -89,7 +90,7 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 	// usineRouteur //
 	//////////////////
 
-	/**	L'entité « usineRouteur »
+	/**	 L'entité usineRouteur
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -97,7 +98,7 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 	@JsonIgnore
 	public Couverture<OpenAPI3RouterFactory> usineRouteurCouverture = new Couverture<OpenAPI3RouterFactory>().p(this).c(OpenAPI3RouterFactory.class).var("usineRouteur").o(usineRouteur);
 
-	/**	<br/>L'entité « usineRouteur »
+	/**	<br/> L'entité usineRouteur
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.contexte.SiteContexteFrFR&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:usineRouteur">Trouver l'entité usineRouteur dans Solr</a>
 	 * <br/>
@@ -127,7 +128,7 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 	// routeur //
 	/////////////
 
-	/**	L'entité « routeur »
+	/**	 L'entité routeur
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -135,7 +136,7 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 	@JsonIgnore
 	public Couverture<Router> routeurCouverture = new Couverture<Router>().p(this).c(Router.class).var("routeur").o(routeur);
 
-	/**	<br/>L'entité « routeur »
+	/**	<br/> L'entité routeur
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.contexte.SiteContexteFrFR&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:routeur">Trouver l'entité routeur dans Solr</a>
 	 * <br/>
@@ -165,7 +166,7 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 	// gestionnaireAuth //
 	//////////////////////
 
-	/**	L'entité « gestionnaireAuth »
+	/**	 L'entité gestionnaireAuth
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -173,7 +174,7 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 	@JsonIgnore
 	public Couverture<OAuth2AuthHandler> gestionnaireAuthCouverture = new Couverture<OAuth2AuthHandler>().p(this).c(OAuth2AuthHandler.class).var("gestionnaireAuth").o(gestionnaireAuth);
 
-	/**	<br/>L'entité « gestionnaireAuth »
+	/**	<br/> L'entité gestionnaireAuth
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.contexte.SiteContexteFrFR&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:gestionnaireAuth">Trouver l'entité gestionnaireAuth dans Solr</a>
 	 * <br/>
@@ -203,7 +204,7 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 	// authFournisseur //
 	/////////////////////
 
-	/**	L'entité « authFournisseur »
+	/**	 L'entité authFournisseur
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -211,7 +212,7 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 	@JsonIgnore
 	public Couverture<OAuth2Auth> authFournisseurCouverture = new Couverture<OAuth2Auth>().p(this).c(OAuth2Auth.class).var("authFournisseur").o(authFournisseur);
 
-	/**	<br/>L'entité « authFournisseur »
+	/**	<br/> L'entité authFournisseur
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.contexte.SiteContexteFrFR&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:authFournisseur">Trouver l'entité authFournisseur dans Solr</a>
 	 * <br/>
@@ -241,7 +242,7 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 	// executeurTravailleur //
 	//////////////////////////
 
-	/**	L'entité « executeurTravailleur »
+	/**	 L'entité executeurTravailleur
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -249,7 +250,7 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 	@JsonIgnore
 	public Couverture<WorkerExecutor> executeurTravailleurCouverture = new Couverture<WorkerExecutor>().p(this).c(WorkerExecutor.class).var("executeurTravailleur").o(executeurTravailleur);
 
-	/**	<br/>L'entité « executeurTravailleur »
+	/**	<br/> L'entité executeurTravailleur
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.contexte.SiteContexteFrFR&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:executeurTravailleur">Trouver l'entité executeurTravailleur dans Solr</a>
 	 * <br/>
@@ -279,7 +280,7 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 	// configSite //
 	////////////////
 
-	/**	L'entité « configSite »
+	/**	 L'entité configSite
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut ConfigSite(). 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -287,7 +288,7 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 	@JsonIgnore
 	public Couverture<ConfigSite> configSiteCouverture = new Couverture<ConfigSite>().p(this).c(ConfigSite.class).var("configSite").o(configSite);
 
-	/**	<br/>L'entité « configSite »
+	/**	<br/> L'entité configSite
 	 * Il est construit avant d'être initialisé avec le constructeur par défaut ConfigSite(). 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.contexte.SiteContexteFrFR&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:configSite">Trouver l'entité configSite dans Solr</a>
 	 * <br/>
@@ -316,7 +317,7 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 	// pgPool //
 	////////////
 
-	/**	L'entité « pgPool »
+	/**	 L'entité pgPool
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -324,7 +325,7 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 	@JsonIgnore
 	public Couverture<PgPool> pgPoolCouverture = new Couverture<PgPool>().p(this).c(PgPool.class).var("pgPool").o(pgPool);
 
-	/**	<br/>L'entité « pgPool »
+	/**	<br/> L'entité pgPool
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.contexte.SiteContexteFrFR&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pgPool">Trouver l'entité pgPool dans Solr</a>
 	 * <br/>
@@ -354,7 +355,7 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 	// clientSolr //
 	////////////////
 
-	/**	L'entité « clientSolr »
+	/**	 L'entité clientSolr
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -362,7 +363,7 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 	@JsonIgnore
 	public Couverture<HttpSolrClient> clientSolrCouverture = new Couverture<HttpSolrClient>().p(this).c(HttpSolrClient.class).var("clientSolr").o(clientSolr);
 
-	/**	<br/>L'entité « clientSolr »
+	/**	<br/> L'entité clientSolr
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.contexte.SiteContexteFrFR&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:clientSolr">Trouver l'entité clientSolr dans Solr</a>
 	 * <br/>
@@ -392,7 +393,7 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 	// mailClient //
 	////////////////
 
-	/**	L'entité « mailClient »
+	/**	 L'entité mailClient
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -400,7 +401,7 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 	@JsonIgnore
 	public Couverture<MailClient> mailClientCouverture = new Couverture<MailClient>().p(this).c(MailClient.class).var("mailClient").o(mailClient);
 
-	/**	<br/>L'entité « mailClient »
+	/**	<br/> L'entité mailClient
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.contexte.SiteContexteFrFR&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:mailClient">Trouver l'entité mailClient dans Solr</a>
 	 * <br/>
@@ -430,7 +431,7 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 	// clientSolrComputate //
 	/////////////////////////
 
-	/**	L'entité « clientSolrComputate »
+	/**	 L'entité clientSolrComputate
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -438,7 +439,7 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 	@JsonIgnore
 	public Couverture<HttpSolrClient> clientSolrComputateCouverture = new Couverture<HttpSolrClient>().p(this).c(HttpSolrClient.class).var("clientSolrComputate").o(clientSolrComputate);
 
-	/**	<br/>L'entité « clientSolrComputate »
+	/**	<br/> L'entité clientSolrComputate
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.contexte.SiteContexteFrFR&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:clientSolrComputate">Trouver l'entité clientSolrComputate dans Solr</a>
 	 * <br/>

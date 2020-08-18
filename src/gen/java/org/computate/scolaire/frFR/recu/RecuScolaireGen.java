@@ -1324,7 +1324,8 @@ public abstract class RecuScolaireGen<DEV> extends Cluster {
 		RecuScolaire oRecuScolaire = (RecuScolaire)this;
 		switch(var) {
 			case "ecoleCle":
-				oRecuScolaire.setEcoleCle((Long)val);
+				if(oRecuScolaire.getEcoleCle() == null)
+					oRecuScolaire.setEcoleCle((Long)val);
 				if(!sauvegardes.contains(var))
 					sauvegardes.add(var);
 				return val;

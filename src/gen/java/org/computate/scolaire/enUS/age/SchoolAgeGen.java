@@ -2869,12 +2869,14 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 					saves.add(var);
 				return val;
 			case "sessionKey":
-				oSchoolAge.setSessionKey((Long)val);
+				if(oSchoolAge.getSessionKey() == null)
+					oSchoolAge.setSessionKey((Long)val);
 				if(!saves.contains(var))
 					saves.add(var);
 				return val;
 			case "yearKey":
-				oSchoolAge.setYearKey((Long)val);
+				if(oSchoolAge.getYearKey() == null)
+					oSchoolAge.setYearKey((Long)val);
 				if(!saves.contains(var))
 					saves.add(var);
 				return val;

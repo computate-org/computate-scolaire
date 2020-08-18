@@ -2701,7 +2701,8 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 		SchoolYear oSchoolYear = (SchoolYear)this;
 		switch(var) {
 			case "schoolKey":
-				oSchoolYear.setSchoolKey((Long)val);
+				if(oSchoolYear.getSchoolKey() == null)
+					oSchoolYear.setSchoolKey((Long)val);
 				if(!saves.contains(var))
 					saves.add(var);
 				return val;

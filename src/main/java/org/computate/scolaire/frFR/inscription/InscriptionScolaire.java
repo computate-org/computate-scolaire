@@ -354,7 +354,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Description.enUS: The primary key of the school children in the database. 
 	 * NomAffichage.frFR: enfants
 	 * NomAffichage.enUS: children
-	 */               
+	 */           
 	protected void _enfantCle(Couverture<Long> c) {}
 
 	/**

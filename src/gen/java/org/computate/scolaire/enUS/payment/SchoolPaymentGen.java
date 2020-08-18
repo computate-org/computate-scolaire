@@ -6664,7 +6664,8 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		SchoolPayment oSchoolPayment = (SchoolPayment)this;
 		switch(var) {
 			case "enrollmentKey":
-				oSchoolPayment.setEnrollmentKey((Long)val);
+				if(oSchoolPayment.getEnrollmentKey() == null)
+					oSchoolPayment.setEnrollmentKey((Long)val);
 				if(!saves.contains(var))
 					saves.add(var);
 				return val;

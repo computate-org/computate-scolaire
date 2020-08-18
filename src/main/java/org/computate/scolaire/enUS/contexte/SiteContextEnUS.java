@@ -28,17 +28,17 @@ public class SiteContextEnUS extends SiteContextEnUSGen<Object> {
 
 	public static final String SQL_create = "insert into c(canonical_name, user_id, created) values($1, $2, $3) returning pk;\n";
 
-	public static final String SQL_setD = "insert into d(pk_c, path, value, current, created) values($1, $2, $3, true, now()) on conflict on constraint d_constraint do update set current=true, value=$3 returning pk, path, pk_c;\n";
+	public static final String SQL_setD = "insert into d(pk_c, path, value, created) values($1, $2, $3, now()) on conflict on constraint d_constraint do update set value=$3 returning pk, path, pk_c;\n";
 
-	public static final String SQL_removeD = "insert into d(pk_c, path, value, current, created) values($1, $2, null, true, now()) on conflict on constraint d_constraint do update set current=false, value=null returning pk, path, pk_c;\n";
+	public static final String SQL_removeD = "delete from d where pk_c=$1 and path=$2;\n";
 
-	public static final String SQL_define = "select path, value from d where d.pk_c=$1 and d.current union select 'created', to_char(created, 'YYYY-MM-DD\"T\"HH24:MI:SS.USOF\":00\"') from c where pk=$1;\n";
+	public static final String SQL_define = "select path, value from d where d.pk_c=$1 union select 'created', to_char(created, 'YYYY-MM-DD\"T\"HH24:MI:SS.USOF\":00\"') from c where pk=$1;\n";
 
-	public static final String SQL_attribute = "select pk1, pk2, entity1, entity2 from a where (a.pk1=$1 or a.pk2=$2) and a.current=true;\n";
+	public static final String SQL_attribute = "select pk1, pk2, entity1, entity2 from a where (a.pk1=$1 or a.pk2=$2) order by created;\n";
 
-	public static final String SQL_addA = "insert into a(pk1, entity1, pk2, entity2, current, created) values($1, $2, $3, $4, true, now()) on conflict on constraint a_constraint do update set current=true;\n";
+	public static final String SQL_addA = "insert into a(pk1, entity1, pk2, entity2, created) values($1, $2, $3, $4, now()) on conflict on constraint a_constraint do nothing;\n";
 
-	public static final String SQL_removeA = "insert into a(pk1, entity1, pk2, entity2, current, created) values($1, $2, $3, $4, false, now()) on conflict on constraint a_constraint do update set current=false;\n";
+	public static final String SQL_removeA = "delete from a where pk1=$1 and entity1=$2 and pk2=$3 and entity2=$4;\n";
 
 	protected void _vertx(Wrap<Vertx> c) {
 	}

@@ -2543,7 +2543,8 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 		SchoolSeason oSchoolSeason = (SchoolSeason)this;
 		switch(var) {
 			case "yearKey":
-				oSchoolSeason.setYearKey((Long)val);
+				if(oSchoolSeason.getYearKey() == null)
+					oSchoolSeason.setYearKey((Long)val);
 				if(!saves.contains(var))
 					saves.add(var);
 				return val;

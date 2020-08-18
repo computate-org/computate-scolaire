@@ -2875,12 +2875,14 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 					sauvegardes.add(var);
 				return val;
 			case "sessionCle":
-				oAgeScolaire.setSessionCle((Long)val);
+				if(oAgeScolaire.getSessionCle() == null)
+					oAgeScolaire.setSessionCle((Long)val);
 				if(!sauvegardes.contains(var))
 					sauvegardes.add(var);
 				return val;
 			case "anneeCle":
-				oAgeScolaire.setAnneeCle((Long)val);
+				if(oAgeScolaire.getAnneeCle() == null)
+					oAgeScolaire.setAnneeCle((Long)val);
 				if(!sauvegardes.contains(var))
 					sauvegardes.add(var);
 				return val;

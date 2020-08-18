@@ -6679,7 +6679,8 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		PaiementScolaire oPaiementScolaire = (PaiementScolaire)this;
 		switch(var) {
 			case "inscriptionCle":
-				oPaiementScolaire.setInscriptionCle((Long)val);
+				if(oPaiementScolaire.getInscriptionCle() == null)
+					oPaiementScolaire.setInscriptionCle((Long)val);
 				if(!sauvegardes.contains(var))
 					sauvegardes.add(var);
 				return val;

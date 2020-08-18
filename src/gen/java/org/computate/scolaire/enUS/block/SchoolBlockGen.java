@@ -4548,7 +4548,8 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 					saves.add(var);
 				return val;
 			case "ageKey":
-				oSchoolBlock.setAgeKey((Long)val);
+				if(oSchoolBlock.getAgeKey() == null)
+					oSchoolBlock.setAgeKey((Long)val);
 				if(!saves.contains(var))
 					saves.add(var);
 				return val;

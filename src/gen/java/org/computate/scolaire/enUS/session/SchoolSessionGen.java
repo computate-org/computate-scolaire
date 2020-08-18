@@ -2847,7 +2847,8 @@ public abstract class SchoolSessionGen<DEV> extends Cluster {
 					saves.add(var);
 				return val;
 			case "seasonKey":
-				oSchoolSession.setSeasonKey((Long)val);
+				if(oSchoolSession.getSeasonKey() == null)
+					oSchoolSession.setSeasonKey((Long)val);
 				if(!saves.contains(var))
 					saves.add(var);
 				return val;

@@ -14952,7 +14952,8 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		SchoolEnrollment oSchoolEnrollment = (SchoolEnrollment)this;
 		switch(var) {
 			case "yearKey":
-				oSchoolEnrollment.setYearKey((Long)val);
+				if(oSchoolEnrollment.getYearKey() == null)
+					oSchoolEnrollment.setYearKey((Long)val);
 				if(!saves.contains(var))
 					saves.add(var);
 				return val;
@@ -14962,7 +14963,8 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 					saves.add(var);
 				return val;
 			case "childKey":
-				oSchoolEnrollment.setChildKey((Long)val);
+				if(oSchoolEnrollment.getChildKey() == null)
+					oSchoolEnrollment.setChildKey((Long)val);
 				if(!saves.contains(var))
 					saves.add(var);
 				return val;
