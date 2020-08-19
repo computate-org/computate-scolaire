@@ -141,6 +141,7 @@ public class GenPageInscription extends GenPageInscriptionGen<ClusterPage> {
 
 	@Override public void htmlScriptsGenPageInscription() {
 		e("script").a("src", statiqueUrlBase, "/js/frFR/PageInscription.js").f().g("script");
+		e("script").a("src", statiqueUrlBase, "/js/frFR/AnneePage.js").f().g("script");
 		e("script").a("src", statiqueUrlBase, "/js/frFR/BlocPage.js").f().g("script");
 		e("script").a("src", statiqueUrlBase, "/js/frFR/EnfantPage.js").f().g("script");
 		e("script").a("src", statiqueUrlBase, "/js/frFR/MerePage.js").f().g("script");
@@ -223,6 +224,14 @@ public class GenPageInscription extends GenPageInscriptionGen<ClusterPage> {
 		} else {
 			tl(2, "suggereInscriptionScolaireUtilisateurCles([{'name':'fq','value':'inscriptionCles:' + pk}], $('#listInscriptionScolaireUtilisateurCles_Page'), pk, false); ");
 		}
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			tl(2, "suggereInscriptionScolaireAnneeCle([{'name':'fq','value':'inscriptionCles:' + pk}], $('#listInscriptionScolaireAnneeCle_Page'), pk, true); ");
+		} else {
+			tl(2, "suggereInscriptionScolaireAnneeCle([{'name':'fq','value':'inscriptionCles:' + pk}], $('#listInscriptionScolaireAnneeCle_Page'), pk, false); ");
+		}
 		tl(2, "$('#signatureInputInscriptionScolaire' + pk + 'inscriptionSignature1').jSignature({'height':200}).bind('change', function(e){ patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:' + pk }], 'setInscriptionSignature1', $('#signatureInputInscriptionScolaire' + pk + 'inscriptionSignature1').jSignature('getData', 'default')); }); ");
 		tl(2, "$('#signatureInputInscriptionScolaire' + pk + 'inscriptionSignature2').jSignature({'height':200}).bind('change', function(e){ patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:' + pk }], 'setInscriptionSignature2', $('#signatureInputInscriptionScolaire' + pk + 'inscriptionSignature2').jSignature('getData', 'default')); }); ");
 		tl(2, "$('#signatureInputInscriptionScolaire' + pk + 'inscriptionSignature3').jSignature({'height':200}).bind('change', function(e){ patchInscriptionScolaireVal([{ name: 'fq', value: 'pk:' + pk }], 'setInscriptionSignature3', $('#signatureInputInscriptionScolaire' + pk + 'inscriptionSignature3').jSignature('getData', 'default')); }); ");
@@ -293,7 +302,6 @@ public class GenPageInscription extends GenPageInscriptionGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmUtilisateurCles("Page");
-			o.htmAnneeCle("Page");
 		} g("div");
 	}
 
@@ -352,7 +360,6 @@ public class GenPageInscription extends GenPageInscriptionGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmUtilisateurCles("POST");
-			o.htmAnneeCle("POST");
 		} g("div");
 	}
 
@@ -433,7 +440,6 @@ public class GenPageInscription extends GenPageInscriptionGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmUtilisateurCles("PUTCopie");
-			o.htmAnneeCle("PUTCopie");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInheritPk("PUTCopie");
@@ -522,7 +528,6 @@ public class GenPageInscription extends GenPageInscriptionGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmUtilisateurCles("PATCH");
-			o.htmAnneeCle("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInheritPk("PATCH");
@@ -612,7 +617,6 @@ public class GenPageInscription extends GenPageInscriptionGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmUtilisateurCles("Recherche");
-			o.htmAnneeCle("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInheritPk("Recherche");

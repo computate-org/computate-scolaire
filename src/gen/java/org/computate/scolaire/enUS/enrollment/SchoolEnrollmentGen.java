@@ -238,76 +238,6 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return yearKey == null ? "" : StringEscapeUtils.escapeHtml4(strYearKey());
 	}
 
-	public void inputYearKey(String classApiMethodMethod) {
-		SchoolEnrollment s = (SchoolEnrollment)this;
-		if(
-				userKeys.contains(siteRequest_.getUserKey())
-				|| Objects.equals(sessionId, siteRequest_.getSessionId())
-				|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
-				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
-		) {
-			e("input")
-				.a("type", "text")
-				.a("placeholder", "year")
-				.a("id", classApiMethodMethod, "_yearKey");
-				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
-					a("class", "setYearKey classSchoolEnrollment inputSchoolEnrollment", pk, "YearKey w3-input w3-border ");
-					a("name", "setYearKey");
-				} else {
-					a("class", "valueYearKey w3-input w3-border classSchoolEnrollment inputSchoolEnrollment", pk, "YearKey w3-input w3-border ");
-					a("name", "yearKey");
-				}
-				if("Page".equals(classApiMethodMethod)) {
-					a("onclick", "removeGlow($(this)); ");
-					a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setYearKey', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_yearKey')); }, function() { addError($('#", classApiMethodMethod, "_yearKey')); }); ");
-				}
-				a("value", strYearKey())
-			.fg();
-
-		} else {
-			e("span").a("class", "varSchoolEnrollment", pk, "YearKey ").f().sx(htmYearKey()).g("span");
-		}
-	}
-
-	public void htmYearKey(String classApiMethodMethod) {
-		SchoolEnrollment s = (SchoolEnrollment)this;
-		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
-			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolEnrollmentYearKey").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-blue-gray ").f();
-							e("label").a("for", classApiMethodMethod, "_yearKey").a("class", "").f().sx("year").g("label");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
-							{ e("div").a("class", "w3-cell ").f();
-
-								inputYearKey(classApiMethodMethod);
-							} g("div");
-							if(
-									userKeys.contains(siteRequest_.getUserKey())
-									|| Objects.equals(sessionId, siteRequest_.getSessionId())
-									|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
-									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
-							) {
-								if("Page".equals(classApiMethodMethod)) {
-									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
-										{ e("button")
-											.a("tabindex", "-1")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-blue-gray ")
-										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_yearKey')); $('#", classApiMethodMethod, "_yearKey').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setYearKey', null, function() { addGlow($('#", classApiMethodMethod, "_yearKey')); }, function() { addError($('#", classApiMethodMethod, "_yearKey')); }); ")
-											.f();
-											e("i").a("class", "far fa-eraser ").f().g("i");
-										} g("button");
-									} g("div");
-								}
-							}
-						} g("div");
-					} g("div");
-				} g("div");
-			} g("div");
-		} g("div");
-	}
-
 	////////////////
 	// yearSearch //
 	////////////////
@@ -15021,6 +14951,12 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	public Object attributeSchoolEnrollment(String var, Object val) {
 		SchoolEnrollment oSchoolEnrollment = (SchoolEnrollment)this;
 		switch(var) {
+			case "yearKey":
+				if(oSchoolEnrollment.getYearKey() == null)
+					oSchoolEnrollment.setYearKey((Long)val);
+				if(!saves.contains(var))
+					saves.add(var);
+				return val;
 			case "blockKeys":
 				oSchoolEnrollment.addBlockKeys((Long)val);
 				if(!saves.contains(var))
@@ -15083,11 +15019,6 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	}
 	public Object defineSchoolEnrollment(String var, String val) {
 		switch(var) {
-			case "yearKey":
-				if(val != null)
-					setYearKey(val);
-				saves.add(var);
-				return val;
 			case "childCompleteName":
 				if(val != null)
 					setChildCompleteName(val);
@@ -15331,11 +15262,9 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 					oSchoolEnrollment.setEnrollmentKey(enrollmentKey);
 			}
 
-			if(saves.contains("yearKey")) {
-				Long yearKey = (Long)solrDocument.get("yearKey_stored_long");
-				if(yearKey != null)
-					oSchoolEnrollment.setYearKey(yearKey);
-			}
+			Long yearKey = (Long)solrDocument.get("yearKey_stored_long");
+			if(yearKey != null)
+				oSchoolEnrollment.setYearKey(yearKey);
 
 			List<Long> blockKeys = (List<Long>)solrDocument.get("blockKeys_stored_longs");
 			if(blockKeys != null)

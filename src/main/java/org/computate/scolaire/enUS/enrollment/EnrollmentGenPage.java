@@ -141,6 +141,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 
 	@Override public void htmlScriptsEnrollmentGenPage() {
 		e("script").a("src", staticBaseUrl, "/js/enUS/EnrollmentPage.js").f().g("script");
+		e("script").a("src", staticBaseUrl, "/js/enUS/YearPage.js").f().g("script");
 		e("script").a("src", staticBaseUrl, "/js/enUS/BlockPage.js").f().g("script");
 		e("script").a("src", staticBaseUrl, "/js/enUS/ChildPage.js").f().g("script");
 		e("script").a("src", staticBaseUrl, "/js/enUS/MomPage.js").f().g("script");
@@ -223,6 +224,14 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 		} else {
 			tl(2, "suggestSchoolEnrollmentUserKeys([{'name':'fq','value':'enrollmentKeys:' + pk}], $('#listSchoolEnrollmentUserKeys_Page'), pk, false); ");
 		}
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			tl(2, "suggestSchoolEnrollmentYearKey([{'name':'fq','value':'enrollmentKeys:' + pk}], $('#listSchoolEnrollmentYearKey_Page'), pk, true); ");
+		} else {
+			tl(2, "suggestSchoolEnrollmentYearKey([{'name':'fq','value':'enrollmentKeys:' + pk}], $('#listSchoolEnrollmentYearKey_Page'), pk, false); ");
+		}
 		tl(2, "$('#signatureInputSchoolEnrollment' + pk + 'enrollmentSignature1').jSignature({'height':200}).bind('change', function(e){ patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + pk }], 'setEnrollmentSignature1', $('#signatureInputSchoolEnrollment' + pk + 'enrollmentSignature1').jSignature('getData', 'default')); }); ");
 		tl(2, "$('#signatureInputSchoolEnrollment' + pk + 'enrollmentSignature2').jSignature({'height':200}).bind('change', function(e){ patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + pk }], 'setEnrollmentSignature2', $('#signatureInputSchoolEnrollment' + pk + 'enrollmentSignature2').jSignature('getData', 'default')); }); ");
 		tl(2, "$('#signatureInputSchoolEnrollment' + pk + 'enrollmentSignature3').jSignature({'height':200}).bind('change', function(e){ patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + pk }], 'setEnrollmentSignature3', $('#signatureInputSchoolEnrollment' + pk + 'enrollmentSignature3').jSignature('getData', 'default')); }); ");
@@ -293,7 +302,6 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmUserKeys("Page");
-			o.htmYearKey("Page");
 		} g("div");
 	}
 
@@ -352,7 +360,6 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmUserKeys("POST");
-			o.htmYearKey("POST");
 		} g("div");
 	}
 
@@ -433,7 +440,6 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmUserKeys("PUTCopy");
-			o.htmYearKey("PUTCopy");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInheritPk("PUTCopy");
@@ -522,7 +528,6 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmUserKeys("PATCH");
-			o.htmYearKey("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInheritPk("PATCH");
@@ -612,7 +617,6 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmUserKeys("Search");
-			o.htmYearKey("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInheritPk("Search");

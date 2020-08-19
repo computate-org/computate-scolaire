@@ -130,9 +130,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Var.enUS: yearKey
 	 * Indexe: true
 	 * Stocke: true
-	 * Definir: true
-	 * HtmlLigne: 12
-	 * HtmlCellule: 2
+	 * Attribuer: AnneeScolaire.inscriptionCles
 	 * Description.frFR: L'année scolaire de la saison scolaire. 
 	 * Description.enUS: The school year of the school season. 
 	 * NomAffichage.frFR: année
