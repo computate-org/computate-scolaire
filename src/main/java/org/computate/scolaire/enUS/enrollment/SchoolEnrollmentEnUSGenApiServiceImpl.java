@@ -1,7 +1,5 @@
 package org.computate.scolaire.enUS.enrollment;
 
-import org.computate.scolaire.enUS.year.SchoolYearEnUSGenApiServiceImpl;
-import org.computate.scolaire.enUS.year.SchoolYear;
 import org.computate.scolaire.enUS.block.SchoolBlockEnUSGenApiServiceImpl;
 import org.computate.scolaire.enUS.block.SchoolBlock;
 import org.computate.scolaire.enUS.child.SchoolChildEnUSGenApiServiceImpl;
@@ -321,37 +319,17 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						}));
 						break;
 					case "yearKey":
-						{
-							Long l = Long.parseLong(jsonObject.getString(entityVar));
-							if(l != null) {
-								SearchList<SchoolYear> searchList = new SearchList<SchoolYear>();
-								searchList.setQuery("*:*");
-								searchList.setStore(true);
-								searchList.setC(SchoolYear.class);
-								searchList.addFilterQuery("deleted_indexed_boolean:false");
-								searchList.addFilterQuery("archived_indexed_boolean:false");
-								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
-								searchList.initDeepSearchList(siteRequest);
-								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l2 != null) {
-									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(l2, "enrollmentKeys", pk, "yearKey")
-												, b
-										-> {
-											if(b.succeeded())
-												a.handle(Future.succeededFuture());
-											else
-												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.yearKey failed", b.cause())));
-										});
-									}));
-									if(!pks.contains(l2)) {
-										pks.add(l2);
-										classes.add("SchoolYear");
-									}
-								}
-							}
-						}
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "yearKey", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.yearKey failed", b.cause())));
+							});
+						}));
 						break;
 					case "blockKeys":
 						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
@@ -1769,11 +1747,9 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						}));
 						break;
 					case "yearKey":
-							{
-						Long l = Long.parseLong(jsonObject.getString(entityVar));
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_addA
-									, Tuple.of(l, "enrollmentKeys", pk, "yearKey")
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "yearKey", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1782,7 +1758,6 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.yearKey failed", b.cause())));
 							});
 						}));
-						}
 						break;
 					case "blockKeys":
 						for(Long l : jsonObject.getJsonArray(entityVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
@@ -2836,71 +2811,31 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						}
 						break;
 					case "setYearKey":
-						{
+						if(jsonObject.getString(methodName) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "yearKey")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.yearKey failed", b.cause())));
+								});
+							}));
+						} else {
 							o2.setYearKey(jsonObject.getString(methodName));
-							Long l = o2.getYearKey();
-							if(l != null && !l.equals(o.getYearKey())) {
-								SearchList<SchoolYear> searchList = new SearchList<SchoolYear>();
-								searchList.setQuery("*:*");
-								searchList.setStore(true);
-								searchList.setC(SchoolYear.class);
-								searchList.addFilterQuery("deleted_indexed_boolean:false");
-								searchList.addFilterQuery("archived_indexed_boolean:false");
-								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
-								searchList.initDeepSearchList(siteRequest);
-								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l2 != null) {
-									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(l2, "enrollmentKeys", pk, "yearKey")
-												, b
-										-> {
-											if(b.succeeded())
-												a.handle(Future.succeededFuture());
-											else
-												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.yearKey failed", b.cause())));
-										});
-									}));
-									if(!pks.contains(l2)) {
-										pks.add(l2);
-										classes.add("SchoolYear");
-									}
-								}
-							}
-						}
-						break;
-					case "removeYearKey":
-						{
-							o2.setYearKey(jsonObject.getString(methodName));
-							Long l = o2.getYearKey();
-							if(l != null) {
-								SearchList<SchoolYear> searchList = new SearchList<SchoolYear>();
-								searchList.setQuery("*:*");
-								searchList.setStore(true);
-								searchList.setC(SchoolYear.class);
-								searchList.addFilterQuery("deleted_indexed_boolean:false");
-								searchList.addFilterQuery("archived_indexed_boolean:false");
-								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
-								searchList.initDeepSearchList(siteRequest);
-								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l2 != null) {
-									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(l2, "enrollmentKeys", pk, "yearKey")
-												, b
-										-> {
-											if(b.succeeded())
-												a.handle(Future.succeededFuture());
-											else
-												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.yearKey failed", b.cause())));
-										});
-									}));
-									if(!pks.contains(l2)) {
-										pks.add(l2);
-										classes.add("SchoolYear");
-									}
-								}
-							}
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "yearKey", o2.jsonYearKey())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.yearKey failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "addBlockKeys":
@@ -5793,71 +5728,31 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						}
 						break;
 					case "setYearKey":
-						{
+						if(jsonObject.getString(methodName) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "yearKey")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.yearKey failed", b.cause())));
+								});
+							}));
+						} else {
 							o2.setYearKey(jsonObject.getString(methodName));
-							Long l = o2.getYearKey();
-							if(l != null && !l.equals(o.getYearKey())) {
-								SearchList<SchoolYear> searchList = new SearchList<SchoolYear>();
-								searchList.setQuery("*:*");
-								searchList.setStore(true);
-								searchList.setC(SchoolYear.class);
-								searchList.addFilterQuery("deleted_indexed_boolean:false");
-								searchList.addFilterQuery("archived_indexed_boolean:false");
-								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
-								searchList.initDeepSearchList(siteRequest);
-								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l2 != null) {
-									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(l2, "enrollmentKeys", pk, "yearKey")
-												, b
-										-> {
-											if(b.succeeded())
-												a.handle(Future.succeededFuture());
-											else
-												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.yearKey failed", b.cause())));
-										});
-									}));
-									if(!pks.contains(l2)) {
-										pks.add(l2);
-										classes.add("SchoolYear");
-									}
-								}
-							}
-						}
-						break;
-					case "removeYearKey":
-						{
-							o2.setYearKey(jsonObject.getString(methodName));
-							Long l = o2.getYearKey();
-							if(l != null) {
-								SearchList<SchoolYear> searchList = new SearchList<SchoolYear>();
-								searchList.setQuery("*:*");
-								searchList.setStore(true);
-								searchList.setC(SchoolYear.class);
-								searchList.addFilterQuery("deleted_indexed_boolean:false");
-								searchList.addFilterQuery("archived_indexed_boolean:false");
-								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
-								searchList.initDeepSearchList(siteRequest);
-								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
-								if(l2 != null) {
-									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(l2, "enrollmentKeys", pk, "yearKey")
-												, b
-										-> {
-											if(b.succeeded())
-												a.handle(Future.succeededFuture());
-											else
-												a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.yearKey failed", b.cause())));
-										});
-									}));
-									if(!pks.contains(l2)) {
-										pks.add(l2);
-										classes.add("SchoolYear");
-									}
-								}
-							}
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "yearKey", o2.jsonYearKey())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.yearKey failed", b.cause())));
+								});
+							}));
 						}
 						break;
 					case "addBlockKeys":
@@ -9080,7 +8975,6 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 				searchList.setQuery("*:*");
 				searchList.setC(SchoolEnrollment.class);
 				searchList.addFilterQuery("modified_indexed_date:[" + DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(siteRequest.getApiRequest_().getCreated().toInstant(), ZoneId.of("UTC"))) + " TO *]");
-				searchList.add("json.facet", "{yearKey:{terms:{field:yearKey_indexed_longs, limit:1000}}}");
 				searchList.add("json.facet", "{blockKeys:{terms:{field:blockKeys_indexed_longs, limit:1000}}}");
 				searchList.add("json.facet", "{childKey:{terms:{field:childKey_indexed_longs, limit:1000}}}");
 				searchList.add("json.facet", "{momKeys:{terms:{field:momKeys_indexed_longs, limit:1000}}}");
@@ -9095,41 +8989,6 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 				for(int i=0; i < pks.size(); i++) {
 					Long pk2 = pks.get(i);
 					String classSimpleName2 = classes.get(i);
-
-					if("SchoolYear".equals(classSimpleName2) && pk2 != null) {
-						SearchList<SchoolYear> searchList2 = new SearchList<SchoolYear>();
-						searchList2.setStore(true);
-						searchList2.setQuery("*:*");
-						searchList2.setC(SchoolYear.class);
-						searchList2.addFilterQuery("pk_indexed_long:" + pk2);
-						searchList2.setRows(1);
-						searchList2.initDeepSearchList(siteRequest);
-						SchoolYear o2 = searchList2.getList().stream().findFirst().orElse(null);
-
-						if(o2 != null) {
-							SchoolYearEnUSGenApiServiceImpl service = new SchoolYearEnUSGenApiServiceImpl(siteRequest.getSiteContext_());
-							SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolEnrollment(siteContext, siteRequest.getOperationRequest(), new JsonObject());
-							ApiRequest apiRequest2 = new ApiRequest();
-							apiRequest2.setRows(1);
-							apiRequest2.setNumFound(1l);
-							apiRequest2.setNumPATCH(0L);
-							apiRequest2.initDeepApiRequest(siteRequest2);
-							siteRequest2.setApiRequest_(apiRequest2);
-							siteRequest2.getVertx().eventBus().publish("websocketSchoolYear", JsonObject.mapFrom(apiRequest2).toString());
-
-							o2.setPk(pk2);
-							o2.setSiteRequest_(siteRequest2);
-							futures.add(
-								service.patchSchoolYearFuture(o2, false, a -> {
-									if(a.succeeded()) {
-									} else {
-										LOGGER.info(String.format("SchoolYear %s failed. ", pk2));
-										eventHandler.handle(Future.failedFuture(a.cause()));
-									}
-								})
-							);
-						}
-					}
 
 					if("SchoolBlock".equals(classSimpleName2) && pk2 != null) {
 						SearchList<SchoolBlock> searchList2 = new SearchList<SchoolBlock>();

@@ -120,7 +120,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Description.enUS: The primary key of the school enrollment in the database. 
 	 * NomAffichage.frFR: clé
 	 * NomAffichage.enUS: key
-	 */                              
+	 */                             
 	protected void _inscriptionCle(Couverture<Long> c) {
 		c.o(pk);
 	}
@@ -130,7 +130,9 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Var.enUS: yearKey
 	 * Indexe: true
 	 * Stocke: true
-	 * Attribuer: AnneeScolaire.inscriptionCles
+	 * Definir: true
+	 * HtmlLigne: 12
+	 * HtmlCellule: 2
 	 * Description.frFR: L'année scolaire de la saison scolaire. 
 	 * Description.enUS: The school year of the school season. 
 	 * NomAffichage.frFR: année

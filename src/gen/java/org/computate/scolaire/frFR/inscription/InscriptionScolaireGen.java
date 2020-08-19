@@ -239,6 +239,77 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return anneeCle == null ? "" : StringEscapeUtils.escapeHtml4(strAnneeCle());
 	}
 
+	public void inputAnneeCle(String classeApiMethodeMethode) {
+		InscriptionScolaire s = (InscriptionScolaire)this;
+		if(
+				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
+				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+		) {
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "année")
+				.a("title", "La clé primaire des utilisateurs dans la base de données. ")
+				.a("id", classeApiMethodeMethode, "_anneeCle");
+				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+					a("class", "setAnneeCle classInscriptionScolaire inputInscriptionScolaire", pk, "AnneeCle w3-input w3-border ");
+					a("name", "setAnneeCle");
+				} else {
+					a("class", "valeurAnneeCle w3-input w3-border classInscriptionScolaire inputInscriptionScolaire", pk, "AnneeCle w3-input w3-border ");
+					a("name", "anneeCle");
+				}
+				if("Page".equals(classeApiMethodeMethode)) {
+					a("onclick", "enleverLueur($(this)); ");
+					a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setAnneeCle', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_anneeCle')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_anneeCle')); }); ");
+				}
+				a("value", strAnneeCle())
+			.fg();
+
+		} else {
+			e("span").a("class", "varInscriptionScolaire", pk, "AnneeCle ").f().sx(htmAnneeCle()).g("span");
+		}
+	}
+
+	public void htmAnneeCle(String classeApiMethodeMethode) {
+		InscriptionScolaire s = (InscriptionScolaire)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "InscriptionScolaireAnneeCle").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-blue-gray ").f();
+							e("label").a("for", classeApiMethodeMethode, "_anneeCle").a("class", "").f().sx("année").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputAnneeCle(classeApiMethodeMethode);
+							} g("div");
+							if(
+									utilisateurCles.contains(requeteSite_.getUtilisateurCle())
+									|| Objects.equals(sessionId, requeteSite_.getSessionId())
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+							) {
+								if("Page".equals(classeApiMethodeMethode)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-blue-gray ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_anneeCle')); $('#", classeApiMethodeMethode, "_anneeCle').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#InscriptionScolaireForm :input[name=pk]').val() }], 'setAnneeCle', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_anneeCle')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_anneeCle')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
 	////////////////////
 	// anneeRecherche //
 	////////////////////
@@ -14984,12 +15055,6 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public Object attribuerInscriptionScolaire(String var, Object val) {
 		InscriptionScolaire oInscriptionScolaire = (InscriptionScolaire)this;
 		switch(var) {
-			case "anneeCle":
-				if(oInscriptionScolaire.getAnneeCle() == null)
-					oInscriptionScolaire.setAnneeCle((Long)val);
-				if(!sauvegardes.contains(var))
-					sauvegardes.add(var);
-				return val;
 			case "blocCles":
 				oInscriptionScolaire.addBlocCles((Long)val);
 				if(!sauvegardes.contains(var))
@@ -15052,6 +15117,11 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 	public Object definirInscriptionScolaire(String var, String val) {
 		switch(var) {
+			case "anneeCle":
+				if(val != null)
+					setAnneeCle(val);
+				sauvegardes.add(var);
+				return val;
 			case "enfantNomComplet":
 				if(val != null)
 					setEnfantNomComplet(val);
@@ -15295,9 +15365,11 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 					oInscriptionScolaire.setInscriptionCle(inscriptionCle);
 			}
 
-			Long anneeCle = (Long)solrDocument.get("anneeCle_stored_long");
-			if(anneeCle != null)
-				oInscriptionScolaire.setAnneeCle(anneeCle);
+			if(sauvegardes.contains("anneeCle")) {
+				Long anneeCle = (Long)solrDocument.get("anneeCle_stored_long");
+				if(anneeCle != null)
+					oInscriptionScolaire.setAnneeCle(anneeCle);
+			}
 
 			List<Long> blocCles = (List<Long>)solrDocument.get("blocCles_stored_longs");
 			if(blocCles != null)
