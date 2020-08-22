@@ -142,7 +142,8 @@ public class DesignDisplayPage extends DesignDisplayPageGen<DesignDisplayGenPage
 				enrollment = enrollments.get(i);
 				blockKeyCurrent = enrollment.getBlockKey();
 				groupCurrent = enrollment.getEnrollmentGroupName();
-				if(StringUtils.equalsAny(pageDesignId, "paid-roster", "not-paid-roster", "group-names-roster", "group-details-roster")) {
+				if(StringUtils.equalsAny(pageDesignId, "paid-roster", "not-paid-roster", "group-names-roster", "group-details-roster")
+						|| pageDesign_ != null && pageDesign_.getDesignEnrollmentSortGroupName()) {
 					if(blockKeyCurrent == null || ObjectUtils.compare(blockKeyCurrent, blockKeyBefore) != 0) {
 						blockKeyBefore = enrollment.getBlockKey();
 						enrollmentGroups = enrollment.getEnrollmentGroups();
