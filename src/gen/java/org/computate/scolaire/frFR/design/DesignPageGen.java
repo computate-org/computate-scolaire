@@ -48,7 +48,7 @@ import org.apache.solr.common.SolrInputDocument;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
 /**	
- * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.design.DesignPage&fq=classeEtendGen_indexed_boolean:true">Trouver la classe designEnrollmentSortGroupName dans Solr. </a>
+ * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.design.DesignPage&fq=classeEtendGen_indexed_boolean:true">Trouver la classe searchPayments dans Solr. </a>
  * <br/>
  **/
 public abstract class DesignPageGen<DEV> extends Cluster {
@@ -1463,136 +1463,6 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		} g("div");
 	}
 
-	///////////////////////////////////
-	// designInscriptionTriNomEnfant //
-	///////////////////////////////////
-
-	/**	 L'entité designInscriptionTriNomEnfant
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonInclude(Include.NON_NULL)
-	protected Boolean designInscriptionTriNomEnfant;
-	@JsonIgnore
-	public Couverture<Boolean> designInscriptionTriNomEnfantCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("designInscriptionTriNomEnfant").o(designInscriptionTriNomEnfant);
-
-	/**	<br/> L'entité designInscriptionTriNomEnfant
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.design.DesignPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:designInscriptionTriNomEnfant">Trouver l'entité designInscriptionTriNomEnfant dans Solr</a>
-	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
-	 **/
-	protected abstract void _designInscriptionTriNomEnfant(Couverture<Boolean> c);
-
-	public Boolean getDesignInscriptionTriNomEnfant() {
-		return designInscriptionTriNomEnfant;
-	}
-
-	public void setDesignInscriptionTriNomEnfant(Boolean designInscriptionTriNomEnfant) {
-		this.designInscriptionTriNomEnfant = designInscriptionTriNomEnfant;
-		this.designInscriptionTriNomEnfantCouverture.dejaInitialise = true;
-	}
-	public DesignPage setDesignInscriptionTriNomEnfant(String o) {
-		this.designInscriptionTriNomEnfant = Boolean.parseBoolean(o);
-		this.designInscriptionTriNomEnfantCouverture.dejaInitialise = true;
-		return (DesignPage)this;
-	}
-	protected DesignPage designInscriptionTriNomEnfantInit() {
-		if(!designInscriptionTriNomEnfantCouverture.dejaInitialise) {
-			_designInscriptionTriNomEnfant(designInscriptionTriNomEnfantCouverture);
-			if(designInscriptionTriNomEnfant == null)
-				setDesignInscriptionTriNomEnfant(designInscriptionTriNomEnfantCouverture.o);
-		}
-		designInscriptionTriNomEnfantCouverture.dejaInitialise(true);
-		return (DesignPage)this;
-	}
-
-	public Boolean solrDesignInscriptionTriNomEnfant() {
-		return designInscriptionTriNomEnfant;
-	}
-
-	public String strDesignInscriptionTriNomEnfant() {
-		return designInscriptionTriNomEnfant == null ? "" : designInscriptionTriNomEnfant.toString();
-	}
-
-	public String jsonDesignInscriptionTriNomEnfant() {
-		return designInscriptionTriNomEnfant == null ? "" : designInscriptionTriNomEnfant.toString();
-	}
-
-	public String nomAffichageDesignInscriptionTriNomEnfant() {
-		return "inscription tri nom d'enfant";
-	}
-
-	public String htmTooltipDesignInscriptionTriNomEnfant() {
-		return null;
-	}
-
-	public String htmDesignInscriptionTriNomEnfant() {
-		return designInscriptionTriNomEnfant == null ? "" : StringEscapeUtils.escapeHtml4(strDesignInscriptionTriNomEnfant());
-	}
-
-	public void inputDesignInscriptionTriNomEnfant(String classeApiMethodeMethode) {
-		DesignPage s = (DesignPage)this;
-		if(
-				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-				) {
-			if("Page".equals(classeApiMethodeMethode)) {
-				e("input")
-					.a("type", "checkbox")
-					.a("id", classeApiMethodeMethode, "_designInscriptionTriNomEnfant")
-					.a("value", "true");
-			} else {
-				e("select")
-					.a("id", classeApiMethodeMethode, "_designInscriptionTriNomEnfant");
-			}
-			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
-				a("class", "setDesignInscriptionTriNomEnfant classDesignPage inputDesignPage", pk, "DesignInscriptionTriNomEnfant w3-input w3-border ");
-				a("name", "setDesignInscriptionTriNomEnfant");
-			} else {
-				a("class", "valeurDesignInscriptionTriNomEnfant classDesignPage inputDesignPage", pk, "DesignInscriptionTriNomEnfant w3-input w3-border ");
-				a("name", "designInscriptionTriNomEnfant");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setDesignInscriptionTriNomEnfant', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_designInscriptionTriNomEnfant')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_designInscriptionTriNomEnfant')); }); ");
-			}
-			if("Page".equals(classeApiMethodeMethode)) {
-				if(getDesignInscriptionTriNomEnfant() != null && getDesignInscriptionTriNomEnfant())
-					a("checked", "checked");
-				fg();
-			} else {
-				f();
-				e("option").a("value", "").a("selected", "selected").f().g("option");
-				e("option").a("value", "true").f().sx("true").g("option");
-				e("option").a("value", "false").f().sx("false").g("option");
-				g("select");
-			}
-
-		} else {
-			e("span").a("class", "varDesignPage", pk, "DesignInscriptionTriNomEnfant ").f().sx(htmDesignInscriptionTriNomEnfant()).g("span");
-		}
-	}
-
-	public void htmDesignInscriptionTriNomEnfant(String classeApiMethodeMethode) {
-		DesignPage s = (DesignPage)this;
-		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
-			{ e("div").a("class", "w3-padding ").f();
-				{ e("div").a("id", "suggere", classeApiMethodeMethode, "DesignPageDesignInscriptionTriNomEnfant").f();
-					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-khaki ").f();
-							e("label").a("for", classeApiMethodeMethode, "_designInscriptionTriNomEnfant").a("class", "").f().sx("inscription tri nom d'enfant").g("label");
-						} g("div");
-						{ e("div").a("class", "w3-cell-row w3-padding ").f();
-							{ e("div").a("class", "w3-cell ").f();
-
-								inputDesignInscriptionTriNomEnfant(classeApiMethodeMethode);
-							} g("div");
-						} g("div");
-					} g("div");
-				} g("div");
-			} g("div");
-		} g("div");
-	}
-
 	/////////////////////////////////////////////
 	// designInscriptionTriMoisJourDeNaissance //
 	/////////////////////////////////////////////
@@ -1853,6 +1723,396 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		} g("div");
 	}
 
+	///////////////////////////////////
+	// designInscriptionTriNomEnfant //
+	///////////////////////////////////
+
+	/**	 L'entité designInscriptionTriNomEnfant
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected Boolean designInscriptionTriNomEnfant;
+	@JsonIgnore
+	public Couverture<Boolean> designInscriptionTriNomEnfantCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("designInscriptionTriNomEnfant").o(designInscriptionTriNomEnfant);
+
+	/**	<br/> L'entité designInscriptionTriNomEnfant
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.design.DesignPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:designInscriptionTriNomEnfant">Trouver l'entité designInscriptionTriNomEnfant dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _designInscriptionTriNomEnfant(Couverture<Boolean> c);
+
+	public Boolean getDesignInscriptionTriNomEnfant() {
+		return designInscriptionTriNomEnfant;
+	}
+
+	public void setDesignInscriptionTriNomEnfant(Boolean designInscriptionTriNomEnfant) {
+		this.designInscriptionTriNomEnfant = designInscriptionTriNomEnfant;
+		this.designInscriptionTriNomEnfantCouverture.dejaInitialise = true;
+	}
+	public DesignPage setDesignInscriptionTriNomEnfant(String o) {
+		this.designInscriptionTriNomEnfant = Boolean.parseBoolean(o);
+		this.designInscriptionTriNomEnfantCouverture.dejaInitialise = true;
+		return (DesignPage)this;
+	}
+	protected DesignPage designInscriptionTriNomEnfantInit() {
+		if(!designInscriptionTriNomEnfantCouverture.dejaInitialise) {
+			_designInscriptionTriNomEnfant(designInscriptionTriNomEnfantCouverture);
+			if(designInscriptionTriNomEnfant == null)
+				setDesignInscriptionTriNomEnfant(designInscriptionTriNomEnfantCouverture.o);
+		}
+		designInscriptionTriNomEnfantCouverture.dejaInitialise(true);
+		return (DesignPage)this;
+	}
+
+	public Boolean solrDesignInscriptionTriNomEnfant() {
+		return designInscriptionTriNomEnfant;
+	}
+
+	public String strDesignInscriptionTriNomEnfant() {
+		return designInscriptionTriNomEnfant == null ? "" : designInscriptionTriNomEnfant.toString();
+	}
+
+	public String jsonDesignInscriptionTriNomEnfant() {
+		return designInscriptionTriNomEnfant == null ? "" : designInscriptionTriNomEnfant.toString();
+	}
+
+	public String nomAffichageDesignInscriptionTriNomEnfant() {
+		return "inscription tri nom d'enfant";
+	}
+
+	public String htmTooltipDesignInscriptionTriNomEnfant() {
+		return null;
+	}
+
+	public String htmDesignInscriptionTriNomEnfant() {
+		return designInscriptionTriNomEnfant == null ? "" : StringEscapeUtils.escapeHtml4(strDesignInscriptionTriNomEnfant());
+	}
+
+	public void inputDesignInscriptionTriNomEnfant(String classeApiMethodeMethode) {
+		DesignPage s = (DesignPage)this;
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			if("Page".equals(classeApiMethodeMethode)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classeApiMethodeMethode, "_designInscriptionTriNomEnfant")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classeApiMethodeMethode, "_designInscriptionTriNomEnfant");
+			}
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setDesignInscriptionTriNomEnfant classDesignPage inputDesignPage", pk, "DesignInscriptionTriNomEnfant w3-input w3-border ");
+				a("name", "setDesignInscriptionTriNomEnfant");
+			} else {
+				a("class", "valeurDesignInscriptionTriNomEnfant classDesignPage inputDesignPage", pk, "DesignInscriptionTriNomEnfant w3-input w3-border ");
+				a("name", "designInscriptionTriNomEnfant");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setDesignInscriptionTriNomEnfant', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_designInscriptionTriNomEnfant')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_designInscriptionTriNomEnfant')); }); ");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				if(getDesignInscriptionTriNomEnfant() != null && getDesignInscriptionTriNomEnfant())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
+
+		} else {
+			e("span").a("class", "varDesignPage", pk, "DesignInscriptionTriNomEnfant ").f().sx(htmDesignInscriptionTriNomEnfant()).g("span");
+		}
+	}
+
+	public void htmDesignInscriptionTriNomEnfant(String classeApiMethodeMethode) {
+		DesignPage s = (DesignPage)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "DesignPageDesignInscriptionTriNomEnfant").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-khaki ").f();
+							e("label").a("for", classeApiMethodeMethode, "_designInscriptionTriNomEnfant").a("class", "").f().sx("inscription tri nom d'enfant").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputDesignInscriptionTriNomEnfant(classeApiMethodeMethode);
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	//////////////////////
+	// rechercherAnnees //
+	//////////////////////
+
+	/**	 L'entité rechercherAnnees
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected Boolean rechercherAnnees;
+	@JsonIgnore
+	public Couverture<Boolean> rechercherAnneesCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("rechercherAnnees").o(rechercherAnnees);
+
+	/**	<br/> L'entité rechercherAnnees
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.design.DesignPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:rechercherAnnees">Trouver l'entité rechercherAnnees dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _rechercherAnnees(Couverture<Boolean> c);
+
+	public Boolean getRechercherAnnees() {
+		return rechercherAnnees;
+	}
+
+	public void setRechercherAnnees(Boolean rechercherAnnees) {
+		this.rechercherAnnees = rechercherAnnees;
+		this.rechercherAnneesCouverture.dejaInitialise = true;
+	}
+	public DesignPage setRechercherAnnees(String o) {
+		this.rechercherAnnees = Boolean.parseBoolean(o);
+		this.rechercherAnneesCouverture.dejaInitialise = true;
+		return (DesignPage)this;
+	}
+	protected DesignPage rechercherAnneesInit() {
+		if(!rechercherAnneesCouverture.dejaInitialise) {
+			_rechercherAnnees(rechercherAnneesCouverture);
+			if(rechercherAnnees == null)
+				setRechercherAnnees(rechercherAnneesCouverture.o);
+		}
+		rechercherAnneesCouverture.dejaInitialise(true);
+		return (DesignPage)this;
+	}
+
+	public Boolean solrRechercherAnnees() {
+		return rechercherAnnees;
+	}
+
+	public String strRechercherAnnees() {
+		return rechercherAnnees == null ? "" : rechercherAnnees.toString();
+	}
+
+	public String jsonRechercherAnnees() {
+		return rechercherAnnees == null ? "" : rechercherAnnees.toString();
+	}
+
+	public String nomAffichageRechercherAnnees() {
+		return "rechercher années";
+	}
+
+	public String htmTooltipRechercherAnnees() {
+		return null;
+	}
+
+	public String htmRechercherAnnees() {
+		return rechercherAnnees == null ? "" : StringEscapeUtils.escapeHtml4(strRechercherAnnees());
+	}
+
+	public void inputRechercherAnnees(String classeApiMethodeMethode) {
+		DesignPage s = (DesignPage)this;
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			if("Page".equals(classeApiMethodeMethode)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classeApiMethodeMethode, "_rechercherAnnees")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classeApiMethodeMethode, "_rechercherAnnees");
+			}
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setRechercherAnnees classDesignPage inputDesignPage", pk, "RechercherAnnees w3-input w3-border ");
+				a("name", "setRechercherAnnees");
+			} else {
+				a("class", "valeurRechercherAnnees classDesignPage inputDesignPage", pk, "RechercherAnnees w3-input w3-border ");
+				a("name", "rechercherAnnees");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setRechercherAnnees', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_rechercherAnnees')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_rechercherAnnees')); }); ");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				if(getRechercherAnnees() != null && getRechercherAnnees())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
+
+		} else {
+			e("span").a("class", "varDesignPage", pk, "RechercherAnnees ").f().sx(htmRechercherAnnees()).g("span");
+		}
+	}
+
+	public void htmRechercherAnnees(String classeApiMethodeMethode) {
+		DesignPage s = (DesignPage)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "DesignPageRechercherAnnees").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-khaki ").f();
+							e("label").a("for", classeApiMethodeMethode, "_rechercherAnnees").a("class", "").f().sx("rechercher années").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputRechercherAnnees(classeApiMethodeMethode);
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	/////////////////////////
+	// rechercherPaiements //
+	/////////////////////////
+
+	/**	 L'entité rechercherPaiements
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected Boolean rechercherPaiements;
+	@JsonIgnore
+	public Couverture<Boolean> rechercherPaiementsCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("rechercherPaiements").o(rechercherPaiements);
+
+	/**	<br/> L'entité rechercherPaiements
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.design.DesignPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:rechercherPaiements">Trouver l'entité rechercherPaiements dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _rechercherPaiements(Couverture<Boolean> c);
+
+	public Boolean getRechercherPaiements() {
+		return rechercherPaiements;
+	}
+
+	public void setRechercherPaiements(Boolean rechercherPaiements) {
+		this.rechercherPaiements = rechercherPaiements;
+		this.rechercherPaiementsCouverture.dejaInitialise = true;
+	}
+	public DesignPage setRechercherPaiements(String o) {
+		this.rechercherPaiements = Boolean.parseBoolean(o);
+		this.rechercherPaiementsCouverture.dejaInitialise = true;
+		return (DesignPage)this;
+	}
+	protected DesignPage rechercherPaiementsInit() {
+		if(!rechercherPaiementsCouverture.dejaInitialise) {
+			_rechercherPaiements(rechercherPaiementsCouverture);
+			if(rechercherPaiements == null)
+				setRechercherPaiements(rechercherPaiementsCouverture.o);
+		}
+		rechercherPaiementsCouverture.dejaInitialise(true);
+		return (DesignPage)this;
+	}
+
+	public Boolean solrRechercherPaiements() {
+		return rechercherPaiements;
+	}
+
+	public String strRechercherPaiements() {
+		return rechercherPaiements == null ? "" : rechercherPaiements.toString();
+	}
+
+	public String jsonRechercherPaiements() {
+		return rechercherPaiements == null ? "" : rechercherPaiements.toString();
+	}
+
+	public String nomAffichageRechercherPaiements() {
+		return "rechercher paiements";
+	}
+
+	public String htmTooltipRechercherPaiements() {
+		return null;
+	}
+
+	public String htmRechercherPaiements() {
+		return rechercherPaiements == null ? "" : StringEscapeUtils.escapeHtml4(strRechercherPaiements());
+	}
+
+	public void inputRechercherPaiements(String classeApiMethodeMethode) {
+		DesignPage s = (DesignPage)this;
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			if("Page".equals(classeApiMethodeMethode)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classeApiMethodeMethode, "_rechercherPaiements")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classeApiMethodeMethode, "_rechercherPaiements");
+			}
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setRechercherPaiements classDesignPage inputDesignPage", pk, "RechercherPaiements w3-input w3-border ");
+				a("name", "setRechercherPaiements");
+			} else {
+				a("class", "valeurRechercherPaiements classDesignPage inputDesignPage", pk, "RechercherPaiements w3-input w3-border ");
+				a("name", "rechercherPaiements");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setRechercherPaiements', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_rechercherPaiements')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_rechercherPaiements')); }); ");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				if(getRechercherPaiements() != null && getRechercherPaiements())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
+
+		} else {
+			e("span").a("class", "varDesignPage", pk, "RechercherPaiements ").f().sx(htmRechercherPaiements()).g("span");
+		}
+	}
+
+	public void htmRechercherPaiements(String classeApiMethodeMethode) {
+		DesignPage s = (DesignPage)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "DesignPageRechercherPaiements").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-khaki ").f();
+							e("label").a("for", classeApiMethodeMethode, "_rechercherPaiements").a("class", "").f().sx("rechercher paiements").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputRechercherPaiements(classeApiMethodeMethode);
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
 	//////////////
 	// initLoin //
 	//////////////
@@ -1885,9 +2145,11 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		designIgnorerPaiementsPasEnSouffranceInit();
 		designIgnorerPaiementsEnSouffranceInit();
 		designFiltrerInscriptionCleInit();
-		designInscriptionTriNomEnfantInit();
 		designInscriptionTriMoisJourDeNaissanceInit();
 		designInscriptionTriNomGroupeInit();
+		designInscriptionTriNomEnfantInit();
+		rechercherAnneesInit();
+		rechercherPaiementsInit();
 	}
 
 	@Override public void initLoinPourClasse(RequeteSiteFrFR requeteSite_) {
@@ -1948,12 +2210,16 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 				return oDesignPage.designIgnorerPaiementsEnSouffrance;
 			case "designFiltrerInscriptionCle":
 				return oDesignPage.designFiltrerInscriptionCle;
-			case "designInscriptionTriNomEnfant":
-				return oDesignPage.designInscriptionTriNomEnfant;
 			case "designInscriptionTriMoisJourDeNaissance":
 				return oDesignPage.designInscriptionTriMoisJourDeNaissance;
 			case "designInscriptionTriNomGroupe":
 				return oDesignPage.designInscriptionTriNomGroupe;
+			case "designInscriptionTriNomEnfant":
+				return oDesignPage.designInscriptionTriNomEnfant;
+			case "rechercherAnnees":
+				return oDesignPage.rechercherAnnees;
+			case "rechercherPaiements":
+				return oDesignPage.rechercherPaiements;
 			default:
 				return super.obtenirCluster(var);
 		}
@@ -2055,11 +2321,6 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 					setDesignFiltrerInscriptionCle(val);
 				sauvegardes.add(var);
 				return val;
-			case "designInscriptionTriNomEnfant":
-				if(val != null)
-					setDesignInscriptionTriNomEnfant(val);
-				sauvegardes.add(var);
-				return val;
 			case "designInscriptionTriMoisJourDeNaissance":
 				if(val != null)
 					setDesignInscriptionTriMoisJourDeNaissance(val);
@@ -2068,6 +2329,21 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 			case "designInscriptionTriNomGroupe":
 				if(val != null)
 					setDesignInscriptionTriNomGroupe(val);
+				sauvegardes.add(var);
+				return val;
+			case "designInscriptionTriNomEnfant":
+				if(val != null)
+					setDesignInscriptionTriNomEnfant(val);
+				sauvegardes.add(var);
+				return val;
+			case "rechercherAnnees":
+				if(val != null)
+					setRechercherAnnees(val);
+				sauvegardes.add(var);
+				return val;
+			case "rechercherPaiements":
+				if(val != null)
+					setRechercherPaiements(val);
 				sauvegardes.add(var);
 				return val;
 			default:
@@ -2147,12 +2423,6 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 					oDesignPage.setDesignFiltrerInscriptionCle(designFiltrerInscriptionCle);
 			}
 
-			if(sauvegardes.contains("designInscriptionTriNomEnfant")) {
-				Boolean designInscriptionTriNomEnfant = (Boolean)solrDocument.get("designInscriptionTriNomEnfant_stored_boolean");
-				if(designInscriptionTriNomEnfant != null)
-					oDesignPage.setDesignInscriptionTriNomEnfant(designInscriptionTriNomEnfant);
-			}
-
 			if(sauvegardes.contains("designInscriptionTriMoisJourDeNaissance")) {
 				Boolean designInscriptionTriMoisJourDeNaissance = (Boolean)solrDocument.get("designInscriptionTriMoisJourDeNaissance_stored_boolean");
 				if(designInscriptionTriMoisJourDeNaissance != null)
@@ -2163,6 +2433,24 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 				Boolean designInscriptionTriNomGroupe = (Boolean)solrDocument.get("designInscriptionTriNomGroupe_stored_boolean");
 				if(designInscriptionTriNomGroupe != null)
 					oDesignPage.setDesignInscriptionTriNomGroupe(designInscriptionTriNomGroupe);
+			}
+
+			if(sauvegardes.contains("designInscriptionTriNomEnfant")) {
+				Boolean designInscriptionTriNomEnfant = (Boolean)solrDocument.get("designInscriptionTriNomEnfant_stored_boolean");
+				if(designInscriptionTriNomEnfant != null)
+					oDesignPage.setDesignInscriptionTriNomEnfant(designInscriptionTriNomEnfant);
+			}
+
+			if(sauvegardes.contains("rechercherAnnees")) {
+				Boolean rechercherAnnees = (Boolean)solrDocument.get("rechercherAnnees_stored_boolean");
+				if(rechercherAnnees != null)
+					oDesignPage.setRechercherAnnees(rechercherAnnees);
+			}
+
+			if(sauvegardes.contains("rechercherPaiements")) {
+				Boolean rechercherPaiements = (Boolean)solrDocument.get("rechercherPaiements_stored_boolean");
+				if(rechercherPaiements != null)
+					oDesignPage.setRechercherPaiements(rechercherPaiements);
 			}
 		}
 
@@ -2287,10 +2575,6 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 			document.addField("designFiltrerInscriptionCle_indexed_boolean", designFiltrerInscriptionCle);
 			document.addField("designFiltrerInscriptionCle_stored_boolean", designFiltrerInscriptionCle);
 		}
-		if(designInscriptionTriNomEnfant != null) {
-			document.addField("designInscriptionTriNomEnfant_indexed_boolean", designInscriptionTriNomEnfant);
-			document.addField("designInscriptionTriNomEnfant_stored_boolean", designInscriptionTriNomEnfant);
-		}
 		if(designInscriptionTriMoisJourDeNaissance != null) {
 			document.addField("designInscriptionTriMoisJourDeNaissance_indexed_boolean", designInscriptionTriMoisJourDeNaissance);
 			document.addField("designInscriptionTriMoisJourDeNaissance_stored_boolean", designInscriptionTriMoisJourDeNaissance);
@@ -2298,6 +2582,18 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		if(designInscriptionTriNomGroupe != null) {
 			document.addField("designInscriptionTriNomGroupe_indexed_boolean", designInscriptionTriNomGroupe);
 			document.addField("designInscriptionTriNomGroupe_stored_boolean", designInscriptionTriNomGroupe);
+		}
+		if(designInscriptionTriNomEnfant != null) {
+			document.addField("designInscriptionTriNomEnfant_indexed_boolean", designInscriptionTriNomEnfant);
+			document.addField("designInscriptionTriNomEnfant_stored_boolean", designInscriptionTriNomEnfant);
+		}
+		if(rechercherAnnees != null) {
+			document.addField("rechercherAnnees_indexed_boolean", rechercherAnnees);
+			document.addField("rechercherAnnees_stored_boolean", rechercherAnnees);
+		}
+		if(rechercherPaiements != null) {
+			document.addField("rechercherPaiements_indexed_boolean", rechercherPaiements);
+			document.addField("rechercherPaiements_stored_boolean", rechercherPaiements);
 		}
 		super.indexerCluster(document);
 
@@ -2344,12 +2640,16 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 				return "designIgnorerPaiementsEnSouffrance_indexed_boolean";
 			case "designFiltrerInscriptionCle":
 				return "designFiltrerInscriptionCle_indexed_boolean";
-			case "designInscriptionTriNomEnfant":
-				return "designInscriptionTriNomEnfant_indexed_boolean";
 			case "designInscriptionTriMoisJourDeNaissance":
 				return "designInscriptionTriMoisJourDeNaissance_indexed_boolean";
 			case "designInscriptionTriNomGroupe":
 				return "designInscriptionTriNomGroupe_indexed_boolean";
+			case "designInscriptionTriNomEnfant":
+				return "designInscriptionTriNomEnfant_indexed_boolean";
+			case "rechercherAnnees":
+				return "rechercherAnnees_indexed_boolean";
+			case "rechercherPaiements":
+				return "rechercherPaiements_indexed_boolean";
 			default:
 				return Cluster.varIndexeCluster(entiteVar);
 		}
@@ -2423,10 +2723,6 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		if(designFiltrerInscriptionCle != null)
 			oDesignPage.setDesignFiltrerInscriptionCle(designFiltrerInscriptionCle);
 
-		Boolean designInscriptionTriNomEnfant = (Boolean)solrDocument.get("designInscriptionTriNomEnfant_stored_boolean");
-		if(designInscriptionTriNomEnfant != null)
-			oDesignPage.setDesignInscriptionTriNomEnfant(designInscriptionTriNomEnfant);
-
 		Boolean designInscriptionTriMoisJourDeNaissance = (Boolean)solrDocument.get("designInscriptionTriMoisJourDeNaissance_stored_boolean");
 		if(designInscriptionTriMoisJourDeNaissance != null)
 			oDesignPage.setDesignInscriptionTriMoisJourDeNaissance(designInscriptionTriMoisJourDeNaissance);
@@ -2434,6 +2730,18 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		Boolean designInscriptionTriNomGroupe = (Boolean)solrDocument.get("designInscriptionTriNomGroupe_stored_boolean");
 		if(designInscriptionTriNomGroupe != null)
 			oDesignPage.setDesignInscriptionTriNomGroupe(designInscriptionTriNomGroupe);
+
+		Boolean designInscriptionTriNomEnfant = (Boolean)solrDocument.get("designInscriptionTriNomEnfant_stored_boolean");
+		if(designInscriptionTriNomEnfant != null)
+			oDesignPage.setDesignInscriptionTriNomEnfant(designInscriptionTriNomEnfant);
+
+		Boolean rechercherAnnees = (Boolean)solrDocument.get("rechercherAnnees_stored_boolean");
+		if(rechercherAnnees != null)
+			oDesignPage.setRechercherAnnees(rechercherAnnees);
+
+		Boolean rechercherPaiements = (Boolean)solrDocument.get("rechercherPaiements_stored_boolean");
+		if(rechercherPaiements != null)
+			oDesignPage.setRechercherPaiements(rechercherPaiements);
 
 		super.stockerCluster(solrDocument);
 	}
@@ -2469,12 +2777,16 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 				requeteApi.addVars("designIgnorerPaiementsEnSouffrance");
 			if(!Objects.equals(designFiltrerInscriptionCle, original.getDesignFiltrerInscriptionCle()))
 				requeteApi.addVars("designFiltrerInscriptionCle");
-			if(!Objects.equals(designInscriptionTriNomEnfant, original.getDesignInscriptionTriNomEnfant()))
-				requeteApi.addVars("designInscriptionTriNomEnfant");
 			if(!Objects.equals(designInscriptionTriMoisJourDeNaissance, original.getDesignInscriptionTriMoisJourDeNaissance()))
 				requeteApi.addVars("designInscriptionTriMoisJourDeNaissance");
 			if(!Objects.equals(designInscriptionTriNomGroupe, original.getDesignInscriptionTriNomGroupe()))
 				requeteApi.addVars("designInscriptionTriNomGroupe");
+			if(!Objects.equals(designInscriptionTriNomEnfant, original.getDesignInscriptionTriNomEnfant()))
+				requeteApi.addVars("designInscriptionTriNomEnfant");
+			if(!Objects.equals(rechercherAnnees, original.getRechercherAnnees()))
+				requeteApi.addVars("rechercherAnnees");
+			if(!Objects.equals(rechercherPaiements, original.getRechercherPaiements()))
+				requeteApi.addVars("rechercherPaiements");
 			super.requeteApiCluster();
 		}
 	}
@@ -2484,7 +2796,7 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), designPageCle, designEnfantCles, designParentCles, partHtmlCles, designPageNomComplet, designCache, designAdmin, designIgnorerNomEnfantVide, designIgnorerPaiementsPasEnSouffrance, designIgnorerPaiementsEnSouffrance, designFiltrerInscriptionCle, designInscriptionTriNomEnfant, designInscriptionTriMoisJourDeNaissance, designInscriptionTriNomGroupe);
+		return Objects.hash(super.hashCode(), designPageCle, designEnfantCles, designParentCles, partHtmlCles, designPageNomComplet, designCache, designAdmin, designIgnorerNomEnfantVide, designIgnorerPaiementsPasEnSouffrance, designIgnorerPaiementsEnSouffrance, designFiltrerInscriptionCle, designInscriptionTriMoisJourDeNaissance, designInscriptionTriNomGroupe, designInscriptionTriNomEnfant, rechercherAnnees, rechercherPaiements);
 	}
 
 	////////////
@@ -2509,9 +2821,11 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 				&& Objects.equals( designIgnorerPaiementsPasEnSouffrance, that.designIgnorerPaiementsPasEnSouffrance )
 				&& Objects.equals( designIgnorerPaiementsEnSouffrance, that.designIgnorerPaiementsEnSouffrance )
 				&& Objects.equals( designFiltrerInscriptionCle, that.designFiltrerInscriptionCle )
-				&& Objects.equals( designInscriptionTriNomEnfant, that.designInscriptionTriNomEnfant )
 				&& Objects.equals( designInscriptionTriMoisJourDeNaissance, that.designInscriptionTriMoisJourDeNaissance )
-				&& Objects.equals( designInscriptionTriNomGroupe, that.designInscriptionTriNomGroupe );
+				&& Objects.equals( designInscriptionTriNomGroupe, that.designInscriptionTriNomGroupe )
+				&& Objects.equals( designInscriptionTriNomEnfant, that.designInscriptionTriNomEnfant )
+				&& Objects.equals( rechercherAnnees, that.rechercherAnnees )
+				&& Objects.equals( rechercherPaiements, that.rechercherPaiements );
 	}
 
 	//////////////
@@ -2533,9 +2847,11 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		sb.append( ", designIgnorerPaiementsPasEnSouffrance: " ).append(designIgnorerPaiementsPasEnSouffrance);
 		sb.append( ", designIgnorerPaiementsEnSouffrance: " ).append(designIgnorerPaiementsEnSouffrance);
 		sb.append( ", designFiltrerInscriptionCle: " ).append(designFiltrerInscriptionCle);
-		sb.append( ", designInscriptionTriNomEnfant: " ).append(designInscriptionTriNomEnfant);
 		sb.append( ", designInscriptionTriMoisJourDeNaissance: " ).append(designInscriptionTriMoisJourDeNaissance);
 		sb.append( ", designInscriptionTriNomGroupe: " ).append(designInscriptionTriNomGroupe);
+		sb.append( ", designInscriptionTriNomEnfant: " ).append(designInscriptionTriNomEnfant);
+		sb.append( ", rechercherAnnees: " ).append(rechercherAnnees);
+		sb.append( ", rechercherPaiements: " ).append(rechercherPaiements);
 		sb.append(" }");
 		return sb.toString();
 	}

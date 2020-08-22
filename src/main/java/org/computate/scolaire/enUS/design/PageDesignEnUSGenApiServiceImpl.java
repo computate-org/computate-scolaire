@@ -508,19 +508,6 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 							});
 						}));
 						break;
-					case "designEnrollmentSortChildName":
-						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "designEnrollmentSortChildName", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
-									, b
-							-> {
-								if(b.succeeded())
-									a.handle(Future.succeededFuture());
-								else
-									a.handle(Future.failedFuture(new Exception("value PageDesign.designEnrollmentSortChildName failed", b.cause())));
-							});
-						}));
-						break;
 					case "designEnrollmentSortMonthDayOfBirth":
 						futures.add(Future.future(a -> {
 							tx.preparedQuery(SiteContextEnUS.SQL_setD
@@ -544,6 +531,45 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 									a.handle(Future.succeededFuture());
 								else
 									a.handle(Future.failedFuture(new Exception("value PageDesign.designEnrollmentSortGroupName failed", b.cause())));
+							});
+						}));
+						break;
+					case "designEnrollmentSortChildName":
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "designEnrollmentSortChildName", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value PageDesign.designEnrollmentSortChildName failed", b.cause())));
+							});
+						}));
+						break;
+					case "searchYears":
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "searchYears", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value PageDesign.searchYears failed", b.cause())));
+							});
+						}));
+						break;
+					case "searchPayments":
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "searchPayments", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value PageDesign.searchPayments failed", b.cause())));
 							});
 						}));
 						break;
@@ -1364,19 +1390,6 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 							});
 						}));
 						break;
-					case "designEnrollmentSortChildName":
-						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "designEnrollmentSortChildName", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
-									, b
-							-> {
-								if(b.succeeded())
-									a.handle(Future.succeededFuture());
-								else
-									a.handle(Future.failedFuture(new Exception("value PageDesign.designEnrollmentSortChildName failed", b.cause())));
-							});
-						}));
-						break;
 					case "designEnrollmentSortMonthDayOfBirth":
 						futures.add(Future.future(a -> {
 							tx.preparedQuery(SiteContextEnUS.SQL_setD
@@ -1400,6 +1413,45 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 									a.handle(Future.succeededFuture());
 								else
 									a.handle(Future.failedFuture(new Exception("value PageDesign.designEnrollmentSortGroupName failed", b.cause())));
+							});
+						}));
+						break;
+					case "designEnrollmentSortChildName":
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "designEnrollmentSortChildName", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value PageDesign.designEnrollmentSortChildName failed", b.cause())));
+							});
+						}));
+						break;
+					case "searchYears":
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "searchYears", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value PageDesign.searchYears failed", b.cause())));
+							});
+						}));
+						break;
+					case "searchPayments":
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "searchPayments", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value PageDesign.searchPayments failed", b.cause())));
 							});
 						}));
 						break;
@@ -2433,34 +2485,6 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 							}));
 						}
 						break;
-					case "setDesignEnrollmentSortChildName":
-						if(jsonObject.getBoolean(methodName) == null) {
-							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "designEnrollmentSortChildName")
-										, b
-								-> {
-									if(b.succeeded())
-										a.handle(Future.succeededFuture());
-									else
-										a.handle(Future.failedFuture(new Exception("value PageDesign.designEnrollmentSortChildName failed", b.cause())));
-								});
-							}));
-						} else {
-							o2.setDesignEnrollmentSortChildName(jsonObject.getBoolean(methodName));
-							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "designEnrollmentSortChildName", o2.jsonDesignEnrollmentSortChildName())
-										, b
-								-> {
-									if(b.succeeded())
-										a.handle(Future.succeededFuture());
-									else
-										a.handle(Future.failedFuture(new Exception("value PageDesign.designEnrollmentSortChildName failed", b.cause())));
-								});
-							}));
-						}
-						break;
 					case "setDesignEnrollmentSortMonthDayOfBirth":
 						if(jsonObject.getBoolean(methodName) == null) {
 							futures.add(Future.future(a -> {
@@ -2513,6 +2537,90 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 										a.handle(Future.succeededFuture());
 									else
 										a.handle(Future.failedFuture(new Exception("value PageDesign.designEnrollmentSortGroupName failed", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setDesignEnrollmentSortChildName":
+						if(jsonObject.getBoolean(methodName) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "designEnrollmentSortChildName")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value PageDesign.designEnrollmentSortChildName failed", b.cause())));
+								});
+							}));
+						} else {
+							o2.setDesignEnrollmentSortChildName(jsonObject.getBoolean(methodName));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "designEnrollmentSortChildName", o2.jsonDesignEnrollmentSortChildName())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value PageDesign.designEnrollmentSortChildName failed", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setSearchYears":
+						if(jsonObject.getBoolean(methodName) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "searchYears")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value PageDesign.searchYears failed", b.cause())));
+								});
+							}));
+						} else {
+							o2.setSearchYears(jsonObject.getBoolean(methodName));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "searchYears", o2.jsonSearchYears())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value PageDesign.searchYears failed", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setSearchPayments":
+						if(jsonObject.getBoolean(methodName) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "searchPayments")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value PageDesign.searchPayments failed", b.cause())));
+								});
+							}));
+						} else {
+							o2.setSearchPayments(jsonObject.getBoolean(methodName));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "searchPayments", o2.jsonSearchPayments())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value PageDesign.searchPayments failed", b.cause())));
 								});
 							}));
 						}

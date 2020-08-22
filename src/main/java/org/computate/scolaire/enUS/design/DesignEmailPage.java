@@ -7,6 +7,9 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -19,6 +22,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -481,7 +485,7 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 		l.setC(SchoolYear.class);
 
 		Long yearKey = Optional.ofNullable(enrollmentSearch.first()).map(SchoolEnrollment::getYearKey).orElse(null);
-		if(attachmentDesignId != null && attachmentDesignId.endsWith("-enrollment-form") && yearKey != null) {
+		if(attachmentDesignId != null && StringUtils.equalsAny(attachmentDesignId, "main-enrollment-form", "tax-year") && yearKey != null) {
 			l.addFilterQuery("pk_indexed_long:" + yearKey);
 		} else {
 			for(String var : siteRequest_.getRequestVars().keySet()) {
@@ -496,7 +500,7 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 	}
 
 	protected void _year_(Wrap<SchoolYear> c) {
-		if(pageDesignId.endsWith("-enrollment-form") || "enrollment-sent".equals(pageDesignId)) {
+		if(pageDesignId.endsWith("-enrollment-form") || "enrollment-sent".equals(pageDesignId) || BooleanUtils.isTrue(pageDesign_.getSearchYears())) {
 			if(yearSearch.size() == 0) {
 				throw new RuntimeException("No year was found for the query: " + siteRequest_.getOperationRequest().getParams().getJsonObject("query").encode());
 			}
@@ -522,6 +526,12 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 	protected void _yearEnd(Wrap<Integer> c) {
 		if(year_ != null)
 			c.o(year_.getYearEnd());
+	}
+
+	protected void _yearVar(Wrap<String> c) {
+		String o = siteRequest_.getRequestVars().get("year");
+		if(o != null)
+			c.o(o);
 	}
 
 	/////////////
@@ -741,11 +751,14 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 	}
 
 	protected void _paymentSearch(SearchList<SchoolPayment> l) {
-		if(pageDesignId.equals("payment-receipt")) {
+		if(pageDesignId.equals("payment-receipt") || BooleanUtils.isTrue(pageDesign_.getSearchPayments())) {
 			l.setStore(true);
 			l.setQuery("*:*");
 			l.setC(SchoolPayment.class);
-			l.setRows(1);
+			if(pageDesignId.equals("payment-receipt"))
+				l.setRows(1);
+			else 
+				l.setRows(100);
 	
 			List<String> roles = Arrays.asList("SiteManager");
 			if(
@@ -762,6 +775,14 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 			l.add("json.facet", "{sum_chargeAmountDue:'sum(chargeAmountDue_indexed_double)'}");
 			l.add("json.facet", "{sum_chargeAmountFuture:'sum(chargeAmountFuture_indexed_double)'}");
 			l.addFilterQuery("paymentAmount_indexed_double:[* TO *]");
+
+			if(StringUtils.equalsAny(attachmentDesignId, "tax-year")) {
+				Integer year = Integer.parseInt(siteRequest_.getRequestVars().get("year"));
+				ZoneId zoneId = ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone());
+				String start = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.of(year, 1, 1, 0, 0, 0, 0, zoneId).withZoneSameInstant(ZoneId.of("UTC")));
+				String end = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.of(year, 12, 31, 23, 59, 59, 999, zoneId).withZoneSameInstant(ZoneId.of("UTC")));
+				l.addFilterQuery("paymentDate_indexed_date:[" + start + " TO " + end + "]");
+			}
 	
 			for(String var : siteRequest_.getRequestVars().keySet()) {
 				String val = siteRequest_.getRequestVars().get(var);

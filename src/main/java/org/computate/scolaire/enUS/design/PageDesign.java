@@ -68,15 +68,23 @@ public class PageDesign extends PageDesignGen<Cluster> {
 		c.o(false);
 	}
 
-	protected void _designEnrollmentSortChildName(Wrap<Boolean> c) {
-		c.o(false);
-	}
-
 	protected void _designEnrollmentSortMonthDayOfBirth(Wrap<Boolean> c) {
 		c.o(false);
 	}
 
 	protected void _designEnrollmentSortGroupName(Wrap<Boolean> c) {
+		c.o(false);
+	}
+
+	protected void _designEnrollmentSortChildName(Wrap<Boolean> c) {
+		c.o(false);
+	}
+
+	protected void _searchYears(Wrap<Boolean> c) {
+		c.o(false);
+	}
+
+	protected void _searchPayments(Wrap<Boolean> c) {
 		c.o(false);
 	}
 

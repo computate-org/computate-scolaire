@@ -239,6 +239,16 @@ public class EnrollmentPage extends EnrollmentPageGen<EnrollmentGenPage> {
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 					) {
+				{ e("div").a("class", "w3-cell-row ").f();
+					{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile  ").f();
+						{ e("div").a("class", "w3-padding ").f();
+							e("a").a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ").a("href", "/pdf/tax-year?var=enrollmentKey:", o.getPk(), "&var=year:", schoolEnrollment_.getYearStart()).f().sx(schoolEnrollment_.getYearStart() + " tax form").g("a");
+						} g("div");
+						{ e("div").a("class", "w3-padding ").f();
+							e("a").a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ").a("href", "/pdf/tax-year?var=enrollmentKey:", o.getPk(), "&var=year:", schoolEnrollment_.getYearEnd()).f().sx(schoolEnrollment_.getYearEnd() + " tax form").g("a");
+						} g("div");
+					} g("div");
+				} g("div");
 				LocalDate lateFeeDate = LocalDate.now().plusDays(15);
 				{ e("div").a("class", "w3-cell w3-cell-middle w3-center w3-mobile w3-padding ").f();
 					{ e("div").a("class", "").f();

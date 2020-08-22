@@ -508,19 +508,6 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 							});
 						}));
 						break;
-					case "designInscriptionTriNomEnfant":
-						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "designInscriptionTriNomEnfant", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
-									, b
-							-> {
-								if(b.succeeded())
-									a.handle(Future.succeededFuture());
-								else
-									a.handle(Future.failedFuture(new Exception("valeur DesignPage.designInscriptionTriNomEnfant a échoué", b.cause())));
-							});
-						}));
-						break;
 					case "designInscriptionTriMoisJourDeNaissance":
 						futures.add(Future.future(a -> {
 							tx.preparedQuery(SiteContexteFrFR.SQL_setD
@@ -544,6 +531,45 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 									a.handle(Future.succeededFuture());
 								else
 									a.handle(Future.failedFuture(new Exception("valeur DesignPage.designInscriptionTriNomGroupe a échoué", b.cause())));
+							});
+						}));
+						break;
+					case "designInscriptionTriNomEnfant":
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "designInscriptionTriNomEnfant", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur DesignPage.designInscriptionTriNomEnfant a échoué", b.cause())));
+							});
+						}));
+						break;
+					case "rechercherAnnees":
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "rechercherAnnees", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur DesignPage.rechercherAnnees a échoué", b.cause())));
+							});
+						}));
+						break;
+					case "rechercherPaiements":
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "rechercherPaiements", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur DesignPage.rechercherPaiements a échoué", b.cause())));
 							});
 						}));
 						break;
@@ -1364,19 +1390,6 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 							});
 						}));
 						break;
-					case "designInscriptionTriNomEnfant":
-						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "designInscriptionTriNomEnfant", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
-									, b
-							-> {
-								if(b.succeeded())
-									a.handle(Future.succeededFuture());
-								else
-									a.handle(Future.failedFuture(new Exception("valeur DesignPage.designInscriptionTriNomEnfant a échoué", b.cause())));
-							});
-						}));
-						break;
 					case "designInscriptionTriMoisJourDeNaissance":
 						futures.add(Future.future(a -> {
 							tx.preparedQuery(SiteContexteFrFR.SQL_setD
@@ -1400,6 +1413,45 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 									a.handle(Future.succeededFuture());
 								else
 									a.handle(Future.failedFuture(new Exception("valeur DesignPage.designInscriptionTriNomGroupe a échoué", b.cause())));
+							});
+						}));
+						break;
+					case "designInscriptionTriNomEnfant":
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "designInscriptionTriNomEnfant", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur DesignPage.designInscriptionTriNomEnfant a échoué", b.cause())));
+							});
+						}));
+						break;
+					case "rechercherAnnees":
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "rechercherAnnees", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur DesignPage.rechercherAnnees a échoué", b.cause())));
+							});
+						}));
+						break;
+					case "rechercherPaiements":
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "rechercherPaiements", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur DesignPage.rechercherPaiements a échoué", b.cause())));
 							});
 						}));
 						break;
@@ -2433,34 +2485,6 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 							}));
 						}
 						break;
-					case "setDesignInscriptionTriNomEnfant":
-						if(jsonObject.getBoolean(methodeNom) == null) {
-							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "designInscriptionTriNomEnfant")
-										, b
-								-> {
-									if(b.succeeded())
-										a.handle(Future.succeededFuture());
-									else
-										a.handle(Future.failedFuture(new Exception("valeur DesignPage.designInscriptionTriNomEnfant a échoué", b.cause())));
-								});
-							}));
-						} else {
-							o2.setDesignInscriptionTriNomEnfant(jsonObject.getBoolean(methodeNom));
-							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "designInscriptionTriNomEnfant", o2.jsonDesignInscriptionTriNomEnfant())
-										, b
-								-> {
-									if(b.succeeded())
-										a.handle(Future.succeededFuture());
-									else
-										a.handle(Future.failedFuture(new Exception("valeur DesignPage.designInscriptionTriNomEnfant a échoué", b.cause())));
-								});
-							}));
-						}
-						break;
 					case "setDesignInscriptionTriMoisJourDeNaissance":
 						if(jsonObject.getBoolean(methodeNom) == null) {
 							futures.add(Future.future(a -> {
@@ -2513,6 +2537,90 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 										a.handle(Future.succeededFuture());
 									else
 										a.handle(Future.failedFuture(new Exception("valeur DesignPage.designInscriptionTriNomGroupe a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setDesignInscriptionTriNomEnfant":
+						if(jsonObject.getBoolean(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "designInscriptionTriNomEnfant")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur DesignPage.designInscriptionTriNomEnfant a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setDesignInscriptionTriNomEnfant(jsonObject.getBoolean(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "designInscriptionTriNomEnfant", o2.jsonDesignInscriptionTriNomEnfant())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur DesignPage.designInscriptionTriNomEnfant a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setRechercherAnnees":
+						if(jsonObject.getBoolean(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "rechercherAnnees")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur DesignPage.rechercherAnnees a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setRechercherAnnees(jsonObject.getBoolean(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "rechercherAnnees", o2.jsonRechercherAnnees())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur DesignPage.rechercherAnnees a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setRechercherPaiements":
+						if(jsonObject.getBoolean(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "rechercherPaiements")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur DesignPage.rechercherPaiements a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setRechercherPaiements(jsonObject.getBoolean(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "rechercherPaiements", o2.jsonRechercherPaiements())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur DesignPage.rechercherPaiements a échoué", b.cause())));
 								});
 							}));
 						}

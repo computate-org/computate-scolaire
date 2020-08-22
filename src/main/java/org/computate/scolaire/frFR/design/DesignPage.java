@@ -146,7 +146,7 @@ public class DesignPage extends DesignPageGen<Cluster> {
 	 * Indexe: true
 	 * Stocke: true
 	 * Attribuer: DesignPage.designEnfantCles
-	 * HtmlLigne: 5
+	 * HtmlLigne: 6
 	 * HtmlCelulle: 1
 	 * NomAffichage.frFR: designs parent
 	 * NomAffichage.enUS: parent designs
@@ -160,7 +160,7 @@ public class DesignPage extends DesignPageGen<Cluster> {
 	 * Indexe: true
 	 * Stocke: true
 	 * Attribuer: PartHtml.designPageCles
-	 * HtmlLigne: 6
+	 * HtmlLigne: 7
 	 * HtmlCellule: 1
 	 * NomAffichage.frFR: parts
 	 * NomAffichage.enUS: parts
@@ -284,25 +284,10 @@ public class DesignPage extends DesignPageGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: designEnrollmentSortChildName
-	 * Definir: true
-	 * HtmlLigne: 4
-	 * HtmlCelulle: 4
-	 * NomAffichage.frFR: inscription tri nom d'enfant
-	 * NomAffichage.enUS: enrollment sort child name
-	 * Indexe: true
-	 * Stocke: true
-	 */                  
-	protected void _designInscriptionTriNomEnfant(Couverture<Boolean> c) {
-		c.o(false);
-	}
-
-	/**
-	 * {@inheritDoc}
 	 * Var.enUS: designEnrollmentSortMonthDayOfBirth
 	 * Definir: true
 	 * HtmlLigne: 4
-	 * HtmlCelulle: 5
+	 * HtmlCelulle: 4
 	 * NomAffichage.frFR: inscription tri mois jour de naissance
 	 * NomAffichage.enUS: enrollment sort month day of birth
 	 * Indexe: true
@@ -317,13 +302,58 @@ public class DesignPage extends DesignPageGen<Cluster> {
 	 * Var.enUS: designEnrollmentSortGroupName
 	 * Definir: true
 	 * HtmlLigne: 4
-	 * HtmlCelulle: 6
+	 * HtmlCelulle: 5
 	 * NomAffichage.frFR: inscription tri nom de groupe
 	 * NomAffichage.enUS: enrollment sort group name
 	 * Indexe: true
 	 * Stocke: true
 	 */                  
 	protected void _designInscriptionTriNomGroupe(Couverture<Boolean> c) {
+		c.o(false);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: designEnrollmentSortChildName
+	 * Definir: true
+	 * HtmlLigne: 4
+	 * HtmlCelulle: 6
+	 * NomAffichage.frFR: inscription tri nom d'enfant
+	 * NomAffichage.enUS: enrollment sort child name
+	 * Indexe: true
+	 * Stocke: true
+	 */                  
+	protected void _designInscriptionTriNomEnfant(Couverture<Boolean> c) {
+		c.o(false);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: searchYears
+	 * Definir: true
+	 * HtmlLigne: 5
+	 * HtmlCelulle: 1
+	 * NomAffichage.frFR: rechercher années
+	 * NomAffichage.enUS: search years
+	 * Indexe: true
+	 * Stocke: true
+	 */                 
+	protected void _rechercherAnnees(Couverture<Boolean> c) {
+		c.o(false);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: searchPayments
+	 * Definir: true
+	 * HtmlLigne: 5
+	 * HtmlCelulle: 1
+	 * NomAffichage.frFR: rechercher paiements
+	 * NomAffichage.enUS: search payments
+	 * Indexe: true
+	 * Stocke: true
+	 */                  
+	protected void _rechercherPaiements(Couverture<Boolean> c) {
 		c.o(false);
 	}
 

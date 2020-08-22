@@ -8,6 +8,9 @@ import java.math.MathContext;
 import java.math.RoundingMode;
 import java.nio.charset.Charset;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -17,6 +20,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -261,7 +265,7 @@ public class DesignPdfPage extends DesignPdfPageGen<DesignPdfGenPage> {
 		l.setC(SchoolYear.class);
 
 		Long yearKey = Optional.ofNullable(enrollmentSearch.first()).map(SchoolEnrollment::getYearKey).orElse(null);
-		if(pageDesignId.endsWith("-enrollment-form") && yearKey != null) {
+		if(StringUtils.equalsAny(pageDesignId, "main-enrollment-form", "tax-year") && yearKey != null) {
 			l.addFilterQuery("pk_indexed_long:" + yearKey);
 		} else {
 			for(String var : siteRequest_.getRequestVars().keySet()) {
@@ -276,7 +280,7 @@ public class DesignPdfPage extends DesignPdfPageGen<DesignPdfGenPage> {
 	}
 
 	protected void _year_(Wrap<SchoolYear> c) {
-		if(pageDesignId.endsWith("-enrollment-form")) {
+		if(pageDesignId.endsWith("-enrollment-form") || BooleanUtils.isTrue(pageDesign_.getSearchYears())) {
 			if(yearSearch.size() == 0) {
 				throw new RuntimeException("No year was found for the query: " + siteRequest_.getOperationRequest().getParams().getJsonObject("query").encode());
 			}
@@ -292,6 +296,12 @@ public class DesignPdfPage extends DesignPdfPageGen<DesignPdfGenPage> {
 	protected void _yearKey(Wrap<Long> c) {
 		if(year_ != null)
 			c.o(year_.getPk());
+	}
+
+	protected void _yearVar(Wrap<String> c) {
+		String o = siteRequest_.getRequestVars().get("year");
+		if(o != null)
+			c.o(o);
 	}
 
 	protected void _schoolSearch(SearchList<School> l) {
@@ -329,11 +339,14 @@ public class DesignPdfPage extends DesignPdfPageGen<DesignPdfGenPage> {
 	}
 
 	protected void _paymentSearch(SearchList<SchoolPayment> l) {
-		if(pageDesignId.equals("payment-receipt")) {
+		if(pageDesignId.equals("payment-receipt") || BooleanUtils.isTrue(pageDesign_.getSearchPayments())) {
 			l.setStore(true);
 			l.setQuery("*:*");
 			l.setC(SchoolPayment.class);
-			l.setRows(1);
+			if(pageDesignId.equals("payment-receipt"))
+				l.setRows(1);
+			else 
+				l.setRows(100);
 	
 			List<String> roles = Arrays.asList("SiteManager");
 			if(
@@ -350,6 +363,14 @@ public class DesignPdfPage extends DesignPdfPageGen<DesignPdfGenPage> {
 			l.add("json.facet", "{sum_chargeAmountDue:'sum(chargeAmountDue_indexed_double)'}");
 			l.add("json.facet", "{sum_chargeAmountFuture:'sum(chargeAmountFuture_indexed_double)'}");
 			l.addFilterQuery("paymentAmount_indexed_double:[* TO *]");
+
+			if(StringUtils.equalsAny(pageDesignId, "tax-year")) {
+				Integer year = Integer.parseInt(siteRequest_.getRequestVars().get("year"));
+				ZoneId zoneId = ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone());
+				String start = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.of(year, 1, 1, 0, 0, 0, 0, zoneId).withZoneSameInstant(ZoneId.of("UTC")));
+				String end = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.of(year, 12, 31, 23, 59, 59, 999, zoneId).withZoneSameInstant(ZoneId.of("UTC")));
+				l.addFilterQuery("paymentDate_indexed_date:[" + start + " TO " + end + "]");
+			}
 	
 			for(String var : siteRequest_.getRequestVars().keySet()) {
 				String val = siteRequest_.getRequestVars().get(var);

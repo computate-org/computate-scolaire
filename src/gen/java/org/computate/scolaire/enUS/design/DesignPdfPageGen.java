@@ -692,6 +692,68 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		return yearKey == null ? "" : StringEscapeUtils.escapeHtml4(strYearKey());
 	}
 
+	/////////////
+	// yearVar //
+	/////////////
+
+	/**	 The entity yearVar
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String yearVar;
+	@JsonIgnore
+	public Wrap<String> yearVarWrap = new Wrap<String>().p(this).c(String.class).var("yearVar").o(yearVar);
+
+	/**	<br/> The entity yearVar
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignPdfPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:yearVar">Find the entity yearVar in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _yearVar(Wrap<String> c);
+
+	public String getYearVar() {
+		return yearVar;
+	}
+
+	public void setYearVar(String yearVar) {
+		this.yearVar = yearVar;
+		this.yearVarWrap.alreadyInitialized = true;
+	}
+	protected DesignPdfPage yearVarInit() {
+		if(!yearVarWrap.alreadyInitialized) {
+			_yearVar(yearVarWrap);
+			if(yearVar == null)
+				setYearVar(yearVarWrap.o);
+		}
+		yearVarWrap.alreadyInitialized(true);
+		return (DesignPdfPage)this;
+	}
+
+	public String solrYearVar() {
+		return yearVar;
+	}
+
+	public String strYearVar() {
+		return yearVar == null ? "" : yearVar;
+	}
+
+	public String jsonYearVar() {
+		return yearVar == null ? "" : yearVar;
+	}
+
+	public String nomAffichageYearVar() {
+		return null;
+	}
+
+	public String htmTooltipYearVar() {
+		return null;
+	}
+
+	public String htmYearVar() {
+		return yearVar == null ? "" : StringEscapeUtils.escapeHtml4(strYearVar());
+	}
+
 	//////////////////
 	// schoolSearch //
 	//////////////////
@@ -3294,6 +3356,7 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		yearSearchInit();
 		year_Init();
 		yearKeyInit();
+		yearVarInit();
 		schoolSearchInit();
 		school_Init();
 		paymentSearchInit();
@@ -3440,6 +3503,8 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 				return oDesignPdfPage.year_;
 			case "yearKey":
 				return oDesignPdfPage.yearKey;
+			case "yearVar":
+				return oDesignPdfPage.yearVar;
 			case "schoolSearch":
 				return oDesignPdfPage.schoolSearch;
 			case "school_":
