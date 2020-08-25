@@ -1144,7 +1144,7 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	protected void _paiementProchain(Couverture<LocalDate> c) {
 		ConfigSite configSite = requeteSite_.getConfigSite_();
 		Integer paiementJour = configSite.getPaiementJour();
-		c.o(LocalDate.now().getDayOfMonth() < paiementJour ? now.withDayOfMonth(paiementJour) : now.plusMonths(1).withDayOfMonth(paiementJour));
+		c.o(now.getDayOfMonth() < paiementJour ? now.withDayOfMonth(paiementJour) : now.plusMonths(1).withDayOfMonth(paiementJour));
 	}
 
 	/**
@@ -1189,7 +1189,7 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	protected void _fraisMontantDu(Couverture<BigDecimal> c) {
 		if(fraisMontant != null && (fraisInscription && paiementDate.compareTo(now.plusDays(15)) <= 0
 				|| fraisPremierDernier && paiementDate.compareTo(now.plusDays(15)) <= 0
-				|| paiementDate != null && paiementDate.compareTo(now.plusDays(15)) <= 0 && paiementDate.compareTo(now.minusDays(1)) >= 0) && paiementDate.compareTo(paiementProchain.minusMonths(1)) > 0 && paiementDate.compareTo(paiementProchain) <= 0)
+				|| paiementDate != null && paiementDate.compareTo(now.plusDays(15)) <= 0 && paiementDate.compareTo(now.minusDays(1)) >= 0) && (fraisInscription || fraisPremierDernier || paiementDate.compareTo(paiementProchain.minusMonths(1)) > 0) && paiementDate.compareTo(paiementProchain) <= 0)
 			c.o(fraisMontant);
 	}
 

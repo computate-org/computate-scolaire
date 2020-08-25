@@ -306,13 +306,13 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 	protected void _paymentNext(Wrap<LocalDate> c) {
 		SiteConfig siteConfig = siteRequest_.getSiteConfig_();
 		Integer paymentDay = siteConfig.getPaymentDay();
-		c.o(LocalDate.now().getDayOfMonth() < paymentDay ? now.withDayOfMonth(paymentDay) : now.plusMonths(1).withDayOfMonth(paymentDay));
+		c.o(now.getDayOfMonth() < paymentDay ? now.withDayOfMonth(paymentDay) : now.plusMonths(1).withDayOfMonth(paymentDay));
 	}
 
 	protected void _chargeAmountDue(Wrap<BigDecimal> c) {
 		if(chargeAmount != null && (chargeEnrollment && paymentDate.compareTo(now.plusDays(15)) <= 0
 				|| chargeFirstLast && paymentDate.compareTo(now.plusDays(15)) <= 0
-				|| paymentDate != null && paymentDate.compareTo(now.plusDays(15)) <= 0 && paymentDate.compareTo(now.minusDays(1)) >= 0) && paymentDate.compareTo(paymentNext.minusMonths(1)) > 0 && paymentDate.compareTo(paymentNext) <= 0)
+				|| paymentDate != null && paymentDate.compareTo(now.plusDays(15)) <= 0 && paymentDate.compareTo(now.minusDays(1)) >= 0) && (chargeEnrollment || chargeFirstLast || paymentDate.compareTo(paymentNext.minusMonths(1).minusDays(1)) > 0) && paymentDate.compareTo(paymentNext) <= 0)
 			c.o(chargeAmount);
 	}
 
