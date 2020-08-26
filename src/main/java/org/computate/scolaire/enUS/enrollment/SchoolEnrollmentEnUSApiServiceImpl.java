@@ -26,6 +26,7 @@ import org.apache.solr.client.solrj.SolrQuery.ORDER;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.client.solrj.util.ClientUtils;
 import org.apache.solr.common.util.SimpleOrderedMap;
+import org.computate.scolaire.enUS.cluster.ClusterGen;
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
 import org.computate.scolaire.enUS.payment.SchoolPayment;
@@ -208,9 +209,9 @@ public class SchoolEnrollmentEnUSApiServiceImpl extends SchoolEnrollmentEnUSGenA
 								}
 
 								SchoolEnrollment schoolEnrollment = listSchoolEnrollment.first();
-								SchoolEnrollmentEnUSApiServiceImpl enrollmentService = new SchoolEnrollmentEnUSApiServiceImpl(siteContext);
+								SchoolPaymentEnUSApiServiceImpl paymentService = new SchoolPaymentEnUSApiServiceImpl(siteContext);
 
-								enrollmentChargesFuture(schoolEnrollment, d -> {
+								futureAuthorizeNetEnrollmentCharges(listSchoolEnrollment, paymentService, this, d -> {
 									if(d.succeeded()) {
 //										authorizeNetEnrollmentPaymentsFuture(schoolEnrollment, e -> {
 //											if(e.succeeded()) {
@@ -250,19 +251,19 @@ public class SchoolEnrollmentEnUSApiServiceImpl extends SchoolEnrollmentEnUSGenA
 //
 //												CompositeFuture.all(futures).setHandler(f -> {
 //													if(f.succeeded()) {
-//														SiteRequestEnUS siteRequest2 = enrollmentService.generateSiteRequestEnUSForSchoolEnrollment(siteContext, siteRequest.getOperationRequest(), new JsonObject());
-//														ApiRequest apiRequest2 = new ApiRequest();
-//														apiRequest2.setRows(1);
-//														apiRequest2.setNumFound(1l);
-//														apiRequest2.setNumPATCH(0L);
-//														apiRequest2.initDeepApiRequest(siteRequest2);
-//														siteRequest2.setApiRequest_(apiRequest2);
-//														siteRequest2.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest2).toString());
-//							
-//														schoolEnrollment.setSiteRequest_(siteRequest2);
-//		
-//														enrollmentService.patchSchoolEnrollmentFuture(schoolEnrollment, false, g -> {
-//															if(g.succeeded()) {
+														SiteRequestEnUS siteRequest2 = generateSiteRequestEnUSForSchoolEnrollment(siteContext, siteRequest.getOperationRequest(), new JsonObject());
+														ApiRequest apiRequest2 = new ApiRequest();
+														apiRequest2.setRows(1);
+														apiRequest2.setNumFound(1l);
+														apiRequest2.setNumPATCH(0L);
+														apiRequest2.initDeepApiRequest(siteRequest2);
+														siteRequest2.setApiRequest_(apiRequest2);
+														siteRequest2.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest2).toString());
+							
+														schoolEnrollment.setSiteRequest_(siteRequest2);
+		
+														patchSchoolEnrollmentFuture(schoolEnrollment, false, g -> {
+															if(g.succeeded()) {
 																LOGGER.info("Refreshing enrollment succeeded. ");
 																CaseInsensitiveHeaders requestHeaders = new CaseInsensitiveHeaders();
 																requestHeaders.add("Location", "/enrollment/" + schoolEnrollment.getPk().toString());
@@ -276,11 +277,11 @@ public class SchoolEnrollmentEnUSApiServiceImpl extends SchoolEnrollmentEnUSGenA
 //																		errorSchoolEnrollment(siteRequest, eventHandler, h);
 //																	}
 //																});
-//															} else {
-//																LOGGER.error("Refreshing enrollment succeeded. ", g.cause());
-//																errorSchoolEnrollment(siteRequest, eventHandler, g);
-//															}
-//														});
+															} else {
+																LOGGER.error("Refreshing enrollment succeeded. ", g.cause());
+																errorSchoolEnrollment(siteRequest, eventHandler, g);
+															}
+														});
 //													} else {
 //														LOGGER.error("Refresh relations failed. ", f.cause());
 //														errorSchoolEnrollment(siteRequest, eventHandler, f);
@@ -314,6 +315,99 @@ public class SchoolEnrollmentEnUSApiServiceImpl extends SchoolEnrollmentEnUSGenA
 			LOGGER.error(String.format("refreshsearchpageSchoolEnrollment failed. ", ex));
 			errorSchoolEnrollment(siteRequest, eventHandler, Future.failedFuture(ex));
 		}
+	}
+
+	public void  futureAuthorizeNetEnrollmentCharges(SearchList<SchoolEnrollment> listSchoolEnrollment, SchoolPaymentEnUSApiServiceImpl paymentService, SchoolEnrollmentEnUSApiServiceImpl enrollmentService, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		List<Future> futures1 = new ArrayList<>();
+		SiteRequestEnUS siteRequest = listSchoolEnrollment.getSiteRequest_();
+		SiteContextEnUS siteContextEnUS = siteRequest.getSiteContext_();
+		listSchoolEnrollment.getList().forEach(o -> {
+
+			SearchList<SchoolPayment> searchList2 = new SearchList<SchoolPayment>();
+			searchList2.setStore(true);
+			searchList2.setQuery("*:*");
+			searchList2.setC(SchoolPayment.class);
+			searchList2.addFilterQuery("enrollmentKey_indexed_long:" + o.getPk());
+			searchList2.setRows(100);
+			searchList2.initDeepSearchList(siteRequest);
+
+			for(SchoolPayment o2 : searchList2.getList()) {
+				SchoolPaymentEnUSApiServiceImpl service = new SchoolPaymentEnUSApiServiceImpl(siteRequest.getSiteContext_());
+				SiteRequestEnUS siteRequest2 = paymentService.generateSiteRequestEnUSForSchoolPayment(siteContextEnUS, siteRequest.getOperationRequest(), new JsonObject());
+				ApiRequest apiRequest2 = new ApiRequest();
+				apiRequest2.setRows(1);
+				apiRequest2.setNumFound(1l);
+				apiRequest2.setNumPATCH(0L);
+				apiRequest2.initDeepApiRequest(siteRequest2);
+				siteRequest2.setApiRequest_(apiRequest2);
+				siteRequest2.getVertx().eventBus().publish("websocketSchoolPayment", JsonObject.mapFrom(apiRequest2).toString());
+
+				o2.setSiteRequest_(siteRequest2);
+				futures1.add(
+					service.patchSchoolPaymentFuture(o2, false, c -> {
+						if(c.succeeded()) {
+						} else {
+							LOGGER.info(String.format("SchoolPayment %s failed. ", o2.getPk()));
+							eventHandler.handle(Future.failedFuture(c.cause()));
+						}
+					})
+				);
+			}
+
+			CompositeFuture.all(futures1).setHandler(f -> {
+				if(f.succeeded()) {
+					enrollmentService.enrollmentChargesFuture(o, a -> {
+						if(a.succeeded()) {
+	//						enrollmentService.authorizeNetEnrollmentPaymentsFuture(o, b -> {
+	//							if(b.succeeded()) {
+									LOGGER.info("Creating charges for customer %s succeeded. ");
+									List<Future> futures2 = new ArrayList<>();
+									SiteRequestEnUS siteRequest2 = enrollmentService.generateSiteRequestEnUSForSchoolEnrollment(siteContextEnUS, siteRequest.getOperationRequest(), new JsonObject());
+									ApiRequest apiRequest2 = new ApiRequest();
+									apiRequest2.setRows(1);
+									apiRequest2.setNumFound(1l);
+									apiRequest2.setNumPATCH(0L);
+									apiRequest2.initDeepApiRequest(siteRequest2);
+									siteRequest2.setApiRequest_(apiRequest2);
+									siteRequest2.getVertx().eventBus().publish("websocketSchoolEnrollment", JsonObject.mapFrom(apiRequest2).toString());
+		
+									o.setSiteRequest_(siteRequest2);
+
+									enrollmentService.patchSchoolEnrollmentFuture(o, false, g -> {
+										if(g.succeeded()) {
+											LOGGER.info("Refreshing enrollment succeeded. ");
+										} else {
+											LOGGER.error("Refreshing enrollment succeeded. ", g.cause());
+											errorSchoolEnrollment(siteRequest, eventHandler, g);
+										}
+									});
+	//							} else {
+	//								LOGGER.error(String.format("refreshsearchpageSchoolEnrollment failed. ", b.cause()));
+	//								errorAppVertx(siteRequest, b);
+	//							}
+	//						});
+						} else {
+							errorSchoolEnrollment(siteRequest, eventHandler, a);
+						}
+					});
+				} else {
+					LOGGER.error("Refresh relations failed. ", f.cause());
+					errorSchoolEnrollment(siteRequest, eventHandler, f);
+				}
+			});
+		});
+		CompositeFuture.all(futures1).setHandler( a -> {
+			if(a.succeeded()) {
+				if(listSchoolEnrollment.next()) {
+//					futureAuthorizeNetEnrollmentCharges(listSchoolEnrollment, paymentService, enrollmentService, eventHandler);
+					LOGGER.info("Create a list of charges has succeeded. ");
+				} else {
+					eventHandler.handle(Future.succeededFuture());
+				}
+			} else {
+				errorSchoolEnrollment(listSchoolEnrollment.getSiteRequest_(), eventHandler, a);
+			}
+		});
 	}
 
 	@Override public void listPATCHPaymentsSchoolEnrollment(ApiRequest apiRequest, SearchList<SchoolEnrollment> listSchoolEnrollment, String dt, Handler<AsyncResult<OperationResponse>> eventHandler) {
@@ -429,6 +523,7 @@ public class SchoolEnrollmentEnUSApiServiceImpl extends SchoolEnrollmentEnUSGenA
 			searchList.add("json.facet", "{sum_chargeAmount:'sum(chargeAmount_indexed_double)'}");
 			searchList.add("json.facet", "{sum_chargeAmountDue:'sum(chargeAmountDue_indexed_double)'}");
 			searchList.add("json.facet", "{sum_chargeAmountFuture:'sum(chargeAmountFuture_indexed_double)'}");
+			searchList.add("json.facet", "{sum_chargeAmountPassed:'sum(chargeAmountPassed_indexed_double)'}");
 			searchList.addSort("paymentDate_indexed_date", ORDER.desc);
 			searchList.setRows(0);
 			searchList.initDeepSearchList(siteRequest);
@@ -441,6 +536,7 @@ public class SchoolEnrollmentEnUSApiServiceImpl extends SchoolEnrollmentEnUSGenA
 			BigDecimal chargeAmount = Optional.ofNullable((Double)facets.get("sum_chargeAmount")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING));
 			BigDecimal chargeAmountFuture = Optional.ofNullable((Double)facets.get("sum_chargeAmountFuture")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING));
 			BigDecimal chargeAmountDue = Optional.ofNullable((Double)facets.get("sum_chargeAmountDue")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING));
+			BigDecimal chargeAmountPassed = Optional.ofNullable((Double)facets.get("sum_chargeAmountPassed")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING));
 			BigDecimal chargesNow = chargeAmount.subtract(paymentAmount).subtract(chargeAmountFuture);
 			Boolean paymentsCurrent = chargesNow.compareTo(BigDecimal.ZERO) <= 0;
 			Boolean paymentsLate = chargesNow.subtract(chargeAmountDue).compareTo(BigDecimal.ZERO) > 0;

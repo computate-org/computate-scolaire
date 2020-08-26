@@ -5697,6 +5697,75 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		return now == null ? "" : StringEscapeUtils.escapeHtml4(strNow());
 	}
 
+	//////////////////
+	// paiementJour //
+	//////////////////
+
+	/**	 L'entité paiementJour
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected Integer paiementJour;
+	@JsonIgnore
+	public Couverture<Integer> paiementJourCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("paiementJour").o(paiementJour);
+
+	/**	<br/> L'entité paiementJour
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:paiementJour">Trouver l'entité paiementJour dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _paiementJour(Couverture<Integer> c);
+
+	public Integer getPaiementJour() {
+		return paiementJour;
+	}
+
+	public void setPaiementJour(Integer paiementJour) {
+		this.paiementJour = paiementJour;
+		this.paiementJourCouverture.dejaInitialise = true;
+	}
+	public PaiementScolaire setPaiementJour(String o) {
+		if(NumberUtils.isParsable(o))
+			this.paiementJour = Integer.parseInt(o);
+		this.paiementJourCouverture.dejaInitialise = true;
+		return (PaiementScolaire)this;
+	}
+	protected PaiementScolaire paiementJourInit() {
+		if(!paiementJourCouverture.dejaInitialise) {
+			_paiementJour(paiementJourCouverture);
+			if(paiementJour == null)
+				setPaiementJour(paiementJourCouverture.o);
+		}
+		paiementJourCouverture.dejaInitialise(true);
+		return (PaiementScolaire)this;
+	}
+
+	public Integer solrPaiementJour() {
+		return paiementJour;
+	}
+
+	public String strPaiementJour() {
+		return paiementJour == null ? "" : paiementJour.toString();
+	}
+
+	public String jsonPaiementJour() {
+		return paiementJour == null ? "" : paiementJour.toString();
+	}
+
+	public String nomAffichagePaiementJour() {
+		return null;
+	}
+
+	public String htmTooltipPaiementJour() {
+		return null;
+	}
+
+	public String htmPaiementJour() {
+		return paiementJour == null ? "" : StringEscapeUtils.escapeHtml4(strPaiementJour());
+	}
+
 	//////////////////////
 	// paiementProchain //
 	//////////////////////
@@ -6478,6 +6547,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		fraisMoisInit();
 		fraisRetardInit();
 		nowInit();
+		paiementJourInit();
 		paiementProchainInit();
 		fraisMontantDuInit();
 		fraisMontantPasseInit();
@@ -6639,6 +6709,8 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				return oPaiementScolaire.fraisRetard;
 			case "now":
 				return oPaiementScolaire.now;
+			case "paiementJour":
+				return oPaiementScolaire.paiementJour;
 			case "paiementProchain":
 				return oPaiementScolaire.paiementProchain;
 			case "fraisMontantDu":

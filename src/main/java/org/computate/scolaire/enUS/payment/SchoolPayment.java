@@ -303,16 +303,20 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 		c.o(now);
 	}
 
-	protected void _paymentNext(Wrap<LocalDate> c) {
+	protected void _paymentDay(Wrap<Integer> c) {
 		SiteConfig siteConfig = siteRequest_.getSiteConfig_();
 		Integer paymentDay = siteConfig.getPaymentDay();
+		c.o(paymentDay);
+	}
+
+	protected void _paymentNext(Wrap<LocalDate> c) {
 		c.o(now.getDayOfMonth() < paymentDay ? now.withDayOfMonth(paymentDay) : now.plusMonths(1).withDayOfMonth(paymentDay));
 	}
 
 	protected void _chargeAmountDue(Wrap<BigDecimal> c) {
-		if(chargeAmount != null && (chargeEnrollment && paymentDate.compareTo(now.plusDays(15)) <= 0
-				|| chargeFirstLast && paymentDate.compareTo(now.plusDays(15)) <= 0
-				|| paymentDate != null && paymentDate.compareTo(now.plusDays(15)) <= 0 && paymentDate.compareTo(now.minusDays(1)) >= 0) && (chargeEnrollment || chargeFirstLast || paymentDate.compareTo(paymentNext.minusMonths(1).minusDays(1)) > 0) && paymentDate.compareTo(paymentNext) <= 0)
+		if(chargeAmount != null && (chargeEnrollment && paymentDate.compareTo(now.plusDays(15)) <= 0 && paymentDate.withDayOfMonth(paymentDay).compareTo(now) >= 0
+				|| chargeFirstLast && paymentDate.compareTo(now.plusDays(15)) <= 0 && paymentDate.withDayOfMonth(paymentDay).compareTo(now) >= 0
+				|| paymentDate != null && paymentDate.compareTo(now.plusDays(15)) <= 0 && paymentDate.compareTo(now) >= 0) && (chargeEnrollment || chargeFirstLast || paymentDate.compareTo(paymentNext.minusMonths(1)) > 0) && paymentDate.compareTo(paymentNext) <= 0)
 			c.o(chargeAmount);
 	}
 

@@ -1107,6 +1107,44 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
+	 * Var.enUS: paymentDay
+	 * r: requeteSite
+	 * r.enUS: siteRequest
+	 * r: ConfigSite
+	 * r.enUS: SiteConfig
+	 * r: fraisMontant
+	 * r.enUS: chargeAmount
+	 * r: paiementDate
+	 * r.enUS: paymentDate
+	 * r: PaiementJour
+	 * r.enUS: PaymentDay
+	 * r: paiementJour
+	 * r.enUS: paymentDay
+	 * r: paiementProchain
+	 * r.enUS: paymentNext
+	 * r: PaiementProchain
+	 * r.enUS: PaymentNext
+	 * r: fraisPremierDernier
+	 * r.enUS: chargeFirstLast
+	 * r: fraisInscription
+	 * r.enUS: chargeEnrollment
+	 * r: PaiementJour
+	 * r.enUS: PaymentDay
+	 * r: paiementJour
+	 * r.enUS: paymentDay
+	 * r: ConfigSite
+	 * r.enUS: SiteConfig
+	 * r: configSite
+	 * r.enUS: siteConfig
+	 */                   
+	protected void _paiementJour(Couverture<Integer> c) {
+		ConfigSite configSite = requeteSite_.getConfigSite_();
+		Integer paiementJour = configSite.getPaiementJour();
+		c.o(paiementJour);
+	}
+
+	/**
+	 * {@inheritDoc}
 	 * Var.enUS: paymentNext
 	 * Indexe: true
 	 * Stocke: true
@@ -1142,8 +1180,6 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * r.enUS: siteConfig
 	 */                   
 	protected void _paiementProchain(Couverture<LocalDate> c) {
-		ConfigSite configSite = requeteSite_.getConfigSite_();
-		Integer paiementJour = configSite.getPaiementJour();
 		c.o(now.getDayOfMonth() < paiementJour ? now.withDayOfMonth(paiementJour) : now.plusMonths(1).withDayOfMonth(paiementJour));
 	}
 
@@ -1187,9 +1223,9 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * r.enUS: siteConfig
 	 */                   
 	protected void _fraisMontantDu(Couverture<BigDecimal> c) {
-		if(fraisMontant != null && (fraisInscription && paiementDate.compareTo(now.plusDays(15)) <= 0
-				|| fraisPremierDernier && paiementDate.compareTo(now.plusDays(15)) <= 0
-				|| paiementDate != null && paiementDate.compareTo(now.plusDays(15)) <= 0 && paiementDate.compareTo(now.minusDays(1)) >= 0) && (fraisInscription || fraisPremierDernier || paiementDate.compareTo(paiementProchain.minusMonths(1)) > 0) && paiementDate.compareTo(paiementProchain) <= 0)
+		if(fraisMontant != null && (fraisInscription && paiementDate.compareTo(now.plusDays(15)) <= 0 && paiementDate.withDayOfMonth(paiementJour).compareTo(now) >= 0
+				|| fraisPremierDernier && paiementDate.compareTo(now.plusDays(15)) <= 0 && paiementDate.withDayOfMonth(paiementJour).compareTo(now) >= 0
+				|| paiementDate != null && paiementDate.compareTo(now.plusDays(15)) <= 0 && paiementDate.compareTo(now) >= 0) && (fraisInscription || fraisPremierDernier || paiementDate.compareTo(paiementProchain.minusMonths(1)) > 0) && paiementDate.compareTo(paiementProchain) <= 0)
 			c.o(fraisMontant);
 	}
 

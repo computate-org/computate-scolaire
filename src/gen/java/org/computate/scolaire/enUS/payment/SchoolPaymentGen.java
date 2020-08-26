@@ -5683,6 +5683,75 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		return now == null ? "" : StringEscapeUtils.escapeHtml4(strNow());
 	}
 
+	////////////////
+	// paymentDay //
+	////////////////
+
+	/**	 The entity paymentDay
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected Integer paymentDay;
+	@JsonIgnore
+	public Wrap<Integer> paymentDayWrap = new Wrap<Integer>().p(this).c(Integer.class).var("paymentDay").o(paymentDay);
+
+	/**	<br/> The entity paymentDay
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.payment.SchoolPayment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:paymentDay">Find the entity paymentDay in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _paymentDay(Wrap<Integer> c);
+
+	public Integer getPaymentDay() {
+		return paymentDay;
+	}
+
+	public void setPaymentDay(Integer paymentDay) {
+		this.paymentDay = paymentDay;
+		this.paymentDayWrap.alreadyInitialized = true;
+	}
+	public SchoolPayment setPaymentDay(String o) {
+		if(NumberUtils.isParsable(o))
+			this.paymentDay = Integer.parseInt(o);
+		this.paymentDayWrap.alreadyInitialized = true;
+		return (SchoolPayment)this;
+	}
+	protected SchoolPayment paymentDayInit() {
+		if(!paymentDayWrap.alreadyInitialized) {
+			_paymentDay(paymentDayWrap);
+			if(paymentDay == null)
+				setPaymentDay(paymentDayWrap.o);
+		}
+		paymentDayWrap.alreadyInitialized(true);
+		return (SchoolPayment)this;
+	}
+
+	public Integer solrPaymentDay() {
+		return paymentDay;
+	}
+
+	public String strPaymentDay() {
+		return paymentDay == null ? "" : paymentDay.toString();
+	}
+
+	public String jsonPaymentDay() {
+		return paymentDay == null ? "" : paymentDay.toString();
+	}
+
+	public String nomAffichagePaymentDay() {
+		return null;
+	}
+
+	public String htmTooltipPaymentDay() {
+		return null;
+	}
+
+	public String htmPaymentDay() {
+		return paymentDay == null ? "" : StringEscapeUtils.escapeHtml4(strPaymentDay());
+	}
+
 	/////////////////
 	// paymentNext //
 	/////////////////
@@ -6463,6 +6532,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		chargeMonthInit();
 		chargeLateFeeInit();
 		nowInit();
+		paymentDayInit();
 		paymentNextInit();
 		chargeAmountDueInit();
 		chargeAmountPassedInit();
@@ -6624,6 +6694,8 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				return oSchoolPayment.chargeLateFee;
 			case "now":
 				return oSchoolPayment.now;
+			case "paymentDay":
+				return oSchoolPayment.paymentDay;
 			case "paymentNext":
 				return oSchoolPayment.paymentNext;
 			case "chargeAmountDue":
