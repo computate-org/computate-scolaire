@@ -453,6 +453,8 @@ public class SchoolEnrollmentEnUSApiServiceImpl extends SchoolEnrollmentEnUSGenA
 				chargeLateFeeList.setStore(true);
 				chargeLateFeeList.setQuery("*:*");
 				chargeLateFeeList.setC(SchoolPayment.class);
+				chargeLateFeeList.addFilterQuery("deleted_indexed_boolean:false");
+				chargeLateFeeList.addFilterQuery("archived_indexed_boolean:false");
 				chargeLateFeeList.addFilterQuery("enrollmentKey_indexed_long:" + schoolEnrollment.getPk());
 				chargeLateFeeList.addFilterQuery("chargeLateFee_indexed_boolean:true");
 				chargeLateFeeList.addFilterQuery("paymentDate_indexed_date:[\"" + DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(lateFeeEndDate.atStartOfDay(zoneId).minusDays(1).toInstant().atZone(ZoneId.of("Z"))) + "\" TO \"" + DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(lateFeeEndDate.atStartOfDay(zoneId).plusDays(1).toInstant().atZone(ZoneId.of("Z"))) + "\"]");
