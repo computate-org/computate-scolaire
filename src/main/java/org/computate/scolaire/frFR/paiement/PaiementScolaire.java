@@ -1221,11 +1221,17 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * r.enUS: SiteConfig
 	 * r: configSite
 	 * r.enUS: siteConfig
+	 * r: fraisRetard
+	 * r.enUS: chargeLateFee
 	 */                   
 	protected void _fraisMontantDu(Couverture<BigDecimal> c) {
-		if(fraisMontant != null && (fraisInscription && paiementDate.compareTo(now.plusDays(15)) <= 0 && paiementDate.withDayOfMonth(paiementJour).compareTo(now) >= 0
-				|| fraisPremierDernier && paiementDate.compareTo(now.plusDays(15)) <= 0 && paiementDate.withDayOfMonth(paiementJour).compareTo(now) >= 0
-				|| paiementDate != null && paiementDate.compareTo(now.plusDays(15)) <= 0 && paiementDate.compareTo(now) >= 0) && (fraisInscription || fraisPremierDernier || paiementDate.compareTo(paiementProchain.minusMonths(1)) > 0) && paiementDate.compareTo(paiementProchain) <= 0)
+		if(fraisMontant != null 
+				&& (
+						fraisInscription && paiementDate.compareTo(now.plusDays(15)) <= 0 && paiementDate.withDayOfMonth(paiementJour).compareTo(now) >= 0
+						|| fraisPremierDernier && paiementDate.compareTo(now.plusDays(15)) <= 0 && paiementDate.withDayOfMonth(paiementJour).compareTo(now) >= 0
+						|| paiementDate != null && paiementDate.compareTo(now.plusDays(15)) <= 0 && paiementDate.compareTo(now) >= 0
+						|| fraisRetard
+				) && (fraisRetard || fraisInscription || fraisPremierDernier || paiementDate.compareTo(paiementProchain.minusMonths(1)) > 0) && paiementDate.compareTo(paiementProchain) <= 0)
 			c.o(fraisMontant);
 	}
 
@@ -1343,9 +1349,12 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * r.enUS: chargeFirstLast
 	 * r: fraisInscription
 	 * r.enUS: chargeEnrollment
+	 * r: fraisRetard
+	 * r.enUS: chargeLateFee
 	 */                  
 	protected void _fraisMontantFuture(Couverture<BigDecimal> c) {
 		if(fraisMontant != null && paiementDate != null 
+				&& !fraisRetard
 				&& paiementDate.compareTo(now.plusDays(15)) > 0)
 //				&& paiementDate.compareTo(paiementProchain) > 0)
 			c.o(fraisMontant);
