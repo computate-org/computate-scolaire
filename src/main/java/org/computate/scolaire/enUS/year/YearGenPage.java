@@ -608,7 +608,7 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postSchoolYearModal').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Create a year").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "postSchoolYearFormValues").f();
 							SchoolYear o = new SchoolYear();
 							o.setSiteRequest_(siteRequest_);
 
@@ -642,7 +642,7 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putimportSchoolYearModal').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Import years").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putimportSchoolYearFormValues").f();
 							SchoolYear o = new SchoolYear();
 							o.setSiteRequest_(siteRequest_);
 
@@ -676,7 +676,7 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putmergeSchoolYearModal').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Merge years").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putmergeSchoolYearFormValues").f();
 							SchoolYear o = new SchoolYear();
 							o.setSiteRequest_(siteRequest_);
 
@@ -710,7 +710,7 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putcopySchoolYearModal').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Duplicate years").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putcopySchoolYearFormValues").f();
 							SchoolYear o = new SchoolYear();
 							o.setSiteRequest_(siteRequest_);
 
@@ -744,14 +744,11 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchSchoolYearModal').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Modify years").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "patchSchoolYearFormValues").f();
 							SchoolYear o = new SchoolYear();
 							o.setSiteRequest_(siteRequest_);
 
-							// FormValues PATCH
-							{ e("form").a("action", "").a("id", "patchSchoolYearFormValues").a("onsubmit", "event.preventDefault(); return false; ").f();
-								htmlFormPATCHSchoolYear(o);
-							} g("form");
+							htmlFormPATCHSchoolYear(o);
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-orange ")
 								.a("onclick", "patchSchoolYear(null, $('#patchSchoolYearFormValues'), ", Optional.ofNullable(schoolYear_).map(SchoolYear::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")

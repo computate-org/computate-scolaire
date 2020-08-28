@@ -526,7 +526,7 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postClusterModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Créer un cluster").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "postClusterFormulaireValeurs").f();
 							Cluster o = new Cluster();
 							o.setRequeteSite_(requeteSite_);
 
@@ -560,7 +560,7 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putimportClusterModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Importer clusters").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putimportClusterFormulaireValeurs").f();
 							Cluster o = new Cluster();
 							o.setRequeteSite_(requeteSite_);
 
@@ -594,7 +594,7 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putfusionClusterModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Fusionner clusters").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putfusionClusterFormulaireValeurs").f();
 							Cluster o = new Cluster();
 							o.setRequeteSite_(requeteSite_);
 
@@ -628,7 +628,7 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putcopieClusterModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Dupliquer clusters").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putcopieClusterFormulaireValeurs").f();
 							Cluster o = new Cluster();
 							o.setRequeteSite_(requeteSite_);
 
@@ -662,14 +662,11 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchClusterModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Modifier clusters").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "patchClusterFormulaireValeurs").f();
 							Cluster o = new Cluster();
 							o.setRequeteSite_(requeteSite_);
 
-							// FormulaireValeurs PATCH
-							{ e("form").a("action", "").a("id", "patchClusterFormulaireValeurs").a("onsubmit", "event.preventDefault(); return false; ").f();
-								htmlFormPATCHCluster(o);
-							} g("form");
+							htmlFormPATCHCluster(o);
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-gray ")
 								.a("onclick", "patchCluster(null, $('#patchClusterFormulaireValeurs'), ", Optional.ofNullable(cluster_).map(Cluster::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")

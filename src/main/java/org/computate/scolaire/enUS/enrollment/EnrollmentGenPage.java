@@ -936,7 +936,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postSchoolEnrollmentModal').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Create an enrollment").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "postSchoolEnrollmentFormValues").f();
 							SchoolEnrollment o = new SchoolEnrollment();
 							o.setSiteRequest_(siteRequest_);
 
@@ -970,7 +970,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putimportSchoolEnrollmentModal').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Import enrollments").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putimportSchoolEnrollmentFormValues").f();
 							SchoolEnrollment o = new SchoolEnrollment();
 							o.setSiteRequest_(siteRequest_);
 
@@ -1004,7 +1004,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putmergeSchoolEnrollmentModal').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Merge enrollments").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putmergeSchoolEnrollmentFormValues").f();
 							SchoolEnrollment o = new SchoolEnrollment();
 							o.setSiteRequest_(siteRequest_);
 
@@ -1038,7 +1038,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putcopySchoolEnrollmentModal').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Duplicate enrollments").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putcopySchoolEnrollmentFormValues").f();
 							SchoolEnrollment o = new SchoolEnrollment();
 							o.setSiteRequest_(siteRequest_);
 
@@ -1072,14 +1072,11 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchSchoolEnrollmentModal').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Modify enrollments").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "patchSchoolEnrollmentFormValues").f();
 							SchoolEnrollment o = new SchoolEnrollment();
 							o.setSiteRequest_(siteRequest_);
 
-							// FormValues PATCH
-							{ e("form").a("action", "").a("id", "patchSchoolEnrollmentFormValues").a("onsubmit", "event.preventDefault(); return false; ").f();
-								htmlFormPATCHSchoolEnrollment(o);
-							} g("form");
+							htmlFormPATCHSchoolEnrollment(o);
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-blue-gray ")
 								.a("onclick", "patchSchoolEnrollment(null, $('#patchSchoolEnrollmentFormValues'), ", Optional.ofNullable(schoolEnrollment_).map(SchoolEnrollment::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")

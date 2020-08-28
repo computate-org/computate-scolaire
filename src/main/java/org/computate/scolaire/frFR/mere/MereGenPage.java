@@ -636,7 +636,7 @@ public class MereGenPage extends MereGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postMereScolaireModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Créer une mère").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "postMereScolaireFormulaireValeurs").f();
 							MereScolaire o = new MereScolaire();
 							o.setRequeteSite_(requeteSite_);
 
@@ -670,7 +670,7 @@ public class MereGenPage extends MereGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putimportMereScolaireModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Importer mères").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putimportMereScolaireFormulaireValeurs").f();
 							MereScolaire o = new MereScolaire();
 							o.setRequeteSite_(requeteSite_);
 
@@ -704,7 +704,7 @@ public class MereGenPage extends MereGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putfusionMereScolaireModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Fusionner mères").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putfusionMereScolaireFormulaireValeurs").f();
 							MereScolaire o = new MereScolaire();
 							o.setRequeteSite_(requeteSite_);
 
@@ -738,7 +738,7 @@ public class MereGenPage extends MereGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putcopieMereScolaireModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Dupliquer mères").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putcopieMereScolaireFormulaireValeurs").f();
 							MereScolaire o = new MereScolaire();
 							o.setRequeteSite_(requeteSite_);
 
@@ -772,14 +772,11 @@ public class MereGenPage extends MereGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchMereScolaireModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Modifier mères").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "patchMereScolaireFormulaireValeurs").f();
 							MereScolaire o = new MereScolaire();
 							o.setRequeteSite_(requeteSite_);
 
-							// FormulaireValeurs PATCH
-							{ e("form").a("action", "").a("id", "patchMereScolaireFormulaireValeurs").a("onsubmit", "event.preventDefault(); return false; ").f();
-								htmlFormPATCHMereScolaire(o);
-							} g("form");
+							htmlFormPATCHMereScolaire(o);
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-pink ")
 								.a("onclick", "patchMereScolaire(null, $('#patchMereScolaireFormulaireValeurs'), ", Optional.ofNullable(mereScolaire_).map(MereScolaire::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")

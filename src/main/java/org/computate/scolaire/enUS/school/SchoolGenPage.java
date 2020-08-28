@@ -665,7 +665,7 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postSchoolModal').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Create a school").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "postSchoolFormValues").f();
 							School o = new School();
 							o.setSiteRequest_(siteRequest_);
 
@@ -699,14 +699,11 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchSchoolModal').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Modify schools").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "patchSchoolFormValues").f();
 							School o = new School();
 							o.setSiteRequest_(siteRequest_);
 
-							// FormValues PATCH
-							{ e("form").a("action", "").a("id", "patchSchoolFormValues").a("onsubmit", "event.preventDefault(); return false; ").f();
-								htmlFormPATCHSchool(o);
-							} g("form");
+							htmlFormPATCHSchool(o);
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-pink ")
 								.a("onclick", "patchSchool(null, $('#patchSchoolFormValues'), ", Optional.ofNullable(school_).map(School::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
@@ -733,7 +730,7 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putimportSchoolModal').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Import schools").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putimportSchoolFormValues").f();
 							School o = new School();
 							o.setSiteRequest_(siteRequest_);
 
@@ -767,7 +764,7 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putmergeSchoolModal').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Merge schools").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putmergeSchoolFormValues").f();
 							School o = new School();
 							o.setSiteRequest_(siteRequest_);
 
@@ -801,7 +798,7 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putcopySchoolModal').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Duplicate schools").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putcopySchoolFormValues").f();
 							School o = new School();
 							o.setSiteRequest_(siteRequest_);
 

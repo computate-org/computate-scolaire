@@ -629,7 +629,7 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postBlocScolaireModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Créer un bloc").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "postBlocScolaireFormulaireValeurs").f();
 							BlocScolaire o = new BlocScolaire();
 							o.setRequeteSite_(requeteSite_);
 
@@ -663,7 +663,7 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putimportBlocScolaireModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Importer blocs").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putimportBlocScolaireFormulaireValeurs").f();
 							BlocScolaire o = new BlocScolaire();
 							o.setRequeteSite_(requeteSite_);
 
@@ -697,7 +697,7 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putfusionBlocScolaireModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Fusionner blocs").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putfusionBlocScolaireFormulaireValeurs").f();
 							BlocScolaire o = new BlocScolaire();
 							o.setRequeteSite_(requeteSite_);
 
@@ -731,7 +731,7 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putcopieBlocScolaireModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Dupliquer blocs").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putcopieBlocScolaireFormulaireValeurs").f();
 							BlocScolaire o = new BlocScolaire();
 							o.setRequeteSite_(requeteSite_);
 
@@ -765,14 +765,11 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchBlocScolaireModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Modifier blocs").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "patchBlocScolaireFormulaireValeurs").f();
 							BlocScolaire o = new BlocScolaire();
 							o.setRequeteSite_(requeteSite_);
 
-							// FormulaireValeurs PATCH
-							{ e("form").a("action", "").a("id", "patchBlocScolaireFormulaireValeurs").a("onsubmit", "event.preventDefault(); return false; ").f();
-								htmlFormPATCHBlocScolaire(o);
-							} g("form");
+							htmlFormPATCHBlocScolaire(o);
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-indigo ")
 								.a("onclick", "patchBlocScolaire(null, $('#patchBlocScolaireFormulaireValeurs'), ", Optional.ofNullable(blocScolaire_).map(BlocScolaire::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")

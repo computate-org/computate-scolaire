@@ -619,14 +619,11 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPag
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchUtilisateurSiteModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Modifier utilisateurs du site").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "patchUtilisateurSiteFormulaireValeurs").f();
 							UtilisateurSite o = new UtilisateurSite();
 							o.setRequeteSite_(requeteSite_);
 
-							// FormulaireValeurs PATCH
-							{ e("form").a("action", "").a("id", "patchUtilisateurSiteFormulaireValeurs").a("onsubmit", "event.preventDefault(); return false; ").f();
-								htmlFormPATCHUtilisateurSite(o);
-							} g("form");
+							htmlFormPATCHUtilisateurSite(o);
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-gray ")
 								.a("onclick", "patchUtilisateurSite(null, $('#patchUtilisateurSiteFormulaireValeurs'), ", Optional.ofNullable(utilisateurSite_).map(UtilisateurSite::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
@@ -653,7 +650,7 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPag
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postUtilisateurSiteModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Créer un utilisateur du site").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "postUtilisateurSiteFormulaireValeurs").f();
 							UtilisateurSite o = new UtilisateurSite();
 							o.setRequeteSite_(requeteSite_);
 

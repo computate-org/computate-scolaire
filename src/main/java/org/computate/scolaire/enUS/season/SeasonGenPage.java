@@ -591,7 +591,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postSchoolSeasonModal').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Create a season").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "postSchoolSeasonFormValues").f();
 							SchoolSeason o = new SchoolSeason();
 							o.setSiteRequest_(siteRequest_);
 
@@ -625,7 +625,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putimportSchoolSeasonModal').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Import seasons").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putimportSchoolSeasonFormValues").f();
 							SchoolSeason o = new SchoolSeason();
 							o.setSiteRequest_(siteRequest_);
 
@@ -659,7 +659,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putmergeSchoolSeasonModal').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Merge seasons").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putmergeSchoolSeasonFormValues").f();
 							SchoolSeason o = new SchoolSeason();
 							o.setSiteRequest_(siteRequest_);
 
@@ -693,7 +693,7 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putcopySchoolSeasonModal').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Duplicate seasons").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putcopySchoolSeasonFormValues").f();
 							SchoolSeason o = new SchoolSeason();
 							o.setSiteRequest_(siteRequest_);
 
@@ -727,14 +727,11 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchSchoolSeasonModal').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Modify seasons").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "patchSchoolSeasonFormValues").f();
 							SchoolSeason o = new SchoolSeason();
 							o.setSiteRequest_(siteRequest_);
 
-							// FormValues PATCH
-							{ e("form").a("action", "").a("id", "patchSchoolSeasonFormValues").a("onsubmit", "event.preventDefault(); return false; ").f();
-								htmlFormPATCHSchoolSeason(o);
-							} g("form");
+							htmlFormPATCHSchoolSeason(o);
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-yellow ")
 								.a("onclick", "patchSchoolSeason(null, $('#patchSchoolSeasonFormValues'), ", Optional.ofNullable(schoolSeason_).map(SchoolSeason::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")

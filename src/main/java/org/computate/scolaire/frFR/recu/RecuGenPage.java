@@ -642,7 +642,7 @@ public class RecuGenPage extends RecuGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postRecuScolaireModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Créer un reçu").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "postRecuScolaireFormulaireValeurs").f();
 							RecuScolaire o = new RecuScolaire();
 							o.setRequeteSite_(requeteSite_);
 
@@ -676,7 +676,7 @@ public class RecuGenPage extends RecuGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putimportRecuScolaireModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Importer reçus").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putimportRecuScolaireFormulaireValeurs").f();
 							RecuScolaire o = new RecuScolaire();
 							o.setRequeteSite_(requeteSite_);
 
@@ -710,7 +710,7 @@ public class RecuGenPage extends RecuGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putfusionRecuScolaireModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Fusionner reçus").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putfusionRecuScolaireFormulaireValeurs").f();
 							RecuScolaire o = new RecuScolaire();
 							o.setRequeteSite_(requeteSite_);
 
@@ -744,7 +744,7 @@ public class RecuGenPage extends RecuGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putcopieRecuScolaireModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Dupliquer reçus").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putcopieRecuScolaireFormulaireValeurs").f();
 							RecuScolaire o = new RecuScolaire();
 							o.setRequeteSite_(requeteSite_);
 
@@ -778,14 +778,11 @@ public class RecuGenPage extends RecuGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchRecuScolaireModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Modifier reçus").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "patchRecuScolaireFormulaireValeurs").f();
 							RecuScolaire o = new RecuScolaire();
 							o.setRequeteSite_(requeteSite_);
 
-							// FormulaireValeurs PATCH
-							{ e("form").a("action", "").a("id", "patchRecuScolaireFormulaireValeurs").a("onsubmit", "event.preventDefault(); return false; ").f();
-								htmlFormPATCHRecuScolaire(o);
-							} g("form");
+							htmlFormPATCHRecuScolaire(o);
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-light-green ")
 								.a("onclick", "patchRecuScolaire(null, $('#patchRecuScolaireFormulaireValeurs'), ", Optional.ofNullable(recuScolaire_).map(RecuScolaire::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")

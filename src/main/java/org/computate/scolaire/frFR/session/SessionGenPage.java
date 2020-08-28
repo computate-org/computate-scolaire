@@ -589,7 +589,7 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postSessionScolaireModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Créer une session").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "postSessionScolaireFormulaireValeurs").f();
 							SessionScolaire o = new SessionScolaire();
 							o.setRequeteSite_(requeteSite_);
 
@@ -623,7 +623,7 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putimportSessionScolaireModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Importer sessions").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putimportSessionScolaireFormulaireValeurs").f();
 							SessionScolaire o = new SessionScolaire();
 							o.setRequeteSite_(requeteSite_);
 
@@ -657,7 +657,7 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putfusionSessionScolaireModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Fusionner sessions").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putfusionSessionScolaireFormulaireValeurs").f();
 							SessionScolaire o = new SessionScolaire();
 							o.setRequeteSite_(requeteSite_);
 
@@ -691,7 +691,7 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putcopieSessionScolaireModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Dupliquer sessions").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putcopieSessionScolaireFormulaireValeurs").f();
 							SessionScolaire o = new SessionScolaire();
 							o.setRequeteSite_(requeteSite_);
 
@@ -725,14 +725,11 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchSessionScolaireModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Modifier sessions").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "patchSessionScolaireFormulaireValeurs").f();
 							SessionScolaire o = new SessionScolaire();
 							o.setRequeteSite_(requeteSite_);
 
-							// FormulaireValeurs PATCH
-							{ e("form").a("action", "").a("id", "patchSessionScolaireFormulaireValeurs").a("onsubmit", "event.preventDefault(); return false; ").f();
-								htmlFormPATCHSessionScolaire(o);
-							} g("form");
+							htmlFormPATCHSessionScolaire(o);
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-green ")
 								.a("onclick", "patchSessionScolaire(null, $('#patchSessionScolaireFormulaireValeurs'), ", Optional.ofNullable(sessionScolaire_).map(SessionScolaire::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")

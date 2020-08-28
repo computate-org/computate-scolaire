@@ -635,7 +635,7 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postSchoolMomModal').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Create a mom").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "postSchoolMomFormValues").f();
 							SchoolMom o = new SchoolMom();
 							o.setSiteRequest_(siteRequest_);
 
@@ -669,7 +669,7 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putimportSchoolMomModal').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Import moms").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putimportSchoolMomFormValues").f();
 							SchoolMom o = new SchoolMom();
 							o.setSiteRequest_(siteRequest_);
 
@@ -703,7 +703,7 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putmergeSchoolMomModal').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Merge moms").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putmergeSchoolMomFormValues").f();
 							SchoolMom o = new SchoolMom();
 							o.setSiteRequest_(siteRequest_);
 
@@ -737,7 +737,7 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putcopySchoolMomModal').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Duplicate moms").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putcopySchoolMomFormValues").f();
 							SchoolMom o = new SchoolMom();
 							o.setSiteRequest_(siteRequest_);
 
@@ -771,14 +771,11 @@ public class MomGenPage extends MomGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchSchoolMomModal').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Modify moms").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "patchSchoolMomFormValues").f();
 							SchoolMom o = new SchoolMom();
 							o.setSiteRequest_(siteRequest_);
 
-							// FormValues PATCH
-							{ e("form").a("action", "").a("id", "patchSchoolMomFormValues").a("onsubmit", "event.preventDefault(); return false; ").f();
-								htmlFormPATCHSchoolMom(o);
-							} g("form");
+							htmlFormPATCHSchoolMom(o);
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-pink ")
 								.a("onclick", "patchSchoolMom(null, $('#patchSchoolMomFormValues'), ", Optional.ofNullable(schoolMom_).map(SchoolMom::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")

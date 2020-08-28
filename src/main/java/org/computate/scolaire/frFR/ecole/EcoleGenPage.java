@@ -666,7 +666,7 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postEcoleModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Créer une école").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "postEcoleFormulaireValeurs").f();
 							Ecole o = new Ecole();
 							o.setRequeteSite_(requeteSite_);
 
@@ -700,14 +700,11 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchEcoleModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Modifier écoles").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "patchEcoleFormulaireValeurs").f();
 							Ecole o = new Ecole();
 							o.setRequeteSite_(requeteSite_);
 
-							// FormulaireValeurs PATCH
-							{ e("form").a("action", "").a("id", "patchEcoleFormulaireValeurs").a("onsubmit", "event.preventDefault(); return false; ").f();
-								htmlFormPATCHEcole(o);
-							} g("form");
+							htmlFormPATCHEcole(o);
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-pink ")
 								.a("onclick", "patchEcole(null, $('#patchEcoleFormulaireValeurs'), ", Optional.ofNullable(ecole_).map(Ecole::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
@@ -734,7 +731,7 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putimportEcoleModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Importer écoles").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putimportEcoleFormulaireValeurs").f();
 							Ecole o = new Ecole();
 							o.setRequeteSite_(requeteSite_);
 
@@ -768,7 +765,7 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putfusionEcoleModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Fusionner écoles").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putfusionEcoleFormulaireValeurs").f();
 							Ecole o = new Ecole();
 							o.setRequeteSite_(requeteSite_);
 
@@ -802,7 +799,7 @@ public class EcoleGenPage extends EcoleGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putcopieEcoleModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Dupliquer écoles").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putcopieEcoleFormulaireValeurs").f();
 							Ecole o = new Ecole();
 							o.setRequeteSite_(requeteSite_);
 

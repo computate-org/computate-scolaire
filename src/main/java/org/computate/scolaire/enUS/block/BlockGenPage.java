@@ -628,7 +628,7 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postSchoolBlockModal').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Create a block").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "postSchoolBlockFormValues").f();
 							SchoolBlock o = new SchoolBlock();
 							o.setSiteRequest_(siteRequest_);
 
@@ -662,7 +662,7 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putimportSchoolBlockModal').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Import blocks").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putimportSchoolBlockFormValues").f();
 							SchoolBlock o = new SchoolBlock();
 							o.setSiteRequest_(siteRequest_);
 
@@ -696,7 +696,7 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putmergeSchoolBlockModal').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Merge blocks").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putmergeSchoolBlockFormValues").f();
 							SchoolBlock o = new SchoolBlock();
 							o.setSiteRequest_(siteRequest_);
 
@@ -730,7 +730,7 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putcopySchoolBlockModal').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Duplicate blocks").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putcopySchoolBlockFormValues").f();
 							SchoolBlock o = new SchoolBlock();
 							o.setSiteRequest_(siteRequest_);
 
@@ -764,14 +764,11 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchSchoolBlockModal').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Modify blocks").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "patchSchoolBlockFormValues").f();
 							SchoolBlock o = new SchoolBlock();
 							o.setSiteRequest_(siteRequest_);
 
-							// FormValues PATCH
-							{ e("form").a("action", "").a("id", "patchSchoolBlockFormValues").a("onsubmit", "event.preventDefault(); return false; ").f();
-								htmlFormPATCHSchoolBlock(o);
-							} g("form");
+							htmlFormPATCHSchoolBlock(o);
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-indigo ")
 								.a("onclick", "patchSchoolBlock(null, $('#patchSchoolBlockFormValues'), ", Optional.ofNullable(schoolBlock_).map(SchoolBlock::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")

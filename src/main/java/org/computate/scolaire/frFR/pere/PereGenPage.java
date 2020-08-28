@@ -636,7 +636,7 @@ public class PereGenPage extends PereGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postPereScolaireModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Créer un père").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "postPereScolaireFormulaireValeurs").f();
 							PereScolaire o = new PereScolaire();
 							o.setRequeteSite_(requeteSite_);
 
@@ -670,7 +670,7 @@ public class PereGenPage extends PereGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putimportPereScolaireModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Importer pères").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putimportPereScolaireFormulaireValeurs").f();
 							PereScolaire o = new PereScolaire();
 							o.setRequeteSite_(requeteSite_);
 
@@ -704,7 +704,7 @@ public class PereGenPage extends PereGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putfusionPereScolaireModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Fusionner pères").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putfusionPereScolaireFormulaireValeurs").f();
 							PereScolaire o = new PereScolaire();
 							o.setRequeteSite_(requeteSite_);
 
@@ -738,7 +738,7 @@ public class PereGenPage extends PereGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putcopiePereScolaireModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Dupliquer pères").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putcopiePereScolaireFormulaireValeurs").f();
 							PereScolaire o = new PereScolaire();
 							o.setRequeteSite_(requeteSite_);
 
@@ -772,14 +772,11 @@ public class PereGenPage extends PereGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchPereScolaireModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Modifier pères").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "patchPereScolaireFormulaireValeurs").f();
 							PereScolaire o = new PereScolaire();
 							o.setRequeteSite_(requeteSite_);
 
-							// FormulaireValeurs PATCH
-							{ e("form").a("action", "").a("id", "patchPereScolaireFormulaireValeurs").a("onsubmit", "event.preventDefault(); return false; ").f();
-								htmlFormPATCHPereScolaire(o);
-							} g("form");
+							htmlFormPATCHPereScolaire(o);
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-light-blue ")
 								.a("onclick", "patchPereScolaire(null, $('#patchPereScolaireFormulaireValeurs'), ", Optional.ofNullable(pereScolaire_).map(PereScolaire::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")

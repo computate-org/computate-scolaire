@@ -609,7 +609,7 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postAnneeScolaireModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Créer une année").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "postAnneeScolaireFormulaireValeurs").f();
 							AnneeScolaire o = new AnneeScolaire();
 							o.setRequeteSite_(requeteSite_);
 
@@ -643,7 +643,7 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putimportAnneeScolaireModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Importer années").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putimportAnneeScolaireFormulaireValeurs").f();
 							AnneeScolaire o = new AnneeScolaire();
 							o.setRequeteSite_(requeteSite_);
 
@@ -677,7 +677,7 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putfusionAnneeScolaireModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Fusionner années").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putfusionAnneeScolaireFormulaireValeurs").f();
 							AnneeScolaire o = new AnneeScolaire();
 							o.setRequeteSite_(requeteSite_);
 
@@ -711,7 +711,7 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putcopieAnneeScolaireModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Dupliquer années").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putcopieAnneeScolaireFormulaireValeurs").f();
 							AnneeScolaire o = new AnneeScolaire();
 							o.setRequeteSite_(requeteSite_);
 
@@ -745,14 +745,11 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchAnneeScolaireModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Modifier années").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "patchAnneeScolaireFormulaireValeurs").f();
 							AnneeScolaire o = new AnneeScolaire();
 							o.setRequeteSite_(requeteSite_);
 
-							// FormulaireValeurs PATCH
-							{ e("form").a("action", "").a("id", "patchAnneeScolaireFormulaireValeurs").a("onsubmit", "event.preventDefault(); return false; ").f();
-								htmlFormPATCHAnneeScolaire(o);
-							} g("form");
+							htmlFormPATCHAnneeScolaire(o);
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-orange ")
 								.a("onclick", "patchAnneeScolaire(null, $('#patchAnneeScolaireFormulaireValeurs'), ", Optional.ofNullable(anneeScolaire_).map(AnneeScolaire::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")

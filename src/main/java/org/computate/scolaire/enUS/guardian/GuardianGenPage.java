@@ -617,7 +617,7 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postSchoolGuardianModal').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Create a guardian").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "postSchoolGuardianFormValues").f();
 							SchoolGuardian o = new SchoolGuardian();
 							o.setSiteRequest_(siteRequest_);
 
@@ -651,7 +651,7 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putimportSchoolGuardianModal').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Import guardians").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putimportSchoolGuardianFormValues").f();
 							SchoolGuardian o = new SchoolGuardian();
 							o.setSiteRequest_(siteRequest_);
 
@@ -685,7 +685,7 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putmergeSchoolGuardianModal').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Merge guardians").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putmergeSchoolGuardianFormValues").f();
 							SchoolGuardian o = new SchoolGuardian();
 							o.setSiteRequest_(siteRequest_);
 
@@ -719,7 +719,7 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putcopySchoolGuardianModal').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Duplicate guardians").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putcopySchoolGuardianFormValues").f();
 							SchoolGuardian o = new SchoolGuardian();
 							o.setSiteRequest_(siteRequest_);
 
@@ -753,14 +753,11 @@ public class GuardianGenPage extends GuardianGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchSchoolGuardianModal').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Modify guardians").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "patchSchoolGuardianFormValues").f();
 							SchoolGuardian o = new SchoolGuardian();
 							o.setSiteRequest_(siteRequest_);
 
-							// FormValues PATCH
-							{ e("form").a("action", "").a("id", "patchSchoolGuardianFormValues").a("onsubmit", "event.preventDefault(); return false; ").f();
-								htmlFormPATCHSchoolGuardian(o);
-							} g("form");
+							htmlFormPATCHSchoolGuardian(o);
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-yellow ")
 								.a("onclick", "patchSchoolGuardian(null, $('#patchSchoolGuardianFormValues'), ", Optional.ofNullable(schoolGuardian_).map(SchoolGuardian::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")

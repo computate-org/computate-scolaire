@@ -599,7 +599,7 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postEnfantScolaireModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Créer un enfant").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "postEnfantScolaireFormulaireValeurs").f();
 							EnfantScolaire o = new EnfantScolaire();
 							o.setRequeteSite_(requeteSite_);
 
@@ -633,7 +633,7 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putimportEnfantScolaireModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Importer enfants").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putimportEnfantScolaireFormulaireValeurs").f();
 							EnfantScolaire o = new EnfantScolaire();
 							o.setRequeteSite_(requeteSite_);
 
@@ -667,7 +667,7 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putfusionEnfantScolaireModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Fusionner enfants").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putfusionEnfantScolaireFormulaireValeurs").f();
 							EnfantScolaire o = new EnfantScolaire();
 							o.setRequeteSite_(requeteSite_);
 
@@ -701,7 +701,7 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putcopieEnfantScolaireModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Dupliquer enfants").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putcopieEnfantScolaireFormulaireValeurs").f();
 							EnfantScolaire o = new EnfantScolaire();
 							o.setRequeteSite_(requeteSite_);
 
@@ -735,14 +735,11 @@ public class EnfantGenPage extends EnfantGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchEnfantScolaireModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Modifier enfants").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "patchEnfantScolaireFormulaireValeurs").f();
 							EnfantScolaire o = new EnfantScolaire();
 							o.setRequeteSite_(requeteSite_);
 
-							// FormulaireValeurs PATCH
-							{ e("form").a("action", "").a("id", "patchEnfantScolaireFormulaireValeurs").a("onsubmit", "event.preventDefault(); return false; ").f();
-								htmlFormPATCHEnfantScolaire(o);
-							} g("form");
+							htmlFormPATCHEnfantScolaire(o);
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-orange ")
 								.a("onclick", "patchEnfantScolaire(null, $('#patchEnfantScolaireFormulaireValeurs'), ", Optional.ofNullable(enfantScolaire_).map(EnfantScolaire::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")

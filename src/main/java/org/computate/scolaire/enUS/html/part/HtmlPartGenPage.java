@@ -766,7 +766,7 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postHtmlPartModal').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Create an HTML part").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "postHtmlPartFormValues").f();
 							HtmlPart o = new HtmlPart();
 							o.setSiteRequest_(siteRequest_);
 
@@ -800,7 +800,7 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putimportHtmlPartModal').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Import HTML parts").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putimportHtmlPartFormValues").f();
 							HtmlPart o = new HtmlPart();
 							o.setSiteRequest_(siteRequest_);
 
@@ -834,7 +834,7 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putmergeHtmlPartModal').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Merge HTML parts").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putmergeHtmlPartFormValues").f();
 							HtmlPart o = new HtmlPart();
 							o.setSiteRequest_(siteRequest_);
 
@@ -868,7 +868,7 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putcopyHtmlPartModal').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Duplicate HTML parts").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putcopyHtmlPartFormValues").f();
 							HtmlPart o = new HtmlPart();
 							o.setSiteRequest_(siteRequest_);
 
@@ -902,14 +902,11 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchHtmlPartModal').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Modify HTML parts").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "patchHtmlPartFormValues").f();
 							HtmlPart o = new HtmlPart();
 							o.setSiteRequest_(siteRequest_);
 
-							// FormValues PATCH
-							{ e("form").a("action", "").a("id", "patchHtmlPartFormValues").a("onsubmit", "event.preventDefault(); return false; ").f();
-								htmlFormPATCHHtmlPart(o);
-							} g("form");
+							htmlFormPATCHHtmlPart(o);
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-khaki ")
 								.a("onclick", "patchHtmlPart(null, $('#patchHtmlPartFormValues'), ", Optional.ofNullable(htmlPart_).map(HtmlPart::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")

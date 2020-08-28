@@ -936,7 +936,7 @@ public class GenPageInscription extends GenPageInscriptionGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postInscriptionScolaireModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Créer une inscription").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "postInscriptionScolaireFormulaireValeurs").f();
 							InscriptionScolaire o = new InscriptionScolaire();
 							o.setRequeteSite_(requeteSite_);
 
@@ -970,7 +970,7 @@ public class GenPageInscription extends GenPageInscriptionGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putimportInscriptionScolaireModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Importer inscriptions").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putimportInscriptionScolaireFormulaireValeurs").f();
 							InscriptionScolaire o = new InscriptionScolaire();
 							o.setRequeteSite_(requeteSite_);
 
@@ -1004,7 +1004,7 @@ public class GenPageInscription extends GenPageInscriptionGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putfusionInscriptionScolaireModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Fusionner inscriptions").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putfusionInscriptionScolaireFormulaireValeurs").f();
 							InscriptionScolaire o = new InscriptionScolaire();
 							o.setRequeteSite_(requeteSite_);
 
@@ -1038,7 +1038,7 @@ public class GenPageInscription extends GenPageInscriptionGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putcopieInscriptionScolaireModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Dupliquer inscriptions").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putcopieInscriptionScolaireFormulaireValeurs").f();
 							InscriptionScolaire o = new InscriptionScolaire();
 							o.setRequeteSite_(requeteSite_);
 
@@ -1072,14 +1072,11 @@ public class GenPageInscription extends GenPageInscriptionGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchInscriptionScolaireModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Modifier inscriptions").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "patchInscriptionScolaireFormulaireValeurs").f();
 							InscriptionScolaire o = new InscriptionScolaire();
 							o.setRequeteSite_(requeteSite_);
 
-							// FormulaireValeurs PATCH
-							{ e("form").a("action", "").a("id", "patchInscriptionScolaireFormulaireValeurs").a("onsubmit", "event.preventDefault(); return false; ").f();
-								htmlFormPATCHInscriptionScolaire(o);
-							} g("form");
+							htmlFormPATCHInscriptionScolaire(o);
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-blue-gray ")
 								.a("onclick", "patchInscriptionScolaire(null, $('#patchInscriptionScolaireFormulaireValeurs'), ", Optional.ofNullable(inscriptionScolaire_).map(InscriptionScolaire::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")

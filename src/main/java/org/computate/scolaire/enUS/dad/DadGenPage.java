@@ -635,7 +635,7 @@ public class DadGenPage extends DadGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postSchoolDadModal').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Create a dad").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "postSchoolDadFormValues").f();
 							SchoolDad o = new SchoolDad();
 							o.setSiteRequest_(siteRequest_);
 
@@ -669,7 +669,7 @@ public class DadGenPage extends DadGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putimportSchoolDadModal').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Import dads").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putimportSchoolDadFormValues").f();
 							SchoolDad o = new SchoolDad();
 							o.setSiteRequest_(siteRequest_);
 
@@ -703,7 +703,7 @@ public class DadGenPage extends DadGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putmergeSchoolDadModal').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Merge dads").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putmergeSchoolDadFormValues").f();
 							SchoolDad o = new SchoolDad();
 							o.setSiteRequest_(siteRequest_);
 
@@ -737,7 +737,7 @@ public class DadGenPage extends DadGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putcopySchoolDadModal').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Duplicate dads").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putcopySchoolDadFormValues").f();
 							SchoolDad o = new SchoolDad();
 							o.setSiteRequest_(siteRequest_);
 
@@ -771,14 +771,11 @@ public class DadGenPage extends DadGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchSchoolDadModal').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Modify dads").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "patchSchoolDadFormValues").f();
 							SchoolDad o = new SchoolDad();
 							o.setSiteRequest_(siteRequest_);
 
-							// FormValues PATCH
-							{ e("form").a("action", "").a("id", "patchSchoolDadFormValues").a("onsubmit", "event.preventDefault(); return false; ").f();
-								htmlFormPATCHSchoolDad(o);
-							} g("form");
+							htmlFormPATCHSchoolDad(o);
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-light-blue ")
 								.a("onclick", "patchSchoolDad(null, $('#patchSchoolDadFormValues'), ", Optional.ofNullable(schoolDad_).map(SchoolDad::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")

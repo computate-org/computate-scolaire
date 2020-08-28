@@ -618,7 +618,7 @@ public class GardienGenPage extends GardienGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postGardienScolaireModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Créer un gardien").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "postGardienScolaireFormulaireValeurs").f();
 							GardienScolaire o = new GardienScolaire();
 							o.setRequeteSite_(requeteSite_);
 
@@ -652,7 +652,7 @@ public class GardienGenPage extends GardienGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putimportGardienScolaireModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Importer gardiens").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putimportGardienScolaireFormulaireValeurs").f();
 							GardienScolaire o = new GardienScolaire();
 							o.setRequeteSite_(requeteSite_);
 
@@ -686,7 +686,7 @@ public class GardienGenPage extends GardienGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putfusionGardienScolaireModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Fusionner gardiens").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putfusionGardienScolaireFormulaireValeurs").f();
 							GardienScolaire o = new GardienScolaire();
 							o.setRequeteSite_(requeteSite_);
 
@@ -720,7 +720,7 @@ public class GardienGenPage extends GardienGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putcopieGardienScolaireModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Dupliquer gardiens").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putcopieGardienScolaireFormulaireValeurs").f();
 							GardienScolaire o = new GardienScolaire();
 							o.setRequeteSite_(requeteSite_);
 
@@ -754,14 +754,11 @@ public class GardienGenPage extends GardienGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchGardienScolaireModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Modifier gardiens").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "patchGardienScolaireFormulaireValeurs").f();
 							GardienScolaire o = new GardienScolaire();
 							o.setRequeteSite_(requeteSite_);
 
-							// FormulaireValeurs PATCH
-							{ e("form").a("action", "").a("id", "patchGardienScolaireFormulaireValeurs").a("onsubmit", "event.preventDefault(); return false; ").f();
-								htmlFormPATCHGardienScolaire(o);
-							} g("form");
+							htmlFormPATCHGardienScolaire(o);
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-yellow ")
 								.a("onclick", "patchGardienScolaire(null, $('#patchGardienScolaireFormulaireValeurs'), ", Optional.ofNullable(gardienScolaire_).map(GardienScolaire::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")

@@ -818,7 +818,7 @@ public class DesignGenPageAffichage extends DesignGenPageAffichageGen<ClusterPag
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postDesignPageModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Créer un design de page").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "postDesignPageFormulaireValeurs").f();
 							DesignPage o = new DesignPage();
 							o.setRequeteSite_(requeteSite_);
 
@@ -852,7 +852,7 @@ public class DesignGenPageAffichage extends DesignGenPageAffichageGen<ClusterPag
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putimportDesignPageModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Importer design de pages").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putimportDesignPageFormulaireValeurs").f();
 							DesignPage o = new DesignPage();
 							o.setRequeteSite_(requeteSite_);
 
@@ -886,7 +886,7 @@ public class DesignGenPageAffichage extends DesignGenPageAffichageGen<ClusterPag
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putfusionDesignPageModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Fusionner design de pages").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putfusionDesignPageFormulaireValeurs").f();
 							DesignPage o = new DesignPage();
 							o.setRequeteSite_(requeteSite_);
 
@@ -920,7 +920,7 @@ public class DesignGenPageAffichage extends DesignGenPageAffichageGen<ClusterPag
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putcopieDesignPageModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Dupliquer design de pages").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putcopieDesignPageFormulaireValeurs").f();
 							DesignPage o = new DesignPage();
 							o.setRequeteSite_(requeteSite_);
 
@@ -954,14 +954,11 @@ public class DesignGenPageAffichage extends DesignGenPageAffichageGen<ClusterPag
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchDesignPageModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Modifier design de pages").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "patchDesignPageFormulaireValeurs").f();
 							DesignPage o = new DesignPage();
 							o.setRequeteSite_(requeteSite_);
 
-							// FormulaireValeurs PATCH
-							{ e("form").a("action", "").a("id", "patchDesignPageFormulaireValeurs").a("onsubmit", "event.preventDefault(); return false; ").f();
-								htmlFormPATCHDesignPage(o);
-							} g("form");
+							htmlFormPATCHDesignPage(o);
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-khaki ")
 								.a("onclick", "patchDesignPage(null, $('#patchDesignPageFormulaireValeurs'), ", Optional.ofNullable(designPage_).map(DesignPage::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")

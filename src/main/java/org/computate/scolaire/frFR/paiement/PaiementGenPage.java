@@ -793,7 +793,7 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postPaiementScolaireModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Créer un paiement").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "postPaiementScolaireFormulaireValeurs").f();
 							PaiementScolaire o = new PaiementScolaire();
 							o.setRequeteSite_(requeteSite_);
 
@@ -827,7 +827,7 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putimportPaiementScolaireModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Importer paiements").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putimportPaiementScolaireFormulaireValeurs").f();
 							PaiementScolaire o = new PaiementScolaire();
 							o.setRequeteSite_(requeteSite_);
 
@@ -861,7 +861,7 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putfusionPaiementScolaireModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Fusionner paiements").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putfusionPaiementScolaireFormulaireValeurs").f();
 							PaiementScolaire o = new PaiementScolaire();
 							o.setRequeteSite_(requeteSite_);
 
@@ -895,7 +895,7 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putcopiePaiementScolaireModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Dupliquer paiements").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putcopiePaiementScolaireFormulaireValeurs").f();
 							PaiementScolaire o = new PaiementScolaire();
 							o.setRequeteSite_(requeteSite_);
 
@@ -929,14 +929,11 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchPaiementScolaireModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Modifier paiements").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "patchPaiementScolaireFormulaireValeurs").f();
 							PaiementScolaire o = new PaiementScolaire();
 							o.setRequeteSite_(requeteSite_);
 
-							// FormulaireValeurs PATCH
-							{ e("form").a("action", "").a("id", "patchPaiementScolaireFormulaireValeurs").a("onsubmit", "event.preventDefault(); return false; ").f();
-								htmlFormPATCHPaiementScolaire(o);
-							} g("form");
+							htmlFormPATCHPaiementScolaire(o);
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-green ")
 								.a("onclick", "patchPaiementScolaire(null, $('#patchPaiementScolaireFormulaireValeurs'), ", Optional.ofNullable(paiementScolaire_).map(PaiementScolaire::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")

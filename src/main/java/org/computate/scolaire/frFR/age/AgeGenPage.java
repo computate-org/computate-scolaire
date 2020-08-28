@@ -598,7 +598,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postAgeScolaireModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Créer un âge").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "postAgeScolaireFormulaireValeurs").f();
 							AgeScolaire o = new AgeScolaire();
 							o.setRequeteSite_(requeteSite_);
 
@@ -632,7 +632,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putimportAgeScolaireModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Importer âges").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putimportAgeScolaireFormulaireValeurs").f();
 							AgeScolaire o = new AgeScolaire();
 							o.setRequeteSite_(requeteSite_);
 
@@ -666,7 +666,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putfusionAgeScolaireModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Fusionner âges").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putfusionAgeScolaireFormulaireValeurs").f();
 							AgeScolaire o = new AgeScolaire();
 							o.setRequeteSite_(requeteSite_);
 
@@ -700,7 +700,7 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putcopieAgeScolaireModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Dupliquer âges").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putcopieAgeScolaireFormulaireValeurs").f();
 							AgeScolaire o = new AgeScolaire();
 							o.setRequeteSite_(requeteSite_);
 
@@ -734,14 +734,11 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchAgeScolaireModale').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Modifier âges").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "patchAgeScolaireFormulaireValeurs").f();
 							AgeScolaire o = new AgeScolaire();
 							o.setRequeteSite_(requeteSite_);
 
-							// FormulaireValeurs PATCH
-							{ e("form").a("action", "").a("id", "patchAgeScolaireFormulaireValeurs").a("onsubmit", "event.preventDefault(); return false; ").f();
-								htmlFormPATCHAgeScolaire(o);
-							} g("form");
+							htmlFormPATCHAgeScolaire(o);
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-blue ")
 								.a("onclick", "patchAgeScolaire(null, $('#patchAgeScolaireFormulaireValeurs'), ", Optional.ofNullable(ageScolaire_).map(AgeScolaire::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")

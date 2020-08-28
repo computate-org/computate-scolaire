@@ -641,7 +641,7 @@ public class ReceiptGenPage extends ReceiptGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postSchoolReceiptModal').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Create a receipt").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "postSchoolReceiptFormValues").f();
 							SchoolReceipt o = new SchoolReceipt();
 							o.setSiteRequest_(siteRequest_);
 
@@ -675,7 +675,7 @@ public class ReceiptGenPage extends ReceiptGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putimportSchoolReceiptModal').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Import receipts").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putimportSchoolReceiptFormValues").f();
 							SchoolReceipt o = new SchoolReceipt();
 							o.setSiteRequest_(siteRequest_);
 
@@ -709,7 +709,7 @@ public class ReceiptGenPage extends ReceiptGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putmergeSchoolReceiptModal').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Merge receipts").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putmergeSchoolReceiptFormValues").f();
 							SchoolReceipt o = new SchoolReceipt();
 							o.setSiteRequest_(siteRequest_);
 
@@ -743,7 +743,7 @@ public class ReceiptGenPage extends ReceiptGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putcopySchoolReceiptModal').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Duplicate receipts").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putcopySchoolReceiptFormValues").f();
 							SchoolReceipt o = new SchoolReceipt();
 							o.setSiteRequest_(siteRequest_);
 
@@ -777,14 +777,11 @@ public class ReceiptGenPage extends ReceiptGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchSchoolReceiptModal').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Modify receipts").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "patchSchoolReceiptFormValues").f();
 							SchoolReceipt o = new SchoolReceipt();
 							o.setSiteRequest_(siteRequest_);
 
-							// FormValues PATCH
-							{ e("form").a("action", "").a("id", "patchSchoolReceiptFormValues").a("onsubmit", "event.preventDefault(); return false; ").f();
-								htmlFormPATCHSchoolReceipt(o);
-							} g("form");
+							htmlFormPATCHSchoolReceipt(o);
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-light-green ")
 								.a("onclick", "patchSchoolReceipt(null, $('#patchSchoolReceiptFormValues'), ", Optional.ofNullable(schoolReceipt_).map(SchoolReceipt::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")

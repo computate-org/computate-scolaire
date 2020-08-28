@@ -588,7 +588,7 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postSchoolSessionModal').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Create a session").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "postSchoolSessionFormValues").f();
 							SchoolSession o = new SchoolSession();
 							o.setSiteRequest_(siteRequest_);
 
@@ -622,7 +622,7 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putimportSchoolSessionModal').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Import sessions").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putimportSchoolSessionFormValues").f();
 							SchoolSession o = new SchoolSession();
 							o.setSiteRequest_(siteRequest_);
 
@@ -656,7 +656,7 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putmergeSchoolSessionModal').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Merge sessions").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putmergeSchoolSessionFormValues").f();
 							SchoolSession o = new SchoolSession();
 							o.setSiteRequest_(siteRequest_);
 
@@ -690,7 +690,7 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putcopySchoolSessionModal').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Duplicate sessions").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "putcopySchoolSessionFormValues").f();
 							SchoolSession o = new SchoolSession();
 							o.setSiteRequest_(siteRequest_);
 
@@ -724,14 +724,11 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchSchoolSessionModal').hide(); ").f().sx("×").g("span");
 							e("h2").a("class", "w3-padding ").f().sx("Modify sessions").g("h2");
 						} g("header");
-						{ e("div").a("class", "w3-container ").f();
+						{ e("div").a("class", "w3-container ").a("id", "patchSchoolSessionFormValues").f();
 							SchoolSession o = new SchoolSession();
 							o.setSiteRequest_(siteRequest_);
 
-							// FormValues PATCH
-							{ e("form").a("action", "").a("id", "patchSchoolSessionFormValues").a("onsubmit", "event.preventDefault(); return false; ").f();
-								htmlFormPATCHSchoolSession(o);
-							} g("form");
+							htmlFormPATCHSchoolSession(o);
 							e("button")
 								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-green ")
 								.a("onclick", "patchSchoolSession(null, $('#patchSchoolSessionFormValues'), ", Optional.ofNullable(schoolSession_).map(SchoolSession::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")

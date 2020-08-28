@@ -224,8 +224,6 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 		l.setQuery("*:*");
 		l.addFilterQuery("enrollmentKey_indexed_long:" + pk);
 		l.addFilterQuery("chargeMonth_indexed_boolean:true");
-		l.addFilterQuery("deleted_indexed_boolean:false");
-		l.addFilterQuery("archived_indexed_boolean:false");
 		l.add("json.facet", "{'paymentDateMax':'max(paymentDate_indexed_date)'}");
 		l.setC(SchoolPayment.class);
 		l.setStore(true);
@@ -234,8 +232,6 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 	protected void _paymentSearch(SearchList<SchoolPayment> l) {
 		l.setQuery("*:*");
 		l.addFilterQuery("enrollmentKey_indexed_long:" + pk);
-		l.addFilterQuery("deleted_indexed_boolean:false");
-		l.addFilterQuery("archived_indexed_boolean:false");
 		l.add("json.facet", "{sum_paymentAmount:'sum(paymentAmount_indexed_double)'}");
 		l.add("json.facet", "{sum_chargeAmount:'sum(chargeAmount_indexed_double)'}");
 		l.add("json.facet", "{sum_chargeAmountDue:'sum(chargeAmountDue_indexed_double)'}");

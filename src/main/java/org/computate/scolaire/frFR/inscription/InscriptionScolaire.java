@@ -1755,7 +1755,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Definir: true
 	 * HtmlLigne: 4
 	 * HtmlCellule: 3
-	 */                  
+	 */               
 	protected void _enfantPropre(Couverture<Boolean> c) {
 		c.o(false);
 	}
