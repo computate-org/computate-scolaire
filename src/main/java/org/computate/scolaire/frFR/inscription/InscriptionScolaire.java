@@ -69,6 +69,14 @@ import org.computate.scolaire.frFR.saison.SaisonScolaire;
  * ApiUriAdminSearch.enUS: /api/admin/enrollment
  * RoleUtilisateurAdminSearch.enUS: true
  * 
+ * ApiMethode.frFR: PATCHAdmin
+ * ApiUriPATCHAdmin.frFR: /api/admin/inscription
+ * RoleUtilisateurPATCHAdmin.frFR: true
+ * 
+ * ApiMethode.enUS: AdminPATCH
+ * ApiUriAdminPATCH.enUS: /api/admin/enrollment
+ * RoleUtilisateurAdminPATCH.enUS: true
+ * 
  * ApiMethode.frFR: PATCHPaiements
  * ApiUriPATCHPayments.frFR: /inscription/paiements
  * 

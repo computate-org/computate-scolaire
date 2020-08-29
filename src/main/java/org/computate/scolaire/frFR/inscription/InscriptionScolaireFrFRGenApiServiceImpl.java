@@ -5485,6 +5485,2673 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 		}
 	}
 
+	// PATCHAdmin //
+
+	@Override
+	public void patchadminInscriptionScolaire(JsonObject body, OperationRequest operationRequete, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		RequeteSiteFrFR requeteSite = genererRequeteSiteFrFRPourInscriptionScolaire(siteContexte, operationRequete, body);
+		requeteSite.setRequeteUri("/api/admin/inscription");
+		requeteSite.setRequeteMethode("PATCHAdmin");
+		try {
+			LOGGER.info(String.format("patchadminInscriptionScolaire a démarré. "));
+			{
+				utilisateurInscriptionScolaire(requeteSite, b -> {
+					if(b.succeeded()) {
+						patchadminInscriptionScolaireReponse(requeteSite, c -> {
+							if(c.succeeded()) {
+								gestionnaireEvenements.handle(Future.succeededFuture(c.result()));
+								WorkerExecutor executeurTravailleur = siteContexte.getExecuteurTravailleur();
+								executeurTravailleur.executeBlocking(
+									blockingCodeHandler -> {
+										try {
+											rechercheInscriptionScolaire(requeteSite, false, true, "/api/admin/inscription", "PATCHAdmin", d -> {
+												if(d.succeeded()) {
+													ListeRecherche<InscriptionScolaire> listeInscriptionScolaire = d.result();
+													RequeteApi requeteApi = new RequeteApi();
+													requeteApi.setRows(listeInscriptionScolaire.getRows());
+													requeteApi.setNumFound(listeInscriptionScolaire.getQueryResponse().getResults().getNumFound());
+													requeteApi.setNumPATCH(0L);
+													requeteApi.initLoinRequeteApi(requeteSite);
+													requeteSite.setRequeteApi_(requeteApi);
+													requeteSite.getVertx().eventBus().publish("websocketInscriptionScolaire", JsonObject.mapFrom(requeteApi).toString());
+													SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listeInscriptionScolaire.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
+													Date date = null;
+													if(facets != null)
+														date = (Date)facets.get("max_modifie");
+													String dt;
+													if(date == null)
+														dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
+													else
+														dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
+													listeInscriptionScolaire.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
+
+													try {
+														listePATCHAdminInscriptionScolaire(requeteApi, listeInscriptionScolaire, dt, e -> {
+															if(e.succeeded()) {
+																patchadminInscriptionScolaireReponse(requeteSite, f -> {
+																	if(f.succeeded()) {
+																		LOGGER.info(String.format("patchadminInscriptionScolaire a réussi. "));
+																		blockingCodeHandler.handle(Future.succeededFuture(f.result()));
+																	} else {
+																		LOGGER.error(String.format("patchadminInscriptionScolaire a échoué. ", f.cause()));
+																		erreurInscriptionScolaire(requeteSite, null, f);
+																	}
+																});
+															} else {
+																LOGGER.error(String.format("patchadminInscriptionScolaire a échoué. ", e.cause()));
+																erreurInscriptionScolaire(requeteSite, null, e);
+															}
+														});
+													} catch(Exception ex) {
+														LOGGER.error(String.format("patchadminInscriptionScolaire a échoué. ", ex));
+														erreurInscriptionScolaire(requeteSite, null, Future.failedFuture(ex));
+													}
+										} else {
+													LOGGER.error(String.format("patchadminInscriptionScolaire a échoué. ", d.cause()));
+													erreurInscriptionScolaire(requeteSite, null, d);
+												}
+											});
+										} catch(Exception ex) {
+											LOGGER.error(String.format("patchadminInscriptionScolaire a échoué. ", ex));
+											erreurInscriptionScolaire(requeteSite, null, Future.failedFuture(ex));
+										}
+									}, resultHandler -> {
+									}
+								);
+							} else {
+								LOGGER.error(String.format("patchadminInscriptionScolaire a échoué. ", c.cause()));
+								erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("patchadminInscriptionScolaire a échoué. ", b.cause()));
+						erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, b);
+					}
+				});
+			}
+		} catch(Exception ex) {
+			LOGGER.error(String.format("patchadminInscriptionScolaire a échoué. ", ex));
+			erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(ex));
+		}
+	}
+
+
+	public void listePATCHAdminInscriptionScolaire(RequeteApi requeteApi, ListeRecherche<InscriptionScolaire> listeInscriptionScolaire, String dt, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		List<Future> futures = new ArrayList<>();
+		RequeteSiteFrFR requeteSite = listeInscriptionScolaire.getRequeteSite_();
+		listeInscriptionScolaire.getList().forEach(o -> {
+			RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourInscriptionScolaire(siteContexte, requeteSite.getOperationRequete(), requeteSite.getObjetJson());
+			requeteSite2.setRequeteApi_(requeteSite.getRequeteApi_());
+			o.setRequeteSite_(requeteSite2);
+			futures.add(
+				patchadminInscriptionScolaireFuture(o, false, a -> {
+					if(a.succeeded()) {
+					} else {
+						erreurInscriptionScolaire(requeteSite2, gestionnaireEvenements, a);
+					}
+				})
+			);
+		});
+		CompositeFuture.all(futures).setHandler( a -> {
+			if(a.succeeded()) {
+				if(listeInscriptionScolaire.next(dt)) {
+					listePATCHAdminInscriptionScolaire(requeteApi, listeInscriptionScolaire, dt, gestionnaireEvenements);
+				} else {
+					reponse200PATCHAdminInscriptionScolaire(requeteSite, gestionnaireEvenements);
+				}
+			} else {
+				LOGGER.error(String.format("listePATCHAdminInscriptionScolaire a échoué. ", a.cause()));
+				erreurInscriptionScolaire(listeInscriptionScolaire.getRequeteSite_(), gestionnaireEvenements, a);
+			}
+		});
+	}
+
+	public Future<InscriptionScolaire> patchadminInscriptionScolaireFuture(InscriptionScolaire o, Boolean inheritPk, Handler<AsyncResult<InscriptionScolaire>> gestionnaireEvenements) {
+		Promise<InscriptionScolaire> promise = Promise.promise();
+		RequeteSiteFrFR requeteSite = o.getRequeteSite_();
+		try {
+			RequeteApi requeteApi = requeteSite.getRequeteApi_();
+			if(requeteApi != null && requeteApi.getNumFound() == 1L) {
+				requeteApi.setOriginal(o);
+				requeteApi.setPk(o.getPk());
+			}
+			sqlConnexionInscriptionScolaire(requeteSite, a -> {
+				if(a.succeeded()) {
+					sqlTransactionInscriptionScolaire(requeteSite, b -> {
+						if(b.succeeded()) {
+							sqlPATCHAdminInscriptionScolaire(o, inheritPk, c -> {
+								if(c.succeeded()) {
+									InscriptionScolaire inscriptionScolaire = c.result();
+									definirIndexerInscriptionScolaire(inscriptionScolaire, d -> {
+										if(d.succeeded()) {
+											if(requeteApi != null) {
+												requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
+												if(requeteApi.getNumFound() == 1L) {
+													inscriptionScolaire.requeteApiInscriptionScolaire();
+												}
+												requeteSite.getVertx().eventBus().publish("websocketInscriptionScolaire", JsonObject.mapFrom(requeteApi).toString());
+											}
+											gestionnaireEvenements.handle(Future.succeededFuture(inscriptionScolaire));
+											promise.complete(inscriptionScolaire);
+										} else {
+											LOGGER.error(String.format("patchadminInscriptionScolaireFuture a échoué. ", d.cause()));
+											gestionnaireEvenements.handle(Future.failedFuture(d.cause()));
+										}
+									});
+								} else {
+									LOGGER.error(String.format("patchadminInscriptionScolaireFuture a échoué. ", c.cause()));
+									gestionnaireEvenements.handle(Future.failedFuture(c.cause()));
+								}
+							});
+						} else {
+							LOGGER.error(String.format("patchadminInscriptionScolaireFuture a échoué. ", b.cause()));
+							gestionnaireEvenements.handle(Future.failedFuture(b.cause()));
+						}
+					});
+				} else {
+					LOGGER.error(String.format("patchadminInscriptionScolaireFuture a échoué. ", a.cause()));
+					gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
+				}
+			});
+		} catch(Exception e) {
+			LOGGER.error(String.format("patchadminInscriptionScolaireFuture a échoué. ", e));
+			erreurInscriptionScolaire(requeteSite, null, Future.failedFuture(e));
+		}
+		return promise.future();
+	}
+
+	public void sqlPATCHAdminInscriptionScolaire(InscriptionScolaire o, Boolean inheritPk, Handler<AsyncResult<InscriptionScolaire>> gestionnaireEvenements) {
+		try {
+			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
+			RequeteApi requeteApi = requeteSite.getRequeteApi_();
+			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(new ArrayList<>());
+			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(new ArrayList<>());
+			Transaction tx = requeteSite.getTx();
+			Long pk = o.getPk();
+			JsonObject jsonObject = requeteSite.getObjetJson();
+			Set<String> methodeNoms = jsonObject.fieldNames();
+			InscriptionScolaire o2 = new InscriptionScolaire();
+			List<Future> futures = new ArrayList<>();
+
+			if(o.getUtilisateurId() == null && requeteSite.getUtilisateurId() != null) {
+				futures.add(Future.future(a -> {
+					tx.preparedQuery(SiteContexteFrFR.SQL_setD
+							, Tuple.of(pk, "utilisateurId", requeteSite.getUtilisateurId())
+							, b
+					-> {
+						if(b.succeeded())
+							a.handle(Future.succeededFuture());
+						else
+							a.handle(Future.failedFuture(b.cause()));
+					});
+				}));
+			}
+			if(o.getUtilisateurCle() == null && requeteSite.getUtilisateurCle() != null) {
+				futures.add(Future.future(a -> {
+					tx.preparedQuery(SiteContexteFrFR.SQL_setD
+				, Tuple.of(pk, "utilisateurCle", requeteSite.getUtilisateurCle().toString())
+							, b
+					-> {
+						if(b.succeeded())
+							a.handle(Future.succeededFuture());
+						else
+							a.handle(Future.failedFuture(b.cause()));
+					});
+				}));
+
+				JsonArray utilisateurCles = Optional.ofNullable(jsonObject.getJsonArray("addUtilisateurCles")).orElse(null);
+				if(utilisateurCles != null && !utilisateurCles.contains(requeteSite.getUtilisateurCle()))
+					utilisateurCles.add(requeteSite.getUtilisateurCle().toString());
+				else
+					jsonObject.put("addUtilisateurCles", new JsonArray().add(requeteSite.getUtilisateurCle().toString()));
+			}
+
+			for(String methodeNom : methodeNoms) {
+				switch(methodeNom) {
+					case "setInheritPk":
+						if(jsonObject.getString(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "inheritPk")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inheritPk a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setInheritPk(jsonObject.getString(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "inheritPk", o2.jsonInheritPk())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inheritPk a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setArchive":
+						if(jsonObject.getBoolean(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "archive")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.archive a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setArchive(jsonObject.getBoolean(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "archive", o2.jsonArchive())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.archive a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setSupprime":
+						if(jsonObject.getBoolean(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "supprime")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.supprime a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setSupprime(jsonObject.getBoolean(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "supprime", o2.jsonSupprime())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.supprime a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setAnneeCle":
+						{
+							o2.setAnneeCle(jsonObject.getString(methodeNom));
+							Long l = o2.getAnneeCle();
+							if(l != null) {
+								ListeRecherche<AnneeScolaire> listeRecherche = new ListeRecherche<AnneeScolaire>();
+								listeRecherche.setQuery("*:*");
+								listeRecherche.setStocker(true);
+								listeRecherche.setC(AnneeScolaire.class);
+								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
+								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+								listeRecherche.initLoinListeRecherche(requeteSite);
+								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null && !l2.equals(o.getAnneeCle())) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA
+												, Tuple.of(pk, "anneeCle", l2, "inscriptionCles")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.anneeCle a échoué", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
+										classes.add("AnneeScolaire");
+									}
+								}
+							}
+						}
+						break;
+					case "removeAnneeCle":
+						{
+							o2.setAnneeCle(jsonObject.getString(methodeNom));
+							Long l = o2.getAnneeCle();
+							if(l != null) {
+								ListeRecherche<AnneeScolaire> listeRecherche = new ListeRecherche<AnneeScolaire>();
+								listeRecherche.setQuery("*:*");
+								listeRecherche.setStocker(true);
+								listeRecherche.setC(AnneeScolaire.class);
+								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
+								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+								listeRecherche.initLoinListeRecherche(requeteSite);
+								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
+												, Tuple.of(pk, "anneeCle", l2, "inscriptionCles")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.anneeCle a échoué", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
+										classes.add("AnneeScolaire");
+									}
+								}
+							}
+						}
+						break;
+					case "addBlocCles":
+						{
+							Long l = Long.parseLong(jsonObject.getString(methodeNom));
+							if(l != null) {
+								ListeRecherche<BlocScolaire> listeRecherche = new ListeRecherche<BlocScolaire>();
+								listeRecherche.setQuery("*:*");
+								listeRecherche.setStocker(true);
+								listeRecherche.setC(BlocScolaire.class);
+								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
+								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+								listeRecherche.initLoinListeRecherche(requeteSite);
+								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null && !o.getBlocCles().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA
+												, Tuple.of(pk, "blocCles", l2, "inscriptionCles")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.blocCles a échoué", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
+										classes.add("BlocScolaire");
+									}
+								}
+							}
+						}
+						break;
+					case "addAllBlocCles":
+						JsonArray addAllBlocClesValeurs = jsonObject.getJsonArray(methodeNom);
+						if(addAllBlocClesValeurs != null) {
+							for(Integer i = 0; i <  addAllBlocClesValeurs.size(); i++) {
+								Long l = Long.parseLong(addAllBlocClesValeurs.getString(i));
+								if(l != null) {
+									ListeRecherche<BlocScolaire> listeRecherche = new ListeRecherche<BlocScolaire>();
+									listeRecherche.setQuery("*:*");
+									listeRecherche.setStocker(true);
+									listeRecherche.setC(BlocScolaire.class);
+									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
+									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+									listeRecherche.initLoinListeRecherche(requeteSite);
+									Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l2 != null && !o.getBlocCles().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA
+												, Tuple.of(pk, "blocCles", l2, "inscriptionCles")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.blocCles a échoué", b.cause())));
+										});
+									}));
+										if(!pks.contains(l2)) {
+											pks.add(l2);
+											classes.add("BlocScolaire");
+										}
+									}
+								}
+							}
+						}
+						break;
+					case "setBlocCles":
+						JsonArray setBlocClesValeurs = jsonObject.getJsonArray(methodeNom);
+						JsonArray setBlocClesValeurs2 = new JsonArray();
+						if(setBlocClesValeurs != null) {
+							for(Integer i = 0; i <  setBlocClesValeurs.size(); i++) {
+								Long l = Long.parseLong(setBlocClesValeurs.getString(i));
+								if(l != null) {
+									ListeRecherche<BlocScolaire> listeRecherche = new ListeRecherche<BlocScolaire>();
+									listeRecherche.setQuery("*:*");
+									listeRecherche.setStocker(true);
+									listeRecherche.setC(BlocScolaire.class);
+									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
+									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+									listeRecherche.initLoinListeRecherche(requeteSite);
+									Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l2 != null)
+										setBlocClesValeurs2.add(l2);
+									if(l2 != null && !o.getBlocCles().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA
+												, Tuple.of(pk, "blocCles", l2, "inscriptionCles")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.blocCles a échoué", b.cause())));
+										});
+									}));
+										if(!pks.contains(l2)) {
+											pks.add(l2);
+											classes.add("BlocScolaire");
+										}
+									}
+								}
+							}
+						}
+						if(o.getBlocCles() != null) {
+							for(Long l :  o.getBlocCles()) {
+								if(l != null && (setBlocClesValeurs2 == null || !setBlocClesValeurs2.contains(l))) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
+												, Tuple.of(pk, "blocCles", l, "inscriptionCles")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.blocCles a échoué", b.cause())));
+										});
+									}));
+								}
+							}
+						}
+						break;
+					case "removeBlocCles":
+						{
+							Long l = Long.parseLong(jsonObject.getString(methodeNom));
+							if(l != null) {
+								ListeRecherche<BlocScolaire> listeRecherche = new ListeRecherche<BlocScolaire>();
+								listeRecherche.setQuery("*:*");
+								listeRecherche.setStocker(true);
+								listeRecherche.setC(BlocScolaire.class);
+								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
+								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+								listeRecherche.initLoinListeRecherche(requeteSite);
+								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null && o.getBlocCles().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
+												, Tuple.of(pk, "blocCles", l2, "inscriptionCles")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.blocCles a échoué", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
+										classes.add("BlocScolaire");
+									}
+								}
+							}
+						}
+						break;
+					case "setEnfantCle":
+						{
+							o2.setEnfantCle(jsonObject.getString(methodeNom));
+							Long l = o2.getEnfantCle();
+							if(l != null) {
+								ListeRecherche<EnfantScolaire> listeRecherche = new ListeRecherche<EnfantScolaire>();
+								listeRecherche.setQuery("*:*");
+								listeRecherche.setStocker(true);
+								listeRecherche.setC(EnfantScolaire.class);
+								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
+								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+								listeRecherche.initLoinListeRecherche(requeteSite);
+								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null && !l2.equals(o.getEnfantCle())) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA
+												, Tuple.of(pk, "enfantCle", l2, "inscriptionCles")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.enfantCle a échoué", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
+										classes.add("EnfantScolaire");
+									}
+								}
+							}
+						}
+						break;
+					case "removeEnfantCle":
+						{
+							o2.setEnfantCle(jsonObject.getString(methodeNom));
+							Long l = o2.getEnfantCle();
+							if(l != null) {
+								ListeRecherche<EnfantScolaire> listeRecherche = new ListeRecherche<EnfantScolaire>();
+								listeRecherche.setQuery("*:*");
+								listeRecherche.setStocker(true);
+								listeRecherche.setC(EnfantScolaire.class);
+								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
+								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+								listeRecherche.initLoinListeRecherche(requeteSite);
+								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
+												, Tuple.of(pk, "enfantCle", l2, "inscriptionCles")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.enfantCle a échoué", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
+										classes.add("EnfantScolaire");
+									}
+								}
+							}
+						}
+						break;
+					case "addMereCles":
+						{
+							Long l = Long.parseLong(jsonObject.getString(methodeNom));
+							if(l != null) {
+								ListeRecherche<MereScolaire> listeRecherche = new ListeRecherche<MereScolaire>();
+								listeRecherche.setQuery("*:*");
+								listeRecherche.setStocker(true);
+								listeRecherche.setC(MereScolaire.class);
+								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
+								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+								listeRecherche.initLoinListeRecherche(requeteSite);
+								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null && !o.getMereCles().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA
+												, Tuple.of(l2, "inscriptionCles", pk, "mereCles")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.mereCles a échoué", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
+										classes.add("MereScolaire");
+									}
+								}
+							}
+						}
+						break;
+					case "addAllMereCles":
+						JsonArray addAllMereClesValeurs = jsonObject.getJsonArray(methodeNom);
+						if(addAllMereClesValeurs != null) {
+							for(Integer i = 0; i <  addAllMereClesValeurs.size(); i++) {
+								Long l = Long.parseLong(addAllMereClesValeurs.getString(i));
+								if(l != null) {
+									ListeRecherche<MereScolaire> listeRecherche = new ListeRecherche<MereScolaire>();
+									listeRecherche.setQuery("*:*");
+									listeRecherche.setStocker(true);
+									listeRecherche.setC(MereScolaire.class);
+									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
+									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+									listeRecherche.initLoinListeRecherche(requeteSite);
+									Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l2 != null && !o.getMereCles().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA
+												, Tuple.of(l2, "inscriptionCles", pk, "mereCles")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.mereCles a échoué", b.cause())));
+										});
+									}));
+										if(!pks.contains(l2)) {
+											pks.add(l2);
+											classes.add("MereScolaire");
+										}
+									}
+								}
+							}
+						}
+						break;
+					case "setMereCles":
+						JsonArray setMereClesValeurs = jsonObject.getJsonArray(methodeNom);
+						JsonArray setMereClesValeurs2 = new JsonArray();
+						if(setMereClesValeurs != null) {
+							for(Integer i = 0; i <  setMereClesValeurs.size(); i++) {
+								Long l = Long.parseLong(setMereClesValeurs.getString(i));
+								if(l != null) {
+									ListeRecherche<MereScolaire> listeRecherche = new ListeRecherche<MereScolaire>();
+									listeRecherche.setQuery("*:*");
+									listeRecherche.setStocker(true);
+									listeRecherche.setC(MereScolaire.class);
+									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
+									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+									listeRecherche.initLoinListeRecherche(requeteSite);
+									Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l2 != null)
+										setMereClesValeurs2.add(l2);
+									if(l2 != null && !o.getMereCles().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA
+												, Tuple.of(l2, "inscriptionCles", pk, "mereCles")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.mereCles a échoué", b.cause())));
+										});
+									}));
+										if(!pks.contains(l2)) {
+											pks.add(l2);
+											classes.add("MereScolaire");
+										}
+									}
+								}
+							}
+						}
+						if(o.getMereCles() != null) {
+							for(Long l :  o.getMereCles()) {
+								if(l != null && (setMereClesValeurs == null || !setMereClesValeurs2.contains(l))) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
+												, Tuple.of(l, "inscriptionCles", pk, "mereCles")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.mereCles a échoué", b.cause())));
+										});
+									}));
+								}
+							}
+						}
+						break;
+					case "removeMereCles":
+						{
+							Long l = Long.parseLong(jsonObject.getString(methodeNom));
+							if(l != null) {
+								ListeRecherche<MereScolaire> listeRecherche = new ListeRecherche<MereScolaire>();
+								listeRecherche.setQuery("*:*");
+								listeRecherche.setStocker(true);
+								listeRecherche.setC(MereScolaire.class);
+								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
+								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+								listeRecherche.initLoinListeRecherche(requeteSite);
+								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null && o.getMereCles().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
+												, Tuple.of(l2, "inscriptionCles", pk, "mereCles")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.mereCles a échoué", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
+										classes.add("MereScolaire");
+									}
+								}
+							}
+						}
+						break;
+					case "addPereCles":
+						{
+							Long l = Long.parseLong(jsonObject.getString(methodeNom));
+							if(l != null) {
+								ListeRecherche<PereScolaire> listeRecherche = new ListeRecherche<PereScolaire>();
+								listeRecherche.setQuery("*:*");
+								listeRecherche.setStocker(true);
+								listeRecherche.setC(PereScolaire.class);
+								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
+								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+								listeRecherche.initLoinListeRecherche(requeteSite);
+								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null && !o.getPereCles().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA
+												, Tuple.of(l2, "inscriptionCles", pk, "pereCles")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.pereCles a échoué", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
+										classes.add("PereScolaire");
+									}
+								}
+							}
+						}
+						break;
+					case "addAllPereCles":
+						JsonArray addAllPereClesValeurs = jsonObject.getJsonArray(methodeNom);
+						if(addAllPereClesValeurs != null) {
+							for(Integer i = 0; i <  addAllPereClesValeurs.size(); i++) {
+								Long l = Long.parseLong(addAllPereClesValeurs.getString(i));
+								if(l != null) {
+									ListeRecherche<PereScolaire> listeRecherche = new ListeRecherche<PereScolaire>();
+									listeRecherche.setQuery("*:*");
+									listeRecherche.setStocker(true);
+									listeRecherche.setC(PereScolaire.class);
+									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
+									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+									listeRecherche.initLoinListeRecherche(requeteSite);
+									Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l2 != null && !o.getPereCles().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA
+												, Tuple.of(l2, "inscriptionCles", pk, "pereCles")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.pereCles a échoué", b.cause())));
+										});
+									}));
+										if(!pks.contains(l2)) {
+											pks.add(l2);
+											classes.add("PereScolaire");
+										}
+									}
+								}
+							}
+						}
+						break;
+					case "setPereCles":
+						JsonArray setPereClesValeurs = jsonObject.getJsonArray(methodeNom);
+						JsonArray setPereClesValeurs2 = new JsonArray();
+						if(setPereClesValeurs != null) {
+							for(Integer i = 0; i <  setPereClesValeurs.size(); i++) {
+								Long l = Long.parseLong(setPereClesValeurs.getString(i));
+								if(l != null) {
+									ListeRecherche<PereScolaire> listeRecherche = new ListeRecherche<PereScolaire>();
+									listeRecherche.setQuery("*:*");
+									listeRecherche.setStocker(true);
+									listeRecherche.setC(PereScolaire.class);
+									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
+									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+									listeRecherche.initLoinListeRecherche(requeteSite);
+									Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l2 != null)
+										setPereClesValeurs2.add(l2);
+									if(l2 != null && !o.getPereCles().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA
+												, Tuple.of(l2, "inscriptionCles", pk, "pereCles")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.pereCles a échoué", b.cause())));
+										});
+									}));
+										if(!pks.contains(l2)) {
+											pks.add(l2);
+											classes.add("PereScolaire");
+										}
+									}
+								}
+							}
+						}
+						if(o.getPereCles() != null) {
+							for(Long l :  o.getPereCles()) {
+								if(l != null && (setPereClesValeurs == null || !setPereClesValeurs2.contains(l))) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
+												, Tuple.of(l, "inscriptionCles", pk, "pereCles")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.pereCles a échoué", b.cause())));
+										});
+									}));
+								}
+							}
+						}
+						break;
+					case "removePereCles":
+						{
+							Long l = Long.parseLong(jsonObject.getString(methodeNom));
+							if(l != null) {
+								ListeRecherche<PereScolaire> listeRecherche = new ListeRecherche<PereScolaire>();
+								listeRecherche.setQuery("*:*");
+								listeRecherche.setStocker(true);
+								listeRecherche.setC(PereScolaire.class);
+								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
+								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+								listeRecherche.initLoinListeRecherche(requeteSite);
+								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null && o.getPereCles().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
+												, Tuple.of(l2, "inscriptionCles", pk, "pereCles")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.pereCles a échoué", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
+										classes.add("PereScolaire");
+									}
+								}
+							}
+						}
+						break;
+					case "addGardienCles":
+						{
+							Long l = Long.parseLong(jsonObject.getString(methodeNom));
+							if(l != null) {
+								ListeRecherche<GardienScolaire> listeRecherche = new ListeRecherche<GardienScolaire>();
+								listeRecherche.setQuery("*:*");
+								listeRecherche.setStocker(true);
+								listeRecherche.setC(GardienScolaire.class);
+								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
+								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+								listeRecherche.initLoinListeRecherche(requeteSite);
+								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null && !o.getGardienCles().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA
+												, Tuple.of(pk, "gardienCles", l2, "inscriptionCles")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.gardienCles a échoué", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
+										classes.add("GardienScolaire");
+									}
+								}
+							}
+						}
+						break;
+					case "addAllGardienCles":
+						JsonArray addAllGardienClesValeurs = jsonObject.getJsonArray(methodeNom);
+						if(addAllGardienClesValeurs != null) {
+							for(Integer i = 0; i <  addAllGardienClesValeurs.size(); i++) {
+								Long l = Long.parseLong(addAllGardienClesValeurs.getString(i));
+								if(l != null) {
+									ListeRecherche<GardienScolaire> listeRecherche = new ListeRecherche<GardienScolaire>();
+									listeRecherche.setQuery("*:*");
+									listeRecherche.setStocker(true);
+									listeRecherche.setC(GardienScolaire.class);
+									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
+									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+									listeRecherche.initLoinListeRecherche(requeteSite);
+									Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l2 != null && !o.getGardienCles().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA
+												, Tuple.of(pk, "gardienCles", l2, "inscriptionCles")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.gardienCles a échoué", b.cause())));
+										});
+									}));
+										if(!pks.contains(l2)) {
+											pks.add(l2);
+											classes.add("GardienScolaire");
+										}
+									}
+								}
+							}
+						}
+						break;
+					case "setGardienCles":
+						JsonArray setGardienClesValeurs = jsonObject.getJsonArray(methodeNom);
+						JsonArray setGardienClesValeurs2 = new JsonArray();
+						if(setGardienClesValeurs != null) {
+							for(Integer i = 0; i <  setGardienClesValeurs.size(); i++) {
+								Long l = Long.parseLong(setGardienClesValeurs.getString(i));
+								if(l != null) {
+									ListeRecherche<GardienScolaire> listeRecherche = new ListeRecherche<GardienScolaire>();
+									listeRecherche.setQuery("*:*");
+									listeRecherche.setStocker(true);
+									listeRecherche.setC(GardienScolaire.class);
+									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
+									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+									listeRecherche.initLoinListeRecherche(requeteSite);
+									Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l2 != null)
+										setGardienClesValeurs2.add(l2);
+									if(l2 != null && !o.getGardienCles().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA
+												, Tuple.of(pk, "gardienCles", l2, "inscriptionCles")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.gardienCles a échoué", b.cause())));
+										});
+									}));
+										if(!pks.contains(l2)) {
+											pks.add(l2);
+											classes.add("GardienScolaire");
+										}
+									}
+								}
+							}
+						}
+						if(o.getGardienCles() != null) {
+							for(Long l :  o.getGardienCles()) {
+								if(l != null && (setGardienClesValeurs2 == null || !setGardienClesValeurs2.contains(l))) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
+												, Tuple.of(pk, "gardienCles", l, "inscriptionCles")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.gardienCles a échoué", b.cause())));
+										});
+									}));
+								}
+							}
+						}
+						break;
+					case "removeGardienCles":
+						{
+							Long l = Long.parseLong(jsonObject.getString(methodeNom));
+							if(l != null) {
+								ListeRecherche<GardienScolaire> listeRecherche = new ListeRecherche<GardienScolaire>();
+								listeRecherche.setQuery("*:*");
+								listeRecherche.setStocker(true);
+								listeRecherche.setC(GardienScolaire.class);
+								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
+								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+								listeRecherche.initLoinListeRecherche(requeteSite);
+								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null && o.getGardienCles().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
+												, Tuple.of(pk, "gardienCles", l2, "inscriptionCles")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.gardienCles a échoué", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
+										classes.add("GardienScolaire");
+									}
+								}
+							}
+						}
+						break;
+					case "addPaiementCles":
+						{
+							Long l = Long.parseLong(jsonObject.getString(methodeNom));
+							if(l != null) {
+								ListeRecherche<PaiementScolaire> listeRecherche = new ListeRecherche<PaiementScolaire>();
+								listeRecherche.setQuery("*:*");
+								listeRecherche.setStocker(true);
+								listeRecherche.setC(PaiementScolaire.class);
+								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
+								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+								listeRecherche.initLoinListeRecherche(requeteSite);
+								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null && !o.getPaiementCles().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA
+												, Tuple.of(l2, "inscriptionCle", pk, "paiementCles")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.paiementCles a échoué", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
+										classes.add("PaiementScolaire");
+									}
+								}
+							}
+						}
+						break;
+					case "addAllPaiementCles":
+						JsonArray addAllPaiementClesValeurs = jsonObject.getJsonArray(methodeNom);
+						if(addAllPaiementClesValeurs != null) {
+							for(Integer i = 0; i <  addAllPaiementClesValeurs.size(); i++) {
+								Long l = Long.parseLong(addAllPaiementClesValeurs.getString(i));
+								if(l != null) {
+									ListeRecherche<PaiementScolaire> listeRecherche = new ListeRecherche<PaiementScolaire>();
+									listeRecherche.setQuery("*:*");
+									listeRecherche.setStocker(true);
+									listeRecherche.setC(PaiementScolaire.class);
+									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
+									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+									listeRecherche.initLoinListeRecherche(requeteSite);
+									Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l2 != null && !o.getPaiementCles().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA
+												, Tuple.of(l2, "inscriptionCle", pk, "paiementCles")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.paiementCles a échoué", b.cause())));
+										});
+									}));
+										if(!pks.contains(l2)) {
+											pks.add(l2);
+											classes.add("PaiementScolaire");
+										}
+									}
+								}
+							}
+						}
+						break;
+					case "setPaiementCles":
+						JsonArray setPaiementClesValeurs = jsonObject.getJsonArray(methodeNom);
+						JsonArray setPaiementClesValeurs2 = new JsonArray();
+						if(setPaiementClesValeurs != null) {
+							for(Integer i = 0; i <  setPaiementClesValeurs.size(); i++) {
+								Long l = Long.parseLong(setPaiementClesValeurs.getString(i));
+								if(l != null) {
+									ListeRecherche<PaiementScolaire> listeRecherche = new ListeRecherche<PaiementScolaire>();
+									listeRecherche.setQuery("*:*");
+									listeRecherche.setStocker(true);
+									listeRecherche.setC(PaiementScolaire.class);
+									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
+									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+									listeRecherche.initLoinListeRecherche(requeteSite);
+									Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l2 != null)
+										setPaiementClesValeurs2.add(l2);
+									if(l2 != null && !o.getPaiementCles().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA
+												, Tuple.of(l2, "inscriptionCle", pk, "paiementCles")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.paiementCles a échoué", b.cause())));
+										});
+									}));
+										if(!pks.contains(l2)) {
+											pks.add(l2);
+											classes.add("PaiementScolaire");
+										}
+									}
+								}
+							}
+						}
+						if(o.getPaiementCles() != null) {
+							for(Long l :  o.getPaiementCles()) {
+								if(l != null && (setPaiementClesValeurs == null || !setPaiementClesValeurs2.contains(l))) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
+												, Tuple.of(l, "inscriptionCle", pk, "paiementCles")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.paiementCles a échoué", b.cause())));
+										});
+									}));
+								}
+							}
+						}
+						break;
+					case "removePaiementCles":
+						{
+							Long l = Long.parseLong(jsonObject.getString(methodeNom));
+							if(l != null) {
+								ListeRecherche<PaiementScolaire> listeRecherche = new ListeRecherche<PaiementScolaire>();
+								listeRecherche.setQuery("*:*");
+								listeRecherche.setStocker(true);
+								listeRecherche.setC(PaiementScolaire.class);
+								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
+								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+								listeRecherche.initLoinListeRecherche(requeteSite);
+								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null && o.getPaiementCles().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
+												, Tuple.of(l2, "inscriptionCle", pk, "paiementCles")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.paiementCles a échoué", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
+										classes.add("PaiementScolaire");
+									}
+								}
+							}
+						}
+						break;
+					case "addUtilisateurCles":
+						{
+							Long l = Long.parseLong(jsonObject.getString(methodeNom));
+							if(l != null) {
+								ListeRecherche<UtilisateurSite> listeRecherche = new ListeRecherche<UtilisateurSite>();
+								listeRecherche.setQuery("*:*");
+								listeRecherche.setStocker(true);
+								listeRecherche.setC(UtilisateurSite.class);
+								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
+								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+								listeRecherche.initLoinListeRecherche(requeteSite);
+								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null && !o.getUtilisateurCles().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA
+												, Tuple.of(l2, "inscriptionCles", pk, "utilisateurCles")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.utilisateurCles a échoué", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
+										classes.add("UtilisateurSite");
+									}
+								}
+							}
+						}
+						break;
+					case "addAllUtilisateurCles":
+						JsonArray addAllUtilisateurClesValeurs = jsonObject.getJsonArray(methodeNom);
+						if(addAllUtilisateurClesValeurs != null) {
+							for(Integer i = 0; i <  addAllUtilisateurClesValeurs.size(); i++) {
+								Long l = Long.parseLong(addAllUtilisateurClesValeurs.getString(i));
+								if(l != null) {
+									ListeRecherche<UtilisateurSite> listeRecherche = new ListeRecherche<UtilisateurSite>();
+									listeRecherche.setQuery("*:*");
+									listeRecherche.setStocker(true);
+									listeRecherche.setC(UtilisateurSite.class);
+									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
+									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+									listeRecherche.initLoinListeRecherche(requeteSite);
+									Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l2 != null && !o.getUtilisateurCles().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA
+												, Tuple.of(l2, "inscriptionCles", pk, "utilisateurCles")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.utilisateurCles a échoué", b.cause())));
+										});
+									}));
+										if(!pks.contains(l2)) {
+											pks.add(l2);
+											classes.add("UtilisateurSite");
+										}
+									}
+								}
+							}
+						}
+						break;
+					case "setUtilisateurCles":
+						JsonArray setUtilisateurClesValeurs = jsonObject.getJsonArray(methodeNom);
+						JsonArray setUtilisateurClesValeurs2 = new JsonArray();
+						if(setUtilisateurClesValeurs != null) {
+							for(Integer i = 0; i <  setUtilisateurClesValeurs.size(); i++) {
+								Long l = Long.parseLong(setUtilisateurClesValeurs.getString(i));
+								if(l != null) {
+									ListeRecherche<UtilisateurSite> listeRecherche = new ListeRecherche<UtilisateurSite>();
+									listeRecherche.setQuery("*:*");
+									listeRecherche.setStocker(true);
+									listeRecherche.setC(UtilisateurSite.class);
+									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
+									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+									listeRecherche.initLoinListeRecherche(requeteSite);
+									Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l2 != null)
+										setUtilisateurClesValeurs2.add(l2);
+									if(l2 != null && !o.getUtilisateurCles().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA
+												, Tuple.of(l2, "inscriptionCles", pk, "utilisateurCles")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.utilisateurCles a échoué", b.cause())));
+										});
+									}));
+										if(!pks.contains(l2)) {
+											pks.add(l2);
+											classes.add("UtilisateurSite");
+										}
+									}
+								}
+							}
+						}
+						if(o.getUtilisateurCles() != null) {
+							for(Long l :  o.getUtilisateurCles()) {
+								if(l != null && (setUtilisateurClesValeurs == null || !setUtilisateurClesValeurs2.contains(l))) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
+												, Tuple.of(l, "inscriptionCles", pk, "utilisateurCles")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.utilisateurCles a échoué", b.cause())));
+										});
+									}));
+								}
+							}
+						}
+						break;
+					case "removeUtilisateurCles":
+						{
+							Long l = Long.parseLong(jsonObject.getString(methodeNom));
+							if(l != null) {
+								ListeRecherche<UtilisateurSite> listeRecherche = new ListeRecherche<UtilisateurSite>();
+								listeRecherche.setQuery("*:*");
+								listeRecherche.setStocker(true);
+								listeRecherche.setC(UtilisateurSite.class);
+								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
+								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+								listeRecherche.initLoinListeRecherche(requeteSite);
+								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null && o.getUtilisateurCles().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
+												, Tuple.of(l2, "inscriptionCles", pk, "utilisateurCles")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.utilisateurCles a échoué", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
+										classes.add("UtilisateurSite");
+									}
+								}
+							}
+						}
+						break;
+					case "setEnfantNomComplet":
+						if(jsonObject.getString(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "enfantNomComplet")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.enfantNomComplet a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setEnfantNomComplet(jsonObject.getString(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "enfantNomComplet", o2.jsonEnfantNomComplet())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.enfantNomComplet a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setEnfantNomCompletPrefere":
+						if(jsonObject.getString(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "enfantNomCompletPrefere")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.enfantNomCompletPrefere a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setEnfantNomCompletPrefere(jsonObject.getString(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "enfantNomCompletPrefere", o2.jsonEnfantNomCompletPrefere())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.enfantNomCompletPrefere a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setEnfantDateNaissance":
+						if(jsonObject.getString(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "enfantDateNaissance")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.enfantDateNaissance a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setEnfantDateNaissance(jsonObject.getString(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "enfantDateNaissance", o2.jsonEnfantDateNaissance())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.enfantDateNaissance a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setEcoleAddresse":
+						if(jsonObject.getString(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "ecoleAddresse")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.ecoleAddresse a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setEcoleAddresse(jsonObject.getString(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "ecoleAddresse", o2.jsonEcoleAddresse())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.ecoleAddresse a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setInscriptionApprouve":
+						if(jsonObject.getBoolean(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "inscriptionApprouve")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionApprouve a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setInscriptionApprouve(jsonObject.getBoolean(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "inscriptionApprouve", o2.jsonInscriptionApprouve())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionApprouve a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setInscriptionImmunisations":
+						if(jsonObject.getBoolean(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "inscriptionImmunisations")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionImmunisations a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setInscriptionImmunisations(jsonObject.getBoolean(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "inscriptionImmunisations", o2.jsonInscriptionImmunisations())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionImmunisations a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setPhoto":
+						if(jsonObject.getString(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "photo")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.photo a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setPhoto(jsonObject.getString(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "photo", o2.jsonPhoto())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.photo a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setFamilleMarie":
+						if(jsonObject.getBoolean(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "familleMarie")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.familleMarie a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setFamilleMarie(jsonObject.getBoolean(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "familleMarie", o2.jsonFamilleMarie())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.familleMarie a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setFamilleSepare":
+						if(jsonObject.getBoolean(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "familleSepare")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.familleSepare a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setFamilleSepare(jsonObject.getBoolean(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "familleSepare", o2.jsonFamilleSepare())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.familleSepare a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setFamilleDivorce":
+						if(jsonObject.getBoolean(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "familleDivorce")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.familleDivorce a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setFamilleDivorce(jsonObject.getBoolean(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "familleDivorce", o2.jsonFamilleDivorce())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.familleDivorce a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setFamilleAddresse":
+						if(jsonObject.getString(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "familleAddresse")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.familleAddresse a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setFamilleAddresse(jsonObject.getString(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "familleAddresse", o2.jsonFamilleAddresse())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.familleAddresse a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setFamilleCommentVousConnaissezEcole":
+						if(jsonObject.getString(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "familleCommentVousConnaissezEcole")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.familleCommentVousConnaissezEcole a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setFamilleCommentVousConnaissezEcole(jsonObject.getString(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "familleCommentVousConnaissezEcole", o2.jsonFamilleCommentVousConnaissezEcole())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.familleCommentVousConnaissezEcole a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setInscriptionConsiderationsSpeciales":
+						if(jsonObject.getString(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "inscriptionConsiderationsSpeciales")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionConsiderationsSpeciales a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setInscriptionConsiderationsSpeciales(jsonObject.getString(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "inscriptionConsiderationsSpeciales", o2.jsonInscriptionConsiderationsSpeciales())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionConsiderationsSpeciales a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setEnfantConditionsMedicales":
+						if(jsonObject.getString(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "enfantConditionsMedicales")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.enfantConditionsMedicales a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setEnfantConditionsMedicales(jsonObject.getString(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "enfantConditionsMedicales", o2.jsonEnfantConditionsMedicales())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.enfantConditionsMedicales a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setEnfantEcolesPrecedemmentFrequentees":
+						if(jsonObject.getString(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "enfantEcolesPrecedemmentFrequentees")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.enfantEcolesPrecedemmentFrequentees a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setEnfantEcolesPrecedemmentFrequentees(jsonObject.getString(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "enfantEcolesPrecedemmentFrequentees", o2.jsonEnfantEcolesPrecedemmentFrequentees())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.enfantEcolesPrecedemmentFrequentees a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setEnfantDescription":
+						if(jsonObject.getString(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "enfantDescription")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.enfantDescription a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setEnfantDescription(jsonObject.getString(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "enfantDescription", o2.jsonEnfantDescription())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.enfantDescription a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setEnfantObjectifs":
+						if(jsonObject.getString(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "enfantObjectifs")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.enfantObjectifs a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setEnfantObjectifs(jsonObject.getString(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "enfantObjectifs", o2.jsonEnfantObjectifs())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.enfantObjectifs a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setEnfantPropre":
+						if(jsonObject.getBoolean(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "enfantPropre")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.enfantPropre a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setEnfantPropre(jsonObject.getBoolean(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "enfantPropre", o2.jsonEnfantPropre())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.enfantPropre a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setInscriptionNomGroupe":
+						if(jsonObject.getString(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "inscriptionNomGroupe")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionNomGroupe a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setInscriptionNomGroupe(jsonObject.getString(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "inscriptionNomGroupe", o2.jsonInscriptionNomGroupe())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionNomGroupe a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setInscriptionPaimentChaqueMois":
+						if(jsonObject.getBoolean(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "inscriptionPaimentChaqueMois")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionPaimentChaqueMois a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setInscriptionPaimentChaqueMois(jsonObject.getBoolean(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "inscriptionPaimentChaqueMois", o2.jsonInscriptionPaimentChaqueMois())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionPaimentChaqueMois a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setInscriptionPaimentComplet":
+						if(jsonObject.getBoolean(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "inscriptionPaimentComplet")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionPaimentComplet a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setInscriptionPaimentComplet(jsonObject.getBoolean(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "inscriptionPaimentComplet", o2.jsonInscriptionPaimentComplet())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionPaimentComplet a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setCustomerProfileId":
+						if(jsonObject.getString(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "customerProfileId")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.customerProfileId a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setCustomerProfileId(jsonObject.getString(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "customerProfileId", o2.jsonCustomerProfileId())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.customerProfileId a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setInscriptionDateFrais":
+						if(jsonObject.getString(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "inscriptionDateFrais")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionDateFrais a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setInscriptionDateFrais(jsonObject.getString(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "inscriptionDateFrais", o2.jsonInscriptionDateFrais())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionDateFrais a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setInscriptionNomsParents":
+						if(jsonObject.getString(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "inscriptionNomsParents")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionNomsParents a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setInscriptionNomsParents(jsonObject.getString(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "inscriptionNomsParents", o2.jsonInscriptionNomsParents())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionNomsParents a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setInscriptionSignature1":
+						if(jsonObject.getString(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "inscriptionSignature1")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionSignature1 a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setInscriptionSignature1(jsonObject.getString(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "inscriptionSignature1", o2.jsonInscriptionSignature1())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionSignature1 a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setInscriptionSignature2":
+						if(jsonObject.getString(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "inscriptionSignature2")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionSignature2 a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setInscriptionSignature2(jsonObject.getString(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "inscriptionSignature2", o2.jsonInscriptionSignature2())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionSignature2 a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setInscriptionSignature3":
+						if(jsonObject.getString(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "inscriptionSignature3")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionSignature3 a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setInscriptionSignature3(jsonObject.getString(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "inscriptionSignature3", o2.jsonInscriptionSignature3())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionSignature3 a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setInscriptionSignature4":
+						if(jsonObject.getString(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "inscriptionSignature4")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionSignature4 a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setInscriptionSignature4(jsonObject.getString(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "inscriptionSignature4", o2.jsonInscriptionSignature4())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionSignature4 a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setInscriptionSignature5":
+						if(jsonObject.getString(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "inscriptionSignature5")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionSignature5 a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setInscriptionSignature5(jsonObject.getString(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "inscriptionSignature5", o2.jsonInscriptionSignature5())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionSignature5 a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setInscriptionSignature6":
+						if(jsonObject.getString(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "inscriptionSignature6")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionSignature6 a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setInscriptionSignature6(jsonObject.getString(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "inscriptionSignature6", o2.jsonInscriptionSignature6())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionSignature6 a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setInscriptionSignature7":
+						if(jsonObject.getString(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "inscriptionSignature7")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionSignature7 a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setInscriptionSignature7(jsonObject.getString(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "inscriptionSignature7", o2.jsonInscriptionSignature7())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionSignature7 a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setInscriptionSignature8":
+						if(jsonObject.getString(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "inscriptionSignature8")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionSignature8 a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setInscriptionSignature8(jsonObject.getString(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "inscriptionSignature8", o2.jsonInscriptionSignature8())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionSignature8 a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setInscriptionSignature9":
+						if(jsonObject.getString(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "inscriptionSignature9")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionSignature9 a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setInscriptionSignature9(jsonObject.getString(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "inscriptionSignature9", o2.jsonInscriptionSignature9())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionSignature9 a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setInscriptionSignature10":
+						if(jsonObject.getString(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "inscriptionSignature10")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionSignature10 a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setInscriptionSignature10(jsonObject.getString(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "inscriptionSignature10", o2.jsonInscriptionSignature10())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionSignature10 a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setInscriptionDate1":
+						if(jsonObject.getString(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "inscriptionDate1")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionDate1 a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setInscriptionDate1(jsonObject.getString(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "inscriptionDate1", o2.jsonInscriptionDate1())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionDate1 a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setInscriptionDate2":
+						if(jsonObject.getString(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "inscriptionDate2")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionDate2 a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setInscriptionDate2(jsonObject.getString(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "inscriptionDate2", o2.jsonInscriptionDate2())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionDate2 a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setInscriptionDate3":
+						if(jsonObject.getString(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "inscriptionDate3")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionDate3 a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setInscriptionDate3(jsonObject.getString(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "inscriptionDate3", o2.jsonInscriptionDate3())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionDate3 a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setInscriptionDate4":
+						if(jsonObject.getString(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "inscriptionDate4")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionDate4 a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setInscriptionDate4(jsonObject.getString(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "inscriptionDate4", o2.jsonInscriptionDate4())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionDate4 a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setInscriptionDate5":
+						if(jsonObject.getString(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "inscriptionDate5")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionDate5 a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setInscriptionDate5(jsonObject.getString(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "inscriptionDate5", o2.jsonInscriptionDate5())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionDate5 a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setInscriptionDate6":
+						if(jsonObject.getString(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "inscriptionDate6")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionDate6 a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setInscriptionDate6(jsonObject.getString(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "inscriptionDate6", o2.jsonInscriptionDate6())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionDate6 a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setInscriptionDate7":
+						if(jsonObject.getString(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "inscriptionDate7")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionDate7 a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setInscriptionDate7(jsonObject.getString(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "inscriptionDate7", o2.jsonInscriptionDate7())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionDate7 a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setInscriptionDate8":
+						if(jsonObject.getString(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "inscriptionDate8")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionDate8 a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setInscriptionDate8(jsonObject.getString(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "inscriptionDate8", o2.jsonInscriptionDate8())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionDate8 a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setInscriptionDate9":
+						if(jsonObject.getString(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "inscriptionDate9")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionDate9 a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setInscriptionDate9(jsonObject.getString(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "inscriptionDate9", o2.jsonInscriptionDate9())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionDate9 a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setInscriptionDate10":
+						if(jsonObject.getString(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "inscriptionDate10")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionDate10 a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setInscriptionDate10(jsonObject.getString(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "inscriptionDate10", o2.jsonInscriptionDate10())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur InscriptionScolaire.inscriptionDate10 a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+				}
+			}
+			CompositeFuture.all(futures).setHandler( a -> {
+				if(a.succeeded()) {
+					InscriptionScolaire o3 = new InscriptionScolaire();
+					o3.setRequeteSite_(o.getRequeteSite_());
+					o3.setPk(pk);
+					gestionnaireEvenements.handle(Future.succeededFuture(o3));
+				} else {
+					LOGGER.error(String.format("sqlPATCHAdminInscriptionScolaire a échoué. ", a.cause()));
+					gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
+				}
+			});
+		} catch(Exception e) {
+			LOGGER.error(String.format("sqlPATCHAdminInscriptionScolaire a échoué. ", e));
+			gestionnaireEvenements.handle(Future.failedFuture(e));
+		}
+	}
+
+	public void patchadminInscriptionScolaireReponse(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		try {
+			reponse200PATCHAdminInscriptionScolaire(requeteSite, a -> {
+				if(a.succeeded()) {
+					gestionnaireEvenements.handle(Future.succeededFuture(a.result()));
+				} else {
+					LOGGER.error(String.format("patchadminInscriptionScolaireReponse a échoué. ", a.cause()));
+					erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("patchadminInscriptionScolaireReponse a échoué. ", ex));
+			erreurInscriptionScolaire(requeteSite, null, Future.failedFuture(ex));
+		}
+	}
+	public void reponse200PATCHAdminInscriptionScolaire(RequeteSiteFrFR requeteSite, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
+		try {
+			JsonObject json = new JsonObject();
+			gestionnaireEvenements.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
+		} catch(Exception e) {
+			LOGGER.error(String.format("reponse200PATCHAdminInscriptionScolaire a échoué. ", e));
+			gestionnaireEvenements.handle(Future.failedFuture(e));
+		}
+	}
+
 	// PATCHPaiements //
 
 	@Override
