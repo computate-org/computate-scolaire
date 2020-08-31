@@ -107,6 +107,7 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 	@Override public void htmlScriptsAnneeGenPage() {
 		e("script").a("src", statiqueUrlBase, "/js/frFR/AnneePage.js").f().g("script");
 		e("script").a("src", statiqueUrlBase, "/js/frFR/EcolePage.js").f().g("script");
+		e("script").a("src", statiqueUrlBase, "/js/frFR/InscriptionPage.js").f().g("script");
 		e("script").a("src", statiqueUrlBase, "/js/frFR/SaisonPage.js").f().g("script");
 		e("script").a("src", statiqueUrlBase, "/js/frFR/AgePage.js").f().g("script");
 	}
@@ -143,6 +144,14 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 			tl(2, "suggereAnneeScolaireAgeCles([{'name':'fq','value':'anneeCle:' + pk}], $('#listAnneeScolaireAgeCles_Page'), pk, true); ");
 		} else {
 			tl(2, "suggereAnneeScolaireAgeCles([{'name':'fq','value':'anneeCle:' + pk}], $('#listAnneeScolaireAgeCles_Page'), pk, false); ");
+		}
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			tl(2, "suggereAnneeScolaireInscriptionCles([{'name':'fq','value':'anneeCle:' + pk}], $('#listAnneeScolaireInscriptionCles_Page'), pk, true); ");
+		} else {
+			tl(2, "suggereAnneeScolaireInscriptionCles([{'name':'fq','value':'anneeCle:' + pk}], $('#listAnneeScolaireInscriptionCles_Page'), pk, false); ");
 		}
 		if(
 				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)

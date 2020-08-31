@@ -2,6 +2,8 @@ package org.computate.scolaire.frFR.annee;
 
 import org.computate.scolaire.frFR.ecole.EcoleFrFRGenApiServiceImpl;
 import org.computate.scolaire.frFR.ecole.Ecole;
+import org.computate.scolaire.frFR.inscription.InscriptionScolaireFrFRGenApiServiceImpl;
+import org.computate.scolaire.frFR.inscription.InscriptionScolaire;
 import org.computate.scolaire.frFR.saison.SaisonScolaireFrFRGenApiServiceImpl;
 import org.computate.scolaire.frFR.saison.SaisonScolaire;
 import org.computate.scolaire.frFR.age.AgeScolaireFrFRGenApiServiceImpl;
@@ -349,6 +351,38 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 									if(!pks.contains(l2)) {
 										pks.add(l2);
 										classes.add("Ecole");
+									}
+								}
+							}
+						}
+						break;
+					case "inscriptionCles":
+						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
+							if(l != null) {
+								ListeRecherche<InscriptionScolaire> listeRecherche = new ListeRecherche<InscriptionScolaire>();
+								listeRecherche.setQuery("*:*");
+								listeRecherche.setStocker(true);
+								listeRecherche.setC(InscriptionScolaire.class);
+								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
+								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+								listeRecherche.initLoinListeRecherche(requeteSite);
+								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA
+												, Tuple.of(l2, "anneeCle", pk, "inscriptionCles")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("valeur AnneeScolaire.inscriptionCles a échoué", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
+										classes.add("InscriptionScolaire");
 									}
 								}
 							}
@@ -1181,6 +1215,25 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 						}));
 						}
 						break;
+					case "inscriptionCles":
+						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_addA
+										, Tuple.of(l, "anneeCle", pk, "inscriptionCles")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur AnneeScolaire.inscriptionCles a échoué", b.cause())));
+								});
+							}));
+							if(!pks.contains(l)) {
+								pks.add(l);
+								classes.add("InscriptionScolaire");
+							}
+						}
+						break;
 					case "saisonCles":
 						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							futures.add(Future.future(a -> {
@@ -1720,6 +1773,164 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 									if(!pks.contains(l2)) {
 										pks.add(l2);
 										classes.add("Ecole");
+									}
+								}
+							}
+						}
+						break;
+					case "addInscriptionCles":
+						{
+							Long l = Long.parseLong(jsonObject.getString(methodeNom));
+							if(l != null) {
+								ListeRecherche<InscriptionScolaire> listeRecherche = new ListeRecherche<InscriptionScolaire>();
+								listeRecherche.setQuery("*:*");
+								listeRecherche.setStocker(true);
+								listeRecherche.setC(InscriptionScolaire.class);
+								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
+								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+								listeRecherche.initLoinListeRecherche(requeteSite);
+								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null && !o.getInscriptionCles().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA
+												, Tuple.of(l2, "anneeCle", pk, "inscriptionCles")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("valeur AnneeScolaire.inscriptionCles a échoué", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
+										classes.add("InscriptionScolaire");
+									}
+								}
+							}
+						}
+						break;
+					case "addAllInscriptionCles":
+						JsonArray addAllInscriptionClesValeurs = jsonObject.getJsonArray(methodeNom);
+						if(addAllInscriptionClesValeurs != null) {
+							for(Integer i = 0; i <  addAllInscriptionClesValeurs.size(); i++) {
+								Long l = Long.parseLong(addAllInscriptionClesValeurs.getString(i));
+								if(l != null) {
+									ListeRecherche<InscriptionScolaire> listeRecherche = new ListeRecherche<InscriptionScolaire>();
+									listeRecherche.setQuery("*:*");
+									listeRecherche.setStocker(true);
+									listeRecherche.setC(InscriptionScolaire.class);
+									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
+									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+									listeRecherche.initLoinListeRecherche(requeteSite);
+									Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l2 != null && !o.getInscriptionCles().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA
+												, Tuple.of(l2, "anneeCle", pk, "inscriptionCles")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("valeur AnneeScolaire.inscriptionCles a échoué", b.cause())));
+										});
+									}));
+										if(!pks.contains(l2)) {
+											pks.add(l2);
+											classes.add("InscriptionScolaire");
+										}
+									}
+								}
+							}
+						}
+						break;
+					case "setInscriptionCles":
+						JsonArray setInscriptionClesValeurs = jsonObject.getJsonArray(methodeNom);
+						JsonArray setInscriptionClesValeurs2 = new JsonArray();
+						if(setInscriptionClesValeurs != null) {
+							for(Integer i = 0; i <  setInscriptionClesValeurs.size(); i++) {
+								Long l = Long.parseLong(setInscriptionClesValeurs.getString(i));
+								if(l != null) {
+									ListeRecherche<InscriptionScolaire> listeRecherche = new ListeRecherche<InscriptionScolaire>();
+									listeRecherche.setQuery("*:*");
+									listeRecherche.setStocker(true);
+									listeRecherche.setC(InscriptionScolaire.class);
+									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
+									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+									listeRecherche.initLoinListeRecherche(requeteSite);
+									Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+									if(l2 != null)
+										setInscriptionClesValeurs2.add(l2);
+									if(l2 != null && !o.getInscriptionCles().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA
+												, Tuple.of(l2, "anneeCle", pk, "inscriptionCles")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("valeur AnneeScolaire.inscriptionCles a échoué", b.cause())));
+										});
+									}));
+										if(!pks.contains(l2)) {
+											pks.add(l2);
+											classes.add("InscriptionScolaire");
+										}
+									}
+								}
+							}
+						}
+						if(o.getInscriptionCles() != null) {
+							for(Long l :  o.getInscriptionCles()) {
+								if(l != null && (setInscriptionClesValeurs == null || !setInscriptionClesValeurs2.contains(l))) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
+												, Tuple.of(l, "anneeCle", pk, "inscriptionCles")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("valeur AnneeScolaire.inscriptionCles a échoué", b.cause())));
+										});
+									}));
+								}
+							}
+						}
+						break;
+					case "removeInscriptionCles":
+						{
+							Long l = Long.parseLong(jsonObject.getString(methodeNom));
+							if(l != null) {
+								ListeRecherche<InscriptionScolaire> listeRecherche = new ListeRecherche<InscriptionScolaire>();
+								listeRecherche.setQuery("*:*");
+								listeRecherche.setStocker(true);
+								listeRecherche.setC(InscriptionScolaire.class);
+								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
+								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
+								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+								listeRecherche.initLoinListeRecherche(requeteSite);
+								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
+								if(l2 != null && o.getInscriptionCles().contains(l2)) {
+									futures.add(Future.future(a -> {
+										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
+												, Tuple.of(l2, "anneeCle", pk, "inscriptionCles")
+												, b
+										-> {
+											if(b.succeeded())
+												a.handle(Future.succeededFuture());
+											else
+												a.handle(Future.failedFuture(new Exception("valeur AnneeScolaire.inscriptionCles a échoué", b.cause())));
+										});
+									}));
+									if(!pks.contains(l2)) {
+										pks.add(l2);
+										classes.add("InscriptionScolaire");
 									}
 								}
 							}
@@ -3318,6 +3529,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 				listeRecherche.setC(AnneeScolaire.class);
 				listeRecherche.addFilterQuery("modifie_indexed_date:[" + DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(requeteSite.getRequeteApi_().getCree().toInstant(), ZoneId.of("UTC"))) + " TO *]");
 				listeRecherche.add("json.facet", "{ecoleCle:{terms:{field:ecoleCle_indexed_longs, limit:1000}}}");
+				listeRecherche.add("json.facet", "{inscriptionCles:{terms:{field:inscriptionCles_indexed_longs, limit:1000}}}");
 				listeRecherche.add("json.facet", "{saisonCles:{terms:{field:saisonCles_indexed_longs, limit:1000}}}");
 				listeRecherche.add("json.facet", "{ageCles:{terms:{field:ageCles_indexed_longs, limit:1000}}}");
 				listeRecherche.setRows(1000);
@@ -3356,6 +3568,41 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 									if(a.succeeded()) {
 									} else {
 										LOGGER.info(String.format("Ecole %s a échoué. ", pk2));
+										gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
+									}
+								})
+							);
+						}
+					}
+
+					if("InscriptionScolaire".equals(classeNomSimple2) && pk2 != null) {
+						ListeRecherche<InscriptionScolaire> listeRecherche2 = new ListeRecherche<InscriptionScolaire>();
+						listeRecherche2.setStocker(true);
+						listeRecherche2.setQuery("*:*");
+						listeRecherche2.setC(InscriptionScolaire.class);
+						listeRecherche2.addFilterQuery("pk_indexed_long:" + pk2);
+						listeRecherche2.setRows(1);
+						listeRecherche2.initLoinListeRecherche(requeteSite);
+						InscriptionScolaire o2 = listeRecherche2.getList().stream().findFirst().orElse(null);
+
+						if(o2 != null) {
+							InscriptionScolaireFrFRGenApiServiceImpl service = new InscriptionScolaireFrFRGenApiServiceImpl(requeteSite.getSiteContexte_());
+							RequeteSiteFrFR requeteSite2 = genererRequeteSiteFrFRPourAnneeScolaire(siteContexte, requeteSite.getOperationRequete(), new JsonObject());
+							RequeteApi requeteApi2 = new RequeteApi();
+							requeteApi2.setRows(1);
+							requeteApi2.setNumFound(1l);
+							requeteApi2.setNumPATCH(0L);
+							requeteApi2.initLoinRequeteApi(requeteSite2);
+							requeteSite2.setRequeteApi_(requeteApi2);
+							requeteSite2.getVertx().eventBus().publish("websocketInscriptionScolaire", JsonObject.mapFrom(requeteApi2).toString());
+
+							o2.setPk(pk2);
+							o2.setRequeteSite_(requeteSite2);
+							futures.add(
+								service.patchInscriptionScolaireFuture(o2, false, a -> {
+									if(a.succeeded()) {
+									} else {
+										LOGGER.info(String.format("InscriptionScolaire %s a échoué. ", pk2));
 										gestionnaireEvenements.handle(Future.failedFuture(a.cause()));
 									}
 								})

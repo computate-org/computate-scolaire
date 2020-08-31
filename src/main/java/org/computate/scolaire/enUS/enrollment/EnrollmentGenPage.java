@@ -172,6 +172,14 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 				) {
+			tl(2, "suggestSchoolEnrollmentYearKey([{'name':'fq','value':'enrollmentKeys:' + pk}], $('#listSchoolEnrollmentYearKey_Page'), pk, true); ");
+		} else {
+			tl(2, "suggestSchoolEnrollmentYearKey([{'name':'fq','value':'enrollmentKeys:' + pk}], $('#listSchoolEnrollmentYearKey_Page'), pk, false); ");
+		}
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
 			tl(2, "suggestSchoolEnrollmentBlockKeys([{'name':'fq','value':'enrollmentKeys:' + pk}], $('#listSchoolEnrollmentBlockKeys_Page'), pk, true); ");
 		} else {
 			tl(2, "suggestSchoolEnrollmentBlockKeys([{'name':'fq','value':'enrollmentKeys:' + pk}], $('#listSchoolEnrollmentBlockKeys_Page'), pk, false); ");
@@ -183,6 +191,14 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 			tl(2, "suggestSchoolEnrollmentChildKey([{'name':'fq','value':'enrollmentKeys:' + pk}], $('#listSchoolEnrollmentChildKey_Page'), pk, true); ");
 		} else {
 			tl(2, "suggestSchoolEnrollmentChildKey([{'name':'fq','value':'enrollmentKeys:' + pk}], $('#listSchoolEnrollmentChildKey_Page'), pk, false); ");
+		}
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			tl(2, "suggestSchoolEnrollmentGuardianKeys([{'name':'fq','value':'enrollmentKeys:' + pk}], $('#listSchoolEnrollmentGuardianKeys_Page'), pk, true); ");
+		} else {
+			tl(2, "suggestSchoolEnrollmentGuardianKeys([{'name':'fq','value':'enrollmentKeys:' + pk}], $('#listSchoolEnrollmentGuardianKeys_Page'), pk, false); ");
 		}
 		if(
 				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
@@ -204,22 +220,6 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 				) {
-			tl(2, "suggestSchoolEnrollmentGuardianKeys([{'name':'fq','value':'enrollmentKeys:' + pk}], $('#listSchoolEnrollmentGuardianKeys_Page'), pk, true); ");
-		} else {
-			tl(2, "suggestSchoolEnrollmentGuardianKeys([{'name':'fq','value':'enrollmentKeys:' + pk}], $('#listSchoolEnrollmentGuardianKeys_Page'), pk, false); ");
-		}
-		if(
-				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
-				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
-				) {
-			tl(2, "suggestSchoolEnrollmentPaymentKeys([{'name':'fq','value':'enrollmentKey:' + pk}], $('#listSchoolEnrollmentPaymentKeys_Page'), pk, true); ");
-		} else {
-			tl(2, "suggestSchoolEnrollmentPaymentKeys([{'name':'fq','value':'enrollmentKey:' + pk}], $('#listSchoolEnrollmentPaymentKeys_Page'), pk, false); ");
-		}
-		if(
-				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
-				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
-				) {
 			tl(2, "suggestSchoolEnrollmentUserKeys([{'name':'fq','value':'enrollmentKeys:' + pk}], $('#listSchoolEnrollmentUserKeys_Page'), pk, true); ");
 		} else {
 			tl(2, "suggestSchoolEnrollmentUserKeys([{'name':'fq','value':'enrollmentKeys:' + pk}], $('#listSchoolEnrollmentUserKeys_Page'), pk, false); ");
@@ -228,9 +228,9 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 				) {
-			tl(2, "suggestSchoolEnrollmentYearKey([{'name':'fq','value':'enrollmentKeys:' + pk}], $('#listSchoolEnrollmentYearKey_Page'), pk, true); ");
+			tl(2, "suggestSchoolEnrollmentPaymentKeys([{'name':'fq','value':'enrollmentKey:' + pk}], $('#listSchoolEnrollmentPaymentKeys_Page'), pk, true); ");
 		} else {
-			tl(2, "suggestSchoolEnrollmentYearKey([{'name':'fq','value':'enrollmentKeys:' + pk}], $('#listSchoolEnrollmentYearKey_Page'), pk, false); ");
+			tl(2, "suggestSchoolEnrollmentPaymentKeys([{'name':'fq','value':'enrollmentKey:' + pk}], $('#listSchoolEnrollmentPaymentKeys_Page'), pk, false); ");
 		}
 		tl(2, "$('#signatureInputSchoolEnrollment' + pk + 'enrollmentSignature1').jSignature({'height':200}).bind('change', function(e){ patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + pk }], 'setEnrollmentSignature1', $('#signatureInputSchoolEnrollment' + pk + 'enrollmentSignature1').jSignature('getData', 'default')); }); ");
 		tl(2, "$('#signatureInputSchoolEnrollment' + pk + 'enrollmentSignature2').jSignature({'height':200}).bind('change', function(e){ patchSchoolEnrollmentVal([{ name: 'fq', value: 'pk:' + pk }], 'setEnrollmentSignature2', $('#signatureInputSchoolEnrollment' + pk + 'enrollmentSignature2').jSignature('getData', 'default')); }); ");
@@ -289,19 +289,20 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 			o.htmChildObjectives("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmYearKey("Page");
 			o.htmBlockKeys("Page");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmChildKey("Page");
+			o.htmGuardianKeys("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmMomKeys("Page");
 			o.htmDadKeys("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmGuardianKeys("Page");
-			o.htmPaymentKeys("Page");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmUserKeys("Page");
+			o.htmPaymentKeys("Page");
 		} g("div");
 	}
 
@@ -347,19 +348,20 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 			o.htmChildObjectives("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmYearKey("POST");
 			o.htmBlockKeys("POST");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmChildKey("POST");
+			o.htmGuardianKeys("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmMomKeys("POST");
 			o.htmDadKeys("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmGuardianKeys("POST");
-			o.htmPaymentKeys("POST");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmUserKeys("POST");
+			o.htmPaymentKeys("POST");
 		} g("div");
 	}
 
@@ -427,19 +429,20 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 			o.htmChildObjectives("PUTCopy");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmYearKey("PUTCopy");
 			o.htmBlockKeys("PUTCopy");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmChildKey("PUTCopy");
+			o.htmGuardianKeys("PUTCopy");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmMomKeys("PUTCopy");
 			o.htmDadKeys("PUTCopy");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmGuardianKeys("PUTCopy");
-			o.htmPaymentKeys("PUTCopy");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmUserKeys("PUTCopy");
+			o.htmPaymentKeys("PUTCopy");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInheritPk("PUTCopy");
@@ -515,19 +518,20 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 			o.htmChildObjectives("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmYearKey("PATCH");
 			o.htmBlockKeys("PATCH");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmChildKey("PATCH");
+			o.htmGuardianKeys("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmMomKeys("PATCH");
 			o.htmDadKeys("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmGuardianKeys("PATCH");
-			o.htmPaymentKeys("PATCH");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmUserKeys("PATCH");
+			o.htmPaymentKeys("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInheritPk("PATCH");
@@ -604,19 +608,20 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 			o.htmChildObjectives("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmYearKey("Search");
 			o.htmBlockKeys("Search");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmChildKey("Search");
+			o.htmGuardianKeys("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmMomKeys("Search");
 			o.htmDadKeys("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmGuardianKeys("Search");
-			o.htmPaymentKeys("Search");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmUserKeys("Search");
+			o.htmPaymentKeys("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInheritPk("Search");

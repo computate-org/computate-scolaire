@@ -41,6 +41,7 @@ import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 import io.vertx.core.logging.LoggerFactory;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import org.computate.scolaire.frFR.inscription.InscriptionScolaire;
 import org.computate.scolaire.frFR.couverture.Couverture;
 import org.apache.commons.collections.CollectionUtils;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -2715,6 +2716,11 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 				if(!sauvegardes.contains(var))
 					sauvegardes.add(var);
 				return val;
+			case "inscriptionCles":
+				oAnneeScolaire.addInscriptionCles((Long)val);
+				if(!sauvegardes.contains(var))
+					sauvegardes.add(var);
+				return val;
 			case "saisonCles":
 				oAnneeScolaire.addSaisonCles((Long)val);
 				if(!sauvegardes.contains(var))
@@ -2808,11 +2814,9 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 					oAnneeScolaire.setAnneeCle(anneeCle);
 			}
 
-			if(sauvegardes.contains("inscriptionCles")) {
-				List<Long> inscriptionCles = (List<Long>)solrDocument.get("inscriptionCles_stored_longs");
-				if(inscriptionCles != null)
-					oAnneeScolaire.inscriptionCles.addAll(inscriptionCles);
-			}
+			List<Long> inscriptionCles = (List<Long>)solrDocument.get("inscriptionCles_stored_longs");
+			if(inscriptionCles != null)
+				oAnneeScolaire.inscriptionCles.addAll(inscriptionCles);
 
 			List<Long> saisonCles = (List<Long>)solrDocument.get("saisonCles_stored_longs");
 			if(saisonCles != null)

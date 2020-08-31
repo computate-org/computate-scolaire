@@ -41,6 +41,7 @@ import org.computate.scolaire.enUS.writer.AllWriter;
 import io.vertx.core.logging.LoggerFactory;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import org.computate.scolaire.enUS.enrollment.SchoolEnrollment;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import org.apache.commons.collections.CollectionUtils;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -2706,6 +2707,11 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 				if(!saves.contains(var))
 					saves.add(var);
 				return val;
+			case "enrollmentKeys":
+				oSchoolYear.addEnrollmentKeys((Long)val);
+				if(!saves.contains(var))
+					saves.add(var);
+				return val;
 			case "seasonKeys":
 				oSchoolYear.addSeasonKeys((Long)val);
 				if(!saves.contains(var))
@@ -2799,11 +2805,9 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 					oSchoolYear.setYearKey(yearKey);
 			}
 
-			if(saves.contains("enrollmentKeys")) {
-				List<Long> enrollmentKeys = (List<Long>)solrDocument.get("enrollmentKeys_stored_longs");
-				if(enrollmentKeys != null)
-					oSchoolYear.enrollmentKeys.addAll(enrollmentKeys);
-			}
+			List<Long> enrollmentKeys = (List<Long>)solrDocument.get("enrollmentKeys_stored_longs");
+			if(enrollmentKeys != null)
+				oSchoolYear.enrollmentKeys.addAll(enrollmentKeys);
 
 			List<Long> seasonKeys = (List<Long>)solrDocument.get("seasonKeys_stored_longs");
 			if(seasonKeys != null)

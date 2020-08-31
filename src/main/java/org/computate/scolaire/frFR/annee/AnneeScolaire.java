@@ -94,6 +94,7 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	 * Var.enUS: enrollmentKeys
 	 * Indexe: true
 	 * Stocke: true
+	 * Attribuer: InscriptionScolaire.anneeCle
 	 */
 	protected void _inscriptionCles(List<Long> o) {}
 

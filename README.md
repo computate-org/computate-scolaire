@@ -289,7 +289,7 @@ ansible-vault edit /usr/local/src/computate/ansible/inventories/$USER-openshift/
 
 The contents of the vault will contain the secrets needed to override any default values you want to change in the computate-scolaire defaults defined here.
 
-https://github.com/computate/computate/blob/master/ansible/roles/computate-scolaire_openshift_enUS/defaults/main.yml
+https://github.com/computate/computate/blob/master/ansible/roles/computate_scolaire_openshift_enUS/defaults/main.yml
 
 There are descriptions for each of the fields.
 There are several sections of fields, including:
@@ -337,7 +337,7 @@ ansible-playbook redhat_sso_openshift.yml -i /usr/local/src/computate/ansible/in
 Run the playbook to install the computate-scolaire project in your OpenShift environment.
 
 ```bash
-ansible-playbook computate-scolaire_openshift.yml -i /usr/local/src/computate/ansible/inventories/$USER-openshift/hosts --vault-id @prompt
+ansible-playbook computate_scolaire_openshift_enUS.yml -i /usr/local/src/computate/ansible/inventories/$USER-openshift/hosts --vault-id @prompt
 ```
 
 

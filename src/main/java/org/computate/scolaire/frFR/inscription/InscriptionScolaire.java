@@ -139,6 +139,8 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Indexe: true
 	 * Stocke: true
 	 * Attribuer: AnneeScolaire.inscriptionCles
+	 * HtmlLigne: 9
+	 * HtmlCellule: 1
 	 * Description.frFR: L'année scolaire de la saison scolaire. 
 	 * Description.enUS: The school year of the school season. 
 	 * NomAffichage.frFR: année
@@ -189,7 +191,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Stocke: true
 	 * Attribuer: BlocScolaire.inscriptionCles
 	 * HtmlLigne: 9
-	 * HtmlCellule: 1
+	 * HtmlCellule: 2
 	 * Description.frFR: La clé primaire des blocs dans la base de données. 
 	 * Description.enUS: The primary key of the school blocks in the database. 
 	 * NomAffichage.frFR: blocs
@@ -356,8 +358,8 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Indexe: true
 	 * Stocke: true
 	 * Attribuer: EnfantScolaire.inscriptionCles
-	 * HtmlLigne: 9
-	 * HtmlCellule: 2
+	 * HtmlLigne: 10
+	 * HtmlCellule: 1
 	 * Description.frFR: La clé primaire des enfants dans la base de données. 
 	 * Description.enUS: The primary key of the school children in the database. 
 	 * NomAffichage.frFR: enfants
@@ -371,7 +373,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Indexe: true
 	 * Stocke: true
 	 * Attribuer: MereScolaire.inscriptionCles
-	 * HtmlLigne: 10
+	 * HtmlLigne: 11
 	 * HtmlCellule: 1
 	 * Description.frFR: La clé primaire des mères dans la base de données. 
 	 * Description.enUS: The primary key of the school moms in the database. 
@@ -386,7 +388,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Indexe: true
 	 * Stocke: true
 	 * Attribuer: PereScolaire.inscriptionCles
-	 * HtmlLigne: 10
+	 * HtmlLigne: 11
 	 * HtmlCellule: 2
 	 * Description.frFR: La clé primaire des pères dans la base de données. 
 	 * Description.enUS: The primary key of the school dads in the database. 
@@ -401,8 +403,8 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Indexe: true
 	 * Stocke: true
 	 * Attribuer: GardienScolaire.inscriptionCles
-	 * HtmlLigne: 11
-	 * HtmlCellule: 1
+	 * HtmlLigne: 10
+	 * HtmlCellule: 2
 	 * Description.frFR: La clé primaire des gardiens dans la base de données. 
 	 * Description.enUS: The primary key of the school gardians in the database. 
 	 * NomAffichage.frFR: gardiens
@@ -416,7 +418,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Indexe: true
 	 * Stocke: true
 	 * Attribuer: PaiementScolaire.inscriptionCle
-	 * HtmlLigne: 11
+	 * HtmlLigne: 12
 	 * HtmlCellule: 2
 	 * Description.frFR: La clé primaire des contacts d'urgence dans la base de données. 
 	 * Description.enUS: The primary key of the school emergency contacts in the database. 
