@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.paiement;                     
+package org.computate.scolaire.frFR.paiement;                    
 
 import java.math.BigDecimal;
 import java.text.NumberFormat;
@@ -1440,7 +1440,7 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 		NumberFormat fn = NumberFormat.getCurrencyInstance(Locale.FRANCE);
 		DateTimeFormatter fd = DateTimeFormatter.ofPattern("MMMM", Locale.FRANCE);
 		DateTimeFormatter fd2 = DateTimeFormatter.ofPattern("MMM d yyyy", Locale.FRANCE);
-		fn.setMaximumFractionDigits(0);
+		fn.setMaximumFractionDigits(2);
 
 		StringBuilder o = new StringBuilder();
 		if(fraisMontant != null) {
@@ -1556,7 +1556,7 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 		NumberFormat fn = NumberFormat.getCurrencyInstance(Locale.FRANCE);
 		DateTimeFormatter fd = DateTimeFormatter.ofPattern("MMMM yyyy", Locale.FRANCE);
 		DateTimeFormatter fd2 = DateTimeFormatter.ofPattern("MMM d yyyy", Locale.FRANCE);
-		fn.setMaximumFractionDigits(0);
+		fn.setMaximumFractionDigits(2);
 		StringBuilder o = new StringBuilder();
 
 		if(paiementDate != null)
@@ -1649,11 +1649,11 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * r.enUS: US
 	 * r: " pour %s"
 	 * r.enUS: " for %s"
-	 * r: "Frais de %s"
+	 * r: "%s frais de %s"
 	 * r.enUS: "%s tuition"
-	 * r: "Frais de %s + %s"
+	 * r: "%s frais de %s + %s"
 	 * r.enUS: "%s + %s tuition"
-	 * r: "Frais d'inscription %s-%s"
+	 * r: "%s frais d'inscription %s-%s"
 	 * r.enUS: "%s-%s enrollment fee"
 	 * r: "%s frais de retard"
 	 * r.enUS: "%s late fee"
@@ -1671,7 +1671,7 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 		NumberFormat fn = NumberFormat.getCurrencyInstance(Locale.FRANCE);
 		DateTimeFormatter fd = DateTimeFormatter.ofPattern("MMMM yyyy", Locale.FRANCE);
 		DateTimeFormatter fd2 = DateTimeFormatter.ofPattern("MMM d yyyy", Locale.FRANCE);
-		fn.setMaximumFractionDigits(0);
+		fn.setMaximumFractionDigits(2);
 		StringBuilder o = new StringBuilder();
 
 		if(paiementDate != null)

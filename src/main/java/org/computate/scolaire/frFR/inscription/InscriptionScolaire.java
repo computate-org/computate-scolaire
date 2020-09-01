@@ -1965,7 +1965,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * r.enUS: paymentAmount
 	 */
 	protected void _paiementMontant(Couverture<BigDecimal> c) {
-		c.o(Optional.ofNullable((Double)paiementFacets.get("sum_paiementMontant")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING)));
+		c.o(Optional.ofNullable((Double)paiementFacets.get("sum_paiementMontant")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP)));
 	}
 
 	/**      
@@ -1979,7 +1979,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * r.enUS: chargeAmount
 	 */
 	protected void _fraisMontant(Couverture<BigDecimal> c) {
-		c.o(Optional.ofNullable((Double)paiementFacets.get("sum_fraisMontant")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING)));
+		c.o(Optional.ofNullable((Double)paiementFacets.get("sum_fraisMontant")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP)));
 	}
 
 	/**       
@@ -1993,7 +1993,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * r.enUS: chargeAmountFuture
 	 */
 	protected void _fraisMontantFuture(Couverture<BigDecimal> c) {
-		c.o(Optional.ofNullable((Double)paiementFacets.get("sum_fraisMontantFuture")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING)));
+		c.o(Optional.ofNullable((Double)paiementFacets.get("sum_fraisMontantFuture")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP)));
 	}
 
 	/**       
@@ -2007,7 +2007,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * r.enUS: chargeAmountDue
 	 */
 	protected void _fraisMontantDu(Couverture<BigDecimal> c) {
-		c.o(Optional.ofNullable((Double)paiementFacets.get("sum_fraisMontantDu")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING)));
+		c.o(Optional.ofNullable((Double)paiementFacets.get("sum_fraisMontantDu")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP)));
 	}
 
 	/**       
@@ -2021,7 +2021,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * r.enUS: chargeAmountNotPassed
 	 */
 	protected void _fraisMontantNonPasse(Couverture<BigDecimal> c) {
-		c.o(Optional.ofNullable((Double)paiementFacets.get("sum_fraisMontantNonPasse")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING)));
+		c.o(Optional.ofNullable((Double)paiementFacets.get("sum_fraisMontantNonPasse")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP)));
 	}
 
 	/**       
