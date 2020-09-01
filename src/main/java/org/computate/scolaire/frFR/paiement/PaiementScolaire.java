@@ -1273,9 +1273,11 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * r.enUS: SiteConfig
 	 * r: configSite
 	 * r.enUS: siteConfig
+	 * r: fraisRetard
+	 * r.enUS: chargeLateFee
 	 */                   
 	protected void _fraisMontantPasse(Couverture<BigDecimal> c) {
-		if(fraisMontant != null && paiementDate != null && paiementDate.compareTo(now) < 0)
+		if(fraisMontant != null && (fraisRetard || paiementDate != null && paiementDate.compareTo(now) < 0))
 			c.o(fraisMontant);
 	}
 
@@ -1317,9 +1319,11 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * r.enUS: SiteConfig
 	 * r: configSite
 	 * r.enUS: siteConfig
+	 * r: fraisRetard
+	 * r.enUS: chargeLateFee
 	 */                   
 	protected void _fraisMontantNonPasse(Couverture<BigDecimal> c) {
-		if(fraisMontant != null && paiementDate != null && paiementDate.compareTo(now) >= 0)
+		if(fraisMontant != null && !fraisRetard && paiementDate != null && paiementDate.compareTo(now) >= 0)
 			c.o(fraisMontant);
 	}
 

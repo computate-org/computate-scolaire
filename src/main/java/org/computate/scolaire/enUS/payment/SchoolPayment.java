@@ -325,12 +325,12 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 	}
 
 	protected void _chargeAmountPassed(Wrap<BigDecimal> c) {
-		if(chargeAmount != null && paymentDate != null && paymentDate.compareTo(now) < 0)
+		if(chargeAmount != null && (chargeLateFee || paymentDate != null && paymentDate.compareTo(now) < 0))
 			c.o(chargeAmount);
 	}
 
 	protected void _chargeAmountNotPassed(Wrap<BigDecimal> c) {
-		if(chargeAmount != null && paymentDate != null && paymentDate.compareTo(now) >= 0)
+		if(chargeAmount != null && !chargeLateFee && paymentDate != null && paymentDate.compareTo(now) >= 0)
 			c.o(chargeAmount);
 	}
 
