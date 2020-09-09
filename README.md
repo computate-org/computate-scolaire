@@ -153,7 +153,7 @@ sudo install -d -o $USER -g $USER /usr/local/src/computate
 Clone the computate project.
 
 ```bash
-git clone https://github.com/computate/computate.git /usr/local/src/computate
+git clone https://github.com/computate-org/computate.git /usr/local/src/computate
 ```
 
 Change to the computate ansible directory.

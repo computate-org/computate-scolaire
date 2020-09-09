@@ -1975,7 +1975,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 								else {
 									e("span").a("style", "border-bottom: 1px solid black; display: block; ").f();
 									String s = (String)MethodUtils.invokeExactMethod(parent, "str" + StringUtils.capitalize(var));
-									s(s);
+									sx(s);
 									g("span");
 								}
 							}
