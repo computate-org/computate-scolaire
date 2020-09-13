@@ -4969,17 +4969,17 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public InscriptionScolaire setAnneeFraisInscription(String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
 		if(NumberUtils.isParsable(o))
-			this.anneeFraisInscription = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.anneeFraisInscription = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.anneeFraisInscriptionCouverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
 	public InscriptionScolaire setAnneeFraisInscription(Double o) {
-			this.anneeFraisInscription = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.anneeFraisInscription = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.anneeFraisInscriptionCouverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
 	public InscriptionScolaire setAnneeFraisInscription(Integer o) {
-			this.anneeFraisInscription = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.anneeFraisInscription = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.anneeFraisInscriptionCouverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
@@ -4998,7 +4998,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strAnneeFraisInscription() {
-		return anneeFraisInscription == null ? "" : anneeFraisInscription.setScale(2, RoundingMode.CEILING).toString();
+		return anneeFraisInscription == null ? "" : anneeFraisInscription.setScale(2, RoundingMode.HALF_UP).toString();
 	}
 
 	public String jsonAnneeFraisInscription() {
@@ -5555,17 +5555,17 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public InscriptionScolaire setBlocPrixParMois(String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
 		if(NumberUtils.isParsable(o))
-			this.blocPrixParMois = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.blocPrixParMois = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.blocPrixParMoisCouverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
 	public InscriptionScolaire setBlocPrixParMois(Double o) {
-			this.blocPrixParMois = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.blocPrixParMois = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.blocPrixParMoisCouverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
 	public InscriptionScolaire setBlocPrixParMois(Integer o) {
-			this.blocPrixParMois = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.blocPrixParMois = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.blocPrixParMoisCouverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
@@ -5584,7 +5584,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strBlocPrixParMois() {
-		return blocPrixParMois == null ? "" : blocPrixParMois.setScale(2, RoundingMode.CEILING).toString();
+		return blocPrixParMois == null ? "" : blocPrixParMois.setScale(2, RoundingMode.HALF_UP).toString();
 	}
 
 	public String jsonBlocPrixParMois() {
@@ -6104,17 +6104,17 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public InscriptionScolaire setBlocPrixTotal(String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
 		if(NumberUtils.isParsable(o))
-			this.blocPrixTotal = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.blocPrixTotal = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.blocPrixTotalCouverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
 	public InscriptionScolaire setBlocPrixTotal(Double o) {
-			this.blocPrixTotal = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.blocPrixTotal = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.blocPrixTotalCouverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
 	public InscriptionScolaire setBlocPrixTotal(Integer o) {
-			this.blocPrixTotal = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.blocPrixTotal = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.blocPrixTotalCouverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
@@ -6133,7 +6133,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strBlocPrixTotal() {
-		return blocPrixTotal == null ? "" : blocPrixTotal.setScale(2, RoundingMode.CEILING).toString();
+		return blocPrixTotal == null ? "" : blocPrixTotal.setScale(2, RoundingMode.HALF_UP).toString();
 	}
 
 	public String jsonBlocPrixTotal() {
@@ -9119,17 +9119,17 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public InscriptionScolaire setPaiementMontant(String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
 		if(NumberUtils.isParsable(o))
-			this.paiementMontant = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.paiementMontant = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.paiementMontantCouverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
 	public InscriptionScolaire setPaiementMontant(Double o) {
-			this.paiementMontant = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.paiementMontant = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.paiementMontantCouverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
 	public InscriptionScolaire setPaiementMontant(Integer o) {
-			this.paiementMontant = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.paiementMontant = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.paiementMontantCouverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
@@ -9148,7 +9148,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strPaiementMontant() {
-		return paiementMontant == null ? "" : paiementMontant.setScale(2, RoundingMode.CEILING).toString();
+		return paiementMontant == null ? "" : paiementMontant.setScale(2, RoundingMode.HALF_UP).toString();
 	}
 
 	public String jsonPaiementMontant() {
@@ -9199,17 +9199,17 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public InscriptionScolaire setFraisMontant(String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
 		if(NumberUtils.isParsable(o))
-			this.fraisMontant = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.fraisMontant = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.fraisMontantCouverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
 	public InscriptionScolaire setFraisMontant(Double o) {
-			this.fraisMontant = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.fraisMontant = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.fraisMontantCouverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
 	public InscriptionScolaire setFraisMontant(Integer o) {
-			this.fraisMontant = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.fraisMontant = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.fraisMontantCouverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
@@ -9228,7 +9228,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strFraisMontant() {
-		return fraisMontant == null ? "" : fraisMontant.setScale(2, RoundingMode.CEILING).toString();
+		return fraisMontant == null ? "" : fraisMontant.setScale(2, RoundingMode.HALF_UP).toString();
 	}
 
 	public String jsonFraisMontant() {
@@ -9279,17 +9279,17 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public InscriptionScolaire setFraisMontantFuture(String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
 		if(NumberUtils.isParsable(o))
-			this.fraisMontantFuture = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.fraisMontantFuture = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.fraisMontantFutureCouverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
 	public InscriptionScolaire setFraisMontantFuture(Double o) {
-			this.fraisMontantFuture = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.fraisMontantFuture = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.fraisMontantFutureCouverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
 	public InscriptionScolaire setFraisMontantFuture(Integer o) {
-			this.fraisMontantFuture = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.fraisMontantFuture = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.fraisMontantFutureCouverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
@@ -9308,7 +9308,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strFraisMontantFuture() {
-		return fraisMontantFuture == null ? "" : fraisMontantFuture.setScale(2, RoundingMode.CEILING).toString();
+		return fraisMontantFuture == null ? "" : fraisMontantFuture.setScale(2, RoundingMode.HALF_UP).toString();
 	}
 
 	public String jsonFraisMontantFuture() {
@@ -9359,17 +9359,17 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public InscriptionScolaire setFraisMontantDu(String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
 		if(NumberUtils.isParsable(o))
-			this.fraisMontantDu = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.fraisMontantDu = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.fraisMontantDuCouverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
 	public InscriptionScolaire setFraisMontantDu(Double o) {
-			this.fraisMontantDu = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.fraisMontantDu = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.fraisMontantDuCouverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
 	public InscriptionScolaire setFraisMontantDu(Integer o) {
-			this.fraisMontantDu = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.fraisMontantDu = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.fraisMontantDuCouverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
@@ -9388,7 +9388,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strFraisMontantDu() {
-		return fraisMontantDu == null ? "" : fraisMontantDu.setScale(2, RoundingMode.CEILING).toString();
+		return fraisMontantDu == null ? "" : fraisMontantDu.setScale(2, RoundingMode.HALF_UP).toString();
 	}
 
 	public String jsonFraisMontantDu() {
@@ -9439,17 +9439,17 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public InscriptionScolaire setFraisMontantNonPasse(String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
 		if(NumberUtils.isParsable(o))
-			this.fraisMontantNonPasse = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.fraisMontantNonPasse = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.fraisMontantNonPasseCouverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
 	public InscriptionScolaire setFraisMontantNonPasse(Double o) {
-			this.fraisMontantNonPasse = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.fraisMontantNonPasse = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.fraisMontantNonPasseCouverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
 	public InscriptionScolaire setFraisMontantNonPasse(Integer o) {
-			this.fraisMontantNonPasse = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.fraisMontantNonPasse = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.fraisMontantNonPasseCouverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
@@ -9468,7 +9468,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strFraisMontantNonPasse() {
-		return fraisMontantNonPasse == null ? "" : fraisMontantNonPasse.setScale(2, RoundingMode.CEILING).toString();
+		return fraisMontantNonPasse == null ? "" : fraisMontantNonPasse.setScale(2, RoundingMode.HALF_UP).toString();
 	}
 
 	public String jsonFraisMontantNonPasse() {
@@ -9519,17 +9519,17 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public InscriptionScolaire setFraisMaintenant(String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
 		if(NumberUtils.isParsable(o))
-			this.fraisMaintenant = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.fraisMaintenant = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.fraisMaintenantCouverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
 	public InscriptionScolaire setFraisMaintenant(Double o) {
-			this.fraisMaintenant = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.fraisMaintenant = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.fraisMaintenantCouverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
 	public InscriptionScolaire setFraisMaintenant(Integer o) {
-			this.fraisMaintenant = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.fraisMaintenant = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.fraisMaintenantCouverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
@@ -9548,7 +9548,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strFraisMaintenant() {
-		return fraisMaintenant == null ? "" : fraisMaintenant.setScale(2, RoundingMode.CEILING).toString();
+		return fraisMaintenant == null ? "" : fraisMaintenant.setScale(2, RoundingMode.HALF_UP).toString();
 	}
 
 	public String jsonFraisMaintenant() {
@@ -9733,17 +9733,17 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public InscriptionScolaire setPaiementsEnRetardMontant(String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
 		if(NumberUtils.isParsable(o))
-			this.paiementsEnRetardMontant = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.paiementsEnRetardMontant = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.paiementsEnRetardMontantCouverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
 	public InscriptionScolaire setPaiementsEnRetardMontant(Double o) {
-			this.paiementsEnRetardMontant = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.paiementsEnRetardMontant = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.paiementsEnRetardMontantCouverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
 	public InscriptionScolaire setPaiementsEnRetardMontant(Integer o) {
-			this.paiementsEnRetardMontant = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.paiementsEnRetardMontant = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.paiementsEnRetardMontantCouverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
@@ -9762,7 +9762,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strPaiementsEnRetardMontant() {
-		return paiementsEnRetardMontant == null ? "" : paiementsEnRetardMontant.setScale(2, RoundingMode.CEILING).toString();
+		return paiementsEnRetardMontant == null ? "" : paiementsEnRetardMontant.setScale(2, RoundingMode.HALF_UP).toString();
 	}
 
 	public String jsonPaiementsEnRetardMontant() {
@@ -9947,17 +9947,17 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public InscriptionScolaire setPaiementsEnSouffranceMontant(String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
 		if(NumberUtils.isParsable(o))
-			this.paiementsEnSouffranceMontant = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.paiementsEnSouffranceMontant = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.paiementsEnSouffranceMontantCouverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
 	public InscriptionScolaire setPaiementsEnSouffranceMontant(Double o) {
-			this.paiementsEnSouffranceMontant = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.paiementsEnSouffranceMontant = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.paiementsEnSouffranceMontantCouverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
 	public InscriptionScolaire setPaiementsEnSouffranceMontant(Integer o) {
-			this.paiementsEnSouffranceMontant = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.paiementsEnSouffranceMontant = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.paiementsEnSouffranceMontantCouverture.dejaInitialise = true;
 		return (InscriptionScolaire)this;
 	}
@@ -9976,7 +9976,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strPaiementsEnSouffranceMontant() {
-		return paiementsEnSouffranceMontant == null ? "" : paiementsEnSouffranceMontant.setScale(2, RoundingMode.CEILING).toString();
+		return paiementsEnSouffranceMontant == null ? "" : paiementsEnSouffranceMontant.setScale(2, RoundingMode.HALF_UP).toString();
 	}
 
 	public String jsonPaiementsEnSouffranceMontant() {

@@ -2171,6 +2171,139 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	}
 
 	/////////////////
+	// htmlVarHtml //
+	/////////////////
+
+	/**	 L'entité htmlVarHtml
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String htmlVarHtml;
+	@JsonIgnore
+	public Couverture<String> htmlVarHtmlCouverture = new Couverture<String>().p(this).c(String.class).var("htmlVarHtml").o(htmlVarHtml);
+
+	/**	<br/> L'entité htmlVarHtml
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.html.part.PartHtml&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:htmlVarHtml">Trouver l'entité htmlVarHtml dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _htmlVarHtml(Couverture<String> c);
+
+	public String getHtmlVarHtml() {
+		return htmlVarHtml;
+	}
+
+	public void setHtmlVarHtml(String htmlVarHtml) {
+		this.htmlVarHtml = htmlVarHtml;
+		this.htmlVarHtmlCouverture.dejaInitialise = true;
+	}
+	protected PartHtml htmlVarHtmlInit() {
+		if(!htmlVarHtmlCouverture.dejaInitialise) {
+			_htmlVarHtml(htmlVarHtmlCouverture);
+			if(htmlVarHtml == null)
+				setHtmlVarHtml(htmlVarHtmlCouverture.o);
+		}
+		htmlVarHtmlCouverture.dejaInitialise(true);
+		return (PartHtml)this;
+	}
+
+	public String solrHtmlVarHtml() {
+		return htmlVarHtml;
+	}
+
+	public String strHtmlVarHtml() {
+		return htmlVarHtml == null ? "" : htmlVarHtml;
+	}
+
+	public String jsonHtmlVarHtml() {
+		return htmlVarHtml == null ? "" : htmlVarHtml;
+	}
+
+	public String nomAffichageHtmlVarHtml() {
+		return "var html";
+	}
+
+	public String htmTooltipHtmlVarHtml() {
+		return null;
+	}
+
+	public String htmHtmlVarHtml() {
+		return htmlVarHtml == null ? "" : StringEscapeUtils.escapeHtml4(strHtmlVarHtml());
+	}
+
+	public void inputHtmlVarHtml(String classeApiMethodeMethode) {
+		PartHtml s = (PartHtml)this;
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "var html")
+				.a("id", classeApiMethodeMethode, "_htmlVarHtml");
+				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+					a("class", "setHtmlVarHtml classPartHtml inputPartHtml", pk, "HtmlVarHtml w3-input w3-border ");
+					a("name", "setHtmlVarHtml");
+				} else {
+					a("class", "valeurHtmlVarHtml w3-input w3-border classPartHtml inputPartHtml", pk, "HtmlVarHtml w3-input w3-border ");
+					a("name", "htmlVarHtml");
+				}
+				if("Page".equals(classeApiMethodeMethode)) {
+					a("onclick", "enleverLueur($(this)); ");
+					a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setHtmlVarHtml', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_htmlVarHtml')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_htmlVarHtml')); }); ");
+				}
+				a("value", strHtmlVarHtml())
+			.fg();
+
+		} else {
+			if(
+					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+				e("span").a("class", "varPartHtml", pk, "HtmlVarHtml ").f().sx(htmHtmlVarHtml()).g("span");
+			}
+		}
+	}
+
+	public void htmHtmlVarHtml(String classeApiMethodeMethode) {
+		PartHtml s = (PartHtml)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "PartHtmlHtmlVarHtml").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-khaki ").f();
+							e("label").a("for", classeApiMethodeMethode, "_htmlVarHtml").a("class", "").f().sx("var html").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputHtmlVarHtml(classeApiMethodeMethode);
+							} g("div");
+							if(
+									CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+									) {
+								if("Page".equals(classeApiMethodeMethode)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-khaki ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_htmlVarHtml')); $('#", classeApiMethodeMethode, "_htmlVarHtml').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#PartHtmlForm :input[name=pk]').val() }], 'setHtmlVarHtml', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_htmlVarHtml')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_htmlVarHtml')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	/////////////////
 	// htmlExclure //
 	/////////////////
 
@@ -4012,6 +4145,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		htmlVarInputInit();
 		htmlIfVarEqualsInit();
 		htmlVarForEachInit();
+		htmlVarHtmlInit();
 		htmlExclureInit();
 		pdfExclureInit();
 		connecterDeconnecterInit();
@@ -4095,6 +4229,8 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				return oPartHtml.htmlIfVarEquals;
 			case "htmlVarForEach":
 				return oPartHtml.htmlVarForEach;
+			case "htmlVarHtml":
+				return oPartHtml.htmlVarHtml;
 			case "htmlExclure":
 				return oPartHtml.htmlExclure;
 			case "pdfExclure":
@@ -4245,6 +4381,11 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 			case "htmlVarForEach":
 				if(val != null)
 					setHtmlVarForEach(val);
+				sauvegardes.add(var);
+				return val;
+			case "htmlVarHtml":
+				if(val != null)
+					setHtmlVarHtml(val);
 				sauvegardes.add(var);
 				return val;
 			case "htmlExclure":
@@ -4421,6 +4562,12 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				String htmlVarForEach = (String)solrDocument.get("htmlVarForEach_stored_string");
 				if(htmlVarForEach != null)
 					oPartHtml.setHtmlVarForEach(htmlVarForEach);
+			}
+
+			if(sauvegardes.contains("htmlVarHtml")) {
+				String htmlVarHtml = (String)solrDocument.get("htmlVarHtml_stored_string");
+				if(htmlVarHtml != null)
+					oPartHtml.setHtmlVarHtml(htmlVarHtml);
 			}
 
 			if(sauvegardes.contains("htmlExclure")) {
@@ -4632,6 +4779,10 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 			document.addField("htmlVarForEach_indexed_string", htmlVarForEach);
 			document.addField("htmlVarForEach_stored_string", htmlVarForEach);
 		}
+		if(htmlVarHtml != null) {
+			document.addField("htmlVarHtml_indexed_string", htmlVarHtml);
+			document.addField("htmlVarHtml_stored_string", htmlVarHtml);
+		}
 		if(htmlExclure != null) {
 			document.addField("htmlExclure_indexed_boolean", htmlExclure);
 			document.addField("htmlExclure_stored_boolean", htmlExclure);
@@ -4733,6 +4884,8 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				return "htmlIfVarEquals_indexed_string";
 			case "htmlVarForEach":
 				return "htmlVarForEach_indexed_string";
+			case "htmlVarHtml":
+				return "htmlVarHtml_indexed_string";
 			case "htmlExclure":
 				return "htmlExclure_indexed_boolean";
 			case "pdfExclure":
@@ -4852,6 +5005,10 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		if(htmlVarForEach != null)
 			oPartHtml.setHtmlVarForEach(htmlVarForEach);
 
+		String htmlVarHtml = (String)solrDocument.get("htmlVarHtml_stored_string");
+		if(htmlVarHtml != null)
+			oPartHtml.setHtmlVarHtml(htmlVarHtml);
+
 		Boolean htmlExclure = (Boolean)solrDocument.get("htmlExclure_stored_boolean");
 		if(htmlExclure != null)
 			oPartHtml.setHtmlExclure(htmlExclure);
@@ -4948,6 +5105,8 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				requeteApi.addVars("htmlIfVarEquals");
 			if(!Objects.equals(htmlVarForEach, original.getHtmlVarForEach()))
 				requeteApi.addVars("htmlVarForEach");
+			if(!Objects.equals(htmlVarHtml, original.getHtmlVarHtml()))
+				requeteApi.addVars("htmlVarHtml");
 			if(!Objects.equals(htmlExclure, original.getHtmlExclure()))
 				requeteApi.addVars("htmlExclure");
 			if(!Objects.equals(pdfExclure, original.getPdfExclure()))
@@ -4983,7 +5142,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), partHtmlCle, designPageCles, htmlLien, htmlElement, htmlId, htmlClasses, htmlStyle, htmlAvant, htmlApres, htmlTexte, htmlVar, htmlVarSpan, htmlVarForm, htmlVarInput, htmlIfVarEquals, htmlVarForEach, htmlExclure, pdfExclure, connecterDeconnecter, tri1, tri2, tri3, tri4, tri5, tri6, tri7, tri8, tri9, tri10);
+		return Objects.hash(super.hashCode(), partHtmlCle, designPageCles, htmlLien, htmlElement, htmlId, htmlClasses, htmlStyle, htmlAvant, htmlApres, htmlTexte, htmlVar, htmlVarSpan, htmlVarForm, htmlVarInput, htmlIfVarEquals, htmlVarForEach, htmlVarHtml, htmlExclure, pdfExclure, connecterDeconnecter, tri1, tri2, tri3, tri4, tri5, tri6, tri7, tri8, tri9, tri10);
 	}
 
 	////////////
@@ -5013,6 +5172,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				&& Objects.equals( htmlVarInput, that.htmlVarInput )
 				&& Objects.equals( htmlIfVarEquals, that.htmlIfVarEquals )
 				&& Objects.equals( htmlVarForEach, that.htmlVarForEach )
+				&& Objects.equals( htmlVarHtml, that.htmlVarHtml )
 				&& Objects.equals( htmlExclure, that.htmlExclure )
 				&& Objects.equals( pdfExclure, that.pdfExclure )
 				&& Objects.equals( connecterDeconnecter, that.connecterDeconnecter )
@@ -5052,6 +5212,7 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		sb.append( ", htmlVarInput: \"" ).append(htmlVarInput).append( "\"" );
 		sb.append( ", htmlIfVarEquals: \"" ).append(htmlIfVarEquals).append( "\"" );
 		sb.append( ", htmlVarForEach: \"" ).append(htmlVarForEach).append( "\"" );
+		sb.append( ", htmlVarHtml: \"" ).append(htmlVarHtml).append( "\"" );
 		sb.append( ", htmlExclure: " ).append(htmlExclure);
 		sb.append( ", pdfExclure: " ).append(pdfExclure);
 		sb.append( ", connecterDeconnecter: " ).append(connecterDeconnecter);

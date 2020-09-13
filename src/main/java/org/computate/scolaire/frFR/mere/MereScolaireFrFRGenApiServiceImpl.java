@@ -2596,7 +2596,7 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 				.put("utilisateurNomComplet", requeteSite.getUtilisateurNomComplet())
 				.put("requeteUri", requeteSite.getRequeteUri())
 				.put("requeteMethode", requeteSite.getRequeteMethode())
-				.put("params", requeteSite.getOperationRequete().getParams())
+				.put("params", Optional.ofNullable(requeteSite.getOperationRequete()).map(o -> o.getParams()).orElse(null))
 				);
 		ExceptionUtils.printRootCauseStackTrace(e);
 		OperationResponse reponseOperation = new OperationResponse(400, "BAD REQUEST", 

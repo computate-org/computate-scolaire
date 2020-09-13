@@ -2249,17 +2249,17 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 	public AnneeScolaire setAnneeFraisInscription(String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
 		if(NumberUtils.isParsable(o))
-			this.anneeFraisInscription = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.anneeFraisInscription = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.anneeFraisInscriptionCouverture.dejaInitialise = true;
 		return (AnneeScolaire)this;
 	}
 	public AnneeScolaire setAnneeFraisInscription(Double o) {
-			this.anneeFraisInscription = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.anneeFraisInscription = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.anneeFraisInscriptionCouverture.dejaInitialise = true;
 		return (AnneeScolaire)this;
 	}
 	public AnneeScolaire setAnneeFraisInscription(Integer o) {
-			this.anneeFraisInscription = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.anneeFraisInscription = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.anneeFraisInscriptionCouverture.dejaInitialise = true;
 		return (AnneeScolaire)this;
 	}
@@ -2278,7 +2278,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strAnneeFraisInscription() {
-		return anneeFraisInscription == null ? "" : anneeFraisInscription.setScale(2, RoundingMode.CEILING).toString();
+		return anneeFraisInscription == null ? "" : anneeFraisInscription.setScale(2, RoundingMode.HALF_UP).toString();
 	}
 
 	public String jsonAnneeFraisInscription() {

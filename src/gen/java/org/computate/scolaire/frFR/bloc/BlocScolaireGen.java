@@ -2199,17 +2199,17 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 	public BlocScolaire setAnneeFraisInscription(String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
 		if(NumberUtils.isParsable(o))
-			this.anneeFraisInscription = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.anneeFraisInscription = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.anneeFraisInscriptionCouverture.dejaInitialise = true;
 		return (BlocScolaire)this;
 	}
 	public BlocScolaire setAnneeFraisInscription(Double o) {
-			this.anneeFraisInscription = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.anneeFraisInscription = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.anneeFraisInscriptionCouverture.dejaInitialise = true;
 		return (BlocScolaire)this;
 	}
 	public BlocScolaire setAnneeFraisInscription(Integer o) {
-			this.anneeFraisInscription = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.anneeFraisInscription = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.anneeFraisInscriptionCouverture.dejaInitialise = true;
 		return (BlocScolaire)this;
 	}
@@ -2228,7 +2228,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strAnneeFraisInscription() {
-		return anneeFraisInscription == null ? "" : anneeFraisInscription.setScale(2, RoundingMode.CEILING).toString();
+		return anneeFraisInscription == null ? "" : anneeFraisInscription.setScale(2, RoundingMode.HALF_UP).toString();
 	}
 
 	public String jsonAnneeFraisInscription() {
@@ -2969,17 +2969,17 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 	public BlocScolaire setBlocPrixParMois(String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
 		if(NumberUtils.isParsable(o))
-			this.blocPrixParMois = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.blocPrixParMois = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.blocPrixParMoisCouverture.dejaInitialise = true;
 		return (BlocScolaire)this;
 	}
 	public BlocScolaire setBlocPrixParMois(Double o) {
-			this.blocPrixParMois = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.blocPrixParMois = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.blocPrixParMoisCouverture.dejaInitialise = true;
 		return (BlocScolaire)this;
 	}
 	public BlocScolaire setBlocPrixParMois(Integer o) {
-			this.blocPrixParMois = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.blocPrixParMois = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.blocPrixParMoisCouverture.dejaInitialise = true;
 		return (BlocScolaire)this;
 	}
@@ -2998,7 +2998,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strBlocPrixParMois() {
-		return blocPrixParMois == null ? "" : blocPrixParMois.setScale(2, RoundingMode.CEILING).toString();
+		return blocPrixParMois == null ? "" : blocPrixParMois.setScale(2, RoundingMode.HALF_UP).toString();
 	}
 
 	public String jsonBlocPrixParMois() {
@@ -3930,17 +3930,17 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 	public BlocScolaire setBlocPrixTotal(String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
 		if(NumberUtils.isParsable(o))
-			this.blocPrixTotal = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.blocPrixTotal = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.blocPrixTotalCouverture.dejaInitialise = true;
 		return (BlocScolaire)this;
 	}
 	public BlocScolaire setBlocPrixTotal(Double o) {
-			this.blocPrixTotal = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.blocPrixTotal = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.blocPrixTotalCouverture.dejaInitialise = true;
 		return (BlocScolaire)this;
 	}
 	public BlocScolaire setBlocPrixTotal(Integer o) {
-			this.blocPrixTotal = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.blocPrixTotal = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.blocPrixTotalCouverture.dejaInitialise = true;
 		return (BlocScolaire)this;
 	}
@@ -3959,7 +3959,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strBlocPrixTotal() {
-		return blocPrixTotal == null ? "" : blocPrixTotal.setScale(2, RoundingMode.CEILING).toString();
+		return blocPrixTotal == null ? "" : blocPrixTotal.setScale(2, RoundingMode.HALF_UP).toString();
 	}
 
 	public String jsonBlocPrixTotal() {

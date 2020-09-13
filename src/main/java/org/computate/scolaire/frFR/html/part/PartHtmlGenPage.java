@@ -179,6 +179,9 @@ public class PartHtmlGenPage extends PartHtmlGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmHtmlVarForEach("Page");
+			o.htmHtmlVarHtml("Page");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmHtmlExclure("Page");
 			o.htmPdfExclure("Page");
 			o.htmConnecterDeconnecter("Page");
@@ -240,6 +243,9 @@ public class PartHtmlGenPage extends PartHtmlGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmHtmlVarForEach("POST");
+			o.htmHtmlVarHtml("POST");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmHtmlExclure("POST");
 			o.htmPdfExclure("POST");
 			o.htmConnecterDeconnecter("POST");
@@ -323,6 +329,9 @@ public class PartHtmlGenPage extends PartHtmlGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmHtmlVarForEach("PUTCopie");
+			o.htmHtmlVarHtml("PUTCopie");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmHtmlExclure("PUTCopie");
 			o.htmPdfExclure("PUTCopie");
 			o.htmConnecterDeconnecter("PUTCopie");
@@ -388,6 +397,9 @@ public class PartHtmlGenPage extends PartHtmlGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmHtmlVarForEach("PATCH");
+			o.htmHtmlVarHtml("PATCH");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmHtmlExclure("PATCH");
 			o.htmPdfExclure("PATCH");
 			o.htmConnecterDeconnecter("PATCH");
@@ -446,6 +458,9 @@ public class PartHtmlGenPage extends PartHtmlGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmHtmlVarForEach("Recherche");
+			o.htmHtmlVarHtml("Recherche");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmHtmlExclure("Recherche");
 			o.htmPdfExclure("Recherche");
 			o.htmConnecterDeconnecter("Recherche");

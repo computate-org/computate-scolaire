@@ -1005,17 +1005,17 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	public DesignDisplayPage setPaymentAmount(String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
 		if(NumberUtils.isParsable(o))
-			this.paymentAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.paymentAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.paymentAmountWrap.alreadyInitialized = true;
 		return (DesignDisplayPage)this;
 	}
 	public DesignDisplayPage setPaymentAmount(Double o) {
-			this.paymentAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.paymentAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.paymentAmountWrap.alreadyInitialized = true;
 		return (DesignDisplayPage)this;
 	}
 	public DesignDisplayPage setPaymentAmount(Integer o) {
-			this.paymentAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.paymentAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.paymentAmountWrap.alreadyInitialized = true;
 		return (DesignDisplayPage)this;
 	}
@@ -1034,7 +1034,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	}
 
 	public String strPaymentAmount() {
-		return paymentAmount == null ? "" : paymentAmount.setScale(2, RoundingMode.CEILING).toString();
+		return paymentAmount == null ? "" : paymentAmount.setScale(2, RoundingMode.HALF_UP).toString();
 	}
 
 	public String jsonPaymentAmount() {
@@ -1085,17 +1085,17 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	public DesignDisplayPage setChargeAmount(String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
 		if(NumberUtils.isParsable(o))
-			this.chargeAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.chargeAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.chargeAmountWrap.alreadyInitialized = true;
 		return (DesignDisplayPage)this;
 	}
 	public DesignDisplayPage setChargeAmount(Double o) {
-			this.chargeAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.chargeAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.chargeAmountWrap.alreadyInitialized = true;
 		return (DesignDisplayPage)this;
 	}
 	public DesignDisplayPage setChargeAmount(Integer o) {
-			this.chargeAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.chargeAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.chargeAmountWrap.alreadyInitialized = true;
 		return (DesignDisplayPage)this;
 	}
@@ -1114,7 +1114,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	}
 
 	public String strChargeAmount() {
-		return chargeAmount == null ? "" : chargeAmount.setScale(2, RoundingMode.CEILING).toString();
+		return chargeAmount == null ? "" : chargeAmount.setScale(2, RoundingMode.HALF_UP).toString();
 	}
 
 	public String jsonChargeAmount() {
@@ -1165,17 +1165,17 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	public DesignDisplayPage setChargeAmountFuture(String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
 		if(NumberUtils.isParsable(o))
-			this.chargeAmountFuture = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.chargeAmountFuture = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.chargeAmountFutureWrap.alreadyInitialized = true;
 		return (DesignDisplayPage)this;
 	}
 	public DesignDisplayPage setChargeAmountFuture(Double o) {
-			this.chargeAmountFuture = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.chargeAmountFuture = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.chargeAmountFutureWrap.alreadyInitialized = true;
 		return (DesignDisplayPage)this;
 	}
 	public DesignDisplayPage setChargeAmountFuture(Integer o) {
-			this.chargeAmountFuture = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.chargeAmountFuture = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.chargeAmountFutureWrap.alreadyInitialized = true;
 		return (DesignDisplayPage)this;
 	}
@@ -1194,7 +1194,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	}
 
 	public String strChargeAmountFuture() {
-		return chargeAmountFuture == null ? "" : chargeAmountFuture.setScale(2, RoundingMode.CEILING).toString();
+		return chargeAmountFuture == null ? "" : chargeAmountFuture.setScale(2, RoundingMode.HALF_UP).toString();
 	}
 
 	public String jsonChargeAmountFuture() {
@@ -1245,17 +1245,17 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	public DesignDisplayPage setChargeAmountDue(String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
 		if(NumberUtils.isParsable(o))
-			this.chargeAmountDue = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.chargeAmountDue = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.chargeAmountDueWrap.alreadyInitialized = true;
 		return (DesignDisplayPage)this;
 	}
 	public DesignDisplayPage setChargeAmountDue(Double o) {
-			this.chargeAmountDue = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.chargeAmountDue = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.chargeAmountDueWrap.alreadyInitialized = true;
 		return (DesignDisplayPage)this;
 	}
 	public DesignDisplayPage setChargeAmountDue(Integer o) {
-			this.chargeAmountDue = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.chargeAmountDue = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.chargeAmountDueWrap.alreadyInitialized = true;
 		return (DesignDisplayPage)this;
 	}
@@ -1274,7 +1274,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	}
 
 	public String strChargeAmountDue() {
-		return chargeAmountDue == null ? "" : chargeAmountDue.setScale(2, RoundingMode.CEILING).toString();
+		return chargeAmountDue == null ? "" : chargeAmountDue.setScale(2, RoundingMode.HALF_UP).toString();
 	}
 
 	public String jsonChargeAmountDue() {
@@ -1325,17 +1325,17 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	public DesignDisplayPage setChargesNow(String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
 		if(NumberUtils.isParsable(o))
-			this.chargesNow = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.chargesNow = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.chargesNowWrap.alreadyInitialized = true;
 		return (DesignDisplayPage)this;
 	}
 	public DesignDisplayPage setChargesNow(Double o) {
-			this.chargesNow = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.chargesNow = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.chargesNowWrap.alreadyInitialized = true;
 		return (DesignDisplayPage)this;
 	}
 	public DesignDisplayPage setChargesNow(Integer o) {
-			this.chargesNow = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.chargesNow = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.chargesNowWrap.alreadyInitialized = true;
 		return (DesignDisplayPage)this;
 	}
@@ -1354,7 +1354,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	}
 
 	public String strChargesNow() {
-		return chargesNow == null ? "" : chargesNow.setScale(2, RoundingMode.CEILING).toString();
+		return chargesNow == null ? "" : chargesNow.setScale(2, RoundingMode.HALF_UP).toString();
 	}
 
 	public String jsonChargesNow() {
@@ -1539,17 +1539,17 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	public DesignDisplayPage setPaymentsLateAmount(String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
 		if(NumberUtils.isParsable(o))
-			this.paymentsLateAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.paymentsLateAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.paymentsLateAmountWrap.alreadyInitialized = true;
 		return (DesignDisplayPage)this;
 	}
 	public DesignDisplayPage setPaymentsLateAmount(Double o) {
-			this.paymentsLateAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.paymentsLateAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.paymentsLateAmountWrap.alreadyInitialized = true;
 		return (DesignDisplayPage)this;
 	}
 	public DesignDisplayPage setPaymentsLateAmount(Integer o) {
-			this.paymentsLateAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.paymentsLateAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.paymentsLateAmountWrap.alreadyInitialized = true;
 		return (DesignDisplayPage)this;
 	}
@@ -1568,7 +1568,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	}
 
 	public String strPaymentsLateAmount() {
-		return paymentsLateAmount == null ? "" : paymentsLateAmount.setScale(2, RoundingMode.CEILING).toString();
+		return paymentsLateAmount == null ? "" : paymentsLateAmount.setScale(2, RoundingMode.HALF_UP).toString();
 	}
 
 	public String jsonPaymentsLateAmount() {

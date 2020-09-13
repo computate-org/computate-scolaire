@@ -748,17 +748,17 @@ public abstract class SchoolReceiptGen<DEV> extends Cluster {
 	public SchoolReceipt setPaymentAmount(String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
 		if(NumberUtils.isParsable(o))
-			this.paymentAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.paymentAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.paymentAmountWrap.alreadyInitialized = true;
 		return (SchoolReceipt)this;
 	}
 	public SchoolReceipt setPaymentAmount(Double o) {
-			this.paymentAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.paymentAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.paymentAmountWrap.alreadyInitialized = true;
 		return (SchoolReceipt)this;
 	}
 	public SchoolReceipt setPaymentAmount(Integer o) {
-			this.paymentAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.paymentAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.paymentAmountWrap.alreadyInitialized = true;
 		return (SchoolReceipt)this;
 	}
@@ -777,7 +777,7 @@ public abstract class SchoolReceiptGen<DEV> extends Cluster {
 	}
 
 	public String strPaymentAmount() {
-		return paymentAmount == null ? "" : paymentAmount.setScale(2, RoundingMode.CEILING).toString();
+		return paymentAmount == null ? "" : paymentAmount.setScale(2, RoundingMode.HALF_UP).toString();
 	}
 
 	public String jsonPaymentAmount() {

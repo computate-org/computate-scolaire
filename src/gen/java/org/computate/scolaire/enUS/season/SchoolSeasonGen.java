@@ -1652,17 +1652,17 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	public SchoolSeason setYearEnrollmentFee(String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
 		if(NumberUtils.isParsable(o))
-			this.yearEnrollmentFee = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.yearEnrollmentFee = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.yearEnrollmentFeeWrap.alreadyInitialized = true;
 		return (SchoolSeason)this;
 	}
 	public SchoolSeason setYearEnrollmentFee(Double o) {
-			this.yearEnrollmentFee = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.yearEnrollmentFee = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.yearEnrollmentFeeWrap.alreadyInitialized = true;
 		return (SchoolSeason)this;
 	}
 	public SchoolSeason setYearEnrollmentFee(Integer o) {
-			this.yearEnrollmentFee = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.yearEnrollmentFee = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.yearEnrollmentFeeWrap.alreadyInitialized = true;
 		return (SchoolSeason)this;
 	}
@@ -1681,7 +1681,7 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 	}
 
 	public String strYearEnrollmentFee() {
-		return yearEnrollmentFee == null ? "" : yearEnrollmentFee.setScale(2, RoundingMode.CEILING).toString();
+		return yearEnrollmentFee == null ? "" : yearEnrollmentFee.setScale(2, RoundingMode.HALF_UP).toString();
 	}
 
 	public String jsonYearEnrollmentFee() {

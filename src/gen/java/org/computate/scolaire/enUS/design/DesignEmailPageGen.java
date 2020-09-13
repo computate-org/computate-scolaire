@@ -2893,17 +2893,17 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 	public DesignEmailPage setPaymentAmount(String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
 		if(NumberUtils.isParsable(o))
-			this.paymentAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.paymentAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.paymentAmountWrap.alreadyInitialized = true;
 		return (DesignEmailPage)this;
 	}
 	public DesignEmailPage setPaymentAmount(Double o) {
-			this.paymentAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.paymentAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.paymentAmountWrap.alreadyInitialized = true;
 		return (DesignEmailPage)this;
 	}
 	public DesignEmailPage setPaymentAmount(Integer o) {
-			this.paymentAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.paymentAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.paymentAmountWrap.alreadyInitialized = true;
 		return (DesignEmailPage)this;
 	}
@@ -2922,7 +2922,7 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 	}
 
 	public String strPaymentAmount() {
-		return paymentAmount == null ? "" : paymentAmount.setScale(2, RoundingMode.CEILING).toString();
+		return paymentAmount == null ? "" : paymentAmount.setScale(2, RoundingMode.HALF_UP).toString();
 	}
 
 	public String jsonPaymentAmount() {
@@ -2973,17 +2973,17 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 	public DesignEmailPage setChargeAmount(String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
 		if(NumberUtils.isParsable(o))
-			this.chargeAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.chargeAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.chargeAmountWrap.alreadyInitialized = true;
 		return (DesignEmailPage)this;
 	}
 	public DesignEmailPage setChargeAmount(Double o) {
-			this.chargeAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.chargeAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.chargeAmountWrap.alreadyInitialized = true;
 		return (DesignEmailPage)this;
 	}
 	public DesignEmailPage setChargeAmount(Integer o) {
-			this.chargeAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.chargeAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.chargeAmountWrap.alreadyInitialized = true;
 		return (DesignEmailPage)this;
 	}
@@ -3002,7 +3002,7 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 	}
 
 	public String strChargeAmount() {
-		return chargeAmount == null ? "" : chargeAmount.setScale(2, RoundingMode.CEILING).toString();
+		return chargeAmount == null ? "" : chargeAmount.setScale(2, RoundingMode.HALF_UP).toString();
 	}
 
 	public String jsonChargeAmount() {
@@ -3053,17 +3053,17 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 	public DesignEmailPage setChargeAmountFuture(String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
 		if(NumberUtils.isParsable(o))
-			this.chargeAmountFuture = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.chargeAmountFuture = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.chargeAmountFutureWrap.alreadyInitialized = true;
 		return (DesignEmailPage)this;
 	}
 	public DesignEmailPage setChargeAmountFuture(Double o) {
-			this.chargeAmountFuture = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.chargeAmountFuture = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.chargeAmountFutureWrap.alreadyInitialized = true;
 		return (DesignEmailPage)this;
 	}
 	public DesignEmailPage setChargeAmountFuture(Integer o) {
-			this.chargeAmountFuture = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.chargeAmountFuture = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.chargeAmountFutureWrap.alreadyInitialized = true;
 		return (DesignEmailPage)this;
 	}
@@ -3082,7 +3082,7 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 	}
 
 	public String strChargeAmountFuture() {
-		return chargeAmountFuture == null ? "" : chargeAmountFuture.setScale(2, RoundingMode.CEILING).toString();
+		return chargeAmountFuture == null ? "" : chargeAmountFuture.setScale(2, RoundingMode.HALF_UP).toString();
 	}
 
 	public String jsonChargeAmountFuture() {
@@ -3133,17 +3133,17 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 	public DesignEmailPage setChargeAmountDue(String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
 		if(NumberUtils.isParsable(o))
-			this.chargeAmountDue = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.chargeAmountDue = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.chargeAmountDueWrap.alreadyInitialized = true;
 		return (DesignEmailPage)this;
 	}
 	public DesignEmailPage setChargeAmountDue(Double o) {
-			this.chargeAmountDue = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.chargeAmountDue = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.chargeAmountDueWrap.alreadyInitialized = true;
 		return (DesignEmailPage)this;
 	}
 	public DesignEmailPage setChargeAmountDue(Integer o) {
-			this.chargeAmountDue = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.chargeAmountDue = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.chargeAmountDueWrap.alreadyInitialized = true;
 		return (DesignEmailPage)this;
 	}
@@ -3162,7 +3162,7 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 	}
 
 	public String strChargeAmountDue() {
-		return chargeAmountDue == null ? "" : chargeAmountDue.setScale(2, RoundingMode.CEILING).toString();
+		return chargeAmountDue == null ? "" : chargeAmountDue.setScale(2, RoundingMode.HALF_UP).toString();
 	}
 
 	public String jsonChargeAmountDue() {
@@ -3213,17 +3213,17 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 	public DesignEmailPage setChargesNow(String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
 		if(NumberUtils.isParsable(o))
-			this.chargesNow = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.chargesNow = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.chargesNowWrap.alreadyInitialized = true;
 		return (DesignEmailPage)this;
 	}
 	public DesignEmailPage setChargesNow(Double o) {
-			this.chargesNow = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.chargesNow = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.chargesNowWrap.alreadyInitialized = true;
 		return (DesignEmailPage)this;
 	}
 	public DesignEmailPage setChargesNow(Integer o) {
-			this.chargesNow = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.chargesNow = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.chargesNowWrap.alreadyInitialized = true;
 		return (DesignEmailPage)this;
 	}
@@ -3242,7 +3242,7 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 	}
 
 	public String strChargesNow() {
-		return chargesNow == null ? "" : chargesNow.setScale(2, RoundingMode.CEILING).toString();
+		return chargesNow == null ? "" : chargesNow.setScale(2, RoundingMode.HALF_UP).toString();
 	}
 
 	public String jsonChargesNow() {
@@ -3427,17 +3427,17 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 	public DesignEmailPage setPaymentsLateAmount(String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
 		if(NumberUtils.isParsable(o))
-			this.paymentsLateAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.paymentsLateAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.paymentsLateAmountWrap.alreadyInitialized = true;
 		return (DesignEmailPage)this;
 	}
 	public DesignEmailPage setPaymentsLateAmount(Double o) {
-			this.paymentsLateAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.paymentsLateAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.paymentsLateAmountWrap.alreadyInitialized = true;
 		return (DesignEmailPage)this;
 	}
 	public DesignEmailPage setPaymentsLateAmount(Integer o) {
-			this.paymentsLateAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.paymentsLateAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.paymentsLateAmountWrap.alreadyInitialized = true;
 		return (DesignEmailPage)this;
 	}
@@ -3456,7 +3456,7 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 	}
 
 	public String strPaymentsLateAmount() {
-		return paymentsLateAmount == null ? "" : paymentsLateAmount.setScale(2, RoundingMode.CEILING).toString();
+		return paymentsLateAmount == null ? "" : paymentsLateAmount.setScale(2, RoundingMode.HALF_UP).toString();
 	}
 
 	public String jsonPaymentsLateAmount() {

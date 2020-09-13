@@ -2195,17 +2195,17 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 	public SchoolBlock setYearEnrollmentFee(String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
 		if(NumberUtils.isParsable(o))
-			this.yearEnrollmentFee = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.yearEnrollmentFee = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.yearEnrollmentFeeWrap.alreadyInitialized = true;
 		return (SchoolBlock)this;
 	}
 	public SchoolBlock setYearEnrollmentFee(Double o) {
-			this.yearEnrollmentFee = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.yearEnrollmentFee = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.yearEnrollmentFeeWrap.alreadyInitialized = true;
 		return (SchoolBlock)this;
 	}
 	public SchoolBlock setYearEnrollmentFee(Integer o) {
-			this.yearEnrollmentFee = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.yearEnrollmentFee = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.yearEnrollmentFeeWrap.alreadyInitialized = true;
 		return (SchoolBlock)this;
 	}
@@ -2224,7 +2224,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 	}
 
 	public String strYearEnrollmentFee() {
-		return yearEnrollmentFee == null ? "" : yearEnrollmentFee.setScale(2, RoundingMode.CEILING).toString();
+		return yearEnrollmentFee == null ? "" : yearEnrollmentFee.setScale(2, RoundingMode.HALF_UP).toString();
 	}
 
 	public String jsonYearEnrollmentFee() {
@@ -2965,17 +2965,17 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 	public SchoolBlock setBlockPricePerMonth(String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
 		if(NumberUtils.isParsable(o))
-			this.blockPricePerMonth = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.blockPricePerMonth = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.blockPricePerMonthWrap.alreadyInitialized = true;
 		return (SchoolBlock)this;
 	}
 	public SchoolBlock setBlockPricePerMonth(Double o) {
-			this.blockPricePerMonth = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.blockPricePerMonth = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.blockPricePerMonthWrap.alreadyInitialized = true;
 		return (SchoolBlock)this;
 	}
 	public SchoolBlock setBlockPricePerMonth(Integer o) {
-			this.blockPricePerMonth = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.blockPricePerMonth = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.blockPricePerMonthWrap.alreadyInitialized = true;
 		return (SchoolBlock)this;
 	}
@@ -2994,7 +2994,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 	}
 
 	public String strBlockPricePerMonth() {
-		return blockPricePerMonth == null ? "" : blockPricePerMonth.setScale(2, RoundingMode.CEILING).toString();
+		return blockPricePerMonth == null ? "" : blockPricePerMonth.setScale(2, RoundingMode.HALF_UP).toString();
 	}
 
 	public String jsonBlockPricePerMonth() {
@@ -3925,17 +3925,17 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 	public SchoolBlock setBlockTotalPrice(String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
 		if(NumberUtils.isParsable(o))
-			this.blockTotalPrice = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.blockTotalPrice = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.blockTotalPriceWrap.alreadyInitialized = true;
 		return (SchoolBlock)this;
 	}
 	public SchoolBlock setBlockTotalPrice(Double o) {
-			this.blockTotalPrice = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.blockTotalPrice = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.blockTotalPriceWrap.alreadyInitialized = true;
 		return (SchoolBlock)this;
 	}
 	public SchoolBlock setBlockTotalPrice(Integer o) {
-			this.blockTotalPrice = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.blockTotalPrice = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.blockTotalPriceWrap.alreadyInitialized = true;
 		return (SchoolBlock)this;
 	}
@@ -3954,7 +3954,7 @@ public abstract class SchoolBlockGen<DEV> extends Cluster {
 	}
 
 	public String strBlockTotalPrice() {
-		return blockTotalPrice == null ? "" : blockTotalPrice.setScale(2, RoundingMode.CEILING).toString();
+		return blockTotalPrice == null ? "" : blockTotalPrice.setScale(2, RoundingMode.HALF_UP).toString();
 	}
 
 	public String jsonBlockTotalPrice() {

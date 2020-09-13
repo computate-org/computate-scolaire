@@ -1862,6 +1862,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	
 				String htmlVar = htmlPart.getHtmlVar();
 				String htmlVarSpan = htmlPart.getHtmlVarSpan();
+				String htmlVarHtml = htmlPart.getHtmlVarHtml();
 				String htmlVarInput = htmlPart.getHtmlVarInput();
 				String htmlVarForm = htmlPart.getHtmlVarForm();
 				String htmlVarForEach = htmlPart.getHtmlVarForEach();
@@ -1925,7 +1926,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 								String s = (String)MethodUtils.invokeExactMethod(parent, "str" + StringUtils.capitalize(var));
 								if(htmlVarSpan != null) {
 									Long pk = (Long)MethodUtils.invokeExactMethod(parent, "getPk");
-									e("span").a("class", "var", parent.getClass().getSimpleName(), pk, StringUtils.capitalize(var), " ").f().s(s).g("span");
+									e("span").a("class", "var", parent.getClass().getSimpleName(), pk, StringUtils.capitalize(var), " ").f().sx(s).g("span");
 								}
 								else {
 									sx(s);
@@ -1933,6 +1934,27 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 							} catch (Exception e) {
 								sx(obtenirPourClasse(htmlVar));
 							}
+						}
+					}
+					if(htmlVarHtml != null) {
+						Object parent = StringUtils.contains(htmlVarHtml, ".") ? obtenirPourClasse(StringUtils.substringBeforeLast(htmlVarHtml, ".")) : null;
+						if(parent == null)
+							parent = this;
+						String var = StringUtils.substringAfterLast(htmlVarHtml, ".");
+						if(StringUtils.isBlank(var))
+							var = htmlVarHtml;
+	
+						try {
+							String s = (String)MethodUtils.invokeExactMethod(parent, "str" + StringUtils.capitalize(var));
+							if(htmlVarSpan != null) {
+								Long pk = (Long)MethodUtils.invokeExactMethod(parent, "getPk");
+								e("span").a("class", "var", parent.getClass().getSimpleName(), pk, StringUtils.capitalize(var), " ").f().s(s).g("span");
+							}
+							else {
+								s(s);
+							}
+						} catch (Exception e) {
+							s(obtenirPourClasse(htmlVarHtml));
 						}
 					}
 					if(htmlVarForm != null) {

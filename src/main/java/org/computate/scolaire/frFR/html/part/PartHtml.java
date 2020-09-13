@@ -323,14 +323,28 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
+	 * Var.enUS: htmlVarHtml
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.enUS: var html
+	 * NomAffichage.frFR: var html
+	 * Definir: true
+	 * HtmlLigne: 10
+	 * HtmlCelulle: 2
+	 */            
+	protected void _htmlVarHtml(Couverture<String> c) {
+	}
+
+	/**
+	 * {@inheritDoc}
 	 * Var.enUS: htmlExclude
 	 * Indexe: true
 	 * Stocke: true
 	 * NomAffichage.enUS: HTML exclude
 	 * NomAffichage.frFR: HTML exclure
 	 * Definir: true
-	 * HtmlLigne: 10
-	 * HtmlCelulle: 2
+	 * HtmlLigne: 11
+	 * HtmlCelulle: 1
 	 */         
 	protected void _htmlExclure(Couverture<Boolean> c) {
 		c.o(false);
@@ -344,8 +358,8 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * NomAffichage.enUS: PDF exclude
 	 * NomAffichage.frFR: PDF exclure
 	 * Definir: true
-	 * HtmlLigne: 10
-	 * HtmlCelulle: 3
+	 * HtmlLigne: 11
+	 * HtmlCelulle: 2
 	 */            
 	protected void _pdfExclure(Couverture<Boolean> c) {
 		c.o(false);
@@ -359,8 +373,8 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * NomAffichage.enUS: login/logout
 	 * NomAffichage.frFR: se connecter / se deconnecter
 	 * Definir: true
-	 * HtmlLigne: 10
-	 * HtmlCelulle: 4
+	 * HtmlLigne: 11
+	 * HtmlCelulle: 3
 	 */            
 	protected void _connecterDeconnecter(Couverture<Boolean> c) {
 		c.o(false);
@@ -374,7 +388,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * NomAffichage.enUS: sort1
 	 * NomAffichage.frFR: tri1
 	 * Definir: true
-	 * HtmlLigne: 11
+	 * HtmlLigne: 12
 	 * HtmlCelulle: 1
 	 */               
 	protected void _tri1(Couverture<Double> c) {
@@ -388,7 +402,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * NomAffichage.enUS: sort2
 	 * NomAffichage.frFR: tri2
 	 * Definir: true
-	 * HtmlLigne: 11
+	 * HtmlLigne: 12
 	 * HtmlCelulle: 2
 	 */               
 	protected void _tri2(Couverture<Double> c) {
@@ -402,7 +416,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * NomAffichage.enUS: sort3
 	 * NomAffichage.frFR: tri3
 	 * Definir: true
-	 * HtmlLigne: 11
+	 * HtmlLigne: 12
 	 * HtmlCelulle: 3
 	 */               
 	protected void _tri3(Couverture<Double> c) {
@@ -416,7 +430,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * NomAffichage.enUS: sort4
 	 * NomAffichage.frFR: tri4
 	 * Definir: true
-	 * HtmlLigne: 11
+	 * HtmlLigne: 12
 	 * HtmlCelulle: 4
 	 */               
 	protected void _tri4(Couverture<Double> c) {
@@ -430,7 +444,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * NomAffichage.enUS: sort5
 	 * NomAffichage.frFR: tri5
 	 * Definir: true
-	 * HtmlLigne: 11
+	 * HtmlLigne: 12
 	 * HtmlCelulle: 5
 	 */               
 	protected void _tri5(Couverture<Double> c) {
@@ -444,7 +458,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * NomAffichage.enUS: sort6
 	 * NomAffichage.frFR: tri6
 	 * Definir: true
-	 * HtmlLigne: 12
+	 * HtmlLigne: 13
 	 * HtmlCelulle: 6
 	 */              
 	protected void _tri6(Couverture<Double> c) {
@@ -458,7 +472,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * NomAffichage.enUS: sort7
 	 * NomAffichage.frFR: tri7
 	 * Definir: true
-	 * HtmlLigne: 12
+	 * HtmlLigne: 13
 	 * HtmlCelulle: 7
 	 */               
 	protected void _tri7(Couverture<Double> c) {
@@ -472,7 +486,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * NomAffichage.enUS: sort8
 	 * NomAffichage.frFR: tri8
 	 * Definir: true
-	 * HtmlLigne: 12
+	 * HtmlLigne: 13
 	 * HtmlCelulle: 8
 	 */               
 	protected void _tri8(Couverture<Double> c) {
@@ -486,7 +500,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * NomAffichage.enUS: sort9
 	 * NomAffichage.frFR: tri9
 	 * Definir: true
-	 * HtmlLigne: 12
+	 * HtmlLigne: 13
 	 * HtmlCelulle: 9
 	 */               
 	protected void _tri9(Couverture<Double> c) {
@@ -500,7 +514,7 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 	 * NomAffichage.enUS: sort10
 	 * NomAffichage.frFR: tri10
 	 * Definir: true
-	 * HtmlLigne: 12
+	 * HtmlLigne: 13
 	 * HtmlCelulle: 10
 	 */              
 	protected void _tri10(Couverture<Double> c) {

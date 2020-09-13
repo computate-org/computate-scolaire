@@ -2434,7 +2434,7 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 				.put("userFullName", siteRequest.getUserFullName())
 				.put("requestUri", siteRequest.getRequestUri())
 				.put("requestMethod", siteRequest.getRequestMethod())
-				.put("params", siteRequest.getOperationRequest().getParams())
+				.put("params", Optional.ofNullable(siteRequest.getOperationRequest()).map(o -> o.getParams()).orElse(null))
 				);
 		ExceptionUtils.printRootCauseStackTrace(e);
 		OperationResponse responseOperation = new OperationResponse(400, "BAD REQUEST", 

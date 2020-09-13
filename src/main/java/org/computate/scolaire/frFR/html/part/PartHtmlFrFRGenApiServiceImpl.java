@@ -531,6 +531,19 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 							});
 						}));
 						break;
+					case "htmlVarHtml":
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "htmlVarHtml", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur PartHtml.htmlVarHtml a échoué", b.cause())));
+							});
+						}));
+						break;
 					case "htmlExclure":
 						futures.add(Future.future(a -> {
 							tx.preparedQuery(SiteContexteFrFR.SQL_setD
@@ -1567,6 +1580,19 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 									a.handle(Future.succeededFuture());
 								else
 									a.handle(Future.failedFuture(new Exception("valeur PartHtml.htmlVarForEach a échoué", b.cause())));
+							});
+						}));
+						break;
+					case "htmlVarHtml":
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "htmlVarHtml", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur PartHtml.htmlVarHtml a échoué", b.cause())));
 							});
 						}));
 						break;
@@ -2649,6 +2675,34 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 							}));
 						}
 						break;
+					case "setHtmlVarHtml":
+						if(jsonObject.getString(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "htmlVarHtml")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur PartHtml.htmlVarHtml a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setHtmlVarHtml(jsonObject.getString(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "htmlVarHtml", o2.jsonHtmlVarHtml())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur PartHtml.htmlVarHtml a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
 					case "setHtmlExclure":
 						if(jsonObject.getBoolean(methodeNom) == null) {
 							futures.add(Future.future(a -> {
@@ -3483,7 +3537,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 				.put("utilisateurNomComplet", requeteSite.getUtilisateurNomComplet())
 				.put("requeteUri", requeteSite.getRequeteUri())
 				.put("requeteMethode", requeteSite.getRequeteMethode())
-				.put("params", requeteSite.getOperationRequete().getParams())
+				.put("params", Optional.ofNullable(requeteSite.getOperationRequete()).map(o -> o.getParams()).orElse(null))
 				);
 		ExceptionUtils.printRootCauseStackTrace(e);
 		OperationResponse reponseOperation = new OperationResponse(400, "BAD REQUEST", 

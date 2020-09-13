@@ -751,17 +751,17 @@ public abstract class RecuScolaireGen<DEV> extends Cluster {
 	public RecuScolaire setPaiementMontant(String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
 		if(NumberUtils.isParsable(o))
-			this.paiementMontant = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.paiementMontant = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.paiementMontantCouverture.dejaInitialise = true;
 		return (RecuScolaire)this;
 	}
 	public RecuScolaire setPaiementMontant(Double o) {
-			this.paiementMontant = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.paiementMontant = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.paiementMontantCouverture.dejaInitialise = true;
 		return (RecuScolaire)this;
 	}
 	public RecuScolaire setPaiementMontant(Integer o) {
-			this.paiementMontant = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING);
+			this.paiementMontant = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.paiementMontantCouverture.dejaInitialise = true;
 		return (RecuScolaire)this;
 	}
@@ -780,7 +780,7 @@ public abstract class RecuScolaireGen<DEV> extends Cluster {
 	}
 
 	public String strPaiementMontant() {
-		return paiementMontant == null ? "" : paiementMontant.setScale(2, RoundingMode.CEILING).toString();
+		return paiementMontant == null ? "" : paiementMontant.setScale(2, RoundingMode.HALF_UP).toString();
 	}
 
 	public String jsonPaiementMontant() {

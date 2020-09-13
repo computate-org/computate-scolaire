@@ -87,6 +87,9 @@ public class HtmlPart extends HtmlPartGen<Cluster> {
 	protected void _htmlVarForEach(Wrap<String> c) {
 	}
 
+	protected void _htmlVarHtml(Wrap<String> c) {
+	}
+
 	protected void _htmlExclude(Wrap<Boolean> c) {
 		c.o(false);
 	}
