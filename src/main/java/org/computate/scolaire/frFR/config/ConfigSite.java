@@ -188,6 +188,21 @@ public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {
 	}
 
 	/**	
+	 * frFR: Le port du site. 
+	 * enUS: The port of the site. 
+	 * r: prefixeEchappe
+	 * r.enUS: prefixEscaped
+	 * **/
+	protected void _siteInstances(Couverture<Integer> c) {
+		Integer o;
+		if(config == null)
+			o = NumberUtils.toInt(System.getenv(c.var));
+		else
+			o = config.getInt(prefixeEchappe + c.var, 1);
+		c.o(o);
+	}
+
+	/**	
 	 * Var.enUS: authRealm
 	 * frFR: Le royaume Keycloak du site. 
 	 * enUS: The Keycloak realm of the site. 

@@ -141,6 +141,18 @@ public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 	}
 
 	/**
+	 * The port of the site. 
+	 **/
+	protected void _siteInstances(Wrap<Integer> c) {
+		Integer o;
+		if(config == null)
+			o = NumberUtils.toInt(System.getenv(c.var));
+		else
+			o = config.getInt(prefixEscaped + c.var, 1);
+		c.o(o);
+	}
+
+	/**
 	 * The Keycloak realm of the site. 
 	 **/
 	protected void _authRealm(Wrap<String> c) {

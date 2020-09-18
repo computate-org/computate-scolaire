@@ -19,6 +19,7 @@ import java.lang.Boolean;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import java.lang.String;
 import io.vertx.core.logging.Logger;
+import java.math.RoundingMode;
 import org.apache.commons.configuration2.INIConfiguration;
 import java.math.MathContext;
 import org.computate.scolaire.frFR.cluster.Cluster;
@@ -426,6 +427,51 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 				setSitePort(sitePortCouverture.o);
 		}
 		sitePortCouverture.dejaInitialise(true);
+		return (ConfigSite)this;
+	}
+
+	///////////////////
+	// siteInstances //
+	///////////////////
+
+	/**	 L'entité siteInstances
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected Integer siteInstances;
+	@JsonIgnore
+	public Couverture<Integer> siteInstancesCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("siteInstances").o(siteInstances);
+
+	/**	<br/> L'entité siteInstances
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.config.ConfigSite&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:siteInstances">Trouver l'entité siteInstances dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _siteInstances(Couverture<Integer> c);
+
+	public Integer getSiteInstances() {
+		return siteInstances;
+	}
+
+	public void setSiteInstances(Integer siteInstances) {
+		this.siteInstances = siteInstances;
+		this.siteInstancesCouverture.dejaInitialise = true;
+	}
+	public ConfigSite setSiteInstances(String o) {
+		if(NumberUtils.isParsable(o))
+			this.siteInstances = Integer.parseInt(o);
+		this.siteInstancesCouverture.dejaInitialise = true;
+		return (ConfigSite)this;
+	}
+	protected ConfigSite siteInstancesInit() {
+		if(!siteInstancesCouverture.dejaInitialise) {
+			_siteInstances(siteInstancesCouverture);
+			if(siteInstances == null)
+				setSiteInstances(siteInstancesCouverture.o);
+		}
+		siteInstancesCouverture.dejaInitialise(true);
 		return (ConfigSite)this;
 	}
 
@@ -2939,6 +2985,7 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 		nomDomaineInit();
 		siteNomHoteInit();
 		sitePortInit();
+		siteInstancesInit();
 		authRoyaumeInit();
 		authRessourceInit();
 		authSecretInit();
@@ -3048,6 +3095,8 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 				return oConfigSite.siteNomHote;
 			case "sitePort":
 				return oConfigSite.sitePort;
+			case "siteInstances":
+				return oConfigSite.siteInstances;
 			case "authRoyaume":
 				return oConfigSite.authRoyaume;
 			case "authRessource":

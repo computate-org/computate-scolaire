@@ -27,6 +27,7 @@ public class RunnerVertx {
 		Integer clusterPort = System.getenv("clusterPort") == null ? null : Integer.parseInt(System.getenv("clusterPort"));
 		String clusterHost = System.getenv("clusterHost");
 		Integer clusterPublicPort = System.getenv("clusterPublicPort") == null ? null : Integer.parseInt(System.getenv("clusterPublicPort"));
+		Integer siteInstances = System.getenv("siteInstances") == null ? 1 : Integer.parseInt(System.getenv("siteInstances"));
 		String clusterPublicHost = System.getenv("clusterPublicHost");
 		String zookeeperHosts = zookeeperHostName + ":" + zookeeperPort;
 		zkConfig.put("zookeeperHosts", zookeeperHosts);
@@ -74,7 +75,7 @@ public class RunnerVertx {
 		optionsVertx.setEventBusOptions(eventBusOptions);
 		optionsVertx.setClusterManager(gestionnaireCluster);
 		DeploymentOptions deploymentOptions = new DeploymentOptions();
-		deploymentOptions.setInstances(10);
+		deploymentOptions.setInstances(siteInstances);
 
 		run(c, optionsVertx, deploymentOptions);
 	}
