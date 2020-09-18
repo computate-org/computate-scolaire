@@ -1382,108 +1382,109 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 		ConfigSite configSite = siteContexteFrFR.getConfigSite();
 		ZoneId zoneId = ZoneId.of(configSite.getSiteZone());
 		Promise<Void> promise = Promise.promise();
+		if(configSite.getAuthorizeEnvironment() != null) {
 
-//		vertx.setPeriodic(1000 * 60 * 60 * 60, a -> {
-		vertx.setPeriodic(1000 * 60 * 2, a -> {
-			WorkerExecutor executeurTravailleur = siteContexteFrFR.getExecuteurTravailleur();
-			executeurTravailleur.executeBlocking(
-				blockingCodeHandler -> {
-					LOGGER.info("Commencer à peupler les frais nouveaux. ");
-					ZonedDateTime debut = ZonedDateTime.now(zoneId);
-					RequeteSiteFrFR requeteSite = new RequeteSiteFrFR();
-					requeteSite.setVertx(vertx);
-					requeteSite.setSiteContexte_(siteContexteFrFR);
-					requeteSite.setConfigSite_(siteContexteFrFR.getConfigSite());
-					requeteSite.initLoinRequeteSiteFrFR(requeteSite);
-					requeteSite.setObjetJson(new JsonObject());
-		
-					try {
-						PaiementScolaireFrFRApiServiceImpl paiementService = new PaiementScolaireFrFRApiServiceImpl(siteContexteFrFR);
-						InscriptionScolaireFrFRApiServiceImpl inscriptionService = new InscriptionScolaireFrFRApiServiceImpl(siteContexteFrFR);
-
-						ZonedDateTime sessionDateDebut = ZonedDateTime.now(zoneId).plusMonths(1);
-						// Mar 26 is last late fee. 
-						// Mar 1 + 2 month = May 1 < May 20 last day
-						ZonedDateTime sessionDateFin = ZonedDateTime.now(zoneId).plusMonths(2);
-						ZonedDateTime inscriptionDateFrais = ZonedDateTime.now(zoneId).plusMonths(1);
-
-						ListeRecherche<InscriptionScolaire> listeRechercheInscription = new ListeRecherche<InscriptionScolaire>();
-						listeRechercheInscription.setStocker(true);
-						listeRechercheInscription.setQuery("*:*");
-						listeRechercheInscription.setC(InscriptionScolaire.class);
-						listeRechercheInscription.addFilterQuery("supprime_indexed_boolean:false");
-						listeRechercheInscription.addFilterQuery("archive_indexed_boolean:false");
-						listeRechercheInscription.addFilterQuery("sessionDateDebut_indexed_date:[* TO " + dateFormat.format(sessionDateDebut) + "]");
-						listeRechercheInscription.addFilterQuery("sessionDateFin_indexed_date:[" + dateFormat.format(sessionDateFin) + " TO *]");
-//						listeRechercheInscription.addFilterQuery("(*:* AND -inscriptionDateFrais_indexed_date:[* TO *] OR inscriptionDateFrais_indexed_date:[* TO " + dateFormat.format(inscriptionDateFrais) + "])");
-						listeRechercheInscription.setRows(1);
-						listeRechercheInscription.addSort("fraisCrees_indexed_boolean", ORDER.asc);
-						listeRechercheInscription.addSort("modifie_indexed_date", ORDER.asc);
-						listeRechercheInscription.initLoinListeRecherche(requeteSite);
-
-						futureAuthorizeNetFraisInscription(listeRechercheInscription, paiementService, inscriptionService, c -> {
-							if(c.succeeded()) {
-								try {
-									ListeRecherche<PaiementScolaire> listeRecherche = new ListeRecherche<PaiementScolaire>();
-									listeRecherche.setStocker(true);
-									listeRecherche.setQuery("*:*");
-									listeRecherche.setC(PaiementScolaire.class);
-									listeRecherche.addFilterQuery("cree_indexed_date:[" + dateFormat.format(ZonedDateTime.ofInstant(debut.toInstant(), ZoneId.of("UTC"))) + " TO *]");
-									listeRecherche.add("json.facet", "{inscriptionCles:{terms:{field:inscriptionCle_indexed_long, limit:1000}}}");
-									listeRecherche.setRows(100);
-									listeRecherche.initLoinListeRecherche(requeteSite);
-									SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listeRecherche.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(new SimpleOrderedMap());
-									List<Long> inscriptionCles = Optional.ofNullable((SimpleOrderedMap)facets.get("inscriptionCles")).map(m -> ((List<SimpleOrderedMap>)m.get("buckets"))).orElse(Arrays.asList()).stream().collect(Collectors.mapping(m -> (Long)m.get("val"), Collectors.toList()));
+			vertx.setPeriodic(1000 * 60 * 2, a -> {
+				WorkerExecutor executeurTravailleur = siteContexteFrFR.getExecuteurTravailleur();
+				executeurTravailleur.executeBlocking(
+					blockingCodeHandler -> {
+						LOGGER.info("Commencer à peupler les frais nouveaux. ");
+						ZonedDateTime debut = ZonedDateTime.now(zoneId);
+						RequeteSiteFrFR requeteSite = new RequeteSiteFrFR();
+						requeteSite.setVertx(vertx);
+						requeteSite.setSiteContexte_(siteContexteFrFR);
+						requeteSite.setConfigSite_(siteContexteFrFR.getConfigSite());
+						requeteSite.initLoinRequeteSiteFrFR(requeteSite);
+						requeteSite.setObjetJson(new JsonObject());
+			
+						try {
+							PaiementScolaireFrFRApiServiceImpl paiementService = new PaiementScolaireFrFRApiServiceImpl(siteContexteFrFR);
+							InscriptionScolaireFrFRApiServiceImpl inscriptionService = new InscriptionScolaireFrFRApiServiceImpl(siteContexteFrFR);
 	
-									List<Future> futures = new ArrayList<>();
-									LOGGER.info(String.format("Il y a %s inscriptions à recharger. ", inscriptionCles.size()));
-									for(Long inscriptionCle : inscriptionCles) {
-										InscriptionScolaire inscriptionScolaire = new InscriptionScolaire();
-										inscriptionScolaire.setPk(inscriptionCle);
-										inscriptionScolaire.setRequeteSite_(requeteSite);
-										futures.add(
-											inscriptionService.patchInscriptionScolaireFuture(inscriptionScolaire, false, d -> {
-												if(d.succeeded()) {
-													LOGGER.info(String.format("inscription %s rechargé. ", inscriptionCle));
-												} else {
-													LOGGER.error(String.format("inscription %s a échoué. ", inscriptionCle), d.cause());
-													blockingCodeHandler.handle(Future.failedFuture(d.cause()));
-												}
-											})
-										);
-									}
-									CompositeFuture.all(futures).setHandler(d -> {
-										if(d.succeeded()) {
-											LOGGER.info("Recharger les inscriptions a réussi. ");
-											LOGGER.info("Finir à peupler les transactions nouveaux. ");
-											blockingCodeHandler.handle(Future.succeededFuture(d.result()));
-										} else {
-											LOGGER.error("Recharger les inscriptions a échoué. ", d.cause());
-											erreurAppliVertx(requeteSite, d);
+							ZonedDateTime sessionDateDebut = ZonedDateTime.now(zoneId).plusMonths(1);
+							// Mar 26 is last late fee. 
+							// Mar 1 + 2 month = May 1 < May 20 last day
+							ZonedDateTime sessionDateFin = ZonedDateTime.now(zoneId).plusMonths(2);
+							ZonedDateTime inscriptionDateFrais = ZonedDateTime.now(zoneId).plusMonths(1);
+	
+							ListeRecherche<InscriptionScolaire> listeRechercheInscription = new ListeRecherche<InscriptionScolaire>();
+							listeRechercheInscription.setStocker(true);
+							listeRechercheInscription.setQuery("*:*");
+							listeRechercheInscription.setC(InscriptionScolaire.class);
+							listeRechercheInscription.addFilterQuery("supprime_indexed_boolean:false");
+							listeRechercheInscription.addFilterQuery("archive_indexed_boolean:false");
+							listeRechercheInscription.addFilterQuery("sessionDateDebut_indexed_date:[* TO " + dateFormat.format(sessionDateDebut) + "]");
+							listeRechercheInscription.addFilterQuery("sessionDateFin_indexed_date:[" + dateFormat.format(sessionDateFin) + " TO *]");
+	//						listeRechercheInscription.addFilterQuery("(*:* AND -inscriptionDateFrais_indexed_date:[* TO *] OR inscriptionDateFrais_indexed_date:[* TO " + dateFormat.format(inscriptionDateFrais) + "])");
+							listeRechercheInscription.setRows(1);
+							listeRechercheInscription.addSort("fraisCrees_indexed_boolean", ORDER.asc);
+							listeRechercheInscription.addSort("modifie_indexed_date", ORDER.asc);
+							listeRechercheInscription.initLoinListeRecherche(requeteSite);
+	
+							futureAuthorizeNetFraisInscription(listeRechercheInscription, paiementService, inscriptionService, c -> {
+								if(c.succeeded()) {
+									try {
+										ListeRecherche<PaiementScolaire> listeRecherche = new ListeRecherche<PaiementScolaire>();
+										listeRecherche.setStocker(true);
+										listeRecherche.setQuery("*:*");
+										listeRecherche.setC(PaiementScolaire.class);
+										listeRecherche.addFilterQuery("cree_indexed_date:[" + dateFormat.format(ZonedDateTime.ofInstant(debut.toInstant(), ZoneId.of("UTC"))) + " TO *]");
+										listeRecherche.add("json.facet", "{inscriptionCles:{terms:{field:inscriptionCle_indexed_long, limit:1000}}}");
+										listeRecherche.setRows(100);
+										listeRecherche.initLoinListeRecherche(requeteSite);
+										SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listeRecherche.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(new SimpleOrderedMap());
+										List<Long> inscriptionCles = Optional.ofNullable((SimpleOrderedMap)facets.get("inscriptionCles")).map(m -> ((List<SimpleOrderedMap>)m.get("buckets"))).orElse(Arrays.asList()).stream().collect(Collectors.mapping(m -> (Long)m.get("val"), Collectors.toList()));
+		
+										List<Future> futures = new ArrayList<>();
+										LOGGER.info(String.format("Il y a %s inscriptions à recharger. ", inscriptionCles.size()));
+										for(Long inscriptionCle : inscriptionCles) {
+											InscriptionScolaire inscriptionScolaire = new InscriptionScolaire();
+											inscriptionScolaire.setPk(inscriptionCle);
+											inscriptionScolaire.setRequeteSite_(requeteSite);
+											futures.add(
+												inscriptionService.patchInscriptionScolaireFuture(inscriptionScolaire, false, d -> {
+													if(d.succeeded()) {
+														LOGGER.info(String.format("inscription %s rechargé. ", inscriptionCle));
+													} else {
+														LOGGER.error(String.format("inscription %s a échoué. ", inscriptionCle), d.cause());
+														blockingCodeHandler.handle(Future.failedFuture(d.cause()));
+													}
+												})
+											);
 										}
-									});
-								} catch (Exception e) {
-									LOGGER.error(String.format("Authorize.net paiements a échoué. \n%s", ExceptionUtils.getStackTrace(e)), ExceptionUtils.getStackTrace(e));
-									erreurAppliVertx(requeteSite, c);
+										CompositeFuture.all(futures).setHandler(d -> {
+											if(d.succeeded()) {
+												LOGGER.info("Recharger les inscriptions a réussi. ");
+												LOGGER.info("Finir à peupler les transactions nouveaux. ");
+												blockingCodeHandler.handle(Future.succeededFuture(d.result()));
+											} else {
+												LOGGER.error("Recharger les inscriptions a échoué. ", d.cause());
+												erreurAppliVertx(requeteSite, d);
+											}
+										});
+									} catch (Exception e) {
+										LOGGER.error(String.format("Authorize.net paiements a échoué. \n%s", ExceptionUtils.getStackTrace(e)), ExceptionUtils.getStackTrace(e));
+										erreurAppliVertx(requeteSite, c);
+									}
+								} else {
+									LOGGER.error(String.format("inscriptions ont échoués. "), c.cause());
+									blockingCodeHandler.handle(Future.failedFuture(c.cause()));
 								}
-							} else {
-								LOGGER.error(String.format("inscriptions ont échoués. "), c.cause());
-								blockingCodeHandler.handle(Future.failedFuture(c.cause()));
-							}
-						});
-					} catch (Exception e) {
-						LOGGER.error(String.format("Authorize.net paiements a échoué. \n%s", ExceptionUtils.getStackTrace(e)), ExceptionUtils.getStackTrace(e));
-						erreurAppliVertx(requeteSite, null);
+							});
+						} catch (Exception e) {
+							LOGGER.error(String.format("Authorize.net paiements a échoué. \n%s", ExceptionUtils.getStackTrace(e)), ExceptionUtils.getStackTrace(e));
+							erreurAppliVertx(requeteSite, null);
+						}
+					}, resultHandler -> {
+						if(resultHandler.succeeded()) {
+							LOGGER.info("Authorize.net WorkerExecutor.executeBlocking a réussi. ");
+						} else {
+							LOGGER.error("Authorize.net WorkerExecutor.executeBlocking a échoué. ", resultHandler.cause());
+						}
 					}
-				}, resultHandler -> {
-					if(resultHandler.succeeded()) {
-						LOGGER.info("Authorize.net WorkerExecutor.executeBlocking a réussi. ");
-					} else {
-						LOGGER.error("Authorize.net WorkerExecutor.executeBlocking a échoué. ", resultHandler.cause());
-					}
-				}
-			);
-		});
+				);
+			});
+		}
 
 		promise.complete();
 		return promise;
