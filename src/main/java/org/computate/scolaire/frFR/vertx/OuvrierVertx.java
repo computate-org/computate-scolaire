@@ -1363,7 +1363,7 @@ public class OuvrierVertx extends OuvrierVertxGen<AbstractVerticle> {
 	 * r.enUS: siteRequest
 	 */
 	public void erreurAppliVertx(RequeteSiteFrFR requeteSite, AsyncResult<?> a) {
-		Throwable e = a.cause();
+		Throwable e = Optional.ofNullable(a).map(b -> b.cause()).orElse(null);
 		if(e != null)
 			LOGGER.error(ExceptionUtils.getStackTrace(e));
 		if(requeteSite != null) {

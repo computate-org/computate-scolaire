@@ -141,7 +141,7 @@ public class SiteConfig extends SiteConfigGen<Object> implements Serializable {
 	}
 
 	/**
-	 * The port of the site. 
+	 * The number of instances of the Vertx verticle to deploy. 
 	 **/
 	protected void _siteInstances(Wrap<Integer> c) {
 		Integer o;

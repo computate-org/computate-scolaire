@@ -455,7 +455,7 @@ The port of the site.
 	///////////////////
 
 	/**	 The entity siteInstances
-The port of the site. 
+The number of instances of the Vertx verticle to deploy. 
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
@@ -465,7 +465,7 @@ The port of the site.
 	public Wrap<Integer> siteInstancesWrap = new Wrap<Integer>().p(this).c(Integer.class).var("siteInstances").o(siteInstances);
 
 	/**	<br/> The entity siteInstances
-The port of the site. 
+The number of instances of the Vertx verticle to deploy. 
 	 *  is defined as null before being initialized. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.config.SiteConfig&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:siteInstances">Find the entity siteInstances in Solr</a>
 	 * <br/>

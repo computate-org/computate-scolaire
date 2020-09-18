@@ -511,7 +511,7 @@ public class WorkerVertx extends WorkerVertxGen<AbstractVerticle> {
 	}
 
 	public void  errorAppVertx(SiteRequestEnUS siteRequest, AsyncResult<?> a) {
-		Throwable e = a.cause();
+		Throwable e = Optional.ofNullable(a).map(b -> b.cause()).orElse(null);
 		if(e != null)
 			LOGGER.error(ExceptionUtils.getStackTrace(e));
 		if(siteRequest != null) {

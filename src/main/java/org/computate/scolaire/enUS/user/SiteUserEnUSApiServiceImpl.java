@@ -83,8 +83,9 @@ public class SiteUserEnUSApiServiceImpl extends SiteUserEnUSGenApiServiceImpl {
 		SiteConfig siteConfig = siteRequest.getSiteConfig_();
 		String authorizeApiLoginId = (String)siteConfig.obtainSiteConfig("authorizeApiLoginId" + schoolNumber);
 		String authorizeTransactionKey = (String)siteConfig.obtainSiteConfig("authorizeTransactionKey" + schoolNumber);
+		String authorizeEnvironment = siteConfig.getAuthorizeEnvironment();
 
-		if(authorizeApiLoginId != null && authorizeTransactionKey != null) {
+		if(StringUtils.isNotBlank(authorizeEnvironment) && authorizeApiLoginId != null && authorizeTransactionKey != null) {
 			String customerProfileId;
 			if(patch)
 				customerProfileId = jsonObject.getString("setCustomerProfileId" + schoolNumber);
@@ -113,7 +114,7 @@ public class SiteUserEnUSApiServiceImpl extends SiteUserEnUSGenApiServiceImpl {
 				createCustomerProfileRequest.setProfile(profile);
 		
 				CreateCustomerProfileController controller = new CreateCustomerProfileController(createCustomerProfileRequest);
-				GetTransactionListForCustomerController.setEnvironment(Environment.valueOf(siteConfig.getAuthorizeEnvironment()));
+				GetTransactionListForCustomerController.setEnvironment(Environment.valueOf(authorizeEnvironment));
 				controller.execute();
 				if(controller.getErrorResponse() != null)
 					throw new RuntimeException(controller.getResults().toString());

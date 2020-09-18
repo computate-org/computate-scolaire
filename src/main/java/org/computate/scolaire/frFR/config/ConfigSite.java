@@ -188,8 +188,8 @@ public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {
 	}
 
 	/**	
-	 * frFR: Le port du site. 
-	 * enUS: The port of the site. 
+	 * frFR: Instances du verticle Vertx. 
+	 * enUS: The number of instances of the Vertx verticle to deploy. 
 	 * r: prefixeEchappe
 	 * r.enUS: prefixEscaped
 	 * **/

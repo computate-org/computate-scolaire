@@ -14,6 +14,7 @@ import java.time.LocalTime;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Base64;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
@@ -1299,7 +1300,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r.enUS: siteRequest
 	 */
 	public void erreurAppliVertx(RequeteSiteFrFR requeteSite, AsyncResult<?> a) {
-		Throwable e = a.cause();
+		Throwable e = Optional.ofNullable(a).map(b -> b.cause()).orElse(null);
 		if(e != null)
 			LOGGER.error(ExceptionUtils.getStackTrace(e));
 		if(requeteSite != null) {
