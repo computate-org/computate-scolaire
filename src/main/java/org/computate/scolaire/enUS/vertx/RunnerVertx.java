@@ -74,7 +74,7 @@ public class RunnerVertx {
 		optionsVertx.setEventBusOptions(eventBusOptions);
 		optionsVertx.setClusterManager(gestionnaireCluster);
 		DeploymentOptions deploymentOptions = new DeploymentOptions();
-		deploymentOptions.setInstances(10);
+		deploymentOptions.setInstances(3);
 
 		run(c, optionsVertx, deploymentOptions);
 	}
