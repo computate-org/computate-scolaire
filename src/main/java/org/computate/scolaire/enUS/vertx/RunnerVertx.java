@@ -12,8 +12,9 @@ import io.vertx.core.logging.LoggerFactory;
 import io.vertx.core.spi.cluster.ClusterManager;
 import io.vertx.spi.cluster.zookeeper.ZookeeperClusterManager;
 
-/**	
- *	A Java class to run the main Vert.x application as a main method. 
+/**
+ * A Java class to run the main Vert.x application as a main method. 
+ * CanonicalName: org.computate.scolaire.frFR.vertx.CoureurVertx
  **/
 public class RunnerVertx {
 
@@ -72,8 +73,10 @@ public class RunnerVertx {
 		eventBusOptions.setClustered(true);
 		optionsVertx.setEventBusOptions(eventBusOptions);
 		optionsVertx.setClusterManager(gestionnaireCluster);
+		DeploymentOptions deploymentOptions = new DeploymentOptions();
+		deploymentOptions.setInstances(10);
 
-		run(c, optionsVertx, null);
+		run(c, optionsVertx, deploymentOptions);
 	}
 
 	public static void  run(Class<?> c, VertxOptions options, DeploymentOptions deploymentOptions) {

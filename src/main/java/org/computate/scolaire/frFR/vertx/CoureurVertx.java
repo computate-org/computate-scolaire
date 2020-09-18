@@ -82,8 +82,10 @@ public class CoureurVertx {
 		eventBusOptions.setClustered(true);
 		optionsVertx.setEventBusOptions(eventBusOptions);
 		optionsVertx.setClusterManager(gestionnaireCluster);
+		DeploymentOptions deploymentOptions = new DeploymentOptions();
+		deploymentOptions.setInstances(10);
 
-		run(c, optionsVertx, null);
+		run(c, optionsVertx, deploymentOptions);
 	}
 
 	public static void run(Class<?> c, VertxOptions options, DeploymentOptions deploymentOptions) {

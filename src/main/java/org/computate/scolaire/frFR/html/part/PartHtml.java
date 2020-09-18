@@ -551,6 +551,8 @@ public class PartHtml extends PartHtmlGen<Cluster> {
 				b.append("<span>").append(htmlVarSpan).append("</span>");
 			else if(htmlVar != null)
 				b.append("{").append(htmlVar).append("}");
+			else if(htmlVarHtml != null)
+				b.append("{").append(htmlVarHtml).append("}");
 		}
 
 		if(htmlVarInput != null)
