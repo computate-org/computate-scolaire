@@ -1456,14 +1456,16 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 		String siteNomHote = configSite.getSiteNomHote();
 		Integer sitePort = configSite.getSitePort();
 		HttpServerOptions options = new HttpServerOptions();
-		if(configSite.getSslJksChemin() != null && new File(configSite.getSslJksChemin()).exists()) {
+		Boolean ssl = false;
+		if(StringUtils.isNotBlank(configSite.getSslJksChemin()) && new File(configSite.getSslJksChemin()).exists()) {
 			options.setKeyStoreOptions(new JksOptions().setPath(configSite.getSslJksChemin()).setPassword(configSite.getSslJksMotDePasse()));
-			options.setSsl(true);
+			ssl = true;
+			options.setSsl(ssl);
 			LOGGER.info(String.format(demarrerServeurSsl, configSite.getSslJksChemin()));
 		}
 		options.setPort(sitePort);
 
-		LOGGER.info(String.format(demarrerServeurAvantServeur, "https", siteNomHote, sitePort));
+		LOGGER.info(String.format(demarrerServeurAvantServeur, (ssl ? "https" : "http"), siteNomHote, sitePort));
 		vertx.createHttpServer(options).requestHandler(siteRouteur).listen(ar -> {
 			if (ar.succeeded()) {
 				LOGGER.info(String.format(demarrerServeurSuccesServeur, "*", sitePort));
