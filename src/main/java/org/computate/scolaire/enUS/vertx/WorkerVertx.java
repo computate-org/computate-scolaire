@@ -10,6 +10,7 @@ import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.solr.client.solrj.SolrQuery.ORDER;
 import org.apache.solr.client.solrj.response.QueryResponse;
@@ -308,7 +309,7 @@ public class WorkerVertx extends WorkerVertxGen<AbstractVerticle> {
 		SiteConfig siteConfig = siteContextEnUS.getSiteConfig();
 		ZoneId zoneId = ZoneId.of(siteConfig.getSiteZone());
 		Promise<Void> promise = Promise.promise();
-		if(siteConfig.getAuthorizeEnvironment() != null) {
+		if(StringUtils.isNotBlank(siteConfig.getAuthorizeEnvironment())) {
 
 			vertx.setPeriodic(1000 * 5, a -> {
 				WorkerExecutor executeurTravailleur = siteContextEnUS.getWorkerExecutor();

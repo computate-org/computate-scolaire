@@ -11,6 +11,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.solr.client.solrj.SolrQuery.ORDER;
 import org.apache.solr.client.solrj.response.QueryResponse;
@@ -674,7 +675,7 @@ public class OuvrierVertx extends OuvrierVertxGen<AbstractVerticle> {
 		ConfigSite configSite = siteContexteFrFR.getConfigSite();
 		ZoneId zoneId = ZoneId.of(configSite.getSiteZone());
 		Promise<Void> promise = Promise.promise();
-		if(configSite.getAuthorizeEnvironment() != null) {
+		if(StringUtils.isNotBlank(configSite.getAuthorizeEnvironment())) {
 
 			vertx.setPeriodic(1000 * 5, a -> {
 				WorkerExecutor executeurTravailleur = siteContexteFrFR.getExecuteurTravailleur();
