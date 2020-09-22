@@ -5,6 +5,7 @@ import java.math.MathContext;
 import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -456,9 +457,11 @@ public class SchoolEnrollmentEnUSApiServiceImpl extends SchoolEnrollmentEnUSGenA
 			LocalDate sessionEndDate = schoolEnrollment.getSessionEndDate();
 			LocalDate chargeStartDate = sessionStartDate == null ? null : (sessionStartDate.getDayOfMonth() < paymentDay ? sessionStartDate.withDayOfMonth(paymentDay).minusMonths(1) : sessionStartDate.withDayOfMonth(paymentDay));
 			LocalDate chargeEndDate = sessionEndDate == null ? null : (sessionEndDate.getDayOfMonth() < paymentDay ? sessionEndDate.withDayOfMonth(paymentDay).minusMonths(1) : sessionEndDate.withDayOfMonth(paymentDay).minusMonths(1));
+			LocalDate paymentNext = now.getDayOfMonth() < paymentDay ? now.withDayOfMonth(paymentDay) : now.plusMonths(1).withDayOfMonth(paymentDay);
 			BigDecimal blockPricePerMonth = schoolEnrollment.getBlockPricePerMonth();
 			BigDecimal yearEnrollmentFee = schoolEnrollment.getYearEnrollmentFee();
 			Long enrollmentKey = schoolEnrollment.getPk();
+			LocalDate enrollmentCreated = schoolEnrollment.getCreated().toLocalDate();
 			Long numMonths = chargeStartDate == null ? null : ChronoUnit.MONTHS.between(chargeStartDate, chargeEndDate);
 			List<Future> futures = new ArrayList<>();
 
@@ -596,7 +599,8 @@ public class SchoolEnrollmentEnUSApiServiceImpl extends SchoolEnrollmentEnUSGenA
 				SchoolPayment o = new SchoolPayment();
 				o.setSiteRequest_(siteRequest);
 				o.setChargeAmount(yearEnrollmentFee);
-				o.setPaymentDate(sessionStartDate);
+				LocalDate paymentDate = enrollmentCreated.compareTo(sessionStartDate) > 0 ? paymentNext : sessionStartDate;
+				o.setPaymentDate(paymentDate);
 				o.setCustomerProfileId(schoolEnrollment.getCustomerProfileId());
 				o.setChargeEnrollment(true);
 				o.setEnrollmentKey(schoolEnrollment.getPk());
@@ -626,7 +630,8 @@ public class SchoolEnrollmentEnUSApiServiceImpl extends SchoolEnrollmentEnUSGenA
 				SchoolPayment o = new SchoolPayment();
 				o.setSiteRequest_(siteRequest);
 				o.setChargeAmount(blockPricePerMonth.multiply(BigDecimal.valueOf(2)));
-				o.setPaymentDate(sessionStartDate);
+				LocalDate paymentDate = enrollmentCreated.compareTo(sessionStartDate) > 0 ? paymentNext : sessionStartDate;
+				o.setPaymentDate(paymentDate);
 				o.setCustomerProfileId(schoolEnrollment.getCustomerProfileId());
 				o.setChargeFirstLast(true);
 				o.setEnrollmentKey(schoolEnrollment.getPk());
@@ -658,7 +663,9 @@ public class SchoolEnrollmentEnUSApiServiceImpl extends SchoolEnrollmentEnUSGenA
 					if(!paymentsDue.contains(paymentDate)) {
 						SchoolPayment o = new SchoolPayment();
 						o.setSiteRequest_(siteRequest);
-						o.setChargeAmount(schoolEnrollment.getBlockPricePerMonth());
+						chargeAmount = enrollmentCreated.compareTo(paymentDate) > 0 ? BigDecimal.ZERO 
+								: schoolEnrollment.getBlockPricePerMonth();
+						o.setChargeAmount(chargeAmount);
 						o.setPaymentDate(paymentDate);
 						o.setCustomerProfileId(schoolEnrollment.getCustomerProfileId());
 						o.setChargeMonth(true);

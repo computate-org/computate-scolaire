@@ -677,7 +677,7 @@ public class OuvrierVertx extends OuvrierVertxGen<AbstractVerticle> {
 		Promise<Void> promise = Promise.promise();
 		if(StringUtils.isNotBlank(configSite.getAuthorizeEnvironment())) {
 
-			vertx.setPeriodic(1000 * 5, a -> {
+			vertx.setPeriodic(1000 * 10, a -> {
 				WorkerExecutor executeurTravailleur = siteContexteFrFR.getExecuteurTravailleur();
 				executeurTravailleur.executeBlocking(
 					blockingCodeHandler -> {
