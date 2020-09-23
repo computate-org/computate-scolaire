@@ -22,6 +22,7 @@ import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.apache.commons.lang3.BooleanUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.solr.client.solrj.SolrQuery.ORDER;
 import org.apache.solr.client.solrj.response.QueryResponse;
@@ -128,7 +129,7 @@ public class SchoolEnrollmentEnUSApiServiceImpl extends SchoolEnrollmentEnUSGenA
 		String authorizeApiLoginId = (String)siteConfig.obtainSiteConfig("authorizeApiLoginId" + schoolNumber);
 		String authorizeTransactionKey = (String)siteConfig.obtainSiteConfig("authorizeTransactionKey" + schoolNumber);
 
-		if(authorizeApiLoginId != null && authorizeTransactionKey != null) {
+		if(StringUtils.isNotBlank(authorizeApiLoginId) && StringUtils.isNotBlank(authorizeTransactionKey)) {
 			String customerProfileId;
 			if(patch)
 				customerProfileId = jsonObject.getString("setCustomerProfileId" + schoolNumber);
