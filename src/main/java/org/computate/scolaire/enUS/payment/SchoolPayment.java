@@ -310,7 +310,7 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 	}
 
 	protected void _paymentNext(Wrap<LocalDate> c) {
-		c.o(now.getDayOfMonth() < paymentDay ? now.withDayOfMonth(paymentDay) : now.plusMonths(1).withDayOfMonth(paymentDay));
+		c.o(now.getDayOfMonth() <= paymentDay ? now.withDayOfMonth(paymentDay) : now.plusMonths(1).withDayOfMonth(paymentDay));
 	}
 
 	protected void _chargeAmountDue(Wrap<BigDecimal> c) {

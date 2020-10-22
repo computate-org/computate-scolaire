@@ -2149,7 +2149,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 				DateTimeFormatter fd = DateTimeFormatter.ofPattern("MMM yyyy", Locale.US);
 				LocalDate now = LocalDate.now();
 				Integer paiementJour = configSite.getPaiementJour();
-				LocalDate chargeEndDate = LocalDate.now().getDayOfMonth() < paiementJour ? now.withDayOfMonth(paiementJour) : now.plusMonths(1).withDayOfMonth(paiementJour);
+				LocalDate chargeEndDate = LocalDate.now().getDayOfMonth() <= paiementJour ? now.withDayOfMonth(paiementJour) : now.plusMonths(1).withDayOfMonth(paiementJour);
 				CustomerProfilePaymentType profile = new CustomerProfilePaymentType();
 				profile.setCustomerProfileId(customerProfileId);
 				transactionRequest.setProfile(profile);
