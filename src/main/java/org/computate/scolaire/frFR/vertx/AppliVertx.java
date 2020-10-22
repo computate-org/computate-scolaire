@@ -1367,6 +1367,10 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r.enUS: startServerBeforeServer
 	 * r: demarrerServeurSsl
 	 * r.enUS: startServerSsl
+	 * r: getSiteUrlBase
+	 * r.enUS: getSiteBaseUrl
+	 * r: siteUrlBase
+	 * r.enUS: siteBaseUrl
 	 * r: getSiteNomHote
 	 * r.enUS: getSiteHostName
 	 * r: getSslJksChemin
@@ -1454,10 +1458,11 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 		Json.mapper.registerModule(module);
 
 		String siteNomHote = configSite.getSiteNomHote();
+		String siteUrlBase = configSite.getSiteUrlBase();
 		Integer sitePort = configSite.getSitePort();
 		HttpServerOptions options = new HttpServerOptions();
 		Boolean ssl = false;
-		if(StringUtils.isNotBlank(configSite.getSslJksChemin()) && new File(configSite.getSslJksChemin()).exists()) {
+		if(StringUtils.isNotBlank(configSite.getSslJksChemin()) && StringUtils.startsWith(siteUrlBase, "https://") && new File(configSite.getSslJksChemin()).exists()) {
 			options.setKeyStoreOptions(new JksOptions().setPath(configSite.getSslJksChemin()).setPassword(configSite.getSslJksMotDePasse()));
 			ssl = true;
 			options.setSsl(ssl);

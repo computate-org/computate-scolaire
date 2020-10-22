@@ -1189,7 +1189,7 @@ public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {
 //	 **/
 //	protected void _paiementProchain(Couverture<LocalDate> c) {
 //		LocalDate now = LocalDate.now();
-//		LocalDate o = LocalDate.now().getDayOfMonth() < paiementJour ? now.withDayOfMonth(paiementJour) : now.plusMonths(1).withDayOfMonth(paiementJour);
+//		LocalDate o = LocalDate.now().getDayOfMonth() <= paiementJour ? now.withDayOfMonth(paiementJour) : now.plusMonths(1).withDayOfMonth(paiementJour);
 //		c.o(o);
 //	}
 

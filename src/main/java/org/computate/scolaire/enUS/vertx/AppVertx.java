@@ -954,10 +954,11 @@ public class AppVertx extends AppVertxGen<AbstractVerticle> {
 		Json.mapper.registerModule(module);
 
 		String siteHostName = siteConfig.getSiteHostName();
+		String siteBaseUrl = siteConfig.getSiteBaseUrl();
 		Integer sitePort = siteConfig.getSitePort();
 		HttpServerOptions options = new HttpServerOptions();
 		Boolean ssl = false;
-		if(StringUtils.isNotBlank(siteConfig.getSslJksPath()) && new File(siteConfig.getSslJksPath()).exists()) {
+		if(StringUtils.isNotBlank(siteConfig.getSslJksPath()) && StringUtils.startsWith(siteBaseUrl, "https://") && new File(siteConfig.getSslJksPath()).exists()) {
 			options.setKeyStoreOptions(new JksOptions().setPath(siteConfig.getSslJksPath()).setPassword(siteConfig.getSslJksPassword()));
 			ssl = true;
 			options.setSsl(ssl);

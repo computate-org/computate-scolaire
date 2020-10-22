@@ -191,8 +191,8 @@ public class InscriptionScolaireFrFRApiServiceImpl extends InscriptionScolaireFr
 			List<LocalDate> paiementsDue = Optional.ofNullable((SimpleOrderedMap)facets.get("paiementDate")).map(m -> ((List<SimpleOrderedMap>)m.get("buckets"))).orElse(Arrays.asList()).stream().collect(Collectors.mapping(m -> ((Date)m.get("val")).toInstant().atZone(ZoneId.of(configSite.getSiteZone())).toLocalDate(), Collectors.toList()));
 			LocalDate sessionDateDebut = inscriptionScolaire.getSessionDateDebut();
 			LocalDate sessionDateFin = inscriptionScolaire.getSessionDateFin();
-			LocalDate fraisDateDebut = sessionDateDebut == null ? null : (sessionDateDebut.getDayOfMonth() < paiementJour ? sessionDateDebut.withDayOfMonth(paiementJour).minusMonths(1) : sessionDateDebut.withDayOfMonth(paiementJour));
-			LocalDate fraisDateFin = sessionDateFin == null ? null : (sessionDateFin.getDayOfMonth() < paiementJour ? sessionDateFin.withDayOfMonth(paiementJour).minusMonths(1) : sessionDateFin.withDayOfMonth(paiementJour));
+			LocalDate fraisDateDebut = sessionDateDebut == null ? null : (sessionDateDebut.getDayOfMonth() <= paiementJour ? sessionDateDebut.withDayOfMonth(paiementJour).minusMonths(1) : sessionDateDebut.withDayOfMonth(paiementJour));
+			LocalDate fraisDateFin = sessionDateFin == null ? null : (sessionDateFin.getDayOfMonth() <= paiementJour ? sessionDateFin.withDayOfMonth(paiementJour).minusMonths(1) : sessionDateFin.withDayOfMonth(paiementJour));
 			BigDecimal blocPrixParMois = inscriptionScolaire.getBlocPrixParMois();
 			BigDecimal anneeFraisInscription = inscriptionScolaire.getAnneeFraisInscription();
 			Long inscriptionCle = inscriptionScolaire.getPk();

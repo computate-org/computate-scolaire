@@ -1180,7 +1180,7 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * r.enUS: siteConfig
 	 */                   
 	protected void _paiementProchain(Couverture<LocalDate> c) {
-		c.o(now.getDayOfMonth() < paiementJour ? now.withDayOfMonth(paiementJour) : now.plusMonths(1).withDayOfMonth(paiementJour));
+		c.o(now.getDayOfMonth() <= paiementJour ? now.withDayOfMonth(paiementJour) : now.plusMonths(1).withDayOfMonth(paiementJour));
 	}
 
 	/**
