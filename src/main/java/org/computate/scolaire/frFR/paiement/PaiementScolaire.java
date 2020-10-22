@@ -1230,8 +1230,7 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 						fraisInscription && paiementDate.compareTo(now.plusDays(15)) <= 0 && paiementDate.withDayOfMonth(paiementJour).compareTo(now) >= 0
 						|| fraisPremierDernier && paiementDate.compareTo(now.plusDays(15)) <= 0 && paiementDate.withDayOfMonth(paiementJour).compareTo(now) >= 0
 						|| paiementDate != null && paiementDate.compareTo(now.plusDays(15)) <= 0 && paiementDate.compareTo(now) >= 0
-						|| fraisRetard
-				) && (fraisRetard || fraisInscription || fraisPremierDernier || paiementDate.compareTo(paiementProchain.minusMonths(1)) > 0) && paiementDate.compareTo(paiementProchain) <= 0)
+				) && (fraisInscription || fraisPremierDernier || paiementDate.compareTo(paiementProchain.minusMonths(1)) > 0) && paiementDate.compareTo(paiementProchain) <= 0)
 			c.o(fraisMontant);
 	}
 
