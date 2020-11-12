@@ -110,10 +110,9 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 		this.pereCle = pereCle;
 		this.pereCleCouverture.dejaInitialise = true;
 	}
-	public PereScolaire setPereCle(String o) {
+	public void setPereCle(String o) {
 		this.pereCle = PereScolaire.staticSetPereCle(requeteSite_, o);
 		this.pereCleCouverture.dejaInitialise = true;
-		return (PereScolaire)this;
 	}
 	public static Long staticSetPereCle(RequeteSiteFrFR requeteSite_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -209,13 +208,12 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 			this.inscriptionCles.add(o);
 		return (PereScolaire)this;
 	}
-	public PereScolaire setInscriptionCles(JsonArray objets) {
+	public void setInscriptionCles(JsonArray objets) {
 		inscriptionCles.clear();
 		for(int i = 0; i < objets.size(); i++) {
 			Long o = objets.getLong(i);
 			addInscriptionCles(o);
 		}
-		return (PereScolaire)this;
 	}
 	public PereScolaire addInscriptionCles(String o) {
 		if(NumberUtils.isParsable(o)) {
@@ -371,10 +369,9 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 		this.familleTri = familleTri;
 		this.familleTriCouverture.dejaInitialise = true;
 	}
-	public PereScolaire setFamilleTri(String o) {
+	public void setFamilleTri(String o) {
 		this.familleTri = PereScolaire.staticSetFamilleTri(requeteSite_, o);
 		this.familleTriCouverture.dejaInitialise = true;
-		return (PereScolaire)this;
 	}
 	public static Integer staticSetFamilleTri(RequeteSiteFrFR requeteSite_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -456,10 +453,9 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 		this.pereTri = pereTri;
 		this.pereTriCouverture.dejaInitialise = true;
 	}
-	public PereScolaire setPereTri(String o) {
+	public void setPereTri(String o) {
 		this.pereTri = PereScolaire.staticSetPereTri(requeteSite_, o);
 		this.pereTriCouverture.dejaInitialise = true;
-		return (PereScolaire)this;
 	}
 	public static Integer staticSetPereTri(RequeteSiteFrFR requeteSite_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -647,13 +643,12 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 			this.utilisateurCles.add(o);
 		return (PereScolaire)this;
 	}
-	public PereScolaire setUtilisateurCles(JsonArray objets) {
+	public void setUtilisateurCles(JsonArray objets) {
 		utilisateurCles.clear();
 		for(int i = 0; i < objets.size(); i++) {
 			Long o = objets.getLong(i);
 			addUtilisateurCles(o);
 		}
-		return (PereScolaire)this;
 	}
 	public PereScolaire addUtilisateurCles(String o) {
 		if(NumberUtils.isParsable(o)) {
@@ -749,13 +744,12 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 			this.ecoleCles.add(o);
 		return (PereScolaire)this;
 	}
-	public PereScolaire setEcoleCles(JsonArray objets) {
+	public void setEcoleCles(JsonArray objets) {
 		ecoleCles.clear();
 		for(int i = 0; i < objets.size(); i++) {
 			Long o = objets.getLong(i);
 			addEcoleCles(o);
 		}
-		return (PereScolaire)this;
 	}
 	public PereScolaire addEcoleCles(String o) {
 		if(NumberUtils.isParsable(o)) {
@@ -851,13 +845,12 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 			this.anneeCles.add(o);
 		return (PereScolaire)this;
 	}
-	public PereScolaire setAnneeCles(JsonArray objets) {
+	public void setAnneeCles(JsonArray objets) {
 		anneeCles.clear();
 		for(int i = 0; i < objets.size(); i++) {
 			Long o = objets.getLong(i);
 			addAnneeCles(o);
 		}
-		return (PereScolaire)this;
 	}
 	public PereScolaire addAnneeCles(String o) {
 		if(NumberUtils.isParsable(o)) {
@@ -953,13 +946,12 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 			this.saisonCles.add(o);
 		return (PereScolaire)this;
 	}
-	public PereScolaire setSaisonCles(JsonArray objets) {
+	public void setSaisonCles(JsonArray objets) {
 		saisonCles.clear();
 		for(int i = 0; i < objets.size(); i++) {
 			Long o = objets.getLong(i);
 			addSaisonCles(o);
 		}
-		return (PereScolaire)this;
 	}
 	public PereScolaire addSaisonCles(String o) {
 		if(NumberUtils.isParsable(o)) {
@@ -1055,13 +1047,12 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 			this.sessionCles.add(o);
 		return (PereScolaire)this;
 	}
-	public PereScolaire setSessionCles(JsonArray objets) {
+	public void setSessionCles(JsonArray objets) {
 		sessionCles.clear();
 		for(int i = 0; i < objets.size(); i++) {
 			Long o = objets.getLong(i);
 			addSessionCles(o);
 		}
-		return (PereScolaire)this;
 	}
 	public PereScolaire addSessionCles(String o) {
 		if(NumberUtils.isParsable(o)) {
@@ -1157,13 +1148,12 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 			this.ageCles.add(o);
 		return (PereScolaire)this;
 	}
-	public PereScolaire setAgeCles(JsonArray objets) {
+	public void setAgeCles(JsonArray objets) {
 		ageCles.clear();
 		for(int i = 0; i < objets.size(); i++) {
 			Long o = objets.getLong(i);
 			addAgeCles(o);
 		}
-		return (PereScolaire)this;
 	}
 	public PereScolaire addAgeCles(String o) {
 		if(NumberUtils.isParsable(o)) {
@@ -1239,10 +1229,9 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 	public String getPersonnePrenom() {
 		return personnePrenom;
 	}
-	public PereScolaire setPersonnePrenom(String o) {
+	public void setPersonnePrenom(String o) {
 		this.personnePrenom = PereScolaire.staticSetPersonnePrenom(requeteSite_, o);
 		this.personnePrenomCouverture.dejaInitialise = true;
-		return (PereScolaire)this;
 	}
 	public static String staticSetPersonnePrenom(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -1386,10 +1375,9 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 	public String getPersonnePrenomPrefere() {
 		return personnePrenomPrefere;
 	}
-	public PereScolaire setPersonnePrenomPrefere(String o) {
+	public void setPersonnePrenomPrefere(String o) {
 		this.personnePrenomPrefere = PereScolaire.staticSetPersonnePrenomPrefere(requeteSite_, o);
 		this.personnePrenomPrefereCouverture.dejaInitialise = true;
-		return (PereScolaire)this;
 	}
 	public static String staticSetPersonnePrenomPrefere(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -1533,10 +1521,9 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 	public String getFamilleNom() {
 		return familleNom;
 	}
-	public PereScolaire setFamilleNom(String o) {
+	public void setFamilleNom(String o) {
 		this.familleNom = PereScolaire.staticSetFamilleNom(requeteSite_, o);
 		this.familleNomCouverture.dejaInitialise = true;
-		return (PereScolaire)this;
 	}
 	public static String staticSetFamilleNom(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -1680,10 +1667,9 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 	public String getPersonneNomComplet() {
 		return personneNomComplet;
 	}
-	public PereScolaire setPersonneNomComplet(String o) {
+	public void setPersonneNomComplet(String o) {
 		this.personneNomComplet = PereScolaire.staticSetPersonneNomComplet(requeteSite_, o);
 		this.personneNomCompletCouverture.dejaInitialise = true;
-		return (PereScolaire)this;
 	}
 	public static String staticSetPersonneNomComplet(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -1757,10 +1743,9 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 	public String getPersonneNomCompletPrefere() {
 		return personneNomCompletPrefere;
 	}
-	public PereScolaire setPersonneNomCompletPrefere(String o) {
+	public void setPersonneNomCompletPrefere(String o) {
 		this.personneNomCompletPrefere = PereScolaire.staticSetPersonneNomCompletPrefere(requeteSite_, o);
 		this.personneNomCompletPrefereCouverture.dejaInitialise = true;
-		return (PereScolaire)this;
 	}
 	public static String staticSetPersonneNomCompletPrefere(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -1834,10 +1819,9 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 	public String getPersonneNomFormel() {
 		return personneNomFormel;
 	}
-	public PereScolaire setPersonneNomFormel(String o) {
+	public void setPersonneNomFormel(String o) {
 		this.personneNomFormel = PereScolaire.staticSetPersonneNomFormel(requeteSite_, o);
 		this.personneNomFormelCouverture.dejaInitialise = true;
-		return (PereScolaire)this;
 	}
 	public static String staticSetPersonneNomFormel(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -1911,10 +1895,9 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 	public String getPersonneOccupation() {
 		return personneOccupation;
 	}
-	public PereScolaire setPersonneOccupation(String o) {
+	public void setPersonneOccupation(String o) {
 		this.personneOccupation = PereScolaire.staticSetPersonneOccupation(requeteSite_, o);
 		this.personneOccupationCouverture.dejaInitialise = true;
-		return (PereScolaire)this;
 	}
 	public static String staticSetPersonneOccupation(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -2058,10 +2041,9 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 	public String getPersonneNumeroTelephone() {
 		return personneNumeroTelephone;
 	}
-	public PereScolaire setPersonneNumeroTelephone(String o) {
+	public void setPersonneNumeroTelephone(String o) {
 		this.personneNumeroTelephone = PereScolaire.staticSetPersonneNumeroTelephone(requeteSite_, o);
 		this.personneNumeroTelephoneCouverture.dejaInitialise = true;
-		return (PereScolaire)this;
 	}
 	public static String staticSetPersonneNumeroTelephone(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -2205,10 +2187,9 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 	public String getPersonneMail() {
 		return personneMail;
 	}
-	public PereScolaire setPersonneMail(String o) {
+	public void setPersonneMail(String o) {
 		this.personneMail = PereScolaire.staticSetPersonneMail(requeteSite_, o);
 		this.personneMailCouverture.dejaInitialise = true;
-		return (PereScolaire)this;
 	}
 	public static String staticSetPersonneMail(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -2352,10 +2333,9 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 	public String getPersonneRelation() {
 		return personneRelation;
 	}
-	public PereScolaire setPersonneRelation(String o) {
+	public void setPersonneRelation(String o) {
 		this.personneRelation = PereScolaire.staticSetPersonneRelation(requeteSite_, o);
 		this.personneRelationCouverture.dejaInitialise = true;
-		return (PereScolaire)this;
 	}
 	public static String staticSetPersonneRelation(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -2434,10 +2414,9 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 		this.personneSms = personneSms;
 		this.personneSmsCouverture.dejaInitialise = true;
 	}
-	public PereScolaire setPersonneSms(String o) {
+	public void setPersonneSms(String o) {
 		this.personneSms = PereScolaire.staticSetPersonneSms(requeteSite_, o);
 		this.personneSmsCouverture.dejaInitialise = true;
-		return (PereScolaire)this;
 	}
 	public static Boolean staticSetPersonneSms(RequeteSiteFrFR requeteSite_, String o) {
 		return Boolean.parseBoolean(o);
@@ -2581,10 +2560,9 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 		this.personneRecevoirMail = personneRecevoirMail;
 		this.personneRecevoirMailCouverture.dejaInitialise = true;
 	}
-	public PereScolaire setPersonneRecevoirMail(String o) {
+	public void setPersonneRecevoirMail(String o) {
 		this.personneRecevoirMail = PereScolaire.staticSetPersonneRecevoirMail(requeteSite_, o);
 		this.personneRecevoirMailCouverture.dejaInitialise = true;
-		return (PereScolaire)this;
 	}
 	public static Boolean staticSetPersonneRecevoirMail(RequeteSiteFrFR requeteSite_, String o) {
 		return Boolean.parseBoolean(o);
@@ -2728,10 +2706,9 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 		this.personneContactUrgence = personneContactUrgence;
 		this.personneContactUrgenceCouverture.dejaInitialise = true;
 	}
-	public PereScolaire setPersonneContactUrgence(String o) {
+	public void setPersonneContactUrgence(String o) {
 		this.personneContactUrgence = PereScolaire.staticSetPersonneContactUrgence(requeteSite_, o);
 		this.personneContactUrgenceCouverture.dejaInitialise = true;
-		return (PereScolaire)this;
 	}
 	public static Boolean staticSetPersonneContactUrgence(RequeteSiteFrFR requeteSite_, String o) {
 		return Boolean.parseBoolean(o);
@@ -2875,10 +2852,9 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 		this.personneChercher = personneChercher;
 		this.personneChercherCouverture.dejaInitialise = true;
 	}
-	public PereScolaire setPersonneChercher(String o) {
+	public void setPersonneChercher(String o) {
 		this.personneChercher = PereScolaire.staticSetPersonneChercher(requeteSite_, o);
 		this.personneChercherCouverture.dejaInitialise = true;
-		return (PereScolaire)this;
 	}
 	public static Boolean staticSetPersonneChercher(RequeteSiteFrFR requeteSite_, String o) {
 		return Boolean.parseBoolean(o);
@@ -3017,10 +2993,9 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 	public String getPhoto() {
 		return photo;
 	}
-	public PereScolaire setPhoto(String o) {
+	public void setPhoto(String o) {
 		this.photo = PereScolaire.staticSetPhoto(requeteSite_, o);
 		this.photoCouverture.dejaInitialise = true;
-		return (PereScolaire)this;
 	}
 	public static String staticSetPhoto(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -3158,10 +3133,9 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 	public String getPereNomComplet() {
 		return pereNomComplet;
 	}
-	public PereScolaire setPereNomComplet(String o) {
+	public void setPereNomComplet(String o) {
 		this.pereNomComplet = PereScolaire.staticSetPereNomComplet(requeteSite_, o);
 		this.pereNomCompletCouverture.dejaInitialise = true;
-		return (PereScolaire)this;
 	}
 	public static String staticSetPereNomComplet(RequeteSiteFrFR requeteSite_, String o) {
 		return o;

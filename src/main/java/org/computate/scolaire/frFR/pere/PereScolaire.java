@@ -407,7 +407,7 @@ public class PereScolaire extends PereScolaireGen<Cluster> {
 	 * Definir: true
 	 * HtmlLigne: 4
 	 * HtmlCellule: 1
-	 */                   
+	 */                  
 	protected void _personneMail(Couverture<String> c) {
 	}
 	/**

@@ -109,10 +109,9 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 		this.dadKey = dadKey;
 		this.dadKeyWrap.alreadyInitialized = true;
 	}
-	public SchoolDad setDadKey(String o) {
+	public void setDadKey(String o) {
 		this.dadKey = SchoolDad.staticSetDadKey(siteRequest_, o);
 		this.dadKeyWrap.alreadyInitialized = true;
-		return (SchoolDad)this;
 	}
 	public static Long staticSetDadKey(SiteRequestEnUS siteRequest_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -208,13 +207,12 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 			this.enrollmentKeys.add(o);
 		return (SchoolDad)this;
 	}
-	public SchoolDad setEnrollmentKeys(JsonArray objets) {
+	public void setEnrollmentKeys(JsonArray objets) {
 		enrollmentKeys.clear();
 		for(int i = 0; i < objets.size(); i++) {
 			Long o = objets.getLong(i);
 			addEnrollmentKeys(o);
 		}
-		return (SchoolDad)this;
 	}
 	public SchoolDad addEnrollmentKeys(String o) {
 		if(NumberUtils.isParsable(o)) {
@@ -370,10 +368,9 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 		this.familySort = familySort;
 		this.familySortWrap.alreadyInitialized = true;
 	}
-	public SchoolDad setFamilySort(String o) {
+	public void setFamilySort(String o) {
 		this.familySort = SchoolDad.staticSetFamilySort(siteRequest_, o);
 		this.familySortWrap.alreadyInitialized = true;
-		return (SchoolDad)this;
 	}
 	public static Integer staticSetFamilySort(SiteRequestEnUS siteRequest_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -455,10 +452,9 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 		this.schoolSort = schoolSort;
 		this.schoolSortWrap.alreadyInitialized = true;
 	}
-	public SchoolDad setSchoolSort(String o) {
+	public void setSchoolSort(String o) {
 		this.schoolSort = SchoolDad.staticSetSchoolSort(siteRequest_, o);
 		this.schoolSortWrap.alreadyInitialized = true;
-		return (SchoolDad)this;
 	}
 	public static Integer staticSetSchoolSort(SiteRequestEnUS siteRequest_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -646,13 +642,12 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 			this.userKeys.add(o);
 		return (SchoolDad)this;
 	}
-	public SchoolDad setUserKeys(JsonArray objets) {
+	public void setUserKeys(JsonArray objets) {
 		userKeys.clear();
 		for(int i = 0; i < objets.size(); i++) {
 			Long o = objets.getLong(i);
 			addUserKeys(o);
 		}
-		return (SchoolDad)this;
 	}
 	public SchoolDad addUserKeys(String o) {
 		if(NumberUtils.isParsable(o)) {
@@ -748,13 +743,12 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 			this.schoolKeys.add(o);
 		return (SchoolDad)this;
 	}
-	public SchoolDad setSchoolKeys(JsonArray objets) {
+	public void setSchoolKeys(JsonArray objets) {
 		schoolKeys.clear();
 		for(int i = 0; i < objets.size(); i++) {
 			Long o = objets.getLong(i);
 			addSchoolKeys(o);
 		}
-		return (SchoolDad)this;
 	}
 	public SchoolDad addSchoolKeys(String o) {
 		if(NumberUtils.isParsable(o)) {
@@ -850,13 +844,12 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 			this.yearKeys.add(o);
 		return (SchoolDad)this;
 	}
-	public SchoolDad setYearKeys(JsonArray objets) {
+	public void setYearKeys(JsonArray objets) {
 		yearKeys.clear();
 		for(int i = 0; i < objets.size(); i++) {
 			Long o = objets.getLong(i);
 			addYearKeys(o);
 		}
-		return (SchoolDad)this;
 	}
 	public SchoolDad addYearKeys(String o) {
 		if(NumberUtils.isParsable(o)) {
@@ -952,13 +945,12 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 			this.seasonKeys.add(o);
 		return (SchoolDad)this;
 	}
-	public SchoolDad setSeasonKeys(JsonArray objets) {
+	public void setSeasonKeys(JsonArray objets) {
 		seasonKeys.clear();
 		for(int i = 0; i < objets.size(); i++) {
 			Long o = objets.getLong(i);
 			addSeasonKeys(o);
 		}
-		return (SchoolDad)this;
 	}
 	public SchoolDad addSeasonKeys(String o) {
 		if(NumberUtils.isParsable(o)) {
@@ -1054,13 +1046,12 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 			this.sessionKeys.add(o);
 		return (SchoolDad)this;
 	}
-	public SchoolDad setSessionKeys(JsonArray objets) {
+	public void setSessionKeys(JsonArray objets) {
 		sessionKeys.clear();
 		for(int i = 0; i < objets.size(); i++) {
 			Long o = objets.getLong(i);
 			addSessionKeys(o);
 		}
-		return (SchoolDad)this;
 	}
 	public SchoolDad addSessionKeys(String o) {
 		if(NumberUtils.isParsable(o)) {
@@ -1156,13 +1147,12 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 			this.ageKeys.add(o);
 		return (SchoolDad)this;
 	}
-	public SchoolDad setAgeKeys(JsonArray objets) {
+	public void setAgeKeys(JsonArray objets) {
 		ageKeys.clear();
 		for(int i = 0; i < objets.size(); i++) {
 			Long o = objets.getLong(i);
 			addAgeKeys(o);
 		}
-		return (SchoolDad)this;
 	}
 	public SchoolDad addAgeKeys(String o) {
 		if(NumberUtils.isParsable(o)) {
@@ -1238,10 +1228,9 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 	public String getPersonFirstName() {
 		return personFirstName;
 	}
-	public SchoolDad setPersonFirstName(String o) {
+	public void setPersonFirstName(String o) {
 		this.personFirstName = SchoolDad.staticSetPersonFirstName(siteRequest_, o);
 		this.personFirstNameWrap.alreadyInitialized = true;
-		return (SchoolDad)this;
 	}
 	public static String staticSetPersonFirstName(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -1385,10 +1374,9 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 	public String getPersonFirstNamePreferred() {
 		return personFirstNamePreferred;
 	}
-	public SchoolDad setPersonFirstNamePreferred(String o) {
+	public void setPersonFirstNamePreferred(String o) {
 		this.personFirstNamePreferred = SchoolDad.staticSetPersonFirstNamePreferred(siteRequest_, o);
 		this.personFirstNamePreferredWrap.alreadyInitialized = true;
-		return (SchoolDad)this;
 	}
 	public static String staticSetPersonFirstNamePreferred(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -1532,10 +1520,9 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 	public String getFamilyName() {
 		return familyName;
 	}
-	public SchoolDad setFamilyName(String o) {
+	public void setFamilyName(String o) {
 		this.familyName = SchoolDad.staticSetFamilyName(siteRequest_, o);
 		this.familyNameWrap.alreadyInitialized = true;
-		return (SchoolDad)this;
 	}
 	public static String staticSetFamilyName(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -1679,10 +1666,9 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 	public String getPersonCompleteName() {
 		return personCompleteName;
 	}
-	public SchoolDad setPersonCompleteName(String o) {
+	public void setPersonCompleteName(String o) {
 		this.personCompleteName = SchoolDad.staticSetPersonCompleteName(siteRequest_, o);
 		this.personCompleteNameWrap.alreadyInitialized = true;
-		return (SchoolDad)this;
 	}
 	public static String staticSetPersonCompleteName(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -1756,10 +1742,9 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 	public String getPersonCompleteNamePreferred() {
 		return personCompleteNamePreferred;
 	}
-	public SchoolDad setPersonCompleteNamePreferred(String o) {
+	public void setPersonCompleteNamePreferred(String o) {
 		this.personCompleteNamePreferred = SchoolDad.staticSetPersonCompleteNamePreferred(siteRequest_, o);
 		this.personCompleteNamePreferredWrap.alreadyInitialized = true;
-		return (SchoolDad)this;
 	}
 	public static String staticSetPersonCompleteNamePreferred(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -1833,10 +1818,9 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 	public String getPersonFormalName() {
 		return personFormalName;
 	}
-	public SchoolDad setPersonFormalName(String o) {
+	public void setPersonFormalName(String o) {
 		this.personFormalName = SchoolDad.staticSetPersonFormalName(siteRequest_, o);
 		this.personFormalNameWrap.alreadyInitialized = true;
-		return (SchoolDad)this;
 	}
 	public static String staticSetPersonFormalName(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -1910,10 +1894,9 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 	public String getPersonOccupation() {
 		return personOccupation;
 	}
-	public SchoolDad setPersonOccupation(String o) {
+	public void setPersonOccupation(String o) {
 		this.personOccupation = SchoolDad.staticSetPersonOccupation(siteRequest_, o);
 		this.personOccupationWrap.alreadyInitialized = true;
-		return (SchoolDad)this;
 	}
 	public static String staticSetPersonOccupation(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -2057,10 +2040,9 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 	public String getPersonPhoneNumber() {
 		return personPhoneNumber;
 	}
-	public SchoolDad setPersonPhoneNumber(String o) {
+	public void setPersonPhoneNumber(String o) {
 		this.personPhoneNumber = SchoolDad.staticSetPersonPhoneNumber(siteRequest_, o);
 		this.personPhoneNumberWrap.alreadyInitialized = true;
-		return (SchoolDad)this;
 	}
 	public static String staticSetPersonPhoneNumber(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -2204,10 +2186,9 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 	public String getPersonEmail() {
 		return personEmail;
 	}
-	public SchoolDad setPersonEmail(String o) {
+	public void setPersonEmail(String o) {
 		this.personEmail = SchoolDad.staticSetPersonEmail(siteRequest_, o);
 		this.personEmailWrap.alreadyInitialized = true;
-		return (SchoolDad)this;
 	}
 	public static String staticSetPersonEmail(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -2351,10 +2332,9 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 	public String getPersonRelation() {
 		return personRelation;
 	}
-	public SchoolDad setPersonRelation(String o) {
+	public void setPersonRelation(String o) {
 		this.personRelation = SchoolDad.staticSetPersonRelation(siteRequest_, o);
 		this.personRelationWrap.alreadyInitialized = true;
-		return (SchoolDad)this;
 	}
 	public static String staticSetPersonRelation(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -2433,10 +2413,9 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 		this.personSms = personSms;
 		this.personSmsWrap.alreadyInitialized = true;
 	}
-	public SchoolDad setPersonSms(String o) {
+	public void setPersonSms(String o) {
 		this.personSms = SchoolDad.staticSetPersonSms(siteRequest_, o);
 		this.personSmsWrap.alreadyInitialized = true;
-		return (SchoolDad)this;
 	}
 	public static Boolean staticSetPersonSms(SiteRequestEnUS siteRequest_, String o) {
 		return Boolean.parseBoolean(o);
@@ -2580,10 +2559,9 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 		this.personReceiveEmail = personReceiveEmail;
 		this.personReceiveEmailWrap.alreadyInitialized = true;
 	}
-	public SchoolDad setPersonReceiveEmail(String o) {
+	public void setPersonReceiveEmail(String o) {
 		this.personReceiveEmail = SchoolDad.staticSetPersonReceiveEmail(siteRequest_, o);
 		this.personReceiveEmailWrap.alreadyInitialized = true;
-		return (SchoolDad)this;
 	}
 	public static Boolean staticSetPersonReceiveEmail(SiteRequestEnUS siteRequest_, String o) {
 		return Boolean.parseBoolean(o);
@@ -2727,10 +2705,9 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 		this.personEmergencyContact = personEmergencyContact;
 		this.personEmergencyContactWrap.alreadyInitialized = true;
 	}
-	public SchoolDad setPersonEmergencyContact(String o) {
+	public void setPersonEmergencyContact(String o) {
 		this.personEmergencyContact = SchoolDad.staticSetPersonEmergencyContact(siteRequest_, o);
 		this.personEmergencyContactWrap.alreadyInitialized = true;
-		return (SchoolDad)this;
 	}
 	public static Boolean staticSetPersonEmergencyContact(SiteRequestEnUS siteRequest_, String o) {
 		return Boolean.parseBoolean(o);
@@ -2874,10 +2851,9 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 		this.personPickup = personPickup;
 		this.personPickupWrap.alreadyInitialized = true;
 	}
-	public SchoolDad setPersonPickup(String o) {
+	public void setPersonPickup(String o) {
 		this.personPickup = SchoolDad.staticSetPersonPickup(siteRequest_, o);
 		this.personPickupWrap.alreadyInitialized = true;
-		return (SchoolDad)this;
 	}
 	public static Boolean staticSetPersonPickup(SiteRequestEnUS siteRequest_, String o) {
 		return Boolean.parseBoolean(o);
@@ -3016,10 +2992,9 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 	public String getPhoto() {
 		return photo;
 	}
-	public SchoolDad setPhoto(String o) {
+	public void setPhoto(String o) {
 		this.photo = SchoolDad.staticSetPhoto(siteRequest_, o);
 		this.photoWrap.alreadyInitialized = true;
-		return (SchoolDad)this;
 	}
 	public static String staticSetPhoto(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -3157,10 +3132,9 @@ public abstract class SchoolDadGen<DEV> extends Cluster {
 	public String getDadCompleteName() {
 		return dadCompleteName;
 	}
-	public SchoolDad setDadCompleteName(String o) {
+	public void setDadCompleteName(String o) {
 		this.dadCompleteName = SchoolDad.staticSetDadCompleteName(siteRequest_, o);
 		this.dadCompleteNameWrap.alreadyInitialized = true;
-		return (SchoolDad)this;
 	}
 	public static String staticSetDadCompleteName(SiteRequestEnUS siteRequest_, String o) {
 		return o;

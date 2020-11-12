@@ -401,7 +401,7 @@ public class GardienScolaire extends GardienScolaireGen<Cluster> {
 	 * Stocke: true
 	 * NomAffichage.frFR: mail
 	 * NomAffichage.enUS: email
-	 */                   
+	 */                  
 	protected void _personneMail(Couverture<String> c) {
 	}
 	/**
