@@ -111,10 +111,14 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		this.designPageCleCouverture.dejaInitialise = true;
 	}
 	public DesignPage setDesignPageCle(String o) {
-		if(NumberUtils.isParsable(o))
-			this.designPageCle = Long.parseLong(o);
+		this.designPageCle = DesignPage.staticSetDesignPageCle(requeteSite_, o);
 		this.designPageCleCouverture.dejaInitialise = true;
 		return (DesignPage)this;
+	}
+	public static Long staticSetDesignPageCle(RequeteSiteFrFR requeteSite_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Long.parseLong(o);
+		return null;
 	}
 	protected DesignPage designPageCleInit() {
 		if(!designPageCleCouverture.dejaInitialise) {
@@ -126,8 +130,20 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		return (DesignPage)this;
 	}
 
+	public static Long staticSolrDesignPageCle(RequeteSiteFrFR requeteSite_, Long o) {
+		return o;
+	}
+
+	public static String staticSolrStrDesignPageCle(RequeteSiteFrFR requeteSite_, Long o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqDesignPageCle(RequeteSiteFrFR requeteSite_, String o) {
+		return DesignPage.staticSolrStrDesignPageCle(requeteSite_, DesignPage.staticSolrDesignPageCle(requeteSite_, DesignPage.staticSetDesignPageCle(requeteSite_, o)));
+	}
+
 	public Long solrDesignPageCle() {
-		return designPageCle;
+		return DesignPage.staticSolrDesignPageCle(requeteSite_, designPageCle);
 	}
 
 	public String strDesignPageCle() {
@@ -179,6 +195,9 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		this.designEnfantCles = designEnfantCles;
 		this.designEnfantClesCouverture.dejaInitialise = true;
 	}
+	public static List<Long> staticSetDesignEnfantCles(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
+	}
 	public DesignPage addDesignEnfantCles(Long...objets) {
 		for(Long o : objets) {
 			addDesignEnfantCles(o);
@@ -213,8 +232,20 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		return (DesignPage)this;
 	}
 
+	public static List<Long> staticSolrDesignEnfantCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
+		return o;
+	}
+
+	public static String staticSolrStrDesignEnfantCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqDesignEnfantCles(RequeteSiteFrFR requeteSite_, String o) {
+		return DesignPage.staticSolrStrDesignEnfantCles(requeteSite_, DesignPage.staticSolrDesignEnfantCles(requeteSite_, DesignPage.staticSetDesignEnfantCles(requeteSite_, o)));
+	}
+
 	public List<Long> solrDesignEnfantCles() {
-		return designEnfantCles;
+		return DesignPage.staticSolrDesignEnfantCles(requeteSite_, designEnfantCles);
 	}
 
 	public String strDesignEnfantCles() {
@@ -266,6 +297,9 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		this.designParentCles = designParentCles;
 		this.designParentClesCouverture.dejaInitialise = true;
 	}
+	public static List<Long> staticSetDesignParentCles(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
+	}
 	public DesignPage addDesignParentCles(Long...objets) {
 		for(Long o : objets) {
 			addDesignParentCles(o);
@@ -300,8 +334,20 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		return (DesignPage)this;
 	}
 
+	public static List<Long> staticSolrDesignParentCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
+		return o;
+	}
+
+	public static String staticSolrStrDesignParentCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqDesignParentCles(RequeteSiteFrFR requeteSite_, String o) {
+		return DesignPage.staticSolrStrDesignParentCles(requeteSite_, DesignPage.staticSolrDesignParentCles(requeteSite_, DesignPage.staticSetDesignParentCles(requeteSite_, o)));
+	}
+
 	public List<Long> solrDesignParentCles() {
-		return designParentCles;
+		return DesignPage.staticSolrDesignParentCles(requeteSite_, designParentCles);
 	}
 
 	public String strDesignParentCles() {
@@ -337,9 +383,12 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 					.a("class", "valeur suggereDesignParentCles w3-input w3-border w3-cell w3-cell-middle ")
 					.a("name", "setDesignParentCles")
 					.a("id", classeApiMethodeMethode, "_designParentCles")
-					.a("autocomplete", "off")
-					.a("oninput", "suggereDesignPageDesignParentCles($(this).val() ? rechercherDesignPageFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'designEnfantCles:" + pk + "'}", "], $('#listDesignPageDesignParentCles_", classeApiMethodeMethode, "'), ", pk, "); ")
-				.fg();
+					.a("autocomplete", "off");
+					if("Page".equals(classeApiMethodeMethode)) {
+						a("oninput", "suggereDesignPageDesignParentCles($(this).val() ? rechercherDesignPageFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'designEnfantCles:" + pk + "'}", "], $('#listDesignPageDesignParentCles_", classeApiMethodeMethode, "'), ", pk, "); ");
+					}
+
+				fg();
 
 		} else {
 			e("span").a("class", "varDesignPage", pk, "DesignParentCles ").f().sx(htmDesignParentCles()).g("span");
@@ -425,6 +474,9 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		this.partHtmlCles = partHtmlCles;
 		this.partHtmlClesCouverture.dejaInitialise = true;
 	}
+	public static List<Long> staticSetPartHtmlCles(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
+	}
 	public DesignPage addPartHtmlCles(Long...objets) {
 		for(Long o : objets) {
 			addPartHtmlCles(o);
@@ -459,8 +511,20 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		return (DesignPage)this;
 	}
 
+	public static List<Long> staticSolrPartHtmlCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
+		return o;
+	}
+
+	public static String staticSolrStrPartHtmlCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPartHtmlCles(RequeteSiteFrFR requeteSite_, String o) {
+		return DesignPage.staticSolrStrPartHtmlCles(requeteSite_, DesignPage.staticSolrPartHtmlCles(requeteSite_, DesignPage.staticSetPartHtmlCles(requeteSite_, o)));
+	}
+
 	public List<Long> solrPartHtmlCles() {
-		return partHtmlCles;
+		return DesignPage.staticSolrPartHtmlCles(requeteSite_, partHtmlCles);
 	}
 
 	public String strPartHtmlCles() {
@@ -496,9 +560,12 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 					.a("class", "valeur suggerePartHtmlCles w3-input w3-border w3-cell w3-cell-middle ")
 					.a("name", "setPartHtmlCles")
 					.a("id", classeApiMethodeMethode, "_partHtmlCles")
-					.a("autocomplete", "off")
-					.a("oninput", "suggereDesignPagePartHtmlCles($(this).val() ? rechercherPartHtmlFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'designPageCles:" + pk + "'}", "], $('#listDesignPagePartHtmlCles_", classeApiMethodeMethode, "'), ", pk, "); ")
-				.fg();
+					.a("autocomplete", "off");
+					if("Page".equals(classeApiMethodeMethode)) {
+						a("oninput", "suggereDesignPagePartHtmlCles($(this).val() ? rechercherPartHtmlFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'designPageCles:" + pk + "'}", "], $('#listDesignPagePartHtmlCles_", classeApiMethodeMethode, "'), ", pk, "); ");
+					}
+
+				fg();
 
 		} else {
 			e("span").a("class", "varDesignPage", pk, "PartHtmlCles ").f().sx(htmPartHtmlCles()).g("span");
@@ -578,10 +645,13 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 	public String getDesignPageNomComplet() {
 		return designPageNomComplet;
 	}
-
-	public void setDesignPageNomComplet(String designPageNomComplet) {
-		this.designPageNomComplet = designPageNomComplet;
+	public DesignPage setDesignPageNomComplet(String o) {
+		this.designPageNomComplet = DesignPage.staticSetDesignPageNomComplet(requeteSite_, o);
 		this.designPageNomCompletCouverture.dejaInitialise = true;
+		return (DesignPage)this;
+	}
+	public static String staticSetDesignPageNomComplet(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected DesignPage designPageNomCompletInit() {
 		if(!designPageNomCompletCouverture.dejaInitialise) {
@@ -593,8 +663,20 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		return (DesignPage)this;
 	}
 
+	public static String staticSolrDesignPageNomComplet(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrDesignPageNomComplet(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqDesignPageNomComplet(RequeteSiteFrFR requeteSite_, String o) {
+		return DesignPage.staticSolrStrDesignPageNomComplet(requeteSite_, DesignPage.staticSolrDesignPageNomComplet(requeteSite_, DesignPage.staticSetDesignPageNomComplet(requeteSite_, o)));
+	}
+
 	public String solrDesignPageNomComplet() {
-		return designPageNomComplet;
+		return DesignPage.staticSolrDesignPageNomComplet(requeteSite_, designPageNomComplet);
 	}
 
 	public String strDesignPageNomComplet() {
@@ -712,9 +794,12 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		this.designCacheCouverture.dejaInitialise = true;
 	}
 	public DesignPage setDesignCache(String o) {
-		this.designCache = Boolean.parseBoolean(o);
+		this.designCache = DesignPage.staticSetDesignCache(requeteSite_, o);
 		this.designCacheCouverture.dejaInitialise = true;
 		return (DesignPage)this;
+	}
+	public static Boolean staticSetDesignCache(RequeteSiteFrFR requeteSite_, String o) {
+		return Boolean.parseBoolean(o);
 	}
 	protected DesignPage designCacheInit() {
 		if(!designCacheCouverture.dejaInitialise) {
@@ -726,8 +811,20 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		return (DesignPage)this;
 	}
 
+	public static Boolean staticSolrDesignCache(RequeteSiteFrFR requeteSite_, Boolean o) {
+		return o;
+	}
+
+	public static String staticSolrStrDesignCache(RequeteSiteFrFR requeteSite_, Boolean o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqDesignCache(RequeteSiteFrFR requeteSite_, String o) {
+		return DesignPage.staticSolrStrDesignCache(requeteSite_, DesignPage.staticSolrDesignCache(requeteSite_, DesignPage.staticSetDesignCache(requeteSite_, o)));
+	}
+
 	public Boolean solrDesignCache() {
-		return designCache;
+		return DesignPage.staticSolrDesignCache(requeteSite_, designCache);
 	}
 
 	public String strDesignCache() {
@@ -842,9 +939,12 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		this.designAdminCouverture.dejaInitialise = true;
 	}
 	public DesignPage setDesignAdmin(String o) {
-		this.designAdmin = Boolean.parseBoolean(o);
+		this.designAdmin = DesignPage.staticSetDesignAdmin(requeteSite_, o);
 		this.designAdminCouverture.dejaInitialise = true;
 		return (DesignPage)this;
+	}
+	public static Boolean staticSetDesignAdmin(RequeteSiteFrFR requeteSite_, String o) {
+		return Boolean.parseBoolean(o);
 	}
 	protected DesignPage designAdminInit() {
 		if(!designAdminCouverture.dejaInitialise) {
@@ -856,8 +956,20 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		return (DesignPage)this;
 	}
 
+	public static Boolean staticSolrDesignAdmin(RequeteSiteFrFR requeteSite_, Boolean o) {
+		return o;
+	}
+
+	public static String staticSolrStrDesignAdmin(RequeteSiteFrFR requeteSite_, Boolean o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqDesignAdmin(RequeteSiteFrFR requeteSite_, String o) {
+		return DesignPage.staticSolrStrDesignAdmin(requeteSite_, DesignPage.staticSolrDesignAdmin(requeteSite_, DesignPage.staticSetDesignAdmin(requeteSite_, o)));
+	}
+
 	public Boolean solrDesignAdmin() {
-		return designAdmin;
+		return DesignPage.staticSolrDesignAdmin(requeteSite_, designAdmin);
 	}
 
 	public String strDesignAdmin() {
@@ -972,9 +1084,12 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		this.designIgnorerNomEnfantVideCouverture.dejaInitialise = true;
 	}
 	public DesignPage setDesignIgnorerNomEnfantVide(String o) {
-		this.designIgnorerNomEnfantVide = Boolean.parseBoolean(o);
+		this.designIgnorerNomEnfantVide = DesignPage.staticSetDesignIgnorerNomEnfantVide(requeteSite_, o);
 		this.designIgnorerNomEnfantVideCouverture.dejaInitialise = true;
 		return (DesignPage)this;
+	}
+	public static Boolean staticSetDesignIgnorerNomEnfantVide(RequeteSiteFrFR requeteSite_, String o) {
+		return Boolean.parseBoolean(o);
 	}
 	protected DesignPage designIgnorerNomEnfantVideInit() {
 		if(!designIgnorerNomEnfantVideCouverture.dejaInitialise) {
@@ -986,8 +1101,20 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		return (DesignPage)this;
 	}
 
+	public static Boolean staticSolrDesignIgnorerNomEnfantVide(RequeteSiteFrFR requeteSite_, Boolean o) {
+		return o;
+	}
+
+	public static String staticSolrStrDesignIgnorerNomEnfantVide(RequeteSiteFrFR requeteSite_, Boolean o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqDesignIgnorerNomEnfantVide(RequeteSiteFrFR requeteSite_, String o) {
+		return DesignPage.staticSolrStrDesignIgnorerNomEnfantVide(requeteSite_, DesignPage.staticSolrDesignIgnorerNomEnfantVide(requeteSite_, DesignPage.staticSetDesignIgnorerNomEnfantVide(requeteSite_, o)));
+	}
+
 	public Boolean solrDesignIgnorerNomEnfantVide() {
-		return designIgnorerNomEnfantVide;
+		return DesignPage.staticSolrDesignIgnorerNomEnfantVide(requeteSite_, designIgnorerNomEnfantVide);
 	}
 
 	public String strDesignIgnorerNomEnfantVide() {
@@ -1102,9 +1229,12 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		this.designIgnorerPaiementsPasEnSouffranceCouverture.dejaInitialise = true;
 	}
 	public DesignPage setDesignIgnorerPaiementsPasEnSouffrance(String o) {
-		this.designIgnorerPaiementsPasEnSouffrance = Boolean.parseBoolean(o);
+		this.designIgnorerPaiementsPasEnSouffrance = DesignPage.staticSetDesignIgnorerPaiementsPasEnSouffrance(requeteSite_, o);
 		this.designIgnorerPaiementsPasEnSouffranceCouverture.dejaInitialise = true;
 		return (DesignPage)this;
+	}
+	public static Boolean staticSetDesignIgnorerPaiementsPasEnSouffrance(RequeteSiteFrFR requeteSite_, String o) {
+		return Boolean.parseBoolean(o);
 	}
 	protected DesignPage designIgnorerPaiementsPasEnSouffranceInit() {
 		if(!designIgnorerPaiementsPasEnSouffranceCouverture.dejaInitialise) {
@@ -1116,8 +1246,20 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		return (DesignPage)this;
 	}
 
+	public static Boolean staticSolrDesignIgnorerPaiementsPasEnSouffrance(RequeteSiteFrFR requeteSite_, Boolean o) {
+		return o;
+	}
+
+	public static String staticSolrStrDesignIgnorerPaiementsPasEnSouffrance(RequeteSiteFrFR requeteSite_, Boolean o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqDesignIgnorerPaiementsPasEnSouffrance(RequeteSiteFrFR requeteSite_, String o) {
+		return DesignPage.staticSolrStrDesignIgnorerPaiementsPasEnSouffrance(requeteSite_, DesignPage.staticSolrDesignIgnorerPaiementsPasEnSouffrance(requeteSite_, DesignPage.staticSetDesignIgnorerPaiementsPasEnSouffrance(requeteSite_, o)));
+	}
+
 	public Boolean solrDesignIgnorerPaiementsPasEnSouffrance() {
-		return designIgnorerPaiementsPasEnSouffrance;
+		return DesignPage.staticSolrDesignIgnorerPaiementsPasEnSouffrance(requeteSite_, designIgnorerPaiementsPasEnSouffrance);
 	}
 
 	public String strDesignIgnorerPaiementsPasEnSouffrance() {
@@ -1232,9 +1374,12 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		this.designIgnorerPaiementsEnSouffranceCouverture.dejaInitialise = true;
 	}
 	public DesignPage setDesignIgnorerPaiementsEnSouffrance(String o) {
-		this.designIgnorerPaiementsEnSouffrance = Boolean.parseBoolean(o);
+		this.designIgnorerPaiementsEnSouffrance = DesignPage.staticSetDesignIgnorerPaiementsEnSouffrance(requeteSite_, o);
 		this.designIgnorerPaiementsEnSouffranceCouverture.dejaInitialise = true;
 		return (DesignPage)this;
+	}
+	public static Boolean staticSetDesignIgnorerPaiementsEnSouffrance(RequeteSiteFrFR requeteSite_, String o) {
+		return Boolean.parseBoolean(o);
 	}
 	protected DesignPage designIgnorerPaiementsEnSouffranceInit() {
 		if(!designIgnorerPaiementsEnSouffranceCouverture.dejaInitialise) {
@@ -1246,8 +1391,20 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		return (DesignPage)this;
 	}
 
+	public static Boolean staticSolrDesignIgnorerPaiementsEnSouffrance(RequeteSiteFrFR requeteSite_, Boolean o) {
+		return o;
+	}
+
+	public static String staticSolrStrDesignIgnorerPaiementsEnSouffrance(RequeteSiteFrFR requeteSite_, Boolean o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqDesignIgnorerPaiementsEnSouffrance(RequeteSiteFrFR requeteSite_, String o) {
+		return DesignPage.staticSolrStrDesignIgnorerPaiementsEnSouffrance(requeteSite_, DesignPage.staticSolrDesignIgnorerPaiementsEnSouffrance(requeteSite_, DesignPage.staticSetDesignIgnorerPaiementsEnSouffrance(requeteSite_, o)));
+	}
+
 	public Boolean solrDesignIgnorerPaiementsEnSouffrance() {
-		return designIgnorerPaiementsEnSouffrance;
+		return DesignPage.staticSolrDesignIgnorerPaiementsEnSouffrance(requeteSite_, designIgnorerPaiementsEnSouffrance);
 	}
 
 	public String strDesignIgnorerPaiementsEnSouffrance() {
@@ -1362,9 +1519,12 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		this.designFiltrerInscriptionCleCouverture.dejaInitialise = true;
 	}
 	public DesignPage setDesignFiltrerInscriptionCle(String o) {
-		this.designFiltrerInscriptionCle = Boolean.parseBoolean(o);
+		this.designFiltrerInscriptionCle = DesignPage.staticSetDesignFiltrerInscriptionCle(requeteSite_, o);
 		this.designFiltrerInscriptionCleCouverture.dejaInitialise = true;
 		return (DesignPage)this;
+	}
+	public static Boolean staticSetDesignFiltrerInscriptionCle(RequeteSiteFrFR requeteSite_, String o) {
+		return Boolean.parseBoolean(o);
 	}
 	protected DesignPage designFiltrerInscriptionCleInit() {
 		if(!designFiltrerInscriptionCleCouverture.dejaInitialise) {
@@ -1376,8 +1536,20 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		return (DesignPage)this;
 	}
 
+	public static Boolean staticSolrDesignFiltrerInscriptionCle(RequeteSiteFrFR requeteSite_, Boolean o) {
+		return o;
+	}
+
+	public static String staticSolrStrDesignFiltrerInscriptionCle(RequeteSiteFrFR requeteSite_, Boolean o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqDesignFiltrerInscriptionCle(RequeteSiteFrFR requeteSite_, String o) {
+		return DesignPage.staticSolrStrDesignFiltrerInscriptionCle(requeteSite_, DesignPage.staticSolrDesignFiltrerInscriptionCle(requeteSite_, DesignPage.staticSetDesignFiltrerInscriptionCle(requeteSite_, o)));
+	}
+
 	public Boolean solrDesignFiltrerInscriptionCle() {
-		return designFiltrerInscriptionCle;
+		return DesignPage.staticSolrDesignFiltrerInscriptionCle(requeteSite_, designFiltrerInscriptionCle);
 	}
 
 	public String strDesignFiltrerInscriptionCle() {
@@ -1492,9 +1664,12 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		this.designInscriptionTriMoisJourDeNaissanceCouverture.dejaInitialise = true;
 	}
 	public DesignPage setDesignInscriptionTriMoisJourDeNaissance(String o) {
-		this.designInscriptionTriMoisJourDeNaissance = Boolean.parseBoolean(o);
+		this.designInscriptionTriMoisJourDeNaissance = DesignPage.staticSetDesignInscriptionTriMoisJourDeNaissance(requeteSite_, o);
 		this.designInscriptionTriMoisJourDeNaissanceCouverture.dejaInitialise = true;
 		return (DesignPage)this;
+	}
+	public static Boolean staticSetDesignInscriptionTriMoisJourDeNaissance(RequeteSiteFrFR requeteSite_, String o) {
+		return Boolean.parseBoolean(o);
 	}
 	protected DesignPage designInscriptionTriMoisJourDeNaissanceInit() {
 		if(!designInscriptionTriMoisJourDeNaissanceCouverture.dejaInitialise) {
@@ -1506,8 +1681,20 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		return (DesignPage)this;
 	}
 
+	public static Boolean staticSolrDesignInscriptionTriMoisJourDeNaissance(RequeteSiteFrFR requeteSite_, Boolean o) {
+		return o;
+	}
+
+	public static String staticSolrStrDesignInscriptionTriMoisJourDeNaissance(RequeteSiteFrFR requeteSite_, Boolean o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqDesignInscriptionTriMoisJourDeNaissance(RequeteSiteFrFR requeteSite_, String o) {
+		return DesignPage.staticSolrStrDesignInscriptionTriMoisJourDeNaissance(requeteSite_, DesignPage.staticSolrDesignInscriptionTriMoisJourDeNaissance(requeteSite_, DesignPage.staticSetDesignInscriptionTriMoisJourDeNaissance(requeteSite_, o)));
+	}
+
 	public Boolean solrDesignInscriptionTriMoisJourDeNaissance() {
-		return designInscriptionTriMoisJourDeNaissance;
+		return DesignPage.staticSolrDesignInscriptionTriMoisJourDeNaissance(requeteSite_, designInscriptionTriMoisJourDeNaissance);
 	}
 
 	public String strDesignInscriptionTriMoisJourDeNaissance() {
@@ -1622,9 +1809,12 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		this.designInscriptionTriNomGroupeCouverture.dejaInitialise = true;
 	}
 	public DesignPage setDesignInscriptionTriNomGroupe(String o) {
-		this.designInscriptionTriNomGroupe = Boolean.parseBoolean(o);
+		this.designInscriptionTriNomGroupe = DesignPage.staticSetDesignInscriptionTriNomGroupe(requeteSite_, o);
 		this.designInscriptionTriNomGroupeCouverture.dejaInitialise = true;
 		return (DesignPage)this;
+	}
+	public static Boolean staticSetDesignInscriptionTriNomGroupe(RequeteSiteFrFR requeteSite_, String o) {
+		return Boolean.parseBoolean(o);
 	}
 	protected DesignPage designInscriptionTriNomGroupeInit() {
 		if(!designInscriptionTriNomGroupeCouverture.dejaInitialise) {
@@ -1636,8 +1826,20 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		return (DesignPage)this;
 	}
 
+	public static Boolean staticSolrDesignInscriptionTriNomGroupe(RequeteSiteFrFR requeteSite_, Boolean o) {
+		return o;
+	}
+
+	public static String staticSolrStrDesignInscriptionTriNomGroupe(RequeteSiteFrFR requeteSite_, Boolean o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqDesignInscriptionTriNomGroupe(RequeteSiteFrFR requeteSite_, String o) {
+		return DesignPage.staticSolrStrDesignInscriptionTriNomGroupe(requeteSite_, DesignPage.staticSolrDesignInscriptionTriNomGroupe(requeteSite_, DesignPage.staticSetDesignInscriptionTriNomGroupe(requeteSite_, o)));
+	}
+
 	public Boolean solrDesignInscriptionTriNomGroupe() {
-		return designInscriptionTriNomGroupe;
+		return DesignPage.staticSolrDesignInscriptionTriNomGroupe(requeteSite_, designInscriptionTriNomGroupe);
 	}
 
 	public String strDesignInscriptionTriNomGroupe() {
@@ -1752,9 +1954,12 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		this.designInscriptionTriNomEnfantCouverture.dejaInitialise = true;
 	}
 	public DesignPage setDesignInscriptionTriNomEnfant(String o) {
-		this.designInscriptionTriNomEnfant = Boolean.parseBoolean(o);
+		this.designInscriptionTriNomEnfant = DesignPage.staticSetDesignInscriptionTriNomEnfant(requeteSite_, o);
 		this.designInscriptionTriNomEnfantCouverture.dejaInitialise = true;
 		return (DesignPage)this;
+	}
+	public static Boolean staticSetDesignInscriptionTriNomEnfant(RequeteSiteFrFR requeteSite_, String o) {
+		return Boolean.parseBoolean(o);
 	}
 	protected DesignPage designInscriptionTriNomEnfantInit() {
 		if(!designInscriptionTriNomEnfantCouverture.dejaInitialise) {
@@ -1766,8 +1971,20 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		return (DesignPage)this;
 	}
 
+	public static Boolean staticSolrDesignInscriptionTriNomEnfant(RequeteSiteFrFR requeteSite_, Boolean o) {
+		return o;
+	}
+
+	public static String staticSolrStrDesignInscriptionTriNomEnfant(RequeteSiteFrFR requeteSite_, Boolean o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqDesignInscriptionTriNomEnfant(RequeteSiteFrFR requeteSite_, String o) {
+		return DesignPage.staticSolrStrDesignInscriptionTriNomEnfant(requeteSite_, DesignPage.staticSolrDesignInscriptionTriNomEnfant(requeteSite_, DesignPage.staticSetDesignInscriptionTriNomEnfant(requeteSite_, o)));
+	}
+
 	public Boolean solrDesignInscriptionTriNomEnfant() {
-		return designInscriptionTriNomEnfant;
+		return DesignPage.staticSolrDesignInscriptionTriNomEnfant(requeteSite_, designInscriptionTriNomEnfant);
 	}
 
 	public String strDesignInscriptionTriNomEnfant() {
@@ -1882,9 +2099,12 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		this.rechercherAnneesCouverture.dejaInitialise = true;
 	}
 	public DesignPage setRechercherAnnees(String o) {
-		this.rechercherAnnees = Boolean.parseBoolean(o);
+		this.rechercherAnnees = DesignPage.staticSetRechercherAnnees(requeteSite_, o);
 		this.rechercherAnneesCouverture.dejaInitialise = true;
 		return (DesignPage)this;
+	}
+	public static Boolean staticSetRechercherAnnees(RequeteSiteFrFR requeteSite_, String o) {
+		return Boolean.parseBoolean(o);
 	}
 	protected DesignPage rechercherAnneesInit() {
 		if(!rechercherAnneesCouverture.dejaInitialise) {
@@ -1896,8 +2116,20 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		return (DesignPage)this;
 	}
 
+	public static Boolean staticSolrRechercherAnnees(RequeteSiteFrFR requeteSite_, Boolean o) {
+		return o;
+	}
+
+	public static String staticSolrStrRechercherAnnees(RequeteSiteFrFR requeteSite_, Boolean o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqRechercherAnnees(RequeteSiteFrFR requeteSite_, String o) {
+		return DesignPage.staticSolrStrRechercherAnnees(requeteSite_, DesignPage.staticSolrRechercherAnnees(requeteSite_, DesignPage.staticSetRechercherAnnees(requeteSite_, o)));
+	}
+
 	public Boolean solrRechercherAnnees() {
-		return rechercherAnnees;
+		return DesignPage.staticSolrRechercherAnnees(requeteSite_, rechercherAnnees);
 	}
 
 	public String strRechercherAnnees() {
@@ -2012,9 +2244,12 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		this.rechercherPaiementsCouverture.dejaInitialise = true;
 	}
 	public DesignPage setRechercherPaiements(String o) {
-		this.rechercherPaiements = Boolean.parseBoolean(o);
+		this.rechercherPaiements = DesignPage.staticSetRechercherPaiements(requeteSite_, o);
 		this.rechercherPaiementsCouverture.dejaInitialise = true;
 		return (DesignPage)this;
+	}
+	public static Boolean staticSetRechercherPaiements(RequeteSiteFrFR requeteSite_, String o) {
+		return Boolean.parseBoolean(o);
 	}
 	protected DesignPage rechercherPaiementsInit() {
 		if(!rechercherPaiementsCouverture.dejaInitialise) {
@@ -2026,8 +2261,20 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		return (DesignPage)this;
 	}
 
+	public static Boolean staticSolrRechercherPaiements(RequeteSiteFrFR requeteSite_, Boolean o) {
+		return o;
+	}
+
+	public static String staticSolrStrRechercherPaiements(RequeteSiteFrFR requeteSite_, Boolean o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqRechercherPaiements(RequeteSiteFrFR requeteSite_, String o) {
+		return DesignPage.staticSolrStrRechercherPaiements(requeteSite_, DesignPage.staticSolrRechercherPaiements(requeteSite_, DesignPage.staticSetRechercherPaiements(requeteSite_, o)));
+	}
+
 	public Boolean solrRechercherPaiements() {
-		return rechercherPaiements;
+		return DesignPage.staticSolrRechercherPaiements(requeteSite_, rechercherPaiements);
 	}
 
 	public String strRechercherPaiements() {
@@ -2262,6 +2509,190 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 				return val;
 			default:
 				return super.attribuerCluster(var, val);
+		}
+	}
+
+	///////////////
+	// staticSet //
+	///////////////
+
+	public static Object staticSetPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		return staticSetDesignPage(entiteVar,  requeteSite_, o);
+	}
+	public static Object staticSetDesignPage(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		switch(entiteVar) {
+		case "designPageCle":
+			return DesignPage.staticSetDesignPageCle(requeteSite_, o);
+		case "designEnfantCles":
+			return DesignPage.staticSetDesignEnfantCles(requeteSite_, o);
+		case "designParentCles":
+			return DesignPage.staticSetDesignParentCles(requeteSite_, o);
+		case "partHtmlCles":
+			return DesignPage.staticSetPartHtmlCles(requeteSite_, o);
+		case "designPageNomComplet":
+			return DesignPage.staticSetDesignPageNomComplet(requeteSite_, o);
+		case "designCache":
+			return DesignPage.staticSetDesignCache(requeteSite_, o);
+		case "designAdmin":
+			return DesignPage.staticSetDesignAdmin(requeteSite_, o);
+		case "designIgnorerNomEnfantVide":
+			return DesignPage.staticSetDesignIgnorerNomEnfantVide(requeteSite_, o);
+		case "designIgnorerPaiementsPasEnSouffrance":
+			return DesignPage.staticSetDesignIgnorerPaiementsPasEnSouffrance(requeteSite_, o);
+		case "designIgnorerPaiementsEnSouffrance":
+			return DesignPage.staticSetDesignIgnorerPaiementsEnSouffrance(requeteSite_, o);
+		case "designFiltrerInscriptionCle":
+			return DesignPage.staticSetDesignFiltrerInscriptionCle(requeteSite_, o);
+		case "designInscriptionTriMoisJourDeNaissance":
+			return DesignPage.staticSetDesignInscriptionTriMoisJourDeNaissance(requeteSite_, o);
+		case "designInscriptionTriNomGroupe":
+			return DesignPage.staticSetDesignInscriptionTriNomGroupe(requeteSite_, o);
+		case "designInscriptionTriNomEnfant":
+			return DesignPage.staticSetDesignInscriptionTriNomEnfant(requeteSite_, o);
+		case "rechercherAnnees":
+			return DesignPage.staticSetRechercherAnnees(requeteSite_, o);
+		case "rechercherPaiements":
+			return DesignPage.staticSetRechercherPaiements(requeteSite_, o);
+			default:
+				return Cluster.staticSetCluster(entiteVar,  requeteSite_, o);
+		}
+	}
+
+	////////////////
+	// staticSolr //
+	////////////////
+
+	public static Object staticSolrPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		return staticSolrDesignPage(entiteVar,  requeteSite_, o);
+	}
+	public static Object staticSolrDesignPage(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		switch(entiteVar) {
+		case "designPageCle":
+			return DesignPage.staticSolrDesignPageCle(requeteSite_, (Long)o);
+		case "designEnfantCles":
+			return DesignPage.staticSolrDesignEnfantCles(requeteSite_, (List<Long>)o);
+		case "designParentCles":
+			return DesignPage.staticSolrDesignParentCles(requeteSite_, (List<Long>)o);
+		case "partHtmlCles":
+			return DesignPage.staticSolrPartHtmlCles(requeteSite_, (List<Long>)o);
+		case "designPageNomComplet":
+			return DesignPage.staticSolrDesignPageNomComplet(requeteSite_, (String)o);
+		case "designCache":
+			return DesignPage.staticSolrDesignCache(requeteSite_, (Boolean)o);
+		case "designAdmin":
+			return DesignPage.staticSolrDesignAdmin(requeteSite_, (Boolean)o);
+		case "designIgnorerNomEnfantVide":
+			return DesignPage.staticSolrDesignIgnorerNomEnfantVide(requeteSite_, (Boolean)o);
+		case "designIgnorerPaiementsPasEnSouffrance":
+			return DesignPage.staticSolrDesignIgnorerPaiementsPasEnSouffrance(requeteSite_, (Boolean)o);
+		case "designIgnorerPaiementsEnSouffrance":
+			return DesignPage.staticSolrDesignIgnorerPaiementsEnSouffrance(requeteSite_, (Boolean)o);
+		case "designFiltrerInscriptionCle":
+			return DesignPage.staticSolrDesignFiltrerInscriptionCle(requeteSite_, (Boolean)o);
+		case "designInscriptionTriMoisJourDeNaissance":
+			return DesignPage.staticSolrDesignInscriptionTriMoisJourDeNaissance(requeteSite_, (Boolean)o);
+		case "designInscriptionTriNomGroupe":
+			return DesignPage.staticSolrDesignInscriptionTriNomGroupe(requeteSite_, (Boolean)o);
+		case "designInscriptionTriNomEnfant":
+			return DesignPage.staticSolrDesignInscriptionTriNomEnfant(requeteSite_, (Boolean)o);
+		case "rechercherAnnees":
+			return DesignPage.staticSolrRechercherAnnees(requeteSite_, (Boolean)o);
+		case "rechercherPaiements":
+			return DesignPage.staticSolrRechercherPaiements(requeteSite_, (Boolean)o);
+			default:
+				return Cluster.staticSolrCluster(entiteVar,  requeteSite_, o);
+		}
+	}
+
+	///////////////////
+	// staticSolrStr //
+	///////////////////
+
+	public static String staticSolrStrPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		return staticSolrStrDesignPage(entiteVar,  requeteSite_, o);
+	}
+	public static String staticSolrStrDesignPage(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		switch(entiteVar) {
+		case "designPageCle":
+			return DesignPage.staticSolrStrDesignPageCle(requeteSite_, (Long)o);
+		case "designEnfantCles":
+			return DesignPage.staticSolrStrDesignEnfantCles(requeteSite_, (List<Long>)o);
+		case "designParentCles":
+			return DesignPage.staticSolrStrDesignParentCles(requeteSite_, (List<Long>)o);
+		case "partHtmlCles":
+			return DesignPage.staticSolrStrPartHtmlCles(requeteSite_, (List<Long>)o);
+		case "designPageNomComplet":
+			return DesignPage.staticSolrStrDesignPageNomComplet(requeteSite_, (String)o);
+		case "designCache":
+			return DesignPage.staticSolrStrDesignCache(requeteSite_, (Boolean)o);
+		case "designAdmin":
+			return DesignPage.staticSolrStrDesignAdmin(requeteSite_, (Boolean)o);
+		case "designIgnorerNomEnfantVide":
+			return DesignPage.staticSolrStrDesignIgnorerNomEnfantVide(requeteSite_, (Boolean)o);
+		case "designIgnorerPaiementsPasEnSouffrance":
+			return DesignPage.staticSolrStrDesignIgnorerPaiementsPasEnSouffrance(requeteSite_, (Boolean)o);
+		case "designIgnorerPaiementsEnSouffrance":
+			return DesignPage.staticSolrStrDesignIgnorerPaiementsEnSouffrance(requeteSite_, (Boolean)o);
+		case "designFiltrerInscriptionCle":
+			return DesignPage.staticSolrStrDesignFiltrerInscriptionCle(requeteSite_, (Boolean)o);
+		case "designInscriptionTriMoisJourDeNaissance":
+			return DesignPage.staticSolrStrDesignInscriptionTriMoisJourDeNaissance(requeteSite_, (Boolean)o);
+		case "designInscriptionTriNomGroupe":
+			return DesignPage.staticSolrStrDesignInscriptionTriNomGroupe(requeteSite_, (Boolean)o);
+		case "designInscriptionTriNomEnfant":
+			return DesignPage.staticSolrStrDesignInscriptionTriNomEnfant(requeteSite_, (Boolean)o);
+		case "rechercherAnnees":
+			return DesignPage.staticSolrStrRechercherAnnees(requeteSite_, (Boolean)o);
+		case "rechercherPaiements":
+			return DesignPage.staticSolrStrRechercherPaiements(requeteSite_, (Boolean)o);
+			default:
+				return Cluster.staticSolrStrCluster(entiteVar,  requeteSite_, o);
+		}
+	}
+
+	//////////////////
+	// staticSolrFq //
+	//////////////////
+
+	public static String staticSolrFqPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		return staticSolrFqDesignPage(entiteVar,  requeteSite_, o);
+	}
+	public static String staticSolrFqDesignPage(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		switch(entiteVar) {
+		case "designPageCle":
+			return DesignPage.staticSolrFqDesignPageCle(requeteSite_, o);
+		case "designEnfantCles":
+			return DesignPage.staticSolrFqDesignEnfantCles(requeteSite_, o);
+		case "designParentCles":
+			return DesignPage.staticSolrFqDesignParentCles(requeteSite_, o);
+		case "partHtmlCles":
+			return DesignPage.staticSolrFqPartHtmlCles(requeteSite_, o);
+		case "designPageNomComplet":
+			return DesignPage.staticSolrFqDesignPageNomComplet(requeteSite_, o);
+		case "designCache":
+			return DesignPage.staticSolrFqDesignCache(requeteSite_, o);
+		case "designAdmin":
+			return DesignPage.staticSolrFqDesignAdmin(requeteSite_, o);
+		case "designIgnorerNomEnfantVide":
+			return DesignPage.staticSolrFqDesignIgnorerNomEnfantVide(requeteSite_, o);
+		case "designIgnorerPaiementsPasEnSouffrance":
+			return DesignPage.staticSolrFqDesignIgnorerPaiementsPasEnSouffrance(requeteSite_, o);
+		case "designIgnorerPaiementsEnSouffrance":
+			return DesignPage.staticSolrFqDesignIgnorerPaiementsEnSouffrance(requeteSite_, o);
+		case "designFiltrerInscriptionCle":
+			return DesignPage.staticSolrFqDesignFiltrerInscriptionCle(requeteSite_, o);
+		case "designInscriptionTriMoisJourDeNaissance":
+			return DesignPage.staticSolrFqDesignInscriptionTriMoisJourDeNaissance(requeteSite_, o);
+		case "designInscriptionTriNomGroupe":
+			return DesignPage.staticSolrFqDesignInscriptionTriNomGroupe(requeteSite_, o);
+		case "designInscriptionTriNomEnfant":
+			return DesignPage.staticSolrFqDesignInscriptionTriNomEnfant(requeteSite_, o);
+		case "rechercherAnnees":
+			return DesignPage.staticSolrFqRechercherAnnees(requeteSite_, o);
+		case "rechercherPaiements":
+			return DesignPage.staticSolrFqRechercherPaiements(requeteSite_, o);
+			default:
+				return Cluster.staticSolrFqCluster(entiteVar,  requeteSite_, o);
 		}
 	}
 

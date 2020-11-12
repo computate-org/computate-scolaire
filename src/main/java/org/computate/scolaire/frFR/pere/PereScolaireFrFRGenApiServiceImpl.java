@@ -2990,7 +2990,16 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 	public void recherchePereScolaireFq(String uri, String apiMethode, ListeRecherche<PereScolaire> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
 		if(varIndexe == null)
 			throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entiteVar));
-		listeRecherche.addFilterQuery(varIndexe + ":" + ClientUtils.escapeQueryChars(valeurIndexe));
+		if(StringUtils.startsWith(valeurIndexe, "[")) {
+			String[] fqs = StringUtils.split(StringUtils.substringBefore(StringUtils.substringAfter(valeurIndexe, "["), "]"), " TO ");
+			if(fqs.length != 2)
+				throw new RuntimeException(String.format("\"%s\" invalid range query. ", valeurIndexe));
+			String fq1 = fqs[0].equals("*") ? fqs[0] : PereScolaire.staticSolrFqPourClasse(entiteVar, listeRecherche.getRequeteSite_(), fqs[0]);
+			String fq2 = fqs[1].equals("*") ? fqs[1] : PereScolaire.staticSolrFqPourClasse(entiteVar, listeRecherche.getRequeteSite_(), fqs[1]);
+			listeRecherche.addFilterQuery(varIndexe + ":[" + fq1 + " TO " + fq2 + "]");
+		} else {
+			listeRecherche.addFilterQuery(varIndexe + ":" + PereScolaire.staticSolrFqPourClasse(entiteVar, listeRecherche.getRequeteSite_(), valeurIndexe));
+		}
 	}
 
 	public void recherchePereScolaireSort(String uri, String apiMethode, ListeRecherche<PereScolaire> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
@@ -3130,7 +3139,7 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 					gestionnaireEvenements.handle(Future.failedFuture(e));
 				}
 			});
-			if("*".equals(listeRecherche.getQuery()) && listeRecherche.getSorts().size() == 0) {
+			if("*:*".equals(listeRecherche.getQuery()) && listeRecherche.getSorts().size() == 0) {
 				listeRecherche.addSort("cree_indexed_date", ORDER.desc);
 			}
 			listeRecherche.initLoinPourClasse(requeteSite);

@@ -127,6 +127,62 @@ public abstract class DadPageGen<DEV> extends DadGenPage {
 		}
 	}
 
+	///////////////
+	// staticSet //
+	///////////////
+
+	public static Object staticSetForClass(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		return staticSetDadPage(entityVar,  siteRequest_, o);
+	}
+	public static Object staticSetDadPage(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		switch(entityVar) {
+			default:
+				return DadGenPage.staticSetDadGenPage(entityVar,  siteRequest_, o);
+		}
+	}
+
+	////////////////
+	// staticSolr //
+	////////////////
+
+	public static Object staticSolrForClass(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		return staticSolrDadPage(entityVar,  siteRequest_, o);
+	}
+	public static Object staticSolrDadPage(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		switch(entityVar) {
+			default:
+				return DadGenPage.staticSolrDadGenPage(entityVar,  siteRequest_, o);
+		}
+	}
+
+	///////////////////
+	// staticSolrStr //
+	///////////////////
+
+	public static String staticSolrStrForClass(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		return staticSolrStrDadPage(entityVar,  siteRequest_, o);
+	}
+	public static String staticSolrStrDadPage(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		switch(entityVar) {
+			default:
+				return DadGenPage.staticSolrStrDadGenPage(entityVar,  siteRequest_, o);
+		}
+	}
+
+	//////////////////
+	// staticSolrFq //
+	//////////////////
+
+	public static String staticSolrFqForClass(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		return staticSolrFqDadPage(entityVar,  siteRequest_, o);
+	}
+	public static String staticSolrFqDadPage(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		switch(entityVar) {
+			default:
+				return DadGenPage.staticSolrFqDadGenPage(entityVar,  siteRequest_, o);
+		}
+	}
+
 	/////////////
 	// define //
 	/////////////

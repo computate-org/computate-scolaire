@@ -111,10 +111,14 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 		this.mereCleCouverture.dejaInitialise = true;
 	}
 	public MereScolaire setMereCle(String o) {
-		if(NumberUtils.isParsable(o))
-			this.mereCle = Long.parseLong(o);
+		this.mereCle = MereScolaire.staticSetMereCle(requeteSite_, o);
 		this.mereCleCouverture.dejaInitialise = true;
 		return (MereScolaire)this;
+	}
+	public static Long staticSetMereCle(RequeteSiteFrFR requeteSite_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Long.parseLong(o);
+		return null;
 	}
 	protected MereScolaire mereCleInit() {
 		if(!mereCleCouverture.dejaInitialise) {
@@ -126,8 +130,20 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 		return (MereScolaire)this;
 	}
 
+	public static Long staticSolrMereCle(RequeteSiteFrFR requeteSite_, Long o) {
+		return o;
+	}
+
+	public static String staticSolrStrMereCle(RequeteSiteFrFR requeteSite_, Long o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqMereCle(RequeteSiteFrFR requeteSite_, String o) {
+		return MereScolaire.staticSolrStrMereCle(requeteSite_, MereScolaire.staticSolrMereCle(requeteSite_, MereScolaire.staticSetMereCle(requeteSite_, o)));
+	}
+
 	public Long solrMereCle() {
-		return mereCle;
+		return MereScolaire.staticSolrMereCle(requeteSite_, mereCle);
 	}
 
 	public String strMereCle() {
@@ -179,6 +195,9 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 		this.inscriptionCles = inscriptionCles;
 		this.inscriptionClesCouverture.dejaInitialise = true;
 	}
+	public static List<Long> staticSetInscriptionCles(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
+	}
 	public MereScolaire addInscriptionCles(Long...objets) {
 		for(Long o : objets) {
 			addInscriptionCles(o);
@@ -213,8 +232,20 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 		return (MereScolaire)this;
 	}
 
+	public static List<Long> staticSolrInscriptionCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
+		return o;
+	}
+
+	public static String staticSolrStrInscriptionCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqInscriptionCles(RequeteSiteFrFR requeteSite_, String o) {
+		return MereScolaire.staticSolrStrInscriptionCles(requeteSite_, MereScolaire.staticSolrInscriptionCles(requeteSite_, MereScolaire.staticSetInscriptionCles(requeteSite_, o)));
+	}
+
 	public List<Long> solrInscriptionCles() {
-		return inscriptionCles;
+		return MereScolaire.staticSolrInscriptionCles(requeteSite_, inscriptionCles);
 	}
 
 	public String strInscriptionCles() {
@@ -252,9 +283,12 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 					.a("class", "valeur suggereInscriptionCles w3-input w3-border w3-cell w3-cell-middle ")
 					.a("name", "setInscriptionCles")
 					.a("id", classeApiMethodeMethode, "_inscriptionCles")
-					.a("autocomplete", "off")
-					.a("oninput", "suggereMereScolaireInscriptionCles($(this).val() ? rechercherInscriptionScolaireFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'mereCles:" + pk + "'}", "], $('#listMereScolaireInscriptionCles_", classeApiMethodeMethode, "'), ", pk, "); ")
-				.fg();
+					.a("autocomplete", "off");
+					if("Page".equals(classeApiMethodeMethode)) {
+						a("oninput", "suggereMereScolaireInscriptionCles($(this).val() ? rechercherInscriptionScolaireFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'mereCles:" + pk + "'}", "], $('#listMereScolaireInscriptionCles_", classeApiMethodeMethode, "'), ", pk, "); ");
+					}
+
+				fg();
 
 		} else {
 			e("span").a("class", "varMereScolaire", pk, "InscriptionCles ").f().sx(htmInscriptionCles()).g("span");
@@ -338,10 +372,14 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 		this.familleTriCouverture.dejaInitialise = true;
 	}
 	public MereScolaire setFamilleTri(String o) {
-		if(NumberUtils.isParsable(o))
-			this.familleTri = Integer.parseInt(o);
+		this.familleTri = MereScolaire.staticSetFamilleTri(requeteSite_, o);
 		this.familleTriCouverture.dejaInitialise = true;
 		return (MereScolaire)this;
+	}
+	public static Integer staticSetFamilleTri(RequeteSiteFrFR requeteSite_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Integer.parseInt(o);
+		return null;
 	}
 	protected MereScolaire familleTriInit() {
 		if(!familleTriCouverture.dejaInitialise) {
@@ -353,8 +391,20 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 		return (MereScolaire)this;
 	}
 
+	public static Integer staticSolrFamilleTri(RequeteSiteFrFR requeteSite_, Integer o) {
+		return o;
+	}
+
+	public static String staticSolrStrFamilleTri(RequeteSiteFrFR requeteSite_, Integer o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqFamilleTri(RequeteSiteFrFR requeteSite_, String o) {
+		return MereScolaire.staticSolrStrFamilleTri(requeteSite_, MereScolaire.staticSolrFamilleTri(requeteSite_, MereScolaire.staticSetFamilleTri(requeteSite_, o)));
+	}
+
 	public Integer solrFamilleTri() {
-		return familleTri;
+		return MereScolaire.staticSolrFamilleTri(requeteSite_, familleTri);
 	}
 
 	public String strFamilleTri() {
@@ -407,10 +457,14 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 		this.mereTriCouverture.dejaInitialise = true;
 	}
 	public MereScolaire setMereTri(String o) {
-		if(NumberUtils.isParsable(o))
-			this.mereTri = Integer.parseInt(o);
+		this.mereTri = MereScolaire.staticSetMereTri(requeteSite_, o);
 		this.mereTriCouverture.dejaInitialise = true;
 		return (MereScolaire)this;
+	}
+	public static Integer staticSetMereTri(RequeteSiteFrFR requeteSite_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Integer.parseInt(o);
+		return null;
 	}
 	protected MereScolaire mereTriInit() {
 		if(!mereTriCouverture.dejaInitialise) {
@@ -422,8 +476,20 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 		return (MereScolaire)this;
 	}
 
+	public static Integer staticSolrMereTri(RequeteSiteFrFR requeteSite_, Integer o) {
+		return o;
+	}
+
+	public static String staticSolrStrMereTri(RequeteSiteFrFR requeteSite_, Integer o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqMereTri(RequeteSiteFrFR requeteSite_, String o) {
+		return MereScolaire.staticSolrStrMereTri(requeteSite_, MereScolaire.staticSolrMereTri(requeteSite_, MereScolaire.staticSetMereTri(requeteSite_, o)));
+	}
+
 	public Integer solrMereTri() {
-		return mereTri;
+		return MereScolaire.staticSolrMereTri(requeteSite_, mereTri);
 	}
 
 	public String strMereTri() {
@@ -475,6 +541,9 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 		this.inscriptionRecherche = inscriptionRecherche;
 		this.inscriptionRechercheCouverture.dejaInitialise = true;
 	}
+	public static ListeRecherche<InscriptionScolaire> staticSetInscriptionRecherche(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
+	}
 	protected MereScolaire inscriptionRechercheInit() {
 		if(!inscriptionRechercheCouverture.dejaInitialise) {
 			_inscriptionRecherche(inscriptionRecherche);
@@ -512,6 +581,9 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 	public void setInscriptions(List<InscriptionScolaire> inscriptions) {
 		this.inscriptions = inscriptions;
 		this.inscriptionsCouverture.dejaInitialise = true;
+	}
+	public static List<InscriptionScolaire> staticSetInscriptions(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
 	}
 	public MereScolaire addInscriptions(InscriptionScolaire...objets) {
 		for(InscriptionScolaire o : objets) {
@@ -561,6 +633,9 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 		this.utilisateurCles = utilisateurCles;
 		this.utilisateurClesCouverture.dejaInitialise = true;
 	}
+	public static List<Long> staticSetUtilisateurCles(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
+	}
 	public MereScolaire addUtilisateurCles(Long...objets) {
 		for(Long o : objets) {
 			addUtilisateurCles(o);
@@ -595,8 +670,20 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 		return (MereScolaire)this;
 	}
 
+	public static List<Long> staticSolrUtilisateurCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
+		return o;
+	}
+
+	public static String staticSolrStrUtilisateurCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqUtilisateurCles(RequeteSiteFrFR requeteSite_, String o) {
+		return MereScolaire.staticSolrStrUtilisateurCles(requeteSite_, MereScolaire.staticSolrUtilisateurCles(requeteSite_, MereScolaire.staticSetUtilisateurCles(requeteSite_, o)));
+	}
+
 	public List<Long> solrUtilisateurCles() {
-		return utilisateurCles;
+		return MereScolaire.staticSolrUtilisateurCles(requeteSite_, utilisateurCles);
 	}
 
 	public String strUtilisateurCles() {
@@ -648,6 +735,9 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 		this.ecoleCles = ecoleCles;
 		this.ecoleClesCouverture.dejaInitialise = true;
 	}
+	public static List<Long> staticSetEcoleCles(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
+	}
 	public MereScolaire addEcoleCles(Long...objets) {
 		for(Long o : objets) {
 			addEcoleCles(o);
@@ -682,8 +772,20 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 		return (MereScolaire)this;
 	}
 
+	public static List<Long> staticSolrEcoleCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
+		return o;
+	}
+
+	public static String staticSolrStrEcoleCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqEcoleCles(RequeteSiteFrFR requeteSite_, String o) {
+		return MereScolaire.staticSolrStrEcoleCles(requeteSite_, MereScolaire.staticSolrEcoleCles(requeteSite_, MereScolaire.staticSetEcoleCles(requeteSite_, o)));
+	}
+
 	public List<Long> solrEcoleCles() {
-		return ecoleCles;
+		return MereScolaire.staticSolrEcoleCles(requeteSite_, ecoleCles);
 	}
 
 	public String strEcoleCles() {
@@ -735,6 +837,9 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 		this.anneeCles = anneeCles;
 		this.anneeClesCouverture.dejaInitialise = true;
 	}
+	public static List<Long> staticSetAnneeCles(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
+	}
 	public MereScolaire addAnneeCles(Long...objets) {
 		for(Long o : objets) {
 			addAnneeCles(o);
@@ -769,8 +874,20 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 		return (MereScolaire)this;
 	}
 
+	public static List<Long> staticSolrAnneeCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
+		return o;
+	}
+
+	public static String staticSolrStrAnneeCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqAnneeCles(RequeteSiteFrFR requeteSite_, String o) {
+		return MereScolaire.staticSolrStrAnneeCles(requeteSite_, MereScolaire.staticSolrAnneeCles(requeteSite_, MereScolaire.staticSetAnneeCles(requeteSite_, o)));
+	}
+
 	public List<Long> solrAnneeCles() {
-		return anneeCles;
+		return MereScolaire.staticSolrAnneeCles(requeteSite_, anneeCles);
 	}
 
 	public String strAnneeCles() {
@@ -822,6 +939,9 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 		this.saisonCles = saisonCles;
 		this.saisonClesCouverture.dejaInitialise = true;
 	}
+	public static List<Long> staticSetSaisonCles(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
+	}
 	public MereScolaire addSaisonCles(Long...objets) {
 		for(Long o : objets) {
 			addSaisonCles(o);
@@ -856,8 +976,20 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 		return (MereScolaire)this;
 	}
 
+	public static List<Long> staticSolrSaisonCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
+		return o;
+	}
+
+	public static String staticSolrStrSaisonCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqSaisonCles(RequeteSiteFrFR requeteSite_, String o) {
+		return MereScolaire.staticSolrStrSaisonCles(requeteSite_, MereScolaire.staticSolrSaisonCles(requeteSite_, MereScolaire.staticSetSaisonCles(requeteSite_, o)));
+	}
+
 	public List<Long> solrSaisonCles() {
-		return saisonCles;
+		return MereScolaire.staticSolrSaisonCles(requeteSite_, saisonCles);
 	}
 
 	public String strSaisonCles() {
@@ -909,6 +1041,9 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 		this.sessionCles = sessionCles;
 		this.sessionClesCouverture.dejaInitialise = true;
 	}
+	public static List<Long> staticSetSessionCles(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
+	}
 	public MereScolaire addSessionCles(Long...objets) {
 		for(Long o : objets) {
 			addSessionCles(o);
@@ -943,8 +1078,20 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 		return (MereScolaire)this;
 	}
 
+	public static List<Long> staticSolrSessionCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
+		return o;
+	}
+
+	public static String staticSolrStrSessionCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqSessionCles(RequeteSiteFrFR requeteSite_, String o) {
+		return MereScolaire.staticSolrStrSessionCles(requeteSite_, MereScolaire.staticSolrSessionCles(requeteSite_, MereScolaire.staticSetSessionCles(requeteSite_, o)));
+	}
+
 	public List<Long> solrSessionCles() {
-		return sessionCles;
+		return MereScolaire.staticSolrSessionCles(requeteSite_, sessionCles);
 	}
 
 	public String strSessionCles() {
@@ -996,6 +1143,9 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 		this.ageCles = ageCles;
 		this.ageClesCouverture.dejaInitialise = true;
 	}
+	public static List<Long> staticSetAgeCles(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
+	}
 	public MereScolaire addAgeCles(Long...objets) {
 		for(Long o : objets) {
 			addAgeCles(o);
@@ -1030,8 +1180,20 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 		return (MereScolaire)this;
 	}
 
+	public static List<Long> staticSolrAgeCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
+		return o;
+	}
+
+	public static String staticSolrStrAgeCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqAgeCles(RequeteSiteFrFR requeteSite_, String o) {
+		return MereScolaire.staticSolrStrAgeCles(requeteSite_, MereScolaire.staticSolrAgeCles(requeteSite_, MereScolaire.staticSetAgeCles(requeteSite_, o)));
+	}
+
 	public List<Long> solrAgeCles() {
-		return ageCles;
+		return MereScolaire.staticSolrAgeCles(requeteSite_, ageCles);
 	}
 
 	public String strAgeCles() {
@@ -1077,10 +1239,13 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 	public String getPersonnePrenom() {
 		return personnePrenom;
 	}
-
-	public void setPersonnePrenom(String personnePrenom) {
-		this.personnePrenom = personnePrenom;
+	public MereScolaire setPersonnePrenom(String o) {
+		this.personnePrenom = MereScolaire.staticSetPersonnePrenom(requeteSite_, o);
 		this.personnePrenomCouverture.dejaInitialise = true;
+		return (MereScolaire)this;
+	}
+	public static String staticSetPersonnePrenom(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected MereScolaire personnePrenomInit() {
 		if(!personnePrenomCouverture.dejaInitialise) {
@@ -1092,8 +1257,20 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 		return (MereScolaire)this;
 	}
 
+	public static String staticSolrPersonnePrenom(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrPersonnePrenom(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPersonnePrenom(RequeteSiteFrFR requeteSite_, String o) {
+		return MereScolaire.staticSolrStrPersonnePrenom(requeteSite_, MereScolaire.staticSolrPersonnePrenom(requeteSite_, MereScolaire.staticSetPersonnePrenom(requeteSite_, o)));
+	}
+
 	public String solrPersonnePrenom() {
-		return personnePrenom;
+		return MereScolaire.staticSolrPersonnePrenom(requeteSite_, personnePrenom);
 	}
 
 	public String strPersonnePrenom() {
@@ -1209,10 +1386,13 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 	public String getPersonnePrenomPrefere() {
 		return personnePrenomPrefere;
 	}
-
-	public void setPersonnePrenomPrefere(String personnePrenomPrefere) {
-		this.personnePrenomPrefere = personnePrenomPrefere;
+	public MereScolaire setPersonnePrenomPrefere(String o) {
+		this.personnePrenomPrefere = MereScolaire.staticSetPersonnePrenomPrefere(requeteSite_, o);
 		this.personnePrenomPrefereCouverture.dejaInitialise = true;
+		return (MereScolaire)this;
+	}
+	public static String staticSetPersonnePrenomPrefere(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected MereScolaire personnePrenomPrefereInit() {
 		if(!personnePrenomPrefereCouverture.dejaInitialise) {
@@ -1224,8 +1404,20 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 		return (MereScolaire)this;
 	}
 
+	public static String staticSolrPersonnePrenomPrefere(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrPersonnePrenomPrefere(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPersonnePrenomPrefere(RequeteSiteFrFR requeteSite_, String o) {
+		return MereScolaire.staticSolrStrPersonnePrenomPrefere(requeteSite_, MereScolaire.staticSolrPersonnePrenomPrefere(requeteSite_, MereScolaire.staticSetPersonnePrenomPrefere(requeteSite_, o)));
+	}
+
 	public String solrPersonnePrenomPrefere() {
-		return personnePrenomPrefere;
+		return MereScolaire.staticSolrPersonnePrenomPrefere(requeteSite_, personnePrenomPrefere);
 	}
 
 	public String strPersonnePrenomPrefere() {
@@ -1341,10 +1533,13 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 	public String getFamilleNom() {
 		return familleNom;
 	}
-
-	public void setFamilleNom(String familleNom) {
-		this.familleNom = familleNom;
+	public MereScolaire setFamilleNom(String o) {
+		this.familleNom = MereScolaire.staticSetFamilleNom(requeteSite_, o);
 		this.familleNomCouverture.dejaInitialise = true;
+		return (MereScolaire)this;
+	}
+	public static String staticSetFamilleNom(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected MereScolaire familleNomInit() {
 		if(!familleNomCouverture.dejaInitialise) {
@@ -1356,8 +1551,20 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 		return (MereScolaire)this;
 	}
 
+	public static String staticSolrFamilleNom(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrFamilleNom(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqFamilleNom(RequeteSiteFrFR requeteSite_, String o) {
+		return MereScolaire.staticSolrStrFamilleNom(requeteSite_, MereScolaire.staticSolrFamilleNom(requeteSite_, MereScolaire.staticSetFamilleNom(requeteSite_, o)));
+	}
+
 	public String solrFamilleNom() {
-		return familleNom;
+		return MereScolaire.staticSolrFamilleNom(requeteSite_, familleNom);
 	}
 
 	public String strFamilleNom() {
@@ -1473,10 +1680,13 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 	public String getPersonneNomComplet() {
 		return personneNomComplet;
 	}
-
-	public void setPersonneNomComplet(String personneNomComplet) {
-		this.personneNomComplet = personneNomComplet;
+	public MereScolaire setPersonneNomComplet(String o) {
+		this.personneNomComplet = MereScolaire.staticSetPersonneNomComplet(requeteSite_, o);
 		this.personneNomCompletCouverture.dejaInitialise = true;
+		return (MereScolaire)this;
+	}
+	public static String staticSetPersonneNomComplet(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected MereScolaire personneNomCompletInit() {
 		if(!personneNomCompletCouverture.dejaInitialise) {
@@ -1488,8 +1698,20 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 		return (MereScolaire)this;
 	}
 
+	public static String staticSolrPersonneNomComplet(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrPersonneNomComplet(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPersonneNomComplet(RequeteSiteFrFR requeteSite_, String o) {
+		return MereScolaire.staticSolrStrPersonneNomComplet(requeteSite_, MereScolaire.staticSolrPersonneNomComplet(requeteSite_, MereScolaire.staticSetPersonneNomComplet(requeteSite_, o)));
+	}
+
 	public String solrPersonneNomComplet() {
-		return personneNomComplet;
+		return MereScolaire.staticSolrPersonneNomComplet(requeteSite_, personneNomComplet);
 	}
 
 	public String strPersonneNomComplet() {
@@ -1535,10 +1757,13 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 	public String getPersonneNomCompletPrefere() {
 		return personneNomCompletPrefere;
 	}
-
-	public void setPersonneNomCompletPrefere(String personneNomCompletPrefere) {
-		this.personneNomCompletPrefere = personneNomCompletPrefere;
+	public MereScolaire setPersonneNomCompletPrefere(String o) {
+		this.personneNomCompletPrefere = MereScolaire.staticSetPersonneNomCompletPrefere(requeteSite_, o);
 		this.personneNomCompletPrefereCouverture.dejaInitialise = true;
+		return (MereScolaire)this;
+	}
+	public static String staticSetPersonneNomCompletPrefere(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected MereScolaire personneNomCompletPrefereInit() {
 		if(!personneNomCompletPrefereCouverture.dejaInitialise) {
@@ -1550,8 +1775,20 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 		return (MereScolaire)this;
 	}
 
+	public static String staticSolrPersonneNomCompletPrefere(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrPersonneNomCompletPrefere(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPersonneNomCompletPrefere(RequeteSiteFrFR requeteSite_, String o) {
+		return MereScolaire.staticSolrStrPersonneNomCompletPrefere(requeteSite_, MereScolaire.staticSolrPersonneNomCompletPrefere(requeteSite_, MereScolaire.staticSetPersonneNomCompletPrefere(requeteSite_, o)));
+	}
+
 	public String solrPersonneNomCompletPrefere() {
-		return personneNomCompletPrefere;
+		return MereScolaire.staticSolrPersonneNomCompletPrefere(requeteSite_, personneNomCompletPrefere);
 	}
 
 	public String strPersonneNomCompletPrefere() {
@@ -1597,10 +1834,13 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 	public String getPersonneNomFormel() {
 		return personneNomFormel;
 	}
-
-	public void setPersonneNomFormel(String personneNomFormel) {
-		this.personneNomFormel = personneNomFormel;
+	public MereScolaire setPersonneNomFormel(String o) {
+		this.personneNomFormel = MereScolaire.staticSetPersonneNomFormel(requeteSite_, o);
 		this.personneNomFormelCouverture.dejaInitialise = true;
+		return (MereScolaire)this;
+	}
+	public static String staticSetPersonneNomFormel(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected MereScolaire personneNomFormelInit() {
 		if(!personneNomFormelCouverture.dejaInitialise) {
@@ -1612,8 +1852,20 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 		return (MereScolaire)this;
 	}
 
+	public static String staticSolrPersonneNomFormel(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrPersonneNomFormel(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPersonneNomFormel(RequeteSiteFrFR requeteSite_, String o) {
+		return MereScolaire.staticSolrStrPersonneNomFormel(requeteSite_, MereScolaire.staticSolrPersonneNomFormel(requeteSite_, MereScolaire.staticSetPersonneNomFormel(requeteSite_, o)));
+	}
+
 	public String solrPersonneNomFormel() {
-		return personneNomFormel;
+		return MereScolaire.staticSolrPersonneNomFormel(requeteSite_, personneNomFormel);
 	}
 
 	public String strPersonneNomFormel() {
@@ -1659,10 +1911,13 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 	public String getPersonneOccupation() {
 		return personneOccupation;
 	}
-
-	public void setPersonneOccupation(String personneOccupation) {
-		this.personneOccupation = personneOccupation;
+	public MereScolaire setPersonneOccupation(String o) {
+		this.personneOccupation = MereScolaire.staticSetPersonneOccupation(requeteSite_, o);
 		this.personneOccupationCouverture.dejaInitialise = true;
+		return (MereScolaire)this;
+	}
+	public static String staticSetPersonneOccupation(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected MereScolaire personneOccupationInit() {
 		if(!personneOccupationCouverture.dejaInitialise) {
@@ -1674,8 +1929,20 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 		return (MereScolaire)this;
 	}
 
+	public static String staticSolrPersonneOccupation(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrPersonneOccupation(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPersonneOccupation(RequeteSiteFrFR requeteSite_, String o) {
+		return MereScolaire.staticSolrStrPersonneOccupation(requeteSite_, MereScolaire.staticSolrPersonneOccupation(requeteSite_, MereScolaire.staticSetPersonneOccupation(requeteSite_, o)));
+	}
+
 	public String solrPersonneOccupation() {
-		return personneOccupation;
+		return MereScolaire.staticSolrPersonneOccupation(requeteSite_, personneOccupation);
 	}
 
 	public String strPersonneOccupation() {
@@ -1791,10 +2058,13 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 	public String getPersonneNumeroTelephone() {
 		return personneNumeroTelephone;
 	}
-
-	public void setPersonneNumeroTelephone(String personneNumeroTelephone) {
-		this.personneNumeroTelephone = personneNumeroTelephone;
+	public MereScolaire setPersonneNumeroTelephone(String o) {
+		this.personneNumeroTelephone = MereScolaire.staticSetPersonneNumeroTelephone(requeteSite_, o);
 		this.personneNumeroTelephoneCouverture.dejaInitialise = true;
+		return (MereScolaire)this;
+	}
+	public static String staticSetPersonneNumeroTelephone(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected MereScolaire personneNumeroTelephoneInit() {
 		if(!personneNumeroTelephoneCouverture.dejaInitialise) {
@@ -1806,8 +2076,20 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 		return (MereScolaire)this;
 	}
 
+	public static String staticSolrPersonneNumeroTelephone(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrPersonneNumeroTelephone(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPersonneNumeroTelephone(RequeteSiteFrFR requeteSite_, String o) {
+		return MereScolaire.staticSolrStrPersonneNumeroTelephone(requeteSite_, MereScolaire.staticSolrPersonneNumeroTelephone(requeteSite_, MereScolaire.staticSetPersonneNumeroTelephone(requeteSite_, o)));
+	}
+
 	public String solrPersonneNumeroTelephone() {
-		return personneNumeroTelephone;
+		return MereScolaire.staticSolrPersonneNumeroTelephone(requeteSite_, personneNumeroTelephone);
 	}
 
 	public String strPersonneNumeroTelephone() {
@@ -1923,10 +2205,13 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 	public String getPersonneMail() {
 		return personneMail;
 	}
-
-	public void setPersonneMail(String personneMail) {
-		this.personneMail = personneMail;
+	public MereScolaire setPersonneMail(String o) {
+		this.personneMail = MereScolaire.staticSetPersonneMail(requeteSite_, o);
 		this.personneMailCouverture.dejaInitialise = true;
+		return (MereScolaire)this;
+	}
+	public static String staticSetPersonneMail(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected MereScolaire personneMailInit() {
 		if(!personneMailCouverture.dejaInitialise) {
@@ -1938,8 +2223,20 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 		return (MereScolaire)this;
 	}
 
+	public static String staticSolrPersonneMail(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrPersonneMail(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPersonneMail(RequeteSiteFrFR requeteSite_, String o) {
+		return MereScolaire.staticSolrStrPersonneMail(requeteSite_, MereScolaire.staticSolrPersonneMail(requeteSite_, MereScolaire.staticSetPersonneMail(requeteSite_, o)));
+	}
+
 	public String solrPersonneMail() {
-		return personneMail;
+		return MereScolaire.staticSolrPersonneMail(requeteSite_, personneMail);
 	}
 
 	public String strPersonneMail() {
@@ -2055,10 +2352,13 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 	public String getPersonneRelation() {
 		return personneRelation;
 	}
-
-	public void setPersonneRelation(String personneRelation) {
-		this.personneRelation = personneRelation;
+	public MereScolaire setPersonneRelation(String o) {
+		this.personneRelation = MereScolaire.staticSetPersonneRelation(requeteSite_, o);
 		this.personneRelationCouverture.dejaInitialise = true;
+		return (MereScolaire)this;
+	}
+	public static String staticSetPersonneRelation(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected MereScolaire personneRelationInit() {
 		if(!personneRelationCouverture.dejaInitialise) {
@@ -2070,8 +2370,20 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 		return (MereScolaire)this;
 	}
 
+	public static String staticSolrPersonneRelation(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrPersonneRelation(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPersonneRelation(RequeteSiteFrFR requeteSite_, String o) {
+		return MereScolaire.staticSolrStrPersonneRelation(requeteSite_, MereScolaire.staticSolrPersonneRelation(requeteSite_, MereScolaire.staticSetPersonneRelation(requeteSite_, o)));
+	}
+
 	public String solrPersonneRelation() {
-		return personneRelation;
+		return MereScolaire.staticSolrPersonneRelation(requeteSite_, personneRelation);
 	}
 
 	public String strPersonneRelation() {
@@ -2123,9 +2435,12 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 		this.personneSmsCouverture.dejaInitialise = true;
 	}
 	public MereScolaire setPersonneSms(String o) {
-		this.personneSms = Boolean.parseBoolean(o);
+		this.personneSms = MereScolaire.staticSetPersonneSms(requeteSite_, o);
 		this.personneSmsCouverture.dejaInitialise = true;
 		return (MereScolaire)this;
+	}
+	public static Boolean staticSetPersonneSms(RequeteSiteFrFR requeteSite_, String o) {
+		return Boolean.parseBoolean(o);
 	}
 	protected MereScolaire personneSmsInit() {
 		if(!personneSmsCouverture.dejaInitialise) {
@@ -2137,8 +2452,20 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 		return (MereScolaire)this;
 	}
 
+	public static Boolean staticSolrPersonneSms(RequeteSiteFrFR requeteSite_, Boolean o) {
+		return o;
+	}
+
+	public static String staticSolrStrPersonneSms(RequeteSiteFrFR requeteSite_, Boolean o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPersonneSms(RequeteSiteFrFR requeteSite_, String o) {
+		return MereScolaire.staticSolrStrPersonneSms(requeteSite_, MereScolaire.staticSolrPersonneSms(requeteSite_, MereScolaire.staticSetPersonneSms(requeteSite_, o)));
+	}
+
 	public Boolean solrPersonneSms() {
-		return personneSms;
+		return MereScolaire.staticSolrPersonneSms(requeteSite_, personneSms);
 	}
 
 	public String strPersonneSms() {
@@ -2255,9 +2582,12 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 		this.personneRecevoirMailCouverture.dejaInitialise = true;
 	}
 	public MereScolaire setPersonneRecevoirMail(String o) {
-		this.personneRecevoirMail = Boolean.parseBoolean(o);
+		this.personneRecevoirMail = MereScolaire.staticSetPersonneRecevoirMail(requeteSite_, o);
 		this.personneRecevoirMailCouverture.dejaInitialise = true;
 		return (MereScolaire)this;
+	}
+	public static Boolean staticSetPersonneRecevoirMail(RequeteSiteFrFR requeteSite_, String o) {
+		return Boolean.parseBoolean(o);
 	}
 	protected MereScolaire personneRecevoirMailInit() {
 		if(!personneRecevoirMailCouverture.dejaInitialise) {
@@ -2269,8 +2599,20 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 		return (MereScolaire)this;
 	}
 
+	public static Boolean staticSolrPersonneRecevoirMail(RequeteSiteFrFR requeteSite_, Boolean o) {
+		return o;
+	}
+
+	public static String staticSolrStrPersonneRecevoirMail(RequeteSiteFrFR requeteSite_, Boolean o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPersonneRecevoirMail(RequeteSiteFrFR requeteSite_, String o) {
+		return MereScolaire.staticSolrStrPersonneRecevoirMail(requeteSite_, MereScolaire.staticSolrPersonneRecevoirMail(requeteSite_, MereScolaire.staticSetPersonneRecevoirMail(requeteSite_, o)));
+	}
+
 	public Boolean solrPersonneRecevoirMail() {
-		return personneRecevoirMail;
+		return MereScolaire.staticSolrPersonneRecevoirMail(requeteSite_, personneRecevoirMail);
 	}
 
 	public String strPersonneRecevoirMail() {
@@ -2387,9 +2729,12 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 		this.personneContactUrgenceCouverture.dejaInitialise = true;
 	}
 	public MereScolaire setPersonneContactUrgence(String o) {
-		this.personneContactUrgence = Boolean.parseBoolean(o);
+		this.personneContactUrgence = MereScolaire.staticSetPersonneContactUrgence(requeteSite_, o);
 		this.personneContactUrgenceCouverture.dejaInitialise = true;
 		return (MereScolaire)this;
+	}
+	public static Boolean staticSetPersonneContactUrgence(RequeteSiteFrFR requeteSite_, String o) {
+		return Boolean.parseBoolean(o);
 	}
 	protected MereScolaire personneContactUrgenceInit() {
 		if(!personneContactUrgenceCouverture.dejaInitialise) {
@@ -2401,8 +2746,20 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 		return (MereScolaire)this;
 	}
 
+	public static Boolean staticSolrPersonneContactUrgence(RequeteSiteFrFR requeteSite_, Boolean o) {
+		return o;
+	}
+
+	public static String staticSolrStrPersonneContactUrgence(RequeteSiteFrFR requeteSite_, Boolean o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPersonneContactUrgence(RequeteSiteFrFR requeteSite_, String o) {
+		return MereScolaire.staticSolrStrPersonneContactUrgence(requeteSite_, MereScolaire.staticSolrPersonneContactUrgence(requeteSite_, MereScolaire.staticSetPersonneContactUrgence(requeteSite_, o)));
+	}
+
 	public Boolean solrPersonneContactUrgence() {
-		return personneContactUrgence;
+		return MereScolaire.staticSolrPersonneContactUrgence(requeteSite_, personneContactUrgence);
 	}
 
 	public String strPersonneContactUrgence() {
@@ -2519,9 +2876,12 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 		this.personneChercherCouverture.dejaInitialise = true;
 	}
 	public MereScolaire setPersonneChercher(String o) {
-		this.personneChercher = Boolean.parseBoolean(o);
+		this.personneChercher = MereScolaire.staticSetPersonneChercher(requeteSite_, o);
 		this.personneChercherCouverture.dejaInitialise = true;
 		return (MereScolaire)this;
+	}
+	public static Boolean staticSetPersonneChercher(RequeteSiteFrFR requeteSite_, String o) {
+		return Boolean.parseBoolean(o);
 	}
 	protected MereScolaire personneChercherInit() {
 		if(!personneChercherCouverture.dejaInitialise) {
@@ -2533,8 +2893,20 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 		return (MereScolaire)this;
 	}
 
+	public static Boolean staticSolrPersonneChercher(RequeteSiteFrFR requeteSite_, Boolean o) {
+		return o;
+	}
+
+	public static String staticSolrStrPersonneChercher(RequeteSiteFrFR requeteSite_, Boolean o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPersonneChercher(RequeteSiteFrFR requeteSite_, String o) {
+		return MereScolaire.staticSolrStrPersonneChercher(requeteSite_, MereScolaire.staticSolrPersonneChercher(requeteSite_, MereScolaire.staticSetPersonneChercher(requeteSite_, o)));
+	}
+
 	public Boolean solrPersonneChercher() {
-		return personneChercher;
+		return MereScolaire.staticSolrPersonneChercher(requeteSite_, personneChercher);
 	}
 
 	public String strPersonneChercher() {
@@ -2645,10 +3017,13 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 	public String getPhoto() {
 		return photo;
 	}
-
-	public void setPhoto(String photo) {
-		this.photo = photo;
+	public MereScolaire setPhoto(String o) {
+		this.photo = MereScolaire.staticSetPhoto(requeteSite_, o);
 		this.photoCouverture.dejaInitialise = true;
+		return (MereScolaire)this;
+	}
+	public static String staticSetPhoto(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected MereScolaire photoInit() {
 		if(!photoCouverture.dejaInitialise) {
@@ -2660,8 +3035,20 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 		return (MereScolaire)this;
 	}
 
+	public static String staticSolrPhoto(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrPhoto(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPhoto(RequeteSiteFrFR requeteSite_, String o) {
+		return MereScolaire.staticSolrStrPhoto(requeteSite_, MereScolaire.staticSolrPhoto(requeteSite_, MereScolaire.staticSetPhoto(requeteSite_, o)));
+	}
+
 	public String solrPhoto() {
-		return photo;
+		return MereScolaire.staticSolrPhoto(requeteSite_, photo);
 	}
 
 	public String strPhoto() {
@@ -2771,10 +3158,13 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 	public String getMereNomComplet() {
 		return mereNomComplet;
 	}
-
-	public void setMereNomComplet(String mereNomComplet) {
-		this.mereNomComplet = mereNomComplet;
+	public MereScolaire setMereNomComplet(String o) {
+		this.mereNomComplet = MereScolaire.staticSetMereNomComplet(requeteSite_, o);
 		this.mereNomCompletCouverture.dejaInitialise = true;
+		return (MereScolaire)this;
+	}
+	public static String staticSetMereNomComplet(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected MereScolaire mereNomCompletInit() {
 		if(!mereNomCompletCouverture.dejaInitialise) {
@@ -2786,8 +3176,20 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 		return (MereScolaire)this;
 	}
 
+	public static String staticSolrMereNomComplet(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrMereNomComplet(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqMereNomComplet(RequeteSiteFrFR requeteSite_, String o) {
+		return MereScolaire.staticSolrStrMereNomComplet(requeteSite_, MereScolaire.staticSolrMereNomComplet(requeteSite_, MereScolaire.staticSetMereNomComplet(requeteSite_, o)));
+	}
+
 	public String solrMereNomComplet() {
-		return mereNomComplet;
+		return MereScolaire.staticSolrMereNomComplet(requeteSite_, mereNomComplet);
 	}
 
 	public String strMereNomComplet() {
@@ -2987,6 +3389,270 @@ public abstract class MereScolaireGen<DEV> extends Cluster {
 				return val;
 			default:
 				return super.attribuerCluster(var, val);
+		}
+	}
+
+	///////////////
+	// staticSet //
+	///////////////
+
+	public static Object staticSetPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		return staticSetMereScolaire(entiteVar,  requeteSite_, o);
+	}
+	public static Object staticSetMereScolaire(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		switch(entiteVar) {
+		case "mereCle":
+			return MereScolaire.staticSetMereCle(requeteSite_, o);
+		case "inscriptionCles":
+			return MereScolaire.staticSetInscriptionCles(requeteSite_, o);
+		case "familleTri":
+			return MereScolaire.staticSetFamilleTri(requeteSite_, o);
+		case "mereTri":
+			return MereScolaire.staticSetMereTri(requeteSite_, o);
+		case "utilisateurCles":
+			return MereScolaire.staticSetUtilisateurCles(requeteSite_, o);
+		case "ecoleCles":
+			return MereScolaire.staticSetEcoleCles(requeteSite_, o);
+		case "anneeCles":
+			return MereScolaire.staticSetAnneeCles(requeteSite_, o);
+		case "saisonCles":
+			return MereScolaire.staticSetSaisonCles(requeteSite_, o);
+		case "sessionCles":
+			return MereScolaire.staticSetSessionCles(requeteSite_, o);
+		case "ageCles":
+			return MereScolaire.staticSetAgeCles(requeteSite_, o);
+		case "personnePrenom":
+			return MereScolaire.staticSetPersonnePrenom(requeteSite_, o);
+		case "personnePrenomPrefere":
+			return MereScolaire.staticSetPersonnePrenomPrefere(requeteSite_, o);
+		case "familleNom":
+			return MereScolaire.staticSetFamilleNom(requeteSite_, o);
+		case "personneNomComplet":
+			return MereScolaire.staticSetPersonneNomComplet(requeteSite_, o);
+		case "personneNomCompletPrefere":
+			return MereScolaire.staticSetPersonneNomCompletPrefere(requeteSite_, o);
+		case "personneNomFormel":
+			return MereScolaire.staticSetPersonneNomFormel(requeteSite_, o);
+		case "personneOccupation":
+			return MereScolaire.staticSetPersonneOccupation(requeteSite_, o);
+		case "personneNumeroTelephone":
+			return MereScolaire.staticSetPersonneNumeroTelephone(requeteSite_, o);
+		case "personneMail":
+			return MereScolaire.staticSetPersonneMail(requeteSite_, o);
+		case "personneRelation":
+			return MereScolaire.staticSetPersonneRelation(requeteSite_, o);
+		case "personneSms":
+			return MereScolaire.staticSetPersonneSms(requeteSite_, o);
+		case "personneRecevoirMail":
+			return MereScolaire.staticSetPersonneRecevoirMail(requeteSite_, o);
+		case "personneContactUrgence":
+			return MereScolaire.staticSetPersonneContactUrgence(requeteSite_, o);
+		case "personneChercher":
+			return MereScolaire.staticSetPersonneChercher(requeteSite_, o);
+		case "photo":
+			return MereScolaire.staticSetPhoto(requeteSite_, o);
+		case "mereNomComplet":
+			return MereScolaire.staticSetMereNomComplet(requeteSite_, o);
+			default:
+				return Cluster.staticSetCluster(entiteVar,  requeteSite_, o);
+		}
+	}
+
+	////////////////
+	// staticSolr //
+	////////////////
+
+	public static Object staticSolrPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		return staticSolrMereScolaire(entiteVar,  requeteSite_, o);
+	}
+	public static Object staticSolrMereScolaire(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		switch(entiteVar) {
+		case "mereCle":
+			return MereScolaire.staticSolrMereCle(requeteSite_, (Long)o);
+		case "inscriptionCles":
+			return MereScolaire.staticSolrInscriptionCles(requeteSite_, (List<Long>)o);
+		case "familleTri":
+			return MereScolaire.staticSolrFamilleTri(requeteSite_, (Integer)o);
+		case "mereTri":
+			return MereScolaire.staticSolrMereTri(requeteSite_, (Integer)o);
+		case "utilisateurCles":
+			return MereScolaire.staticSolrUtilisateurCles(requeteSite_, (List<Long>)o);
+		case "ecoleCles":
+			return MereScolaire.staticSolrEcoleCles(requeteSite_, (List<Long>)o);
+		case "anneeCles":
+			return MereScolaire.staticSolrAnneeCles(requeteSite_, (List<Long>)o);
+		case "saisonCles":
+			return MereScolaire.staticSolrSaisonCles(requeteSite_, (List<Long>)o);
+		case "sessionCles":
+			return MereScolaire.staticSolrSessionCles(requeteSite_, (List<Long>)o);
+		case "ageCles":
+			return MereScolaire.staticSolrAgeCles(requeteSite_, (List<Long>)o);
+		case "personnePrenom":
+			return MereScolaire.staticSolrPersonnePrenom(requeteSite_, (String)o);
+		case "personnePrenomPrefere":
+			return MereScolaire.staticSolrPersonnePrenomPrefere(requeteSite_, (String)o);
+		case "familleNom":
+			return MereScolaire.staticSolrFamilleNom(requeteSite_, (String)o);
+		case "personneNomComplet":
+			return MereScolaire.staticSolrPersonneNomComplet(requeteSite_, (String)o);
+		case "personneNomCompletPrefere":
+			return MereScolaire.staticSolrPersonneNomCompletPrefere(requeteSite_, (String)o);
+		case "personneNomFormel":
+			return MereScolaire.staticSolrPersonneNomFormel(requeteSite_, (String)o);
+		case "personneOccupation":
+			return MereScolaire.staticSolrPersonneOccupation(requeteSite_, (String)o);
+		case "personneNumeroTelephone":
+			return MereScolaire.staticSolrPersonneNumeroTelephone(requeteSite_, (String)o);
+		case "personneMail":
+			return MereScolaire.staticSolrPersonneMail(requeteSite_, (String)o);
+		case "personneRelation":
+			return MereScolaire.staticSolrPersonneRelation(requeteSite_, (String)o);
+		case "personneSms":
+			return MereScolaire.staticSolrPersonneSms(requeteSite_, (Boolean)o);
+		case "personneRecevoirMail":
+			return MereScolaire.staticSolrPersonneRecevoirMail(requeteSite_, (Boolean)o);
+		case "personneContactUrgence":
+			return MereScolaire.staticSolrPersonneContactUrgence(requeteSite_, (Boolean)o);
+		case "personneChercher":
+			return MereScolaire.staticSolrPersonneChercher(requeteSite_, (Boolean)o);
+		case "photo":
+			return MereScolaire.staticSolrPhoto(requeteSite_, (String)o);
+		case "mereNomComplet":
+			return MereScolaire.staticSolrMereNomComplet(requeteSite_, (String)o);
+			default:
+				return Cluster.staticSolrCluster(entiteVar,  requeteSite_, o);
+		}
+	}
+
+	///////////////////
+	// staticSolrStr //
+	///////////////////
+
+	public static String staticSolrStrPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		return staticSolrStrMereScolaire(entiteVar,  requeteSite_, o);
+	}
+	public static String staticSolrStrMereScolaire(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		switch(entiteVar) {
+		case "mereCle":
+			return MereScolaire.staticSolrStrMereCle(requeteSite_, (Long)o);
+		case "inscriptionCles":
+			return MereScolaire.staticSolrStrInscriptionCles(requeteSite_, (List<Long>)o);
+		case "familleTri":
+			return MereScolaire.staticSolrStrFamilleTri(requeteSite_, (Integer)o);
+		case "mereTri":
+			return MereScolaire.staticSolrStrMereTri(requeteSite_, (Integer)o);
+		case "utilisateurCles":
+			return MereScolaire.staticSolrStrUtilisateurCles(requeteSite_, (List<Long>)o);
+		case "ecoleCles":
+			return MereScolaire.staticSolrStrEcoleCles(requeteSite_, (List<Long>)o);
+		case "anneeCles":
+			return MereScolaire.staticSolrStrAnneeCles(requeteSite_, (List<Long>)o);
+		case "saisonCles":
+			return MereScolaire.staticSolrStrSaisonCles(requeteSite_, (List<Long>)o);
+		case "sessionCles":
+			return MereScolaire.staticSolrStrSessionCles(requeteSite_, (List<Long>)o);
+		case "ageCles":
+			return MereScolaire.staticSolrStrAgeCles(requeteSite_, (List<Long>)o);
+		case "personnePrenom":
+			return MereScolaire.staticSolrStrPersonnePrenom(requeteSite_, (String)o);
+		case "personnePrenomPrefere":
+			return MereScolaire.staticSolrStrPersonnePrenomPrefere(requeteSite_, (String)o);
+		case "familleNom":
+			return MereScolaire.staticSolrStrFamilleNom(requeteSite_, (String)o);
+		case "personneNomComplet":
+			return MereScolaire.staticSolrStrPersonneNomComplet(requeteSite_, (String)o);
+		case "personneNomCompletPrefere":
+			return MereScolaire.staticSolrStrPersonneNomCompletPrefere(requeteSite_, (String)o);
+		case "personneNomFormel":
+			return MereScolaire.staticSolrStrPersonneNomFormel(requeteSite_, (String)o);
+		case "personneOccupation":
+			return MereScolaire.staticSolrStrPersonneOccupation(requeteSite_, (String)o);
+		case "personneNumeroTelephone":
+			return MereScolaire.staticSolrStrPersonneNumeroTelephone(requeteSite_, (String)o);
+		case "personneMail":
+			return MereScolaire.staticSolrStrPersonneMail(requeteSite_, (String)o);
+		case "personneRelation":
+			return MereScolaire.staticSolrStrPersonneRelation(requeteSite_, (String)o);
+		case "personneSms":
+			return MereScolaire.staticSolrStrPersonneSms(requeteSite_, (Boolean)o);
+		case "personneRecevoirMail":
+			return MereScolaire.staticSolrStrPersonneRecevoirMail(requeteSite_, (Boolean)o);
+		case "personneContactUrgence":
+			return MereScolaire.staticSolrStrPersonneContactUrgence(requeteSite_, (Boolean)o);
+		case "personneChercher":
+			return MereScolaire.staticSolrStrPersonneChercher(requeteSite_, (Boolean)o);
+		case "photo":
+			return MereScolaire.staticSolrStrPhoto(requeteSite_, (String)o);
+		case "mereNomComplet":
+			return MereScolaire.staticSolrStrMereNomComplet(requeteSite_, (String)o);
+			default:
+				return Cluster.staticSolrStrCluster(entiteVar,  requeteSite_, o);
+		}
+	}
+
+	//////////////////
+	// staticSolrFq //
+	//////////////////
+
+	public static String staticSolrFqPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		return staticSolrFqMereScolaire(entiteVar,  requeteSite_, o);
+	}
+	public static String staticSolrFqMereScolaire(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		switch(entiteVar) {
+		case "mereCle":
+			return MereScolaire.staticSolrFqMereCle(requeteSite_, o);
+		case "inscriptionCles":
+			return MereScolaire.staticSolrFqInscriptionCles(requeteSite_, o);
+		case "familleTri":
+			return MereScolaire.staticSolrFqFamilleTri(requeteSite_, o);
+		case "mereTri":
+			return MereScolaire.staticSolrFqMereTri(requeteSite_, o);
+		case "utilisateurCles":
+			return MereScolaire.staticSolrFqUtilisateurCles(requeteSite_, o);
+		case "ecoleCles":
+			return MereScolaire.staticSolrFqEcoleCles(requeteSite_, o);
+		case "anneeCles":
+			return MereScolaire.staticSolrFqAnneeCles(requeteSite_, o);
+		case "saisonCles":
+			return MereScolaire.staticSolrFqSaisonCles(requeteSite_, o);
+		case "sessionCles":
+			return MereScolaire.staticSolrFqSessionCles(requeteSite_, o);
+		case "ageCles":
+			return MereScolaire.staticSolrFqAgeCles(requeteSite_, o);
+		case "personnePrenom":
+			return MereScolaire.staticSolrFqPersonnePrenom(requeteSite_, o);
+		case "personnePrenomPrefere":
+			return MereScolaire.staticSolrFqPersonnePrenomPrefere(requeteSite_, o);
+		case "familleNom":
+			return MereScolaire.staticSolrFqFamilleNom(requeteSite_, o);
+		case "personneNomComplet":
+			return MereScolaire.staticSolrFqPersonneNomComplet(requeteSite_, o);
+		case "personneNomCompletPrefere":
+			return MereScolaire.staticSolrFqPersonneNomCompletPrefere(requeteSite_, o);
+		case "personneNomFormel":
+			return MereScolaire.staticSolrFqPersonneNomFormel(requeteSite_, o);
+		case "personneOccupation":
+			return MereScolaire.staticSolrFqPersonneOccupation(requeteSite_, o);
+		case "personneNumeroTelephone":
+			return MereScolaire.staticSolrFqPersonneNumeroTelephone(requeteSite_, o);
+		case "personneMail":
+			return MereScolaire.staticSolrFqPersonneMail(requeteSite_, o);
+		case "personneRelation":
+			return MereScolaire.staticSolrFqPersonneRelation(requeteSite_, o);
+		case "personneSms":
+			return MereScolaire.staticSolrFqPersonneSms(requeteSite_, o);
+		case "personneRecevoirMail":
+			return MereScolaire.staticSolrFqPersonneRecevoirMail(requeteSite_, o);
+		case "personneContactUrgence":
+			return MereScolaire.staticSolrFqPersonneContactUrgence(requeteSite_, o);
+		case "personneChercher":
+			return MereScolaire.staticSolrFqPersonneChercher(requeteSite_, o);
+		case "photo":
+			return MereScolaire.staticSolrFqPhoto(requeteSite_, o);
+		case "mereNomComplet":
+			return MereScolaire.staticSolrFqMereNomComplet(requeteSite_, o);
+			default:
+				return Cluster.staticSolrFqCluster(entiteVar,  requeteSite_, o);
 		}
 	}
 

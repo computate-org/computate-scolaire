@@ -222,13 +222,6 @@ public class RecuGenPage extends RecuGenPageGen<ClusterPage> {
 			o.htmEcoleCle("PUTCopie");
 			o.htmPaiementDescription("PUTCopie");
 		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmInheritPk("PUTCopie");
-			o.htmSessionId("PUTCopie");
-			o.htmUtilisateurId("PUTCopie");
-			o.htmUtilisateurCle("PUTCopie");
-			o.htmPaiementNomCourt("PUTCopie");
-		} g("div");
 	}
 
 	public void htmlFormPATCHRecuScolaire(RecuScolaire o) {
@@ -247,13 +240,6 @@ public class RecuGenPage extends RecuGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEcoleCle("PATCH");
 			o.htmPaiementDescription("PATCH");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmInheritPk("PATCH");
-			o.htmSessionId("PATCH");
-			o.htmUtilisateurId("PATCH");
-			o.htmUtilisateurCle("PATCH");
-			o.htmPaiementNomCourt("PATCH");
 		} g("div");
 	}
 

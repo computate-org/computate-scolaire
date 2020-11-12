@@ -68,6 +68,9 @@ public abstract class ChildGenPageGen<DEV> extends ClusterPage {
 		this.listSchoolChild = listSchoolChild;
 		this.listSchoolChildWrap.alreadyInitialized = true;
 	}
+	public static SearchList<SchoolChild> staticSetListSchoolChild(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	protected ChildGenPage listSchoolChildInit() {
 		if(!listSchoolChildWrap.alreadyInitialized) {
 			_listSchoolChild(listSchoolChildWrap);
@@ -107,6 +110,9 @@ public abstract class ChildGenPageGen<DEV> extends ClusterPage {
 	public void setSchoolChild_(SchoolChild schoolChild_) {
 		this.schoolChild_ = schoolChild_;
 		this.schoolChild_Wrap.alreadyInitialized = true;
+	}
+	public static SchoolChild staticSetSchoolChild_(SiteRequestEnUS siteRequest_, String o) {
+		return null;
 	}
 	protected ChildGenPage schoolChild_Init() {
 		if(!schoolChild_Wrap.alreadyInitialized) {
@@ -212,6 +218,62 @@ public abstract class ChildGenPageGen<DEV> extends ClusterPage {
 		switch(var) {
 			default:
 				return super.attributeClusterPage(var, val);
+		}
+	}
+
+	///////////////
+	// staticSet //
+	///////////////
+
+	public static Object staticSetForClass(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		return staticSetChildGenPage(entityVar,  siteRequest_, o);
+	}
+	public static Object staticSetChildGenPage(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		switch(entityVar) {
+			default:
+				return ClusterPage.staticSetClusterPage(entityVar,  siteRequest_, o);
+		}
+	}
+
+	////////////////
+	// staticSolr //
+	////////////////
+
+	public static Object staticSolrForClass(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		return staticSolrChildGenPage(entityVar,  siteRequest_, o);
+	}
+	public static Object staticSolrChildGenPage(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		switch(entityVar) {
+			default:
+				return ClusterPage.staticSolrClusterPage(entityVar,  siteRequest_, o);
+		}
+	}
+
+	///////////////////
+	// staticSolrStr //
+	///////////////////
+
+	public static String staticSolrStrForClass(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		return staticSolrStrChildGenPage(entityVar,  siteRequest_, o);
+	}
+	public static String staticSolrStrChildGenPage(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		switch(entityVar) {
+			default:
+				return ClusterPage.staticSolrStrClusterPage(entityVar,  siteRequest_, o);
+		}
+	}
+
+	//////////////////
+	// staticSolrFq //
+	//////////////////
+
+	public static String staticSolrFqForClass(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		return staticSolrFqChildGenPage(entityVar,  siteRequest_, o);
+	}
+	public static String staticSolrFqChildGenPage(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		switch(entityVar) {
+			default:
+				return ClusterPage.staticSolrFqClusterPage(entityVar,  siteRequest_, o);
 		}
 	}
 

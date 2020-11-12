@@ -117,6 +117,9 @@ public abstract class ClusterGen<DEV> extends Object {
 		this.requeteSite_ = requeteSite_;
 		this.requeteSite_Couverture.dejaInitialise = true;
 	}
+	public static RequeteSiteFrFR staticSetRequeteSite_(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
+	}
 	protected Cluster requeteSite_Init() {
 		if(!requeteSite_Couverture.dejaInitialise) {
 			_requeteSite_(requeteSite_Couverture);
@@ -154,6 +157,9 @@ public abstract class ClusterGen<DEV> extends Object {
 	public void setPageParts(List<PagePart> pageParts) {
 		this.pageParts = pageParts;
 		this.pagePartsCouverture.dejaInitialise = true;
+	}
+	public static List<PagePart> staticSetPageParts(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
 	}
 	public Cluster addPageParts(PagePart...objets) {
 		for(PagePart o : objets) {
@@ -205,10 +211,14 @@ public abstract class ClusterGen<DEV> extends Object {
 		this.pkCouverture.dejaInitialise = true;
 	}
 	public Cluster setPk(String o) {
-		if(NumberUtils.isParsable(o))
-			this.pk = Long.parseLong(o);
+		this.pk = Cluster.staticSetPk(requeteSite_, o);
 		this.pkCouverture.dejaInitialise = true;
 		return (Cluster)this;
+	}
+	public static Long staticSetPk(RequeteSiteFrFR requeteSite_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Long.parseLong(o);
+		return null;
 	}
 	protected Cluster pkInit() {
 		if(!pkCouverture.dejaInitialise) {
@@ -220,8 +230,20 @@ public abstract class ClusterGen<DEV> extends Object {
 		return (Cluster)this;
 	}
 
+	public static Long staticSolrPk(RequeteSiteFrFR requeteSite_, Long o) {
+		return o;
+	}
+
+	public static String staticSolrStrPk(RequeteSiteFrFR requeteSite_, Long o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPk(RequeteSiteFrFR requeteSite_, String o) {
+		return Cluster.staticSolrStrPk(requeteSite_, Cluster.staticSolrPk(requeteSite_, Cluster.staticSetPk(requeteSite_, o)));
+	}
+
 	public Long solrPk() {
-		return pk;
+		return Cluster.staticSolrPk(requeteSite_, pk);
 	}
 
 	public String strPk() {
@@ -301,10 +323,14 @@ public abstract class ClusterGen<DEV> extends Object {
 		this.inheritPkCouverture.dejaInitialise = true;
 	}
 	public Cluster setInheritPk(String o) {
-		if(NumberUtils.isParsable(o))
-			this.inheritPk = Long.parseLong(o);
+		this.inheritPk = Cluster.staticSetInheritPk(requeteSite_, o);
 		this.inheritPkCouverture.dejaInitialise = true;
 		return (Cluster)this;
+	}
+	public static Long staticSetInheritPk(RequeteSiteFrFR requeteSite_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Long.parseLong(o);
+		return null;
 	}
 	protected Cluster inheritPkInit() {
 		if(!inheritPkCouverture.dejaInitialise) {
@@ -316,8 +342,20 @@ public abstract class ClusterGen<DEV> extends Object {
 		return (Cluster)this;
 	}
 
+	public static Long staticSolrInheritPk(RequeteSiteFrFR requeteSite_, Long o) {
+		return o;
+	}
+
+	public static String staticSolrStrInheritPk(RequeteSiteFrFR requeteSite_, Long o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqInheritPk(RequeteSiteFrFR requeteSite_, String o) {
+		return Cluster.staticSolrStrInheritPk(requeteSite_, Cluster.staticSolrInheritPk(requeteSite_, Cluster.staticSetInheritPk(requeteSite_, o)));
+	}
+
 	public Long solrInheritPk() {
-		return inheritPk;
+		return Cluster.staticSolrInheritPk(requeteSite_, inheritPk);
 	}
 
 	public String strInheritPk() {
@@ -432,10 +470,13 @@ public abstract class ClusterGen<DEV> extends Object {
 	public String getId() {
 		return id;
 	}
-
-	public void setId(String id) {
-		this.id = id;
+	public Cluster setId(String o) {
+		this.id = Cluster.staticSetId(requeteSite_, o);
 		this.idCouverture.dejaInitialise = true;
+		return (Cluster)this;
+	}
+	public static String staticSetId(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected Cluster idInit() {
 		if(!idCouverture.dejaInitialise) {
@@ -447,8 +488,20 @@ public abstract class ClusterGen<DEV> extends Object {
 		return (Cluster)this;
 	}
 
+	public static String staticSolrId(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrId(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqId(RequeteSiteFrFR requeteSite_, String o) {
+		return Cluster.staticSolrStrId(requeteSite_, Cluster.staticSolrId(requeteSite_, Cluster.staticSetId(requeteSite_, o)));
+	}
+
 	public String solrId() {
-		return id;
+		return Cluster.staticSolrId(requeteSite_, id);
 	}
 
 	public String strId() {
@@ -507,9 +560,12 @@ public abstract class ClusterGen<DEV> extends Object {
 	}
 	/** Example: 2011-12-03T10:15:30+01:00 **/
 	public Cluster setCree(String o) {
-		this.cree = o == null ? null : ZonedDateTime.parse(o, DateTimeFormatter.ISO_DATE_TIME.withZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone()))).truncatedTo(ChronoUnit.MILLIS);
+		this.cree = Cluster.staticSetCree(requeteSite_, o);
 		this.creeCouverture.dejaInitialise = true;
 		return (Cluster)this;
+	}
+	public static ZonedDateTime staticSetCree(RequeteSiteFrFR requeteSite_, String o) {
+		return o == null ? null : ZonedDateTime.parse(o, DateTimeFormatter.ISO_DATE_TIME.withZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone()))).truncatedTo(ChronoUnit.MILLIS);
 	}
 	public Cluster setCree(Date o) {
 		this.cree = o == null ? null : ZonedDateTime.ofInstant(o.toInstant(), ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).truncatedTo(ChronoUnit.MILLIS);
@@ -526,8 +582,20 @@ public abstract class ClusterGen<DEV> extends Object {
 		return (Cluster)this;
 	}
 
+	public static Date staticSolrCree(RequeteSiteFrFR requeteSite_, ZonedDateTime o) {
+		return o == null ? null : Date.from(o.toInstant());
+	}
+
+	public static String staticSolrStrCree(RequeteSiteFrFR requeteSite_, Date o) {
+		return "\"" + DateTimeFormatter.ISO_DATE_TIME.format(o.toInstant().atOffset(ZoneOffset.UTC)) + "\"";
+	}
+
+	public static String staticSolrFqCree(RequeteSiteFrFR requeteSite_, String o) {
+		return Cluster.staticSolrStrCree(requeteSite_, Cluster.staticSolrCree(requeteSite_, Cluster.staticSetCree(requeteSite_, o)));
+	}
+
 	public Date solrCree() {
-		return cree == null ? null : Date.from(cree.toInstant());
+		return Cluster.staticSolrCree(requeteSite_, cree);
 	}
 
 	public String strCree() {
@@ -611,9 +679,12 @@ public abstract class ClusterGen<DEV> extends Object {
 	}
 	/** Example: 2011-12-03T10:15:30+01:00 **/
 	public Cluster setModifie(String o) {
-		this.modifie = o == null ? null : ZonedDateTime.parse(o, DateTimeFormatter.ISO_DATE_TIME.withZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone()))).truncatedTo(ChronoUnit.MILLIS);
+		this.modifie = Cluster.staticSetModifie(requeteSite_, o);
 		this.modifieCouverture.dejaInitialise = true;
 		return (Cluster)this;
+	}
+	public static ZonedDateTime staticSetModifie(RequeteSiteFrFR requeteSite_, String o) {
+		return o == null ? null : ZonedDateTime.parse(o, DateTimeFormatter.ISO_DATE_TIME.withZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone()))).truncatedTo(ChronoUnit.MILLIS);
 	}
 	public Cluster setModifie(Date o) {
 		this.modifie = o == null ? null : ZonedDateTime.ofInstant(o.toInstant(), ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).truncatedTo(ChronoUnit.MILLIS);
@@ -630,8 +701,20 @@ public abstract class ClusterGen<DEV> extends Object {
 		return (Cluster)this;
 	}
 
+	public static Date staticSolrModifie(RequeteSiteFrFR requeteSite_, ZonedDateTime o) {
+		return o == null ? null : Date.from(o.toInstant());
+	}
+
+	public static String staticSolrStrModifie(RequeteSiteFrFR requeteSite_, Date o) {
+		return "\"" + DateTimeFormatter.ISO_DATE_TIME.format(o.toInstant().atOffset(ZoneOffset.UTC)) + "\"";
+	}
+
+	public static String staticSolrFqModifie(RequeteSiteFrFR requeteSite_, String o) {
+		return Cluster.staticSolrStrModifie(requeteSite_, Cluster.staticSolrModifie(requeteSite_, Cluster.staticSetModifie(requeteSite_, o)));
+	}
+
 	public Date solrModifie() {
-		return modifie == null ? null : Date.from(modifie.toInstant());
+		return Cluster.staticSolrModifie(requeteSite_, modifie);
 	}
 
 	public String strModifie() {
@@ -708,9 +791,12 @@ public abstract class ClusterGen<DEV> extends Object {
 		this.archiveCouverture.dejaInitialise = true;
 	}
 	public Cluster setArchive(String o) {
-		this.archive = Boolean.parseBoolean(o);
+		this.archive = Cluster.staticSetArchive(requeteSite_, o);
 		this.archiveCouverture.dejaInitialise = true;
 		return (Cluster)this;
+	}
+	public static Boolean staticSetArchive(RequeteSiteFrFR requeteSite_, String o) {
+		return Boolean.parseBoolean(o);
 	}
 	protected Cluster archiveInit() {
 		if(!archiveCouverture.dejaInitialise) {
@@ -722,8 +808,20 @@ public abstract class ClusterGen<DEV> extends Object {
 		return (Cluster)this;
 	}
 
+	public static Boolean staticSolrArchive(RequeteSiteFrFR requeteSite_, Boolean o) {
+		return o;
+	}
+
+	public static String staticSolrStrArchive(RequeteSiteFrFR requeteSite_, Boolean o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqArchive(RequeteSiteFrFR requeteSite_, String o) {
+		return Cluster.staticSolrStrArchive(requeteSite_, Cluster.staticSolrArchive(requeteSite_, Cluster.staticSetArchive(requeteSite_, o)));
+	}
+
 	public Boolean solrArchive() {
-		return archive;
+		return Cluster.staticSolrArchive(requeteSite_, archive);
 	}
 
 	public String strArchive() {
@@ -845,9 +943,12 @@ public abstract class ClusterGen<DEV> extends Object {
 		this.supprimeCouverture.dejaInitialise = true;
 	}
 	public Cluster setSupprime(String o) {
-		this.supprime = Boolean.parseBoolean(o);
+		this.supprime = Cluster.staticSetSupprime(requeteSite_, o);
 		this.supprimeCouverture.dejaInitialise = true;
 		return (Cluster)this;
+	}
+	public static Boolean staticSetSupprime(RequeteSiteFrFR requeteSite_, String o) {
+		return Boolean.parseBoolean(o);
 	}
 	protected Cluster supprimeInit() {
 		if(!supprimeCouverture.dejaInitialise) {
@@ -859,8 +960,20 @@ public abstract class ClusterGen<DEV> extends Object {
 		return (Cluster)this;
 	}
 
+	public static Boolean staticSolrSupprime(RequeteSiteFrFR requeteSite_, Boolean o) {
+		return o;
+	}
+
+	public static String staticSolrStrSupprime(RequeteSiteFrFR requeteSite_, Boolean o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqSupprime(RequeteSiteFrFR requeteSite_, String o) {
+		return Cluster.staticSolrStrSupprime(requeteSite_, Cluster.staticSolrSupprime(requeteSite_, Cluster.staticSetSupprime(requeteSite_, o)));
+	}
+
 	public Boolean solrSupprime() {
-		return supprime;
+		return Cluster.staticSolrSupprime(requeteSite_, supprime);
 	}
 
 	public String strSupprime() {
@@ -976,10 +1089,13 @@ public abstract class ClusterGen<DEV> extends Object {
 	public String getClasseNomCanonique() {
 		return classeNomCanonique;
 	}
-
-	public void setClasseNomCanonique(String classeNomCanonique) {
-		this.classeNomCanonique = classeNomCanonique;
+	public Cluster setClasseNomCanonique(String o) {
+		this.classeNomCanonique = Cluster.staticSetClasseNomCanonique(requeteSite_, o);
 		this.classeNomCanoniqueCouverture.dejaInitialise = true;
+		return (Cluster)this;
+	}
+	public static String staticSetClasseNomCanonique(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected Cluster classeNomCanoniqueInit() {
 		if(!classeNomCanoniqueCouverture.dejaInitialise) {
@@ -991,8 +1107,20 @@ public abstract class ClusterGen<DEV> extends Object {
 		return (Cluster)this;
 	}
 
+	public static String staticSolrClasseNomCanonique(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrClasseNomCanonique(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqClasseNomCanonique(RequeteSiteFrFR requeteSite_, String o) {
+		return Cluster.staticSolrStrClasseNomCanonique(requeteSite_, Cluster.staticSolrClasseNomCanonique(requeteSite_, Cluster.staticSetClasseNomCanonique(requeteSite_, o)));
+	}
+
 	public String solrClasseNomCanonique() {
-		return classeNomCanonique;
+		return Cluster.staticSolrClasseNomCanonique(requeteSite_, classeNomCanonique);
 	}
 
 	public String strClasseNomCanonique() {
@@ -1038,10 +1166,13 @@ public abstract class ClusterGen<DEV> extends Object {
 	public String getClasseNomSimple() {
 		return classeNomSimple;
 	}
-
-	public void setClasseNomSimple(String classeNomSimple) {
-		this.classeNomSimple = classeNomSimple;
+	public Cluster setClasseNomSimple(String o) {
+		this.classeNomSimple = Cluster.staticSetClasseNomSimple(requeteSite_, o);
 		this.classeNomSimpleCouverture.dejaInitialise = true;
+		return (Cluster)this;
+	}
+	public static String staticSetClasseNomSimple(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected Cluster classeNomSimpleInit() {
 		if(!classeNomSimpleCouverture.dejaInitialise) {
@@ -1053,8 +1184,20 @@ public abstract class ClusterGen<DEV> extends Object {
 		return (Cluster)this;
 	}
 
+	public static String staticSolrClasseNomSimple(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrClasseNomSimple(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqClasseNomSimple(RequeteSiteFrFR requeteSite_, String o) {
+		return Cluster.staticSolrStrClasseNomSimple(requeteSite_, Cluster.staticSolrClasseNomSimple(requeteSite_, Cluster.staticSetClasseNomSimple(requeteSite_, o)));
+	}
+
 	public String solrClasseNomSimple() {
-		return classeNomSimple;
+		return Cluster.staticSolrClasseNomSimple(requeteSite_, classeNomSimple);
 	}
 
 	public String strClasseNomSimple() {
@@ -1105,6 +1248,9 @@ public abstract class ClusterGen<DEV> extends Object {
 		this.classeNomsCanoniques = classeNomsCanoniques;
 		this.classeNomsCanoniquesCouverture.dejaInitialise = true;
 	}
+	public static List<String> staticSetClasseNomsCanoniques(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
+	}
 	public Cluster addClasseNomsCanoniques(String...objets) {
 		for(String o : objets) {
 			addClasseNomsCanoniques(o);
@@ -1132,8 +1278,20 @@ public abstract class ClusterGen<DEV> extends Object {
 		return (Cluster)this;
 	}
 
+	public static List<String> staticSolrClasseNomsCanoniques(RequeteSiteFrFR requeteSite_, List<String> o) {
+		return o;
+	}
+
+	public static String staticSolrStrClasseNomsCanoniques(RequeteSiteFrFR requeteSite_, List<String> o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqClasseNomsCanoniques(RequeteSiteFrFR requeteSite_, String o) {
+		return Cluster.staticSolrStrClasseNomsCanoniques(requeteSite_, Cluster.staticSolrClasseNomsCanoniques(requeteSite_, Cluster.staticSetClasseNomsCanoniques(requeteSite_, o)));
+	}
+
 	public List<String> solrClasseNomsCanoniques() {
-		return classeNomsCanoniques;
+		return Cluster.staticSolrClasseNomsCanoniques(requeteSite_, classeNomsCanoniques);
 	}
 
 	public String strClasseNomsCanoniques() {
@@ -1179,10 +1337,13 @@ public abstract class ClusterGen<DEV> extends Object {
 	public String getSessionId() {
 		return sessionId;
 	}
-
-	public void setSessionId(String sessionId) {
-		this.sessionId = sessionId;
+	public Cluster setSessionId(String o) {
+		this.sessionId = Cluster.staticSetSessionId(requeteSite_, o);
 		this.sessionIdCouverture.dejaInitialise = true;
+		return (Cluster)this;
+	}
+	public static String staticSetSessionId(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected Cluster sessionIdInit() {
 		if(!sessionIdCouverture.dejaInitialise) {
@@ -1194,8 +1355,20 @@ public abstract class ClusterGen<DEV> extends Object {
 		return (Cluster)this;
 	}
 
+	public static String staticSolrSessionId(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrSessionId(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqSessionId(RequeteSiteFrFR requeteSite_, String o) {
+		return Cluster.staticSolrStrSessionId(requeteSite_, Cluster.staticSolrSessionId(requeteSite_, Cluster.staticSetSessionId(requeteSite_, o)));
+	}
+
 	public String solrSessionId() {
-		return sessionId;
+		return Cluster.staticSolrSessionId(requeteSite_, sessionId);
 	}
 
 	public String strSessionId() {
@@ -1264,10 +1437,13 @@ public abstract class ClusterGen<DEV> extends Object {
 	public String getUtilisateurId() {
 		return utilisateurId;
 	}
-
-	public void setUtilisateurId(String utilisateurId) {
-		this.utilisateurId = utilisateurId;
+	public Cluster setUtilisateurId(String o) {
+		this.utilisateurId = Cluster.staticSetUtilisateurId(requeteSite_, o);
 		this.utilisateurIdCouverture.dejaInitialise = true;
+		return (Cluster)this;
+	}
+	public static String staticSetUtilisateurId(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected Cluster utilisateurIdInit() {
 		if(!utilisateurIdCouverture.dejaInitialise) {
@@ -1279,8 +1455,20 @@ public abstract class ClusterGen<DEV> extends Object {
 		return (Cluster)this;
 	}
 
+	public static String staticSolrUtilisateurId(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrUtilisateurId(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqUtilisateurId(RequeteSiteFrFR requeteSite_, String o) {
+		return Cluster.staticSolrStrUtilisateurId(requeteSite_, Cluster.staticSolrUtilisateurId(requeteSite_, Cluster.staticSetUtilisateurId(requeteSite_, o)));
+	}
+
 	public String solrUtilisateurId() {
-		return utilisateurId;
+		return Cluster.staticSolrUtilisateurId(requeteSite_, utilisateurId);
 	}
 
 	public String strUtilisateurId() {
@@ -1356,10 +1544,14 @@ public abstract class ClusterGen<DEV> extends Object {
 		this.utilisateurCleCouverture.dejaInitialise = true;
 	}
 	public Cluster setUtilisateurCle(String o) {
-		if(NumberUtils.isParsable(o))
-			this.utilisateurCle = Long.parseLong(o);
+		this.utilisateurCle = Cluster.staticSetUtilisateurCle(requeteSite_, o);
 		this.utilisateurCleCouverture.dejaInitialise = true;
 		return (Cluster)this;
+	}
+	public static Long staticSetUtilisateurCle(RequeteSiteFrFR requeteSite_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Long.parseLong(o);
+		return null;
 	}
 	protected Cluster utilisateurCleInit() {
 		if(!utilisateurCleCouverture.dejaInitialise) {
@@ -1371,8 +1563,20 @@ public abstract class ClusterGen<DEV> extends Object {
 		return (Cluster)this;
 	}
 
+	public static Long staticSolrUtilisateurCle(RequeteSiteFrFR requeteSite_, Long o) {
+		return o;
+	}
+
+	public static String staticSolrStrUtilisateurCle(RequeteSiteFrFR requeteSite_, Long o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqUtilisateurCle(RequeteSiteFrFR requeteSite_, String o) {
+		return Cluster.staticSolrStrUtilisateurCle(requeteSite_, Cluster.staticSolrUtilisateurCle(requeteSite_, Cluster.staticSetUtilisateurCle(requeteSite_, o)));
+	}
+
 	public Long solrUtilisateurCle() {
-		return utilisateurCle;
+		return Cluster.staticSolrUtilisateurCle(requeteSite_, utilisateurCle);
 	}
 
 	public String strUtilisateurCle() {
@@ -1446,6 +1650,9 @@ public abstract class ClusterGen<DEV> extends Object {
 		this.sauvegardes = sauvegardes;
 		this.sauvegardesCouverture.dejaInitialise = true;
 	}
+	public static List<String> staticSetSauvegardes(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
+	}
 	public Cluster addSauvegardes(String...objets) {
 		for(String o : objets) {
 			addSauvegardes(o);
@@ -1473,8 +1680,20 @@ public abstract class ClusterGen<DEV> extends Object {
 		return (Cluster)this;
 	}
 
+	public static List<String> staticSolrSauvegardes(RequeteSiteFrFR requeteSite_, List<String> o) {
+		return o;
+	}
+
+	public static String staticSolrStrSauvegardes(RequeteSiteFrFR requeteSite_, List<String> o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqSauvegardes(RequeteSiteFrFR requeteSite_, String o) {
+		return Cluster.staticSolrStrSauvegardes(requeteSite_, Cluster.staticSolrSauvegardes(requeteSite_, Cluster.staticSetSauvegardes(requeteSite_, o)));
+	}
+
 	public List<String> solrSauvegardes() {
-		return sauvegardes;
+		return Cluster.staticSolrSauvegardes(requeteSite_, sauvegardes);
 	}
 
 	public String strSauvegardes() {
@@ -1520,10 +1739,13 @@ public abstract class ClusterGen<DEV> extends Object {
 	public String getObjetTitre() {
 		return objetTitre;
 	}
-
-	public void setObjetTitre(String objetTitre) {
-		this.objetTitre = objetTitre;
+	public Cluster setObjetTitre(String o) {
+		this.objetTitre = Cluster.staticSetObjetTitre(requeteSite_, o);
 		this.objetTitreCouverture.dejaInitialise = true;
+		return (Cluster)this;
+	}
+	public static String staticSetObjetTitre(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected Cluster objetTitreInit() {
 		if(!objetTitreCouverture.dejaInitialise) {
@@ -1535,8 +1757,20 @@ public abstract class ClusterGen<DEV> extends Object {
 		return (Cluster)this;
 	}
 
+	public static String staticSolrObjetTitre(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrObjetTitre(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqObjetTitre(RequeteSiteFrFR requeteSite_, String o) {
+		return Cluster.staticSolrStrObjetTitre(requeteSite_, Cluster.staticSolrObjetTitre(requeteSite_, Cluster.staticSetObjetTitre(requeteSite_, o)));
+	}
+
 	public String solrObjetTitre() {
-		return objetTitre;
+		return Cluster.staticSolrObjetTitre(requeteSite_, objetTitre);
 	}
 
 	public String strObjetTitre() {
@@ -1605,10 +1839,13 @@ public abstract class ClusterGen<DEV> extends Object {
 	public String getObjetId() {
 		return objetId;
 	}
-
-	public void setObjetId(String objetId) {
-		this.objetId = objetId;
+	public Cluster setObjetId(String o) {
+		this.objetId = Cluster.staticSetObjetId(requeteSite_, o);
 		this.objetIdCouverture.dejaInitialise = true;
+		return (Cluster)this;
+	}
+	public static String staticSetObjetId(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected Cluster objetIdInit() {
 		if(!objetIdCouverture.dejaInitialise) {
@@ -1620,8 +1857,20 @@ public abstract class ClusterGen<DEV> extends Object {
 		return (Cluster)this;
 	}
 
+	public static String staticSolrObjetId(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrObjetId(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqObjetId(RequeteSiteFrFR requeteSite_, String o) {
+		return Cluster.staticSolrStrObjetId(requeteSite_, Cluster.staticSolrObjetId(requeteSite_, Cluster.staticSetObjetId(requeteSite_, o)));
+	}
+
 	public String solrObjetId() {
-		return objetId;
+		return Cluster.staticSolrObjetId(requeteSite_, objetId);
 	}
 
 	public String strObjetId() {
@@ -1693,10 +1942,13 @@ public abstract class ClusterGen<DEV> extends Object {
 	public String getObjetNomVar() {
 		return objetNomVar;
 	}
-
-	public void setObjetNomVar(String objetNomVar) {
-		this.objetNomVar = objetNomVar;
+	public Cluster setObjetNomVar(String o) {
+		this.objetNomVar = Cluster.staticSetObjetNomVar(requeteSite_, o);
 		this.objetNomVarCouverture.dejaInitialise = true;
+		return (Cluster)this;
+	}
+	public static String staticSetObjetNomVar(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected Cluster objetNomVarInit() {
 		if(!objetNomVarCouverture.dejaInitialise) {
@@ -1708,8 +1960,20 @@ public abstract class ClusterGen<DEV> extends Object {
 		return (Cluster)this;
 	}
 
+	public static String staticSolrObjetNomVar(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrObjetNomVar(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqObjetNomVar(RequeteSiteFrFR requeteSite_, String o) {
+		return Cluster.staticSolrStrObjetNomVar(requeteSite_, Cluster.staticSolrObjetNomVar(requeteSite_, Cluster.staticSetObjetNomVar(requeteSite_, o)));
+	}
+
 	public String solrObjetNomVar() {
-		return objetNomVar;
+		return Cluster.staticSolrObjetNomVar(requeteSite_, objetNomVar);
 	}
 
 	public String strObjetNomVar() {
@@ -1755,10 +2019,13 @@ public abstract class ClusterGen<DEV> extends Object {
 	public String getObjetSuggere() {
 		return objetSuggere;
 	}
-
-	public void setObjetSuggere(String objetSuggere) {
-		this.objetSuggere = objetSuggere;
+	public Cluster setObjetSuggere(String o) {
+		this.objetSuggere = Cluster.staticSetObjetSuggere(requeteSite_, o);
 		this.objetSuggereCouverture.dejaInitialise = true;
+		return (Cluster)this;
+	}
+	public static String staticSetObjetSuggere(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected Cluster objetSuggereInit() {
 		if(!objetSuggereCouverture.dejaInitialise) {
@@ -1770,8 +2037,20 @@ public abstract class ClusterGen<DEV> extends Object {
 		return (Cluster)this;
 	}
 
+	public static String staticSolrObjetSuggere(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrObjetSuggere(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqObjetSuggere(RequeteSiteFrFR requeteSite_, String o) {
+		return Cluster.staticSolrStrObjetSuggere(requeteSite_, Cluster.staticSolrObjetSuggere(requeteSite_, Cluster.staticSetObjetSuggere(requeteSite_, o)));
+	}
+
 	public String solrObjetSuggere() {
-		return objetSuggere;
+		return Cluster.staticSolrObjetSuggere(requeteSite_, objetSuggere);
 	}
 
 	public String strObjetSuggere() {
@@ -1817,10 +2096,13 @@ public abstract class ClusterGen<DEV> extends Object {
 	public String getObjetTexte() {
 		return objetTexte;
 	}
-
-	public void setObjetTexte(String objetTexte) {
-		this.objetTexte = objetTexte;
+	public Cluster setObjetTexte(String o) {
+		this.objetTexte = Cluster.staticSetObjetTexte(requeteSite_, o);
 		this.objetTexteCouverture.dejaInitialise = true;
+		return (Cluster)this;
+	}
+	public static String staticSetObjetTexte(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected Cluster objetTexteInit() {
 		if(!objetTexteCouverture.dejaInitialise) {
@@ -1832,8 +2114,20 @@ public abstract class ClusterGen<DEV> extends Object {
 		return (Cluster)this;
 	}
 
+	public static String staticSolrObjetTexte(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrObjetTexte(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqObjetTexte(RequeteSiteFrFR requeteSite_, String o) {
+		return Cluster.staticSolrStrObjetTexte(requeteSite_, Cluster.staticSolrObjetTexte(requeteSite_, Cluster.staticSetObjetTexte(requeteSite_, o)));
+	}
+
 	public String solrObjetTexte() {
-		return objetTexte;
+		return Cluster.staticSolrObjetTexte(requeteSite_, objetTexte);
 	}
 
 	public String strObjetTexte() {
@@ -1879,10 +2173,13 @@ public abstract class ClusterGen<DEV> extends Object {
 	public String getPageUrlId() {
 		return pageUrlId;
 	}
-
-	public void setPageUrlId(String pageUrlId) {
-		this.pageUrlId = pageUrlId;
+	public Cluster setPageUrlId(String o) {
+		this.pageUrlId = Cluster.staticSetPageUrlId(requeteSite_, o);
 		this.pageUrlIdCouverture.dejaInitialise = true;
+		return (Cluster)this;
+	}
+	public static String staticSetPageUrlId(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected Cluster pageUrlIdInit() {
 		if(!pageUrlIdCouverture.dejaInitialise) {
@@ -1894,8 +2191,20 @@ public abstract class ClusterGen<DEV> extends Object {
 		return (Cluster)this;
 	}
 
+	public static String staticSolrPageUrlId(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrPageUrlId(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPageUrlId(RequeteSiteFrFR requeteSite_, String o) {
+		return Cluster.staticSolrStrPageUrlId(requeteSite_, Cluster.staticSolrPageUrlId(requeteSite_, Cluster.staticSetPageUrlId(requeteSite_, o)));
+	}
+
 	public String solrPageUrlId() {
-		return pageUrlId;
+		return Cluster.staticSolrPageUrlId(requeteSite_, pageUrlId);
 	}
 
 	public String strPageUrlId() {
@@ -1941,10 +2250,13 @@ public abstract class ClusterGen<DEV> extends Object {
 	public String getPageUrlPk() {
 		return pageUrlPk;
 	}
-
-	public void setPageUrlPk(String pageUrlPk) {
-		this.pageUrlPk = pageUrlPk;
+	public Cluster setPageUrlPk(String o) {
+		this.pageUrlPk = Cluster.staticSetPageUrlPk(requeteSite_, o);
 		this.pageUrlPkCouverture.dejaInitialise = true;
+		return (Cluster)this;
+	}
+	public static String staticSetPageUrlPk(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected Cluster pageUrlPkInit() {
 		if(!pageUrlPkCouverture.dejaInitialise) {
@@ -1956,8 +2268,20 @@ public abstract class ClusterGen<DEV> extends Object {
 		return (Cluster)this;
 	}
 
+	public static String staticSolrPageUrlPk(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrPageUrlPk(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPageUrlPk(RequeteSiteFrFR requeteSite_, String o) {
+		return Cluster.staticSolrStrPageUrlPk(requeteSite_, Cluster.staticSolrPageUrlPk(requeteSite_, Cluster.staticSetPageUrlPk(requeteSite_, o)));
+	}
+
 	public String solrPageUrlPk() {
-		return pageUrlPk;
+		return Cluster.staticSolrPageUrlPk(requeteSite_, pageUrlPk);
 	}
 
 	public String strPageUrlPk() {
@@ -2003,10 +2327,13 @@ public abstract class ClusterGen<DEV> extends Object {
 	public String getPageUrlApi() {
 		return pageUrlApi;
 	}
-
-	public void setPageUrlApi(String pageUrlApi) {
-		this.pageUrlApi = pageUrlApi;
+	public Cluster setPageUrlApi(String o) {
+		this.pageUrlApi = Cluster.staticSetPageUrlApi(requeteSite_, o);
 		this.pageUrlApiCouverture.dejaInitialise = true;
+		return (Cluster)this;
+	}
+	public static String staticSetPageUrlApi(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected Cluster pageUrlApiInit() {
 		if(!pageUrlApiCouverture.dejaInitialise) {
@@ -2018,8 +2345,20 @@ public abstract class ClusterGen<DEV> extends Object {
 		return (Cluster)this;
 	}
 
+	public static String staticSolrPageUrlApi(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrPageUrlApi(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPageUrlApi(RequeteSiteFrFR requeteSite_, String o) {
+		return Cluster.staticSolrStrPageUrlApi(requeteSite_, Cluster.staticSolrPageUrlApi(requeteSite_, Cluster.staticSetPageUrlApi(requeteSite_, o)));
+	}
+
 	public String solrPageUrlApi() {
-		return pageUrlApi;
+		return Cluster.staticSolrPageUrlApi(requeteSite_, pageUrlApi);
 	}
 
 	public String strPageUrlApi() {
@@ -2065,10 +2404,13 @@ public abstract class ClusterGen<DEV> extends Object {
 	public String getPageH1() {
 		return pageH1;
 	}
-
-	public void setPageH1(String pageH1) {
-		this.pageH1 = pageH1;
+	public Cluster setPageH1(String o) {
+		this.pageH1 = Cluster.staticSetPageH1(requeteSite_, o);
 		this.pageH1Couverture.dejaInitialise = true;
+		return (Cluster)this;
+	}
+	public static String staticSetPageH1(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected Cluster pageH1Init() {
 		if(!pageH1Couverture.dejaInitialise) {
@@ -2080,8 +2422,20 @@ public abstract class ClusterGen<DEV> extends Object {
 		return (Cluster)this;
 	}
 
+	public static String staticSolrPageH1(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrPageH1(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPageH1(RequeteSiteFrFR requeteSite_, String o) {
+		return Cluster.staticSolrStrPageH1(requeteSite_, Cluster.staticSolrPageH1(requeteSite_, Cluster.staticSetPageH1(requeteSite_, o)));
+	}
+
 	public String solrPageH1() {
-		return pageH1;
+		return Cluster.staticSolrPageH1(requeteSite_, pageH1);
 	}
 
 	public String strPageH1() {
@@ -2261,6 +2615,246 @@ public abstract class ClusterGen<DEV> extends Object {
 	public Object attribuerCluster(String var, Object val) {
 		Cluster oCluster = (Cluster)this;
 		switch(var) {
+			default:
+				return null;
+		}
+	}
+
+	///////////////
+	// staticSet //
+	///////////////
+
+	public static Object staticSetPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		return staticSetCluster(entiteVar,  requeteSite_, o);
+	}
+	public static Object staticSetCluster(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		switch(entiteVar) {
+		case "pk":
+			return Cluster.staticSetPk(requeteSite_, o);
+		case "inheritPk":
+			return Cluster.staticSetInheritPk(requeteSite_, o);
+		case "id":
+			return Cluster.staticSetId(requeteSite_, o);
+		case "cree":
+			return Cluster.staticSetCree(requeteSite_, o);
+		case "modifie":
+			return Cluster.staticSetModifie(requeteSite_, o);
+		case "archive":
+			return Cluster.staticSetArchive(requeteSite_, o);
+		case "supprime":
+			return Cluster.staticSetSupprime(requeteSite_, o);
+		case "classeNomCanonique":
+			return Cluster.staticSetClasseNomCanonique(requeteSite_, o);
+		case "classeNomSimple":
+			return Cluster.staticSetClasseNomSimple(requeteSite_, o);
+		case "classeNomsCanoniques":
+			return Cluster.staticSetClasseNomsCanoniques(requeteSite_, o);
+		case "sessionId":
+			return Cluster.staticSetSessionId(requeteSite_, o);
+		case "utilisateurId":
+			return Cluster.staticSetUtilisateurId(requeteSite_, o);
+		case "utilisateurCle":
+			return Cluster.staticSetUtilisateurCle(requeteSite_, o);
+		case "sauvegardes":
+			return Cluster.staticSetSauvegardes(requeteSite_, o);
+		case "objetTitre":
+			return Cluster.staticSetObjetTitre(requeteSite_, o);
+		case "objetId":
+			return Cluster.staticSetObjetId(requeteSite_, o);
+		case "objetNomVar":
+			return Cluster.staticSetObjetNomVar(requeteSite_, o);
+		case "objetSuggere":
+			return Cluster.staticSetObjetSuggere(requeteSite_, o);
+		case "objetTexte":
+			return Cluster.staticSetObjetTexte(requeteSite_, o);
+		case "pageUrlId":
+			return Cluster.staticSetPageUrlId(requeteSite_, o);
+		case "pageUrlPk":
+			return Cluster.staticSetPageUrlPk(requeteSite_, o);
+		case "pageUrlApi":
+			return Cluster.staticSetPageUrlApi(requeteSite_, o);
+		case "pageH1":
+			return Cluster.staticSetPageH1(requeteSite_, o);
+			default:
+				return null;
+		}
+	}
+
+	////////////////
+	// staticSolr //
+	////////////////
+
+	public static Object staticSolrPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		return staticSolrCluster(entiteVar,  requeteSite_, o);
+	}
+	public static Object staticSolrCluster(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		switch(entiteVar) {
+		case "pk":
+			return Cluster.staticSolrPk(requeteSite_, (Long)o);
+		case "inheritPk":
+			return Cluster.staticSolrInheritPk(requeteSite_, (Long)o);
+		case "id":
+			return Cluster.staticSolrId(requeteSite_, (String)o);
+		case "cree":
+			return Cluster.staticSolrCree(requeteSite_, (ZonedDateTime)o);
+		case "modifie":
+			return Cluster.staticSolrModifie(requeteSite_, (ZonedDateTime)o);
+		case "archive":
+			return Cluster.staticSolrArchive(requeteSite_, (Boolean)o);
+		case "supprime":
+			return Cluster.staticSolrSupprime(requeteSite_, (Boolean)o);
+		case "classeNomCanonique":
+			return Cluster.staticSolrClasseNomCanonique(requeteSite_, (String)o);
+		case "classeNomSimple":
+			return Cluster.staticSolrClasseNomSimple(requeteSite_, (String)o);
+		case "classeNomsCanoniques":
+			return Cluster.staticSolrClasseNomsCanoniques(requeteSite_, (List<String>)o);
+		case "sessionId":
+			return Cluster.staticSolrSessionId(requeteSite_, (String)o);
+		case "utilisateurId":
+			return Cluster.staticSolrUtilisateurId(requeteSite_, (String)o);
+		case "utilisateurCle":
+			return Cluster.staticSolrUtilisateurCle(requeteSite_, (Long)o);
+		case "sauvegardes":
+			return Cluster.staticSolrSauvegardes(requeteSite_, (List<String>)o);
+		case "objetTitre":
+			return Cluster.staticSolrObjetTitre(requeteSite_, (String)o);
+		case "objetId":
+			return Cluster.staticSolrObjetId(requeteSite_, (String)o);
+		case "objetNomVar":
+			return Cluster.staticSolrObjetNomVar(requeteSite_, (String)o);
+		case "objetSuggere":
+			return Cluster.staticSolrObjetSuggere(requeteSite_, (String)o);
+		case "objetTexte":
+			return Cluster.staticSolrObjetTexte(requeteSite_, (String)o);
+		case "pageUrlId":
+			return Cluster.staticSolrPageUrlId(requeteSite_, (String)o);
+		case "pageUrlPk":
+			return Cluster.staticSolrPageUrlPk(requeteSite_, (String)o);
+		case "pageUrlApi":
+			return Cluster.staticSolrPageUrlApi(requeteSite_, (String)o);
+		case "pageH1":
+			return Cluster.staticSolrPageH1(requeteSite_, (String)o);
+			default:
+				return null;
+		}
+	}
+
+	///////////////////
+	// staticSolrStr //
+	///////////////////
+
+	public static String staticSolrStrPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		return staticSolrStrCluster(entiteVar,  requeteSite_, o);
+	}
+	public static String staticSolrStrCluster(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		switch(entiteVar) {
+		case "pk":
+			return Cluster.staticSolrStrPk(requeteSite_, (Long)o);
+		case "inheritPk":
+			return Cluster.staticSolrStrInheritPk(requeteSite_, (Long)o);
+		case "id":
+			return Cluster.staticSolrStrId(requeteSite_, (String)o);
+		case "cree":
+			return Cluster.staticSolrStrCree(requeteSite_, (Date)o);
+		case "modifie":
+			return Cluster.staticSolrStrModifie(requeteSite_, (Date)o);
+		case "archive":
+			return Cluster.staticSolrStrArchive(requeteSite_, (Boolean)o);
+		case "supprime":
+			return Cluster.staticSolrStrSupprime(requeteSite_, (Boolean)o);
+		case "classeNomCanonique":
+			return Cluster.staticSolrStrClasseNomCanonique(requeteSite_, (String)o);
+		case "classeNomSimple":
+			return Cluster.staticSolrStrClasseNomSimple(requeteSite_, (String)o);
+		case "classeNomsCanoniques":
+			return Cluster.staticSolrStrClasseNomsCanoniques(requeteSite_, (List<String>)o);
+		case "sessionId":
+			return Cluster.staticSolrStrSessionId(requeteSite_, (String)o);
+		case "utilisateurId":
+			return Cluster.staticSolrStrUtilisateurId(requeteSite_, (String)o);
+		case "utilisateurCle":
+			return Cluster.staticSolrStrUtilisateurCle(requeteSite_, (Long)o);
+		case "sauvegardes":
+			return Cluster.staticSolrStrSauvegardes(requeteSite_, (List<String>)o);
+		case "objetTitre":
+			return Cluster.staticSolrStrObjetTitre(requeteSite_, (String)o);
+		case "objetId":
+			return Cluster.staticSolrStrObjetId(requeteSite_, (String)o);
+		case "objetNomVar":
+			return Cluster.staticSolrStrObjetNomVar(requeteSite_, (String)o);
+		case "objetSuggere":
+			return Cluster.staticSolrStrObjetSuggere(requeteSite_, (String)o);
+		case "objetTexte":
+			return Cluster.staticSolrStrObjetTexte(requeteSite_, (String)o);
+		case "pageUrlId":
+			return Cluster.staticSolrStrPageUrlId(requeteSite_, (String)o);
+		case "pageUrlPk":
+			return Cluster.staticSolrStrPageUrlPk(requeteSite_, (String)o);
+		case "pageUrlApi":
+			return Cluster.staticSolrStrPageUrlApi(requeteSite_, (String)o);
+		case "pageH1":
+			return Cluster.staticSolrStrPageH1(requeteSite_, (String)o);
+			default:
+				return null;
+		}
+	}
+
+	//////////////////
+	// staticSolrFq //
+	//////////////////
+
+	public static String staticSolrFqPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		return staticSolrFqCluster(entiteVar,  requeteSite_, o);
+	}
+	public static String staticSolrFqCluster(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		switch(entiteVar) {
+		case "pk":
+			return Cluster.staticSolrFqPk(requeteSite_, o);
+		case "inheritPk":
+			return Cluster.staticSolrFqInheritPk(requeteSite_, o);
+		case "id":
+			return Cluster.staticSolrFqId(requeteSite_, o);
+		case "cree":
+			return Cluster.staticSolrFqCree(requeteSite_, o);
+		case "modifie":
+			return Cluster.staticSolrFqModifie(requeteSite_, o);
+		case "archive":
+			return Cluster.staticSolrFqArchive(requeteSite_, o);
+		case "supprime":
+			return Cluster.staticSolrFqSupprime(requeteSite_, o);
+		case "classeNomCanonique":
+			return Cluster.staticSolrFqClasseNomCanonique(requeteSite_, o);
+		case "classeNomSimple":
+			return Cluster.staticSolrFqClasseNomSimple(requeteSite_, o);
+		case "classeNomsCanoniques":
+			return Cluster.staticSolrFqClasseNomsCanoniques(requeteSite_, o);
+		case "sessionId":
+			return Cluster.staticSolrFqSessionId(requeteSite_, o);
+		case "utilisateurId":
+			return Cluster.staticSolrFqUtilisateurId(requeteSite_, o);
+		case "utilisateurCle":
+			return Cluster.staticSolrFqUtilisateurCle(requeteSite_, o);
+		case "sauvegardes":
+			return Cluster.staticSolrFqSauvegardes(requeteSite_, o);
+		case "objetTitre":
+			return Cluster.staticSolrFqObjetTitre(requeteSite_, o);
+		case "objetId":
+			return Cluster.staticSolrFqObjetId(requeteSite_, o);
+		case "objetNomVar":
+			return Cluster.staticSolrFqObjetNomVar(requeteSite_, o);
+		case "objetSuggere":
+			return Cluster.staticSolrFqObjetSuggere(requeteSite_, o);
+		case "objetTexte":
+			return Cluster.staticSolrFqObjetTexte(requeteSite_, o);
+		case "pageUrlId":
+			return Cluster.staticSolrFqPageUrlId(requeteSite_, o);
+		case "pageUrlPk":
+			return Cluster.staticSolrFqPageUrlPk(requeteSite_, o);
+		case "pageUrlApi":
+			return Cluster.staticSolrFqPageUrlApi(requeteSite_, o);
+		case "pageH1":
+			return Cluster.staticSolrFqPageH1(requeteSite_, o);
 			default:
 				return null;
 		}

@@ -313,27 +313,6 @@ public class DesignPageGenPage extends DesignPageGenPageGen<ClusterPage> {
 			o.htmSupprime("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmDesignPageNomComplet("Page");
-			o.htmDesignCache("Page");
-			o.htmDesignAdmin("Page");
-			o.htmDesignIgnorerNomEnfantVide("Page");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmDesignIgnorerPaiementsPasEnSouffrance("Page");
-			o.htmDesignIgnorerPaiementsEnSouffrance("Page");
-			o.htmDesignFiltrerInscriptionCle("Page");
-			o.htmDesignInscriptionTriMoisJourDeNaissance("Page");
-			o.htmDesignInscriptionTriNomGroupe("Page");
-			o.htmDesignInscriptionTriNomEnfant("Page");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmRechercherAnnees("Page");
-			o.htmRechercherPaiements("Page");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmDesignParentCles("Page");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPartHtmlCles("Page");
 		} g("div");
 	}
@@ -348,27 +327,6 @@ public class DesignPageGenPage extends DesignPageGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchive("POST");
 			o.htmSupprime("POST");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmDesignPageNomComplet("POST");
-			o.htmDesignCache("POST");
-			o.htmDesignAdmin("POST");
-			o.htmDesignIgnorerNomEnfantVide("POST");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmDesignIgnorerPaiementsPasEnSouffrance("POST");
-			o.htmDesignIgnorerPaiementsEnSouffrance("POST");
-			o.htmDesignFiltrerInscriptionCle("POST");
-			o.htmDesignInscriptionTriMoisJourDeNaissance("POST");
-			o.htmDesignInscriptionTriNomGroupe("POST");
-			o.htmDesignInscriptionTriNomEnfant("POST");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmRechercherAnnees("POST");
-			o.htmRechercherPaiements("POST");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmDesignParentCles("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPartHtmlCles("POST");
@@ -432,12 +390,6 @@ public class DesignPageGenPage extends DesignPageGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPartHtmlCles("PUTCopie");
 		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmInheritPk("PUTCopie");
-			o.htmSessionId("PUTCopie");
-			o.htmUtilisateurId("PUTCopie");
-			o.htmUtilisateurCle("PUTCopie");
-		} g("div");
 	}
 
 	public void htmlFormPATCHDesignPage(DesignPage o) {
@@ -472,12 +424,6 @@ public class DesignPageGenPage extends DesignPageGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmPartHtmlCles("PATCH");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmInheritPk("PATCH");
-			o.htmSessionId("PATCH");
-			o.htmUtilisateurId("PATCH");
-			o.htmUtilisateurCle("PATCH");
 		} g("div");
 	}
 

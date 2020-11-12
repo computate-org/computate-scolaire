@@ -127,6 +127,62 @@ public abstract class SessionPageGen<DEV> extends SessionGenPage {
 		}
 	}
 
+	///////////////
+	// staticSet //
+	///////////////
+
+	public static Object staticSetForClass(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		return staticSetSessionPage(entityVar,  siteRequest_, o);
+	}
+	public static Object staticSetSessionPage(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		switch(entityVar) {
+			default:
+				return SessionGenPage.staticSetSessionGenPage(entityVar,  siteRequest_, o);
+		}
+	}
+
+	////////////////
+	// staticSolr //
+	////////////////
+
+	public static Object staticSolrForClass(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		return staticSolrSessionPage(entityVar,  siteRequest_, o);
+	}
+	public static Object staticSolrSessionPage(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		switch(entityVar) {
+			default:
+				return SessionGenPage.staticSolrSessionGenPage(entityVar,  siteRequest_, o);
+		}
+	}
+
+	///////////////////
+	// staticSolrStr //
+	///////////////////
+
+	public static String staticSolrStrForClass(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		return staticSolrStrSessionPage(entityVar,  siteRequest_, o);
+	}
+	public static String staticSolrStrSessionPage(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		switch(entityVar) {
+			default:
+				return SessionGenPage.staticSolrStrSessionGenPage(entityVar,  siteRequest_, o);
+		}
+	}
+
+	//////////////////
+	// staticSolrFq //
+	//////////////////
+
+	public static String staticSolrFqForClass(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		return staticSolrFqSessionPage(entityVar,  siteRequest_, o);
+	}
+	public static String staticSolrFqSessionPage(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		switch(entityVar) {
+			default:
+				return SessionGenPage.staticSolrFqSessionGenPage(entityVar,  siteRequest_, o);
+		}
+	}
+
 	/////////////
 	// define //
 	/////////////

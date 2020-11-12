@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.cluster;              
+package org.computate.scolaire.frFR.cluster;             
 
 import java.text.Normalizer;
 import java.time.ZoneId;
@@ -64,14 +64,14 @@ import org.computate.scolaire.frFR.xml.OutilXml;
  * Role.enUS: SiteManager
  * RoleLire.frFR: User
  * RoleLire.enUS: User
- */              
-public class Cluster extends ClusterGen<Object> {   
+ */   
+public class Cluster extends ClusterGen<Object> {
 
 	/**
 	 * {@inheritDoc}
 	 * Var.enUS: siteRequest_
 	 * Ignorer: true
-	 */         
+	 */        
 	protected void _requeteSite_(Couverture<RequeteSiteFrFR> c) {}
 
 	protected void _pageParts(List<PagePart> l) {

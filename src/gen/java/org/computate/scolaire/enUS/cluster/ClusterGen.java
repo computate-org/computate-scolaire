@@ -116,6 +116,9 @@ public abstract class ClusterGen<DEV> extends Object {
 		this.siteRequest_ = siteRequest_;
 		this.siteRequest_Wrap.alreadyInitialized = true;
 	}
+	public static SiteRequestEnUS staticSetSiteRequest_(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	protected Cluster siteRequest_Init() {
 		if(!siteRequest_Wrap.alreadyInitialized) {
 			_siteRequest_(siteRequest_Wrap);
@@ -153,6 +156,9 @@ public abstract class ClusterGen<DEV> extends Object {
 	public void setPageParts(List<PagePart> pageParts) {
 		this.pageParts = pageParts;
 		this.pagePartsWrap.alreadyInitialized = true;
+	}
+	public static List<PagePart> staticSetPageParts(SiteRequestEnUS siteRequest_, String o) {
+		return null;
 	}
 	public Cluster addPageParts(PagePart...objets) {
 		for(PagePart o : objets) {
@@ -204,10 +210,14 @@ public abstract class ClusterGen<DEV> extends Object {
 		this.pkWrap.alreadyInitialized = true;
 	}
 	public Cluster setPk(String o) {
-		if(NumberUtils.isParsable(o))
-			this.pk = Long.parseLong(o);
+		this.pk = Cluster.staticSetPk(siteRequest_, o);
 		this.pkWrap.alreadyInitialized = true;
 		return (Cluster)this;
+	}
+	public static Long staticSetPk(SiteRequestEnUS siteRequest_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Long.parseLong(o);
+		return null;
 	}
 	protected Cluster pkInit() {
 		if(!pkWrap.alreadyInitialized) {
@@ -219,8 +229,20 @@ public abstract class ClusterGen<DEV> extends Object {
 		return (Cluster)this;
 	}
 
+	public static Long staticSolrPk(SiteRequestEnUS siteRequest_, Long o) {
+		return o;
+	}
+
+	public static String staticSolrStrPk(SiteRequestEnUS siteRequest_, Long o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPk(SiteRequestEnUS siteRequest_, String o) {
+		return Cluster.staticSolrStrPk(siteRequest_, Cluster.staticSolrPk(siteRequest_, Cluster.staticSetPk(siteRequest_, o)));
+	}
+
 	public Long solrPk() {
-		return pk;
+		return Cluster.staticSolrPk(siteRequest_, pk);
 	}
 
 	public String strPk() {
@@ -300,10 +322,14 @@ public abstract class ClusterGen<DEV> extends Object {
 		this.inheritPkWrap.alreadyInitialized = true;
 	}
 	public Cluster setInheritPk(String o) {
-		if(NumberUtils.isParsable(o))
-			this.inheritPk = Long.parseLong(o);
+		this.inheritPk = Cluster.staticSetInheritPk(siteRequest_, o);
 		this.inheritPkWrap.alreadyInitialized = true;
 		return (Cluster)this;
+	}
+	public static Long staticSetInheritPk(SiteRequestEnUS siteRequest_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Long.parseLong(o);
+		return null;
 	}
 	protected Cluster inheritPkInit() {
 		if(!inheritPkWrap.alreadyInitialized) {
@@ -315,8 +341,20 @@ public abstract class ClusterGen<DEV> extends Object {
 		return (Cluster)this;
 	}
 
+	public static Long staticSolrInheritPk(SiteRequestEnUS siteRequest_, Long o) {
+		return o;
+	}
+
+	public static String staticSolrStrInheritPk(SiteRequestEnUS siteRequest_, Long o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqInheritPk(SiteRequestEnUS siteRequest_, String o) {
+		return Cluster.staticSolrStrInheritPk(siteRequest_, Cluster.staticSolrInheritPk(siteRequest_, Cluster.staticSetInheritPk(siteRequest_, o)));
+	}
+
 	public Long solrInheritPk() {
-		return inheritPk;
+		return Cluster.staticSolrInheritPk(siteRequest_, inheritPk);
 	}
 
 	public String strInheritPk() {
@@ -431,10 +469,13 @@ public abstract class ClusterGen<DEV> extends Object {
 	public String getId() {
 		return id;
 	}
-
-	public void setId(String id) {
-		this.id = id;
+	public Cluster setId(String o) {
+		this.id = Cluster.staticSetId(siteRequest_, o);
 		this.idWrap.alreadyInitialized = true;
+		return (Cluster)this;
+	}
+	public static String staticSetId(SiteRequestEnUS siteRequest_, String o) {
+		return o;
 	}
 	protected Cluster idInit() {
 		if(!idWrap.alreadyInitialized) {
@@ -446,8 +487,20 @@ public abstract class ClusterGen<DEV> extends Object {
 		return (Cluster)this;
 	}
 
+	public static String staticSolrId(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrId(SiteRequestEnUS siteRequest_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqId(SiteRequestEnUS siteRequest_, String o) {
+		return Cluster.staticSolrStrId(siteRequest_, Cluster.staticSolrId(siteRequest_, Cluster.staticSetId(siteRequest_, o)));
+	}
+
 	public String solrId() {
-		return id;
+		return Cluster.staticSolrId(siteRequest_, id);
 	}
 
 	public String strId() {
@@ -506,9 +559,12 @@ public abstract class ClusterGen<DEV> extends Object {
 	}
 	/** Example: 2011-12-03T10:15:30+01:00 **/
 	public Cluster setCreated(String o) {
-		this.created = o == null ? null : ZonedDateTime.parse(o, DateTimeFormatter.ISO_DATE_TIME.withZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone()))).truncatedTo(ChronoUnit.MILLIS);
+		this.created = Cluster.staticSetCreated(siteRequest_, o);
 		this.createdWrap.alreadyInitialized = true;
 		return (Cluster)this;
+	}
+	public static ZonedDateTime staticSetCreated(SiteRequestEnUS siteRequest_, String o) {
+		return o == null ? null : ZonedDateTime.parse(o, DateTimeFormatter.ISO_DATE_TIME.withZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone()))).truncatedTo(ChronoUnit.MILLIS);
 	}
 	public Cluster setCreated(Date o) {
 		this.created = o == null ? null : ZonedDateTime.ofInstant(o.toInstant(), ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).truncatedTo(ChronoUnit.MILLIS);
@@ -525,8 +581,20 @@ public abstract class ClusterGen<DEV> extends Object {
 		return (Cluster)this;
 	}
 
+	public static Date staticSolrCreated(SiteRequestEnUS siteRequest_, ZonedDateTime o) {
+		return o == null ? null : Date.from(o.toInstant());
+	}
+
+	public static String staticSolrStrCreated(SiteRequestEnUS siteRequest_, Date o) {
+		return "\"" + DateTimeFormatter.ISO_DATE_TIME.format(o.toInstant().atOffset(ZoneOffset.UTC)) + "\"";
+	}
+
+	public static String staticSolrFqCreated(SiteRequestEnUS siteRequest_, String o) {
+		return Cluster.staticSolrStrCreated(siteRequest_, Cluster.staticSolrCreated(siteRequest_, Cluster.staticSetCreated(siteRequest_, o)));
+	}
+
 	public Date solrCreated() {
-		return created == null ? null : Date.from(created.toInstant());
+		return Cluster.staticSolrCreated(siteRequest_, created);
 	}
 
 	public String strCreated() {
@@ -610,9 +678,12 @@ public abstract class ClusterGen<DEV> extends Object {
 	}
 	/** Example: 2011-12-03T10:15:30+01:00 **/
 	public Cluster setModified(String o) {
-		this.modified = o == null ? null : ZonedDateTime.parse(o, DateTimeFormatter.ISO_DATE_TIME.withZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone()))).truncatedTo(ChronoUnit.MILLIS);
+		this.modified = Cluster.staticSetModified(siteRequest_, o);
 		this.modifiedWrap.alreadyInitialized = true;
 		return (Cluster)this;
+	}
+	public static ZonedDateTime staticSetModified(SiteRequestEnUS siteRequest_, String o) {
+		return o == null ? null : ZonedDateTime.parse(o, DateTimeFormatter.ISO_DATE_TIME.withZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone()))).truncatedTo(ChronoUnit.MILLIS);
 	}
 	public Cluster setModified(Date o) {
 		this.modified = o == null ? null : ZonedDateTime.ofInstant(o.toInstant(), ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).truncatedTo(ChronoUnit.MILLIS);
@@ -629,8 +700,20 @@ public abstract class ClusterGen<DEV> extends Object {
 		return (Cluster)this;
 	}
 
+	public static Date staticSolrModified(SiteRequestEnUS siteRequest_, ZonedDateTime o) {
+		return o == null ? null : Date.from(o.toInstant());
+	}
+
+	public static String staticSolrStrModified(SiteRequestEnUS siteRequest_, Date o) {
+		return "\"" + DateTimeFormatter.ISO_DATE_TIME.format(o.toInstant().atOffset(ZoneOffset.UTC)) + "\"";
+	}
+
+	public static String staticSolrFqModified(SiteRequestEnUS siteRequest_, String o) {
+		return Cluster.staticSolrStrModified(siteRequest_, Cluster.staticSolrModified(siteRequest_, Cluster.staticSetModified(siteRequest_, o)));
+	}
+
 	public Date solrModified() {
-		return modified == null ? null : Date.from(modified.toInstant());
+		return Cluster.staticSolrModified(siteRequest_, modified);
 	}
 
 	public String strModified() {
@@ -707,9 +790,12 @@ public abstract class ClusterGen<DEV> extends Object {
 		this.archivedWrap.alreadyInitialized = true;
 	}
 	public Cluster setArchived(String o) {
-		this.archived = Boolean.parseBoolean(o);
+		this.archived = Cluster.staticSetArchived(siteRequest_, o);
 		this.archivedWrap.alreadyInitialized = true;
 		return (Cluster)this;
+	}
+	public static Boolean staticSetArchived(SiteRequestEnUS siteRequest_, String o) {
+		return Boolean.parseBoolean(o);
 	}
 	protected Cluster archivedInit() {
 		if(!archivedWrap.alreadyInitialized) {
@@ -721,8 +807,20 @@ public abstract class ClusterGen<DEV> extends Object {
 		return (Cluster)this;
 	}
 
+	public static Boolean staticSolrArchived(SiteRequestEnUS siteRequest_, Boolean o) {
+		return o;
+	}
+
+	public static String staticSolrStrArchived(SiteRequestEnUS siteRequest_, Boolean o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqArchived(SiteRequestEnUS siteRequest_, String o) {
+		return Cluster.staticSolrStrArchived(siteRequest_, Cluster.staticSolrArchived(siteRequest_, Cluster.staticSetArchived(siteRequest_, o)));
+	}
+
 	public Boolean solrArchived() {
-		return archived;
+		return Cluster.staticSolrArchived(siteRequest_, archived);
 	}
 
 	public String strArchived() {
@@ -844,9 +942,12 @@ public abstract class ClusterGen<DEV> extends Object {
 		this.deletedWrap.alreadyInitialized = true;
 	}
 	public Cluster setDeleted(String o) {
-		this.deleted = Boolean.parseBoolean(o);
+		this.deleted = Cluster.staticSetDeleted(siteRequest_, o);
 		this.deletedWrap.alreadyInitialized = true;
 		return (Cluster)this;
+	}
+	public static Boolean staticSetDeleted(SiteRequestEnUS siteRequest_, String o) {
+		return Boolean.parseBoolean(o);
 	}
 	protected Cluster deletedInit() {
 		if(!deletedWrap.alreadyInitialized) {
@@ -858,8 +959,20 @@ public abstract class ClusterGen<DEV> extends Object {
 		return (Cluster)this;
 	}
 
+	public static Boolean staticSolrDeleted(SiteRequestEnUS siteRequest_, Boolean o) {
+		return o;
+	}
+
+	public static String staticSolrStrDeleted(SiteRequestEnUS siteRequest_, Boolean o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqDeleted(SiteRequestEnUS siteRequest_, String o) {
+		return Cluster.staticSolrStrDeleted(siteRequest_, Cluster.staticSolrDeleted(siteRequest_, Cluster.staticSetDeleted(siteRequest_, o)));
+	}
+
 	public Boolean solrDeleted() {
-		return deleted;
+		return Cluster.staticSolrDeleted(siteRequest_, deleted);
 	}
 
 	public String strDeleted() {
@@ -975,10 +1088,13 @@ public abstract class ClusterGen<DEV> extends Object {
 	public String getClassCanonicalName() {
 		return classCanonicalName;
 	}
-
-	public void setClassCanonicalName(String classCanonicalName) {
-		this.classCanonicalName = classCanonicalName;
+	public Cluster setClassCanonicalName(String o) {
+		this.classCanonicalName = Cluster.staticSetClassCanonicalName(siteRequest_, o);
 		this.classCanonicalNameWrap.alreadyInitialized = true;
+		return (Cluster)this;
+	}
+	public static String staticSetClassCanonicalName(SiteRequestEnUS siteRequest_, String o) {
+		return o;
 	}
 	protected Cluster classCanonicalNameInit() {
 		if(!classCanonicalNameWrap.alreadyInitialized) {
@@ -990,8 +1106,20 @@ public abstract class ClusterGen<DEV> extends Object {
 		return (Cluster)this;
 	}
 
+	public static String staticSolrClassCanonicalName(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrClassCanonicalName(SiteRequestEnUS siteRequest_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqClassCanonicalName(SiteRequestEnUS siteRequest_, String o) {
+		return Cluster.staticSolrStrClassCanonicalName(siteRequest_, Cluster.staticSolrClassCanonicalName(siteRequest_, Cluster.staticSetClassCanonicalName(siteRequest_, o)));
+	}
+
 	public String solrClassCanonicalName() {
-		return classCanonicalName;
+		return Cluster.staticSolrClassCanonicalName(siteRequest_, classCanonicalName);
 	}
 
 	public String strClassCanonicalName() {
@@ -1037,10 +1165,13 @@ public abstract class ClusterGen<DEV> extends Object {
 	public String getClassSimpleName() {
 		return classSimpleName;
 	}
-
-	public void setClassSimpleName(String classSimpleName) {
-		this.classSimpleName = classSimpleName;
+	public Cluster setClassSimpleName(String o) {
+		this.classSimpleName = Cluster.staticSetClassSimpleName(siteRequest_, o);
 		this.classSimpleNameWrap.alreadyInitialized = true;
+		return (Cluster)this;
+	}
+	public static String staticSetClassSimpleName(SiteRequestEnUS siteRequest_, String o) {
+		return o;
 	}
 	protected Cluster classSimpleNameInit() {
 		if(!classSimpleNameWrap.alreadyInitialized) {
@@ -1052,8 +1183,20 @@ public abstract class ClusterGen<DEV> extends Object {
 		return (Cluster)this;
 	}
 
+	public static String staticSolrClassSimpleName(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrClassSimpleName(SiteRequestEnUS siteRequest_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqClassSimpleName(SiteRequestEnUS siteRequest_, String o) {
+		return Cluster.staticSolrStrClassSimpleName(siteRequest_, Cluster.staticSolrClassSimpleName(siteRequest_, Cluster.staticSetClassSimpleName(siteRequest_, o)));
+	}
+
 	public String solrClassSimpleName() {
-		return classSimpleName;
+		return Cluster.staticSolrClassSimpleName(siteRequest_, classSimpleName);
 	}
 
 	public String strClassSimpleName() {
@@ -1104,6 +1247,9 @@ public abstract class ClusterGen<DEV> extends Object {
 		this.classCanonicalNames = classCanonicalNames;
 		this.classCanonicalNamesWrap.alreadyInitialized = true;
 	}
+	public static List<String> staticSetClassCanonicalNames(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	public Cluster addClassCanonicalNames(String...objets) {
 		for(String o : objets) {
 			addClassCanonicalNames(o);
@@ -1131,8 +1277,20 @@ public abstract class ClusterGen<DEV> extends Object {
 		return (Cluster)this;
 	}
 
+	public static List<String> staticSolrClassCanonicalNames(SiteRequestEnUS siteRequest_, List<String> o) {
+		return o;
+	}
+
+	public static String staticSolrStrClassCanonicalNames(SiteRequestEnUS siteRequest_, List<String> o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqClassCanonicalNames(SiteRequestEnUS siteRequest_, String o) {
+		return Cluster.staticSolrStrClassCanonicalNames(siteRequest_, Cluster.staticSolrClassCanonicalNames(siteRequest_, Cluster.staticSetClassCanonicalNames(siteRequest_, o)));
+	}
+
 	public List<String> solrClassCanonicalNames() {
-		return classCanonicalNames;
+		return Cluster.staticSolrClassCanonicalNames(siteRequest_, classCanonicalNames);
 	}
 
 	public String strClassCanonicalNames() {
@@ -1178,10 +1336,13 @@ public abstract class ClusterGen<DEV> extends Object {
 	public String getSessionId() {
 		return sessionId;
 	}
-
-	public void setSessionId(String sessionId) {
-		this.sessionId = sessionId;
+	public Cluster setSessionId(String o) {
+		this.sessionId = Cluster.staticSetSessionId(siteRequest_, o);
 		this.sessionIdWrap.alreadyInitialized = true;
+		return (Cluster)this;
+	}
+	public static String staticSetSessionId(SiteRequestEnUS siteRequest_, String o) {
+		return o;
 	}
 	protected Cluster sessionIdInit() {
 		if(!sessionIdWrap.alreadyInitialized) {
@@ -1193,8 +1354,20 @@ public abstract class ClusterGen<DEV> extends Object {
 		return (Cluster)this;
 	}
 
+	public static String staticSolrSessionId(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrSessionId(SiteRequestEnUS siteRequest_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqSessionId(SiteRequestEnUS siteRequest_, String o) {
+		return Cluster.staticSolrStrSessionId(siteRequest_, Cluster.staticSolrSessionId(siteRequest_, Cluster.staticSetSessionId(siteRequest_, o)));
+	}
+
 	public String solrSessionId() {
-		return sessionId;
+		return Cluster.staticSolrSessionId(siteRequest_, sessionId);
 	}
 
 	public String strSessionId() {
@@ -1263,10 +1436,13 @@ public abstract class ClusterGen<DEV> extends Object {
 	public String getUserId() {
 		return userId;
 	}
-
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public Cluster setUserId(String o) {
+		this.userId = Cluster.staticSetUserId(siteRequest_, o);
 		this.userIdWrap.alreadyInitialized = true;
+		return (Cluster)this;
+	}
+	public static String staticSetUserId(SiteRequestEnUS siteRequest_, String o) {
+		return o;
 	}
 	protected Cluster userIdInit() {
 		if(!userIdWrap.alreadyInitialized) {
@@ -1278,8 +1454,20 @@ public abstract class ClusterGen<DEV> extends Object {
 		return (Cluster)this;
 	}
 
+	public static String staticSolrUserId(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrUserId(SiteRequestEnUS siteRequest_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqUserId(SiteRequestEnUS siteRequest_, String o) {
+		return Cluster.staticSolrStrUserId(siteRequest_, Cluster.staticSolrUserId(siteRequest_, Cluster.staticSetUserId(siteRequest_, o)));
+	}
+
 	public String solrUserId() {
-		return userId;
+		return Cluster.staticSolrUserId(siteRequest_, userId);
 	}
 
 	public String strUserId() {
@@ -1355,10 +1543,14 @@ public abstract class ClusterGen<DEV> extends Object {
 		this.userKeyWrap.alreadyInitialized = true;
 	}
 	public Cluster setUserKey(String o) {
-		if(NumberUtils.isParsable(o))
-			this.userKey = Long.parseLong(o);
+		this.userKey = Cluster.staticSetUserKey(siteRequest_, o);
 		this.userKeyWrap.alreadyInitialized = true;
 		return (Cluster)this;
+	}
+	public static Long staticSetUserKey(SiteRequestEnUS siteRequest_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Long.parseLong(o);
+		return null;
 	}
 	protected Cluster userKeyInit() {
 		if(!userKeyWrap.alreadyInitialized) {
@@ -1370,8 +1562,20 @@ public abstract class ClusterGen<DEV> extends Object {
 		return (Cluster)this;
 	}
 
+	public static Long staticSolrUserKey(SiteRequestEnUS siteRequest_, Long o) {
+		return o;
+	}
+
+	public static String staticSolrStrUserKey(SiteRequestEnUS siteRequest_, Long o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqUserKey(SiteRequestEnUS siteRequest_, String o) {
+		return Cluster.staticSolrStrUserKey(siteRequest_, Cluster.staticSolrUserKey(siteRequest_, Cluster.staticSetUserKey(siteRequest_, o)));
+	}
+
 	public Long solrUserKey() {
-		return userKey;
+		return Cluster.staticSolrUserKey(siteRequest_, userKey);
 	}
 
 	public String strUserKey() {
@@ -1445,6 +1649,9 @@ public abstract class ClusterGen<DEV> extends Object {
 		this.saves = saves;
 		this.savesWrap.alreadyInitialized = true;
 	}
+	public static List<String> staticSetSaves(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	public Cluster addSaves(String...objets) {
 		for(String o : objets) {
 			addSaves(o);
@@ -1472,8 +1679,20 @@ public abstract class ClusterGen<DEV> extends Object {
 		return (Cluster)this;
 	}
 
+	public static List<String> staticSolrSaves(SiteRequestEnUS siteRequest_, List<String> o) {
+		return o;
+	}
+
+	public static String staticSolrStrSaves(SiteRequestEnUS siteRequest_, List<String> o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqSaves(SiteRequestEnUS siteRequest_, String o) {
+		return Cluster.staticSolrStrSaves(siteRequest_, Cluster.staticSolrSaves(siteRequest_, Cluster.staticSetSaves(siteRequest_, o)));
+	}
+
 	public List<String> solrSaves() {
-		return saves;
+		return Cluster.staticSolrSaves(siteRequest_, saves);
 	}
 
 	public String strSaves() {
@@ -1519,10 +1738,13 @@ public abstract class ClusterGen<DEV> extends Object {
 	public String getObjectTitle() {
 		return objectTitle;
 	}
-
-	public void setObjectTitle(String objectTitle) {
-		this.objectTitle = objectTitle;
+	public Cluster setObjectTitle(String o) {
+		this.objectTitle = Cluster.staticSetObjectTitle(siteRequest_, o);
 		this.objectTitleWrap.alreadyInitialized = true;
+		return (Cluster)this;
+	}
+	public static String staticSetObjectTitle(SiteRequestEnUS siteRequest_, String o) {
+		return o;
 	}
 	protected Cluster objectTitleInit() {
 		if(!objectTitleWrap.alreadyInitialized) {
@@ -1534,8 +1756,20 @@ public abstract class ClusterGen<DEV> extends Object {
 		return (Cluster)this;
 	}
 
+	public static String staticSolrObjectTitle(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrObjectTitle(SiteRequestEnUS siteRequest_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqObjectTitle(SiteRequestEnUS siteRequest_, String o) {
+		return Cluster.staticSolrStrObjectTitle(siteRequest_, Cluster.staticSolrObjectTitle(siteRequest_, Cluster.staticSetObjectTitle(siteRequest_, o)));
+	}
+
 	public String solrObjectTitle() {
-		return objectTitle;
+		return Cluster.staticSolrObjectTitle(siteRequest_, objectTitle);
 	}
 
 	public String strObjectTitle() {
@@ -1604,10 +1838,13 @@ public abstract class ClusterGen<DEV> extends Object {
 	public String getObjectId() {
 		return objectId;
 	}
-
-	public void setObjectId(String objectId) {
-		this.objectId = objectId;
+	public Cluster setObjectId(String o) {
+		this.objectId = Cluster.staticSetObjectId(siteRequest_, o);
 		this.objectIdWrap.alreadyInitialized = true;
+		return (Cluster)this;
+	}
+	public static String staticSetObjectId(SiteRequestEnUS siteRequest_, String o) {
+		return o;
 	}
 	protected Cluster objectIdInit() {
 		if(!objectIdWrap.alreadyInitialized) {
@@ -1619,8 +1856,20 @@ public abstract class ClusterGen<DEV> extends Object {
 		return (Cluster)this;
 	}
 
+	public static String staticSolrObjectId(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrObjectId(SiteRequestEnUS siteRequest_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqObjectId(SiteRequestEnUS siteRequest_, String o) {
+		return Cluster.staticSolrStrObjectId(siteRequest_, Cluster.staticSolrObjectId(siteRequest_, Cluster.staticSetObjectId(siteRequest_, o)));
+	}
+
 	public String solrObjectId() {
-		return objectId;
+		return Cluster.staticSolrObjectId(siteRequest_, objectId);
 	}
 
 	public String strObjectId() {
@@ -1692,10 +1941,13 @@ public abstract class ClusterGen<DEV> extends Object {
 	public String getObjectNameVar() {
 		return objectNameVar;
 	}
-
-	public void setObjectNameVar(String objectNameVar) {
-		this.objectNameVar = objectNameVar;
+	public Cluster setObjectNameVar(String o) {
+		this.objectNameVar = Cluster.staticSetObjectNameVar(siteRequest_, o);
 		this.objectNameVarWrap.alreadyInitialized = true;
+		return (Cluster)this;
+	}
+	public static String staticSetObjectNameVar(SiteRequestEnUS siteRequest_, String o) {
+		return o;
 	}
 	protected Cluster objectNameVarInit() {
 		if(!objectNameVarWrap.alreadyInitialized) {
@@ -1707,8 +1959,20 @@ public abstract class ClusterGen<DEV> extends Object {
 		return (Cluster)this;
 	}
 
+	public static String staticSolrObjectNameVar(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrObjectNameVar(SiteRequestEnUS siteRequest_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqObjectNameVar(SiteRequestEnUS siteRequest_, String o) {
+		return Cluster.staticSolrStrObjectNameVar(siteRequest_, Cluster.staticSolrObjectNameVar(siteRequest_, Cluster.staticSetObjectNameVar(siteRequest_, o)));
+	}
+
 	public String solrObjectNameVar() {
-		return objectNameVar;
+		return Cluster.staticSolrObjectNameVar(siteRequest_, objectNameVar);
 	}
 
 	public String strObjectNameVar() {
@@ -1754,10 +2018,13 @@ public abstract class ClusterGen<DEV> extends Object {
 	public String getObjectSuggest() {
 		return objectSuggest;
 	}
-
-	public void setObjectSuggest(String objectSuggest) {
-		this.objectSuggest = objectSuggest;
+	public Cluster setObjectSuggest(String o) {
+		this.objectSuggest = Cluster.staticSetObjectSuggest(siteRequest_, o);
 		this.objectSuggestWrap.alreadyInitialized = true;
+		return (Cluster)this;
+	}
+	public static String staticSetObjectSuggest(SiteRequestEnUS siteRequest_, String o) {
+		return o;
 	}
 	protected Cluster objectSuggestInit() {
 		if(!objectSuggestWrap.alreadyInitialized) {
@@ -1769,8 +2036,20 @@ public abstract class ClusterGen<DEV> extends Object {
 		return (Cluster)this;
 	}
 
+	public static String staticSolrObjectSuggest(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrObjectSuggest(SiteRequestEnUS siteRequest_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqObjectSuggest(SiteRequestEnUS siteRequest_, String o) {
+		return Cluster.staticSolrStrObjectSuggest(siteRequest_, Cluster.staticSolrObjectSuggest(siteRequest_, Cluster.staticSetObjectSuggest(siteRequest_, o)));
+	}
+
 	public String solrObjectSuggest() {
-		return objectSuggest;
+		return Cluster.staticSolrObjectSuggest(siteRequest_, objectSuggest);
 	}
 
 	public String strObjectSuggest() {
@@ -1816,10 +2095,13 @@ public abstract class ClusterGen<DEV> extends Object {
 	public String getObjectText() {
 		return objectText;
 	}
-
-	public void setObjectText(String objectText) {
-		this.objectText = objectText;
+	public Cluster setObjectText(String o) {
+		this.objectText = Cluster.staticSetObjectText(siteRequest_, o);
 		this.objectTextWrap.alreadyInitialized = true;
+		return (Cluster)this;
+	}
+	public static String staticSetObjectText(SiteRequestEnUS siteRequest_, String o) {
+		return o;
 	}
 	protected Cluster objectTextInit() {
 		if(!objectTextWrap.alreadyInitialized) {
@@ -1831,8 +2113,20 @@ public abstract class ClusterGen<DEV> extends Object {
 		return (Cluster)this;
 	}
 
+	public static String staticSolrObjectText(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrObjectText(SiteRequestEnUS siteRequest_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqObjectText(SiteRequestEnUS siteRequest_, String o) {
+		return Cluster.staticSolrStrObjectText(siteRequest_, Cluster.staticSolrObjectText(siteRequest_, Cluster.staticSetObjectText(siteRequest_, o)));
+	}
+
 	public String solrObjectText() {
-		return objectText;
+		return Cluster.staticSolrObjectText(siteRequest_, objectText);
 	}
 
 	public String strObjectText() {
@@ -1878,10 +2172,13 @@ public abstract class ClusterGen<DEV> extends Object {
 	public String getPageUrlId() {
 		return pageUrlId;
 	}
-
-	public void setPageUrlId(String pageUrlId) {
-		this.pageUrlId = pageUrlId;
+	public Cluster setPageUrlId(String o) {
+		this.pageUrlId = Cluster.staticSetPageUrlId(siteRequest_, o);
 		this.pageUrlIdWrap.alreadyInitialized = true;
+		return (Cluster)this;
+	}
+	public static String staticSetPageUrlId(SiteRequestEnUS siteRequest_, String o) {
+		return o;
 	}
 	protected Cluster pageUrlIdInit() {
 		if(!pageUrlIdWrap.alreadyInitialized) {
@@ -1893,8 +2190,20 @@ public abstract class ClusterGen<DEV> extends Object {
 		return (Cluster)this;
 	}
 
+	public static String staticSolrPageUrlId(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrPageUrlId(SiteRequestEnUS siteRequest_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPageUrlId(SiteRequestEnUS siteRequest_, String o) {
+		return Cluster.staticSolrStrPageUrlId(siteRequest_, Cluster.staticSolrPageUrlId(siteRequest_, Cluster.staticSetPageUrlId(siteRequest_, o)));
+	}
+
 	public String solrPageUrlId() {
-		return pageUrlId;
+		return Cluster.staticSolrPageUrlId(siteRequest_, pageUrlId);
 	}
 
 	public String strPageUrlId() {
@@ -1940,10 +2249,13 @@ public abstract class ClusterGen<DEV> extends Object {
 	public String getPageUrlPk() {
 		return pageUrlPk;
 	}
-
-	public void setPageUrlPk(String pageUrlPk) {
-		this.pageUrlPk = pageUrlPk;
+	public Cluster setPageUrlPk(String o) {
+		this.pageUrlPk = Cluster.staticSetPageUrlPk(siteRequest_, o);
 		this.pageUrlPkWrap.alreadyInitialized = true;
+		return (Cluster)this;
+	}
+	public static String staticSetPageUrlPk(SiteRequestEnUS siteRequest_, String o) {
+		return o;
 	}
 	protected Cluster pageUrlPkInit() {
 		if(!pageUrlPkWrap.alreadyInitialized) {
@@ -1955,8 +2267,20 @@ public abstract class ClusterGen<DEV> extends Object {
 		return (Cluster)this;
 	}
 
+	public static String staticSolrPageUrlPk(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrPageUrlPk(SiteRequestEnUS siteRequest_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPageUrlPk(SiteRequestEnUS siteRequest_, String o) {
+		return Cluster.staticSolrStrPageUrlPk(siteRequest_, Cluster.staticSolrPageUrlPk(siteRequest_, Cluster.staticSetPageUrlPk(siteRequest_, o)));
+	}
+
 	public String solrPageUrlPk() {
-		return pageUrlPk;
+		return Cluster.staticSolrPageUrlPk(siteRequest_, pageUrlPk);
 	}
 
 	public String strPageUrlPk() {
@@ -2002,10 +2326,13 @@ public abstract class ClusterGen<DEV> extends Object {
 	public String getPageUrlApi() {
 		return pageUrlApi;
 	}
-
-	public void setPageUrlApi(String pageUrlApi) {
-		this.pageUrlApi = pageUrlApi;
+	public Cluster setPageUrlApi(String o) {
+		this.pageUrlApi = Cluster.staticSetPageUrlApi(siteRequest_, o);
 		this.pageUrlApiWrap.alreadyInitialized = true;
+		return (Cluster)this;
+	}
+	public static String staticSetPageUrlApi(SiteRequestEnUS siteRequest_, String o) {
+		return o;
 	}
 	protected Cluster pageUrlApiInit() {
 		if(!pageUrlApiWrap.alreadyInitialized) {
@@ -2017,8 +2344,20 @@ public abstract class ClusterGen<DEV> extends Object {
 		return (Cluster)this;
 	}
 
+	public static String staticSolrPageUrlApi(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrPageUrlApi(SiteRequestEnUS siteRequest_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPageUrlApi(SiteRequestEnUS siteRequest_, String o) {
+		return Cluster.staticSolrStrPageUrlApi(siteRequest_, Cluster.staticSolrPageUrlApi(siteRequest_, Cluster.staticSetPageUrlApi(siteRequest_, o)));
+	}
+
 	public String solrPageUrlApi() {
-		return pageUrlApi;
+		return Cluster.staticSolrPageUrlApi(siteRequest_, pageUrlApi);
 	}
 
 	public String strPageUrlApi() {
@@ -2064,10 +2403,13 @@ public abstract class ClusterGen<DEV> extends Object {
 	public String getPageH1() {
 		return pageH1;
 	}
-
-	public void setPageH1(String pageH1) {
-		this.pageH1 = pageH1;
+	public Cluster setPageH1(String o) {
+		this.pageH1 = Cluster.staticSetPageH1(siteRequest_, o);
 		this.pageH1Wrap.alreadyInitialized = true;
+		return (Cluster)this;
+	}
+	public static String staticSetPageH1(SiteRequestEnUS siteRequest_, String o) {
+		return o;
 	}
 	protected Cluster pageH1Init() {
 		if(!pageH1Wrap.alreadyInitialized) {
@@ -2079,8 +2421,20 @@ public abstract class ClusterGen<DEV> extends Object {
 		return (Cluster)this;
 	}
 
+	public static String staticSolrPageH1(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrPageH1(SiteRequestEnUS siteRequest_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPageH1(SiteRequestEnUS siteRequest_, String o) {
+		return Cluster.staticSolrStrPageH1(siteRequest_, Cluster.staticSolrPageH1(siteRequest_, Cluster.staticSetPageH1(siteRequest_, o)));
+	}
+
 	public String solrPageH1() {
-		return pageH1;
+		return Cluster.staticSolrPageH1(siteRequest_, pageH1);
 	}
 
 	public String strPageH1() {
@@ -2260,6 +2614,246 @@ public abstract class ClusterGen<DEV> extends Object {
 	public Object attributeCluster(String var, Object val) {
 		Cluster oCluster = (Cluster)this;
 		switch(var) {
+			default:
+				return null;
+		}
+	}
+
+	///////////////
+	// staticSet //
+	///////////////
+
+	public static Object staticSetForClass(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		return staticSetCluster(entityVar,  siteRequest_, o);
+	}
+	public static Object staticSetCluster(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		switch(entityVar) {
+		case "pk":
+			return Cluster.staticSetPk(siteRequest_, o);
+		case "inheritPk":
+			return Cluster.staticSetInheritPk(siteRequest_, o);
+		case "id":
+			return Cluster.staticSetId(siteRequest_, o);
+		case "created":
+			return Cluster.staticSetCreated(siteRequest_, o);
+		case "modified":
+			return Cluster.staticSetModified(siteRequest_, o);
+		case "archived":
+			return Cluster.staticSetArchived(siteRequest_, o);
+		case "deleted":
+			return Cluster.staticSetDeleted(siteRequest_, o);
+		case "classCanonicalName":
+			return Cluster.staticSetClassCanonicalName(siteRequest_, o);
+		case "classSimpleName":
+			return Cluster.staticSetClassSimpleName(siteRequest_, o);
+		case "classCanonicalNames":
+			return Cluster.staticSetClassCanonicalNames(siteRequest_, o);
+		case "sessionId":
+			return Cluster.staticSetSessionId(siteRequest_, o);
+		case "userId":
+			return Cluster.staticSetUserId(siteRequest_, o);
+		case "userKey":
+			return Cluster.staticSetUserKey(siteRequest_, o);
+		case "saves":
+			return Cluster.staticSetSaves(siteRequest_, o);
+		case "objectTitle":
+			return Cluster.staticSetObjectTitle(siteRequest_, o);
+		case "objectId":
+			return Cluster.staticSetObjectId(siteRequest_, o);
+		case "objectNameVar":
+			return Cluster.staticSetObjectNameVar(siteRequest_, o);
+		case "objectSuggest":
+			return Cluster.staticSetObjectSuggest(siteRequest_, o);
+		case "objectText":
+			return Cluster.staticSetObjectText(siteRequest_, o);
+		case "pageUrlId":
+			return Cluster.staticSetPageUrlId(siteRequest_, o);
+		case "pageUrlPk":
+			return Cluster.staticSetPageUrlPk(siteRequest_, o);
+		case "pageUrlApi":
+			return Cluster.staticSetPageUrlApi(siteRequest_, o);
+		case "pageH1":
+			return Cluster.staticSetPageH1(siteRequest_, o);
+			default:
+				return null;
+		}
+	}
+
+	////////////////
+	// staticSolr //
+	////////////////
+
+	public static Object staticSolrForClass(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		return staticSolrCluster(entityVar,  siteRequest_, o);
+	}
+	public static Object staticSolrCluster(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		switch(entityVar) {
+		case "pk":
+			return Cluster.staticSolrPk(siteRequest_, (Long)o);
+		case "inheritPk":
+			return Cluster.staticSolrInheritPk(siteRequest_, (Long)o);
+		case "id":
+			return Cluster.staticSolrId(siteRequest_, (String)o);
+		case "created":
+			return Cluster.staticSolrCreated(siteRequest_, (ZonedDateTime)o);
+		case "modified":
+			return Cluster.staticSolrModified(siteRequest_, (ZonedDateTime)o);
+		case "archived":
+			return Cluster.staticSolrArchived(siteRequest_, (Boolean)o);
+		case "deleted":
+			return Cluster.staticSolrDeleted(siteRequest_, (Boolean)o);
+		case "classCanonicalName":
+			return Cluster.staticSolrClassCanonicalName(siteRequest_, (String)o);
+		case "classSimpleName":
+			return Cluster.staticSolrClassSimpleName(siteRequest_, (String)o);
+		case "classCanonicalNames":
+			return Cluster.staticSolrClassCanonicalNames(siteRequest_, (List<String>)o);
+		case "sessionId":
+			return Cluster.staticSolrSessionId(siteRequest_, (String)o);
+		case "userId":
+			return Cluster.staticSolrUserId(siteRequest_, (String)o);
+		case "userKey":
+			return Cluster.staticSolrUserKey(siteRequest_, (Long)o);
+		case "saves":
+			return Cluster.staticSolrSaves(siteRequest_, (List<String>)o);
+		case "objectTitle":
+			return Cluster.staticSolrObjectTitle(siteRequest_, (String)o);
+		case "objectId":
+			return Cluster.staticSolrObjectId(siteRequest_, (String)o);
+		case "objectNameVar":
+			return Cluster.staticSolrObjectNameVar(siteRequest_, (String)o);
+		case "objectSuggest":
+			return Cluster.staticSolrObjectSuggest(siteRequest_, (String)o);
+		case "objectText":
+			return Cluster.staticSolrObjectText(siteRequest_, (String)o);
+		case "pageUrlId":
+			return Cluster.staticSolrPageUrlId(siteRequest_, (String)o);
+		case "pageUrlPk":
+			return Cluster.staticSolrPageUrlPk(siteRequest_, (String)o);
+		case "pageUrlApi":
+			return Cluster.staticSolrPageUrlApi(siteRequest_, (String)o);
+		case "pageH1":
+			return Cluster.staticSolrPageH1(siteRequest_, (String)o);
+			default:
+				return null;
+		}
+	}
+
+	///////////////////
+	// staticSolrStr //
+	///////////////////
+
+	public static String staticSolrStrForClass(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		return staticSolrStrCluster(entityVar,  siteRequest_, o);
+	}
+	public static String staticSolrStrCluster(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		switch(entityVar) {
+		case "pk":
+			return Cluster.staticSolrStrPk(siteRequest_, (Long)o);
+		case "inheritPk":
+			return Cluster.staticSolrStrInheritPk(siteRequest_, (Long)o);
+		case "id":
+			return Cluster.staticSolrStrId(siteRequest_, (String)o);
+		case "created":
+			return Cluster.staticSolrStrCreated(siteRequest_, (Date)o);
+		case "modified":
+			return Cluster.staticSolrStrModified(siteRequest_, (Date)o);
+		case "archived":
+			return Cluster.staticSolrStrArchived(siteRequest_, (Boolean)o);
+		case "deleted":
+			return Cluster.staticSolrStrDeleted(siteRequest_, (Boolean)o);
+		case "classCanonicalName":
+			return Cluster.staticSolrStrClassCanonicalName(siteRequest_, (String)o);
+		case "classSimpleName":
+			return Cluster.staticSolrStrClassSimpleName(siteRequest_, (String)o);
+		case "classCanonicalNames":
+			return Cluster.staticSolrStrClassCanonicalNames(siteRequest_, (List<String>)o);
+		case "sessionId":
+			return Cluster.staticSolrStrSessionId(siteRequest_, (String)o);
+		case "userId":
+			return Cluster.staticSolrStrUserId(siteRequest_, (String)o);
+		case "userKey":
+			return Cluster.staticSolrStrUserKey(siteRequest_, (Long)o);
+		case "saves":
+			return Cluster.staticSolrStrSaves(siteRequest_, (List<String>)o);
+		case "objectTitle":
+			return Cluster.staticSolrStrObjectTitle(siteRequest_, (String)o);
+		case "objectId":
+			return Cluster.staticSolrStrObjectId(siteRequest_, (String)o);
+		case "objectNameVar":
+			return Cluster.staticSolrStrObjectNameVar(siteRequest_, (String)o);
+		case "objectSuggest":
+			return Cluster.staticSolrStrObjectSuggest(siteRequest_, (String)o);
+		case "objectText":
+			return Cluster.staticSolrStrObjectText(siteRequest_, (String)o);
+		case "pageUrlId":
+			return Cluster.staticSolrStrPageUrlId(siteRequest_, (String)o);
+		case "pageUrlPk":
+			return Cluster.staticSolrStrPageUrlPk(siteRequest_, (String)o);
+		case "pageUrlApi":
+			return Cluster.staticSolrStrPageUrlApi(siteRequest_, (String)o);
+		case "pageH1":
+			return Cluster.staticSolrStrPageH1(siteRequest_, (String)o);
+			default:
+				return null;
+		}
+	}
+
+	//////////////////
+	// staticSolrFq //
+	//////////////////
+
+	public static String staticSolrFqForClass(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		return staticSolrFqCluster(entityVar,  siteRequest_, o);
+	}
+	public static String staticSolrFqCluster(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		switch(entityVar) {
+		case "pk":
+			return Cluster.staticSolrFqPk(siteRequest_, o);
+		case "inheritPk":
+			return Cluster.staticSolrFqInheritPk(siteRequest_, o);
+		case "id":
+			return Cluster.staticSolrFqId(siteRequest_, o);
+		case "created":
+			return Cluster.staticSolrFqCreated(siteRequest_, o);
+		case "modified":
+			return Cluster.staticSolrFqModified(siteRequest_, o);
+		case "archived":
+			return Cluster.staticSolrFqArchived(siteRequest_, o);
+		case "deleted":
+			return Cluster.staticSolrFqDeleted(siteRequest_, o);
+		case "classCanonicalName":
+			return Cluster.staticSolrFqClassCanonicalName(siteRequest_, o);
+		case "classSimpleName":
+			return Cluster.staticSolrFqClassSimpleName(siteRequest_, o);
+		case "classCanonicalNames":
+			return Cluster.staticSolrFqClassCanonicalNames(siteRequest_, o);
+		case "sessionId":
+			return Cluster.staticSolrFqSessionId(siteRequest_, o);
+		case "userId":
+			return Cluster.staticSolrFqUserId(siteRequest_, o);
+		case "userKey":
+			return Cluster.staticSolrFqUserKey(siteRequest_, o);
+		case "saves":
+			return Cluster.staticSolrFqSaves(siteRequest_, o);
+		case "objectTitle":
+			return Cluster.staticSolrFqObjectTitle(siteRequest_, o);
+		case "objectId":
+			return Cluster.staticSolrFqObjectId(siteRequest_, o);
+		case "objectNameVar":
+			return Cluster.staticSolrFqObjectNameVar(siteRequest_, o);
+		case "objectSuggest":
+			return Cluster.staticSolrFqObjectSuggest(siteRequest_, o);
+		case "objectText":
+			return Cluster.staticSolrFqObjectText(siteRequest_, o);
+		case "pageUrlId":
+			return Cluster.staticSolrFqPageUrlId(siteRequest_, o);
+		case "pageUrlPk":
+			return Cluster.staticSolrFqPageUrlPk(siteRequest_, o);
+		case "pageUrlApi":
+			return Cluster.staticSolrFqPageUrlApi(siteRequest_, o);
+		case "pageH1":
+			return Cluster.staticSolrFqPageH1(siteRequest_, o);
 			default:
 				return null;
 		}

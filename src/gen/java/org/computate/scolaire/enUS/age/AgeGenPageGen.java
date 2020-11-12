@@ -68,6 +68,9 @@ public abstract class AgeGenPageGen<DEV> extends ClusterPage {
 		this.listSchoolAge = listSchoolAge;
 		this.listSchoolAgeWrap.alreadyInitialized = true;
 	}
+	public static SearchList<SchoolAge> staticSetListSchoolAge(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	protected AgeGenPage listSchoolAgeInit() {
 		if(!listSchoolAgeWrap.alreadyInitialized) {
 			_listSchoolAge(listSchoolAgeWrap);
@@ -107,6 +110,9 @@ public abstract class AgeGenPageGen<DEV> extends ClusterPage {
 	public void setSchoolAge_(SchoolAge schoolAge_) {
 		this.schoolAge_ = schoolAge_;
 		this.schoolAge_Wrap.alreadyInitialized = true;
+	}
+	public static SchoolAge staticSetSchoolAge_(SiteRequestEnUS siteRequest_, String o) {
+		return null;
 	}
 	protected AgeGenPage schoolAge_Init() {
 		if(!schoolAge_Wrap.alreadyInitialized) {
@@ -212,6 +218,62 @@ public abstract class AgeGenPageGen<DEV> extends ClusterPage {
 		switch(var) {
 			default:
 				return super.attributeClusterPage(var, val);
+		}
+	}
+
+	///////////////
+	// staticSet //
+	///////////////
+
+	public static Object staticSetForClass(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		return staticSetAgeGenPage(entityVar,  siteRequest_, o);
+	}
+	public static Object staticSetAgeGenPage(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		switch(entityVar) {
+			default:
+				return ClusterPage.staticSetClusterPage(entityVar,  siteRequest_, o);
+		}
+	}
+
+	////////////////
+	// staticSolr //
+	////////////////
+
+	public static Object staticSolrForClass(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		return staticSolrAgeGenPage(entityVar,  siteRequest_, o);
+	}
+	public static Object staticSolrAgeGenPage(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		switch(entityVar) {
+			default:
+				return ClusterPage.staticSolrClusterPage(entityVar,  siteRequest_, o);
+		}
+	}
+
+	///////////////////
+	// staticSolrStr //
+	///////////////////
+
+	public static String staticSolrStrForClass(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		return staticSolrStrAgeGenPage(entityVar,  siteRequest_, o);
+	}
+	public static String staticSolrStrAgeGenPage(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		switch(entityVar) {
+			default:
+				return ClusterPage.staticSolrStrClusterPage(entityVar,  siteRequest_, o);
+		}
+	}
+
+	//////////////////
+	// staticSolrFq //
+	//////////////////
+
+	public static String staticSolrFqForClass(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		return staticSolrFqAgeGenPage(entityVar,  siteRequest_, o);
+	}
+	public static String staticSolrFqAgeGenPage(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		switch(entityVar) {
+			default:
+				return ClusterPage.staticSolrFqClusterPage(entityVar,  siteRequest_, o);
 		}
 	}
 

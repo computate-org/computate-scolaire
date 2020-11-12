@@ -127,6 +127,62 @@ public abstract class SessionPageGen<DEV> extends SessionGenPage {
 		}
 	}
 
+	///////////////
+	// staticSet //
+	///////////////
+
+	public static Object staticSetPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		return staticSetSessionPage(entiteVar,  requeteSite_, o);
+	}
+	public static Object staticSetSessionPage(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		switch(entiteVar) {
+			default:
+				return SessionGenPage.staticSetSessionGenPage(entiteVar,  requeteSite_, o);
+		}
+	}
+
+	////////////////
+	// staticSolr //
+	////////////////
+
+	public static Object staticSolrPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		return staticSolrSessionPage(entiteVar,  requeteSite_, o);
+	}
+	public static Object staticSolrSessionPage(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		switch(entiteVar) {
+			default:
+				return SessionGenPage.staticSolrSessionGenPage(entiteVar,  requeteSite_, o);
+		}
+	}
+
+	///////////////////
+	// staticSolrStr //
+	///////////////////
+
+	public static String staticSolrStrPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		return staticSolrStrSessionPage(entiteVar,  requeteSite_, o);
+	}
+	public static String staticSolrStrSessionPage(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		switch(entiteVar) {
+			default:
+				return SessionGenPage.staticSolrStrSessionGenPage(entiteVar,  requeteSite_, o);
+		}
+	}
+
+	//////////////////
+	// staticSolrFq //
+	//////////////////
+
+	public static String staticSolrFqPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		return staticSolrFqSessionPage(entiteVar,  requeteSite_, o);
+	}
+	public static String staticSolrFqSessionPage(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		switch(entiteVar) {
+			default:
+				return SessionGenPage.staticSolrFqSessionGenPage(entiteVar,  requeteSite_, o);
+		}
+	}
+
 	/////////////
 	// definir //
 	/////////////

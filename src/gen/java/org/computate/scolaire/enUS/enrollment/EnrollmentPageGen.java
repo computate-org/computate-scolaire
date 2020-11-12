@@ -127,6 +127,62 @@ public abstract class EnrollmentPageGen<DEV> extends EnrollmentGenPage {
 		}
 	}
 
+	///////////////
+	// staticSet //
+	///////////////
+
+	public static Object staticSetForClass(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		return staticSetEnrollmentPage(entityVar,  siteRequest_, o);
+	}
+	public static Object staticSetEnrollmentPage(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		switch(entityVar) {
+			default:
+				return EnrollmentGenPage.staticSetEnrollmentGenPage(entityVar,  siteRequest_, o);
+		}
+	}
+
+	////////////////
+	// staticSolr //
+	////////////////
+
+	public static Object staticSolrForClass(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		return staticSolrEnrollmentPage(entityVar,  siteRequest_, o);
+	}
+	public static Object staticSolrEnrollmentPage(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		switch(entityVar) {
+			default:
+				return EnrollmentGenPage.staticSolrEnrollmentGenPage(entityVar,  siteRequest_, o);
+		}
+	}
+
+	///////////////////
+	// staticSolrStr //
+	///////////////////
+
+	public static String staticSolrStrForClass(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		return staticSolrStrEnrollmentPage(entityVar,  siteRequest_, o);
+	}
+	public static String staticSolrStrEnrollmentPage(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		switch(entityVar) {
+			default:
+				return EnrollmentGenPage.staticSolrStrEnrollmentGenPage(entityVar,  siteRequest_, o);
+		}
+	}
+
+	//////////////////
+	// staticSolrFq //
+	//////////////////
+
+	public static String staticSolrFqForClass(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		return staticSolrFqEnrollmentPage(entityVar,  siteRequest_, o);
+	}
+	public static String staticSolrFqEnrollmentPage(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		switch(entityVar) {
+			default:
+				return EnrollmentGenPage.staticSolrFqEnrollmentGenPage(entityVar,  siteRequest_, o);
+		}
+	}
+
 	/////////////
 	// define //
 	/////////////

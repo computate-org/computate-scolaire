@@ -68,6 +68,9 @@ public abstract class SeasonGenPageGen<DEV> extends ClusterPage {
 		this.listSchoolSeason = listSchoolSeason;
 		this.listSchoolSeasonWrap.alreadyInitialized = true;
 	}
+	public static SearchList<SchoolSeason> staticSetListSchoolSeason(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	protected SeasonGenPage listSchoolSeasonInit() {
 		if(!listSchoolSeasonWrap.alreadyInitialized) {
 			_listSchoolSeason(listSchoolSeasonWrap);
@@ -107,6 +110,9 @@ public abstract class SeasonGenPageGen<DEV> extends ClusterPage {
 	public void setSchoolSeason_(SchoolSeason schoolSeason_) {
 		this.schoolSeason_ = schoolSeason_;
 		this.schoolSeason_Wrap.alreadyInitialized = true;
+	}
+	public static SchoolSeason staticSetSchoolSeason_(SiteRequestEnUS siteRequest_, String o) {
+		return null;
 	}
 	protected SeasonGenPage schoolSeason_Init() {
 		if(!schoolSeason_Wrap.alreadyInitialized) {
@@ -212,6 +218,62 @@ public abstract class SeasonGenPageGen<DEV> extends ClusterPage {
 		switch(var) {
 			default:
 				return super.attributeClusterPage(var, val);
+		}
+	}
+
+	///////////////
+	// staticSet //
+	///////////////
+
+	public static Object staticSetForClass(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		return staticSetSeasonGenPage(entityVar,  siteRequest_, o);
+	}
+	public static Object staticSetSeasonGenPage(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		switch(entityVar) {
+			default:
+				return ClusterPage.staticSetClusterPage(entityVar,  siteRequest_, o);
+		}
+	}
+
+	////////////////
+	// staticSolr //
+	////////////////
+
+	public static Object staticSolrForClass(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		return staticSolrSeasonGenPage(entityVar,  siteRequest_, o);
+	}
+	public static Object staticSolrSeasonGenPage(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		switch(entityVar) {
+			default:
+				return ClusterPage.staticSolrClusterPage(entityVar,  siteRequest_, o);
+		}
+	}
+
+	///////////////////
+	// staticSolrStr //
+	///////////////////
+
+	public static String staticSolrStrForClass(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		return staticSolrStrSeasonGenPage(entityVar,  siteRequest_, o);
+	}
+	public static String staticSolrStrSeasonGenPage(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		switch(entityVar) {
+			default:
+				return ClusterPage.staticSolrStrClusterPage(entityVar,  siteRequest_, o);
+		}
+	}
+
+	//////////////////
+	// staticSolrFq //
+	//////////////////
+
+	public static String staticSolrFqForClass(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		return staticSolrFqSeasonGenPage(entityVar,  siteRequest_, o);
+	}
+	public static String staticSolrFqSeasonGenPage(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		switch(entityVar) {
+			default:
+				return ClusterPage.staticSolrFqClusterPage(entityVar,  siteRequest_, o);
 		}
 	}
 

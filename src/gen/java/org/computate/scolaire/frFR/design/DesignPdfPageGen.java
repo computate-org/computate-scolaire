@@ -127,6 +127,62 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		}
 	}
 
+	///////////////
+	// staticSet //
+	///////////////
+
+	public static Object staticSetPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		return staticSetDesignPdfPage(entiteVar,  requeteSite_, o);
+	}
+	public static Object staticSetDesignPdfPage(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		switch(entiteVar) {
+			default:
+				return DesignPdfGenPage.staticSetDesignPdfGenPage(entiteVar,  requeteSite_, o);
+		}
+	}
+
+	////////////////
+	// staticSolr //
+	////////////////
+
+	public static Object staticSolrPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		return staticSolrDesignPdfPage(entiteVar,  requeteSite_, o);
+	}
+	public static Object staticSolrDesignPdfPage(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		switch(entiteVar) {
+			default:
+				return DesignPdfGenPage.staticSolrDesignPdfGenPage(entiteVar,  requeteSite_, o);
+		}
+	}
+
+	///////////////////
+	// staticSolrStr //
+	///////////////////
+
+	public static String staticSolrStrPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		return staticSolrStrDesignPdfPage(entiteVar,  requeteSite_, o);
+	}
+	public static String staticSolrStrDesignPdfPage(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		switch(entiteVar) {
+			default:
+				return DesignPdfGenPage.staticSolrStrDesignPdfGenPage(entiteVar,  requeteSite_, o);
+		}
+	}
+
+	//////////////////
+	// staticSolrFq //
+	//////////////////
+
+	public static String staticSolrFqPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		return staticSolrFqDesignPdfPage(entiteVar,  requeteSite_, o);
+	}
+	public static String staticSolrFqDesignPdfPage(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		switch(entiteVar) {
+			default:
+				return DesignPdfGenPage.staticSolrFqDesignPdfGenPage(entiteVar,  requeteSite_, o);
+		}
+	}
+
 	/////////////
 	// definir //
 	/////////////

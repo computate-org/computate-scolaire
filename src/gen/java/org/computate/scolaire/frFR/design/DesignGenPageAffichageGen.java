@@ -68,6 +68,9 @@ public abstract class DesignGenPageAffichageGen<DEV> extends ClusterPage {
 		this.listeDesignPage = listeDesignPage;
 		this.listeDesignPageCouverture.dejaInitialise = true;
 	}
+	public static ListeRecherche<DesignPage> staticSetListeDesignPage(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
+	}
 	protected DesignGenPageAffichage listeDesignPageInit() {
 		if(!listeDesignPageCouverture.dejaInitialise) {
 			_listeDesignPage(listeDesignPageCouverture);
@@ -107,6 +110,9 @@ public abstract class DesignGenPageAffichageGen<DEV> extends ClusterPage {
 	public void setDesignPage_(DesignPage designPage_) {
 		this.designPage_ = designPage_;
 		this.designPage_Couverture.dejaInitialise = true;
+	}
+	public static DesignPage staticSetDesignPage_(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
 	}
 	protected DesignGenPageAffichage designPage_Init() {
 		if(!designPage_Couverture.dejaInitialise) {
@@ -212,6 +218,62 @@ public abstract class DesignGenPageAffichageGen<DEV> extends ClusterPage {
 		switch(var) {
 			default:
 				return super.attribuerClusterPage(var, val);
+		}
+	}
+
+	///////////////
+	// staticSet //
+	///////////////
+
+	public static Object staticSetPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		return staticSetDesignGenPageAffichage(entiteVar,  requeteSite_, o);
+	}
+	public static Object staticSetDesignGenPageAffichage(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		switch(entiteVar) {
+			default:
+				return ClusterPage.staticSetClusterPage(entiteVar,  requeteSite_, o);
+		}
+	}
+
+	////////////////
+	// staticSolr //
+	////////////////
+
+	public static Object staticSolrPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		return staticSolrDesignGenPageAffichage(entiteVar,  requeteSite_, o);
+	}
+	public static Object staticSolrDesignGenPageAffichage(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		switch(entiteVar) {
+			default:
+				return ClusterPage.staticSolrClusterPage(entiteVar,  requeteSite_, o);
+		}
+	}
+
+	///////////////////
+	// staticSolrStr //
+	///////////////////
+
+	public static String staticSolrStrPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		return staticSolrStrDesignGenPageAffichage(entiteVar,  requeteSite_, o);
+	}
+	public static String staticSolrStrDesignGenPageAffichage(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		switch(entiteVar) {
+			default:
+				return ClusterPage.staticSolrStrClusterPage(entiteVar,  requeteSite_, o);
+		}
+	}
+
+	//////////////////
+	// staticSolrFq //
+	//////////////////
+
+	public static String staticSolrFqPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		return staticSolrFqDesignGenPageAffichage(entiteVar,  requeteSite_, o);
+	}
+	public static String staticSolrFqDesignGenPageAffichage(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		switch(entiteVar) {
+			default:
+				return ClusterPage.staticSolrFqClusterPage(entiteVar,  requeteSite_, o);
 		}
 	}
 

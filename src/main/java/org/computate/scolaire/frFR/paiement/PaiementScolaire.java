@@ -387,11 +387,6 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * Var.enUS: childCompleteNamePreferred
 	 * Indexe: true
 	 * Stocke: true
-	 * Definir: true
-	 * Description.frFR: 
-	 * Description.enUS: 
-	 * NomAffichage.frFR: 
-	 * NomAffichage.enUS: 
 	 * Facet: terms
 	 * r: inscription_
 	 * r.enUS: enrollment_
@@ -409,11 +404,6 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * Var.enUS: childBirthDate
 	 * Indexe: true
 	 * Stocke: true
-	 * Definir: true
-	 * Description.frFR: 
-	 * Description.enUS: 
-	 * NomAffichage.frFR: 
-	 * NomAffichage.enUS: 
 	 * r: inscription_
 	 * r.enUS: enrollment_
 	 * r: EnfantDateNaissance
@@ -429,11 +419,6 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * Var.enUS: momCompleteNamePreferred
 	 * Indexe: true
 	 * Stocke: true
-	 * Definir: true
-	 * Description.frFR: 
-	 * Description.enUS: 
-	 * NomAffichage.frFR: 
-	 * NomAffichage.enUS: 
 	 * r: inscription_
 	 * r.enUS: enrollment_
 	 * r: MereNomCompletPrefere
@@ -449,11 +434,6 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * Var.enUS: dadCompleteNamePreferred
 	 * Indexe: true
 	 * Stocke: true
-	 * Definir: true
-	 * Description.frFR: 
-	 * Description.enUS: 
-	 * NomAffichage.frFR: 
-	 * NomAffichage.enUS: 
 	 * r: inscription_
 	 * r.enUS: enrollment_
 	 * r: PereNomCompletPrefere
@@ -469,10 +449,6 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * Var.enUS: schoolName
 	 * Indexe: true
 	 * Stocke: true
-	 * Description.frFR: 
-	 * Description.enUS: 
-	 * NomAffichage.frFR: 
-	 * NomAffichage.enUS: 
 	 * r: EcoleNom
 	 * r.enUS: SchoolName
 	 * r: inscription
@@ -488,10 +464,6 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * Var.enUS: schoolCompleteName
 	 * Indexe: true
 	 * Stocke: true
-	 * Description.frFR: 
-	 * Description.enUS: 
-	 * NomAffichage.frFR: 
-	 * NomAffichage.enUS: 
 	 * r: EcoleNomComplet
 	 * r.enUS: SchoolCompleteName
 	 * r: inscription
@@ -771,21 +743,6 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	protected void _inscriptionPaimentChaqueMois(Couverture<Boolean> c) {
 		c.o(false);
 	}
-//
-//	/**
-//	 * {@inheritDoc}
-//	 * Var.enUS: enrollmentPaymentComplete
-//	 * Indexe: true
-//	 * Stocke: true
-//	 * NomAffichage.frFR: paiement complet
-//	 * NomAffichage.enUS: complete payment
-//	 * Definir: true
-//	 * HtmlLigne: 4
-//	 * HtmlCellule: 3
-//	 */                       
-//	protected void _inscriptionPaimentComplet(Couverture<Boolean> c) {
-//		c.o(false);
-//	}
 
 	/**
 	 * {@inheritDoc}
@@ -795,8 +752,6 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * Definir: true
 	 * HtmlLigne: 4
 	 * HtmlCellule: 1
-	 * Description.frFR: 
-	 * Description.enUS: 
 	 * NomAffichage.frFR: description
 	 * NomAffichage.enUS: description
 	 */   
@@ -814,8 +769,21 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * NomAffichage.frFR: date de paiement
 	 * NomAffichage.enUS: payment date
 	 * HtmlColonne: 3
-	 */                
+	 */ 
 	protected void _paiementDate(Couverture<LocalDate> c) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: lateFeeDate
+	 * Indexe: true
+	 * Stocke: true
+	 * Definir: true
+	 * NomAffichage.frFR: date frais de retard
+	 * NomAffichage.enUS: late fee date
+	 * HtmlLigne: 8
+	 */
+	protected void _fraisRetardDate(Couverture<LocalDate> c) {
 	}
 
 	/**
@@ -825,7 +793,7 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * Stocke: true
 	 * r: paiementDate
 	 * r.enUS: paymentDate
-	 */                
+	 */
 	protected void _paiementAnnee(Couverture<Integer> c) {
 		if(paiementDate != null)
 			c.o(paiementDate.getYear());
@@ -843,7 +811,7 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * Facet: sum
 	 * NomAffichage.frFR: paiement montant
 	 * NomAffichage.enUS: payment amount
-	 */              
+	 */           
 	protected void _paiementMontant(Couverture<BigDecimal> c) {
 	}
 
@@ -887,7 +855,7 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * HtmlCellule: 5
 	 * NomAffichage.frFR: e-check
 	 * NomAffichage.enUS: e-check
-	 */                     
+	 */                    
 	protected void _paiementECheck(Couverture<Boolean> c) {
 		c.o(false);
 	}
@@ -1188,7 +1156,6 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * Var.enUS: chargeAmountDue
 	 * Indexe: true
 	 * Stocke: true
-	 * Definir: true
 	 * Facet: sum
 	 * Modifier: false
 	 * NomAffichage.frFR: frais montant dû
@@ -1239,7 +1206,6 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * Var.enUS: chargeAmountPassed
 	 * Indexe: true
 	 * Stocke: true
-	 * Definir: true
 	 * Facet: sum
 	 * Modifier: false
 	 * NomAffichage.frFR: frais montant du passé
@@ -1285,7 +1251,6 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * Var.enUS: chargeAmountNotPassed
 	 * Indexe: true
 	 * Stocke: true
-	 * Definir: true
 	 * Facet: sum
 	 * Modifier: false
 	 * NomAffichage.frFR: frais montant pas du passé
@@ -1331,7 +1296,6 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * Var.enUS: chargeAmountFuture
 	 * Indexe: true
 	 * Stocke: true
-	 * Definir: true
 	 * Facet: sum
 	 * Modifier: false
 	 * NomAffichage.frFR: frais montant future

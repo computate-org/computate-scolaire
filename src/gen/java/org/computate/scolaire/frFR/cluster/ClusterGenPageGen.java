@@ -67,6 +67,9 @@ public abstract class ClusterGenPageGen<DEV> extends MiseEnPage {
 		this.listeCluster = listeCluster;
 		this.listeClusterCouverture.dejaInitialise = true;
 	}
+	public static ListeRecherche<Cluster> staticSetListeCluster(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
+	}
 	protected ClusterGenPage listeClusterInit() {
 		if(!listeClusterCouverture.dejaInitialise) {
 			_listeCluster(listeClusterCouverture);
@@ -106,6 +109,9 @@ public abstract class ClusterGenPageGen<DEV> extends MiseEnPage {
 	public void setCluster_(Cluster cluster_) {
 		this.cluster_ = cluster_;
 		this.cluster_Couverture.dejaInitialise = true;
+	}
+	public static Cluster staticSetCluster_(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
 	}
 	protected ClusterGenPage cluster_Init() {
 		if(!cluster_Couverture.dejaInitialise) {
@@ -211,6 +217,62 @@ public abstract class ClusterGenPageGen<DEV> extends MiseEnPage {
 		switch(var) {
 			default:
 				return super.attribuerMiseEnPage(var, val);
+		}
+	}
+
+	///////////////
+	// staticSet //
+	///////////////
+
+	public static Object staticSetPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		return staticSetClusterGenPage(entiteVar,  requeteSite_, o);
+	}
+	public static Object staticSetClusterGenPage(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		switch(entiteVar) {
+			default:
+				return MiseEnPage.staticSetMiseEnPage(entiteVar,  requeteSite_, o);
+		}
+	}
+
+	////////////////
+	// staticSolr //
+	////////////////
+
+	public static Object staticSolrPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		return staticSolrClusterGenPage(entiteVar,  requeteSite_, o);
+	}
+	public static Object staticSolrClusterGenPage(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		switch(entiteVar) {
+			default:
+				return MiseEnPage.staticSolrMiseEnPage(entiteVar,  requeteSite_, o);
+		}
+	}
+
+	///////////////////
+	// staticSolrStr //
+	///////////////////
+
+	public static String staticSolrStrPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		return staticSolrStrClusterGenPage(entiteVar,  requeteSite_, o);
+	}
+	public static String staticSolrStrClusterGenPage(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		switch(entiteVar) {
+			default:
+				return MiseEnPage.staticSolrStrMiseEnPage(entiteVar,  requeteSite_, o);
+		}
+	}
+
+	//////////////////
+	// staticSolrFq //
+	//////////////////
+
+	public static String staticSolrFqPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		return staticSolrFqClusterGenPage(entiteVar,  requeteSite_, o);
+	}
+	public static String staticSolrFqClusterGenPage(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		switch(entiteVar) {
+			default:
+				return MiseEnPage.staticSolrFqMiseEnPage(entiteVar,  requeteSite_, o);
 		}
 	}
 

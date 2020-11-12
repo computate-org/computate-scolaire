@@ -356,58 +356,6 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 							}
 						}
 						break;
-					case "childCompleteNamePreferred":
-						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "childCompleteNamePreferred", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
-									, b
-							-> {
-								if(b.succeeded())
-									a.handle(Future.succeededFuture());
-								else
-									a.handle(Future.failedFuture(new Exception("value SchoolPayment.childCompleteNamePreferred failed", b.cause())));
-							});
-						}));
-						break;
-					case "childBirthDate":
-						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "childBirthDate", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
-									, b
-							-> {
-								if(b.succeeded())
-									a.handle(Future.succeededFuture());
-								else
-									a.handle(Future.failedFuture(new Exception("value SchoolPayment.childBirthDate failed", b.cause())));
-							});
-						}));
-						break;
-					case "momCompleteNamePreferred":
-						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "momCompleteNamePreferred", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
-									, b
-							-> {
-								if(b.succeeded())
-									a.handle(Future.succeededFuture());
-								else
-									a.handle(Future.failedFuture(new Exception("value SchoolPayment.momCompleteNamePreferred failed", b.cause())));
-							});
-						}));
-						break;
-					case "dadCompleteNamePreferred":
-						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "dadCompleteNamePreferred", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
-									, b
-							-> {
-								if(b.succeeded())
-									a.handle(Future.succeededFuture());
-								else
-									a.handle(Future.failedFuture(new Exception("value SchoolPayment.dadCompleteNamePreferred failed", b.cause())));
-							});
-						}));
-						break;
 					case "enrollmentPaymentEachMonth":
 						futures.add(Future.future(a -> {
 							tx.preparedQuery(SiteContextEnUS.SQL_setD
@@ -444,6 +392,19 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 									a.handle(Future.succeededFuture());
 								else
 									a.handle(Future.failedFuture(new Exception("value SchoolPayment.paymentDate failed", b.cause())));
+							});
+						}));
+						break;
+					case "lateFeeDate":
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "lateFeeDate", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolPayment.lateFeeDate failed", b.cause())));
 							});
 						}));
 						break;
@@ -1340,58 +1301,6 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						}));
 						}
 						break;
-					case "childCompleteNamePreferred":
-						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "childCompleteNamePreferred", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
-									, b
-							-> {
-								if(b.succeeded())
-									a.handle(Future.succeededFuture());
-								else
-									a.handle(Future.failedFuture(new Exception("value SchoolPayment.childCompleteNamePreferred failed", b.cause())));
-							});
-						}));
-						break;
-					case "childBirthDate":
-						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "childBirthDate", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
-									, b
-							-> {
-								if(b.succeeded())
-									a.handle(Future.succeededFuture());
-								else
-									a.handle(Future.failedFuture(new Exception("value SchoolPayment.childBirthDate failed", b.cause())));
-							});
-						}));
-						break;
-					case "momCompleteNamePreferred":
-						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "momCompleteNamePreferred", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
-									, b
-							-> {
-								if(b.succeeded())
-									a.handle(Future.succeededFuture());
-								else
-									a.handle(Future.failedFuture(new Exception("value SchoolPayment.momCompleteNamePreferred failed", b.cause())));
-							});
-						}));
-						break;
-					case "dadCompleteNamePreferred":
-						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "dadCompleteNamePreferred", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
-									, b
-							-> {
-								if(b.succeeded())
-									a.handle(Future.succeededFuture());
-								else
-									a.handle(Future.failedFuture(new Exception("value SchoolPayment.dadCompleteNamePreferred failed", b.cause())));
-							});
-						}));
-						break;
 					case "enrollmentPaymentEachMonth":
 						futures.add(Future.future(a -> {
 							tx.preparedQuery(SiteContextEnUS.SQL_setD
@@ -1428,6 +1337,19 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 									a.handle(Future.succeededFuture());
 								else
 									a.handle(Future.failedFuture(new Exception("value SchoolPayment.paymentDate failed", b.cause())));
+							});
+						}));
+						break;
+					case "lateFeeDate":
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD
+									, Tuple.of(pk, "lateFeeDate", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolPayment.lateFeeDate failed", b.cause())));
 							});
 						}));
 						break;
@@ -2073,118 +1995,6 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 							}
 						}
 						break;
-					case "setChildCompleteNamePreferred":
-						if(jsonObject.getString(methodName) == null) {
-							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "childCompleteNamePreferred")
-										, b
-								-> {
-									if(b.succeeded())
-										a.handle(Future.succeededFuture());
-									else
-										a.handle(Future.failedFuture(new Exception("value SchoolPayment.childCompleteNamePreferred failed", b.cause())));
-								});
-							}));
-						} else {
-							o2.setChildCompleteNamePreferred(jsonObject.getString(methodName));
-							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "childCompleteNamePreferred", o2.jsonChildCompleteNamePreferred())
-										, b
-								-> {
-									if(b.succeeded())
-										a.handle(Future.succeededFuture());
-									else
-										a.handle(Future.failedFuture(new Exception("value SchoolPayment.childCompleteNamePreferred failed", b.cause())));
-								});
-							}));
-						}
-						break;
-					case "setChildBirthDate":
-						if(jsonObject.getString(methodName) == null) {
-							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "childBirthDate")
-										, b
-								-> {
-									if(b.succeeded())
-										a.handle(Future.succeededFuture());
-									else
-										a.handle(Future.failedFuture(new Exception("value SchoolPayment.childBirthDate failed", b.cause())));
-								});
-							}));
-						} else {
-							o2.setChildBirthDate(jsonObject.getString(methodName));
-							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "childBirthDate", o2.jsonChildBirthDate())
-										, b
-								-> {
-									if(b.succeeded())
-										a.handle(Future.succeededFuture());
-									else
-										a.handle(Future.failedFuture(new Exception("value SchoolPayment.childBirthDate failed", b.cause())));
-								});
-							}));
-						}
-						break;
-					case "setMomCompleteNamePreferred":
-						if(jsonObject.getString(methodName) == null) {
-							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "momCompleteNamePreferred")
-										, b
-								-> {
-									if(b.succeeded())
-										a.handle(Future.succeededFuture());
-									else
-										a.handle(Future.failedFuture(new Exception("value SchoolPayment.momCompleteNamePreferred failed", b.cause())));
-								});
-							}));
-						} else {
-							o2.setMomCompleteNamePreferred(jsonObject.getString(methodName));
-							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "momCompleteNamePreferred", o2.jsonMomCompleteNamePreferred())
-										, b
-								-> {
-									if(b.succeeded())
-										a.handle(Future.succeededFuture());
-									else
-										a.handle(Future.failedFuture(new Exception("value SchoolPayment.momCompleteNamePreferred failed", b.cause())));
-								});
-							}));
-						}
-						break;
-					case "setDadCompleteNamePreferred":
-						if(jsonObject.getString(methodName) == null) {
-							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "dadCompleteNamePreferred")
-										, b
-								-> {
-									if(b.succeeded())
-										a.handle(Future.succeededFuture());
-									else
-										a.handle(Future.failedFuture(new Exception("value SchoolPayment.dadCompleteNamePreferred failed", b.cause())));
-								});
-							}));
-						} else {
-							o2.setDadCompleteNamePreferred(jsonObject.getString(methodName));
-							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "dadCompleteNamePreferred", o2.jsonDadCompleteNamePreferred())
-										, b
-								-> {
-									if(b.succeeded())
-										a.handle(Future.succeededFuture());
-									else
-										a.handle(Future.failedFuture(new Exception("value SchoolPayment.dadCompleteNamePreferred failed", b.cause())));
-								});
-							}));
-						}
-						break;
 					case "setEnrollmentPaymentEachMonth":
 						if(jsonObject.getBoolean(methodName) == null) {
 							futures.add(Future.future(a -> {
@@ -2265,6 +2075,34 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 										a.handle(Future.succeededFuture());
 									else
 										a.handle(Future.failedFuture(new Exception("value SchoolPayment.paymentDate failed", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setLateFeeDate":
+						if(jsonObject.getString(methodName) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD
+										, Tuple.of(pk, "lateFeeDate")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolPayment.lateFeeDate failed", b.cause())));
+								});
+							}));
+						} else {
+							o2.setLateFeeDate(jsonObject.getString(methodName));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD
+										, Tuple.of(pk, "lateFeeDate", o2.jsonLateFeeDate())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolPayment.lateFeeDate failed", b.cause())));
 								});
 							}));
 						}
@@ -3581,7 +3419,16 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 	public void aSearchSchoolPaymentFq(String uri, String apiMethod, SearchList<SchoolPayment> searchList, String entityVar, String valueIndexed, String varIndexed) {
 		if(varIndexed == null)
 			throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
-		searchList.addFilterQuery(varIndexed + ":" + ClientUtils.escapeQueryChars(valueIndexed));
+		if(StringUtils.startsWith(valueIndexed, "[")) {
+			String[] fqs = StringUtils.split(StringUtils.substringBefore(StringUtils.substringAfter(valueIndexed, "["), "]"), " TO ");
+			if(fqs.length != 2)
+				throw new RuntimeException(String.format("\"%s\" invalid range query. ", valueIndexed));
+			String fq1 = fqs[0].equals("*") ? fqs[0] : SchoolPayment.staticSolrFqForClass(entityVar, searchList.getSiteRequest_(), fqs[0]);
+			String fq2 = fqs[1].equals("*") ? fqs[1] : SchoolPayment.staticSolrFqForClass(entityVar, searchList.getSiteRequest_(), fqs[1]);
+			searchList.addFilterQuery(varIndexed + ":[" + fq1 + " TO " + fq2 + "]");
+		} else {
+			searchList.addFilterQuery(varIndexed + ":" + SchoolPayment.staticSolrFqForClass(entityVar, searchList.getSiteRequest_(), valueIndexed));
+		}
 	}
 
 	public void aSearchSchoolPaymentSort(String uri, String apiMethod, SearchList<SchoolPayment> searchList, String entityVar, String valueIndexed, String varIndexed) {
@@ -3719,7 +3566,7 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 					eventHandler.handle(Future.failedFuture(e));
 				}
 			});
-			if("*".equals(searchList.getQuery()) && searchList.getSorts().size() == 0) {
+			if("*:*".equals(searchList.getQuery()) && searchList.getSorts().size() == 0) {
 				searchList.addSort("paymentDate_indexed_date", ORDER.desc);
 				searchList.addSort("paymentBy_indexed_string", ORDER.desc);
 			}

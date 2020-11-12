@@ -285,19 +285,7 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 			o.htmEnrollmentKey("PUTCopy");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmInheritPk("PUTCopy");
-			o.htmSessionId("PUTCopy");
-			o.htmUserId("PUTCopy");
-			o.htmUserKey("PUTCopy");
-			o.htmChildCompleteNamePreferred("PUTCopy");
-			o.htmChildBirthDate("PUTCopy");
-			o.htmMomCompleteNamePreferred("PUTCopy");
-			o.htmDadCompleteNamePreferred("PUTCopy");
-			o.htmChargeAmountDue("PUTCopy");
-			o.htmChargeAmountPassed("PUTCopy");
-			o.htmChargeAmountNotPassed("PUTCopy");
-			o.htmChargeAmountFuture("PUTCopy");
-			o.htmPaymentShortName("PUTCopy");
+			o.htmLateFeeDate("PUTCopy");
 		} g("div");
 	}
 
@@ -340,19 +328,7 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 			o.htmEnrollmentKey("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmInheritPk("PATCH");
-			o.htmSessionId("PATCH");
-			o.htmUserId("PATCH");
-			o.htmUserKey("PATCH");
-			o.htmChildCompleteNamePreferred("PATCH");
-			o.htmChildBirthDate("PATCH");
-			o.htmMomCompleteNamePreferred("PATCH");
-			o.htmDadCompleteNamePreferred("PATCH");
-			o.htmChargeAmountDue("PATCH");
-			o.htmChargeAmountPassed("PATCH");
-			o.htmChargeAmountNotPassed("PATCH");
-			o.htmChargeAmountFuture("PATCH");
-			o.htmPaymentShortName("PATCH");
+			o.htmLateFeeDate("PATCH");
 		} g("div");
 	}
 
@@ -397,19 +373,14 @@ public class PaymentGenPage extends PaymentGenPageGen<ClusterPage> {
 			o.htmEnrollmentKey("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmLateFeeDate("Search");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInheritPk("Search");
 			o.htmSessionId("Search");
 			o.htmUserId("Search");
 			o.htmUserKey("Search");
 			o.htmObjectTitle("Search");
-			o.htmChildCompleteNamePreferred("Search");
-			o.htmChildBirthDate("Search");
-			o.htmMomCompleteNamePreferred("Search");
-			o.htmDadCompleteNamePreferred("Search");
-			o.htmChargeAmountDue("Search");
-			o.htmChargeAmountPassed("Search");
-			o.htmChargeAmountNotPassed("Search");
-			o.htmChargeAmountFuture("Search");
 			o.htmPaymentShortName("Search");
 		} g("div");
 	}

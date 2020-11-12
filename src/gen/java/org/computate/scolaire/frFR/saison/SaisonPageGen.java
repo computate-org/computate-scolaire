@@ -127,6 +127,62 @@ public abstract class SaisonPageGen<DEV> extends SaisonGenPage {
 		}
 	}
 
+	///////////////
+	// staticSet //
+	///////////////
+
+	public static Object staticSetPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		return staticSetSaisonPage(entiteVar,  requeteSite_, o);
+	}
+	public static Object staticSetSaisonPage(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		switch(entiteVar) {
+			default:
+				return SaisonGenPage.staticSetSaisonGenPage(entiteVar,  requeteSite_, o);
+		}
+	}
+
+	////////////////
+	// staticSolr //
+	////////////////
+
+	public static Object staticSolrPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		return staticSolrSaisonPage(entiteVar,  requeteSite_, o);
+	}
+	public static Object staticSolrSaisonPage(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		switch(entiteVar) {
+			default:
+				return SaisonGenPage.staticSolrSaisonGenPage(entiteVar,  requeteSite_, o);
+		}
+	}
+
+	///////////////////
+	// staticSolrStr //
+	///////////////////
+
+	public static String staticSolrStrPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		return staticSolrStrSaisonPage(entiteVar,  requeteSite_, o);
+	}
+	public static String staticSolrStrSaisonPage(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		switch(entiteVar) {
+			default:
+				return SaisonGenPage.staticSolrStrSaisonGenPage(entiteVar,  requeteSite_, o);
+		}
+	}
+
+	//////////////////
+	// staticSolrFq //
+	//////////////////
+
+	public static String staticSolrFqPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		return staticSolrFqSaisonPage(entiteVar,  requeteSite_, o);
+	}
+	public static String staticSolrFqSaisonPage(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		switch(entiteVar) {
+			default:
+				return SaisonGenPage.staticSolrFqSaisonGenPage(entiteVar,  requeteSite_, o);
+		}
+	}
+
 	/////////////
 	// definir //
 	/////////////

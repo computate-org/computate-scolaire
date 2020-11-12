@@ -445,38 +445,6 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 			o.htmUtilisateurCles("PUTCopie");
 			o.htmPaiementCles("PUTCopie");
 		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmInheritPk("PUTCopie");
-			o.htmSessionId("PUTCopie");
-			o.htmUtilisateurId("PUTCopie");
-			o.htmUtilisateurCle("PUTCopie");
-			o.htmEnfantNomComplet("PUTCopie");
-			o.htmEnfantNomCompletPrefere("PUTCopie");
-			o.htmEnfantDateNaissance("PUTCopie");
-			o.htmEcoleAddresse("PUTCopie");
-			o.htmInscriptionDateFrais("PUTCopie");
-			o.htmInscriptionNomsParents("PUTCopie");
-			o.htmInscriptionSignature1("PUTCopie");
-			o.htmInscriptionSignature2("PUTCopie");
-			o.htmInscriptionSignature3("PUTCopie");
-			o.htmInscriptionSignature4("PUTCopie");
-			o.htmInscriptionSignature5("PUTCopie");
-			o.htmInscriptionSignature6("PUTCopie");
-			o.htmInscriptionSignature7("PUTCopie");
-			o.htmInscriptionSignature8("PUTCopie");
-			o.htmInscriptionSignature9("PUTCopie");
-			o.htmInscriptionSignature10("PUTCopie");
-			o.htmInscriptionDate1("PUTCopie");
-			o.htmInscriptionDate2("PUTCopie");
-			o.htmInscriptionDate3("PUTCopie");
-			o.htmInscriptionDate4("PUTCopie");
-			o.htmInscriptionDate5("PUTCopie");
-			o.htmInscriptionDate6("PUTCopie");
-			o.htmInscriptionDate7("PUTCopie");
-			o.htmInscriptionDate8("PUTCopie");
-			o.htmInscriptionDate9("PUTCopie");
-			o.htmInscriptionDate10("PUTCopie");
-		} g("div");
 	}
 
 	public void htmlFormPATCHInscriptionScolaire(InscriptionScolaire o) {
@@ -533,38 +501,6 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmUtilisateurCles("PATCH");
 			o.htmPaiementCles("PATCH");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmInheritPk("PATCH");
-			o.htmSessionId("PATCH");
-			o.htmUtilisateurId("PATCH");
-			o.htmUtilisateurCle("PATCH");
-			o.htmEnfantNomComplet("PATCH");
-			o.htmEnfantNomCompletPrefere("PATCH");
-			o.htmEnfantDateNaissance("PATCH");
-			o.htmEcoleAddresse("PATCH");
-			o.htmInscriptionDateFrais("PATCH");
-			o.htmInscriptionNomsParents("PATCH");
-			o.htmInscriptionSignature1("PATCH");
-			o.htmInscriptionSignature2("PATCH");
-			o.htmInscriptionSignature3("PATCH");
-			o.htmInscriptionSignature4("PATCH");
-			o.htmInscriptionSignature5("PATCH");
-			o.htmInscriptionSignature6("PATCH");
-			o.htmInscriptionSignature7("PATCH");
-			o.htmInscriptionSignature8("PATCH");
-			o.htmInscriptionSignature9("PATCH");
-			o.htmInscriptionSignature10("PATCH");
-			o.htmInscriptionDate1("PATCH");
-			o.htmInscriptionDate2("PATCH");
-			o.htmInscriptionDate3("PATCH");
-			o.htmInscriptionDate4("PATCH");
-			o.htmInscriptionDate5("PATCH");
-			o.htmInscriptionDate6("PATCH");
-			o.htmInscriptionDate7("PATCH");
-			o.htmInscriptionDate8("PATCH");
-			o.htmInscriptionDate9("PATCH");
-			o.htmInscriptionDate10("PATCH");
 		} g("div");
 	}
 

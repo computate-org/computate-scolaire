@@ -127,6 +127,62 @@ public abstract class PerePageGen<DEV> extends PereGenPage {
 		}
 	}
 
+	///////////////
+	// staticSet //
+	///////////////
+
+	public static Object staticSetPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		return staticSetPerePage(entiteVar,  requeteSite_, o);
+	}
+	public static Object staticSetPerePage(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		switch(entiteVar) {
+			default:
+				return PereGenPage.staticSetPereGenPage(entiteVar,  requeteSite_, o);
+		}
+	}
+
+	////////////////
+	// staticSolr //
+	////////////////
+
+	public static Object staticSolrPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		return staticSolrPerePage(entiteVar,  requeteSite_, o);
+	}
+	public static Object staticSolrPerePage(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		switch(entiteVar) {
+			default:
+				return PereGenPage.staticSolrPereGenPage(entiteVar,  requeteSite_, o);
+		}
+	}
+
+	///////////////////
+	// staticSolrStr //
+	///////////////////
+
+	public static String staticSolrStrPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		return staticSolrStrPerePage(entiteVar,  requeteSite_, o);
+	}
+	public static String staticSolrStrPerePage(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		switch(entiteVar) {
+			default:
+				return PereGenPage.staticSolrStrPereGenPage(entiteVar,  requeteSite_, o);
+		}
+	}
+
+	//////////////////
+	// staticSolrFq //
+	//////////////////
+
+	public static String staticSolrFqPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		return staticSolrFqPerePage(entiteVar,  requeteSite_, o);
+	}
+	public static String staticSolrFqPerePage(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		switch(entiteVar) {
+			default:
+				return PereGenPage.staticSolrFqPereGenPage(entiteVar,  requeteSite_, o);
+		}
+	}
+
 	/////////////
 	// definir //
 	/////////////

@@ -111,10 +111,14 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		this.partHtmlCleCouverture.dejaInitialise = true;
 	}
 	public PartHtml setPartHtmlCle(String o) {
-		if(NumberUtils.isParsable(o))
-			this.partHtmlCle = Long.parseLong(o);
+		this.partHtmlCle = PartHtml.staticSetPartHtmlCle(requeteSite_, o);
 		this.partHtmlCleCouverture.dejaInitialise = true;
 		return (PartHtml)this;
+	}
+	public static Long staticSetPartHtmlCle(RequeteSiteFrFR requeteSite_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Long.parseLong(o);
+		return null;
 	}
 	protected PartHtml partHtmlCleInit() {
 		if(!partHtmlCleCouverture.dejaInitialise) {
@@ -126,8 +130,20 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		return (PartHtml)this;
 	}
 
+	public static Long staticSolrPartHtmlCle(RequeteSiteFrFR requeteSite_, Long o) {
+		return o;
+	}
+
+	public static String staticSolrStrPartHtmlCle(RequeteSiteFrFR requeteSite_, Long o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPartHtmlCle(RequeteSiteFrFR requeteSite_, String o) {
+		return PartHtml.staticSolrStrPartHtmlCle(requeteSite_, PartHtml.staticSolrPartHtmlCle(requeteSite_, PartHtml.staticSetPartHtmlCle(requeteSite_, o)));
+	}
+
 	public Long solrPartHtmlCle() {
-		return partHtmlCle;
+		return PartHtml.staticSolrPartHtmlCle(requeteSite_, partHtmlCle);
 	}
 
 	public String strPartHtmlCle() {
@@ -179,6 +195,9 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		this.designPageCles = designPageCles;
 		this.designPageClesCouverture.dejaInitialise = true;
 	}
+	public static List<Long> staticSetDesignPageCles(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
+	}
 	public PartHtml addDesignPageCles(Long...objets) {
 		for(Long o : objets) {
 			addDesignPageCles(o);
@@ -213,8 +232,20 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		return (PartHtml)this;
 	}
 
+	public static List<Long> staticSolrDesignPageCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
+		return o;
+	}
+
+	public static String staticSolrStrDesignPageCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqDesignPageCles(RequeteSiteFrFR requeteSite_, String o) {
+		return PartHtml.staticSolrStrDesignPageCles(requeteSite_, PartHtml.staticSolrDesignPageCles(requeteSite_, PartHtml.staticSetDesignPageCles(requeteSite_, o)));
+	}
+
 	public List<Long> solrDesignPageCles() {
-		return designPageCles;
+		return PartHtml.staticSolrDesignPageCles(requeteSite_, designPageCles);
 	}
 
 	public String strDesignPageCles() {
@@ -250,9 +281,12 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 					.a("class", "valeur suggereDesignPageCles w3-input w3-border w3-cell w3-cell-middle ")
 					.a("name", "setDesignPageCles")
 					.a("id", classeApiMethodeMethode, "_designPageCles")
-					.a("autocomplete", "off")
-					.a("oninput", "suggerePartHtmlDesignPageCles($(this).val() ? rechercherDesignPageFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'partHtmlCles:" + pk + "'}", "], $('#listPartHtmlDesignPageCles_", classeApiMethodeMethode, "'), ", pk, "); ")
-				.fg();
+					.a("autocomplete", "off");
+					if("Page".equals(classeApiMethodeMethode)) {
+						a("oninput", "suggerePartHtmlDesignPageCles($(this).val() ? rechercherDesignPageFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'partHtmlCles:" + pk + "'}", "], $('#listPartHtmlDesignPageCles_", classeApiMethodeMethode, "'), ", pk, "); ");
+					}
+
+				fg();
 
 		} else {
 			if(
@@ -337,10 +371,13 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	public String getHtmlLien() {
 		return htmlLien;
 	}
-
-	public void setHtmlLien(String htmlLien) {
-		this.htmlLien = htmlLien;
+	public PartHtml setHtmlLien(String o) {
+		this.htmlLien = PartHtml.staticSetHtmlLien(requeteSite_, o);
 		this.htmlLienCouverture.dejaInitialise = true;
+		return (PartHtml)this;
+	}
+	public static String staticSetHtmlLien(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected PartHtml htmlLienInit() {
 		if(!htmlLienCouverture.dejaInitialise) {
@@ -352,8 +389,20 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		return (PartHtml)this;
 	}
 
+	public static String staticSolrHtmlLien(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrHtmlLien(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqHtmlLien(RequeteSiteFrFR requeteSite_, String o) {
+		return PartHtml.staticSolrStrHtmlLien(requeteSite_, PartHtml.staticSolrHtmlLien(requeteSite_, PartHtml.staticSetHtmlLien(requeteSite_, o)));
+	}
+
 	public String solrHtmlLien() {
-		return htmlLien;
+		return PartHtml.staticSolrHtmlLien(requeteSite_, htmlLien);
 	}
 
 	public String strHtmlLien() {
@@ -470,10 +519,13 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	public String getHtmlElement() {
 		return htmlElement;
 	}
-
-	public void setHtmlElement(String htmlElement) {
-		this.htmlElement = htmlElement;
+	public PartHtml setHtmlElement(String o) {
+		this.htmlElement = PartHtml.staticSetHtmlElement(requeteSite_, o);
 		this.htmlElementCouverture.dejaInitialise = true;
+		return (PartHtml)this;
+	}
+	public static String staticSetHtmlElement(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected PartHtml htmlElementInit() {
 		if(!htmlElementCouverture.dejaInitialise) {
@@ -485,8 +537,20 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		return (PartHtml)this;
 	}
 
+	public static String staticSolrHtmlElement(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrHtmlElement(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqHtmlElement(RequeteSiteFrFR requeteSite_, String o) {
+		return PartHtml.staticSolrStrHtmlElement(requeteSite_, PartHtml.staticSolrHtmlElement(requeteSite_, PartHtml.staticSetHtmlElement(requeteSite_, o)));
+	}
+
 	public String solrHtmlElement() {
-		return htmlElement;
+		return PartHtml.staticSolrHtmlElement(requeteSite_, htmlElement);
 	}
 
 	public String strHtmlElement() {
@@ -603,10 +667,13 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	public String getHtmlId() {
 		return htmlId;
 	}
-
-	public void setHtmlId(String htmlId) {
-		this.htmlId = htmlId;
+	public PartHtml setHtmlId(String o) {
+		this.htmlId = PartHtml.staticSetHtmlId(requeteSite_, o);
 		this.htmlIdCouverture.dejaInitialise = true;
+		return (PartHtml)this;
+	}
+	public static String staticSetHtmlId(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected PartHtml htmlIdInit() {
 		if(!htmlIdCouverture.dejaInitialise) {
@@ -618,8 +685,20 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		return (PartHtml)this;
 	}
 
+	public static String staticSolrHtmlId(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrHtmlId(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqHtmlId(RequeteSiteFrFR requeteSite_, String o) {
+		return PartHtml.staticSolrStrHtmlId(requeteSite_, PartHtml.staticSolrHtmlId(requeteSite_, PartHtml.staticSetHtmlId(requeteSite_, o)));
+	}
+
 	public String solrHtmlId() {
-		return htmlId;
+		return PartHtml.staticSolrHtmlId(requeteSite_, htmlId);
 	}
 
 	public String strHtmlId() {
@@ -736,10 +815,13 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	public String getHtmlClasses() {
 		return htmlClasses;
 	}
-
-	public void setHtmlClasses(String htmlClasses) {
-		this.htmlClasses = htmlClasses;
+	public PartHtml setHtmlClasses(String o) {
+		this.htmlClasses = PartHtml.staticSetHtmlClasses(requeteSite_, o);
 		this.htmlClassesCouverture.dejaInitialise = true;
+		return (PartHtml)this;
+	}
+	public static String staticSetHtmlClasses(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected PartHtml htmlClassesInit() {
 		if(!htmlClassesCouverture.dejaInitialise) {
@@ -751,8 +833,20 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		return (PartHtml)this;
 	}
 
+	public static String staticSolrHtmlClasses(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrHtmlClasses(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqHtmlClasses(RequeteSiteFrFR requeteSite_, String o) {
+		return PartHtml.staticSolrStrHtmlClasses(requeteSite_, PartHtml.staticSolrHtmlClasses(requeteSite_, PartHtml.staticSetHtmlClasses(requeteSite_, o)));
+	}
+
 	public String solrHtmlClasses() {
-		return htmlClasses;
+		return PartHtml.staticSolrHtmlClasses(requeteSite_, htmlClasses);
 	}
 
 	public String strHtmlClasses() {
@@ -869,10 +963,13 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	public String getHtmlStyle() {
 		return htmlStyle;
 	}
-
-	public void setHtmlStyle(String htmlStyle) {
-		this.htmlStyle = htmlStyle;
+	public PartHtml setHtmlStyle(String o) {
+		this.htmlStyle = PartHtml.staticSetHtmlStyle(requeteSite_, o);
 		this.htmlStyleCouverture.dejaInitialise = true;
+		return (PartHtml)this;
+	}
+	public static String staticSetHtmlStyle(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected PartHtml htmlStyleInit() {
 		if(!htmlStyleCouverture.dejaInitialise) {
@@ -884,8 +981,20 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		return (PartHtml)this;
 	}
 
+	public static String staticSolrHtmlStyle(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrHtmlStyle(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqHtmlStyle(RequeteSiteFrFR requeteSite_, String o) {
+		return PartHtml.staticSolrStrHtmlStyle(requeteSite_, PartHtml.staticSolrHtmlStyle(requeteSite_, PartHtml.staticSetHtmlStyle(requeteSite_, o)));
+	}
+
 	public String solrHtmlStyle() {
-		return htmlStyle;
+		return PartHtml.staticSolrHtmlStyle(requeteSite_, htmlStyle);
 	}
 
 	public String strHtmlStyle() {
@@ -1002,10 +1111,13 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	public String getHtmlAvant() {
 		return htmlAvant;
 	}
-
-	public void setHtmlAvant(String htmlAvant) {
-		this.htmlAvant = htmlAvant;
+	public PartHtml setHtmlAvant(String o) {
+		this.htmlAvant = PartHtml.staticSetHtmlAvant(requeteSite_, o);
 		this.htmlAvantCouverture.dejaInitialise = true;
+		return (PartHtml)this;
+	}
+	public static String staticSetHtmlAvant(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected PartHtml htmlAvantInit() {
 		if(!htmlAvantCouverture.dejaInitialise) {
@@ -1017,8 +1129,20 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		return (PartHtml)this;
 	}
 
+	public static String staticSolrHtmlAvant(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrHtmlAvant(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqHtmlAvant(RequeteSiteFrFR requeteSite_, String o) {
+		return PartHtml.staticSolrStrHtmlAvant(requeteSite_, PartHtml.staticSolrHtmlAvant(requeteSite_, PartHtml.staticSetHtmlAvant(requeteSite_, o)));
+	}
+
 	public String solrHtmlAvant() {
-		return htmlAvant;
+		return PartHtml.staticSolrHtmlAvant(requeteSite_, htmlAvant);
 	}
 
 	public String strHtmlAvant() {
@@ -1133,10 +1257,13 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	public String getHtmlApres() {
 		return htmlApres;
 	}
-
-	public void setHtmlApres(String htmlApres) {
-		this.htmlApres = htmlApres;
+	public PartHtml setHtmlApres(String o) {
+		this.htmlApres = PartHtml.staticSetHtmlApres(requeteSite_, o);
 		this.htmlApresCouverture.dejaInitialise = true;
+		return (PartHtml)this;
+	}
+	public static String staticSetHtmlApres(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected PartHtml htmlApresInit() {
 		if(!htmlApresCouverture.dejaInitialise) {
@@ -1148,8 +1275,20 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		return (PartHtml)this;
 	}
 
+	public static String staticSolrHtmlApres(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrHtmlApres(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqHtmlApres(RequeteSiteFrFR requeteSite_, String o) {
+		return PartHtml.staticSolrStrHtmlApres(requeteSite_, PartHtml.staticSolrHtmlApres(requeteSite_, PartHtml.staticSetHtmlApres(requeteSite_, o)));
+	}
+
 	public String solrHtmlApres() {
-		return htmlApres;
+		return PartHtml.staticSolrHtmlApres(requeteSite_, htmlApres);
 	}
 
 	public String strHtmlApres() {
@@ -1264,10 +1403,13 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	public String getHtmlTexte() {
 		return htmlTexte;
 	}
-
-	public void setHtmlTexte(String htmlTexte) {
-		this.htmlTexte = htmlTexte;
+	public PartHtml setHtmlTexte(String o) {
+		this.htmlTexte = PartHtml.staticSetHtmlTexte(requeteSite_, o);
 		this.htmlTexteCouverture.dejaInitialise = true;
+		return (PartHtml)this;
+	}
+	public static String staticSetHtmlTexte(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected PartHtml htmlTexteInit() {
 		if(!htmlTexteCouverture.dejaInitialise) {
@@ -1279,8 +1421,20 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		return (PartHtml)this;
 	}
 
+	public static String staticSolrHtmlTexte(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrHtmlTexte(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqHtmlTexte(RequeteSiteFrFR requeteSite_, String o) {
+		return PartHtml.staticSolrStrHtmlTexte(requeteSite_, PartHtml.staticSolrHtmlTexte(requeteSite_, PartHtml.staticSetHtmlTexte(requeteSite_, o)));
+	}
+
 	public String solrHtmlTexte() {
-		return htmlTexte;
+		return PartHtml.staticSolrHtmlTexte(requeteSite_, htmlTexte);
 	}
 
 	public String strHtmlTexte() {
@@ -1395,10 +1549,13 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	public String getHtmlVar() {
 		return htmlVar;
 	}
-
-	public void setHtmlVar(String htmlVar) {
-		this.htmlVar = htmlVar;
+	public PartHtml setHtmlVar(String o) {
+		this.htmlVar = PartHtml.staticSetHtmlVar(requeteSite_, o);
 		this.htmlVarCouverture.dejaInitialise = true;
+		return (PartHtml)this;
+	}
+	public static String staticSetHtmlVar(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected PartHtml htmlVarInit() {
 		if(!htmlVarCouverture.dejaInitialise) {
@@ -1410,8 +1567,20 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		return (PartHtml)this;
 	}
 
+	public static String staticSolrHtmlVar(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrHtmlVar(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqHtmlVar(RequeteSiteFrFR requeteSite_, String o) {
+		return PartHtml.staticSolrStrHtmlVar(requeteSite_, PartHtml.staticSolrHtmlVar(requeteSite_, PartHtml.staticSetHtmlVar(requeteSite_, o)));
+	}
+
 	public String solrHtmlVar() {
-		return htmlVar;
+		return PartHtml.staticSolrHtmlVar(requeteSite_, htmlVar);
 	}
 
 	public String strHtmlVar() {
@@ -1528,10 +1697,13 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	public String getHtmlVarSpan() {
 		return htmlVarSpan;
 	}
-
-	public void setHtmlVarSpan(String htmlVarSpan) {
-		this.htmlVarSpan = htmlVarSpan;
+	public PartHtml setHtmlVarSpan(String o) {
+		this.htmlVarSpan = PartHtml.staticSetHtmlVarSpan(requeteSite_, o);
 		this.htmlVarSpanCouverture.dejaInitialise = true;
+		return (PartHtml)this;
+	}
+	public static String staticSetHtmlVarSpan(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected PartHtml htmlVarSpanInit() {
 		if(!htmlVarSpanCouverture.dejaInitialise) {
@@ -1543,8 +1715,20 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		return (PartHtml)this;
 	}
 
+	public static String staticSolrHtmlVarSpan(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrHtmlVarSpan(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqHtmlVarSpan(RequeteSiteFrFR requeteSite_, String o) {
+		return PartHtml.staticSolrStrHtmlVarSpan(requeteSite_, PartHtml.staticSolrHtmlVarSpan(requeteSite_, PartHtml.staticSetHtmlVarSpan(requeteSite_, o)));
+	}
+
 	public String solrHtmlVarSpan() {
-		return htmlVarSpan;
+		return PartHtml.staticSolrHtmlVarSpan(requeteSite_, htmlVarSpan);
 	}
 
 	public String strHtmlVarSpan() {
@@ -1661,10 +1845,13 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	public String getHtmlVarForm() {
 		return htmlVarForm;
 	}
-
-	public void setHtmlVarForm(String htmlVarForm) {
-		this.htmlVarForm = htmlVarForm;
+	public PartHtml setHtmlVarForm(String o) {
+		this.htmlVarForm = PartHtml.staticSetHtmlVarForm(requeteSite_, o);
 		this.htmlVarFormCouverture.dejaInitialise = true;
+		return (PartHtml)this;
+	}
+	public static String staticSetHtmlVarForm(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected PartHtml htmlVarFormInit() {
 		if(!htmlVarFormCouverture.dejaInitialise) {
@@ -1676,8 +1863,20 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		return (PartHtml)this;
 	}
 
+	public static String staticSolrHtmlVarForm(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrHtmlVarForm(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqHtmlVarForm(RequeteSiteFrFR requeteSite_, String o) {
+		return PartHtml.staticSolrStrHtmlVarForm(requeteSite_, PartHtml.staticSolrHtmlVarForm(requeteSite_, PartHtml.staticSetHtmlVarForm(requeteSite_, o)));
+	}
+
 	public String solrHtmlVarForm() {
-		return htmlVarForm;
+		return PartHtml.staticSolrHtmlVarForm(requeteSite_, htmlVarForm);
 	}
 
 	public String strHtmlVarForm() {
@@ -1794,10 +1993,13 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	public String getHtmlVarInput() {
 		return htmlVarInput;
 	}
-
-	public void setHtmlVarInput(String htmlVarInput) {
-		this.htmlVarInput = htmlVarInput;
+	public PartHtml setHtmlVarInput(String o) {
+		this.htmlVarInput = PartHtml.staticSetHtmlVarInput(requeteSite_, o);
 		this.htmlVarInputCouverture.dejaInitialise = true;
+		return (PartHtml)this;
+	}
+	public static String staticSetHtmlVarInput(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected PartHtml htmlVarInputInit() {
 		if(!htmlVarInputCouverture.dejaInitialise) {
@@ -1809,8 +2011,20 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		return (PartHtml)this;
 	}
 
+	public static String staticSolrHtmlVarInput(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrHtmlVarInput(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqHtmlVarInput(RequeteSiteFrFR requeteSite_, String o) {
+		return PartHtml.staticSolrStrHtmlVarInput(requeteSite_, PartHtml.staticSolrHtmlVarInput(requeteSite_, PartHtml.staticSetHtmlVarInput(requeteSite_, o)));
+	}
+
 	public String solrHtmlVarInput() {
-		return htmlVarInput;
+		return PartHtml.staticSolrHtmlVarInput(requeteSite_, htmlVarInput);
 	}
 
 	public String strHtmlVarInput() {
@@ -1927,10 +2141,13 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	public String getHtmlIfVarEquals() {
 		return htmlIfVarEquals;
 	}
-
-	public void setHtmlIfVarEquals(String htmlIfVarEquals) {
-		this.htmlIfVarEquals = htmlIfVarEquals;
+	public PartHtml setHtmlIfVarEquals(String o) {
+		this.htmlIfVarEquals = PartHtml.staticSetHtmlIfVarEquals(requeteSite_, o);
 		this.htmlIfVarEqualsCouverture.dejaInitialise = true;
+		return (PartHtml)this;
+	}
+	public static String staticSetHtmlIfVarEquals(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected PartHtml htmlIfVarEqualsInit() {
 		if(!htmlIfVarEqualsCouverture.dejaInitialise) {
@@ -1942,8 +2159,20 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		return (PartHtml)this;
 	}
 
+	public static String staticSolrHtmlIfVarEquals(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrHtmlIfVarEquals(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqHtmlIfVarEquals(RequeteSiteFrFR requeteSite_, String o) {
+		return PartHtml.staticSolrStrHtmlIfVarEquals(requeteSite_, PartHtml.staticSolrHtmlIfVarEquals(requeteSite_, PartHtml.staticSetHtmlIfVarEquals(requeteSite_, o)));
+	}
+
 	public String solrHtmlIfVarEquals() {
-		return htmlIfVarEquals;
+		return PartHtml.staticSolrHtmlIfVarEquals(requeteSite_, htmlIfVarEquals);
 	}
 
 	public String strHtmlIfVarEquals() {
@@ -2060,10 +2289,13 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	public String getHtmlVarForEach() {
 		return htmlVarForEach;
 	}
-
-	public void setHtmlVarForEach(String htmlVarForEach) {
-		this.htmlVarForEach = htmlVarForEach;
+	public PartHtml setHtmlVarForEach(String o) {
+		this.htmlVarForEach = PartHtml.staticSetHtmlVarForEach(requeteSite_, o);
 		this.htmlVarForEachCouverture.dejaInitialise = true;
+		return (PartHtml)this;
+	}
+	public static String staticSetHtmlVarForEach(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected PartHtml htmlVarForEachInit() {
 		if(!htmlVarForEachCouverture.dejaInitialise) {
@@ -2075,8 +2307,20 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		return (PartHtml)this;
 	}
 
+	public static String staticSolrHtmlVarForEach(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrHtmlVarForEach(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqHtmlVarForEach(RequeteSiteFrFR requeteSite_, String o) {
+		return PartHtml.staticSolrStrHtmlVarForEach(requeteSite_, PartHtml.staticSolrHtmlVarForEach(requeteSite_, PartHtml.staticSetHtmlVarForEach(requeteSite_, o)));
+	}
+
 	public String solrHtmlVarForEach() {
-		return htmlVarForEach;
+		return PartHtml.staticSolrHtmlVarForEach(requeteSite_, htmlVarForEach);
 	}
 
 	public String strHtmlVarForEach() {
@@ -2193,10 +2437,13 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 	public String getHtmlVarHtml() {
 		return htmlVarHtml;
 	}
-
-	public void setHtmlVarHtml(String htmlVarHtml) {
-		this.htmlVarHtml = htmlVarHtml;
+	public PartHtml setHtmlVarHtml(String o) {
+		this.htmlVarHtml = PartHtml.staticSetHtmlVarHtml(requeteSite_, o);
 		this.htmlVarHtmlCouverture.dejaInitialise = true;
+		return (PartHtml)this;
+	}
+	public static String staticSetHtmlVarHtml(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected PartHtml htmlVarHtmlInit() {
 		if(!htmlVarHtmlCouverture.dejaInitialise) {
@@ -2208,8 +2455,20 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		return (PartHtml)this;
 	}
 
+	public static String staticSolrHtmlVarHtml(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrHtmlVarHtml(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqHtmlVarHtml(RequeteSiteFrFR requeteSite_, String o) {
+		return PartHtml.staticSolrStrHtmlVarHtml(requeteSite_, PartHtml.staticSolrHtmlVarHtml(requeteSite_, PartHtml.staticSetHtmlVarHtml(requeteSite_, o)));
+	}
+
 	public String solrHtmlVarHtml() {
-		return htmlVarHtml;
+		return PartHtml.staticSolrHtmlVarHtml(requeteSite_, htmlVarHtml);
 	}
 
 	public String strHtmlVarHtml() {
@@ -2332,9 +2591,12 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		this.htmlExclureCouverture.dejaInitialise = true;
 	}
 	public PartHtml setHtmlExclure(String o) {
-		this.htmlExclure = Boolean.parseBoolean(o);
+		this.htmlExclure = PartHtml.staticSetHtmlExclure(requeteSite_, o);
 		this.htmlExclureCouverture.dejaInitialise = true;
 		return (PartHtml)this;
+	}
+	public static Boolean staticSetHtmlExclure(RequeteSiteFrFR requeteSite_, String o) {
+		return Boolean.parseBoolean(o);
 	}
 	protected PartHtml htmlExclureInit() {
 		if(!htmlExclureCouverture.dejaInitialise) {
@@ -2346,8 +2608,20 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		return (PartHtml)this;
 	}
 
+	public static Boolean staticSolrHtmlExclure(RequeteSiteFrFR requeteSite_, Boolean o) {
+		return o;
+	}
+
+	public static String staticSolrStrHtmlExclure(RequeteSiteFrFR requeteSite_, Boolean o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqHtmlExclure(RequeteSiteFrFR requeteSite_, String o) {
+		return PartHtml.staticSolrStrHtmlExclure(requeteSite_, PartHtml.staticSolrHtmlExclure(requeteSite_, PartHtml.staticSetHtmlExclure(requeteSite_, o)));
+	}
+
 	public Boolean solrHtmlExclure() {
-		return htmlExclure;
+		return PartHtml.staticSolrHtmlExclure(requeteSite_, htmlExclure);
 	}
 
 	public String strHtmlExclure() {
@@ -2467,9 +2741,12 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		this.pdfExclureCouverture.dejaInitialise = true;
 	}
 	public PartHtml setPdfExclure(String o) {
-		this.pdfExclure = Boolean.parseBoolean(o);
+		this.pdfExclure = PartHtml.staticSetPdfExclure(requeteSite_, o);
 		this.pdfExclureCouverture.dejaInitialise = true;
 		return (PartHtml)this;
+	}
+	public static Boolean staticSetPdfExclure(RequeteSiteFrFR requeteSite_, String o) {
+		return Boolean.parseBoolean(o);
 	}
 	protected PartHtml pdfExclureInit() {
 		if(!pdfExclureCouverture.dejaInitialise) {
@@ -2481,8 +2758,20 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		return (PartHtml)this;
 	}
 
+	public static Boolean staticSolrPdfExclure(RequeteSiteFrFR requeteSite_, Boolean o) {
+		return o;
+	}
+
+	public static String staticSolrStrPdfExclure(RequeteSiteFrFR requeteSite_, Boolean o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPdfExclure(RequeteSiteFrFR requeteSite_, String o) {
+		return PartHtml.staticSolrStrPdfExclure(requeteSite_, PartHtml.staticSolrPdfExclure(requeteSite_, PartHtml.staticSetPdfExclure(requeteSite_, o)));
+	}
+
 	public Boolean solrPdfExclure() {
-		return pdfExclure;
+		return PartHtml.staticSolrPdfExclure(requeteSite_, pdfExclure);
 	}
 
 	public String strPdfExclure() {
@@ -2602,9 +2891,12 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		this.connecterDeconnecterCouverture.dejaInitialise = true;
 	}
 	public PartHtml setConnecterDeconnecter(String o) {
-		this.connecterDeconnecter = Boolean.parseBoolean(o);
+		this.connecterDeconnecter = PartHtml.staticSetConnecterDeconnecter(requeteSite_, o);
 		this.connecterDeconnecterCouverture.dejaInitialise = true;
 		return (PartHtml)this;
+	}
+	public static Boolean staticSetConnecterDeconnecter(RequeteSiteFrFR requeteSite_, String o) {
+		return Boolean.parseBoolean(o);
 	}
 	protected PartHtml connecterDeconnecterInit() {
 		if(!connecterDeconnecterCouverture.dejaInitialise) {
@@ -2616,8 +2908,20 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		return (PartHtml)this;
 	}
 
+	public static Boolean staticSolrConnecterDeconnecter(RequeteSiteFrFR requeteSite_, Boolean o) {
+		return o;
+	}
+
+	public static String staticSolrStrConnecterDeconnecter(RequeteSiteFrFR requeteSite_, Boolean o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqConnecterDeconnecter(RequeteSiteFrFR requeteSite_, String o) {
+		return PartHtml.staticSolrStrConnecterDeconnecter(requeteSite_, PartHtml.staticSolrConnecterDeconnecter(requeteSite_, PartHtml.staticSetConnecterDeconnecter(requeteSite_, o)));
+	}
+
 	public Boolean solrConnecterDeconnecter() {
-		return connecterDeconnecter;
+		return PartHtml.staticSolrConnecterDeconnecter(requeteSite_, connecterDeconnecter);
 	}
 
 	public String strConnecterDeconnecter() {
@@ -2738,10 +3042,14 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		this.tri1Couverture.dejaInitialise = true;
 	}
 	public PartHtml setTri1(String o) {
-		if(NumberUtils.isParsable(o))
-			this.tri1 = Double.parseDouble(o);
+		this.tri1 = PartHtml.staticSetTri1(requeteSite_, o);
 		this.tri1Couverture.dejaInitialise = true;
 		return (PartHtml)this;
+	}
+	public static Double staticSetTri1(RequeteSiteFrFR requeteSite_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Double.parseDouble(o);
+		return null;
 	}
 	protected PartHtml tri1Init() {
 		if(!tri1Couverture.dejaInitialise) {
@@ -2753,8 +3061,20 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		return (PartHtml)this;
 	}
 
+	public static Double staticSolrTri1(RequeteSiteFrFR requeteSite_, Double o) {
+		return o;
+	}
+
+	public static String staticSolrStrTri1(RequeteSiteFrFR requeteSite_, Double o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqTri1(RequeteSiteFrFR requeteSite_, String o) {
+		return PartHtml.staticSolrStrTri1(requeteSite_, PartHtml.staticSolrTri1(requeteSite_, PartHtml.staticSetTri1(requeteSite_, o)));
+	}
+
 	public Double solrTri1() {
-		return tri1;
+		return PartHtml.staticSolrTri1(requeteSite_, tri1);
 	}
 
 	public String strTri1() {
@@ -2878,10 +3198,14 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		this.tri2Couverture.dejaInitialise = true;
 	}
 	public PartHtml setTri2(String o) {
-		if(NumberUtils.isParsable(o))
-			this.tri2 = Double.parseDouble(o);
+		this.tri2 = PartHtml.staticSetTri2(requeteSite_, o);
 		this.tri2Couverture.dejaInitialise = true;
 		return (PartHtml)this;
+	}
+	public static Double staticSetTri2(RequeteSiteFrFR requeteSite_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Double.parseDouble(o);
+		return null;
 	}
 	protected PartHtml tri2Init() {
 		if(!tri2Couverture.dejaInitialise) {
@@ -2893,8 +3217,20 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		return (PartHtml)this;
 	}
 
+	public static Double staticSolrTri2(RequeteSiteFrFR requeteSite_, Double o) {
+		return o;
+	}
+
+	public static String staticSolrStrTri2(RequeteSiteFrFR requeteSite_, Double o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqTri2(RequeteSiteFrFR requeteSite_, String o) {
+		return PartHtml.staticSolrStrTri2(requeteSite_, PartHtml.staticSolrTri2(requeteSite_, PartHtml.staticSetTri2(requeteSite_, o)));
+	}
+
 	public Double solrTri2() {
-		return tri2;
+		return PartHtml.staticSolrTri2(requeteSite_, tri2);
 	}
 
 	public String strTri2() {
@@ -3018,10 +3354,14 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		this.tri3Couverture.dejaInitialise = true;
 	}
 	public PartHtml setTri3(String o) {
-		if(NumberUtils.isParsable(o))
-			this.tri3 = Double.parseDouble(o);
+		this.tri3 = PartHtml.staticSetTri3(requeteSite_, o);
 		this.tri3Couverture.dejaInitialise = true;
 		return (PartHtml)this;
+	}
+	public static Double staticSetTri3(RequeteSiteFrFR requeteSite_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Double.parseDouble(o);
+		return null;
 	}
 	protected PartHtml tri3Init() {
 		if(!tri3Couverture.dejaInitialise) {
@@ -3033,8 +3373,20 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		return (PartHtml)this;
 	}
 
+	public static Double staticSolrTri3(RequeteSiteFrFR requeteSite_, Double o) {
+		return o;
+	}
+
+	public static String staticSolrStrTri3(RequeteSiteFrFR requeteSite_, Double o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqTri3(RequeteSiteFrFR requeteSite_, String o) {
+		return PartHtml.staticSolrStrTri3(requeteSite_, PartHtml.staticSolrTri3(requeteSite_, PartHtml.staticSetTri3(requeteSite_, o)));
+	}
+
 	public Double solrTri3() {
-		return tri3;
+		return PartHtml.staticSolrTri3(requeteSite_, tri3);
 	}
 
 	public String strTri3() {
@@ -3158,10 +3510,14 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		this.tri4Couverture.dejaInitialise = true;
 	}
 	public PartHtml setTri4(String o) {
-		if(NumberUtils.isParsable(o))
-			this.tri4 = Double.parseDouble(o);
+		this.tri4 = PartHtml.staticSetTri4(requeteSite_, o);
 		this.tri4Couverture.dejaInitialise = true;
 		return (PartHtml)this;
+	}
+	public static Double staticSetTri4(RequeteSiteFrFR requeteSite_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Double.parseDouble(o);
+		return null;
 	}
 	protected PartHtml tri4Init() {
 		if(!tri4Couverture.dejaInitialise) {
@@ -3173,8 +3529,20 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		return (PartHtml)this;
 	}
 
+	public static Double staticSolrTri4(RequeteSiteFrFR requeteSite_, Double o) {
+		return o;
+	}
+
+	public static String staticSolrStrTri4(RequeteSiteFrFR requeteSite_, Double o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqTri4(RequeteSiteFrFR requeteSite_, String o) {
+		return PartHtml.staticSolrStrTri4(requeteSite_, PartHtml.staticSolrTri4(requeteSite_, PartHtml.staticSetTri4(requeteSite_, o)));
+	}
+
 	public Double solrTri4() {
-		return tri4;
+		return PartHtml.staticSolrTri4(requeteSite_, tri4);
 	}
 
 	public String strTri4() {
@@ -3298,10 +3666,14 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		this.tri5Couverture.dejaInitialise = true;
 	}
 	public PartHtml setTri5(String o) {
-		if(NumberUtils.isParsable(o))
-			this.tri5 = Double.parseDouble(o);
+		this.tri5 = PartHtml.staticSetTri5(requeteSite_, o);
 		this.tri5Couverture.dejaInitialise = true;
 		return (PartHtml)this;
+	}
+	public static Double staticSetTri5(RequeteSiteFrFR requeteSite_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Double.parseDouble(o);
+		return null;
 	}
 	protected PartHtml tri5Init() {
 		if(!tri5Couverture.dejaInitialise) {
@@ -3313,8 +3685,20 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		return (PartHtml)this;
 	}
 
+	public static Double staticSolrTri5(RequeteSiteFrFR requeteSite_, Double o) {
+		return o;
+	}
+
+	public static String staticSolrStrTri5(RequeteSiteFrFR requeteSite_, Double o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqTri5(RequeteSiteFrFR requeteSite_, String o) {
+		return PartHtml.staticSolrStrTri5(requeteSite_, PartHtml.staticSolrTri5(requeteSite_, PartHtml.staticSetTri5(requeteSite_, o)));
+	}
+
 	public Double solrTri5() {
-		return tri5;
+		return PartHtml.staticSolrTri5(requeteSite_, tri5);
 	}
 
 	public String strTri5() {
@@ -3438,10 +3822,14 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		this.tri6Couverture.dejaInitialise = true;
 	}
 	public PartHtml setTri6(String o) {
-		if(NumberUtils.isParsable(o))
-			this.tri6 = Double.parseDouble(o);
+		this.tri6 = PartHtml.staticSetTri6(requeteSite_, o);
 		this.tri6Couverture.dejaInitialise = true;
 		return (PartHtml)this;
+	}
+	public static Double staticSetTri6(RequeteSiteFrFR requeteSite_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Double.parseDouble(o);
+		return null;
 	}
 	protected PartHtml tri6Init() {
 		if(!tri6Couverture.dejaInitialise) {
@@ -3453,8 +3841,20 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		return (PartHtml)this;
 	}
 
+	public static Double staticSolrTri6(RequeteSiteFrFR requeteSite_, Double o) {
+		return o;
+	}
+
+	public static String staticSolrStrTri6(RequeteSiteFrFR requeteSite_, Double o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqTri6(RequeteSiteFrFR requeteSite_, String o) {
+		return PartHtml.staticSolrStrTri6(requeteSite_, PartHtml.staticSolrTri6(requeteSite_, PartHtml.staticSetTri6(requeteSite_, o)));
+	}
+
 	public Double solrTri6() {
-		return tri6;
+		return PartHtml.staticSolrTri6(requeteSite_, tri6);
 	}
 
 	public String strTri6() {
@@ -3578,10 +3978,14 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		this.tri7Couverture.dejaInitialise = true;
 	}
 	public PartHtml setTri7(String o) {
-		if(NumberUtils.isParsable(o))
-			this.tri7 = Double.parseDouble(o);
+		this.tri7 = PartHtml.staticSetTri7(requeteSite_, o);
 		this.tri7Couverture.dejaInitialise = true;
 		return (PartHtml)this;
+	}
+	public static Double staticSetTri7(RequeteSiteFrFR requeteSite_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Double.parseDouble(o);
+		return null;
 	}
 	protected PartHtml tri7Init() {
 		if(!tri7Couverture.dejaInitialise) {
@@ -3593,8 +3997,20 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		return (PartHtml)this;
 	}
 
+	public static Double staticSolrTri7(RequeteSiteFrFR requeteSite_, Double o) {
+		return o;
+	}
+
+	public static String staticSolrStrTri7(RequeteSiteFrFR requeteSite_, Double o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqTri7(RequeteSiteFrFR requeteSite_, String o) {
+		return PartHtml.staticSolrStrTri7(requeteSite_, PartHtml.staticSolrTri7(requeteSite_, PartHtml.staticSetTri7(requeteSite_, o)));
+	}
+
 	public Double solrTri7() {
-		return tri7;
+		return PartHtml.staticSolrTri7(requeteSite_, tri7);
 	}
 
 	public String strTri7() {
@@ -3718,10 +4134,14 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		this.tri8Couverture.dejaInitialise = true;
 	}
 	public PartHtml setTri8(String o) {
-		if(NumberUtils.isParsable(o))
-			this.tri8 = Double.parseDouble(o);
+		this.tri8 = PartHtml.staticSetTri8(requeteSite_, o);
 		this.tri8Couverture.dejaInitialise = true;
 		return (PartHtml)this;
+	}
+	public static Double staticSetTri8(RequeteSiteFrFR requeteSite_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Double.parseDouble(o);
+		return null;
 	}
 	protected PartHtml tri8Init() {
 		if(!tri8Couverture.dejaInitialise) {
@@ -3733,8 +4153,20 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		return (PartHtml)this;
 	}
 
+	public static Double staticSolrTri8(RequeteSiteFrFR requeteSite_, Double o) {
+		return o;
+	}
+
+	public static String staticSolrStrTri8(RequeteSiteFrFR requeteSite_, Double o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqTri8(RequeteSiteFrFR requeteSite_, String o) {
+		return PartHtml.staticSolrStrTri8(requeteSite_, PartHtml.staticSolrTri8(requeteSite_, PartHtml.staticSetTri8(requeteSite_, o)));
+	}
+
 	public Double solrTri8() {
-		return tri8;
+		return PartHtml.staticSolrTri8(requeteSite_, tri8);
 	}
 
 	public String strTri8() {
@@ -3858,10 +4290,14 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		this.tri9Couverture.dejaInitialise = true;
 	}
 	public PartHtml setTri9(String o) {
-		if(NumberUtils.isParsable(o))
-			this.tri9 = Double.parseDouble(o);
+		this.tri9 = PartHtml.staticSetTri9(requeteSite_, o);
 		this.tri9Couverture.dejaInitialise = true;
 		return (PartHtml)this;
+	}
+	public static Double staticSetTri9(RequeteSiteFrFR requeteSite_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Double.parseDouble(o);
+		return null;
 	}
 	protected PartHtml tri9Init() {
 		if(!tri9Couverture.dejaInitialise) {
@@ -3873,8 +4309,20 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		return (PartHtml)this;
 	}
 
+	public static Double staticSolrTri9(RequeteSiteFrFR requeteSite_, Double o) {
+		return o;
+	}
+
+	public static String staticSolrStrTri9(RequeteSiteFrFR requeteSite_, Double o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqTri9(RequeteSiteFrFR requeteSite_, String o) {
+		return PartHtml.staticSolrStrTri9(requeteSite_, PartHtml.staticSolrTri9(requeteSite_, PartHtml.staticSetTri9(requeteSite_, o)));
+	}
+
 	public Double solrTri9() {
-		return tri9;
+		return PartHtml.staticSolrTri9(requeteSite_, tri9);
 	}
 
 	public String strTri9() {
@@ -3998,10 +4446,14 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		this.tri10Couverture.dejaInitialise = true;
 	}
 	public PartHtml setTri10(String o) {
-		if(NumberUtils.isParsable(o))
-			this.tri10 = Double.parseDouble(o);
+		this.tri10 = PartHtml.staticSetTri10(requeteSite_, o);
 		this.tri10Couverture.dejaInitialise = true;
 		return (PartHtml)this;
+	}
+	public static Double staticSetTri10(RequeteSiteFrFR requeteSite_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Double.parseDouble(o);
+		return null;
 	}
 	protected PartHtml tri10Init() {
 		if(!tri10Couverture.dejaInitialise) {
@@ -4013,8 +4465,20 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 		return (PartHtml)this;
 	}
 
+	public static Double staticSolrTri10(RequeteSiteFrFR requeteSite_, Double o) {
+		return o;
+	}
+
+	public static String staticSolrStrTri10(RequeteSiteFrFR requeteSite_, Double o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqTri10(RequeteSiteFrFR requeteSite_, String o) {
+		return PartHtml.staticSolrStrTri10(requeteSite_, PartHtml.staticSolrTri10(requeteSite_, PartHtml.staticSetTri10(requeteSite_, o)));
+	}
+
 	public Double solrTri10() {
-		return tri10;
+		return PartHtml.staticSolrTri10(requeteSite_, tri10);
 	}
 
 	public String strTri10() {
@@ -4289,6 +4753,302 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				return val;
 			default:
 				return super.attribuerCluster(var, val);
+		}
+	}
+
+	///////////////
+	// staticSet //
+	///////////////
+
+	public static Object staticSetPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		return staticSetPartHtml(entiteVar,  requeteSite_, o);
+	}
+	public static Object staticSetPartHtml(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		switch(entiteVar) {
+		case "partHtmlCle":
+			return PartHtml.staticSetPartHtmlCle(requeteSite_, o);
+		case "designPageCles":
+			return PartHtml.staticSetDesignPageCles(requeteSite_, o);
+		case "htmlLien":
+			return PartHtml.staticSetHtmlLien(requeteSite_, o);
+		case "htmlElement":
+			return PartHtml.staticSetHtmlElement(requeteSite_, o);
+		case "htmlId":
+			return PartHtml.staticSetHtmlId(requeteSite_, o);
+		case "htmlClasses":
+			return PartHtml.staticSetHtmlClasses(requeteSite_, o);
+		case "htmlStyle":
+			return PartHtml.staticSetHtmlStyle(requeteSite_, o);
+		case "htmlAvant":
+			return PartHtml.staticSetHtmlAvant(requeteSite_, o);
+		case "htmlApres":
+			return PartHtml.staticSetHtmlApres(requeteSite_, o);
+		case "htmlTexte":
+			return PartHtml.staticSetHtmlTexte(requeteSite_, o);
+		case "htmlVar":
+			return PartHtml.staticSetHtmlVar(requeteSite_, o);
+		case "htmlVarSpan":
+			return PartHtml.staticSetHtmlVarSpan(requeteSite_, o);
+		case "htmlVarForm":
+			return PartHtml.staticSetHtmlVarForm(requeteSite_, o);
+		case "htmlVarInput":
+			return PartHtml.staticSetHtmlVarInput(requeteSite_, o);
+		case "htmlIfVarEquals":
+			return PartHtml.staticSetHtmlIfVarEquals(requeteSite_, o);
+		case "htmlVarForEach":
+			return PartHtml.staticSetHtmlVarForEach(requeteSite_, o);
+		case "htmlVarHtml":
+			return PartHtml.staticSetHtmlVarHtml(requeteSite_, o);
+		case "htmlExclure":
+			return PartHtml.staticSetHtmlExclure(requeteSite_, o);
+		case "pdfExclure":
+			return PartHtml.staticSetPdfExclure(requeteSite_, o);
+		case "connecterDeconnecter":
+			return PartHtml.staticSetConnecterDeconnecter(requeteSite_, o);
+		case "tri1":
+			return PartHtml.staticSetTri1(requeteSite_, o);
+		case "tri2":
+			return PartHtml.staticSetTri2(requeteSite_, o);
+		case "tri3":
+			return PartHtml.staticSetTri3(requeteSite_, o);
+		case "tri4":
+			return PartHtml.staticSetTri4(requeteSite_, o);
+		case "tri5":
+			return PartHtml.staticSetTri5(requeteSite_, o);
+		case "tri6":
+			return PartHtml.staticSetTri6(requeteSite_, o);
+		case "tri7":
+			return PartHtml.staticSetTri7(requeteSite_, o);
+		case "tri8":
+			return PartHtml.staticSetTri8(requeteSite_, o);
+		case "tri9":
+			return PartHtml.staticSetTri9(requeteSite_, o);
+		case "tri10":
+			return PartHtml.staticSetTri10(requeteSite_, o);
+			default:
+				return Cluster.staticSetCluster(entiteVar,  requeteSite_, o);
+		}
+	}
+
+	////////////////
+	// staticSolr //
+	////////////////
+
+	public static Object staticSolrPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		return staticSolrPartHtml(entiteVar,  requeteSite_, o);
+	}
+	public static Object staticSolrPartHtml(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		switch(entiteVar) {
+		case "partHtmlCle":
+			return PartHtml.staticSolrPartHtmlCle(requeteSite_, (Long)o);
+		case "designPageCles":
+			return PartHtml.staticSolrDesignPageCles(requeteSite_, (List<Long>)o);
+		case "htmlLien":
+			return PartHtml.staticSolrHtmlLien(requeteSite_, (String)o);
+		case "htmlElement":
+			return PartHtml.staticSolrHtmlElement(requeteSite_, (String)o);
+		case "htmlId":
+			return PartHtml.staticSolrHtmlId(requeteSite_, (String)o);
+		case "htmlClasses":
+			return PartHtml.staticSolrHtmlClasses(requeteSite_, (String)o);
+		case "htmlStyle":
+			return PartHtml.staticSolrHtmlStyle(requeteSite_, (String)o);
+		case "htmlAvant":
+			return PartHtml.staticSolrHtmlAvant(requeteSite_, (String)o);
+		case "htmlApres":
+			return PartHtml.staticSolrHtmlApres(requeteSite_, (String)o);
+		case "htmlTexte":
+			return PartHtml.staticSolrHtmlTexte(requeteSite_, (String)o);
+		case "htmlVar":
+			return PartHtml.staticSolrHtmlVar(requeteSite_, (String)o);
+		case "htmlVarSpan":
+			return PartHtml.staticSolrHtmlVarSpan(requeteSite_, (String)o);
+		case "htmlVarForm":
+			return PartHtml.staticSolrHtmlVarForm(requeteSite_, (String)o);
+		case "htmlVarInput":
+			return PartHtml.staticSolrHtmlVarInput(requeteSite_, (String)o);
+		case "htmlIfVarEquals":
+			return PartHtml.staticSolrHtmlIfVarEquals(requeteSite_, (String)o);
+		case "htmlVarForEach":
+			return PartHtml.staticSolrHtmlVarForEach(requeteSite_, (String)o);
+		case "htmlVarHtml":
+			return PartHtml.staticSolrHtmlVarHtml(requeteSite_, (String)o);
+		case "htmlExclure":
+			return PartHtml.staticSolrHtmlExclure(requeteSite_, (Boolean)o);
+		case "pdfExclure":
+			return PartHtml.staticSolrPdfExclure(requeteSite_, (Boolean)o);
+		case "connecterDeconnecter":
+			return PartHtml.staticSolrConnecterDeconnecter(requeteSite_, (Boolean)o);
+		case "tri1":
+			return PartHtml.staticSolrTri1(requeteSite_, (Double)o);
+		case "tri2":
+			return PartHtml.staticSolrTri2(requeteSite_, (Double)o);
+		case "tri3":
+			return PartHtml.staticSolrTri3(requeteSite_, (Double)o);
+		case "tri4":
+			return PartHtml.staticSolrTri4(requeteSite_, (Double)o);
+		case "tri5":
+			return PartHtml.staticSolrTri5(requeteSite_, (Double)o);
+		case "tri6":
+			return PartHtml.staticSolrTri6(requeteSite_, (Double)o);
+		case "tri7":
+			return PartHtml.staticSolrTri7(requeteSite_, (Double)o);
+		case "tri8":
+			return PartHtml.staticSolrTri8(requeteSite_, (Double)o);
+		case "tri9":
+			return PartHtml.staticSolrTri9(requeteSite_, (Double)o);
+		case "tri10":
+			return PartHtml.staticSolrTri10(requeteSite_, (Double)o);
+			default:
+				return Cluster.staticSolrCluster(entiteVar,  requeteSite_, o);
+		}
+	}
+
+	///////////////////
+	// staticSolrStr //
+	///////////////////
+
+	public static String staticSolrStrPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		return staticSolrStrPartHtml(entiteVar,  requeteSite_, o);
+	}
+	public static String staticSolrStrPartHtml(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		switch(entiteVar) {
+		case "partHtmlCle":
+			return PartHtml.staticSolrStrPartHtmlCle(requeteSite_, (Long)o);
+		case "designPageCles":
+			return PartHtml.staticSolrStrDesignPageCles(requeteSite_, (List<Long>)o);
+		case "htmlLien":
+			return PartHtml.staticSolrStrHtmlLien(requeteSite_, (String)o);
+		case "htmlElement":
+			return PartHtml.staticSolrStrHtmlElement(requeteSite_, (String)o);
+		case "htmlId":
+			return PartHtml.staticSolrStrHtmlId(requeteSite_, (String)o);
+		case "htmlClasses":
+			return PartHtml.staticSolrStrHtmlClasses(requeteSite_, (String)o);
+		case "htmlStyle":
+			return PartHtml.staticSolrStrHtmlStyle(requeteSite_, (String)o);
+		case "htmlAvant":
+			return PartHtml.staticSolrStrHtmlAvant(requeteSite_, (String)o);
+		case "htmlApres":
+			return PartHtml.staticSolrStrHtmlApres(requeteSite_, (String)o);
+		case "htmlTexte":
+			return PartHtml.staticSolrStrHtmlTexte(requeteSite_, (String)o);
+		case "htmlVar":
+			return PartHtml.staticSolrStrHtmlVar(requeteSite_, (String)o);
+		case "htmlVarSpan":
+			return PartHtml.staticSolrStrHtmlVarSpan(requeteSite_, (String)o);
+		case "htmlVarForm":
+			return PartHtml.staticSolrStrHtmlVarForm(requeteSite_, (String)o);
+		case "htmlVarInput":
+			return PartHtml.staticSolrStrHtmlVarInput(requeteSite_, (String)o);
+		case "htmlIfVarEquals":
+			return PartHtml.staticSolrStrHtmlIfVarEquals(requeteSite_, (String)o);
+		case "htmlVarForEach":
+			return PartHtml.staticSolrStrHtmlVarForEach(requeteSite_, (String)o);
+		case "htmlVarHtml":
+			return PartHtml.staticSolrStrHtmlVarHtml(requeteSite_, (String)o);
+		case "htmlExclure":
+			return PartHtml.staticSolrStrHtmlExclure(requeteSite_, (Boolean)o);
+		case "pdfExclure":
+			return PartHtml.staticSolrStrPdfExclure(requeteSite_, (Boolean)o);
+		case "connecterDeconnecter":
+			return PartHtml.staticSolrStrConnecterDeconnecter(requeteSite_, (Boolean)o);
+		case "tri1":
+			return PartHtml.staticSolrStrTri1(requeteSite_, (Double)o);
+		case "tri2":
+			return PartHtml.staticSolrStrTri2(requeteSite_, (Double)o);
+		case "tri3":
+			return PartHtml.staticSolrStrTri3(requeteSite_, (Double)o);
+		case "tri4":
+			return PartHtml.staticSolrStrTri4(requeteSite_, (Double)o);
+		case "tri5":
+			return PartHtml.staticSolrStrTri5(requeteSite_, (Double)o);
+		case "tri6":
+			return PartHtml.staticSolrStrTri6(requeteSite_, (Double)o);
+		case "tri7":
+			return PartHtml.staticSolrStrTri7(requeteSite_, (Double)o);
+		case "tri8":
+			return PartHtml.staticSolrStrTri8(requeteSite_, (Double)o);
+		case "tri9":
+			return PartHtml.staticSolrStrTri9(requeteSite_, (Double)o);
+		case "tri10":
+			return PartHtml.staticSolrStrTri10(requeteSite_, (Double)o);
+			default:
+				return Cluster.staticSolrStrCluster(entiteVar,  requeteSite_, o);
+		}
+	}
+
+	//////////////////
+	// staticSolrFq //
+	//////////////////
+
+	public static String staticSolrFqPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		return staticSolrFqPartHtml(entiteVar,  requeteSite_, o);
+	}
+	public static String staticSolrFqPartHtml(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		switch(entiteVar) {
+		case "partHtmlCle":
+			return PartHtml.staticSolrFqPartHtmlCle(requeteSite_, o);
+		case "designPageCles":
+			return PartHtml.staticSolrFqDesignPageCles(requeteSite_, o);
+		case "htmlLien":
+			return PartHtml.staticSolrFqHtmlLien(requeteSite_, o);
+		case "htmlElement":
+			return PartHtml.staticSolrFqHtmlElement(requeteSite_, o);
+		case "htmlId":
+			return PartHtml.staticSolrFqHtmlId(requeteSite_, o);
+		case "htmlClasses":
+			return PartHtml.staticSolrFqHtmlClasses(requeteSite_, o);
+		case "htmlStyle":
+			return PartHtml.staticSolrFqHtmlStyle(requeteSite_, o);
+		case "htmlAvant":
+			return PartHtml.staticSolrFqHtmlAvant(requeteSite_, o);
+		case "htmlApres":
+			return PartHtml.staticSolrFqHtmlApres(requeteSite_, o);
+		case "htmlTexte":
+			return PartHtml.staticSolrFqHtmlTexte(requeteSite_, o);
+		case "htmlVar":
+			return PartHtml.staticSolrFqHtmlVar(requeteSite_, o);
+		case "htmlVarSpan":
+			return PartHtml.staticSolrFqHtmlVarSpan(requeteSite_, o);
+		case "htmlVarForm":
+			return PartHtml.staticSolrFqHtmlVarForm(requeteSite_, o);
+		case "htmlVarInput":
+			return PartHtml.staticSolrFqHtmlVarInput(requeteSite_, o);
+		case "htmlIfVarEquals":
+			return PartHtml.staticSolrFqHtmlIfVarEquals(requeteSite_, o);
+		case "htmlVarForEach":
+			return PartHtml.staticSolrFqHtmlVarForEach(requeteSite_, o);
+		case "htmlVarHtml":
+			return PartHtml.staticSolrFqHtmlVarHtml(requeteSite_, o);
+		case "htmlExclure":
+			return PartHtml.staticSolrFqHtmlExclure(requeteSite_, o);
+		case "pdfExclure":
+			return PartHtml.staticSolrFqPdfExclure(requeteSite_, o);
+		case "connecterDeconnecter":
+			return PartHtml.staticSolrFqConnecterDeconnecter(requeteSite_, o);
+		case "tri1":
+			return PartHtml.staticSolrFqTri1(requeteSite_, o);
+		case "tri2":
+			return PartHtml.staticSolrFqTri2(requeteSite_, o);
+		case "tri3":
+			return PartHtml.staticSolrFqTri3(requeteSite_, o);
+		case "tri4":
+			return PartHtml.staticSolrFqTri4(requeteSite_, o);
+		case "tri5":
+			return PartHtml.staticSolrFqTri5(requeteSite_, o);
+		case "tri6":
+			return PartHtml.staticSolrFqTri6(requeteSite_, o);
+		case "tri7":
+			return PartHtml.staticSolrFqTri7(requeteSite_, o);
+		case "tri8":
+			return PartHtml.staticSolrFqTri8(requeteSite_, o);
+		case "tri9":
+			return PartHtml.staticSolrFqTri9(requeteSite_, o);
+		case "tri10":
+			return PartHtml.staticSolrFqTri10(requeteSite_, o);
+			default:
+				return Cluster.staticSolrFqCluster(entiteVar,  requeteSite_, o);
 		}
 	}
 

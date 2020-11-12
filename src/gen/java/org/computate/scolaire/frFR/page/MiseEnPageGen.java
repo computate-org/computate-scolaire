@@ -83,6 +83,9 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		this.pageParts = pageParts;
 		this.pagePartsCouverture.dejaInitialise = true;
 	}
+	public static List<PagePart> staticSetPageParts(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
+	}
 	public MiseEnPage addPageParts(PagePart...objets) {
 		for(PagePart o : objets) {
 			addPageParts(o);
@@ -131,6 +134,9 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		this.requeteSite_ = requeteSite_;
 		this.requeteSite_Couverture.dejaInitialise = true;
 	}
+	public static RequeteSiteFrFR staticSetRequeteSite_(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
+	}
 	protected MiseEnPage requeteSite_Init() {
 		if(!requeteSite_Couverture.dejaInitialise) {
 			_requeteSite_(requeteSite_Couverture);
@@ -164,10 +170,13 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	public String getSiteUrlBase() {
 		return siteUrlBase;
 	}
-
-	public void setSiteUrlBase(String siteUrlBase) {
-		this.siteUrlBase = siteUrlBase;
+	public MiseEnPage setSiteUrlBase(String o) {
+		this.siteUrlBase = MiseEnPage.staticSetSiteUrlBase(requeteSite_, o);
 		this.siteUrlBaseCouverture.dejaInitialise = true;
+		return (MiseEnPage)this;
+	}
+	public static String staticSetSiteUrlBase(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected MiseEnPage siteUrlBaseInit() {
 		if(!siteUrlBaseCouverture.dejaInitialise) {
@@ -179,8 +188,20 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		return (MiseEnPage)this;
 	}
 
+	public static String staticSolrSiteUrlBase(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrSiteUrlBase(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqSiteUrlBase(RequeteSiteFrFR requeteSite_, String o) {
+		return MiseEnPage.staticSolrStrSiteUrlBase(requeteSite_, MiseEnPage.staticSolrSiteUrlBase(requeteSite_, MiseEnPage.staticSetSiteUrlBase(requeteSite_, o)));
+	}
+
 	public String solrSiteUrlBase() {
-		return siteUrlBase;
+		return MiseEnPage.staticSolrSiteUrlBase(requeteSite_, siteUrlBase);
 	}
 
 	public String strSiteUrlBase() {
@@ -226,10 +247,13 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	public String getStatiqueUrlBase() {
 		return statiqueUrlBase;
 	}
-
-	public void setStatiqueUrlBase(String statiqueUrlBase) {
-		this.statiqueUrlBase = statiqueUrlBase;
+	public MiseEnPage setStatiqueUrlBase(String o) {
+		this.statiqueUrlBase = MiseEnPage.staticSetStatiqueUrlBase(requeteSite_, o);
 		this.statiqueUrlBaseCouverture.dejaInitialise = true;
+		return (MiseEnPage)this;
+	}
+	public static String staticSetStatiqueUrlBase(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected MiseEnPage statiqueUrlBaseInit() {
 		if(!statiqueUrlBaseCouverture.dejaInitialise) {
@@ -241,8 +265,20 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		return (MiseEnPage)this;
 	}
 
+	public static String staticSolrStatiqueUrlBase(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrStatiqueUrlBase(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqStatiqueUrlBase(RequeteSiteFrFR requeteSite_, String o) {
+		return MiseEnPage.staticSolrStrStatiqueUrlBase(requeteSite_, MiseEnPage.staticSolrStatiqueUrlBase(requeteSite_, MiseEnPage.staticSetStatiqueUrlBase(requeteSite_, o)));
+	}
+
 	public String solrStatiqueUrlBase() {
-		return statiqueUrlBase;
+		return MiseEnPage.staticSolrStatiqueUrlBase(requeteSite_, statiqueUrlBase);
 	}
 
 	public String strStatiqueUrlBase() {
@@ -293,6 +329,9 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		this.pageDocumentSolr = pageDocumentSolr;
 		this.pageDocumentSolrCouverture.dejaInitialise = true;
 	}
+	public static SolrDocument staticSetPageDocumentSolr(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
+	}
 	protected MiseEnPage pageDocumentSolrInit() {
 		if(!pageDocumentSolrCouverture.dejaInitialise) {
 			_pageDocumentSolr(pageDocumentSolrCouverture);
@@ -331,6 +370,9 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		this.w = w;
 		this.wCouverture.dejaInitialise = true;
 	}
+	public static ToutEcrivain staticSetW(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
+	}
 	protected MiseEnPage wInit() {
 		if(!wCouverture.dejaInitialise) {
 			_w(wCouverture);
@@ -366,10 +408,13 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	public String getContexteIconeGroupe() {
 		return contexteIconeGroupe;
 	}
-
-	public void setContexteIconeGroupe(String contexteIconeGroupe) {
-		this.contexteIconeGroupe = contexteIconeGroupe;
+	public MiseEnPage setContexteIconeGroupe(String o) {
+		this.contexteIconeGroupe = MiseEnPage.staticSetContexteIconeGroupe(requeteSite_, o);
 		this.contexteIconeGroupeCouverture.dejaInitialise = true;
+		return (MiseEnPage)this;
+	}
+	public static String staticSetContexteIconeGroupe(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected MiseEnPage contexteIconeGroupeInit() {
 		if(!contexteIconeGroupeCouverture.dejaInitialise) {
@@ -381,8 +426,20 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		return (MiseEnPage)this;
 	}
 
+	public static String staticSolrContexteIconeGroupe(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrContexteIconeGroupe(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqContexteIconeGroupe(RequeteSiteFrFR requeteSite_, String o) {
+		return MiseEnPage.staticSolrStrContexteIconeGroupe(requeteSite_, MiseEnPage.staticSolrContexteIconeGroupe(requeteSite_, MiseEnPage.staticSetContexteIconeGroupe(requeteSite_, o)));
+	}
+
 	public String solrContexteIconeGroupe() {
-		return contexteIconeGroupe;
+		return MiseEnPage.staticSolrContexteIconeGroupe(requeteSite_, contexteIconeGroupe);
 	}
 
 	public String strContexteIconeGroupe() {
@@ -428,10 +485,13 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	public String getContexteIconeNom() {
 		return contexteIconeNom;
 	}
-
-	public void setContexteIconeNom(String contexteIconeNom) {
-		this.contexteIconeNom = contexteIconeNom;
+	public MiseEnPage setContexteIconeNom(String o) {
+		this.contexteIconeNom = MiseEnPage.staticSetContexteIconeNom(requeteSite_, o);
 		this.contexteIconeNomCouverture.dejaInitialise = true;
+		return (MiseEnPage)this;
+	}
+	public static String staticSetContexteIconeNom(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected MiseEnPage contexteIconeNomInit() {
 		if(!contexteIconeNomCouverture.dejaInitialise) {
@@ -443,8 +503,20 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		return (MiseEnPage)this;
 	}
 
+	public static String staticSolrContexteIconeNom(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrContexteIconeNom(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqContexteIconeNom(RequeteSiteFrFR requeteSite_, String o) {
+		return MiseEnPage.staticSolrStrContexteIconeNom(requeteSite_, MiseEnPage.staticSolrContexteIconeNom(requeteSite_, MiseEnPage.staticSetContexteIconeNom(requeteSite_, o)));
+	}
+
 	public String solrContexteIconeNom() {
-		return contexteIconeNom;
+		return MiseEnPage.staticSolrContexteIconeNom(requeteSite_, contexteIconeNom);
 	}
 
 	public String strContexteIconeNom() {
@@ -490,10 +562,13 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	public String getContexteIconeClassesCss() {
 		return contexteIconeClassesCss;
 	}
-
-	public void setContexteIconeClassesCss(String contexteIconeClassesCss) {
-		this.contexteIconeClassesCss = contexteIconeClassesCss;
+	public MiseEnPage setContexteIconeClassesCss(String o) {
+		this.contexteIconeClassesCss = MiseEnPage.staticSetContexteIconeClassesCss(requeteSite_, o);
 		this.contexteIconeClassesCssCouverture.dejaInitialise = true;
+		return (MiseEnPage)this;
+	}
+	public static String staticSetContexteIconeClassesCss(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected MiseEnPage contexteIconeClassesCssInit() {
 		if(!contexteIconeClassesCssCouverture.dejaInitialise) {
@@ -505,8 +580,20 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		return (MiseEnPage)this;
 	}
 
+	public static String staticSolrContexteIconeClassesCss(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrContexteIconeClassesCss(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqContexteIconeClassesCss(RequeteSiteFrFR requeteSite_, String o) {
+		return MiseEnPage.staticSolrStrContexteIconeClassesCss(requeteSite_, MiseEnPage.staticSolrContexteIconeClassesCss(requeteSite_, MiseEnPage.staticSetContexteIconeClassesCss(requeteSite_, o)));
+	}
+
 	public String solrContexteIconeClassesCss() {
-		return contexteIconeClassesCss;
+		return MiseEnPage.staticSolrContexteIconeClassesCss(requeteSite_, contexteIconeClassesCss);
 	}
 
 	public String strContexteIconeClassesCss() {
@@ -558,9 +645,12 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		this.pageVisibleAuxBotsCouverture.dejaInitialise = true;
 	}
 	public MiseEnPage setPageVisibleAuxBots(String o) {
-		this.pageVisibleAuxBots = Boolean.parseBoolean(o);
+		this.pageVisibleAuxBots = MiseEnPage.staticSetPageVisibleAuxBots(requeteSite_, o);
 		this.pageVisibleAuxBotsCouverture.dejaInitialise = true;
 		return (MiseEnPage)this;
+	}
+	public static Boolean staticSetPageVisibleAuxBots(RequeteSiteFrFR requeteSite_, String o) {
+		return Boolean.parseBoolean(o);
 	}
 	protected MiseEnPage pageVisibleAuxBotsInit() {
 		if(!pageVisibleAuxBotsCouverture.dejaInitialise) {
@@ -572,8 +662,20 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		return (MiseEnPage)this;
 	}
 
+	public static Boolean staticSolrPageVisibleAuxBots(RequeteSiteFrFR requeteSite_, Boolean o) {
+		return o;
+	}
+
+	public static String staticSolrStrPageVisibleAuxBots(RequeteSiteFrFR requeteSite_, Boolean o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPageVisibleAuxBots(RequeteSiteFrFR requeteSite_, String o) {
+		return MiseEnPage.staticSolrStrPageVisibleAuxBots(requeteSite_, MiseEnPage.staticSolrPageVisibleAuxBots(requeteSite_, MiseEnPage.staticSetPageVisibleAuxBots(requeteSite_, o)));
+	}
+
 	public Boolean solrPageVisibleAuxBots() {
-		return pageVisibleAuxBots;
+		return MiseEnPage.staticSolrPageVisibleAuxBots(requeteSite_, pageVisibleAuxBots);
 	}
 
 	public String strPageVisibleAuxBots() {
@@ -619,10 +721,13 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	public String getPageH1() {
 		return pageH1;
 	}
-
-	public void setPageH1(String pageH1) {
-		this.pageH1 = pageH1;
+	public MiseEnPage setPageH1(String o) {
+		this.pageH1 = MiseEnPage.staticSetPageH1(requeteSite_, o);
 		this.pageH1Couverture.dejaInitialise = true;
+		return (MiseEnPage)this;
+	}
+	public static String staticSetPageH1(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected MiseEnPage pageH1Init() {
 		if(!pageH1Couverture.dejaInitialise) {
@@ -634,8 +739,20 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		return (MiseEnPage)this;
 	}
 
+	public static String staticSolrPageH1(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrPageH1(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPageH1(RequeteSiteFrFR requeteSite_, String o) {
+		return MiseEnPage.staticSolrStrPageH1(requeteSite_, MiseEnPage.staticSolrPageH1(requeteSite_, MiseEnPage.staticSetPageH1(requeteSite_, o)));
+	}
+
 	public String solrPageH1() {
-		return pageH1;
+		return MiseEnPage.staticSolrPageH1(requeteSite_, pageH1);
 	}
 
 	public String strPageH1() {
@@ -681,10 +798,13 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	public String getPageH2() {
 		return pageH2;
 	}
-
-	public void setPageH2(String pageH2) {
-		this.pageH2 = pageH2;
+	public MiseEnPage setPageH2(String o) {
+		this.pageH2 = MiseEnPage.staticSetPageH2(requeteSite_, o);
 		this.pageH2Couverture.dejaInitialise = true;
+		return (MiseEnPage)this;
+	}
+	public static String staticSetPageH2(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected MiseEnPage pageH2Init() {
 		if(!pageH2Couverture.dejaInitialise) {
@@ -696,8 +816,20 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		return (MiseEnPage)this;
 	}
 
+	public static String staticSolrPageH2(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrPageH2(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPageH2(RequeteSiteFrFR requeteSite_, String o) {
+		return MiseEnPage.staticSolrStrPageH2(requeteSite_, MiseEnPage.staticSolrPageH2(requeteSite_, MiseEnPage.staticSetPageH2(requeteSite_, o)));
+	}
+
 	public String solrPageH2() {
-		return pageH2;
+		return MiseEnPage.staticSolrPageH2(requeteSite_, pageH2);
 	}
 
 	public String strPageH2() {
@@ -743,10 +875,13 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	public String getPageH3() {
 		return pageH3;
 	}
-
-	public void setPageH3(String pageH3) {
-		this.pageH3 = pageH3;
+	public MiseEnPage setPageH3(String o) {
+		this.pageH3 = MiseEnPage.staticSetPageH3(requeteSite_, o);
 		this.pageH3Couverture.dejaInitialise = true;
+		return (MiseEnPage)this;
+	}
+	public static String staticSetPageH3(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected MiseEnPage pageH3Init() {
 		if(!pageH3Couverture.dejaInitialise) {
@@ -758,8 +893,20 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		return (MiseEnPage)this;
 	}
 
+	public static String staticSolrPageH3(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrPageH3(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPageH3(RequeteSiteFrFR requeteSite_, String o) {
+		return MiseEnPage.staticSolrStrPageH3(requeteSite_, MiseEnPage.staticSolrPageH3(requeteSite_, MiseEnPage.staticSetPageH3(requeteSite_, o)));
+	}
+
 	public String solrPageH3() {
-		return pageH3;
+		return MiseEnPage.staticSolrPageH3(requeteSite_, pageH3);
 	}
 
 	public String strPageH3() {
@@ -805,10 +952,13 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	public String getPageH1Court() {
 		return pageH1Court;
 	}
-
-	public void setPageH1Court(String pageH1Court) {
-		this.pageH1Court = pageH1Court;
+	public MiseEnPage setPageH1Court(String o) {
+		this.pageH1Court = MiseEnPage.staticSetPageH1Court(requeteSite_, o);
 		this.pageH1CourtCouverture.dejaInitialise = true;
+		return (MiseEnPage)this;
+	}
+	public static String staticSetPageH1Court(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected MiseEnPage pageH1CourtInit() {
 		if(!pageH1CourtCouverture.dejaInitialise) {
@@ -820,8 +970,20 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		return (MiseEnPage)this;
 	}
 
+	public static String staticSolrPageH1Court(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrPageH1Court(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPageH1Court(RequeteSiteFrFR requeteSite_, String o) {
+		return MiseEnPage.staticSolrStrPageH1Court(requeteSite_, MiseEnPage.staticSolrPageH1Court(requeteSite_, MiseEnPage.staticSetPageH1Court(requeteSite_, o)));
+	}
+
 	public String solrPageH1Court() {
-		return pageH1Court;
+		return MiseEnPage.staticSolrPageH1Court(requeteSite_, pageH1Court);
 	}
 
 	public String strPageH1Court() {
@@ -867,10 +1029,13 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	public String getPageH2Court() {
 		return pageH2Court;
 	}
-
-	public void setPageH2Court(String pageH2Court) {
-		this.pageH2Court = pageH2Court;
+	public MiseEnPage setPageH2Court(String o) {
+		this.pageH2Court = MiseEnPage.staticSetPageH2Court(requeteSite_, o);
 		this.pageH2CourtCouverture.dejaInitialise = true;
+		return (MiseEnPage)this;
+	}
+	public static String staticSetPageH2Court(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected MiseEnPage pageH2CourtInit() {
 		if(!pageH2CourtCouverture.dejaInitialise) {
@@ -882,8 +1047,20 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		return (MiseEnPage)this;
 	}
 
+	public static String staticSolrPageH2Court(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrPageH2Court(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPageH2Court(RequeteSiteFrFR requeteSite_, String o) {
+		return MiseEnPage.staticSolrStrPageH2Court(requeteSite_, MiseEnPage.staticSolrPageH2Court(requeteSite_, MiseEnPage.staticSetPageH2Court(requeteSite_, o)));
+	}
+
 	public String solrPageH2Court() {
-		return pageH2Court;
+		return MiseEnPage.staticSolrPageH2Court(requeteSite_, pageH2Court);
 	}
 
 	public String strPageH2Court() {
@@ -929,10 +1106,13 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	public String getPageH3Court() {
 		return pageH3Court;
 	}
-
-	public void setPageH3Court(String pageH3Court) {
-		this.pageH3Court = pageH3Court;
+	public MiseEnPage setPageH3Court(String o) {
+		this.pageH3Court = MiseEnPage.staticSetPageH3Court(requeteSite_, o);
 		this.pageH3CourtCouverture.dejaInitialise = true;
+		return (MiseEnPage)this;
+	}
+	public static String staticSetPageH3Court(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected MiseEnPage pageH3CourtInit() {
 		if(!pageH3CourtCouverture.dejaInitialise) {
@@ -944,8 +1124,20 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		return (MiseEnPage)this;
 	}
 
+	public static String staticSolrPageH3Court(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrPageH3Court(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPageH3Court(RequeteSiteFrFR requeteSite_, String o) {
+		return MiseEnPage.staticSolrStrPageH3Court(requeteSite_, MiseEnPage.staticSolrPageH3Court(requeteSite_, MiseEnPage.staticSetPageH3Court(requeteSite_, o)));
+	}
+
 	public String solrPageH3Court() {
-		return pageH3Court;
+		return MiseEnPage.staticSolrPageH3Court(requeteSite_, pageH3Court);
 	}
 
 	public String strPageH3Court() {
@@ -991,10 +1183,13 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	public String getPageTitre() {
 		return pageTitre;
 	}
-
-	public void setPageTitre(String pageTitre) {
-		this.pageTitre = pageTitre;
+	public MiseEnPage setPageTitre(String o) {
+		this.pageTitre = MiseEnPage.staticSetPageTitre(requeteSite_, o);
 		this.pageTitreCouverture.dejaInitialise = true;
+		return (MiseEnPage)this;
+	}
+	public static String staticSetPageTitre(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected MiseEnPage pageTitreInit() {
 		if(!pageTitreCouverture.dejaInitialise) {
@@ -1006,8 +1201,20 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		return (MiseEnPage)this;
 	}
 
+	public static String staticSolrPageTitre(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrPageTitre(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPageTitre(RequeteSiteFrFR requeteSite_, String o) {
+		return MiseEnPage.staticSolrStrPageTitre(requeteSite_, MiseEnPage.staticSolrPageTitre(requeteSite_, MiseEnPage.staticSetPageTitre(requeteSite_, o)));
+	}
+
 	public String solrPageTitre() {
-		return pageTitre;
+		return MiseEnPage.staticSolrPageTitre(requeteSite_, pageTitre);
 	}
 
 	public String strPageTitre() {
@@ -1053,10 +1260,13 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	public String getPageUri() {
 		return pageUri;
 	}
-
-	public void setPageUri(String pageUri) {
-		this.pageUri = pageUri;
+	public MiseEnPage setPageUri(String o) {
+		this.pageUri = MiseEnPage.staticSetPageUri(requeteSite_, o);
 		this.pageUriCouverture.dejaInitialise = true;
+		return (MiseEnPage)this;
+	}
+	public static String staticSetPageUri(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected MiseEnPage pageUriInit() {
 		if(!pageUriCouverture.dejaInitialise) {
@@ -1068,8 +1278,20 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		return (MiseEnPage)this;
 	}
 
+	public static String staticSolrPageUri(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrPageUri(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPageUri(RequeteSiteFrFR requeteSite_, String o) {
+		return MiseEnPage.staticSolrStrPageUri(requeteSite_, MiseEnPage.staticSolrPageUri(requeteSite_, MiseEnPage.staticSetPageUri(requeteSite_, o)));
+	}
+
 	public String solrPageUri() {
-		return pageUri;
+		return MiseEnPage.staticSolrPageUri(requeteSite_, pageUri);
 	}
 
 	public String strPageUri() {
@@ -1120,6 +1342,9 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		this.pageUris = pageUris;
 		this.pageUrisCouverture.dejaInitialise = true;
 	}
+	public static List<String> staticSetPageUris(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
+	}
 	public MiseEnPage addPageUris(String...objets) {
 		for(String o : objets) {
 			addPageUris(o);
@@ -1147,8 +1372,20 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		return (MiseEnPage)this;
 	}
 
+	public static List<String> staticSolrPageUris(RequeteSiteFrFR requeteSite_, List<String> o) {
+		return o;
+	}
+
+	public static String staticSolrStrPageUris(RequeteSiteFrFR requeteSite_, List<String> o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPageUris(RequeteSiteFrFR requeteSite_, String o) {
+		return MiseEnPage.staticSolrStrPageUris(requeteSite_, MiseEnPage.staticSolrPageUris(requeteSite_, MiseEnPage.staticSetPageUris(requeteSite_, o)));
+	}
+
 	public List<String> solrPageUris() {
-		return pageUris;
+		return MiseEnPage.staticSolrPageUris(requeteSite_, pageUris);
 	}
 
 	public String strPageUris() {
@@ -1194,10 +1431,13 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	public String getPageUrl() {
 		return pageUrl;
 	}
-
-	public void setPageUrl(String pageUrl) {
-		this.pageUrl = pageUrl;
+	public MiseEnPage setPageUrl(String o) {
+		this.pageUrl = MiseEnPage.staticSetPageUrl(requeteSite_, o);
 		this.pageUrlCouverture.dejaInitialise = true;
+		return (MiseEnPage)this;
+	}
+	public static String staticSetPageUrl(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected MiseEnPage pageUrlInit() {
 		if(!pageUrlCouverture.dejaInitialise) {
@@ -1209,8 +1449,20 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		return (MiseEnPage)this;
 	}
 
+	public static String staticSolrPageUrl(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrPageUrl(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPageUrl(RequeteSiteFrFR requeteSite_, String o) {
+		return MiseEnPage.staticSolrStrPageUrl(requeteSite_, MiseEnPage.staticSolrPageUrl(requeteSite_, MiseEnPage.staticSetPageUrl(requeteSite_, o)));
+	}
+
 	public String solrPageUrl() {
-		return pageUrl;
+		return MiseEnPage.staticSolrPageUrl(requeteSite_, pageUrl);
 	}
 
 	public String strPageUrl() {
@@ -1256,10 +1508,13 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	public String getPageImageUri() {
 		return pageImageUri;
 	}
-
-	public void setPageImageUri(String pageImageUri) {
-		this.pageImageUri = pageImageUri;
+	public MiseEnPage setPageImageUri(String o) {
+		this.pageImageUri = MiseEnPage.staticSetPageImageUri(requeteSite_, o);
 		this.pageImageUriCouverture.dejaInitialise = true;
+		return (MiseEnPage)this;
+	}
+	public static String staticSetPageImageUri(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected MiseEnPage pageImageUriInit() {
 		if(!pageImageUriCouverture.dejaInitialise) {
@@ -1271,8 +1526,20 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		return (MiseEnPage)this;
 	}
 
+	public static String staticSolrPageImageUri(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrPageImageUri(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPageImageUri(RequeteSiteFrFR requeteSite_, String o) {
+		return MiseEnPage.staticSolrStrPageImageUri(requeteSite_, MiseEnPage.staticSolrPageImageUri(requeteSite_, MiseEnPage.staticSetPageImageUri(requeteSite_, o)));
+	}
+
 	public String solrPageImageUri() {
-		return pageImageUri;
+		return MiseEnPage.staticSolrPageImageUri(requeteSite_, pageImageUri);
 	}
 
 	public String strPageImageUri() {
@@ -1318,10 +1585,13 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	public String getPageImageUrl() {
 		return pageImageUrl;
 	}
-
-	public void setPageImageUrl(String pageImageUrl) {
-		this.pageImageUrl = pageImageUrl;
+	public MiseEnPage setPageImageUrl(String o) {
+		this.pageImageUrl = MiseEnPage.staticSetPageImageUrl(requeteSite_, o);
 		this.pageImageUrlCouverture.dejaInitialise = true;
+		return (MiseEnPage)this;
+	}
+	public static String staticSetPageImageUrl(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected MiseEnPage pageImageUrlInit() {
 		if(!pageImageUrlCouverture.dejaInitialise) {
@@ -1333,8 +1603,20 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		return (MiseEnPage)this;
 	}
 
+	public static String staticSolrPageImageUrl(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrPageImageUrl(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPageImageUrl(RequeteSiteFrFR requeteSite_, String o) {
+		return MiseEnPage.staticSolrStrPageImageUrl(requeteSite_, MiseEnPage.staticSolrPageImageUrl(requeteSite_, MiseEnPage.staticSetPageImageUrl(requeteSite_, o)));
+	}
+
 	public String solrPageImageUrl() {
-		return pageImageUrl;
+		return MiseEnPage.staticSolrPageImageUrl(requeteSite_, pageImageUrl);
 	}
 
 	public String strPageImageUrl() {
@@ -1380,10 +1662,13 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	public String getPageVideoId() {
 		return pageVideoId;
 	}
-
-	public void setPageVideoId(String pageVideoId) {
-		this.pageVideoId = pageVideoId;
+	public MiseEnPage setPageVideoId(String o) {
+		this.pageVideoId = MiseEnPage.staticSetPageVideoId(requeteSite_, o);
 		this.pageVideoIdCouverture.dejaInitialise = true;
+		return (MiseEnPage)this;
+	}
+	public static String staticSetPageVideoId(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected MiseEnPage pageVideoIdInit() {
 		if(!pageVideoIdCouverture.dejaInitialise) {
@@ -1395,8 +1680,20 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		return (MiseEnPage)this;
 	}
 
+	public static String staticSolrPageVideoId(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrPageVideoId(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPageVideoId(RequeteSiteFrFR requeteSite_, String o) {
+		return MiseEnPage.staticSolrStrPageVideoId(requeteSite_, MiseEnPage.staticSolrPageVideoId(requeteSite_, MiseEnPage.staticSetPageVideoId(requeteSite_, o)));
+	}
+
 	public String solrPageVideoId() {
-		return pageVideoId;
+		return MiseEnPage.staticSolrPageVideoId(requeteSite_, pageVideoId);
 	}
 
 	public String strPageVideoId() {
@@ -1442,10 +1739,13 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	public String getPageVideoUrl() {
 		return pageVideoUrl;
 	}
-
-	public void setPageVideoUrl(String pageVideoUrl) {
-		this.pageVideoUrl = pageVideoUrl;
+	public MiseEnPage setPageVideoUrl(String o) {
+		this.pageVideoUrl = MiseEnPage.staticSetPageVideoUrl(requeteSite_, o);
 		this.pageVideoUrlCouverture.dejaInitialise = true;
+		return (MiseEnPage)this;
+	}
+	public static String staticSetPageVideoUrl(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected MiseEnPage pageVideoUrlInit() {
 		if(!pageVideoUrlCouverture.dejaInitialise) {
@@ -1457,8 +1757,20 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		return (MiseEnPage)this;
 	}
 
+	public static String staticSolrPageVideoUrl(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrPageVideoUrl(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPageVideoUrl(RequeteSiteFrFR requeteSite_, String o) {
+		return MiseEnPage.staticSolrStrPageVideoUrl(requeteSite_, MiseEnPage.staticSolrPageVideoUrl(requeteSite_, MiseEnPage.staticSetPageVideoUrl(requeteSite_, o)));
+	}
+
 	public String solrPageVideoUrl() {
-		return pageVideoUrl;
+		return MiseEnPage.staticSolrPageVideoUrl(requeteSite_, pageVideoUrl);
 	}
 
 	public String strPageVideoUrl() {
@@ -1504,10 +1816,13 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	public String getPageVideoUrlEmbed() {
 		return pageVideoUrlEmbed;
 	}
-
-	public void setPageVideoUrlEmbed(String pageVideoUrlEmbed) {
-		this.pageVideoUrlEmbed = pageVideoUrlEmbed;
+	public MiseEnPage setPageVideoUrlEmbed(String o) {
+		this.pageVideoUrlEmbed = MiseEnPage.staticSetPageVideoUrlEmbed(requeteSite_, o);
 		this.pageVideoUrlEmbedCouverture.dejaInitialise = true;
+		return (MiseEnPage)this;
+	}
+	public static String staticSetPageVideoUrlEmbed(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected MiseEnPage pageVideoUrlEmbedInit() {
 		if(!pageVideoUrlEmbedCouverture.dejaInitialise) {
@@ -1519,8 +1834,20 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		return (MiseEnPage)this;
 	}
 
+	public static String staticSolrPageVideoUrlEmbed(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrPageVideoUrlEmbed(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPageVideoUrlEmbed(RequeteSiteFrFR requeteSite_, String o) {
+		return MiseEnPage.staticSolrStrPageVideoUrlEmbed(requeteSite_, MiseEnPage.staticSolrPageVideoUrlEmbed(requeteSite_, MiseEnPage.staticSetPageVideoUrlEmbed(requeteSite_, o)));
+	}
+
 	public String solrPageVideoUrlEmbed() {
-		return pageVideoUrlEmbed;
+		return MiseEnPage.staticSolrPageVideoUrlEmbed(requeteSite_, pageVideoUrlEmbed);
 	}
 
 	public String strPageVideoUrlEmbed() {
@@ -1573,10 +1900,14 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		this.pageImageLargeurCouverture.dejaInitialise = true;
 	}
 	public MiseEnPage setPageImageLargeur(String o) {
-		if(NumberUtils.isParsable(o))
-			this.pageImageLargeur = Integer.parseInt(o);
+		this.pageImageLargeur = MiseEnPage.staticSetPageImageLargeur(requeteSite_, o);
 		this.pageImageLargeurCouverture.dejaInitialise = true;
 		return (MiseEnPage)this;
+	}
+	public static Integer staticSetPageImageLargeur(RequeteSiteFrFR requeteSite_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Integer.parseInt(o);
+		return null;
 	}
 	protected MiseEnPage pageImageLargeurInit() {
 		if(!pageImageLargeurCouverture.dejaInitialise) {
@@ -1588,8 +1919,20 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		return (MiseEnPage)this;
 	}
 
+	public static Integer staticSolrPageImageLargeur(RequeteSiteFrFR requeteSite_, Integer o) {
+		return o;
+	}
+
+	public static String staticSolrStrPageImageLargeur(RequeteSiteFrFR requeteSite_, Integer o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPageImageLargeur(RequeteSiteFrFR requeteSite_, String o) {
+		return MiseEnPage.staticSolrStrPageImageLargeur(requeteSite_, MiseEnPage.staticSolrPageImageLargeur(requeteSite_, MiseEnPage.staticSetPageImageLargeur(requeteSite_, o)));
+	}
+
 	public Integer solrPageImageLargeur() {
-		return pageImageLargeur;
+		return MiseEnPage.staticSolrPageImageLargeur(requeteSite_, pageImageLargeur);
 	}
 
 	public String strPageImageLargeur() {
@@ -1642,10 +1985,14 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		this.pageImageHauteurCouverture.dejaInitialise = true;
 	}
 	public MiseEnPage setPageImageHauteur(String o) {
-		if(NumberUtils.isParsable(o))
-			this.pageImageHauteur = Integer.parseInt(o);
+		this.pageImageHauteur = MiseEnPage.staticSetPageImageHauteur(requeteSite_, o);
 		this.pageImageHauteurCouverture.dejaInitialise = true;
 		return (MiseEnPage)this;
+	}
+	public static Integer staticSetPageImageHauteur(RequeteSiteFrFR requeteSite_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Integer.parseInt(o);
+		return null;
 	}
 	protected MiseEnPage pageImageHauteurInit() {
 		if(!pageImageHauteurCouverture.dejaInitialise) {
@@ -1657,8 +2004,20 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		return (MiseEnPage)this;
 	}
 
+	public static Integer staticSolrPageImageHauteur(RequeteSiteFrFR requeteSite_, Integer o) {
+		return o;
+	}
+
+	public static String staticSolrStrPageImageHauteur(RequeteSiteFrFR requeteSite_, Integer o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPageImageHauteur(RequeteSiteFrFR requeteSite_, String o) {
+		return MiseEnPage.staticSolrStrPageImageHauteur(requeteSite_, MiseEnPage.staticSolrPageImageHauteur(requeteSite_, MiseEnPage.staticSetPageImageHauteur(requeteSite_, o)));
+	}
+
 	public Integer solrPageImageHauteur() {
-		return pageImageHauteur;
+		return MiseEnPage.staticSolrPageImageHauteur(requeteSite_, pageImageHauteur);
 	}
 
 	public String strPageImageHauteur() {
@@ -1704,10 +2063,13 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	public String getPageImageTypeContenu() {
 		return pageImageTypeContenu;
 	}
-
-	public void setPageImageTypeContenu(String pageImageTypeContenu) {
-		this.pageImageTypeContenu = pageImageTypeContenu;
+	public MiseEnPage setPageImageTypeContenu(String o) {
+		this.pageImageTypeContenu = MiseEnPage.staticSetPageImageTypeContenu(requeteSite_, o);
 		this.pageImageTypeContenuCouverture.dejaInitialise = true;
+		return (MiseEnPage)this;
+	}
+	public static String staticSetPageImageTypeContenu(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected MiseEnPage pageImageTypeContenuInit() {
 		if(!pageImageTypeContenuCouverture.dejaInitialise) {
@@ -1719,8 +2081,20 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		return (MiseEnPage)this;
 	}
 
+	public static String staticSolrPageImageTypeContenu(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrPageImageTypeContenu(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPageImageTypeContenu(RequeteSiteFrFR requeteSite_, String o) {
+		return MiseEnPage.staticSolrStrPageImageTypeContenu(requeteSite_, MiseEnPage.staticSolrPageImageTypeContenu(requeteSite_, MiseEnPage.staticSetPageImageTypeContenu(requeteSite_, o)));
+	}
+
 	public String solrPageImageTypeContenu() {
-		return pageImageTypeContenu;
+		return MiseEnPage.staticSolrPageImageTypeContenu(requeteSite_, pageImageTypeContenu);
 	}
 
 	public String strPageImageTypeContenu() {
@@ -1766,10 +2140,13 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	public String getPageTypeContenu() {
 		return pageTypeContenu;
 	}
-
-	public void setPageTypeContenu(String pageTypeContenu) {
-		this.pageTypeContenu = pageTypeContenu;
+	public MiseEnPage setPageTypeContenu(String o) {
+		this.pageTypeContenu = MiseEnPage.staticSetPageTypeContenu(requeteSite_, o);
 		this.pageTypeContenuCouverture.dejaInitialise = true;
+		return (MiseEnPage)this;
+	}
+	public static String staticSetPageTypeContenu(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected MiseEnPage pageTypeContenuInit() {
 		if(!pageTypeContenuCouverture.dejaInitialise) {
@@ -1781,8 +2158,20 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		return (MiseEnPage)this;
 	}
 
+	public static String staticSolrPageTypeContenu(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrPageTypeContenu(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPageTypeContenu(RequeteSiteFrFR requeteSite_, String o) {
+		return MiseEnPage.staticSolrStrPageTypeContenu(requeteSite_, MiseEnPage.staticSolrPageTypeContenu(requeteSite_, MiseEnPage.staticSetPageTypeContenu(requeteSite_, o)));
+	}
+
 	public String solrPageTypeContenu() {
-		return pageTypeContenu;
+		return MiseEnPage.staticSolrPageTypeContenu(requeteSite_, pageTypeContenu);
 	}
 
 	public String strPageTypeContenu() {
@@ -1841,9 +2230,12 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	}
 	/** Example: 2011-12-03T10:15:30+01:00 **/
 	public MiseEnPage setPageCree(String o) {
-		this.pageCree = o == null ? null : LocalDateTime.parse(o, DateTimeFormatter.ISO_DATE_TIME).truncatedTo(ChronoUnit.MILLIS);
+		this.pageCree = MiseEnPage.staticSetPageCree(requeteSite_, o);
 		this.pageCreeCouverture.dejaInitialise = true;
 		return (MiseEnPage)this;
+	}
+	public static LocalDateTime staticSetPageCree(RequeteSiteFrFR requeteSite_, String o) {
+		return o == null ? null : LocalDateTime.parse(o, DateTimeFormatter.ISO_DATE_TIME).truncatedTo(ChronoUnit.MILLIS);
 	}
 	public MiseEnPage setPageCree(Date o) {
 		this.pageCree = o == null ? null : LocalDateTime.ofInstant(o.toInstant(), ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).truncatedTo(ChronoUnit.MILLIS);
@@ -1860,8 +2252,20 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		return (MiseEnPage)this;
 	}
 
+	public static Date staticSolrPageCree(RequeteSiteFrFR requeteSite_, LocalDateTime o) {
+		return o == null ? null : Date.from(o.atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toInstant().atZone(ZoneId.of("Z")).toInstant());
+	}
+
+	public static String staticSolrStrPageCree(RequeteSiteFrFR requeteSite_, Date o) {
+		return DateTimeFormatter.ISO_DATE_TIME.format(o.toInstant());
+	}
+
+	public static String staticSolrFqPageCree(RequeteSiteFrFR requeteSite_, String o) {
+		return MiseEnPage.staticSolrStrPageCree(requeteSite_, MiseEnPage.staticSolrPageCree(requeteSite_, MiseEnPage.staticSetPageCree(requeteSite_, o)));
+	}
+
 	public Date solrPageCree() {
-		return pageCree == null ? null : Date.from(pageCree.atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toInstant().atZone(ZoneId.of("Z")).toInstant());
+		return MiseEnPage.staticSolrPageCree(requeteSite_, pageCree);
 	}
 
 	public String strPageCree() {
@@ -1920,9 +2324,12 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	}
 	/** Example: 2011-12-03T10:15:30+01:00 **/
 	public MiseEnPage setPageModifiee(String o) {
-		this.pageModifiee = o == null ? null : LocalDateTime.parse(o, DateTimeFormatter.ISO_DATE_TIME).truncatedTo(ChronoUnit.MILLIS);
+		this.pageModifiee = MiseEnPage.staticSetPageModifiee(requeteSite_, o);
 		this.pageModifieeCouverture.dejaInitialise = true;
 		return (MiseEnPage)this;
+	}
+	public static LocalDateTime staticSetPageModifiee(RequeteSiteFrFR requeteSite_, String o) {
+		return o == null ? null : LocalDateTime.parse(o, DateTimeFormatter.ISO_DATE_TIME).truncatedTo(ChronoUnit.MILLIS);
 	}
 	public MiseEnPage setPageModifiee(Date o) {
 		this.pageModifiee = o == null ? null : LocalDateTime.ofInstant(o.toInstant(), ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).truncatedTo(ChronoUnit.MILLIS);
@@ -1939,8 +2346,20 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		return (MiseEnPage)this;
 	}
 
+	public static Date staticSolrPageModifiee(RequeteSiteFrFR requeteSite_, LocalDateTime o) {
+		return o == null ? null : Date.from(o.atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toInstant().atZone(ZoneId.of("Z")).toInstant());
+	}
+
+	public static String staticSolrStrPageModifiee(RequeteSiteFrFR requeteSite_, Date o) {
+		return DateTimeFormatter.ISO_DATE_TIME.format(o.toInstant());
+	}
+
+	public static String staticSolrFqPageModifiee(RequeteSiteFrFR requeteSite_, String o) {
+		return MiseEnPage.staticSolrStrPageModifiee(requeteSite_, MiseEnPage.staticSolrPageModifiee(requeteSite_, MiseEnPage.staticSetPageModifiee(requeteSite_, o)));
+	}
+
 	public Date solrPageModifiee() {
-		return pageModifiee == null ? null : Date.from(pageModifiee.atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toInstant().atZone(ZoneId.of("Z")).toInstant());
+		return MiseEnPage.staticSolrPageModifiee(requeteSite_, pageModifiee);
 	}
 
 	public String strPageModifiee() {
@@ -1986,10 +2405,13 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	public String getPageMotsCles() {
 		return pageMotsCles;
 	}
-
-	public void setPageMotsCles(String pageMotsCles) {
-		this.pageMotsCles = pageMotsCles;
+	public MiseEnPage setPageMotsCles(String o) {
+		this.pageMotsCles = MiseEnPage.staticSetPageMotsCles(requeteSite_, o);
 		this.pageMotsClesCouverture.dejaInitialise = true;
+		return (MiseEnPage)this;
+	}
+	public static String staticSetPageMotsCles(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected MiseEnPage pageMotsClesInit() {
 		if(!pageMotsClesCouverture.dejaInitialise) {
@@ -2001,8 +2423,20 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		return (MiseEnPage)this;
 	}
 
+	public static String staticSolrPageMotsCles(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrPageMotsCles(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPageMotsCles(RequeteSiteFrFR requeteSite_, String o) {
+		return MiseEnPage.staticSolrStrPageMotsCles(requeteSite_, MiseEnPage.staticSolrPageMotsCles(requeteSite_, MiseEnPage.staticSetPageMotsCles(requeteSite_, o)));
+	}
+
 	public String solrPageMotsCles() {
-		return pageMotsCles;
+		return MiseEnPage.staticSolrPageMotsCles(requeteSite_, pageMotsCles);
 	}
 
 	public String strPageMotsCles() {
@@ -2048,10 +2482,13 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	public String getPageDescription() {
 		return pageDescription;
 	}
-
-	public void setPageDescription(String pageDescription) {
-		this.pageDescription = pageDescription;
+	public MiseEnPage setPageDescription(String o) {
+		this.pageDescription = MiseEnPage.staticSetPageDescription(requeteSite_, o);
 		this.pageDescriptionCouverture.dejaInitialise = true;
+		return (MiseEnPage)this;
+	}
+	public static String staticSetPageDescription(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected MiseEnPage pageDescriptionInit() {
 		if(!pageDescriptionCouverture.dejaInitialise) {
@@ -2063,8 +2500,20 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		return (MiseEnPage)this;
 	}
 
+	public static String staticSolrPageDescription(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrPageDescription(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPageDescription(RequeteSiteFrFR requeteSite_, String o) {
+		return MiseEnPage.staticSolrStrPageDescription(requeteSite_, MiseEnPage.staticSolrPageDescription(requeteSite_, MiseEnPage.staticSetPageDescription(requeteSite_, o)));
+	}
+
 	public String solrPageDescription() {
-		return pageDescription;
+		return MiseEnPage.staticSolrPageDescription(requeteSite_, pageDescription);
 	}
 
 	public String strPageDescription() {
@@ -2110,10 +2559,13 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	public String getPageAccueilUri() {
 		return pageAccueilUri;
 	}
-
-	public void setPageAccueilUri(String pageAccueilUri) {
-		this.pageAccueilUri = pageAccueilUri;
+	public MiseEnPage setPageAccueilUri(String o) {
+		this.pageAccueilUri = MiseEnPage.staticSetPageAccueilUri(requeteSite_, o);
 		this.pageAccueilUriCouverture.dejaInitialise = true;
+		return (MiseEnPage)this;
+	}
+	public static String staticSetPageAccueilUri(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected MiseEnPage pageAccueilUriInit() {
 		if(!pageAccueilUriCouverture.dejaInitialise) {
@@ -2125,8 +2577,20 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		return (MiseEnPage)this;
 	}
 
+	public static String staticSolrPageAccueilUri(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrPageAccueilUri(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPageAccueilUri(RequeteSiteFrFR requeteSite_, String o) {
+		return MiseEnPage.staticSolrStrPageAccueilUri(requeteSite_, MiseEnPage.staticSolrPageAccueilUri(requeteSite_, MiseEnPage.staticSetPageAccueilUri(requeteSite_, o)));
+	}
+
 	public String solrPageAccueilUri() {
-		return pageAccueilUri;
+		return MiseEnPage.staticSolrPageAccueilUri(requeteSite_, pageAccueilUri);
 	}
 
 	public String strPageAccueilUri() {
@@ -2172,10 +2636,13 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	public String getPageEcoleUri() {
 		return pageEcoleUri;
 	}
-
-	public void setPageEcoleUri(String pageEcoleUri) {
-		this.pageEcoleUri = pageEcoleUri;
+	public MiseEnPage setPageEcoleUri(String o) {
+		this.pageEcoleUri = MiseEnPage.staticSetPageEcoleUri(requeteSite_, o);
 		this.pageEcoleUriCouverture.dejaInitialise = true;
+		return (MiseEnPage)this;
+	}
+	public static String staticSetPageEcoleUri(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected MiseEnPage pageEcoleUriInit() {
 		if(!pageEcoleUriCouverture.dejaInitialise) {
@@ -2187,8 +2654,20 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		return (MiseEnPage)this;
 	}
 
+	public static String staticSolrPageEcoleUri(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrPageEcoleUri(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPageEcoleUri(RequeteSiteFrFR requeteSite_, String o) {
+		return MiseEnPage.staticSolrStrPageEcoleUri(requeteSite_, MiseEnPage.staticSolrPageEcoleUri(requeteSite_, MiseEnPage.staticSetPageEcoleUri(requeteSite_, o)));
+	}
+
 	public String solrPageEcoleUri() {
-		return pageEcoleUri;
+		return MiseEnPage.staticSolrPageEcoleUri(requeteSite_, pageEcoleUri);
 	}
 
 	public String strPageEcoleUri() {
@@ -2234,10 +2713,13 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	public String getPageUtilisateurUri() {
 		return pageUtilisateurUri;
 	}
-
-	public void setPageUtilisateurUri(String pageUtilisateurUri) {
-		this.pageUtilisateurUri = pageUtilisateurUri;
+	public MiseEnPage setPageUtilisateurUri(String o) {
+		this.pageUtilisateurUri = MiseEnPage.staticSetPageUtilisateurUri(requeteSite_, o);
 		this.pageUtilisateurUriCouverture.dejaInitialise = true;
+		return (MiseEnPage)this;
+	}
+	public static String staticSetPageUtilisateurUri(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected MiseEnPage pageUtilisateurUriInit() {
 		if(!pageUtilisateurUriCouverture.dejaInitialise) {
@@ -2249,8 +2731,20 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		return (MiseEnPage)this;
 	}
 
+	public static String staticSolrPageUtilisateurUri(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrPageUtilisateurUri(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPageUtilisateurUri(RequeteSiteFrFR requeteSite_, String o) {
+		return MiseEnPage.staticSolrStrPageUtilisateurUri(requeteSite_, MiseEnPage.staticSolrPageUtilisateurUri(requeteSite_, MiseEnPage.staticSetPageUtilisateurUri(requeteSite_, o)));
+	}
+
 	public String solrPageUtilisateurUri() {
-		return pageUtilisateurUri;
+		return MiseEnPage.staticSolrPageUtilisateurUri(requeteSite_, pageUtilisateurUri);
 	}
 
 	public String strPageUtilisateurUri() {
@@ -2296,10 +2790,13 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	public String getPageDeconnexionUri() {
 		return pageDeconnexionUri;
 	}
-
-	public void setPageDeconnexionUri(String pageDeconnexionUri) {
-		this.pageDeconnexionUri = pageDeconnexionUri;
+	public MiseEnPage setPageDeconnexionUri(String o) {
+		this.pageDeconnexionUri = MiseEnPage.staticSetPageDeconnexionUri(requeteSite_, o);
 		this.pageDeconnexionUriCouverture.dejaInitialise = true;
+		return (MiseEnPage)this;
+	}
+	public static String staticSetPageDeconnexionUri(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected MiseEnPage pageDeconnexionUriInit() {
 		if(!pageDeconnexionUriCouverture.dejaInitialise) {
@@ -2311,8 +2808,20 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		return (MiseEnPage)this;
 	}
 
+	public static String staticSolrPageDeconnexionUri(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrPageDeconnexionUri(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPageDeconnexionUri(RequeteSiteFrFR requeteSite_, String o) {
+		return MiseEnPage.staticSolrStrPageDeconnexionUri(requeteSite_, MiseEnPage.staticSolrPageDeconnexionUri(requeteSite_, MiseEnPage.staticSetPageDeconnexionUri(requeteSite_, o)));
+	}
+
 	public String solrPageDeconnexionUri() {
-		return pageDeconnexionUri;
+		return MiseEnPage.staticSolrPageDeconnexionUri(requeteSite_, pageDeconnexionUri);
 	}
 
 	public String strPageDeconnexionUri() {
@@ -2363,6 +2872,9 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		this.listeEcole = listeEcole;
 		this.listeEcoleCouverture.dejaInitialise = true;
 	}
+	public static ListeRecherche<Ecole> staticSetListeEcole(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
+	}
 	protected MiseEnPage listeEcoleInit() {
 		if(!listeEcoleCouverture.dejaInitialise) {
 			_listeEcole(listeEcole);
@@ -2399,6 +2911,9 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	public void setEcoles(List<Ecole> ecoles) {
 		this.ecoles = ecoles;
 		this.ecolesCouverture.dejaInitialise = true;
+	}
+	public static List<Ecole> staticSetEcoles(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
 	}
 	public MiseEnPage addEcoles(Ecole...objets) {
 		for(Ecole o : objets) {
@@ -2449,6 +2964,9 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		this.ecole_ = ecole_;
 		this.ecole_Couverture.dejaInitialise = true;
 	}
+	public static Ecole staticSetEcole_(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
+	}
 	protected MiseEnPage ecole_Init() {
 		if(!ecole_Couverture.dejaInitialise) {
 			_ecole_(ecole_Couverture);
@@ -2489,10 +3007,14 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		this.anneeValCouverture.dejaInitialise = true;
 	}
 	public MiseEnPage setAnneeVal(String o) {
-		if(NumberUtils.isParsable(o))
-			this.anneeVal = Integer.parseInt(o);
+		this.anneeVal = MiseEnPage.staticSetAnneeVal(requeteSite_, o);
 		this.anneeValCouverture.dejaInitialise = true;
 		return (MiseEnPage)this;
+	}
+	public static Integer staticSetAnneeVal(RequeteSiteFrFR requeteSite_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Integer.parseInt(o);
+		return null;
 	}
 	protected MiseEnPage anneeValInit() {
 		if(!anneeValCouverture.dejaInitialise) {
@@ -2504,8 +3026,20 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		return (MiseEnPage)this;
 	}
 
+	public static Integer staticSolrAnneeVal(RequeteSiteFrFR requeteSite_, Integer o) {
+		return o;
+	}
+
+	public static String staticSolrStrAnneeVal(RequeteSiteFrFR requeteSite_, Integer o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqAnneeVal(RequeteSiteFrFR requeteSite_, String o) {
+		return MiseEnPage.staticSolrStrAnneeVal(requeteSite_, MiseEnPage.staticSolrAnneeVal(requeteSite_, MiseEnPage.staticSetAnneeVal(requeteSite_, o)));
+	}
+
 	public Integer solrAnneeVal() {
-		return anneeVal;
+		return MiseEnPage.staticSolrAnneeVal(requeteSite_, anneeVal);
 	}
 
 	public String strAnneeVal() {
@@ -2737,6 +3271,334 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	public Object attribuerMiseEnPage(String var, Object val) {
 		MiseEnPage oMiseEnPage = (MiseEnPage)this;
 		switch(var) {
+			default:
+				return null;
+		}
+	}
+
+	///////////////
+	// staticSet //
+	///////////////
+
+	public static Object staticSetPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		return staticSetMiseEnPage(entiteVar,  requeteSite_, o);
+	}
+	public static Object staticSetMiseEnPage(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		switch(entiteVar) {
+		case "siteUrlBase":
+			return MiseEnPage.staticSetSiteUrlBase(requeteSite_, o);
+		case "statiqueUrlBase":
+			return MiseEnPage.staticSetStatiqueUrlBase(requeteSite_, o);
+		case "contexteIconeGroupe":
+			return MiseEnPage.staticSetContexteIconeGroupe(requeteSite_, o);
+		case "contexteIconeNom":
+			return MiseEnPage.staticSetContexteIconeNom(requeteSite_, o);
+		case "contexteIconeClassesCss":
+			return MiseEnPage.staticSetContexteIconeClassesCss(requeteSite_, o);
+		case "pageVisibleAuxBots":
+			return MiseEnPage.staticSetPageVisibleAuxBots(requeteSite_, o);
+		case "pageH1":
+			return MiseEnPage.staticSetPageH1(requeteSite_, o);
+		case "pageH2":
+			return MiseEnPage.staticSetPageH2(requeteSite_, o);
+		case "pageH3":
+			return MiseEnPage.staticSetPageH3(requeteSite_, o);
+		case "pageH1Court":
+			return MiseEnPage.staticSetPageH1Court(requeteSite_, o);
+		case "pageH2Court":
+			return MiseEnPage.staticSetPageH2Court(requeteSite_, o);
+		case "pageH3Court":
+			return MiseEnPage.staticSetPageH3Court(requeteSite_, o);
+		case "pageTitre":
+			return MiseEnPage.staticSetPageTitre(requeteSite_, o);
+		case "pageUri":
+			return MiseEnPage.staticSetPageUri(requeteSite_, o);
+		case "pageUris":
+			return MiseEnPage.staticSetPageUris(requeteSite_, o);
+		case "pageUrl":
+			return MiseEnPage.staticSetPageUrl(requeteSite_, o);
+		case "pageImageUri":
+			return MiseEnPage.staticSetPageImageUri(requeteSite_, o);
+		case "pageImageUrl":
+			return MiseEnPage.staticSetPageImageUrl(requeteSite_, o);
+		case "pageVideoId":
+			return MiseEnPage.staticSetPageVideoId(requeteSite_, o);
+		case "pageVideoUrl":
+			return MiseEnPage.staticSetPageVideoUrl(requeteSite_, o);
+		case "pageVideoUrlEmbed":
+			return MiseEnPage.staticSetPageVideoUrlEmbed(requeteSite_, o);
+		case "pageImageLargeur":
+			return MiseEnPage.staticSetPageImageLargeur(requeteSite_, o);
+		case "pageImageHauteur":
+			return MiseEnPage.staticSetPageImageHauteur(requeteSite_, o);
+		case "pageImageTypeContenu":
+			return MiseEnPage.staticSetPageImageTypeContenu(requeteSite_, o);
+		case "pageTypeContenu":
+			return MiseEnPage.staticSetPageTypeContenu(requeteSite_, o);
+		case "pageCree":
+			return MiseEnPage.staticSetPageCree(requeteSite_, o);
+		case "pageModifiee":
+			return MiseEnPage.staticSetPageModifiee(requeteSite_, o);
+		case "pageMotsCles":
+			return MiseEnPage.staticSetPageMotsCles(requeteSite_, o);
+		case "pageDescription":
+			return MiseEnPage.staticSetPageDescription(requeteSite_, o);
+		case "pageAccueilUri":
+			return MiseEnPage.staticSetPageAccueilUri(requeteSite_, o);
+		case "pageEcoleUri":
+			return MiseEnPage.staticSetPageEcoleUri(requeteSite_, o);
+		case "pageUtilisateurUri":
+			return MiseEnPage.staticSetPageUtilisateurUri(requeteSite_, o);
+		case "pageDeconnexionUri":
+			return MiseEnPage.staticSetPageDeconnexionUri(requeteSite_, o);
+		case "anneeVal":
+			return MiseEnPage.staticSetAnneeVal(requeteSite_, o);
+			default:
+				return null;
+		}
+	}
+
+	////////////////
+	// staticSolr //
+	////////////////
+
+	public static Object staticSolrPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		return staticSolrMiseEnPage(entiteVar,  requeteSite_, o);
+	}
+	public static Object staticSolrMiseEnPage(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		switch(entiteVar) {
+		case "siteUrlBase":
+			return MiseEnPage.staticSolrSiteUrlBase(requeteSite_, (String)o);
+		case "statiqueUrlBase":
+			return MiseEnPage.staticSolrStatiqueUrlBase(requeteSite_, (String)o);
+		case "contexteIconeGroupe":
+			return MiseEnPage.staticSolrContexteIconeGroupe(requeteSite_, (String)o);
+		case "contexteIconeNom":
+			return MiseEnPage.staticSolrContexteIconeNom(requeteSite_, (String)o);
+		case "contexteIconeClassesCss":
+			return MiseEnPage.staticSolrContexteIconeClassesCss(requeteSite_, (String)o);
+		case "pageVisibleAuxBots":
+			return MiseEnPage.staticSolrPageVisibleAuxBots(requeteSite_, (Boolean)o);
+		case "pageH1":
+			return MiseEnPage.staticSolrPageH1(requeteSite_, (String)o);
+		case "pageH2":
+			return MiseEnPage.staticSolrPageH2(requeteSite_, (String)o);
+		case "pageH3":
+			return MiseEnPage.staticSolrPageH3(requeteSite_, (String)o);
+		case "pageH1Court":
+			return MiseEnPage.staticSolrPageH1Court(requeteSite_, (String)o);
+		case "pageH2Court":
+			return MiseEnPage.staticSolrPageH2Court(requeteSite_, (String)o);
+		case "pageH3Court":
+			return MiseEnPage.staticSolrPageH3Court(requeteSite_, (String)o);
+		case "pageTitre":
+			return MiseEnPage.staticSolrPageTitre(requeteSite_, (String)o);
+		case "pageUri":
+			return MiseEnPage.staticSolrPageUri(requeteSite_, (String)o);
+		case "pageUris":
+			return MiseEnPage.staticSolrPageUris(requeteSite_, (List<String>)o);
+		case "pageUrl":
+			return MiseEnPage.staticSolrPageUrl(requeteSite_, (String)o);
+		case "pageImageUri":
+			return MiseEnPage.staticSolrPageImageUri(requeteSite_, (String)o);
+		case "pageImageUrl":
+			return MiseEnPage.staticSolrPageImageUrl(requeteSite_, (String)o);
+		case "pageVideoId":
+			return MiseEnPage.staticSolrPageVideoId(requeteSite_, (String)o);
+		case "pageVideoUrl":
+			return MiseEnPage.staticSolrPageVideoUrl(requeteSite_, (String)o);
+		case "pageVideoUrlEmbed":
+			return MiseEnPage.staticSolrPageVideoUrlEmbed(requeteSite_, (String)o);
+		case "pageImageLargeur":
+			return MiseEnPage.staticSolrPageImageLargeur(requeteSite_, (Integer)o);
+		case "pageImageHauteur":
+			return MiseEnPage.staticSolrPageImageHauteur(requeteSite_, (Integer)o);
+		case "pageImageTypeContenu":
+			return MiseEnPage.staticSolrPageImageTypeContenu(requeteSite_, (String)o);
+		case "pageTypeContenu":
+			return MiseEnPage.staticSolrPageTypeContenu(requeteSite_, (String)o);
+		case "pageCree":
+			return MiseEnPage.staticSolrPageCree(requeteSite_, (LocalDateTime)o);
+		case "pageModifiee":
+			return MiseEnPage.staticSolrPageModifiee(requeteSite_, (LocalDateTime)o);
+		case "pageMotsCles":
+			return MiseEnPage.staticSolrPageMotsCles(requeteSite_, (String)o);
+		case "pageDescription":
+			return MiseEnPage.staticSolrPageDescription(requeteSite_, (String)o);
+		case "pageAccueilUri":
+			return MiseEnPage.staticSolrPageAccueilUri(requeteSite_, (String)o);
+		case "pageEcoleUri":
+			return MiseEnPage.staticSolrPageEcoleUri(requeteSite_, (String)o);
+		case "pageUtilisateurUri":
+			return MiseEnPage.staticSolrPageUtilisateurUri(requeteSite_, (String)o);
+		case "pageDeconnexionUri":
+			return MiseEnPage.staticSolrPageDeconnexionUri(requeteSite_, (String)o);
+		case "anneeVal":
+			return MiseEnPage.staticSolrAnneeVal(requeteSite_, (Integer)o);
+			default:
+				return null;
+		}
+	}
+
+	///////////////////
+	// staticSolrStr //
+	///////////////////
+
+	public static String staticSolrStrPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		return staticSolrStrMiseEnPage(entiteVar,  requeteSite_, o);
+	}
+	public static String staticSolrStrMiseEnPage(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		switch(entiteVar) {
+		case "siteUrlBase":
+			return MiseEnPage.staticSolrStrSiteUrlBase(requeteSite_, (String)o);
+		case "statiqueUrlBase":
+			return MiseEnPage.staticSolrStrStatiqueUrlBase(requeteSite_, (String)o);
+		case "contexteIconeGroupe":
+			return MiseEnPage.staticSolrStrContexteIconeGroupe(requeteSite_, (String)o);
+		case "contexteIconeNom":
+			return MiseEnPage.staticSolrStrContexteIconeNom(requeteSite_, (String)o);
+		case "contexteIconeClassesCss":
+			return MiseEnPage.staticSolrStrContexteIconeClassesCss(requeteSite_, (String)o);
+		case "pageVisibleAuxBots":
+			return MiseEnPage.staticSolrStrPageVisibleAuxBots(requeteSite_, (Boolean)o);
+		case "pageH1":
+			return MiseEnPage.staticSolrStrPageH1(requeteSite_, (String)o);
+		case "pageH2":
+			return MiseEnPage.staticSolrStrPageH2(requeteSite_, (String)o);
+		case "pageH3":
+			return MiseEnPage.staticSolrStrPageH3(requeteSite_, (String)o);
+		case "pageH1Court":
+			return MiseEnPage.staticSolrStrPageH1Court(requeteSite_, (String)o);
+		case "pageH2Court":
+			return MiseEnPage.staticSolrStrPageH2Court(requeteSite_, (String)o);
+		case "pageH3Court":
+			return MiseEnPage.staticSolrStrPageH3Court(requeteSite_, (String)o);
+		case "pageTitre":
+			return MiseEnPage.staticSolrStrPageTitre(requeteSite_, (String)o);
+		case "pageUri":
+			return MiseEnPage.staticSolrStrPageUri(requeteSite_, (String)o);
+		case "pageUris":
+			return MiseEnPage.staticSolrStrPageUris(requeteSite_, (List<String>)o);
+		case "pageUrl":
+			return MiseEnPage.staticSolrStrPageUrl(requeteSite_, (String)o);
+		case "pageImageUri":
+			return MiseEnPage.staticSolrStrPageImageUri(requeteSite_, (String)o);
+		case "pageImageUrl":
+			return MiseEnPage.staticSolrStrPageImageUrl(requeteSite_, (String)o);
+		case "pageVideoId":
+			return MiseEnPage.staticSolrStrPageVideoId(requeteSite_, (String)o);
+		case "pageVideoUrl":
+			return MiseEnPage.staticSolrStrPageVideoUrl(requeteSite_, (String)o);
+		case "pageVideoUrlEmbed":
+			return MiseEnPage.staticSolrStrPageVideoUrlEmbed(requeteSite_, (String)o);
+		case "pageImageLargeur":
+			return MiseEnPage.staticSolrStrPageImageLargeur(requeteSite_, (Integer)o);
+		case "pageImageHauteur":
+			return MiseEnPage.staticSolrStrPageImageHauteur(requeteSite_, (Integer)o);
+		case "pageImageTypeContenu":
+			return MiseEnPage.staticSolrStrPageImageTypeContenu(requeteSite_, (String)o);
+		case "pageTypeContenu":
+			return MiseEnPage.staticSolrStrPageTypeContenu(requeteSite_, (String)o);
+		case "pageCree":
+			return MiseEnPage.staticSolrStrPageCree(requeteSite_, (Date)o);
+		case "pageModifiee":
+			return MiseEnPage.staticSolrStrPageModifiee(requeteSite_, (Date)o);
+		case "pageMotsCles":
+			return MiseEnPage.staticSolrStrPageMotsCles(requeteSite_, (String)o);
+		case "pageDescription":
+			return MiseEnPage.staticSolrStrPageDescription(requeteSite_, (String)o);
+		case "pageAccueilUri":
+			return MiseEnPage.staticSolrStrPageAccueilUri(requeteSite_, (String)o);
+		case "pageEcoleUri":
+			return MiseEnPage.staticSolrStrPageEcoleUri(requeteSite_, (String)o);
+		case "pageUtilisateurUri":
+			return MiseEnPage.staticSolrStrPageUtilisateurUri(requeteSite_, (String)o);
+		case "pageDeconnexionUri":
+			return MiseEnPage.staticSolrStrPageDeconnexionUri(requeteSite_, (String)o);
+		case "anneeVal":
+			return MiseEnPage.staticSolrStrAnneeVal(requeteSite_, (Integer)o);
+			default:
+				return null;
+		}
+	}
+
+	//////////////////
+	// staticSolrFq //
+	//////////////////
+
+	public static String staticSolrFqPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		return staticSolrFqMiseEnPage(entiteVar,  requeteSite_, o);
+	}
+	public static String staticSolrFqMiseEnPage(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		switch(entiteVar) {
+		case "siteUrlBase":
+			return MiseEnPage.staticSolrFqSiteUrlBase(requeteSite_, o);
+		case "statiqueUrlBase":
+			return MiseEnPage.staticSolrFqStatiqueUrlBase(requeteSite_, o);
+		case "contexteIconeGroupe":
+			return MiseEnPage.staticSolrFqContexteIconeGroupe(requeteSite_, o);
+		case "contexteIconeNom":
+			return MiseEnPage.staticSolrFqContexteIconeNom(requeteSite_, o);
+		case "contexteIconeClassesCss":
+			return MiseEnPage.staticSolrFqContexteIconeClassesCss(requeteSite_, o);
+		case "pageVisibleAuxBots":
+			return MiseEnPage.staticSolrFqPageVisibleAuxBots(requeteSite_, o);
+		case "pageH1":
+			return MiseEnPage.staticSolrFqPageH1(requeteSite_, o);
+		case "pageH2":
+			return MiseEnPage.staticSolrFqPageH2(requeteSite_, o);
+		case "pageH3":
+			return MiseEnPage.staticSolrFqPageH3(requeteSite_, o);
+		case "pageH1Court":
+			return MiseEnPage.staticSolrFqPageH1Court(requeteSite_, o);
+		case "pageH2Court":
+			return MiseEnPage.staticSolrFqPageH2Court(requeteSite_, o);
+		case "pageH3Court":
+			return MiseEnPage.staticSolrFqPageH3Court(requeteSite_, o);
+		case "pageTitre":
+			return MiseEnPage.staticSolrFqPageTitre(requeteSite_, o);
+		case "pageUri":
+			return MiseEnPage.staticSolrFqPageUri(requeteSite_, o);
+		case "pageUris":
+			return MiseEnPage.staticSolrFqPageUris(requeteSite_, o);
+		case "pageUrl":
+			return MiseEnPage.staticSolrFqPageUrl(requeteSite_, o);
+		case "pageImageUri":
+			return MiseEnPage.staticSolrFqPageImageUri(requeteSite_, o);
+		case "pageImageUrl":
+			return MiseEnPage.staticSolrFqPageImageUrl(requeteSite_, o);
+		case "pageVideoId":
+			return MiseEnPage.staticSolrFqPageVideoId(requeteSite_, o);
+		case "pageVideoUrl":
+			return MiseEnPage.staticSolrFqPageVideoUrl(requeteSite_, o);
+		case "pageVideoUrlEmbed":
+			return MiseEnPage.staticSolrFqPageVideoUrlEmbed(requeteSite_, o);
+		case "pageImageLargeur":
+			return MiseEnPage.staticSolrFqPageImageLargeur(requeteSite_, o);
+		case "pageImageHauteur":
+			return MiseEnPage.staticSolrFqPageImageHauteur(requeteSite_, o);
+		case "pageImageTypeContenu":
+			return MiseEnPage.staticSolrFqPageImageTypeContenu(requeteSite_, o);
+		case "pageTypeContenu":
+			return MiseEnPage.staticSolrFqPageTypeContenu(requeteSite_, o);
+		case "pageCree":
+			return MiseEnPage.staticSolrFqPageCree(requeteSite_, o);
+		case "pageModifiee":
+			return MiseEnPage.staticSolrFqPageModifiee(requeteSite_, o);
+		case "pageMotsCles":
+			return MiseEnPage.staticSolrFqPageMotsCles(requeteSite_, o);
+		case "pageDescription":
+			return MiseEnPage.staticSolrFqPageDescription(requeteSite_, o);
+		case "pageAccueilUri":
+			return MiseEnPage.staticSolrFqPageAccueilUri(requeteSite_, o);
+		case "pageEcoleUri":
+			return MiseEnPage.staticSolrFqPageEcoleUri(requeteSite_, o);
+		case "pageUtilisateurUri":
+			return MiseEnPage.staticSolrFqPageUtilisateurUri(requeteSite_, o);
+		case "pageDeconnexionUri":
+			return MiseEnPage.staticSolrFqPageDeconnexionUri(requeteSite_, o);
+		case "anneeVal":
+			return MiseEnPage.staticSolrFqAnneeVal(requeteSite_, o);
 			default:
 				return null;
 		}

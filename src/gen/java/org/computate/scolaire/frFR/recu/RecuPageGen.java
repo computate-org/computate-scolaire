@@ -127,6 +127,62 @@ public abstract class RecuPageGen<DEV> extends RecuGenPage {
 		}
 	}
 
+	///////////////
+	// staticSet //
+	///////////////
+
+	public static Object staticSetPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		return staticSetRecuPage(entiteVar,  requeteSite_, o);
+	}
+	public static Object staticSetRecuPage(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		switch(entiteVar) {
+			default:
+				return RecuGenPage.staticSetRecuGenPage(entiteVar,  requeteSite_, o);
+		}
+	}
+
+	////////////////
+	// staticSolr //
+	////////////////
+
+	public static Object staticSolrPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		return staticSolrRecuPage(entiteVar,  requeteSite_, o);
+	}
+	public static Object staticSolrRecuPage(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		switch(entiteVar) {
+			default:
+				return RecuGenPage.staticSolrRecuGenPage(entiteVar,  requeteSite_, o);
+		}
+	}
+
+	///////////////////
+	// staticSolrStr //
+	///////////////////
+
+	public static String staticSolrStrPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		return staticSolrStrRecuPage(entiteVar,  requeteSite_, o);
+	}
+	public static String staticSolrStrRecuPage(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		switch(entiteVar) {
+			default:
+				return RecuGenPage.staticSolrStrRecuGenPage(entiteVar,  requeteSite_, o);
+		}
+	}
+
+	//////////////////
+	// staticSolrFq //
+	//////////////////
+
+	public static String staticSolrFqPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		return staticSolrFqRecuPage(entiteVar,  requeteSite_, o);
+	}
+	public static String staticSolrFqRecuPage(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		switch(entiteVar) {
+			default:
+				return RecuGenPage.staticSolrFqRecuGenPage(entiteVar,  requeteSite_, o);
+		}
+	}
+
 	/////////////
 	// definir //
 	/////////////

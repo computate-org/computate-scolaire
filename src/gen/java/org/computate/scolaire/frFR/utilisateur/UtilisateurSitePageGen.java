@@ -127,6 +127,62 @@ public abstract class UtilisateurSitePageGen<DEV> extends UtilisateurSiteGenPage
 		}
 	}
 
+	///////////////
+	// staticSet //
+	///////////////
+
+	public static Object staticSetPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		return staticSetUtilisateurSitePage(entiteVar,  requeteSite_, o);
+	}
+	public static Object staticSetUtilisateurSitePage(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		switch(entiteVar) {
+			default:
+				return UtilisateurSiteGenPage.staticSetUtilisateurSiteGenPage(entiteVar,  requeteSite_, o);
+		}
+	}
+
+	////////////////
+	// staticSolr //
+	////////////////
+
+	public static Object staticSolrPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		return staticSolrUtilisateurSitePage(entiteVar,  requeteSite_, o);
+	}
+	public static Object staticSolrUtilisateurSitePage(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		switch(entiteVar) {
+			default:
+				return UtilisateurSiteGenPage.staticSolrUtilisateurSiteGenPage(entiteVar,  requeteSite_, o);
+		}
+	}
+
+	///////////////////
+	// staticSolrStr //
+	///////////////////
+
+	public static String staticSolrStrPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		return staticSolrStrUtilisateurSitePage(entiteVar,  requeteSite_, o);
+	}
+	public static String staticSolrStrUtilisateurSitePage(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		switch(entiteVar) {
+			default:
+				return UtilisateurSiteGenPage.staticSolrStrUtilisateurSiteGenPage(entiteVar,  requeteSite_, o);
+		}
+	}
+
+	//////////////////
+	// staticSolrFq //
+	//////////////////
+
+	public static String staticSolrFqPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		return staticSolrFqUtilisateurSitePage(entiteVar,  requeteSite_, o);
+	}
+	public static String staticSolrFqUtilisateurSitePage(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		switch(entiteVar) {
+			default:
+				return UtilisateurSiteGenPage.staticSolrFqUtilisateurSiteGenPage(entiteVar,  requeteSite_, o);
+		}
+	}
+
 	/////////////
 	// definir //
 	/////////////

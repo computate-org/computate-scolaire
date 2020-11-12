@@ -116,10 +116,14 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		this.childKeyWrap.alreadyInitialized = true;
 	}
 	public SchoolChild setChildKey(String o) {
-		if(NumberUtils.isParsable(o))
-			this.childKey = Long.parseLong(o);
+		this.childKey = SchoolChild.staticSetChildKey(siteRequest_, o);
 		this.childKeyWrap.alreadyInitialized = true;
 		return (SchoolChild)this;
+	}
+	public static Long staticSetChildKey(SiteRequestEnUS siteRequest_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Long.parseLong(o);
+		return null;
 	}
 	protected SchoolChild childKeyInit() {
 		if(!childKeyWrap.alreadyInitialized) {
@@ -131,8 +135,20 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		return (SchoolChild)this;
 	}
 
+	public static Long staticSolrChildKey(SiteRequestEnUS siteRequest_, Long o) {
+		return o;
+	}
+
+	public static String staticSolrStrChildKey(SiteRequestEnUS siteRequest_, Long o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqChildKey(SiteRequestEnUS siteRequest_, String o) {
+		return SchoolChild.staticSolrStrChildKey(siteRequest_, SchoolChild.staticSolrChildKey(siteRequest_, SchoolChild.staticSetChildKey(siteRequest_, o)));
+	}
+
 	public Long solrChildKey() {
-		return childKey;
+		return SchoolChild.staticSolrChildKey(siteRequest_, childKey);
 	}
 
 	public String strChildKey() {
@@ -184,6 +200,9 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		this.enrollmentKeys = enrollmentKeys;
 		this.enrollmentKeysWrap.alreadyInitialized = true;
 	}
+	public static List<Long> staticSetEnrollmentKeys(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	public SchoolChild addEnrollmentKeys(Long...objets) {
 		for(Long o : objets) {
 			addEnrollmentKeys(o);
@@ -218,8 +237,20 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		return (SchoolChild)this;
 	}
 
+	public static List<Long> staticSolrEnrollmentKeys(SiteRequestEnUS siteRequest_, List<Long> o) {
+		return o;
+	}
+
+	public static String staticSolrStrEnrollmentKeys(SiteRequestEnUS siteRequest_, List<Long> o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqEnrollmentKeys(SiteRequestEnUS siteRequest_, String o) {
+		return SchoolChild.staticSolrStrEnrollmentKeys(siteRequest_, SchoolChild.staticSolrEnrollmentKeys(siteRequest_, SchoolChild.staticSetEnrollmentKeys(siteRequest_, o)));
+	}
+
 	public List<Long> solrEnrollmentKeys() {
-		return enrollmentKeys;
+		return SchoolChild.staticSolrEnrollmentKeys(siteRequest_, enrollmentKeys);
 	}
 
 	public String strEnrollmentKeys() {
@@ -257,9 +288,12 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 					.a("class", "valueObjectSuggest suggestEnrollmentKeys w3-input w3-border w3-cell w3-cell-middle ")
 					.a("name", "setEnrollmentKeys")
 					.a("id", classApiMethodMethod, "_enrollmentKeys")
-					.a("autocomplete", "off")
-					.a("oninput", "suggestSchoolChildEnrollmentKeys($(this).val() ? searchSchoolEnrollmentFilters($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'childKey:" + pk + "'}", "], $('#listSchoolChildEnrollmentKeys_", classApiMethodMethod, "'), ", pk, "); ")
-				.fg();
+					.a("autocomplete", "off");
+					if("Page".equals(classApiMethodMethod)) {
+						a("oninput", "suggestSchoolChildEnrollmentKeys($(this).val() ? searchSchoolEnrollmentFilters($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'childKey:" + pk + "'}", "], $('#listSchoolChildEnrollmentKeys_", classApiMethodMethod, "'), ", pk, "); ");
+					}
+
+				fg();
 
 		} else {
 			e("span").a("class", "varSchoolChild", pk, "EnrollmentKeys ").f().sx(htmEnrollmentKeys()).g("span");
@@ -343,10 +377,14 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		this.familySortWrap.alreadyInitialized = true;
 	}
 	public SchoolChild setFamilySort(String o) {
-		if(NumberUtils.isParsable(o))
-			this.familySort = Integer.parseInt(o);
+		this.familySort = SchoolChild.staticSetFamilySort(siteRequest_, o);
 		this.familySortWrap.alreadyInitialized = true;
 		return (SchoolChild)this;
+	}
+	public static Integer staticSetFamilySort(SiteRequestEnUS siteRequest_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Integer.parseInt(o);
+		return null;
 	}
 	protected SchoolChild familySortInit() {
 		if(!familySortWrap.alreadyInitialized) {
@@ -358,8 +396,20 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		return (SchoolChild)this;
 	}
 
+	public static Integer staticSolrFamilySort(SiteRequestEnUS siteRequest_, Integer o) {
+		return o;
+	}
+
+	public static String staticSolrStrFamilySort(SiteRequestEnUS siteRequest_, Integer o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqFamilySort(SiteRequestEnUS siteRequest_, String o) {
+		return SchoolChild.staticSolrStrFamilySort(siteRequest_, SchoolChild.staticSolrFamilySort(siteRequest_, SchoolChild.staticSetFamilySort(siteRequest_, o)));
+	}
+
 	public Integer solrFamilySort() {
-		return familySort;
+		return SchoolChild.staticSolrFamilySort(siteRequest_, familySort);
 	}
 
 	public String strFamilySort() {
@@ -412,10 +462,14 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		this.schoolSortWrap.alreadyInitialized = true;
 	}
 	public SchoolChild setSchoolSort(String o) {
-		if(NumberUtils.isParsable(o))
-			this.schoolSort = Integer.parseInt(o);
+		this.schoolSort = SchoolChild.staticSetSchoolSort(siteRequest_, o);
 		this.schoolSortWrap.alreadyInitialized = true;
 		return (SchoolChild)this;
+	}
+	public static Integer staticSetSchoolSort(SiteRequestEnUS siteRequest_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Integer.parseInt(o);
+		return null;
 	}
 	protected SchoolChild schoolSortInit() {
 		if(!schoolSortWrap.alreadyInitialized) {
@@ -427,8 +481,20 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		return (SchoolChild)this;
 	}
 
+	public static Integer staticSolrSchoolSort(SiteRequestEnUS siteRequest_, Integer o) {
+		return o;
+	}
+
+	public static String staticSolrStrSchoolSort(SiteRequestEnUS siteRequest_, Integer o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqSchoolSort(SiteRequestEnUS siteRequest_, String o) {
+		return SchoolChild.staticSolrStrSchoolSort(siteRequest_, SchoolChild.staticSolrSchoolSort(siteRequest_, SchoolChild.staticSetSchoolSort(siteRequest_, o)));
+	}
+
 	public Integer solrSchoolSort() {
-		return schoolSort;
+		return SchoolChild.staticSolrSchoolSort(siteRequest_, schoolSort);
 	}
 
 	public String strSchoolSort() {
@@ -480,6 +546,9 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		this.enrollmentSearch = enrollmentSearch;
 		this.enrollmentSearchWrap.alreadyInitialized = true;
 	}
+	public static SearchList<SchoolEnrollment> staticSetEnrollmentSearch(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	protected SchoolChild enrollmentSearchInit() {
 		if(!enrollmentSearchWrap.alreadyInitialized) {
 			_enrollmentSearch(enrollmentSearch);
@@ -517,6 +586,9 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 	public void setEnrollments(List<SchoolEnrollment> enrollments) {
 		this.enrollments = enrollments;
 		this.enrollmentsWrap.alreadyInitialized = true;
+	}
+	public static List<SchoolEnrollment> staticSetEnrollments(SiteRequestEnUS siteRequest_, String o) {
+		return null;
 	}
 	public SchoolChild addEnrollments(SchoolEnrollment...objets) {
 		for(SchoolEnrollment o : objets) {
@@ -566,6 +638,9 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		this.userKeys = userKeys;
 		this.userKeysWrap.alreadyInitialized = true;
 	}
+	public static List<Long> staticSetUserKeys(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	public SchoolChild addUserKeys(Long...objets) {
 		for(Long o : objets) {
 			addUserKeys(o);
@@ -600,8 +675,20 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		return (SchoolChild)this;
 	}
 
+	public static List<Long> staticSolrUserKeys(SiteRequestEnUS siteRequest_, List<Long> o) {
+		return o;
+	}
+
+	public static String staticSolrStrUserKeys(SiteRequestEnUS siteRequest_, List<Long> o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqUserKeys(SiteRequestEnUS siteRequest_, String o) {
+		return SchoolChild.staticSolrStrUserKeys(siteRequest_, SchoolChild.staticSolrUserKeys(siteRequest_, SchoolChild.staticSetUserKeys(siteRequest_, o)));
+	}
+
 	public List<Long> solrUserKeys() {
-		return userKeys;
+		return SchoolChild.staticSolrUserKeys(siteRequest_, userKeys);
 	}
 
 	public String strUserKeys() {
@@ -653,6 +740,9 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		this.schoolKeys = schoolKeys;
 		this.schoolKeysWrap.alreadyInitialized = true;
 	}
+	public static List<Long> staticSetSchoolKeys(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	public SchoolChild addSchoolKeys(Long...objets) {
 		for(Long o : objets) {
 			addSchoolKeys(o);
@@ -687,8 +777,20 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		return (SchoolChild)this;
 	}
 
+	public static List<Long> staticSolrSchoolKeys(SiteRequestEnUS siteRequest_, List<Long> o) {
+		return o;
+	}
+
+	public static String staticSolrStrSchoolKeys(SiteRequestEnUS siteRequest_, List<Long> o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqSchoolKeys(SiteRequestEnUS siteRequest_, String o) {
+		return SchoolChild.staticSolrStrSchoolKeys(siteRequest_, SchoolChild.staticSolrSchoolKeys(siteRequest_, SchoolChild.staticSetSchoolKeys(siteRequest_, o)));
+	}
+
 	public List<Long> solrSchoolKeys() {
-		return schoolKeys;
+		return SchoolChild.staticSolrSchoolKeys(siteRequest_, schoolKeys);
 	}
 
 	public String strSchoolKeys() {
@@ -740,6 +842,9 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		this.yearKeys = yearKeys;
 		this.yearKeysWrap.alreadyInitialized = true;
 	}
+	public static List<Long> staticSetYearKeys(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	public SchoolChild addYearKeys(Long...objets) {
 		for(Long o : objets) {
 			addYearKeys(o);
@@ -774,8 +879,20 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		return (SchoolChild)this;
 	}
 
+	public static List<Long> staticSolrYearKeys(SiteRequestEnUS siteRequest_, List<Long> o) {
+		return o;
+	}
+
+	public static String staticSolrStrYearKeys(SiteRequestEnUS siteRequest_, List<Long> o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqYearKeys(SiteRequestEnUS siteRequest_, String o) {
+		return SchoolChild.staticSolrStrYearKeys(siteRequest_, SchoolChild.staticSolrYearKeys(siteRequest_, SchoolChild.staticSetYearKeys(siteRequest_, o)));
+	}
+
 	public List<Long> solrYearKeys() {
-		return yearKeys;
+		return SchoolChild.staticSolrYearKeys(siteRequest_, yearKeys);
 	}
 
 	public String strYearKeys() {
@@ -827,6 +944,9 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		this.seasonKeys = seasonKeys;
 		this.seasonKeysWrap.alreadyInitialized = true;
 	}
+	public static List<Long> staticSetSeasonKeys(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	public SchoolChild addSeasonKeys(Long...objets) {
 		for(Long o : objets) {
 			addSeasonKeys(o);
@@ -861,8 +981,20 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		return (SchoolChild)this;
 	}
 
+	public static List<Long> staticSolrSeasonKeys(SiteRequestEnUS siteRequest_, List<Long> o) {
+		return o;
+	}
+
+	public static String staticSolrStrSeasonKeys(SiteRequestEnUS siteRequest_, List<Long> o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqSeasonKeys(SiteRequestEnUS siteRequest_, String o) {
+		return SchoolChild.staticSolrStrSeasonKeys(siteRequest_, SchoolChild.staticSolrSeasonKeys(siteRequest_, SchoolChild.staticSetSeasonKeys(siteRequest_, o)));
+	}
+
 	public List<Long> solrSeasonKeys() {
-		return seasonKeys;
+		return SchoolChild.staticSolrSeasonKeys(siteRequest_, seasonKeys);
 	}
 
 	public String strSeasonKeys() {
@@ -914,6 +1046,9 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		this.sessionKeys = sessionKeys;
 		this.sessionKeysWrap.alreadyInitialized = true;
 	}
+	public static List<Long> staticSetSessionKeys(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	public SchoolChild addSessionKeys(Long...objets) {
 		for(Long o : objets) {
 			addSessionKeys(o);
@@ -948,8 +1083,20 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		return (SchoolChild)this;
 	}
 
+	public static List<Long> staticSolrSessionKeys(SiteRequestEnUS siteRequest_, List<Long> o) {
+		return o;
+	}
+
+	public static String staticSolrStrSessionKeys(SiteRequestEnUS siteRequest_, List<Long> o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqSessionKeys(SiteRequestEnUS siteRequest_, String o) {
+		return SchoolChild.staticSolrStrSessionKeys(siteRequest_, SchoolChild.staticSolrSessionKeys(siteRequest_, SchoolChild.staticSetSessionKeys(siteRequest_, o)));
+	}
+
 	public List<Long> solrSessionKeys() {
-		return sessionKeys;
+		return SchoolChild.staticSolrSessionKeys(siteRequest_, sessionKeys);
 	}
 
 	public String strSessionKeys() {
@@ -1001,6 +1148,9 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		this.ageKeys = ageKeys;
 		this.ageKeysWrap.alreadyInitialized = true;
 	}
+	public static List<Long> staticSetAgeKeys(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	public SchoolChild addAgeKeys(Long...objets) {
 		for(Long o : objets) {
 			addAgeKeys(o);
@@ -1035,8 +1185,20 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		return (SchoolChild)this;
 	}
 
+	public static List<Long> staticSolrAgeKeys(SiteRequestEnUS siteRequest_, List<Long> o) {
+		return o;
+	}
+
+	public static String staticSolrStrAgeKeys(SiteRequestEnUS siteRequest_, List<Long> o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqAgeKeys(SiteRequestEnUS siteRequest_, String o) {
+		return SchoolChild.staticSolrStrAgeKeys(siteRequest_, SchoolChild.staticSolrAgeKeys(siteRequest_, SchoolChild.staticSetAgeKeys(siteRequest_, o)));
+	}
+
 	public List<Long> solrAgeKeys() {
-		return ageKeys;
+		return SchoolChild.staticSolrAgeKeys(siteRequest_, ageKeys);
 	}
 
 	public String strAgeKeys() {
@@ -1082,10 +1244,13 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 	public String getPersonFirstName() {
 		return personFirstName;
 	}
-
-	public void setPersonFirstName(String personFirstName) {
-		this.personFirstName = personFirstName;
+	public SchoolChild setPersonFirstName(String o) {
+		this.personFirstName = SchoolChild.staticSetPersonFirstName(siteRequest_, o);
 		this.personFirstNameWrap.alreadyInitialized = true;
+		return (SchoolChild)this;
+	}
+	public static String staticSetPersonFirstName(SiteRequestEnUS siteRequest_, String o) {
+		return o;
 	}
 	protected SchoolChild personFirstNameInit() {
 		if(!personFirstNameWrap.alreadyInitialized) {
@@ -1097,8 +1262,20 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		return (SchoolChild)this;
 	}
 
+	public static String staticSolrPersonFirstName(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrPersonFirstName(SiteRequestEnUS siteRequest_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPersonFirstName(SiteRequestEnUS siteRequest_, String o) {
+		return SchoolChild.staticSolrStrPersonFirstName(siteRequest_, SchoolChild.staticSolrPersonFirstName(siteRequest_, SchoolChild.staticSetPersonFirstName(siteRequest_, o)));
+	}
+
 	public String solrPersonFirstName() {
-		return personFirstName;
+		return SchoolChild.staticSolrPersonFirstName(siteRequest_, personFirstName);
 	}
 
 	public String strPersonFirstName() {
@@ -1214,10 +1391,13 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 	public String getPersonFirstNamePreferred() {
 		return personFirstNamePreferred;
 	}
-
-	public void setPersonFirstNamePreferred(String personFirstNamePreferred) {
-		this.personFirstNamePreferred = personFirstNamePreferred;
+	public SchoolChild setPersonFirstNamePreferred(String o) {
+		this.personFirstNamePreferred = SchoolChild.staticSetPersonFirstNamePreferred(siteRequest_, o);
 		this.personFirstNamePreferredWrap.alreadyInitialized = true;
+		return (SchoolChild)this;
+	}
+	public static String staticSetPersonFirstNamePreferred(SiteRequestEnUS siteRequest_, String o) {
+		return o;
 	}
 	protected SchoolChild personFirstNamePreferredInit() {
 		if(!personFirstNamePreferredWrap.alreadyInitialized) {
@@ -1229,8 +1409,20 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		return (SchoolChild)this;
 	}
 
+	public static String staticSolrPersonFirstNamePreferred(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrPersonFirstNamePreferred(SiteRequestEnUS siteRequest_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPersonFirstNamePreferred(SiteRequestEnUS siteRequest_, String o) {
+		return SchoolChild.staticSolrStrPersonFirstNamePreferred(siteRequest_, SchoolChild.staticSolrPersonFirstNamePreferred(siteRequest_, SchoolChild.staticSetPersonFirstNamePreferred(siteRequest_, o)));
+	}
+
 	public String solrPersonFirstNamePreferred() {
-		return personFirstNamePreferred;
+		return SchoolChild.staticSolrPersonFirstNamePreferred(siteRequest_, personFirstNamePreferred);
 	}
 
 	public String strPersonFirstNamePreferred() {
@@ -1346,10 +1538,13 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 	public String getFamilyName() {
 		return familyName;
 	}
-
-	public void setFamilyName(String familyName) {
-		this.familyName = familyName;
+	public SchoolChild setFamilyName(String o) {
+		this.familyName = SchoolChild.staticSetFamilyName(siteRequest_, o);
 		this.familyNameWrap.alreadyInitialized = true;
+		return (SchoolChild)this;
+	}
+	public static String staticSetFamilyName(SiteRequestEnUS siteRequest_, String o) {
+		return o;
 	}
 	protected SchoolChild familyNameInit() {
 		if(!familyNameWrap.alreadyInitialized) {
@@ -1361,8 +1556,20 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		return (SchoolChild)this;
 	}
 
+	public static String staticSolrFamilyName(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrFamilyName(SiteRequestEnUS siteRequest_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqFamilyName(SiteRequestEnUS siteRequest_, String o) {
+		return SchoolChild.staticSolrStrFamilyName(siteRequest_, SchoolChild.staticSolrFamilyName(siteRequest_, SchoolChild.staticSetFamilyName(siteRequest_, o)));
+	}
+
 	public String solrFamilyName() {
-		return familyName;
+		return SchoolChild.staticSolrFamilyName(siteRequest_, familyName);
 	}
 
 	public String strFamilyName() {
@@ -1478,10 +1685,13 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 	public String getPersonCompleteName() {
 		return personCompleteName;
 	}
-
-	public void setPersonCompleteName(String personCompleteName) {
-		this.personCompleteName = personCompleteName;
+	public SchoolChild setPersonCompleteName(String o) {
+		this.personCompleteName = SchoolChild.staticSetPersonCompleteName(siteRequest_, o);
 		this.personCompleteNameWrap.alreadyInitialized = true;
+		return (SchoolChild)this;
+	}
+	public static String staticSetPersonCompleteName(SiteRequestEnUS siteRequest_, String o) {
+		return o;
 	}
 	protected SchoolChild personCompleteNameInit() {
 		if(!personCompleteNameWrap.alreadyInitialized) {
@@ -1493,8 +1703,20 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		return (SchoolChild)this;
 	}
 
+	public static String staticSolrPersonCompleteName(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrPersonCompleteName(SiteRequestEnUS siteRequest_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPersonCompleteName(SiteRequestEnUS siteRequest_, String o) {
+		return SchoolChild.staticSolrStrPersonCompleteName(siteRequest_, SchoolChild.staticSolrPersonCompleteName(siteRequest_, SchoolChild.staticSetPersonCompleteName(siteRequest_, o)));
+	}
+
 	public String solrPersonCompleteName() {
-		return personCompleteName;
+		return SchoolChild.staticSolrPersonCompleteName(siteRequest_, personCompleteName);
 	}
 
 	public String strPersonCompleteName() {
@@ -1540,10 +1762,13 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 	public String getPersonCompleteNamePreferred() {
 		return personCompleteNamePreferred;
 	}
-
-	public void setPersonCompleteNamePreferred(String personCompleteNamePreferred) {
-		this.personCompleteNamePreferred = personCompleteNamePreferred;
+	public SchoolChild setPersonCompleteNamePreferred(String o) {
+		this.personCompleteNamePreferred = SchoolChild.staticSetPersonCompleteNamePreferred(siteRequest_, o);
 		this.personCompleteNamePreferredWrap.alreadyInitialized = true;
+		return (SchoolChild)this;
+	}
+	public static String staticSetPersonCompleteNamePreferred(SiteRequestEnUS siteRequest_, String o) {
+		return o;
 	}
 	protected SchoolChild personCompleteNamePreferredInit() {
 		if(!personCompleteNamePreferredWrap.alreadyInitialized) {
@@ -1555,8 +1780,20 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		return (SchoolChild)this;
 	}
 
+	public static String staticSolrPersonCompleteNamePreferred(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrPersonCompleteNamePreferred(SiteRequestEnUS siteRequest_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPersonCompleteNamePreferred(SiteRequestEnUS siteRequest_, String o) {
+		return SchoolChild.staticSolrStrPersonCompleteNamePreferred(siteRequest_, SchoolChild.staticSolrPersonCompleteNamePreferred(siteRequest_, SchoolChild.staticSetPersonCompleteNamePreferred(siteRequest_, o)));
+	}
+
 	public String solrPersonCompleteNamePreferred() {
-		return personCompleteNamePreferred;
+		return SchoolChild.staticSolrPersonCompleteNamePreferred(siteRequest_, personCompleteNamePreferred);
 	}
 
 	public String strPersonCompleteNamePreferred() {
@@ -1602,10 +1839,13 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 	public String getPersonFormalName() {
 		return personFormalName;
 	}
-
-	public void setPersonFormalName(String personFormalName) {
-		this.personFormalName = personFormalName;
+	public SchoolChild setPersonFormalName(String o) {
+		this.personFormalName = SchoolChild.staticSetPersonFormalName(siteRequest_, o);
 		this.personFormalNameWrap.alreadyInitialized = true;
+		return (SchoolChild)this;
+	}
+	public static String staticSetPersonFormalName(SiteRequestEnUS siteRequest_, String o) {
+		return o;
 	}
 	protected SchoolChild personFormalNameInit() {
 		if(!personFormalNameWrap.alreadyInitialized) {
@@ -1617,8 +1857,20 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		return (SchoolChild)this;
 	}
 
+	public static String staticSolrPersonFormalName(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrPersonFormalName(SiteRequestEnUS siteRequest_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPersonFormalName(SiteRequestEnUS siteRequest_, String o) {
+		return SchoolChild.staticSolrStrPersonFormalName(siteRequest_, SchoolChild.staticSolrPersonFormalName(siteRequest_, SchoolChild.staticSetPersonFormalName(siteRequest_, o)));
+	}
+
 	public String solrPersonFormalName() {
-		return personFormalName;
+		return SchoolChild.staticSolrPersonFormalName(siteRequest_, personFormalName);
 	}
 
 	public String strPersonFormalName() {
@@ -1679,9 +1931,12 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolChild setPersonBirthDate(String o) {
-		this.personBirthDate = o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		this.personBirthDate = SchoolChild.staticSetPersonBirthDate(siteRequest_, o);
 		this.personBirthDateWrap.alreadyInitialized = true;
 		return (SchoolChild)this;
+	}
+	public static LocalDate staticSetPersonBirthDate(SiteRequestEnUS siteRequest_, String o) {
+		return o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 	}
 	public SchoolChild setPersonBirthDate(Date o) {
 		this.personBirthDate = o == null ? null : o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
@@ -1698,8 +1953,20 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		return (SchoolChild)this;
 	}
 
+	public static Date staticSolrPersonBirthDate(SiteRequestEnUS siteRequest_, LocalDate o) {
+		return o == null ? null : Date.from(o.atStartOfDay(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toInstant().atZone(ZoneId.of("Z")).toInstant());
+	}
+
+	public static String staticSolrStrPersonBirthDate(SiteRequestEnUS siteRequest_, Date o) {
+		return "\"" + DateTimeFormatter.ISO_DATE_TIME.format(o.toInstant().atOffset(ZoneOffset.UTC)) + "\"";
+	}
+
+	public static String staticSolrFqPersonBirthDate(SiteRequestEnUS siteRequest_, String o) {
+		return SchoolChild.staticSolrStrPersonBirthDate(siteRequest_, SchoolChild.staticSolrPersonBirthDate(siteRequest_, SchoolChild.staticSetPersonBirthDate(siteRequest_, o)));
+	}
+
 	public Date solrPersonBirthDate() {
-		return personBirthDate == null ? null : Date.from(personBirthDate.atStartOfDay(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toInstant().atZone(ZoneId.of("Z")).toInstant());
+		return SchoolChild.staticSolrPersonBirthDate(siteRequest_, personBirthDate);
 	}
 
 	public String strPersonBirthDate() {
@@ -1731,15 +1998,17 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 		) {
 			e("input")
-				.a("type", "text")
-				.a("class", "w3-input w3-border datepicker setPersonBirthDate classSchoolChild inputSchoolChild", pk, "PersonBirthDate w3-input w3-border ")
-				.a("placeholder", "MM/DD/YYYY")
-				.a("data-timeformat", "MM/dd/yyyy")
-				.a("id", classApiMethodMethod, "_personBirthDate")
-				.a("onclick", "removeGlow($(this)); ")
-				.a("value", personBirthDate == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy").format(personBirthDate))
-				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonBirthDate', s, function() { addGlow($('#", classApiMethodMethod, "_personBirthDate')); }, function() { addError($('#", classApiMethodMethod, "_personBirthDate')); }); } ")
-				.fg();
+					.a("type", "text")
+					.a("class", "w3-input w3-border datepicker setPersonBirthDate classSchoolChild inputSchoolChild", pk, "PersonBirthDate w3-input w3-border ")
+					.a("placeholder", "MM/DD/YYYY")
+					.a("data-timeformat", "MM/dd/yyyy")
+					.a("id", classApiMethodMethod, "_personBirthDate")
+					.a("value", personBirthDate == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy").format(personBirthDate));
+			if("Page".equals(classApiMethodMethod)) {
+				a("onclick", "removeGlow($(this)); ");
+				a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setPersonBirthDate', s, function() { addGlow($('#", classApiMethodMethod, "_personBirthDate')); }, function() { addError($('#", classApiMethodMethod, "_personBirthDate')); }); } ");
+			}
+			fg();
 		} else {
 			e("span").a("class", "varSchoolChild", pk, "PersonBirthDate ").f().sx(htmPersonBirthDate()).g("span");
 		}
@@ -1813,10 +2082,14 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		this.personBirthDateYearWrap.alreadyInitialized = true;
 	}
 	public SchoolChild setPersonBirthDateYear(String o) {
-		if(NumberUtils.isParsable(o))
-			this.personBirthDateYear = Integer.parseInt(o);
+		this.personBirthDateYear = SchoolChild.staticSetPersonBirthDateYear(siteRequest_, o);
 		this.personBirthDateYearWrap.alreadyInitialized = true;
 		return (SchoolChild)this;
+	}
+	public static Integer staticSetPersonBirthDateYear(SiteRequestEnUS siteRequest_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Integer.parseInt(o);
+		return null;
 	}
 	protected SchoolChild personBirthDateYearInit() {
 		if(!personBirthDateYearWrap.alreadyInitialized) {
@@ -1828,8 +2101,20 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		return (SchoolChild)this;
 	}
 
+	public static Integer staticSolrPersonBirthDateYear(SiteRequestEnUS siteRequest_, Integer o) {
+		return o;
+	}
+
+	public static String staticSolrStrPersonBirthDateYear(SiteRequestEnUS siteRequest_, Integer o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPersonBirthDateYear(SiteRequestEnUS siteRequest_, String o) {
+		return SchoolChild.staticSolrStrPersonBirthDateYear(siteRequest_, SchoolChild.staticSolrPersonBirthDateYear(siteRequest_, SchoolChild.staticSetPersonBirthDateYear(siteRequest_, o)));
+	}
+
 	public Integer solrPersonBirthDateYear() {
-		return personBirthDateYear;
+		return SchoolChild.staticSolrPersonBirthDateYear(siteRequest_, personBirthDateYear);
 	}
 
 	public String strPersonBirthDateYear() {
@@ -1875,10 +2160,13 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 	public String getPersonBirthDateMonthOfYear() {
 		return personBirthDateMonthOfYear;
 	}
-
-	public void setPersonBirthDateMonthOfYear(String personBirthDateMonthOfYear) {
-		this.personBirthDateMonthOfYear = personBirthDateMonthOfYear;
+	public SchoolChild setPersonBirthDateMonthOfYear(String o) {
+		this.personBirthDateMonthOfYear = SchoolChild.staticSetPersonBirthDateMonthOfYear(siteRequest_, o);
 		this.personBirthDateMonthOfYearWrap.alreadyInitialized = true;
+		return (SchoolChild)this;
+	}
+	public static String staticSetPersonBirthDateMonthOfYear(SiteRequestEnUS siteRequest_, String o) {
+		return o;
 	}
 	protected SchoolChild personBirthDateMonthOfYearInit() {
 		if(!personBirthDateMonthOfYearWrap.alreadyInitialized) {
@@ -1890,8 +2178,20 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		return (SchoolChild)this;
 	}
 
+	public static String staticSolrPersonBirthDateMonthOfYear(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrPersonBirthDateMonthOfYear(SiteRequestEnUS siteRequest_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPersonBirthDateMonthOfYear(SiteRequestEnUS siteRequest_, String o) {
+		return SchoolChild.staticSolrStrPersonBirthDateMonthOfYear(siteRequest_, SchoolChild.staticSolrPersonBirthDateMonthOfYear(siteRequest_, SchoolChild.staticSetPersonBirthDateMonthOfYear(siteRequest_, o)));
+	}
+
 	public String solrPersonBirthDateMonthOfYear() {
-		return personBirthDateMonthOfYear;
+		return SchoolChild.staticSolrPersonBirthDateMonthOfYear(siteRequest_, personBirthDateMonthOfYear);
 	}
 
 	public String strPersonBirthDateMonthOfYear() {
@@ -1937,10 +2237,13 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 	public String getPersonBirthDateDayOfWeek() {
 		return personBirthDateDayOfWeek;
 	}
-
-	public void setPersonBirthDateDayOfWeek(String personBirthDateDayOfWeek) {
-		this.personBirthDateDayOfWeek = personBirthDateDayOfWeek;
+	public SchoolChild setPersonBirthDateDayOfWeek(String o) {
+		this.personBirthDateDayOfWeek = SchoolChild.staticSetPersonBirthDateDayOfWeek(siteRequest_, o);
 		this.personBirthDateDayOfWeekWrap.alreadyInitialized = true;
+		return (SchoolChild)this;
+	}
+	public static String staticSetPersonBirthDateDayOfWeek(SiteRequestEnUS siteRequest_, String o) {
+		return o;
 	}
 	protected SchoolChild personBirthDateDayOfWeekInit() {
 		if(!personBirthDateDayOfWeekWrap.alreadyInitialized) {
@@ -1952,8 +2255,20 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		return (SchoolChild)this;
 	}
 
+	public static String staticSolrPersonBirthDateDayOfWeek(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrPersonBirthDateDayOfWeek(SiteRequestEnUS siteRequest_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPersonBirthDateDayOfWeek(SiteRequestEnUS siteRequest_, String o) {
+		return SchoolChild.staticSolrStrPersonBirthDateDayOfWeek(siteRequest_, SchoolChild.staticSolrPersonBirthDateDayOfWeek(siteRequest_, SchoolChild.staticSetPersonBirthDateDayOfWeek(siteRequest_, o)));
+	}
+
 	public String solrPersonBirthDateDayOfWeek() {
-		return personBirthDateDayOfWeek;
+		return SchoolChild.staticSolrPersonBirthDateDayOfWeek(siteRequest_, personBirthDateDayOfWeek);
 	}
 
 	public String strPersonBirthDateDayOfWeek() {
@@ -1999,10 +2314,13 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 	public String getPersonAgeInSeptember() {
 		return personAgeInSeptember;
 	}
-
-	public void setPersonAgeInSeptember(String personAgeInSeptember) {
-		this.personAgeInSeptember = personAgeInSeptember;
+	public SchoolChild setPersonAgeInSeptember(String o) {
+		this.personAgeInSeptember = SchoolChild.staticSetPersonAgeInSeptember(siteRequest_, o);
 		this.personAgeInSeptemberWrap.alreadyInitialized = true;
+		return (SchoolChild)this;
+	}
+	public static String staticSetPersonAgeInSeptember(SiteRequestEnUS siteRequest_, String o) {
+		return o;
 	}
 	protected SchoolChild personAgeInSeptemberInit() {
 		if(!personAgeInSeptemberWrap.alreadyInitialized) {
@@ -2014,8 +2332,20 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		return (SchoolChild)this;
 	}
 
+	public static String staticSolrPersonAgeInSeptember(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrPersonAgeInSeptember(SiteRequestEnUS siteRequest_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPersonAgeInSeptember(SiteRequestEnUS siteRequest_, String o) {
+		return SchoolChild.staticSolrStrPersonAgeInSeptember(siteRequest_, SchoolChild.staticSolrPersonAgeInSeptember(siteRequest_, SchoolChild.staticSetPersonAgeInSeptember(siteRequest_, o)));
+	}
+
 	public String solrPersonAgeInSeptember() {
-		return personAgeInSeptember;
+		return SchoolChild.staticSolrPersonAgeInSeptember(siteRequest_, personAgeInSeptember);
 	}
 
 	public String strPersonAgeInSeptember() {
@@ -2087,10 +2417,13 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 	public String getPhoto() {
 		return photo;
 	}
-
-	public void setPhoto(String photo) {
-		this.photo = photo;
+	public SchoolChild setPhoto(String o) {
+		this.photo = SchoolChild.staticSetPhoto(siteRequest_, o);
 		this.photoWrap.alreadyInitialized = true;
+		return (SchoolChild)this;
+	}
+	public static String staticSetPhoto(SiteRequestEnUS siteRequest_, String o) {
+		return o;
 	}
 	protected SchoolChild photoInit() {
 		if(!photoWrap.alreadyInitialized) {
@@ -2102,8 +2435,20 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		return (SchoolChild)this;
 	}
 
+	public static String staticSolrPhoto(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrPhoto(SiteRequestEnUS siteRequest_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPhoto(SiteRequestEnUS siteRequest_, String o) {
+		return SchoolChild.staticSolrStrPhoto(siteRequest_, SchoolChild.staticSolrPhoto(siteRequest_, SchoolChild.staticSetPhoto(siteRequest_, o)));
+	}
+
 	public String solrPhoto() {
-		return photo;
+		return SchoolChild.staticSolrPhoto(siteRequest_, photo);
 	}
 
 	public String strPhoto() {
@@ -2213,10 +2558,13 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 	public String getChildCompleteName() {
 		return childCompleteName;
 	}
-
-	public void setChildCompleteName(String childCompleteName) {
-		this.childCompleteName = childCompleteName;
+	public SchoolChild setChildCompleteName(String o) {
+		this.childCompleteName = SchoolChild.staticSetChildCompleteName(siteRequest_, o);
 		this.childCompleteNameWrap.alreadyInitialized = true;
+		return (SchoolChild)this;
+	}
+	public static String staticSetChildCompleteName(SiteRequestEnUS siteRequest_, String o) {
+		return o;
 	}
 	protected SchoolChild childCompleteNameInit() {
 		if(!childCompleteNameWrap.alreadyInitialized) {
@@ -2228,8 +2576,20 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 		return (SchoolChild)this;
 	}
 
+	public static String staticSolrChildCompleteName(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrChildCompleteName(SiteRequestEnUS siteRequest_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqChildCompleteName(SiteRequestEnUS siteRequest_, String o) {
+		return SchoolChild.staticSolrStrChildCompleteName(siteRequest_, SchoolChild.staticSolrChildCompleteName(siteRequest_, SchoolChild.staticSetChildCompleteName(siteRequest_, o)));
+	}
+
 	public String solrChildCompleteName() {
-		return childCompleteName;
+		return SchoolChild.staticSolrChildCompleteName(siteRequest_, childCompleteName);
 	}
 
 	public String strChildCompleteName() {
@@ -2420,6 +2780,246 @@ public abstract class SchoolChildGen<DEV> extends Cluster {
 				return val;
 			default:
 				return super.attributeCluster(var, val);
+		}
+	}
+
+	///////////////
+	// staticSet //
+	///////////////
+
+	public static Object staticSetForClass(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		return staticSetSchoolChild(entityVar,  siteRequest_, o);
+	}
+	public static Object staticSetSchoolChild(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		switch(entityVar) {
+		case "childKey":
+			return SchoolChild.staticSetChildKey(siteRequest_, o);
+		case "enrollmentKeys":
+			return SchoolChild.staticSetEnrollmentKeys(siteRequest_, o);
+		case "familySort":
+			return SchoolChild.staticSetFamilySort(siteRequest_, o);
+		case "schoolSort":
+			return SchoolChild.staticSetSchoolSort(siteRequest_, o);
+		case "userKeys":
+			return SchoolChild.staticSetUserKeys(siteRequest_, o);
+		case "schoolKeys":
+			return SchoolChild.staticSetSchoolKeys(siteRequest_, o);
+		case "yearKeys":
+			return SchoolChild.staticSetYearKeys(siteRequest_, o);
+		case "seasonKeys":
+			return SchoolChild.staticSetSeasonKeys(siteRequest_, o);
+		case "sessionKeys":
+			return SchoolChild.staticSetSessionKeys(siteRequest_, o);
+		case "ageKeys":
+			return SchoolChild.staticSetAgeKeys(siteRequest_, o);
+		case "personFirstName":
+			return SchoolChild.staticSetPersonFirstName(siteRequest_, o);
+		case "personFirstNamePreferred":
+			return SchoolChild.staticSetPersonFirstNamePreferred(siteRequest_, o);
+		case "familyName":
+			return SchoolChild.staticSetFamilyName(siteRequest_, o);
+		case "personCompleteName":
+			return SchoolChild.staticSetPersonCompleteName(siteRequest_, o);
+		case "personCompleteNamePreferred":
+			return SchoolChild.staticSetPersonCompleteNamePreferred(siteRequest_, o);
+		case "personFormalName":
+			return SchoolChild.staticSetPersonFormalName(siteRequest_, o);
+		case "personBirthDate":
+			return SchoolChild.staticSetPersonBirthDate(siteRequest_, o);
+		case "personBirthDateYear":
+			return SchoolChild.staticSetPersonBirthDateYear(siteRequest_, o);
+		case "personBirthDateMonthOfYear":
+			return SchoolChild.staticSetPersonBirthDateMonthOfYear(siteRequest_, o);
+		case "personBirthDateDayOfWeek":
+			return SchoolChild.staticSetPersonBirthDateDayOfWeek(siteRequest_, o);
+		case "personAgeInSeptember":
+			return SchoolChild.staticSetPersonAgeInSeptember(siteRequest_, o);
+		case "photo":
+			return SchoolChild.staticSetPhoto(siteRequest_, o);
+		case "childCompleteName":
+			return SchoolChild.staticSetChildCompleteName(siteRequest_, o);
+			default:
+				return Cluster.staticSetCluster(entityVar,  siteRequest_, o);
+		}
+	}
+
+	////////////////
+	// staticSolr //
+	////////////////
+
+	public static Object staticSolrForClass(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		return staticSolrSchoolChild(entityVar,  siteRequest_, o);
+	}
+	public static Object staticSolrSchoolChild(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		switch(entityVar) {
+		case "childKey":
+			return SchoolChild.staticSolrChildKey(siteRequest_, (Long)o);
+		case "enrollmentKeys":
+			return SchoolChild.staticSolrEnrollmentKeys(siteRequest_, (List<Long>)o);
+		case "familySort":
+			return SchoolChild.staticSolrFamilySort(siteRequest_, (Integer)o);
+		case "schoolSort":
+			return SchoolChild.staticSolrSchoolSort(siteRequest_, (Integer)o);
+		case "userKeys":
+			return SchoolChild.staticSolrUserKeys(siteRequest_, (List<Long>)o);
+		case "schoolKeys":
+			return SchoolChild.staticSolrSchoolKeys(siteRequest_, (List<Long>)o);
+		case "yearKeys":
+			return SchoolChild.staticSolrYearKeys(siteRequest_, (List<Long>)o);
+		case "seasonKeys":
+			return SchoolChild.staticSolrSeasonKeys(siteRequest_, (List<Long>)o);
+		case "sessionKeys":
+			return SchoolChild.staticSolrSessionKeys(siteRequest_, (List<Long>)o);
+		case "ageKeys":
+			return SchoolChild.staticSolrAgeKeys(siteRequest_, (List<Long>)o);
+		case "personFirstName":
+			return SchoolChild.staticSolrPersonFirstName(siteRequest_, (String)o);
+		case "personFirstNamePreferred":
+			return SchoolChild.staticSolrPersonFirstNamePreferred(siteRequest_, (String)o);
+		case "familyName":
+			return SchoolChild.staticSolrFamilyName(siteRequest_, (String)o);
+		case "personCompleteName":
+			return SchoolChild.staticSolrPersonCompleteName(siteRequest_, (String)o);
+		case "personCompleteNamePreferred":
+			return SchoolChild.staticSolrPersonCompleteNamePreferred(siteRequest_, (String)o);
+		case "personFormalName":
+			return SchoolChild.staticSolrPersonFormalName(siteRequest_, (String)o);
+		case "personBirthDate":
+			return SchoolChild.staticSolrPersonBirthDate(siteRequest_, (LocalDate)o);
+		case "personBirthDateYear":
+			return SchoolChild.staticSolrPersonBirthDateYear(siteRequest_, (Integer)o);
+		case "personBirthDateMonthOfYear":
+			return SchoolChild.staticSolrPersonBirthDateMonthOfYear(siteRequest_, (String)o);
+		case "personBirthDateDayOfWeek":
+			return SchoolChild.staticSolrPersonBirthDateDayOfWeek(siteRequest_, (String)o);
+		case "personAgeInSeptember":
+			return SchoolChild.staticSolrPersonAgeInSeptember(siteRequest_, (String)o);
+		case "photo":
+			return SchoolChild.staticSolrPhoto(siteRequest_, (String)o);
+		case "childCompleteName":
+			return SchoolChild.staticSolrChildCompleteName(siteRequest_, (String)o);
+			default:
+				return Cluster.staticSolrCluster(entityVar,  siteRequest_, o);
+		}
+	}
+
+	///////////////////
+	// staticSolrStr //
+	///////////////////
+
+	public static String staticSolrStrForClass(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		return staticSolrStrSchoolChild(entityVar,  siteRequest_, o);
+	}
+	public static String staticSolrStrSchoolChild(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		switch(entityVar) {
+		case "childKey":
+			return SchoolChild.staticSolrStrChildKey(siteRequest_, (Long)o);
+		case "enrollmentKeys":
+			return SchoolChild.staticSolrStrEnrollmentKeys(siteRequest_, (List<Long>)o);
+		case "familySort":
+			return SchoolChild.staticSolrStrFamilySort(siteRequest_, (Integer)o);
+		case "schoolSort":
+			return SchoolChild.staticSolrStrSchoolSort(siteRequest_, (Integer)o);
+		case "userKeys":
+			return SchoolChild.staticSolrStrUserKeys(siteRequest_, (List<Long>)o);
+		case "schoolKeys":
+			return SchoolChild.staticSolrStrSchoolKeys(siteRequest_, (List<Long>)o);
+		case "yearKeys":
+			return SchoolChild.staticSolrStrYearKeys(siteRequest_, (List<Long>)o);
+		case "seasonKeys":
+			return SchoolChild.staticSolrStrSeasonKeys(siteRequest_, (List<Long>)o);
+		case "sessionKeys":
+			return SchoolChild.staticSolrStrSessionKeys(siteRequest_, (List<Long>)o);
+		case "ageKeys":
+			return SchoolChild.staticSolrStrAgeKeys(siteRequest_, (List<Long>)o);
+		case "personFirstName":
+			return SchoolChild.staticSolrStrPersonFirstName(siteRequest_, (String)o);
+		case "personFirstNamePreferred":
+			return SchoolChild.staticSolrStrPersonFirstNamePreferred(siteRequest_, (String)o);
+		case "familyName":
+			return SchoolChild.staticSolrStrFamilyName(siteRequest_, (String)o);
+		case "personCompleteName":
+			return SchoolChild.staticSolrStrPersonCompleteName(siteRequest_, (String)o);
+		case "personCompleteNamePreferred":
+			return SchoolChild.staticSolrStrPersonCompleteNamePreferred(siteRequest_, (String)o);
+		case "personFormalName":
+			return SchoolChild.staticSolrStrPersonFormalName(siteRequest_, (String)o);
+		case "personBirthDate":
+			return SchoolChild.staticSolrStrPersonBirthDate(siteRequest_, (Date)o);
+		case "personBirthDateYear":
+			return SchoolChild.staticSolrStrPersonBirthDateYear(siteRequest_, (Integer)o);
+		case "personBirthDateMonthOfYear":
+			return SchoolChild.staticSolrStrPersonBirthDateMonthOfYear(siteRequest_, (String)o);
+		case "personBirthDateDayOfWeek":
+			return SchoolChild.staticSolrStrPersonBirthDateDayOfWeek(siteRequest_, (String)o);
+		case "personAgeInSeptember":
+			return SchoolChild.staticSolrStrPersonAgeInSeptember(siteRequest_, (String)o);
+		case "photo":
+			return SchoolChild.staticSolrStrPhoto(siteRequest_, (String)o);
+		case "childCompleteName":
+			return SchoolChild.staticSolrStrChildCompleteName(siteRequest_, (String)o);
+			default:
+				return Cluster.staticSolrStrCluster(entityVar,  siteRequest_, o);
+		}
+	}
+
+	//////////////////
+	// staticSolrFq //
+	//////////////////
+
+	public static String staticSolrFqForClass(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		return staticSolrFqSchoolChild(entityVar,  siteRequest_, o);
+	}
+	public static String staticSolrFqSchoolChild(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		switch(entityVar) {
+		case "childKey":
+			return SchoolChild.staticSolrFqChildKey(siteRequest_, o);
+		case "enrollmentKeys":
+			return SchoolChild.staticSolrFqEnrollmentKeys(siteRequest_, o);
+		case "familySort":
+			return SchoolChild.staticSolrFqFamilySort(siteRequest_, o);
+		case "schoolSort":
+			return SchoolChild.staticSolrFqSchoolSort(siteRequest_, o);
+		case "userKeys":
+			return SchoolChild.staticSolrFqUserKeys(siteRequest_, o);
+		case "schoolKeys":
+			return SchoolChild.staticSolrFqSchoolKeys(siteRequest_, o);
+		case "yearKeys":
+			return SchoolChild.staticSolrFqYearKeys(siteRequest_, o);
+		case "seasonKeys":
+			return SchoolChild.staticSolrFqSeasonKeys(siteRequest_, o);
+		case "sessionKeys":
+			return SchoolChild.staticSolrFqSessionKeys(siteRequest_, o);
+		case "ageKeys":
+			return SchoolChild.staticSolrFqAgeKeys(siteRequest_, o);
+		case "personFirstName":
+			return SchoolChild.staticSolrFqPersonFirstName(siteRequest_, o);
+		case "personFirstNamePreferred":
+			return SchoolChild.staticSolrFqPersonFirstNamePreferred(siteRequest_, o);
+		case "familyName":
+			return SchoolChild.staticSolrFqFamilyName(siteRequest_, o);
+		case "personCompleteName":
+			return SchoolChild.staticSolrFqPersonCompleteName(siteRequest_, o);
+		case "personCompleteNamePreferred":
+			return SchoolChild.staticSolrFqPersonCompleteNamePreferred(siteRequest_, o);
+		case "personFormalName":
+			return SchoolChild.staticSolrFqPersonFormalName(siteRequest_, o);
+		case "personBirthDate":
+			return SchoolChild.staticSolrFqPersonBirthDate(siteRequest_, o);
+		case "personBirthDateYear":
+			return SchoolChild.staticSolrFqPersonBirthDateYear(siteRequest_, o);
+		case "personBirthDateMonthOfYear":
+			return SchoolChild.staticSolrFqPersonBirthDateMonthOfYear(siteRequest_, o);
+		case "personBirthDateDayOfWeek":
+			return SchoolChild.staticSolrFqPersonBirthDateDayOfWeek(siteRequest_, o);
+		case "personAgeInSeptember":
+			return SchoolChild.staticSolrFqPersonAgeInSeptember(siteRequest_, o);
+		case "photo":
+			return SchoolChild.staticSolrFqPhoto(siteRequest_, o);
+		case "childCompleteName":
+			return SchoolChild.staticSolrFqChildCompleteName(siteRequest_, o);
+			default:
+				return Cluster.staticSolrFqCluster(entityVar,  siteRequest_, o);
 		}
 	}
 

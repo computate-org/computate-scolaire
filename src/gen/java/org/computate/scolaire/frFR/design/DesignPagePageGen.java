@@ -127,6 +127,62 @@ public abstract class DesignPagePageGen<DEV> extends DesignPageGenPage {
 		}
 	}
 
+	///////////////
+	// staticSet //
+	///////////////
+
+	public static Object staticSetPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		return staticSetDesignPagePage(entiteVar,  requeteSite_, o);
+	}
+	public static Object staticSetDesignPagePage(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		switch(entiteVar) {
+			default:
+				return DesignPageGenPage.staticSetDesignPageGenPage(entiteVar,  requeteSite_, o);
+		}
+	}
+
+	////////////////
+	// staticSolr //
+	////////////////
+
+	public static Object staticSolrPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		return staticSolrDesignPagePage(entiteVar,  requeteSite_, o);
+	}
+	public static Object staticSolrDesignPagePage(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		switch(entiteVar) {
+			default:
+				return DesignPageGenPage.staticSolrDesignPageGenPage(entiteVar,  requeteSite_, o);
+		}
+	}
+
+	///////////////////
+	// staticSolrStr //
+	///////////////////
+
+	public static String staticSolrStrPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		return staticSolrStrDesignPagePage(entiteVar,  requeteSite_, o);
+	}
+	public static String staticSolrStrDesignPagePage(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		switch(entiteVar) {
+			default:
+				return DesignPageGenPage.staticSolrStrDesignPageGenPage(entiteVar,  requeteSite_, o);
+		}
+	}
+
+	//////////////////
+	// staticSolrFq //
+	//////////////////
+
+	public static String staticSolrFqPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		return staticSolrFqDesignPagePage(entiteVar,  requeteSite_, o);
+	}
+	public static String staticSolrFqDesignPagePage(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		switch(entiteVar) {
+			default:
+				return DesignPageGenPage.staticSolrFqDesignPageGenPage(entiteVar,  requeteSite_, o);
+		}
+	}
+
 	/////////////
 	// definir //
 	/////////////

@@ -71,6 +71,9 @@ public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
 		this.pageDesignSearch = pageDesignSearch;
 		this.pageDesignSearchWrap.alreadyInitialized = true;
 	}
+	public static SearchList<PageDesign> staticSetPageDesignSearch(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	protected SiteUserPage pageDesignSearchInit() {
 		if(!pageDesignSearchWrap.alreadyInitialized) {
 			_pageDesignSearch(pageDesignSearch);
@@ -107,6 +110,9 @@ public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
 	public void setPageDesigns(List<PageDesign> pageDesigns) {
 		this.pageDesigns = pageDesigns;
 		this.pageDesignsWrap.alreadyInitialized = true;
+	}
+	public static List<PageDesign> staticSetPageDesigns(SiteRequestEnUS siteRequest_, String o) {
+		return null;
 	}
 	public SiteUserPage addPageDesigns(PageDesign...objets) {
 		for(PageDesign o : objets) {
@@ -157,6 +163,9 @@ public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
 		this.yearSearch = yearSearch;
 		this.yearSearchWrap.alreadyInitialized = true;
 	}
+	public static SearchList<SchoolYear> staticSetYearSearch(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	protected SiteUserPage yearSearchInit() {
 		if(!yearSearchWrap.alreadyInitialized) {
 			_yearSearch(yearSearch);
@@ -193,6 +202,9 @@ public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
 	public void setYears(List<SchoolYear> years) {
 		this.years = years;
 		this.yearsWrap.alreadyInitialized = true;
+	}
+	public static List<SchoolYear> staticSetYears(SiteRequestEnUS siteRequest_, String o) {
+		return null;
 	}
 	public SiteUserPage addYears(SchoolYear...objets) {
 		for(SchoolYear o : objets) {
@@ -243,6 +255,9 @@ public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
 		this.schoolYears = schoolYears;
 		this.schoolYearsWrap.alreadyInitialized = true;
 	}
+	public static List<SchoolYear> staticSetSchoolYears(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	public SiteUserPage addSchoolYears(SchoolYear...objets) {
 		for(SchoolYear o : objets) {
 			addSchoolYears(o);
@@ -290,6 +305,9 @@ public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
 		this.enrollmentSearch = enrollmentSearch;
 		this.enrollmentSearchWrap.alreadyInitialized = true;
 	}
+	public static SearchList<SchoolEnrollment> staticSetEnrollmentSearch(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	protected SiteUserPage enrollmentSearchInit() {
 		if(!enrollmentSearchWrap.alreadyInitialized) {
 			_enrollmentSearch(enrollmentSearch);
@@ -326,6 +344,9 @@ public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
 	public void setEnrollmentSchools(List<SchoolEnrollment> enrollmentSchools) {
 		this.enrollmentSchools = enrollmentSchools;
 		this.enrollmentSchoolsWrap.alreadyInitialized = true;
+	}
+	public static List<SchoolEnrollment> staticSetEnrollmentSchools(SiteRequestEnUS siteRequest_, String o) {
+		return null;
 	}
 	public SiteUserPage addEnrollmentSchools(SchoolEnrollment...objets) {
 		for(SchoolEnrollment o : objets) {
@@ -373,6 +394,9 @@ public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
 	public void setEnrollmentApprovals(List<SchoolEnrollment> enrollmentApprovals) {
 		this.enrollmentApprovals = enrollmentApprovals;
 		this.enrollmentApprovalsWrap.alreadyInitialized = true;
+	}
+	public static List<SchoolEnrollment> staticSetEnrollmentApprovals(SiteRequestEnUS siteRequest_, String o) {
+		return null;
 	}
 	public SiteUserPage addEnrollmentApprovals(SchoolEnrollment...objets) {
 		for(SchoolEnrollment o : objets) {
@@ -423,6 +447,9 @@ public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
 		this.enrollmentYears = enrollmentYears;
 		this.enrollmentYearsWrap.alreadyInitialized = true;
 	}
+	public static List<SchoolEnrollment> staticSetEnrollmentYears(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	public SiteUserPage addEnrollmentYears(SchoolEnrollment...objets) {
 		for(SchoolEnrollment o : objets) {
 			addEnrollmentYears(o);
@@ -472,6 +499,9 @@ public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
 		this.enrollmentSchool = enrollmentSchool;
 		this.enrollmentSchoolWrap.alreadyInitialized = true;
 	}
+	public static SchoolEnrollment staticSetEnrollmentSchool(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	protected SiteUserPage enrollmentSchoolInit() {
 		if(!enrollmentSchoolWrap.alreadyInitialized) {
 			_enrollmentSchool(enrollmentSchoolWrap);
@@ -511,6 +541,9 @@ public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
 	public void setEnrollmentApproval(SchoolEnrollment enrollmentApproval) {
 		this.enrollmentApproval = enrollmentApproval;
 		this.enrollmentApprovalWrap.alreadyInitialized = true;
+	}
+	public static SchoolEnrollment staticSetEnrollmentApproval(SiteRequestEnUS siteRequest_, String o) {
+		return null;
 	}
 	protected SiteUserPage enrollmentApprovalInit() {
 		if(!enrollmentApprovalWrap.alreadyInitialized) {
@@ -552,6 +585,9 @@ public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
 		this.enrollmentYear = enrollmentYear;
 		this.enrollmentYearWrap.alreadyInitialized = true;
 	}
+	public static SchoolEnrollment staticSetEnrollmentYear(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	protected SiteUserPage enrollmentYearInit() {
 		if(!enrollmentYearWrap.alreadyInitialized) {
 			_enrollmentYear(enrollmentYearWrap);
@@ -592,6 +628,9 @@ public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
 		this.enrollmentEnrollment = enrollmentEnrollment;
 		this.enrollmentEnrollmentWrap.alreadyInitialized = true;
 	}
+	public static SchoolEnrollment staticSetEnrollmentEnrollment(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	protected SiteUserPage enrollmentEnrollmentInit() {
 		if(!enrollmentEnrollmentWrap.alreadyInitialized) {
 			_enrollmentEnrollment(enrollmentEnrollmentWrap);
@@ -631,6 +670,9 @@ public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
 	public void setEnrollments(List<SchoolEnrollment> enrollments) {
 		this.enrollments = enrollments;
 		this.enrollmentsWrap.alreadyInitialized = true;
+	}
+	public static List<SchoolEnrollment> staticSetEnrollments(SiteRequestEnUS siteRequest_, String o) {
+		return null;
 	}
 	public SiteUserPage addEnrollments(SchoolEnrollment...objets) {
 		for(SchoolEnrollment o : objets) {
@@ -680,6 +722,9 @@ public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
 	public void setEnrollments_(List<SchoolEnrollment> enrollments_) {
 		this.enrollments_ = enrollments_;
 		this.enrollments_Wrap.alreadyInitialized = true;
+	}
+	public static List<SchoolEnrollment> staticSetEnrollments_(SiteRequestEnUS siteRequest_, String o) {
+		return null;
 	}
 	public SiteUserPage addEnrollments_(SchoolEnrollment...objets) {
 		for(SchoolEnrollment o : objets) {
@@ -847,6 +892,62 @@ public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
 		switch(var) {
 			default:
 				return super.attributeSiteUserGenPage(var, val);
+		}
+	}
+
+	///////////////
+	// staticSet //
+	///////////////
+
+	public static Object staticSetForClass(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		return staticSetSiteUserPage(entityVar,  siteRequest_, o);
+	}
+	public static Object staticSetSiteUserPage(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		switch(entityVar) {
+			default:
+				return SiteUserGenPage.staticSetSiteUserGenPage(entityVar,  siteRequest_, o);
+		}
+	}
+
+	////////////////
+	// staticSolr //
+	////////////////
+
+	public static Object staticSolrForClass(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		return staticSolrSiteUserPage(entityVar,  siteRequest_, o);
+	}
+	public static Object staticSolrSiteUserPage(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		switch(entityVar) {
+			default:
+				return SiteUserGenPage.staticSolrSiteUserGenPage(entityVar,  siteRequest_, o);
+		}
+	}
+
+	///////////////////
+	// staticSolrStr //
+	///////////////////
+
+	public static String staticSolrStrForClass(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		return staticSolrStrSiteUserPage(entityVar,  siteRequest_, o);
+	}
+	public static String staticSolrStrSiteUserPage(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		switch(entityVar) {
+			default:
+				return SiteUserGenPage.staticSolrStrSiteUserGenPage(entityVar,  siteRequest_, o);
+		}
+	}
+
+	//////////////////
+	// staticSolrFq //
+	//////////////////
+
+	public static String staticSolrFqForClass(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		return staticSolrFqSiteUserPage(entityVar,  siteRequest_, o);
+	}
+	public static String staticSolrFqSiteUserPage(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		switch(entityVar) {
+			default:
+				return SiteUserGenPage.staticSolrFqSiteUserGenPage(entityVar,  siteRequest_, o);
 		}
 	}
 

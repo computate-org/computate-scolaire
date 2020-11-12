@@ -2060,7 +2060,16 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 	public void aSearchSiteUserFq(String uri, String apiMethod, SearchList<SiteUser> searchList, String entityVar, String valueIndexed, String varIndexed) {
 		if(varIndexed == null)
 			throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
-		searchList.addFilterQuery(varIndexed + ":" + ClientUtils.escapeQueryChars(valueIndexed));
+		if(StringUtils.startsWith(valueIndexed, "[")) {
+			String[] fqs = StringUtils.split(StringUtils.substringBefore(StringUtils.substringAfter(valueIndexed, "["), "]"), " TO ");
+			if(fqs.length != 2)
+				throw new RuntimeException(String.format("\"%s\" invalid range query. ", valueIndexed));
+			String fq1 = fqs[0].equals("*") ? fqs[0] : SiteUser.staticSolrFqForClass(entityVar, searchList.getSiteRequest_(), fqs[0]);
+			String fq2 = fqs[1].equals("*") ? fqs[1] : SiteUser.staticSolrFqForClass(entityVar, searchList.getSiteRequest_(), fqs[1]);
+			searchList.addFilterQuery(varIndexed + ":[" + fq1 + " TO " + fq2 + "]");
+		} else {
+			searchList.addFilterQuery(varIndexed + ":" + SiteUser.staticSolrFqForClass(entityVar, searchList.getSiteRequest_(), valueIndexed));
+		}
 	}
 
 	public void aSearchSiteUserSort(String uri, String apiMethod, SearchList<SiteUser> searchList, String entityVar, String valueIndexed, String varIndexed) {
@@ -2200,7 +2209,7 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 					eventHandler.handle(Future.failedFuture(e));
 				}
 			});
-			if("*".equals(searchList.getQuery()) && searchList.getSorts().size() == 0) {
+			if("*:*".equals(searchList.getQuery()) && searchList.getSorts().size() == 0) {
 				searchList.addSort("created_indexed_date", ORDER.desc);
 			}
 			searchList.initDeepForClass(siteRequest);

@@ -244,14 +244,6 @@ public class SiteUserGenPage extends SiteUserGenPageGen<ClusterPage> {
 			o.htmEnrollmentKeys("PUTCopy");
 			o.htmPaymentKeys("PUTCopy");
 		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmInheritPk("PUTCopy");
-			o.htmSessionId("PUTCopy");
-			o.htmUserId("PUTCopy");
-			o.htmUserKey("PUTCopy");
-			o.htmUserName("PUTCopy");
-			o.htmUserEmail("PUTCopy");
-		} g("div");
 	}
 
 	public void htmlFormPATCHSiteUser(SiteUser o) {
@@ -275,14 +267,6 @@ public class SiteUserGenPage extends SiteUserGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEnrollmentKeys("PATCH");
 			o.htmPaymentKeys("PATCH");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmInheritPk("PATCH");
-			o.htmSessionId("PATCH");
-			o.htmUserId("PATCH");
-			o.htmUserKey("PATCH");
-			o.htmUserName("PATCH");
-			o.htmUserEmail("PATCH");
 		} g("div");
 	}
 

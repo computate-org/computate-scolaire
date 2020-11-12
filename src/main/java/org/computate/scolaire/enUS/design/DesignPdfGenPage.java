@@ -312,27 +312,6 @@ public class DesignPdfGenPage extends DesignPdfGenPageGen<ClusterPage> {
 			o.htmDeleted("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPageDesignCompleteName("Page");
-			o.htmDesignHidden("Page");
-			o.htmDesignAdmin("Page");
-			o.htmDesignIgnoreEmptyChildName("Page");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmDesignIgnorePaymentsNotPastDue("Page");
-			o.htmDesignIgnorePaymentsPastDue("Page");
-			o.htmDesignFilterEnrollmentKey("Page");
-			o.htmDesignEnrollmentSortMonthDayOfBirth("Page");
-			o.htmDesignEnrollmentSortGroupName("Page");
-			o.htmDesignEnrollmentSortChildName("Page");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmSearchYears("Page");
-			o.htmSearchPayments("Page");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmParentDesignKeys("Page");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmHtmlPartKeys("Page");
 		} g("div");
 	}
@@ -347,27 +326,6 @@ public class DesignPdfGenPage extends DesignPdfGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchived("POST");
 			o.htmDeleted("POST");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPageDesignCompleteName("POST");
-			o.htmDesignHidden("POST");
-			o.htmDesignAdmin("POST");
-			o.htmDesignIgnoreEmptyChildName("POST");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmDesignIgnorePaymentsNotPastDue("POST");
-			o.htmDesignIgnorePaymentsPastDue("POST");
-			o.htmDesignFilterEnrollmentKey("POST");
-			o.htmDesignEnrollmentSortMonthDayOfBirth("POST");
-			o.htmDesignEnrollmentSortGroupName("POST");
-			o.htmDesignEnrollmentSortChildName("POST");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmSearchYears("POST");
-			o.htmSearchPayments("POST");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmParentDesignKeys("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmHtmlPartKeys("POST");
@@ -431,12 +389,6 @@ public class DesignPdfGenPage extends DesignPdfGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmHtmlPartKeys("PUTCopy");
 		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmInheritPk("PUTCopy");
-			o.htmSessionId("PUTCopy");
-			o.htmUserId("PUTCopy");
-			o.htmUserKey("PUTCopy");
-		} g("div");
 	}
 
 	public void htmlFormPATCHPageDesign(PageDesign o) {
@@ -471,12 +423,6 @@ public class DesignPdfGenPage extends DesignPdfGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmHtmlPartKeys("PATCH");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmInheritPk("PATCH");
-			o.htmSessionId("PATCH");
-			o.htmUserId("PATCH");
-			o.htmUserKey("PATCH");
 		} g("div");
 	}
 

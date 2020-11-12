@@ -34,6 +34,7 @@ import org.computate.scolaire.enUS.school.SchoolGenPage;
 import org.computate.scolaire.enUS.writer.AllWriter;
 import org.computate.scolaire.enUS.child.ChildGenPage;
 import org.computate.scolaire.enUS.guardian.GuardianGenPage;
+import org.computate.scolaire.enUS.html.part.HtmlPart;
 import org.computate.scolaire.enUS.html.part.HtmlPartGenPage;
 import org.computate.scolaire.enUS.enrollment.EnrollmentGenPage;
 import org.computate.scolaire.enUS.mom.MomGenPage;

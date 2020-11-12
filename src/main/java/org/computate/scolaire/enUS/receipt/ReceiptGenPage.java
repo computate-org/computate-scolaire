@@ -221,13 +221,6 @@ public class ReceiptGenPage extends ReceiptGenPageGen<ClusterPage> {
 			o.htmSchoolKey("PUTCopy");
 			o.htmPaymentDescription("PUTCopy");
 		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmInheritPk("PUTCopy");
-			o.htmSessionId("PUTCopy");
-			o.htmUserId("PUTCopy");
-			o.htmUserKey("PUTCopy");
-			o.htmPaymentShortName("PUTCopy");
-		} g("div");
 	}
 
 	public void htmlFormPATCHSchoolReceipt(SchoolReceipt o) {
@@ -246,13 +239,6 @@ public class ReceiptGenPage extends ReceiptGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSchoolKey("PATCH");
 			o.htmPaymentDescription("PATCH");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmInheritPk("PATCH");
-			o.htmSessionId("PATCH");
-			o.htmUserId("PATCH");
-			o.htmUserKey("PATCH");
-			o.htmPaymentShortName("PATCH");
 		} g("div");
 	}
 

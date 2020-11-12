@@ -255,13 +255,6 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 			o.htmAgeCle("PUTCopie");
 			o.htmInscriptionCles("PUTCopie");
 		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmInheritPk("PUTCopie");
-			o.htmSessionId("PUTCopie");
-			o.htmUtilisateurId("PUTCopie");
-			o.htmUtilisateurCle("PUTCopie");
-			o.htmEcoleAddresse("PUTCopie");
-		} g("div");
 	}
 
 	public void htmlFormPATCHBlocScolaire(BlocScolaire o) {
@@ -288,13 +281,6 @@ public class BlocGenPage extends BlocGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmAgeCle("PATCH");
 			o.htmInscriptionCles("PATCH");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmInheritPk("PATCH");
-			o.htmSessionId("PATCH");
-			o.htmUtilisateurId("PATCH");
-			o.htmUtilisateurCle("PATCH");
-			o.htmEcoleAddresse("PATCH");
 		} g("div");
 	}
 

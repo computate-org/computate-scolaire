@@ -118,10 +118,14 @@ public abstract class SchoolReceiptGen<DEV> extends Cluster {
 		this.receiptKeyWrap.alreadyInitialized = true;
 	}
 	public SchoolReceipt setReceiptKey(String o) {
-		if(NumberUtils.isParsable(o))
-			this.receiptKey = Long.parseLong(o);
+		this.receiptKey = SchoolReceipt.staticSetReceiptKey(siteRequest_, o);
 		this.receiptKeyWrap.alreadyInitialized = true;
 		return (SchoolReceipt)this;
+	}
+	public static Long staticSetReceiptKey(SiteRequestEnUS siteRequest_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Long.parseLong(o);
+		return null;
 	}
 	protected SchoolReceipt receiptKeyInit() {
 		if(!receiptKeyWrap.alreadyInitialized) {
@@ -133,8 +137,20 @@ public abstract class SchoolReceiptGen<DEV> extends Cluster {
 		return (SchoolReceipt)this;
 	}
 
+	public static Long staticSolrReceiptKey(SiteRequestEnUS siteRequest_, Long o) {
+		return o;
+	}
+
+	public static String staticSolrStrReceiptKey(SiteRequestEnUS siteRequest_, Long o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqReceiptKey(SiteRequestEnUS siteRequest_, String o) {
+		return SchoolReceipt.staticSolrStrReceiptKey(siteRequest_, SchoolReceipt.staticSolrReceiptKey(siteRequest_, SchoolReceipt.staticSetReceiptKey(siteRequest_, o)));
+	}
+
 	public Long solrReceiptKey() {
-		return receiptKey;
+		return SchoolReceipt.staticSolrReceiptKey(siteRequest_, receiptKey);
 	}
 
 	public String strReceiptKey() {
@@ -187,10 +203,14 @@ public abstract class SchoolReceiptGen<DEV> extends Cluster {
 		this.schoolKeyWrap.alreadyInitialized = true;
 	}
 	public SchoolReceipt setSchoolKey(String o) {
-		if(NumberUtils.isParsable(o))
-			this.schoolKey = Long.parseLong(o);
+		this.schoolKey = SchoolReceipt.staticSetSchoolKey(siteRequest_, o);
 		this.schoolKeyWrap.alreadyInitialized = true;
 		return (SchoolReceipt)this;
+	}
+	public static Long staticSetSchoolKey(SiteRequestEnUS siteRequest_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Long.parseLong(o);
+		return null;
 	}
 	protected SchoolReceipt schoolKeyInit() {
 		if(!schoolKeyWrap.alreadyInitialized) {
@@ -202,8 +222,20 @@ public abstract class SchoolReceiptGen<DEV> extends Cluster {
 		return (SchoolReceipt)this;
 	}
 
+	public static Long staticSolrSchoolKey(SiteRequestEnUS siteRequest_, Long o) {
+		return o;
+	}
+
+	public static String staticSolrStrSchoolKey(SiteRequestEnUS siteRequest_, Long o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqSchoolKey(SiteRequestEnUS siteRequest_, String o) {
+		return SchoolReceipt.staticSolrStrSchoolKey(siteRequest_, SchoolReceipt.staticSolrSchoolKey(siteRequest_, SchoolReceipt.staticSetSchoolKey(siteRequest_, o)));
+	}
+
 	public Long solrSchoolKey() {
-		return schoolKey;
+		return SchoolReceipt.staticSolrSchoolKey(siteRequest_, schoolKey);
 	}
 
 	public String strSchoolKey() {
@@ -239,9 +271,12 @@ public abstract class SchoolReceiptGen<DEV> extends Cluster {
 					.a("class", "valueObjectSuggest suggestSchoolKey w3-input w3-border w3-cell w3-cell-middle ")
 					.a("name", "setSchoolKey")
 					.a("id", classApiMethodMethod, "_schoolKey")
-					.a("autocomplete", "off")
-					.a("oninput", "suggestSchoolReceiptSchoolKey($(this).val() ? searchSchoolFilters($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'receiptKeys:" + pk + "'}", "], $('#listSchoolReceiptSchoolKey_", classApiMethodMethod, "'), ", pk, "); ")
-				.fg();
+					.a("autocomplete", "off");
+					if("Page".equals(classApiMethodMethod)) {
+						a("oninput", "suggestSchoolReceiptSchoolKey($(this).val() ? searchSchoolFilters($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'receiptKeys:" + pk + "'}", "], $('#listSchoolReceiptSchoolKey_", classApiMethodMethod, "'), ", pk, "); ");
+					}
+
+				fg();
 
 		} else {
 			if(
@@ -332,6 +367,9 @@ public abstract class SchoolReceiptGen<DEV> extends Cluster {
 		this.schoolSearch = schoolSearch;
 		this.schoolSearchWrap.alreadyInitialized = true;
 	}
+	public static SearchList<School> staticSetSchoolSearch(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	protected SchoolReceipt schoolSearchInit() {
 		if(!schoolSearchWrap.alreadyInitialized) {
 			_schoolSearch(schoolSearch);
@@ -370,6 +408,9 @@ public abstract class SchoolReceiptGen<DEV> extends Cluster {
 		this.school_ = school_;
 		this.school_Wrap.alreadyInitialized = true;
 	}
+	public static School staticSetSchool_(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	protected SchoolReceipt school_Init() {
 		if(!school_Wrap.alreadyInitialized) {
 			_school_(school_Wrap);
@@ -403,10 +444,13 @@ public abstract class SchoolReceiptGen<DEV> extends Cluster {
 	public String getSchoolAddress() {
 		return schoolAddress;
 	}
-
-	public void setSchoolAddress(String schoolAddress) {
-		this.schoolAddress = schoolAddress;
+	public SchoolReceipt setSchoolAddress(String o) {
+		this.schoolAddress = SchoolReceipt.staticSetSchoolAddress(siteRequest_, o);
 		this.schoolAddressWrap.alreadyInitialized = true;
+		return (SchoolReceipt)this;
+	}
+	public static String staticSetSchoolAddress(SiteRequestEnUS siteRequest_, String o) {
+		return o;
 	}
 	protected SchoolReceipt schoolAddressInit() {
 		if(!schoolAddressWrap.alreadyInitialized) {
@@ -418,8 +462,20 @@ public abstract class SchoolReceiptGen<DEV> extends Cluster {
 		return (SchoolReceipt)this;
 	}
 
+	public static String staticSolrSchoolAddress(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrSchoolAddress(SiteRequestEnUS siteRequest_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqSchoolAddress(SiteRequestEnUS siteRequest_, String o) {
+		return SchoolReceipt.staticSolrStrSchoolAddress(siteRequest_, SchoolReceipt.staticSolrSchoolAddress(siteRequest_, SchoolReceipt.staticSetSchoolAddress(siteRequest_, o)));
+	}
+
 	public String solrSchoolAddress() {
-		return schoolAddress;
+		return SchoolReceipt.staticSolrSchoolAddress(siteRequest_, schoolAddress);
 	}
 
 	public String strSchoolAddress() {
@@ -465,10 +521,13 @@ public abstract class SchoolReceiptGen<DEV> extends Cluster {
 	public String getSchoolPhoneNumber() {
 		return schoolPhoneNumber;
 	}
-
-	public void setSchoolPhoneNumber(String schoolPhoneNumber) {
-		this.schoolPhoneNumber = schoolPhoneNumber;
+	public SchoolReceipt setSchoolPhoneNumber(String o) {
+		this.schoolPhoneNumber = SchoolReceipt.staticSetSchoolPhoneNumber(siteRequest_, o);
 		this.schoolPhoneNumberWrap.alreadyInitialized = true;
+		return (SchoolReceipt)this;
+	}
+	public static String staticSetSchoolPhoneNumber(SiteRequestEnUS siteRequest_, String o) {
+		return o;
 	}
 	protected SchoolReceipt schoolPhoneNumberInit() {
 		if(!schoolPhoneNumberWrap.alreadyInitialized) {
@@ -480,8 +539,20 @@ public abstract class SchoolReceiptGen<DEV> extends Cluster {
 		return (SchoolReceipt)this;
 	}
 
+	public static String staticSolrSchoolPhoneNumber(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrSchoolPhoneNumber(SiteRequestEnUS siteRequest_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqSchoolPhoneNumber(SiteRequestEnUS siteRequest_, String o) {
+		return SchoolReceipt.staticSolrStrSchoolPhoneNumber(siteRequest_, SchoolReceipt.staticSolrSchoolPhoneNumber(siteRequest_, SchoolReceipt.staticSetSchoolPhoneNumber(siteRequest_, o)));
+	}
+
 	public String solrSchoolPhoneNumber() {
-		return schoolPhoneNumber;
+		return SchoolReceipt.staticSolrSchoolPhoneNumber(siteRequest_, schoolPhoneNumber);
 	}
 
 	public String strSchoolPhoneNumber() {
@@ -542,9 +613,12 @@ public abstract class SchoolReceiptGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SchoolReceipt setPaymentDate(String o) {
-		this.paymentDate = o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		this.paymentDate = SchoolReceipt.staticSetPaymentDate(siteRequest_, o);
 		this.paymentDateWrap.alreadyInitialized = true;
 		return (SchoolReceipt)this;
+	}
+	public static LocalDate staticSetPaymentDate(SiteRequestEnUS siteRequest_, String o) {
+		return o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 	}
 	public SchoolReceipt setPaymentDate(Date o) {
 		this.paymentDate = o == null ? null : o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
@@ -561,8 +635,20 @@ public abstract class SchoolReceiptGen<DEV> extends Cluster {
 		return (SchoolReceipt)this;
 	}
 
+	public static Date staticSolrPaymentDate(SiteRequestEnUS siteRequest_, LocalDate o) {
+		return o == null ? null : Date.from(o.atStartOfDay(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toInstant().atZone(ZoneId.of("Z")).toInstant());
+	}
+
+	public static String staticSolrStrPaymentDate(SiteRequestEnUS siteRequest_, Date o) {
+		return "\"" + DateTimeFormatter.ISO_DATE_TIME.format(o.toInstant().atOffset(ZoneOffset.UTC)) + "\"";
+	}
+
+	public static String staticSolrFqPaymentDate(SiteRequestEnUS siteRequest_, String o) {
+		return SchoolReceipt.staticSolrStrPaymentDate(siteRequest_, SchoolReceipt.staticSolrPaymentDate(siteRequest_, SchoolReceipt.staticSetPaymentDate(siteRequest_, o)));
+	}
+
 	public Date solrPaymentDate() {
-		return paymentDate == null ? null : Date.from(paymentDate.atStartOfDay(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toInstant().atZone(ZoneId.of("Z")).toInstant());
+		return SchoolReceipt.staticSolrPaymentDate(siteRequest_, paymentDate);
 	}
 
 	public String strPaymentDate() {
@@ -592,15 +678,17 @@ public abstract class SchoolReceiptGen<DEV> extends Cluster {
 				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 				) {
 			e("input")
-				.a("type", "text")
-				.a("class", "w3-input w3-border datepicker setPaymentDate classSchoolReceipt inputSchoolReceipt", pk, "PaymentDate w3-input w3-border ")
-				.a("placeholder", "MM/DD/YYYY")
-				.a("data-timeformat", "MM/dd/yyyy")
-				.a("id", classApiMethodMethod, "_paymentDate")
-				.a("onclick", "removeGlow($(this)); ")
-				.a("value", paymentDate == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy").format(paymentDate))
-				.a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setPaymentDate', s, function() { addGlow($('#", classApiMethodMethod, "_paymentDate')); }, function() { addError($('#", classApiMethodMethod, "_paymentDate')); }); } ")
-				.fg();
+					.a("type", "text")
+					.a("class", "w3-input w3-border datepicker setPaymentDate classSchoolReceipt inputSchoolReceipt", pk, "PaymentDate w3-input w3-border ")
+					.a("placeholder", "MM/DD/YYYY")
+					.a("data-timeformat", "MM/dd/yyyy")
+					.a("id", classApiMethodMethod, "_paymentDate")
+					.a("value", paymentDate == null ? "" : DateTimeFormatter.ofPattern("MM/dd/yyyy").format(paymentDate));
+			if("Page".equals(classApiMethodMethod)) {
+				a("onclick", "removeGlow($(this)); ");
+				a("onchange", "var t = moment(this.value, 'MM/DD/YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setPaymentDate', s, function() { addGlow($('#", classApiMethodMethod, "_paymentDate')); }, function() { addError($('#", classApiMethodMethod, "_paymentDate')); }); } ");
+			}
+			fg();
 		} else {
 			if(
 					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
@@ -677,10 +765,14 @@ public abstract class SchoolReceiptGen<DEV> extends Cluster {
 		this.paymentYearWrap.alreadyInitialized = true;
 	}
 	public SchoolReceipt setPaymentYear(String o) {
-		if(NumberUtils.isParsable(o))
-			this.paymentYear = Integer.parseInt(o);
+		this.paymentYear = SchoolReceipt.staticSetPaymentYear(siteRequest_, o);
 		this.paymentYearWrap.alreadyInitialized = true;
 		return (SchoolReceipt)this;
+	}
+	public static Integer staticSetPaymentYear(SiteRequestEnUS siteRequest_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Integer.parseInt(o);
+		return null;
 	}
 	protected SchoolReceipt paymentYearInit() {
 		if(!paymentYearWrap.alreadyInitialized) {
@@ -692,8 +784,20 @@ public abstract class SchoolReceiptGen<DEV> extends Cluster {
 		return (SchoolReceipt)this;
 	}
 
+	public static Integer staticSolrPaymentYear(SiteRequestEnUS siteRequest_, Integer o) {
+		return o;
+	}
+
+	public static String staticSolrStrPaymentYear(SiteRequestEnUS siteRequest_, Integer o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPaymentYear(SiteRequestEnUS siteRequest_, String o) {
+		return SchoolReceipt.staticSolrStrPaymentYear(siteRequest_, SchoolReceipt.staticSolrPaymentYear(siteRequest_, SchoolReceipt.staticSetPaymentYear(siteRequest_, o)));
+	}
+
 	public Integer solrPaymentYear() {
-		return paymentYear;
+		return SchoolReceipt.staticSolrPaymentYear(siteRequest_, paymentYear);
 	}
 
 	public String strPaymentYear() {
@@ -746,11 +850,15 @@ public abstract class SchoolReceiptGen<DEV> extends Cluster {
 		this.paymentAmountWrap.alreadyInitialized = true;
 	}
 	public SchoolReceipt setPaymentAmount(String o) {
-		o = StringUtils.removeAll(o, "[^\\d\\.]");
-		if(NumberUtils.isParsable(o))
-			this.paymentAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
+		this.paymentAmount = SchoolReceipt.staticSetPaymentAmount(siteRequest_, o);
 		this.paymentAmountWrap.alreadyInitialized = true;
 		return (SchoolReceipt)this;
+	}
+	public static BigDecimal staticSetPaymentAmount(SiteRequestEnUS siteRequest_, String o) {
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
+		return null;
 	}
 	public SchoolReceipt setPaymentAmount(Double o) {
 			this.paymentAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
@@ -772,8 +880,20 @@ public abstract class SchoolReceiptGen<DEV> extends Cluster {
 		return (SchoolReceipt)this;
 	}
 
+	public static Double staticSolrPaymentAmount(SiteRequestEnUS siteRequest_, BigDecimal o) {
+		return o == null ? null : o.doubleValue();
+	}
+
+	public static String staticSolrStrPaymentAmount(SiteRequestEnUS siteRequest_, Double o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPaymentAmount(SiteRequestEnUS siteRequest_, String o) {
+		return SchoolReceipt.staticSolrStrPaymentAmount(siteRequest_, SchoolReceipt.staticSolrPaymentAmount(siteRequest_, SchoolReceipt.staticSetPaymentAmount(siteRequest_, o)));
+	}
+
 	public Double solrPaymentAmount() {
-		return paymentAmount == null ? null : paymentAmount.doubleValue();
+		return SchoolReceipt.staticSolrPaymentAmount(siteRequest_, paymentAmount);
 	}
 
 	public String strPaymentAmount() {
@@ -890,10 +1010,13 @@ public abstract class SchoolReceiptGen<DEV> extends Cluster {
 	public String getPaymentDescription() {
 		return paymentDescription;
 	}
-
-	public void setPaymentDescription(String paymentDescription) {
-		this.paymentDescription = paymentDescription;
+	public SchoolReceipt setPaymentDescription(String o) {
+		this.paymentDescription = SchoolReceipt.staticSetPaymentDescription(siteRequest_, o);
 		this.paymentDescriptionWrap.alreadyInitialized = true;
+		return (SchoolReceipt)this;
+	}
+	public static String staticSetPaymentDescription(SiteRequestEnUS siteRequest_, String o) {
+		return o;
 	}
 	protected SchoolReceipt paymentDescriptionInit() {
 		if(!paymentDescriptionWrap.alreadyInitialized) {
@@ -905,8 +1028,20 @@ public abstract class SchoolReceiptGen<DEV> extends Cluster {
 		return (SchoolReceipt)this;
 	}
 
+	public static String staticSolrPaymentDescription(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrPaymentDescription(SiteRequestEnUS siteRequest_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPaymentDescription(SiteRequestEnUS siteRequest_, String o) {
+		return SchoolReceipt.staticSolrStrPaymentDescription(siteRequest_, SchoolReceipt.staticSolrPaymentDescription(siteRequest_, SchoolReceipt.staticSetPaymentDescription(siteRequest_, o)));
+	}
+
 	public String solrPaymentDescription() {
-		return paymentDescription;
+		return SchoolReceipt.staticSolrPaymentDescription(siteRequest_, paymentDescription);
 	}
 
 	public String strPaymentDescription() {
@@ -1023,10 +1158,13 @@ public abstract class SchoolReceiptGen<DEV> extends Cluster {
 	public String getPaymentShortName() {
 		return paymentShortName;
 	}
-
-	public void setPaymentShortName(String paymentShortName) {
-		this.paymentShortName = paymentShortName;
+	public SchoolReceipt setPaymentShortName(String o) {
+		this.paymentShortName = SchoolReceipt.staticSetPaymentShortName(siteRequest_, o);
 		this.paymentShortNameWrap.alreadyInitialized = true;
+		return (SchoolReceipt)this;
+	}
+	public static String staticSetPaymentShortName(SiteRequestEnUS siteRequest_, String o) {
+		return o;
 	}
 	protected SchoolReceipt paymentShortNameInit() {
 		if(!paymentShortNameWrap.alreadyInitialized) {
@@ -1038,8 +1176,20 @@ public abstract class SchoolReceiptGen<DEV> extends Cluster {
 		return (SchoolReceipt)this;
 	}
 
+	public static String staticSolrPaymentShortName(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrPaymentShortName(SiteRequestEnUS siteRequest_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPaymentShortName(SiteRequestEnUS siteRequest_, String o) {
+		return SchoolReceipt.staticSolrStrPaymentShortName(siteRequest_, SchoolReceipt.staticSolrPaymentShortName(siteRequest_, SchoolReceipt.staticSetPaymentShortName(siteRequest_, o)));
+	}
+
 	public String solrPaymentShortName() {
-		return paymentShortName;
+		return SchoolReceipt.staticSolrPaymentShortName(siteRequest_, paymentShortName);
 	}
 
 	public String strPaymentShortName() {
@@ -1156,10 +1306,13 @@ public abstract class SchoolReceiptGen<DEV> extends Cluster {
 	public String getPaymentCompleteName() {
 		return paymentCompleteName;
 	}
-
-	public void setPaymentCompleteName(String paymentCompleteName) {
-		this.paymentCompleteName = paymentCompleteName;
+	public SchoolReceipt setPaymentCompleteName(String o) {
+		this.paymentCompleteName = SchoolReceipt.staticSetPaymentCompleteName(siteRequest_, o);
 		this.paymentCompleteNameWrap.alreadyInitialized = true;
+		return (SchoolReceipt)this;
+	}
+	public static String staticSetPaymentCompleteName(SiteRequestEnUS siteRequest_, String o) {
+		return o;
 	}
 	protected SchoolReceipt paymentCompleteNameInit() {
 		if(!paymentCompleteNameWrap.alreadyInitialized) {
@@ -1171,8 +1324,20 @@ public abstract class SchoolReceiptGen<DEV> extends Cluster {
 		return (SchoolReceipt)this;
 	}
 
+	public static String staticSolrPaymentCompleteName(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrPaymentCompleteName(SiteRequestEnUS siteRequest_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPaymentCompleteName(SiteRequestEnUS siteRequest_, String o) {
+		return SchoolReceipt.staticSolrStrPaymentCompleteName(siteRequest_, SchoolReceipt.staticSolrPaymentCompleteName(siteRequest_, SchoolReceipt.staticSetPaymentCompleteName(siteRequest_, o)));
+	}
+
 	public String solrPaymentCompleteName() {
-		return paymentCompleteName;
+		return SchoolReceipt.staticSolrPaymentCompleteName(siteRequest_, paymentCompleteName);
 	}
 
 	public String strPaymentCompleteName() {
@@ -1325,6 +1490,142 @@ public abstract class SchoolReceiptGen<DEV> extends Cluster {
 				return val;
 			default:
 				return super.attributeCluster(var, val);
+		}
+	}
+
+	///////////////
+	// staticSet //
+	///////////////
+
+	public static Object staticSetForClass(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		return staticSetSchoolReceipt(entityVar,  siteRequest_, o);
+	}
+	public static Object staticSetSchoolReceipt(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		switch(entityVar) {
+		case "receiptKey":
+			return SchoolReceipt.staticSetReceiptKey(siteRequest_, o);
+		case "schoolKey":
+			return SchoolReceipt.staticSetSchoolKey(siteRequest_, o);
+		case "schoolAddress":
+			return SchoolReceipt.staticSetSchoolAddress(siteRequest_, o);
+		case "schoolPhoneNumber":
+			return SchoolReceipt.staticSetSchoolPhoneNumber(siteRequest_, o);
+		case "paymentDate":
+			return SchoolReceipt.staticSetPaymentDate(siteRequest_, o);
+		case "paymentYear":
+			return SchoolReceipt.staticSetPaymentYear(siteRequest_, o);
+		case "paymentAmount":
+			return SchoolReceipt.staticSetPaymentAmount(siteRequest_, o);
+		case "paymentDescription":
+			return SchoolReceipt.staticSetPaymentDescription(siteRequest_, o);
+		case "paymentShortName":
+			return SchoolReceipt.staticSetPaymentShortName(siteRequest_, o);
+		case "paymentCompleteName":
+			return SchoolReceipt.staticSetPaymentCompleteName(siteRequest_, o);
+			default:
+				return Cluster.staticSetCluster(entityVar,  siteRequest_, o);
+		}
+	}
+
+	////////////////
+	// staticSolr //
+	////////////////
+
+	public static Object staticSolrForClass(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		return staticSolrSchoolReceipt(entityVar,  siteRequest_, o);
+	}
+	public static Object staticSolrSchoolReceipt(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		switch(entityVar) {
+		case "receiptKey":
+			return SchoolReceipt.staticSolrReceiptKey(siteRequest_, (Long)o);
+		case "schoolKey":
+			return SchoolReceipt.staticSolrSchoolKey(siteRequest_, (Long)o);
+		case "schoolAddress":
+			return SchoolReceipt.staticSolrSchoolAddress(siteRequest_, (String)o);
+		case "schoolPhoneNumber":
+			return SchoolReceipt.staticSolrSchoolPhoneNumber(siteRequest_, (String)o);
+		case "paymentDate":
+			return SchoolReceipt.staticSolrPaymentDate(siteRequest_, (LocalDate)o);
+		case "paymentYear":
+			return SchoolReceipt.staticSolrPaymentYear(siteRequest_, (Integer)o);
+		case "paymentAmount":
+			return SchoolReceipt.staticSolrPaymentAmount(siteRequest_, (BigDecimal)o);
+		case "paymentDescription":
+			return SchoolReceipt.staticSolrPaymentDescription(siteRequest_, (String)o);
+		case "paymentShortName":
+			return SchoolReceipt.staticSolrPaymentShortName(siteRequest_, (String)o);
+		case "paymentCompleteName":
+			return SchoolReceipt.staticSolrPaymentCompleteName(siteRequest_, (String)o);
+			default:
+				return Cluster.staticSolrCluster(entityVar,  siteRequest_, o);
+		}
+	}
+
+	///////////////////
+	// staticSolrStr //
+	///////////////////
+
+	public static String staticSolrStrForClass(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		return staticSolrStrSchoolReceipt(entityVar,  siteRequest_, o);
+	}
+	public static String staticSolrStrSchoolReceipt(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		switch(entityVar) {
+		case "receiptKey":
+			return SchoolReceipt.staticSolrStrReceiptKey(siteRequest_, (Long)o);
+		case "schoolKey":
+			return SchoolReceipt.staticSolrStrSchoolKey(siteRequest_, (Long)o);
+		case "schoolAddress":
+			return SchoolReceipt.staticSolrStrSchoolAddress(siteRequest_, (String)o);
+		case "schoolPhoneNumber":
+			return SchoolReceipt.staticSolrStrSchoolPhoneNumber(siteRequest_, (String)o);
+		case "paymentDate":
+			return SchoolReceipt.staticSolrStrPaymentDate(siteRequest_, (Date)o);
+		case "paymentYear":
+			return SchoolReceipt.staticSolrStrPaymentYear(siteRequest_, (Integer)o);
+		case "paymentAmount":
+			return SchoolReceipt.staticSolrStrPaymentAmount(siteRequest_, (Double)o);
+		case "paymentDescription":
+			return SchoolReceipt.staticSolrStrPaymentDescription(siteRequest_, (String)o);
+		case "paymentShortName":
+			return SchoolReceipt.staticSolrStrPaymentShortName(siteRequest_, (String)o);
+		case "paymentCompleteName":
+			return SchoolReceipt.staticSolrStrPaymentCompleteName(siteRequest_, (String)o);
+			default:
+				return Cluster.staticSolrStrCluster(entityVar,  siteRequest_, o);
+		}
+	}
+
+	//////////////////
+	// staticSolrFq //
+	//////////////////
+
+	public static String staticSolrFqForClass(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		return staticSolrFqSchoolReceipt(entityVar,  siteRequest_, o);
+	}
+	public static String staticSolrFqSchoolReceipt(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		switch(entityVar) {
+		case "receiptKey":
+			return SchoolReceipt.staticSolrFqReceiptKey(siteRequest_, o);
+		case "schoolKey":
+			return SchoolReceipt.staticSolrFqSchoolKey(siteRequest_, o);
+		case "schoolAddress":
+			return SchoolReceipt.staticSolrFqSchoolAddress(siteRequest_, o);
+		case "schoolPhoneNumber":
+			return SchoolReceipt.staticSolrFqSchoolPhoneNumber(siteRequest_, o);
+		case "paymentDate":
+			return SchoolReceipt.staticSolrFqPaymentDate(siteRequest_, o);
+		case "paymentYear":
+			return SchoolReceipt.staticSolrFqPaymentYear(siteRequest_, o);
+		case "paymentAmount":
+			return SchoolReceipt.staticSolrFqPaymentAmount(siteRequest_, o);
+		case "paymentDescription":
+			return SchoolReceipt.staticSolrFqPaymentDescription(siteRequest_, o);
+		case "paymentShortName":
+			return SchoolReceipt.staticSolrFqPaymentShortName(siteRequest_, o);
+		case "paymentCompleteName":
+			return SchoolReceipt.staticSolrFqPaymentCompleteName(siteRequest_, o);
+			default:
+				return Cluster.staticSolrFqCluster(entityVar,  siteRequest_, o);
 		}
 	}
 

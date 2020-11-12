@@ -158,14 +158,6 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 			o.htmArchived("Page");
 			o.htmDeleted("Page");
 		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmSeasonStartDate("Page");
-			o.htmSeasonFuture("Page");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmYearKey("Page");
-			o.htmSessionKeys("Page");
-		} g("div");
 	}
 
 	public void htmlFormPOSTSchoolSeason(SchoolSeason o) {
@@ -178,14 +170,6 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchived("POST");
 			o.htmDeleted("POST");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmSeasonStartDate("POST");
-			o.htmSeasonFuture("POST");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmYearKey("POST");
-			o.htmSessionKeys("POST");
 		} g("div");
 	}
 
@@ -230,14 +214,6 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 			o.htmYearKey("PUTCopy");
 			o.htmSessionKeys("PUTCopy");
 		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmInheritPk("PUTCopy");
-			o.htmSessionId("PUTCopy");
-			o.htmUserId("PUTCopy");
-			o.htmUserKey("PUTCopy");
-			o.htmSeasonSummer("PUTCopy");
-			o.htmSeasonWinter("PUTCopy");
-		} g("div");
 	}
 
 	public void htmlFormPATCHSchoolSeason(SchoolSeason o) {
@@ -256,14 +232,6 @@ public class SeasonGenPage extends SeasonGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmYearKey("PATCH");
 			o.htmSessionKeys("PATCH");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmInheritPk("PATCH");
-			o.htmSessionId("PATCH");
-			o.htmUserId("PATCH");
-			o.htmUserKey("PATCH");
-			o.htmSeasonSummer("PATCH");
-			o.htmSeasonWinter("PATCH");
 		} g("div");
 	}
 

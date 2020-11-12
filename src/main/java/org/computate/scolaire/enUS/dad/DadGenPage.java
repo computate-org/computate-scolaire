@@ -257,12 +257,6 @@ public class DadGenPage extends DadGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEnrollmentKeys("PUTCopy");
 		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmInheritPk("PUTCopy");
-			o.htmSessionId("PUTCopy");
-			o.htmUserId("PUTCopy");
-			o.htmUserKey("PUTCopy");
-		} g("div");
 	}
 
 	public void htmlFormPATCHSchoolDad(SchoolDad o) {
@@ -293,12 +287,6 @@ public class DadGenPage extends DadGenPageGen<ClusterPage> {
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEnrollmentKeys("PATCH");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmInheritPk("PATCH");
-			o.htmSessionId("PATCH");
-			o.htmUserId("PATCH");
-			o.htmUserKey("PATCH");
 		} g("div");
 	}
 

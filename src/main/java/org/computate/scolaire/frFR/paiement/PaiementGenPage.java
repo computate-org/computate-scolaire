@@ -286,19 +286,7 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 			o.htmInscriptionCle("PUTCopie");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmInheritPk("PUTCopie");
-			o.htmSessionId("PUTCopie");
-			o.htmUtilisateurId("PUTCopie");
-			o.htmUtilisateurCle("PUTCopie");
-			o.htmEnfantNomCompletPrefere("PUTCopie");
-			o.htmEnfantDateNaissance("PUTCopie");
-			o.htmMereNomCompletPrefere("PUTCopie");
-			o.htmPereNomCompletPrefere("PUTCopie");
-			o.htmFraisMontantDu("PUTCopie");
-			o.htmFraisMontantPasse("PUTCopie");
-			o.htmFraisMontantNonPasse("PUTCopie");
-			o.htmFraisMontantFuture("PUTCopie");
-			o.htmPaiementNomCourt("PUTCopie");
+			o.htmFraisRetardDate("PUTCopie");
 		} g("div");
 	}
 
@@ -341,19 +329,7 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 			o.htmInscriptionCle("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmInheritPk("PATCH");
-			o.htmSessionId("PATCH");
-			o.htmUtilisateurId("PATCH");
-			o.htmUtilisateurCle("PATCH");
-			o.htmEnfantNomCompletPrefere("PATCH");
-			o.htmEnfantDateNaissance("PATCH");
-			o.htmMereNomCompletPrefere("PATCH");
-			o.htmPereNomCompletPrefere("PATCH");
-			o.htmFraisMontantDu("PATCH");
-			o.htmFraisMontantPasse("PATCH");
-			o.htmFraisMontantNonPasse("PATCH");
-			o.htmFraisMontantFuture("PATCH");
-			o.htmPaiementNomCourt("PATCH");
+			o.htmFraisRetardDate("PATCH");
 		} g("div");
 	}
 
@@ -398,19 +374,14 @@ public class PaiementGenPage extends PaiementGenPageGen<ClusterPage> {
 			o.htmInscriptionCle("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmFraisRetardDate("Recherche");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInheritPk("Recherche");
 			o.htmSessionId("Recherche");
 			o.htmUtilisateurId("Recherche");
 			o.htmUtilisateurCle("Recherche");
 			o.htmObjetTitre("Recherche");
-			o.htmEnfantNomCompletPrefere("Recherche");
-			o.htmEnfantDateNaissance("Recherche");
-			o.htmMereNomCompletPrefere("Recherche");
-			o.htmPereNomCompletPrefere("Recherche");
-			o.htmFraisMontantDu("Recherche");
-			o.htmFraisMontantPasse("Recherche");
-			o.htmFraisMontantNonPasse("Recherche");
-			o.htmFraisMontantFuture("Recherche");
 			o.htmPaiementNomCourt("Recherche");
 		} g("div");
 	}

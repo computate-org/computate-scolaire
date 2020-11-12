@@ -226,6 +226,9 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 	protected void _paymentDate(Wrap<LocalDate> c) {
 	}
 
+	protected void _lateFeeDate(Wrap<LocalDate> c) {
+	}
+
 	protected void _paymentYear(Wrap<Integer> c) {
 		if(paymentDate != null)
 			c.o(paymentDate.getYear());

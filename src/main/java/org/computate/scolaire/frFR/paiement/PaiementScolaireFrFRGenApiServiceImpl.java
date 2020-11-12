@@ -356,58 +356,6 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 							}
 						}
 						break;
-					case "enfantNomCompletPrefere":
-						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "enfantNomCompletPrefere", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
-									, b
-							-> {
-								if(b.succeeded())
-									a.handle(Future.succeededFuture());
-								else
-									a.handle(Future.failedFuture(new Exception("valeur PaiementScolaire.enfantNomCompletPrefere a échoué", b.cause())));
-							});
-						}));
-						break;
-					case "enfantDateNaissance":
-						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "enfantDateNaissance", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
-									, b
-							-> {
-								if(b.succeeded())
-									a.handle(Future.succeededFuture());
-								else
-									a.handle(Future.failedFuture(new Exception("valeur PaiementScolaire.enfantDateNaissance a échoué", b.cause())));
-							});
-						}));
-						break;
-					case "mereNomCompletPrefere":
-						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "mereNomCompletPrefere", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
-									, b
-							-> {
-								if(b.succeeded())
-									a.handle(Future.succeededFuture());
-								else
-									a.handle(Future.failedFuture(new Exception("valeur PaiementScolaire.mereNomCompletPrefere a échoué", b.cause())));
-							});
-						}));
-						break;
-					case "pereNomCompletPrefere":
-						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "pereNomCompletPrefere", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
-									, b
-							-> {
-								if(b.succeeded())
-									a.handle(Future.succeededFuture());
-								else
-									a.handle(Future.failedFuture(new Exception("valeur PaiementScolaire.pereNomCompletPrefere a échoué", b.cause())));
-							});
-						}));
-						break;
 					case "inscriptionPaimentChaqueMois":
 						futures.add(Future.future(a -> {
 							tx.preparedQuery(SiteContexteFrFR.SQL_setD
@@ -444,6 +392,19 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 									a.handle(Future.succeededFuture());
 								else
 									a.handle(Future.failedFuture(new Exception("valeur PaiementScolaire.paiementDate a échoué", b.cause())));
+							});
+						}));
+						break;
+					case "fraisRetardDate":
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "fraisRetardDate", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur PaiementScolaire.fraisRetardDate a échoué", b.cause())));
 							});
 						}));
 						break;
@@ -1340,58 +1301,6 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 						}));
 						}
 						break;
-					case "enfantNomCompletPrefere":
-						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "enfantNomCompletPrefere", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
-									, b
-							-> {
-								if(b.succeeded())
-									a.handle(Future.succeededFuture());
-								else
-									a.handle(Future.failedFuture(new Exception("valeur PaiementScolaire.enfantNomCompletPrefere a échoué", b.cause())));
-							});
-						}));
-						break;
-					case "enfantDateNaissance":
-						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "enfantDateNaissance", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
-									, b
-							-> {
-								if(b.succeeded())
-									a.handle(Future.succeededFuture());
-								else
-									a.handle(Future.failedFuture(new Exception("valeur PaiementScolaire.enfantDateNaissance a échoué", b.cause())));
-							});
-						}));
-						break;
-					case "mereNomCompletPrefere":
-						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "mereNomCompletPrefere", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
-									, b
-							-> {
-								if(b.succeeded())
-									a.handle(Future.succeededFuture());
-								else
-									a.handle(Future.failedFuture(new Exception("valeur PaiementScolaire.mereNomCompletPrefere a échoué", b.cause())));
-							});
-						}));
-						break;
-					case "pereNomCompletPrefere":
-						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "pereNomCompletPrefere", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
-									, b
-							-> {
-								if(b.succeeded())
-									a.handle(Future.succeededFuture());
-								else
-									a.handle(Future.failedFuture(new Exception("valeur PaiementScolaire.pereNomCompletPrefere a échoué", b.cause())));
-							});
-						}));
-						break;
 					case "inscriptionPaimentChaqueMois":
 						futures.add(Future.future(a -> {
 							tx.preparedQuery(SiteContexteFrFR.SQL_setD
@@ -1428,6 +1337,19 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 									a.handle(Future.succeededFuture());
 								else
 									a.handle(Future.failedFuture(new Exception("valeur PaiementScolaire.paiementDate a échoué", b.cause())));
+							});
+						}));
+						break;
+					case "fraisRetardDate":
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "fraisRetardDate", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur PaiementScolaire.fraisRetardDate a échoué", b.cause())));
 							});
 						}));
 						break;
@@ -2073,118 +1995,6 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 							}
 						}
 						break;
-					case "setEnfantNomCompletPrefere":
-						if(jsonObject.getString(methodeNom) == null) {
-							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "enfantNomCompletPrefere")
-										, b
-								-> {
-									if(b.succeeded())
-										a.handle(Future.succeededFuture());
-									else
-										a.handle(Future.failedFuture(new Exception("valeur PaiementScolaire.enfantNomCompletPrefere a échoué", b.cause())));
-								});
-							}));
-						} else {
-							o2.setEnfantNomCompletPrefere(jsonObject.getString(methodeNom));
-							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "enfantNomCompletPrefere", o2.jsonEnfantNomCompletPrefere())
-										, b
-								-> {
-									if(b.succeeded())
-										a.handle(Future.succeededFuture());
-									else
-										a.handle(Future.failedFuture(new Exception("valeur PaiementScolaire.enfantNomCompletPrefere a échoué", b.cause())));
-								});
-							}));
-						}
-						break;
-					case "setEnfantDateNaissance":
-						if(jsonObject.getString(methodeNom) == null) {
-							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "enfantDateNaissance")
-										, b
-								-> {
-									if(b.succeeded())
-										a.handle(Future.succeededFuture());
-									else
-										a.handle(Future.failedFuture(new Exception("valeur PaiementScolaire.enfantDateNaissance a échoué", b.cause())));
-								});
-							}));
-						} else {
-							o2.setEnfantDateNaissance(jsonObject.getString(methodeNom));
-							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "enfantDateNaissance", o2.jsonEnfantDateNaissance())
-										, b
-								-> {
-									if(b.succeeded())
-										a.handle(Future.succeededFuture());
-									else
-										a.handle(Future.failedFuture(new Exception("valeur PaiementScolaire.enfantDateNaissance a échoué", b.cause())));
-								});
-							}));
-						}
-						break;
-					case "setMereNomCompletPrefere":
-						if(jsonObject.getString(methodeNom) == null) {
-							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "mereNomCompletPrefere")
-										, b
-								-> {
-									if(b.succeeded())
-										a.handle(Future.succeededFuture());
-									else
-										a.handle(Future.failedFuture(new Exception("valeur PaiementScolaire.mereNomCompletPrefere a échoué", b.cause())));
-								});
-							}));
-						} else {
-							o2.setMereNomCompletPrefere(jsonObject.getString(methodeNom));
-							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "mereNomCompletPrefere", o2.jsonMereNomCompletPrefere())
-										, b
-								-> {
-									if(b.succeeded())
-										a.handle(Future.succeededFuture());
-									else
-										a.handle(Future.failedFuture(new Exception("valeur PaiementScolaire.mereNomCompletPrefere a échoué", b.cause())));
-								});
-							}));
-						}
-						break;
-					case "setPereNomCompletPrefere":
-						if(jsonObject.getString(methodeNom) == null) {
-							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "pereNomCompletPrefere")
-										, b
-								-> {
-									if(b.succeeded())
-										a.handle(Future.succeededFuture());
-									else
-										a.handle(Future.failedFuture(new Exception("valeur PaiementScolaire.pereNomCompletPrefere a échoué", b.cause())));
-								});
-							}));
-						} else {
-							o2.setPereNomCompletPrefere(jsonObject.getString(methodeNom));
-							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "pereNomCompletPrefere", o2.jsonPereNomCompletPrefere())
-										, b
-								-> {
-									if(b.succeeded())
-										a.handle(Future.succeededFuture());
-									else
-										a.handle(Future.failedFuture(new Exception("valeur PaiementScolaire.pereNomCompletPrefere a échoué", b.cause())));
-								});
-							}));
-						}
-						break;
 					case "setInscriptionPaimentChaqueMois":
 						if(jsonObject.getBoolean(methodeNom) == null) {
 							futures.add(Future.future(a -> {
@@ -2265,6 +2075,34 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 										a.handle(Future.succeededFuture());
 									else
 										a.handle(Future.failedFuture(new Exception("valeur PaiementScolaire.paiementDate a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setFraisRetardDate":
+						if(jsonObject.getString(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "fraisRetardDate")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur PaiementScolaire.fraisRetardDate a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setFraisRetardDate(jsonObject.getString(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "fraisRetardDate", o2.jsonFraisRetardDate())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur PaiementScolaire.fraisRetardDate a échoué", b.cause())));
 								});
 							}));
 						}
@@ -3581,7 +3419,16 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 	public void recherchePaiementScolaireFq(String uri, String apiMethode, ListeRecherche<PaiementScolaire> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
 		if(varIndexe == null)
 			throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entiteVar));
-		listeRecherche.addFilterQuery(varIndexe + ":" + ClientUtils.escapeQueryChars(valeurIndexe));
+		if(StringUtils.startsWith(valeurIndexe, "[")) {
+			String[] fqs = StringUtils.split(StringUtils.substringBefore(StringUtils.substringAfter(valeurIndexe, "["), "]"), " TO ");
+			if(fqs.length != 2)
+				throw new RuntimeException(String.format("\"%s\" invalid range query. ", valeurIndexe));
+			String fq1 = fqs[0].equals("*") ? fqs[0] : PaiementScolaire.staticSolrFqPourClasse(entiteVar, listeRecherche.getRequeteSite_(), fqs[0]);
+			String fq2 = fqs[1].equals("*") ? fqs[1] : PaiementScolaire.staticSolrFqPourClasse(entiteVar, listeRecherche.getRequeteSite_(), fqs[1]);
+			listeRecherche.addFilterQuery(varIndexe + ":[" + fq1 + " TO " + fq2 + "]");
+		} else {
+			listeRecherche.addFilterQuery(varIndexe + ":" + PaiementScolaire.staticSolrFqPourClasse(entiteVar, listeRecherche.getRequeteSite_(), valeurIndexe));
+		}
 	}
 
 	public void recherchePaiementScolaireSort(String uri, String apiMethode, ListeRecherche<PaiementScolaire> listeRecherche, String entiteVar, String valeurIndexe, String varIndexe) {
@@ -3719,7 +3566,7 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 					gestionnaireEvenements.handle(Future.failedFuture(e));
 				}
 			});
-			if("*".equals(listeRecherche.getQuery()) && listeRecherche.getSorts().size() == 0) {
+			if("*:*".equals(listeRecherche.getQuery()) && listeRecherche.getSorts().size() == 0) {
 				listeRecherche.addSort("paiementDate_indexed_date", ORDER.desc);
 				listeRecherche.addSort("paiementPar_indexed_string", ORDER.desc);
 			}

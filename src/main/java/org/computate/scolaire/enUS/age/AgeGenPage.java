@@ -239,13 +239,6 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 			o.htmYearKey("PUTCopy");
 			o.htmBlockKeys("PUTCopy");
 		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmInheritPk("PUTCopy");
-			o.htmSessionId("PUTCopy");
-			o.htmUserId("PUTCopy");
-			o.htmUserKey("PUTCopy");
-			o.htmSchoolAddress("PUTCopy");
-		} g("div");
 	}
 
 	public void htmlFormPATCHSchoolAge(SchoolAge o) {
@@ -264,13 +257,6 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmYearKey("PATCH");
 			o.htmBlockKeys("PATCH");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmInheritPk("PATCH");
-			o.htmSessionId("PATCH");
-			o.htmUserId("PATCH");
-			o.htmUserKey("PATCH");
-			o.htmSchoolAddress("PATCH");
 		} g("div");
 	}
 

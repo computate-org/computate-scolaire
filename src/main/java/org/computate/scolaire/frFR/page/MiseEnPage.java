@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.page;          
+package org.computate.scolaire.frFR.page;      
 
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
@@ -35,6 +35,7 @@ import org.computate.scolaire.frFR.ecole.EcoleGenPage;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 import org.computate.scolaire.frFR.enfant.EnfantGenPage;
 import org.computate.scolaire.frFR.gardien.GardienGenPage;
+import org.computate.scolaire.frFR.html.part.PartHtml;
 import org.computate.scolaire.frFR.html.part.PartHtmlGenPage;
 import org.computate.scolaire.frFR.inscription.InscriptionGenPage;
 import org.computate.scolaire.frFR.mere.MereGenPage;
@@ -1794,8 +1795,22 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	 * r.enUS: StaticBaseUrl
 	 * r: ecrireConnecterDeconnecter
 	 * r.enUS: writeLoginLogout
+	 * r: PartHtml
+	 * r.enUS: HtmlPart
+	 * r: getTri
+	 * r.enUS: getSort
+	 * r: getPdfExclure
+	 * r.enUS: getPdfExclude
+	 * r: getHtmlExclure
+	 * r.enUS: getHtmlExclude
+	 * r: getHtmlAvant
+	 * r.enUS: getHtmlBefore
+	 * r: getHtmlApres
+	 * r.enUS: getHtmlAfter
+	 * r: getConnecterDeconnecter
+	 * r.enUS: getLoginLogout
 	 */
-	public Integer htmlPageLayout2(String pageTypeContenu, List<HtmlPart> htmlPartList, HtmlPart htmlPartParent, Integer start, Integer size) {
+	public Integer htmlPageLayout2(String pageTypeContenu, List<PartHtml> htmlPartList, PartHtml htmlPartParent, Integer start, Integer size) {
 
 		Integer i;
 
@@ -1811,31 +1826,31 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 		Double parentSort10 = null;
 
 		if(htmlPartParent != null) {
-			parentSort1 = htmlPartParent.getSort1();
-			parentSort2 = htmlPartParent.getSort2();
-			parentSort3 = htmlPartParent.getSort3();
-			parentSort4 = htmlPartParent.getSort4();
-			parentSort5 = htmlPartParent.getSort5();
-			parentSort6 = htmlPartParent.getSort6();
-			parentSort7 = htmlPartParent.getSort7();
-			parentSort8 = htmlPartParent.getSort8();
-			parentSort9 = htmlPartParent.getSort9();
-			parentSort10 = htmlPartParent.getSort10();
+			parentSort1 = htmlPartParent.getTri1();
+			parentSort2 = htmlPartParent.getTri2();
+			parentSort3 = htmlPartParent.getTri3();
+			parentSort4 = htmlPartParent.getTri4();
+			parentSort5 = htmlPartParent.getTri5();
+			parentSort6 = htmlPartParent.getTri6();
+			parentSort7 = htmlPartParent.getTri7();
+			parentSort8 = htmlPartParent.getTri8();
+			parentSort9 = htmlPartParent.getTri9();
+			parentSort10 = htmlPartParent.getTri10();
 		}
 
 		for(i = Math.abs(start); i < size; i++) {
-			HtmlPart htmlPart = htmlPartList.get(i);
+			PartHtml htmlPart = htmlPartList.get(i);
 
-			Double sort1 = htmlPart.getSort1();
-			Double sort2 = htmlPart.getSort2();
-			Double sort3 = htmlPart.getSort3();
-			Double sort4 = htmlPart.getSort4();
-			Double sort5 = htmlPart.getSort5();
-			Double sort6 = htmlPart.getSort6();
-			Double sort7 = htmlPart.getSort7();
-			Double sort8 = htmlPart.getSort8();
-			Double sort9 = htmlPart.getSort9();
-			Double sort10 = htmlPart.getSort10();
+			Double sort1 = htmlPart.getTri1();
+			Double sort2 = htmlPart.getTri2();
+			Double sort3 = htmlPart.getTri3();
+			Double sort4 = htmlPart.getTri4();
+			Double sort5 = htmlPart.getTri5();
+			Double sort6 = htmlPart.getTri6();
+			Double sort7 = htmlPart.getTri7();
+			Double sort8 = htmlPart.getTri8();
+			Double sort9 = htmlPart.getTri9();
+			Double sort10 = htmlPart.getTri10();
 
 			if(htmlPartParent != null) {
 				if(parentSort2 != null && (sort1 == null || parentSort1.compareTo(sort1) != 0))
@@ -1867,8 +1882,8 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 				String htmlVarForm = htmlPart.getHtmlVarForm();
 				String htmlVarForEach = htmlPart.getHtmlVarForEach();
 				String htmlIfVarEquals = htmlPart.getHtmlIfVarEquals();
-				Boolean pdfExclude = htmlPart.getPdfExclude();
-				Boolean htmlExclude = htmlPart.getHtmlExclude();
+				Boolean pdfExclude = htmlPart.getPdfExclure();
+				Boolean htmlExclude = htmlPart.getHtmlExclure();
 
 				if(htmlVarSpan != null)
 					htmlVar = htmlVarSpan;
@@ -1877,7 +1892,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 						"application/pdf".equals(pageTypeContenu) && BooleanUtils.isNotTrue(pdfExclude)
 						|| !"application/pdf".equals(pageTypeContenu) && BooleanUtils.isNotTrue(htmlExclude)
 						) {
-					s(htmlPart.getHtmlBefore());
+					s(htmlPart.getHtmlAvant());
 					if(htmlVar != null) {
 	
 						Object parent = StringUtils.contains(htmlVar, ".") ? obtenirPourClasse(StringUtils.substringBeforeLast(htmlVar, ".")) : null;
@@ -2016,11 +2031,11 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 							throw new RuntimeException(String.format("Could not call method %s of var %s and object: %s", "htm" + StringUtils.capitalize(var), htmlVarInput, parent), e);
 						}
 					}
-					if(htmlPart.getLoginLogout()) {
+					if(htmlPart.getConnecterDeconnecter()) {
 						ecrireConnecterDeconnecter();
 						l();
 					}
-					s(htmlPart.getHtmlAfter());
+					s(htmlPart.getHtmlApres());
 				}
 			}
 		}

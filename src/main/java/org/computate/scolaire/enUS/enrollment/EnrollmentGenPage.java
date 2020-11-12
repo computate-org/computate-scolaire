@@ -444,38 +444,6 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 			o.htmUserKeys("PUTCopy");
 			o.htmPaymentKeys("PUTCopy");
 		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmInheritPk("PUTCopy");
-			o.htmSessionId("PUTCopy");
-			o.htmUserId("PUTCopy");
-			o.htmUserKey("PUTCopy");
-			o.htmChildCompleteName("PUTCopy");
-			o.htmChildCompleteNamePreferred("PUTCopy");
-			o.htmChildBirthDate("PUTCopy");
-			o.htmSchoolAddress("PUTCopy");
-			o.htmEnrollmentChargeDate("PUTCopy");
-			o.htmEnrollmentParentNames("PUTCopy");
-			o.htmEnrollmentSignature1("PUTCopy");
-			o.htmEnrollmentSignature2("PUTCopy");
-			o.htmEnrollmentSignature3("PUTCopy");
-			o.htmEnrollmentSignature4("PUTCopy");
-			o.htmEnrollmentSignature5("PUTCopy");
-			o.htmEnrollmentSignature6("PUTCopy");
-			o.htmEnrollmentSignature7("PUTCopy");
-			o.htmEnrollmentSignature8("PUTCopy");
-			o.htmEnrollmentSignature9("PUTCopy");
-			o.htmEnrollmentSignature10("PUTCopy");
-			o.htmEnrollmentDate1("PUTCopy");
-			o.htmEnrollmentDate2("PUTCopy");
-			o.htmEnrollmentDate3("PUTCopy");
-			o.htmEnrollmentDate4("PUTCopy");
-			o.htmEnrollmentDate5("PUTCopy");
-			o.htmEnrollmentDate6("PUTCopy");
-			o.htmEnrollmentDate7("PUTCopy");
-			o.htmEnrollmentDate8("PUTCopy");
-			o.htmEnrollmentDate9("PUTCopy");
-			o.htmEnrollmentDate10("PUTCopy");
-		} g("div");
 	}
 
 	public void htmlFormPATCHSchoolEnrollment(SchoolEnrollment o) {
@@ -532,38 +500,6 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmUserKeys("PATCH");
 			o.htmPaymentKeys("PATCH");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmInheritPk("PATCH");
-			o.htmSessionId("PATCH");
-			o.htmUserId("PATCH");
-			o.htmUserKey("PATCH");
-			o.htmChildCompleteName("PATCH");
-			o.htmChildCompleteNamePreferred("PATCH");
-			o.htmChildBirthDate("PATCH");
-			o.htmSchoolAddress("PATCH");
-			o.htmEnrollmentChargeDate("PATCH");
-			o.htmEnrollmentParentNames("PATCH");
-			o.htmEnrollmentSignature1("PATCH");
-			o.htmEnrollmentSignature2("PATCH");
-			o.htmEnrollmentSignature3("PATCH");
-			o.htmEnrollmentSignature4("PATCH");
-			o.htmEnrollmentSignature5("PATCH");
-			o.htmEnrollmentSignature6("PATCH");
-			o.htmEnrollmentSignature7("PATCH");
-			o.htmEnrollmentSignature8("PATCH");
-			o.htmEnrollmentSignature9("PATCH");
-			o.htmEnrollmentSignature10("PATCH");
-			o.htmEnrollmentDate1("PATCH");
-			o.htmEnrollmentDate2("PATCH");
-			o.htmEnrollmentDate3("PATCH");
-			o.htmEnrollmentDate4("PATCH");
-			o.htmEnrollmentDate5("PATCH");
-			o.htmEnrollmentDate6("PATCH");
-			o.htmEnrollmentDate7("PATCH");
-			o.htmEnrollmentDate8("PATCH");
-			o.htmEnrollmentDate9("PATCH");
-			o.htmEnrollmentDate10("PATCH");
 		} g("div");
 	}
 

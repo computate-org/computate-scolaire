@@ -120,10 +120,14 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		this.sessionCleCouverture.dejaInitialise = true;
 	}
 	public SessionScolaire setSessionCle(String o) {
-		if(NumberUtils.isParsable(o))
-			this.sessionCle = Long.parseLong(o);
+		this.sessionCle = SessionScolaire.staticSetSessionCle(requeteSite_, o);
 		this.sessionCleCouverture.dejaInitialise = true;
 		return (SessionScolaire)this;
+	}
+	public static Long staticSetSessionCle(RequeteSiteFrFR requeteSite_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Long.parseLong(o);
+		return null;
 	}
 	protected SessionScolaire sessionCleInit() {
 		if(!sessionCleCouverture.dejaInitialise) {
@@ -135,8 +139,20 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		return (SessionScolaire)this;
 	}
 
+	public static Long staticSolrSessionCle(RequeteSiteFrFR requeteSite_, Long o) {
+		return o;
+	}
+
+	public static String staticSolrStrSessionCle(RequeteSiteFrFR requeteSite_, Long o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqSessionCle(RequeteSiteFrFR requeteSite_, String o) {
+		return SessionScolaire.staticSolrStrSessionCle(requeteSite_, SessionScolaire.staticSolrSessionCle(requeteSite_, SessionScolaire.staticSetSessionCle(requeteSite_, o)));
+	}
+
 	public Long solrSessionCle() {
-		return sessionCle;
+		return SessionScolaire.staticSolrSessionCle(requeteSite_, sessionCle);
 	}
 
 	public String strSessionCle() {
@@ -188,6 +204,9 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		this.inscriptionCles = inscriptionCles;
 		this.inscriptionClesCouverture.dejaInitialise = true;
 	}
+	public static List<Long> staticSetInscriptionCles(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
+	}
 	public SessionScolaire addInscriptionCles(Long...objets) {
 		for(Long o : objets) {
 			addInscriptionCles(o);
@@ -222,8 +241,20 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		return (SessionScolaire)this;
 	}
 
+	public static List<Long> staticSolrInscriptionCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
+		return o;
+	}
+
+	public static String staticSolrStrInscriptionCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqInscriptionCles(RequeteSiteFrFR requeteSite_, String o) {
+		return SessionScolaire.staticSolrStrInscriptionCles(requeteSite_, SessionScolaire.staticSolrInscriptionCles(requeteSite_, SessionScolaire.staticSetInscriptionCles(requeteSite_, o)));
+	}
+
 	public List<Long> solrInscriptionCles() {
-		return inscriptionCles;
+		return SessionScolaire.staticSolrInscriptionCles(requeteSite_, inscriptionCles);
 	}
 
 	public String strInscriptionCles() {
@@ -275,6 +306,9 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		this.ageCles = ageCles;
 		this.ageClesCouverture.dejaInitialise = true;
 	}
+	public static List<Long> staticSetAgeCles(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
+	}
 	public SessionScolaire addAgeCles(Long...objets) {
 		for(Long o : objets) {
 			addAgeCles(o);
@@ -309,8 +343,20 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		return (SessionScolaire)this;
 	}
 
+	public static List<Long> staticSolrAgeCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
+		return o;
+	}
+
+	public static String staticSolrStrAgeCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqAgeCles(RequeteSiteFrFR requeteSite_, String o) {
+		return SessionScolaire.staticSolrStrAgeCles(requeteSite_, SessionScolaire.staticSolrAgeCles(requeteSite_, SessionScolaire.staticSetAgeCles(requeteSite_, o)));
+	}
+
 	public List<Long> solrAgeCles() {
-		return ageCles;
+		return SessionScolaire.staticSolrAgeCles(requeteSite_, ageCles);
 	}
 
 	public String strAgeCles() {
@@ -347,9 +393,12 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 					.a("class", "valeur suggereAgeCles w3-input w3-border w3-cell w3-cell-middle ")
 					.a("name", "setAgeCles")
 					.a("id", classeApiMethodeMethode, "_ageCles")
-					.a("autocomplete", "off")
-					.a("oninput", "suggereSessionScolaireAgeCles($(this).val() ? rechercherAgeScolaireFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'sessionCle:" + pk + "'}", "], $('#listSessionScolaireAgeCles_", classeApiMethodeMethode, "'), ", pk, "); ")
-				.fg();
+					.a("autocomplete", "off");
+					if("Page".equals(classeApiMethodeMethode)) {
+						a("oninput", "suggereSessionScolaireAgeCles($(this).val() ? rechercherAgeScolaireFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'sessionCle:" + pk + "'}", "], $('#listSessionScolaireAgeCles_", classeApiMethodeMethode, "'), ", pk, "); ");
+					}
+
+				fg();
 
 		} else {
 			if(
@@ -441,10 +490,14 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		this.scolaireTriCouverture.dejaInitialise = true;
 	}
 	public SessionScolaire setScolaireTri(String o) {
-		if(NumberUtils.isParsable(o))
-			this.scolaireTri = Integer.parseInt(o);
+		this.scolaireTri = SessionScolaire.staticSetScolaireTri(requeteSite_, o);
 		this.scolaireTriCouverture.dejaInitialise = true;
 		return (SessionScolaire)this;
+	}
+	public static Integer staticSetScolaireTri(RequeteSiteFrFR requeteSite_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Integer.parseInt(o);
+		return null;
 	}
 	protected SessionScolaire scolaireTriInit() {
 		if(!scolaireTriCouverture.dejaInitialise) {
@@ -456,8 +509,20 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		return (SessionScolaire)this;
 	}
 
+	public static Integer staticSolrScolaireTri(RequeteSiteFrFR requeteSite_, Integer o) {
+		return o;
+	}
+
+	public static String staticSolrStrScolaireTri(RequeteSiteFrFR requeteSite_, Integer o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqScolaireTri(RequeteSiteFrFR requeteSite_, String o) {
+		return SessionScolaire.staticSolrStrScolaireTri(requeteSite_, SessionScolaire.staticSolrScolaireTri(requeteSite_, SessionScolaire.staticSetScolaireTri(requeteSite_, o)));
+	}
+
 	public Integer solrScolaireTri() {
-		return scolaireTri;
+		return SessionScolaire.staticSolrScolaireTri(requeteSite_, scolaireTri);
 	}
 
 	public String strScolaireTri() {
@@ -510,10 +575,14 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		this.ecoleTriCouverture.dejaInitialise = true;
 	}
 	public SessionScolaire setEcoleTri(String o) {
-		if(NumberUtils.isParsable(o))
-			this.ecoleTri = Integer.parseInt(o);
+		this.ecoleTri = SessionScolaire.staticSetEcoleTri(requeteSite_, o);
 		this.ecoleTriCouverture.dejaInitialise = true;
 		return (SessionScolaire)this;
+	}
+	public static Integer staticSetEcoleTri(RequeteSiteFrFR requeteSite_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Integer.parseInt(o);
+		return null;
 	}
 	protected SessionScolaire ecoleTriInit() {
 		if(!ecoleTriCouverture.dejaInitialise) {
@@ -525,8 +594,20 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		return (SessionScolaire)this;
 	}
 
+	public static Integer staticSolrEcoleTri(RequeteSiteFrFR requeteSite_, Integer o) {
+		return o;
+	}
+
+	public static String staticSolrStrEcoleTri(RequeteSiteFrFR requeteSite_, Integer o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqEcoleTri(RequeteSiteFrFR requeteSite_, String o) {
+		return SessionScolaire.staticSolrStrEcoleTri(requeteSite_, SessionScolaire.staticSolrEcoleTri(requeteSite_, SessionScolaire.staticSetEcoleTri(requeteSite_, o)));
+	}
+
 	public Integer solrEcoleTri() {
-		return ecoleTri;
+		return SessionScolaire.staticSolrEcoleTri(requeteSite_, ecoleTri);
 	}
 
 	public String strEcoleTri() {
@@ -579,10 +660,14 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		this.anneeTriCouverture.dejaInitialise = true;
 	}
 	public SessionScolaire setAnneeTri(String o) {
-		if(NumberUtils.isParsable(o))
-			this.anneeTri = Integer.parseInt(o);
+		this.anneeTri = SessionScolaire.staticSetAnneeTri(requeteSite_, o);
 		this.anneeTriCouverture.dejaInitialise = true;
 		return (SessionScolaire)this;
+	}
+	public static Integer staticSetAnneeTri(RequeteSiteFrFR requeteSite_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Integer.parseInt(o);
+		return null;
 	}
 	protected SessionScolaire anneeTriInit() {
 		if(!anneeTriCouverture.dejaInitialise) {
@@ -594,8 +679,20 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		return (SessionScolaire)this;
 	}
 
+	public static Integer staticSolrAnneeTri(RequeteSiteFrFR requeteSite_, Integer o) {
+		return o;
+	}
+
+	public static String staticSolrStrAnneeTri(RequeteSiteFrFR requeteSite_, Integer o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqAnneeTri(RequeteSiteFrFR requeteSite_, String o) {
+		return SessionScolaire.staticSolrStrAnneeTri(requeteSite_, SessionScolaire.staticSolrAnneeTri(requeteSite_, SessionScolaire.staticSetAnneeTri(requeteSite_, o)));
+	}
+
 	public Integer solrAnneeTri() {
-		return anneeTri;
+		return SessionScolaire.staticSolrAnneeTri(requeteSite_, anneeTri);
 	}
 
 	public String strAnneeTri() {
@@ -648,10 +745,14 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		this.saisonTriCouverture.dejaInitialise = true;
 	}
 	public SessionScolaire setSaisonTri(String o) {
-		if(NumberUtils.isParsable(o))
-			this.saisonTri = Integer.parseInt(o);
+		this.saisonTri = SessionScolaire.staticSetSaisonTri(requeteSite_, o);
 		this.saisonTriCouverture.dejaInitialise = true;
 		return (SessionScolaire)this;
+	}
+	public static Integer staticSetSaisonTri(RequeteSiteFrFR requeteSite_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Integer.parseInt(o);
+		return null;
 	}
 	protected SessionScolaire saisonTriInit() {
 		if(!saisonTriCouverture.dejaInitialise) {
@@ -663,8 +764,20 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		return (SessionScolaire)this;
 	}
 
+	public static Integer staticSolrSaisonTri(RequeteSiteFrFR requeteSite_, Integer o) {
+		return o;
+	}
+
+	public static String staticSolrStrSaisonTri(RequeteSiteFrFR requeteSite_, Integer o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqSaisonTri(RequeteSiteFrFR requeteSite_, String o) {
+		return SessionScolaire.staticSolrStrSaisonTri(requeteSite_, SessionScolaire.staticSolrSaisonTri(requeteSite_, SessionScolaire.staticSetSaisonTri(requeteSite_, o)));
+	}
+
 	public Integer solrSaisonTri() {
-		return saisonTri;
+		return SessionScolaire.staticSolrSaisonTri(requeteSite_, saisonTri);
 	}
 
 	public String strSaisonTri() {
@@ -717,10 +830,14 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		this.sessionTriCouverture.dejaInitialise = true;
 	}
 	public SessionScolaire setSessionTri(String o) {
-		if(NumberUtils.isParsable(o))
-			this.sessionTri = Integer.parseInt(o);
+		this.sessionTri = SessionScolaire.staticSetSessionTri(requeteSite_, o);
 		this.sessionTriCouverture.dejaInitialise = true;
 		return (SessionScolaire)this;
+	}
+	public static Integer staticSetSessionTri(RequeteSiteFrFR requeteSite_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Integer.parseInt(o);
+		return null;
 	}
 	protected SessionScolaire sessionTriInit() {
 		if(!sessionTriCouverture.dejaInitialise) {
@@ -732,8 +849,20 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		return (SessionScolaire)this;
 	}
 
+	public static Integer staticSolrSessionTri(RequeteSiteFrFR requeteSite_, Integer o) {
+		return o;
+	}
+
+	public static String staticSolrStrSessionTri(RequeteSiteFrFR requeteSite_, Integer o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqSessionTri(RequeteSiteFrFR requeteSite_, String o) {
+		return SessionScolaire.staticSolrStrSessionTri(requeteSite_, SessionScolaire.staticSolrSessionTri(requeteSite_, SessionScolaire.staticSetSessionTri(requeteSite_, o)));
+	}
+
 	public Integer solrSessionTri() {
-		return sessionTri;
+		return SessionScolaire.staticSolrSessionTri(requeteSite_, sessionTri);
 	}
 
 	public String strSessionTri() {
@@ -786,10 +915,14 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		this.saisonCleCouverture.dejaInitialise = true;
 	}
 	public SessionScolaire setSaisonCle(String o) {
-		if(NumberUtils.isParsable(o))
-			this.saisonCle = Long.parseLong(o);
+		this.saisonCle = SessionScolaire.staticSetSaisonCle(requeteSite_, o);
 		this.saisonCleCouverture.dejaInitialise = true;
 		return (SessionScolaire)this;
+	}
+	public static Long staticSetSaisonCle(RequeteSiteFrFR requeteSite_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Long.parseLong(o);
+		return null;
 	}
 	protected SessionScolaire saisonCleInit() {
 		if(!saisonCleCouverture.dejaInitialise) {
@@ -801,8 +934,20 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		return (SessionScolaire)this;
 	}
 
+	public static Long staticSolrSaisonCle(RequeteSiteFrFR requeteSite_, Long o) {
+		return o;
+	}
+
+	public static String staticSolrStrSaisonCle(RequeteSiteFrFR requeteSite_, Long o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqSaisonCle(RequeteSiteFrFR requeteSite_, String o) {
+		return SessionScolaire.staticSolrStrSaisonCle(requeteSite_, SessionScolaire.staticSolrSaisonCle(requeteSite_, SessionScolaire.staticSetSaisonCle(requeteSite_, o)));
+	}
+
 	public Long solrSaisonCle() {
-		return saisonCle;
+		return SessionScolaire.staticSolrSaisonCle(requeteSite_, saisonCle);
 	}
 
 	public String strSaisonCle() {
@@ -839,9 +984,12 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 					.a("class", "valeur suggereSaisonCle w3-input w3-border w3-cell w3-cell-middle ")
 					.a("name", "setSaisonCle")
 					.a("id", classeApiMethodeMethode, "_saisonCle")
-					.a("autocomplete", "off")
-					.a("oninput", "suggereSessionScolaireSaisonCle($(this).val() ? rechercherSaisonScolaireFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'sessionCles:" + pk + "'}", "], $('#listSessionScolaireSaisonCle_", classeApiMethodeMethode, "'), ", pk, "); ")
-				.fg();
+					.a("autocomplete", "off");
+					if("Page".equals(classeApiMethodeMethode)) {
+						a("oninput", "suggereSessionScolaireSaisonCle($(this).val() ? rechercherSaisonScolaireFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'sessionCles:" + pk + "'}", "], $('#listSessionScolaireSaisonCle_", classeApiMethodeMethode, "'), ", pk, "); ");
+					}
+
+				fg();
 
 		} else {
 			if(
@@ -932,6 +1080,9 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		this.saisonRecherche = saisonRecherche;
 		this.saisonRechercheCouverture.dejaInitialise = true;
 	}
+	public static ListeRecherche<SaisonScolaire> staticSetSaisonRecherche(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
+	}
 	protected SessionScolaire saisonRechercheInit() {
 		if(!saisonRechercheCouverture.dejaInitialise) {
 			_saisonRecherche(saisonRecherche);
@@ -969,6 +1120,9 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 	public void setSaison_(SaisonScolaire saison_) {
 		this.saison_ = saison_;
 		this.saison_Couverture.dejaInitialise = true;
+	}
+	public static SaisonScolaire staticSetSaison_(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
 	}
 	protected SessionScolaire saison_Init() {
 		if(!saison_Couverture.dejaInitialise) {
@@ -1010,10 +1164,14 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		this.ecoleCleCouverture.dejaInitialise = true;
 	}
 	public SessionScolaire setEcoleCle(String o) {
-		if(NumberUtils.isParsable(o))
-			this.ecoleCle = Long.parseLong(o);
+		this.ecoleCle = SessionScolaire.staticSetEcoleCle(requeteSite_, o);
 		this.ecoleCleCouverture.dejaInitialise = true;
 		return (SessionScolaire)this;
+	}
+	public static Long staticSetEcoleCle(RequeteSiteFrFR requeteSite_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Long.parseLong(o);
+		return null;
 	}
 	protected SessionScolaire ecoleCleInit() {
 		if(!ecoleCleCouverture.dejaInitialise) {
@@ -1025,8 +1183,20 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		return (SessionScolaire)this;
 	}
 
+	public static Long staticSolrEcoleCle(RequeteSiteFrFR requeteSite_, Long o) {
+		return o;
+	}
+
+	public static String staticSolrStrEcoleCle(RequeteSiteFrFR requeteSite_, Long o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqEcoleCle(RequeteSiteFrFR requeteSite_, String o) {
+		return SessionScolaire.staticSolrStrEcoleCle(requeteSite_, SessionScolaire.staticSolrEcoleCle(requeteSite_, SessionScolaire.staticSetEcoleCle(requeteSite_, o)));
+	}
+
 	public Long solrEcoleCle() {
-		return ecoleCle;
+		return SessionScolaire.staticSolrEcoleCle(requeteSite_, ecoleCle);
 	}
 
 	public String strEcoleCle() {
@@ -1079,10 +1249,14 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		this.anneeCleCouverture.dejaInitialise = true;
 	}
 	public SessionScolaire setAnneeCle(String o) {
-		if(NumberUtils.isParsable(o))
-			this.anneeCle = Long.parseLong(o);
+		this.anneeCle = SessionScolaire.staticSetAnneeCle(requeteSite_, o);
 		this.anneeCleCouverture.dejaInitialise = true;
 		return (SessionScolaire)this;
+	}
+	public static Long staticSetAnneeCle(RequeteSiteFrFR requeteSite_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Long.parseLong(o);
+		return null;
 	}
 	protected SessionScolaire anneeCleInit() {
 		if(!anneeCleCouverture.dejaInitialise) {
@@ -1094,8 +1268,20 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		return (SessionScolaire)this;
 	}
 
+	public static Long staticSolrAnneeCle(RequeteSiteFrFR requeteSite_, Long o) {
+		return o;
+	}
+
+	public static String staticSolrStrAnneeCle(RequeteSiteFrFR requeteSite_, Long o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqAnneeCle(RequeteSiteFrFR requeteSite_, String o) {
+		return SessionScolaire.staticSolrStrAnneeCle(requeteSite_, SessionScolaire.staticSolrAnneeCle(requeteSite_, SessionScolaire.staticSetAnneeCle(requeteSite_, o)));
+	}
+
 	public Long solrAnneeCle() {
-		return anneeCle;
+		return SessionScolaire.staticSolrAnneeCle(requeteSite_, anneeCle);
 	}
 
 	public String strAnneeCle() {
@@ -1141,10 +1327,13 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 	public String getEcoleNom() {
 		return ecoleNom;
 	}
-
-	public void setEcoleNom(String ecoleNom) {
-		this.ecoleNom = ecoleNom;
+	public SessionScolaire setEcoleNom(String o) {
+		this.ecoleNom = SessionScolaire.staticSetEcoleNom(requeteSite_, o);
 		this.ecoleNomCouverture.dejaInitialise = true;
+		return (SessionScolaire)this;
+	}
+	public static String staticSetEcoleNom(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected SessionScolaire ecoleNomInit() {
 		if(!ecoleNomCouverture.dejaInitialise) {
@@ -1156,8 +1345,20 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		return (SessionScolaire)this;
 	}
 
+	public static String staticSolrEcoleNom(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrEcoleNom(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqEcoleNom(RequeteSiteFrFR requeteSite_, String o) {
+		return SessionScolaire.staticSolrStrEcoleNom(requeteSite_, SessionScolaire.staticSolrEcoleNom(requeteSite_, SessionScolaire.staticSetEcoleNom(requeteSite_, o)));
+	}
+
 	public String solrEcoleNom() {
-		return ecoleNom;
+		return SessionScolaire.staticSolrEcoleNom(requeteSite_, ecoleNom);
 	}
 
 	public String strEcoleNom() {
@@ -1203,10 +1404,13 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 	public String getEcoleNomComplet() {
 		return ecoleNomComplet;
 	}
-
-	public void setEcoleNomComplet(String ecoleNomComplet) {
-		this.ecoleNomComplet = ecoleNomComplet;
+	public SessionScolaire setEcoleNomComplet(String o) {
+		this.ecoleNomComplet = SessionScolaire.staticSetEcoleNomComplet(requeteSite_, o);
 		this.ecoleNomCompletCouverture.dejaInitialise = true;
+		return (SessionScolaire)this;
+	}
+	public static String staticSetEcoleNomComplet(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected SessionScolaire ecoleNomCompletInit() {
 		if(!ecoleNomCompletCouverture.dejaInitialise) {
@@ -1218,8 +1422,20 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		return (SessionScolaire)this;
 	}
 
+	public static String staticSolrEcoleNomComplet(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrEcoleNomComplet(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqEcoleNomComplet(RequeteSiteFrFR requeteSite_, String o) {
+		return SessionScolaire.staticSolrStrEcoleNomComplet(requeteSite_, SessionScolaire.staticSolrEcoleNomComplet(requeteSite_, SessionScolaire.staticSetEcoleNomComplet(requeteSite_, o)));
+	}
+
 	public String solrEcoleNomComplet() {
-		return ecoleNomComplet;
+		return SessionScolaire.staticSolrEcoleNomComplet(requeteSite_, ecoleNomComplet);
 	}
 
 	public String strEcoleNomComplet() {
@@ -1265,10 +1481,13 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 	public String getEcoleEmplacement() {
 		return ecoleEmplacement;
 	}
-
-	public void setEcoleEmplacement(String ecoleEmplacement) {
-		this.ecoleEmplacement = ecoleEmplacement;
+	public SessionScolaire setEcoleEmplacement(String o) {
+		this.ecoleEmplacement = SessionScolaire.staticSetEcoleEmplacement(requeteSite_, o);
 		this.ecoleEmplacementCouverture.dejaInitialise = true;
+		return (SessionScolaire)this;
+	}
+	public static String staticSetEcoleEmplacement(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected SessionScolaire ecoleEmplacementInit() {
 		if(!ecoleEmplacementCouverture.dejaInitialise) {
@@ -1280,8 +1499,20 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		return (SessionScolaire)this;
 	}
 
+	public static String staticSolrEcoleEmplacement(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrEcoleEmplacement(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqEcoleEmplacement(RequeteSiteFrFR requeteSite_, String o) {
+		return SessionScolaire.staticSolrStrEcoleEmplacement(requeteSite_, SessionScolaire.staticSolrEcoleEmplacement(requeteSite_, SessionScolaire.staticSetEcoleEmplacement(requeteSite_, o)));
+	}
+
 	public String solrEcoleEmplacement() {
-		return ecoleEmplacement;
+		return SessionScolaire.staticSolrEcoleEmplacement(requeteSite_, ecoleEmplacement);
 	}
 
 	public String strEcoleEmplacement() {
@@ -1327,10 +1558,13 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 	public String getEcoleAddresse() {
 		return ecoleAddresse;
 	}
-
-	public void setEcoleAddresse(String ecoleAddresse) {
-		this.ecoleAddresse = ecoleAddresse;
+	public SessionScolaire setEcoleAddresse(String o) {
+		this.ecoleAddresse = SessionScolaire.staticSetEcoleAddresse(requeteSite_, o);
 		this.ecoleAddresseCouverture.dejaInitialise = true;
+		return (SessionScolaire)this;
+	}
+	public static String staticSetEcoleAddresse(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected SessionScolaire ecoleAddresseInit() {
 		if(!ecoleAddresseCouverture.dejaInitialise) {
@@ -1342,8 +1576,20 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		return (SessionScolaire)this;
 	}
 
+	public static String staticSolrEcoleAddresse(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrEcoleAddresse(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqEcoleAddresse(RequeteSiteFrFR requeteSite_, String o) {
+		return SessionScolaire.staticSolrStrEcoleAddresse(requeteSite_, SessionScolaire.staticSolrEcoleAddresse(requeteSite_, SessionScolaire.staticSetEcoleAddresse(requeteSite_, o)));
+	}
+
 	public String solrEcoleAddresse() {
-		return ecoleAddresse;
+		return SessionScolaire.staticSolrEcoleAddresse(requeteSite_, ecoleAddresse);
 	}
 
 	public String strEcoleAddresse() {
@@ -1461,10 +1707,13 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 	public String getEcoleNumeroTelephone() {
 		return ecoleNumeroTelephone;
 	}
-
-	public void setEcoleNumeroTelephone(String ecoleNumeroTelephone) {
-		this.ecoleNumeroTelephone = ecoleNumeroTelephone;
+	public SessionScolaire setEcoleNumeroTelephone(String o) {
+		this.ecoleNumeroTelephone = SessionScolaire.staticSetEcoleNumeroTelephone(requeteSite_, o);
 		this.ecoleNumeroTelephoneCouverture.dejaInitialise = true;
+		return (SessionScolaire)this;
+	}
+	public static String staticSetEcoleNumeroTelephone(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected SessionScolaire ecoleNumeroTelephoneInit() {
 		if(!ecoleNumeroTelephoneCouverture.dejaInitialise) {
@@ -1476,8 +1725,20 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		return (SessionScolaire)this;
 	}
 
+	public static String staticSolrEcoleNumeroTelephone(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrEcoleNumeroTelephone(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqEcoleNumeroTelephone(RequeteSiteFrFR requeteSite_, String o) {
+		return SessionScolaire.staticSolrStrEcoleNumeroTelephone(requeteSite_, SessionScolaire.staticSolrEcoleNumeroTelephone(requeteSite_, SessionScolaire.staticSetEcoleNumeroTelephone(requeteSite_, o)));
+	}
+
 	public String solrEcoleNumeroTelephone() {
-		return ecoleNumeroTelephone;
+		return SessionScolaire.staticSolrEcoleNumeroTelephone(requeteSite_, ecoleNumeroTelephone);
 	}
 
 	public String strEcoleNumeroTelephone() {
@@ -1523,10 +1784,13 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 	public String getEcoleForm() {
 		return ecoleForm;
 	}
-
-	public void setEcoleForm(String ecoleForm) {
-		this.ecoleForm = ecoleForm;
+	public SessionScolaire setEcoleForm(String o) {
+		this.ecoleForm = SessionScolaire.staticSetEcoleForm(requeteSite_, o);
 		this.ecoleFormCouverture.dejaInitialise = true;
+		return (SessionScolaire)this;
+	}
+	public static String staticSetEcoleForm(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected SessionScolaire ecoleFormInit() {
 		if(!ecoleFormCouverture.dejaInitialise) {
@@ -1538,8 +1802,20 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		return (SessionScolaire)this;
 	}
 
+	public static String staticSolrEcoleForm(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrEcoleForm(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqEcoleForm(RequeteSiteFrFR requeteSite_, String o) {
+		return SessionScolaire.staticSolrStrEcoleForm(requeteSite_, SessionScolaire.staticSolrEcoleForm(requeteSite_, SessionScolaire.staticSetEcoleForm(requeteSite_, o)));
+	}
+
 	public String solrEcoleForm() {
-		return ecoleForm;
+		return SessionScolaire.staticSolrEcoleForm(requeteSite_, ecoleForm);
 	}
 
 	public String strEcoleForm() {
@@ -1592,10 +1868,14 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		this.ecoleNumeroCouverture.dejaInitialise = true;
 	}
 	public SessionScolaire setEcoleNumero(String o) {
-		if(NumberUtils.isParsable(o))
-			this.ecoleNumero = Integer.parseInt(o);
+		this.ecoleNumero = SessionScolaire.staticSetEcoleNumero(requeteSite_, o);
 		this.ecoleNumeroCouverture.dejaInitialise = true;
 		return (SessionScolaire)this;
+	}
+	public static Integer staticSetEcoleNumero(RequeteSiteFrFR requeteSite_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Integer.parseInt(o);
+		return null;
 	}
 	protected SessionScolaire ecoleNumeroInit() {
 		if(!ecoleNumeroCouverture.dejaInitialise) {
@@ -1607,8 +1887,20 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		return (SessionScolaire)this;
 	}
 
+	public static Integer staticSolrEcoleNumero(RequeteSiteFrFR requeteSite_, Integer o) {
+		return o;
+	}
+
+	public static String staticSolrStrEcoleNumero(RequeteSiteFrFR requeteSite_, Integer o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqEcoleNumero(RequeteSiteFrFR requeteSite_, String o) {
+		return SessionScolaire.staticSolrStrEcoleNumero(requeteSite_, SessionScolaire.staticSolrEcoleNumero(requeteSite_, SessionScolaire.staticSetEcoleNumero(requeteSite_, o)));
+	}
+
 	public Integer solrEcoleNumero() {
-		return ecoleNumero;
+		return SessionScolaire.staticSolrEcoleNumero(requeteSite_, ecoleNumero);
 	}
 
 	public String strEcoleNumero() {
@@ -1654,10 +1946,13 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 	public String getEcoleAdministrateurNom() {
 		return ecoleAdministrateurNom;
 	}
-
-	public void setEcoleAdministrateurNom(String ecoleAdministrateurNom) {
-		this.ecoleAdministrateurNom = ecoleAdministrateurNom;
+	public SessionScolaire setEcoleAdministrateurNom(String o) {
+		this.ecoleAdministrateurNom = SessionScolaire.staticSetEcoleAdministrateurNom(requeteSite_, o);
 		this.ecoleAdministrateurNomCouverture.dejaInitialise = true;
+		return (SessionScolaire)this;
+	}
+	public static String staticSetEcoleAdministrateurNom(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected SessionScolaire ecoleAdministrateurNomInit() {
 		if(!ecoleAdministrateurNomCouverture.dejaInitialise) {
@@ -1669,8 +1964,20 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		return (SessionScolaire)this;
 	}
 
+	public static String staticSolrEcoleAdministrateurNom(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrEcoleAdministrateurNom(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqEcoleAdministrateurNom(RequeteSiteFrFR requeteSite_, String o) {
+		return SessionScolaire.staticSolrStrEcoleAdministrateurNom(requeteSite_, SessionScolaire.staticSolrEcoleAdministrateurNom(requeteSite_, SessionScolaire.staticSetEcoleAdministrateurNom(requeteSite_, o)));
+	}
+
 	public String solrEcoleAdministrateurNom() {
-		return ecoleAdministrateurNom;
+		return SessionScolaire.staticSolrEcoleAdministrateurNom(requeteSite_, ecoleAdministrateurNom);
 	}
 
 	public String strEcoleAdministrateurNom() {
@@ -1723,10 +2030,14 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		this.anneeDebutCouverture.dejaInitialise = true;
 	}
 	public SessionScolaire setAnneeDebut(String o) {
-		if(NumberUtils.isParsable(o))
-			this.anneeDebut = Integer.parseInt(o);
+		this.anneeDebut = SessionScolaire.staticSetAnneeDebut(requeteSite_, o);
 		this.anneeDebutCouverture.dejaInitialise = true;
 		return (SessionScolaire)this;
+	}
+	public static Integer staticSetAnneeDebut(RequeteSiteFrFR requeteSite_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Integer.parseInt(o);
+		return null;
 	}
 	protected SessionScolaire anneeDebutInit() {
 		if(!anneeDebutCouverture.dejaInitialise) {
@@ -1738,8 +2049,20 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		return (SessionScolaire)this;
 	}
 
+	public static Integer staticSolrAnneeDebut(RequeteSiteFrFR requeteSite_, Integer o) {
+		return o;
+	}
+
+	public static String staticSolrStrAnneeDebut(RequeteSiteFrFR requeteSite_, Integer o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqAnneeDebut(RequeteSiteFrFR requeteSite_, String o) {
+		return SessionScolaire.staticSolrStrAnneeDebut(requeteSite_, SessionScolaire.staticSolrAnneeDebut(requeteSite_, SessionScolaire.staticSetAnneeDebut(requeteSite_, o)));
+	}
+
 	public Integer solrAnneeDebut() {
-		return anneeDebut;
+		return SessionScolaire.staticSolrAnneeDebut(requeteSite_, anneeDebut);
 	}
 
 	public String strAnneeDebut() {
@@ -1792,10 +2115,14 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		this.anneeFinCouverture.dejaInitialise = true;
 	}
 	public SessionScolaire setAnneeFin(String o) {
-		if(NumberUtils.isParsable(o))
-			this.anneeFin = Integer.parseInt(o);
+		this.anneeFin = SessionScolaire.staticSetAnneeFin(requeteSite_, o);
 		this.anneeFinCouverture.dejaInitialise = true;
 		return (SessionScolaire)this;
+	}
+	public static Integer staticSetAnneeFin(RequeteSiteFrFR requeteSite_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Integer.parseInt(o);
+		return null;
 	}
 	protected SessionScolaire anneeFinInit() {
 		if(!anneeFinCouverture.dejaInitialise) {
@@ -1807,8 +2134,20 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		return (SessionScolaire)this;
 	}
 
+	public static Integer staticSolrAnneeFin(RequeteSiteFrFR requeteSite_, Integer o) {
+		return o;
+	}
+
+	public static String staticSolrStrAnneeFin(RequeteSiteFrFR requeteSite_, Integer o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqAnneeFin(RequeteSiteFrFR requeteSite_, String o) {
+		return SessionScolaire.staticSolrStrAnneeFin(requeteSite_, SessionScolaire.staticSolrAnneeFin(requeteSite_, SessionScolaire.staticSetAnneeFin(requeteSite_, o)));
+	}
+
 	public Integer solrAnneeFin() {
-		return anneeFin;
+		return SessionScolaire.staticSolrAnneeFin(requeteSite_, anneeFin);
 	}
 
 	public String strAnneeFin() {
@@ -1869,9 +2208,12 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SessionScolaire setSaisonDateDebut(String o) {
-		this.saisonDateDebut = o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		this.saisonDateDebut = SessionScolaire.staticSetSaisonDateDebut(requeteSite_, o);
 		this.saisonDateDebutCouverture.dejaInitialise = true;
 		return (SessionScolaire)this;
+	}
+	public static LocalDate staticSetSaisonDateDebut(RequeteSiteFrFR requeteSite_, String o) {
+		return o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 	}
 	public SessionScolaire setSaisonDateDebut(Date o) {
 		this.saisonDateDebut = o == null ? null : o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
@@ -1888,8 +2230,20 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		return (SessionScolaire)this;
 	}
 
+	public static Date staticSolrSaisonDateDebut(RequeteSiteFrFR requeteSite_, LocalDate o) {
+		return o == null ? null : Date.from(o.atStartOfDay(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toInstant().atZone(ZoneId.of("Z")).toInstant());
+	}
+
+	public static String staticSolrStrSaisonDateDebut(RequeteSiteFrFR requeteSite_, Date o) {
+		return "\"" + DateTimeFormatter.ISO_DATE_TIME.format(o.toInstant().atOffset(ZoneOffset.UTC)) + "\"";
+	}
+
+	public static String staticSolrFqSaisonDateDebut(RequeteSiteFrFR requeteSite_, String o) {
+		return SessionScolaire.staticSolrStrSaisonDateDebut(requeteSite_, SessionScolaire.staticSolrSaisonDateDebut(requeteSite_, SessionScolaire.staticSetSaisonDateDebut(requeteSite_, o)));
+	}
+
 	public Date solrSaisonDateDebut() {
-		return saisonDateDebut == null ? null : Date.from(saisonDateDebut.atStartOfDay(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toInstant().atZone(ZoneId.of("Z")).toInstant());
+		return SessionScolaire.staticSolrSaisonDateDebut(requeteSite_, saisonDateDebut);
 	}
 
 	public String strSaisonDateDebut() {
@@ -1941,9 +2295,12 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		this.saisonEteCouverture.dejaInitialise = true;
 	}
 	public SessionScolaire setSaisonEte(String o) {
-		this.saisonEte = Boolean.parseBoolean(o);
+		this.saisonEte = SessionScolaire.staticSetSaisonEte(requeteSite_, o);
 		this.saisonEteCouverture.dejaInitialise = true;
 		return (SessionScolaire)this;
+	}
+	public static Boolean staticSetSaisonEte(RequeteSiteFrFR requeteSite_, String o) {
+		return Boolean.parseBoolean(o);
 	}
 	protected SessionScolaire saisonEteInit() {
 		if(!saisonEteCouverture.dejaInitialise) {
@@ -1955,8 +2312,20 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		return (SessionScolaire)this;
 	}
 
+	public static Boolean staticSolrSaisonEte(RequeteSiteFrFR requeteSite_, Boolean o) {
+		return o;
+	}
+
+	public static String staticSolrStrSaisonEte(RequeteSiteFrFR requeteSite_, Boolean o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqSaisonEte(RequeteSiteFrFR requeteSite_, String o) {
+		return SessionScolaire.staticSolrStrSaisonEte(requeteSite_, SessionScolaire.staticSolrSaisonEte(requeteSite_, SessionScolaire.staticSetSaisonEte(requeteSite_, o)));
+	}
+
 	public Boolean solrSaisonEte() {
-		return saisonEte;
+		return SessionScolaire.staticSolrSaisonEte(requeteSite_, saisonEte);
 	}
 
 	public String strSaisonEte() {
@@ -2008,9 +2377,12 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		this.saisonHiverCouverture.dejaInitialise = true;
 	}
 	public SessionScolaire setSaisonHiver(String o) {
-		this.saisonHiver = Boolean.parseBoolean(o);
+		this.saisonHiver = SessionScolaire.staticSetSaisonHiver(requeteSite_, o);
 		this.saisonHiverCouverture.dejaInitialise = true;
 		return (SessionScolaire)this;
+	}
+	public static Boolean staticSetSaisonHiver(RequeteSiteFrFR requeteSite_, String o) {
+		return Boolean.parseBoolean(o);
 	}
 	protected SessionScolaire saisonHiverInit() {
 		if(!saisonHiverCouverture.dejaInitialise) {
@@ -2022,8 +2394,20 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		return (SessionScolaire)this;
 	}
 
+	public static Boolean staticSolrSaisonHiver(RequeteSiteFrFR requeteSite_, Boolean o) {
+		return o;
+	}
+
+	public static String staticSolrStrSaisonHiver(RequeteSiteFrFR requeteSite_, Boolean o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqSaisonHiver(RequeteSiteFrFR requeteSite_, String o) {
+		return SessionScolaire.staticSolrStrSaisonHiver(requeteSite_, SessionScolaire.staticSolrSaisonHiver(requeteSite_, SessionScolaire.staticSetSaisonHiver(requeteSite_, o)));
+	}
+
 	public Boolean solrSaisonHiver() {
-		return saisonHiver;
+		return SessionScolaire.staticSolrSaisonHiver(requeteSite_, saisonHiver);
 	}
 
 	public String strSaisonHiver() {
@@ -2076,11 +2460,15 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		this.anneeFraisInscriptionCouverture.dejaInitialise = true;
 	}
 	public SessionScolaire setAnneeFraisInscription(String o) {
-		o = StringUtils.removeAll(o, "[^\\d\\.]");
-		if(NumberUtils.isParsable(o))
-			this.anneeFraisInscription = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
+		this.anneeFraisInscription = SessionScolaire.staticSetAnneeFraisInscription(requeteSite_, o);
 		this.anneeFraisInscriptionCouverture.dejaInitialise = true;
 		return (SessionScolaire)this;
+	}
+	public static BigDecimal staticSetAnneeFraisInscription(RequeteSiteFrFR requeteSite_, String o) {
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
+		return null;
 	}
 	public SessionScolaire setAnneeFraisInscription(Double o) {
 			this.anneeFraisInscription = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
@@ -2102,8 +2490,20 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		return (SessionScolaire)this;
 	}
 
+	public static Double staticSolrAnneeFraisInscription(RequeteSiteFrFR requeteSite_, BigDecimal o) {
+		return o == null ? null : o.doubleValue();
+	}
+
+	public static String staticSolrStrAnneeFraisInscription(RequeteSiteFrFR requeteSite_, Double o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqAnneeFraisInscription(RequeteSiteFrFR requeteSite_, String o) {
+		return SessionScolaire.staticSolrStrAnneeFraisInscription(requeteSite_, SessionScolaire.staticSolrAnneeFraisInscription(requeteSite_, SessionScolaire.staticSetAnneeFraisInscription(requeteSite_, o)));
+	}
+
 	public Double solrAnneeFraisInscription() {
-		return anneeFraisInscription == null ? null : anneeFraisInscription.doubleValue();
+		return SessionScolaire.staticSolrAnneeFraisInscription(requeteSite_, anneeFraisInscription);
 	}
 
 	public String strAnneeFraisInscription() {
@@ -2149,10 +2549,13 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 	public String getSaisonNomCourt() {
 		return saisonNomCourt;
 	}
-
-	public void setSaisonNomCourt(String saisonNomCourt) {
-		this.saisonNomCourt = saisonNomCourt;
+	public SessionScolaire setSaisonNomCourt(String o) {
+		this.saisonNomCourt = SessionScolaire.staticSetSaisonNomCourt(requeteSite_, o);
 		this.saisonNomCourtCouverture.dejaInitialise = true;
+		return (SessionScolaire)this;
+	}
+	public static String staticSetSaisonNomCourt(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected SessionScolaire saisonNomCourtInit() {
 		if(!saisonNomCourtCouverture.dejaInitialise) {
@@ -2164,8 +2567,20 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		return (SessionScolaire)this;
 	}
 
+	public static String staticSolrSaisonNomCourt(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrSaisonNomCourt(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqSaisonNomCourt(RequeteSiteFrFR requeteSite_, String o) {
+		return SessionScolaire.staticSolrStrSaisonNomCourt(requeteSite_, SessionScolaire.staticSolrSaisonNomCourt(requeteSite_, SessionScolaire.staticSetSaisonNomCourt(requeteSite_, o)));
+	}
+
 	public String solrSaisonNomCourt() {
-		return saisonNomCourt;
+		return SessionScolaire.staticSolrSaisonNomCourt(requeteSite_, saisonNomCourt);
 	}
 
 	public String strSaisonNomCourt() {
@@ -2211,10 +2626,13 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 	public String getSaisonNomComplet() {
 		return saisonNomComplet;
 	}
-
-	public void setSaisonNomComplet(String saisonNomComplet) {
-		this.saisonNomComplet = saisonNomComplet;
+	public SessionScolaire setSaisonNomComplet(String o) {
+		this.saisonNomComplet = SessionScolaire.staticSetSaisonNomComplet(requeteSite_, o);
 		this.saisonNomCompletCouverture.dejaInitialise = true;
+		return (SessionScolaire)this;
+	}
+	public static String staticSetSaisonNomComplet(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected SessionScolaire saisonNomCompletInit() {
 		if(!saisonNomCompletCouverture.dejaInitialise) {
@@ -2226,8 +2644,20 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		return (SessionScolaire)this;
 	}
 
+	public static String staticSolrSaisonNomComplet(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrSaisonNomComplet(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqSaisonNomComplet(RequeteSiteFrFR requeteSite_, String o) {
+		return SessionScolaire.staticSolrStrSaisonNomComplet(requeteSite_, SessionScolaire.staticSolrSaisonNomComplet(requeteSite_, SessionScolaire.staticSetSaisonNomComplet(requeteSite_, o)));
+	}
+
 	public String solrSaisonNomComplet() {
-		return saisonNomComplet;
+		return SessionScolaire.staticSolrSaisonNomComplet(requeteSite_, saisonNomComplet);
 	}
 
 	public String strSaisonNomComplet() {
@@ -2288,9 +2718,12 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SessionScolaire setSessionDateDebut(String o) {
-		this.sessionDateDebut = o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		this.sessionDateDebut = SessionScolaire.staticSetSessionDateDebut(requeteSite_, o);
 		this.sessionDateDebutCouverture.dejaInitialise = true;
 		return (SessionScolaire)this;
+	}
+	public static LocalDate staticSetSessionDateDebut(RequeteSiteFrFR requeteSite_, String o) {
+		return o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 	}
 	public SessionScolaire setSessionDateDebut(Date o) {
 		this.sessionDateDebut = o == null ? null : o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
@@ -2307,8 +2740,20 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		return (SessionScolaire)this;
 	}
 
+	public static Date staticSolrSessionDateDebut(RequeteSiteFrFR requeteSite_, LocalDate o) {
+		return o == null ? null : Date.from(o.atStartOfDay(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toInstant().atZone(ZoneId.of("Z")).toInstant());
+	}
+
+	public static String staticSolrStrSessionDateDebut(RequeteSiteFrFR requeteSite_, Date o) {
+		return "\"" + DateTimeFormatter.ISO_DATE_TIME.format(o.toInstant().atOffset(ZoneOffset.UTC)) + "\"";
+	}
+
+	public static String staticSolrFqSessionDateDebut(RequeteSiteFrFR requeteSite_, String o) {
+		return SessionScolaire.staticSolrStrSessionDateDebut(requeteSite_, SessionScolaire.staticSolrSessionDateDebut(requeteSite_, SessionScolaire.staticSetSessionDateDebut(requeteSite_, o)));
+	}
+
 	public Date solrSessionDateDebut() {
-		return sessionDateDebut == null ? null : Date.from(sessionDateDebut.atStartOfDay(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toInstant().atZone(ZoneId.of("Z")).toInstant());
+		return SessionScolaire.staticSolrSessionDateDebut(requeteSite_, sessionDateDebut);
 	}
 
 	public String strSessionDateDebut() {
@@ -2338,16 +2783,18 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 				) {
 			e("input")
-				.a("type", "text")
-				.a("class", "w3-input w3-border datepicker setSessionDateDebut classSessionScolaire inputSessionScolaire", pk, "SessionDateDebut w3-input w3-border ")
-				.a("placeholder", "DD-MM-YYYY")
-				.a("data-timeformat", "dd-MM-yyyy")
-				.a("id", classeApiMethodeMethode, "_sessionDateDebut")
-				.a("onclick", "enleverLueur($(this)); ")
-				.a("title", "L'année scolaire de la saison scolaire.  (DD-MM-YYYY)")
-				.a("value", sessionDateDebut == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy").format(sessionDateDebut))
-				.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setSessionDateDebut', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_sessionDateDebut')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_sessionDateDebut')); }); } ")
-				.fg();
+					.a("type", "text")
+					.a("class", "w3-input w3-border datepicker setSessionDateDebut classSessionScolaire inputSessionScolaire", pk, "SessionDateDebut w3-input w3-border ")
+					.a("placeholder", "DD-MM-YYYY")
+					.a("data-timeformat", "dd-MM-yyyy")
+					.a("id", classeApiMethodeMethode, "_sessionDateDebut")
+					.a("title", "L'année scolaire de la saison scolaire.  (DD-MM-YYYY)")
+					.a("value", sessionDateDebut == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy").format(sessionDateDebut));
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onclick", "enleverLueur($(this)); ");
+				a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setSessionDateDebut', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_sessionDateDebut')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_sessionDateDebut')); }); } ");
+			}
+			fg();
 		} else {
 			if(
 					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
@@ -2432,9 +2879,12 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public SessionScolaire setSessionDateFin(String o) {
-		this.sessionDateFin = o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		this.sessionDateFin = SessionScolaire.staticSetSessionDateFin(requeteSite_, o);
 		this.sessionDateFinCouverture.dejaInitialise = true;
 		return (SessionScolaire)this;
+	}
+	public static LocalDate staticSetSessionDateFin(RequeteSiteFrFR requeteSite_, String o) {
+		return o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 	}
 	public SessionScolaire setSessionDateFin(Date o) {
 		this.sessionDateFin = o == null ? null : o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
@@ -2451,8 +2901,20 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		return (SessionScolaire)this;
 	}
 
+	public static Date staticSolrSessionDateFin(RequeteSiteFrFR requeteSite_, LocalDate o) {
+		return o == null ? null : Date.from(o.atStartOfDay(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toInstant().atZone(ZoneId.of("Z")).toInstant());
+	}
+
+	public static String staticSolrStrSessionDateFin(RequeteSiteFrFR requeteSite_, Date o) {
+		return "\"" + DateTimeFormatter.ISO_DATE_TIME.format(o.toInstant().atOffset(ZoneOffset.UTC)) + "\"";
+	}
+
+	public static String staticSolrFqSessionDateFin(RequeteSiteFrFR requeteSite_, String o) {
+		return SessionScolaire.staticSolrStrSessionDateFin(requeteSite_, SessionScolaire.staticSolrSessionDateFin(requeteSite_, SessionScolaire.staticSetSessionDateFin(requeteSite_, o)));
+	}
+
 	public Date solrSessionDateFin() {
-		return sessionDateFin == null ? null : Date.from(sessionDateFin.atStartOfDay(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toInstant().atZone(ZoneId.of("Z")).toInstant());
+		return SessionScolaire.staticSolrSessionDateFin(requeteSite_, sessionDateFin);
 	}
 
 	public String strSessionDateFin() {
@@ -2482,16 +2944,18 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 				) {
 			e("input")
-				.a("type", "text")
-				.a("class", "w3-input w3-border datepicker setSessionDateFin classSessionScolaire inputSessionScolaire", pk, "SessionDateFin w3-input w3-border ")
-				.a("placeholder", "DD-MM-YYYY")
-				.a("data-timeformat", "dd-MM-yyyy")
-				.a("id", classeApiMethodeMethode, "_sessionDateFin")
-				.a("onclick", "enleverLueur($(this)); ")
-				.a("title", "L'année scolaire de la saison scolaire.  (DD-MM-YYYY)")
-				.a("value", sessionDateFin == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy").format(sessionDateFin))
-				.a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setSessionDateFin', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_sessionDateFin')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_sessionDateFin')); }); } ")
-				.fg();
+					.a("type", "text")
+					.a("class", "w3-input w3-border datepicker setSessionDateFin classSessionScolaire inputSessionScolaire", pk, "SessionDateFin w3-input w3-border ")
+					.a("placeholder", "DD-MM-YYYY")
+					.a("data-timeformat", "dd-MM-yyyy")
+					.a("id", classeApiMethodeMethode, "_sessionDateFin")
+					.a("title", "L'année scolaire de la saison scolaire.  (DD-MM-YYYY)")
+					.a("value", sessionDateFin == null ? "" : DateTimeFormatter.ofPattern("dd-MM-yyyy").format(sessionDateFin));
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onclick", "enleverLueur($(this)); ");
+				a("onchange", "var t = moment(this.value, 'DD-MM-YYYY'); if(t) { var s = t.format('YYYY-MM-DD'); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setSessionDateFin', s, function() { ajouterLueur($('#", classeApiMethodeMethode, "_sessionDateFin')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_sessionDateFin')); }); } ");
+			}
+			fg();
 		} else {
 			if(
 					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
@@ -2561,10 +3025,13 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 	public String getSessionNomCourt() {
 		return sessionNomCourt;
 	}
-
-	public void setSessionNomCourt(String sessionNomCourt) {
-		this.sessionNomCourt = sessionNomCourt;
+	public SessionScolaire setSessionNomCourt(String o) {
+		this.sessionNomCourt = SessionScolaire.staticSetSessionNomCourt(requeteSite_, o);
 		this.sessionNomCourtCouverture.dejaInitialise = true;
+		return (SessionScolaire)this;
+	}
+	public static String staticSetSessionNomCourt(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected SessionScolaire sessionNomCourtInit() {
 		if(!sessionNomCourtCouverture.dejaInitialise) {
@@ -2576,8 +3043,20 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		return (SessionScolaire)this;
 	}
 
+	public static String staticSolrSessionNomCourt(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrSessionNomCourt(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqSessionNomCourt(RequeteSiteFrFR requeteSite_, String o) {
+		return SessionScolaire.staticSolrStrSessionNomCourt(requeteSite_, SessionScolaire.staticSolrSessionNomCourt(requeteSite_, SessionScolaire.staticSetSessionNomCourt(requeteSite_, o)));
+	}
+
 	public String solrSessionNomCourt() {
-		return sessionNomCourt;
+		return SessionScolaire.staticSolrSessionNomCourt(requeteSite_, sessionNomCourt);
 	}
 
 	public String strSessionNomCourt() {
@@ -2623,10 +3102,13 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 	public String getSessionNomComplet() {
 		return sessionNomComplet;
 	}
-
-	public void setSessionNomComplet(String sessionNomComplet) {
-		this.sessionNomComplet = sessionNomComplet;
+	public SessionScolaire setSessionNomComplet(String o) {
+		this.sessionNomComplet = SessionScolaire.staticSetSessionNomComplet(requeteSite_, o);
 		this.sessionNomCompletCouverture.dejaInitialise = true;
+		return (SessionScolaire)this;
+	}
+	public static String staticSetSessionNomComplet(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected SessionScolaire sessionNomCompletInit() {
 		if(!sessionNomCompletCouverture.dejaInitialise) {
@@ -2638,8 +3120,20 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 		return (SessionScolaire)this;
 	}
 
+	public static String staticSolrSessionNomComplet(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrSessionNomComplet(RequeteSiteFrFR requeteSite_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqSessionNomComplet(RequeteSiteFrFR requeteSite_, String o) {
+		return SessionScolaire.staticSolrStrSessionNomComplet(requeteSite_, SessionScolaire.staticSolrSessionNomComplet(requeteSite_, SessionScolaire.staticSetSessionNomComplet(requeteSite_, o)));
+	}
+
 	public String solrSessionNomComplet() {
-		return sessionNomComplet;
+		return SessionScolaire.staticSolrSessionNomComplet(requeteSite_, sessionNomComplet);
 	}
 
 	public String strSessionNomComplet() {
@@ -2860,6 +3354,310 @@ public abstract class SessionScolaireGen<DEV> extends Cluster {
 				return val;
 			default:
 				return super.attribuerCluster(var, val);
+		}
+	}
+
+	///////////////
+	// staticSet //
+	///////////////
+
+	public static Object staticSetPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		return staticSetSessionScolaire(entiteVar,  requeteSite_, o);
+	}
+	public static Object staticSetSessionScolaire(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		switch(entiteVar) {
+		case "sessionCle":
+			return SessionScolaire.staticSetSessionCle(requeteSite_, o);
+		case "inscriptionCles":
+			return SessionScolaire.staticSetInscriptionCles(requeteSite_, o);
+		case "ageCles":
+			return SessionScolaire.staticSetAgeCles(requeteSite_, o);
+		case "scolaireTri":
+			return SessionScolaire.staticSetScolaireTri(requeteSite_, o);
+		case "ecoleTri":
+			return SessionScolaire.staticSetEcoleTri(requeteSite_, o);
+		case "anneeTri":
+			return SessionScolaire.staticSetAnneeTri(requeteSite_, o);
+		case "saisonTri":
+			return SessionScolaire.staticSetSaisonTri(requeteSite_, o);
+		case "sessionTri":
+			return SessionScolaire.staticSetSessionTri(requeteSite_, o);
+		case "saisonCle":
+			return SessionScolaire.staticSetSaisonCle(requeteSite_, o);
+		case "ecoleCle":
+			return SessionScolaire.staticSetEcoleCle(requeteSite_, o);
+		case "anneeCle":
+			return SessionScolaire.staticSetAnneeCle(requeteSite_, o);
+		case "ecoleNom":
+			return SessionScolaire.staticSetEcoleNom(requeteSite_, o);
+		case "ecoleNomComplet":
+			return SessionScolaire.staticSetEcoleNomComplet(requeteSite_, o);
+		case "ecoleEmplacement":
+			return SessionScolaire.staticSetEcoleEmplacement(requeteSite_, o);
+		case "ecoleAddresse":
+			return SessionScolaire.staticSetEcoleAddresse(requeteSite_, o);
+		case "ecoleNumeroTelephone":
+			return SessionScolaire.staticSetEcoleNumeroTelephone(requeteSite_, o);
+		case "ecoleForm":
+			return SessionScolaire.staticSetEcoleForm(requeteSite_, o);
+		case "ecoleNumero":
+			return SessionScolaire.staticSetEcoleNumero(requeteSite_, o);
+		case "ecoleAdministrateurNom":
+			return SessionScolaire.staticSetEcoleAdministrateurNom(requeteSite_, o);
+		case "anneeDebut":
+			return SessionScolaire.staticSetAnneeDebut(requeteSite_, o);
+		case "anneeFin":
+			return SessionScolaire.staticSetAnneeFin(requeteSite_, o);
+		case "saisonDateDebut":
+			return SessionScolaire.staticSetSaisonDateDebut(requeteSite_, o);
+		case "saisonEte":
+			return SessionScolaire.staticSetSaisonEte(requeteSite_, o);
+		case "saisonHiver":
+			return SessionScolaire.staticSetSaisonHiver(requeteSite_, o);
+		case "anneeFraisInscription":
+			return SessionScolaire.staticSetAnneeFraisInscription(requeteSite_, o);
+		case "saisonNomCourt":
+			return SessionScolaire.staticSetSaisonNomCourt(requeteSite_, o);
+		case "saisonNomComplet":
+			return SessionScolaire.staticSetSaisonNomComplet(requeteSite_, o);
+		case "sessionDateDebut":
+			return SessionScolaire.staticSetSessionDateDebut(requeteSite_, o);
+		case "sessionDateFin":
+			return SessionScolaire.staticSetSessionDateFin(requeteSite_, o);
+		case "sessionNomCourt":
+			return SessionScolaire.staticSetSessionNomCourt(requeteSite_, o);
+		case "sessionNomComplet":
+			return SessionScolaire.staticSetSessionNomComplet(requeteSite_, o);
+			default:
+				return Cluster.staticSetCluster(entiteVar,  requeteSite_, o);
+		}
+	}
+
+	////////////////
+	// staticSolr //
+	////////////////
+
+	public static Object staticSolrPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		return staticSolrSessionScolaire(entiteVar,  requeteSite_, o);
+	}
+	public static Object staticSolrSessionScolaire(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		switch(entiteVar) {
+		case "sessionCle":
+			return SessionScolaire.staticSolrSessionCle(requeteSite_, (Long)o);
+		case "inscriptionCles":
+			return SessionScolaire.staticSolrInscriptionCles(requeteSite_, (List<Long>)o);
+		case "ageCles":
+			return SessionScolaire.staticSolrAgeCles(requeteSite_, (List<Long>)o);
+		case "scolaireTri":
+			return SessionScolaire.staticSolrScolaireTri(requeteSite_, (Integer)o);
+		case "ecoleTri":
+			return SessionScolaire.staticSolrEcoleTri(requeteSite_, (Integer)o);
+		case "anneeTri":
+			return SessionScolaire.staticSolrAnneeTri(requeteSite_, (Integer)o);
+		case "saisonTri":
+			return SessionScolaire.staticSolrSaisonTri(requeteSite_, (Integer)o);
+		case "sessionTri":
+			return SessionScolaire.staticSolrSessionTri(requeteSite_, (Integer)o);
+		case "saisonCle":
+			return SessionScolaire.staticSolrSaisonCle(requeteSite_, (Long)o);
+		case "ecoleCle":
+			return SessionScolaire.staticSolrEcoleCle(requeteSite_, (Long)o);
+		case "anneeCle":
+			return SessionScolaire.staticSolrAnneeCle(requeteSite_, (Long)o);
+		case "ecoleNom":
+			return SessionScolaire.staticSolrEcoleNom(requeteSite_, (String)o);
+		case "ecoleNomComplet":
+			return SessionScolaire.staticSolrEcoleNomComplet(requeteSite_, (String)o);
+		case "ecoleEmplacement":
+			return SessionScolaire.staticSolrEcoleEmplacement(requeteSite_, (String)o);
+		case "ecoleAddresse":
+			return SessionScolaire.staticSolrEcoleAddresse(requeteSite_, (String)o);
+		case "ecoleNumeroTelephone":
+			return SessionScolaire.staticSolrEcoleNumeroTelephone(requeteSite_, (String)o);
+		case "ecoleForm":
+			return SessionScolaire.staticSolrEcoleForm(requeteSite_, (String)o);
+		case "ecoleNumero":
+			return SessionScolaire.staticSolrEcoleNumero(requeteSite_, (Integer)o);
+		case "ecoleAdministrateurNom":
+			return SessionScolaire.staticSolrEcoleAdministrateurNom(requeteSite_, (String)o);
+		case "anneeDebut":
+			return SessionScolaire.staticSolrAnneeDebut(requeteSite_, (Integer)o);
+		case "anneeFin":
+			return SessionScolaire.staticSolrAnneeFin(requeteSite_, (Integer)o);
+		case "saisonDateDebut":
+			return SessionScolaire.staticSolrSaisonDateDebut(requeteSite_, (LocalDate)o);
+		case "saisonEte":
+			return SessionScolaire.staticSolrSaisonEte(requeteSite_, (Boolean)o);
+		case "saisonHiver":
+			return SessionScolaire.staticSolrSaisonHiver(requeteSite_, (Boolean)o);
+		case "anneeFraisInscription":
+			return SessionScolaire.staticSolrAnneeFraisInscription(requeteSite_, (BigDecimal)o);
+		case "saisonNomCourt":
+			return SessionScolaire.staticSolrSaisonNomCourt(requeteSite_, (String)o);
+		case "saisonNomComplet":
+			return SessionScolaire.staticSolrSaisonNomComplet(requeteSite_, (String)o);
+		case "sessionDateDebut":
+			return SessionScolaire.staticSolrSessionDateDebut(requeteSite_, (LocalDate)o);
+		case "sessionDateFin":
+			return SessionScolaire.staticSolrSessionDateFin(requeteSite_, (LocalDate)o);
+		case "sessionNomCourt":
+			return SessionScolaire.staticSolrSessionNomCourt(requeteSite_, (String)o);
+		case "sessionNomComplet":
+			return SessionScolaire.staticSolrSessionNomComplet(requeteSite_, (String)o);
+			default:
+				return Cluster.staticSolrCluster(entiteVar,  requeteSite_, o);
+		}
+	}
+
+	///////////////////
+	// staticSolrStr //
+	///////////////////
+
+	public static String staticSolrStrPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		return staticSolrStrSessionScolaire(entiteVar,  requeteSite_, o);
+	}
+	public static String staticSolrStrSessionScolaire(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		switch(entiteVar) {
+		case "sessionCle":
+			return SessionScolaire.staticSolrStrSessionCle(requeteSite_, (Long)o);
+		case "inscriptionCles":
+			return SessionScolaire.staticSolrStrInscriptionCles(requeteSite_, (List<Long>)o);
+		case "ageCles":
+			return SessionScolaire.staticSolrStrAgeCles(requeteSite_, (List<Long>)o);
+		case "scolaireTri":
+			return SessionScolaire.staticSolrStrScolaireTri(requeteSite_, (Integer)o);
+		case "ecoleTri":
+			return SessionScolaire.staticSolrStrEcoleTri(requeteSite_, (Integer)o);
+		case "anneeTri":
+			return SessionScolaire.staticSolrStrAnneeTri(requeteSite_, (Integer)o);
+		case "saisonTri":
+			return SessionScolaire.staticSolrStrSaisonTri(requeteSite_, (Integer)o);
+		case "sessionTri":
+			return SessionScolaire.staticSolrStrSessionTri(requeteSite_, (Integer)o);
+		case "saisonCle":
+			return SessionScolaire.staticSolrStrSaisonCle(requeteSite_, (Long)o);
+		case "ecoleCle":
+			return SessionScolaire.staticSolrStrEcoleCle(requeteSite_, (Long)o);
+		case "anneeCle":
+			return SessionScolaire.staticSolrStrAnneeCle(requeteSite_, (Long)o);
+		case "ecoleNom":
+			return SessionScolaire.staticSolrStrEcoleNom(requeteSite_, (String)o);
+		case "ecoleNomComplet":
+			return SessionScolaire.staticSolrStrEcoleNomComplet(requeteSite_, (String)o);
+		case "ecoleEmplacement":
+			return SessionScolaire.staticSolrStrEcoleEmplacement(requeteSite_, (String)o);
+		case "ecoleAddresse":
+			return SessionScolaire.staticSolrStrEcoleAddresse(requeteSite_, (String)o);
+		case "ecoleNumeroTelephone":
+			return SessionScolaire.staticSolrStrEcoleNumeroTelephone(requeteSite_, (String)o);
+		case "ecoleForm":
+			return SessionScolaire.staticSolrStrEcoleForm(requeteSite_, (String)o);
+		case "ecoleNumero":
+			return SessionScolaire.staticSolrStrEcoleNumero(requeteSite_, (Integer)o);
+		case "ecoleAdministrateurNom":
+			return SessionScolaire.staticSolrStrEcoleAdministrateurNom(requeteSite_, (String)o);
+		case "anneeDebut":
+			return SessionScolaire.staticSolrStrAnneeDebut(requeteSite_, (Integer)o);
+		case "anneeFin":
+			return SessionScolaire.staticSolrStrAnneeFin(requeteSite_, (Integer)o);
+		case "saisonDateDebut":
+			return SessionScolaire.staticSolrStrSaisonDateDebut(requeteSite_, (Date)o);
+		case "saisonEte":
+			return SessionScolaire.staticSolrStrSaisonEte(requeteSite_, (Boolean)o);
+		case "saisonHiver":
+			return SessionScolaire.staticSolrStrSaisonHiver(requeteSite_, (Boolean)o);
+		case "anneeFraisInscription":
+			return SessionScolaire.staticSolrStrAnneeFraisInscription(requeteSite_, (Double)o);
+		case "saisonNomCourt":
+			return SessionScolaire.staticSolrStrSaisonNomCourt(requeteSite_, (String)o);
+		case "saisonNomComplet":
+			return SessionScolaire.staticSolrStrSaisonNomComplet(requeteSite_, (String)o);
+		case "sessionDateDebut":
+			return SessionScolaire.staticSolrStrSessionDateDebut(requeteSite_, (Date)o);
+		case "sessionDateFin":
+			return SessionScolaire.staticSolrStrSessionDateFin(requeteSite_, (Date)o);
+		case "sessionNomCourt":
+			return SessionScolaire.staticSolrStrSessionNomCourt(requeteSite_, (String)o);
+		case "sessionNomComplet":
+			return SessionScolaire.staticSolrStrSessionNomComplet(requeteSite_, (String)o);
+			default:
+				return Cluster.staticSolrStrCluster(entiteVar,  requeteSite_, o);
+		}
+	}
+
+	//////////////////
+	// staticSolrFq //
+	//////////////////
+
+	public static String staticSolrFqPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		return staticSolrFqSessionScolaire(entiteVar,  requeteSite_, o);
+	}
+	public static String staticSolrFqSessionScolaire(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		switch(entiteVar) {
+		case "sessionCle":
+			return SessionScolaire.staticSolrFqSessionCle(requeteSite_, o);
+		case "inscriptionCles":
+			return SessionScolaire.staticSolrFqInscriptionCles(requeteSite_, o);
+		case "ageCles":
+			return SessionScolaire.staticSolrFqAgeCles(requeteSite_, o);
+		case "scolaireTri":
+			return SessionScolaire.staticSolrFqScolaireTri(requeteSite_, o);
+		case "ecoleTri":
+			return SessionScolaire.staticSolrFqEcoleTri(requeteSite_, o);
+		case "anneeTri":
+			return SessionScolaire.staticSolrFqAnneeTri(requeteSite_, o);
+		case "saisonTri":
+			return SessionScolaire.staticSolrFqSaisonTri(requeteSite_, o);
+		case "sessionTri":
+			return SessionScolaire.staticSolrFqSessionTri(requeteSite_, o);
+		case "saisonCle":
+			return SessionScolaire.staticSolrFqSaisonCle(requeteSite_, o);
+		case "ecoleCle":
+			return SessionScolaire.staticSolrFqEcoleCle(requeteSite_, o);
+		case "anneeCle":
+			return SessionScolaire.staticSolrFqAnneeCle(requeteSite_, o);
+		case "ecoleNom":
+			return SessionScolaire.staticSolrFqEcoleNom(requeteSite_, o);
+		case "ecoleNomComplet":
+			return SessionScolaire.staticSolrFqEcoleNomComplet(requeteSite_, o);
+		case "ecoleEmplacement":
+			return SessionScolaire.staticSolrFqEcoleEmplacement(requeteSite_, o);
+		case "ecoleAddresse":
+			return SessionScolaire.staticSolrFqEcoleAddresse(requeteSite_, o);
+		case "ecoleNumeroTelephone":
+			return SessionScolaire.staticSolrFqEcoleNumeroTelephone(requeteSite_, o);
+		case "ecoleForm":
+			return SessionScolaire.staticSolrFqEcoleForm(requeteSite_, o);
+		case "ecoleNumero":
+			return SessionScolaire.staticSolrFqEcoleNumero(requeteSite_, o);
+		case "ecoleAdministrateurNom":
+			return SessionScolaire.staticSolrFqEcoleAdministrateurNom(requeteSite_, o);
+		case "anneeDebut":
+			return SessionScolaire.staticSolrFqAnneeDebut(requeteSite_, o);
+		case "anneeFin":
+			return SessionScolaire.staticSolrFqAnneeFin(requeteSite_, o);
+		case "saisonDateDebut":
+			return SessionScolaire.staticSolrFqSaisonDateDebut(requeteSite_, o);
+		case "saisonEte":
+			return SessionScolaire.staticSolrFqSaisonEte(requeteSite_, o);
+		case "saisonHiver":
+			return SessionScolaire.staticSolrFqSaisonHiver(requeteSite_, o);
+		case "anneeFraisInscription":
+			return SessionScolaire.staticSolrFqAnneeFraisInscription(requeteSite_, o);
+		case "saisonNomCourt":
+			return SessionScolaire.staticSolrFqSaisonNomCourt(requeteSite_, o);
+		case "saisonNomComplet":
+			return SessionScolaire.staticSolrFqSaisonNomComplet(requeteSite_, o);
+		case "sessionDateDebut":
+			return SessionScolaire.staticSolrFqSessionDateDebut(requeteSite_, o);
+		case "sessionDateFin":
+			return SessionScolaire.staticSolrFqSessionDateFin(requeteSite_, o);
+		case "sessionNomCourt":
+			return SessionScolaire.staticSolrFqSessionNomCourt(requeteSite_, o);
+		case "sessionNomComplet":
+			return SessionScolaire.staticSolrFqSessionNomComplet(requeteSite_, o);
+			default:
+				return Cluster.staticSolrFqCluster(entiteVar,  requeteSite_, o);
 		}
 	}
 

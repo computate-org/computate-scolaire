@@ -179,7 +179,6 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSessionStartDate("Page");
 			o.htmSessionEndDate("Page");
-			o.htmYearEnrollmentFee("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSchoolKey("Page");
@@ -201,7 +200,6 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSessionStartDate("POST");
 			o.htmSessionEndDate("POST");
-			o.htmYearEnrollmentFee("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSchoolKey("POST");
@@ -251,15 +249,6 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 			o.htmSchoolKey("PUTCopy");
 			o.htmAgeKeys("PUTCopy");
 		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmInheritPk("PUTCopy");
-			o.htmSessionId("PUTCopy");
-			o.htmUserId("PUTCopy");
-			o.htmUserKey("PUTCopy");
-			o.htmSeasonStartDate("PUTCopy");
-			o.htmYearStart("PUTCopy");
-			o.htmYearEnd("PUTCopy");
-		} g("div");
 	}
 
 	public void htmlFormPATCHSchoolYear(SchoolYear o) {
@@ -279,15 +268,6 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSchoolKey("PATCH");
 			o.htmAgeKeys("PATCH");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmInheritPk("PATCH");
-			o.htmSessionId("PATCH");
-			o.htmUserId("PATCH");
-			o.htmUserKey("PATCH");
-			o.htmSeasonStartDate("PATCH");
-			o.htmYearStart("PATCH");
-			o.htmYearEnd("PATCH");
 		} g("div");
 	}
 

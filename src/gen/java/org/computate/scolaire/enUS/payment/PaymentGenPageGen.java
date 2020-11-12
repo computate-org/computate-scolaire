@@ -68,6 +68,9 @@ public abstract class PaymentGenPageGen<DEV> extends ClusterPage {
 		this.listSchoolPayment = listSchoolPayment;
 		this.listSchoolPaymentWrap.alreadyInitialized = true;
 	}
+	public static SearchList<SchoolPayment> staticSetListSchoolPayment(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	protected PaymentGenPage listSchoolPaymentInit() {
 		if(!listSchoolPaymentWrap.alreadyInitialized) {
 			_listSchoolPayment(listSchoolPaymentWrap);
@@ -107,6 +110,9 @@ public abstract class PaymentGenPageGen<DEV> extends ClusterPage {
 	public void setSchoolPayment_(SchoolPayment schoolPayment_) {
 		this.schoolPayment_ = schoolPayment_;
 		this.schoolPayment_Wrap.alreadyInitialized = true;
+	}
+	public static SchoolPayment staticSetSchoolPayment_(SiteRequestEnUS siteRequest_, String o) {
+		return null;
 	}
 	protected PaymentGenPage schoolPayment_Init() {
 		if(!schoolPayment_Wrap.alreadyInitialized) {
@@ -212,6 +218,62 @@ public abstract class PaymentGenPageGen<DEV> extends ClusterPage {
 		switch(var) {
 			default:
 				return super.attributeClusterPage(var, val);
+		}
+	}
+
+	///////////////
+	// staticSet //
+	///////////////
+
+	public static Object staticSetForClass(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		return staticSetPaymentGenPage(entityVar,  siteRequest_, o);
+	}
+	public static Object staticSetPaymentGenPage(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		switch(entityVar) {
+			default:
+				return ClusterPage.staticSetClusterPage(entityVar,  siteRequest_, o);
+		}
+	}
+
+	////////////////
+	// staticSolr //
+	////////////////
+
+	public static Object staticSolrForClass(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		return staticSolrPaymentGenPage(entityVar,  siteRequest_, o);
+	}
+	public static Object staticSolrPaymentGenPage(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		switch(entityVar) {
+			default:
+				return ClusterPage.staticSolrClusterPage(entityVar,  siteRequest_, o);
+		}
+	}
+
+	///////////////////
+	// staticSolrStr //
+	///////////////////
+
+	public static String staticSolrStrForClass(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		return staticSolrStrPaymentGenPage(entityVar,  siteRequest_, o);
+	}
+	public static String staticSolrStrPaymentGenPage(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		switch(entityVar) {
+			default:
+				return ClusterPage.staticSolrStrClusterPage(entityVar,  siteRequest_, o);
+		}
+	}
+
+	//////////////////
+	// staticSolrFq //
+	//////////////////
+
+	public static String staticSolrFqForClass(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		return staticSolrFqPaymentGenPage(entityVar,  siteRequest_, o);
+	}
+	public static String staticSolrFqPaymentGenPage(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		switch(entityVar) {
+			default:
+				return ClusterPage.staticSolrFqClusterPage(entityVar,  siteRequest_, o);
 		}
 	}
 

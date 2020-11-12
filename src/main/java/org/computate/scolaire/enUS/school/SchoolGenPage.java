@@ -278,12 +278,6 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 			o.htmYearKeys("PUTCopy");
 			o.htmReceiptKeys("PUTCopy");
 		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmInheritPk("PUTCopy");
-			o.htmSessionId("PUTCopy");
-			o.htmUserId("PUTCopy");
-			o.htmUserKey("PUTCopy");
-		} g("div");
 	}
 
 	public void htmlFormPATCHSchool(School o) {
@@ -318,12 +312,6 @@ public class SchoolGenPage extends SchoolGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmYearKeys("PATCH");
 			o.htmReceiptKeys("PATCH");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmInheritPk("PATCH");
-			o.htmSessionId("PATCH");
-			o.htmUserId("PATCH");
-			o.htmUserKey("PATCH");
 		} g("div");
 	}
 

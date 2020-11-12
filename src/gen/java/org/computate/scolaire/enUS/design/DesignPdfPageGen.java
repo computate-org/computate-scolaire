@@ -92,6 +92,9 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		this.w1 = w1;
 		this.w1Wrap.alreadyInitialized = true;
 	}
+	public static AllWriter staticSetW1(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	protected DesignPdfPage w1Init() {
 		if(!w1Wrap.alreadyInitialized) {
 			_w1(w1Wrap);
@@ -132,6 +135,9 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		this.w2 = w2;
 		this.w2Wrap.alreadyInitialized = true;
 	}
+	public static AllWriter staticSetW2(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	protected DesignPdfPage w2Init() {
 		if(!w2Wrap.alreadyInitialized) {
 			_w2(w2Wrap);
@@ -167,10 +173,13 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 	public String getPageDesignId() {
 		return pageDesignId;
 	}
-
-	public void setPageDesignId(String pageDesignId) {
-		this.pageDesignId = pageDesignId;
+	public DesignPdfPage setPageDesignId(String o) {
+		this.pageDesignId = DesignPdfPage.staticSetPageDesignId(siteRequest_, o);
 		this.pageDesignIdWrap.alreadyInitialized = true;
+		return (DesignPdfPage)this;
+	}
+	public static String staticSetPageDesignId(SiteRequestEnUS siteRequest_, String o) {
+		return o;
 	}
 	protected DesignPdfPage pageDesignIdInit() {
 		if(!pageDesignIdWrap.alreadyInitialized) {
@@ -182,8 +191,20 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		return (DesignPdfPage)this;
 	}
 
+	public static String staticSolrPageDesignId(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrPageDesignId(SiteRequestEnUS siteRequest_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPageDesignId(SiteRequestEnUS siteRequest_, String o) {
+		return DesignPdfPage.staticSolrStrPageDesignId(siteRequest_, DesignPdfPage.staticSolrPageDesignId(siteRequest_, DesignPdfPage.staticSetPageDesignId(siteRequest_, o)));
+	}
+
 	public String solrPageDesignId() {
-		return pageDesignId;
+		return DesignPdfPage.staticSolrPageDesignId(siteRequest_, pageDesignId);
 	}
 
 	public String strPageDesignId() {
@@ -234,6 +255,9 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		this.enrollmentSearch = enrollmentSearch;
 		this.enrollmentSearchWrap.alreadyInitialized = true;
 	}
+	public static SearchList<SchoolEnrollment> staticSetEnrollmentSearch(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	protected DesignPdfPage enrollmentSearchInit() {
 		if(!enrollmentSearchWrap.alreadyInitialized) {
 			_enrollmentSearch(enrollmentSearch);
@@ -270,6 +294,9 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 	public void setSchoolEnrollment(SchoolEnrollment schoolEnrollment) {
 		this.schoolEnrollment = schoolEnrollment;
 		this.schoolEnrollmentWrap.alreadyInitialized = true;
+	}
+	public static SchoolEnrollment staticSetSchoolEnrollment(SiteRequestEnUS siteRequest_, String o) {
+		return null;
 	}
 	protected DesignPdfPage schoolEnrollmentInit() {
 		if(!schoolEnrollmentWrap.alreadyInitialized) {
@@ -310,6 +337,9 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 	public void setEnrollments(List<SchoolEnrollment> enrollments) {
 		this.enrollments = enrollments;
 		this.enrollmentsWrap.alreadyInitialized = true;
+	}
+	public static List<SchoolEnrollment> staticSetEnrollments(SiteRequestEnUS siteRequest_, String o) {
+		return null;
 	}
 	public DesignPdfPage addEnrollments(SchoolEnrollment...objets) {
 		for(SchoolEnrollment o : objets) {
@@ -360,6 +390,9 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		this.enrollmentBlocks = enrollmentBlocks;
 		this.enrollmentBlocksWrap.alreadyInitialized = true;
 	}
+	public static List<SchoolEnrollment> staticSetEnrollmentBlocks(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	public DesignPdfPage addEnrollmentBlocks(SchoolEnrollment...objets) {
 		for(SchoolEnrollment o : objets) {
 			addEnrollmentBlocks(o);
@@ -406,6 +439,9 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 	public void setEnrollmentGroups(List<SchoolEnrollment> enrollmentGroups) {
 		this.enrollmentGroups = enrollmentGroups;
 		this.enrollmentGroupsWrap.alreadyInitialized = true;
+	}
+	public static List<SchoolEnrollment> staticSetEnrollmentGroups(SiteRequestEnUS siteRequest_, String o) {
+		return null;
 	}
 	public DesignPdfPage addEnrollmentGroups(SchoolEnrollment...objets) {
 		for(SchoolEnrollment o : objets) {
@@ -456,6 +492,9 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		this.enrollmentBlock = enrollmentBlock;
 		this.enrollmentBlockWrap.alreadyInitialized = true;
 	}
+	public static SchoolEnrollment staticSetEnrollmentBlock(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	protected DesignPdfPage enrollmentBlockInit() {
 		if(!enrollmentBlockWrap.alreadyInitialized) {
 			_enrollmentBlock(enrollmentBlockWrap);
@@ -495,6 +534,9 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 	public void setEnrollmentGroup(SchoolEnrollment enrollmentGroup) {
 		this.enrollmentGroup = enrollmentGroup;
 		this.enrollmentGroupWrap.alreadyInitialized = true;
+	}
+	public static SchoolEnrollment staticSetEnrollmentGroup(SiteRequestEnUS siteRequest_, String o) {
+		return null;
 	}
 	protected DesignPdfPage enrollmentGroupInit() {
 		if(!enrollmentGroupWrap.alreadyInitialized) {
@@ -536,6 +578,9 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		this.enrollmentEnrollment = enrollmentEnrollment;
 		this.enrollmentEnrollmentWrap.alreadyInitialized = true;
 	}
+	public static SchoolEnrollment staticSetEnrollmentEnrollment(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	protected DesignPdfPage enrollmentEnrollmentInit() {
 		if(!enrollmentEnrollmentWrap.alreadyInitialized) {
 			_enrollmentEnrollment(enrollmentEnrollmentWrap);
@@ -576,6 +621,9 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		this.yearSearch = yearSearch;
 		this.yearSearchWrap.alreadyInitialized = true;
 	}
+	public static SearchList<SchoolYear> staticSetYearSearch(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	protected DesignPdfPage yearSearchInit() {
 		if(!yearSearchWrap.alreadyInitialized) {
 			_yearSearch(yearSearch);
@@ -612,6 +660,9 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 	public void setYear_(SchoolYear year_) {
 		this.year_ = year_;
 		this.year_Wrap.alreadyInitialized = true;
+	}
+	public static SchoolYear staticSetYear_(SiteRequestEnUS siteRequest_, String o) {
+		return null;
 	}
 	protected DesignPdfPage year_Init() {
 		if(!year_Wrap.alreadyInitialized) {
@@ -653,10 +704,14 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		this.yearKeyWrap.alreadyInitialized = true;
 	}
 	public DesignPdfPage setYearKey(String o) {
-		if(NumberUtils.isParsable(o))
-			this.yearKey = Long.parseLong(o);
+		this.yearKey = DesignPdfPage.staticSetYearKey(siteRequest_, o);
 		this.yearKeyWrap.alreadyInitialized = true;
 		return (DesignPdfPage)this;
+	}
+	public static Long staticSetYearKey(SiteRequestEnUS siteRequest_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Long.parseLong(o);
+		return null;
 	}
 	protected DesignPdfPage yearKeyInit() {
 		if(!yearKeyWrap.alreadyInitialized) {
@@ -668,8 +723,20 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		return (DesignPdfPage)this;
 	}
 
+	public static Long staticSolrYearKey(SiteRequestEnUS siteRequest_, Long o) {
+		return o;
+	}
+
+	public static String staticSolrStrYearKey(SiteRequestEnUS siteRequest_, Long o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqYearKey(SiteRequestEnUS siteRequest_, String o) {
+		return DesignPdfPage.staticSolrStrYearKey(siteRequest_, DesignPdfPage.staticSolrYearKey(siteRequest_, DesignPdfPage.staticSetYearKey(siteRequest_, o)));
+	}
+
 	public Long solrYearKey() {
-		return yearKey;
+		return DesignPdfPage.staticSolrYearKey(siteRequest_, yearKey);
 	}
 
 	public String strYearKey() {
@@ -715,10 +782,13 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 	public String getYearVar() {
 		return yearVar;
 	}
-
-	public void setYearVar(String yearVar) {
-		this.yearVar = yearVar;
+	public DesignPdfPage setYearVar(String o) {
+		this.yearVar = DesignPdfPage.staticSetYearVar(siteRequest_, o);
 		this.yearVarWrap.alreadyInitialized = true;
+		return (DesignPdfPage)this;
+	}
+	public static String staticSetYearVar(SiteRequestEnUS siteRequest_, String o) {
+		return o;
 	}
 	protected DesignPdfPage yearVarInit() {
 		if(!yearVarWrap.alreadyInitialized) {
@@ -730,8 +800,20 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		return (DesignPdfPage)this;
 	}
 
+	public static String staticSolrYearVar(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrYearVar(SiteRequestEnUS siteRequest_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqYearVar(SiteRequestEnUS siteRequest_, String o) {
+		return DesignPdfPage.staticSolrStrYearVar(siteRequest_, DesignPdfPage.staticSolrYearVar(siteRequest_, DesignPdfPage.staticSetYearVar(siteRequest_, o)));
+	}
+
 	public String solrYearVar() {
-		return yearVar;
+		return DesignPdfPage.staticSolrYearVar(siteRequest_, yearVar);
 	}
 
 	public String strYearVar() {
@@ -782,6 +864,9 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		this.schoolSearch = schoolSearch;
 		this.schoolSearchWrap.alreadyInitialized = true;
 	}
+	public static SearchList<School> staticSetSchoolSearch(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	protected DesignPdfPage schoolSearchInit() {
 		if(!schoolSearchWrap.alreadyInitialized) {
 			_schoolSearch(schoolSearch);
@@ -818,6 +903,9 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 	public void setSchool_(School school_) {
 		this.school_ = school_;
 		this.school_Wrap.alreadyInitialized = true;
+	}
+	public static School staticSetSchool_(SiteRequestEnUS siteRequest_, String o) {
+		return null;
 	}
 	protected DesignPdfPage school_Init() {
 		if(!school_Wrap.alreadyInitialized) {
@@ -857,6 +945,9 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		this.paymentSearch = paymentSearch;
 		this.paymentSearchWrap.alreadyInitialized = true;
 	}
+	public static SearchList<SchoolPayment> staticSetPaymentSearch(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	protected DesignPdfPage paymentSearchInit() {
 		if(!paymentSearchWrap.alreadyInitialized) {
 			_paymentSearch(paymentSearch);
@@ -893,6 +984,9 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 	public void setPayments_(List<SchoolPayment> payments_) {
 		this.payments_ = payments_;
 		this.payments_Wrap.alreadyInitialized = true;
+	}
+	public static List<SchoolPayment> staticSetPayments_(SiteRequestEnUS siteRequest_, String o) {
+		return null;
 	}
 	public DesignPdfPage addPayments_(SchoolPayment...objets) {
 		for(SchoolPayment o : objets) {
@@ -943,6 +1037,9 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		this.payment_ = payment_;
 		this.payment_Wrap.alreadyInitialized = true;
 	}
+	public static SchoolPayment staticSetPayment_(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	protected DesignPdfPage payment_Init() {
 		if(!payment_Wrap.alreadyInitialized) {
 			_payment_(payment_Wrap);
@@ -981,6 +1078,9 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		this.paymentFacets = paymentFacets;
 		this.paymentFacetsWrap.alreadyInitialized = true;
 	}
+	public static SimpleOrderedMap staticSetPaymentFacets(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	protected DesignPdfPage paymentFacetsInit() {
 		if(!paymentFacetsWrap.alreadyInitialized) {
 			_paymentFacets(paymentFacetsWrap);
@@ -1014,10 +1114,13 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 	public String getPaymentLastStr() {
 		return paymentLastStr;
 	}
-
-	public void setPaymentLastStr(String paymentLastStr) {
-		this.paymentLastStr = paymentLastStr;
+	public DesignPdfPage setPaymentLastStr(String o) {
+		this.paymentLastStr = DesignPdfPage.staticSetPaymentLastStr(siteRequest_, o);
 		this.paymentLastStrWrap.alreadyInitialized = true;
+		return (DesignPdfPage)this;
+	}
+	public static String staticSetPaymentLastStr(SiteRequestEnUS siteRequest_, String o) {
+		return o;
 	}
 	protected DesignPdfPage paymentLastStrInit() {
 		if(!paymentLastStrWrap.alreadyInitialized) {
@@ -1029,8 +1132,20 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		return (DesignPdfPage)this;
 	}
 
+	public static String staticSolrPaymentLastStr(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrPaymentLastStr(SiteRequestEnUS siteRequest_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPaymentLastStr(SiteRequestEnUS siteRequest_, String o) {
+		return DesignPdfPage.staticSolrStrPaymentLastStr(siteRequest_, DesignPdfPage.staticSolrPaymentLastStr(siteRequest_, DesignPdfPage.staticSetPaymentLastStr(siteRequest_, o)));
+	}
+
 	public String solrPaymentLastStr() {
-		return paymentLastStr;
+		return DesignPdfPage.staticSolrPaymentLastStr(siteRequest_, paymentLastStr);
 	}
 
 	public String strPaymentLastStr() {
@@ -1083,11 +1198,15 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		this.paymentAmountWrap.alreadyInitialized = true;
 	}
 	public DesignPdfPage setPaymentAmount(String o) {
-		o = StringUtils.removeAll(o, "[^\\d\\.]");
-		if(NumberUtils.isParsable(o))
-			this.paymentAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
+		this.paymentAmount = DesignPdfPage.staticSetPaymentAmount(siteRequest_, o);
 		this.paymentAmountWrap.alreadyInitialized = true;
 		return (DesignPdfPage)this;
+	}
+	public static BigDecimal staticSetPaymentAmount(SiteRequestEnUS siteRequest_, String o) {
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
+		return null;
 	}
 	public DesignPdfPage setPaymentAmount(Double o) {
 			this.paymentAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
@@ -1109,8 +1228,20 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		return (DesignPdfPage)this;
 	}
 
+	public static Double staticSolrPaymentAmount(SiteRequestEnUS siteRequest_, BigDecimal o) {
+		return o == null ? null : o.doubleValue();
+	}
+
+	public static String staticSolrStrPaymentAmount(SiteRequestEnUS siteRequest_, Double o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPaymentAmount(SiteRequestEnUS siteRequest_, String o) {
+		return DesignPdfPage.staticSolrStrPaymentAmount(siteRequest_, DesignPdfPage.staticSolrPaymentAmount(siteRequest_, DesignPdfPage.staticSetPaymentAmount(siteRequest_, o)));
+	}
+
 	public Double solrPaymentAmount() {
-		return paymentAmount == null ? null : paymentAmount.doubleValue();
+		return DesignPdfPage.staticSolrPaymentAmount(siteRequest_, paymentAmount);
 	}
 
 	public String strPaymentAmount() {
@@ -1163,11 +1294,15 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		this.chargeAmountWrap.alreadyInitialized = true;
 	}
 	public DesignPdfPage setChargeAmount(String o) {
-		o = StringUtils.removeAll(o, "[^\\d\\.]");
-		if(NumberUtils.isParsable(o))
-			this.chargeAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
+		this.chargeAmount = DesignPdfPage.staticSetChargeAmount(siteRequest_, o);
 		this.chargeAmountWrap.alreadyInitialized = true;
 		return (DesignPdfPage)this;
+	}
+	public static BigDecimal staticSetChargeAmount(SiteRequestEnUS siteRequest_, String o) {
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
+		return null;
 	}
 	public DesignPdfPage setChargeAmount(Double o) {
 			this.chargeAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
@@ -1189,8 +1324,20 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		return (DesignPdfPage)this;
 	}
 
+	public static Double staticSolrChargeAmount(SiteRequestEnUS siteRequest_, BigDecimal o) {
+		return o == null ? null : o.doubleValue();
+	}
+
+	public static String staticSolrStrChargeAmount(SiteRequestEnUS siteRequest_, Double o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqChargeAmount(SiteRequestEnUS siteRequest_, String o) {
+		return DesignPdfPage.staticSolrStrChargeAmount(siteRequest_, DesignPdfPage.staticSolrChargeAmount(siteRequest_, DesignPdfPage.staticSetChargeAmount(siteRequest_, o)));
+	}
+
 	public Double solrChargeAmount() {
-		return chargeAmount == null ? null : chargeAmount.doubleValue();
+		return DesignPdfPage.staticSolrChargeAmount(siteRequest_, chargeAmount);
 	}
 
 	public String strChargeAmount() {
@@ -1243,11 +1390,15 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		this.chargeAmountFutureWrap.alreadyInitialized = true;
 	}
 	public DesignPdfPage setChargeAmountFuture(String o) {
-		o = StringUtils.removeAll(o, "[^\\d\\.]");
-		if(NumberUtils.isParsable(o))
-			this.chargeAmountFuture = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
+		this.chargeAmountFuture = DesignPdfPage.staticSetChargeAmountFuture(siteRequest_, o);
 		this.chargeAmountFutureWrap.alreadyInitialized = true;
 		return (DesignPdfPage)this;
+	}
+	public static BigDecimal staticSetChargeAmountFuture(SiteRequestEnUS siteRequest_, String o) {
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
+		return null;
 	}
 	public DesignPdfPage setChargeAmountFuture(Double o) {
 			this.chargeAmountFuture = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
@@ -1269,8 +1420,20 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		return (DesignPdfPage)this;
 	}
 
+	public static Double staticSolrChargeAmountFuture(SiteRequestEnUS siteRequest_, BigDecimal o) {
+		return o == null ? null : o.doubleValue();
+	}
+
+	public static String staticSolrStrChargeAmountFuture(SiteRequestEnUS siteRequest_, Double o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqChargeAmountFuture(SiteRequestEnUS siteRequest_, String o) {
+		return DesignPdfPage.staticSolrStrChargeAmountFuture(siteRequest_, DesignPdfPage.staticSolrChargeAmountFuture(siteRequest_, DesignPdfPage.staticSetChargeAmountFuture(siteRequest_, o)));
+	}
+
 	public Double solrChargeAmountFuture() {
-		return chargeAmountFuture == null ? null : chargeAmountFuture.doubleValue();
+		return DesignPdfPage.staticSolrChargeAmountFuture(siteRequest_, chargeAmountFuture);
 	}
 
 	public String strChargeAmountFuture() {
@@ -1323,11 +1486,15 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		this.chargeAmountDueWrap.alreadyInitialized = true;
 	}
 	public DesignPdfPage setChargeAmountDue(String o) {
-		o = StringUtils.removeAll(o, "[^\\d\\.]");
-		if(NumberUtils.isParsable(o))
-			this.chargeAmountDue = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
+		this.chargeAmountDue = DesignPdfPage.staticSetChargeAmountDue(siteRequest_, o);
 		this.chargeAmountDueWrap.alreadyInitialized = true;
 		return (DesignPdfPage)this;
+	}
+	public static BigDecimal staticSetChargeAmountDue(SiteRequestEnUS siteRequest_, String o) {
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
+		return null;
 	}
 	public DesignPdfPage setChargeAmountDue(Double o) {
 			this.chargeAmountDue = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
@@ -1349,8 +1516,20 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		return (DesignPdfPage)this;
 	}
 
+	public static Double staticSolrChargeAmountDue(SiteRequestEnUS siteRequest_, BigDecimal o) {
+		return o == null ? null : o.doubleValue();
+	}
+
+	public static String staticSolrStrChargeAmountDue(SiteRequestEnUS siteRequest_, Double o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqChargeAmountDue(SiteRequestEnUS siteRequest_, String o) {
+		return DesignPdfPage.staticSolrStrChargeAmountDue(siteRequest_, DesignPdfPage.staticSolrChargeAmountDue(siteRequest_, DesignPdfPage.staticSetChargeAmountDue(siteRequest_, o)));
+	}
+
 	public Double solrChargeAmountDue() {
-		return chargeAmountDue == null ? null : chargeAmountDue.doubleValue();
+		return DesignPdfPage.staticSolrChargeAmountDue(siteRequest_, chargeAmountDue);
 	}
 
 	public String strChargeAmountDue() {
@@ -1403,11 +1582,15 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		this.chargesNowWrap.alreadyInitialized = true;
 	}
 	public DesignPdfPage setChargesNow(String o) {
-		o = StringUtils.removeAll(o, "[^\\d\\.]");
-		if(NumberUtils.isParsable(o))
-			this.chargesNow = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
+		this.chargesNow = DesignPdfPage.staticSetChargesNow(siteRequest_, o);
 		this.chargesNowWrap.alreadyInitialized = true;
 		return (DesignPdfPage)this;
+	}
+	public static BigDecimal staticSetChargesNow(SiteRequestEnUS siteRequest_, String o) {
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
+		return null;
 	}
 	public DesignPdfPage setChargesNow(Double o) {
 			this.chargesNow = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
@@ -1429,8 +1612,20 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		return (DesignPdfPage)this;
 	}
 
+	public static Double staticSolrChargesNow(SiteRequestEnUS siteRequest_, BigDecimal o) {
+		return o == null ? null : o.doubleValue();
+	}
+
+	public static String staticSolrStrChargesNow(SiteRequestEnUS siteRequest_, Double o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqChargesNow(SiteRequestEnUS siteRequest_, String o) {
+		return DesignPdfPage.staticSolrStrChargesNow(siteRequest_, DesignPdfPage.staticSolrChargesNow(siteRequest_, DesignPdfPage.staticSetChargesNow(siteRequest_, o)));
+	}
+
 	public Double solrChargesNow() {
-		return chargesNow == null ? null : chargesNow.doubleValue();
+		return DesignPdfPage.staticSolrChargesNow(siteRequest_, chargesNow);
 	}
 
 	public String strChargesNow() {
@@ -1482,9 +1677,12 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		this.paymentsCurrentWrap.alreadyInitialized = true;
 	}
 	public DesignPdfPage setPaymentsCurrent(String o) {
-		this.paymentsCurrent = Boolean.parseBoolean(o);
+		this.paymentsCurrent = DesignPdfPage.staticSetPaymentsCurrent(siteRequest_, o);
 		this.paymentsCurrentWrap.alreadyInitialized = true;
 		return (DesignPdfPage)this;
+	}
+	public static Boolean staticSetPaymentsCurrent(SiteRequestEnUS siteRequest_, String o) {
+		return Boolean.parseBoolean(o);
 	}
 	protected DesignPdfPage paymentsCurrentInit() {
 		if(!paymentsCurrentWrap.alreadyInitialized) {
@@ -1496,8 +1694,20 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		return (DesignPdfPage)this;
 	}
 
+	public static Boolean staticSolrPaymentsCurrent(SiteRequestEnUS siteRequest_, Boolean o) {
+		return o;
+	}
+
+	public static String staticSolrStrPaymentsCurrent(SiteRequestEnUS siteRequest_, Boolean o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPaymentsCurrent(SiteRequestEnUS siteRequest_, String o) {
+		return DesignPdfPage.staticSolrStrPaymentsCurrent(siteRequest_, DesignPdfPage.staticSolrPaymentsCurrent(siteRequest_, DesignPdfPage.staticSetPaymentsCurrent(siteRequest_, o)));
+	}
+
 	public Boolean solrPaymentsCurrent() {
-		return paymentsCurrent;
+		return DesignPdfPage.staticSolrPaymentsCurrent(siteRequest_, paymentsCurrent);
 	}
 
 	public String strPaymentsCurrent() {
@@ -1549,9 +1759,12 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		this.paymentsLateWrap.alreadyInitialized = true;
 	}
 	public DesignPdfPage setPaymentsLate(String o) {
-		this.paymentsLate = Boolean.parseBoolean(o);
+		this.paymentsLate = DesignPdfPage.staticSetPaymentsLate(siteRequest_, o);
 		this.paymentsLateWrap.alreadyInitialized = true;
 		return (DesignPdfPage)this;
+	}
+	public static Boolean staticSetPaymentsLate(SiteRequestEnUS siteRequest_, String o) {
+		return Boolean.parseBoolean(o);
 	}
 	protected DesignPdfPage paymentsLateInit() {
 		if(!paymentsLateWrap.alreadyInitialized) {
@@ -1563,8 +1776,20 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		return (DesignPdfPage)this;
 	}
 
+	public static Boolean staticSolrPaymentsLate(SiteRequestEnUS siteRequest_, Boolean o) {
+		return o;
+	}
+
+	public static String staticSolrStrPaymentsLate(SiteRequestEnUS siteRequest_, Boolean o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPaymentsLate(SiteRequestEnUS siteRequest_, String o) {
+		return DesignPdfPage.staticSolrStrPaymentsLate(siteRequest_, DesignPdfPage.staticSolrPaymentsLate(siteRequest_, DesignPdfPage.staticSetPaymentsLate(siteRequest_, o)));
+	}
+
 	public Boolean solrPaymentsLate() {
-		return paymentsLate;
+		return DesignPdfPage.staticSolrPaymentsLate(siteRequest_, paymentsLate);
 	}
 
 	public String strPaymentsLate() {
@@ -1617,11 +1842,15 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		this.paymentsLateAmountWrap.alreadyInitialized = true;
 	}
 	public DesignPdfPage setPaymentsLateAmount(String o) {
-		o = StringUtils.removeAll(o, "[^\\d\\.]");
-		if(NumberUtils.isParsable(o))
-			this.paymentsLateAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
+		this.paymentsLateAmount = DesignPdfPage.staticSetPaymentsLateAmount(siteRequest_, o);
 		this.paymentsLateAmountWrap.alreadyInitialized = true;
 		return (DesignPdfPage)this;
+	}
+	public static BigDecimal staticSetPaymentsLateAmount(SiteRequestEnUS siteRequest_, String o) {
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
+		return null;
 	}
 	public DesignPdfPage setPaymentsLateAmount(Double o) {
 			this.paymentsLateAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
@@ -1643,8 +1872,20 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		return (DesignPdfPage)this;
 	}
 
+	public static Double staticSolrPaymentsLateAmount(SiteRequestEnUS siteRequest_, BigDecimal o) {
+		return o == null ? null : o.doubleValue();
+	}
+
+	public static String staticSolrStrPaymentsLateAmount(SiteRequestEnUS siteRequest_, Double o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPaymentsLateAmount(SiteRequestEnUS siteRequest_, String o) {
+		return DesignPdfPage.staticSolrStrPaymentsLateAmount(siteRequest_, DesignPdfPage.staticSolrPaymentsLateAmount(siteRequest_, DesignPdfPage.staticSetPaymentsLateAmount(siteRequest_, o)));
+	}
+
 	public Double solrPaymentsLateAmount() {
-		return paymentsLateAmount == null ? null : paymentsLateAmount.doubleValue();
+		return DesignPdfPage.staticSolrPaymentsLateAmount(siteRequest_, paymentsLateAmount);
 	}
 
 	public String strPaymentsLateAmount() {
@@ -1696,9 +1937,12 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		this.paymentsAheadWrap.alreadyInitialized = true;
 	}
 	public DesignPdfPage setPaymentsAhead(String o) {
-		this.paymentsAhead = Boolean.parseBoolean(o);
+		this.paymentsAhead = DesignPdfPage.staticSetPaymentsAhead(siteRequest_, o);
 		this.paymentsAheadWrap.alreadyInitialized = true;
 		return (DesignPdfPage)this;
+	}
+	public static Boolean staticSetPaymentsAhead(SiteRequestEnUS siteRequest_, String o) {
+		return Boolean.parseBoolean(o);
 	}
 	protected DesignPdfPage paymentsAheadInit() {
 		if(!paymentsAheadWrap.alreadyInitialized) {
@@ -1710,8 +1954,20 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		return (DesignPdfPage)this;
 	}
 
+	public static Boolean staticSolrPaymentsAhead(SiteRequestEnUS siteRequest_, Boolean o) {
+		return o;
+	}
+
+	public static String staticSolrStrPaymentsAhead(SiteRequestEnUS siteRequest_, Boolean o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPaymentsAhead(SiteRequestEnUS siteRequest_, String o) {
+		return DesignPdfPage.staticSolrStrPaymentsAhead(siteRequest_, DesignPdfPage.staticSolrPaymentsAhead(siteRequest_, DesignPdfPage.staticSetPaymentsAhead(siteRequest_, o)));
+	}
+
 	public Boolean solrPaymentsAhead() {
-		return paymentsAhead;
+		return DesignPdfPage.staticSolrPaymentsAhead(siteRequest_, paymentsAhead);
 	}
 
 	public String strPaymentsAhead() {
@@ -1762,6 +2018,9 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		this.receiptSearch = receiptSearch;
 		this.receiptSearchWrap.alreadyInitialized = true;
 	}
+	public static SearchList<SchoolReceipt> staticSetReceiptSearch(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	protected DesignPdfPage receiptSearchInit() {
 		if(!receiptSearchWrap.alreadyInitialized) {
 			_receiptSearch(receiptSearch);
@@ -1798,6 +2057,9 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 	public void setReceipts_(List<SchoolReceipt> receipts_) {
 		this.receipts_ = receipts_;
 		this.receipts_Wrap.alreadyInitialized = true;
+	}
+	public static List<SchoolReceipt> staticSetReceipts_(SiteRequestEnUS siteRequest_, String o) {
+		return null;
 	}
 	public DesignPdfPage addReceipts_(SchoolReceipt...objets) {
 		for(SchoolReceipt o : objets) {
@@ -1848,6 +2110,9 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		this.receipt_ = receipt_;
 		this.receipt_Wrap.alreadyInitialized = true;
 	}
+	public static SchoolReceipt staticSetReceipt_(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	protected DesignPdfPage receipt_Init() {
 		if(!receipt_Wrap.alreadyInitialized) {
 			_receipt_(receipt_Wrap);
@@ -1881,10 +2146,13 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 	public String getEmailFrom() {
 		return emailFrom;
 	}
-
-	public void setEmailFrom(String emailFrom) {
-		this.emailFrom = emailFrom;
+	public DesignPdfPage setEmailFrom(String o) {
+		this.emailFrom = DesignPdfPage.staticSetEmailFrom(siteRequest_, o);
 		this.emailFromWrap.alreadyInitialized = true;
+		return (DesignPdfPage)this;
+	}
+	public static String staticSetEmailFrom(SiteRequestEnUS siteRequest_, String o) {
+		return o;
 	}
 	protected DesignPdfPage emailFromInit() {
 		if(!emailFromWrap.alreadyInitialized) {
@@ -1896,8 +2164,20 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		return (DesignPdfPage)this;
 	}
 
+	public static String staticSolrEmailFrom(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrEmailFrom(SiteRequestEnUS siteRequest_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqEmailFrom(SiteRequestEnUS siteRequest_, String o) {
+		return DesignPdfPage.staticSolrStrEmailFrom(siteRequest_, DesignPdfPage.staticSolrEmailFrom(siteRequest_, DesignPdfPage.staticSetEmailFrom(siteRequest_, o)));
+	}
+
 	public String solrEmailFrom() {
-		return emailFrom;
+		return DesignPdfPage.staticSolrEmailFrom(siteRequest_, emailFrom);
 	}
 
 	public String strEmailFrom() {
@@ -1943,10 +2223,13 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 	public String getEmailToSchool() {
 		return emailToSchool;
 	}
-
-	public void setEmailToSchool(String emailToSchool) {
-		this.emailToSchool = emailToSchool;
+	public DesignPdfPage setEmailToSchool(String o) {
+		this.emailToSchool = DesignPdfPage.staticSetEmailToSchool(siteRequest_, o);
 		this.emailToSchoolWrap.alreadyInitialized = true;
+		return (DesignPdfPage)this;
+	}
+	public static String staticSetEmailToSchool(SiteRequestEnUS siteRequest_, String o) {
+		return o;
 	}
 	protected DesignPdfPage emailToSchoolInit() {
 		if(!emailToSchoolWrap.alreadyInitialized) {
@@ -1958,8 +2241,20 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		return (DesignPdfPage)this;
 	}
 
+	public static String staticSolrEmailToSchool(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrEmailToSchool(SiteRequestEnUS siteRequest_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqEmailToSchool(SiteRequestEnUS siteRequest_, String o) {
+		return DesignPdfPage.staticSolrStrEmailToSchool(siteRequest_, DesignPdfPage.staticSolrEmailToSchool(siteRequest_, DesignPdfPage.staticSetEmailToSchool(siteRequest_, o)));
+	}
+
 	public String solrEmailToSchool() {
-		return emailToSchool;
+		return DesignPdfPage.staticSolrEmailToSchool(siteRequest_, emailToSchool);
 	}
 
 	public String strEmailToSchool() {
@@ -2005,10 +2300,13 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 	public String getEmailToAddress() {
 		return emailToAddress;
 	}
-
-	public void setEmailToAddress(String emailToAddress) {
-		this.emailToAddress = emailToAddress;
+	public DesignPdfPage setEmailToAddress(String o) {
+		this.emailToAddress = DesignPdfPage.staticSetEmailToAddress(siteRequest_, o);
 		this.emailToAddressWrap.alreadyInitialized = true;
+		return (DesignPdfPage)this;
+	}
+	public static String staticSetEmailToAddress(SiteRequestEnUS siteRequest_, String o) {
+		return o;
 	}
 	protected DesignPdfPage emailToAddressInit() {
 		if(!emailToAddressWrap.alreadyInitialized) {
@@ -2020,8 +2318,20 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		return (DesignPdfPage)this;
 	}
 
+	public static String staticSolrEmailToAddress(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrEmailToAddress(SiteRequestEnUS siteRequest_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqEmailToAddress(SiteRequestEnUS siteRequest_, String o) {
+		return DesignPdfPage.staticSolrStrEmailToAddress(siteRequest_, DesignPdfPage.staticSolrEmailToAddress(siteRequest_, DesignPdfPage.staticSetEmailToAddress(siteRequest_, o)));
+	}
+
 	public String solrEmailToAddress() {
-		return emailToAddress;
+		return DesignPdfPage.staticSolrEmailToAddress(siteRequest_, emailToAddress);
 	}
 
 	public String strEmailToAddress() {
@@ -2067,10 +2377,13 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 	public String getEmailToName() {
 		return emailToName;
 	}
-
-	public void setEmailToName(String emailToName) {
-		this.emailToName = emailToName;
+	public DesignPdfPage setEmailToName(String o) {
+		this.emailToName = DesignPdfPage.staticSetEmailToName(siteRequest_, o);
 		this.emailToNameWrap.alreadyInitialized = true;
+		return (DesignPdfPage)this;
+	}
+	public static String staticSetEmailToName(SiteRequestEnUS siteRequest_, String o) {
+		return o;
 	}
 	protected DesignPdfPage emailToNameInit() {
 		if(!emailToNameWrap.alreadyInitialized) {
@@ -2082,8 +2395,20 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		return (DesignPdfPage)this;
 	}
 
+	public static String staticSolrEmailToName(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrEmailToName(SiteRequestEnUS siteRequest_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqEmailToName(SiteRequestEnUS siteRequest_, String o) {
+		return DesignPdfPage.staticSolrStrEmailToName(siteRequest_, DesignPdfPage.staticSolrEmailToName(siteRequest_, DesignPdfPage.staticSetEmailToName(siteRequest_, o)));
+	}
+
 	public String solrEmailToName() {
-		return emailToName;
+		return DesignPdfPage.staticSolrEmailToName(siteRequest_, emailToName);
 	}
 
 	public String strEmailToName() {
@@ -2129,10 +2454,13 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 	public String getEmailMessage() {
 		return emailMessage;
 	}
-
-	public void setEmailMessage(String emailMessage) {
-		this.emailMessage = emailMessage;
+	public DesignPdfPage setEmailMessage(String o) {
+		this.emailMessage = DesignPdfPage.staticSetEmailMessage(siteRequest_, o);
 		this.emailMessageWrap.alreadyInitialized = true;
+		return (DesignPdfPage)this;
+	}
+	public static String staticSetEmailMessage(SiteRequestEnUS siteRequest_, String o) {
+		return o;
 	}
 	protected DesignPdfPage emailMessageInit() {
 		if(!emailMessageWrap.alreadyInitialized) {
@@ -2144,8 +2472,20 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		return (DesignPdfPage)this;
 	}
 
+	public static String staticSolrEmailMessage(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrEmailMessage(SiteRequestEnUS siteRequest_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqEmailMessage(SiteRequestEnUS siteRequest_, String o) {
+		return DesignPdfPage.staticSolrStrEmailMessage(siteRequest_, DesignPdfPage.staticSolrEmailMessage(siteRequest_, DesignPdfPage.staticSetEmailMessage(siteRequest_, o)));
+	}
+
 	public String solrEmailMessage() {
-		return emailMessage;
+		return DesignPdfPage.staticSolrEmailMessage(siteRequest_, emailMessage);
 	}
 
 	public String strEmailMessage() {
@@ -2198,10 +2538,14 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		this.schoolKeyWrap.alreadyInitialized = true;
 	}
 	public DesignPdfPage setSchoolKey(String o) {
-		if(NumberUtils.isParsable(o))
-			this.schoolKey = Long.parseLong(o);
+		this.schoolKey = DesignPdfPage.staticSetSchoolKey(siteRequest_, o);
 		this.schoolKeyWrap.alreadyInitialized = true;
 		return (DesignPdfPage)this;
+	}
+	public static Long staticSetSchoolKey(SiteRequestEnUS siteRequest_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Long.parseLong(o);
+		return null;
 	}
 	protected DesignPdfPage schoolKeyInit() {
 		if(!schoolKeyWrap.alreadyInitialized) {
@@ -2213,8 +2557,20 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		return (DesignPdfPage)this;
 	}
 
+	public static Long staticSolrSchoolKey(SiteRequestEnUS siteRequest_, Long o) {
+		return o;
+	}
+
+	public static String staticSolrStrSchoolKey(SiteRequestEnUS siteRequest_, Long o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqSchoolKey(SiteRequestEnUS siteRequest_, String o) {
+		return DesignPdfPage.staticSolrStrSchoolKey(siteRequest_, DesignPdfPage.staticSolrSchoolKey(siteRequest_, DesignPdfPage.staticSetSchoolKey(siteRequest_, o)));
+	}
+
 	public Long solrSchoolKey() {
-		return schoolKey;
+		return DesignPdfPage.staticSolrSchoolKey(siteRequest_, schoolKey);
 	}
 
 	public String strSchoolKey() {
@@ -2260,10 +2616,13 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 	public String getSchoolName() {
 		return schoolName;
 	}
-
-	public void setSchoolName(String schoolName) {
-		this.schoolName = schoolName;
+	public DesignPdfPage setSchoolName(String o) {
+		this.schoolName = DesignPdfPage.staticSetSchoolName(siteRequest_, o);
 		this.schoolNameWrap.alreadyInitialized = true;
+		return (DesignPdfPage)this;
+	}
+	public static String staticSetSchoolName(SiteRequestEnUS siteRequest_, String o) {
+		return o;
 	}
 	protected DesignPdfPage schoolNameInit() {
 		if(!schoolNameWrap.alreadyInitialized) {
@@ -2275,8 +2634,20 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		return (DesignPdfPage)this;
 	}
 
+	public static String staticSolrSchoolName(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrSchoolName(SiteRequestEnUS siteRequest_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqSchoolName(SiteRequestEnUS siteRequest_, String o) {
+		return DesignPdfPage.staticSolrStrSchoolName(siteRequest_, DesignPdfPage.staticSolrSchoolName(siteRequest_, DesignPdfPage.staticSetSchoolName(siteRequest_, o)));
+	}
+
 	public String solrSchoolName() {
-		return schoolName;
+		return DesignPdfPage.staticSolrSchoolName(siteRequest_, schoolName);
 	}
 
 	public String strSchoolName() {
@@ -2322,10 +2693,13 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 	public String getSchoolCompleteName() {
 		return schoolCompleteName;
 	}
-
-	public void setSchoolCompleteName(String schoolCompleteName) {
-		this.schoolCompleteName = schoolCompleteName;
+	public DesignPdfPage setSchoolCompleteName(String o) {
+		this.schoolCompleteName = DesignPdfPage.staticSetSchoolCompleteName(siteRequest_, o);
 		this.schoolCompleteNameWrap.alreadyInitialized = true;
+		return (DesignPdfPage)this;
+	}
+	public static String staticSetSchoolCompleteName(SiteRequestEnUS siteRequest_, String o) {
+		return o;
 	}
 	protected DesignPdfPage schoolCompleteNameInit() {
 		if(!schoolCompleteNameWrap.alreadyInitialized) {
@@ -2337,8 +2711,20 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		return (DesignPdfPage)this;
 	}
 
+	public static String staticSolrSchoolCompleteName(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrSchoolCompleteName(SiteRequestEnUS siteRequest_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqSchoolCompleteName(SiteRequestEnUS siteRequest_, String o) {
+		return DesignPdfPage.staticSolrStrSchoolCompleteName(siteRequest_, DesignPdfPage.staticSolrSchoolCompleteName(siteRequest_, DesignPdfPage.staticSetSchoolCompleteName(siteRequest_, o)));
+	}
+
 	public String solrSchoolCompleteName() {
-		return schoolCompleteName;
+		return DesignPdfPage.staticSolrSchoolCompleteName(siteRequest_, schoolCompleteName);
 	}
 
 	public String strSchoolCompleteName() {
@@ -2384,10 +2770,13 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 	public String getSchoolLocation() {
 		return schoolLocation;
 	}
-
-	public void setSchoolLocation(String schoolLocation) {
-		this.schoolLocation = schoolLocation;
+	public DesignPdfPage setSchoolLocation(String o) {
+		this.schoolLocation = DesignPdfPage.staticSetSchoolLocation(siteRequest_, o);
 		this.schoolLocationWrap.alreadyInitialized = true;
+		return (DesignPdfPage)this;
+	}
+	public static String staticSetSchoolLocation(SiteRequestEnUS siteRequest_, String o) {
+		return o;
 	}
 	protected DesignPdfPage schoolLocationInit() {
 		if(!schoolLocationWrap.alreadyInitialized) {
@@ -2399,8 +2788,20 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		return (DesignPdfPage)this;
 	}
 
+	public static String staticSolrSchoolLocation(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrSchoolLocation(SiteRequestEnUS siteRequest_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqSchoolLocation(SiteRequestEnUS siteRequest_, String o) {
+		return DesignPdfPage.staticSolrStrSchoolLocation(siteRequest_, DesignPdfPage.staticSolrSchoolLocation(siteRequest_, DesignPdfPage.staticSetSchoolLocation(siteRequest_, o)));
+	}
+
 	public String solrSchoolLocation() {
-		return schoolLocation;
+		return DesignPdfPage.staticSolrSchoolLocation(siteRequest_, schoolLocation);
 	}
 
 	public String strSchoolLocation() {
@@ -2446,10 +2847,13 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 	public String getSchoolAddress() {
 		return schoolAddress;
 	}
-
-	public void setSchoolAddress(String schoolAddress) {
-		this.schoolAddress = schoolAddress;
+	public DesignPdfPage setSchoolAddress(String o) {
+		this.schoolAddress = DesignPdfPage.staticSetSchoolAddress(siteRequest_, o);
 		this.schoolAddressWrap.alreadyInitialized = true;
+		return (DesignPdfPage)this;
+	}
+	public static String staticSetSchoolAddress(SiteRequestEnUS siteRequest_, String o) {
+		return o;
 	}
 	protected DesignPdfPage schoolAddressInit() {
 		if(!schoolAddressWrap.alreadyInitialized) {
@@ -2461,8 +2865,20 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		return (DesignPdfPage)this;
 	}
 
+	public static String staticSolrSchoolAddress(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrSchoolAddress(SiteRequestEnUS siteRequest_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqSchoolAddress(SiteRequestEnUS siteRequest_, String o) {
+		return DesignPdfPage.staticSolrStrSchoolAddress(siteRequest_, DesignPdfPage.staticSolrSchoolAddress(siteRequest_, DesignPdfPage.staticSetSchoolAddress(siteRequest_, o)));
+	}
+
 	public String solrSchoolAddress() {
-		return schoolAddress;
+		return DesignPdfPage.staticSolrSchoolAddress(siteRequest_, schoolAddress);
 	}
 
 	public String strSchoolAddress() {
@@ -2508,10 +2924,13 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 	public String getSchoolPhoneNumber() {
 		return schoolPhoneNumber;
 	}
-
-	public void setSchoolPhoneNumber(String schoolPhoneNumber) {
-		this.schoolPhoneNumber = schoolPhoneNumber;
+	public DesignPdfPage setSchoolPhoneNumber(String o) {
+		this.schoolPhoneNumber = DesignPdfPage.staticSetSchoolPhoneNumber(siteRequest_, o);
 		this.schoolPhoneNumberWrap.alreadyInitialized = true;
+		return (DesignPdfPage)this;
+	}
+	public static String staticSetSchoolPhoneNumber(SiteRequestEnUS siteRequest_, String o) {
+		return o;
 	}
 	protected DesignPdfPage schoolPhoneNumberInit() {
 		if(!schoolPhoneNumberWrap.alreadyInitialized) {
@@ -2523,8 +2942,20 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		return (DesignPdfPage)this;
 	}
 
+	public static String staticSolrSchoolPhoneNumber(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrSchoolPhoneNumber(SiteRequestEnUS siteRequest_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqSchoolPhoneNumber(SiteRequestEnUS siteRequest_, String o) {
+		return DesignPdfPage.staticSolrStrSchoolPhoneNumber(siteRequest_, DesignPdfPage.staticSolrSchoolPhoneNumber(siteRequest_, DesignPdfPage.staticSetSchoolPhoneNumber(siteRequest_, o)));
+	}
+
 	public String solrSchoolPhoneNumber() {
-		return schoolPhoneNumber;
+		return DesignPdfPage.staticSolrSchoolPhoneNumber(siteRequest_, schoolPhoneNumber);
 	}
 
 	public String strSchoolPhoneNumber() {
@@ -2570,10 +3001,13 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 	public String getSchoolAdministratorName() {
 		return schoolAdministratorName;
 	}
-
-	public void setSchoolAdministratorName(String schoolAdministratorName) {
-		this.schoolAdministratorName = schoolAdministratorName;
+	public DesignPdfPage setSchoolAdministratorName(String o) {
+		this.schoolAdministratorName = DesignPdfPage.staticSetSchoolAdministratorName(siteRequest_, o);
 		this.schoolAdministratorNameWrap.alreadyInitialized = true;
+		return (DesignPdfPage)this;
+	}
+	public static String staticSetSchoolAdministratorName(SiteRequestEnUS siteRequest_, String o) {
+		return o;
 	}
 	protected DesignPdfPage schoolAdministratorNameInit() {
 		if(!schoolAdministratorNameWrap.alreadyInitialized) {
@@ -2585,8 +3019,20 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		return (DesignPdfPage)this;
 	}
 
+	public static String staticSolrSchoolAdministratorName(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrSchoolAdministratorName(SiteRequestEnUS siteRequest_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqSchoolAdministratorName(SiteRequestEnUS siteRequest_, String o) {
+		return DesignPdfPage.staticSolrStrSchoolAdministratorName(siteRequest_, DesignPdfPage.staticSolrSchoolAdministratorName(siteRequest_, DesignPdfPage.staticSetSchoolAdministratorName(siteRequest_, o)));
+	}
+
 	public String solrSchoolAdministratorName() {
-		return schoolAdministratorName;
+		return DesignPdfPage.staticSolrSchoolAdministratorName(siteRequest_, schoolAdministratorName);
 	}
 
 	public String strSchoolAdministratorName() {
@@ -2639,10 +3085,14 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		this.yearStartWrap.alreadyInitialized = true;
 	}
 	public DesignPdfPage setYearStart(String o) {
-		if(NumberUtils.isParsable(o))
-			this.yearStart = Integer.parseInt(o);
+		this.yearStart = DesignPdfPage.staticSetYearStart(siteRequest_, o);
 		this.yearStartWrap.alreadyInitialized = true;
 		return (DesignPdfPage)this;
+	}
+	public static Integer staticSetYearStart(SiteRequestEnUS siteRequest_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Integer.parseInt(o);
+		return null;
 	}
 	protected DesignPdfPage yearStartInit() {
 		if(!yearStartWrap.alreadyInitialized) {
@@ -2654,8 +3104,20 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		return (DesignPdfPage)this;
 	}
 
+	public static Integer staticSolrYearStart(SiteRequestEnUS siteRequest_, Integer o) {
+		return o;
+	}
+
+	public static String staticSolrStrYearStart(SiteRequestEnUS siteRequest_, Integer o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqYearStart(SiteRequestEnUS siteRequest_, String o) {
+		return DesignPdfPage.staticSolrStrYearStart(siteRequest_, DesignPdfPage.staticSolrYearStart(siteRequest_, DesignPdfPage.staticSetYearStart(siteRequest_, o)));
+	}
+
 	public Integer solrYearStart() {
-		return yearStart;
+		return DesignPdfPage.staticSolrYearStart(siteRequest_, yearStart);
 	}
 
 	public String strYearStart() {
@@ -2708,10 +3170,14 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		this.yearEndWrap.alreadyInitialized = true;
 	}
 	public DesignPdfPage setYearEnd(String o) {
-		if(NumberUtils.isParsable(o))
-			this.yearEnd = Integer.parseInt(o);
+		this.yearEnd = DesignPdfPage.staticSetYearEnd(siteRequest_, o);
 		this.yearEndWrap.alreadyInitialized = true;
 		return (DesignPdfPage)this;
+	}
+	public static Integer staticSetYearEnd(SiteRequestEnUS siteRequest_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Integer.parseInt(o);
+		return null;
 	}
 	protected DesignPdfPage yearEndInit() {
 		if(!yearEndWrap.alreadyInitialized) {
@@ -2723,8 +3189,20 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		return (DesignPdfPage)this;
 	}
 
+	public static Integer staticSolrYearEnd(SiteRequestEnUS siteRequest_, Integer o) {
+		return o;
+	}
+
+	public static String staticSolrStrYearEnd(SiteRequestEnUS siteRequest_, Integer o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqYearEnd(SiteRequestEnUS siteRequest_, String o) {
+		return DesignPdfPage.staticSolrStrYearEnd(siteRequest_, DesignPdfPage.staticSolrYearEnd(siteRequest_, DesignPdfPage.staticSetYearEnd(siteRequest_, o)));
+	}
+
 	public Integer solrYearEnd() {
-		return yearEnd;
+		return DesignPdfPage.staticSolrYearEnd(siteRequest_, yearEnd);
 	}
 
 	public String strYearEnd() {
@@ -2785,9 +3263,12 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public DesignPdfPage setSeasonStartDate(String o) {
-		this.seasonStartDate = o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		this.seasonStartDate = DesignPdfPage.staticSetSeasonStartDate(siteRequest_, o);
 		this.seasonStartDateWrap.alreadyInitialized = true;
 		return (DesignPdfPage)this;
+	}
+	public static LocalDate staticSetSeasonStartDate(SiteRequestEnUS siteRequest_, String o) {
+		return o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 	}
 	public DesignPdfPage setSeasonStartDate(Date o) {
 		this.seasonStartDate = o == null ? null : o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
@@ -2804,8 +3285,20 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		return (DesignPdfPage)this;
 	}
 
+	public static Date staticSolrSeasonStartDate(SiteRequestEnUS siteRequest_, LocalDate o) {
+		return o == null ? null : Date.from(o.atStartOfDay(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toInstant().atZone(ZoneId.of("Z")).toInstant());
+	}
+
+	public static String staticSolrStrSeasonStartDate(SiteRequestEnUS siteRequest_, Date o) {
+		return "\"" + DateTimeFormatter.ISO_DATE_TIME.format(o.toInstant().atOffset(ZoneOffset.UTC)) + "\"";
+	}
+
+	public static String staticSolrFqSeasonStartDate(SiteRequestEnUS siteRequest_, String o) {
+		return DesignPdfPage.staticSolrStrSeasonStartDate(siteRequest_, DesignPdfPage.staticSolrSeasonStartDate(siteRequest_, DesignPdfPage.staticSetSeasonStartDate(siteRequest_, o)));
+	}
+
 	public Date solrSeasonStartDate() {
-		return seasonStartDate == null ? null : Date.from(seasonStartDate.atStartOfDay(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toInstant().atZone(ZoneId.of("Z")).toInstant());
+		return DesignPdfPage.staticSolrSeasonStartDate(siteRequest_, seasonStartDate);
 	}
 
 	public String strSeasonStartDate() {
@@ -2856,6 +3349,9 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		this.mom_ = mom_;
 		this.mom_Wrap.alreadyInitialized = true;
 	}
+	public static SchoolMom staticSetMom_(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	protected DesignPdfPage mom_Init() {
 		if(!mom_Wrap.alreadyInitialized) {
 			_mom_(mom_Wrap);
@@ -2893,6 +3389,9 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 	public void setDad_(SchoolDad dad_) {
 		this.dad_ = dad_;
 		this.dad_Wrap.alreadyInitialized = true;
+	}
+	public static SchoolDad staticSetDad_(SiteRequestEnUS siteRequest_, String o) {
+		return null;
 	}
 	protected DesignPdfPage dad_Init() {
 		if(!dad_Wrap.alreadyInitialized) {
@@ -2932,6 +3431,9 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		this.guardian_ = guardian_;
 		this.guardian_Wrap.alreadyInitialized = true;
 	}
+	public static SchoolGuardian staticSetGuardian_(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	protected DesignPdfPage guardian_Init() {
 		if(!guardian_Wrap.alreadyInitialized) {
 			_guardian_(guardian_Wrap);
@@ -2970,6 +3472,9 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		this.blockSearch = blockSearch;
 		this.blockSearchWrap.alreadyInitialized = true;
 	}
+	public static SearchList<SchoolBlock> staticSetBlockSearch(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	protected DesignPdfPage blockSearchInit() {
 		if(!blockSearchWrap.alreadyInitialized) {
 			_blockSearch(blockSearch);
@@ -3006,6 +3511,9 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 	public void setBlocks(List<SchoolBlock> blocks) {
 		this.blocks = blocks;
 		this.blocksWrap.alreadyInitialized = true;
+	}
+	public static List<SchoolBlock> staticSetBlocks(SiteRequestEnUS siteRequest_, String o) {
+		return null;
 	}
 	public DesignPdfPage addBlocks(SchoolBlock...objets) {
 		for(SchoolBlock o : objets) {
@@ -3056,6 +3564,9 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		this.seasonBlocks = seasonBlocks;
 		this.seasonBlocksWrap.alreadyInitialized = true;
 	}
+	public static List<SchoolBlock> staticSetSeasonBlocks(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	public DesignPdfPage addSeasonBlocks(SchoolBlock...objets) {
 		for(SchoolBlock o : objets) {
 			addSeasonBlocks(o);
@@ -3103,6 +3614,9 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		this.seasonBlock = seasonBlock;
 		this.seasonBlockWrap.alreadyInitialized = true;
 	}
+	public static SchoolBlock staticSetSeasonBlock(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	protected DesignPdfPage seasonBlockInit() {
 		if(!seasonBlockWrap.alreadyInitialized) {
 			_seasonBlock(seasonBlockWrap);
@@ -3142,6 +3656,9 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 	public void setSessionBlock(SchoolBlock sessionBlock) {
 		this.sessionBlock = sessionBlock;
 		this.sessionBlockWrap.alreadyInitialized = true;
+	}
+	public static SchoolBlock staticSetSessionBlock(SiteRequestEnUS siteRequest_, String o) {
+		return null;
 	}
 	protected DesignPdfPage sessionBlockInit() {
 		if(!sessionBlockWrap.alreadyInitialized) {
@@ -3183,6 +3700,9 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		this.ageBlock = ageBlock;
 		this.ageBlockWrap.alreadyInitialized = true;
 	}
+	public static SchoolBlock staticSetAgeBlock(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	protected DesignPdfPage ageBlockInit() {
 		if(!ageBlockWrap.alreadyInitialized) {
 			_ageBlock(ageBlockWrap);
@@ -3222,6 +3742,9 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 	public void setBlockBlock(SchoolBlock blockBlock) {
 		this.blockBlock = blockBlock;
 		this.blockBlockWrap.alreadyInitialized = true;
+	}
+	public static SchoolBlock staticSetBlockBlock(SiteRequestEnUS siteRequest_, String o) {
+		return null;
 	}
 	protected DesignPdfPage blockBlockInit() {
 		if(!blockBlockWrap.alreadyInitialized) {
@@ -3263,6 +3786,9 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		this.htmlPartSearch = htmlPartSearch;
 		this.htmlPartSearchWrap.alreadyInitialized = true;
 	}
+	public static SearchList<HtmlPart> staticSetHtmlPartSearch(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	protected DesignPdfPage htmlPartSearchInit() {
 		if(!htmlPartSearchWrap.alreadyInitialized) {
 			_htmlPartSearch(htmlPartSearch);
@@ -3299,6 +3825,9 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 	public void setHtmlPartList(List<HtmlPart> htmlPartList) {
 		this.htmlPartList = htmlPartList;
 		this.htmlPartListWrap.alreadyInitialized = true;
+	}
+	public static List<HtmlPart> staticSetHtmlPartList(SiteRequestEnUS siteRequest_, String o) {
+		return null;
 	}
 	public DesignPdfPage addHtmlPartList(HtmlPart...objets) {
 		for(HtmlPart o : objets) {
@@ -3624,6 +4153,286 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		switch(var) {
 			default:
 				return super.attributeDesignPdfGenPage(var, val);
+		}
+	}
+
+	///////////////
+	// staticSet //
+	///////////////
+
+	public static Object staticSetForClass(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		return staticSetDesignPdfPage(entityVar,  siteRequest_, o);
+	}
+	public static Object staticSetDesignPdfPage(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		switch(entityVar) {
+		case "pageDesignId":
+			return DesignPdfPage.staticSetPageDesignId(siteRequest_, o);
+		case "yearKey":
+			return DesignPdfPage.staticSetYearKey(siteRequest_, o);
+		case "yearVar":
+			return DesignPdfPage.staticSetYearVar(siteRequest_, o);
+		case "paymentLastStr":
+			return DesignPdfPage.staticSetPaymentLastStr(siteRequest_, o);
+		case "paymentAmount":
+			return DesignPdfPage.staticSetPaymentAmount(siteRequest_, o);
+		case "chargeAmount":
+			return DesignPdfPage.staticSetChargeAmount(siteRequest_, o);
+		case "chargeAmountFuture":
+			return DesignPdfPage.staticSetChargeAmountFuture(siteRequest_, o);
+		case "chargeAmountDue":
+			return DesignPdfPage.staticSetChargeAmountDue(siteRequest_, o);
+		case "chargesNow":
+			return DesignPdfPage.staticSetChargesNow(siteRequest_, o);
+		case "paymentsCurrent":
+			return DesignPdfPage.staticSetPaymentsCurrent(siteRequest_, o);
+		case "paymentsLate":
+			return DesignPdfPage.staticSetPaymentsLate(siteRequest_, o);
+		case "paymentsLateAmount":
+			return DesignPdfPage.staticSetPaymentsLateAmount(siteRequest_, o);
+		case "paymentsAhead":
+			return DesignPdfPage.staticSetPaymentsAhead(siteRequest_, o);
+		case "emailFrom":
+			return DesignPdfPage.staticSetEmailFrom(siteRequest_, o);
+		case "emailToSchool":
+			return DesignPdfPage.staticSetEmailToSchool(siteRequest_, o);
+		case "emailToAddress":
+			return DesignPdfPage.staticSetEmailToAddress(siteRequest_, o);
+		case "emailToName":
+			return DesignPdfPage.staticSetEmailToName(siteRequest_, o);
+		case "emailMessage":
+			return DesignPdfPage.staticSetEmailMessage(siteRequest_, o);
+		case "schoolKey":
+			return DesignPdfPage.staticSetSchoolKey(siteRequest_, o);
+		case "schoolName":
+			return DesignPdfPage.staticSetSchoolName(siteRequest_, o);
+		case "schoolCompleteName":
+			return DesignPdfPage.staticSetSchoolCompleteName(siteRequest_, o);
+		case "schoolLocation":
+			return DesignPdfPage.staticSetSchoolLocation(siteRequest_, o);
+		case "schoolAddress":
+			return DesignPdfPage.staticSetSchoolAddress(siteRequest_, o);
+		case "schoolPhoneNumber":
+			return DesignPdfPage.staticSetSchoolPhoneNumber(siteRequest_, o);
+		case "schoolAdministratorName":
+			return DesignPdfPage.staticSetSchoolAdministratorName(siteRequest_, o);
+		case "yearStart":
+			return DesignPdfPage.staticSetYearStart(siteRequest_, o);
+		case "yearEnd":
+			return DesignPdfPage.staticSetYearEnd(siteRequest_, o);
+		case "seasonStartDate":
+			return DesignPdfPage.staticSetSeasonStartDate(siteRequest_, o);
+			default:
+				return DesignPdfGenPage.staticSetDesignPdfGenPage(entityVar,  siteRequest_, o);
+		}
+	}
+
+	////////////////
+	// staticSolr //
+	////////////////
+
+	public static Object staticSolrForClass(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		return staticSolrDesignPdfPage(entityVar,  siteRequest_, o);
+	}
+	public static Object staticSolrDesignPdfPage(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		switch(entityVar) {
+		case "pageDesignId":
+			return DesignPdfPage.staticSolrPageDesignId(siteRequest_, (String)o);
+		case "yearKey":
+			return DesignPdfPage.staticSolrYearKey(siteRequest_, (Long)o);
+		case "yearVar":
+			return DesignPdfPage.staticSolrYearVar(siteRequest_, (String)o);
+		case "paymentLastStr":
+			return DesignPdfPage.staticSolrPaymentLastStr(siteRequest_, (String)o);
+		case "paymentAmount":
+			return DesignPdfPage.staticSolrPaymentAmount(siteRequest_, (BigDecimal)o);
+		case "chargeAmount":
+			return DesignPdfPage.staticSolrChargeAmount(siteRequest_, (BigDecimal)o);
+		case "chargeAmountFuture":
+			return DesignPdfPage.staticSolrChargeAmountFuture(siteRequest_, (BigDecimal)o);
+		case "chargeAmountDue":
+			return DesignPdfPage.staticSolrChargeAmountDue(siteRequest_, (BigDecimal)o);
+		case "chargesNow":
+			return DesignPdfPage.staticSolrChargesNow(siteRequest_, (BigDecimal)o);
+		case "paymentsCurrent":
+			return DesignPdfPage.staticSolrPaymentsCurrent(siteRequest_, (Boolean)o);
+		case "paymentsLate":
+			return DesignPdfPage.staticSolrPaymentsLate(siteRequest_, (Boolean)o);
+		case "paymentsLateAmount":
+			return DesignPdfPage.staticSolrPaymentsLateAmount(siteRequest_, (BigDecimal)o);
+		case "paymentsAhead":
+			return DesignPdfPage.staticSolrPaymentsAhead(siteRequest_, (Boolean)o);
+		case "emailFrom":
+			return DesignPdfPage.staticSolrEmailFrom(siteRequest_, (String)o);
+		case "emailToSchool":
+			return DesignPdfPage.staticSolrEmailToSchool(siteRequest_, (String)o);
+		case "emailToAddress":
+			return DesignPdfPage.staticSolrEmailToAddress(siteRequest_, (String)o);
+		case "emailToName":
+			return DesignPdfPage.staticSolrEmailToName(siteRequest_, (String)o);
+		case "emailMessage":
+			return DesignPdfPage.staticSolrEmailMessage(siteRequest_, (String)o);
+		case "schoolKey":
+			return DesignPdfPage.staticSolrSchoolKey(siteRequest_, (Long)o);
+		case "schoolName":
+			return DesignPdfPage.staticSolrSchoolName(siteRequest_, (String)o);
+		case "schoolCompleteName":
+			return DesignPdfPage.staticSolrSchoolCompleteName(siteRequest_, (String)o);
+		case "schoolLocation":
+			return DesignPdfPage.staticSolrSchoolLocation(siteRequest_, (String)o);
+		case "schoolAddress":
+			return DesignPdfPage.staticSolrSchoolAddress(siteRequest_, (String)o);
+		case "schoolPhoneNumber":
+			return DesignPdfPage.staticSolrSchoolPhoneNumber(siteRequest_, (String)o);
+		case "schoolAdministratorName":
+			return DesignPdfPage.staticSolrSchoolAdministratorName(siteRequest_, (String)o);
+		case "yearStart":
+			return DesignPdfPage.staticSolrYearStart(siteRequest_, (Integer)o);
+		case "yearEnd":
+			return DesignPdfPage.staticSolrYearEnd(siteRequest_, (Integer)o);
+		case "seasonStartDate":
+			return DesignPdfPage.staticSolrSeasonStartDate(siteRequest_, (LocalDate)o);
+			default:
+				return DesignPdfGenPage.staticSolrDesignPdfGenPage(entityVar,  siteRequest_, o);
+		}
+	}
+
+	///////////////////
+	// staticSolrStr //
+	///////////////////
+
+	public static String staticSolrStrForClass(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		return staticSolrStrDesignPdfPage(entityVar,  siteRequest_, o);
+	}
+	public static String staticSolrStrDesignPdfPage(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		switch(entityVar) {
+		case "pageDesignId":
+			return DesignPdfPage.staticSolrStrPageDesignId(siteRequest_, (String)o);
+		case "yearKey":
+			return DesignPdfPage.staticSolrStrYearKey(siteRequest_, (Long)o);
+		case "yearVar":
+			return DesignPdfPage.staticSolrStrYearVar(siteRequest_, (String)o);
+		case "paymentLastStr":
+			return DesignPdfPage.staticSolrStrPaymentLastStr(siteRequest_, (String)o);
+		case "paymentAmount":
+			return DesignPdfPage.staticSolrStrPaymentAmount(siteRequest_, (Double)o);
+		case "chargeAmount":
+			return DesignPdfPage.staticSolrStrChargeAmount(siteRequest_, (Double)o);
+		case "chargeAmountFuture":
+			return DesignPdfPage.staticSolrStrChargeAmountFuture(siteRequest_, (Double)o);
+		case "chargeAmountDue":
+			return DesignPdfPage.staticSolrStrChargeAmountDue(siteRequest_, (Double)o);
+		case "chargesNow":
+			return DesignPdfPage.staticSolrStrChargesNow(siteRequest_, (Double)o);
+		case "paymentsCurrent":
+			return DesignPdfPage.staticSolrStrPaymentsCurrent(siteRequest_, (Boolean)o);
+		case "paymentsLate":
+			return DesignPdfPage.staticSolrStrPaymentsLate(siteRequest_, (Boolean)o);
+		case "paymentsLateAmount":
+			return DesignPdfPage.staticSolrStrPaymentsLateAmount(siteRequest_, (Double)o);
+		case "paymentsAhead":
+			return DesignPdfPage.staticSolrStrPaymentsAhead(siteRequest_, (Boolean)o);
+		case "emailFrom":
+			return DesignPdfPage.staticSolrStrEmailFrom(siteRequest_, (String)o);
+		case "emailToSchool":
+			return DesignPdfPage.staticSolrStrEmailToSchool(siteRequest_, (String)o);
+		case "emailToAddress":
+			return DesignPdfPage.staticSolrStrEmailToAddress(siteRequest_, (String)o);
+		case "emailToName":
+			return DesignPdfPage.staticSolrStrEmailToName(siteRequest_, (String)o);
+		case "emailMessage":
+			return DesignPdfPage.staticSolrStrEmailMessage(siteRequest_, (String)o);
+		case "schoolKey":
+			return DesignPdfPage.staticSolrStrSchoolKey(siteRequest_, (Long)o);
+		case "schoolName":
+			return DesignPdfPage.staticSolrStrSchoolName(siteRequest_, (String)o);
+		case "schoolCompleteName":
+			return DesignPdfPage.staticSolrStrSchoolCompleteName(siteRequest_, (String)o);
+		case "schoolLocation":
+			return DesignPdfPage.staticSolrStrSchoolLocation(siteRequest_, (String)o);
+		case "schoolAddress":
+			return DesignPdfPage.staticSolrStrSchoolAddress(siteRequest_, (String)o);
+		case "schoolPhoneNumber":
+			return DesignPdfPage.staticSolrStrSchoolPhoneNumber(siteRequest_, (String)o);
+		case "schoolAdministratorName":
+			return DesignPdfPage.staticSolrStrSchoolAdministratorName(siteRequest_, (String)o);
+		case "yearStart":
+			return DesignPdfPage.staticSolrStrYearStart(siteRequest_, (Integer)o);
+		case "yearEnd":
+			return DesignPdfPage.staticSolrStrYearEnd(siteRequest_, (Integer)o);
+		case "seasonStartDate":
+			return DesignPdfPage.staticSolrStrSeasonStartDate(siteRequest_, (Date)o);
+			default:
+				return DesignPdfGenPage.staticSolrStrDesignPdfGenPage(entityVar,  siteRequest_, o);
+		}
+	}
+
+	//////////////////
+	// staticSolrFq //
+	//////////////////
+
+	public static String staticSolrFqForClass(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		return staticSolrFqDesignPdfPage(entityVar,  siteRequest_, o);
+	}
+	public static String staticSolrFqDesignPdfPage(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		switch(entityVar) {
+		case "pageDesignId":
+			return DesignPdfPage.staticSolrFqPageDesignId(siteRequest_, o);
+		case "yearKey":
+			return DesignPdfPage.staticSolrFqYearKey(siteRequest_, o);
+		case "yearVar":
+			return DesignPdfPage.staticSolrFqYearVar(siteRequest_, o);
+		case "paymentLastStr":
+			return DesignPdfPage.staticSolrFqPaymentLastStr(siteRequest_, o);
+		case "paymentAmount":
+			return DesignPdfPage.staticSolrFqPaymentAmount(siteRequest_, o);
+		case "chargeAmount":
+			return DesignPdfPage.staticSolrFqChargeAmount(siteRequest_, o);
+		case "chargeAmountFuture":
+			return DesignPdfPage.staticSolrFqChargeAmountFuture(siteRequest_, o);
+		case "chargeAmountDue":
+			return DesignPdfPage.staticSolrFqChargeAmountDue(siteRequest_, o);
+		case "chargesNow":
+			return DesignPdfPage.staticSolrFqChargesNow(siteRequest_, o);
+		case "paymentsCurrent":
+			return DesignPdfPage.staticSolrFqPaymentsCurrent(siteRequest_, o);
+		case "paymentsLate":
+			return DesignPdfPage.staticSolrFqPaymentsLate(siteRequest_, o);
+		case "paymentsLateAmount":
+			return DesignPdfPage.staticSolrFqPaymentsLateAmount(siteRequest_, o);
+		case "paymentsAhead":
+			return DesignPdfPage.staticSolrFqPaymentsAhead(siteRequest_, o);
+		case "emailFrom":
+			return DesignPdfPage.staticSolrFqEmailFrom(siteRequest_, o);
+		case "emailToSchool":
+			return DesignPdfPage.staticSolrFqEmailToSchool(siteRequest_, o);
+		case "emailToAddress":
+			return DesignPdfPage.staticSolrFqEmailToAddress(siteRequest_, o);
+		case "emailToName":
+			return DesignPdfPage.staticSolrFqEmailToName(siteRequest_, o);
+		case "emailMessage":
+			return DesignPdfPage.staticSolrFqEmailMessage(siteRequest_, o);
+		case "schoolKey":
+			return DesignPdfPage.staticSolrFqSchoolKey(siteRequest_, o);
+		case "schoolName":
+			return DesignPdfPage.staticSolrFqSchoolName(siteRequest_, o);
+		case "schoolCompleteName":
+			return DesignPdfPage.staticSolrFqSchoolCompleteName(siteRequest_, o);
+		case "schoolLocation":
+			return DesignPdfPage.staticSolrFqSchoolLocation(siteRequest_, o);
+		case "schoolAddress":
+			return DesignPdfPage.staticSolrFqSchoolAddress(siteRequest_, o);
+		case "schoolPhoneNumber":
+			return DesignPdfPage.staticSolrFqSchoolPhoneNumber(siteRequest_, o);
+		case "schoolAdministratorName":
+			return DesignPdfPage.staticSolrFqSchoolAdministratorName(siteRequest_, o);
+		case "yearStart":
+			return DesignPdfPage.staticSolrFqYearStart(siteRequest_, o);
+		case "yearEnd":
+			return DesignPdfPage.staticSolrFqYearEnd(siteRequest_, o);
+		case "seasonStartDate":
+			return DesignPdfPage.staticSolrFqSeasonStartDate(siteRequest_, o);
+			default:
+				return DesignPdfGenPage.staticSolrFqDesignPdfGenPage(entityVar,  siteRequest_, o);
 		}
 	}
 

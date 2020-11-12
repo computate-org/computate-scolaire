@@ -93,6 +93,9 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		this.w1 = w1;
 		this.w1Wrap.alreadyInitialized = true;
 	}
+	public static AllWriter staticSetW1(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	protected DesignEmailPage w1Init() {
 		if(!w1Wrap.alreadyInitialized) {
 			_w1(w1Wrap);
@@ -133,6 +136,9 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		this.wPage = wPage;
 		this.wPageWrap.alreadyInitialized = true;
 	}
+	public static AllWriter staticSetWPage(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	protected DesignEmailPage wPageInit() {
 		if(!wPageWrap.alreadyInitialized) {
 			_wPage(wPageWrap);
@@ -168,10 +174,13 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 	public String getPageDesignId() {
 		return pageDesignId;
 	}
-
-	public void setPageDesignId(String pageDesignId) {
-		this.pageDesignId = pageDesignId;
+	public DesignEmailPage setPageDesignId(String o) {
+		this.pageDesignId = DesignEmailPage.staticSetPageDesignId(siteRequest_, o);
 		this.pageDesignIdWrap.alreadyInitialized = true;
+		return (DesignEmailPage)this;
+	}
+	public static String staticSetPageDesignId(SiteRequestEnUS siteRequest_, String o) {
+		return o;
 	}
 	protected DesignEmailPage pageDesignIdInit() {
 		if(!pageDesignIdWrap.alreadyInitialized) {
@@ -183,8 +192,20 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		return (DesignEmailPage)this;
 	}
 
+	public static String staticSolrPageDesignId(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrPageDesignId(SiteRequestEnUS siteRequest_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPageDesignId(SiteRequestEnUS siteRequest_, String o) {
+		return DesignEmailPage.staticSolrStrPageDesignId(siteRequest_, DesignEmailPage.staticSolrPageDesignId(siteRequest_, DesignEmailPage.staticSetPageDesignId(siteRequest_, o)));
+	}
+
 	public String solrPageDesignId() {
-		return pageDesignId;
+		return DesignEmailPage.staticSolrPageDesignId(siteRequest_, pageDesignId);
 	}
 
 	public String strPageDesignId() {
@@ -235,6 +256,9 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		this.pageHtmlPartSearch = pageHtmlPartSearch;
 		this.pageHtmlPartSearchWrap.alreadyInitialized = true;
 	}
+	public static SearchList<HtmlPart> staticSetPageHtmlPartSearch(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	protected DesignEmailPage pageHtmlPartSearchInit() {
 		if(!pageHtmlPartSearchWrap.alreadyInitialized) {
 			_pageHtmlPartSearch(pageHtmlPartSearch);
@@ -271,6 +295,9 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 	public void setPageHtmlPartList(List<HtmlPart> pageHtmlPartList) {
 		this.pageHtmlPartList = pageHtmlPartList;
 		this.pageHtmlPartListWrap.alreadyInitialized = true;
+	}
+	public static List<HtmlPart> staticSetPageHtmlPartList(SiteRequestEnUS siteRequest_, String o) {
+		return null;
 	}
 	public DesignEmailPage addPageHtmlPartList(HtmlPart...objets) {
 		for(HtmlPart o : objets) {
@@ -321,6 +348,9 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		this.wEmail = wEmail;
 		this.wEmailWrap.alreadyInitialized = true;
 	}
+	public static AllWriter staticSetWEmail(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	protected DesignEmailPage wEmailInit() {
 		if(!wEmailWrap.alreadyInitialized) {
 			_wEmail(wEmailWrap);
@@ -356,10 +386,13 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 	public String getEmailContentType() {
 		return emailContentType;
 	}
-
-	public void setEmailContentType(String emailContentType) {
-		this.emailContentType = emailContentType;
+	public DesignEmailPage setEmailContentType(String o) {
+		this.emailContentType = DesignEmailPage.staticSetEmailContentType(siteRequest_, o);
 		this.emailContentTypeWrap.alreadyInitialized = true;
+		return (DesignEmailPage)this;
+	}
+	public static String staticSetEmailContentType(SiteRequestEnUS siteRequest_, String o) {
+		return o;
 	}
 	protected DesignEmailPage emailContentTypeInit() {
 		if(!emailContentTypeWrap.alreadyInitialized) {
@@ -371,8 +404,20 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		return (DesignEmailPage)this;
 	}
 
+	public static String staticSolrEmailContentType(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrEmailContentType(SiteRequestEnUS siteRequest_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqEmailContentType(SiteRequestEnUS siteRequest_, String o) {
+		return DesignEmailPage.staticSolrStrEmailContentType(siteRequest_, DesignEmailPage.staticSolrEmailContentType(siteRequest_, DesignEmailPage.staticSetEmailContentType(siteRequest_, o)));
+	}
+
 	public String solrEmailContentType() {
-		return emailContentType;
+		return DesignEmailPage.staticSolrEmailContentType(siteRequest_, emailContentType);
 	}
 
 	public String strEmailContentType() {
@@ -418,10 +463,13 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 	public String getEmailDesignId() {
 		return emailDesignId;
 	}
-
-	public void setEmailDesignId(String emailDesignId) {
-		this.emailDesignId = emailDesignId;
+	public DesignEmailPage setEmailDesignId(String o) {
+		this.emailDesignId = DesignEmailPage.staticSetEmailDesignId(siteRequest_, o);
 		this.emailDesignIdWrap.alreadyInitialized = true;
+		return (DesignEmailPage)this;
+	}
+	public static String staticSetEmailDesignId(SiteRequestEnUS siteRequest_, String o) {
+		return o;
 	}
 	protected DesignEmailPage emailDesignIdInit() {
 		if(!emailDesignIdWrap.alreadyInitialized) {
@@ -433,8 +481,20 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		return (DesignEmailPage)this;
 	}
 
+	public static String staticSolrEmailDesignId(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrEmailDesignId(SiteRequestEnUS siteRequest_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqEmailDesignId(SiteRequestEnUS siteRequest_, String o) {
+		return DesignEmailPage.staticSolrStrEmailDesignId(siteRequest_, DesignEmailPage.staticSolrEmailDesignId(siteRequest_, DesignEmailPage.staticSetEmailDesignId(siteRequest_, o)));
+	}
+
 	public String solrEmailDesignId() {
-		return emailDesignId;
+		return DesignEmailPage.staticSolrEmailDesignId(siteRequest_, emailDesignId);
 	}
 
 	public String strEmailDesignId() {
@@ -485,6 +545,9 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		this.emailDesignSearch = emailDesignSearch;
 		this.emailDesignSearchWrap.alreadyInitialized = true;
 	}
+	public static SearchList<PageDesign> staticSetEmailDesignSearch(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	protected DesignEmailPage emailDesignSearchInit() {
 		if(!emailDesignSearchWrap.alreadyInitialized) {
 			_emailDesignSearch(emailDesignSearch);
@@ -521,6 +584,9 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 	public void setEmailDesign(PageDesign emailDesign) {
 		this.emailDesign = emailDesign;
 		this.emailDesignWrap.alreadyInitialized = true;
+	}
+	public static PageDesign staticSetEmailDesign(SiteRequestEnUS siteRequest_, String o) {
+		return null;
 	}
 	protected DesignEmailPage emailDesignInit() {
 		if(!emailDesignWrap.alreadyInitialized) {
@@ -562,6 +628,9 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		this.emailHtmlPartSearch = emailHtmlPartSearch;
 		this.emailHtmlPartSearchWrap.alreadyInitialized = true;
 	}
+	public static SearchList<HtmlPart> staticSetEmailHtmlPartSearch(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	protected DesignEmailPage emailHtmlPartSearchInit() {
 		if(!emailHtmlPartSearchWrap.alreadyInitialized) {
 			_emailHtmlPartSearch(emailHtmlPartSearch);
@@ -598,6 +667,9 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 	public void setEmailHtmlPartList(List<HtmlPart> emailHtmlPartList) {
 		this.emailHtmlPartList = emailHtmlPartList;
 		this.emailHtmlPartListWrap.alreadyInitialized = true;
+	}
+	public static List<HtmlPart> staticSetEmailHtmlPartList(SiteRequestEnUS siteRequest_, String o) {
+		return null;
 	}
 	public DesignEmailPage addEmailHtmlPartList(HtmlPart...objets) {
 		for(HtmlPart o : objets) {
@@ -648,6 +720,9 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		this.wAttachment = wAttachment;
 		this.wAttachmentWrap.alreadyInitialized = true;
 	}
+	public static AllWriter staticSetWAttachment(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	protected DesignEmailPage wAttachmentInit() {
 		if(!wAttachmentWrap.alreadyInitialized) {
 			_wAttachment(wAttachmentWrap);
@@ -683,10 +758,13 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 	public String getAttachmentContentType() {
 		return attachmentContentType;
 	}
-
-	public void setAttachmentContentType(String attachmentContentType) {
-		this.attachmentContentType = attachmentContentType;
+	public DesignEmailPage setAttachmentContentType(String o) {
+		this.attachmentContentType = DesignEmailPage.staticSetAttachmentContentType(siteRequest_, o);
 		this.attachmentContentTypeWrap.alreadyInitialized = true;
+		return (DesignEmailPage)this;
+	}
+	public static String staticSetAttachmentContentType(SiteRequestEnUS siteRequest_, String o) {
+		return o;
 	}
 	protected DesignEmailPage attachmentContentTypeInit() {
 		if(!attachmentContentTypeWrap.alreadyInitialized) {
@@ -698,8 +776,20 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		return (DesignEmailPage)this;
 	}
 
+	public static String staticSolrAttachmentContentType(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrAttachmentContentType(SiteRequestEnUS siteRequest_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqAttachmentContentType(SiteRequestEnUS siteRequest_, String o) {
+		return DesignEmailPage.staticSolrStrAttachmentContentType(siteRequest_, DesignEmailPage.staticSolrAttachmentContentType(siteRequest_, DesignEmailPage.staticSetAttachmentContentType(siteRequest_, o)));
+	}
+
 	public String solrAttachmentContentType() {
-		return attachmentContentType;
+		return DesignEmailPage.staticSolrAttachmentContentType(siteRequest_, attachmentContentType);
 	}
 
 	public String strAttachmentContentType() {
@@ -745,10 +835,13 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 	public String getAttachmentDesignId() {
 		return attachmentDesignId;
 	}
-
-	public void setAttachmentDesignId(String attachmentDesignId) {
-		this.attachmentDesignId = attachmentDesignId;
+	public DesignEmailPage setAttachmentDesignId(String o) {
+		this.attachmentDesignId = DesignEmailPage.staticSetAttachmentDesignId(siteRequest_, o);
 		this.attachmentDesignIdWrap.alreadyInitialized = true;
+		return (DesignEmailPage)this;
+	}
+	public static String staticSetAttachmentDesignId(SiteRequestEnUS siteRequest_, String o) {
+		return o;
 	}
 	protected DesignEmailPage attachmentDesignIdInit() {
 		if(!attachmentDesignIdWrap.alreadyInitialized) {
@@ -760,8 +853,20 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		return (DesignEmailPage)this;
 	}
 
+	public static String staticSolrAttachmentDesignId(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrAttachmentDesignId(SiteRequestEnUS siteRequest_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqAttachmentDesignId(SiteRequestEnUS siteRequest_, String o) {
+		return DesignEmailPage.staticSolrStrAttachmentDesignId(siteRequest_, DesignEmailPage.staticSolrAttachmentDesignId(siteRequest_, DesignEmailPage.staticSetAttachmentDesignId(siteRequest_, o)));
+	}
+
 	public String solrAttachmentDesignId() {
-		return attachmentDesignId;
+		return DesignEmailPage.staticSolrAttachmentDesignId(siteRequest_, attachmentDesignId);
 	}
 
 	public String strAttachmentDesignId() {
@@ -812,6 +917,9 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		this.attachmentDesignSearch = attachmentDesignSearch;
 		this.attachmentDesignSearchWrap.alreadyInitialized = true;
 	}
+	public static SearchList<PageDesign> staticSetAttachmentDesignSearch(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	protected DesignEmailPage attachmentDesignSearchInit() {
 		if(!attachmentDesignSearchWrap.alreadyInitialized) {
 			_attachmentDesignSearch(attachmentDesignSearch);
@@ -848,6 +956,9 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 	public void setAttachmentDesign(PageDesign attachmentDesign) {
 		this.attachmentDesign = attachmentDesign;
 		this.attachmentDesignWrap.alreadyInitialized = true;
+	}
+	public static PageDesign staticSetAttachmentDesign(SiteRequestEnUS siteRequest_, String o) {
+		return null;
 	}
 	protected DesignEmailPage attachmentDesignInit() {
 		if(!attachmentDesignWrap.alreadyInitialized) {
@@ -889,6 +1000,9 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		this.attachmentHtmlPartSearch = attachmentHtmlPartSearch;
 		this.attachmentHtmlPartSearchWrap.alreadyInitialized = true;
 	}
+	public static SearchList<HtmlPart> staticSetAttachmentHtmlPartSearch(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	protected DesignEmailPage attachmentHtmlPartSearchInit() {
 		if(!attachmentHtmlPartSearchWrap.alreadyInitialized) {
 			_attachmentHtmlPartSearch(attachmentHtmlPartSearch);
@@ -925,6 +1039,9 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 	public void setAttachmentHtmlPartList(List<HtmlPart> attachmentHtmlPartList) {
 		this.attachmentHtmlPartList = attachmentHtmlPartList;
 		this.attachmentHtmlPartListWrap.alreadyInitialized = true;
+	}
+	public static List<HtmlPart> staticSetAttachmentHtmlPartList(SiteRequestEnUS siteRequest_, String o) {
+		return null;
 	}
 	public DesignEmailPage addAttachmentHtmlPartList(HtmlPart...objets) {
 		for(HtmlPart o : objets) {
@@ -975,6 +1092,9 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		this.enrollmentSearch = enrollmentSearch;
 		this.enrollmentSearchWrap.alreadyInitialized = true;
 	}
+	public static SearchList<SchoolEnrollment> staticSetEnrollmentSearch(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	protected DesignEmailPage enrollmentSearchInit() {
 		if(!enrollmentSearchWrap.alreadyInitialized) {
 			_enrollmentSearch(enrollmentSearch);
@@ -1011,6 +1131,9 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 	public void setSchoolEnrollment(SchoolEnrollment schoolEnrollment) {
 		this.schoolEnrollment = schoolEnrollment;
 		this.schoolEnrollmentWrap.alreadyInitialized = true;
+	}
+	public static SchoolEnrollment staticSetSchoolEnrollment(SiteRequestEnUS siteRequest_, String o) {
+		return null;
 	}
 	protected DesignEmailPage schoolEnrollmentInit() {
 		if(!schoolEnrollmentWrap.alreadyInitialized) {
@@ -1051,6 +1174,9 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 	public void setEnrollments(List<SchoolEnrollment> enrollments) {
 		this.enrollments = enrollments;
 		this.enrollmentsWrap.alreadyInitialized = true;
+	}
+	public static List<SchoolEnrollment> staticSetEnrollments(SiteRequestEnUS siteRequest_, String o) {
+		return null;
 	}
 	public DesignEmailPage addEnrollments(SchoolEnrollment...objets) {
 		for(SchoolEnrollment o : objets) {
@@ -1101,6 +1227,9 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		this.enrollmentBlocks = enrollmentBlocks;
 		this.enrollmentBlocksWrap.alreadyInitialized = true;
 	}
+	public static List<SchoolEnrollment> staticSetEnrollmentBlocks(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	public DesignEmailPage addEnrollmentBlocks(SchoolEnrollment...objets) {
 		for(SchoolEnrollment o : objets) {
 			addEnrollmentBlocks(o);
@@ -1147,6 +1276,9 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 	public void setEnrollmentGroups(List<SchoolEnrollment> enrollmentGroups) {
 		this.enrollmentGroups = enrollmentGroups;
 		this.enrollmentGroupsWrap.alreadyInitialized = true;
+	}
+	public static List<SchoolEnrollment> staticSetEnrollmentGroups(SiteRequestEnUS siteRequest_, String o) {
+		return null;
 	}
 	public DesignEmailPage addEnrollmentGroups(SchoolEnrollment...objets) {
 		for(SchoolEnrollment o : objets) {
@@ -1197,6 +1329,9 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		this.enrollmentBlock = enrollmentBlock;
 		this.enrollmentBlockWrap.alreadyInitialized = true;
 	}
+	public static SchoolEnrollment staticSetEnrollmentBlock(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	protected DesignEmailPage enrollmentBlockInit() {
 		if(!enrollmentBlockWrap.alreadyInitialized) {
 			_enrollmentBlock(enrollmentBlockWrap);
@@ -1236,6 +1371,9 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 	public void setEnrollmentGroup(SchoolEnrollment enrollmentGroup) {
 		this.enrollmentGroup = enrollmentGroup;
 		this.enrollmentGroupWrap.alreadyInitialized = true;
+	}
+	public static SchoolEnrollment staticSetEnrollmentGroup(SiteRequestEnUS siteRequest_, String o) {
+		return null;
 	}
 	protected DesignEmailPage enrollmentGroupInit() {
 		if(!enrollmentGroupWrap.alreadyInitialized) {
@@ -1277,6 +1415,9 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		this.enrollmentEnrollment = enrollmentEnrollment;
 		this.enrollmentEnrollmentWrap.alreadyInitialized = true;
 	}
+	public static SchoolEnrollment staticSetEnrollmentEnrollment(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	protected DesignEmailPage enrollmentEnrollmentInit() {
 		if(!enrollmentEnrollmentWrap.alreadyInitialized) {
 			_enrollmentEnrollment(enrollmentEnrollmentWrap);
@@ -1317,6 +1458,9 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		this.yearSearch = yearSearch;
 		this.yearSearchWrap.alreadyInitialized = true;
 	}
+	public static SearchList<SchoolYear> staticSetYearSearch(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	protected DesignEmailPage yearSearchInit() {
 		if(!yearSearchWrap.alreadyInitialized) {
 			_yearSearch(yearSearch);
@@ -1353,6 +1497,9 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 	public void setYear_(SchoolYear year_) {
 		this.year_ = year_;
 		this.year_Wrap.alreadyInitialized = true;
+	}
+	public static SchoolYear staticSetYear_(SiteRequestEnUS siteRequest_, String o) {
+		return null;
 	}
 	protected DesignEmailPage year_Init() {
 		if(!year_Wrap.alreadyInitialized) {
@@ -1394,10 +1541,14 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		this.yearKeyWrap.alreadyInitialized = true;
 	}
 	public DesignEmailPage setYearKey(String o) {
-		if(NumberUtils.isParsable(o))
-			this.yearKey = Long.parseLong(o);
+		this.yearKey = DesignEmailPage.staticSetYearKey(siteRequest_, o);
 		this.yearKeyWrap.alreadyInitialized = true;
 		return (DesignEmailPage)this;
+	}
+	public static Long staticSetYearKey(SiteRequestEnUS siteRequest_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Long.parseLong(o);
+		return null;
 	}
 	protected DesignEmailPage yearKeyInit() {
 		if(!yearKeyWrap.alreadyInitialized) {
@@ -1409,8 +1560,20 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		return (DesignEmailPage)this;
 	}
 
+	public static Long staticSolrYearKey(SiteRequestEnUS siteRequest_, Long o) {
+		return o;
+	}
+
+	public static String staticSolrStrYearKey(SiteRequestEnUS siteRequest_, Long o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqYearKey(SiteRequestEnUS siteRequest_, String o) {
+		return DesignEmailPage.staticSolrStrYearKey(siteRequest_, DesignEmailPage.staticSolrYearKey(siteRequest_, DesignEmailPage.staticSetYearKey(siteRequest_, o)));
+	}
+
 	public Long solrYearKey() {
-		return yearKey;
+		return DesignEmailPage.staticSolrYearKey(siteRequest_, yearKey);
 	}
 
 	public String strYearKey() {
@@ -1463,10 +1626,14 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		this.yearStartWrap.alreadyInitialized = true;
 	}
 	public DesignEmailPage setYearStart(String o) {
-		if(NumberUtils.isParsable(o))
-			this.yearStart = Integer.parseInt(o);
+		this.yearStart = DesignEmailPage.staticSetYearStart(siteRequest_, o);
 		this.yearStartWrap.alreadyInitialized = true;
 		return (DesignEmailPage)this;
+	}
+	public static Integer staticSetYearStart(SiteRequestEnUS siteRequest_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Integer.parseInt(o);
+		return null;
 	}
 	protected DesignEmailPage yearStartInit() {
 		if(!yearStartWrap.alreadyInitialized) {
@@ -1478,8 +1645,20 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		return (DesignEmailPage)this;
 	}
 
+	public static Integer staticSolrYearStart(SiteRequestEnUS siteRequest_, Integer o) {
+		return o;
+	}
+
+	public static String staticSolrStrYearStart(SiteRequestEnUS siteRequest_, Integer o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqYearStart(SiteRequestEnUS siteRequest_, String o) {
+		return DesignEmailPage.staticSolrStrYearStart(siteRequest_, DesignEmailPage.staticSolrYearStart(siteRequest_, DesignEmailPage.staticSetYearStart(siteRequest_, o)));
+	}
+
 	public Integer solrYearStart() {
-		return yearStart;
+		return DesignEmailPage.staticSolrYearStart(siteRequest_, yearStart);
 	}
 
 	public String strYearStart() {
@@ -1532,10 +1711,14 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		this.yearEndWrap.alreadyInitialized = true;
 	}
 	public DesignEmailPage setYearEnd(String o) {
-		if(NumberUtils.isParsable(o))
-			this.yearEnd = Integer.parseInt(o);
+		this.yearEnd = DesignEmailPage.staticSetYearEnd(siteRequest_, o);
 		this.yearEndWrap.alreadyInitialized = true;
 		return (DesignEmailPage)this;
+	}
+	public static Integer staticSetYearEnd(SiteRequestEnUS siteRequest_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Integer.parseInt(o);
+		return null;
 	}
 	protected DesignEmailPage yearEndInit() {
 		if(!yearEndWrap.alreadyInitialized) {
@@ -1547,8 +1730,20 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		return (DesignEmailPage)this;
 	}
 
+	public static Integer staticSolrYearEnd(SiteRequestEnUS siteRequest_, Integer o) {
+		return o;
+	}
+
+	public static String staticSolrStrYearEnd(SiteRequestEnUS siteRequest_, Integer o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqYearEnd(SiteRequestEnUS siteRequest_, String o) {
+		return DesignEmailPage.staticSolrStrYearEnd(siteRequest_, DesignEmailPage.staticSolrYearEnd(siteRequest_, DesignEmailPage.staticSetYearEnd(siteRequest_, o)));
+	}
+
 	public Integer solrYearEnd() {
-		return yearEnd;
+		return DesignEmailPage.staticSolrYearEnd(siteRequest_, yearEnd);
 	}
 
 	public String strYearEnd() {
@@ -1594,10 +1789,13 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 	public String getYearVar() {
 		return yearVar;
 	}
-
-	public void setYearVar(String yearVar) {
-		this.yearVar = yearVar;
+	public DesignEmailPage setYearVar(String o) {
+		this.yearVar = DesignEmailPage.staticSetYearVar(siteRequest_, o);
 		this.yearVarWrap.alreadyInitialized = true;
+		return (DesignEmailPage)this;
+	}
+	public static String staticSetYearVar(SiteRequestEnUS siteRequest_, String o) {
+		return o;
 	}
 	protected DesignEmailPage yearVarInit() {
 		if(!yearVarWrap.alreadyInitialized) {
@@ -1609,8 +1807,20 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		return (DesignEmailPage)this;
 	}
 
+	public static String staticSolrYearVar(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrYearVar(SiteRequestEnUS siteRequest_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqYearVar(SiteRequestEnUS siteRequest_, String o) {
+		return DesignEmailPage.staticSolrStrYearVar(siteRequest_, DesignEmailPage.staticSolrYearVar(siteRequest_, DesignEmailPage.staticSetYearVar(siteRequest_, o)));
+	}
+
 	public String solrYearVar() {
-		return yearVar;
+		return DesignEmailPage.staticSolrYearVar(siteRequest_, yearVar);
 	}
 
 	public String strYearVar() {
@@ -1661,6 +1871,9 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		this.schoolSearch = schoolSearch;
 		this.schoolSearchWrap.alreadyInitialized = true;
 	}
+	public static SearchList<School> staticSetSchoolSearch(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	protected DesignEmailPage schoolSearchInit() {
 		if(!schoolSearchWrap.alreadyInitialized) {
 			_schoolSearch(schoolSearch);
@@ -1697,6 +1910,9 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 	public void setSchool_(School school_) {
 		this.school_ = school_;
 		this.school_Wrap.alreadyInitialized = true;
+	}
+	public static School staticSetSchool_(SiteRequestEnUS siteRequest_, String o) {
+		return null;
 	}
 	protected DesignEmailPage school_Init() {
 		if(!school_Wrap.alreadyInitialized) {
@@ -1738,10 +1954,14 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		this.schoolKeyWrap.alreadyInitialized = true;
 	}
 	public DesignEmailPage setSchoolKey(String o) {
-		if(NumberUtils.isParsable(o))
-			this.schoolKey = Long.parseLong(o);
+		this.schoolKey = DesignEmailPage.staticSetSchoolKey(siteRequest_, o);
 		this.schoolKeyWrap.alreadyInitialized = true;
 		return (DesignEmailPage)this;
+	}
+	public static Long staticSetSchoolKey(SiteRequestEnUS siteRequest_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Long.parseLong(o);
+		return null;
 	}
 	protected DesignEmailPage schoolKeyInit() {
 		if(!schoolKeyWrap.alreadyInitialized) {
@@ -1753,8 +1973,20 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		return (DesignEmailPage)this;
 	}
 
+	public static Long staticSolrSchoolKey(SiteRequestEnUS siteRequest_, Long o) {
+		return o;
+	}
+
+	public static String staticSolrStrSchoolKey(SiteRequestEnUS siteRequest_, Long o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqSchoolKey(SiteRequestEnUS siteRequest_, String o) {
+		return DesignEmailPage.staticSolrStrSchoolKey(siteRequest_, DesignEmailPage.staticSolrSchoolKey(siteRequest_, DesignEmailPage.staticSetSchoolKey(siteRequest_, o)));
+	}
+
 	public Long solrSchoolKey() {
-		return schoolKey;
+		return DesignEmailPage.staticSolrSchoolKey(siteRequest_, schoolKey);
 	}
 
 	public String strSchoolKey() {
@@ -1800,10 +2032,13 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 	public String getSchoolName() {
 		return schoolName;
 	}
-
-	public void setSchoolName(String schoolName) {
-		this.schoolName = schoolName;
+	public DesignEmailPage setSchoolName(String o) {
+		this.schoolName = DesignEmailPage.staticSetSchoolName(siteRequest_, o);
 		this.schoolNameWrap.alreadyInitialized = true;
+		return (DesignEmailPage)this;
+	}
+	public static String staticSetSchoolName(SiteRequestEnUS siteRequest_, String o) {
+		return o;
 	}
 	protected DesignEmailPage schoolNameInit() {
 		if(!schoolNameWrap.alreadyInitialized) {
@@ -1815,8 +2050,20 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		return (DesignEmailPage)this;
 	}
 
+	public static String staticSolrSchoolName(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrSchoolName(SiteRequestEnUS siteRequest_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqSchoolName(SiteRequestEnUS siteRequest_, String o) {
+		return DesignEmailPage.staticSolrStrSchoolName(siteRequest_, DesignEmailPage.staticSolrSchoolName(siteRequest_, DesignEmailPage.staticSetSchoolName(siteRequest_, o)));
+	}
+
 	public String solrSchoolName() {
-		return schoolName;
+		return DesignEmailPage.staticSolrSchoolName(siteRequest_, schoolName);
 	}
 
 	public String strSchoolName() {
@@ -1862,10 +2109,13 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 	public String getSchoolCompleteName() {
 		return schoolCompleteName;
 	}
-
-	public void setSchoolCompleteName(String schoolCompleteName) {
-		this.schoolCompleteName = schoolCompleteName;
+	public DesignEmailPage setSchoolCompleteName(String o) {
+		this.schoolCompleteName = DesignEmailPage.staticSetSchoolCompleteName(siteRequest_, o);
 		this.schoolCompleteNameWrap.alreadyInitialized = true;
+		return (DesignEmailPage)this;
+	}
+	public static String staticSetSchoolCompleteName(SiteRequestEnUS siteRequest_, String o) {
+		return o;
 	}
 	protected DesignEmailPage schoolCompleteNameInit() {
 		if(!schoolCompleteNameWrap.alreadyInitialized) {
@@ -1877,8 +2127,20 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		return (DesignEmailPage)this;
 	}
 
+	public static String staticSolrSchoolCompleteName(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrSchoolCompleteName(SiteRequestEnUS siteRequest_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqSchoolCompleteName(SiteRequestEnUS siteRequest_, String o) {
+		return DesignEmailPage.staticSolrStrSchoolCompleteName(siteRequest_, DesignEmailPage.staticSolrSchoolCompleteName(siteRequest_, DesignEmailPage.staticSetSchoolCompleteName(siteRequest_, o)));
+	}
+
 	public String solrSchoolCompleteName() {
-		return schoolCompleteName;
+		return DesignEmailPage.staticSolrSchoolCompleteName(siteRequest_, schoolCompleteName);
 	}
 
 	public String strSchoolCompleteName() {
@@ -1924,10 +2186,13 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 	public String getSchoolLocation() {
 		return schoolLocation;
 	}
-
-	public void setSchoolLocation(String schoolLocation) {
-		this.schoolLocation = schoolLocation;
+	public DesignEmailPage setSchoolLocation(String o) {
+		this.schoolLocation = DesignEmailPage.staticSetSchoolLocation(siteRequest_, o);
 		this.schoolLocationWrap.alreadyInitialized = true;
+		return (DesignEmailPage)this;
+	}
+	public static String staticSetSchoolLocation(SiteRequestEnUS siteRequest_, String o) {
+		return o;
 	}
 	protected DesignEmailPage schoolLocationInit() {
 		if(!schoolLocationWrap.alreadyInitialized) {
@@ -1939,8 +2204,20 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		return (DesignEmailPage)this;
 	}
 
+	public static String staticSolrSchoolLocation(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrSchoolLocation(SiteRequestEnUS siteRequest_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqSchoolLocation(SiteRequestEnUS siteRequest_, String o) {
+		return DesignEmailPage.staticSolrStrSchoolLocation(siteRequest_, DesignEmailPage.staticSolrSchoolLocation(siteRequest_, DesignEmailPage.staticSetSchoolLocation(siteRequest_, o)));
+	}
+
 	public String solrSchoolLocation() {
-		return schoolLocation;
+		return DesignEmailPage.staticSolrSchoolLocation(siteRequest_, schoolLocation);
 	}
 
 	public String strSchoolLocation() {
@@ -1986,10 +2263,13 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 	public String getSchoolAddress() {
 		return schoolAddress;
 	}
-
-	public void setSchoolAddress(String schoolAddress) {
-		this.schoolAddress = schoolAddress;
+	public DesignEmailPage setSchoolAddress(String o) {
+		this.schoolAddress = DesignEmailPage.staticSetSchoolAddress(siteRequest_, o);
 		this.schoolAddressWrap.alreadyInitialized = true;
+		return (DesignEmailPage)this;
+	}
+	public static String staticSetSchoolAddress(SiteRequestEnUS siteRequest_, String o) {
+		return o;
 	}
 	protected DesignEmailPage schoolAddressInit() {
 		if(!schoolAddressWrap.alreadyInitialized) {
@@ -2001,8 +2281,20 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		return (DesignEmailPage)this;
 	}
 
+	public static String staticSolrSchoolAddress(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrSchoolAddress(SiteRequestEnUS siteRequest_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqSchoolAddress(SiteRequestEnUS siteRequest_, String o) {
+		return DesignEmailPage.staticSolrStrSchoolAddress(siteRequest_, DesignEmailPage.staticSolrSchoolAddress(siteRequest_, DesignEmailPage.staticSetSchoolAddress(siteRequest_, o)));
+	}
+
 	public String solrSchoolAddress() {
-		return schoolAddress;
+		return DesignEmailPage.staticSolrSchoolAddress(siteRequest_, schoolAddress);
 	}
 
 	public String strSchoolAddress() {
@@ -2048,10 +2340,13 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 	public String getSchoolPhoneNumber() {
 		return schoolPhoneNumber;
 	}
-
-	public void setSchoolPhoneNumber(String schoolPhoneNumber) {
-		this.schoolPhoneNumber = schoolPhoneNumber;
+	public DesignEmailPage setSchoolPhoneNumber(String o) {
+		this.schoolPhoneNumber = DesignEmailPage.staticSetSchoolPhoneNumber(siteRequest_, o);
 		this.schoolPhoneNumberWrap.alreadyInitialized = true;
+		return (DesignEmailPage)this;
+	}
+	public static String staticSetSchoolPhoneNumber(SiteRequestEnUS siteRequest_, String o) {
+		return o;
 	}
 	protected DesignEmailPage schoolPhoneNumberInit() {
 		if(!schoolPhoneNumberWrap.alreadyInitialized) {
@@ -2063,8 +2358,20 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		return (DesignEmailPage)this;
 	}
 
+	public static String staticSolrSchoolPhoneNumber(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrSchoolPhoneNumber(SiteRequestEnUS siteRequest_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqSchoolPhoneNumber(SiteRequestEnUS siteRequest_, String o) {
+		return DesignEmailPage.staticSolrStrSchoolPhoneNumber(siteRequest_, DesignEmailPage.staticSolrSchoolPhoneNumber(siteRequest_, DesignEmailPage.staticSetSchoolPhoneNumber(siteRequest_, o)));
+	}
+
 	public String solrSchoolPhoneNumber() {
-		return schoolPhoneNumber;
+		return DesignEmailPage.staticSolrSchoolPhoneNumber(siteRequest_, schoolPhoneNumber);
 	}
 
 	public String strSchoolPhoneNumber() {
@@ -2110,10 +2417,13 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 	public String getSchoolAdministratorName() {
 		return schoolAdministratorName;
 	}
-
-	public void setSchoolAdministratorName(String schoolAdministratorName) {
-		this.schoolAdministratorName = schoolAdministratorName;
+	public DesignEmailPage setSchoolAdministratorName(String o) {
+		this.schoolAdministratorName = DesignEmailPage.staticSetSchoolAdministratorName(siteRequest_, o);
 		this.schoolAdministratorNameWrap.alreadyInitialized = true;
+		return (DesignEmailPage)this;
+	}
+	public static String staticSetSchoolAdministratorName(SiteRequestEnUS siteRequest_, String o) {
+		return o;
 	}
 	protected DesignEmailPage schoolAdministratorNameInit() {
 		if(!schoolAdministratorNameWrap.alreadyInitialized) {
@@ -2125,8 +2435,20 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		return (DesignEmailPage)this;
 	}
 
+	public static String staticSolrSchoolAdministratorName(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrSchoolAdministratorName(SiteRequestEnUS siteRequest_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqSchoolAdministratorName(SiteRequestEnUS siteRequest_, String o) {
+		return DesignEmailPage.staticSolrStrSchoolAdministratorName(siteRequest_, DesignEmailPage.staticSolrSchoolAdministratorName(siteRequest_, DesignEmailPage.staticSetSchoolAdministratorName(siteRequest_, o)));
+	}
+
 	public String solrSchoolAdministratorName() {
-		return schoolAdministratorName;
+		return DesignEmailPage.staticSolrSchoolAdministratorName(siteRequest_, schoolAdministratorName);
 	}
 
 	public String strSchoolAdministratorName() {
@@ -2187,9 +2509,12 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 	}
 	/** Example: 2011-12-03+01:00 **/
 	public DesignEmailPage setSeasonStartDate(String o) {
-		this.seasonStartDate = o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
+		this.seasonStartDate = DesignEmailPage.staticSetSeasonStartDate(siteRequest_, o);
 		this.seasonStartDateWrap.alreadyInitialized = true;
 		return (DesignEmailPage)this;
+	}
+	public static LocalDate staticSetSeasonStartDate(SiteRequestEnUS siteRequest_, String o) {
+		return o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 	}
 	public DesignEmailPage setSeasonStartDate(Date o) {
 		this.seasonStartDate = o == null ? null : o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
@@ -2206,8 +2531,20 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		return (DesignEmailPage)this;
 	}
 
+	public static Date staticSolrSeasonStartDate(SiteRequestEnUS siteRequest_, LocalDate o) {
+		return o == null ? null : Date.from(o.atStartOfDay(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toInstant().atZone(ZoneId.of("Z")).toInstant());
+	}
+
+	public static String staticSolrStrSeasonStartDate(SiteRequestEnUS siteRequest_, Date o) {
+		return "\"" + DateTimeFormatter.ISO_DATE_TIME.format(o.toInstant().atOffset(ZoneOffset.UTC)) + "\"";
+	}
+
+	public static String staticSolrFqSeasonStartDate(SiteRequestEnUS siteRequest_, String o) {
+		return DesignEmailPage.staticSolrStrSeasonStartDate(siteRequest_, DesignEmailPage.staticSolrSeasonStartDate(siteRequest_, DesignEmailPage.staticSetSeasonStartDate(siteRequest_, o)));
+	}
+
 	public Date solrSeasonStartDate() {
-		return seasonStartDate == null ? null : Date.from(seasonStartDate.atStartOfDay(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toInstant().atZone(ZoneId.of("Z")).toInstant());
+		return DesignEmailPage.staticSolrSeasonStartDate(siteRequest_, seasonStartDate);
 	}
 
 	public String strSeasonStartDate() {
@@ -2258,6 +2595,9 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		this.mom_ = mom_;
 		this.mom_Wrap.alreadyInitialized = true;
 	}
+	public static SchoolMom staticSetMom_(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	protected DesignEmailPage mom_Init() {
 		if(!mom_Wrap.alreadyInitialized) {
 			_mom_(mom_Wrap);
@@ -2295,6 +2635,9 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 	public void setDad_(SchoolDad dad_) {
 		this.dad_ = dad_;
 		this.dad_Wrap.alreadyInitialized = true;
+	}
+	public static SchoolDad staticSetDad_(SiteRequestEnUS siteRequest_, String o) {
+		return null;
 	}
 	protected DesignEmailPage dad_Init() {
 		if(!dad_Wrap.alreadyInitialized) {
@@ -2334,6 +2677,9 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		this.guardian_ = guardian_;
 		this.guardian_Wrap.alreadyInitialized = true;
 	}
+	public static SchoolGuardian staticSetGuardian_(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	protected DesignEmailPage guardian_Init() {
 		if(!guardian_Wrap.alreadyInitialized) {
 			_guardian_(guardian_Wrap);
@@ -2372,6 +2718,9 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		this.blockSearch = blockSearch;
 		this.blockSearchWrap.alreadyInitialized = true;
 	}
+	public static SearchList<SchoolBlock> staticSetBlockSearch(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	protected DesignEmailPage blockSearchInit() {
 		if(!blockSearchWrap.alreadyInitialized) {
 			_blockSearch(blockSearch);
@@ -2408,6 +2757,9 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 	public void setBlocks(List<SchoolBlock> blocks) {
 		this.blocks = blocks;
 		this.blocksWrap.alreadyInitialized = true;
+	}
+	public static List<SchoolBlock> staticSetBlocks(SiteRequestEnUS siteRequest_, String o) {
+		return null;
 	}
 	public DesignEmailPage addBlocks(SchoolBlock...objets) {
 		for(SchoolBlock o : objets) {
@@ -2458,6 +2810,9 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		this.seasonBlocks = seasonBlocks;
 		this.seasonBlocksWrap.alreadyInitialized = true;
 	}
+	public static List<SchoolBlock> staticSetSeasonBlocks(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	public DesignEmailPage addSeasonBlocks(SchoolBlock...objets) {
 		for(SchoolBlock o : objets) {
 			addSeasonBlocks(o);
@@ -2505,6 +2860,9 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		this.seasonBlock = seasonBlock;
 		this.seasonBlockWrap.alreadyInitialized = true;
 	}
+	public static SchoolBlock staticSetSeasonBlock(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	protected DesignEmailPage seasonBlockInit() {
 		if(!seasonBlockWrap.alreadyInitialized) {
 			_seasonBlock(seasonBlockWrap);
@@ -2544,6 +2902,9 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 	public void setSessionBlock(SchoolBlock sessionBlock) {
 		this.sessionBlock = sessionBlock;
 		this.sessionBlockWrap.alreadyInitialized = true;
+	}
+	public static SchoolBlock staticSetSessionBlock(SiteRequestEnUS siteRequest_, String o) {
+		return null;
 	}
 	protected DesignEmailPage sessionBlockInit() {
 		if(!sessionBlockWrap.alreadyInitialized) {
@@ -2585,6 +2946,9 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		this.ageBlock = ageBlock;
 		this.ageBlockWrap.alreadyInitialized = true;
 	}
+	public static SchoolBlock staticSetAgeBlock(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	protected DesignEmailPage ageBlockInit() {
 		if(!ageBlockWrap.alreadyInitialized) {
 			_ageBlock(ageBlockWrap);
@@ -2624,6 +2988,9 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 	public void setBlockBlock(SchoolBlock blockBlock) {
 		this.blockBlock = blockBlock;
 		this.blockBlockWrap.alreadyInitialized = true;
+	}
+	public static SchoolBlock staticSetBlockBlock(SiteRequestEnUS siteRequest_, String o) {
+		return null;
 	}
 	protected DesignEmailPage blockBlockInit() {
 		if(!blockBlockWrap.alreadyInitialized) {
@@ -2665,6 +3032,9 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		this.paymentSearch = paymentSearch;
 		this.paymentSearchWrap.alreadyInitialized = true;
 	}
+	public static SearchList<SchoolPayment> staticSetPaymentSearch(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	protected DesignEmailPage paymentSearchInit() {
 		if(!paymentSearchWrap.alreadyInitialized) {
 			_paymentSearch(paymentSearch);
@@ -2701,6 +3071,9 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 	public void setPayments_(List<SchoolPayment> payments_) {
 		this.payments_ = payments_;
 		this.payments_Wrap.alreadyInitialized = true;
+	}
+	public static List<SchoolPayment> staticSetPayments_(SiteRequestEnUS siteRequest_, String o) {
+		return null;
 	}
 	public DesignEmailPage addPayments_(SchoolPayment...objets) {
 		for(SchoolPayment o : objets) {
@@ -2751,6 +3124,9 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		this.payment_ = payment_;
 		this.payment_Wrap.alreadyInitialized = true;
 	}
+	public static SchoolPayment staticSetPayment_(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	protected DesignEmailPage payment_Init() {
 		if(!payment_Wrap.alreadyInitialized) {
 			_payment_(payment_Wrap);
@@ -2789,6 +3165,9 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		this.paymentFacets = paymentFacets;
 		this.paymentFacetsWrap.alreadyInitialized = true;
 	}
+	public static SimpleOrderedMap staticSetPaymentFacets(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	protected DesignEmailPage paymentFacetsInit() {
 		if(!paymentFacetsWrap.alreadyInitialized) {
 			_paymentFacets(paymentFacetsWrap);
@@ -2822,10 +3201,13 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 	public String getPaymentLastStr() {
 		return paymentLastStr;
 	}
-
-	public void setPaymentLastStr(String paymentLastStr) {
-		this.paymentLastStr = paymentLastStr;
+	public DesignEmailPage setPaymentLastStr(String o) {
+		this.paymentLastStr = DesignEmailPage.staticSetPaymentLastStr(siteRequest_, o);
 		this.paymentLastStrWrap.alreadyInitialized = true;
+		return (DesignEmailPage)this;
+	}
+	public static String staticSetPaymentLastStr(SiteRequestEnUS siteRequest_, String o) {
+		return o;
 	}
 	protected DesignEmailPage paymentLastStrInit() {
 		if(!paymentLastStrWrap.alreadyInitialized) {
@@ -2837,8 +3219,20 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		return (DesignEmailPage)this;
 	}
 
+	public static String staticSolrPaymentLastStr(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrPaymentLastStr(SiteRequestEnUS siteRequest_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPaymentLastStr(SiteRequestEnUS siteRequest_, String o) {
+		return DesignEmailPage.staticSolrStrPaymentLastStr(siteRequest_, DesignEmailPage.staticSolrPaymentLastStr(siteRequest_, DesignEmailPage.staticSetPaymentLastStr(siteRequest_, o)));
+	}
+
 	public String solrPaymentLastStr() {
-		return paymentLastStr;
+		return DesignEmailPage.staticSolrPaymentLastStr(siteRequest_, paymentLastStr);
 	}
 
 	public String strPaymentLastStr() {
@@ -2891,11 +3285,15 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		this.paymentAmountWrap.alreadyInitialized = true;
 	}
 	public DesignEmailPage setPaymentAmount(String o) {
-		o = StringUtils.removeAll(o, "[^\\d\\.]");
-		if(NumberUtils.isParsable(o))
-			this.paymentAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
+		this.paymentAmount = DesignEmailPage.staticSetPaymentAmount(siteRequest_, o);
 		this.paymentAmountWrap.alreadyInitialized = true;
 		return (DesignEmailPage)this;
+	}
+	public static BigDecimal staticSetPaymentAmount(SiteRequestEnUS siteRequest_, String o) {
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
+		return null;
 	}
 	public DesignEmailPage setPaymentAmount(Double o) {
 			this.paymentAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
@@ -2917,8 +3315,20 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		return (DesignEmailPage)this;
 	}
 
+	public static Double staticSolrPaymentAmount(SiteRequestEnUS siteRequest_, BigDecimal o) {
+		return o == null ? null : o.doubleValue();
+	}
+
+	public static String staticSolrStrPaymentAmount(SiteRequestEnUS siteRequest_, Double o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPaymentAmount(SiteRequestEnUS siteRequest_, String o) {
+		return DesignEmailPage.staticSolrStrPaymentAmount(siteRequest_, DesignEmailPage.staticSolrPaymentAmount(siteRequest_, DesignEmailPage.staticSetPaymentAmount(siteRequest_, o)));
+	}
+
 	public Double solrPaymentAmount() {
-		return paymentAmount == null ? null : paymentAmount.doubleValue();
+		return DesignEmailPage.staticSolrPaymentAmount(siteRequest_, paymentAmount);
 	}
 
 	public String strPaymentAmount() {
@@ -2971,11 +3381,15 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		this.chargeAmountWrap.alreadyInitialized = true;
 	}
 	public DesignEmailPage setChargeAmount(String o) {
-		o = StringUtils.removeAll(o, "[^\\d\\.]");
-		if(NumberUtils.isParsable(o))
-			this.chargeAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
+		this.chargeAmount = DesignEmailPage.staticSetChargeAmount(siteRequest_, o);
 		this.chargeAmountWrap.alreadyInitialized = true;
 		return (DesignEmailPage)this;
+	}
+	public static BigDecimal staticSetChargeAmount(SiteRequestEnUS siteRequest_, String o) {
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
+		return null;
 	}
 	public DesignEmailPage setChargeAmount(Double o) {
 			this.chargeAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
@@ -2997,8 +3411,20 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		return (DesignEmailPage)this;
 	}
 
+	public static Double staticSolrChargeAmount(SiteRequestEnUS siteRequest_, BigDecimal o) {
+		return o == null ? null : o.doubleValue();
+	}
+
+	public static String staticSolrStrChargeAmount(SiteRequestEnUS siteRequest_, Double o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqChargeAmount(SiteRequestEnUS siteRequest_, String o) {
+		return DesignEmailPage.staticSolrStrChargeAmount(siteRequest_, DesignEmailPage.staticSolrChargeAmount(siteRequest_, DesignEmailPage.staticSetChargeAmount(siteRequest_, o)));
+	}
+
 	public Double solrChargeAmount() {
-		return chargeAmount == null ? null : chargeAmount.doubleValue();
+		return DesignEmailPage.staticSolrChargeAmount(siteRequest_, chargeAmount);
 	}
 
 	public String strChargeAmount() {
@@ -3051,11 +3477,15 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		this.chargeAmountFutureWrap.alreadyInitialized = true;
 	}
 	public DesignEmailPage setChargeAmountFuture(String o) {
-		o = StringUtils.removeAll(o, "[^\\d\\.]");
-		if(NumberUtils.isParsable(o))
-			this.chargeAmountFuture = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
+		this.chargeAmountFuture = DesignEmailPage.staticSetChargeAmountFuture(siteRequest_, o);
 		this.chargeAmountFutureWrap.alreadyInitialized = true;
 		return (DesignEmailPage)this;
+	}
+	public static BigDecimal staticSetChargeAmountFuture(SiteRequestEnUS siteRequest_, String o) {
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
+		return null;
 	}
 	public DesignEmailPage setChargeAmountFuture(Double o) {
 			this.chargeAmountFuture = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
@@ -3077,8 +3507,20 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		return (DesignEmailPage)this;
 	}
 
+	public static Double staticSolrChargeAmountFuture(SiteRequestEnUS siteRequest_, BigDecimal o) {
+		return o == null ? null : o.doubleValue();
+	}
+
+	public static String staticSolrStrChargeAmountFuture(SiteRequestEnUS siteRequest_, Double o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqChargeAmountFuture(SiteRequestEnUS siteRequest_, String o) {
+		return DesignEmailPage.staticSolrStrChargeAmountFuture(siteRequest_, DesignEmailPage.staticSolrChargeAmountFuture(siteRequest_, DesignEmailPage.staticSetChargeAmountFuture(siteRequest_, o)));
+	}
+
 	public Double solrChargeAmountFuture() {
-		return chargeAmountFuture == null ? null : chargeAmountFuture.doubleValue();
+		return DesignEmailPage.staticSolrChargeAmountFuture(siteRequest_, chargeAmountFuture);
 	}
 
 	public String strChargeAmountFuture() {
@@ -3131,11 +3573,15 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		this.chargeAmountDueWrap.alreadyInitialized = true;
 	}
 	public DesignEmailPage setChargeAmountDue(String o) {
-		o = StringUtils.removeAll(o, "[^\\d\\.]");
-		if(NumberUtils.isParsable(o))
-			this.chargeAmountDue = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
+		this.chargeAmountDue = DesignEmailPage.staticSetChargeAmountDue(siteRequest_, o);
 		this.chargeAmountDueWrap.alreadyInitialized = true;
 		return (DesignEmailPage)this;
+	}
+	public static BigDecimal staticSetChargeAmountDue(SiteRequestEnUS siteRequest_, String o) {
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
+		return null;
 	}
 	public DesignEmailPage setChargeAmountDue(Double o) {
 			this.chargeAmountDue = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
@@ -3157,8 +3603,20 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		return (DesignEmailPage)this;
 	}
 
+	public static Double staticSolrChargeAmountDue(SiteRequestEnUS siteRequest_, BigDecimal o) {
+		return o == null ? null : o.doubleValue();
+	}
+
+	public static String staticSolrStrChargeAmountDue(SiteRequestEnUS siteRequest_, Double o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqChargeAmountDue(SiteRequestEnUS siteRequest_, String o) {
+		return DesignEmailPage.staticSolrStrChargeAmountDue(siteRequest_, DesignEmailPage.staticSolrChargeAmountDue(siteRequest_, DesignEmailPage.staticSetChargeAmountDue(siteRequest_, o)));
+	}
+
 	public Double solrChargeAmountDue() {
-		return chargeAmountDue == null ? null : chargeAmountDue.doubleValue();
+		return DesignEmailPage.staticSolrChargeAmountDue(siteRequest_, chargeAmountDue);
 	}
 
 	public String strChargeAmountDue() {
@@ -3211,11 +3669,15 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		this.chargesNowWrap.alreadyInitialized = true;
 	}
 	public DesignEmailPage setChargesNow(String o) {
-		o = StringUtils.removeAll(o, "[^\\d\\.]");
-		if(NumberUtils.isParsable(o))
-			this.chargesNow = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
+		this.chargesNow = DesignEmailPage.staticSetChargesNow(siteRequest_, o);
 		this.chargesNowWrap.alreadyInitialized = true;
 		return (DesignEmailPage)this;
+	}
+	public static BigDecimal staticSetChargesNow(SiteRequestEnUS siteRequest_, String o) {
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
+		return null;
 	}
 	public DesignEmailPage setChargesNow(Double o) {
 			this.chargesNow = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
@@ -3237,8 +3699,20 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		return (DesignEmailPage)this;
 	}
 
+	public static Double staticSolrChargesNow(SiteRequestEnUS siteRequest_, BigDecimal o) {
+		return o == null ? null : o.doubleValue();
+	}
+
+	public static String staticSolrStrChargesNow(SiteRequestEnUS siteRequest_, Double o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqChargesNow(SiteRequestEnUS siteRequest_, String o) {
+		return DesignEmailPage.staticSolrStrChargesNow(siteRequest_, DesignEmailPage.staticSolrChargesNow(siteRequest_, DesignEmailPage.staticSetChargesNow(siteRequest_, o)));
+	}
+
 	public Double solrChargesNow() {
-		return chargesNow == null ? null : chargesNow.doubleValue();
+		return DesignEmailPage.staticSolrChargesNow(siteRequest_, chargesNow);
 	}
 
 	public String strChargesNow() {
@@ -3290,9 +3764,12 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		this.paymentsCurrentWrap.alreadyInitialized = true;
 	}
 	public DesignEmailPage setPaymentsCurrent(String o) {
-		this.paymentsCurrent = Boolean.parseBoolean(o);
+		this.paymentsCurrent = DesignEmailPage.staticSetPaymentsCurrent(siteRequest_, o);
 		this.paymentsCurrentWrap.alreadyInitialized = true;
 		return (DesignEmailPage)this;
+	}
+	public static Boolean staticSetPaymentsCurrent(SiteRequestEnUS siteRequest_, String o) {
+		return Boolean.parseBoolean(o);
 	}
 	protected DesignEmailPage paymentsCurrentInit() {
 		if(!paymentsCurrentWrap.alreadyInitialized) {
@@ -3304,8 +3781,20 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		return (DesignEmailPage)this;
 	}
 
+	public static Boolean staticSolrPaymentsCurrent(SiteRequestEnUS siteRequest_, Boolean o) {
+		return o;
+	}
+
+	public static String staticSolrStrPaymentsCurrent(SiteRequestEnUS siteRequest_, Boolean o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPaymentsCurrent(SiteRequestEnUS siteRequest_, String o) {
+		return DesignEmailPage.staticSolrStrPaymentsCurrent(siteRequest_, DesignEmailPage.staticSolrPaymentsCurrent(siteRequest_, DesignEmailPage.staticSetPaymentsCurrent(siteRequest_, o)));
+	}
+
 	public Boolean solrPaymentsCurrent() {
-		return paymentsCurrent;
+		return DesignEmailPage.staticSolrPaymentsCurrent(siteRequest_, paymentsCurrent);
 	}
 
 	public String strPaymentsCurrent() {
@@ -3357,9 +3846,12 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		this.paymentsLateWrap.alreadyInitialized = true;
 	}
 	public DesignEmailPage setPaymentsLate(String o) {
-		this.paymentsLate = Boolean.parseBoolean(o);
+		this.paymentsLate = DesignEmailPage.staticSetPaymentsLate(siteRequest_, o);
 		this.paymentsLateWrap.alreadyInitialized = true;
 		return (DesignEmailPage)this;
+	}
+	public static Boolean staticSetPaymentsLate(SiteRequestEnUS siteRequest_, String o) {
+		return Boolean.parseBoolean(o);
 	}
 	protected DesignEmailPage paymentsLateInit() {
 		if(!paymentsLateWrap.alreadyInitialized) {
@@ -3371,8 +3863,20 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		return (DesignEmailPage)this;
 	}
 
+	public static Boolean staticSolrPaymentsLate(SiteRequestEnUS siteRequest_, Boolean o) {
+		return o;
+	}
+
+	public static String staticSolrStrPaymentsLate(SiteRequestEnUS siteRequest_, Boolean o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPaymentsLate(SiteRequestEnUS siteRequest_, String o) {
+		return DesignEmailPage.staticSolrStrPaymentsLate(siteRequest_, DesignEmailPage.staticSolrPaymentsLate(siteRequest_, DesignEmailPage.staticSetPaymentsLate(siteRequest_, o)));
+	}
+
 	public Boolean solrPaymentsLate() {
-		return paymentsLate;
+		return DesignEmailPage.staticSolrPaymentsLate(siteRequest_, paymentsLate);
 	}
 
 	public String strPaymentsLate() {
@@ -3425,11 +3929,15 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		this.paymentsLateAmountWrap.alreadyInitialized = true;
 	}
 	public DesignEmailPage setPaymentsLateAmount(String o) {
-		o = StringUtils.removeAll(o, "[^\\d\\.]");
-		if(NumberUtils.isParsable(o))
-			this.paymentsLateAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
+		this.paymentsLateAmount = DesignEmailPage.staticSetPaymentsLateAmount(siteRequest_, o);
 		this.paymentsLateAmountWrap.alreadyInitialized = true;
 		return (DesignEmailPage)this;
+	}
+	public static BigDecimal staticSetPaymentsLateAmount(SiteRequestEnUS siteRequest_, String o) {
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
+		return null;
 	}
 	public DesignEmailPage setPaymentsLateAmount(Double o) {
 			this.paymentsLateAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
@@ -3451,8 +3959,20 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		return (DesignEmailPage)this;
 	}
 
+	public static Double staticSolrPaymentsLateAmount(SiteRequestEnUS siteRequest_, BigDecimal o) {
+		return o == null ? null : o.doubleValue();
+	}
+
+	public static String staticSolrStrPaymentsLateAmount(SiteRequestEnUS siteRequest_, Double o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPaymentsLateAmount(SiteRequestEnUS siteRequest_, String o) {
+		return DesignEmailPage.staticSolrStrPaymentsLateAmount(siteRequest_, DesignEmailPage.staticSolrPaymentsLateAmount(siteRequest_, DesignEmailPage.staticSetPaymentsLateAmount(siteRequest_, o)));
+	}
+
 	public Double solrPaymentsLateAmount() {
-		return paymentsLateAmount == null ? null : paymentsLateAmount.doubleValue();
+		return DesignEmailPage.staticSolrPaymentsLateAmount(siteRequest_, paymentsLateAmount);
 	}
 
 	public String strPaymentsLateAmount() {
@@ -3504,9 +4024,12 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		this.paymentsAheadWrap.alreadyInitialized = true;
 	}
 	public DesignEmailPage setPaymentsAhead(String o) {
-		this.paymentsAhead = Boolean.parseBoolean(o);
+		this.paymentsAhead = DesignEmailPage.staticSetPaymentsAhead(siteRequest_, o);
 		this.paymentsAheadWrap.alreadyInitialized = true;
 		return (DesignEmailPage)this;
+	}
+	public static Boolean staticSetPaymentsAhead(SiteRequestEnUS siteRequest_, String o) {
+		return Boolean.parseBoolean(o);
 	}
 	protected DesignEmailPage paymentsAheadInit() {
 		if(!paymentsAheadWrap.alreadyInitialized) {
@@ -3518,8 +4041,20 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		return (DesignEmailPage)this;
 	}
 
+	public static Boolean staticSolrPaymentsAhead(SiteRequestEnUS siteRequest_, Boolean o) {
+		return o;
+	}
+
+	public static String staticSolrStrPaymentsAhead(SiteRequestEnUS siteRequest_, Boolean o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPaymentsAhead(SiteRequestEnUS siteRequest_, String o) {
+		return DesignEmailPage.staticSolrStrPaymentsAhead(siteRequest_, DesignEmailPage.staticSolrPaymentsAhead(siteRequest_, DesignEmailPage.staticSetPaymentsAhead(siteRequest_, o)));
+	}
+
 	public Boolean solrPaymentsAhead() {
-		return paymentsAhead;
+		return DesignEmailPage.staticSolrPaymentsAhead(siteRequest_, paymentsAhead);
 	}
 
 	public String strPaymentsAhead() {
@@ -3570,6 +4105,9 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		this.receiptSearch = receiptSearch;
 		this.receiptSearchWrap.alreadyInitialized = true;
 	}
+	public static SearchList<SchoolReceipt> staticSetReceiptSearch(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	protected DesignEmailPage receiptSearchInit() {
 		if(!receiptSearchWrap.alreadyInitialized) {
 			_receiptSearch(receiptSearch);
@@ -3606,6 +4144,9 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 	public void setReceipts_(List<SchoolReceipt> receipts_) {
 		this.receipts_ = receipts_;
 		this.receipts_Wrap.alreadyInitialized = true;
+	}
+	public static List<SchoolReceipt> staticSetReceipts_(SiteRequestEnUS siteRequest_, String o) {
+		return null;
 	}
 	public DesignEmailPage addReceipts_(SchoolReceipt...objets) {
 		for(SchoolReceipt o : objets) {
@@ -3656,6 +4197,9 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		this.receipt_ = receipt_;
 		this.receipt_Wrap.alreadyInitialized = true;
 	}
+	public static SchoolReceipt staticSetReceipt_(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	protected DesignEmailPage receipt_Init() {
 		if(!receipt_Wrap.alreadyInitialized) {
 			_receipt_(receipt_Wrap);
@@ -3689,10 +4233,13 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 	public String getEmailFrom() {
 		return emailFrom;
 	}
-
-	public void setEmailFrom(String emailFrom) {
-		this.emailFrom = emailFrom;
+	public DesignEmailPage setEmailFrom(String o) {
+		this.emailFrom = DesignEmailPage.staticSetEmailFrom(siteRequest_, o);
 		this.emailFromWrap.alreadyInitialized = true;
+		return (DesignEmailPage)this;
+	}
+	public static String staticSetEmailFrom(SiteRequestEnUS siteRequest_, String o) {
+		return o;
 	}
 	protected DesignEmailPage emailFromInit() {
 		if(!emailFromWrap.alreadyInitialized) {
@@ -3704,8 +4251,20 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		return (DesignEmailPage)this;
 	}
 
+	public static String staticSolrEmailFrom(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrEmailFrom(SiteRequestEnUS siteRequest_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqEmailFrom(SiteRequestEnUS siteRequest_, String o) {
+		return DesignEmailPage.staticSolrStrEmailFrom(siteRequest_, DesignEmailPage.staticSolrEmailFrom(siteRequest_, DesignEmailPage.staticSetEmailFrom(siteRequest_, o)));
+	}
+
 	public String solrEmailFrom() {
-		return emailFrom;
+		return DesignEmailPage.staticSolrEmailFrom(siteRequest_, emailFrom);
 	}
 
 	public String strEmailFrom() {
@@ -3751,10 +4310,13 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 	public String getEmailToSchool() {
 		return emailToSchool;
 	}
-
-	public void setEmailToSchool(String emailToSchool) {
-		this.emailToSchool = emailToSchool;
+	public DesignEmailPage setEmailToSchool(String o) {
+		this.emailToSchool = DesignEmailPage.staticSetEmailToSchool(siteRequest_, o);
 		this.emailToSchoolWrap.alreadyInitialized = true;
+		return (DesignEmailPage)this;
+	}
+	public static String staticSetEmailToSchool(SiteRequestEnUS siteRequest_, String o) {
+		return o;
 	}
 	protected DesignEmailPage emailToSchoolInit() {
 		if(!emailToSchoolWrap.alreadyInitialized) {
@@ -3766,8 +4328,20 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		return (DesignEmailPage)this;
 	}
 
+	public static String staticSolrEmailToSchool(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrEmailToSchool(SiteRequestEnUS siteRequest_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqEmailToSchool(SiteRequestEnUS siteRequest_, String o) {
+		return DesignEmailPage.staticSolrStrEmailToSchool(siteRequest_, DesignEmailPage.staticSolrEmailToSchool(siteRequest_, DesignEmailPage.staticSetEmailToSchool(siteRequest_, o)));
+	}
+
 	public String solrEmailToSchool() {
-		return emailToSchool;
+		return DesignEmailPage.staticSolrEmailToSchool(siteRequest_, emailToSchool);
 	}
 
 	public String strEmailToSchool() {
@@ -3813,10 +4387,13 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 	public String getEmailToAddress() {
 		return emailToAddress;
 	}
-
-	public void setEmailToAddress(String emailToAddress) {
-		this.emailToAddress = emailToAddress;
+	public DesignEmailPage setEmailToAddress(String o) {
+		this.emailToAddress = DesignEmailPage.staticSetEmailToAddress(siteRequest_, o);
 		this.emailToAddressWrap.alreadyInitialized = true;
+		return (DesignEmailPage)this;
+	}
+	public static String staticSetEmailToAddress(SiteRequestEnUS siteRequest_, String o) {
+		return o;
 	}
 	protected DesignEmailPage emailToAddressInit() {
 		if(!emailToAddressWrap.alreadyInitialized) {
@@ -3828,8 +4405,20 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		return (DesignEmailPage)this;
 	}
 
+	public static String staticSolrEmailToAddress(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrEmailToAddress(SiteRequestEnUS siteRequest_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqEmailToAddress(SiteRequestEnUS siteRequest_, String o) {
+		return DesignEmailPage.staticSolrStrEmailToAddress(siteRequest_, DesignEmailPage.staticSolrEmailToAddress(siteRequest_, DesignEmailPage.staticSetEmailToAddress(siteRequest_, o)));
+	}
+
 	public String solrEmailToAddress() {
-		return emailToAddress;
+		return DesignEmailPage.staticSolrEmailToAddress(siteRequest_, emailToAddress);
 	}
 
 	public String strEmailToAddress() {
@@ -3875,10 +4464,13 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 	public String getEmailToName() {
 		return emailToName;
 	}
-
-	public void setEmailToName(String emailToName) {
-		this.emailToName = emailToName;
+	public DesignEmailPage setEmailToName(String o) {
+		this.emailToName = DesignEmailPage.staticSetEmailToName(siteRequest_, o);
 		this.emailToNameWrap.alreadyInitialized = true;
+		return (DesignEmailPage)this;
+	}
+	public static String staticSetEmailToName(SiteRequestEnUS siteRequest_, String o) {
+		return o;
 	}
 	protected DesignEmailPage emailToNameInit() {
 		if(!emailToNameWrap.alreadyInitialized) {
@@ -3890,8 +4482,20 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		return (DesignEmailPage)this;
 	}
 
+	public static String staticSolrEmailToName(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrEmailToName(SiteRequestEnUS siteRequest_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqEmailToName(SiteRequestEnUS siteRequest_, String o) {
+		return DesignEmailPage.staticSolrStrEmailToName(siteRequest_, DesignEmailPage.staticSolrEmailToName(siteRequest_, DesignEmailPage.staticSetEmailToName(siteRequest_, o)));
+	}
+
 	public String solrEmailToName() {
-		return emailToName;
+		return DesignEmailPage.staticSolrEmailToName(siteRequest_, emailToName);
 	}
 
 	public String strEmailToName() {
@@ -3937,10 +4541,13 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 	public String getEmailMessage() {
 		return emailMessage;
 	}
-
-	public void setEmailMessage(String emailMessage) {
-		this.emailMessage = emailMessage;
+	public DesignEmailPage setEmailMessage(String o) {
+		this.emailMessage = DesignEmailPage.staticSetEmailMessage(siteRequest_, o);
 		this.emailMessageWrap.alreadyInitialized = true;
+		return (DesignEmailPage)this;
+	}
+	public static String staticSetEmailMessage(SiteRequestEnUS siteRequest_, String o) {
+		return o;
 	}
 	protected DesignEmailPage emailMessageInit() {
 		if(!emailMessageWrap.alreadyInitialized) {
@@ -3952,8 +4559,20 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		return (DesignEmailPage)this;
 	}
 
+	public static String staticSolrEmailMessage(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrEmailMessage(SiteRequestEnUS siteRequest_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqEmailMessage(SiteRequestEnUS siteRequest_, String o) {
+		return DesignEmailPage.staticSolrStrEmailMessage(siteRequest_, DesignEmailPage.staticSolrEmailMessage(siteRequest_, DesignEmailPage.staticSetEmailMessage(siteRequest_, o)));
+	}
+
 	public String solrEmailMessage() {
-		return emailMessage;
+		return DesignEmailPage.staticSolrEmailMessage(siteRequest_, emailMessage);
 	}
 
 	public String strEmailMessage() {
@@ -3999,10 +4618,13 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 	public String getEmailSubject() {
 		return emailSubject;
 	}
-
-	public void setEmailSubject(String emailSubject) {
-		this.emailSubject = emailSubject;
+	public DesignEmailPage setEmailSubject(String o) {
+		this.emailSubject = DesignEmailPage.staticSetEmailSubject(siteRequest_, o);
 		this.emailSubjectWrap.alreadyInitialized = true;
+		return (DesignEmailPage)this;
+	}
+	public static String staticSetEmailSubject(SiteRequestEnUS siteRequest_, String o) {
+		return o;
 	}
 	protected DesignEmailPage emailSubjectInit() {
 		if(!emailSubjectWrap.alreadyInitialized) {
@@ -4014,8 +4636,20 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		return (DesignEmailPage)this;
 	}
 
+	public static String staticSolrEmailSubject(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrEmailSubject(SiteRequestEnUS siteRequest_, String o) {
+			return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqEmailSubject(SiteRequestEnUS siteRequest_, String o) {
+		return DesignEmailPage.staticSolrStrEmailSubject(siteRequest_, DesignEmailPage.staticSolrEmailSubject(siteRequest_, DesignEmailPage.staticSetEmailSubject(siteRequest_, o)));
+	}
+
 	public String solrEmailSubject() {
-		return emailSubject;
+		return DesignEmailPage.staticSolrEmailSubject(siteRequest_, emailSubject);
 	}
 
 	public String strEmailSubject() {
@@ -4402,6 +5036,326 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		switch(var) {
 			default:
 				return super.attributeDesignEmailGenPage(var, val);
+		}
+	}
+
+	///////////////
+	// staticSet //
+	///////////////
+
+	public static Object staticSetForClass(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		return staticSetDesignEmailPage(entityVar,  siteRequest_, o);
+	}
+	public static Object staticSetDesignEmailPage(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		switch(entityVar) {
+		case "pageDesignId":
+			return DesignEmailPage.staticSetPageDesignId(siteRequest_, o);
+		case "emailContentType":
+			return DesignEmailPage.staticSetEmailContentType(siteRequest_, o);
+		case "emailDesignId":
+			return DesignEmailPage.staticSetEmailDesignId(siteRequest_, o);
+		case "attachmentContentType":
+			return DesignEmailPage.staticSetAttachmentContentType(siteRequest_, o);
+		case "attachmentDesignId":
+			return DesignEmailPage.staticSetAttachmentDesignId(siteRequest_, o);
+		case "yearKey":
+			return DesignEmailPage.staticSetYearKey(siteRequest_, o);
+		case "yearStart":
+			return DesignEmailPage.staticSetYearStart(siteRequest_, o);
+		case "yearEnd":
+			return DesignEmailPage.staticSetYearEnd(siteRequest_, o);
+		case "yearVar":
+			return DesignEmailPage.staticSetYearVar(siteRequest_, o);
+		case "schoolKey":
+			return DesignEmailPage.staticSetSchoolKey(siteRequest_, o);
+		case "schoolName":
+			return DesignEmailPage.staticSetSchoolName(siteRequest_, o);
+		case "schoolCompleteName":
+			return DesignEmailPage.staticSetSchoolCompleteName(siteRequest_, o);
+		case "schoolLocation":
+			return DesignEmailPage.staticSetSchoolLocation(siteRequest_, o);
+		case "schoolAddress":
+			return DesignEmailPage.staticSetSchoolAddress(siteRequest_, o);
+		case "schoolPhoneNumber":
+			return DesignEmailPage.staticSetSchoolPhoneNumber(siteRequest_, o);
+		case "schoolAdministratorName":
+			return DesignEmailPage.staticSetSchoolAdministratorName(siteRequest_, o);
+		case "seasonStartDate":
+			return DesignEmailPage.staticSetSeasonStartDate(siteRequest_, o);
+		case "paymentLastStr":
+			return DesignEmailPage.staticSetPaymentLastStr(siteRequest_, o);
+		case "paymentAmount":
+			return DesignEmailPage.staticSetPaymentAmount(siteRequest_, o);
+		case "chargeAmount":
+			return DesignEmailPage.staticSetChargeAmount(siteRequest_, o);
+		case "chargeAmountFuture":
+			return DesignEmailPage.staticSetChargeAmountFuture(siteRequest_, o);
+		case "chargeAmountDue":
+			return DesignEmailPage.staticSetChargeAmountDue(siteRequest_, o);
+		case "chargesNow":
+			return DesignEmailPage.staticSetChargesNow(siteRequest_, o);
+		case "paymentsCurrent":
+			return DesignEmailPage.staticSetPaymentsCurrent(siteRequest_, o);
+		case "paymentsLate":
+			return DesignEmailPage.staticSetPaymentsLate(siteRequest_, o);
+		case "paymentsLateAmount":
+			return DesignEmailPage.staticSetPaymentsLateAmount(siteRequest_, o);
+		case "paymentsAhead":
+			return DesignEmailPage.staticSetPaymentsAhead(siteRequest_, o);
+		case "emailFrom":
+			return DesignEmailPage.staticSetEmailFrom(siteRequest_, o);
+		case "emailToSchool":
+			return DesignEmailPage.staticSetEmailToSchool(siteRequest_, o);
+		case "emailToAddress":
+			return DesignEmailPage.staticSetEmailToAddress(siteRequest_, o);
+		case "emailToName":
+			return DesignEmailPage.staticSetEmailToName(siteRequest_, o);
+		case "emailMessage":
+			return DesignEmailPage.staticSetEmailMessage(siteRequest_, o);
+		case "emailSubject":
+			return DesignEmailPage.staticSetEmailSubject(siteRequest_, o);
+			default:
+				return DesignEmailGenPage.staticSetDesignEmailGenPage(entityVar,  siteRequest_, o);
+		}
+	}
+
+	////////////////
+	// staticSolr //
+	////////////////
+
+	public static Object staticSolrForClass(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		return staticSolrDesignEmailPage(entityVar,  siteRequest_, o);
+	}
+	public static Object staticSolrDesignEmailPage(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		switch(entityVar) {
+		case "pageDesignId":
+			return DesignEmailPage.staticSolrPageDesignId(siteRequest_, (String)o);
+		case "emailContentType":
+			return DesignEmailPage.staticSolrEmailContentType(siteRequest_, (String)o);
+		case "emailDesignId":
+			return DesignEmailPage.staticSolrEmailDesignId(siteRequest_, (String)o);
+		case "attachmentContentType":
+			return DesignEmailPage.staticSolrAttachmentContentType(siteRequest_, (String)o);
+		case "attachmentDesignId":
+			return DesignEmailPage.staticSolrAttachmentDesignId(siteRequest_, (String)o);
+		case "yearKey":
+			return DesignEmailPage.staticSolrYearKey(siteRequest_, (Long)o);
+		case "yearStart":
+			return DesignEmailPage.staticSolrYearStart(siteRequest_, (Integer)o);
+		case "yearEnd":
+			return DesignEmailPage.staticSolrYearEnd(siteRequest_, (Integer)o);
+		case "yearVar":
+			return DesignEmailPage.staticSolrYearVar(siteRequest_, (String)o);
+		case "schoolKey":
+			return DesignEmailPage.staticSolrSchoolKey(siteRequest_, (Long)o);
+		case "schoolName":
+			return DesignEmailPage.staticSolrSchoolName(siteRequest_, (String)o);
+		case "schoolCompleteName":
+			return DesignEmailPage.staticSolrSchoolCompleteName(siteRequest_, (String)o);
+		case "schoolLocation":
+			return DesignEmailPage.staticSolrSchoolLocation(siteRequest_, (String)o);
+		case "schoolAddress":
+			return DesignEmailPage.staticSolrSchoolAddress(siteRequest_, (String)o);
+		case "schoolPhoneNumber":
+			return DesignEmailPage.staticSolrSchoolPhoneNumber(siteRequest_, (String)o);
+		case "schoolAdministratorName":
+			return DesignEmailPage.staticSolrSchoolAdministratorName(siteRequest_, (String)o);
+		case "seasonStartDate":
+			return DesignEmailPage.staticSolrSeasonStartDate(siteRequest_, (LocalDate)o);
+		case "paymentLastStr":
+			return DesignEmailPage.staticSolrPaymentLastStr(siteRequest_, (String)o);
+		case "paymentAmount":
+			return DesignEmailPage.staticSolrPaymentAmount(siteRequest_, (BigDecimal)o);
+		case "chargeAmount":
+			return DesignEmailPage.staticSolrChargeAmount(siteRequest_, (BigDecimal)o);
+		case "chargeAmountFuture":
+			return DesignEmailPage.staticSolrChargeAmountFuture(siteRequest_, (BigDecimal)o);
+		case "chargeAmountDue":
+			return DesignEmailPage.staticSolrChargeAmountDue(siteRequest_, (BigDecimal)o);
+		case "chargesNow":
+			return DesignEmailPage.staticSolrChargesNow(siteRequest_, (BigDecimal)o);
+		case "paymentsCurrent":
+			return DesignEmailPage.staticSolrPaymentsCurrent(siteRequest_, (Boolean)o);
+		case "paymentsLate":
+			return DesignEmailPage.staticSolrPaymentsLate(siteRequest_, (Boolean)o);
+		case "paymentsLateAmount":
+			return DesignEmailPage.staticSolrPaymentsLateAmount(siteRequest_, (BigDecimal)o);
+		case "paymentsAhead":
+			return DesignEmailPage.staticSolrPaymentsAhead(siteRequest_, (Boolean)o);
+		case "emailFrom":
+			return DesignEmailPage.staticSolrEmailFrom(siteRequest_, (String)o);
+		case "emailToSchool":
+			return DesignEmailPage.staticSolrEmailToSchool(siteRequest_, (String)o);
+		case "emailToAddress":
+			return DesignEmailPage.staticSolrEmailToAddress(siteRequest_, (String)o);
+		case "emailToName":
+			return DesignEmailPage.staticSolrEmailToName(siteRequest_, (String)o);
+		case "emailMessage":
+			return DesignEmailPage.staticSolrEmailMessage(siteRequest_, (String)o);
+		case "emailSubject":
+			return DesignEmailPage.staticSolrEmailSubject(siteRequest_, (String)o);
+			default:
+				return DesignEmailGenPage.staticSolrDesignEmailGenPage(entityVar,  siteRequest_, o);
+		}
+	}
+
+	///////////////////
+	// staticSolrStr //
+	///////////////////
+
+	public static String staticSolrStrForClass(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		return staticSolrStrDesignEmailPage(entityVar,  siteRequest_, o);
+	}
+	public static String staticSolrStrDesignEmailPage(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		switch(entityVar) {
+		case "pageDesignId":
+			return DesignEmailPage.staticSolrStrPageDesignId(siteRequest_, (String)o);
+		case "emailContentType":
+			return DesignEmailPage.staticSolrStrEmailContentType(siteRequest_, (String)o);
+		case "emailDesignId":
+			return DesignEmailPage.staticSolrStrEmailDesignId(siteRequest_, (String)o);
+		case "attachmentContentType":
+			return DesignEmailPage.staticSolrStrAttachmentContentType(siteRequest_, (String)o);
+		case "attachmentDesignId":
+			return DesignEmailPage.staticSolrStrAttachmentDesignId(siteRequest_, (String)o);
+		case "yearKey":
+			return DesignEmailPage.staticSolrStrYearKey(siteRequest_, (Long)o);
+		case "yearStart":
+			return DesignEmailPage.staticSolrStrYearStart(siteRequest_, (Integer)o);
+		case "yearEnd":
+			return DesignEmailPage.staticSolrStrYearEnd(siteRequest_, (Integer)o);
+		case "yearVar":
+			return DesignEmailPage.staticSolrStrYearVar(siteRequest_, (String)o);
+		case "schoolKey":
+			return DesignEmailPage.staticSolrStrSchoolKey(siteRequest_, (Long)o);
+		case "schoolName":
+			return DesignEmailPage.staticSolrStrSchoolName(siteRequest_, (String)o);
+		case "schoolCompleteName":
+			return DesignEmailPage.staticSolrStrSchoolCompleteName(siteRequest_, (String)o);
+		case "schoolLocation":
+			return DesignEmailPage.staticSolrStrSchoolLocation(siteRequest_, (String)o);
+		case "schoolAddress":
+			return DesignEmailPage.staticSolrStrSchoolAddress(siteRequest_, (String)o);
+		case "schoolPhoneNumber":
+			return DesignEmailPage.staticSolrStrSchoolPhoneNumber(siteRequest_, (String)o);
+		case "schoolAdministratorName":
+			return DesignEmailPage.staticSolrStrSchoolAdministratorName(siteRequest_, (String)o);
+		case "seasonStartDate":
+			return DesignEmailPage.staticSolrStrSeasonStartDate(siteRequest_, (Date)o);
+		case "paymentLastStr":
+			return DesignEmailPage.staticSolrStrPaymentLastStr(siteRequest_, (String)o);
+		case "paymentAmount":
+			return DesignEmailPage.staticSolrStrPaymentAmount(siteRequest_, (Double)o);
+		case "chargeAmount":
+			return DesignEmailPage.staticSolrStrChargeAmount(siteRequest_, (Double)o);
+		case "chargeAmountFuture":
+			return DesignEmailPage.staticSolrStrChargeAmountFuture(siteRequest_, (Double)o);
+		case "chargeAmountDue":
+			return DesignEmailPage.staticSolrStrChargeAmountDue(siteRequest_, (Double)o);
+		case "chargesNow":
+			return DesignEmailPage.staticSolrStrChargesNow(siteRequest_, (Double)o);
+		case "paymentsCurrent":
+			return DesignEmailPage.staticSolrStrPaymentsCurrent(siteRequest_, (Boolean)o);
+		case "paymentsLate":
+			return DesignEmailPage.staticSolrStrPaymentsLate(siteRequest_, (Boolean)o);
+		case "paymentsLateAmount":
+			return DesignEmailPage.staticSolrStrPaymentsLateAmount(siteRequest_, (Double)o);
+		case "paymentsAhead":
+			return DesignEmailPage.staticSolrStrPaymentsAhead(siteRequest_, (Boolean)o);
+		case "emailFrom":
+			return DesignEmailPage.staticSolrStrEmailFrom(siteRequest_, (String)o);
+		case "emailToSchool":
+			return DesignEmailPage.staticSolrStrEmailToSchool(siteRequest_, (String)o);
+		case "emailToAddress":
+			return DesignEmailPage.staticSolrStrEmailToAddress(siteRequest_, (String)o);
+		case "emailToName":
+			return DesignEmailPage.staticSolrStrEmailToName(siteRequest_, (String)o);
+		case "emailMessage":
+			return DesignEmailPage.staticSolrStrEmailMessage(siteRequest_, (String)o);
+		case "emailSubject":
+			return DesignEmailPage.staticSolrStrEmailSubject(siteRequest_, (String)o);
+			default:
+				return DesignEmailGenPage.staticSolrStrDesignEmailGenPage(entityVar,  siteRequest_, o);
+		}
+	}
+
+	//////////////////
+	// staticSolrFq //
+	//////////////////
+
+	public static String staticSolrFqForClass(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		return staticSolrFqDesignEmailPage(entityVar,  siteRequest_, o);
+	}
+	public static String staticSolrFqDesignEmailPage(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		switch(entityVar) {
+		case "pageDesignId":
+			return DesignEmailPage.staticSolrFqPageDesignId(siteRequest_, o);
+		case "emailContentType":
+			return DesignEmailPage.staticSolrFqEmailContentType(siteRequest_, o);
+		case "emailDesignId":
+			return DesignEmailPage.staticSolrFqEmailDesignId(siteRequest_, o);
+		case "attachmentContentType":
+			return DesignEmailPage.staticSolrFqAttachmentContentType(siteRequest_, o);
+		case "attachmentDesignId":
+			return DesignEmailPage.staticSolrFqAttachmentDesignId(siteRequest_, o);
+		case "yearKey":
+			return DesignEmailPage.staticSolrFqYearKey(siteRequest_, o);
+		case "yearStart":
+			return DesignEmailPage.staticSolrFqYearStart(siteRequest_, o);
+		case "yearEnd":
+			return DesignEmailPage.staticSolrFqYearEnd(siteRequest_, o);
+		case "yearVar":
+			return DesignEmailPage.staticSolrFqYearVar(siteRequest_, o);
+		case "schoolKey":
+			return DesignEmailPage.staticSolrFqSchoolKey(siteRequest_, o);
+		case "schoolName":
+			return DesignEmailPage.staticSolrFqSchoolName(siteRequest_, o);
+		case "schoolCompleteName":
+			return DesignEmailPage.staticSolrFqSchoolCompleteName(siteRequest_, o);
+		case "schoolLocation":
+			return DesignEmailPage.staticSolrFqSchoolLocation(siteRequest_, o);
+		case "schoolAddress":
+			return DesignEmailPage.staticSolrFqSchoolAddress(siteRequest_, o);
+		case "schoolPhoneNumber":
+			return DesignEmailPage.staticSolrFqSchoolPhoneNumber(siteRequest_, o);
+		case "schoolAdministratorName":
+			return DesignEmailPage.staticSolrFqSchoolAdministratorName(siteRequest_, o);
+		case "seasonStartDate":
+			return DesignEmailPage.staticSolrFqSeasonStartDate(siteRequest_, o);
+		case "paymentLastStr":
+			return DesignEmailPage.staticSolrFqPaymentLastStr(siteRequest_, o);
+		case "paymentAmount":
+			return DesignEmailPage.staticSolrFqPaymentAmount(siteRequest_, o);
+		case "chargeAmount":
+			return DesignEmailPage.staticSolrFqChargeAmount(siteRequest_, o);
+		case "chargeAmountFuture":
+			return DesignEmailPage.staticSolrFqChargeAmountFuture(siteRequest_, o);
+		case "chargeAmountDue":
+			return DesignEmailPage.staticSolrFqChargeAmountDue(siteRequest_, o);
+		case "chargesNow":
+			return DesignEmailPage.staticSolrFqChargesNow(siteRequest_, o);
+		case "paymentsCurrent":
+			return DesignEmailPage.staticSolrFqPaymentsCurrent(siteRequest_, o);
+		case "paymentsLate":
+			return DesignEmailPage.staticSolrFqPaymentsLate(siteRequest_, o);
+		case "paymentsLateAmount":
+			return DesignEmailPage.staticSolrFqPaymentsLateAmount(siteRequest_, o);
+		case "paymentsAhead":
+			return DesignEmailPage.staticSolrFqPaymentsAhead(siteRequest_, o);
+		case "emailFrom":
+			return DesignEmailPage.staticSolrFqEmailFrom(siteRequest_, o);
+		case "emailToSchool":
+			return DesignEmailPage.staticSolrFqEmailToSchool(siteRequest_, o);
+		case "emailToAddress":
+			return DesignEmailPage.staticSolrFqEmailToAddress(siteRequest_, o);
+		case "emailToName":
+			return DesignEmailPage.staticSolrFqEmailToName(siteRequest_, o);
+		case "emailMessage":
+			return DesignEmailPage.staticSolrFqEmailMessage(siteRequest_, o);
+		case "emailSubject":
+			return DesignEmailPage.staticSolrFqEmailSubject(siteRequest_, o);
+			default:
+				return DesignEmailGenPage.staticSolrFqDesignEmailGenPage(entityVar,  siteRequest_, o);
 		}
 	}
 

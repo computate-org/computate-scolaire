@@ -68,6 +68,9 @@ public abstract class PartHtmlGenPageGen<DEV> extends ClusterPage {
 		this.listePartHtml = listePartHtml;
 		this.listePartHtmlCouverture.dejaInitialise = true;
 	}
+	public static ListeRecherche<PartHtml> staticSetListePartHtml(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
+	}
 	protected PartHtmlGenPage listePartHtmlInit() {
 		if(!listePartHtmlCouverture.dejaInitialise) {
 			_listePartHtml(listePartHtmlCouverture);
@@ -107,6 +110,9 @@ public abstract class PartHtmlGenPageGen<DEV> extends ClusterPage {
 	public void setPartHtml_(PartHtml partHtml_) {
 		this.partHtml_ = partHtml_;
 		this.partHtml_Couverture.dejaInitialise = true;
+	}
+	public static PartHtml staticSetPartHtml_(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
 	}
 	protected PartHtmlGenPage partHtml_Init() {
 		if(!partHtml_Couverture.dejaInitialise) {
@@ -212,6 +218,62 @@ public abstract class PartHtmlGenPageGen<DEV> extends ClusterPage {
 		switch(var) {
 			default:
 				return super.attribuerClusterPage(var, val);
+		}
+	}
+
+	///////////////
+	// staticSet //
+	///////////////
+
+	public static Object staticSetPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		return staticSetPartHtmlGenPage(entiteVar,  requeteSite_, o);
+	}
+	public static Object staticSetPartHtmlGenPage(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		switch(entiteVar) {
+			default:
+				return ClusterPage.staticSetClusterPage(entiteVar,  requeteSite_, o);
+		}
+	}
+
+	////////////////
+	// staticSolr //
+	////////////////
+
+	public static Object staticSolrPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		return staticSolrPartHtmlGenPage(entiteVar,  requeteSite_, o);
+	}
+	public static Object staticSolrPartHtmlGenPage(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		switch(entiteVar) {
+			default:
+				return ClusterPage.staticSolrClusterPage(entiteVar,  requeteSite_, o);
+		}
+	}
+
+	///////////////////
+	// staticSolrStr //
+	///////////////////
+
+	public static String staticSolrStrPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		return staticSolrStrPartHtmlGenPage(entiteVar,  requeteSite_, o);
+	}
+	public static String staticSolrStrPartHtmlGenPage(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		switch(entiteVar) {
+			default:
+				return ClusterPage.staticSolrStrClusterPage(entiteVar,  requeteSite_, o);
+		}
+	}
+
+	//////////////////
+	// staticSolrFq //
+	//////////////////
+
+	public static String staticSolrFqPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		return staticSolrFqPartHtmlGenPage(entiteVar,  requeteSite_, o);
+	}
+	public static String staticSolrFqPartHtmlGenPage(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		switch(entiteVar) {
+			default:
+				return ClusterPage.staticSolrFqClusterPage(entiteVar,  requeteSite_, o);
 		}
 	}
 

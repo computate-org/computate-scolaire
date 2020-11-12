@@ -245,14 +245,6 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPag
 			o.htmInscriptionCles("PUTCopie");
 			o.htmPaiementCles("PUTCopie");
 		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmInheritPk("PUTCopie");
-			o.htmSessionId("PUTCopie");
-			o.htmUtilisateurId("PUTCopie");
-			o.htmUtilisateurCle("PUTCopie");
-			o.htmUtilisateurNom("PUTCopie");
-			o.htmUtilisateurMail("PUTCopie");
-		} g("div");
 	}
 
 	public void htmlFormPATCHUtilisateurSite(UtilisateurSite o) {
@@ -276,14 +268,6 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPag
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInscriptionCles("PATCH");
 			o.htmPaiementCles("PATCH");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmInheritPk("PATCH");
-			o.htmSessionId("PATCH");
-			o.htmUtilisateurId("PATCH");
-			o.htmUtilisateurCle("PATCH");
-			o.htmUtilisateurNom("PATCH");
-			o.htmUtilisateurMail("PATCH");
 		} g("div");
 	}
 

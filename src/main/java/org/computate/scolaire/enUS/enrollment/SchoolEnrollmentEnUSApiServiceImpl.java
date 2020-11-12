@@ -546,7 +546,7 @@ public class SchoolEnrollmentEnUSApiServiceImpl extends SchoolEnrollmentEnUSGenA
 			Boolean paymentsLate = chargesNow.subtract(chargeAmountDue).compareTo(BigDecimal.ZERO) > 0;
 			if(paymentsLate && chargeStartDate != null) {
 				BigDecimal paymentsLateAmount = chargesNow.subtract(chargeAmountDue);
-				LocalDate lateFeeStartDate = (now.getDayOfMonth() < paymentDay ? now.withDayOfMonth(paymentDay).minusMonths(1) : now.withDayOfMonth(paymentDay));
+				LocalDate lateFeeStartDate = (now.getDayOfMonth() < paymentDay ? now.withDayOfMonth(paymentDay).minusMonths(1) : now.withDayOfMonth(paymentDay)).plusDays(1);
 				LocalDate lateFeeEndDate = (now.getDayOfMonth() < paymentDay ? now.withDayOfMonth(paymentDay) : now.withDayOfMonth(paymentDay).plusMonths(1));
 
 				SearchList<SchoolPayment> chargeLateFeeList = new SearchList<SchoolPayment>();
@@ -569,6 +569,7 @@ public class SchoolEnrollmentEnUSApiServiceImpl extends SchoolEnrollmentEnUSGenA
 					o.setSiteRequest_(siteRequest);
 					o.setChargeAmount(new BigDecimal(20));
 					o.setPaymentDate(lateFeeEndDate);
+					o.setLateFeeDate(lateFeeStartDate);
 					o.setCustomerProfileId(schoolEnrollment.getCustomerProfileId());
 					o.setChargeLateFee(true);
 					o.setEnrollmentKey(schoolEnrollment.getPk());

@@ -159,14 +159,6 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 			o.htmArchive("Page");
 			o.htmSupprime("Page");
 		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmSaisonDateDebut("Page");
-			o.htmSaisonFuture("Page");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmAnneeCle("Page");
-			o.htmSessionCles("Page");
-		} g("div");
 	}
 
 	public void htmlFormPOSTSaisonScolaire(SaisonScolaire o) {
@@ -179,14 +171,6 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchive("POST");
 			o.htmSupprime("POST");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmSaisonDateDebut("POST");
-			o.htmSaisonFuture("POST");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmAnneeCle("POST");
-			o.htmSessionCles("POST");
 		} g("div");
 	}
 
@@ -231,14 +215,6 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 			o.htmAnneeCle("PUTCopie");
 			o.htmSessionCles("PUTCopie");
 		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmInheritPk("PUTCopie");
-			o.htmSessionId("PUTCopie");
-			o.htmUtilisateurId("PUTCopie");
-			o.htmUtilisateurCle("PUTCopie");
-			o.htmSaisonEte("PUTCopie");
-			o.htmSaisonHiver("PUTCopie");
-		} g("div");
 	}
 
 	public void htmlFormPATCHSaisonScolaire(SaisonScolaire o) {
@@ -257,14 +233,6 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmAnneeCle("PATCH");
 			o.htmSessionCles("PATCH");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmInheritPk("PATCH");
-			o.htmSessionId("PATCH");
-			o.htmUtilisateurId("PATCH");
-			o.htmUtilisateurCle("PATCH");
-			o.htmSaisonEte("PATCH");
-			o.htmSaisonHiver("PATCH");
 		} g("div");
 	}
 

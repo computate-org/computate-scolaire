@@ -254,13 +254,6 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 			o.htmAgeKey("PUTCopy");
 			o.htmEnrollmentKeys("PUTCopy");
 		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmInheritPk("PUTCopy");
-			o.htmSessionId("PUTCopy");
-			o.htmUserId("PUTCopy");
-			o.htmUserKey("PUTCopy");
-			o.htmSchoolAddress("PUTCopy");
-		} g("div");
 	}
 
 	public void htmlFormPATCHSchoolBlock(SchoolBlock o) {
@@ -287,13 +280,6 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmAgeKey("PATCH");
 			o.htmEnrollmentKeys("PATCH");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmInheritPk("PATCH");
-			o.htmSessionId("PATCH");
-			o.htmUserId("PATCH");
-			o.htmUserKey("PATCH");
-			o.htmSchoolAddress("PATCH");
 		} g("div");
 	}
 

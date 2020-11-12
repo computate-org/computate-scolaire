@@ -148,57 +148,6 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 			o.htmArchived("Page");
 			o.htmDeleted("Page");
 		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPageDesignKeys("Page");
-			o.htmHtmlLink("Page");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmHtmlElement("Page");
-			o.htmHtmlId("Page");
-			o.htmHtmlClasses("Page");
-			o.htmHtmlStyle("Page");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmHtmlBefore("Page");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmHtmlAfter("Page");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmHtmlText("Page");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmHtmlVar("Page");
-			o.htmHtmlVarSpan("Page");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmHtmlVarForm("Page");
-			o.htmHtmlVarInput("Page");
-			o.htmHtmlIfVarEquals("Page");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmHtmlVarForEach("Page");
-			o.htmHtmlVarHtml("Page");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmHtmlExclude("Page");
-			o.htmPdfExclude("Page");
-			o.htmLoginLogout("Page");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmSort1("Page");
-			o.htmSort2("Page");
-			o.htmSort3("Page");
-			o.htmSort4("Page");
-			o.htmSort5("Page");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmSort6("Page");
-			o.htmSort7("Page");
-			o.htmSort8("Page");
-			o.htmSort9("Page");
-			o.htmSort10("Page");
-		} g("div");
 	}
 
 	public void htmlFormPOSTHtmlPart(HtmlPart o) {
@@ -211,57 +160,6 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchived("POST");
 			o.htmDeleted("POST");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmPageDesignKeys("POST");
-			o.htmHtmlLink("POST");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmHtmlElement("POST");
-			o.htmHtmlId("POST");
-			o.htmHtmlClasses("POST");
-			o.htmHtmlStyle("POST");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmHtmlBefore("POST");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmHtmlAfter("POST");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmHtmlText("POST");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmHtmlVar("POST");
-			o.htmHtmlVarSpan("POST");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmHtmlVarForm("POST");
-			o.htmHtmlVarInput("POST");
-			o.htmHtmlIfVarEquals("POST");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmHtmlVarForEach("POST");
-			o.htmHtmlVarHtml("POST");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmHtmlExclude("POST");
-			o.htmPdfExclude("POST");
-			o.htmLoginLogout("POST");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmSort1("POST");
-			o.htmSort2("POST");
-			o.htmSort3("POST");
-			o.htmSort4("POST");
-			o.htmSort5("POST");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmSort6("POST");
-			o.htmSort7("POST");
-			o.htmSort8("POST");
-			o.htmSort9("POST");
-			o.htmSort10("POST");
 		} g("div");
 	}
 
@@ -349,12 +247,6 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 			o.htmSort9("PUTCopy");
 			o.htmSort10("PUTCopy");
 		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmInheritPk("PUTCopy");
-			o.htmSessionId("PUTCopy");
-			o.htmUserId("PUTCopy");
-			o.htmUserKey("PUTCopy");
-		} g("div");
 	}
 
 	public void htmlFormPATCHHtmlPart(HtmlPart o) {
@@ -416,12 +308,6 @@ public class HtmlPartGenPage extends HtmlPartGenPageGen<ClusterPage> {
 			o.htmSort8("PATCH");
 			o.htmSort9("PATCH");
 			o.htmSort10("PATCH");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmInheritPk("PATCH");
-			o.htmSessionId("PATCH");
-			o.htmUserId("PATCH");
-			o.htmUserKey("PATCH");
 		} g("div");
 	}
 
