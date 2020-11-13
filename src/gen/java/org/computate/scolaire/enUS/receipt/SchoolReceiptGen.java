@@ -117,10 +117,9 @@ public abstract class SchoolReceiptGen<DEV> extends Cluster {
 		this.receiptKey = receiptKey;
 		this.receiptKeyWrap.alreadyInitialized = true;
 	}
-	public SchoolReceipt setReceiptKey(String o) {
+	public void setReceiptKey(String o) {
 		this.receiptKey = SchoolReceipt.staticSetReceiptKey(siteRequest_, o);
 		this.receiptKeyWrap.alreadyInitialized = true;
-		return (SchoolReceipt)this;
 	}
 	public static Long staticSetReceiptKey(SiteRequestEnUS siteRequest_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -142,7 +141,7 @@ public abstract class SchoolReceiptGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrReceiptKey(SiteRequestEnUS siteRequest_, Long o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqReceiptKey(SiteRequestEnUS siteRequest_, String o) {
@@ -202,10 +201,9 @@ public abstract class SchoolReceiptGen<DEV> extends Cluster {
 		this.schoolKey = schoolKey;
 		this.schoolKeyWrap.alreadyInitialized = true;
 	}
-	public SchoolReceipt setSchoolKey(String o) {
+	public void setSchoolKey(String o) {
 		this.schoolKey = SchoolReceipt.staticSetSchoolKey(siteRequest_, o);
 		this.schoolKeyWrap.alreadyInitialized = true;
-		return (SchoolReceipt)this;
 	}
 	public static Long staticSetSchoolKey(SiteRequestEnUS siteRequest_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -227,7 +225,7 @@ public abstract class SchoolReceiptGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrSchoolKey(SiteRequestEnUS siteRequest_, Long o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqSchoolKey(SiteRequestEnUS siteRequest_, String o) {
@@ -444,10 +442,9 @@ public abstract class SchoolReceiptGen<DEV> extends Cluster {
 	public String getSchoolAddress() {
 		return schoolAddress;
 	}
-	public SchoolReceipt setSchoolAddress(String o) {
+	public void setSchoolAddress(String o) {
 		this.schoolAddress = SchoolReceipt.staticSetSchoolAddress(siteRequest_, o);
 		this.schoolAddressWrap.alreadyInitialized = true;
-		return (SchoolReceipt)this;
 	}
 	public static String staticSetSchoolAddress(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -467,7 +464,7 @@ public abstract class SchoolReceiptGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrSchoolAddress(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqSchoolAddress(SiteRequestEnUS siteRequest_, String o) {
@@ -521,10 +518,9 @@ public abstract class SchoolReceiptGen<DEV> extends Cluster {
 	public String getSchoolPhoneNumber() {
 		return schoolPhoneNumber;
 	}
-	public SchoolReceipt setSchoolPhoneNumber(String o) {
+	public void setSchoolPhoneNumber(String o) {
 		this.schoolPhoneNumber = SchoolReceipt.staticSetSchoolPhoneNumber(siteRequest_, o);
 		this.schoolPhoneNumberWrap.alreadyInitialized = true;
-		return (SchoolReceipt)this;
 	}
 	public static String staticSetSchoolPhoneNumber(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -544,7 +540,7 @@ public abstract class SchoolReceiptGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrSchoolPhoneNumber(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqSchoolPhoneNumber(SiteRequestEnUS siteRequest_, String o) {
@@ -606,24 +602,21 @@ public abstract class SchoolReceiptGen<DEV> extends Cluster {
 		this.paymentDate = paymentDate;
 		this.paymentDateWrap.alreadyInitialized = true;
 	}
-	public SchoolReceipt setPaymentDate(Instant o) {
+	public void setPaymentDate(Instant o) {
 		this.paymentDate = o == null ? null : LocalDate.from(o);
 		this.paymentDateWrap.alreadyInitialized = true;
-		return (SchoolReceipt)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
-	public SchoolReceipt setPaymentDate(String o) {
+	public void setPaymentDate(String o) {
 		this.paymentDate = SchoolReceipt.staticSetPaymentDate(siteRequest_, o);
 		this.paymentDateWrap.alreadyInitialized = true;
-		return (SchoolReceipt)this;
 	}
 	public static LocalDate staticSetPaymentDate(SiteRequestEnUS siteRequest_, String o) {
 		return o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 	}
-	public SchoolReceipt setPaymentDate(Date o) {
+	public void setPaymentDate(Date o) {
 		this.paymentDate = o == null ? null : o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
 		this.paymentDateWrap.alreadyInitialized = true;
-		return (SchoolReceipt)this;
 	}
 	protected SchoolReceipt paymentDateInit() {
 		if(!paymentDateWrap.alreadyInitialized) {
@@ -764,10 +757,9 @@ public abstract class SchoolReceiptGen<DEV> extends Cluster {
 		this.paymentYear = paymentYear;
 		this.paymentYearWrap.alreadyInitialized = true;
 	}
-	public SchoolReceipt setPaymentYear(String o) {
+	public void setPaymentYear(String o) {
 		this.paymentYear = SchoolReceipt.staticSetPaymentYear(siteRequest_, o);
 		this.paymentYearWrap.alreadyInitialized = true;
-		return (SchoolReceipt)this;
 	}
 	public static Integer staticSetPaymentYear(SiteRequestEnUS siteRequest_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -789,7 +781,7 @@ public abstract class SchoolReceiptGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrPaymentYear(SiteRequestEnUS siteRequest_, Integer o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPaymentYear(SiteRequestEnUS siteRequest_, String o) {
@@ -849,10 +841,9 @@ public abstract class SchoolReceiptGen<DEV> extends Cluster {
 		this.paymentAmount = paymentAmount;
 		this.paymentAmountWrap.alreadyInitialized = true;
 	}
-	public SchoolReceipt setPaymentAmount(String o) {
+	public void setPaymentAmount(String o) {
 		this.paymentAmount = SchoolReceipt.staticSetPaymentAmount(siteRequest_, o);
 		this.paymentAmountWrap.alreadyInitialized = true;
-		return (SchoolReceipt)this;
 	}
 	public static BigDecimal staticSetPaymentAmount(SiteRequestEnUS siteRequest_, String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
@@ -860,15 +851,13 @@ public abstract class SchoolReceiptGen<DEV> extends Cluster {
 			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		return null;
 	}
-	public SchoolReceipt setPaymentAmount(Double o) {
+	public void setPaymentAmount(Double o) {
 			this.paymentAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.paymentAmountWrap.alreadyInitialized = true;
-		return (SchoolReceipt)this;
 	}
-	public SchoolReceipt setPaymentAmount(Integer o) {
+	public void setPaymentAmount(Integer o) {
 			this.paymentAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.paymentAmountWrap.alreadyInitialized = true;
-		return (SchoolReceipt)this;
 	}
 	protected SchoolReceipt paymentAmountInit() {
 		if(!paymentAmountWrap.alreadyInitialized) {
@@ -885,7 +874,7 @@ public abstract class SchoolReceiptGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrPaymentAmount(SiteRequestEnUS siteRequest_, Double o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPaymentAmount(SiteRequestEnUS siteRequest_, String o) {
@@ -1010,10 +999,9 @@ public abstract class SchoolReceiptGen<DEV> extends Cluster {
 	public String getPaymentDescription() {
 		return paymentDescription;
 	}
-	public SchoolReceipt setPaymentDescription(String o) {
+	public void setPaymentDescription(String o) {
 		this.paymentDescription = SchoolReceipt.staticSetPaymentDescription(siteRequest_, o);
 		this.paymentDescriptionWrap.alreadyInitialized = true;
-		return (SchoolReceipt)this;
 	}
 	public static String staticSetPaymentDescription(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -1033,7 +1021,7 @@ public abstract class SchoolReceiptGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrPaymentDescription(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPaymentDescription(SiteRequestEnUS siteRequest_, String o) {
@@ -1158,10 +1146,9 @@ public abstract class SchoolReceiptGen<DEV> extends Cluster {
 	public String getPaymentShortName() {
 		return paymentShortName;
 	}
-	public SchoolReceipt setPaymentShortName(String o) {
+	public void setPaymentShortName(String o) {
 		this.paymentShortName = SchoolReceipt.staticSetPaymentShortName(siteRequest_, o);
 		this.paymentShortNameWrap.alreadyInitialized = true;
-		return (SchoolReceipt)this;
 	}
 	public static String staticSetPaymentShortName(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -1181,7 +1168,7 @@ public abstract class SchoolReceiptGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrPaymentShortName(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPaymentShortName(SiteRequestEnUS siteRequest_, String o) {
@@ -1306,10 +1293,9 @@ public abstract class SchoolReceiptGen<DEV> extends Cluster {
 	public String getPaymentCompleteName() {
 		return paymentCompleteName;
 	}
-	public SchoolReceipt setPaymentCompleteName(String o) {
+	public void setPaymentCompleteName(String o) {
 		this.paymentCompleteName = SchoolReceipt.staticSetPaymentCompleteName(siteRequest_, o);
 		this.paymentCompleteNameWrap.alreadyInitialized = true;
-		return (SchoolReceipt)this;
 	}
 	public static String staticSetPaymentCompleteName(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -1329,7 +1315,7 @@ public abstract class SchoolReceiptGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrPaymentCompleteName(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPaymentCompleteName(SiteRequestEnUS siteRequest_, String o) {

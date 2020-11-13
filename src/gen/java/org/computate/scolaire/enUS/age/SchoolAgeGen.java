@@ -118,10 +118,9 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		this.ageKey = ageKey;
 		this.ageKeyWrap.alreadyInitialized = true;
 	}
-	public SchoolAge setAgeKey(String o) {
+	public void setAgeKey(String o) {
 		this.ageKey = SchoolAge.staticSetAgeKey(siteRequest_, o);
 		this.ageKeyWrap.alreadyInitialized = true;
-		return (SchoolAge)this;
 	}
 	public static Long staticSetAgeKey(SiteRequestEnUS siteRequest_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -143,7 +142,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrAgeKey(SiteRequestEnUS siteRequest_, Long o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqAgeKey(SiteRequestEnUS siteRequest_, String o) {
@@ -203,7 +202,15 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		this.enrollmentKeys = enrollmentKeys;
 		this.enrollmentKeysWrap.alreadyInitialized = true;
 	}
-	public static List<Long> staticSetEnrollmentKeys(SiteRequestEnUS siteRequest_, String o) {
+	public void setEnrollmentKeys(String o) {
+		Long l = SchoolAge.staticSetEnrollmentKeys(siteRequest_, o);
+		if(l != null)
+			addEnrollmentKeys(l);
+		this.enrollmentKeysWrap.alreadyInitialized = true;
+	}
+	public static Long staticSetEnrollmentKeys(SiteRequestEnUS siteRequest_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Long.parseLong(o);
 		return null;
 	}
 	public SchoolAge addEnrollmentKeys(Long...objets) {
@@ -217,13 +224,12 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 			this.enrollmentKeys.add(o);
 		return (SchoolAge)this;
 	}
-	public SchoolAge setEnrollmentKeys(JsonArray objets) {
+	public void setEnrollmentKeys(JsonArray objets) {
 		enrollmentKeys.clear();
 		for(int i = 0; i < objets.size(); i++) {
 			Long o = objets.getLong(i);
 			addEnrollmentKeys(o);
 		}
-		return (SchoolAge)this;
 	}
 	public SchoolAge addEnrollmentKeys(String o) {
 		if(NumberUtils.isParsable(o)) {
@@ -240,12 +246,12 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		return (SchoolAge)this;
 	}
 
-	public static List<Long> staticSolrEnrollmentKeys(SiteRequestEnUS siteRequest_, List<Long> o) {
+	public static Long staticSolrEnrollmentKeys(SiteRequestEnUS siteRequest_, Long o) {
 		return o;
 	}
 
-	public static String staticSolrStrEnrollmentKeys(SiteRequestEnUS siteRequest_, List<Long> o) {
-			return o == null ? null : o.toString();
+	public static String staticSolrStrEnrollmentKeys(SiteRequestEnUS siteRequest_, Long o) {
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqEnrollmentKeys(SiteRequestEnUS siteRequest_, String o) {
@@ -253,7 +259,11 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 	}
 
 	public List<Long> solrEnrollmentKeys() {
-		return SchoolAge.staticSolrEnrollmentKeys(siteRequest_, enrollmentKeys);
+		List<Long> l = new ArrayList<Long>();
+		for(Long o : enrollmentKeys) {
+			l.add(SchoolAge.staticSolrEnrollmentKeys(siteRequest_, o));
+		}
+		return l;
 	}
 
 	public String strEnrollmentKeys() {
@@ -305,7 +315,15 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		this.blockKeys = blockKeys;
 		this.blockKeysWrap.alreadyInitialized = true;
 	}
-	public static List<Long> staticSetBlockKeys(SiteRequestEnUS siteRequest_, String o) {
+	public void setBlockKeys(String o) {
+		Long l = SchoolAge.staticSetBlockKeys(siteRequest_, o);
+		if(l != null)
+			addBlockKeys(l);
+		this.blockKeysWrap.alreadyInitialized = true;
+	}
+	public static Long staticSetBlockKeys(SiteRequestEnUS siteRequest_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Long.parseLong(o);
 		return null;
 	}
 	public SchoolAge addBlockKeys(Long...objets) {
@@ -319,13 +337,12 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 			this.blockKeys.add(o);
 		return (SchoolAge)this;
 	}
-	public SchoolAge setBlockKeys(JsonArray objets) {
+	public void setBlockKeys(JsonArray objets) {
 		blockKeys.clear();
 		for(int i = 0; i < objets.size(); i++) {
 			Long o = objets.getLong(i);
 			addBlockKeys(o);
 		}
-		return (SchoolAge)this;
 	}
 	public SchoolAge addBlockKeys(String o) {
 		if(NumberUtils.isParsable(o)) {
@@ -342,12 +359,12 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		return (SchoolAge)this;
 	}
 
-	public static List<Long> staticSolrBlockKeys(SiteRequestEnUS siteRequest_, List<Long> o) {
+	public static Long staticSolrBlockKeys(SiteRequestEnUS siteRequest_, Long o) {
 		return o;
 	}
 
-	public static String staticSolrStrBlockKeys(SiteRequestEnUS siteRequest_, List<Long> o) {
-			return o == null ? null : o.toString();
+	public static String staticSolrStrBlockKeys(SiteRequestEnUS siteRequest_, Long o) {
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqBlockKeys(SiteRequestEnUS siteRequest_, String o) {
@@ -355,7 +372,11 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 	}
 
 	public List<Long> solrBlockKeys() {
-		return SchoolAge.staticSolrBlockKeys(siteRequest_, blockKeys);
+		List<Long> l = new ArrayList<Long>();
+		for(Long o : blockKeys) {
+			l.add(SchoolAge.staticSolrBlockKeys(siteRequest_, o));
+		}
+		return l;
 	}
 
 	public String strBlockKeys() {
@@ -487,10 +508,9 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		this.educationSort = educationSort;
 		this.educationSortWrap.alreadyInitialized = true;
 	}
-	public SchoolAge setEducationSort(String o) {
+	public void setEducationSort(String o) {
 		this.educationSort = SchoolAge.staticSetEducationSort(siteRequest_, o);
 		this.educationSortWrap.alreadyInitialized = true;
-		return (SchoolAge)this;
 	}
 	public static Integer staticSetEducationSort(SiteRequestEnUS siteRequest_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -512,7 +532,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrEducationSort(SiteRequestEnUS siteRequest_, Integer o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqEducationSort(SiteRequestEnUS siteRequest_, String o) {
@@ -572,10 +592,9 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		this.schoolSort = schoolSort;
 		this.schoolSortWrap.alreadyInitialized = true;
 	}
-	public SchoolAge setSchoolSort(String o) {
+	public void setSchoolSort(String o) {
 		this.schoolSort = SchoolAge.staticSetSchoolSort(siteRequest_, o);
 		this.schoolSortWrap.alreadyInitialized = true;
-		return (SchoolAge)this;
 	}
 	public static Integer staticSetSchoolSort(SiteRequestEnUS siteRequest_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -597,7 +616,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrSchoolSort(SiteRequestEnUS siteRequest_, Integer o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqSchoolSort(SiteRequestEnUS siteRequest_, String o) {
@@ -657,10 +676,9 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		this.yearSort = yearSort;
 		this.yearSortWrap.alreadyInitialized = true;
 	}
-	public SchoolAge setYearSort(String o) {
+	public void setYearSort(String o) {
 		this.yearSort = SchoolAge.staticSetYearSort(siteRequest_, o);
 		this.yearSortWrap.alreadyInitialized = true;
-		return (SchoolAge)this;
 	}
 	public static Integer staticSetYearSort(SiteRequestEnUS siteRequest_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -682,7 +700,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrYearSort(SiteRequestEnUS siteRequest_, Integer o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqYearSort(SiteRequestEnUS siteRequest_, String o) {
@@ -742,10 +760,9 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		this.seasonSort = seasonSort;
 		this.seasonSortWrap.alreadyInitialized = true;
 	}
-	public SchoolAge setSeasonSort(String o) {
+	public void setSeasonSort(String o) {
 		this.seasonSort = SchoolAge.staticSetSeasonSort(siteRequest_, o);
 		this.seasonSortWrap.alreadyInitialized = true;
-		return (SchoolAge)this;
 	}
 	public static Integer staticSetSeasonSort(SiteRequestEnUS siteRequest_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -767,7 +784,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrSeasonSort(SiteRequestEnUS siteRequest_, Integer o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqSeasonSort(SiteRequestEnUS siteRequest_, String o) {
@@ -827,10 +844,9 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		this.sessionSort = sessionSort;
 		this.sessionSortWrap.alreadyInitialized = true;
 	}
-	public SchoolAge setSessionSort(String o) {
+	public void setSessionSort(String o) {
 		this.sessionSort = SchoolAge.staticSetSessionSort(siteRequest_, o);
 		this.sessionSortWrap.alreadyInitialized = true;
-		return (SchoolAge)this;
 	}
 	public static Integer staticSetSessionSort(SiteRequestEnUS siteRequest_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -852,7 +868,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrSessionSort(SiteRequestEnUS siteRequest_, Integer o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqSessionSort(SiteRequestEnUS siteRequest_, String o) {
@@ -912,10 +928,9 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		this.sessionKey = sessionKey;
 		this.sessionKeyWrap.alreadyInitialized = true;
 	}
-	public SchoolAge setSessionKey(String o) {
+	public void setSessionKey(String o) {
 		this.sessionKey = SchoolAge.staticSetSessionKey(siteRequest_, o);
 		this.sessionKeyWrap.alreadyInitialized = true;
-		return (SchoolAge)this;
 	}
 	public static Long staticSetSessionKey(SiteRequestEnUS siteRequest_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -937,7 +952,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrSessionKey(SiteRequestEnUS siteRequest_, Long o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqSessionKey(SiteRequestEnUS siteRequest_, String o) {
@@ -1080,10 +1095,9 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		this.schoolKey = schoolKey;
 		this.schoolKeyWrap.alreadyInitialized = true;
 	}
-	public SchoolAge setSchoolKey(String o) {
+	public void setSchoolKey(String o) {
 		this.schoolKey = SchoolAge.staticSetSchoolKey(siteRequest_, o);
 		this.schoolKeyWrap.alreadyInitialized = true;
-		return (SchoolAge)this;
 	}
 	public static Long staticSetSchoolKey(SiteRequestEnUS siteRequest_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -1105,7 +1119,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrSchoolKey(SiteRequestEnUS siteRequest_, Long o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqSchoolKey(SiteRequestEnUS siteRequest_, String o) {
@@ -1165,10 +1179,9 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		this.yearKey = yearKey;
 		this.yearKeyWrap.alreadyInitialized = true;
 	}
-	public SchoolAge setYearKey(String o) {
+	public void setYearKey(String o) {
 		this.yearKey = SchoolAge.staticSetYearKey(siteRequest_, o);
 		this.yearKeyWrap.alreadyInitialized = true;
-		return (SchoolAge)this;
 	}
 	public static Long staticSetYearKey(SiteRequestEnUS siteRequest_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -1190,7 +1203,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrYearKey(SiteRequestEnUS siteRequest_, Long o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqYearKey(SiteRequestEnUS siteRequest_, String o) {
@@ -1324,10 +1337,9 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 	public String getSchoolName() {
 		return schoolName;
 	}
-	public SchoolAge setSchoolName(String o) {
+	public void setSchoolName(String o) {
 		this.schoolName = SchoolAge.staticSetSchoolName(siteRequest_, o);
 		this.schoolNameWrap.alreadyInitialized = true;
-		return (SchoolAge)this;
 	}
 	public static String staticSetSchoolName(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -1347,7 +1359,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrSchoolName(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqSchoolName(SiteRequestEnUS siteRequest_, String o) {
@@ -1401,10 +1413,9 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 	public String getSchoolCompleteName() {
 		return schoolCompleteName;
 	}
-	public SchoolAge setSchoolCompleteName(String o) {
+	public void setSchoolCompleteName(String o) {
 		this.schoolCompleteName = SchoolAge.staticSetSchoolCompleteName(siteRequest_, o);
 		this.schoolCompleteNameWrap.alreadyInitialized = true;
-		return (SchoolAge)this;
 	}
 	public static String staticSetSchoolCompleteName(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -1424,7 +1435,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrSchoolCompleteName(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqSchoolCompleteName(SiteRequestEnUS siteRequest_, String o) {
@@ -1478,10 +1489,9 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 	public String getSchoolLocation() {
 		return schoolLocation;
 	}
-	public SchoolAge setSchoolLocation(String o) {
+	public void setSchoolLocation(String o) {
 		this.schoolLocation = SchoolAge.staticSetSchoolLocation(siteRequest_, o);
 		this.schoolLocationWrap.alreadyInitialized = true;
-		return (SchoolAge)this;
 	}
 	public static String staticSetSchoolLocation(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -1501,7 +1511,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrSchoolLocation(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqSchoolLocation(SiteRequestEnUS siteRequest_, String o) {
@@ -1555,10 +1565,9 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 	public String getSchoolAddress() {
 		return schoolAddress;
 	}
-	public SchoolAge setSchoolAddress(String o) {
+	public void setSchoolAddress(String o) {
 		this.schoolAddress = SchoolAge.staticSetSchoolAddress(siteRequest_, o);
 		this.schoolAddressWrap.alreadyInitialized = true;
-		return (SchoolAge)this;
 	}
 	public static String staticSetSchoolAddress(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -1578,7 +1587,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrSchoolAddress(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqSchoolAddress(SiteRequestEnUS siteRequest_, String o) {
@@ -1703,10 +1712,9 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 	public String getSchoolPhoneNumber() {
 		return schoolPhoneNumber;
 	}
-	public SchoolAge setSchoolPhoneNumber(String o) {
+	public void setSchoolPhoneNumber(String o) {
 		this.schoolPhoneNumber = SchoolAge.staticSetSchoolPhoneNumber(siteRequest_, o);
 		this.schoolPhoneNumberWrap.alreadyInitialized = true;
-		return (SchoolAge)this;
 	}
 	public static String staticSetSchoolPhoneNumber(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -1726,7 +1734,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrSchoolPhoneNumber(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqSchoolPhoneNumber(SiteRequestEnUS siteRequest_, String o) {
@@ -1780,10 +1788,9 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 	public String getSchoolForm() {
 		return schoolForm;
 	}
-	public SchoolAge setSchoolForm(String o) {
+	public void setSchoolForm(String o) {
 		this.schoolForm = SchoolAge.staticSetSchoolForm(siteRequest_, o);
 		this.schoolFormWrap.alreadyInitialized = true;
-		return (SchoolAge)this;
 	}
 	public static String staticSetSchoolForm(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -1803,7 +1810,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrSchoolForm(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqSchoolForm(SiteRequestEnUS siteRequest_, String o) {
@@ -1863,10 +1870,9 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		this.schoolNumber = schoolNumber;
 		this.schoolNumberWrap.alreadyInitialized = true;
 	}
-	public SchoolAge setSchoolNumber(String o) {
+	public void setSchoolNumber(String o) {
 		this.schoolNumber = SchoolAge.staticSetSchoolNumber(siteRequest_, o);
 		this.schoolNumberWrap.alreadyInitialized = true;
-		return (SchoolAge)this;
 	}
 	public static Integer staticSetSchoolNumber(SiteRequestEnUS siteRequest_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -1888,7 +1894,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrSchoolNumber(SiteRequestEnUS siteRequest_, Integer o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqSchoolNumber(SiteRequestEnUS siteRequest_, String o) {
@@ -1942,10 +1948,9 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 	public String getSchoolAdministratorName() {
 		return schoolAdministratorName;
 	}
-	public SchoolAge setSchoolAdministratorName(String o) {
+	public void setSchoolAdministratorName(String o) {
 		this.schoolAdministratorName = SchoolAge.staticSetSchoolAdministratorName(siteRequest_, o);
 		this.schoolAdministratorNameWrap.alreadyInitialized = true;
-		return (SchoolAge)this;
 	}
 	public static String staticSetSchoolAdministratorName(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -1965,7 +1970,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrSchoolAdministratorName(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqSchoolAdministratorName(SiteRequestEnUS siteRequest_, String o) {
@@ -2025,10 +2030,9 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		this.yearStart = yearStart;
 		this.yearStartWrap.alreadyInitialized = true;
 	}
-	public SchoolAge setYearStart(String o) {
+	public void setYearStart(String o) {
 		this.yearStart = SchoolAge.staticSetYearStart(siteRequest_, o);
 		this.yearStartWrap.alreadyInitialized = true;
-		return (SchoolAge)this;
 	}
 	public static Integer staticSetYearStart(SiteRequestEnUS siteRequest_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -2050,7 +2054,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrYearStart(SiteRequestEnUS siteRequest_, Integer o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqYearStart(SiteRequestEnUS siteRequest_, String o) {
@@ -2110,10 +2114,9 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		this.yearEnd = yearEnd;
 		this.yearEndWrap.alreadyInitialized = true;
 	}
-	public SchoolAge setYearEnd(String o) {
+	public void setYearEnd(String o) {
 		this.yearEnd = SchoolAge.staticSetYearEnd(siteRequest_, o);
 		this.yearEndWrap.alreadyInitialized = true;
-		return (SchoolAge)this;
 	}
 	public static Integer staticSetYearEnd(SiteRequestEnUS siteRequest_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -2135,7 +2138,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrYearEnd(SiteRequestEnUS siteRequest_, Integer o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqYearEnd(SiteRequestEnUS siteRequest_, String o) {
@@ -2197,24 +2200,21 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		this.seasonStartDate = seasonStartDate;
 		this.seasonStartDateWrap.alreadyInitialized = true;
 	}
-	public SchoolAge setSeasonStartDate(Instant o) {
+	public void setSeasonStartDate(Instant o) {
 		this.seasonStartDate = o == null ? null : LocalDate.from(o);
 		this.seasonStartDateWrap.alreadyInitialized = true;
-		return (SchoolAge)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
-	public SchoolAge setSeasonStartDate(String o) {
+	public void setSeasonStartDate(String o) {
 		this.seasonStartDate = SchoolAge.staticSetSeasonStartDate(siteRequest_, o);
 		this.seasonStartDateWrap.alreadyInitialized = true;
-		return (SchoolAge)this;
 	}
 	public static LocalDate staticSetSeasonStartDate(SiteRequestEnUS siteRequest_, String o) {
 		return o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 	}
-	public SchoolAge setSeasonStartDate(Date o) {
+	public void setSeasonStartDate(Date o) {
 		this.seasonStartDate = o == null ? null : o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
 		this.seasonStartDateWrap.alreadyInitialized = true;
-		return (SchoolAge)this;
 	}
 	protected SchoolAge seasonStartDateInit() {
 		if(!seasonStartDateWrap.alreadyInitialized) {
@@ -2291,10 +2291,9 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		this.yearEnrollmentFee = yearEnrollmentFee;
 		this.yearEnrollmentFeeWrap.alreadyInitialized = true;
 	}
-	public SchoolAge setYearEnrollmentFee(String o) {
+	public void setYearEnrollmentFee(String o) {
 		this.yearEnrollmentFee = SchoolAge.staticSetYearEnrollmentFee(siteRequest_, o);
 		this.yearEnrollmentFeeWrap.alreadyInitialized = true;
-		return (SchoolAge)this;
 	}
 	public static BigDecimal staticSetYearEnrollmentFee(SiteRequestEnUS siteRequest_, String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
@@ -2302,15 +2301,13 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		return null;
 	}
-	public SchoolAge setYearEnrollmentFee(Double o) {
+	public void setYearEnrollmentFee(Double o) {
 			this.yearEnrollmentFee = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.yearEnrollmentFeeWrap.alreadyInitialized = true;
-		return (SchoolAge)this;
 	}
-	public SchoolAge setYearEnrollmentFee(Integer o) {
+	public void setYearEnrollmentFee(Integer o) {
 			this.yearEnrollmentFee = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.yearEnrollmentFeeWrap.alreadyInitialized = true;
-		return (SchoolAge)this;
 	}
 	protected SchoolAge yearEnrollmentFeeInit() {
 		if(!yearEnrollmentFeeWrap.alreadyInitialized) {
@@ -2327,7 +2324,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrYearEnrollmentFee(SiteRequestEnUS siteRequest_, Double o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqYearEnrollmentFee(SiteRequestEnUS siteRequest_, String o) {
@@ -2381,10 +2378,9 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 	public String getYearShortName() {
 		return yearShortName;
 	}
-	public SchoolAge setYearShortName(String o) {
+	public void setYearShortName(String o) {
 		this.yearShortName = SchoolAge.staticSetYearShortName(siteRequest_, o);
 		this.yearShortNameWrap.alreadyInitialized = true;
-		return (SchoolAge)this;
 	}
 	public static String staticSetYearShortName(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -2404,7 +2400,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrYearShortName(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqYearShortName(SiteRequestEnUS siteRequest_, String o) {
@@ -2458,10 +2454,9 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 	public String getYearCompleteName() {
 		return yearCompleteName;
 	}
-	public SchoolAge setYearCompleteName(String o) {
+	public void setYearCompleteName(String o) {
 		this.yearCompleteName = SchoolAge.staticSetYearCompleteName(siteRequest_, o);
 		this.yearCompleteNameWrap.alreadyInitialized = true;
-		return (SchoolAge)this;
 	}
 	public static String staticSetYearCompleteName(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -2481,7 +2476,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrYearCompleteName(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqYearCompleteName(SiteRequestEnUS siteRequest_, String o) {
@@ -2543,24 +2538,21 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		this.sessionStartDate = sessionStartDate;
 		this.sessionStartDateWrap.alreadyInitialized = true;
 	}
-	public SchoolAge setSessionStartDate(Instant o) {
+	public void setSessionStartDate(Instant o) {
 		this.sessionStartDate = o == null ? null : LocalDate.from(o);
 		this.sessionStartDateWrap.alreadyInitialized = true;
-		return (SchoolAge)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
-	public SchoolAge setSessionStartDate(String o) {
+	public void setSessionStartDate(String o) {
 		this.sessionStartDate = SchoolAge.staticSetSessionStartDate(siteRequest_, o);
 		this.sessionStartDateWrap.alreadyInitialized = true;
-		return (SchoolAge)this;
 	}
 	public static LocalDate staticSetSessionStartDate(SiteRequestEnUS siteRequest_, String o) {
 		return o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 	}
-	public SchoolAge setSessionStartDate(Date o) {
+	public void setSessionStartDate(Date o) {
 		this.sessionStartDate = o == null ? null : o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
 		this.sessionStartDateWrap.alreadyInitialized = true;
-		return (SchoolAge)this;
 	}
 	protected SchoolAge sessionStartDateInit() {
 		if(!sessionStartDateWrap.alreadyInitialized) {
@@ -2639,24 +2631,21 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		this.sessionEndDate = sessionEndDate;
 		this.sessionEndDateWrap.alreadyInitialized = true;
 	}
-	public SchoolAge setSessionEndDate(Instant o) {
+	public void setSessionEndDate(Instant o) {
 		this.sessionEndDate = o == null ? null : LocalDate.from(o);
 		this.sessionEndDateWrap.alreadyInitialized = true;
-		return (SchoolAge)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
-	public SchoolAge setSessionEndDate(String o) {
+	public void setSessionEndDate(String o) {
 		this.sessionEndDate = SchoolAge.staticSetSessionEndDate(siteRequest_, o);
 		this.sessionEndDateWrap.alreadyInitialized = true;
-		return (SchoolAge)this;
 	}
 	public static LocalDate staticSetSessionEndDate(SiteRequestEnUS siteRequest_, String o) {
 		return o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 	}
-	public SchoolAge setSessionEndDate(Date o) {
+	public void setSessionEndDate(Date o) {
 		this.sessionEndDate = o == null ? null : o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
 		this.sessionEndDateWrap.alreadyInitialized = true;
-		return (SchoolAge)this;
 	}
 	protected SchoolAge sessionEndDateInit() {
 		if(!sessionEndDateWrap.alreadyInitialized) {
@@ -2733,10 +2722,9 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		this.ageStart = ageStart;
 		this.ageStartWrap.alreadyInitialized = true;
 	}
-	public SchoolAge setAgeStart(String o) {
+	public void setAgeStart(String o) {
 		this.ageStart = SchoolAge.staticSetAgeStart(siteRequest_, o);
 		this.ageStartWrap.alreadyInitialized = true;
-		return (SchoolAge)this;
 	}
 	public static Integer staticSetAgeStart(SiteRequestEnUS siteRequest_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -2758,7 +2746,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrAgeStart(SiteRequestEnUS siteRequest_, Integer o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqAgeStart(SiteRequestEnUS siteRequest_, String o) {
@@ -2889,10 +2877,9 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		this.ageEnd = ageEnd;
 		this.ageEndWrap.alreadyInitialized = true;
 	}
-	public SchoolAge setAgeEnd(String o) {
+	public void setAgeEnd(String o) {
 		this.ageEnd = SchoolAge.staticSetAgeEnd(siteRequest_, o);
 		this.ageEndWrap.alreadyInitialized = true;
-		return (SchoolAge)this;
 	}
 	public static Integer staticSetAgeEnd(SiteRequestEnUS siteRequest_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -2914,7 +2901,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrAgeEnd(SiteRequestEnUS siteRequest_, Integer o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqAgeEnd(SiteRequestEnUS siteRequest_, String o) {
@@ -3039,10 +3026,9 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 	public String getAgeShortName() {
 		return ageShortName;
 	}
-	public SchoolAge setAgeShortName(String o) {
+	public void setAgeShortName(String o) {
 		this.ageShortName = SchoolAge.staticSetAgeShortName(siteRequest_, o);
 		this.ageShortNameWrap.alreadyInitialized = true;
-		return (SchoolAge)this;
 	}
 	public static String staticSetAgeShortName(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -3062,7 +3048,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrAgeShortName(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqAgeShortName(SiteRequestEnUS siteRequest_, String o) {
@@ -3116,10 +3102,9 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 	public String getAgeCompleteName() {
 		return ageCompleteName;
 	}
-	public SchoolAge setAgeCompleteName(String o) {
+	public void setAgeCompleteName(String o) {
 		this.ageCompleteName = SchoolAge.staticSetAgeCompleteName(siteRequest_, o);
 		this.ageCompleteNameWrap.alreadyInitialized = true;
-		return (SchoolAge)this;
 	}
 	public static String staticSetAgeCompleteName(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -3139,7 +3124,7 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrAgeCompleteName(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqAgeCompleteName(SiteRequestEnUS siteRequest_, String o) {
@@ -3465,9 +3450,9 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		case "ageKey":
 			return SchoolAge.staticSolrAgeKey(siteRequest_, (Long)o);
 		case "enrollmentKeys":
-			return SchoolAge.staticSolrEnrollmentKeys(siteRequest_, (List<Long>)o);
+			return SchoolAge.staticSolrEnrollmentKeys(siteRequest_, (Long)o);
 		case "blockKeys":
-			return SchoolAge.staticSolrBlockKeys(siteRequest_, (List<Long>)o);
+			return SchoolAge.staticSolrBlockKeys(siteRequest_, (Long)o);
 		case "educationSort":
 			return SchoolAge.staticSolrEducationSort(siteRequest_, (Integer)o);
 		case "schoolSort":
@@ -3541,9 +3526,9 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 		case "ageKey":
 			return SchoolAge.staticSolrStrAgeKey(siteRequest_, (Long)o);
 		case "enrollmentKeys":
-			return SchoolAge.staticSolrStrEnrollmentKeys(siteRequest_, (List<Long>)o);
+			return SchoolAge.staticSolrStrEnrollmentKeys(siteRequest_, (Long)o);
 		case "blockKeys":
-			return SchoolAge.staticSolrStrBlockKeys(siteRequest_, (List<Long>)o);
+			return SchoolAge.staticSolrStrBlockKeys(siteRequest_, (Long)o);
 		case "educationSort":
 			return SchoolAge.staticSolrStrEducationSort(siteRequest_, (Integer)o);
 		case "schoolSort":

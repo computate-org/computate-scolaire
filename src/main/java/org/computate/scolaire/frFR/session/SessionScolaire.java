@@ -519,14 +519,13 @@ public class SessionScolaire extends SessionScolaireGen<Cluster> {
 	 * r: SessionDateDebut
 	 * r.enUS: SessionStartDate
 	 */
-	@Override public SessionScolaire setSessionDateDebut(String o) {
+	@Override public void setSessionDateDebut(String o) {
 		if(StringUtils.contains(o, " "))
 			o = StringUtils.substringBefore(o, " ");
 		try {
-			return super.setSessionDateDebut(o);
+			super.setSessionDateDebut(o);
 		} catch (Exception e) {
 			setSessionDateDebut(LocalDate.from(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(o)));
-			return this;
 		}
 	}
 
@@ -535,14 +534,13 @@ public class SessionScolaire extends SessionScolaireGen<Cluster> {
 	 * r: SessionDateFin
 	 * r.enUS: SessionEndDate
 	 */
-	@Override public SessionScolaire setSessionDateFin(String o) {
+	@Override public void setSessionDateFin(String o) {
 		if(StringUtils.contains(o, " "))
 			o = StringUtils.substringBefore(o, " ");
 		try {
-			return super.setSessionDateFin(o);
+			super.setSessionDateFin(o);
 		} catch (Exception e) {
 			setSessionDateFin(LocalDate.from(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(o)));
-			return this;
 		}
 	}
 

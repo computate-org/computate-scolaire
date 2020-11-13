@@ -80,7 +80,7 @@ public class GardienScolaire extends GardienScolaireGen<Cluster> {
 	 * Description.enUS: The primary key of the school guardian in the database. 
 	 * NomAffichage.frFR: clé
 	 * NomAffichage.enUS: key
-	 */               
+	 */     
 	protected void _gardienCle(Couverture<Long> c) {
 		c.o(pk);
 	}

@@ -120,10 +120,9 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		this.paiementCle = paiementCle;
 		this.paiementCleCouverture.dejaInitialise = true;
 	}
-	public PaiementScolaire setPaiementCle(String o) {
+	public void setPaiementCle(String o) {
 		this.paiementCle = PaiementScolaire.staticSetPaiementCle(requeteSite_, o);
 		this.paiementCleCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	public static Long staticSetPaiementCle(RequeteSiteFrFR requeteSite_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -145,7 +144,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrPaiementCle(RequeteSiteFrFR requeteSite_, Long o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPaiementCle(RequeteSiteFrFR requeteSite_, String o) {
@@ -205,10 +204,9 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		this.inscriptionCle = inscriptionCle;
 		this.inscriptionCleCouverture.dejaInitialise = true;
 	}
-	public PaiementScolaire setInscriptionCle(String o) {
+	public void setInscriptionCle(String o) {
 		this.inscriptionCle = PaiementScolaire.staticSetInscriptionCle(requeteSite_, o);
 		this.inscriptionCleCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	public static Long staticSetInscriptionCle(RequeteSiteFrFR requeteSite_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -230,7 +228,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrInscriptionCle(RequeteSiteFrFR requeteSite_, Long o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqInscriptionCle(RequeteSiteFrFR requeteSite_, String o) {
@@ -453,10 +451,9 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		this.ecoleNumero = ecoleNumero;
 		this.ecoleNumeroCouverture.dejaInitialise = true;
 	}
-	public PaiementScolaire setEcoleNumero(String o) {
+	public void setEcoleNumero(String o) {
 		this.ecoleNumero = PaiementScolaire.staticSetEcoleNumero(requeteSite_, o);
 		this.ecoleNumeroCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	public static Integer staticSetEcoleNumero(RequeteSiteFrFR requeteSite_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -478,7 +475,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrEcoleNumero(RequeteSiteFrFR requeteSite_, Integer o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqEcoleNumero(RequeteSiteFrFR requeteSite_, String o) {
@@ -538,7 +535,15 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		this.utilisateurCles = utilisateurCles;
 		this.utilisateurClesCouverture.dejaInitialise = true;
 	}
-	public static List<Long> staticSetUtilisateurCles(RequeteSiteFrFR requeteSite_, String o) {
+	public void setUtilisateurCles(String o) {
+		Long l = PaiementScolaire.staticSetUtilisateurCles(requeteSite_, o);
+		if(l != null)
+			addUtilisateurCles(l);
+		this.utilisateurClesCouverture.dejaInitialise = true;
+	}
+	public static Long staticSetUtilisateurCles(RequeteSiteFrFR requeteSite_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Long.parseLong(o);
 		return null;
 	}
 	public PaiementScolaire addUtilisateurCles(Long...objets) {
@@ -552,13 +557,12 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			this.utilisateurCles.add(o);
 		return (PaiementScolaire)this;
 	}
-	public PaiementScolaire setUtilisateurCles(JsonArray objets) {
+	public void setUtilisateurCles(JsonArray objets) {
 		utilisateurCles.clear();
 		for(int i = 0; i < objets.size(); i++) {
 			Long o = objets.getLong(i);
 			addUtilisateurCles(o);
 		}
-		return (PaiementScolaire)this;
 	}
 	public PaiementScolaire addUtilisateurCles(String o) {
 		if(NumberUtils.isParsable(o)) {
@@ -575,12 +579,12 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		return (PaiementScolaire)this;
 	}
 
-	public static List<Long> staticSolrUtilisateurCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
+	public static Long staticSolrUtilisateurCles(RequeteSiteFrFR requeteSite_, Long o) {
 		return o;
 	}
 
-	public static String staticSolrStrUtilisateurCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
-			return o == null ? null : o.toString();
+	public static String staticSolrStrUtilisateurCles(RequeteSiteFrFR requeteSite_, Long o) {
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqUtilisateurCles(RequeteSiteFrFR requeteSite_, String o) {
@@ -588,7 +592,11 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public List<Long> solrUtilisateurCles() {
-		return PaiementScolaire.staticSolrUtilisateurCles(requeteSite_, utilisateurCles);
+		List<Long> l = new ArrayList<Long>();
+		for(Long o : utilisateurCles) {
+			l.add(PaiementScolaire.staticSolrUtilisateurCles(requeteSite_, o));
+		}
+		return l;
 	}
 
 	public String strUtilisateurCles() {
@@ -640,10 +648,9 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		this.ecoleCle = ecoleCle;
 		this.ecoleCleCouverture.dejaInitialise = true;
 	}
-	public PaiementScolaire setEcoleCle(String o) {
+	public void setEcoleCle(String o) {
 		this.ecoleCle = PaiementScolaire.staticSetEcoleCle(requeteSite_, o);
 		this.ecoleCleCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	public static Long staticSetEcoleCle(RequeteSiteFrFR requeteSite_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -665,7 +672,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrEcoleCle(RequeteSiteFrFR requeteSite_, Long o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqEcoleCle(RequeteSiteFrFR requeteSite_, String o) {
@@ -719,10 +726,9 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	public String getEcoleAddresse() {
 		return ecoleAddresse;
 	}
-	public PaiementScolaire setEcoleAddresse(String o) {
+	public void setEcoleAddresse(String o) {
 		this.ecoleAddresse = PaiementScolaire.staticSetEcoleAddresse(requeteSite_, o);
 		this.ecoleAddresseCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	public static String staticSetEcoleAddresse(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -742,7 +748,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrEcoleAddresse(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqEcoleAddresse(RequeteSiteFrFR requeteSite_, String o) {
@@ -796,10 +802,9 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	public String getEcoleNumeroTelephone() {
 		return ecoleNumeroTelephone;
 	}
-	public PaiementScolaire setEcoleNumeroTelephone(String o) {
+	public void setEcoleNumeroTelephone(String o) {
 		this.ecoleNumeroTelephone = PaiementScolaire.staticSetEcoleNumeroTelephone(requeteSite_, o);
 		this.ecoleNumeroTelephoneCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	public static String staticSetEcoleNumeroTelephone(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -819,7 +824,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrEcoleNumeroTelephone(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqEcoleNumeroTelephone(RequeteSiteFrFR requeteSite_, String o) {
@@ -879,10 +884,9 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		this.anneeCle = anneeCle;
 		this.anneeCleCouverture.dejaInitialise = true;
 	}
-	public PaiementScolaire setAnneeCle(String o) {
+	public void setAnneeCle(String o) {
 		this.anneeCle = PaiementScolaire.staticSetAnneeCle(requeteSite_, o);
 		this.anneeCleCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	public static Long staticSetAnneeCle(RequeteSiteFrFR requeteSite_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -904,7 +908,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrAnneeCle(RequeteSiteFrFR requeteSite_, Long o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqAnneeCle(RequeteSiteFrFR requeteSite_, String o) {
@@ -964,10 +968,9 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		this.sessionCle = sessionCle;
 		this.sessionCleCouverture.dejaInitialise = true;
 	}
-	public PaiementScolaire setSessionCle(String o) {
+	public void setSessionCle(String o) {
 		this.sessionCle = PaiementScolaire.staticSetSessionCle(requeteSite_, o);
 		this.sessionCleCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	public static Long staticSetSessionCle(RequeteSiteFrFR requeteSite_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -989,7 +992,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrSessionCle(RequeteSiteFrFR requeteSite_, Long o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqSessionCle(RequeteSiteFrFR requeteSite_, String o) {
@@ -1049,10 +1052,9 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		this.ageCle = ageCle;
 		this.ageCleCouverture.dejaInitialise = true;
 	}
-	public PaiementScolaire setAgeCle(String o) {
+	public void setAgeCle(String o) {
 		this.ageCle = PaiementScolaire.staticSetAgeCle(requeteSite_, o);
 		this.ageCleCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	public static Long staticSetAgeCle(RequeteSiteFrFR requeteSite_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -1074,7 +1076,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrAgeCle(RequeteSiteFrFR requeteSite_, Long o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqAgeCle(RequeteSiteFrFR requeteSite_, String o) {
@@ -1134,10 +1136,9 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		this.blocCle = blocCle;
 		this.blocCleCouverture.dejaInitialise = true;
 	}
-	public PaiementScolaire setBlocCle(String o) {
+	public void setBlocCle(String o) {
 		this.blocCle = PaiementScolaire.staticSetBlocCle(requeteSite_, o);
 		this.blocCleCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	public static Long staticSetBlocCle(RequeteSiteFrFR requeteSite_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -1159,7 +1160,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrBlocCle(RequeteSiteFrFR requeteSite_, Long o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqBlocCle(RequeteSiteFrFR requeteSite_, String o) {
@@ -1219,10 +1220,9 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		this.enfantCle = enfantCle;
 		this.enfantCleCouverture.dejaInitialise = true;
 	}
-	public PaiementScolaire setEnfantCle(String o) {
+	public void setEnfantCle(String o) {
 		this.enfantCle = PaiementScolaire.staticSetEnfantCle(requeteSite_, o);
 		this.enfantCleCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	public static Long staticSetEnfantCle(RequeteSiteFrFR requeteSite_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -1244,7 +1244,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrEnfantCle(RequeteSiteFrFR requeteSite_, Long o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqEnfantCle(RequeteSiteFrFR requeteSite_, String o) {
@@ -1304,7 +1304,15 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		this.mereCles = mereCles;
 		this.mereClesCouverture.dejaInitialise = true;
 	}
-	public static List<Long> staticSetMereCles(RequeteSiteFrFR requeteSite_, String o) {
+	public void setMereCles(String o) {
+		Long l = PaiementScolaire.staticSetMereCles(requeteSite_, o);
+		if(l != null)
+			addMereCles(l);
+		this.mereClesCouverture.dejaInitialise = true;
+	}
+	public static Long staticSetMereCles(RequeteSiteFrFR requeteSite_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Long.parseLong(o);
 		return null;
 	}
 	public PaiementScolaire addMereCles(Long...objets) {
@@ -1318,13 +1326,12 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			this.mereCles.add(o);
 		return (PaiementScolaire)this;
 	}
-	public PaiementScolaire setMereCles(JsonArray objets) {
+	public void setMereCles(JsonArray objets) {
 		mereCles.clear();
 		for(int i = 0; i < objets.size(); i++) {
 			Long o = objets.getLong(i);
 			addMereCles(o);
 		}
-		return (PaiementScolaire)this;
 	}
 	public PaiementScolaire addMereCles(String o) {
 		if(NumberUtils.isParsable(o)) {
@@ -1341,12 +1348,12 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		return (PaiementScolaire)this;
 	}
 
-	public static List<Long> staticSolrMereCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
+	public static Long staticSolrMereCles(RequeteSiteFrFR requeteSite_, Long o) {
 		return o;
 	}
 
-	public static String staticSolrStrMereCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
-			return o == null ? null : o.toString();
+	public static String staticSolrStrMereCles(RequeteSiteFrFR requeteSite_, Long o) {
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqMereCles(RequeteSiteFrFR requeteSite_, String o) {
@@ -1354,7 +1361,11 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public List<Long> solrMereCles() {
-		return PaiementScolaire.staticSolrMereCles(requeteSite_, mereCles);
+		List<Long> l = new ArrayList<Long>();
+		for(Long o : mereCles) {
+			l.add(PaiementScolaire.staticSolrMereCles(requeteSite_, o));
+		}
+		return l;
 	}
 
 	public String strMereCles() {
@@ -1406,7 +1417,15 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		this.pereCles = pereCles;
 		this.pereClesCouverture.dejaInitialise = true;
 	}
-	public static List<Long> staticSetPereCles(RequeteSiteFrFR requeteSite_, String o) {
+	public void setPereCles(String o) {
+		Long l = PaiementScolaire.staticSetPereCles(requeteSite_, o);
+		if(l != null)
+			addPereCles(l);
+		this.pereClesCouverture.dejaInitialise = true;
+	}
+	public static Long staticSetPereCles(RequeteSiteFrFR requeteSite_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Long.parseLong(o);
 		return null;
 	}
 	public PaiementScolaire addPereCles(Long...objets) {
@@ -1420,13 +1439,12 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			this.pereCles.add(o);
 		return (PaiementScolaire)this;
 	}
-	public PaiementScolaire setPereCles(JsonArray objets) {
+	public void setPereCles(JsonArray objets) {
 		pereCles.clear();
 		for(int i = 0; i < objets.size(); i++) {
 			Long o = objets.getLong(i);
 			addPereCles(o);
 		}
-		return (PaiementScolaire)this;
 	}
 	public PaiementScolaire addPereCles(String o) {
 		if(NumberUtils.isParsable(o)) {
@@ -1443,12 +1461,12 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		return (PaiementScolaire)this;
 	}
 
-	public static List<Long> staticSolrPereCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
+	public static Long staticSolrPereCles(RequeteSiteFrFR requeteSite_, Long o) {
 		return o;
 	}
 
-	public static String staticSolrStrPereCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
-			return o == null ? null : o.toString();
+	public static String staticSolrStrPereCles(RequeteSiteFrFR requeteSite_, Long o) {
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPereCles(RequeteSiteFrFR requeteSite_, String o) {
@@ -1456,7 +1474,11 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public List<Long> solrPereCles() {
-		return PaiementScolaire.staticSolrPereCles(requeteSite_, pereCles);
+		List<Long> l = new ArrayList<Long>();
+		for(Long o : pereCles) {
+			l.add(PaiementScolaire.staticSolrPereCles(requeteSite_, o));
+		}
+		return l;
 	}
 
 	public String strPereCles() {
@@ -1508,7 +1530,15 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		this.gardienCles = gardienCles;
 		this.gardienClesCouverture.dejaInitialise = true;
 	}
-	public static List<Long> staticSetGardienCles(RequeteSiteFrFR requeteSite_, String o) {
+	public void setGardienCles(String o) {
+		Long l = PaiementScolaire.staticSetGardienCles(requeteSite_, o);
+		if(l != null)
+			addGardienCles(l);
+		this.gardienClesCouverture.dejaInitialise = true;
+	}
+	public static Long staticSetGardienCles(RequeteSiteFrFR requeteSite_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Long.parseLong(o);
 		return null;
 	}
 	public PaiementScolaire addGardienCles(Long...objets) {
@@ -1522,13 +1552,12 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			this.gardienCles.add(o);
 		return (PaiementScolaire)this;
 	}
-	public PaiementScolaire setGardienCles(JsonArray objets) {
+	public void setGardienCles(JsonArray objets) {
 		gardienCles.clear();
 		for(int i = 0; i < objets.size(); i++) {
 			Long o = objets.getLong(i);
 			addGardienCles(o);
 		}
-		return (PaiementScolaire)this;
 	}
 	public PaiementScolaire addGardienCles(String o) {
 		if(NumberUtils.isParsable(o)) {
@@ -1545,12 +1574,12 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		return (PaiementScolaire)this;
 	}
 
-	public static List<Long> staticSolrGardienCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
+	public static Long staticSolrGardienCles(RequeteSiteFrFR requeteSite_, Long o) {
 		return o;
 	}
 
-	public static String staticSolrStrGardienCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
-			return o == null ? null : o.toString();
+	public static String staticSolrStrGardienCles(RequeteSiteFrFR requeteSite_, Long o) {
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqGardienCles(RequeteSiteFrFR requeteSite_, String o) {
@@ -1558,7 +1587,11 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public List<Long> solrGardienCles() {
-		return PaiementScolaire.staticSolrGardienCles(requeteSite_, gardienCles);
+		List<Long> l = new ArrayList<Long>();
+		for(Long o : gardienCles) {
+			l.add(PaiementScolaire.staticSolrGardienCles(requeteSite_, o));
+		}
+		return l;
 	}
 
 	public String strGardienCles() {
@@ -1604,10 +1637,9 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	public String getEnfantNomCompletPrefere() {
 		return enfantNomCompletPrefere;
 	}
-	public PaiementScolaire setEnfantNomCompletPrefere(String o) {
+	public void setEnfantNomCompletPrefere(String o) {
 		this.enfantNomCompletPrefere = PaiementScolaire.staticSetEnfantNomCompletPrefere(requeteSite_, o);
 		this.enfantNomCompletPrefereCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	public static String staticSetEnfantNomCompletPrefere(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -1627,7 +1659,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrEnfantNomCompletPrefere(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqEnfantNomCompletPrefere(RequeteSiteFrFR requeteSite_, String o) {
@@ -1689,24 +1721,21 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		this.enfantDateNaissance = enfantDateNaissance;
 		this.enfantDateNaissanceCouverture.dejaInitialise = true;
 	}
-	public PaiementScolaire setEnfantDateNaissance(Instant o) {
+	public void setEnfantDateNaissance(Instant o) {
 		this.enfantDateNaissance = o == null ? null : LocalDate.from(o);
 		this.enfantDateNaissanceCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
-	public PaiementScolaire setEnfantDateNaissance(String o) {
+	public void setEnfantDateNaissance(String o) {
 		this.enfantDateNaissance = PaiementScolaire.staticSetEnfantDateNaissance(requeteSite_, o);
 		this.enfantDateNaissanceCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	public static LocalDate staticSetEnfantDateNaissance(RequeteSiteFrFR requeteSite_, String o) {
 		return o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 	}
-	public PaiementScolaire setEnfantDateNaissance(Date o) {
+	public void setEnfantDateNaissance(Date o) {
 		this.enfantDateNaissance = o == null ? null : o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
 		this.enfantDateNaissanceCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	protected PaiementScolaire enfantDateNaissanceInit() {
 		if(!enfantDateNaissanceCouverture.dejaInitialise) {
@@ -1777,10 +1806,9 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	public String getMereNomCompletPrefere() {
 		return mereNomCompletPrefere;
 	}
-	public PaiementScolaire setMereNomCompletPrefere(String o) {
+	public void setMereNomCompletPrefere(String o) {
 		this.mereNomCompletPrefere = PaiementScolaire.staticSetMereNomCompletPrefere(requeteSite_, o);
 		this.mereNomCompletPrefereCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	public static String staticSetMereNomCompletPrefere(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -1800,7 +1828,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrMereNomCompletPrefere(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqMereNomCompletPrefere(RequeteSiteFrFR requeteSite_, String o) {
@@ -1854,10 +1882,9 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	public String getPereNomCompletPrefere() {
 		return pereNomCompletPrefere;
 	}
-	public PaiementScolaire setPereNomCompletPrefere(String o) {
+	public void setPereNomCompletPrefere(String o) {
 		this.pereNomCompletPrefere = PaiementScolaire.staticSetPereNomCompletPrefere(requeteSite_, o);
 		this.pereNomCompletPrefereCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	public static String staticSetPereNomCompletPrefere(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -1877,7 +1904,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrPereNomCompletPrefere(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPereNomCompletPrefere(RequeteSiteFrFR requeteSite_, String o) {
@@ -1931,10 +1958,9 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	public String getEcoleNom() {
 		return ecoleNom;
 	}
-	public PaiementScolaire setEcoleNom(String o) {
+	public void setEcoleNom(String o) {
 		this.ecoleNom = PaiementScolaire.staticSetEcoleNom(requeteSite_, o);
 		this.ecoleNomCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	public static String staticSetEcoleNom(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -1954,7 +1980,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrEcoleNom(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqEcoleNom(RequeteSiteFrFR requeteSite_, String o) {
@@ -2008,10 +2034,9 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	public String getEcoleNomComplet() {
 		return ecoleNomComplet;
 	}
-	public PaiementScolaire setEcoleNomComplet(String o) {
+	public void setEcoleNomComplet(String o) {
 		this.ecoleNomComplet = PaiementScolaire.staticSetEcoleNomComplet(requeteSite_, o);
 		this.ecoleNomCompletCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	public static String staticSetEcoleNomComplet(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -2031,7 +2056,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrEcoleNomComplet(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqEcoleNomComplet(RequeteSiteFrFR requeteSite_, String o) {
@@ -2085,10 +2110,9 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	public String getEcoleEmplacement() {
 		return ecoleEmplacement;
 	}
-	public PaiementScolaire setEcoleEmplacement(String o) {
+	public void setEcoleEmplacement(String o) {
 		this.ecoleEmplacement = PaiementScolaire.staticSetEcoleEmplacement(requeteSite_, o);
 		this.ecoleEmplacementCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	public static String staticSetEcoleEmplacement(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -2108,7 +2132,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrEcoleEmplacement(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqEcoleEmplacement(RequeteSiteFrFR requeteSite_, String o) {
@@ -2168,10 +2192,9 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		this.anneeDebut = anneeDebut;
 		this.anneeDebutCouverture.dejaInitialise = true;
 	}
-	public PaiementScolaire setAnneeDebut(String o) {
+	public void setAnneeDebut(String o) {
 		this.anneeDebut = PaiementScolaire.staticSetAnneeDebut(requeteSite_, o);
 		this.anneeDebutCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	public static Integer staticSetAnneeDebut(RequeteSiteFrFR requeteSite_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -2193,7 +2216,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrAnneeDebut(RequeteSiteFrFR requeteSite_, Integer o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqAnneeDebut(RequeteSiteFrFR requeteSite_, String o) {
@@ -2253,10 +2276,9 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		this.anneeFin = anneeFin;
 		this.anneeFinCouverture.dejaInitialise = true;
 	}
-	public PaiementScolaire setAnneeFin(String o) {
+	public void setAnneeFin(String o) {
 		this.anneeFin = PaiementScolaire.staticSetAnneeFin(requeteSite_, o);
 		this.anneeFinCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	public static Integer staticSetAnneeFin(RequeteSiteFrFR requeteSite_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -2278,7 +2300,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrAnneeFin(RequeteSiteFrFR requeteSite_, Integer o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqAnneeFin(RequeteSiteFrFR requeteSite_, String o) {
@@ -2340,24 +2362,21 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		this.saisonDateDebut = saisonDateDebut;
 		this.saisonDateDebutCouverture.dejaInitialise = true;
 	}
-	public PaiementScolaire setSaisonDateDebut(Instant o) {
+	public void setSaisonDateDebut(Instant o) {
 		this.saisonDateDebut = o == null ? null : LocalDate.from(o);
 		this.saisonDateDebutCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
-	public PaiementScolaire setSaisonDateDebut(String o) {
+	public void setSaisonDateDebut(String o) {
 		this.saisonDateDebut = PaiementScolaire.staticSetSaisonDateDebut(requeteSite_, o);
 		this.saisonDateDebutCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	public static LocalDate staticSetSaisonDateDebut(RequeteSiteFrFR requeteSite_, String o) {
 		return o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 	}
-	public PaiementScolaire setSaisonDateDebut(Date o) {
+	public void setSaisonDateDebut(Date o) {
 		this.saisonDateDebut = o == null ? null : o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
 		this.saisonDateDebutCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	protected PaiementScolaire saisonDateDebutInit() {
 		if(!saisonDateDebutCouverture.dejaInitialise) {
@@ -2434,10 +2453,9 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		this.anneeFraisInscription = anneeFraisInscription;
 		this.anneeFraisInscriptionCouverture.dejaInitialise = true;
 	}
-	public PaiementScolaire setAnneeFraisInscription(String o) {
+	public void setAnneeFraisInscription(String o) {
 		this.anneeFraisInscription = PaiementScolaire.staticSetAnneeFraisInscription(requeteSite_, o);
 		this.anneeFraisInscriptionCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	public static BigDecimal staticSetAnneeFraisInscription(RequeteSiteFrFR requeteSite_, String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
@@ -2445,15 +2463,13 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		return null;
 	}
-	public PaiementScolaire setAnneeFraisInscription(Double o) {
+	public void setAnneeFraisInscription(Double o) {
 			this.anneeFraisInscription = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.anneeFraisInscriptionCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
-	public PaiementScolaire setAnneeFraisInscription(Integer o) {
+	public void setAnneeFraisInscription(Integer o) {
 			this.anneeFraisInscription = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.anneeFraisInscriptionCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	protected PaiementScolaire anneeFraisInscriptionInit() {
 		if(!anneeFraisInscriptionCouverture.dejaInitialise) {
@@ -2470,7 +2486,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrAnneeFraisInscription(RequeteSiteFrFR requeteSite_, Double o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqAnneeFraisInscription(RequeteSiteFrFR requeteSite_, String o) {
@@ -2532,24 +2548,21 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		this.sessionDateDebut = sessionDateDebut;
 		this.sessionDateDebutCouverture.dejaInitialise = true;
 	}
-	public PaiementScolaire setSessionDateDebut(Instant o) {
+	public void setSessionDateDebut(Instant o) {
 		this.sessionDateDebut = o == null ? null : LocalDate.from(o);
 		this.sessionDateDebutCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
-	public PaiementScolaire setSessionDateDebut(String o) {
+	public void setSessionDateDebut(String o) {
 		this.sessionDateDebut = PaiementScolaire.staticSetSessionDateDebut(requeteSite_, o);
 		this.sessionDateDebutCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	public static LocalDate staticSetSessionDateDebut(RequeteSiteFrFR requeteSite_, String o) {
 		return o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 	}
-	public PaiementScolaire setSessionDateDebut(Date o) {
+	public void setSessionDateDebut(Date o) {
 		this.sessionDateDebut = o == null ? null : o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
 		this.sessionDateDebutCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	protected PaiementScolaire sessionDateDebutInit() {
 		if(!sessionDateDebutCouverture.dejaInitialise) {
@@ -2628,24 +2641,21 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		this.sessionDateFin = sessionDateFin;
 		this.sessionDateFinCouverture.dejaInitialise = true;
 	}
-	public PaiementScolaire setSessionDateFin(Instant o) {
+	public void setSessionDateFin(Instant o) {
 		this.sessionDateFin = o == null ? null : LocalDate.from(o);
 		this.sessionDateFinCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
-	public PaiementScolaire setSessionDateFin(String o) {
+	public void setSessionDateFin(String o) {
 		this.sessionDateFin = PaiementScolaire.staticSetSessionDateFin(requeteSite_, o);
 		this.sessionDateFinCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	public static LocalDate staticSetSessionDateFin(RequeteSiteFrFR requeteSite_, String o) {
 		return o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 	}
-	public PaiementScolaire setSessionDateFin(Date o) {
+	public void setSessionDateFin(Date o) {
 		this.sessionDateFin = o == null ? null : o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
 		this.sessionDateFinCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	protected PaiementScolaire sessionDateFinInit() {
 		if(!sessionDateFinCouverture.dejaInitialise) {
@@ -2722,10 +2732,9 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		this.ageDebut = ageDebut;
 		this.ageDebutCouverture.dejaInitialise = true;
 	}
-	public PaiementScolaire setAgeDebut(String o) {
+	public void setAgeDebut(String o) {
 		this.ageDebut = PaiementScolaire.staticSetAgeDebut(requeteSite_, o);
 		this.ageDebutCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	public static Integer staticSetAgeDebut(RequeteSiteFrFR requeteSite_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -2747,7 +2756,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrAgeDebut(RequeteSiteFrFR requeteSite_, Integer o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqAgeDebut(RequeteSiteFrFR requeteSite_, String o) {
@@ -2807,10 +2816,9 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		this.ageFin = ageFin;
 		this.ageFinCouverture.dejaInitialise = true;
 	}
-	public PaiementScolaire setAgeFin(String o) {
+	public void setAgeFin(String o) {
 		this.ageFin = PaiementScolaire.staticSetAgeFin(requeteSite_, o);
 		this.ageFinCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	public static Integer staticSetAgeFin(RequeteSiteFrFR requeteSite_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -2832,7 +2840,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrAgeFin(RequeteSiteFrFR requeteSite_, Integer o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqAgeFin(RequeteSiteFrFR requeteSite_, String o) {
@@ -2893,10 +2901,9 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		this.blocHeureDebutCouverture.dejaInitialise = true;
 	}
 	/** Example: 01:00 **/
-	public PaiementScolaire setBlocHeureDebut(String o) {
+	public void setBlocHeureDebut(String o) {
 		this.blocHeureDebut = PaiementScolaire.staticSetBlocHeureDebut(requeteSite_, o);
 		this.blocHeureDebutCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	public static LocalTime staticSetBlocHeureDebut(RequeteSiteFrFR requeteSite_, String o) {
 		try {
@@ -2920,7 +2927,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrBlocHeureDebut(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqBlocHeureDebut(RequeteSiteFrFR requeteSite_, String o) {
@@ -2981,10 +2988,9 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		this.blocHeureFinCouverture.dejaInitialise = true;
 	}
 	/** Example: 01:00 **/
-	public PaiementScolaire setBlocHeureFin(String o) {
+	public void setBlocHeureFin(String o) {
 		this.blocHeureFin = PaiementScolaire.staticSetBlocHeureFin(requeteSite_, o);
 		this.blocHeureFinCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	public static LocalTime staticSetBlocHeureFin(RequeteSiteFrFR requeteSite_, String o) {
 		try {
@@ -3008,7 +3014,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrBlocHeureFin(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqBlocHeureFin(RequeteSiteFrFR requeteSite_, String o) {
@@ -3068,10 +3074,9 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		this.blocPrixParMois = blocPrixParMois;
 		this.blocPrixParMoisCouverture.dejaInitialise = true;
 	}
-	public PaiementScolaire setBlocPrixParMois(String o) {
+	public void setBlocPrixParMois(String o) {
 		this.blocPrixParMois = PaiementScolaire.staticSetBlocPrixParMois(requeteSite_, o);
 		this.blocPrixParMoisCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	public static BigDecimal staticSetBlocPrixParMois(RequeteSiteFrFR requeteSite_, String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
@@ -3079,15 +3084,13 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		return null;
 	}
-	public PaiementScolaire setBlocPrixParMois(Double o) {
+	public void setBlocPrixParMois(Double o) {
 			this.blocPrixParMois = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.blocPrixParMoisCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
-	public PaiementScolaire setBlocPrixParMois(Integer o) {
+	public void setBlocPrixParMois(Integer o) {
 			this.blocPrixParMois = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.blocPrixParMoisCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	protected PaiementScolaire blocPrixParMoisInit() {
 		if(!blocPrixParMoisCouverture.dejaInitialise) {
@@ -3104,7 +3107,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrBlocPrixParMois(RequeteSiteFrFR requeteSite_, Double o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqBlocPrixParMois(RequeteSiteFrFR requeteSite_, String o) {
@@ -3164,10 +3167,9 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		this.blocPrixTotal = blocPrixTotal;
 		this.blocPrixTotalCouverture.dejaInitialise = true;
 	}
-	public PaiementScolaire setBlocPrixTotal(String o) {
+	public void setBlocPrixTotal(String o) {
 		this.blocPrixTotal = PaiementScolaire.staticSetBlocPrixTotal(requeteSite_, o);
 		this.blocPrixTotalCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	public static BigDecimal staticSetBlocPrixTotal(RequeteSiteFrFR requeteSite_, String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
@@ -3175,15 +3177,13 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		return null;
 	}
-	public PaiementScolaire setBlocPrixTotal(Double o) {
+	public void setBlocPrixTotal(Double o) {
 			this.blocPrixTotal = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.blocPrixTotalCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
-	public PaiementScolaire setBlocPrixTotal(Integer o) {
+	public void setBlocPrixTotal(Integer o) {
 			this.blocPrixTotal = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.blocPrixTotalCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	protected PaiementScolaire blocPrixTotalInit() {
 		if(!blocPrixTotalCouverture.dejaInitialise) {
@@ -3200,7 +3200,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrBlocPrixTotal(RequeteSiteFrFR requeteSite_, Double o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqBlocPrixTotal(RequeteSiteFrFR requeteSite_, String o) {
@@ -3259,10 +3259,9 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		this.inscriptionPaimentChaqueMois = inscriptionPaimentChaqueMois;
 		this.inscriptionPaimentChaqueMoisCouverture.dejaInitialise = true;
 	}
-	public PaiementScolaire setInscriptionPaimentChaqueMois(String o) {
+	public void setInscriptionPaimentChaqueMois(String o) {
 		this.inscriptionPaimentChaqueMois = PaiementScolaire.staticSetInscriptionPaimentChaqueMois(requeteSite_, o);
 		this.inscriptionPaimentChaqueMoisCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	public static Boolean staticSetInscriptionPaimentChaqueMois(RequeteSiteFrFR requeteSite_, String o) {
 		return Boolean.parseBoolean(o);
@@ -3282,7 +3281,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrInscriptionPaimentChaqueMois(RequeteSiteFrFR requeteSite_, Boolean o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqInscriptionPaimentChaqueMois(RequeteSiteFrFR requeteSite_, String o) {
@@ -3406,10 +3405,9 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	public String getPaiementDescription() {
 		return paiementDescription;
 	}
-	public PaiementScolaire setPaiementDescription(String o) {
+	public void setPaiementDescription(String o) {
 		this.paiementDescription = PaiementScolaire.staticSetPaiementDescription(requeteSite_, o);
 		this.paiementDescriptionCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	public static String staticSetPaiementDescription(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -3429,7 +3427,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrPaiementDescription(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPaiementDescription(RequeteSiteFrFR requeteSite_, String o) {
@@ -3565,24 +3563,21 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		this.paiementDate = paiementDate;
 		this.paiementDateCouverture.dejaInitialise = true;
 	}
-	public PaiementScolaire setPaiementDate(Instant o) {
+	public void setPaiementDate(Instant o) {
 		this.paiementDate = o == null ? null : LocalDate.from(o);
 		this.paiementDateCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
-	public PaiementScolaire setPaiementDate(String o) {
+	public void setPaiementDate(String o) {
 		this.paiementDate = PaiementScolaire.staticSetPaiementDate(requeteSite_, o);
 		this.paiementDateCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	public static LocalDate staticSetPaiementDate(RequeteSiteFrFR requeteSite_, String o) {
 		return o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 	}
-	public PaiementScolaire setPaiementDate(Date o) {
+	public void setPaiementDate(Date o) {
 		this.paiementDate = o == null ? null : o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
 		this.paiementDateCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	protected PaiementScolaire paiementDateInit() {
 		if(!paiementDateCouverture.dejaInitialise) {
@@ -3728,24 +3723,21 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		this.fraisRetardDate = fraisRetardDate;
 		this.fraisRetardDateCouverture.dejaInitialise = true;
 	}
-	public PaiementScolaire setFraisRetardDate(Instant o) {
+	public void setFraisRetardDate(Instant o) {
 		this.fraisRetardDate = o == null ? null : LocalDate.from(o);
 		this.fraisRetardDateCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
-	public PaiementScolaire setFraisRetardDate(String o) {
+	public void setFraisRetardDate(String o) {
 		this.fraisRetardDate = PaiementScolaire.staticSetFraisRetardDate(requeteSite_, o);
 		this.fraisRetardDateCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	public static LocalDate staticSetFraisRetardDate(RequeteSiteFrFR requeteSite_, String o) {
 		return o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 	}
-	public PaiementScolaire setFraisRetardDate(Date o) {
+	public void setFraisRetardDate(Date o) {
 		this.fraisRetardDate = o == null ? null : o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
 		this.fraisRetardDateCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	protected PaiementScolaire fraisRetardDateInit() {
 		if(!fraisRetardDateCouverture.dejaInitialise) {
@@ -3889,10 +3881,9 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		this.paiementAnnee = paiementAnnee;
 		this.paiementAnneeCouverture.dejaInitialise = true;
 	}
-	public PaiementScolaire setPaiementAnnee(String o) {
+	public void setPaiementAnnee(String o) {
 		this.paiementAnnee = PaiementScolaire.staticSetPaiementAnnee(requeteSite_, o);
 		this.paiementAnneeCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	public static Integer staticSetPaiementAnnee(RequeteSiteFrFR requeteSite_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -3914,7 +3905,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrPaiementAnnee(RequeteSiteFrFR requeteSite_, Integer o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPaiementAnnee(RequeteSiteFrFR requeteSite_, String o) {
@@ -3974,10 +3965,9 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		this.paiementMontant = paiementMontant;
 		this.paiementMontantCouverture.dejaInitialise = true;
 	}
-	public PaiementScolaire setPaiementMontant(String o) {
+	public void setPaiementMontant(String o) {
 		this.paiementMontant = PaiementScolaire.staticSetPaiementMontant(requeteSite_, o);
 		this.paiementMontantCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	public static BigDecimal staticSetPaiementMontant(RequeteSiteFrFR requeteSite_, String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
@@ -3985,15 +3975,13 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		return null;
 	}
-	public PaiementScolaire setPaiementMontant(Double o) {
+	public void setPaiementMontant(Double o) {
 			this.paiementMontant = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.paiementMontantCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
-	public PaiementScolaire setPaiementMontant(Integer o) {
+	public void setPaiementMontant(Integer o) {
 			this.paiementMontant = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.paiementMontantCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	protected PaiementScolaire paiementMontantInit() {
 		if(!paiementMontantCouverture.dejaInitialise) {
@@ -4010,7 +3998,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrPaiementMontant(RequeteSiteFrFR requeteSite_, Double o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPaiementMontant(RequeteSiteFrFR requeteSite_, String o) {
@@ -4143,10 +4131,9 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		this.paiementEspeces = paiementEspeces;
 		this.paiementEspecesCouverture.dejaInitialise = true;
 	}
-	public PaiementScolaire setPaiementEspeces(String o) {
+	public void setPaiementEspeces(String o) {
 		this.paiementEspeces = PaiementScolaire.staticSetPaiementEspeces(requeteSite_, o);
 		this.paiementEspecesCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	public static Boolean staticSetPaiementEspeces(RequeteSiteFrFR requeteSite_, String o) {
 		return Boolean.parseBoolean(o);
@@ -4166,7 +4153,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrPaiementEspeces(RequeteSiteFrFR requeteSite_, Boolean o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPaiementEspeces(RequeteSiteFrFR requeteSite_, String o) {
@@ -4295,10 +4282,9 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		this.paiementCheque = paiementCheque;
 		this.paiementChequeCouverture.dejaInitialise = true;
 	}
-	public PaiementScolaire setPaiementCheque(String o) {
+	public void setPaiementCheque(String o) {
 		this.paiementCheque = PaiementScolaire.staticSetPaiementCheque(requeteSite_, o);
 		this.paiementChequeCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	public static Boolean staticSetPaiementCheque(RequeteSiteFrFR requeteSite_, String o) {
 		return Boolean.parseBoolean(o);
@@ -4318,7 +4304,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrPaiementCheque(RequeteSiteFrFR requeteSite_, Boolean o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPaiementCheque(RequeteSiteFrFR requeteSite_, String o) {
@@ -4447,10 +4433,9 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		this.paiementECheck = paiementECheck;
 		this.paiementECheckCouverture.dejaInitialise = true;
 	}
-	public PaiementScolaire setPaiementECheck(String o) {
+	public void setPaiementECheck(String o) {
 		this.paiementECheck = PaiementScolaire.staticSetPaiementECheck(requeteSite_, o);
 		this.paiementECheckCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	public static Boolean staticSetPaiementECheck(RequeteSiteFrFR requeteSite_, String o) {
 		return Boolean.parseBoolean(o);
@@ -4470,7 +4455,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrPaiementECheck(RequeteSiteFrFR requeteSite_, Boolean o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPaiementECheck(RequeteSiteFrFR requeteSite_, String o) {
@@ -4599,10 +4584,9 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		this.paiementSysteme = paiementSysteme;
 		this.paiementSystemeCouverture.dejaInitialise = true;
 	}
-	public PaiementScolaire setPaiementSysteme(String o) {
+	public void setPaiementSysteme(String o) {
 		this.paiementSysteme = PaiementScolaire.staticSetPaiementSysteme(requeteSite_, o);
 		this.paiementSystemeCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	public static Boolean staticSetPaiementSysteme(RequeteSiteFrFR requeteSite_, String o) {
 		return Boolean.parseBoolean(o);
@@ -4622,7 +4606,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrPaiementSysteme(RequeteSiteFrFR requeteSite_, Boolean o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPaiementSysteme(RequeteSiteFrFR requeteSite_, String o) {
@@ -4746,10 +4730,9 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	public String getPaiementType() {
 		return paiementType;
 	}
-	public PaiementScolaire setPaiementType(String o) {
+	public void setPaiementType(String o) {
 		this.paiementType = PaiementScolaire.staticSetPaiementType(requeteSite_, o);
 		this.paiementTypeCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	public static String staticSetPaiementType(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -4769,7 +4752,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrPaiementType(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPaiementType(RequeteSiteFrFR requeteSite_, String o) {
@@ -4823,10 +4806,9 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	public String getPaiementPar() {
 		return paiementPar;
 	}
-	public PaiementScolaire setPaiementPar(String o) {
+	public void setPaiementPar(String o) {
 		this.paiementPar = PaiementScolaire.staticSetPaiementPar(requeteSite_, o);
 		this.paiementParCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	public static String staticSetPaiementPar(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -4846,7 +4828,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrPaiementPar(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPaiementPar(RequeteSiteFrFR requeteSite_, String o) {
@@ -4974,10 +4956,9 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	public String getTransactionId() {
 		return transactionId;
 	}
-	public PaiementScolaire setTransactionId(String o) {
+	public void setTransactionId(String o) {
 		this.transactionId = PaiementScolaire.staticSetTransactionId(requeteSite_, o);
 		this.transactionIdCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	public static String staticSetTransactionId(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -4997,7 +4978,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrTransactionId(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqTransactionId(RequeteSiteFrFR requeteSite_, String o) {
@@ -5125,10 +5106,9 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	public String getCustomerProfileId() {
 		return customerProfileId;
 	}
-	public PaiementScolaire setCustomerProfileId(String o) {
+	public void setCustomerProfileId(String o) {
 		this.customerProfileId = PaiementScolaire.staticSetCustomerProfileId(requeteSite_, o);
 		this.customerProfileIdCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	public static String staticSetCustomerProfileId(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -5148,7 +5128,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrCustomerProfileId(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqCustomerProfileId(RequeteSiteFrFR requeteSite_, String o) {
@@ -5276,10 +5256,9 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	public String getTransactionStatus() {
 		return transactionStatus;
 	}
-	public PaiementScolaire setTransactionStatus(String o) {
+	public void setTransactionStatus(String o) {
 		this.transactionStatus = PaiementScolaire.staticSetTransactionStatus(requeteSite_, o);
 		this.transactionStatusCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	public static String staticSetTransactionStatus(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -5299,7 +5278,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrTransactionStatus(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqTransactionStatus(RequeteSiteFrFR requeteSite_, String o) {
@@ -5432,10 +5411,9 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		this.paiementRecu = paiementRecu;
 		this.paiementRecuCouverture.dejaInitialise = true;
 	}
-	public PaiementScolaire setPaiementRecu(String o) {
+	public void setPaiementRecu(String o) {
 		this.paiementRecu = PaiementScolaire.staticSetPaiementRecu(requeteSite_, o);
 		this.paiementRecuCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	public static Boolean staticSetPaiementRecu(RequeteSiteFrFR requeteSite_, String o) {
 		return Boolean.parseBoolean(o);
@@ -5455,7 +5433,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrPaiementRecu(RequeteSiteFrFR requeteSite_, Boolean o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPaiementRecu(RequeteSiteFrFR requeteSite_, String o) {
@@ -5585,10 +5563,9 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		this.fraisMontant = fraisMontant;
 		this.fraisMontantCouverture.dejaInitialise = true;
 	}
-	public PaiementScolaire setFraisMontant(String o) {
+	public void setFraisMontant(String o) {
 		this.fraisMontant = PaiementScolaire.staticSetFraisMontant(requeteSite_, o);
 		this.fraisMontantCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	public static BigDecimal staticSetFraisMontant(RequeteSiteFrFR requeteSite_, String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
@@ -5596,15 +5573,13 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		return null;
 	}
-	public PaiementScolaire setFraisMontant(Double o) {
+	public void setFraisMontant(Double o) {
 			this.fraisMontant = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.fraisMontantCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
-	public PaiementScolaire setFraisMontant(Integer o) {
+	public void setFraisMontant(Integer o) {
 			this.fraisMontant = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.fraisMontantCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	protected PaiementScolaire fraisMontantInit() {
 		if(!fraisMontantCouverture.dejaInitialise) {
@@ -5621,7 +5596,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrFraisMontant(RequeteSiteFrFR requeteSite_, Double o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqFraisMontant(RequeteSiteFrFR requeteSite_, String o) {
@@ -5754,10 +5729,9 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		this.fraisPremierDernier = fraisPremierDernier;
 		this.fraisPremierDernierCouverture.dejaInitialise = true;
 	}
-	public PaiementScolaire setFraisPremierDernier(String o) {
+	public void setFraisPremierDernier(String o) {
 		this.fraisPremierDernier = PaiementScolaire.staticSetFraisPremierDernier(requeteSite_, o);
 		this.fraisPremierDernierCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	public static Boolean staticSetFraisPremierDernier(RequeteSiteFrFR requeteSite_, String o) {
 		return Boolean.parseBoolean(o);
@@ -5777,7 +5751,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrFraisPremierDernier(RequeteSiteFrFR requeteSite_, Boolean o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqFraisPremierDernier(RequeteSiteFrFR requeteSite_, String o) {
@@ -5906,10 +5880,9 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		this.fraisInscription = fraisInscription;
 		this.fraisInscriptionCouverture.dejaInitialise = true;
 	}
-	public PaiementScolaire setFraisInscription(String o) {
+	public void setFraisInscription(String o) {
 		this.fraisInscription = PaiementScolaire.staticSetFraisInscription(requeteSite_, o);
 		this.fraisInscriptionCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	public static Boolean staticSetFraisInscription(RequeteSiteFrFR requeteSite_, String o) {
 		return Boolean.parseBoolean(o);
@@ -5929,7 +5902,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrFraisInscription(RequeteSiteFrFR requeteSite_, Boolean o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqFraisInscription(RequeteSiteFrFR requeteSite_, String o) {
@@ -6058,10 +6031,9 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		this.fraisMois = fraisMois;
 		this.fraisMoisCouverture.dejaInitialise = true;
 	}
-	public PaiementScolaire setFraisMois(String o) {
+	public void setFraisMois(String o) {
 		this.fraisMois = PaiementScolaire.staticSetFraisMois(requeteSite_, o);
 		this.fraisMoisCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	public static Boolean staticSetFraisMois(RequeteSiteFrFR requeteSite_, String o) {
 		return Boolean.parseBoolean(o);
@@ -6081,7 +6053,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrFraisMois(RequeteSiteFrFR requeteSite_, Boolean o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqFraisMois(RequeteSiteFrFR requeteSite_, String o) {
@@ -6210,10 +6182,9 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		this.fraisRetard = fraisRetard;
 		this.fraisRetardCouverture.dejaInitialise = true;
 	}
-	public PaiementScolaire setFraisRetard(String o) {
+	public void setFraisRetard(String o) {
 		this.fraisRetard = PaiementScolaire.staticSetFraisRetard(requeteSite_, o);
 		this.fraisRetardCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	public static Boolean staticSetFraisRetard(RequeteSiteFrFR requeteSite_, String o) {
 		return Boolean.parseBoolean(o);
@@ -6233,7 +6204,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrFraisRetard(RequeteSiteFrFR requeteSite_, Boolean o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqFraisRetard(RequeteSiteFrFR requeteSite_, String o) {
@@ -6365,24 +6336,21 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		this.now = now;
 		this.nowCouverture.dejaInitialise = true;
 	}
-	public PaiementScolaire setNow(Instant o) {
+	public void setNow(Instant o) {
 		this.now = o == null ? null : LocalDate.from(o);
 		this.nowCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
-	public PaiementScolaire setNow(String o) {
+	public void setNow(String o) {
 		this.now = PaiementScolaire.staticSetNow(requeteSite_, o);
 		this.nowCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	public static LocalDate staticSetNow(RequeteSiteFrFR requeteSite_, String o) {
 		return o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 	}
-	public PaiementScolaire setNow(Date o) {
+	public void setNow(Date o) {
 		this.now = o == null ? null : o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
 		this.nowCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	protected PaiementScolaire nowInit() {
 		if(!nowCouverture.dejaInitialise) {
@@ -6459,10 +6427,9 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		this.paiementJour = paiementJour;
 		this.paiementJourCouverture.dejaInitialise = true;
 	}
-	public PaiementScolaire setPaiementJour(String o) {
+	public void setPaiementJour(String o) {
 		this.paiementJour = PaiementScolaire.staticSetPaiementJour(requeteSite_, o);
 		this.paiementJourCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	public static Integer staticSetPaiementJour(RequeteSiteFrFR requeteSite_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -6484,7 +6451,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrPaiementJour(RequeteSiteFrFR requeteSite_, Integer o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPaiementJour(RequeteSiteFrFR requeteSite_, String o) {
@@ -6546,24 +6513,21 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		this.paiementProchain = paiementProchain;
 		this.paiementProchainCouverture.dejaInitialise = true;
 	}
-	public PaiementScolaire setPaiementProchain(Instant o) {
+	public void setPaiementProchain(Instant o) {
 		this.paiementProchain = o == null ? null : LocalDate.from(o);
 		this.paiementProchainCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
-	public PaiementScolaire setPaiementProchain(String o) {
+	public void setPaiementProchain(String o) {
 		this.paiementProchain = PaiementScolaire.staticSetPaiementProchain(requeteSite_, o);
 		this.paiementProchainCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	public static LocalDate staticSetPaiementProchain(RequeteSiteFrFR requeteSite_, String o) {
 		return o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 	}
-	public PaiementScolaire setPaiementProchain(Date o) {
+	public void setPaiementProchain(Date o) {
 		this.paiementProchain = o == null ? null : o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
 		this.paiementProchainCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	protected PaiementScolaire paiementProchainInit() {
 		if(!paiementProchainCouverture.dejaInitialise) {
@@ -6640,10 +6604,9 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		this.fraisMontantDu = fraisMontantDu;
 		this.fraisMontantDuCouverture.dejaInitialise = true;
 	}
-	public PaiementScolaire setFraisMontantDu(String o) {
+	public void setFraisMontantDu(String o) {
 		this.fraisMontantDu = PaiementScolaire.staticSetFraisMontantDu(requeteSite_, o);
 		this.fraisMontantDuCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	public static BigDecimal staticSetFraisMontantDu(RequeteSiteFrFR requeteSite_, String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
@@ -6651,15 +6614,13 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		return null;
 	}
-	public PaiementScolaire setFraisMontantDu(Double o) {
+	public void setFraisMontantDu(Double o) {
 			this.fraisMontantDu = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.fraisMontantDuCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
-	public PaiementScolaire setFraisMontantDu(Integer o) {
+	public void setFraisMontantDu(Integer o) {
 			this.fraisMontantDu = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.fraisMontantDuCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	protected PaiementScolaire fraisMontantDuInit() {
 		if(!fraisMontantDuCouverture.dejaInitialise) {
@@ -6676,7 +6637,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrFraisMontantDu(RequeteSiteFrFR requeteSite_, Double o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqFraisMontantDu(RequeteSiteFrFR requeteSite_, String o) {
@@ -6736,10 +6697,9 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		this.fraisMontantPasse = fraisMontantPasse;
 		this.fraisMontantPasseCouverture.dejaInitialise = true;
 	}
-	public PaiementScolaire setFraisMontantPasse(String o) {
+	public void setFraisMontantPasse(String o) {
 		this.fraisMontantPasse = PaiementScolaire.staticSetFraisMontantPasse(requeteSite_, o);
 		this.fraisMontantPasseCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	public static BigDecimal staticSetFraisMontantPasse(RequeteSiteFrFR requeteSite_, String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
@@ -6747,15 +6707,13 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		return null;
 	}
-	public PaiementScolaire setFraisMontantPasse(Double o) {
+	public void setFraisMontantPasse(Double o) {
 			this.fraisMontantPasse = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.fraisMontantPasseCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
-	public PaiementScolaire setFraisMontantPasse(Integer o) {
+	public void setFraisMontantPasse(Integer o) {
 			this.fraisMontantPasse = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.fraisMontantPasseCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	protected PaiementScolaire fraisMontantPasseInit() {
 		if(!fraisMontantPasseCouverture.dejaInitialise) {
@@ -6772,7 +6730,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrFraisMontantPasse(RequeteSiteFrFR requeteSite_, Double o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqFraisMontantPasse(RequeteSiteFrFR requeteSite_, String o) {
@@ -6832,10 +6790,9 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		this.fraisMontantNonPasse = fraisMontantNonPasse;
 		this.fraisMontantNonPasseCouverture.dejaInitialise = true;
 	}
-	public PaiementScolaire setFraisMontantNonPasse(String o) {
+	public void setFraisMontantNonPasse(String o) {
 		this.fraisMontantNonPasse = PaiementScolaire.staticSetFraisMontantNonPasse(requeteSite_, o);
 		this.fraisMontantNonPasseCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	public static BigDecimal staticSetFraisMontantNonPasse(RequeteSiteFrFR requeteSite_, String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
@@ -6843,15 +6800,13 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		return null;
 	}
-	public PaiementScolaire setFraisMontantNonPasse(Double o) {
+	public void setFraisMontantNonPasse(Double o) {
 			this.fraisMontantNonPasse = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.fraisMontantNonPasseCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
-	public PaiementScolaire setFraisMontantNonPasse(Integer o) {
+	public void setFraisMontantNonPasse(Integer o) {
 			this.fraisMontantNonPasse = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.fraisMontantNonPasseCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	protected PaiementScolaire fraisMontantNonPasseInit() {
 		if(!fraisMontantNonPasseCouverture.dejaInitialise) {
@@ -6868,7 +6823,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrFraisMontantNonPasse(RequeteSiteFrFR requeteSite_, Double o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqFraisMontantNonPasse(RequeteSiteFrFR requeteSite_, String o) {
@@ -6928,10 +6883,9 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		this.fraisMontantFuture = fraisMontantFuture;
 		this.fraisMontantFutureCouverture.dejaInitialise = true;
 	}
-	public PaiementScolaire setFraisMontantFuture(String o) {
+	public void setFraisMontantFuture(String o) {
 		this.fraisMontantFuture = PaiementScolaire.staticSetFraisMontantFuture(requeteSite_, o);
 		this.fraisMontantFutureCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	public static BigDecimal staticSetFraisMontantFuture(RequeteSiteFrFR requeteSite_, String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
@@ -6939,15 +6893,13 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		return null;
 	}
-	public PaiementScolaire setFraisMontantFuture(Double o) {
+	public void setFraisMontantFuture(Double o) {
 			this.fraisMontantFuture = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.fraisMontantFutureCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
-	public PaiementScolaire setFraisMontantFuture(Integer o) {
+	public void setFraisMontantFuture(Integer o) {
 			this.fraisMontantFuture = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.fraisMontantFutureCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	protected PaiementScolaire fraisMontantFutureInit() {
 		if(!fraisMontantFutureCouverture.dejaInitialise) {
@@ -6964,7 +6916,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrFraisMontantFuture(RequeteSiteFrFR requeteSite_, Double o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqFraisMontantFuture(RequeteSiteFrFR requeteSite_, String o) {
@@ -7018,10 +6970,9 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	public String getPaiementNomCourt() {
 		return paiementNomCourt;
 	}
-	public PaiementScolaire setPaiementNomCourt(String o) {
+	public void setPaiementNomCourt(String o) {
 		this.paiementNomCourt = PaiementScolaire.staticSetPaiementNomCourt(requeteSite_, o);
 		this.paiementNomCourtCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	public static String staticSetPaiementNomCourt(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -7041,7 +6992,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrPaiementNomCourt(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPaiementNomCourt(RequeteSiteFrFR requeteSite_, String o) {
@@ -7169,10 +7120,9 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	public String getPaiementNomComplet() {
 		return paiementNomComplet;
 	}
-	public PaiementScolaire setPaiementNomComplet(String o) {
+	public void setPaiementNomComplet(String o) {
 		this.paiementNomComplet = PaiementScolaire.staticSetPaiementNomComplet(requeteSite_, o);
 		this.paiementNomCompletCouverture.dejaInitialise = true;
-		return (PaiementScolaire)this;
 	}
 	public static String staticSetPaiementNomComplet(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -7192,7 +7142,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrPaiementNomComplet(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPaiementNomComplet(RequeteSiteFrFR requeteSite_, String o) {
@@ -7676,7 +7626,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		case "ecoleNumero":
 			return PaiementScolaire.staticSolrEcoleNumero(requeteSite_, (Integer)o);
 		case "utilisateurCles":
-			return PaiementScolaire.staticSolrUtilisateurCles(requeteSite_, (List<Long>)o);
+			return PaiementScolaire.staticSolrUtilisateurCles(requeteSite_, (Long)o);
 		case "ecoleCle":
 			return PaiementScolaire.staticSolrEcoleCle(requeteSite_, (Long)o);
 		case "ecoleAddresse":
@@ -7694,11 +7644,11 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		case "enfantCle":
 			return PaiementScolaire.staticSolrEnfantCle(requeteSite_, (Long)o);
 		case "mereCles":
-			return PaiementScolaire.staticSolrMereCles(requeteSite_, (List<Long>)o);
+			return PaiementScolaire.staticSolrMereCles(requeteSite_, (Long)o);
 		case "pereCles":
-			return PaiementScolaire.staticSolrPereCles(requeteSite_, (List<Long>)o);
+			return PaiementScolaire.staticSolrPereCles(requeteSite_, (Long)o);
 		case "gardienCles":
-			return PaiementScolaire.staticSolrGardienCles(requeteSite_, (List<Long>)o);
+			return PaiementScolaire.staticSolrGardienCles(requeteSite_, (Long)o);
 		case "enfantNomCompletPrefere":
 			return PaiementScolaire.staticSolrEnfantNomCompletPrefere(requeteSite_, (String)o);
 		case "enfantDateNaissance":
@@ -7818,7 +7768,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		case "ecoleNumero":
 			return PaiementScolaire.staticSolrStrEcoleNumero(requeteSite_, (Integer)o);
 		case "utilisateurCles":
-			return PaiementScolaire.staticSolrStrUtilisateurCles(requeteSite_, (List<Long>)o);
+			return PaiementScolaire.staticSolrStrUtilisateurCles(requeteSite_, (Long)o);
 		case "ecoleCle":
 			return PaiementScolaire.staticSolrStrEcoleCle(requeteSite_, (Long)o);
 		case "ecoleAddresse":
@@ -7836,11 +7786,11 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		case "enfantCle":
 			return PaiementScolaire.staticSolrStrEnfantCle(requeteSite_, (Long)o);
 		case "mereCles":
-			return PaiementScolaire.staticSolrStrMereCles(requeteSite_, (List<Long>)o);
+			return PaiementScolaire.staticSolrStrMereCles(requeteSite_, (Long)o);
 		case "pereCles":
-			return PaiementScolaire.staticSolrStrPereCles(requeteSite_, (List<Long>)o);
+			return PaiementScolaire.staticSolrStrPereCles(requeteSite_, (Long)o);
 		case "gardienCles":
-			return PaiementScolaire.staticSolrStrGardienCles(requeteSite_, (List<Long>)o);
+			return PaiementScolaire.staticSolrStrGardienCles(requeteSite_, (Long)o);
 		case "enfantNomCompletPrefere":
 			return PaiementScolaire.staticSolrStrEnfantNomCompletPrefere(requeteSite_, (String)o);
 		case "enfantDateNaissance":

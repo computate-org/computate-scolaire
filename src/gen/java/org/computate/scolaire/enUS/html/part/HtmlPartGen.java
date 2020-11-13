@@ -109,10 +109,9 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		this.htmlPartKey = htmlPartKey;
 		this.htmlPartKeyWrap.alreadyInitialized = true;
 	}
-	public HtmlPart setHtmlPartKey(String o) {
+	public void setHtmlPartKey(String o) {
 		this.htmlPartKey = HtmlPart.staticSetHtmlPartKey(siteRequest_, o);
 		this.htmlPartKeyWrap.alreadyInitialized = true;
-		return (HtmlPart)this;
 	}
 	public static Long staticSetHtmlPartKey(SiteRequestEnUS siteRequest_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -134,7 +133,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrHtmlPartKey(SiteRequestEnUS siteRequest_, Long o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqHtmlPartKey(SiteRequestEnUS siteRequest_, String o) {
@@ -194,7 +193,15 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		this.pageDesignKeys = pageDesignKeys;
 		this.pageDesignKeysWrap.alreadyInitialized = true;
 	}
-	public static List<Long> staticSetPageDesignKeys(SiteRequestEnUS siteRequest_, String o) {
+	public void setPageDesignKeys(String o) {
+		Long l = HtmlPart.staticSetPageDesignKeys(siteRequest_, o);
+		if(l != null)
+			addPageDesignKeys(l);
+		this.pageDesignKeysWrap.alreadyInitialized = true;
+	}
+	public static Long staticSetPageDesignKeys(SiteRequestEnUS siteRequest_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Long.parseLong(o);
 		return null;
 	}
 	public HtmlPart addPageDesignKeys(Long...objets) {
@@ -208,13 +215,12 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 			this.pageDesignKeys.add(o);
 		return (HtmlPart)this;
 	}
-	public HtmlPart setPageDesignKeys(JsonArray objets) {
+	public void setPageDesignKeys(JsonArray objets) {
 		pageDesignKeys.clear();
 		for(int i = 0; i < objets.size(); i++) {
 			Long o = objets.getLong(i);
 			addPageDesignKeys(o);
 		}
-		return (HtmlPart)this;
 	}
 	public HtmlPart addPageDesignKeys(String o) {
 		if(NumberUtils.isParsable(o)) {
@@ -231,12 +237,12 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		return (HtmlPart)this;
 	}
 
-	public static List<Long> staticSolrPageDesignKeys(SiteRequestEnUS siteRequest_, List<Long> o) {
+	public static Long staticSolrPageDesignKeys(SiteRequestEnUS siteRequest_, Long o) {
 		return o;
 	}
 
-	public static String staticSolrStrPageDesignKeys(SiteRequestEnUS siteRequest_, List<Long> o) {
-			return o == null ? null : o.toString();
+	public static String staticSolrStrPageDesignKeys(SiteRequestEnUS siteRequest_, Long o) {
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPageDesignKeys(SiteRequestEnUS siteRequest_, String o) {
@@ -244,7 +250,11 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public List<Long> solrPageDesignKeys() {
-		return HtmlPart.staticSolrPageDesignKeys(siteRequest_, pageDesignKeys);
+		List<Long> l = new ArrayList<Long>();
+		for(Long o : pageDesignKeys) {
+			l.add(HtmlPart.staticSolrPageDesignKeys(siteRequest_, o));
+		}
+		return l;
 	}
 
 	public String strPageDesignKeys() {
@@ -370,10 +380,9 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	public String getHtmlLink() {
 		return htmlLink;
 	}
-	public HtmlPart setHtmlLink(String o) {
+	public void setHtmlLink(String o) {
 		this.htmlLink = HtmlPart.staticSetHtmlLink(siteRequest_, o);
 		this.htmlLinkWrap.alreadyInitialized = true;
-		return (HtmlPart)this;
 	}
 	public static String staticSetHtmlLink(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -393,7 +402,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrHtmlLink(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqHtmlLink(SiteRequestEnUS siteRequest_, String o) {
@@ -518,10 +527,9 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	public String getHtmlElement() {
 		return htmlElement;
 	}
-	public HtmlPart setHtmlElement(String o) {
+	public void setHtmlElement(String o) {
 		this.htmlElement = HtmlPart.staticSetHtmlElement(siteRequest_, o);
 		this.htmlElementWrap.alreadyInitialized = true;
-		return (HtmlPart)this;
 	}
 	public static String staticSetHtmlElement(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -541,7 +549,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrHtmlElement(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqHtmlElement(SiteRequestEnUS siteRequest_, String o) {
@@ -666,10 +674,9 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	public String getHtmlId() {
 		return htmlId;
 	}
-	public HtmlPart setHtmlId(String o) {
+	public void setHtmlId(String o) {
 		this.htmlId = HtmlPart.staticSetHtmlId(siteRequest_, o);
 		this.htmlIdWrap.alreadyInitialized = true;
-		return (HtmlPart)this;
 	}
 	public static String staticSetHtmlId(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -689,7 +696,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrHtmlId(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqHtmlId(SiteRequestEnUS siteRequest_, String o) {
@@ -814,10 +821,9 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	public String getHtmlClasses() {
 		return htmlClasses;
 	}
-	public HtmlPart setHtmlClasses(String o) {
+	public void setHtmlClasses(String o) {
 		this.htmlClasses = HtmlPart.staticSetHtmlClasses(siteRequest_, o);
 		this.htmlClassesWrap.alreadyInitialized = true;
-		return (HtmlPart)this;
 	}
 	public static String staticSetHtmlClasses(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -837,7 +843,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrHtmlClasses(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqHtmlClasses(SiteRequestEnUS siteRequest_, String o) {
@@ -962,10 +968,9 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	public String getHtmlStyle() {
 		return htmlStyle;
 	}
-	public HtmlPart setHtmlStyle(String o) {
+	public void setHtmlStyle(String o) {
 		this.htmlStyle = HtmlPart.staticSetHtmlStyle(siteRequest_, o);
 		this.htmlStyleWrap.alreadyInitialized = true;
-		return (HtmlPart)this;
 	}
 	public static String staticSetHtmlStyle(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -985,7 +990,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrHtmlStyle(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqHtmlStyle(SiteRequestEnUS siteRequest_, String o) {
@@ -1110,10 +1115,9 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	public String getHtmlBefore() {
 		return htmlBefore;
 	}
-	public HtmlPart setHtmlBefore(String o) {
+	public void setHtmlBefore(String o) {
 		this.htmlBefore = HtmlPart.staticSetHtmlBefore(siteRequest_, o);
 		this.htmlBeforeWrap.alreadyInitialized = true;
-		return (HtmlPart)this;
 	}
 	public static String staticSetHtmlBefore(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -1133,7 +1137,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrHtmlBefore(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqHtmlBefore(SiteRequestEnUS siteRequest_, String o) {
@@ -1256,10 +1260,9 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	public String getHtmlAfter() {
 		return htmlAfter;
 	}
-	public HtmlPart setHtmlAfter(String o) {
+	public void setHtmlAfter(String o) {
 		this.htmlAfter = HtmlPart.staticSetHtmlAfter(siteRequest_, o);
 		this.htmlAfterWrap.alreadyInitialized = true;
-		return (HtmlPart)this;
 	}
 	public static String staticSetHtmlAfter(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -1279,7 +1282,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrHtmlAfter(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqHtmlAfter(SiteRequestEnUS siteRequest_, String o) {
@@ -1402,10 +1405,9 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	public String getHtmlText() {
 		return htmlText;
 	}
-	public HtmlPart setHtmlText(String o) {
+	public void setHtmlText(String o) {
 		this.htmlText = HtmlPart.staticSetHtmlText(siteRequest_, o);
 		this.htmlTextWrap.alreadyInitialized = true;
-		return (HtmlPart)this;
 	}
 	public static String staticSetHtmlText(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -1425,7 +1427,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrHtmlText(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqHtmlText(SiteRequestEnUS siteRequest_, String o) {
@@ -1548,10 +1550,9 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	public String getHtmlVar() {
 		return htmlVar;
 	}
-	public HtmlPart setHtmlVar(String o) {
+	public void setHtmlVar(String o) {
 		this.htmlVar = HtmlPart.staticSetHtmlVar(siteRequest_, o);
 		this.htmlVarWrap.alreadyInitialized = true;
-		return (HtmlPart)this;
 	}
 	public static String staticSetHtmlVar(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -1571,7 +1572,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrHtmlVar(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqHtmlVar(SiteRequestEnUS siteRequest_, String o) {
@@ -1696,10 +1697,9 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	public String getHtmlVarSpan() {
 		return htmlVarSpan;
 	}
-	public HtmlPart setHtmlVarSpan(String o) {
+	public void setHtmlVarSpan(String o) {
 		this.htmlVarSpan = HtmlPart.staticSetHtmlVarSpan(siteRequest_, o);
 		this.htmlVarSpanWrap.alreadyInitialized = true;
-		return (HtmlPart)this;
 	}
 	public static String staticSetHtmlVarSpan(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -1719,7 +1719,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrHtmlVarSpan(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqHtmlVarSpan(SiteRequestEnUS siteRequest_, String o) {
@@ -1844,10 +1844,9 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	public String getHtmlVarForm() {
 		return htmlVarForm;
 	}
-	public HtmlPart setHtmlVarForm(String o) {
+	public void setHtmlVarForm(String o) {
 		this.htmlVarForm = HtmlPart.staticSetHtmlVarForm(siteRequest_, o);
 		this.htmlVarFormWrap.alreadyInitialized = true;
-		return (HtmlPart)this;
 	}
 	public static String staticSetHtmlVarForm(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -1867,7 +1866,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrHtmlVarForm(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqHtmlVarForm(SiteRequestEnUS siteRequest_, String o) {
@@ -1992,10 +1991,9 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	public String getHtmlVarInput() {
 		return htmlVarInput;
 	}
-	public HtmlPart setHtmlVarInput(String o) {
+	public void setHtmlVarInput(String o) {
 		this.htmlVarInput = HtmlPart.staticSetHtmlVarInput(siteRequest_, o);
 		this.htmlVarInputWrap.alreadyInitialized = true;
-		return (HtmlPart)this;
 	}
 	public static String staticSetHtmlVarInput(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -2015,7 +2013,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrHtmlVarInput(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqHtmlVarInput(SiteRequestEnUS siteRequest_, String o) {
@@ -2140,10 +2138,9 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	public String getHtmlIfVarEquals() {
 		return htmlIfVarEquals;
 	}
-	public HtmlPart setHtmlIfVarEquals(String o) {
+	public void setHtmlIfVarEquals(String o) {
 		this.htmlIfVarEquals = HtmlPart.staticSetHtmlIfVarEquals(siteRequest_, o);
 		this.htmlIfVarEqualsWrap.alreadyInitialized = true;
-		return (HtmlPart)this;
 	}
 	public static String staticSetHtmlIfVarEquals(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -2163,7 +2160,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrHtmlIfVarEquals(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqHtmlIfVarEquals(SiteRequestEnUS siteRequest_, String o) {
@@ -2288,10 +2285,9 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	public String getHtmlVarForEach() {
 		return htmlVarForEach;
 	}
-	public HtmlPart setHtmlVarForEach(String o) {
+	public void setHtmlVarForEach(String o) {
 		this.htmlVarForEach = HtmlPart.staticSetHtmlVarForEach(siteRequest_, o);
 		this.htmlVarForEachWrap.alreadyInitialized = true;
-		return (HtmlPart)this;
 	}
 	public static String staticSetHtmlVarForEach(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -2311,7 +2307,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrHtmlVarForEach(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqHtmlVarForEach(SiteRequestEnUS siteRequest_, String o) {
@@ -2436,10 +2432,9 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	public String getHtmlVarHtml() {
 		return htmlVarHtml;
 	}
-	public HtmlPart setHtmlVarHtml(String o) {
+	public void setHtmlVarHtml(String o) {
 		this.htmlVarHtml = HtmlPart.staticSetHtmlVarHtml(siteRequest_, o);
 		this.htmlVarHtmlWrap.alreadyInitialized = true;
-		return (HtmlPart)this;
 	}
 	public static String staticSetHtmlVarHtml(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -2459,7 +2454,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrHtmlVarHtml(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqHtmlVarHtml(SiteRequestEnUS siteRequest_, String o) {
@@ -2589,10 +2584,9 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		this.htmlExclude = htmlExclude;
 		this.htmlExcludeWrap.alreadyInitialized = true;
 	}
-	public HtmlPart setHtmlExclude(String o) {
+	public void setHtmlExclude(String o) {
 		this.htmlExclude = HtmlPart.staticSetHtmlExclude(siteRequest_, o);
 		this.htmlExcludeWrap.alreadyInitialized = true;
-		return (HtmlPart)this;
 	}
 	public static Boolean staticSetHtmlExclude(SiteRequestEnUS siteRequest_, String o) {
 		return Boolean.parseBoolean(o);
@@ -2612,7 +2606,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrHtmlExclude(SiteRequestEnUS siteRequest_, Boolean o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqHtmlExclude(SiteRequestEnUS siteRequest_, String o) {
@@ -2739,10 +2733,9 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		this.pdfExclude = pdfExclude;
 		this.pdfExcludeWrap.alreadyInitialized = true;
 	}
-	public HtmlPart setPdfExclude(String o) {
+	public void setPdfExclude(String o) {
 		this.pdfExclude = HtmlPart.staticSetPdfExclude(siteRequest_, o);
 		this.pdfExcludeWrap.alreadyInitialized = true;
-		return (HtmlPart)this;
 	}
 	public static Boolean staticSetPdfExclude(SiteRequestEnUS siteRequest_, String o) {
 		return Boolean.parseBoolean(o);
@@ -2762,7 +2755,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrPdfExclude(SiteRequestEnUS siteRequest_, Boolean o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPdfExclude(SiteRequestEnUS siteRequest_, String o) {
@@ -2889,10 +2882,9 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		this.loginLogout = loginLogout;
 		this.loginLogoutWrap.alreadyInitialized = true;
 	}
-	public HtmlPart setLoginLogout(String o) {
+	public void setLoginLogout(String o) {
 		this.loginLogout = HtmlPart.staticSetLoginLogout(siteRequest_, o);
 		this.loginLogoutWrap.alreadyInitialized = true;
-		return (HtmlPart)this;
 	}
 	public static Boolean staticSetLoginLogout(SiteRequestEnUS siteRequest_, String o) {
 		return Boolean.parseBoolean(o);
@@ -2912,7 +2904,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrLoginLogout(SiteRequestEnUS siteRequest_, Boolean o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqLoginLogout(SiteRequestEnUS siteRequest_, String o) {
@@ -3040,10 +3032,9 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		this.sort1 = sort1;
 		this.sort1Wrap.alreadyInitialized = true;
 	}
-	public HtmlPart setSort1(String o) {
+	public void setSort1(String o) {
 		this.sort1 = HtmlPart.staticSetSort1(siteRequest_, o);
 		this.sort1Wrap.alreadyInitialized = true;
-		return (HtmlPart)this;
 	}
 	public static Double staticSetSort1(SiteRequestEnUS siteRequest_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -3065,7 +3056,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrSort1(SiteRequestEnUS siteRequest_, Double o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqSort1(SiteRequestEnUS siteRequest_, String o) {
@@ -3196,10 +3187,9 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		this.sort2 = sort2;
 		this.sort2Wrap.alreadyInitialized = true;
 	}
-	public HtmlPart setSort2(String o) {
+	public void setSort2(String o) {
 		this.sort2 = HtmlPart.staticSetSort2(siteRequest_, o);
 		this.sort2Wrap.alreadyInitialized = true;
-		return (HtmlPart)this;
 	}
 	public static Double staticSetSort2(SiteRequestEnUS siteRequest_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -3221,7 +3211,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrSort2(SiteRequestEnUS siteRequest_, Double o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqSort2(SiteRequestEnUS siteRequest_, String o) {
@@ -3352,10 +3342,9 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		this.sort3 = sort3;
 		this.sort3Wrap.alreadyInitialized = true;
 	}
-	public HtmlPart setSort3(String o) {
+	public void setSort3(String o) {
 		this.sort3 = HtmlPart.staticSetSort3(siteRequest_, o);
 		this.sort3Wrap.alreadyInitialized = true;
-		return (HtmlPart)this;
 	}
 	public static Double staticSetSort3(SiteRequestEnUS siteRequest_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -3377,7 +3366,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrSort3(SiteRequestEnUS siteRequest_, Double o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqSort3(SiteRequestEnUS siteRequest_, String o) {
@@ -3508,10 +3497,9 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		this.sort4 = sort4;
 		this.sort4Wrap.alreadyInitialized = true;
 	}
-	public HtmlPart setSort4(String o) {
+	public void setSort4(String o) {
 		this.sort4 = HtmlPart.staticSetSort4(siteRequest_, o);
 		this.sort4Wrap.alreadyInitialized = true;
-		return (HtmlPart)this;
 	}
 	public static Double staticSetSort4(SiteRequestEnUS siteRequest_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -3533,7 +3521,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrSort4(SiteRequestEnUS siteRequest_, Double o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqSort4(SiteRequestEnUS siteRequest_, String o) {
@@ -3664,10 +3652,9 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		this.sort5 = sort5;
 		this.sort5Wrap.alreadyInitialized = true;
 	}
-	public HtmlPart setSort5(String o) {
+	public void setSort5(String o) {
 		this.sort5 = HtmlPart.staticSetSort5(siteRequest_, o);
 		this.sort5Wrap.alreadyInitialized = true;
-		return (HtmlPart)this;
 	}
 	public static Double staticSetSort5(SiteRequestEnUS siteRequest_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -3689,7 +3676,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrSort5(SiteRequestEnUS siteRequest_, Double o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqSort5(SiteRequestEnUS siteRequest_, String o) {
@@ -3820,10 +3807,9 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		this.sort6 = sort6;
 		this.sort6Wrap.alreadyInitialized = true;
 	}
-	public HtmlPart setSort6(String o) {
+	public void setSort6(String o) {
 		this.sort6 = HtmlPart.staticSetSort6(siteRequest_, o);
 		this.sort6Wrap.alreadyInitialized = true;
-		return (HtmlPart)this;
 	}
 	public static Double staticSetSort6(SiteRequestEnUS siteRequest_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -3845,7 +3831,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrSort6(SiteRequestEnUS siteRequest_, Double o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqSort6(SiteRequestEnUS siteRequest_, String o) {
@@ -3976,10 +3962,9 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		this.sort7 = sort7;
 		this.sort7Wrap.alreadyInitialized = true;
 	}
-	public HtmlPart setSort7(String o) {
+	public void setSort7(String o) {
 		this.sort7 = HtmlPart.staticSetSort7(siteRequest_, o);
 		this.sort7Wrap.alreadyInitialized = true;
-		return (HtmlPart)this;
 	}
 	public static Double staticSetSort7(SiteRequestEnUS siteRequest_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -4001,7 +3986,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrSort7(SiteRequestEnUS siteRequest_, Double o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqSort7(SiteRequestEnUS siteRequest_, String o) {
@@ -4132,10 +4117,9 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		this.sort8 = sort8;
 		this.sort8Wrap.alreadyInitialized = true;
 	}
-	public HtmlPart setSort8(String o) {
+	public void setSort8(String o) {
 		this.sort8 = HtmlPart.staticSetSort8(siteRequest_, o);
 		this.sort8Wrap.alreadyInitialized = true;
-		return (HtmlPart)this;
 	}
 	public static Double staticSetSort8(SiteRequestEnUS siteRequest_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -4157,7 +4141,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrSort8(SiteRequestEnUS siteRequest_, Double o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqSort8(SiteRequestEnUS siteRequest_, String o) {
@@ -4288,10 +4272,9 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		this.sort9 = sort9;
 		this.sort9Wrap.alreadyInitialized = true;
 	}
-	public HtmlPart setSort9(String o) {
+	public void setSort9(String o) {
 		this.sort9 = HtmlPart.staticSetSort9(siteRequest_, o);
 		this.sort9Wrap.alreadyInitialized = true;
-		return (HtmlPart)this;
 	}
 	public static Double staticSetSort9(SiteRequestEnUS siteRequest_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -4313,7 +4296,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrSort9(SiteRequestEnUS siteRequest_, Double o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqSort9(SiteRequestEnUS siteRequest_, String o) {
@@ -4444,10 +4427,9 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		this.sort10 = sort10;
 		this.sort10Wrap.alreadyInitialized = true;
 	}
-	public HtmlPart setSort10(String o) {
+	public void setSort10(String o) {
 		this.sort10 = HtmlPart.staticSetSort10(siteRequest_, o);
 		this.sort10Wrap.alreadyInitialized = true;
-		return (HtmlPart)this;
 	}
 	public static Double staticSetSort10(SiteRequestEnUS siteRequest_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -4469,7 +4451,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrSort10(SiteRequestEnUS siteRequest_, Double o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqSort10(SiteRequestEnUS siteRequest_, String o) {
@@ -4841,7 +4823,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		case "htmlPartKey":
 			return HtmlPart.staticSolrHtmlPartKey(siteRequest_, (Long)o);
 		case "pageDesignKeys":
-			return HtmlPart.staticSolrPageDesignKeys(siteRequest_, (List<Long>)o);
+			return HtmlPart.staticSolrPageDesignKeys(siteRequest_, (Long)o);
 		case "htmlLink":
 			return HtmlPart.staticSolrHtmlLink(siteRequest_, (String)o);
 		case "htmlElement":
@@ -4915,7 +4897,7 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		case "htmlPartKey":
 			return HtmlPart.staticSolrStrHtmlPartKey(siteRequest_, (Long)o);
 		case "pageDesignKeys":
-			return HtmlPart.staticSolrStrPageDesignKeys(siteRequest_, (List<Long>)o);
+			return HtmlPart.staticSolrStrPageDesignKeys(siteRequest_, (Long)o);
 		case "htmlLink":
 			return HtmlPart.staticSolrStrHtmlLink(siteRequest_, (String)o);
 		case "htmlElement":

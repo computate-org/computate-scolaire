@@ -109,7 +109,15 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		this.utilisateurCles = utilisateurCles;
 		this.utilisateurClesCouverture.dejaInitialise = true;
 	}
-	public static List<Long> staticSetUtilisateurCles(RequeteSiteFrFR requeteSite_, String o) {
+	public void setUtilisateurCles(String o) {
+		Long l = UtilisateurSite.staticSetUtilisateurCles(requeteSite_, o);
+		if(l != null)
+			addUtilisateurCles(l);
+		this.utilisateurClesCouverture.dejaInitialise = true;
+	}
+	public static Long staticSetUtilisateurCles(RequeteSiteFrFR requeteSite_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Long.parseLong(o);
 		return null;
 	}
 	public UtilisateurSite addUtilisateurCles(Long...objets) {
@@ -123,13 +131,12 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 			this.utilisateurCles.add(o);
 		return (UtilisateurSite)this;
 	}
-	public UtilisateurSite setUtilisateurCles(JsonArray objets) {
+	public void setUtilisateurCles(JsonArray objets) {
 		utilisateurCles.clear();
 		for(int i = 0; i < objets.size(); i++) {
 			Long o = objets.getLong(i);
 			addUtilisateurCles(o);
 		}
-		return (UtilisateurSite)this;
 	}
 	public UtilisateurSite addUtilisateurCles(String o) {
 		if(NumberUtils.isParsable(o)) {
@@ -146,12 +153,12 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		return (UtilisateurSite)this;
 	}
 
-	public static List<Long> staticSolrUtilisateurCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
+	public static Long staticSolrUtilisateurCles(RequeteSiteFrFR requeteSite_, Long o) {
 		return o;
 	}
 
-	public static String staticSolrStrUtilisateurCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
-			return o == null ? null : o.toString();
+	public static String staticSolrStrUtilisateurCles(RequeteSiteFrFR requeteSite_, Long o) {
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqUtilisateurCles(RequeteSiteFrFR requeteSite_, String o) {
@@ -159,7 +166,11 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	}
 
 	public List<Long> solrUtilisateurCles() {
-		return UtilisateurSite.staticSolrUtilisateurCles(requeteSite_, utilisateurCles);
+		List<Long> l = new ArrayList<Long>();
+		for(Long o : utilisateurCles) {
+			l.add(UtilisateurSite.staticSolrUtilisateurCles(requeteSite_, o));
+		}
+		return l;
 	}
 
 	public String strUtilisateurCles() {
@@ -211,7 +222,15 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		this.inscriptionCles = inscriptionCles;
 		this.inscriptionClesCouverture.dejaInitialise = true;
 	}
-	public static List<Long> staticSetInscriptionCles(RequeteSiteFrFR requeteSite_, String o) {
+	public void setInscriptionCles(String o) {
+		Long l = UtilisateurSite.staticSetInscriptionCles(requeteSite_, o);
+		if(l != null)
+			addInscriptionCles(l);
+		this.inscriptionClesCouverture.dejaInitialise = true;
+	}
+	public static Long staticSetInscriptionCles(RequeteSiteFrFR requeteSite_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Long.parseLong(o);
 		return null;
 	}
 	public UtilisateurSite addInscriptionCles(Long...objets) {
@@ -225,13 +244,12 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 			this.inscriptionCles.add(o);
 		return (UtilisateurSite)this;
 	}
-	public UtilisateurSite setInscriptionCles(JsonArray objets) {
+	public void setInscriptionCles(JsonArray objets) {
 		inscriptionCles.clear();
 		for(int i = 0; i < objets.size(); i++) {
 			Long o = objets.getLong(i);
 			addInscriptionCles(o);
 		}
-		return (UtilisateurSite)this;
 	}
 	public UtilisateurSite addInscriptionCles(String o) {
 		if(NumberUtils.isParsable(o)) {
@@ -248,12 +266,12 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		return (UtilisateurSite)this;
 	}
 
-	public static List<Long> staticSolrInscriptionCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
+	public static Long staticSolrInscriptionCles(RequeteSiteFrFR requeteSite_, Long o) {
 		return o;
 	}
 
-	public static String staticSolrStrInscriptionCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
-			return o == null ? null : o.toString();
+	public static String staticSolrStrInscriptionCles(RequeteSiteFrFR requeteSite_, Long o) {
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqInscriptionCles(RequeteSiteFrFR requeteSite_, String o) {
@@ -261,7 +279,11 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	}
 
 	public List<Long> solrInscriptionCles() {
-		return UtilisateurSite.staticSolrInscriptionCles(requeteSite_, inscriptionCles);
+		List<Long> l = new ArrayList<Long>();
+		for(Long o : inscriptionCles) {
+			l.add(UtilisateurSite.staticSolrInscriptionCles(requeteSite_, o));
+		}
+		return l;
 	}
 
 	public String strInscriptionCles() {
@@ -444,7 +466,15 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		this.paiementCles = paiementCles;
 		this.paiementClesCouverture.dejaInitialise = true;
 	}
-	public static List<Long> staticSetPaiementCles(RequeteSiteFrFR requeteSite_, String o) {
+	public void setPaiementCles(String o) {
+		Long l = UtilisateurSite.staticSetPaiementCles(requeteSite_, o);
+		if(l != null)
+			addPaiementCles(l);
+		this.paiementClesCouverture.dejaInitialise = true;
+	}
+	public static Long staticSetPaiementCles(RequeteSiteFrFR requeteSite_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Long.parseLong(o);
 		return null;
 	}
 	public UtilisateurSite addPaiementCles(Long...objets) {
@@ -458,13 +488,12 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 			this.paiementCles.add(o);
 		return (UtilisateurSite)this;
 	}
-	public UtilisateurSite setPaiementCles(JsonArray objets) {
+	public void setPaiementCles(JsonArray objets) {
 		paiementCles.clear();
 		for(int i = 0; i < objets.size(); i++) {
 			Long o = objets.getLong(i);
 			addPaiementCles(o);
 		}
-		return (UtilisateurSite)this;
 	}
 	public UtilisateurSite addPaiementCles(String o) {
 		if(NumberUtils.isParsable(o)) {
@@ -481,12 +510,12 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		return (UtilisateurSite)this;
 	}
 
-	public static List<Long> staticSolrPaiementCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
+	public static Long staticSolrPaiementCles(RequeteSiteFrFR requeteSite_, Long o) {
 		return o;
 	}
 
-	public static String staticSolrStrPaiementCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
-			return o == null ? null : o.toString();
+	public static String staticSolrStrPaiementCles(RequeteSiteFrFR requeteSite_, Long o) {
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPaiementCles(RequeteSiteFrFR requeteSite_, String o) {
@@ -494,7 +523,11 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	}
 
 	public List<Long> solrPaiementCles() {
-		return UtilisateurSite.staticSolrPaiementCles(requeteSite_, paiementCles);
+		List<Long> l = new ArrayList<Long>();
+		for(Long o : paiementCles) {
+			l.add(UtilisateurSite.staticSolrPaiementCles(requeteSite_, o));
+		}
+		return l;
 	}
 
 	public String strPaiementCles() {
@@ -621,10 +654,9 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	public String getUtilisateurNom() {
 		return utilisateurNom;
 	}
-	public UtilisateurSite setUtilisateurNom(String o) {
+	public void setUtilisateurNom(String o) {
 		this.utilisateurNom = UtilisateurSite.staticSetUtilisateurNom(requeteSite_, o);
 		this.utilisateurNomCouverture.dejaInitialise = true;
-		return (UtilisateurSite)this;
 	}
 	public static String staticSetUtilisateurNom(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -644,7 +676,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrUtilisateurNom(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqUtilisateurNom(RequeteSiteFrFR requeteSite_, String o) {
@@ -766,10 +798,9 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	public String getUtilisateurMail() {
 		return utilisateurMail;
 	}
-	public UtilisateurSite setUtilisateurMail(String o) {
+	public void setUtilisateurMail(String o) {
 		this.utilisateurMail = UtilisateurSite.staticSetUtilisateurMail(requeteSite_, o);
 		this.utilisateurMailCouverture.dejaInitialise = true;
-		return (UtilisateurSite)this;
 	}
 	public static String staticSetUtilisateurMail(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -789,7 +820,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrUtilisateurMail(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqUtilisateurMail(RequeteSiteFrFR requeteSite_, String o) {
@@ -911,10 +942,9 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	public String getUtilisateurPrenom() {
 		return utilisateurPrenom;
 	}
-	public UtilisateurSite setUtilisateurPrenom(String o) {
+	public void setUtilisateurPrenom(String o) {
 		this.utilisateurPrenom = UtilisateurSite.staticSetUtilisateurPrenom(requeteSite_, o);
 		this.utilisateurPrenomCouverture.dejaInitialise = true;
-		return (UtilisateurSite)this;
 	}
 	public static String staticSetUtilisateurPrenom(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -934,7 +964,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrUtilisateurPrenom(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqUtilisateurPrenom(RequeteSiteFrFR requeteSite_, String o) {
@@ -988,10 +1018,9 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	public String getUtilisateurNomFamille() {
 		return utilisateurNomFamille;
 	}
-	public UtilisateurSite setUtilisateurNomFamille(String o) {
+	public void setUtilisateurNomFamille(String o) {
 		this.utilisateurNomFamille = UtilisateurSite.staticSetUtilisateurNomFamille(requeteSite_, o);
 		this.utilisateurNomFamilleCouverture.dejaInitialise = true;
-		return (UtilisateurSite)this;
 	}
 	public static String staticSetUtilisateurNomFamille(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -1011,7 +1040,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrUtilisateurNomFamille(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqUtilisateurNomFamille(RequeteSiteFrFR requeteSite_, String o) {
@@ -1065,10 +1094,9 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	public String getUtilisateurNomComplet() {
 		return utilisateurNomComplet;
 	}
-	public UtilisateurSite setUtilisateurNomComplet(String o) {
+	public void setUtilisateurNomComplet(String o) {
 		this.utilisateurNomComplet = UtilisateurSite.staticSetUtilisateurNomComplet(requeteSite_, o);
 		this.utilisateurNomCompletCouverture.dejaInitialise = true;
-		return (UtilisateurSite)this;
 	}
 	public static String staticSetUtilisateurNomComplet(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -1088,7 +1116,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrUtilisateurNomComplet(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqUtilisateurNomComplet(RequeteSiteFrFR requeteSite_, String o) {
@@ -1142,10 +1170,9 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	public String getUtilisateurSite() {
 		return utilisateurSite;
 	}
-	public UtilisateurSite setUtilisateurSite(String o) {
+	public void setUtilisateurSite(String o) {
 		this.utilisateurSite = UtilisateurSite.staticSetUtilisateurSite(requeteSite_, o);
 		this.utilisateurSiteCouverture.dejaInitialise = true;
-		return (UtilisateurSite)this;
 	}
 	public static String staticSetUtilisateurSite(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -1165,7 +1192,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrUtilisateurSite(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqUtilisateurSite(RequeteSiteFrFR requeteSite_, String o) {
@@ -1219,10 +1246,9 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	public String getCustomerProfileId1() {
 		return customerProfileId1;
 	}
-	public UtilisateurSite setCustomerProfileId1(String o) {
+	public void setCustomerProfileId1(String o) {
 		this.customerProfileId1 = UtilisateurSite.staticSetCustomerProfileId1(requeteSite_, o);
 		this.customerProfileId1Couverture.dejaInitialise = true;
-		return (UtilisateurSite)this;
 	}
 	public static String staticSetCustomerProfileId1(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -1242,7 +1268,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrCustomerProfileId1(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqCustomerProfileId1(RequeteSiteFrFR requeteSite_, String o) {
@@ -1368,10 +1394,9 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	public String getCustomerProfileId2() {
 		return customerProfileId2;
 	}
-	public UtilisateurSite setCustomerProfileId2(String o) {
+	public void setCustomerProfileId2(String o) {
 		this.customerProfileId2 = UtilisateurSite.staticSetCustomerProfileId2(requeteSite_, o);
 		this.customerProfileId2Couverture.dejaInitialise = true;
-		return (UtilisateurSite)this;
 	}
 	public static String staticSetCustomerProfileId2(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -1391,7 +1416,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrCustomerProfileId2(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqCustomerProfileId2(RequeteSiteFrFR requeteSite_, String o) {
@@ -1522,10 +1547,9 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		this.utilisateurRecevoirCourriels = utilisateurRecevoirCourriels;
 		this.utilisateurRecevoirCourrielsCouverture.dejaInitialise = true;
 	}
-	public UtilisateurSite setUtilisateurRecevoirCourriels(String o) {
+	public void setUtilisateurRecevoirCourriels(String o) {
 		this.utilisateurRecevoirCourriels = UtilisateurSite.staticSetUtilisateurRecevoirCourriels(requeteSite_, o);
 		this.utilisateurRecevoirCourrielsCouverture.dejaInitialise = true;
-		return (UtilisateurSite)this;
 	}
 	public static Boolean staticSetUtilisateurRecevoirCourriels(RequeteSiteFrFR requeteSite_, String o) {
 		return Boolean.parseBoolean(o);
@@ -1545,7 +1569,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrUtilisateurRecevoirCourriels(RequeteSiteFrFR requeteSite_, Boolean o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqUtilisateurRecevoirCourriels(RequeteSiteFrFR requeteSite_, String o) {
@@ -1672,10 +1696,9 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		this.voirArchive = voirArchive;
 		this.voirArchiveCouverture.dejaInitialise = true;
 	}
-	public UtilisateurSite setVoirArchive(String o) {
+	public void setVoirArchive(String o) {
 		this.voirArchive = UtilisateurSite.staticSetVoirArchive(requeteSite_, o);
 		this.voirArchiveCouverture.dejaInitialise = true;
-		return (UtilisateurSite)this;
 	}
 	public static Boolean staticSetVoirArchive(RequeteSiteFrFR requeteSite_, String o) {
 		return Boolean.parseBoolean(o);
@@ -1695,7 +1718,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrVoirArchive(RequeteSiteFrFR requeteSite_, Boolean o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqVoirArchive(RequeteSiteFrFR requeteSite_, String o) {
@@ -1822,10 +1845,9 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		this.voirSupprime = voirSupprime;
 		this.voirSupprimeCouverture.dejaInitialise = true;
 	}
-	public UtilisateurSite setVoirSupprime(String o) {
+	public void setVoirSupprime(String o) {
 		this.voirSupprime = UtilisateurSite.staticSetVoirSupprime(requeteSite_, o);
 		this.voirSupprimeCouverture.dejaInitialise = true;
-		return (UtilisateurSite)this;
 	}
 	public static Boolean staticSetVoirSupprime(RequeteSiteFrFR requeteSite_, String o) {
 		return Boolean.parseBoolean(o);
@@ -1845,7 +1867,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrVoirSupprime(RequeteSiteFrFR requeteSite_, Boolean o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqVoirSupprime(RequeteSiteFrFR requeteSite_, String o) {
@@ -2140,11 +2162,11 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	public static Object staticSolrUtilisateurSite(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
 		switch(entiteVar) {
 		case "utilisateurCles":
-			return UtilisateurSite.staticSolrUtilisateurCles(requeteSite_, (List<Long>)o);
+			return UtilisateurSite.staticSolrUtilisateurCles(requeteSite_, (Long)o);
 		case "inscriptionCles":
-			return UtilisateurSite.staticSolrInscriptionCles(requeteSite_, (List<Long>)o);
+			return UtilisateurSite.staticSolrInscriptionCles(requeteSite_, (Long)o);
 		case "paiementCles":
-			return UtilisateurSite.staticSolrPaiementCles(requeteSite_, (List<Long>)o);
+			return UtilisateurSite.staticSolrPaiementCles(requeteSite_, (Long)o);
 		case "utilisateurNom":
 			return UtilisateurSite.staticSolrUtilisateurNom(requeteSite_, (String)o);
 		case "utilisateurMail":
@@ -2182,11 +2204,11 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 	public static String staticSolrStrUtilisateurSite(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
 		switch(entiteVar) {
 		case "utilisateurCles":
-			return UtilisateurSite.staticSolrStrUtilisateurCles(requeteSite_, (List<Long>)o);
+			return UtilisateurSite.staticSolrStrUtilisateurCles(requeteSite_, (Long)o);
 		case "inscriptionCles":
-			return UtilisateurSite.staticSolrStrInscriptionCles(requeteSite_, (List<Long>)o);
+			return UtilisateurSite.staticSolrStrInscriptionCles(requeteSite_, (Long)o);
 		case "paiementCles":
-			return UtilisateurSite.staticSolrStrPaiementCles(requeteSite_, (List<Long>)o);
+			return UtilisateurSite.staticSolrStrPaiementCles(requeteSite_, (Long)o);
 		case "utilisateurNom":
 			return UtilisateurSite.staticSolrStrUtilisateurNom(requeteSite_, (String)o);
 		case "utilisateurMail":

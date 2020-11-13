@@ -119,10 +119,9 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		this.ageCle = ageCle;
 		this.ageCleCouverture.dejaInitialise = true;
 	}
-	public AgeScolaire setAgeCle(String o) {
+	public void setAgeCle(String o) {
 		this.ageCle = AgeScolaire.staticSetAgeCle(requeteSite_, o);
 		this.ageCleCouverture.dejaInitialise = true;
-		return (AgeScolaire)this;
 	}
 	public static Long staticSetAgeCle(RequeteSiteFrFR requeteSite_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -144,7 +143,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrAgeCle(RequeteSiteFrFR requeteSite_, Long o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqAgeCle(RequeteSiteFrFR requeteSite_, String o) {
@@ -204,7 +203,15 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		this.inscriptionCles = inscriptionCles;
 		this.inscriptionClesCouverture.dejaInitialise = true;
 	}
-	public static List<Long> staticSetInscriptionCles(RequeteSiteFrFR requeteSite_, String o) {
+	public void setInscriptionCles(String o) {
+		Long l = AgeScolaire.staticSetInscriptionCles(requeteSite_, o);
+		if(l != null)
+			addInscriptionCles(l);
+		this.inscriptionClesCouverture.dejaInitialise = true;
+	}
+	public static Long staticSetInscriptionCles(RequeteSiteFrFR requeteSite_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Long.parseLong(o);
 		return null;
 	}
 	public AgeScolaire addInscriptionCles(Long...objets) {
@@ -218,13 +225,12 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 			this.inscriptionCles.add(o);
 		return (AgeScolaire)this;
 	}
-	public AgeScolaire setInscriptionCles(JsonArray objets) {
+	public void setInscriptionCles(JsonArray objets) {
 		inscriptionCles.clear();
 		for(int i = 0; i < objets.size(); i++) {
 			Long o = objets.getLong(i);
 			addInscriptionCles(o);
 		}
-		return (AgeScolaire)this;
 	}
 	public AgeScolaire addInscriptionCles(String o) {
 		if(NumberUtils.isParsable(o)) {
@@ -241,12 +247,12 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		return (AgeScolaire)this;
 	}
 
-	public static List<Long> staticSolrInscriptionCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
+	public static Long staticSolrInscriptionCles(RequeteSiteFrFR requeteSite_, Long o) {
 		return o;
 	}
 
-	public static String staticSolrStrInscriptionCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
-			return o == null ? null : o.toString();
+	public static String staticSolrStrInscriptionCles(RequeteSiteFrFR requeteSite_, Long o) {
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqInscriptionCles(RequeteSiteFrFR requeteSite_, String o) {
@@ -254,7 +260,11 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 	}
 
 	public List<Long> solrInscriptionCles() {
-		return AgeScolaire.staticSolrInscriptionCles(requeteSite_, inscriptionCles);
+		List<Long> l = new ArrayList<Long>();
+		for(Long o : inscriptionCles) {
+			l.add(AgeScolaire.staticSolrInscriptionCles(requeteSite_, o));
+		}
+		return l;
 	}
 
 	public String strInscriptionCles() {
@@ -306,7 +316,15 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		this.blocCles = blocCles;
 		this.blocClesCouverture.dejaInitialise = true;
 	}
-	public static List<Long> staticSetBlocCles(RequeteSiteFrFR requeteSite_, String o) {
+	public void setBlocCles(String o) {
+		Long l = AgeScolaire.staticSetBlocCles(requeteSite_, o);
+		if(l != null)
+			addBlocCles(l);
+		this.blocClesCouverture.dejaInitialise = true;
+	}
+	public static Long staticSetBlocCles(RequeteSiteFrFR requeteSite_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Long.parseLong(o);
 		return null;
 	}
 	public AgeScolaire addBlocCles(Long...objets) {
@@ -320,13 +338,12 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 			this.blocCles.add(o);
 		return (AgeScolaire)this;
 	}
-	public AgeScolaire setBlocCles(JsonArray objets) {
+	public void setBlocCles(JsonArray objets) {
 		blocCles.clear();
 		for(int i = 0; i < objets.size(); i++) {
 			Long o = objets.getLong(i);
 			addBlocCles(o);
 		}
-		return (AgeScolaire)this;
 	}
 	public AgeScolaire addBlocCles(String o) {
 		if(NumberUtils.isParsable(o)) {
@@ -343,12 +360,12 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		return (AgeScolaire)this;
 	}
 
-	public static List<Long> staticSolrBlocCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
+	public static Long staticSolrBlocCles(RequeteSiteFrFR requeteSite_, Long o) {
 		return o;
 	}
 
-	public static String staticSolrStrBlocCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
-			return o == null ? null : o.toString();
+	public static String staticSolrStrBlocCles(RequeteSiteFrFR requeteSite_, Long o) {
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqBlocCles(RequeteSiteFrFR requeteSite_, String o) {
@@ -356,7 +373,11 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 	}
 
 	public List<Long> solrBlocCles() {
-		return AgeScolaire.staticSolrBlocCles(requeteSite_, blocCles);
+		List<Long> l = new ArrayList<Long>();
+		for(Long o : blocCles) {
+			l.add(AgeScolaire.staticSolrBlocCles(requeteSite_, o));
+		}
+		return l;
 	}
 
 	public String strBlocCles() {
@@ -489,10 +510,9 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		this.scolaireTri = scolaireTri;
 		this.scolaireTriCouverture.dejaInitialise = true;
 	}
-	public AgeScolaire setScolaireTri(String o) {
+	public void setScolaireTri(String o) {
 		this.scolaireTri = AgeScolaire.staticSetScolaireTri(requeteSite_, o);
 		this.scolaireTriCouverture.dejaInitialise = true;
-		return (AgeScolaire)this;
 	}
 	public static Integer staticSetScolaireTri(RequeteSiteFrFR requeteSite_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -514,7 +534,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrScolaireTri(RequeteSiteFrFR requeteSite_, Integer o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqScolaireTri(RequeteSiteFrFR requeteSite_, String o) {
@@ -574,10 +594,9 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		this.ecoleTri = ecoleTri;
 		this.ecoleTriCouverture.dejaInitialise = true;
 	}
-	public AgeScolaire setEcoleTri(String o) {
+	public void setEcoleTri(String o) {
 		this.ecoleTri = AgeScolaire.staticSetEcoleTri(requeteSite_, o);
 		this.ecoleTriCouverture.dejaInitialise = true;
-		return (AgeScolaire)this;
 	}
 	public static Integer staticSetEcoleTri(RequeteSiteFrFR requeteSite_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -599,7 +618,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrEcoleTri(RequeteSiteFrFR requeteSite_, Integer o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqEcoleTri(RequeteSiteFrFR requeteSite_, String o) {
@@ -659,10 +678,9 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		this.anneeTri = anneeTri;
 		this.anneeTriCouverture.dejaInitialise = true;
 	}
-	public AgeScolaire setAnneeTri(String o) {
+	public void setAnneeTri(String o) {
 		this.anneeTri = AgeScolaire.staticSetAnneeTri(requeteSite_, o);
 		this.anneeTriCouverture.dejaInitialise = true;
-		return (AgeScolaire)this;
 	}
 	public static Integer staticSetAnneeTri(RequeteSiteFrFR requeteSite_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -684,7 +702,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrAnneeTri(RequeteSiteFrFR requeteSite_, Integer o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqAnneeTri(RequeteSiteFrFR requeteSite_, String o) {
@@ -744,10 +762,9 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		this.saisonTri = saisonTri;
 		this.saisonTriCouverture.dejaInitialise = true;
 	}
-	public AgeScolaire setSaisonTri(String o) {
+	public void setSaisonTri(String o) {
 		this.saisonTri = AgeScolaire.staticSetSaisonTri(requeteSite_, o);
 		this.saisonTriCouverture.dejaInitialise = true;
-		return (AgeScolaire)this;
 	}
 	public static Integer staticSetSaisonTri(RequeteSiteFrFR requeteSite_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -769,7 +786,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrSaisonTri(RequeteSiteFrFR requeteSite_, Integer o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqSaisonTri(RequeteSiteFrFR requeteSite_, String o) {
@@ -829,10 +846,9 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		this.sessionTri = sessionTri;
 		this.sessionTriCouverture.dejaInitialise = true;
 	}
-	public AgeScolaire setSessionTri(String o) {
+	public void setSessionTri(String o) {
 		this.sessionTri = AgeScolaire.staticSetSessionTri(requeteSite_, o);
 		this.sessionTriCouverture.dejaInitialise = true;
-		return (AgeScolaire)this;
 	}
 	public static Integer staticSetSessionTri(RequeteSiteFrFR requeteSite_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -854,7 +870,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrSessionTri(RequeteSiteFrFR requeteSite_, Integer o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqSessionTri(RequeteSiteFrFR requeteSite_, String o) {
@@ -914,10 +930,9 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		this.sessionCle = sessionCle;
 		this.sessionCleCouverture.dejaInitialise = true;
 	}
-	public AgeScolaire setSessionCle(String o) {
+	public void setSessionCle(String o) {
 		this.sessionCle = AgeScolaire.staticSetSessionCle(requeteSite_, o);
 		this.sessionCleCouverture.dejaInitialise = true;
-		return (AgeScolaire)this;
 	}
 	public static Long staticSetSessionCle(RequeteSiteFrFR requeteSite_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -939,7 +954,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrSessionCle(RequeteSiteFrFR requeteSite_, Long o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqSessionCle(RequeteSiteFrFR requeteSite_, String o) {
@@ -1082,10 +1097,9 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		this.ecoleCle = ecoleCle;
 		this.ecoleCleCouverture.dejaInitialise = true;
 	}
-	public AgeScolaire setEcoleCle(String o) {
+	public void setEcoleCle(String o) {
 		this.ecoleCle = AgeScolaire.staticSetEcoleCle(requeteSite_, o);
 		this.ecoleCleCouverture.dejaInitialise = true;
-		return (AgeScolaire)this;
 	}
 	public static Long staticSetEcoleCle(RequeteSiteFrFR requeteSite_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -1107,7 +1121,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrEcoleCle(RequeteSiteFrFR requeteSite_, Long o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqEcoleCle(RequeteSiteFrFR requeteSite_, String o) {
@@ -1167,10 +1181,9 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		this.anneeCle = anneeCle;
 		this.anneeCleCouverture.dejaInitialise = true;
 	}
-	public AgeScolaire setAnneeCle(String o) {
+	public void setAnneeCle(String o) {
 		this.anneeCle = AgeScolaire.staticSetAnneeCle(requeteSite_, o);
 		this.anneeCleCouverture.dejaInitialise = true;
-		return (AgeScolaire)this;
 	}
 	public static Long staticSetAnneeCle(RequeteSiteFrFR requeteSite_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -1192,7 +1205,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrAnneeCle(RequeteSiteFrFR requeteSite_, Long o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqAnneeCle(RequeteSiteFrFR requeteSite_, String o) {
@@ -1327,10 +1340,9 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 	public String getEcoleNom() {
 		return ecoleNom;
 	}
-	public AgeScolaire setEcoleNom(String o) {
+	public void setEcoleNom(String o) {
 		this.ecoleNom = AgeScolaire.staticSetEcoleNom(requeteSite_, o);
 		this.ecoleNomCouverture.dejaInitialise = true;
-		return (AgeScolaire)this;
 	}
 	public static String staticSetEcoleNom(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -1350,7 +1362,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrEcoleNom(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqEcoleNom(RequeteSiteFrFR requeteSite_, String o) {
@@ -1404,10 +1416,9 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 	public String getEcoleNomComplet() {
 		return ecoleNomComplet;
 	}
-	public AgeScolaire setEcoleNomComplet(String o) {
+	public void setEcoleNomComplet(String o) {
 		this.ecoleNomComplet = AgeScolaire.staticSetEcoleNomComplet(requeteSite_, o);
 		this.ecoleNomCompletCouverture.dejaInitialise = true;
-		return (AgeScolaire)this;
 	}
 	public static String staticSetEcoleNomComplet(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -1427,7 +1438,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrEcoleNomComplet(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqEcoleNomComplet(RequeteSiteFrFR requeteSite_, String o) {
@@ -1481,10 +1492,9 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 	public String getEcoleEmplacement() {
 		return ecoleEmplacement;
 	}
-	public AgeScolaire setEcoleEmplacement(String o) {
+	public void setEcoleEmplacement(String o) {
 		this.ecoleEmplacement = AgeScolaire.staticSetEcoleEmplacement(requeteSite_, o);
 		this.ecoleEmplacementCouverture.dejaInitialise = true;
-		return (AgeScolaire)this;
 	}
 	public static String staticSetEcoleEmplacement(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -1504,7 +1514,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrEcoleEmplacement(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqEcoleEmplacement(RequeteSiteFrFR requeteSite_, String o) {
@@ -1558,10 +1568,9 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 	public String getEcoleAddresse() {
 		return ecoleAddresse;
 	}
-	public AgeScolaire setEcoleAddresse(String o) {
+	public void setEcoleAddresse(String o) {
 		this.ecoleAddresse = AgeScolaire.staticSetEcoleAddresse(requeteSite_, o);
 		this.ecoleAddresseCouverture.dejaInitialise = true;
-		return (AgeScolaire)this;
 	}
 	public static String staticSetEcoleAddresse(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -1581,7 +1590,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrEcoleAddresse(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqEcoleAddresse(RequeteSiteFrFR requeteSite_, String o) {
@@ -1707,10 +1716,9 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 	public String getEcoleNumeroTelephone() {
 		return ecoleNumeroTelephone;
 	}
-	public AgeScolaire setEcoleNumeroTelephone(String o) {
+	public void setEcoleNumeroTelephone(String o) {
 		this.ecoleNumeroTelephone = AgeScolaire.staticSetEcoleNumeroTelephone(requeteSite_, o);
 		this.ecoleNumeroTelephoneCouverture.dejaInitialise = true;
-		return (AgeScolaire)this;
 	}
 	public static String staticSetEcoleNumeroTelephone(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -1730,7 +1738,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrEcoleNumeroTelephone(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqEcoleNumeroTelephone(RequeteSiteFrFR requeteSite_, String o) {
@@ -1784,10 +1792,9 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 	public String getEcoleForm() {
 		return ecoleForm;
 	}
-	public AgeScolaire setEcoleForm(String o) {
+	public void setEcoleForm(String o) {
 		this.ecoleForm = AgeScolaire.staticSetEcoleForm(requeteSite_, o);
 		this.ecoleFormCouverture.dejaInitialise = true;
-		return (AgeScolaire)this;
 	}
 	public static String staticSetEcoleForm(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -1807,7 +1814,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrEcoleForm(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqEcoleForm(RequeteSiteFrFR requeteSite_, String o) {
@@ -1867,10 +1874,9 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		this.ecoleNumero = ecoleNumero;
 		this.ecoleNumeroCouverture.dejaInitialise = true;
 	}
-	public AgeScolaire setEcoleNumero(String o) {
+	public void setEcoleNumero(String o) {
 		this.ecoleNumero = AgeScolaire.staticSetEcoleNumero(requeteSite_, o);
 		this.ecoleNumeroCouverture.dejaInitialise = true;
-		return (AgeScolaire)this;
 	}
 	public static Integer staticSetEcoleNumero(RequeteSiteFrFR requeteSite_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -1892,7 +1898,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrEcoleNumero(RequeteSiteFrFR requeteSite_, Integer o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqEcoleNumero(RequeteSiteFrFR requeteSite_, String o) {
@@ -1946,10 +1952,9 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 	public String getEcoleAdministrateurNom() {
 		return ecoleAdministrateurNom;
 	}
-	public AgeScolaire setEcoleAdministrateurNom(String o) {
+	public void setEcoleAdministrateurNom(String o) {
 		this.ecoleAdministrateurNom = AgeScolaire.staticSetEcoleAdministrateurNom(requeteSite_, o);
 		this.ecoleAdministrateurNomCouverture.dejaInitialise = true;
-		return (AgeScolaire)this;
 	}
 	public static String staticSetEcoleAdministrateurNom(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -1969,7 +1974,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrEcoleAdministrateurNom(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqEcoleAdministrateurNom(RequeteSiteFrFR requeteSite_, String o) {
@@ -2029,10 +2034,9 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		this.anneeDebut = anneeDebut;
 		this.anneeDebutCouverture.dejaInitialise = true;
 	}
-	public AgeScolaire setAnneeDebut(String o) {
+	public void setAnneeDebut(String o) {
 		this.anneeDebut = AgeScolaire.staticSetAnneeDebut(requeteSite_, o);
 		this.anneeDebutCouverture.dejaInitialise = true;
-		return (AgeScolaire)this;
 	}
 	public static Integer staticSetAnneeDebut(RequeteSiteFrFR requeteSite_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -2054,7 +2058,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrAnneeDebut(RequeteSiteFrFR requeteSite_, Integer o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqAnneeDebut(RequeteSiteFrFR requeteSite_, String o) {
@@ -2114,10 +2118,9 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		this.anneeFin = anneeFin;
 		this.anneeFinCouverture.dejaInitialise = true;
 	}
-	public AgeScolaire setAnneeFin(String o) {
+	public void setAnneeFin(String o) {
 		this.anneeFin = AgeScolaire.staticSetAnneeFin(requeteSite_, o);
 		this.anneeFinCouverture.dejaInitialise = true;
-		return (AgeScolaire)this;
 	}
 	public static Integer staticSetAnneeFin(RequeteSiteFrFR requeteSite_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -2139,7 +2142,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrAnneeFin(RequeteSiteFrFR requeteSite_, Integer o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqAnneeFin(RequeteSiteFrFR requeteSite_, String o) {
@@ -2201,24 +2204,21 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		this.saisonDateDebut = saisonDateDebut;
 		this.saisonDateDebutCouverture.dejaInitialise = true;
 	}
-	public AgeScolaire setSaisonDateDebut(Instant o) {
+	public void setSaisonDateDebut(Instant o) {
 		this.saisonDateDebut = o == null ? null : LocalDate.from(o);
 		this.saisonDateDebutCouverture.dejaInitialise = true;
-		return (AgeScolaire)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
-	public AgeScolaire setSaisonDateDebut(String o) {
+	public void setSaisonDateDebut(String o) {
 		this.saisonDateDebut = AgeScolaire.staticSetSaisonDateDebut(requeteSite_, o);
 		this.saisonDateDebutCouverture.dejaInitialise = true;
-		return (AgeScolaire)this;
 	}
 	public static LocalDate staticSetSaisonDateDebut(RequeteSiteFrFR requeteSite_, String o) {
 		return o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 	}
-	public AgeScolaire setSaisonDateDebut(Date o) {
+	public void setSaisonDateDebut(Date o) {
 		this.saisonDateDebut = o == null ? null : o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
 		this.saisonDateDebutCouverture.dejaInitialise = true;
-		return (AgeScolaire)this;
 	}
 	protected AgeScolaire saisonDateDebutInit() {
 		if(!saisonDateDebutCouverture.dejaInitialise) {
@@ -2295,10 +2295,9 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		this.anneeFraisInscription = anneeFraisInscription;
 		this.anneeFraisInscriptionCouverture.dejaInitialise = true;
 	}
-	public AgeScolaire setAnneeFraisInscription(String o) {
+	public void setAnneeFraisInscription(String o) {
 		this.anneeFraisInscription = AgeScolaire.staticSetAnneeFraisInscription(requeteSite_, o);
 		this.anneeFraisInscriptionCouverture.dejaInitialise = true;
-		return (AgeScolaire)this;
 	}
 	public static BigDecimal staticSetAnneeFraisInscription(RequeteSiteFrFR requeteSite_, String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
@@ -2306,15 +2305,13 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		return null;
 	}
-	public AgeScolaire setAnneeFraisInscription(Double o) {
+	public void setAnneeFraisInscription(Double o) {
 			this.anneeFraisInscription = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.anneeFraisInscriptionCouverture.dejaInitialise = true;
-		return (AgeScolaire)this;
 	}
-	public AgeScolaire setAnneeFraisInscription(Integer o) {
+	public void setAnneeFraisInscription(Integer o) {
 			this.anneeFraisInscription = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.anneeFraisInscriptionCouverture.dejaInitialise = true;
-		return (AgeScolaire)this;
 	}
 	protected AgeScolaire anneeFraisInscriptionInit() {
 		if(!anneeFraisInscriptionCouverture.dejaInitialise) {
@@ -2331,7 +2328,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrAnneeFraisInscription(RequeteSiteFrFR requeteSite_, Double o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqAnneeFraisInscription(RequeteSiteFrFR requeteSite_, String o) {
@@ -2385,10 +2382,9 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 	public String getAnneeNomCourt() {
 		return anneeNomCourt;
 	}
-	public AgeScolaire setAnneeNomCourt(String o) {
+	public void setAnneeNomCourt(String o) {
 		this.anneeNomCourt = AgeScolaire.staticSetAnneeNomCourt(requeteSite_, o);
 		this.anneeNomCourtCouverture.dejaInitialise = true;
-		return (AgeScolaire)this;
 	}
 	public static String staticSetAnneeNomCourt(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -2408,7 +2404,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrAnneeNomCourt(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqAnneeNomCourt(RequeteSiteFrFR requeteSite_, String o) {
@@ -2462,10 +2458,9 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 	public String getAnneeNomComplet() {
 		return anneeNomComplet;
 	}
-	public AgeScolaire setAnneeNomComplet(String o) {
+	public void setAnneeNomComplet(String o) {
 		this.anneeNomComplet = AgeScolaire.staticSetAnneeNomComplet(requeteSite_, o);
 		this.anneeNomCompletCouverture.dejaInitialise = true;
-		return (AgeScolaire)this;
 	}
 	public static String staticSetAnneeNomComplet(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -2485,7 +2480,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrAnneeNomComplet(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqAnneeNomComplet(RequeteSiteFrFR requeteSite_, String o) {
@@ -2547,24 +2542,21 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		this.sessionDateDebut = sessionDateDebut;
 		this.sessionDateDebutCouverture.dejaInitialise = true;
 	}
-	public AgeScolaire setSessionDateDebut(Instant o) {
+	public void setSessionDateDebut(Instant o) {
 		this.sessionDateDebut = o == null ? null : LocalDate.from(o);
 		this.sessionDateDebutCouverture.dejaInitialise = true;
-		return (AgeScolaire)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
-	public AgeScolaire setSessionDateDebut(String o) {
+	public void setSessionDateDebut(String o) {
 		this.sessionDateDebut = AgeScolaire.staticSetSessionDateDebut(requeteSite_, o);
 		this.sessionDateDebutCouverture.dejaInitialise = true;
-		return (AgeScolaire)this;
 	}
 	public static LocalDate staticSetSessionDateDebut(RequeteSiteFrFR requeteSite_, String o) {
 		return o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 	}
-	public AgeScolaire setSessionDateDebut(Date o) {
+	public void setSessionDateDebut(Date o) {
 		this.sessionDateDebut = o == null ? null : o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
 		this.sessionDateDebutCouverture.dejaInitialise = true;
-		return (AgeScolaire)this;
 	}
 	protected AgeScolaire sessionDateDebutInit() {
 		if(!sessionDateDebutCouverture.dejaInitialise) {
@@ -2643,24 +2635,21 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		this.sessionDateFin = sessionDateFin;
 		this.sessionDateFinCouverture.dejaInitialise = true;
 	}
-	public AgeScolaire setSessionDateFin(Instant o) {
+	public void setSessionDateFin(Instant o) {
 		this.sessionDateFin = o == null ? null : LocalDate.from(o);
 		this.sessionDateFinCouverture.dejaInitialise = true;
-		return (AgeScolaire)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
-	public AgeScolaire setSessionDateFin(String o) {
+	public void setSessionDateFin(String o) {
 		this.sessionDateFin = AgeScolaire.staticSetSessionDateFin(requeteSite_, o);
 		this.sessionDateFinCouverture.dejaInitialise = true;
-		return (AgeScolaire)this;
 	}
 	public static LocalDate staticSetSessionDateFin(RequeteSiteFrFR requeteSite_, String o) {
 		return o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 	}
-	public AgeScolaire setSessionDateFin(Date o) {
+	public void setSessionDateFin(Date o) {
 		this.sessionDateFin = o == null ? null : o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
 		this.sessionDateFinCouverture.dejaInitialise = true;
-		return (AgeScolaire)this;
 	}
 	protected AgeScolaire sessionDateFinInit() {
 		if(!sessionDateFinCouverture.dejaInitialise) {
@@ -2737,10 +2726,9 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		this.ageDebut = ageDebut;
 		this.ageDebutCouverture.dejaInitialise = true;
 	}
-	public AgeScolaire setAgeDebut(String o) {
+	public void setAgeDebut(String o) {
 		this.ageDebut = AgeScolaire.staticSetAgeDebut(requeteSite_, o);
 		this.ageDebutCouverture.dejaInitialise = true;
-		return (AgeScolaire)this;
 	}
 	public static Integer staticSetAgeDebut(RequeteSiteFrFR requeteSite_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -2762,7 +2750,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrAgeDebut(RequeteSiteFrFR requeteSite_, Integer o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqAgeDebut(RequeteSiteFrFR requeteSite_, String o) {
@@ -2894,10 +2882,9 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		this.ageFin = ageFin;
 		this.ageFinCouverture.dejaInitialise = true;
 	}
-	public AgeScolaire setAgeFin(String o) {
+	public void setAgeFin(String o) {
 		this.ageFin = AgeScolaire.staticSetAgeFin(requeteSite_, o);
 		this.ageFinCouverture.dejaInitialise = true;
-		return (AgeScolaire)this;
 	}
 	public static Integer staticSetAgeFin(RequeteSiteFrFR requeteSite_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -2919,7 +2906,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrAgeFin(RequeteSiteFrFR requeteSite_, Integer o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqAgeFin(RequeteSiteFrFR requeteSite_, String o) {
@@ -3045,10 +3032,9 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 	public String getAgeNomCourt() {
 		return ageNomCourt;
 	}
-	public AgeScolaire setAgeNomCourt(String o) {
+	public void setAgeNomCourt(String o) {
 		this.ageNomCourt = AgeScolaire.staticSetAgeNomCourt(requeteSite_, o);
 		this.ageNomCourtCouverture.dejaInitialise = true;
-		return (AgeScolaire)this;
 	}
 	public static String staticSetAgeNomCourt(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -3068,7 +3054,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrAgeNomCourt(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqAgeNomCourt(RequeteSiteFrFR requeteSite_, String o) {
@@ -3122,10 +3108,9 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 	public String getAgeNomComplet() {
 		return ageNomComplet;
 	}
-	public AgeScolaire setAgeNomComplet(String o) {
+	public void setAgeNomComplet(String o) {
 		this.ageNomComplet = AgeScolaire.staticSetAgeNomComplet(requeteSite_, o);
 		this.ageNomCompletCouverture.dejaInitialise = true;
-		return (AgeScolaire)this;
 	}
 	public static String staticSetAgeNomComplet(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -3145,7 +3130,7 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrAgeNomComplet(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqAgeNomComplet(RequeteSiteFrFR requeteSite_, String o) {
@@ -3471,9 +3456,9 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		case "ageCle":
 			return AgeScolaire.staticSolrAgeCle(requeteSite_, (Long)o);
 		case "inscriptionCles":
-			return AgeScolaire.staticSolrInscriptionCles(requeteSite_, (List<Long>)o);
+			return AgeScolaire.staticSolrInscriptionCles(requeteSite_, (Long)o);
 		case "blocCles":
-			return AgeScolaire.staticSolrBlocCles(requeteSite_, (List<Long>)o);
+			return AgeScolaire.staticSolrBlocCles(requeteSite_, (Long)o);
 		case "scolaireTri":
 			return AgeScolaire.staticSolrScolaireTri(requeteSite_, (Integer)o);
 		case "ecoleTri":
@@ -3547,9 +3532,9 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 		case "ageCle":
 			return AgeScolaire.staticSolrStrAgeCle(requeteSite_, (Long)o);
 		case "inscriptionCles":
-			return AgeScolaire.staticSolrStrInscriptionCles(requeteSite_, (List<Long>)o);
+			return AgeScolaire.staticSolrStrInscriptionCles(requeteSite_, (Long)o);
 		case "blocCles":
-			return AgeScolaire.staticSolrStrBlocCles(requeteSite_, (List<Long>)o);
+			return AgeScolaire.staticSolrStrBlocCles(requeteSite_, (Long)o);
 		case "scolaireTri":
 			return AgeScolaire.staticSolrStrScolaireTri(requeteSite_, (Integer)o);
 		case "ecoleTri":

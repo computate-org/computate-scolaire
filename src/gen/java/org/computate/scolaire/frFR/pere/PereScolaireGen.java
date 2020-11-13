@@ -134,7 +134,7 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrPereCle(RequeteSiteFrFR requeteSite_, Long o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPereCle(RequeteSiteFrFR requeteSite_, String o) {
@@ -194,7 +194,15 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 		this.inscriptionCles = inscriptionCles;
 		this.inscriptionClesCouverture.dejaInitialise = true;
 	}
-	public static List<Long> staticSetInscriptionCles(RequeteSiteFrFR requeteSite_, String o) {
+	public void setInscriptionCles(String o) {
+		Long l = PereScolaire.staticSetInscriptionCles(requeteSite_, o);
+		if(l != null)
+			addInscriptionCles(l);
+		this.inscriptionClesCouverture.dejaInitialise = true;
+	}
+	public static Long staticSetInscriptionCles(RequeteSiteFrFR requeteSite_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Long.parseLong(o);
 		return null;
 	}
 	public PereScolaire addInscriptionCles(Long...objets) {
@@ -230,12 +238,12 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 		return (PereScolaire)this;
 	}
 
-	public static List<Long> staticSolrInscriptionCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
+	public static Long staticSolrInscriptionCles(RequeteSiteFrFR requeteSite_, Long o) {
 		return o;
 	}
 
-	public static String staticSolrStrInscriptionCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
-			return o == null ? null : o.toString();
+	public static String staticSolrStrInscriptionCles(RequeteSiteFrFR requeteSite_, Long o) {
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqInscriptionCles(RequeteSiteFrFR requeteSite_, String o) {
@@ -243,7 +251,11 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 	}
 
 	public List<Long> solrInscriptionCles() {
-		return PereScolaire.staticSolrInscriptionCles(requeteSite_, inscriptionCles);
+		List<Long> l = new ArrayList<Long>();
+		for(Long o : inscriptionCles) {
+			l.add(PereScolaire.staticSolrInscriptionCles(requeteSite_, o));
+		}
+		return l;
 	}
 
 	public String strInscriptionCles() {
@@ -393,7 +405,7 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrFamilleTri(RequeteSiteFrFR requeteSite_, Integer o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqFamilleTri(RequeteSiteFrFR requeteSite_, String o) {
@@ -477,7 +489,7 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrPereTri(RequeteSiteFrFR requeteSite_, Integer o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPereTri(RequeteSiteFrFR requeteSite_, String o) {
@@ -629,7 +641,15 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 		this.utilisateurCles = utilisateurCles;
 		this.utilisateurClesCouverture.dejaInitialise = true;
 	}
-	public static List<Long> staticSetUtilisateurCles(RequeteSiteFrFR requeteSite_, String o) {
+	public void setUtilisateurCles(String o) {
+		Long l = PereScolaire.staticSetUtilisateurCles(requeteSite_, o);
+		if(l != null)
+			addUtilisateurCles(l);
+		this.utilisateurClesCouverture.dejaInitialise = true;
+	}
+	public static Long staticSetUtilisateurCles(RequeteSiteFrFR requeteSite_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Long.parseLong(o);
 		return null;
 	}
 	public PereScolaire addUtilisateurCles(Long...objets) {
@@ -665,12 +685,12 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 		return (PereScolaire)this;
 	}
 
-	public static List<Long> staticSolrUtilisateurCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
+	public static Long staticSolrUtilisateurCles(RequeteSiteFrFR requeteSite_, Long o) {
 		return o;
 	}
 
-	public static String staticSolrStrUtilisateurCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
-			return o == null ? null : o.toString();
+	public static String staticSolrStrUtilisateurCles(RequeteSiteFrFR requeteSite_, Long o) {
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqUtilisateurCles(RequeteSiteFrFR requeteSite_, String o) {
@@ -678,7 +698,11 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 	}
 
 	public List<Long> solrUtilisateurCles() {
-		return PereScolaire.staticSolrUtilisateurCles(requeteSite_, utilisateurCles);
+		List<Long> l = new ArrayList<Long>();
+		for(Long o : utilisateurCles) {
+			l.add(PereScolaire.staticSolrUtilisateurCles(requeteSite_, o));
+		}
+		return l;
 	}
 
 	public String strUtilisateurCles() {
@@ -730,7 +754,15 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 		this.ecoleCles = ecoleCles;
 		this.ecoleClesCouverture.dejaInitialise = true;
 	}
-	public static List<Long> staticSetEcoleCles(RequeteSiteFrFR requeteSite_, String o) {
+	public void setEcoleCles(String o) {
+		Long l = PereScolaire.staticSetEcoleCles(requeteSite_, o);
+		if(l != null)
+			addEcoleCles(l);
+		this.ecoleClesCouverture.dejaInitialise = true;
+	}
+	public static Long staticSetEcoleCles(RequeteSiteFrFR requeteSite_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Long.parseLong(o);
 		return null;
 	}
 	public PereScolaire addEcoleCles(Long...objets) {
@@ -766,12 +798,12 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 		return (PereScolaire)this;
 	}
 
-	public static List<Long> staticSolrEcoleCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
+	public static Long staticSolrEcoleCles(RequeteSiteFrFR requeteSite_, Long o) {
 		return o;
 	}
 
-	public static String staticSolrStrEcoleCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
-			return o == null ? null : o.toString();
+	public static String staticSolrStrEcoleCles(RequeteSiteFrFR requeteSite_, Long o) {
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqEcoleCles(RequeteSiteFrFR requeteSite_, String o) {
@@ -779,7 +811,11 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 	}
 
 	public List<Long> solrEcoleCles() {
-		return PereScolaire.staticSolrEcoleCles(requeteSite_, ecoleCles);
+		List<Long> l = new ArrayList<Long>();
+		for(Long o : ecoleCles) {
+			l.add(PereScolaire.staticSolrEcoleCles(requeteSite_, o));
+		}
+		return l;
 	}
 
 	public String strEcoleCles() {
@@ -831,7 +867,15 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 		this.anneeCles = anneeCles;
 		this.anneeClesCouverture.dejaInitialise = true;
 	}
-	public static List<Long> staticSetAnneeCles(RequeteSiteFrFR requeteSite_, String o) {
+	public void setAnneeCles(String o) {
+		Long l = PereScolaire.staticSetAnneeCles(requeteSite_, o);
+		if(l != null)
+			addAnneeCles(l);
+		this.anneeClesCouverture.dejaInitialise = true;
+	}
+	public static Long staticSetAnneeCles(RequeteSiteFrFR requeteSite_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Long.parseLong(o);
 		return null;
 	}
 	public PereScolaire addAnneeCles(Long...objets) {
@@ -867,12 +911,12 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 		return (PereScolaire)this;
 	}
 
-	public static List<Long> staticSolrAnneeCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
+	public static Long staticSolrAnneeCles(RequeteSiteFrFR requeteSite_, Long o) {
 		return o;
 	}
 
-	public static String staticSolrStrAnneeCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
-			return o == null ? null : o.toString();
+	public static String staticSolrStrAnneeCles(RequeteSiteFrFR requeteSite_, Long o) {
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqAnneeCles(RequeteSiteFrFR requeteSite_, String o) {
@@ -880,7 +924,11 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 	}
 
 	public List<Long> solrAnneeCles() {
-		return PereScolaire.staticSolrAnneeCles(requeteSite_, anneeCles);
+		List<Long> l = new ArrayList<Long>();
+		for(Long o : anneeCles) {
+			l.add(PereScolaire.staticSolrAnneeCles(requeteSite_, o));
+		}
+		return l;
 	}
 
 	public String strAnneeCles() {
@@ -932,7 +980,15 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 		this.saisonCles = saisonCles;
 		this.saisonClesCouverture.dejaInitialise = true;
 	}
-	public static List<Long> staticSetSaisonCles(RequeteSiteFrFR requeteSite_, String o) {
+	public void setSaisonCles(String o) {
+		Long l = PereScolaire.staticSetSaisonCles(requeteSite_, o);
+		if(l != null)
+			addSaisonCles(l);
+		this.saisonClesCouverture.dejaInitialise = true;
+	}
+	public static Long staticSetSaisonCles(RequeteSiteFrFR requeteSite_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Long.parseLong(o);
 		return null;
 	}
 	public PereScolaire addSaisonCles(Long...objets) {
@@ -968,12 +1024,12 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 		return (PereScolaire)this;
 	}
 
-	public static List<Long> staticSolrSaisonCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
+	public static Long staticSolrSaisonCles(RequeteSiteFrFR requeteSite_, Long o) {
 		return o;
 	}
 
-	public static String staticSolrStrSaisonCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
-			return o == null ? null : o.toString();
+	public static String staticSolrStrSaisonCles(RequeteSiteFrFR requeteSite_, Long o) {
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqSaisonCles(RequeteSiteFrFR requeteSite_, String o) {
@@ -981,7 +1037,11 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 	}
 
 	public List<Long> solrSaisonCles() {
-		return PereScolaire.staticSolrSaisonCles(requeteSite_, saisonCles);
+		List<Long> l = new ArrayList<Long>();
+		for(Long o : saisonCles) {
+			l.add(PereScolaire.staticSolrSaisonCles(requeteSite_, o));
+		}
+		return l;
 	}
 
 	public String strSaisonCles() {
@@ -1033,7 +1093,15 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 		this.sessionCles = sessionCles;
 		this.sessionClesCouverture.dejaInitialise = true;
 	}
-	public static List<Long> staticSetSessionCles(RequeteSiteFrFR requeteSite_, String o) {
+	public void setSessionCles(String o) {
+		Long l = PereScolaire.staticSetSessionCles(requeteSite_, o);
+		if(l != null)
+			addSessionCles(l);
+		this.sessionClesCouverture.dejaInitialise = true;
+	}
+	public static Long staticSetSessionCles(RequeteSiteFrFR requeteSite_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Long.parseLong(o);
 		return null;
 	}
 	public PereScolaire addSessionCles(Long...objets) {
@@ -1069,12 +1137,12 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 		return (PereScolaire)this;
 	}
 
-	public static List<Long> staticSolrSessionCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
+	public static Long staticSolrSessionCles(RequeteSiteFrFR requeteSite_, Long o) {
 		return o;
 	}
 
-	public static String staticSolrStrSessionCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
-			return o == null ? null : o.toString();
+	public static String staticSolrStrSessionCles(RequeteSiteFrFR requeteSite_, Long o) {
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqSessionCles(RequeteSiteFrFR requeteSite_, String o) {
@@ -1082,7 +1150,11 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 	}
 
 	public List<Long> solrSessionCles() {
-		return PereScolaire.staticSolrSessionCles(requeteSite_, sessionCles);
+		List<Long> l = new ArrayList<Long>();
+		for(Long o : sessionCles) {
+			l.add(PereScolaire.staticSolrSessionCles(requeteSite_, o));
+		}
+		return l;
 	}
 
 	public String strSessionCles() {
@@ -1134,7 +1206,15 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 		this.ageCles = ageCles;
 		this.ageClesCouverture.dejaInitialise = true;
 	}
-	public static List<Long> staticSetAgeCles(RequeteSiteFrFR requeteSite_, String o) {
+	public void setAgeCles(String o) {
+		Long l = PereScolaire.staticSetAgeCles(requeteSite_, o);
+		if(l != null)
+			addAgeCles(l);
+		this.ageClesCouverture.dejaInitialise = true;
+	}
+	public static Long staticSetAgeCles(RequeteSiteFrFR requeteSite_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Long.parseLong(o);
 		return null;
 	}
 	public PereScolaire addAgeCles(Long...objets) {
@@ -1170,12 +1250,12 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 		return (PereScolaire)this;
 	}
 
-	public static List<Long> staticSolrAgeCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
+	public static Long staticSolrAgeCles(RequeteSiteFrFR requeteSite_, Long o) {
 		return o;
 	}
 
-	public static String staticSolrStrAgeCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
-			return o == null ? null : o.toString();
+	public static String staticSolrStrAgeCles(RequeteSiteFrFR requeteSite_, Long o) {
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqAgeCles(RequeteSiteFrFR requeteSite_, String o) {
@@ -1183,7 +1263,11 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 	}
 
 	public List<Long> solrAgeCles() {
-		return PereScolaire.staticSolrAgeCles(requeteSite_, ageCles);
+		List<Long> l = new ArrayList<Long>();
+		for(Long o : ageCles) {
+			l.add(PereScolaire.staticSolrAgeCles(requeteSite_, o));
+		}
+		return l;
 	}
 
 	public String strAgeCles() {
@@ -1251,7 +1335,7 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrPersonnePrenom(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPersonnePrenom(RequeteSiteFrFR requeteSite_, String o) {
@@ -1397,7 +1481,7 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrPersonnePrenomPrefere(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPersonnePrenomPrefere(RequeteSiteFrFR requeteSite_, String o) {
@@ -1543,7 +1627,7 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrFamilleNom(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqFamilleNom(RequeteSiteFrFR requeteSite_, String o) {
@@ -1689,7 +1773,7 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrPersonneNomComplet(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPersonneNomComplet(RequeteSiteFrFR requeteSite_, String o) {
@@ -1765,7 +1849,7 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrPersonneNomCompletPrefere(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPersonneNomCompletPrefere(RequeteSiteFrFR requeteSite_, String o) {
@@ -1841,7 +1925,7 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrPersonneNomFormel(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPersonneNomFormel(RequeteSiteFrFR requeteSite_, String o) {
@@ -1917,7 +2001,7 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrPersonneOccupation(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPersonneOccupation(RequeteSiteFrFR requeteSite_, String o) {
@@ -2063,7 +2147,7 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrPersonneNumeroTelephone(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPersonneNumeroTelephone(RequeteSiteFrFR requeteSite_, String o) {
@@ -2209,7 +2293,7 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrPersonneMail(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPersonneMail(RequeteSiteFrFR requeteSite_, String o) {
@@ -2355,7 +2439,7 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrPersonneRelation(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPersonneRelation(RequeteSiteFrFR requeteSite_, String o) {
@@ -2436,7 +2520,7 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrPersonneSms(RequeteSiteFrFR requeteSite_, Boolean o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPersonneSms(RequeteSiteFrFR requeteSite_, String o) {
@@ -2582,7 +2666,7 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrPersonneRecevoirMail(RequeteSiteFrFR requeteSite_, Boolean o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPersonneRecevoirMail(RequeteSiteFrFR requeteSite_, String o) {
@@ -2728,7 +2812,7 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrPersonneContactUrgence(RequeteSiteFrFR requeteSite_, Boolean o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPersonneContactUrgence(RequeteSiteFrFR requeteSite_, String o) {
@@ -2874,7 +2958,7 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrPersonneChercher(RequeteSiteFrFR requeteSite_, Boolean o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPersonneChercher(RequeteSiteFrFR requeteSite_, String o) {
@@ -3015,7 +3099,7 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrPhoto(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPhoto(RequeteSiteFrFR requeteSite_, String o) {
@@ -3155,7 +3239,7 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrPereNomComplet(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPereNomComplet(RequeteSiteFrFR requeteSite_, String o) {
@@ -3444,23 +3528,23 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 		case "pereCle":
 			return PereScolaire.staticSolrPereCle(requeteSite_, (Long)o);
 		case "inscriptionCles":
-			return PereScolaire.staticSolrInscriptionCles(requeteSite_, (List<Long>)o);
+			return PereScolaire.staticSolrInscriptionCles(requeteSite_, (Long)o);
 		case "familleTri":
 			return PereScolaire.staticSolrFamilleTri(requeteSite_, (Integer)o);
 		case "pereTri":
 			return PereScolaire.staticSolrPereTri(requeteSite_, (Integer)o);
 		case "utilisateurCles":
-			return PereScolaire.staticSolrUtilisateurCles(requeteSite_, (List<Long>)o);
+			return PereScolaire.staticSolrUtilisateurCles(requeteSite_, (Long)o);
 		case "ecoleCles":
-			return PereScolaire.staticSolrEcoleCles(requeteSite_, (List<Long>)o);
+			return PereScolaire.staticSolrEcoleCles(requeteSite_, (Long)o);
 		case "anneeCles":
-			return PereScolaire.staticSolrAnneeCles(requeteSite_, (List<Long>)o);
+			return PereScolaire.staticSolrAnneeCles(requeteSite_, (Long)o);
 		case "saisonCles":
-			return PereScolaire.staticSolrSaisonCles(requeteSite_, (List<Long>)o);
+			return PereScolaire.staticSolrSaisonCles(requeteSite_, (Long)o);
 		case "sessionCles":
-			return PereScolaire.staticSolrSessionCles(requeteSite_, (List<Long>)o);
+			return PereScolaire.staticSolrSessionCles(requeteSite_, (Long)o);
 		case "ageCles":
-			return PereScolaire.staticSolrAgeCles(requeteSite_, (List<Long>)o);
+			return PereScolaire.staticSolrAgeCles(requeteSite_, (Long)o);
 		case "personnePrenom":
 			return PereScolaire.staticSolrPersonnePrenom(requeteSite_, (String)o);
 		case "personnePrenomPrefere":
@@ -3510,23 +3594,23 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 		case "pereCle":
 			return PereScolaire.staticSolrStrPereCle(requeteSite_, (Long)o);
 		case "inscriptionCles":
-			return PereScolaire.staticSolrStrInscriptionCles(requeteSite_, (List<Long>)o);
+			return PereScolaire.staticSolrStrInscriptionCles(requeteSite_, (Long)o);
 		case "familleTri":
 			return PereScolaire.staticSolrStrFamilleTri(requeteSite_, (Integer)o);
 		case "pereTri":
 			return PereScolaire.staticSolrStrPereTri(requeteSite_, (Integer)o);
 		case "utilisateurCles":
-			return PereScolaire.staticSolrStrUtilisateurCles(requeteSite_, (List<Long>)o);
+			return PereScolaire.staticSolrStrUtilisateurCles(requeteSite_, (Long)o);
 		case "ecoleCles":
-			return PereScolaire.staticSolrStrEcoleCles(requeteSite_, (List<Long>)o);
+			return PereScolaire.staticSolrStrEcoleCles(requeteSite_, (Long)o);
 		case "anneeCles":
-			return PereScolaire.staticSolrStrAnneeCles(requeteSite_, (List<Long>)o);
+			return PereScolaire.staticSolrStrAnneeCles(requeteSite_, (Long)o);
 		case "saisonCles":
-			return PereScolaire.staticSolrStrSaisonCles(requeteSite_, (List<Long>)o);
+			return PereScolaire.staticSolrStrSaisonCles(requeteSite_, (Long)o);
 		case "sessionCles":
-			return PereScolaire.staticSolrStrSessionCles(requeteSite_, (List<Long>)o);
+			return PereScolaire.staticSolrStrSessionCles(requeteSite_, (Long)o);
 		case "ageCles":
-			return PereScolaire.staticSolrStrAgeCles(requeteSite_, (List<Long>)o);
+			return PereScolaire.staticSolrStrAgeCles(requeteSite_, (Long)o);
 		case "personnePrenom":
 			return PereScolaire.staticSolrStrPersonnePrenom(requeteSite_, (String)o);
 		case "personnePrenomPrefere":

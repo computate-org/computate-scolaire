@@ -110,10 +110,9 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		this.designPageCle = designPageCle;
 		this.designPageCleCouverture.dejaInitialise = true;
 	}
-	public DesignPage setDesignPageCle(String o) {
+	public void setDesignPageCle(String o) {
 		this.designPageCle = DesignPage.staticSetDesignPageCle(requeteSite_, o);
 		this.designPageCleCouverture.dejaInitialise = true;
-		return (DesignPage)this;
 	}
 	public static Long staticSetDesignPageCle(RequeteSiteFrFR requeteSite_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -135,7 +134,7 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrDesignPageCle(RequeteSiteFrFR requeteSite_, Long o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqDesignPageCle(RequeteSiteFrFR requeteSite_, String o) {
@@ -195,7 +194,15 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		this.designEnfantCles = designEnfantCles;
 		this.designEnfantClesCouverture.dejaInitialise = true;
 	}
-	public static List<Long> staticSetDesignEnfantCles(RequeteSiteFrFR requeteSite_, String o) {
+	public void setDesignEnfantCles(String o) {
+		Long l = DesignPage.staticSetDesignEnfantCles(requeteSite_, o);
+		if(l != null)
+			addDesignEnfantCles(l);
+		this.designEnfantClesCouverture.dejaInitialise = true;
+	}
+	public static Long staticSetDesignEnfantCles(RequeteSiteFrFR requeteSite_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Long.parseLong(o);
 		return null;
 	}
 	public DesignPage addDesignEnfantCles(Long...objets) {
@@ -209,13 +216,12 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 			this.designEnfantCles.add(o);
 		return (DesignPage)this;
 	}
-	public DesignPage setDesignEnfantCles(JsonArray objets) {
+	public void setDesignEnfantCles(JsonArray objets) {
 		designEnfantCles.clear();
 		for(int i = 0; i < objets.size(); i++) {
 			Long o = objets.getLong(i);
 			addDesignEnfantCles(o);
 		}
-		return (DesignPage)this;
 	}
 	public DesignPage addDesignEnfantCles(String o) {
 		if(NumberUtils.isParsable(o)) {
@@ -232,12 +238,12 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		return (DesignPage)this;
 	}
 
-	public static List<Long> staticSolrDesignEnfantCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
+	public static Long staticSolrDesignEnfantCles(RequeteSiteFrFR requeteSite_, Long o) {
 		return o;
 	}
 
-	public static String staticSolrStrDesignEnfantCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
-			return o == null ? null : o.toString();
+	public static String staticSolrStrDesignEnfantCles(RequeteSiteFrFR requeteSite_, Long o) {
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqDesignEnfantCles(RequeteSiteFrFR requeteSite_, String o) {
@@ -245,7 +251,11 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 	}
 
 	public List<Long> solrDesignEnfantCles() {
-		return DesignPage.staticSolrDesignEnfantCles(requeteSite_, designEnfantCles);
+		List<Long> l = new ArrayList<Long>();
+		for(Long o : designEnfantCles) {
+			l.add(DesignPage.staticSolrDesignEnfantCles(requeteSite_, o));
+		}
+		return l;
 	}
 
 	public String strDesignEnfantCles() {
@@ -297,7 +307,15 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		this.designParentCles = designParentCles;
 		this.designParentClesCouverture.dejaInitialise = true;
 	}
-	public static List<Long> staticSetDesignParentCles(RequeteSiteFrFR requeteSite_, String o) {
+	public void setDesignParentCles(String o) {
+		Long l = DesignPage.staticSetDesignParentCles(requeteSite_, o);
+		if(l != null)
+			addDesignParentCles(l);
+		this.designParentClesCouverture.dejaInitialise = true;
+	}
+	public static Long staticSetDesignParentCles(RequeteSiteFrFR requeteSite_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Long.parseLong(o);
 		return null;
 	}
 	public DesignPage addDesignParentCles(Long...objets) {
@@ -311,13 +329,12 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 			this.designParentCles.add(o);
 		return (DesignPage)this;
 	}
-	public DesignPage setDesignParentCles(JsonArray objets) {
+	public void setDesignParentCles(JsonArray objets) {
 		designParentCles.clear();
 		for(int i = 0; i < objets.size(); i++) {
 			Long o = objets.getLong(i);
 			addDesignParentCles(o);
 		}
-		return (DesignPage)this;
 	}
 	public DesignPage addDesignParentCles(String o) {
 		if(NumberUtils.isParsable(o)) {
@@ -334,12 +351,12 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		return (DesignPage)this;
 	}
 
-	public static List<Long> staticSolrDesignParentCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
+	public static Long staticSolrDesignParentCles(RequeteSiteFrFR requeteSite_, Long o) {
 		return o;
 	}
 
-	public static String staticSolrStrDesignParentCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
-			return o == null ? null : o.toString();
+	public static String staticSolrStrDesignParentCles(RequeteSiteFrFR requeteSite_, Long o) {
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqDesignParentCles(RequeteSiteFrFR requeteSite_, String o) {
@@ -347,7 +364,11 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 	}
 
 	public List<Long> solrDesignParentCles() {
-		return DesignPage.staticSolrDesignParentCles(requeteSite_, designParentCles);
+		List<Long> l = new ArrayList<Long>();
+		for(Long o : designParentCles) {
+			l.add(DesignPage.staticSolrDesignParentCles(requeteSite_, o));
+		}
+		return l;
 	}
 
 	public String strDesignParentCles() {
@@ -474,7 +495,15 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		this.partHtmlCles = partHtmlCles;
 		this.partHtmlClesCouverture.dejaInitialise = true;
 	}
-	public static List<Long> staticSetPartHtmlCles(RequeteSiteFrFR requeteSite_, String o) {
+	public void setPartHtmlCles(String o) {
+		Long l = DesignPage.staticSetPartHtmlCles(requeteSite_, o);
+		if(l != null)
+			addPartHtmlCles(l);
+		this.partHtmlClesCouverture.dejaInitialise = true;
+	}
+	public static Long staticSetPartHtmlCles(RequeteSiteFrFR requeteSite_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Long.parseLong(o);
 		return null;
 	}
 	public DesignPage addPartHtmlCles(Long...objets) {
@@ -488,13 +517,12 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 			this.partHtmlCles.add(o);
 		return (DesignPage)this;
 	}
-	public DesignPage setPartHtmlCles(JsonArray objets) {
+	public void setPartHtmlCles(JsonArray objets) {
 		partHtmlCles.clear();
 		for(int i = 0; i < objets.size(); i++) {
 			Long o = objets.getLong(i);
 			addPartHtmlCles(o);
 		}
-		return (DesignPage)this;
 	}
 	public DesignPage addPartHtmlCles(String o) {
 		if(NumberUtils.isParsable(o)) {
@@ -511,12 +539,12 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		return (DesignPage)this;
 	}
 
-	public static List<Long> staticSolrPartHtmlCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
+	public static Long staticSolrPartHtmlCles(RequeteSiteFrFR requeteSite_, Long o) {
 		return o;
 	}
 
-	public static String staticSolrStrPartHtmlCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
-			return o == null ? null : o.toString();
+	public static String staticSolrStrPartHtmlCles(RequeteSiteFrFR requeteSite_, Long o) {
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPartHtmlCles(RequeteSiteFrFR requeteSite_, String o) {
@@ -524,7 +552,11 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 	}
 
 	public List<Long> solrPartHtmlCles() {
-		return DesignPage.staticSolrPartHtmlCles(requeteSite_, partHtmlCles);
+		List<Long> l = new ArrayList<Long>();
+		for(Long o : partHtmlCles) {
+			l.add(DesignPage.staticSolrPartHtmlCles(requeteSite_, o));
+		}
+		return l;
 	}
 
 	public String strPartHtmlCles() {
@@ -645,10 +677,9 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 	public String getDesignPageNomComplet() {
 		return designPageNomComplet;
 	}
-	public DesignPage setDesignPageNomComplet(String o) {
+	public void setDesignPageNomComplet(String o) {
 		this.designPageNomComplet = DesignPage.staticSetDesignPageNomComplet(requeteSite_, o);
 		this.designPageNomCompletCouverture.dejaInitialise = true;
-		return (DesignPage)this;
 	}
 	public static String staticSetDesignPageNomComplet(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -668,7 +699,7 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrDesignPageNomComplet(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqDesignPageNomComplet(RequeteSiteFrFR requeteSite_, String o) {
@@ -793,10 +824,9 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		this.designCache = designCache;
 		this.designCacheCouverture.dejaInitialise = true;
 	}
-	public DesignPage setDesignCache(String o) {
+	public void setDesignCache(String o) {
 		this.designCache = DesignPage.staticSetDesignCache(requeteSite_, o);
 		this.designCacheCouverture.dejaInitialise = true;
-		return (DesignPage)this;
 	}
 	public static Boolean staticSetDesignCache(RequeteSiteFrFR requeteSite_, String o) {
 		return Boolean.parseBoolean(o);
@@ -816,7 +846,7 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrDesignCache(RequeteSiteFrFR requeteSite_, Boolean o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqDesignCache(RequeteSiteFrFR requeteSite_, String o) {
@@ -938,10 +968,9 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		this.designAdmin = designAdmin;
 		this.designAdminCouverture.dejaInitialise = true;
 	}
-	public DesignPage setDesignAdmin(String o) {
+	public void setDesignAdmin(String o) {
 		this.designAdmin = DesignPage.staticSetDesignAdmin(requeteSite_, o);
 		this.designAdminCouverture.dejaInitialise = true;
-		return (DesignPage)this;
 	}
 	public static Boolean staticSetDesignAdmin(RequeteSiteFrFR requeteSite_, String o) {
 		return Boolean.parseBoolean(o);
@@ -961,7 +990,7 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrDesignAdmin(RequeteSiteFrFR requeteSite_, Boolean o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqDesignAdmin(RequeteSiteFrFR requeteSite_, String o) {
@@ -1083,10 +1112,9 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		this.designIgnorerNomEnfantVide = designIgnorerNomEnfantVide;
 		this.designIgnorerNomEnfantVideCouverture.dejaInitialise = true;
 	}
-	public DesignPage setDesignIgnorerNomEnfantVide(String o) {
+	public void setDesignIgnorerNomEnfantVide(String o) {
 		this.designIgnorerNomEnfantVide = DesignPage.staticSetDesignIgnorerNomEnfantVide(requeteSite_, o);
 		this.designIgnorerNomEnfantVideCouverture.dejaInitialise = true;
-		return (DesignPage)this;
 	}
 	public static Boolean staticSetDesignIgnorerNomEnfantVide(RequeteSiteFrFR requeteSite_, String o) {
 		return Boolean.parseBoolean(o);
@@ -1106,7 +1134,7 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrDesignIgnorerNomEnfantVide(RequeteSiteFrFR requeteSite_, Boolean o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqDesignIgnorerNomEnfantVide(RequeteSiteFrFR requeteSite_, String o) {
@@ -1228,10 +1256,9 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		this.designIgnorerPaiementsPasEnSouffrance = designIgnorerPaiementsPasEnSouffrance;
 		this.designIgnorerPaiementsPasEnSouffranceCouverture.dejaInitialise = true;
 	}
-	public DesignPage setDesignIgnorerPaiementsPasEnSouffrance(String o) {
+	public void setDesignIgnorerPaiementsPasEnSouffrance(String o) {
 		this.designIgnorerPaiementsPasEnSouffrance = DesignPage.staticSetDesignIgnorerPaiementsPasEnSouffrance(requeteSite_, o);
 		this.designIgnorerPaiementsPasEnSouffranceCouverture.dejaInitialise = true;
-		return (DesignPage)this;
 	}
 	public static Boolean staticSetDesignIgnorerPaiementsPasEnSouffrance(RequeteSiteFrFR requeteSite_, String o) {
 		return Boolean.parseBoolean(o);
@@ -1251,7 +1278,7 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrDesignIgnorerPaiementsPasEnSouffrance(RequeteSiteFrFR requeteSite_, Boolean o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqDesignIgnorerPaiementsPasEnSouffrance(RequeteSiteFrFR requeteSite_, String o) {
@@ -1373,10 +1400,9 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		this.designIgnorerPaiementsEnSouffrance = designIgnorerPaiementsEnSouffrance;
 		this.designIgnorerPaiementsEnSouffranceCouverture.dejaInitialise = true;
 	}
-	public DesignPage setDesignIgnorerPaiementsEnSouffrance(String o) {
+	public void setDesignIgnorerPaiementsEnSouffrance(String o) {
 		this.designIgnorerPaiementsEnSouffrance = DesignPage.staticSetDesignIgnorerPaiementsEnSouffrance(requeteSite_, o);
 		this.designIgnorerPaiementsEnSouffranceCouverture.dejaInitialise = true;
-		return (DesignPage)this;
 	}
 	public static Boolean staticSetDesignIgnorerPaiementsEnSouffrance(RequeteSiteFrFR requeteSite_, String o) {
 		return Boolean.parseBoolean(o);
@@ -1396,7 +1422,7 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrDesignIgnorerPaiementsEnSouffrance(RequeteSiteFrFR requeteSite_, Boolean o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqDesignIgnorerPaiementsEnSouffrance(RequeteSiteFrFR requeteSite_, String o) {
@@ -1518,10 +1544,9 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		this.designFiltrerInscriptionCle = designFiltrerInscriptionCle;
 		this.designFiltrerInscriptionCleCouverture.dejaInitialise = true;
 	}
-	public DesignPage setDesignFiltrerInscriptionCle(String o) {
+	public void setDesignFiltrerInscriptionCle(String o) {
 		this.designFiltrerInscriptionCle = DesignPage.staticSetDesignFiltrerInscriptionCle(requeteSite_, o);
 		this.designFiltrerInscriptionCleCouverture.dejaInitialise = true;
-		return (DesignPage)this;
 	}
 	public static Boolean staticSetDesignFiltrerInscriptionCle(RequeteSiteFrFR requeteSite_, String o) {
 		return Boolean.parseBoolean(o);
@@ -1541,7 +1566,7 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrDesignFiltrerInscriptionCle(RequeteSiteFrFR requeteSite_, Boolean o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqDesignFiltrerInscriptionCle(RequeteSiteFrFR requeteSite_, String o) {
@@ -1663,10 +1688,9 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		this.designInscriptionTriMoisJourDeNaissance = designInscriptionTriMoisJourDeNaissance;
 		this.designInscriptionTriMoisJourDeNaissanceCouverture.dejaInitialise = true;
 	}
-	public DesignPage setDesignInscriptionTriMoisJourDeNaissance(String o) {
+	public void setDesignInscriptionTriMoisJourDeNaissance(String o) {
 		this.designInscriptionTriMoisJourDeNaissance = DesignPage.staticSetDesignInscriptionTriMoisJourDeNaissance(requeteSite_, o);
 		this.designInscriptionTriMoisJourDeNaissanceCouverture.dejaInitialise = true;
-		return (DesignPage)this;
 	}
 	public static Boolean staticSetDesignInscriptionTriMoisJourDeNaissance(RequeteSiteFrFR requeteSite_, String o) {
 		return Boolean.parseBoolean(o);
@@ -1686,7 +1710,7 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrDesignInscriptionTriMoisJourDeNaissance(RequeteSiteFrFR requeteSite_, Boolean o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqDesignInscriptionTriMoisJourDeNaissance(RequeteSiteFrFR requeteSite_, String o) {
@@ -1808,10 +1832,9 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		this.designInscriptionTriNomGroupe = designInscriptionTriNomGroupe;
 		this.designInscriptionTriNomGroupeCouverture.dejaInitialise = true;
 	}
-	public DesignPage setDesignInscriptionTriNomGroupe(String o) {
+	public void setDesignInscriptionTriNomGroupe(String o) {
 		this.designInscriptionTriNomGroupe = DesignPage.staticSetDesignInscriptionTriNomGroupe(requeteSite_, o);
 		this.designInscriptionTriNomGroupeCouverture.dejaInitialise = true;
-		return (DesignPage)this;
 	}
 	public static Boolean staticSetDesignInscriptionTriNomGroupe(RequeteSiteFrFR requeteSite_, String o) {
 		return Boolean.parseBoolean(o);
@@ -1831,7 +1854,7 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrDesignInscriptionTriNomGroupe(RequeteSiteFrFR requeteSite_, Boolean o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqDesignInscriptionTriNomGroupe(RequeteSiteFrFR requeteSite_, String o) {
@@ -1953,10 +1976,9 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		this.designInscriptionTriNomEnfant = designInscriptionTriNomEnfant;
 		this.designInscriptionTriNomEnfantCouverture.dejaInitialise = true;
 	}
-	public DesignPage setDesignInscriptionTriNomEnfant(String o) {
+	public void setDesignInscriptionTriNomEnfant(String o) {
 		this.designInscriptionTriNomEnfant = DesignPage.staticSetDesignInscriptionTriNomEnfant(requeteSite_, o);
 		this.designInscriptionTriNomEnfantCouverture.dejaInitialise = true;
-		return (DesignPage)this;
 	}
 	public static Boolean staticSetDesignInscriptionTriNomEnfant(RequeteSiteFrFR requeteSite_, String o) {
 		return Boolean.parseBoolean(o);
@@ -1976,7 +1998,7 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrDesignInscriptionTriNomEnfant(RequeteSiteFrFR requeteSite_, Boolean o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqDesignInscriptionTriNomEnfant(RequeteSiteFrFR requeteSite_, String o) {
@@ -2098,10 +2120,9 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		this.rechercherAnnees = rechercherAnnees;
 		this.rechercherAnneesCouverture.dejaInitialise = true;
 	}
-	public DesignPage setRechercherAnnees(String o) {
+	public void setRechercherAnnees(String o) {
 		this.rechercherAnnees = DesignPage.staticSetRechercherAnnees(requeteSite_, o);
 		this.rechercherAnneesCouverture.dejaInitialise = true;
-		return (DesignPage)this;
 	}
 	public static Boolean staticSetRechercherAnnees(RequeteSiteFrFR requeteSite_, String o) {
 		return Boolean.parseBoolean(o);
@@ -2121,7 +2142,7 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrRechercherAnnees(RequeteSiteFrFR requeteSite_, Boolean o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqRechercherAnnees(RequeteSiteFrFR requeteSite_, String o) {
@@ -2243,10 +2264,9 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		this.rechercherPaiements = rechercherPaiements;
 		this.rechercherPaiementsCouverture.dejaInitialise = true;
 	}
-	public DesignPage setRechercherPaiements(String o) {
+	public void setRechercherPaiements(String o) {
 		this.rechercherPaiements = DesignPage.staticSetRechercherPaiements(requeteSite_, o);
 		this.rechercherPaiementsCouverture.dejaInitialise = true;
-		return (DesignPage)this;
 	}
 	public static Boolean staticSetRechercherPaiements(RequeteSiteFrFR requeteSite_, String o) {
 		return Boolean.parseBoolean(o);
@@ -2266,7 +2286,7 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrRechercherPaiements(RequeteSiteFrFR requeteSite_, Boolean o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqRechercherPaiements(RequeteSiteFrFR requeteSite_, String o) {
@@ -2570,11 +2590,11 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		case "designPageCle":
 			return DesignPage.staticSolrDesignPageCle(requeteSite_, (Long)o);
 		case "designEnfantCles":
-			return DesignPage.staticSolrDesignEnfantCles(requeteSite_, (List<Long>)o);
+			return DesignPage.staticSolrDesignEnfantCles(requeteSite_, (Long)o);
 		case "designParentCles":
-			return DesignPage.staticSolrDesignParentCles(requeteSite_, (List<Long>)o);
+			return DesignPage.staticSolrDesignParentCles(requeteSite_, (Long)o);
 		case "partHtmlCles":
-			return DesignPage.staticSolrPartHtmlCles(requeteSite_, (List<Long>)o);
+			return DesignPage.staticSolrPartHtmlCles(requeteSite_, (Long)o);
 		case "designPageNomComplet":
 			return DesignPage.staticSolrDesignPageNomComplet(requeteSite_, (String)o);
 		case "designCache":
@@ -2616,11 +2636,11 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		case "designPageCle":
 			return DesignPage.staticSolrStrDesignPageCle(requeteSite_, (Long)o);
 		case "designEnfantCles":
-			return DesignPage.staticSolrStrDesignEnfantCles(requeteSite_, (List<Long>)o);
+			return DesignPage.staticSolrStrDesignEnfantCles(requeteSite_, (Long)o);
 		case "designParentCles":
-			return DesignPage.staticSolrStrDesignParentCles(requeteSite_, (List<Long>)o);
+			return DesignPage.staticSolrStrDesignParentCles(requeteSite_, (Long)o);
 		case "partHtmlCles":
-			return DesignPage.staticSolrStrPartHtmlCles(requeteSite_, (List<Long>)o);
+			return DesignPage.staticSolrStrPartHtmlCles(requeteSite_, (Long)o);
 		case "designPageNomComplet":
 			return DesignPage.staticSolrStrDesignPageNomComplet(requeteSite_, (String)o);
 		case "designCache":

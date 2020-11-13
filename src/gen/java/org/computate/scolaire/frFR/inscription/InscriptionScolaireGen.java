@@ -130,10 +130,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.inscriptionCle = inscriptionCle;
 		this.inscriptionCleCouverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setInscriptionCle(String o) {
+	public void setInscriptionCle(String o) {
 		this.inscriptionCle = InscriptionScolaire.staticSetInscriptionCle(requeteSite_, o);
 		this.inscriptionCleCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static Long staticSetInscriptionCle(RequeteSiteFrFR requeteSite_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -155,7 +154,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrInscriptionCle(RequeteSiteFrFR requeteSite_, Long o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqInscriptionCle(RequeteSiteFrFR requeteSite_, String o) {
@@ -215,10 +214,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.anneeCle = anneeCle;
 		this.anneeCleCouverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setAnneeCle(String o) {
+	public void setAnneeCle(String o) {
 		this.anneeCle = InscriptionScolaire.staticSetAnneeCle(requeteSite_, o);
 		this.anneeCleCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static Long staticSetAnneeCle(RequeteSiteFrFR requeteSite_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -240,7 +238,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrAnneeCle(RequeteSiteFrFR requeteSite_, Long o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqAnneeCle(RequeteSiteFrFR requeteSite_, String o) {
@@ -461,7 +459,15 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.blocCles = blocCles;
 		this.blocClesCouverture.dejaInitialise = true;
 	}
-	public static List<Long> staticSetBlocCles(RequeteSiteFrFR requeteSite_, String o) {
+	public void setBlocCles(String o) {
+		Long l = InscriptionScolaire.staticSetBlocCles(requeteSite_, o);
+		if(l != null)
+			addBlocCles(l);
+		this.blocClesCouverture.dejaInitialise = true;
+	}
+	public static Long staticSetBlocCles(RequeteSiteFrFR requeteSite_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Long.parseLong(o);
 		return null;
 	}
 	public InscriptionScolaire addBlocCles(Long...objets) {
@@ -475,13 +481,12 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			this.blocCles.add(o);
 		return (InscriptionScolaire)this;
 	}
-	public InscriptionScolaire setBlocCles(JsonArray objets) {
+	public void setBlocCles(JsonArray objets) {
 		blocCles.clear();
 		for(int i = 0; i < objets.size(); i++) {
 			Long o = objets.getLong(i);
 			addBlocCles(o);
 		}
-		return (InscriptionScolaire)this;
 	}
 	public InscriptionScolaire addBlocCles(String o) {
 		if(NumberUtils.isParsable(o)) {
@@ -498,12 +503,12 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return (InscriptionScolaire)this;
 	}
 
-	public static List<Long> staticSolrBlocCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
+	public static Long staticSolrBlocCles(RequeteSiteFrFR requeteSite_, Long o) {
 		return o;
 	}
 
-	public static String staticSolrStrBlocCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
-			return o == null ? null : o.toString();
+	public static String staticSolrStrBlocCles(RequeteSiteFrFR requeteSite_, Long o) {
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqBlocCles(RequeteSiteFrFR requeteSite_, String o) {
@@ -511,7 +516,11 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public List<Long> solrBlocCles() {
-		return InscriptionScolaire.staticSolrBlocCles(requeteSite_, blocCles);
+		List<Long> l = new ArrayList<Long>();
+		for(Long o : blocCles) {
+			l.add(InscriptionScolaire.staticSolrBlocCles(requeteSite_, o));
+		}
+		return l;
 	}
 
 	public String strBlocCles() {
@@ -682,7 +691,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.blocs_ = blocs_;
 		this.blocs_Couverture.dejaInitialise = true;
 	}
-	public static List<BlocScolaire> staticSetBlocs_(RequeteSiteFrFR requeteSite_, String o) {
+	public static BlocScolaire staticSetBlocs_(RequeteSiteFrFR requeteSite_, String o) {
 		return null;
 	}
 	public InscriptionScolaire addBlocs_(BlocScolaire...objets) {
@@ -735,7 +744,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.saisons_ = saisons_;
 		this.saisons_Couverture.dejaInitialise = true;
 	}
-	public static List<SaisonScolaire> staticSetSaisons_(RequeteSiteFrFR requeteSite_, String o) {
+	public static SaisonScolaire staticSetSaisons_(RequeteSiteFrFR requeteSite_, String o) {
 		return null;
 	}
 	public InscriptionScolaire addSaisons_(SaisonScolaire...objets) {
@@ -828,10 +837,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.ecoleCle = ecoleCle;
 		this.ecoleCleCouverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setEcoleCle(String o) {
+	public void setEcoleCle(String o) {
 		this.ecoleCle = InscriptionScolaire.staticSetEcoleCle(requeteSite_, o);
 		this.ecoleCleCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static Long staticSetEcoleCle(RequeteSiteFrFR requeteSite_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -853,7 +861,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrEcoleCle(RequeteSiteFrFR requeteSite_, Long o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqEcoleCle(RequeteSiteFrFR requeteSite_, String o) {
@@ -913,10 +921,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.sessionCle = sessionCle;
 		this.sessionCleCouverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setSessionCle(String o) {
+	public void setSessionCle(String o) {
 		this.sessionCle = InscriptionScolaire.staticSetSessionCle(requeteSite_, o);
 		this.sessionCleCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static Long staticSetSessionCle(RequeteSiteFrFR requeteSite_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -938,7 +945,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrSessionCle(RequeteSiteFrFR requeteSite_, Long o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqSessionCle(RequeteSiteFrFR requeteSite_, String o) {
@@ -998,10 +1005,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.ageCle = ageCle;
 		this.ageCleCouverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setAgeCle(String o) {
+	public void setAgeCle(String o) {
 		this.ageCle = InscriptionScolaire.staticSetAgeCle(requeteSite_, o);
 		this.ageCleCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static Long staticSetAgeCle(RequeteSiteFrFR requeteSite_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -1023,7 +1029,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrAgeCle(RequeteSiteFrFR requeteSite_, Long o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqAgeCle(RequeteSiteFrFR requeteSite_, String o) {
@@ -1083,10 +1089,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.blocCle = blocCle;
 		this.blocCleCouverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setBlocCle(String o) {
+	public void setBlocCle(String o) {
 		this.blocCle = InscriptionScolaire.staticSetBlocCle(requeteSite_, o);
 		this.blocCleCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static Long staticSetBlocCle(RequeteSiteFrFR requeteSite_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -1108,7 +1113,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrBlocCle(RequeteSiteFrFR requeteSite_, Long o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqBlocCle(RequeteSiteFrFR requeteSite_, String o) {
@@ -1168,10 +1173,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.enfantCle = enfantCle;
 		this.enfantCleCouverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setEnfantCle(String o) {
+	public void setEnfantCle(String o) {
 		this.enfantCle = InscriptionScolaire.staticSetEnfantCle(requeteSite_, o);
 		this.enfantCleCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static Long staticSetEnfantCle(RequeteSiteFrFR requeteSite_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -1193,7 +1197,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrEnfantCle(RequeteSiteFrFR requeteSite_, Long o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqEnfantCle(RequeteSiteFrFR requeteSite_, String o) {
@@ -1328,7 +1332,15 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.mereCles = mereCles;
 		this.mereClesCouverture.dejaInitialise = true;
 	}
-	public static List<Long> staticSetMereCles(RequeteSiteFrFR requeteSite_, String o) {
+	public void setMereCles(String o) {
+		Long l = InscriptionScolaire.staticSetMereCles(requeteSite_, o);
+		if(l != null)
+			addMereCles(l);
+		this.mereClesCouverture.dejaInitialise = true;
+	}
+	public static Long staticSetMereCles(RequeteSiteFrFR requeteSite_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Long.parseLong(o);
 		return null;
 	}
 	public InscriptionScolaire addMereCles(Long...objets) {
@@ -1342,13 +1354,12 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			this.mereCles.add(o);
 		return (InscriptionScolaire)this;
 	}
-	public InscriptionScolaire setMereCles(JsonArray objets) {
+	public void setMereCles(JsonArray objets) {
 		mereCles.clear();
 		for(int i = 0; i < objets.size(); i++) {
 			Long o = objets.getLong(i);
 			addMereCles(o);
 		}
-		return (InscriptionScolaire)this;
 	}
 	public InscriptionScolaire addMereCles(String o) {
 		if(NumberUtils.isParsable(o)) {
@@ -1365,12 +1376,12 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return (InscriptionScolaire)this;
 	}
 
-	public static List<Long> staticSolrMereCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
+	public static Long staticSolrMereCles(RequeteSiteFrFR requeteSite_, Long o) {
 		return o;
 	}
 
-	public static String staticSolrStrMereCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
-			return o == null ? null : o.toString();
+	public static String staticSolrStrMereCles(RequeteSiteFrFR requeteSite_, Long o) {
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqMereCles(RequeteSiteFrFR requeteSite_, String o) {
@@ -1378,7 +1389,11 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public List<Long> solrMereCles() {
-		return InscriptionScolaire.staticSolrMereCles(requeteSite_, mereCles);
+		List<Long> l = new ArrayList<Long>();
+		for(Long o : mereCles) {
+			l.add(InscriptionScolaire.staticSolrMereCles(requeteSite_, o));
+		}
+		return l;
 	}
 
 	public String strMereCles() {
@@ -1505,7 +1520,15 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.pereCles = pereCles;
 		this.pereClesCouverture.dejaInitialise = true;
 	}
-	public static List<Long> staticSetPereCles(RequeteSiteFrFR requeteSite_, String o) {
+	public void setPereCles(String o) {
+		Long l = InscriptionScolaire.staticSetPereCles(requeteSite_, o);
+		if(l != null)
+			addPereCles(l);
+		this.pereClesCouverture.dejaInitialise = true;
+	}
+	public static Long staticSetPereCles(RequeteSiteFrFR requeteSite_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Long.parseLong(o);
 		return null;
 	}
 	public InscriptionScolaire addPereCles(Long...objets) {
@@ -1519,13 +1542,12 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			this.pereCles.add(o);
 		return (InscriptionScolaire)this;
 	}
-	public InscriptionScolaire setPereCles(JsonArray objets) {
+	public void setPereCles(JsonArray objets) {
 		pereCles.clear();
 		for(int i = 0; i < objets.size(); i++) {
 			Long o = objets.getLong(i);
 			addPereCles(o);
 		}
-		return (InscriptionScolaire)this;
 	}
 	public InscriptionScolaire addPereCles(String o) {
 		if(NumberUtils.isParsable(o)) {
@@ -1542,12 +1564,12 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return (InscriptionScolaire)this;
 	}
 
-	public static List<Long> staticSolrPereCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
+	public static Long staticSolrPereCles(RequeteSiteFrFR requeteSite_, Long o) {
 		return o;
 	}
 
-	public static String staticSolrStrPereCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
-			return o == null ? null : o.toString();
+	public static String staticSolrStrPereCles(RequeteSiteFrFR requeteSite_, Long o) {
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPereCles(RequeteSiteFrFR requeteSite_, String o) {
@@ -1555,7 +1577,11 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public List<Long> solrPereCles() {
-		return InscriptionScolaire.staticSolrPereCles(requeteSite_, pereCles);
+		List<Long> l = new ArrayList<Long>();
+		for(Long o : pereCles) {
+			l.add(InscriptionScolaire.staticSolrPereCles(requeteSite_, o));
+		}
+		return l;
 	}
 
 	public String strPereCles() {
@@ -1682,7 +1708,15 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.gardienCles = gardienCles;
 		this.gardienClesCouverture.dejaInitialise = true;
 	}
-	public static List<Long> staticSetGardienCles(RequeteSiteFrFR requeteSite_, String o) {
+	public void setGardienCles(String o) {
+		Long l = InscriptionScolaire.staticSetGardienCles(requeteSite_, o);
+		if(l != null)
+			addGardienCles(l);
+		this.gardienClesCouverture.dejaInitialise = true;
+	}
+	public static Long staticSetGardienCles(RequeteSiteFrFR requeteSite_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Long.parseLong(o);
 		return null;
 	}
 	public InscriptionScolaire addGardienCles(Long...objets) {
@@ -1696,13 +1730,12 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			this.gardienCles.add(o);
 		return (InscriptionScolaire)this;
 	}
-	public InscriptionScolaire setGardienCles(JsonArray objets) {
+	public void setGardienCles(JsonArray objets) {
 		gardienCles.clear();
 		for(int i = 0; i < objets.size(); i++) {
 			Long o = objets.getLong(i);
 			addGardienCles(o);
 		}
-		return (InscriptionScolaire)this;
 	}
 	public InscriptionScolaire addGardienCles(String o) {
 		if(NumberUtils.isParsable(o)) {
@@ -1719,12 +1752,12 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return (InscriptionScolaire)this;
 	}
 
-	public static List<Long> staticSolrGardienCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
+	public static Long staticSolrGardienCles(RequeteSiteFrFR requeteSite_, Long o) {
 		return o;
 	}
 
-	public static String staticSolrStrGardienCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
-			return o == null ? null : o.toString();
+	public static String staticSolrStrGardienCles(RequeteSiteFrFR requeteSite_, Long o) {
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqGardienCles(RequeteSiteFrFR requeteSite_, String o) {
@@ -1732,7 +1765,11 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public List<Long> solrGardienCles() {
-		return InscriptionScolaire.staticSolrGardienCles(requeteSite_, gardienCles);
+		List<Long> l = new ArrayList<Long>();
+		for(Long o : gardienCles) {
+			l.add(InscriptionScolaire.staticSolrGardienCles(requeteSite_, o));
+		}
+		return l;
 	}
 
 	public String strGardienCles() {
@@ -1859,7 +1896,15 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.paiementCles = paiementCles;
 		this.paiementClesCouverture.dejaInitialise = true;
 	}
-	public static List<Long> staticSetPaiementCles(RequeteSiteFrFR requeteSite_, String o) {
+	public void setPaiementCles(String o) {
+		Long l = InscriptionScolaire.staticSetPaiementCles(requeteSite_, o);
+		if(l != null)
+			addPaiementCles(l);
+		this.paiementClesCouverture.dejaInitialise = true;
+	}
+	public static Long staticSetPaiementCles(RequeteSiteFrFR requeteSite_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Long.parseLong(o);
 		return null;
 	}
 	public InscriptionScolaire addPaiementCles(Long...objets) {
@@ -1873,13 +1918,12 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			this.paiementCles.add(o);
 		return (InscriptionScolaire)this;
 	}
-	public InscriptionScolaire setPaiementCles(JsonArray objets) {
+	public void setPaiementCles(JsonArray objets) {
 		paiementCles.clear();
 		for(int i = 0; i < objets.size(); i++) {
 			Long o = objets.getLong(i);
 			addPaiementCles(o);
 		}
-		return (InscriptionScolaire)this;
 	}
 	public InscriptionScolaire addPaiementCles(String o) {
 		if(NumberUtils.isParsable(o)) {
@@ -1896,12 +1940,12 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return (InscriptionScolaire)this;
 	}
 
-	public static List<Long> staticSolrPaiementCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
+	public static Long staticSolrPaiementCles(RequeteSiteFrFR requeteSite_, Long o) {
 		return o;
 	}
 
-	public static String staticSolrStrPaiementCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
-			return o == null ? null : o.toString();
+	public static String staticSolrStrPaiementCles(RequeteSiteFrFR requeteSite_, Long o) {
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPaiementCles(RequeteSiteFrFR requeteSite_, String o) {
@@ -1909,7 +1953,11 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public List<Long> solrPaiementCles() {
-		return InscriptionScolaire.staticSolrPaiementCles(requeteSite_, paiementCles);
+		List<Long> l = new ArrayList<Long>();
+		for(Long o : paiementCles) {
+			l.add(InscriptionScolaire.staticSolrPaiementCles(requeteSite_, o));
+		}
+		return l;
 	}
 
 	public String strPaiementCles() {
@@ -2039,10 +2087,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.formInscriptionCle = formInscriptionCle;
 		this.formInscriptionCleCouverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setFormInscriptionCle(String o) {
+	public void setFormInscriptionCle(String o) {
 		this.formInscriptionCle = InscriptionScolaire.staticSetFormInscriptionCle(requeteSite_, o);
 		this.formInscriptionCleCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static Long staticSetFormInscriptionCle(RequeteSiteFrFR requeteSite_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -2064,7 +2111,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrFormInscriptionCle(RequeteSiteFrFR requeteSite_, Long o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqFormInscriptionCle(RequeteSiteFrFR requeteSite_, String o) {
@@ -2124,7 +2171,15 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.utilisateurCles = utilisateurCles;
 		this.utilisateurClesCouverture.dejaInitialise = true;
 	}
-	public static List<Long> staticSetUtilisateurCles(RequeteSiteFrFR requeteSite_, String o) {
+	public void setUtilisateurCles(String o) {
+		Long l = InscriptionScolaire.staticSetUtilisateurCles(requeteSite_, o);
+		if(l != null)
+			addUtilisateurCles(l);
+		this.utilisateurClesCouverture.dejaInitialise = true;
+	}
+	public static Long staticSetUtilisateurCles(RequeteSiteFrFR requeteSite_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Long.parseLong(o);
 		return null;
 	}
 	public InscriptionScolaire addUtilisateurCles(Long...objets) {
@@ -2138,13 +2193,12 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			this.utilisateurCles.add(o);
 		return (InscriptionScolaire)this;
 	}
-	public InscriptionScolaire setUtilisateurCles(JsonArray objets) {
+	public void setUtilisateurCles(JsonArray objets) {
 		utilisateurCles.clear();
 		for(int i = 0; i < objets.size(); i++) {
 			Long o = objets.getLong(i);
 			addUtilisateurCles(o);
 		}
-		return (InscriptionScolaire)this;
 	}
 	public InscriptionScolaire addUtilisateurCles(String o) {
 		if(NumberUtils.isParsable(o)) {
@@ -2161,12 +2215,12 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return (InscriptionScolaire)this;
 	}
 
-	public static List<Long> staticSolrUtilisateurCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
+	public static Long staticSolrUtilisateurCles(RequeteSiteFrFR requeteSite_, Long o) {
 		return o;
 	}
 
-	public static String staticSolrStrUtilisateurCles(RequeteSiteFrFR requeteSite_, List<Long> o) {
-			return o == null ? null : o.toString();
+	public static String staticSolrStrUtilisateurCles(RequeteSiteFrFR requeteSite_, Long o) {
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqUtilisateurCles(RequeteSiteFrFR requeteSite_, String o) {
@@ -2174,7 +2228,11 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public List<Long> solrUtilisateurCles() {
-		return InscriptionScolaire.staticSolrUtilisateurCles(requeteSite_, utilisateurCles);
+		List<Long> l = new ArrayList<Long>();
+		for(Long o : utilisateurCles) {
+			l.add(InscriptionScolaire.staticSolrUtilisateurCles(requeteSite_, o));
+		}
+		return l;
 	}
 
 	public String strUtilisateurCles() {
@@ -2304,10 +2362,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.scolaireTri = scolaireTri;
 		this.scolaireTriCouverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setScolaireTri(String o) {
+	public void setScolaireTri(String o) {
 		this.scolaireTri = InscriptionScolaire.staticSetScolaireTri(requeteSite_, o);
 		this.scolaireTriCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static Integer staticSetScolaireTri(RequeteSiteFrFR requeteSite_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -2329,7 +2386,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrScolaireTri(RequeteSiteFrFR requeteSite_, Integer o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqScolaireTri(RequeteSiteFrFR requeteSite_, String o) {
@@ -2389,10 +2446,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.ecoleTri = ecoleTri;
 		this.ecoleTriCouverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setEcoleTri(String o) {
+	public void setEcoleTri(String o) {
 		this.ecoleTri = InscriptionScolaire.staticSetEcoleTri(requeteSite_, o);
 		this.ecoleTriCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static Integer staticSetEcoleTri(RequeteSiteFrFR requeteSite_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -2414,7 +2470,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrEcoleTri(RequeteSiteFrFR requeteSite_, Integer o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqEcoleTri(RequeteSiteFrFR requeteSite_, String o) {
@@ -2474,10 +2530,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.anneeTri = anneeTri;
 		this.anneeTriCouverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setAnneeTri(String o) {
+	public void setAnneeTri(String o) {
 		this.anneeTri = InscriptionScolaire.staticSetAnneeTri(requeteSite_, o);
 		this.anneeTriCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static Integer staticSetAnneeTri(RequeteSiteFrFR requeteSite_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -2499,7 +2554,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrAnneeTri(RequeteSiteFrFR requeteSite_, Integer o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqAnneeTri(RequeteSiteFrFR requeteSite_, String o) {
@@ -2559,10 +2614,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.saisonTri = saisonTri;
 		this.saisonTriCouverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setSaisonTri(String o) {
+	public void setSaisonTri(String o) {
 		this.saisonTri = InscriptionScolaire.staticSetSaisonTri(requeteSite_, o);
 		this.saisonTriCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static Integer staticSetSaisonTri(RequeteSiteFrFR requeteSite_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -2584,7 +2638,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrSaisonTri(RequeteSiteFrFR requeteSite_, Integer o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqSaisonTri(RequeteSiteFrFR requeteSite_, String o) {
@@ -2644,10 +2698,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.sessionTri = sessionTri;
 		this.sessionTriCouverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setSessionTri(String o) {
+	public void setSessionTri(String o) {
 		this.sessionTri = InscriptionScolaire.staticSetSessionTri(requeteSite_, o);
 		this.sessionTriCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static Integer staticSetSessionTri(RequeteSiteFrFR requeteSite_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -2669,7 +2722,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrSessionTri(RequeteSiteFrFR requeteSite_, Integer o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqSessionTri(RequeteSiteFrFR requeteSite_, String o) {
@@ -2729,10 +2782,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.ageTri = ageTri;
 		this.ageTriCouverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setAgeTri(String o) {
+	public void setAgeTri(String o) {
 		this.ageTri = InscriptionScolaire.staticSetAgeTri(requeteSite_, o);
 		this.ageTriCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static Integer staticSetAgeTri(RequeteSiteFrFR requeteSite_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -2754,7 +2806,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrAgeTri(RequeteSiteFrFR requeteSite_, Integer o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqAgeTri(RequeteSiteFrFR requeteSite_, String o) {
@@ -2938,7 +2990,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.meres = meres;
 		this.meresCouverture.dejaInitialise = true;
 	}
-	public static List<MereScolaire> staticSetMeres(RequeteSiteFrFR requeteSite_, String o) {
+	public static MereScolaire staticSetMeres(RequeteSiteFrFR requeteSite_, String o) {
 		return null;
 	}
 	public InscriptionScolaire addMeres(MereScolaire...objets) {
@@ -3032,7 +3084,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.peres = peres;
 		this.peresCouverture.dejaInitialise = true;
 	}
-	public static List<PereScolaire> staticSetPeres(RequeteSiteFrFR requeteSite_, String o) {
+	public static PereScolaire staticSetPeres(RequeteSiteFrFR requeteSite_, String o) {
 		return null;
 	}
 	public InscriptionScolaire addPeres(PereScolaire...objets) {
@@ -3126,7 +3178,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.gardiens = gardiens;
 		this.gardiensCouverture.dejaInitialise = true;
 	}
-	public static List<GardienScolaire> staticSetGardiens(RequeteSiteFrFR requeteSite_, String o) {
+	public static GardienScolaire staticSetGardiens(RequeteSiteFrFR requeteSite_, String o) {
 		return null;
 	}
 	public InscriptionScolaire addGardiens(GardienScolaire...objets) {
@@ -3255,10 +3307,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public String getEnfantPrenom() {
 		return enfantPrenom;
 	}
-	public InscriptionScolaire setEnfantPrenom(String o) {
+	public void setEnfantPrenom(String o) {
 		this.enfantPrenom = InscriptionScolaire.staticSetEnfantPrenom(requeteSite_, o);
 		this.enfantPrenomCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static String staticSetEnfantPrenom(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -3278,7 +3329,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrEnfantPrenom(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqEnfantPrenom(RequeteSiteFrFR requeteSite_, String o) {
@@ -3332,10 +3383,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public String getEnfantPrenomPrefere() {
 		return enfantPrenomPrefere;
 	}
-	public InscriptionScolaire setEnfantPrenomPrefere(String o) {
+	public void setEnfantPrenomPrefere(String o) {
 		this.enfantPrenomPrefere = InscriptionScolaire.staticSetEnfantPrenomPrefere(requeteSite_, o);
 		this.enfantPrenomPrefereCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static String staticSetEnfantPrenomPrefere(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -3355,7 +3405,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrEnfantPrenomPrefere(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqEnfantPrenomPrefere(RequeteSiteFrFR requeteSite_, String o) {
@@ -3409,10 +3459,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public String getEnfantFamilleNom() {
 		return enfantFamilleNom;
 	}
-	public InscriptionScolaire setEnfantFamilleNom(String o) {
+	public void setEnfantFamilleNom(String o) {
 		this.enfantFamilleNom = InscriptionScolaire.staticSetEnfantFamilleNom(requeteSite_, o);
 		this.enfantFamilleNomCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static String staticSetEnfantFamilleNom(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -3432,7 +3481,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrEnfantFamilleNom(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqEnfantFamilleNom(RequeteSiteFrFR requeteSite_, String o) {
@@ -3486,10 +3535,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public String getMerePrenom() {
 		return merePrenom;
 	}
-	public InscriptionScolaire setMerePrenom(String o) {
+	public void setMerePrenom(String o) {
 		this.merePrenom = InscriptionScolaire.staticSetMerePrenom(requeteSite_, o);
 		this.merePrenomCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static String staticSetMerePrenom(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -3509,7 +3557,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrMerePrenom(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqMerePrenom(RequeteSiteFrFR requeteSite_, String o) {
@@ -3563,10 +3611,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public String getMerePrenomPrefere() {
 		return merePrenomPrefere;
 	}
-	public InscriptionScolaire setMerePrenomPrefere(String o) {
+	public void setMerePrenomPrefere(String o) {
 		this.merePrenomPrefere = InscriptionScolaire.staticSetMerePrenomPrefere(requeteSite_, o);
 		this.merePrenomPrefereCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static String staticSetMerePrenomPrefere(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -3586,7 +3633,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrMerePrenomPrefere(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqMerePrenomPrefere(RequeteSiteFrFR requeteSite_, String o) {
@@ -3640,10 +3687,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public String getMereNomCompletPrefere() {
 		return mereNomCompletPrefere;
 	}
-	public InscriptionScolaire setMereNomCompletPrefere(String o) {
+	public void setMereNomCompletPrefere(String o) {
 		this.mereNomCompletPrefere = InscriptionScolaire.staticSetMereNomCompletPrefere(requeteSite_, o);
 		this.mereNomCompletPrefereCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static String staticSetMereNomCompletPrefere(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -3663,7 +3709,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrMereNomCompletPrefere(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqMereNomCompletPrefere(RequeteSiteFrFR requeteSite_, String o) {
@@ -3717,10 +3763,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public String getPerePrenom() {
 		return perePrenom;
 	}
-	public InscriptionScolaire setPerePrenom(String o) {
+	public void setPerePrenom(String o) {
 		this.perePrenom = InscriptionScolaire.staticSetPerePrenom(requeteSite_, o);
 		this.perePrenomCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static String staticSetPerePrenom(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -3740,7 +3785,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrPerePrenom(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPerePrenom(RequeteSiteFrFR requeteSite_, String o) {
@@ -3794,10 +3839,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public String getPerePrenomPrefere() {
 		return perePrenomPrefere;
 	}
-	public InscriptionScolaire setPerePrenomPrefere(String o) {
+	public void setPerePrenomPrefere(String o) {
 		this.perePrenomPrefere = InscriptionScolaire.staticSetPerePrenomPrefere(requeteSite_, o);
 		this.perePrenomPrefereCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static String staticSetPerePrenomPrefere(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -3817,7 +3861,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrPerePrenomPrefere(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPerePrenomPrefere(RequeteSiteFrFR requeteSite_, String o) {
@@ -3871,10 +3915,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public String getPereNomCompletPrefere() {
 		return pereNomCompletPrefere;
 	}
-	public InscriptionScolaire setPereNomCompletPrefere(String o) {
+	public void setPereNomCompletPrefere(String o) {
 		this.pereNomCompletPrefere = InscriptionScolaire.staticSetPereNomCompletPrefere(requeteSite_, o);
 		this.pereNomCompletPrefereCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static String staticSetPereNomCompletPrefere(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -3894,7 +3937,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrPereNomCompletPrefere(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPereNomCompletPrefere(RequeteSiteFrFR requeteSite_, String o) {
@@ -3948,10 +3991,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public String getEnfantNomComplet() {
 		return enfantNomComplet;
 	}
-	public InscriptionScolaire setEnfantNomComplet(String o) {
+	public void setEnfantNomComplet(String o) {
 		this.enfantNomComplet = InscriptionScolaire.staticSetEnfantNomComplet(requeteSite_, o);
 		this.enfantNomCompletCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static String staticSetEnfantNomComplet(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -3971,7 +4013,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrEnfantNomComplet(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqEnfantNomComplet(RequeteSiteFrFR requeteSite_, String o) {
@@ -4096,10 +4138,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public String getEnfantNomCompletPrefere() {
 		return enfantNomCompletPrefere;
 	}
-	public InscriptionScolaire setEnfantNomCompletPrefere(String o) {
+	public void setEnfantNomCompletPrefere(String o) {
 		this.enfantNomCompletPrefere = InscriptionScolaire.staticSetEnfantNomCompletPrefere(requeteSite_, o);
 		this.enfantNomCompletPrefereCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static String staticSetEnfantNomCompletPrefere(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -4119,7 +4160,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrEnfantNomCompletPrefere(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqEnfantNomCompletPrefere(RequeteSiteFrFR requeteSite_, String o) {
@@ -4252,24 +4293,21 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.enfantDateNaissance = enfantDateNaissance;
 		this.enfantDateNaissanceCouverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setEnfantDateNaissance(Instant o) {
+	public void setEnfantDateNaissance(Instant o) {
 		this.enfantDateNaissance = o == null ? null : LocalDate.from(o);
 		this.enfantDateNaissanceCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
-	public InscriptionScolaire setEnfantDateNaissance(String o) {
+	public void setEnfantDateNaissance(String o) {
 		this.enfantDateNaissance = InscriptionScolaire.staticSetEnfantDateNaissance(requeteSite_, o);
 		this.enfantDateNaissanceCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static LocalDate staticSetEnfantDateNaissance(RequeteSiteFrFR requeteSite_, String o) {
 		return o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 	}
-	public InscriptionScolaire setEnfantDateNaissance(Date o) {
+	public void setEnfantDateNaissance(Date o) {
 		this.enfantDateNaissance = o == null ? null : o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
 		this.enfantDateNaissanceCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	protected InscriptionScolaire enfantDateNaissanceInit() {
 		if(!enfantDateNaissanceCouverture.dejaInitialise) {
@@ -4410,10 +4448,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.enfantDateNaissanceDAnnee = enfantDateNaissanceDAnnee;
 		this.enfantDateNaissanceDAnneeCouverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setEnfantDateNaissanceDAnnee(String o) {
+	public void setEnfantDateNaissanceDAnnee(String o) {
 		this.enfantDateNaissanceDAnnee = InscriptionScolaire.staticSetEnfantDateNaissanceDAnnee(requeteSite_, o);
 		this.enfantDateNaissanceDAnneeCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static Integer staticSetEnfantDateNaissanceDAnnee(RequeteSiteFrFR requeteSite_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -4435,7 +4472,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrEnfantDateNaissanceDAnnee(RequeteSiteFrFR requeteSite_, Integer o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqEnfantDateNaissanceDAnnee(RequeteSiteFrFR requeteSite_, String o) {
@@ -4489,10 +4526,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public String getEnfantDateNaissanceMoisDAnnee() {
 		return enfantDateNaissanceMoisDAnnee;
 	}
-	public InscriptionScolaire setEnfantDateNaissanceMoisDAnnee(String o) {
+	public void setEnfantDateNaissanceMoisDAnnee(String o) {
 		this.enfantDateNaissanceMoisDAnnee = InscriptionScolaire.staticSetEnfantDateNaissanceMoisDAnnee(requeteSite_, o);
 		this.enfantDateNaissanceMoisDAnneeCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static String staticSetEnfantDateNaissanceMoisDAnnee(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -4512,7 +4548,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrEnfantDateNaissanceMoisDAnnee(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqEnfantDateNaissanceMoisDAnnee(RequeteSiteFrFR requeteSite_, String o) {
@@ -4566,10 +4602,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public String getEnfantDateNaissanceJourDeSemaine() {
 		return enfantDateNaissanceJourDeSemaine;
 	}
-	public InscriptionScolaire setEnfantDateNaissanceJourDeSemaine(String o) {
+	public void setEnfantDateNaissanceJourDeSemaine(String o) {
 		this.enfantDateNaissanceJourDeSemaine = InscriptionScolaire.staticSetEnfantDateNaissanceJourDeSemaine(requeteSite_, o);
 		this.enfantDateNaissanceJourDeSemaineCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static String staticSetEnfantDateNaissanceJourDeSemaine(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -4589,7 +4624,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrEnfantDateNaissanceJourDeSemaine(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqEnfantDateNaissanceJourDeSemaine(RequeteSiteFrFR requeteSite_, String o) {
@@ -4649,10 +4684,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.enfantMoisNaissance = enfantMoisNaissance;
 		this.enfantMoisNaissanceCouverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setEnfantMoisNaissance(String o) {
+	public void setEnfantMoisNaissance(String o) {
 		this.enfantMoisNaissance = InscriptionScolaire.staticSetEnfantMoisNaissance(requeteSite_, o);
 		this.enfantMoisNaissanceCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static Integer staticSetEnfantMoisNaissance(RequeteSiteFrFR requeteSite_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -4674,7 +4708,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrEnfantMoisNaissance(RequeteSiteFrFR requeteSite_, Integer o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqEnfantMoisNaissance(RequeteSiteFrFR requeteSite_, String o) {
@@ -4734,10 +4768,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.enfantJourNaissance = enfantJourNaissance;
 		this.enfantJourNaissanceCouverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setEnfantJourNaissance(String o) {
+	public void setEnfantJourNaissance(String o) {
 		this.enfantJourNaissance = InscriptionScolaire.staticSetEnfantJourNaissance(requeteSite_, o);
 		this.enfantJourNaissanceCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static Integer staticSetEnfantJourNaissance(RequeteSiteFrFR requeteSite_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -4759,7 +4792,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrEnfantJourNaissance(RequeteSiteFrFR requeteSite_, Integer o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqEnfantJourNaissance(RequeteSiteFrFR requeteSite_, String o) {
@@ -4813,10 +4846,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public String getEcoleNom() {
 		return ecoleNom;
 	}
-	public InscriptionScolaire setEcoleNom(String o) {
+	public void setEcoleNom(String o) {
 		this.ecoleNom = InscriptionScolaire.staticSetEcoleNom(requeteSite_, o);
 		this.ecoleNomCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static String staticSetEcoleNom(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -4836,7 +4868,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrEcoleNom(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqEcoleNom(RequeteSiteFrFR requeteSite_, String o) {
@@ -4890,10 +4922,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public String getEcoleNomComplet() {
 		return ecoleNomComplet;
 	}
-	public InscriptionScolaire setEcoleNomComplet(String o) {
+	public void setEcoleNomComplet(String o) {
 		this.ecoleNomComplet = InscriptionScolaire.staticSetEcoleNomComplet(requeteSite_, o);
 		this.ecoleNomCompletCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static String staticSetEcoleNomComplet(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -4913,7 +4944,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrEcoleNomComplet(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqEcoleNomComplet(RequeteSiteFrFR requeteSite_, String o) {
@@ -4967,10 +4998,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public String getEcoleEmplacement() {
 		return ecoleEmplacement;
 	}
-	public InscriptionScolaire setEcoleEmplacement(String o) {
+	public void setEcoleEmplacement(String o) {
 		this.ecoleEmplacement = InscriptionScolaire.staticSetEcoleEmplacement(requeteSite_, o);
 		this.ecoleEmplacementCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static String staticSetEcoleEmplacement(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -4990,7 +5020,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrEcoleEmplacement(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqEcoleEmplacement(RequeteSiteFrFR requeteSite_, String o) {
@@ -5044,10 +5074,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public String getEcoleAddresse() {
 		return ecoleAddresse;
 	}
-	public InscriptionScolaire setEcoleAddresse(String o) {
+	public void setEcoleAddresse(String o) {
 		this.ecoleAddresse = InscriptionScolaire.staticSetEcoleAddresse(requeteSite_, o);
 		this.ecoleAddresseCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static String staticSetEcoleAddresse(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -5067,7 +5096,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrEcoleAddresse(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqEcoleAddresse(RequeteSiteFrFR requeteSite_, String o) {
@@ -5192,10 +5221,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public String getEcoleNumeroTelephone() {
 		return ecoleNumeroTelephone;
 	}
-	public InscriptionScolaire setEcoleNumeroTelephone(String o) {
+	public void setEcoleNumeroTelephone(String o) {
 		this.ecoleNumeroTelephone = InscriptionScolaire.staticSetEcoleNumeroTelephone(requeteSite_, o);
 		this.ecoleNumeroTelephoneCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static String staticSetEcoleNumeroTelephone(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -5215,7 +5243,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrEcoleNumeroTelephone(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqEcoleNumeroTelephone(RequeteSiteFrFR requeteSite_, String o) {
@@ -5269,10 +5297,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public String getEcoleForm() {
 		return ecoleForm;
 	}
-	public InscriptionScolaire setEcoleForm(String o) {
+	public void setEcoleForm(String o) {
 		this.ecoleForm = InscriptionScolaire.staticSetEcoleForm(requeteSite_, o);
 		this.ecoleFormCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static String staticSetEcoleForm(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -5292,7 +5319,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrEcoleForm(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqEcoleForm(RequeteSiteFrFR requeteSite_, String o) {
@@ -5352,10 +5379,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.ecoleNumero = ecoleNumero;
 		this.ecoleNumeroCouverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setEcoleNumero(String o) {
+	public void setEcoleNumero(String o) {
 		this.ecoleNumero = InscriptionScolaire.staticSetEcoleNumero(requeteSite_, o);
 		this.ecoleNumeroCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static Integer staticSetEcoleNumero(RequeteSiteFrFR requeteSite_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -5377,7 +5403,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrEcoleNumero(RequeteSiteFrFR requeteSite_, Integer o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqEcoleNumero(RequeteSiteFrFR requeteSite_, String o) {
@@ -5431,10 +5457,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public String getEcoleAdministrateurNom() {
 		return ecoleAdministrateurNom;
 	}
-	public InscriptionScolaire setEcoleAdministrateurNom(String o) {
+	public void setEcoleAdministrateurNom(String o) {
 		this.ecoleAdministrateurNom = InscriptionScolaire.staticSetEcoleAdministrateurNom(requeteSite_, o);
 		this.ecoleAdministrateurNomCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static String staticSetEcoleAdministrateurNom(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -5454,7 +5479,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrEcoleAdministrateurNom(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqEcoleAdministrateurNom(RequeteSiteFrFR requeteSite_, String o) {
@@ -5514,10 +5539,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.anneeDebut = anneeDebut;
 		this.anneeDebutCouverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setAnneeDebut(String o) {
+	public void setAnneeDebut(String o) {
 		this.anneeDebut = InscriptionScolaire.staticSetAnneeDebut(requeteSite_, o);
 		this.anneeDebutCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static Integer staticSetAnneeDebut(RequeteSiteFrFR requeteSite_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -5539,7 +5563,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrAnneeDebut(RequeteSiteFrFR requeteSite_, Integer o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqAnneeDebut(RequeteSiteFrFR requeteSite_, String o) {
@@ -5599,10 +5623,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.anneeFin = anneeFin;
 		this.anneeFinCouverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setAnneeFin(String o) {
+	public void setAnneeFin(String o) {
 		this.anneeFin = InscriptionScolaire.staticSetAnneeFin(requeteSite_, o);
 		this.anneeFinCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static Integer staticSetAnneeFin(RequeteSiteFrFR requeteSite_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -5624,7 +5647,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrAnneeFin(RequeteSiteFrFR requeteSite_, Integer o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqAnneeFin(RequeteSiteFrFR requeteSite_, String o) {
@@ -5686,24 +5709,21 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.saisonDateDebut = saisonDateDebut;
 		this.saisonDateDebutCouverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setSaisonDateDebut(Instant o) {
+	public void setSaisonDateDebut(Instant o) {
 		this.saisonDateDebut = o == null ? null : LocalDate.from(o);
 		this.saisonDateDebutCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
-	public InscriptionScolaire setSaisonDateDebut(String o) {
+	public void setSaisonDateDebut(String o) {
 		this.saisonDateDebut = InscriptionScolaire.staticSetSaisonDateDebut(requeteSite_, o);
 		this.saisonDateDebutCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static LocalDate staticSetSaisonDateDebut(RequeteSiteFrFR requeteSite_, String o) {
 		return o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 	}
-	public InscriptionScolaire setSaisonDateDebut(Date o) {
+	public void setSaisonDateDebut(Date o) {
 		this.saisonDateDebut = o == null ? null : o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
 		this.saisonDateDebutCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	protected InscriptionScolaire saisonDateDebutInit() {
 		if(!saisonDateDebutCouverture.dejaInitialise) {
@@ -5780,10 +5800,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.anneeFraisInscription = anneeFraisInscription;
 		this.anneeFraisInscriptionCouverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setAnneeFraisInscription(String o) {
+	public void setAnneeFraisInscription(String o) {
 		this.anneeFraisInscription = InscriptionScolaire.staticSetAnneeFraisInscription(requeteSite_, o);
 		this.anneeFraisInscriptionCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static BigDecimal staticSetAnneeFraisInscription(RequeteSiteFrFR requeteSite_, String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
@@ -5791,15 +5810,13 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		return null;
 	}
-	public InscriptionScolaire setAnneeFraisInscription(Double o) {
+	public void setAnneeFraisInscription(Double o) {
 			this.anneeFraisInscription = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.anneeFraisInscriptionCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
-	public InscriptionScolaire setAnneeFraisInscription(Integer o) {
+	public void setAnneeFraisInscription(Integer o) {
 			this.anneeFraisInscription = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.anneeFraisInscriptionCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	protected InscriptionScolaire anneeFraisInscriptionInit() {
 		if(!anneeFraisInscriptionCouverture.dejaInitialise) {
@@ -5816,7 +5833,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrAnneeFraisInscription(RequeteSiteFrFR requeteSite_, Double o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqAnneeFraisInscription(RequeteSiteFrFR requeteSite_, String o) {
@@ -5878,24 +5895,21 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.sessionDateDebut = sessionDateDebut;
 		this.sessionDateDebutCouverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setSessionDateDebut(Instant o) {
+	public void setSessionDateDebut(Instant o) {
 		this.sessionDateDebut = o == null ? null : LocalDate.from(o);
 		this.sessionDateDebutCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
-	public InscriptionScolaire setSessionDateDebut(String o) {
+	public void setSessionDateDebut(String o) {
 		this.sessionDateDebut = InscriptionScolaire.staticSetSessionDateDebut(requeteSite_, o);
 		this.sessionDateDebutCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static LocalDate staticSetSessionDateDebut(RequeteSiteFrFR requeteSite_, String o) {
 		return o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 	}
-	public InscriptionScolaire setSessionDateDebut(Date o) {
+	public void setSessionDateDebut(Date o) {
 		this.sessionDateDebut = o == null ? null : o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
 		this.sessionDateDebutCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	protected InscriptionScolaire sessionDateDebutInit() {
 		if(!sessionDateDebutCouverture.dejaInitialise) {
@@ -5974,24 +5988,21 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.sessionDateFin = sessionDateFin;
 		this.sessionDateFinCouverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setSessionDateFin(Instant o) {
+	public void setSessionDateFin(Instant o) {
 		this.sessionDateFin = o == null ? null : LocalDate.from(o);
 		this.sessionDateFinCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
-	public InscriptionScolaire setSessionDateFin(String o) {
+	public void setSessionDateFin(String o) {
 		this.sessionDateFin = InscriptionScolaire.staticSetSessionDateFin(requeteSite_, o);
 		this.sessionDateFinCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static LocalDate staticSetSessionDateFin(RequeteSiteFrFR requeteSite_, String o) {
 		return o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 	}
-	public InscriptionScolaire setSessionDateFin(Date o) {
+	public void setSessionDateFin(Date o) {
 		this.sessionDateFin = o == null ? null : o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
 		this.sessionDateFinCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	protected InscriptionScolaire sessionDateFinInit() {
 		if(!sessionDateFinCouverture.dejaInitialise) {
@@ -6062,10 +6073,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public String getAgeNomComplet() {
 		return ageNomComplet;
 	}
-	public InscriptionScolaire setAgeNomComplet(String o) {
+	public void setAgeNomComplet(String o) {
 		this.ageNomComplet = InscriptionScolaire.staticSetAgeNomComplet(requeteSite_, o);
 		this.ageNomCompletCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static String staticSetAgeNomComplet(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -6085,7 +6095,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrAgeNomComplet(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqAgeNomComplet(RequeteSiteFrFR requeteSite_, String o) {
@@ -6145,10 +6155,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.ageDebut = ageDebut;
 		this.ageDebutCouverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setAgeDebut(String o) {
+	public void setAgeDebut(String o) {
 		this.ageDebut = InscriptionScolaire.staticSetAgeDebut(requeteSite_, o);
 		this.ageDebutCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static Integer staticSetAgeDebut(RequeteSiteFrFR requeteSite_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -6170,7 +6179,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrAgeDebut(RequeteSiteFrFR requeteSite_, Integer o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqAgeDebut(RequeteSiteFrFR requeteSite_, String o) {
@@ -6230,10 +6239,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.ageFin = ageFin;
 		this.ageFinCouverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setAgeFin(String o) {
+	public void setAgeFin(String o) {
 		this.ageFin = InscriptionScolaire.staticSetAgeFin(requeteSite_, o);
 		this.ageFinCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static Integer staticSetAgeFin(RequeteSiteFrFR requeteSite_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -6255,7 +6263,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrAgeFin(RequeteSiteFrFR requeteSite_, Integer o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqAgeFin(RequeteSiteFrFR requeteSite_, String o) {
@@ -6316,10 +6324,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.blocHeureDebutCouverture.dejaInitialise = true;
 	}
 	/** Example: 01:00 **/
-	public InscriptionScolaire setBlocHeureDebut(String o) {
+	public void setBlocHeureDebut(String o) {
 		this.blocHeureDebut = InscriptionScolaire.staticSetBlocHeureDebut(requeteSite_, o);
 		this.blocHeureDebutCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static LocalTime staticSetBlocHeureDebut(RequeteSiteFrFR requeteSite_, String o) {
 		try {
@@ -6343,7 +6350,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrBlocHeureDebut(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqBlocHeureDebut(RequeteSiteFrFR requeteSite_, String o) {
@@ -6404,10 +6411,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.blocHeureFinCouverture.dejaInitialise = true;
 	}
 	/** Example: 01:00 **/
-	public InscriptionScolaire setBlocHeureFin(String o) {
+	public void setBlocHeureFin(String o) {
 		this.blocHeureFin = InscriptionScolaire.staticSetBlocHeureFin(requeteSite_, o);
 		this.blocHeureFinCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static LocalTime staticSetBlocHeureFin(RequeteSiteFrFR requeteSite_, String o) {
 		try {
@@ -6431,7 +6437,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrBlocHeureFin(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqBlocHeureFin(RequeteSiteFrFR requeteSite_, String o) {
@@ -6491,10 +6497,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.blocPrixParMois = blocPrixParMois;
 		this.blocPrixParMoisCouverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setBlocPrixParMois(String o) {
+	public void setBlocPrixParMois(String o) {
 		this.blocPrixParMois = InscriptionScolaire.staticSetBlocPrixParMois(requeteSite_, o);
 		this.blocPrixParMoisCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static BigDecimal staticSetBlocPrixParMois(RequeteSiteFrFR requeteSite_, String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
@@ -6502,15 +6507,13 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		return null;
 	}
-	public InscriptionScolaire setBlocPrixParMois(Double o) {
+	public void setBlocPrixParMois(Double o) {
 			this.blocPrixParMois = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.blocPrixParMoisCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
-	public InscriptionScolaire setBlocPrixParMois(Integer o) {
+	public void setBlocPrixParMois(Integer o) {
 			this.blocPrixParMois = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.blocPrixParMoisCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	protected InscriptionScolaire blocPrixParMoisInit() {
 		if(!blocPrixParMoisCouverture.dejaInitialise) {
@@ -6527,7 +6530,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrBlocPrixParMois(RequeteSiteFrFR requeteSite_, Double o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqBlocPrixParMois(RequeteSiteFrFR requeteSite_, String o) {
@@ -6586,10 +6589,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.blocDimanche = blocDimanche;
 		this.blocDimancheCouverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setBlocDimanche(String o) {
+	public void setBlocDimanche(String o) {
 		this.blocDimanche = InscriptionScolaire.staticSetBlocDimanche(requeteSite_, o);
 		this.blocDimancheCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static Boolean staticSetBlocDimanche(RequeteSiteFrFR requeteSite_, String o) {
 		return Boolean.parseBoolean(o);
@@ -6609,7 +6611,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrBlocDimanche(RequeteSiteFrFR requeteSite_, Boolean o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqBlocDimanche(RequeteSiteFrFR requeteSite_, String o) {
@@ -6668,10 +6670,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.blocLundi = blocLundi;
 		this.blocLundiCouverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setBlocLundi(String o) {
+	public void setBlocLundi(String o) {
 		this.blocLundi = InscriptionScolaire.staticSetBlocLundi(requeteSite_, o);
 		this.blocLundiCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static Boolean staticSetBlocLundi(RequeteSiteFrFR requeteSite_, String o) {
 		return Boolean.parseBoolean(o);
@@ -6691,7 +6692,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrBlocLundi(RequeteSiteFrFR requeteSite_, Boolean o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqBlocLundi(RequeteSiteFrFR requeteSite_, String o) {
@@ -6750,10 +6751,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.blocMardi = blocMardi;
 		this.blocMardiCouverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setBlocMardi(String o) {
+	public void setBlocMardi(String o) {
 		this.blocMardi = InscriptionScolaire.staticSetBlocMardi(requeteSite_, o);
 		this.blocMardiCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static Boolean staticSetBlocMardi(RequeteSiteFrFR requeteSite_, String o) {
 		return Boolean.parseBoolean(o);
@@ -6773,7 +6773,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrBlocMardi(RequeteSiteFrFR requeteSite_, Boolean o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqBlocMardi(RequeteSiteFrFR requeteSite_, String o) {
@@ -6832,10 +6832,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.blocMercredi = blocMercredi;
 		this.blocMercrediCouverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setBlocMercredi(String o) {
+	public void setBlocMercredi(String o) {
 		this.blocMercredi = InscriptionScolaire.staticSetBlocMercredi(requeteSite_, o);
 		this.blocMercrediCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static Boolean staticSetBlocMercredi(RequeteSiteFrFR requeteSite_, String o) {
 		return Boolean.parseBoolean(o);
@@ -6855,7 +6854,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrBlocMercredi(RequeteSiteFrFR requeteSite_, Boolean o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqBlocMercredi(RequeteSiteFrFR requeteSite_, String o) {
@@ -6914,10 +6913,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.blocJeudi = blocJeudi;
 		this.blocJeudiCouverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setBlocJeudi(String o) {
+	public void setBlocJeudi(String o) {
 		this.blocJeudi = InscriptionScolaire.staticSetBlocJeudi(requeteSite_, o);
 		this.blocJeudiCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static Boolean staticSetBlocJeudi(RequeteSiteFrFR requeteSite_, String o) {
 		return Boolean.parseBoolean(o);
@@ -6937,7 +6935,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrBlocJeudi(RequeteSiteFrFR requeteSite_, Boolean o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqBlocJeudi(RequeteSiteFrFR requeteSite_, String o) {
@@ -6996,10 +6994,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.blocVendredi = blocVendredi;
 		this.blocVendrediCouverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setBlocVendredi(String o) {
+	public void setBlocVendredi(String o) {
 		this.blocVendredi = InscriptionScolaire.staticSetBlocVendredi(requeteSite_, o);
 		this.blocVendrediCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static Boolean staticSetBlocVendredi(RequeteSiteFrFR requeteSite_, String o) {
 		return Boolean.parseBoolean(o);
@@ -7019,7 +7016,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrBlocVendredi(RequeteSiteFrFR requeteSite_, Boolean o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqBlocVendredi(RequeteSiteFrFR requeteSite_, String o) {
@@ -7078,10 +7075,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.blocSamedi = blocSamedi;
 		this.blocSamediCouverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setBlocSamedi(String o) {
+	public void setBlocSamedi(String o) {
 		this.blocSamedi = InscriptionScolaire.staticSetBlocSamedi(requeteSite_, o);
 		this.blocSamediCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static Boolean staticSetBlocSamedi(RequeteSiteFrFR requeteSite_, String o) {
 		return Boolean.parseBoolean(o);
@@ -7101,7 +7097,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrBlocSamedi(RequeteSiteFrFR requeteSite_, Boolean o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqBlocSamedi(RequeteSiteFrFR requeteSite_, String o) {
@@ -7161,10 +7157,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.blocPrixTotal = blocPrixTotal;
 		this.blocPrixTotalCouverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setBlocPrixTotal(String o) {
+	public void setBlocPrixTotal(String o) {
 		this.blocPrixTotal = InscriptionScolaire.staticSetBlocPrixTotal(requeteSite_, o);
 		this.blocPrixTotalCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static BigDecimal staticSetBlocPrixTotal(RequeteSiteFrFR requeteSite_, String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
@@ -7172,15 +7167,13 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		return null;
 	}
-	public InscriptionScolaire setBlocPrixTotal(Double o) {
+	public void setBlocPrixTotal(Double o) {
 			this.blocPrixTotal = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.blocPrixTotalCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
-	public InscriptionScolaire setBlocPrixTotal(Integer o) {
+	public void setBlocPrixTotal(Integer o) {
 			this.blocPrixTotal = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.blocPrixTotalCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	protected InscriptionScolaire blocPrixTotalInit() {
 		if(!blocPrixTotalCouverture.dejaInitialise) {
@@ -7197,7 +7190,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrBlocPrixTotal(RequeteSiteFrFR requeteSite_, Double o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqBlocPrixTotal(RequeteSiteFrFR requeteSite_, String o) {
@@ -7251,10 +7244,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public String getBlocNomAdmin() {
 		return blocNomAdmin;
 	}
-	public InscriptionScolaire setBlocNomAdmin(String o) {
+	public void setBlocNomAdmin(String o) {
 		this.blocNomAdmin = InscriptionScolaire.staticSetBlocNomAdmin(requeteSite_, o);
 		this.blocNomAdminCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static String staticSetBlocNomAdmin(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -7274,7 +7266,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrBlocNomAdmin(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqBlocNomAdmin(RequeteSiteFrFR requeteSite_, String o) {
@@ -7328,10 +7320,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public String getBlocNomCourt() {
 		return blocNomCourt;
 	}
-	public InscriptionScolaire setBlocNomCourt(String o) {
+	public void setBlocNomCourt(String o) {
 		this.blocNomCourt = InscriptionScolaire.staticSetBlocNomCourt(requeteSite_, o);
 		this.blocNomCourtCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static String staticSetBlocNomCourt(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -7351,7 +7342,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrBlocNomCourt(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqBlocNomCourt(RequeteSiteFrFR requeteSite_, String o) {
@@ -7405,10 +7396,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public String getBlocNomComplet() {
 		return blocNomComplet;
 	}
-	public InscriptionScolaire setBlocNomComplet(String o) {
+	public void setBlocNomComplet(String o) {
 		this.blocNomComplet = InscriptionScolaire.staticSetBlocNomComplet(requeteSite_, o);
 		this.blocNomCompletCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static String staticSetBlocNomComplet(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -7428,7 +7418,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrBlocNomComplet(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqBlocNomComplet(RequeteSiteFrFR requeteSite_, String o) {
@@ -7487,10 +7477,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.inscriptionApprouve = inscriptionApprouve;
 		this.inscriptionApprouveCouverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setInscriptionApprouve(String o) {
+	public void setInscriptionApprouve(String o) {
 		this.inscriptionApprouve = InscriptionScolaire.staticSetInscriptionApprouve(requeteSite_, o);
 		this.inscriptionApprouveCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static Boolean staticSetInscriptionApprouve(RequeteSiteFrFR requeteSite_, String o) {
 		return Boolean.parseBoolean(o);
@@ -7510,7 +7499,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrInscriptionApprouve(RequeteSiteFrFR requeteSite_, Boolean o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqInscriptionApprouve(RequeteSiteFrFR requeteSite_, String o) {
@@ -7634,10 +7623,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.inscriptionImmunisations = inscriptionImmunisations;
 		this.inscriptionImmunisationsCouverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setInscriptionImmunisations(String o) {
+	public void setInscriptionImmunisations(String o) {
 		this.inscriptionImmunisations = InscriptionScolaire.staticSetInscriptionImmunisations(requeteSite_, o);
 		this.inscriptionImmunisationsCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static Boolean staticSetInscriptionImmunisations(RequeteSiteFrFR requeteSite_, String o) {
 		return Boolean.parseBoolean(o);
@@ -7657,7 +7645,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrInscriptionImmunisations(RequeteSiteFrFR requeteSite_, Boolean o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqInscriptionImmunisations(RequeteSiteFrFR requeteSite_, String o) {
@@ -7776,10 +7764,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public String getPhoto() {
 		return photo;
 	}
-	public InscriptionScolaire setPhoto(String o) {
+	public void setPhoto(String o) {
 		this.photo = InscriptionScolaire.staticSetPhoto(requeteSite_, o);
 		this.photoCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static String staticSetPhoto(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -7799,7 +7786,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrPhoto(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPhoto(RequeteSiteFrFR requeteSite_, String o) {
@@ -7922,10 +7909,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.familleMarie = familleMarie;
 		this.familleMarieCouverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setFamilleMarie(String o) {
+	public void setFamilleMarie(String o) {
 		this.familleMarie = InscriptionScolaire.staticSetFamilleMarie(requeteSite_, o);
 		this.familleMarieCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static Boolean staticSetFamilleMarie(RequeteSiteFrFR requeteSite_, String o) {
 		return Boolean.parseBoolean(o);
@@ -7945,7 +7931,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrFamilleMarie(RequeteSiteFrFR requeteSite_, Boolean o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqFamilleMarie(RequeteSiteFrFR requeteSite_, String o) {
@@ -8069,10 +8055,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.familleSepare = familleSepare;
 		this.familleSepareCouverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setFamilleSepare(String o) {
+	public void setFamilleSepare(String o) {
 		this.familleSepare = InscriptionScolaire.staticSetFamilleSepare(requeteSite_, o);
 		this.familleSepareCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static Boolean staticSetFamilleSepare(RequeteSiteFrFR requeteSite_, String o) {
 		return Boolean.parseBoolean(o);
@@ -8092,7 +8077,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrFamilleSepare(RequeteSiteFrFR requeteSite_, Boolean o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqFamilleSepare(RequeteSiteFrFR requeteSite_, String o) {
@@ -8216,10 +8201,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.familleDivorce = familleDivorce;
 		this.familleDivorceCouverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setFamilleDivorce(String o) {
+	public void setFamilleDivorce(String o) {
 		this.familleDivorce = InscriptionScolaire.staticSetFamilleDivorce(requeteSite_, o);
 		this.familleDivorceCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static Boolean staticSetFamilleDivorce(RequeteSiteFrFR requeteSite_, String o) {
 		return Boolean.parseBoolean(o);
@@ -8239,7 +8223,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrFamilleDivorce(RequeteSiteFrFR requeteSite_, Boolean o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqFamilleDivorce(RequeteSiteFrFR requeteSite_, String o) {
@@ -8358,10 +8342,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public String getFamilleAddresse() {
 		return familleAddresse;
 	}
-	public InscriptionScolaire setFamilleAddresse(String o) {
+	public void setFamilleAddresse(String o) {
 		this.familleAddresse = InscriptionScolaire.staticSetFamilleAddresse(requeteSite_, o);
 		this.familleAddresseCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static String staticSetFamilleAddresse(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -8381,7 +8364,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrFamilleAddresse(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqFamilleAddresse(RequeteSiteFrFR requeteSite_, String o) {
@@ -8504,10 +8487,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public String getFamilleCommentVousConnaissezEcole() {
 		return familleCommentVousConnaissezEcole;
 	}
-	public InscriptionScolaire setFamilleCommentVousConnaissezEcole(String o) {
+	public void setFamilleCommentVousConnaissezEcole(String o) {
 		this.familleCommentVousConnaissezEcole = InscriptionScolaire.staticSetFamilleCommentVousConnaissezEcole(requeteSite_, o);
 		this.familleCommentVousConnaissezEcoleCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static String staticSetFamilleCommentVousConnaissezEcole(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -8527,7 +8509,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrFamilleCommentVousConnaissezEcole(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqFamilleCommentVousConnaissezEcole(RequeteSiteFrFR requeteSite_, String o) {
@@ -8650,10 +8632,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public String getInscriptionConsiderationsSpeciales() {
 		return inscriptionConsiderationsSpeciales;
 	}
-	public InscriptionScolaire setInscriptionConsiderationsSpeciales(String o) {
+	public void setInscriptionConsiderationsSpeciales(String o) {
 		this.inscriptionConsiderationsSpeciales = InscriptionScolaire.staticSetInscriptionConsiderationsSpeciales(requeteSite_, o);
 		this.inscriptionConsiderationsSpecialesCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static String staticSetInscriptionConsiderationsSpeciales(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -8673,7 +8654,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrInscriptionConsiderationsSpeciales(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqInscriptionConsiderationsSpeciales(RequeteSiteFrFR requeteSite_, String o) {
@@ -8796,10 +8777,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public String getEnfantConditionsMedicales() {
 		return enfantConditionsMedicales;
 	}
-	public InscriptionScolaire setEnfantConditionsMedicales(String o) {
+	public void setEnfantConditionsMedicales(String o) {
 		this.enfantConditionsMedicales = InscriptionScolaire.staticSetEnfantConditionsMedicales(requeteSite_, o);
 		this.enfantConditionsMedicalesCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static String staticSetEnfantConditionsMedicales(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -8819,7 +8799,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrEnfantConditionsMedicales(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqEnfantConditionsMedicales(RequeteSiteFrFR requeteSite_, String o) {
@@ -8942,10 +8922,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public String getEnfantEcolesPrecedemmentFrequentees() {
 		return enfantEcolesPrecedemmentFrequentees;
 	}
-	public InscriptionScolaire setEnfantEcolesPrecedemmentFrequentees(String o) {
+	public void setEnfantEcolesPrecedemmentFrequentees(String o) {
 		this.enfantEcolesPrecedemmentFrequentees = InscriptionScolaire.staticSetEnfantEcolesPrecedemmentFrequentees(requeteSite_, o);
 		this.enfantEcolesPrecedemmentFrequenteesCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static String staticSetEnfantEcolesPrecedemmentFrequentees(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -8965,7 +8944,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrEnfantEcolesPrecedemmentFrequentees(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqEnfantEcolesPrecedemmentFrequentees(RequeteSiteFrFR requeteSite_, String o) {
@@ -9088,10 +9067,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public String getEnfantDescription() {
 		return enfantDescription;
 	}
-	public InscriptionScolaire setEnfantDescription(String o) {
+	public void setEnfantDescription(String o) {
 		this.enfantDescription = InscriptionScolaire.staticSetEnfantDescription(requeteSite_, o);
 		this.enfantDescriptionCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static String staticSetEnfantDescription(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -9111,7 +9089,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrEnfantDescription(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqEnfantDescription(RequeteSiteFrFR requeteSite_, String o) {
@@ -9234,10 +9212,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public String getEnfantObjectifs() {
 		return enfantObjectifs;
 	}
-	public InscriptionScolaire setEnfantObjectifs(String o) {
+	public void setEnfantObjectifs(String o) {
 		this.enfantObjectifs = InscriptionScolaire.staticSetEnfantObjectifs(requeteSite_, o);
 		this.enfantObjectifsCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static String staticSetEnfantObjectifs(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -9257,7 +9234,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrEnfantObjectifs(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqEnfantObjectifs(RequeteSiteFrFR requeteSite_, String o) {
@@ -9385,10 +9362,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.enfantPropre = enfantPropre;
 		this.enfantPropreCouverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setEnfantPropre(String o) {
+	public void setEnfantPropre(String o) {
 		this.enfantPropre = InscriptionScolaire.staticSetEnfantPropre(requeteSite_, o);
 		this.enfantPropreCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static Boolean staticSetEnfantPropre(RequeteSiteFrFR requeteSite_, String o) {
 		return Boolean.parseBoolean(o);
@@ -9408,7 +9384,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrEnfantPropre(RequeteSiteFrFR requeteSite_, Boolean o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqEnfantPropre(RequeteSiteFrFR requeteSite_, String o) {
@@ -9527,10 +9503,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public String getInscriptionNomGroupe() {
 		return inscriptionNomGroupe;
 	}
-	public InscriptionScolaire setInscriptionNomGroupe(String o) {
+	public void setInscriptionNomGroupe(String o) {
 		this.inscriptionNomGroupe = InscriptionScolaire.staticSetInscriptionNomGroupe(requeteSite_, o);
 		this.inscriptionNomGroupeCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static String staticSetInscriptionNomGroupe(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -9550,7 +9525,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrInscriptionNomGroupe(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqInscriptionNomGroupe(RequeteSiteFrFR requeteSite_, String o) {
@@ -9675,10 +9650,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public String getInscriptionCouleurGroupe() {
 		return inscriptionCouleurGroupe;
 	}
-	public InscriptionScolaire setInscriptionCouleurGroupe(String o) {
+	public void setInscriptionCouleurGroupe(String o) {
 		this.inscriptionCouleurGroupe = InscriptionScolaire.staticSetInscriptionCouleurGroupe(requeteSite_, o);
 		this.inscriptionCouleurGroupeCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static String staticSetInscriptionCouleurGroupe(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -9698,7 +9672,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrInscriptionCouleurGroupe(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqInscriptionCouleurGroupe(RequeteSiteFrFR requeteSite_, String o) {
@@ -9757,10 +9731,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.inscriptionPaimentChaqueMois = inscriptionPaimentChaqueMois;
 		this.inscriptionPaimentChaqueMoisCouverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setInscriptionPaimentChaqueMois(String o) {
+	public void setInscriptionPaimentChaqueMois(String o) {
 		this.inscriptionPaimentChaqueMois = InscriptionScolaire.staticSetInscriptionPaimentChaqueMois(requeteSite_, o);
 		this.inscriptionPaimentChaqueMoisCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static Boolean staticSetInscriptionPaimentChaqueMois(RequeteSiteFrFR requeteSite_, String o) {
 		return Boolean.parseBoolean(o);
@@ -9780,7 +9753,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrInscriptionPaimentChaqueMois(RequeteSiteFrFR requeteSite_, Boolean o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqInscriptionPaimentChaqueMois(RequeteSiteFrFR requeteSite_, String o) {
@@ -9904,10 +9877,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.inscriptionPaimentComplet = inscriptionPaimentComplet;
 		this.inscriptionPaimentCompletCouverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setInscriptionPaimentComplet(String o) {
+	public void setInscriptionPaimentComplet(String o) {
 		this.inscriptionPaimentComplet = InscriptionScolaire.staticSetInscriptionPaimentComplet(requeteSite_, o);
 		this.inscriptionPaimentCompletCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static Boolean staticSetInscriptionPaimentComplet(RequeteSiteFrFR requeteSite_, String o) {
 		return Boolean.parseBoolean(o);
@@ -9927,7 +9899,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrInscriptionPaimentComplet(RequeteSiteFrFR requeteSite_, Boolean o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqInscriptionPaimentComplet(RequeteSiteFrFR requeteSite_, String o) {
@@ -10046,10 +10018,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public String getCustomerProfileId() {
 		return customerProfileId;
 	}
-	public InscriptionScolaire setCustomerProfileId(String o) {
+	public void setCustomerProfileId(String o) {
 		this.customerProfileId = InscriptionScolaire.staticSetCustomerProfileId(requeteSite_, o);
 		this.customerProfileIdCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static String staticSetCustomerProfileId(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -10069,7 +10040,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrCustomerProfileId(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqCustomerProfileId(RequeteSiteFrFR requeteSite_, String o) {
@@ -10202,24 +10173,21 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.inscriptionDateFrais = inscriptionDateFrais;
 		this.inscriptionDateFraisCouverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setInscriptionDateFrais(Instant o) {
+	public void setInscriptionDateFrais(Instant o) {
 		this.inscriptionDateFrais = o == null ? null : LocalDate.from(o);
 		this.inscriptionDateFraisCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
-	public InscriptionScolaire setInscriptionDateFrais(String o) {
+	public void setInscriptionDateFrais(String o) {
 		this.inscriptionDateFrais = InscriptionScolaire.staticSetInscriptionDateFrais(requeteSite_, o);
 		this.inscriptionDateFraisCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static LocalDate staticSetInscriptionDateFrais(RequeteSiteFrFR requeteSite_, String o) {
 		return o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 	}
-	public InscriptionScolaire setInscriptionDateFrais(Date o) {
+	public void setInscriptionDateFrais(Date o) {
 		this.inscriptionDateFrais = o == null ? null : o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
 		this.inscriptionDateFraisCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	protected InscriptionScolaire inscriptionDateFraisInit() {
 		if(!inscriptionDateFraisCouverture.dejaInitialise) {
@@ -10401,24 +10369,21 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.paiementLastDate = paiementLastDate;
 		this.paiementLastDateCouverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setPaiementLastDate(Instant o) {
+	public void setPaiementLastDate(Instant o) {
 		this.paiementLastDate = o == null ? null : LocalDate.from(o);
 		this.paiementLastDateCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
-	public InscriptionScolaire setPaiementLastDate(String o) {
+	public void setPaiementLastDate(String o) {
 		this.paiementLastDate = InscriptionScolaire.staticSetPaiementLastDate(requeteSite_, o);
 		this.paiementLastDateCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static LocalDate staticSetPaiementLastDate(RequeteSiteFrFR requeteSite_, String o) {
 		return o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 	}
-	public InscriptionScolaire setPaiementLastDate(Date o) {
+	public void setPaiementLastDate(Date o) {
 		this.paiementLastDate = o == null ? null : o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
 		this.paiementLastDateCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	protected InscriptionScolaire paiementLastDateInit() {
 		if(!paiementLastDateCouverture.dejaInitialise) {
@@ -10489,10 +10454,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public String getPaiementLastStr() {
 		return paiementLastStr;
 	}
-	public InscriptionScolaire setPaiementLastStr(String o) {
+	public void setPaiementLastStr(String o) {
 		this.paiementLastStr = InscriptionScolaire.staticSetPaiementLastStr(requeteSite_, o);
 		this.paiementLastStrCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static String staticSetPaiementLastStr(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -10512,7 +10476,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrPaiementLastStr(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPaiementLastStr(RequeteSiteFrFR requeteSite_, String o) {
@@ -10572,10 +10536,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.paiementMontant = paiementMontant;
 		this.paiementMontantCouverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setPaiementMontant(String o) {
+	public void setPaiementMontant(String o) {
 		this.paiementMontant = InscriptionScolaire.staticSetPaiementMontant(requeteSite_, o);
 		this.paiementMontantCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static BigDecimal staticSetPaiementMontant(RequeteSiteFrFR requeteSite_, String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
@@ -10583,15 +10546,13 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		return null;
 	}
-	public InscriptionScolaire setPaiementMontant(Double o) {
+	public void setPaiementMontant(Double o) {
 			this.paiementMontant = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.paiementMontantCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
-	public InscriptionScolaire setPaiementMontant(Integer o) {
+	public void setPaiementMontant(Integer o) {
 			this.paiementMontant = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.paiementMontantCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	protected InscriptionScolaire paiementMontantInit() {
 		if(!paiementMontantCouverture.dejaInitialise) {
@@ -10608,7 +10569,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrPaiementMontant(RequeteSiteFrFR requeteSite_, Double o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPaiementMontant(RequeteSiteFrFR requeteSite_, String o) {
@@ -10668,10 +10629,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.fraisMontant = fraisMontant;
 		this.fraisMontantCouverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setFraisMontant(String o) {
+	public void setFraisMontant(String o) {
 		this.fraisMontant = InscriptionScolaire.staticSetFraisMontant(requeteSite_, o);
 		this.fraisMontantCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static BigDecimal staticSetFraisMontant(RequeteSiteFrFR requeteSite_, String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
@@ -10679,15 +10639,13 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		return null;
 	}
-	public InscriptionScolaire setFraisMontant(Double o) {
+	public void setFraisMontant(Double o) {
 			this.fraisMontant = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.fraisMontantCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
-	public InscriptionScolaire setFraisMontant(Integer o) {
+	public void setFraisMontant(Integer o) {
 			this.fraisMontant = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.fraisMontantCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	protected InscriptionScolaire fraisMontantInit() {
 		if(!fraisMontantCouverture.dejaInitialise) {
@@ -10704,7 +10662,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrFraisMontant(RequeteSiteFrFR requeteSite_, Double o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqFraisMontant(RequeteSiteFrFR requeteSite_, String o) {
@@ -10764,10 +10722,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.fraisMontantFuture = fraisMontantFuture;
 		this.fraisMontantFutureCouverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setFraisMontantFuture(String o) {
+	public void setFraisMontantFuture(String o) {
 		this.fraisMontantFuture = InscriptionScolaire.staticSetFraisMontantFuture(requeteSite_, o);
 		this.fraisMontantFutureCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static BigDecimal staticSetFraisMontantFuture(RequeteSiteFrFR requeteSite_, String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
@@ -10775,15 +10732,13 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		return null;
 	}
-	public InscriptionScolaire setFraisMontantFuture(Double o) {
+	public void setFraisMontantFuture(Double o) {
 			this.fraisMontantFuture = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.fraisMontantFutureCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
-	public InscriptionScolaire setFraisMontantFuture(Integer o) {
+	public void setFraisMontantFuture(Integer o) {
 			this.fraisMontantFuture = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.fraisMontantFutureCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	protected InscriptionScolaire fraisMontantFutureInit() {
 		if(!fraisMontantFutureCouverture.dejaInitialise) {
@@ -10800,7 +10755,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrFraisMontantFuture(RequeteSiteFrFR requeteSite_, Double o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqFraisMontantFuture(RequeteSiteFrFR requeteSite_, String o) {
@@ -10860,10 +10815,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.fraisMontantDu = fraisMontantDu;
 		this.fraisMontantDuCouverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setFraisMontantDu(String o) {
+	public void setFraisMontantDu(String o) {
 		this.fraisMontantDu = InscriptionScolaire.staticSetFraisMontantDu(requeteSite_, o);
 		this.fraisMontantDuCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static BigDecimal staticSetFraisMontantDu(RequeteSiteFrFR requeteSite_, String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
@@ -10871,15 +10825,13 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		return null;
 	}
-	public InscriptionScolaire setFraisMontantDu(Double o) {
+	public void setFraisMontantDu(Double o) {
 			this.fraisMontantDu = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.fraisMontantDuCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
-	public InscriptionScolaire setFraisMontantDu(Integer o) {
+	public void setFraisMontantDu(Integer o) {
 			this.fraisMontantDu = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.fraisMontantDuCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	protected InscriptionScolaire fraisMontantDuInit() {
 		if(!fraisMontantDuCouverture.dejaInitialise) {
@@ -10896,7 +10848,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrFraisMontantDu(RequeteSiteFrFR requeteSite_, Double o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqFraisMontantDu(RequeteSiteFrFR requeteSite_, String o) {
@@ -10956,10 +10908,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.fraisMontantNonPasse = fraisMontantNonPasse;
 		this.fraisMontantNonPasseCouverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setFraisMontantNonPasse(String o) {
+	public void setFraisMontantNonPasse(String o) {
 		this.fraisMontantNonPasse = InscriptionScolaire.staticSetFraisMontantNonPasse(requeteSite_, o);
 		this.fraisMontantNonPasseCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static BigDecimal staticSetFraisMontantNonPasse(RequeteSiteFrFR requeteSite_, String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
@@ -10967,15 +10918,13 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		return null;
 	}
-	public InscriptionScolaire setFraisMontantNonPasse(Double o) {
+	public void setFraisMontantNonPasse(Double o) {
 			this.fraisMontantNonPasse = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.fraisMontantNonPasseCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
-	public InscriptionScolaire setFraisMontantNonPasse(Integer o) {
+	public void setFraisMontantNonPasse(Integer o) {
 			this.fraisMontantNonPasse = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.fraisMontantNonPasseCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	protected InscriptionScolaire fraisMontantNonPasseInit() {
 		if(!fraisMontantNonPasseCouverture.dejaInitialise) {
@@ -10992,7 +10941,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrFraisMontantNonPasse(RequeteSiteFrFR requeteSite_, Double o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqFraisMontantNonPasse(RequeteSiteFrFR requeteSite_, String o) {
@@ -11052,10 +11001,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.fraisMaintenant = fraisMaintenant;
 		this.fraisMaintenantCouverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setFraisMaintenant(String o) {
+	public void setFraisMaintenant(String o) {
 		this.fraisMaintenant = InscriptionScolaire.staticSetFraisMaintenant(requeteSite_, o);
 		this.fraisMaintenantCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static BigDecimal staticSetFraisMaintenant(RequeteSiteFrFR requeteSite_, String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
@@ -11063,15 +11011,13 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		return null;
 	}
-	public InscriptionScolaire setFraisMaintenant(Double o) {
+	public void setFraisMaintenant(Double o) {
 			this.fraisMaintenant = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.fraisMaintenantCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
-	public InscriptionScolaire setFraisMaintenant(Integer o) {
+	public void setFraisMaintenant(Integer o) {
 			this.fraisMaintenant = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.fraisMaintenantCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	protected InscriptionScolaire fraisMaintenantInit() {
 		if(!fraisMaintenantCouverture.dejaInitialise) {
@@ -11088,7 +11034,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrFraisMaintenant(RequeteSiteFrFR requeteSite_, Double o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqFraisMaintenant(RequeteSiteFrFR requeteSite_, String o) {
@@ -11147,10 +11093,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.paiementsAJour = paiementsAJour;
 		this.paiementsAJourCouverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setPaiementsAJour(String o) {
+	public void setPaiementsAJour(String o) {
 		this.paiementsAJour = InscriptionScolaire.staticSetPaiementsAJour(requeteSite_, o);
 		this.paiementsAJourCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static Boolean staticSetPaiementsAJour(RequeteSiteFrFR requeteSite_, String o) {
 		return Boolean.parseBoolean(o);
@@ -11170,7 +11115,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrPaiementsAJour(RequeteSiteFrFR requeteSite_, Boolean o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPaiementsAJour(RequeteSiteFrFR requeteSite_, String o) {
@@ -11229,10 +11174,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.paiementsEnRetard = paiementsEnRetard;
 		this.paiementsEnRetardCouverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setPaiementsEnRetard(String o) {
+	public void setPaiementsEnRetard(String o) {
 		this.paiementsEnRetard = InscriptionScolaire.staticSetPaiementsEnRetard(requeteSite_, o);
 		this.paiementsEnRetardCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static Boolean staticSetPaiementsEnRetard(RequeteSiteFrFR requeteSite_, String o) {
 		return Boolean.parseBoolean(o);
@@ -11252,7 +11196,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrPaiementsEnRetard(RequeteSiteFrFR requeteSite_, Boolean o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPaiementsEnRetard(RequeteSiteFrFR requeteSite_, String o) {
@@ -11312,10 +11256,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.paiementsEnRetardMontant = paiementsEnRetardMontant;
 		this.paiementsEnRetardMontantCouverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setPaiementsEnRetardMontant(String o) {
+	public void setPaiementsEnRetardMontant(String o) {
 		this.paiementsEnRetardMontant = InscriptionScolaire.staticSetPaiementsEnRetardMontant(requeteSite_, o);
 		this.paiementsEnRetardMontantCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static BigDecimal staticSetPaiementsEnRetardMontant(RequeteSiteFrFR requeteSite_, String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
@@ -11323,15 +11266,13 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		return null;
 	}
-	public InscriptionScolaire setPaiementsEnRetardMontant(Double o) {
+	public void setPaiementsEnRetardMontant(Double o) {
 			this.paiementsEnRetardMontant = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.paiementsEnRetardMontantCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
-	public InscriptionScolaire setPaiementsEnRetardMontant(Integer o) {
+	public void setPaiementsEnRetardMontant(Integer o) {
 			this.paiementsEnRetardMontant = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.paiementsEnRetardMontantCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	protected InscriptionScolaire paiementsEnRetardMontantInit() {
 		if(!paiementsEnRetardMontantCouverture.dejaInitialise) {
@@ -11348,7 +11289,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrPaiementsEnRetardMontant(RequeteSiteFrFR requeteSite_, Double o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPaiementsEnRetardMontant(RequeteSiteFrFR requeteSite_, String o) {
@@ -11407,10 +11348,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.paiementsEnAvance = paiementsEnAvance;
 		this.paiementsEnAvanceCouverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setPaiementsEnAvance(String o) {
+	public void setPaiementsEnAvance(String o) {
 		this.paiementsEnAvance = InscriptionScolaire.staticSetPaiementsEnAvance(requeteSite_, o);
 		this.paiementsEnAvanceCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static Boolean staticSetPaiementsEnAvance(RequeteSiteFrFR requeteSite_, String o) {
 		return Boolean.parseBoolean(o);
@@ -11430,7 +11370,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrPaiementsEnAvance(RequeteSiteFrFR requeteSite_, Boolean o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPaiementsEnAvance(RequeteSiteFrFR requeteSite_, String o) {
@@ -11489,10 +11429,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.paiementsEnSouffrance = paiementsEnSouffrance;
 		this.paiementsEnSouffranceCouverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setPaiementsEnSouffrance(String o) {
+	public void setPaiementsEnSouffrance(String o) {
 		this.paiementsEnSouffrance = InscriptionScolaire.staticSetPaiementsEnSouffrance(requeteSite_, o);
 		this.paiementsEnSouffranceCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static Boolean staticSetPaiementsEnSouffrance(RequeteSiteFrFR requeteSite_, String o) {
 		return Boolean.parseBoolean(o);
@@ -11512,7 +11451,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrPaiementsEnSouffrance(RequeteSiteFrFR requeteSite_, Boolean o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPaiementsEnSouffrance(RequeteSiteFrFR requeteSite_, String o) {
@@ -11572,10 +11511,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.paiementsEnSouffranceMontant = paiementsEnSouffranceMontant;
 		this.paiementsEnSouffranceMontantCouverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setPaiementsEnSouffranceMontant(String o) {
+	public void setPaiementsEnSouffranceMontant(String o) {
 		this.paiementsEnSouffranceMontant = InscriptionScolaire.staticSetPaiementsEnSouffranceMontant(requeteSite_, o);
 		this.paiementsEnSouffranceMontantCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static BigDecimal staticSetPaiementsEnSouffranceMontant(RequeteSiteFrFR requeteSite_, String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
@@ -11583,15 +11521,13 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		return null;
 	}
-	public InscriptionScolaire setPaiementsEnSouffranceMontant(Double o) {
+	public void setPaiementsEnSouffranceMontant(Double o) {
 			this.paiementsEnSouffranceMontant = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.paiementsEnSouffranceMontantCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
-	public InscriptionScolaire setPaiementsEnSouffranceMontant(Integer o) {
+	public void setPaiementsEnSouffranceMontant(Integer o) {
 			this.paiementsEnSouffranceMontant = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.paiementsEnSouffranceMontantCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	protected InscriptionScolaire paiementsEnSouffranceMontantInit() {
 		if(!paiementsEnSouffranceMontantCouverture.dejaInitialise) {
@@ -11608,7 +11544,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrPaiementsEnSouffranceMontant(RequeteSiteFrFR requeteSite_, Double o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPaiementsEnSouffranceMontant(RequeteSiteFrFR requeteSite_, String o) {
@@ -11667,10 +11603,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.fraisCrees = fraisCrees;
 		this.fraisCreesCouverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setFraisCrees(String o) {
+	public void setFraisCrees(String o) {
 		this.fraisCrees = InscriptionScolaire.staticSetFraisCrees(requeteSite_, o);
 		this.fraisCreesCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static Boolean staticSetFraisCrees(RequeteSiteFrFR requeteSite_, String o) {
 		return Boolean.parseBoolean(o);
@@ -11690,7 +11625,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrFraisCrees(RequeteSiteFrFR requeteSite_, Boolean o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqFraisCrees(RequeteSiteFrFR requeteSite_, String o) {
@@ -11750,10 +11685,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.creeDAnnee = creeDAnnee;
 		this.creeDAnneeCouverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setCreeDAnnee(String o) {
+	public void setCreeDAnnee(String o) {
 		this.creeDAnnee = InscriptionScolaire.staticSetCreeDAnnee(requeteSite_, o);
 		this.creeDAnneeCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static Integer staticSetCreeDAnnee(RequeteSiteFrFR requeteSite_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -11775,7 +11709,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrCreeDAnnee(RequeteSiteFrFR requeteSite_, Integer o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqCreeDAnnee(RequeteSiteFrFR requeteSite_, String o) {
@@ -11829,10 +11763,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public String getCreeJourDeSemaine() {
 		return creeJourDeSemaine;
 	}
-	public InscriptionScolaire setCreeJourDeSemaine(String o) {
+	public void setCreeJourDeSemaine(String o) {
 		this.creeJourDeSemaine = InscriptionScolaire.staticSetCreeJourDeSemaine(requeteSite_, o);
 		this.creeJourDeSemaineCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static String staticSetCreeJourDeSemaine(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -11852,7 +11785,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrCreeJourDeSemaine(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqCreeJourDeSemaine(RequeteSiteFrFR requeteSite_, String o) {
@@ -11906,10 +11839,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public String getCreeMoisDAnnee() {
 		return creeMoisDAnnee;
 	}
-	public InscriptionScolaire setCreeMoisDAnnee(String o) {
+	public void setCreeMoisDAnnee(String o) {
 		this.creeMoisDAnnee = InscriptionScolaire.staticSetCreeMoisDAnnee(requeteSite_, o);
 		this.creeMoisDAnneeCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static String staticSetCreeMoisDAnnee(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -11929,7 +11861,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrCreeMoisDAnnee(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqCreeMoisDAnnee(RequeteSiteFrFR requeteSite_, String o) {
@@ -11983,10 +11915,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public String getCreeHeureDuJour() {
 		return creeHeureDuJour;
 	}
-	public InscriptionScolaire setCreeHeureDuJour(String o) {
+	public void setCreeHeureDuJour(String o) {
 		this.creeHeureDuJour = InscriptionScolaire.staticSetCreeHeureDuJour(requeteSite_, o);
 		this.creeHeureDuJourCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static String staticSetCreeHeureDuJour(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -12006,7 +11937,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrCreeHeureDuJour(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqCreeHeureDuJour(RequeteSiteFrFR requeteSite_, String o) {
@@ -12065,7 +11996,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.inscriptionJoursDeSemaine = inscriptionJoursDeSemaine;
 		this.inscriptionJoursDeSemaineCouverture.dejaInitialise = true;
 	}
-	public static List<String> staticSetInscriptionJoursDeSemaine(RequeteSiteFrFR requeteSite_, String o) {
+	public static String staticSetInscriptionJoursDeSemaine(RequeteSiteFrFR requeteSite_, String o) {
 		return null;
 	}
 	public InscriptionScolaire addInscriptionJoursDeSemaine(String...objets) {
@@ -12079,13 +12010,12 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			this.inscriptionJoursDeSemaine.add(o);
 		return (InscriptionScolaire)this;
 	}
-	public InscriptionScolaire setInscriptionJoursDeSemaine(JsonArray objets) {
+	public void setInscriptionJoursDeSemaine(JsonArray objets) {
 		inscriptionJoursDeSemaine.clear();
 		for(int i = 0; i < objets.size(); i++) {
 			String o = objets.getString(i);
 			addInscriptionJoursDeSemaine(o);
 		}
-		return (InscriptionScolaire)this;
 	}
 	protected InscriptionScolaire inscriptionJoursDeSemaineInit() {
 		if(!inscriptionJoursDeSemaineCouverture.dejaInitialise) {
@@ -12095,12 +12025,12 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return (InscriptionScolaire)this;
 	}
 
-	public static List<String> staticSolrInscriptionJoursDeSemaine(RequeteSiteFrFR requeteSite_, List<String> o) {
+	public static String staticSolrInscriptionJoursDeSemaine(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
 	}
 
-	public static String staticSolrStrInscriptionJoursDeSemaine(RequeteSiteFrFR requeteSite_, List<String> o) {
-			return o == null ? null : o.toString();
+	public static String staticSolrStrInscriptionJoursDeSemaine(RequeteSiteFrFR requeteSite_, String o) {
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqInscriptionJoursDeSemaine(RequeteSiteFrFR requeteSite_, String o) {
@@ -12108,7 +12038,11 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public List<String> solrInscriptionJoursDeSemaine() {
-		return InscriptionScolaire.staticSolrInscriptionJoursDeSemaine(requeteSite_, inscriptionJoursDeSemaine);
+		List<String> l = new ArrayList<String>();
+		for(String o : inscriptionJoursDeSemaine) {
+			l.add(InscriptionScolaire.staticSolrInscriptionJoursDeSemaine(requeteSite_, o));
+		}
+		return l;
 	}
 
 	public String strInscriptionJoursDeSemaine() {
@@ -12154,10 +12088,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public String getInscriptionNomsParents() {
 		return inscriptionNomsParents;
 	}
-	public InscriptionScolaire setInscriptionNomsParents(String o) {
+	public void setInscriptionNomsParents(String o) {
 		this.inscriptionNomsParents = InscriptionScolaire.staticSetInscriptionNomsParents(requeteSite_, o);
 		this.inscriptionNomsParentsCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static String staticSetInscriptionNomsParents(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -12177,7 +12110,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrInscriptionNomsParents(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqInscriptionNomsParents(RequeteSiteFrFR requeteSite_, String o) {
@@ -12303,7 +12236,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.inscriptionMails = inscriptionMails;
 		this.inscriptionMailsCouverture.dejaInitialise = true;
 	}
-	public static List<String> staticSetInscriptionMails(RequeteSiteFrFR requeteSite_, String o) {
+	public static String staticSetInscriptionMails(RequeteSiteFrFR requeteSite_, String o) {
 		return null;
 	}
 	public InscriptionScolaire addInscriptionMails(String...objets) {
@@ -12317,13 +12250,12 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			this.inscriptionMails.add(o);
 		return (InscriptionScolaire)this;
 	}
-	public InscriptionScolaire setInscriptionMails(JsonArray objets) {
+	public void setInscriptionMails(JsonArray objets) {
 		inscriptionMails.clear();
 		for(int i = 0; i < objets.size(); i++) {
 			String o = objets.getString(i);
 			addInscriptionMails(o);
 		}
-		return (InscriptionScolaire)this;
 	}
 	protected InscriptionScolaire inscriptionMailsInit() {
 		if(!inscriptionMailsCouverture.dejaInitialise) {
@@ -12333,12 +12265,12 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return (InscriptionScolaire)this;
 	}
 
-	public static List<String> staticSolrInscriptionMails(RequeteSiteFrFR requeteSite_, List<String> o) {
+	public static String staticSolrInscriptionMails(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
 	}
 
-	public static String staticSolrStrInscriptionMails(RequeteSiteFrFR requeteSite_, List<String> o) {
-			return o == null ? null : o.toString();
+	public static String staticSolrStrInscriptionMails(RequeteSiteFrFR requeteSite_, String o) {
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqInscriptionMails(RequeteSiteFrFR requeteSite_, String o) {
@@ -12346,7 +12278,11 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public List<String> solrInscriptionMails() {
-		return InscriptionScolaire.staticSolrInscriptionMails(requeteSite_, inscriptionMails);
+		List<String> l = new ArrayList<String>();
+		for(String o : inscriptionMails) {
+			l.add(InscriptionScolaire.staticSolrInscriptionMails(requeteSite_, o));
+		}
+		return l;
 	}
 
 	public String strInscriptionMails() {
@@ -12392,10 +12328,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public String getInscriptionMail() {
 		return inscriptionMail;
 	}
-	public InscriptionScolaire setInscriptionMail(String o) {
+	public void setInscriptionMail(String o) {
 		this.inscriptionMail = InscriptionScolaire.staticSetInscriptionMail(requeteSite_, o);
 		this.inscriptionMailCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static String staticSetInscriptionMail(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -12415,7 +12350,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrInscriptionMail(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqInscriptionMail(RequeteSiteFrFR requeteSite_, String o) {
@@ -12469,10 +12404,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public String getInscriptionMailsParents() {
 		return inscriptionMailsParents;
 	}
-	public InscriptionScolaire setInscriptionMailsParents(String o) {
+	public void setInscriptionMailsParents(String o) {
 		this.inscriptionMailsParents = InscriptionScolaire.staticSetInscriptionMailsParents(requeteSite_, o);
 		this.inscriptionMailsParentsCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static String staticSetInscriptionMailsParents(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -12492,7 +12426,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrInscriptionMailsParents(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqInscriptionMailsParents(RequeteSiteFrFR requeteSite_, String o) {
@@ -12551,7 +12485,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.inscriptionNumeroTelephones = inscriptionNumeroTelephones;
 		this.inscriptionNumeroTelephonesCouverture.dejaInitialise = true;
 	}
-	public static List<String> staticSetInscriptionNumeroTelephones(RequeteSiteFrFR requeteSite_, String o) {
+	public static String staticSetInscriptionNumeroTelephones(RequeteSiteFrFR requeteSite_, String o) {
 		return null;
 	}
 	public InscriptionScolaire addInscriptionNumeroTelephones(String...objets) {
@@ -12565,13 +12499,12 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			this.inscriptionNumeroTelephones.add(o);
 		return (InscriptionScolaire)this;
 	}
-	public InscriptionScolaire setInscriptionNumeroTelephones(JsonArray objets) {
+	public void setInscriptionNumeroTelephones(JsonArray objets) {
 		inscriptionNumeroTelephones.clear();
 		for(int i = 0; i < objets.size(); i++) {
 			String o = objets.getString(i);
 			addInscriptionNumeroTelephones(o);
 		}
-		return (InscriptionScolaire)this;
 	}
 	protected InscriptionScolaire inscriptionNumeroTelephonesInit() {
 		if(!inscriptionNumeroTelephonesCouverture.dejaInitialise) {
@@ -12581,12 +12514,12 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return (InscriptionScolaire)this;
 	}
 
-	public static List<String> staticSolrInscriptionNumeroTelephones(RequeteSiteFrFR requeteSite_, List<String> o) {
+	public static String staticSolrInscriptionNumeroTelephones(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
 	}
 
-	public static String staticSolrStrInscriptionNumeroTelephones(RequeteSiteFrFR requeteSite_, List<String> o) {
-			return o == null ? null : o.toString();
+	public static String staticSolrStrInscriptionNumeroTelephones(RequeteSiteFrFR requeteSite_, String o) {
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqInscriptionNumeroTelephones(RequeteSiteFrFR requeteSite_, String o) {
@@ -12594,7 +12527,11 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public List<String> solrInscriptionNumeroTelephones() {
-		return InscriptionScolaire.staticSolrInscriptionNumeroTelephones(requeteSite_, inscriptionNumeroTelephones);
+		List<String> l = new ArrayList<String>();
+		for(String o : inscriptionNumeroTelephones) {
+			l.add(InscriptionScolaire.staticSolrInscriptionNumeroTelephones(requeteSite_, o));
+		}
+		return l;
 	}
 
 	public String strInscriptionNumeroTelephones() {
@@ -12640,10 +12577,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public String getInscriptionNumeroTelephone() {
 		return inscriptionNumeroTelephone;
 	}
-	public InscriptionScolaire setInscriptionNumeroTelephone(String o) {
+	public void setInscriptionNumeroTelephone(String o) {
 		this.inscriptionNumeroTelephone = InscriptionScolaire.staticSetInscriptionNumeroTelephone(requeteSite_, o);
 		this.inscriptionNumeroTelephoneCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static String staticSetInscriptionNumeroTelephone(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -12663,7 +12599,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrInscriptionNumeroTelephone(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqInscriptionNumeroTelephone(RequeteSiteFrFR requeteSite_, String o) {
@@ -12717,10 +12653,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public String getInscriptionNomParent() {
 		return inscriptionNomParent;
 	}
-	public InscriptionScolaire setInscriptionNomParent(String o) {
+	public void setInscriptionNomParent(String o) {
 		this.inscriptionNomParent = InscriptionScolaire.staticSetInscriptionNomParent(requeteSite_, o);
 		this.inscriptionNomParentCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static String staticSetInscriptionNomParent(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -12740,7 +12675,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrInscriptionNomParent(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqInscriptionNomParent(RequeteSiteFrFR requeteSite_, String o) {
@@ -12794,10 +12729,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public String getInscriptionNomParentLignes() {
 		return inscriptionNomParentLignes;
 	}
-	public InscriptionScolaire setInscriptionNomParentLignes(String o) {
+	public void setInscriptionNomParentLignes(String o) {
 		this.inscriptionNomParentLignes = InscriptionScolaire.staticSetInscriptionNomParentLignes(requeteSite_, o);
 		this.inscriptionNomParentLignesCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static String staticSetInscriptionNomParentLignes(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -12817,7 +12751,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrInscriptionNomParentLignes(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqInscriptionNomParentLignes(RequeteSiteFrFR requeteSite_, String o) {
@@ -12871,10 +12805,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public String getInscriptionMailParentLignes() {
 		return inscriptionMailParentLignes;
 	}
-	public InscriptionScolaire setInscriptionMailParentLignes(String o) {
+	public void setInscriptionMailParentLignes(String o) {
 		this.inscriptionMailParentLignes = InscriptionScolaire.staticSetInscriptionMailParentLignes(requeteSite_, o);
 		this.inscriptionMailParentLignesCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static String staticSetInscriptionMailParentLignes(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -12894,7 +12827,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrInscriptionMailParentLignes(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqInscriptionMailParentLignes(RequeteSiteFrFR requeteSite_, String o) {
@@ -12948,10 +12881,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public String getInscriptionDetailParentLignes() {
 		return inscriptionDetailParentLignes;
 	}
-	public InscriptionScolaire setInscriptionDetailParentLignes(String o) {
+	public void setInscriptionDetailParentLignes(String o) {
 		this.inscriptionDetailParentLignes = InscriptionScolaire.staticSetInscriptionDetailParentLignes(requeteSite_, o);
 		this.inscriptionDetailParentLignesCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static String staticSetInscriptionDetailParentLignes(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -12971,7 +12903,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrInscriptionDetailParentLignes(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqInscriptionDetailParentLignes(RequeteSiteFrFR requeteSite_, String o) {
@@ -13025,10 +12957,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public String getInscriptionChercherParentLignes() {
 		return inscriptionChercherParentLignes;
 	}
-	public InscriptionScolaire setInscriptionChercherParentLignes(String o) {
+	public void setInscriptionChercherParentLignes(String o) {
 		this.inscriptionChercherParentLignes = InscriptionScolaire.staticSetInscriptionChercherParentLignes(requeteSite_, o);
 		this.inscriptionChercherParentLignesCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static String staticSetInscriptionChercherParentLignes(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -13048,7 +12979,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrInscriptionChercherParentLignes(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqInscriptionChercherParentLignes(RequeteSiteFrFR requeteSite_, String o) {
@@ -13102,10 +13033,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public String getInscriptionContactUrgenceParentLignes() {
 		return inscriptionContactUrgenceParentLignes;
 	}
-	public InscriptionScolaire setInscriptionContactUrgenceParentLignes(String o) {
+	public void setInscriptionContactUrgenceParentLignes(String o) {
 		this.inscriptionContactUrgenceParentLignes = InscriptionScolaire.staticSetInscriptionContactUrgenceParentLignes(requeteSite_, o);
 		this.inscriptionContactUrgenceParentLignesCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static String staticSetInscriptionContactUrgenceParentLignes(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -13125,7 +13055,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrInscriptionContactUrgenceParentLignes(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqInscriptionContactUrgenceParentLignes(RequeteSiteFrFR requeteSite_, String o) {
@@ -13179,10 +13109,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public String getInscriptionSignature1() {
 		return inscriptionSignature1;
 	}
-	public InscriptionScolaire setInscriptionSignature1(String o) {
+	public void setInscriptionSignature1(String o) {
 		this.inscriptionSignature1 = InscriptionScolaire.staticSetInscriptionSignature1(requeteSite_, o);
 		this.inscriptionSignature1Couverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static String staticSetInscriptionSignature1(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -13202,7 +13131,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrInscriptionSignature1(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqInscriptionSignature1(RequeteSiteFrFR requeteSite_, String o) {
@@ -13332,10 +13261,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public String getInscriptionSignature2() {
 		return inscriptionSignature2;
 	}
-	public InscriptionScolaire setInscriptionSignature2(String o) {
+	public void setInscriptionSignature2(String o) {
 		this.inscriptionSignature2 = InscriptionScolaire.staticSetInscriptionSignature2(requeteSite_, o);
 		this.inscriptionSignature2Couverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static String staticSetInscriptionSignature2(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -13355,7 +13283,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrInscriptionSignature2(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqInscriptionSignature2(RequeteSiteFrFR requeteSite_, String o) {
@@ -13485,10 +13413,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public String getInscriptionSignature3() {
 		return inscriptionSignature3;
 	}
-	public InscriptionScolaire setInscriptionSignature3(String o) {
+	public void setInscriptionSignature3(String o) {
 		this.inscriptionSignature3 = InscriptionScolaire.staticSetInscriptionSignature3(requeteSite_, o);
 		this.inscriptionSignature3Couverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static String staticSetInscriptionSignature3(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -13508,7 +13435,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrInscriptionSignature3(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqInscriptionSignature3(RequeteSiteFrFR requeteSite_, String o) {
@@ -13638,10 +13565,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public String getInscriptionSignature4() {
 		return inscriptionSignature4;
 	}
-	public InscriptionScolaire setInscriptionSignature4(String o) {
+	public void setInscriptionSignature4(String o) {
 		this.inscriptionSignature4 = InscriptionScolaire.staticSetInscriptionSignature4(requeteSite_, o);
 		this.inscriptionSignature4Couverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static String staticSetInscriptionSignature4(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -13661,7 +13587,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrInscriptionSignature4(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqInscriptionSignature4(RequeteSiteFrFR requeteSite_, String o) {
@@ -13791,10 +13717,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public String getInscriptionSignature5() {
 		return inscriptionSignature5;
 	}
-	public InscriptionScolaire setInscriptionSignature5(String o) {
+	public void setInscriptionSignature5(String o) {
 		this.inscriptionSignature5 = InscriptionScolaire.staticSetInscriptionSignature5(requeteSite_, o);
 		this.inscriptionSignature5Couverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static String staticSetInscriptionSignature5(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -13814,7 +13739,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrInscriptionSignature5(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqInscriptionSignature5(RequeteSiteFrFR requeteSite_, String o) {
@@ -13944,10 +13869,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public String getInscriptionSignature6() {
 		return inscriptionSignature6;
 	}
-	public InscriptionScolaire setInscriptionSignature6(String o) {
+	public void setInscriptionSignature6(String o) {
 		this.inscriptionSignature6 = InscriptionScolaire.staticSetInscriptionSignature6(requeteSite_, o);
 		this.inscriptionSignature6Couverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static String staticSetInscriptionSignature6(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -13967,7 +13891,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrInscriptionSignature6(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqInscriptionSignature6(RequeteSiteFrFR requeteSite_, String o) {
@@ -14097,10 +14021,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public String getInscriptionSignature7() {
 		return inscriptionSignature7;
 	}
-	public InscriptionScolaire setInscriptionSignature7(String o) {
+	public void setInscriptionSignature7(String o) {
 		this.inscriptionSignature7 = InscriptionScolaire.staticSetInscriptionSignature7(requeteSite_, o);
 		this.inscriptionSignature7Couverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static String staticSetInscriptionSignature7(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -14120,7 +14043,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrInscriptionSignature7(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqInscriptionSignature7(RequeteSiteFrFR requeteSite_, String o) {
@@ -14250,10 +14173,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public String getInscriptionSignature8() {
 		return inscriptionSignature8;
 	}
-	public InscriptionScolaire setInscriptionSignature8(String o) {
+	public void setInscriptionSignature8(String o) {
 		this.inscriptionSignature8 = InscriptionScolaire.staticSetInscriptionSignature8(requeteSite_, o);
 		this.inscriptionSignature8Couverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static String staticSetInscriptionSignature8(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -14273,7 +14195,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrInscriptionSignature8(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqInscriptionSignature8(RequeteSiteFrFR requeteSite_, String o) {
@@ -14403,10 +14325,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public String getInscriptionSignature9() {
 		return inscriptionSignature9;
 	}
-	public InscriptionScolaire setInscriptionSignature9(String o) {
+	public void setInscriptionSignature9(String o) {
 		this.inscriptionSignature9 = InscriptionScolaire.staticSetInscriptionSignature9(requeteSite_, o);
 		this.inscriptionSignature9Couverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static String staticSetInscriptionSignature9(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -14426,7 +14347,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrInscriptionSignature9(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqInscriptionSignature9(RequeteSiteFrFR requeteSite_, String o) {
@@ -14556,10 +14477,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public String getInscriptionSignature10() {
 		return inscriptionSignature10;
 	}
-	public InscriptionScolaire setInscriptionSignature10(String o) {
+	public void setInscriptionSignature10(String o) {
 		this.inscriptionSignature10 = InscriptionScolaire.staticSetInscriptionSignature10(requeteSite_, o);
 		this.inscriptionSignature10Couverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static String staticSetInscriptionSignature10(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -14579,7 +14499,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrInscriptionSignature10(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqInscriptionSignature10(RequeteSiteFrFR requeteSite_, String o) {
@@ -14717,24 +14637,21 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.inscriptionDate1 = inscriptionDate1;
 		this.inscriptionDate1Couverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setInscriptionDate1(Instant o) {
+	public void setInscriptionDate1(Instant o) {
 		this.inscriptionDate1 = o == null ? null : LocalDate.from(o);
 		this.inscriptionDate1Couverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
-	public InscriptionScolaire setInscriptionDate1(String o) {
+	public void setInscriptionDate1(String o) {
 		this.inscriptionDate1 = InscriptionScolaire.staticSetInscriptionDate1(requeteSite_, o);
 		this.inscriptionDate1Couverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static LocalDate staticSetInscriptionDate1(RequeteSiteFrFR requeteSite_, String o) {
 		return o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 	}
-	public InscriptionScolaire setInscriptionDate1(Date o) {
+	public void setInscriptionDate1(Date o) {
 		this.inscriptionDate1 = o == null ? null : o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
 		this.inscriptionDate1Couverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	protected InscriptionScolaire inscriptionDate1Init() {
 		if(!inscriptionDate1Couverture.dejaInitialise) {
@@ -14874,24 +14791,21 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.inscriptionDate2 = inscriptionDate2;
 		this.inscriptionDate2Couverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setInscriptionDate2(Instant o) {
+	public void setInscriptionDate2(Instant o) {
 		this.inscriptionDate2 = o == null ? null : LocalDate.from(o);
 		this.inscriptionDate2Couverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
-	public InscriptionScolaire setInscriptionDate2(String o) {
+	public void setInscriptionDate2(String o) {
 		this.inscriptionDate2 = InscriptionScolaire.staticSetInscriptionDate2(requeteSite_, o);
 		this.inscriptionDate2Couverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static LocalDate staticSetInscriptionDate2(RequeteSiteFrFR requeteSite_, String o) {
 		return o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 	}
-	public InscriptionScolaire setInscriptionDate2(Date o) {
+	public void setInscriptionDate2(Date o) {
 		this.inscriptionDate2 = o == null ? null : o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
 		this.inscriptionDate2Couverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	protected InscriptionScolaire inscriptionDate2Init() {
 		if(!inscriptionDate2Couverture.dejaInitialise) {
@@ -15031,24 +14945,21 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.inscriptionDate3 = inscriptionDate3;
 		this.inscriptionDate3Couverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setInscriptionDate3(Instant o) {
+	public void setInscriptionDate3(Instant o) {
 		this.inscriptionDate3 = o == null ? null : LocalDate.from(o);
 		this.inscriptionDate3Couverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
-	public InscriptionScolaire setInscriptionDate3(String o) {
+	public void setInscriptionDate3(String o) {
 		this.inscriptionDate3 = InscriptionScolaire.staticSetInscriptionDate3(requeteSite_, o);
 		this.inscriptionDate3Couverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static LocalDate staticSetInscriptionDate3(RequeteSiteFrFR requeteSite_, String o) {
 		return o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 	}
-	public InscriptionScolaire setInscriptionDate3(Date o) {
+	public void setInscriptionDate3(Date o) {
 		this.inscriptionDate3 = o == null ? null : o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
 		this.inscriptionDate3Couverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	protected InscriptionScolaire inscriptionDate3Init() {
 		if(!inscriptionDate3Couverture.dejaInitialise) {
@@ -15188,24 +15099,21 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.inscriptionDate4 = inscriptionDate4;
 		this.inscriptionDate4Couverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setInscriptionDate4(Instant o) {
+	public void setInscriptionDate4(Instant o) {
 		this.inscriptionDate4 = o == null ? null : LocalDate.from(o);
 		this.inscriptionDate4Couverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
-	public InscriptionScolaire setInscriptionDate4(String o) {
+	public void setInscriptionDate4(String o) {
 		this.inscriptionDate4 = InscriptionScolaire.staticSetInscriptionDate4(requeteSite_, o);
 		this.inscriptionDate4Couverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static LocalDate staticSetInscriptionDate4(RequeteSiteFrFR requeteSite_, String o) {
 		return o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 	}
-	public InscriptionScolaire setInscriptionDate4(Date o) {
+	public void setInscriptionDate4(Date o) {
 		this.inscriptionDate4 = o == null ? null : o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
 		this.inscriptionDate4Couverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	protected InscriptionScolaire inscriptionDate4Init() {
 		if(!inscriptionDate4Couverture.dejaInitialise) {
@@ -15345,24 +15253,21 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.inscriptionDate5 = inscriptionDate5;
 		this.inscriptionDate5Couverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setInscriptionDate5(Instant o) {
+	public void setInscriptionDate5(Instant o) {
 		this.inscriptionDate5 = o == null ? null : LocalDate.from(o);
 		this.inscriptionDate5Couverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
-	public InscriptionScolaire setInscriptionDate5(String o) {
+	public void setInscriptionDate5(String o) {
 		this.inscriptionDate5 = InscriptionScolaire.staticSetInscriptionDate5(requeteSite_, o);
 		this.inscriptionDate5Couverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static LocalDate staticSetInscriptionDate5(RequeteSiteFrFR requeteSite_, String o) {
 		return o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 	}
-	public InscriptionScolaire setInscriptionDate5(Date o) {
+	public void setInscriptionDate5(Date o) {
 		this.inscriptionDate5 = o == null ? null : o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
 		this.inscriptionDate5Couverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	protected InscriptionScolaire inscriptionDate5Init() {
 		if(!inscriptionDate5Couverture.dejaInitialise) {
@@ -15502,24 +15407,21 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.inscriptionDate6 = inscriptionDate6;
 		this.inscriptionDate6Couverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setInscriptionDate6(Instant o) {
+	public void setInscriptionDate6(Instant o) {
 		this.inscriptionDate6 = o == null ? null : LocalDate.from(o);
 		this.inscriptionDate6Couverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
-	public InscriptionScolaire setInscriptionDate6(String o) {
+	public void setInscriptionDate6(String o) {
 		this.inscriptionDate6 = InscriptionScolaire.staticSetInscriptionDate6(requeteSite_, o);
 		this.inscriptionDate6Couverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static LocalDate staticSetInscriptionDate6(RequeteSiteFrFR requeteSite_, String o) {
 		return o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 	}
-	public InscriptionScolaire setInscriptionDate6(Date o) {
+	public void setInscriptionDate6(Date o) {
 		this.inscriptionDate6 = o == null ? null : o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
 		this.inscriptionDate6Couverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	protected InscriptionScolaire inscriptionDate6Init() {
 		if(!inscriptionDate6Couverture.dejaInitialise) {
@@ -15659,24 +15561,21 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.inscriptionDate7 = inscriptionDate7;
 		this.inscriptionDate7Couverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setInscriptionDate7(Instant o) {
+	public void setInscriptionDate7(Instant o) {
 		this.inscriptionDate7 = o == null ? null : LocalDate.from(o);
 		this.inscriptionDate7Couverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
-	public InscriptionScolaire setInscriptionDate7(String o) {
+	public void setInscriptionDate7(String o) {
 		this.inscriptionDate7 = InscriptionScolaire.staticSetInscriptionDate7(requeteSite_, o);
 		this.inscriptionDate7Couverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static LocalDate staticSetInscriptionDate7(RequeteSiteFrFR requeteSite_, String o) {
 		return o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 	}
-	public InscriptionScolaire setInscriptionDate7(Date o) {
+	public void setInscriptionDate7(Date o) {
 		this.inscriptionDate7 = o == null ? null : o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
 		this.inscriptionDate7Couverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	protected InscriptionScolaire inscriptionDate7Init() {
 		if(!inscriptionDate7Couverture.dejaInitialise) {
@@ -15816,24 +15715,21 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.inscriptionDate8 = inscriptionDate8;
 		this.inscriptionDate8Couverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setInscriptionDate8(Instant o) {
+	public void setInscriptionDate8(Instant o) {
 		this.inscriptionDate8 = o == null ? null : LocalDate.from(o);
 		this.inscriptionDate8Couverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
-	public InscriptionScolaire setInscriptionDate8(String o) {
+	public void setInscriptionDate8(String o) {
 		this.inscriptionDate8 = InscriptionScolaire.staticSetInscriptionDate8(requeteSite_, o);
 		this.inscriptionDate8Couverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static LocalDate staticSetInscriptionDate8(RequeteSiteFrFR requeteSite_, String o) {
 		return o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 	}
-	public InscriptionScolaire setInscriptionDate8(Date o) {
+	public void setInscriptionDate8(Date o) {
 		this.inscriptionDate8 = o == null ? null : o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
 		this.inscriptionDate8Couverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	protected InscriptionScolaire inscriptionDate8Init() {
 		if(!inscriptionDate8Couverture.dejaInitialise) {
@@ -15973,24 +15869,21 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.inscriptionDate9 = inscriptionDate9;
 		this.inscriptionDate9Couverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setInscriptionDate9(Instant o) {
+	public void setInscriptionDate9(Instant o) {
 		this.inscriptionDate9 = o == null ? null : LocalDate.from(o);
 		this.inscriptionDate9Couverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
-	public InscriptionScolaire setInscriptionDate9(String o) {
+	public void setInscriptionDate9(String o) {
 		this.inscriptionDate9 = InscriptionScolaire.staticSetInscriptionDate9(requeteSite_, o);
 		this.inscriptionDate9Couverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static LocalDate staticSetInscriptionDate9(RequeteSiteFrFR requeteSite_, String o) {
 		return o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 	}
-	public InscriptionScolaire setInscriptionDate9(Date o) {
+	public void setInscriptionDate9(Date o) {
 		this.inscriptionDate9 = o == null ? null : o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
 		this.inscriptionDate9Couverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	protected InscriptionScolaire inscriptionDate9Init() {
 		if(!inscriptionDate9Couverture.dejaInitialise) {
@@ -16130,24 +16023,21 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.inscriptionDate10 = inscriptionDate10;
 		this.inscriptionDate10Couverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setInscriptionDate10(Instant o) {
+	public void setInscriptionDate10(Instant o) {
 		this.inscriptionDate10 = o == null ? null : LocalDate.from(o);
 		this.inscriptionDate10Couverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
-	public InscriptionScolaire setInscriptionDate10(String o) {
+	public void setInscriptionDate10(String o) {
 		this.inscriptionDate10 = InscriptionScolaire.staticSetInscriptionDate10(requeteSite_, o);
 		this.inscriptionDate10Couverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static LocalDate staticSetInscriptionDate10(RequeteSiteFrFR requeteSite_, String o) {
 		return o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 	}
-	public InscriptionScolaire setInscriptionDate10(Date o) {
+	public void setInscriptionDate10(Date o) {
 		this.inscriptionDate10 = o == null ? null : o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
 		this.inscriptionDate10Couverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	protected InscriptionScolaire inscriptionDate10Init() {
 		if(!inscriptionDate10Couverture.dejaInitialise) {
@@ -16284,7 +16174,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.inscriptionsAnnees = inscriptionsAnnees;
 		this.inscriptionsAnneesCouverture.dejaInitialise = true;
 	}
-	public static List<InscriptionScolaire> staticSetInscriptionsAnnees(RequeteSiteFrFR requeteSite_, String o) {
+	public static InscriptionScolaire staticSetInscriptionsAnnees(RequeteSiteFrFR requeteSite_, String o) {
 		return null;
 	}
 	public InscriptionScolaire addInscriptionsAnnees(InscriptionScolaire...objets) {
@@ -16334,7 +16224,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.inscriptionsApprouves = inscriptionsApprouves;
 		this.inscriptionsApprouvesCouverture.dejaInitialise = true;
 	}
-	public static List<InscriptionScolaire> staticSetInscriptionsApprouves(RequeteSiteFrFR requeteSite_, String o) {
+	public static InscriptionScolaire staticSetInscriptionsApprouves(RequeteSiteFrFR requeteSite_, String o) {
 		return null;
 	}
 	public InscriptionScolaire addInscriptionsApprouves(InscriptionScolaire...objets) {
@@ -16384,7 +16274,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.inscriptionsGroupe = inscriptionsGroupe;
 		this.inscriptionsGroupeCouverture.dejaInitialise = true;
 	}
-	public static List<InscriptionScolaire> staticSetInscriptionsGroupe(RequeteSiteFrFR requeteSite_, String o) {
+	public static InscriptionScolaire staticSetInscriptionsGroupe(RequeteSiteFrFR requeteSite_, String o) {
 		return null;
 	}
 	public InscriptionScolaire addInscriptionsGroupe(InscriptionScolaire...objets) {
@@ -16434,7 +16324,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.inscriptionsInscription = inscriptionsInscription;
 		this.inscriptionsInscriptionCouverture.dejaInitialise = true;
 	}
-	public static List<InscriptionScolaire> staticSetInscriptionsInscription(RequeteSiteFrFR requeteSite_, String o) {
+	public static InscriptionScolaire staticSetInscriptionsInscription(RequeteSiteFrFR requeteSite_, String o) {
 		return null;
 	}
 	public InscriptionScolaire addInscriptionsInscription(InscriptionScolaire...objets) {
@@ -16479,10 +16369,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public String getEnfantImmunisationsRecu() {
 		return enfantImmunisationsRecu;
 	}
-	public InscriptionScolaire setEnfantImmunisationsRecu(String o) {
+	public void setEnfantImmunisationsRecu(String o) {
 		this.enfantImmunisationsRecu = InscriptionScolaire.staticSetEnfantImmunisationsRecu(requeteSite_, o);
 		this.enfantImmunisationsRecuCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static String staticSetEnfantImmunisationsRecu(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -16502,7 +16391,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrEnfantImmunisationsRecu(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqEnfantImmunisationsRecu(RequeteSiteFrFR requeteSite_, String o) {
@@ -16556,10 +16445,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public String getEnfantPhotosApprouve() {
 		return enfantPhotosApprouve;
 	}
-	public InscriptionScolaire setEnfantPhotosApprouve(String o) {
+	public void setEnfantPhotosApprouve(String o) {
 		this.enfantPhotosApprouve = InscriptionScolaire.staticSetEnfantPhotosApprouve(requeteSite_, o);
 		this.enfantPhotosApprouveCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static String staticSetEnfantPhotosApprouve(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -16579,7 +16467,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrEnfantPhotosApprouve(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqEnfantPhotosApprouve(RequeteSiteFrFR requeteSite_, String o) {
@@ -16639,10 +16527,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		this.inscriptionNumero = inscriptionNumero;
 		this.inscriptionNumeroCouverture.dejaInitialise = true;
 	}
-	public InscriptionScolaire setInscriptionNumero(String o) {
+	public void setInscriptionNumero(String o) {
 		this.inscriptionNumero = InscriptionScolaire.staticSetInscriptionNumero(requeteSite_, o);
 		this.inscriptionNumeroCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static Integer staticSetInscriptionNumero(RequeteSiteFrFR requeteSite_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -16664,7 +16551,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrInscriptionNumero(RequeteSiteFrFR requeteSite_, Integer o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqInscriptionNumero(RequeteSiteFrFR requeteSite_, String o) {
@@ -16718,10 +16605,9 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public String getInscriptionNomComplet() {
 		return inscriptionNomComplet;
 	}
-	public InscriptionScolaire setInscriptionNomComplet(String o) {
+	public void setInscriptionNomComplet(String o) {
 		this.inscriptionNomComplet = InscriptionScolaire.staticSetInscriptionNomComplet(requeteSite_, o);
 		this.inscriptionNomCompletCouverture.dejaInitialise = true;
-		return (InscriptionScolaire)this;
 	}
 	public static String staticSetInscriptionNomComplet(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -16741,7 +16627,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrInscriptionNomComplet(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqInscriptionNomComplet(RequeteSiteFrFR requeteSite_, String o) {
@@ -17730,7 +17616,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		case "anneeCle":
 			return InscriptionScolaire.staticSolrAnneeCle(requeteSite_, (Long)o);
 		case "blocCles":
-			return InscriptionScolaire.staticSolrBlocCles(requeteSite_, (List<Long>)o);
+			return InscriptionScolaire.staticSolrBlocCles(requeteSite_, (Long)o);
 		case "ecoleCle":
 			return InscriptionScolaire.staticSolrEcoleCle(requeteSite_, (Long)o);
 		case "sessionCle":
@@ -17742,17 +17628,17 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		case "enfantCle":
 			return InscriptionScolaire.staticSolrEnfantCle(requeteSite_, (Long)o);
 		case "mereCles":
-			return InscriptionScolaire.staticSolrMereCles(requeteSite_, (List<Long>)o);
+			return InscriptionScolaire.staticSolrMereCles(requeteSite_, (Long)o);
 		case "pereCles":
-			return InscriptionScolaire.staticSolrPereCles(requeteSite_, (List<Long>)o);
+			return InscriptionScolaire.staticSolrPereCles(requeteSite_, (Long)o);
 		case "gardienCles":
-			return InscriptionScolaire.staticSolrGardienCles(requeteSite_, (List<Long>)o);
+			return InscriptionScolaire.staticSolrGardienCles(requeteSite_, (Long)o);
 		case "paiementCles":
-			return InscriptionScolaire.staticSolrPaiementCles(requeteSite_, (List<Long>)o);
+			return InscriptionScolaire.staticSolrPaiementCles(requeteSite_, (Long)o);
 		case "formInscriptionCle":
 			return InscriptionScolaire.staticSolrFormInscriptionCle(requeteSite_, (Long)o);
 		case "utilisateurCles":
-			return InscriptionScolaire.staticSolrUtilisateurCles(requeteSite_, (List<Long>)o);
+			return InscriptionScolaire.staticSolrUtilisateurCles(requeteSite_, (Long)o);
 		case "scolaireTri":
 			return InscriptionScolaire.staticSolrScolaireTri(requeteSite_, (Integer)o);
 		case "ecoleTri":
@@ -17940,17 +17826,17 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		case "creeHeureDuJour":
 			return InscriptionScolaire.staticSolrCreeHeureDuJour(requeteSite_, (String)o);
 		case "inscriptionJoursDeSemaine":
-			return InscriptionScolaire.staticSolrInscriptionJoursDeSemaine(requeteSite_, (List<String>)o);
+			return InscriptionScolaire.staticSolrInscriptionJoursDeSemaine(requeteSite_, (String)o);
 		case "inscriptionNomsParents":
 			return InscriptionScolaire.staticSolrInscriptionNomsParents(requeteSite_, (String)o);
 		case "inscriptionMails":
-			return InscriptionScolaire.staticSolrInscriptionMails(requeteSite_, (List<String>)o);
+			return InscriptionScolaire.staticSolrInscriptionMails(requeteSite_, (String)o);
 		case "inscriptionMail":
 			return InscriptionScolaire.staticSolrInscriptionMail(requeteSite_, (String)o);
 		case "inscriptionMailsParents":
 			return InscriptionScolaire.staticSolrInscriptionMailsParents(requeteSite_, (String)o);
 		case "inscriptionNumeroTelephones":
-			return InscriptionScolaire.staticSolrInscriptionNumeroTelephones(requeteSite_, (List<String>)o);
+			return InscriptionScolaire.staticSolrInscriptionNumeroTelephones(requeteSite_, (String)o);
 		case "inscriptionNumeroTelephone":
 			return InscriptionScolaire.staticSolrInscriptionNumeroTelephone(requeteSite_, (String)o);
 		case "inscriptionNomParent":
@@ -18032,7 +17918,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		case "anneeCle":
 			return InscriptionScolaire.staticSolrStrAnneeCle(requeteSite_, (Long)o);
 		case "blocCles":
-			return InscriptionScolaire.staticSolrStrBlocCles(requeteSite_, (List<Long>)o);
+			return InscriptionScolaire.staticSolrStrBlocCles(requeteSite_, (Long)o);
 		case "ecoleCle":
 			return InscriptionScolaire.staticSolrStrEcoleCle(requeteSite_, (Long)o);
 		case "sessionCle":
@@ -18044,17 +17930,17 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		case "enfantCle":
 			return InscriptionScolaire.staticSolrStrEnfantCle(requeteSite_, (Long)o);
 		case "mereCles":
-			return InscriptionScolaire.staticSolrStrMereCles(requeteSite_, (List<Long>)o);
+			return InscriptionScolaire.staticSolrStrMereCles(requeteSite_, (Long)o);
 		case "pereCles":
-			return InscriptionScolaire.staticSolrStrPereCles(requeteSite_, (List<Long>)o);
+			return InscriptionScolaire.staticSolrStrPereCles(requeteSite_, (Long)o);
 		case "gardienCles":
-			return InscriptionScolaire.staticSolrStrGardienCles(requeteSite_, (List<Long>)o);
+			return InscriptionScolaire.staticSolrStrGardienCles(requeteSite_, (Long)o);
 		case "paiementCles":
-			return InscriptionScolaire.staticSolrStrPaiementCles(requeteSite_, (List<Long>)o);
+			return InscriptionScolaire.staticSolrStrPaiementCles(requeteSite_, (Long)o);
 		case "formInscriptionCle":
 			return InscriptionScolaire.staticSolrStrFormInscriptionCle(requeteSite_, (Long)o);
 		case "utilisateurCles":
-			return InscriptionScolaire.staticSolrStrUtilisateurCles(requeteSite_, (List<Long>)o);
+			return InscriptionScolaire.staticSolrStrUtilisateurCles(requeteSite_, (Long)o);
 		case "scolaireTri":
 			return InscriptionScolaire.staticSolrStrScolaireTri(requeteSite_, (Integer)o);
 		case "ecoleTri":
@@ -18242,17 +18128,17 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		case "creeHeureDuJour":
 			return InscriptionScolaire.staticSolrStrCreeHeureDuJour(requeteSite_, (String)o);
 		case "inscriptionJoursDeSemaine":
-			return InscriptionScolaire.staticSolrStrInscriptionJoursDeSemaine(requeteSite_, (List<String>)o);
+			return InscriptionScolaire.staticSolrStrInscriptionJoursDeSemaine(requeteSite_, (String)o);
 		case "inscriptionNomsParents":
 			return InscriptionScolaire.staticSolrStrInscriptionNomsParents(requeteSite_, (String)o);
 		case "inscriptionMails":
-			return InscriptionScolaire.staticSolrStrInscriptionMails(requeteSite_, (List<String>)o);
+			return InscriptionScolaire.staticSolrStrInscriptionMails(requeteSite_, (String)o);
 		case "inscriptionMail":
 			return InscriptionScolaire.staticSolrStrInscriptionMail(requeteSite_, (String)o);
 		case "inscriptionMailsParents":
 			return InscriptionScolaire.staticSolrStrInscriptionMailsParents(requeteSite_, (String)o);
 		case "inscriptionNumeroTelephones":
-			return InscriptionScolaire.staticSolrStrInscriptionNumeroTelephones(requeteSite_, (List<String>)o);
+			return InscriptionScolaire.staticSolrStrInscriptionNumeroTelephones(requeteSite_, (String)o);
 		case "inscriptionNumeroTelephone":
 			return InscriptionScolaire.staticSolrStrInscriptionNumeroTelephone(requeteSite_, (String)o);
 		case "inscriptionNomParent":

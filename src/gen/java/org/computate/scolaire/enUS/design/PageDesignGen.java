@@ -109,10 +109,9 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 		this.pageDesignKey = pageDesignKey;
 		this.pageDesignKeyWrap.alreadyInitialized = true;
 	}
-	public PageDesign setPageDesignKey(String o) {
+	public void setPageDesignKey(String o) {
 		this.pageDesignKey = PageDesign.staticSetPageDesignKey(siteRequest_, o);
 		this.pageDesignKeyWrap.alreadyInitialized = true;
-		return (PageDesign)this;
 	}
 	public static Long staticSetPageDesignKey(SiteRequestEnUS siteRequest_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -134,7 +133,7 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrPageDesignKey(SiteRequestEnUS siteRequest_, Long o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPageDesignKey(SiteRequestEnUS siteRequest_, String o) {
@@ -194,7 +193,15 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 		this.childDesignKeys = childDesignKeys;
 		this.childDesignKeysWrap.alreadyInitialized = true;
 	}
-	public static List<Long> staticSetChildDesignKeys(SiteRequestEnUS siteRequest_, String o) {
+	public void setChildDesignKeys(String o) {
+		Long l = PageDesign.staticSetChildDesignKeys(siteRequest_, o);
+		if(l != null)
+			addChildDesignKeys(l);
+		this.childDesignKeysWrap.alreadyInitialized = true;
+	}
+	public static Long staticSetChildDesignKeys(SiteRequestEnUS siteRequest_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Long.parseLong(o);
 		return null;
 	}
 	public PageDesign addChildDesignKeys(Long...objets) {
@@ -208,13 +215,12 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 			this.childDesignKeys.add(o);
 		return (PageDesign)this;
 	}
-	public PageDesign setChildDesignKeys(JsonArray objets) {
+	public void setChildDesignKeys(JsonArray objets) {
 		childDesignKeys.clear();
 		for(int i = 0; i < objets.size(); i++) {
 			Long o = objets.getLong(i);
 			addChildDesignKeys(o);
 		}
-		return (PageDesign)this;
 	}
 	public PageDesign addChildDesignKeys(String o) {
 		if(NumberUtils.isParsable(o)) {
@@ -231,12 +237,12 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 		return (PageDesign)this;
 	}
 
-	public static List<Long> staticSolrChildDesignKeys(SiteRequestEnUS siteRequest_, List<Long> o) {
+	public static Long staticSolrChildDesignKeys(SiteRequestEnUS siteRequest_, Long o) {
 		return o;
 	}
 
-	public static String staticSolrStrChildDesignKeys(SiteRequestEnUS siteRequest_, List<Long> o) {
-			return o == null ? null : o.toString();
+	public static String staticSolrStrChildDesignKeys(SiteRequestEnUS siteRequest_, Long o) {
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqChildDesignKeys(SiteRequestEnUS siteRequest_, String o) {
@@ -244,7 +250,11 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 	}
 
 	public List<Long> solrChildDesignKeys() {
-		return PageDesign.staticSolrChildDesignKeys(siteRequest_, childDesignKeys);
+		List<Long> l = new ArrayList<Long>();
+		for(Long o : childDesignKeys) {
+			l.add(PageDesign.staticSolrChildDesignKeys(siteRequest_, o));
+		}
+		return l;
 	}
 
 	public String strChildDesignKeys() {
@@ -296,7 +306,15 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 		this.parentDesignKeys = parentDesignKeys;
 		this.parentDesignKeysWrap.alreadyInitialized = true;
 	}
-	public static List<Long> staticSetParentDesignKeys(SiteRequestEnUS siteRequest_, String o) {
+	public void setParentDesignKeys(String o) {
+		Long l = PageDesign.staticSetParentDesignKeys(siteRequest_, o);
+		if(l != null)
+			addParentDesignKeys(l);
+		this.parentDesignKeysWrap.alreadyInitialized = true;
+	}
+	public static Long staticSetParentDesignKeys(SiteRequestEnUS siteRequest_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Long.parseLong(o);
 		return null;
 	}
 	public PageDesign addParentDesignKeys(Long...objets) {
@@ -310,13 +328,12 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 			this.parentDesignKeys.add(o);
 		return (PageDesign)this;
 	}
-	public PageDesign setParentDesignKeys(JsonArray objets) {
+	public void setParentDesignKeys(JsonArray objets) {
 		parentDesignKeys.clear();
 		for(int i = 0; i < objets.size(); i++) {
 			Long o = objets.getLong(i);
 			addParentDesignKeys(o);
 		}
-		return (PageDesign)this;
 	}
 	public PageDesign addParentDesignKeys(String o) {
 		if(NumberUtils.isParsable(o)) {
@@ -333,12 +350,12 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 		return (PageDesign)this;
 	}
 
-	public static List<Long> staticSolrParentDesignKeys(SiteRequestEnUS siteRequest_, List<Long> o) {
+	public static Long staticSolrParentDesignKeys(SiteRequestEnUS siteRequest_, Long o) {
 		return o;
 	}
 
-	public static String staticSolrStrParentDesignKeys(SiteRequestEnUS siteRequest_, List<Long> o) {
-			return o == null ? null : o.toString();
+	public static String staticSolrStrParentDesignKeys(SiteRequestEnUS siteRequest_, Long o) {
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqParentDesignKeys(SiteRequestEnUS siteRequest_, String o) {
@@ -346,7 +363,11 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 	}
 
 	public List<Long> solrParentDesignKeys() {
-		return PageDesign.staticSolrParentDesignKeys(siteRequest_, parentDesignKeys);
+		List<Long> l = new ArrayList<Long>();
+		for(Long o : parentDesignKeys) {
+			l.add(PageDesign.staticSolrParentDesignKeys(siteRequest_, o));
+		}
+		return l;
 	}
 
 	public String strParentDesignKeys() {
@@ -473,7 +494,15 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 		this.htmlPartKeys = htmlPartKeys;
 		this.htmlPartKeysWrap.alreadyInitialized = true;
 	}
-	public static List<Long> staticSetHtmlPartKeys(SiteRequestEnUS siteRequest_, String o) {
+	public void setHtmlPartKeys(String o) {
+		Long l = PageDesign.staticSetHtmlPartKeys(siteRequest_, o);
+		if(l != null)
+			addHtmlPartKeys(l);
+		this.htmlPartKeysWrap.alreadyInitialized = true;
+	}
+	public static Long staticSetHtmlPartKeys(SiteRequestEnUS siteRequest_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Long.parseLong(o);
 		return null;
 	}
 	public PageDesign addHtmlPartKeys(Long...objets) {
@@ -487,13 +516,12 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 			this.htmlPartKeys.add(o);
 		return (PageDesign)this;
 	}
-	public PageDesign setHtmlPartKeys(JsonArray objets) {
+	public void setHtmlPartKeys(JsonArray objets) {
 		htmlPartKeys.clear();
 		for(int i = 0; i < objets.size(); i++) {
 			Long o = objets.getLong(i);
 			addHtmlPartKeys(o);
 		}
-		return (PageDesign)this;
 	}
 	public PageDesign addHtmlPartKeys(String o) {
 		if(NumberUtils.isParsable(o)) {
@@ -510,12 +538,12 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 		return (PageDesign)this;
 	}
 
-	public static List<Long> staticSolrHtmlPartKeys(SiteRequestEnUS siteRequest_, List<Long> o) {
+	public static Long staticSolrHtmlPartKeys(SiteRequestEnUS siteRequest_, Long o) {
 		return o;
 	}
 
-	public static String staticSolrStrHtmlPartKeys(SiteRequestEnUS siteRequest_, List<Long> o) {
-			return o == null ? null : o.toString();
+	public static String staticSolrStrHtmlPartKeys(SiteRequestEnUS siteRequest_, Long o) {
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqHtmlPartKeys(SiteRequestEnUS siteRequest_, String o) {
@@ -523,7 +551,11 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 	}
 
 	public List<Long> solrHtmlPartKeys() {
-		return PageDesign.staticSolrHtmlPartKeys(siteRequest_, htmlPartKeys);
+		List<Long> l = new ArrayList<Long>();
+		for(Long o : htmlPartKeys) {
+			l.add(PageDesign.staticSolrHtmlPartKeys(siteRequest_, o));
+		}
+		return l;
 	}
 
 	public String strHtmlPartKeys() {
@@ -644,10 +676,9 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 	public String getPageDesignCompleteName() {
 		return pageDesignCompleteName;
 	}
-	public PageDesign setPageDesignCompleteName(String o) {
+	public void setPageDesignCompleteName(String o) {
 		this.pageDesignCompleteName = PageDesign.staticSetPageDesignCompleteName(siteRequest_, o);
 		this.pageDesignCompleteNameWrap.alreadyInitialized = true;
-		return (PageDesign)this;
 	}
 	public static String staticSetPageDesignCompleteName(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -667,7 +698,7 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrPageDesignCompleteName(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPageDesignCompleteName(SiteRequestEnUS siteRequest_, String o) {
@@ -792,10 +823,9 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 		this.designHidden = designHidden;
 		this.designHiddenWrap.alreadyInitialized = true;
 	}
-	public PageDesign setDesignHidden(String o) {
+	public void setDesignHidden(String o) {
 		this.designHidden = PageDesign.staticSetDesignHidden(siteRequest_, o);
 		this.designHiddenWrap.alreadyInitialized = true;
-		return (PageDesign)this;
 	}
 	public static Boolean staticSetDesignHidden(SiteRequestEnUS siteRequest_, String o) {
 		return Boolean.parseBoolean(o);
@@ -815,7 +845,7 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrDesignHidden(SiteRequestEnUS siteRequest_, Boolean o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqDesignHidden(SiteRequestEnUS siteRequest_, String o) {
@@ -937,10 +967,9 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 		this.designAdmin = designAdmin;
 		this.designAdminWrap.alreadyInitialized = true;
 	}
-	public PageDesign setDesignAdmin(String o) {
+	public void setDesignAdmin(String o) {
 		this.designAdmin = PageDesign.staticSetDesignAdmin(siteRequest_, o);
 		this.designAdminWrap.alreadyInitialized = true;
-		return (PageDesign)this;
 	}
 	public static Boolean staticSetDesignAdmin(SiteRequestEnUS siteRequest_, String o) {
 		return Boolean.parseBoolean(o);
@@ -960,7 +989,7 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrDesignAdmin(SiteRequestEnUS siteRequest_, Boolean o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqDesignAdmin(SiteRequestEnUS siteRequest_, String o) {
@@ -1082,10 +1111,9 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 		this.designIgnoreEmptyChildName = designIgnoreEmptyChildName;
 		this.designIgnoreEmptyChildNameWrap.alreadyInitialized = true;
 	}
-	public PageDesign setDesignIgnoreEmptyChildName(String o) {
+	public void setDesignIgnoreEmptyChildName(String o) {
 		this.designIgnoreEmptyChildName = PageDesign.staticSetDesignIgnoreEmptyChildName(siteRequest_, o);
 		this.designIgnoreEmptyChildNameWrap.alreadyInitialized = true;
-		return (PageDesign)this;
 	}
 	public static Boolean staticSetDesignIgnoreEmptyChildName(SiteRequestEnUS siteRequest_, String o) {
 		return Boolean.parseBoolean(o);
@@ -1105,7 +1133,7 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrDesignIgnoreEmptyChildName(SiteRequestEnUS siteRequest_, Boolean o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqDesignIgnoreEmptyChildName(SiteRequestEnUS siteRequest_, String o) {
@@ -1227,10 +1255,9 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 		this.designIgnorePaymentsNotPastDue = designIgnorePaymentsNotPastDue;
 		this.designIgnorePaymentsNotPastDueWrap.alreadyInitialized = true;
 	}
-	public PageDesign setDesignIgnorePaymentsNotPastDue(String o) {
+	public void setDesignIgnorePaymentsNotPastDue(String o) {
 		this.designIgnorePaymentsNotPastDue = PageDesign.staticSetDesignIgnorePaymentsNotPastDue(siteRequest_, o);
 		this.designIgnorePaymentsNotPastDueWrap.alreadyInitialized = true;
-		return (PageDesign)this;
 	}
 	public static Boolean staticSetDesignIgnorePaymentsNotPastDue(SiteRequestEnUS siteRequest_, String o) {
 		return Boolean.parseBoolean(o);
@@ -1250,7 +1277,7 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrDesignIgnorePaymentsNotPastDue(SiteRequestEnUS siteRequest_, Boolean o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqDesignIgnorePaymentsNotPastDue(SiteRequestEnUS siteRequest_, String o) {
@@ -1372,10 +1399,9 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 		this.designIgnorePaymentsPastDue = designIgnorePaymentsPastDue;
 		this.designIgnorePaymentsPastDueWrap.alreadyInitialized = true;
 	}
-	public PageDesign setDesignIgnorePaymentsPastDue(String o) {
+	public void setDesignIgnorePaymentsPastDue(String o) {
 		this.designIgnorePaymentsPastDue = PageDesign.staticSetDesignIgnorePaymentsPastDue(siteRequest_, o);
 		this.designIgnorePaymentsPastDueWrap.alreadyInitialized = true;
-		return (PageDesign)this;
 	}
 	public static Boolean staticSetDesignIgnorePaymentsPastDue(SiteRequestEnUS siteRequest_, String o) {
 		return Boolean.parseBoolean(o);
@@ -1395,7 +1421,7 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrDesignIgnorePaymentsPastDue(SiteRequestEnUS siteRequest_, Boolean o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqDesignIgnorePaymentsPastDue(SiteRequestEnUS siteRequest_, String o) {
@@ -1517,10 +1543,9 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 		this.designFilterEnrollmentKey = designFilterEnrollmentKey;
 		this.designFilterEnrollmentKeyWrap.alreadyInitialized = true;
 	}
-	public PageDesign setDesignFilterEnrollmentKey(String o) {
+	public void setDesignFilterEnrollmentKey(String o) {
 		this.designFilterEnrollmentKey = PageDesign.staticSetDesignFilterEnrollmentKey(siteRequest_, o);
 		this.designFilterEnrollmentKeyWrap.alreadyInitialized = true;
-		return (PageDesign)this;
 	}
 	public static Boolean staticSetDesignFilterEnrollmentKey(SiteRequestEnUS siteRequest_, String o) {
 		return Boolean.parseBoolean(o);
@@ -1540,7 +1565,7 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrDesignFilterEnrollmentKey(SiteRequestEnUS siteRequest_, Boolean o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqDesignFilterEnrollmentKey(SiteRequestEnUS siteRequest_, String o) {
@@ -1662,10 +1687,9 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 		this.designEnrollmentSortMonthDayOfBirth = designEnrollmentSortMonthDayOfBirth;
 		this.designEnrollmentSortMonthDayOfBirthWrap.alreadyInitialized = true;
 	}
-	public PageDesign setDesignEnrollmentSortMonthDayOfBirth(String o) {
+	public void setDesignEnrollmentSortMonthDayOfBirth(String o) {
 		this.designEnrollmentSortMonthDayOfBirth = PageDesign.staticSetDesignEnrollmentSortMonthDayOfBirth(siteRequest_, o);
 		this.designEnrollmentSortMonthDayOfBirthWrap.alreadyInitialized = true;
-		return (PageDesign)this;
 	}
 	public static Boolean staticSetDesignEnrollmentSortMonthDayOfBirth(SiteRequestEnUS siteRequest_, String o) {
 		return Boolean.parseBoolean(o);
@@ -1685,7 +1709,7 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrDesignEnrollmentSortMonthDayOfBirth(SiteRequestEnUS siteRequest_, Boolean o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqDesignEnrollmentSortMonthDayOfBirth(SiteRequestEnUS siteRequest_, String o) {
@@ -1807,10 +1831,9 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 		this.designEnrollmentSortGroupName = designEnrollmentSortGroupName;
 		this.designEnrollmentSortGroupNameWrap.alreadyInitialized = true;
 	}
-	public PageDesign setDesignEnrollmentSortGroupName(String o) {
+	public void setDesignEnrollmentSortGroupName(String o) {
 		this.designEnrollmentSortGroupName = PageDesign.staticSetDesignEnrollmentSortGroupName(siteRequest_, o);
 		this.designEnrollmentSortGroupNameWrap.alreadyInitialized = true;
-		return (PageDesign)this;
 	}
 	public static Boolean staticSetDesignEnrollmentSortGroupName(SiteRequestEnUS siteRequest_, String o) {
 		return Boolean.parseBoolean(o);
@@ -1830,7 +1853,7 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrDesignEnrollmentSortGroupName(SiteRequestEnUS siteRequest_, Boolean o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqDesignEnrollmentSortGroupName(SiteRequestEnUS siteRequest_, String o) {
@@ -1952,10 +1975,9 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 		this.designEnrollmentSortChildName = designEnrollmentSortChildName;
 		this.designEnrollmentSortChildNameWrap.alreadyInitialized = true;
 	}
-	public PageDesign setDesignEnrollmentSortChildName(String o) {
+	public void setDesignEnrollmentSortChildName(String o) {
 		this.designEnrollmentSortChildName = PageDesign.staticSetDesignEnrollmentSortChildName(siteRequest_, o);
 		this.designEnrollmentSortChildNameWrap.alreadyInitialized = true;
-		return (PageDesign)this;
 	}
 	public static Boolean staticSetDesignEnrollmentSortChildName(SiteRequestEnUS siteRequest_, String o) {
 		return Boolean.parseBoolean(o);
@@ -1975,7 +1997,7 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrDesignEnrollmentSortChildName(SiteRequestEnUS siteRequest_, Boolean o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqDesignEnrollmentSortChildName(SiteRequestEnUS siteRequest_, String o) {
@@ -2097,10 +2119,9 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 		this.searchYears = searchYears;
 		this.searchYearsWrap.alreadyInitialized = true;
 	}
-	public PageDesign setSearchYears(String o) {
+	public void setSearchYears(String o) {
 		this.searchYears = PageDesign.staticSetSearchYears(siteRequest_, o);
 		this.searchYearsWrap.alreadyInitialized = true;
-		return (PageDesign)this;
 	}
 	public static Boolean staticSetSearchYears(SiteRequestEnUS siteRequest_, String o) {
 		return Boolean.parseBoolean(o);
@@ -2120,7 +2141,7 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrSearchYears(SiteRequestEnUS siteRequest_, Boolean o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqSearchYears(SiteRequestEnUS siteRequest_, String o) {
@@ -2242,10 +2263,9 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 		this.searchPayments = searchPayments;
 		this.searchPaymentsWrap.alreadyInitialized = true;
 	}
-	public PageDesign setSearchPayments(String o) {
+	public void setSearchPayments(String o) {
 		this.searchPayments = PageDesign.staticSetSearchPayments(siteRequest_, o);
 		this.searchPaymentsWrap.alreadyInitialized = true;
-		return (PageDesign)this;
 	}
 	public static Boolean staticSetSearchPayments(SiteRequestEnUS siteRequest_, String o) {
 		return Boolean.parseBoolean(o);
@@ -2265,7 +2285,7 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrSearchPayments(SiteRequestEnUS siteRequest_, Boolean o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqSearchPayments(SiteRequestEnUS siteRequest_, String o) {
@@ -2569,11 +2589,11 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 		case "pageDesignKey":
 			return PageDesign.staticSolrPageDesignKey(siteRequest_, (Long)o);
 		case "childDesignKeys":
-			return PageDesign.staticSolrChildDesignKeys(siteRequest_, (List<Long>)o);
+			return PageDesign.staticSolrChildDesignKeys(siteRequest_, (Long)o);
 		case "parentDesignKeys":
-			return PageDesign.staticSolrParentDesignKeys(siteRequest_, (List<Long>)o);
+			return PageDesign.staticSolrParentDesignKeys(siteRequest_, (Long)o);
 		case "htmlPartKeys":
-			return PageDesign.staticSolrHtmlPartKeys(siteRequest_, (List<Long>)o);
+			return PageDesign.staticSolrHtmlPartKeys(siteRequest_, (Long)o);
 		case "pageDesignCompleteName":
 			return PageDesign.staticSolrPageDesignCompleteName(siteRequest_, (String)o);
 		case "designHidden":
@@ -2615,11 +2635,11 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 		case "pageDesignKey":
 			return PageDesign.staticSolrStrPageDesignKey(siteRequest_, (Long)o);
 		case "childDesignKeys":
-			return PageDesign.staticSolrStrChildDesignKeys(siteRequest_, (List<Long>)o);
+			return PageDesign.staticSolrStrChildDesignKeys(siteRequest_, (Long)o);
 		case "parentDesignKeys":
-			return PageDesign.staticSolrStrParentDesignKeys(siteRequest_, (List<Long>)o);
+			return PageDesign.staticSolrStrParentDesignKeys(siteRequest_, (Long)o);
 		case "htmlPartKeys":
-			return PageDesign.staticSolrStrHtmlPartKeys(siteRequest_, (List<Long>)o);
+			return PageDesign.staticSolrStrHtmlPartKeys(siteRequest_, (Long)o);
 		case "pageDesignCompleteName":
 			return PageDesign.staticSolrStrPageDesignCompleteName(siteRequest_, (String)o);
 		case "designHidden":

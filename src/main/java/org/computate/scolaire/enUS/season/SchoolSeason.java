@@ -135,14 +135,13 @@ public class SchoolSeason extends SchoolSeasonGen<Cluster> {
 	protected void _seasonStartDate(Wrap<LocalDate> c) {}
 
 	@Override()
-	public SchoolSeason setSeasonStartDate(String o) {
+	public void  setSeasonStartDate(String o) {
 		if(StringUtils.contains(o, " "))
 			o = StringUtils.substringBefore(o, " ");
 		try {
-			return super.setSeasonStartDate(o);
+			super.setSeasonStartDate(o);
 		} catch (Exception e) {
 			setSeasonStartDate(LocalDate.from(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(o)));
-			return this;
 		}
 	}
 

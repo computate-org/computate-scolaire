@@ -410,14 +410,13 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 	 * r: SaisonDateDebut
 	 * r.enUS: SeasonStartDate
 	 */
-	@Override public SaisonScolaire setSaisonDateDebut(String o) {
+	@Override public void setSaisonDateDebut(String o) {
 		if(StringUtils.contains(o, " "))
 			o = StringUtils.substringBefore(o, " ");
 		try {
-			return super.setSaisonDateDebut(o);
+			super.setSaisonDateDebut(o);
 		} catch (Exception e) {
 			setSaisonDateDebut(LocalDate.from(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(o)));
-			return this;
 		}
 	}
 

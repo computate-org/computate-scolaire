@@ -118,10 +118,9 @@ public abstract class RecuScolaireGen<DEV> extends Cluster {
 		this.recuCle = recuCle;
 		this.recuCleCouverture.dejaInitialise = true;
 	}
-	public RecuScolaire setRecuCle(String o) {
+	public void setRecuCle(String o) {
 		this.recuCle = RecuScolaire.staticSetRecuCle(requeteSite_, o);
 		this.recuCleCouverture.dejaInitialise = true;
-		return (RecuScolaire)this;
 	}
 	public static Long staticSetRecuCle(RequeteSiteFrFR requeteSite_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -143,7 +142,7 @@ public abstract class RecuScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrRecuCle(RequeteSiteFrFR requeteSite_, Long o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqRecuCle(RequeteSiteFrFR requeteSite_, String o) {
@@ -203,10 +202,9 @@ public abstract class RecuScolaireGen<DEV> extends Cluster {
 		this.ecoleCle = ecoleCle;
 		this.ecoleCleCouverture.dejaInitialise = true;
 	}
-	public RecuScolaire setEcoleCle(String o) {
+	public void setEcoleCle(String o) {
 		this.ecoleCle = RecuScolaire.staticSetEcoleCle(requeteSite_, o);
 		this.ecoleCleCouverture.dejaInitialise = true;
-		return (RecuScolaire)this;
 	}
 	public static Long staticSetEcoleCle(RequeteSiteFrFR requeteSite_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -228,7 +226,7 @@ public abstract class RecuScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrEcoleCle(RequeteSiteFrFR requeteSite_, Long o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqEcoleCle(RequeteSiteFrFR requeteSite_, String o) {
@@ -446,10 +444,9 @@ public abstract class RecuScolaireGen<DEV> extends Cluster {
 	public String getEcoleAddresse() {
 		return ecoleAddresse;
 	}
-	public RecuScolaire setEcoleAddresse(String o) {
+	public void setEcoleAddresse(String o) {
 		this.ecoleAddresse = RecuScolaire.staticSetEcoleAddresse(requeteSite_, o);
 		this.ecoleAddresseCouverture.dejaInitialise = true;
-		return (RecuScolaire)this;
 	}
 	public static String staticSetEcoleAddresse(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -469,7 +466,7 @@ public abstract class RecuScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrEcoleAddresse(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqEcoleAddresse(RequeteSiteFrFR requeteSite_, String o) {
@@ -523,10 +520,9 @@ public abstract class RecuScolaireGen<DEV> extends Cluster {
 	public String getEcoleNumeroTelephone() {
 		return ecoleNumeroTelephone;
 	}
-	public RecuScolaire setEcoleNumeroTelephone(String o) {
+	public void setEcoleNumeroTelephone(String o) {
 		this.ecoleNumeroTelephone = RecuScolaire.staticSetEcoleNumeroTelephone(requeteSite_, o);
 		this.ecoleNumeroTelephoneCouverture.dejaInitialise = true;
-		return (RecuScolaire)this;
 	}
 	public static String staticSetEcoleNumeroTelephone(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -546,7 +542,7 @@ public abstract class RecuScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrEcoleNumeroTelephone(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqEcoleNumeroTelephone(RequeteSiteFrFR requeteSite_, String o) {
@@ -608,24 +604,21 @@ public abstract class RecuScolaireGen<DEV> extends Cluster {
 		this.paiementDate = paiementDate;
 		this.paiementDateCouverture.dejaInitialise = true;
 	}
-	public RecuScolaire setPaiementDate(Instant o) {
+	public void setPaiementDate(Instant o) {
 		this.paiementDate = o == null ? null : LocalDate.from(o);
 		this.paiementDateCouverture.dejaInitialise = true;
-		return (RecuScolaire)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
-	public RecuScolaire setPaiementDate(String o) {
+	public void setPaiementDate(String o) {
 		this.paiementDate = RecuScolaire.staticSetPaiementDate(requeteSite_, o);
 		this.paiementDateCouverture.dejaInitialise = true;
-		return (RecuScolaire)this;
 	}
 	public static LocalDate staticSetPaiementDate(RequeteSiteFrFR requeteSite_, String o) {
 		return o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 	}
-	public RecuScolaire setPaiementDate(Date o) {
+	public void setPaiementDate(Date o) {
 		this.paiementDate = o == null ? null : o.toInstant().atZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).toLocalDate();
 		this.paiementDateCouverture.dejaInitialise = true;
-		return (RecuScolaire)this;
 	}
 	protected RecuScolaire paiementDateInit() {
 		if(!paiementDateCouverture.dejaInitialise) {
@@ -767,10 +760,9 @@ public abstract class RecuScolaireGen<DEV> extends Cluster {
 		this.paiementAnnee = paiementAnnee;
 		this.paiementAnneeCouverture.dejaInitialise = true;
 	}
-	public RecuScolaire setPaiementAnnee(String o) {
+	public void setPaiementAnnee(String o) {
 		this.paiementAnnee = RecuScolaire.staticSetPaiementAnnee(requeteSite_, o);
 		this.paiementAnneeCouverture.dejaInitialise = true;
-		return (RecuScolaire)this;
 	}
 	public static Integer staticSetPaiementAnnee(RequeteSiteFrFR requeteSite_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -792,7 +784,7 @@ public abstract class RecuScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrPaiementAnnee(RequeteSiteFrFR requeteSite_, Integer o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPaiementAnnee(RequeteSiteFrFR requeteSite_, String o) {
@@ -852,10 +844,9 @@ public abstract class RecuScolaireGen<DEV> extends Cluster {
 		this.paiementMontant = paiementMontant;
 		this.paiementMontantCouverture.dejaInitialise = true;
 	}
-	public RecuScolaire setPaiementMontant(String o) {
+	public void setPaiementMontant(String o) {
 		this.paiementMontant = RecuScolaire.staticSetPaiementMontant(requeteSite_, o);
 		this.paiementMontantCouverture.dejaInitialise = true;
-		return (RecuScolaire)this;
 	}
 	public static BigDecimal staticSetPaiementMontant(RequeteSiteFrFR requeteSite_, String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
@@ -863,15 +854,13 @@ public abstract class RecuScolaireGen<DEV> extends Cluster {
 			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		return null;
 	}
-	public RecuScolaire setPaiementMontant(Double o) {
+	public void setPaiementMontant(Double o) {
 			this.paiementMontant = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.paiementMontantCouverture.dejaInitialise = true;
-		return (RecuScolaire)this;
 	}
-	public RecuScolaire setPaiementMontant(Integer o) {
+	public void setPaiementMontant(Integer o) {
 			this.paiementMontant = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.paiementMontantCouverture.dejaInitialise = true;
-		return (RecuScolaire)this;
 	}
 	protected RecuScolaire paiementMontantInit() {
 		if(!paiementMontantCouverture.dejaInitialise) {
@@ -888,7 +877,7 @@ public abstract class RecuScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrPaiementMontant(RequeteSiteFrFR requeteSite_, Double o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPaiementMontant(RequeteSiteFrFR requeteSite_, String o) {
@@ -1014,10 +1003,9 @@ public abstract class RecuScolaireGen<DEV> extends Cluster {
 	public String getPaiementDescription() {
 		return paiementDescription;
 	}
-	public RecuScolaire setPaiementDescription(String o) {
+	public void setPaiementDescription(String o) {
 		this.paiementDescription = RecuScolaire.staticSetPaiementDescription(requeteSite_, o);
 		this.paiementDescriptionCouverture.dejaInitialise = true;
-		return (RecuScolaire)this;
 	}
 	public static String staticSetPaiementDescription(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -1037,7 +1025,7 @@ public abstract class RecuScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrPaiementDescription(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPaiementDescription(RequeteSiteFrFR requeteSite_, String o) {
@@ -1163,10 +1151,9 @@ public abstract class RecuScolaireGen<DEV> extends Cluster {
 	public String getPaiementNomCourt() {
 		return paiementNomCourt;
 	}
-	public RecuScolaire setPaiementNomCourt(String o) {
+	public void setPaiementNomCourt(String o) {
 		this.paiementNomCourt = RecuScolaire.staticSetPaiementNomCourt(requeteSite_, o);
 		this.paiementNomCourtCouverture.dejaInitialise = true;
-		return (RecuScolaire)this;
 	}
 	public static String staticSetPaiementNomCourt(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -1186,7 +1173,7 @@ public abstract class RecuScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrPaiementNomCourt(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPaiementNomCourt(RequeteSiteFrFR requeteSite_, String o) {
@@ -1312,10 +1299,9 @@ public abstract class RecuScolaireGen<DEV> extends Cluster {
 	public String getPaiementNomComplet() {
 		return paiementNomComplet;
 	}
-	public RecuScolaire setPaiementNomComplet(String o) {
+	public void setPaiementNomComplet(String o) {
 		this.paiementNomComplet = RecuScolaire.staticSetPaiementNomComplet(requeteSite_, o);
 		this.paiementNomCompletCouverture.dejaInitialise = true;
-		return (RecuScolaire)this;
 	}
 	public static String staticSetPaiementNomComplet(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -1335,7 +1321,7 @@ public abstract class RecuScolaireGen<DEV> extends Cluster {
 	}
 
 	public static String staticSolrStrPaiementNomComplet(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPaiementNomComplet(RequeteSiteFrFR requeteSite_, String o) {

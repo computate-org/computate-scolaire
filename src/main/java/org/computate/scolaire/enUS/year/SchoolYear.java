@@ -118,28 +118,26 @@ public class SchoolYear extends SchoolYearGen<Cluster> {
 	}
 
 	@Override()
-	public SchoolYear setSessionStartDate(String o) {
+	public void  setSessionStartDate(String o) {
 		if(StringUtils.contains(o, " "))
 			o = StringUtils.substringBefore(o, " ");
 		try {
-			return super.setSessionStartDate(o);
+			super.setSessionStartDate(o);
 		} catch (Exception e) {
 			setSessionStartDate(LocalDate.from(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(o)));
-			return this;
 		}
 	}
 
 	protected void _sessionEndDate(Wrap<LocalDate> c) {}
 
 	@Override()
-	public SchoolYear setSessionEndDate(String o) {
+	public void  setSessionEndDate(String o) {
 		if(StringUtils.contains(o, " "))
 			o = StringUtils.substringBefore(o, " ");
 		try {
-			return super.setSessionEndDate(o);
+			super.setSessionEndDate(o);
 		} catch (Exception e) {
 			setSessionEndDate(LocalDate.from(DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(o)));
-			return this;
 		}
 	}
 

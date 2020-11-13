@@ -71,7 +71,7 @@ public class Cluster extends ClusterGen<Object> {
 	 * {@inheritDoc}
 	 * Var.enUS: siteRequest_
 	 * Ignorer: true
-	 */        
+	 */     
 	protected void _requeteSite_(Couverture<RequeteSiteFrFR> c) {}
 
 	protected void _pageParts(List<PagePart> l) {

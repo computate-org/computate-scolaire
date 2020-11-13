@@ -87,10 +87,9 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	public String getPageDesignId() {
 		return pageDesignId;
 	}
-	public DesignDisplayPage setPageDesignId(String o) {
+	public void setPageDesignId(String o) {
 		this.pageDesignId = DesignDisplayPage.staticSetPageDesignId(siteRequest_, o);
 		this.pageDesignIdWrap.alreadyInitialized = true;
-		return (DesignDisplayPage)this;
 	}
 	public static String staticSetPageDesignId(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -110,7 +109,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	}
 
 	public static String staticSolrStrPageDesignId(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPageDesignId(SiteRequestEnUS siteRequest_, String o) {
@@ -617,10 +616,9 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 		this.yearKey = yearKey;
 		this.yearKeyWrap.alreadyInitialized = true;
 	}
-	public DesignDisplayPage setYearKey(String o) {
+	public void setYearKey(String o) {
 		this.yearKey = DesignDisplayPage.staticSetYearKey(siteRequest_, o);
 		this.yearKeyWrap.alreadyInitialized = true;
-		return (DesignDisplayPage)this;
 	}
 	public static Long staticSetYearKey(SiteRequestEnUS siteRequest_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -642,7 +640,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	}
 
 	public static String staticSolrStrYearKey(SiteRequestEnUS siteRequest_, Long o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqYearKey(SiteRequestEnUS siteRequest_, String o) {
@@ -696,10 +694,9 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	public String getYearVar() {
 		return yearVar;
 	}
-	public DesignDisplayPage setYearVar(String o) {
+	public void setYearVar(String o) {
 		this.yearVar = DesignDisplayPage.staticSetYearVar(siteRequest_, o);
 		this.yearVarWrap.alreadyInitialized = true;
-		return (DesignDisplayPage)this;
 	}
 	public static String staticSetYearVar(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -719,7 +716,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	}
 
 	public static String staticSolrStrYearVar(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqYearVar(SiteRequestEnUS siteRequest_, String o) {
@@ -1028,10 +1025,9 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	public String getPaymentLastStr() {
 		return paymentLastStr;
 	}
-	public DesignDisplayPage setPaymentLastStr(String o) {
+	public void setPaymentLastStr(String o) {
 		this.paymentLastStr = DesignDisplayPage.staticSetPaymentLastStr(siteRequest_, o);
 		this.paymentLastStrWrap.alreadyInitialized = true;
-		return (DesignDisplayPage)this;
 	}
 	public static String staticSetPaymentLastStr(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -1051,7 +1047,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	}
 
 	public static String staticSolrStrPaymentLastStr(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPaymentLastStr(SiteRequestEnUS siteRequest_, String o) {
@@ -1111,10 +1107,9 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 		this.paymentAmount = paymentAmount;
 		this.paymentAmountWrap.alreadyInitialized = true;
 	}
-	public DesignDisplayPage setPaymentAmount(String o) {
+	public void setPaymentAmount(String o) {
 		this.paymentAmount = DesignDisplayPage.staticSetPaymentAmount(siteRequest_, o);
 		this.paymentAmountWrap.alreadyInitialized = true;
-		return (DesignDisplayPage)this;
 	}
 	public static BigDecimal staticSetPaymentAmount(SiteRequestEnUS siteRequest_, String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
@@ -1122,15 +1117,13 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		return null;
 	}
-	public DesignDisplayPage setPaymentAmount(Double o) {
+	public void setPaymentAmount(Double o) {
 			this.paymentAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.paymentAmountWrap.alreadyInitialized = true;
-		return (DesignDisplayPage)this;
 	}
-	public DesignDisplayPage setPaymentAmount(Integer o) {
+	public void setPaymentAmount(Integer o) {
 			this.paymentAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.paymentAmountWrap.alreadyInitialized = true;
-		return (DesignDisplayPage)this;
 	}
 	protected DesignDisplayPage paymentAmountInit() {
 		if(!paymentAmountWrap.alreadyInitialized) {
@@ -1147,7 +1140,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	}
 
 	public static String staticSolrStrPaymentAmount(SiteRequestEnUS siteRequest_, Double o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPaymentAmount(SiteRequestEnUS siteRequest_, String o) {
@@ -1207,10 +1200,9 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 		this.chargeAmount = chargeAmount;
 		this.chargeAmountWrap.alreadyInitialized = true;
 	}
-	public DesignDisplayPage setChargeAmount(String o) {
+	public void setChargeAmount(String o) {
 		this.chargeAmount = DesignDisplayPage.staticSetChargeAmount(siteRequest_, o);
 		this.chargeAmountWrap.alreadyInitialized = true;
-		return (DesignDisplayPage)this;
 	}
 	public static BigDecimal staticSetChargeAmount(SiteRequestEnUS siteRequest_, String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
@@ -1218,15 +1210,13 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		return null;
 	}
-	public DesignDisplayPage setChargeAmount(Double o) {
+	public void setChargeAmount(Double o) {
 			this.chargeAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.chargeAmountWrap.alreadyInitialized = true;
-		return (DesignDisplayPage)this;
 	}
-	public DesignDisplayPage setChargeAmount(Integer o) {
+	public void setChargeAmount(Integer o) {
 			this.chargeAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.chargeAmountWrap.alreadyInitialized = true;
-		return (DesignDisplayPage)this;
 	}
 	protected DesignDisplayPage chargeAmountInit() {
 		if(!chargeAmountWrap.alreadyInitialized) {
@@ -1243,7 +1233,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	}
 
 	public static String staticSolrStrChargeAmount(SiteRequestEnUS siteRequest_, Double o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqChargeAmount(SiteRequestEnUS siteRequest_, String o) {
@@ -1303,10 +1293,9 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 		this.chargeAmountFuture = chargeAmountFuture;
 		this.chargeAmountFutureWrap.alreadyInitialized = true;
 	}
-	public DesignDisplayPage setChargeAmountFuture(String o) {
+	public void setChargeAmountFuture(String o) {
 		this.chargeAmountFuture = DesignDisplayPage.staticSetChargeAmountFuture(siteRequest_, o);
 		this.chargeAmountFutureWrap.alreadyInitialized = true;
-		return (DesignDisplayPage)this;
 	}
 	public static BigDecimal staticSetChargeAmountFuture(SiteRequestEnUS siteRequest_, String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
@@ -1314,15 +1303,13 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		return null;
 	}
-	public DesignDisplayPage setChargeAmountFuture(Double o) {
+	public void setChargeAmountFuture(Double o) {
 			this.chargeAmountFuture = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.chargeAmountFutureWrap.alreadyInitialized = true;
-		return (DesignDisplayPage)this;
 	}
-	public DesignDisplayPage setChargeAmountFuture(Integer o) {
+	public void setChargeAmountFuture(Integer o) {
 			this.chargeAmountFuture = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.chargeAmountFutureWrap.alreadyInitialized = true;
-		return (DesignDisplayPage)this;
 	}
 	protected DesignDisplayPage chargeAmountFutureInit() {
 		if(!chargeAmountFutureWrap.alreadyInitialized) {
@@ -1339,7 +1326,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	}
 
 	public static String staticSolrStrChargeAmountFuture(SiteRequestEnUS siteRequest_, Double o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqChargeAmountFuture(SiteRequestEnUS siteRequest_, String o) {
@@ -1399,10 +1386,9 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 		this.chargeAmountDue = chargeAmountDue;
 		this.chargeAmountDueWrap.alreadyInitialized = true;
 	}
-	public DesignDisplayPage setChargeAmountDue(String o) {
+	public void setChargeAmountDue(String o) {
 		this.chargeAmountDue = DesignDisplayPage.staticSetChargeAmountDue(siteRequest_, o);
 		this.chargeAmountDueWrap.alreadyInitialized = true;
-		return (DesignDisplayPage)this;
 	}
 	public static BigDecimal staticSetChargeAmountDue(SiteRequestEnUS siteRequest_, String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
@@ -1410,15 +1396,13 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		return null;
 	}
-	public DesignDisplayPage setChargeAmountDue(Double o) {
+	public void setChargeAmountDue(Double o) {
 			this.chargeAmountDue = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.chargeAmountDueWrap.alreadyInitialized = true;
-		return (DesignDisplayPage)this;
 	}
-	public DesignDisplayPage setChargeAmountDue(Integer o) {
+	public void setChargeAmountDue(Integer o) {
 			this.chargeAmountDue = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.chargeAmountDueWrap.alreadyInitialized = true;
-		return (DesignDisplayPage)this;
 	}
 	protected DesignDisplayPage chargeAmountDueInit() {
 		if(!chargeAmountDueWrap.alreadyInitialized) {
@@ -1435,7 +1419,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	}
 
 	public static String staticSolrStrChargeAmountDue(SiteRequestEnUS siteRequest_, Double o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqChargeAmountDue(SiteRequestEnUS siteRequest_, String o) {
@@ -1495,10 +1479,9 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 		this.chargesNow = chargesNow;
 		this.chargesNowWrap.alreadyInitialized = true;
 	}
-	public DesignDisplayPage setChargesNow(String o) {
+	public void setChargesNow(String o) {
 		this.chargesNow = DesignDisplayPage.staticSetChargesNow(siteRequest_, o);
 		this.chargesNowWrap.alreadyInitialized = true;
-		return (DesignDisplayPage)this;
 	}
 	public static BigDecimal staticSetChargesNow(SiteRequestEnUS siteRequest_, String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
@@ -1506,15 +1489,13 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		return null;
 	}
-	public DesignDisplayPage setChargesNow(Double o) {
+	public void setChargesNow(Double o) {
 			this.chargesNow = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.chargesNowWrap.alreadyInitialized = true;
-		return (DesignDisplayPage)this;
 	}
-	public DesignDisplayPage setChargesNow(Integer o) {
+	public void setChargesNow(Integer o) {
 			this.chargesNow = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.chargesNowWrap.alreadyInitialized = true;
-		return (DesignDisplayPage)this;
 	}
 	protected DesignDisplayPage chargesNowInit() {
 		if(!chargesNowWrap.alreadyInitialized) {
@@ -1531,7 +1512,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	}
 
 	public static String staticSolrStrChargesNow(SiteRequestEnUS siteRequest_, Double o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqChargesNow(SiteRequestEnUS siteRequest_, String o) {
@@ -1590,10 +1571,9 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 		this.paymentsCurrent = paymentsCurrent;
 		this.paymentsCurrentWrap.alreadyInitialized = true;
 	}
-	public DesignDisplayPage setPaymentsCurrent(String o) {
+	public void setPaymentsCurrent(String o) {
 		this.paymentsCurrent = DesignDisplayPage.staticSetPaymentsCurrent(siteRequest_, o);
 		this.paymentsCurrentWrap.alreadyInitialized = true;
-		return (DesignDisplayPage)this;
 	}
 	public static Boolean staticSetPaymentsCurrent(SiteRequestEnUS siteRequest_, String o) {
 		return Boolean.parseBoolean(o);
@@ -1613,7 +1593,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	}
 
 	public static String staticSolrStrPaymentsCurrent(SiteRequestEnUS siteRequest_, Boolean o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPaymentsCurrent(SiteRequestEnUS siteRequest_, String o) {
@@ -1672,10 +1652,9 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 		this.paymentsLate = paymentsLate;
 		this.paymentsLateWrap.alreadyInitialized = true;
 	}
-	public DesignDisplayPage setPaymentsLate(String o) {
+	public void setPaymentsLate(String o) {
 		this.paymentsLate = DesignDisplayPage.staticSetPaymentsLate(siteRequest_, o);
 		this.paymentsLateWrap.alreadyInitialized = true;
-		return (DesignDisplayPage)this;
 	}
 	public static Boolean staticSetPaymentsLate(SiteRequestEnUS siteRequest_, String o) {
 		return Boolean.parseBoolean(o);
@@ -1695,7 +1674,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	}
 
 	public static String staticSolrStrPaymentsLate(SiteRequestEnUS siteRequest_, Boolean o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPaymentsLate(SiteRequestEnUS siteRequest_, String o) {
@@ -1755,10 +1734,9 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 		this.paymentsLateAmount = paymentsLateAmount;
 		this.paymentsLateAmountWrap.alreadyInitialized = true;
 	}
-	public DesignDisplayPage setPaymentsLateAmount(String o) {
+	public void setPaymentsLateAmount(String o) {
 		this.paymentsLateAmount = DesignDisplayPage.staticSetPaymentsLateAmount(siteRequest_, o);
 		this.paymentsLateAmountWrap.alreadyInitialized = true;
-		return (DesignDisplayPage)this;
 	}
 	public static BigDecimal staticSetPaymentsLateAmount(SiteRequestEnUS siteRequest_, String o) {
 		o = StringUtils.removeAll(o, "[^\\d\\.]");
@@ -1766,15 +1744,13 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		return null;
 	}
-	public DesignDisplayPage setPaymentsLateAmount(Double o) {
+	public void setPaymentsLateAmount(Double o) {
 			this.paymentsLateAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.paymentsLateAmountWrap.alreadyInitialized = true;
-		return (DesignDisplayPage)this;
 	}
-	public DesignDisplayPage setPaymentsLateAmount(Integer o) {
+	public void setPaymentsLateAmount(Integer o) {
 			this.paymentsLateAmount = new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
 		this.paymentsLateAmountWrap.alreadyInitialized = true;
-		return (DesignDisplayPage)this;
 	}
 	protected DesignDisplayPage paymentsLateAmountInit() {
 		if(!paymentsLateAmountWrap.alreadyInitialized) {
@@ -1791,7 +1767,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	}
 
 	public static String staticSolrStrPaymentsLateAmount(SiteRequestEnUS siteRequest_, Double o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPaymentsLateAmount(SiteRequestEnUS siteRequest_, String o) {
@@ -1850,10 +1826,9 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 		this.paymentsAhead = paymentsAhead;
 		this.paymentsAheadWrap.alreadyInitialized = true;
 	}
-	public DesignDisplayPage setPaymentsAhead(String o) {
+	public void setPaymentsAhead(String o) {
 		this.paymentsAhead = DesignDisplayPage.staticSetPaymentsAhead(siteRequest_, o);
 		this.paymentsAheadWrap.alreadyInitialized = true;
-		return (DesignDisplayPage)this;
 	}
 	public static Boolean staticSetPaymentsAhead(SiteRequestEnUS siteRequest_, String o) {
 		return Boolean.parseBoolean(o);
@@ -1873,7 +1848,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	}
 
 	public static String staticSolrStrPaymentsAhead(SiteRequestEnUS siteRequest_, Boolean o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPaymentsAhead(SiteRequestEnUS siteRequest_, String o) {
@@ -2060,10 +2035,9 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	public String getEmailFrom() {
 		return emailFrom;
 	}
-	public DesignDisplayPage setEmailFrom(String o) {
+	public void setEmailFrom(String o) {
 		this.emailFrom = DesignDisplayPage.staticSetEmailFrom(siteRequest_, o);
 		this.emailFromWrap.alreadyInitialized = true;
-		return (DesignDisplayPage)this;
 	}
 	public static String staticSetEmailFrom(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -2083,7 +2057,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	}
 
 	public static String staticSolrStrEmailFrom(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqEmailFrom(SiteRequestEnUS siteRequest_, String o) {
@@ -2137,10 +2111,9 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	public String getEmailToSchool() {
 		return emailToSchool;
 	}
-	public DesignDisplayPage setEmailToSchool(String o) {
+	public void setEmailToSchool(String o) {
 		this.emailToSchool = DesignDisplayPage.staticSetEmailToSchool(siteRequest_, o);
 		this.emailToSchoolWrap.alreadyInitialized = true;
-		return (DesignDisplayPage)this;
 	}
 	public static String staticSetEmailToSchool(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -2160,7 +2133,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	}
 
 	public static String staticSolrStrEmailToSchool(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqEmailToSchool(SiteRequestEnUS siteRequest_, String o) {
@@ -2214,10 +2187,9 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	public String getEmailToAddress() {
 		return emailToAddress;
 	}
-	public DesignDisplayPage setEmailToAddress(String o) {
+	public void setEmailToAddress(String o) {
 		this.emailToAddress = DesignDisplayPage.staticSetEmailToAddress(siteRequest_, o);
 		this.emailToAddressWrap.alreadyInitialized = true;
-		return (DesignDisplayPage)this;
 	}
 	public static String staticSetEmailToAddress(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -2237,7 +2209,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	}
 
 	public static String staticSolrStrEmailToAddress(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqEmailToAddress(SiteRequestEnUS siteRequest_, String o) {
@@ -2291,10 +2263,9 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	public String getEmailToName() {
 		return emailToName;
 	}
-	public DesignDisplayPage setEmailToName(String o) {
+	public void setEmailToName(String o) {
 		this.emailToName = DesignDisplayPage.staticSetEmailToName(siteRequest_, o);
 		this.emailToNameWrap.alreadyInitialized = true;
-		return (DesignDisplayPage)this;
 	}
 	public static String staticSetEmailToName(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -2314,7 +2285,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	}
 
 	public static String staticSolrStrEmailToName(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqEmailToName(SiteRequestEnUS siteRequest_, String o) {
@@ -2368,10 +2339,9 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	public String getEmailMessage() {
 		return emailMessage;
 	}
-	public DesignDisplayPage setEmailMessage(String o) {
+	public void setEmailMessage(String o) {
 		this.emailMessage = DesignDisplayPage.staticSetEmailMessage(siteRequest_, o);
 		this.emailMessageWrap.alreadyInitialized = true;
-		return (DesignDisplayPage)this;
 	}
 	public static String staticSetEmailMessage(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -2391,7 +2361,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	}
 
 	public static String staticSolrStrEmailMessage(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqEmailMessage(SiteRequestEnUS siteRequest_, String o) {
@@ -2451,10 +2421,9 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 		this.schoolKey = schoolKey;
 		this.schoolKeyWrap.alreadyInitialized = true;
 	}
-	public DesignDisplayPage setSchoolKey(String o) {
+	public void setSchoolKey(String o) {
 		this.schoolKey = DesignDisplayPage.staticSetSchoolKey(siteRequest_, o);
 		this.schoolKeyWrap.alreadyInitialized = true;
-		return (DesignDisplayPage)this;
 	}
 	public static Long staticSetSchoolKey(SiteRequestEnUS siteRequest_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -2476,7 +2445,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	}
 
 	public static String staticSolrStrSchoolKey(SiteRequestEnUS siteRequest_, Long o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqSchoolKey(SiteRequestEnUS siteRequest_, String o) {
@@ -2530,10 +2499,9 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	public String getSchoolName() {
 		return schoolName;
 	}
-	public DesignDisplayPage setSchoolName(String o) {
+	public void setSchoolName(String o) {
 		this.schoolName = DesignDisplayPage.staticSetSchoolName(siteRequest_, o);
 		this.schoolNameWrap.alreadyInitialized = true;
-		return (DesignDisplayPage)this;
 	}
 	public static String staticSetSchoolName(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -2553,7 +2521,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	}
 
 	public static String staticSolrStrSchoolName(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqSchoolName(SiteRequestEnUS siteRequest_, String o) {
@@ -2607,10 +2575,9 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	public String getSchoolCompleteName() {
 		return schoolCompleteName;
 	}
-	public DesignDisplayPage setSchoolCompleteName(String o) {
+	public void setSchoolCompleteName(String o) {
 		this.schoolCompleteName = DesignDisplayPage.staticSetSchoolCompleteName(siteRequest_, o);
 		this.schoolCompleteNameWrap.alreadyInitialized = true;
-		return (DesignDisplayPage)this;
 	}
 	public static String staticSetSchoolCompleteName(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -2630,7 +2597,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	}
 
 	public static String staticSolrStrSchoolCompleteName(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqSchoolCompleteName(SiteRequestEnUS siteRequest_, String o) {
@@ -2684,10 +2651,9 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	public String getSchoolLocation() {
 		return schoolLocation;
 	}
-	public DesignDisplayPage setSchoolLocation(String o) {
+	public void setSchoolLocation(String o) {
 		this.schoolLocation = DesignDisplayPage.staticSetSchoolLocation(siteRequest_, o);
 		this.schoolLocationWrap.alreadyInitialized = true;
-		return (DesignDisplayPage)this;
 	}
 	public static String staticSetSchoolLocation(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -2707,7 +2673,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	}
 
 	public static String staticSolrStrSchoolLocation(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqSchoolLocation(SiteRequestEnUS siteRequest_, String o) {
@@ -2761,10 +2727,9 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	public String getSchoolAddress() {
 		return schoolAddress;
 	}
-	public DesignDisplayPage setSchoolAddress(String o) {
+	public void setSchoolAddress(String o) {
 		this.schoolAddress = DesignDisplayPage.staticSetSchoolAddress(siteRequest_, o);
 		this.schoolAddressWrap.alreadyInitialized = true;
-		return (DesignDisplayPage)this;
 	}
 	public static String staticSetSchoolAddress(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -2784,7 +2749,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	}
 
 	public static String staticSolrStrSchoolAddress(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqSchoolAddress(SiteRequestEnUS siteRequest_, String o) {
@@ -2838,10 +2803,9 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	public String getSchoolPhoneNumber() {
 		return schoolPhoneNumber;
 	}
-	public DesignDisplayPage setSchoolPhoneNumber(String o) {
+	public void setSchoolPhoneNumber(String o) {
 		this.schoolPhoneNumber = DesignDisplayPage.staticSetSchoolPhoneNumber(siteRequest_, o);
 		this.schoolPhoneNumberWrap.alreadyInitialized = true;
-		return (DesignDisplayPage)this;
 	}
 	public static String staticSetSchoolPhoneNumber(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -2861,7 +2825,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	}
 
 	public static String staticSolrStrSchoolPhoneNumber(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqSchoolPhoneNumber(SiteRequestEnUS siteRequest_, String o) {
@@ -2915,10 +2879,9 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	public String getSchoolAdministratorName() {
 		return schoolAdministratorName;
 	}
-	public DesignDisplayPage setSchoolAdministratorName(String o) {
+	public void setSchoolAdministratorName(String o) {
 		this.schoolAdministratorName = DesignDisplayPage.staticSetSchoolAdministratorName(siteRequest_, o);
 		this.schoolAdministratorNameWrap.alreadyInitialized = true;
-		return (DesignDisplayPage)this;
 	}
 	public static String staticSetSchoolAdministratorName(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -2938,7 +2901,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	}
 
 	public static String staticSolrStrSchoolAdministratorName(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqSchoolAdministratorName(SiteRequestEnUS siteRequest_, String o) {
@@ -2998,10 +2961,9 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 		this.yearStart = yearStart;
 		this.yearStartWrap.alreadyInitialized = true;
 	}
-	public DesignDisplayPage setYearStart(String o) {
+	public void setYearStart(String o) {
 		this.yearStart = DesignDisplayPage.staticSetYearStart(siteRequest_, o);
 		this.yearStartWrap.alreadyInitialized = true;
-		return (DesignDisplayPage)this;
 	}
 	public static Integer staticSetYearStart(SiteRequestEnUS siteRequest_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -3023,7 +2985,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	}
 
 	public static String staticSolrStrYearStart(SiteRequestEnUS siteRequest_, Integer o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqYearStart(SiteRequestEnUS siteRequest_, String o) {
@@ -3083,10 +3045,9 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 		this.yearEnd = yearEnd;
 		this.yearEndWrap.alreadyInitialized = true;
 	}
-	public DesignDisplayPage setYearEnd(String o) {
+	public void setYearEnd(String o) {
 		this.yearEnd = DesignDisplayPage.staticSetYearEnd(siteRequest_, o);
 		this.yearEndWrap.alreadyInitialized = true;
-		return (DesignDisplayPage)this;
 	}
 	public static Integer staticSetYearEnd(SiteRequestEnUS siteRequest_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -3108,7 +3069,7 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	}
 
 	public static String staticSolrStrYearEnd(SiteRequestEnUS siteRequest_, Integer o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqYearEnd(SiteRequestEnUS siteRequest_, String o) {
@@ -3170,24 +3131,21 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 		this.seasonStartDate = seasonStartDate;
 		this.seasonStartDateWrap.alreadyInitialized = true;
 	}
-	public DesignDisplayPage setSeasonStartDate(Instant o) {
+	public void setSeasonStartDate(Instant o) {
 		this.seasonStartDate = o == null ? null : LocalDate.from(o);
 		this.seasonStartDateWrap.alreadyInitialized = true;
-		return (DesignDisplayPage)this;
 	}
 	/** Example: 2011-12-03+01:00 **/
-	public DesignDisplayPage setSeasonStartDate(String o) {
+	public void setSeasonStartDate(String o) {
 		this.seasonStartDate = DesignDisplayPage.staticSetSeasonStartDate(siteRequest_, o);
 		this.seasonStartDateWrap.alreadyInitialized = true;
-		return (DesignDisplayPage)this;
 	}
 	public static LocalDate staticSetSeasonStartDate(SiteRequestEnUS siteRequest_, String o) {
 		return o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE);
 	}
-	public DesignDisplayPage setSeasonStartDate(Date o) {
+	public void setSeasonStartDate(Date o) {
 		this.seasonStartDate = o == null ? null : o.toInstant().atZone(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).toLocalDate();
 		this.seasonStartDateWrap.alreadyInitialized = true;
-		return (DesignDisplayPage)this;
 	}
 	protected DesignDisplayPage seasonStartDateInit() {
 		if(!seasonStartDateWrap.alreadyInitialized) {
