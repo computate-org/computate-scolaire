@@ -557,18 +557,18 @@ public class SchoolEnrollmentEnUSApiServiceImpl extends SchoolEnrollmentEnUSGenA
 				chargeLateFeeList.addFilterQuery("archived_indexed_boolean:false");
 				chargeLateFeeList.addFilterQuery("enrollmentKey_indexed_long:" + schoolEnrollment.getPk());
 				chargeLateFeeList.addFilterQuery("chargeLateFee_indexed_boolean:true");
-				chargeLateFeeList.addFilterQuery("paymentDate_indexed_date:[\"" + DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(lateFeeEndDate.atStartOfDay(zoneId).minusDays(1).toInstant().atZone(ZoneId.of("Z"))) + "\" TO \"" + DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(lateFeeEndDate.atStartOfDay(zoneId).plusDays(1).toInstant().atZone(ZoneId.of("Z"))) + "\"]");
+				chargeLateFeeList.addFilterQuery("lateFeeDate_indexed_date:[\"" + DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(lateFeeStartDate.atStartOfDay(zoneId).minusDays(1).toInstant().atZone(ZoneId.of("Z"))) + "\" TO \"" + DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(lateFeeStartDate.atStartOfDay(zoneId).plusDays(1).toInstant().atZone(ZoneId.of("Z"))) + "\"]");
 //				chargeLateFeeList.add("json.facet", "{sum_chargeAmount:'sum(chargeAmount_indexed_double)'}");
-				chargeLateFeeList.add("json.facet", "{paymentDate:{terms:{field:paymentDate_indexed_date,limit:1}}}");
+				chargeLateFeeList.add("json.facet", "{lateFeeDate:{terms:{field:lateFeeDate_indexed_date,limit:1}}}");
 				chargeLateFeeList.setRows(0);
 				chargeLateFeeList.initDeepSearchList(siteRequest);
 				SimpleOrderedMap chargeLateFeeFacets = (SimpleOrderedMap)Optional.ofNullable(chargeLateFeeList.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(new SimpleOrderedMap());
-				List<LocalDate> lateFeeDates = Optional.ofNullable((SimpleOrderedMap)chargeLateFeeFacets.get("paymentDate")).map(m -> ((List<SimpleOrderedMap>)m.get("buckets"))).orElse(Arrays.asList()).stream().collect(Collectors.mapping(m -> ((Date)m.get("val")).toInstant().atZone(zoneId).toLocalDate(), Collectors.toList()));
+				List<LocalDate> lateFeeDates = Optional.ofNullable((SimpleOrderedMap)chargeLateFeeFacets.get("lateFeeDate")).map(m -> ((List<SimpleOrderedMap>)m.get("buckets"))).orElse(Arrays.asList()).stream().collect(Collectors.mapping(m -> ((Date)m.get("val")).toInstant().atZone(zoneId).toLocalDate(), Collectors.toList()));
 				if(lateFeeDates.size() == 0) {
 					SchoolPayment o = new SchoolPayment();
 					o.setSiteRequest_(siteRequest);
 					o.setChargeAmount(new BigDecimal(20));
-					o.setPaymentDate(lateFeeEndDate);
+					o.setPaymentDate(lateFeeStartDate);
 					o.setLateFeeDate(lateFeeStartDate);
 					o.setCustomerProfileId(schoolEnrollment.getCustomerProfileId());
 					o.setChargeLateFee(true);
