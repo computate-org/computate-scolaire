@@ -92,7 +92,7 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 	 * Stocke: true
 	 * Attribuer: AnneeScolaire.saisonCles
 	 * HtmlLigne: 4
-	 * HtmlCelulle: 1
+	 * HtmlCellule: 1
 	 * Description.frFR: L'année scolaire de la saison scolaire. 
 	 * Description.enUS: The school year of the school season. 
 	 * NomAffichage.frFR: année
@@ -108,7 +108,7 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 	 * Stocke: true
 	 * Attribuer: SessionScolaire.saisonCle
 	 * HtmlLigne: 4
-	 * HtmlCelulle: 2
+	 * HtmlCellule: 2
 	 * Description.frFR: Les sessions scolaires de la saison scolaire. 
 	 * Description.enUS: The school sessions of the school season. 
 	 * NomAffichage.frFR: sessions
@@ -399,7 +399,7 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 	 * Stocke: true
 	 * Definir: true
 	 * HtmlLigne: 3
-	 * HtmlCelulle: 1
+	 * HtmlCellule: 1
 	 * NomAffichage.frFR: début de la saison
 	 * NomAffichage.enUS: start of the season
 	 */                  
@@ -449,7 +449,7 @@ public class SaisonScolaire extends SaisonScolaireGen<Cluster> {
 	 * Stocke: true
 	 * Definir: true
 	 * HtmlLigne: 3
-	 * HtmlCelulle: 2
+	 * HtmlCellule: 2
 	 * NomAffichage.frFR: saison future
 	 * NomAffichage.enUS: future season
 	 */                 

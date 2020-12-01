@@ -446,7 +446,7 @@ public class AnneeScolaire extends AnneeScolaireGen<Cluster> {
 	 * Stocke: true
 	 * Definir: true
 	 * HtmlLigne: 3
-	 * HtmlCelulle: 3
+	 * HtmlCellule: 3
 	 * NomAffichage.frFR: frais d'inscription
 	 * NomAffichage.enUS: enrollment fee
 	 */         

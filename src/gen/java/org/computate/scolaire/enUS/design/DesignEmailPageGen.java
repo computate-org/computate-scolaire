@@ -295,7 +295,7 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		this.pageHtmlPartList = pageHtmlPartList;
 		this.pageHtmlPartListWrap.alreadyInitialized = true;
 	}
-	public static List<HtmlPart> staticSetPageHtmlPartList(SiteRequestEnUS siteRequest_, String o) {
+	public static HtmlPart staticSetPageHtmlPartList(SiteRequestEnUS siteRequest_, String o) {
 		return null;
 	}
 	public DesignEmailPage addPageHtmlPartList(HtmlPart...objets) {
@@ -665,7 +665,7 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		this.emailHtmlPartList = emailHtmlPartList;
 		this.emailHtmlPartListWrap.alreadyInitialized = true;
 	}
-	public static List<HtmlPart> staticSetEmailHtmlPartList(SiteRequestEnUS siteRequest_, String o) {
+	public static HtmlPart staticSetEmailHtmlPartList(SiteRequestEnUS siteRequest_, String o) {
 		return null;
 	}
 	public DesignEmailPage addEmailHtmlPartList(HtmlPart...objets) {
@@ -1035,7 +1035,7 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		this.attachmentHtmlPartList = attachmentHtmlPartList;
 		this.attachmentHtmlPartListWrap.alreadyInitialized = true;
 	}
-	public static List<HtmlPart> staticSetAttachmentHtmlPartList(SiteRequestEnUS siteRequest_, String o) {
+	public static HtmlPart staticSetAttachmentHtmlPartList(SiteRequestEnUS siteRequest_, String o) {
 		return null;
 	}
 	public DesignEmailPage addAttachmentHtmlPartList(HtmlPart...objets) {
@@ -1170,7 +1170,7 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		this.enrollments = enrollments;
 		this.enrollmentsWrap.alreadyInitialized = true;
 	}
-	public static List<SchoolEnrollment> staticSetEnrollments(SiteRequestEnUS siteRequest_, String o) {
+	public static SchoolEnrollment staticSetEnrollments(SiteRequestEnUS siteRequest_, String o) {
 		return null;
 	}
 	public DesignEmailPage addEnrollments(SchoolEnrollment...objets) {
@@ -1222,7 +1222,7 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		this.enrollmentBlocks = enrollmentBlocks;
 		this.enrollmentBlocksWrap.alreadyInitialized = true;
 	}
-	public static List<SchoolEnrollment> staticSetEnrollmentBlocks(SiteRequestEnUS siteRequest_, String o) {
+	public static SchoolEnrollment staticSetEnrollmentBlocks(SiteRequestEnUS siteRequest_, String o) {
 		return null;
 	}
 	public DesignEmailPage addEnrollmentBlocks(SchoolEnrollment...objets) {
@@ -1272,7 +1272,7 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		this.enrollmentGroups = enrollmentGroups;
 		this.enrollmentGroupsWrap.alreadyInitialized = true;
 	}
-	public static List<SchoolEnrollment> staticSetEnrollmentGroups(SiteRequestEnUS siteRequest_, String o) {
+	public static SchoolEnrollment staticSetEnrollmentGroups(SiteRequestEnUS siteRequest_, String o) {
 		return null;
 	}
 	public DesignEmailPage addEnrollmentGroups(SchoolEnrollment...objets) {
@@ -2739,7 +2739,7 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		this.blocks = blocks;
 		this.blocksWrap.alreadyInitialized = true;
 	}
-	public static List<SchoolBlock> staticSetBlocks(SiteRequestEnUS siteRequest_, String o) {
+	public static SchoolBlock staticSetBlocks(SiteRequestEnUS siteRequest_, String o) {
 		return null;
 	}
 	public DesignEmailPage addBlocks(SchoolBlock...objets) {
@@ -2791,7 +2791,7 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		this.seasonBlocks = seasonBlocks;
 		this.seasonBlocksWrap.alreadyInitialized = true;
 	}
-	public static List<SchoolBlock> staticSetSeasonBlocks(SiteRequestEnUS siteRequest_, String o) {
+	public static SchoolBlock staticSetSeasonBlocks(SiteRequestEnUS siteRequest_, String o) {
 		return null;
 	}
 	public DesignEmailPage addSeasonBlocks(SchoolBlock...objets) {
@@ -3053,7 +3053,7 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		this.payments_ = payments_;
 		this.payments_Wrap.alreadyInitialized = true;
 	}
-	public static List<SchoolPayment> staticSetPayments_(SiteRequestEnUS siteRequest_, String o) {
+	public static SchoolPayment staticSetPayments_(SiteRequestEnUS siteRequest_, String o) {
 		return null;
 	}
 	public DesignEmailPage addPayments_(SchoolPayment...objets) {
@@ -4104,7 +4104,7 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		this.receipts_ = receipts_;
 		this.receipts_Wrap.alreadyInitialized = true;
 	}
-	public static List<SchoolReceipt> staticSetReceipts_(SiteRequestEnUS siteRequest_, String o) {
+	public static SchoolReceipt staticSetReceipts_(SiteRequestEnUS siteRequest_, String o) {
 		return null;
 	}
 	public DesignEmailPage addReceipts_(SchoolReceipt...objets) {

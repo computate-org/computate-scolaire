@@ -2775,7 +2775,7 @@ public abstract class AnneeScolaireGen<DEV> extends Cluster {
 		this.anneesAnnee = anneesAnnee;
 		this.anneesAnneeCouverture.dejaInitialise = true;
 	}
-	public static List<AnneeScolaire> staticSetAnneesAnnee(RequeteSiteFrFR requeteSite_, String o) {
+	public static AnneeScolaire staticSetAnneesAnnee(RequeteSiteFrFR requeteSite_, String o) {
 		return null;
 	}
 	public AnneeScolaire addAnneesAnnee(AnneeScolaire...objets) {

@@ -2766,7 +2766,7 @@ public abstract class SchoolYearGen<DEV> extends Cluster {
 		this.yearYears = yearYears;
 		this.yearYearsWrap.alreadyInitialized = true;
 	}
-	public static List<SchoolYear> staticSetYearYears(SiteRequestEnUS siteRequest_, String o) {
+	public static SchoolYear staticSetYearYears(SiteRequestEnUS siteRequest_, String o) {
 		return null;
 	}
 	public SchoolYear addYearYears(SchoolYear...objets) {

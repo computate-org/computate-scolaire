@@ -179,6 +179,7 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSessionStartDate("Page");
 			o.htmSessionEndDate("Page");
+			o.htmYearEnrollmentFee("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSchoolKey("Page");
@@ -200,6 +201,7 @@ public class YearGenPage extends YearGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSessionStartDate("POST");
 			o.htmSessionEndDate("POST");
+			o.htmYearEnrollmentFee("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSchoolKey("POST");

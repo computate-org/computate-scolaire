@@ -180,6 +180,7 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSessionDateDebut("Page");
 			o.htmSessionDateFin("Page");
+			o.htmAnneeFraisInscription("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEcoleCle("Page");
@@ -201,6 +202,7 @@ public class AnneeGenPage extends AnneeGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSessionDateDebut("POST");
 			o.htmSessionDateFin("POST");
+			o.htmAnneeFraisInscription("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEcoleCle("POST");

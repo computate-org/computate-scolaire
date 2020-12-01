@@ -159,6 +159,14 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 			o.htmArchive("Page");
 			o.htmSupprime("Page");
 		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmSaisonDateDebut("Page");
+			o.htmSaisonFuture("Page");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmAnneeCle("Page");
+			o.htmSessionCles("Page");
+		} g("div");
 	}
 
 	public void htmlFormPOSTSaisonScolaire(SaisonScolaire o) {
@@ -171,6 +179,14 @@ public class SaisonGenPage extends SaisonGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmArchive("POST");
 			o.htmSupprime("POST");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmSaisonDateDebut("POST");
+			o.htmSaisonFuture("POST");
+		} g("div");
+		{ e("div").a("class", "w3-cell-row ").f();
+			o.htmAnneeCle("POST");
+			o.htmSessionCles("POST");
 		} g("div");
 	}
 

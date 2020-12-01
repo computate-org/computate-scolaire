@@ -147,7 +147,7 @@ public class DesignPage extends DesignPageGen<Cluster> {
 	 * Stocke: true
 	 * Attribuer: DesignPage.designEnfantCles
 	 * HtmlLigne: 6
-	 * HtmlCelulle: 1
+	 * HtmlCellule: 1
 	 * NomAffichage.frFR: designs parent
 	 * NomAffichage.enUS: parent designs
 	*/  
@@ -164,7 +164,7 @@ public class DesignPage extends DesignPageGen<Cluster> {
 	 * HtmlCellule: 1
 	 * NomAffichage.frFR: parts
 	 * NomAffichage.enUS: parts
-	 */           
+	 */          
 	protected void _partHtmlCles(List<Long> o) {}
 
 	/**    
@@ -176,7 +176,7 @@ public class DesignPage extends DesignPageGen<Cluster> {
 	 * VarTitre: true
 	 * Definir: true
 	 * HtmlLigne: 3
-	 * HtmlCelulle: 1
+	 * HtmlCellule: 1
 	 * NomAffichage.frFR: nom
 	 * NomAffichage.enUS: name
 	 * r: %s - %s %s %s par mois %s
@@ -187,7 +187,7 @@ public class DesignPage extends DesignPageGen<Cluster> {
 	 * r.enUS: "enrollment design for the %s"
 	 * r: "design d'inscription"
 	 * r.enUS: "enrollment design"
-	 */ 
+	 */
 	protected void _designPageNomComplet(Couverture<String> c) {
 		c.o("design d'inscription");
 	}
@@ -197,12 +197,12 @@ public class DesignPage extends DesignPageGen<Cluster> {
 	 * Var.enUS: designHidden
 	 * Definir: true
 	 * HtmlLigne: 3
-	 * HtmlCelulle: 2
+	 * HtmlCellule: 2
 	 * NomAffichage.frFR: caché
 	 * NomAffichage.enUS: hidden
 	 * Indexe: true
 	 * Stocke: true
-	 */                  
+	 */                 
 	protected void _designCache(Couverture<Boolean> c) {
 		c.o(false);
 	}
@@ -212,7 +212,7 @@ public class DesignPage extends DesignPageGen<Cluster> {
 	 * Var.enUS: designAdmin
 	 * Definir: true
 	 * HtmlLigne: 3
-	 * HtmlCelulle: 3
+	 * HtmlCellule: 3
 	 * NomAffichage.frFR: pour admin
 	 * NomAffichage.enUS: for admin
 	 * Indexe: true
@@ -227,7 +227,7 @@ public class DesignPage extends DesignPageGen<Cluster> {
 	 * Var.enUS: designIgnoreEmptyChildName
 	 * Definir: true
 	 * HtmlLigne: 3
-	 * HtmlCelulle: 4
+	 * HtmlCellule: 4
 	 * NomAffichage.frFR: ignorer nom d'enfant vide
 	 * NomAffichage.enUS: ignore empty child name
 	 * Indexe: true
@@ -242,7 +242,7 @@ public class DesignPage extends DesignPageGen<Cluster> {
 	 * Var.enUS: designIgnorePaymentsNotPastDue
 	 * Definir: true
 	 * HtmlLigne: 4
-	 * HtmlCelulle: 1
+	 * HtmlCellule: 1
 	 * NomAffichage.frFR: ignorer inscriptions pas en souffrance
 	 * NomAffichage.enUS: ignore enrollments not past due
 	 * Indexe: true
@@ -257,7 +257,7 @@ public class DesignPage extends DesignPageGen<Cluster> {
 	 * Var.enUS: designIgnorePaymentsPastDue
 	 * Definir: true
 	 * HtmlLigne: 4
-	 * HtmlCelulle: 2
+	 * HtmlCellule: 2
 	 * NomAffichage.frFR: ignorer inscriptions en souffrance
 	 * NomAffichage.enUS: ignore enrollments past due
 	 * Indexe: true
@@ -272,7 +272,7 @@ public class DesignPage extends DesignPageGen<Cluster> {
 	 * Var.enUS: designFilterEnrollmentKey
 	 * Definir: true
 	 * HtmlLigne: 4
-	 * HtmlCelulle: 3
+	 * HtmlCellule: 3
 	 * NomAffichage.frFR: filtrer inscription clé
 	 * NomAffichage.enUS: filter enrollment key
 	 * Indexe: true
@@ -287,7 +287,7 @@ public class DesignPage extends DesignPageGen<Cluster> {
 	 * Var.enUS: designEnrollmentSortMonthDayOfBirth
 	 * Definir: true
 	 * HtmlLigne: 4
-	 * HtmlCelulle: 4
+	 * HtmlCellule: 4
 	 * NomAffichage.frFR: inscription tri mois jour de naissance
 	 * NomAffichage.enUS: enrollment sort month day of birth
 	 * Indexe: true
@@ -302,7 +302,7 @@ public class DesignPage extends DesignPageGen<Cluster> {
 	 * Var.enUS: designEnrollmentSortGroupName
 	 * Definir: true
 	 * HtmlLigne: 4
-	 * HtmlCelulle: 5
+	 * HtmlCellule: 5
 	 * NomAffichage.frFR: inscription tri nom de groupe
 	 * NomAffichage.enUS: enrollment sort group name
 	 * Indexe: true
@@ -317,7 +317,7 @@ public class DesignPage extends DesignPageGen<Cluster> {
 	 * Var.enUS: designEnrollmentSortChildName
 	 * Definir: true
 	 * HtmlLigne: 4
-	 * HtmlCelulle: 6
+	 * HtmlCellule: 6
 	 * NomAffichage.frFR: inscription tri nom d'enfant
 	 * NomAffichage.enUS: enrollment sort child name
 	 * Indexe: true
@@ -332,7 +332,7 @@ public class DesignPage extends DesignPageGen<Cluster> {
 	 * Var.enUS: searchYears
 	 * Definir: true
 	 * HtmlLigne: 5
-	 * HtmlCelulle: 1
+	 * HtmlCellule: 1
 	 * NomAffichage.frFR: rechercher années
 	 * NomAffichage.enUS: search years
 	 * Indexe: true
@@ -347,7 +347,7 @@ public class DesignPage extends DesignPageGen<Cluster> {
 	 * Var.enUS: searchPayments
 	 * Definir: true
 	 * HtmlLigne: 5
-	 * HtmlCelulle: 1
+	 * HtmlCellule: 1
 	 * NomAffichage.frFR: rechercher paiements
 	 * NomAffichage.enUS: search payments
 	 * Indexe: true

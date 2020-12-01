@@ -337,7 +337,7 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		this.enrollments = enrollments;
 		this.enrollmentsWrap.alreadyInitialized = true;
 	}
-	public static List<SchoolEnrollment> staticSetEnrollments(SiteRequestEnUS siteRequest_, String o) {
+	public static SchoolEnrollment staticSetEnrollments(SiteRequestEnUS siteRequest_, String o) {
 		return null;
 	}
 	public DesignPdfPage addEnrollments(SchoolEnrollment...objets) {
@@ -389,7 +389,7 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		this.enrollmentBlocks = enrollmentBlocks;
 		this.enrollmentBlocksWrap.alreadyInitialized = true;
 	}
-	public static List<SchoolEnrollment> staticSetEnrollmentBlocks(SiteRequestEnUS siteRequest_, String o) {
+	public static SchoolEnrollment staticSetEnrollmentBlocks(SiteRequestEnUS siteRequest_, String o) {
 		return null;
 	}
 	public DesignPdfPage addEnrollmentBlocks(SchoolEnrollment...objets) {
@@ -439,7 +439,7 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		this.enrollmentGroups = enrollmentGroups;
 		this.enrollmentGroupsWrap.alreadyInitialized = true;
 	}
-	public static List<SchoolEnrollment> staticSetEnrollmentGroups(SiteRequestEnUS siteRequest_, String o) {
+	public static SchoolEnrollment staticSetEnrollmentGroups(SiteRequestEnUS siteRequest_, String o) {
 		return null;
 	}
 	public DesignPdfPage addEnrollmentGroups(SchoolEnrollment...objets) {
@@ -982,7 +982,7 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		this.payments_ = payments_;
 		this.payments_Wrap.alreadyInitialized = true;
 	}
-	public static List<SchoolPayment> staticSetPayments_(SiteRequestEnUS siteRequest_, String o) {
+	public static SchoolPayment staticSetPayments_(SiteRequestEnUS siteRequest_, String o) {
 		return null;
 	}
 	public DesignPdfPage addPayments_(SchoolPayment...objets) {
@@ -2033,7 +2033,7 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		this.receipts_ = receipts_;
 		this.receipts_Wrap.alreadyInitialized = true;
 	}
-	public static List<SchoolReceipt> staticSetReceipts_(SiteRequestEnUS siteRequest_, String o) {
+	public static SchoolReceipt staticSetReceipts_(SiteRequestEnUS siteRequest_, String o) {
 		return null;
 	}
 	public DesignPdfPage addReceipts_(SchoolReceipt...objets) {
@@ -3470,7 +3470,7 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		this.blocks = blocks;
 		this.blocksWrap.alreadyInitialized = true;
 	}
-	public static List<SchoolBlock> staticSetBlocks(SiteRequestEnUS siteRequest_, String o) {
+	public static SchoolBlock staticSetBlocks(SiteRequestEnUS siteRequest_, String o) {
 		return null;
 	}
 	public DesignPdfPage addBlocks(SchoolBlock...objets) {
@@ -3522,7 +3522,7 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		this.seasonBlocks = seasonBlocks;
 		this.seasonBlocksWrap.alreadyInitialized = true;
 	}
-	public static List<SchoolBlock> staticSetSeasonBlocks(SiteRequestEnUS siteRequest_, String o) {
+	public static SchoolBlock staticSetSeasonBlocks(SiteRequestEnUS siteRequest_, String o) {
 		return null;
 	}
 	public DesignPdfPage addSeasonBlocks(SchoolBlock...objets) {
@@ -3784,7 +3784,7 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		this.htmlPartList = htmlPartList;
 		this.htmlPartListWrap.alreadyInitialized = true;
 	}
-	public static List<HtmlPart> staticSetHtmlPartList(SiteRequestEnUS siteRequest_, String o) {
+	public static HtmlPart staticSetHtmlPartList(SiteRequestEnUS siteRequest_, String o) {
 		return null;
 	}
 	public DesignPdfPage addHtmlPartList(HtmlPart...objets) {
