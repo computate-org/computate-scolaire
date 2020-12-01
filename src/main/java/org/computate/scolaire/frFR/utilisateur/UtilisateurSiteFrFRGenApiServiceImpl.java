@@ -949,6 +949,230 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 							}));
 						}
 						break;
+					case "setCustomerProfileId3":
+						if(jsonObject.getString(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "customerProfileId3")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur UtilisateurSite.customerProfileId3 a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setCustomerProfileId3(jsonObject.getString(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "customerProfileId3", o2.jsonCustomerProfileId3())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur UtilisateurSite.customerProfileId3 a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setCustomerProfileId4":
+						if(jsonObject.getString(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "customerProfileId4")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur UtilisateurSite.customerProfileId4 a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setCustomerProfileId4(jsonObject.getString(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "customerProfileId4", o2.jsonCustomerProfileId4())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur UtilisateurSite.customerProfileId4 a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setCustomerProfileId5":
+						if(jsonObject.getString(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "customerProfileId5")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur UtilisateurSite.customerProfileId5 a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setCustomerProfileId5(jsonObject.getString(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "customerProfileId5", o2.jsonCustomerProfileId5())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur UtilisateurSite.customerProfileId5 a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setCustomerProfileId6":
+						if(jsonObject.getString(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "customerProfileId6")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur UtilisateurSite.customerProfileId6 a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setCustomerProfileId6(jsonObject.getString(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "customerProfileId6", o2.jsonCustomerProfileId6())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur UtilisateurSite.customerProfileId6 a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setCustomerProfileId7":
+						if(jsonObject.getString(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "customerProfileId7")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur UtilisateurSite.customerProfileId7 a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setCustomerProfileId7(jsonObject.getString(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "customerProfileId7", o2.jsonCustomerProfileId7())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur UtilisateurSite.customerProfileId7 a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setCustomerProfileId8":
+						if(jsonObject.getString(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "customerProfileId8")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur UtilisateurSite.customerProfileId8 a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setCustomerProfileId8(jsonObject.getString(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "customerProfileId8", o2.jsonCustomerProfileId8())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur UtilisateurSite.customerProfileId8 a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setCustomerProfileId9":
+						if(jsonObject.getString(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "customerProfileId9")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur UtilisateurSite.customerProfileId9 a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setCustomerProfileId9(jsonObject.getString(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "customerProfileId9", o2.jsonCustomerProfileId9())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur UtilisateurSite.customerProfileId9 a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setCustomerProfileId10":
+						if(jsonObject.getString(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
+										, Tuple.of(pk, "customerProfileId10")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur UtilisateurSite.customerProfileId10 a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setCustomerProfileId10(jsonObject.getString(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD
+										, Tuple.of(pk, "customerProfileId10", o2.jsonCustomerProfileId10())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur UtilisateurSite.customerProfileId10 a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
 					case "setUtilisateurRecevoirCourriels":
 						if(jsonObject.getBoolean(methodeNom) == null) {
 							futures.add(Future.future(a -> {
@@ -1394,6 +1618,110 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 									a.handle(Future.succeededFuture());
 								else
 									a.handle(Future.failedFuture(new Exception("valeur UtilisateurSite.customerProfileId2 a échoué", b.cause())));
+							});
+						}));
+						break;
+					case "customerProfileId3":
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "customerProfileId3", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur UtilisateurSite.customerProfileId3 a échoué", b.cause())));
+							});
+						}));
+						break;
+					case "customerProfileId4":
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "customerProfileId4", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur UtilisateurSite.customerProfileId4 a échoué", b.cause())));
+							});
+						}));
+						break;
+					case "customerProfileId5":
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "customerProfileId5", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur UtilisateurSite.customerProfileId5 a échoué", b.cause())));
+							});
+						}));
+						break;
+					case "customerProfileId6":
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "customerProfileId6", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur UtilisateurSite.customerProfileId6 a échoué", b.cause())));
+							});
+						}));
+						break;
+					case "customerProfileId7":
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "customerProfileId7", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur UtilisateurSite.customerProfileId7 a échoué", b.cause())));
+							});
+						}));
+						break;
+					case "customerProfileId8":
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "customerProfileId8", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur UtilisateurSite.customerProfileId8 a échoué", b.cause())));
+							});
+						}));
+						break;
+					case "customerProfileId9":
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "customerProfileId9", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur UtilisateurSite.customerProfileId9 a échoué", b.cause())));
+							});
+						}));
+						break;
+					case "customerProfileId10":
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD
+									, Tuple.of(pk, "customerProfileId10", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur UtilisateurSite.customerProfileId10 a échoué", b.cause())));
 							});
 						}));
 						break;

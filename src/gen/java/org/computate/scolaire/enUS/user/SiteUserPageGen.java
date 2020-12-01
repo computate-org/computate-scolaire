@@ -111,7 +111,7 @@ public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
 		this.pageDesigns = pageDesigns;
 		this.pageDesignsWrap.alreadyInitialized = true;
 	}
-	public static List<PageDesign> staticSetPageDesigns(SiteRequestEnUS siteRequest_, String o) {
+	public static PageDesign staticSetPageDesigns(SiteRequestEnUS siteRequest_, String o) {
 		return null;
 	}
 	public SiteUserPage addPageDesigns(PageDesign...objets) {
@@ -203,7 +203,7 @@ public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
 		this.years = years;
 		this.yearsWrap.alreadyInitialized = true;
 	}
-	public static List<SchoolYear> staticSetYears(SiteRequestEnUS siteRequest_, String o) {
+	public static SchoolYear staticSetYears(SiteRequestEnUS siteRequest_, String o) {
 		return null;
 	}
 	public SiteUserPage addYears(SchoolYear...objets) {
@@ -255,7 +255,7 @@ public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
 		this.schoolYears = schoolYears;
 		this.schoolYearsWrap.alreadyInitialized = true;
 	}
-	public static List<SchoolYear> staticSetSchoolYears(SiteRequestEnUS siteRequest_, String o) {
+	public static SchoolYear staticSetSchoolYears(SiteRequestEnUS siteRequest_, String o) {
 		return null;
 	}
 	public SiteUserPage addSchoolYears(SchoolYear...objets) {
@@ -345,7 +345,7 @@ public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
 		this.enrollmentSchools = enrollmentSchools;
 		this.enrollmentSchoolsWrap.alreadyInitialized = true;
 	}
-	public static List<SchoolEnrollment> staticSetEnrollmentSchools(SiteRequestEnUS siteRequest_, String o) {
+	public static SchoolEnrollment staticSetEnrollmentSchools(SiteRequestEnUS siteRequest_, String o) {
 		return null;
 	}
 	public SiteUserPage addEnrollmentSchools(SchoolEnrollment...objets) {
@@ -395,7 +395,7 @@ public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
 		this.enrollmentApprovals = enrollmentApprovals;
 		this.enrollmentApprovalsWrap.alreadyInitialized = true;
 	}
-	public static List<SchoolEnrollment> staticSetEnrollmentApprovals(SiteRequestEnUS siteRequest_, String o) {
+	public static SchoolEnrollment staticSetEnrollmentApprovals(SiteRequestEnUS siteRequest_, String o) {
 		return null;
 	}
 	public SiteUserPage addEnrollmentApprovals(SchoolEnrollment...objets) {
@@ -447,7 +447,7 @@ public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
 		this.enrollmentYears = enrollmentYears;
 		this.enrollmentYearsWrap.alreadyInitialized = true;
 	}
-	public static List<SchoolEnrollment> staticSetEnrollmentYears(SiteRequestEnUS siteRequest_, String o) {
+	public static SchoolEnrollment staticSetEnrollmentYears(SiteRequestEnUS siteRequest_, String o) {
 		return null;
 	}
 	public SiteUserPage addEnrollmentYears(SchoolEnrollment...objets) {
@@ -671,7 +671,7 @@ public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
 		this.enrollments = enrollments;
 		this.enrollmentsWrap.alreadyInitialized = true;
 	}
-	public static List<SchoolEnrollment> staticSetEnrollments(SiteRequestEnUS siteRequest_, String o) {
+	public static SchoolEnrollment staticSetEnrollments(SiteRequestEnUS siteRequest_, String o) {
 		return null;
 	}
 	public SiteUserPage addEnrollments(SchoolEnrollment...objets) {
@@ -723,7 +723,7 @@ public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
 		this.enrollments_ = enrollments_;
 		this.enrollments_Wrap.alreadyInitialized = true;
 	}
-	public static List<SchoolEnrollment> staticSetEnrollments_(SiteRequestEnUS siteRequest_, String o) {
+	public static SchoolEnrollment staticSetEnrollments_(SiteRequestEnUS siteRequest_, String o) {
 		return null;
 	}
 	public SiteUserPage addEnrollments_(SchoolEnrollment...objets) {

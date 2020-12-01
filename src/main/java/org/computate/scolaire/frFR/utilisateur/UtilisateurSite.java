@@ -182,10 +182,6 @@ public class UtilisateurSite extends UtilisateurSiteGen<Cluster> {
 	 * Indexe: true
 	 * Stocke: true
 	 * Definir: true
-	 * HtmlLigne: 4
-	 * HtmlCellule: 1
-	 * NomAffichage.frFR: customer profile ID 1
-	 * NomAffichage.enUS: customer profile ID 1
 	 */       
 	protected void _customerProfileId1(Couverture<String> c) {
 	}
@@ -195,12 +191,80 @@ public class UtilisateurSite extends UtilisateurSiteGen<Cluster> {
 	 * Indexe: true
 	 * Stocke: true
 	 * Definir: true
-	 * HtmlLigne: 4
-	 * HtmlCellule: 2
-	 * NomAffichage.frFR: customer profile ID 2
-	 * NomAffichage.enUS: customer profile ID 2
 	 */       
 	protected void _customerProfileId2(Couverture<String> c) {
+	}
+
+	/**	
+	 * description.frFR: ID authorize.net pour l'utilisateur. 
+	 * Indexe: true
+	 * Stocke: true
+	 * Definir: true
+	 */       
+	protected void _customerProfileId3(Couverture<String> c) {
+	}
+
+	/**	
+	 * description.frFR: ID authorize.net pour l'utilisateur. 
+	 * Indexe: true
+	 * Stocke: true
+	 * Definir: true
+	 */       
+	protected void _customerProfileId4(Couverture<String> c) {
+	}
+
+	/**	
+	 * description.frFR: ID authorize.net pour l'utilisateur. 
+	 * Indexe: true
+	 * Stocke: true
+	 * Definir: true
+	 */       
+	protected void _customerProfileId5(Couverture<String> c) {
+	}
+
+	/**	
+	 * description.frFR: ID authorize.net pour l'utilisateur. 
+	 * Indexe: true
+	 * Stocke: true
+	 * Definir: true
+	 */       
+	protected void _customerProfileId6(Couverture<String> c) {
+	}
+
+	/**	
+	 * description.frFR: ID authorize.net pour l'utilisateur. 
+	 * Indexe: true
+	 * Stocke: true
+	 * Definir: true
+	 */       
+	protected void _customerProfileId7(Couverture<String> c) {
+	}
+
+	/**	
+	 * description.frFR: ID authorize.net pour l'utilisateur. 
+	 * Indexe: true
+	 * Stocke: true
+	 * Definir: true
+	 */       
+	protected void _customerProfileId8(Couverture<String> c) {
+	}
+
+	/**	
+	 * description.frFR: ID authorize.net pour l'utilisateur. 
+	 * Indexe: true
+	 * Stocke: true
+	 * Definir: true
+	 */       
+	protected void _customerProfileId9(Couverture<String> c) {
+	}
+
+	/**	
+	 * description.frFR: ID authorize.net pour l'utilisateur. 
+	 * Indexe: true
+	 * Stocke: true
+	 * Definir: true
+	 */       
+	protected void _customerProfileId10(Couverture<String> c) {
 	}
 
 	/**	

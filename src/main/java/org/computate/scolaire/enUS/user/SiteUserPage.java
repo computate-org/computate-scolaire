@@ -102,13 +102,15 @@ public class SiteUserPage extends SiteUserPageGen<SiteUserGenPage> {
 
 	protected void _yearSearch(SearchList<SchoolYear> l) {
 		LocalDate now = LocalDate.now();
+		LocalDate yearStartDate = now.with(TemporalAdjusters.firstDayOfMonth()).withMonth(12);
+		yearStartDate = now.isAfter(yearStartDate.minusDays(1)) ? yearStartDate : yearStartDate.minusYears(1);
 		LocalDate yearEndDate = now.with(TemporalAdjusters.firstDayOfMonth()).withMonth(6);
 		yearEndDate = now.isBefore(yearEndDate) ? yearEndDate : yearEndDate.plusYears(1);
 
 		l.setQuery("*:*");
 		l.addFilterQuery("deleted_indexed_boolean:false");
 		l.addFilterQuery("archived_indexed_boolean:false");
-		l.addFilterQuery("yearEnd_indexed_int:" + yearEndDate.getYear());
+		l.addFilterQuery("yearEnd_indexed_int:[" + yearStartDate.getYear() + " TO " + yearEndDate.getYear() + "]");
 		l.setC(SchoolYear.class);
 		l.setStore(true);
 		l.addSort("schoolName_indexed_string", ORDER.asc);

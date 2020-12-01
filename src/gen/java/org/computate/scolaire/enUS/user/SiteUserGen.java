@@ -411,7 +411,7 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 		this.enrollments_ = enrollments_;
 		this.enrollments_Wrap.alreadyInitialized = true;
 	}
-	public static List<SchoolEnrollment> staticSetEnrollments_(SiteRequestEnUS siteRequest_, String o) {
+	public static SchoolEnrollment staticSetEnrollments_(SiteRequestEnUS siteRequest_, String o) {
 		return null;
 	}
 	public SiteUser addEnrollments_(SchoolEnrollment...objets) {
@@ -1283,7 +1283,7 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 	}
 
 	public String nomAffichageCustomerProfileId1() {
-		return "customer profile ID 1";
+		return null;
 	}
 
 	public String htmTooltipCustomerProfileId1() {
@@ -1302,7 +1302,6 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 				) {
 			e("input")
 				.a("type", "text")
-				.a("placeholder", "customer profile ID 1")
 				.a("id", classApiMethodMethod, "_customerProfileId1");
 				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
 					a("class", "setCustomerProfileId1 classSiteUser inputSiteUser", pk, "CustomerProfileId1 w3-input w3-border ");
@@ -1334,9 +1333,6 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggest", classApiMethodMethod, "SiteUserCustomerProfileId1").f();
 					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-gray ").f();
-							e("label").a("for", classApiMethodMethod, "_customerProfileId1").a("class", "").f().sx("customer profile ID 1").g("label");
-						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
 
@@ -1430,7 +1426,7 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 	}
 
 	public String nomAffichageCustomerProfileId2() {
-		return "customer profile ID 2";
+		return null;
 	}
 
 	public String htmTooltipCustomerProfileId2() {
@@ -1449,7 +1445,6 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 				) {
 			e("input")
 				.a("type", "text")
-				.a("placeholder", "customer profile ID 2")
 				.a("id", classApiMethodMethod, "_customerProfileId2");
 				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
 					a("class", "setCustomerProfileId2 classSiteUser inputSiteUser", pk, "CustomerProfileId2 w3-input w3-border ");
@@ -1481,9 +1476,6 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 			{ e("div").a("class", "w3-padding ").f();
 				{ e("div").a("id", "suggest", classApiMethodMethod, "SiteUserCustomerProfileId2").f();
 					{ e("div").a("class", "w3-card ").f();
-						{ e("div").a("class", "w3-cell-row w3-gray ").f();
-							e("label").a("for", classApiMethodMethod, "_customerProfileId2").a("class", "").f().sx("customer profile ID 2").g("label");
-						} g("div");
 						{ e("div").a("class", "w3-cell-row w3-padding ").f();
 							{ e("div").a("class", "w3-cell ").f();
 
@@ -1499,6 +1491,1150 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 											.a("tabindex", "-1")
 											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-gray ")
 										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_customerProfileId2')); $('#", classApiMethodMethod, "_customerProfileId2').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#SiteUserForm :input[name=pk]').val() }], 'setCustomerProfileId2', null, function() { addGlow($('#", classApiMethodMethod, "_customerProfileId2')); }, function() { addError($('#", classApiMethodMethod, "_customerProfileId2')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	////////////////////////
+	// customerProfileId3 //
+	////////////////////////
+
+	/**	 The entity customerProfileId3
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String customerProfileId3;
+	@JsonIgnore
+	public Wrap<String> customerProfileId3Wrap = new Wrap<String>().p(this).c(String.class).var("customerProfileId3").o(customerProfileId3);
+
+	/**	<br/> The entity customerProfileId3
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.user.SiteUser&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:customerProfileId3">Find the entity customerProfileId3 in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _customerProfileId3(Wrap<String> c);
+
+	public String getCustomerProfileId3() {
+		return customerProfileId3;
+	}
+	public void setCustomerProfileId3(String o) {
+		this.customerProfileId3 = SiteUser.staticSetCustomerProfileId3(siteRequest_, o);
+		this.customerProfileId3Wrap.alreadyInitialized = true;
+	}
+	public static String staticSetCustomerProfileId3(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+	protected SiteUser customerProfileId3Init() {
+		if(!customerProfileId3Wrap.alreadyInitialized) {
+			_customerProfileId3(customerProfileId3Wrap);
+			if(customerProfileId3 == null)
+				setCustomerProfileId3(customerProfileId3Wrap.o);
+		}
+		customerProfileId3Wrap.alreadyInitialized(true);
+		return (SiteUser)this;
+	}
+
+	public static String staticSolrCustomerProfileId3(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrCustomerProfileId3(SiteRequestEnUS siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqCustomerProfileId3(SiteRequestEnUS siteRequest_, String o) {
+		return SiteUser.staticSolrStrCustomerProfileId3(siteRequest_, SiteUser.staticSolrCustomerProfileId3(siteRequest_, SiteUser.staticSetCustomerProfileId3(siteRequest_, o)));
+	}
+
+	public String solrCustomerProfileId3() {
+		return SiteUser.staticSolrCustomerProfileId3(siteRequest_, customerProfileId3);
+	}
+
+	public String strCustomerProfileId3() {
+		return customerProfileId3 == null ? "" : customerProfileId3;
+	}
+
+	public String jsonCustomerProfileId3() {
+		return customerProfileId3 == null ? "" : customerProfileId3;
+	}
+
+	public String nomAffichageCustomerProfileId3() {
+		return null;
+	}
+
+	public String htmTooltipCustomerProfileId3() {
+		return null;
+	}
+
+	public String htmCustomerProfileId3() {
+		return customerProfileId3 == null ? "" : StringEscapeUtils.escapeHtml4(strCustomerProfileId3());
+	}
+
+	public void inputCustomerProfileId3(String classApiMethodMethod) {
+		SiteUser s = (SiteUser)this;
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			e("input")
+				.a("type", "text")
+				.a("id", classApiMethodMethod, "_customerProfileId3");
+				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+					a("class", "setCustomerProfileId3 classSiteUser inputSiteUser", pk, "CustomerProfileId3 w3-input w3-border ");
+					a("name", "setCustomerProfileId3");
+				} else {
+					a("class", "valueCustomerProfileId3 w3-input w3-border classSiteUser inputSiteUser", pk, "CustomerProfileId3 w3-input w3-border ");
+					a("name", "customerProfileId3");
+				}
+				if("Page".equals(classApiMethodMethod)) {
+					a("onclick", "removeGlow($(this)); ");
+					a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setCustomerProfileId3', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_customerProfileId3')); }, function() { addError($('#", classApiMethodMethod, "_customerProfileId3')); }); ");
+				}
+				a("value", strCustomerProfileId3())
+			.fg();
+
+		} else {
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					) {
+				e("span").a("class", "varSiteUser", pk, "CustomerProfileId3 ").f().sx(htmCustomerProfileId3()).g("span");
+			}
+		}
+	}
+
+	public void htmCustomerProfileId3(String classApiMethodMethod) {
+		SiteUser s = (SiteUser)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SiteUserCustomerProfileId3").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputCustomerProfileId3(classApiMethodMethod);
+							} g("div");
+							if(
+									CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+									) {
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-gray ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_customerProfileId3')); $('#", classApiMethodMethod, "_customerProfileId3').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#SiteUserForm :input[name=pk]').val() }], 'setCustomerProfileId3', null, function() { addGlow($('#", classApiMethodMethod, "_customerProfileId3')); }, function() { addError($('#", classApiMethodMethod, "_customerProfileId3')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	////////////////////////
+	// customerProfileId4 //
+	////////////////////////
+
+	/**	 The entity customerProfileId4
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String customerProfileId4;
+	@JsonIgnore
+	public Wrap<String> customerProfileId4Wrap = new Wrap<String>().p(this).c(String.class).var("customerProfileId4").o(customerProfileId4);
+
+	/**	<br/> The entity customerProfileId4
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.user.SiteUser&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:customerProfileId4">Find the entity customerProfileId4 in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _customerProfileId4(Wrap<String> c);
+
+	public String getCustomerProfileId4() {
+		return customerProfileId4;
+	}
+	public void setCustomerProfileId4(String o) {
+		this.customerProfileId4 = SiteUser.staticSetCustomerProfileId4(siteRequest_, o);
+		this.customerProfileId4Wrap.alreadyInitialized = true;
+	}
+	public static String staticSetCustomerProfileId4(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+	protected SiteUser customerProfileId4Init() {
+		if(!customerProfileId4Wrap.alreadyInitialized) {
+			_customerProfileId4(customerProfileId4Wrap);
+			if(customerProfileId4 == null)
+				setCustomerProfileId4(customerProfileId4Wrap.o);
+		}
+		customerProfileId4Wrap.alreadyInitialized(true);
+		return (SiteUser)this;
+	}
+
+	public static String staticSolrCustomerProfileId4(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrCustomerProfileId4(SiteRequestEnUS siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqCustomerProfileId4(SiteRequestEnUS siteRequest_, String o) {
+		return SiteUser.staticSolrStrCustomerProfileId4(siteRequest_, SiteUser.staticSolrCustomerProfileId4(siteRequest_, SiteUser.staticSetCustomerProfileId4(siteRequest_, o)));
+	}
+
+	public String solrCustomerProfileId4() {
+		return SiteUser.staticSolrCustomerProfileId4(siteRequest_, customerProfileId4);
+	}
+
+	public String strCustomerProfileId4() {
+		return customerProfileId4 == null ? "" : customerProfileId4;
+	}
+
+	public String jsonCustomerProfileId4() {
+		return customerProfileId4 == null ? "" : customerProfileId4;
+	}
+
+	public String nomAffichageCustomerProfileId4() {
+		return null;
+	}
+
+	public String htmTooltipCustomerProfileId4() {
+		return null;
+	}
+
+	public String htmCustomerProfileId4() {
+		return customerProfileId4 == null ? "" : StringEscapeUtils.escapeHtml4(strCustomerProfileId4());
+	}
+
+	public void inputCustomerProfileId4(String classApiMethodMethod) {
+		SiteUser s = (SiteUser)this;
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			e("input")
+				.a("type", "text")
+				.a("id", classApiMethodMethod, "_customerProfileId4");
+				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+					a("class", "setCustomerProfileId4 classSiteUser inputSiteUser", pk, "CustomerProfileId4 w3-input w3-border ");
+					a("name", "setCustomerProfileId4");
+				} else {
+					a("class", "valueCustomerProfileId4 w3-input w3-border classSiteUser inputSiteUser", pk, "CustomerProfileId4 w3-input w3-border ");
+					a("name", "customerProfileId4");
+				}
+				if("Page".equals(classApiMethodMethod)) {
+					a("onclick", "removeGlow($(this)); ");
+					a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setCustomerProfileId4', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_customerProfileId4')); }, function() { addError($('#", classApiMethodMethod, "_customerProfileId4')); }); ");
+				}
+				a("value", strCustomerProfileId4())
+			.fg();
+
+		} else {
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					) {
+				e("span").a("class", "varSiteUser", pk, "CustomerProfileId4 ").f().sx(htmCustomerProfileId4()).g("span");
+			}
+		}
+	}
+
+	public void htmCustomerProfileId4(String classApiMethodMethod) {
+		SiteUser s = (SiteUser)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SiteUserCustomerProfileId4").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputCustomerProfileId4(classApiMethodMethod);
+							} g("div");
+							if(
+									CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+									) {
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-gray ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_customerProfileId4')); $('#", classApiMethodMethod, "_customerProfileId4').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#SiteUserForm :input[name=pk]').val() }], 'setCustomerProfileId4', null, function() { addGlow($('#", classApiMethodMethod, "_customerProfileId4')); }, function() { addError($('#", classApiMethodMethod, "_customerProfileId4')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	////////////////////////
+	// customerProfileId5 //
+	////////////////////////
+
+	/**	 The entity customerProfileId5
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String customerProfileId5;
+	@JsonIgnore
+	public Wrap<String> customerProfileId5Wrap = new Wrap<String>().p(this).c(String.class).var("customerProfileId5").o(customerProfileId5);
+
+	/**	<br/> The entity customerProfileId5
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.user.SiteUser&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:customerProfileId5">Find the entity customerProfileId5 in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _customerProfileId5(Wrap<String> c);
+
+	public String getCustomerProfileId5() {
+		return customerProfileId5;
+	}
+	public void setCustomerProfileId5(String o) {
+		this.customerProfileId5 = SiteUser.staticSetCustomerProfileId5(siteRequest_, o);
+		this.customerProfileId5Wrap.alreadyInitialized = true;
+	}
+	public static String staticSetCustomerProfileId5(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+	protected SiteUser customerProfileId5Init() {
+		if(!customerProfileId5Wrap.alreadyInitialized) {
+			_customerProfileId5(customerProfileId5Wrap);
+			if(customerProfileId5 == null)
+				setCustomerProfileId5(customerProfileId5Wrap.o);
+		}
+		customerProfileId5Wrap.alreadyInitialized(true);
+		return (SiteUser)this;
+	}
+
+	public static String staticSolrCustomerProfileId5(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrCustomerProfileId5(SiteRequestEnUS siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqCustomerProfileId5(SiteRequestEnUS siteRequest_, String o) {
+		return SiteUser.staticSolrStrCustomerProfileId5(siteRequest_, SiteUser.staticSolrCustomerProfileId5(siteRequest_, SiteUser.staticSetCustomerProfileId5(siteRequest_, o)));
+	}
+
+	public String solrCustomerProfileId5() {
+		return SiteUser.staticSolrCustomerProfileId5(siteRequest_, customerProfileId5);
+	}
+
+	public String strCustomerProfileId5() {
+		return customerProfileId5 == null ? "" : customerProfileId5;
+	}
+
+	public String jsonCustomerProfileId5() {
+		return customerProfileId5 == null ? "" : customerProfileId5;
+	}
+
+	public String nomAffichageCustomerProfileId5() {
+		return null;
+	}
+
+	public String htmTooltipCustomerProfileId5() {
+		return null;
+	}
+
+	public String htmCustomerProfileId5() {
+		return customerProfileId5 == null ? "" : StringEscapeUtils.escapeHtml4(strCustomerProfileId5());
+	}
+
+	public void inputCustomerProfileId5(String classApiMethodMethod) {
+		SiteUser s = (SiteUser)this;
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			e("input")
+				.a("type", "text")
+				.a("id", classApiMethodMethod, "_customerProfileId5");
+				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+					a("class", "setCustomerProfileId5 classSiteUser inputSiteUser", pk, "CustomerProfileId5 w3-input w3-border ");
+					a("name", "setCustomerProfileId5");
+				} else {
+					a("class", "valueCustomerProfileId5 w3-input w3-border classSiteUser inputSiteUser", pk, "CustomerProfileId5 w3-input w3-border ");
+					a("name", "customerProfileId5");
+				}
+				if("Page".equals(classApiMethodMethod)) {
+					a("onclick", "removeGlow($(this)); ");
+					a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setCustomerProfileId5', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_customerProfileId5')); }, function() { addError($('#", classApiMethodMethod, "_customerProfileId5')); }); ");
+				}
+				a("value", strCustomerProfileId5())
+			.fg();
+
+		} else {
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					) {
+				e("span").a("class", "varSiteUser", pk, "CustomerProfileId5 ").f().sx(htmCustomerProfileId5()).g("span");
+			}
+		}
+	}
+
+	public void htmCustomerProfileId5(String classApiMethodMethod) {
+		SiteUser s = (SiteUser)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SiteUserCustomerProfileId5").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputCustomerProfileId5(classApiMethodMethod);
+							} g("div");
+							if(
+									CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+									) {
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-gray ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_customerProfileId5')); $('#", classApiMethodMethod, "_customerProfileId5').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#SiteUserForm :input[name=pk]').val() }], 'setCustomerProfileId5', null, function() { addGlow($('#", classApiMethodMethod, "_customerProfileId5')); }, function() { addError($('#", classApiMethodMethod, "_customerProfileId5')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	////////////////////////
+	// customerProfileId6 //
+	////////////////////////
+
+	/**	 The entity customerProfileId6
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String customerProfileId6;
+	@JsonIgnore
+	public Wrap<String> customerProfileId6Wrap = new Wrap<String>().p(this).c(String.class).var("customerProfileId6").o(customerProfileId6);
+
+	/**	<br/> The entity customerProfileId6
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.user.SiteUser&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:customerProfileId6">Find the entity customerProfileId6 in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _customerProfileId6(Wrap<String> c);
+
+	public String getCustomerProfileId6() {
+		return customerProfileId6;
+	}
+	public void setCustomerProfileId6(String o) {
+		this.customerProfileId6 = SiteUser.staticSetCustomerProfileId6(siteRequest_, o);
+		this.customerProfileId6Wrap.alreadyInitialized = true;
+	}
+	public static String staticSetCustomerProfileId6(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+	protected SiteUser customerProfileId6Init() {
+		if(!customerProfileId6Wrap.alreadyInitialized) {
+			_customerProfileId6(customerProfileId6Wrap);
+			if(customerProfileId6 == null)
+				setCustomerProfileId6(customerProfileId6Wrap.o);
+		}
+		customerProfileId6Wrap.alreadyInitialized(true);
+		return (SiteUser)this;
+	}
+
+	public static String staticSolrCustomerProfileId6(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrCustomerProfileId6(SiteRequestEnUS siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqCustomerProfileId6(SiteRequestEnUS siteRequest_, String o) {
+		return SiteUser.staticSolrStrCustomerProfileId6(siteRequest_, SiteUser.staticSolrCustomerProfileId6(siteRequest_, SiteUser.staticSetCustomerProfileId6(siteRequest_, o)));
+	}
+
+	public String solrCustomerProfileId6() {
+		return SiteUser.staticSolrCustomerProfileId6(siteRequest_, customerProfileId6);
+	}
+
+	public String strCustomerProfileId6() {
+		return customerProfileId6 == null ? "" : customerProfileId6;
+	}
+
+	public String jsonCustomerProfileId6() {
+		return customerProfileId6 == null ? "" : customerProfileId6;
+	}
+
+	public String nomAffichageCustomerProfileId6() {
+		return null;
+	}
+
+	public String htmTooltipCustomerProfileId6() {
+		return null;
+	}
+
+	public String htmCustomerProfileId6() {
+		return customerProfileId6 == null ? "" : StringEscapeUtils.escapeHtml4(strCustomerProfileId6());
+	}
+
+	public void inputCustomerProfileId6(String classApiMethodMethod) {
+		SiteUser s = (SiteUser)this;
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			e("input")
+				.a("type", "text")
+				.a("id", classApiMethodMethod, "_customerProfileId6");
+				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+					a("class", "setCustomerProfileId6 classSiteUser inputSiteUser", pk, "CustomerProfileId6 w3-input w3-border ");
+					a("name", "setCustomerProfileId6");
+				} else {
+					a("class", "valueCustomerProfileId6 w3-input w3-border classSiteUser inputSiteUser", pk, "CustomerProfileId6 w3-input w3-border ");
+					a("name", "customerProfileId6");
+				}
+				if("Page".equals(classApiMethodMethod)) {
+					a("onclick", "removeGlow($(this)); ");
+					a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setCustomerProfileId6', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_customerProfileId6')); }, function() { addError($('#", classApiMethodMethod, "_customerProfileId6')); }); ");
+				}
+				a("value", strCustomerProfileId6())
+			.fg();
+
+		} else {
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					) {
+				e("span").a("class", "varSiteUser", pk, "CustomerProfileId6 ").f().sx(htmCustomerProfileId6()).g("span");
+			}
+		}
+	}
+
+	public void htmCustomerProfileId6(String classApiMethodMethod) {
+		SiteUser s = (SiteUser)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SiteUserCustomerProfileId6").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputCustomerProfileId6(classApiMethodMethod);
+							} g("div");
+							if(
+									CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+									) {
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-gray ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_customerProfileId6')); $('#", classApiMethodMethod, "_customerProfileId6').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#SiteUserForm :input[name=pk]').val() }], 'setCustomerProfileId6', null, function() { addGlow($('#", classApiMethodMethod, "_customerProfileId6')); }, function() { addError($('#", classApiMethodMethod, "_customerProfileId6')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	////////////////////////
+	// customerProfileId7 //
+	////////////////////////
+
+	/**	 The entity customerProfileId7
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String customerProfileId7;
+	@JsonIgnore
+	public Wrap<String> customerProfileId7Wrap = new Wrap<String>().p(this).c(String.class).var("customerProfileId7").o(customerProfileId7);
+
+	/**	<br/> The entity customerProfileId7
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.user.SiteUser&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:customerProfileId7">Find the entity customerProfileId7 in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _customerProfileId7(Wrap<String> c);
+
+	public String getCustomerProfileId7() {
+		return customerProfileId7;
+	}
+	public void setCustomerProfileId7(String o) {
+		this.customerProfileId7 = SiteUser.staticSetCustomerProfileId7(siteRequest_, o);
+		this.customerProfileId7Wrap.alreadyInitialized = true;
+	}
+	public static String staticSetCustomerProfileId7(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+	protected SiteUser customerProfileId7Init() {
+		if(!customerProfileId7Wrap.alreadyInitialized) {
+			_customerProfileId7(customerProfileId7Wrap);
+			if(customerProfileId7 == null)
+				setCustomerProfileId7(customerProfileId7Wrap.o);
+		}
+		customerProfileId7Wrap.alreadyInitialized(true);
+		return (SiteUser)this;
+	}
+
+	public static String staticSolrCustomerProfileId7(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrCustomerProfileId7(SiteRequestEnUS siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqCustomerProfileId7(SiteRequestEnUS siteRequest_, String o) {
+		return SiteUser.staticSolrStrCustomerProfileId7(siteRequest_, SiteUser.staticSolrCustomerProfileId7(siteRequest_, SiteUser.staticSetCustomerProfileId7(siteRequest_, o)));
+	}
+
+	public String solrCustomerProfileId7() {
+		return SiteUser.staticSolrCustomerProfileId7(siteRequest_, customerProfileId7);
+	}
+
+	public String strCustomerProfileId7() {
+		return customerProfileId7 == null ? "" : customerProfileId7;
+	}
+
+	public String jsonCustomerProfileId7() {
+		return customerProfileId7 == null ? "" : customerProfileId7;
+	}
+
+	public String nomAffichageCustomerProfileId7() {
+		return null;
+	}
+
+	public String htmTooltipCustomerProfileId7() {
+		return null;
+	}
+
+	public String htmCustomerProfileId7() {
+		return customerProfileId7 == null ? "" : StringEscapeUtils.escapeHtml4(strCustomerProfileId7());
+	}
+
+	public void inputCustomerProfileId7(String classApiMethodMethod) {
+		SiteUser s = (SiteUser)this;
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			e("input")
+				.a("type", "text")
+				.a("id", classApiMethodMethod, "_customerProfileId7");
+				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+					a("class", "setCustomerProfileId7 classSiteUser inputSiteUser", pk, "CustomerProfileId7 w3-input w3-border ");
+					a("name", "setCustomerProfileId7");
+				} else {
+					a("class", "valueCustomerProfileId7 w3-input w3-border classSiteUser inputSiteUser", pk, "CustomerProfileId7 w3-input w3-border ");
+					a("name", "customerProfileId7");
+				}
+				if("Page".equals(classApiMethodMethod)) {
+					a("onclick", "removeGlow($(this)); ");
+					a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setCustomerProfileId7', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_customerProfileId7')); }, function() { addError($('#", classApiMethodMethod, "_customerProfileId7')); }); ");
+				}
+				a("value", strCustomerProfileId7())
+			.fg();
+
+		} else {
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					) {
+				e("span").a("class", "varSiteUser", pk, "CustomerProfileId7 ").f().sx(htmCustomerProfileId7()).g("span");
+			}
+		}
+	}
+
+	public void htmCustomerProfileId7(String classApiMethodMethod) {
+		SiteUser s = (SiteUser)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SiteUserCustomerProfileId7").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputCustomerProfileId7(classApiMethodMethod);
+							} g("div");
+							if(
+									CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+									) {
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-gray ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_customerProfileId7')); $('#", classApiMethodMethod, "_customerProfileId7').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#SiteUserForm :input[name=pk]').val() }], 'setCustomerProfileId7', null, function() { addGlow($('#", classApiMethodMethod, "_customerProfileId7')); }, function() { addError($('#", classApiMethodMethod, "_customerProfileId7')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	////////////////////////
+	// customerProfileId8 //
+	////////////////////////
+
+	/**	 The entity customerProfileId8
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String customerProfileId8;
+	@JsonIgnore
+	public Wrap<String> customerProfileId8Wrap = new Wrap<String>().p(this).c(String.class).var("customerProfileId8").o(customerProfileId8);
+
+	/**	<br/> The entity customerProfileId8
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.user.SiteUser&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:customerProfileId8">Find the entity customerProfileId8 in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _customerProfileId8(Wrap<String> c);
+
+	public String getCustomerProfileId8() {
+		return customerProfileId8;
+	}
+	public void setCustomerProfileId8(String o) {
+		this.customerProfileId8 = SiteUser.staticSetCustomerProfileId8(siteRequest_, o);
+		this.customerProfileId8Wrap.alreadyInitialized = true;
+	}
+	public static String staticSetCustomerProfileId8(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+	protected SiteUser customerProfileId8Init() {
+		if(!customerProfileId8Wrap.alreadyInitialized) {
+			_customerProfileId8(customerProfileId8Wrap);
+			if(customerProfileId8 == null)
+				setCustomerProfileId8(customerProfileId8Wrap.o);
+		}
+		customerProfileId8Wrap.alreadyInitialized(true);
+		return (SiteUser)this;
+	}
+
+	public static String staticSolrCustomerProfileId8(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrCustomerProfileId8(SiteRequestEnUS siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqCustomerProfileId8(SiteRequestEnUS siteRequest_, String o) {
+		return SiteUser.staticSolrStrCustomerProfileId8(siteRequest_, SiteUser.staticSolrCustomerProfileId8(siteRequest_, SiteUser.staticSetCustomerProfileId8(siteRequest_, o)));
+	}
+
+	public String solrCustomerProfileId8() {
+		return SiteUser.staticSolrCustomerProfileId8(siteRequest_, customerProfileId8);
+	}
+
+	public String strCustomerProfileId8() {
+		return customerProfileId8 == null ? "" : customerProfileId8;
+	}
+
+	public String jsonCustomerProfileId8() {
+		return customerProfileId8 == null ? "" : customerProfileId8;
+	}
+
+	public String nomAffichageCustomerProfileId8() {
+		return null;
+	}
+
+	public String htmTooltipCustomerProfileId8() {
+		return null;
+	}
+
+	public String htmCustomerProfileId8() {
+		return customerProfileId8 == null ? "" : StringEscapeUtils.escapeHtml4(strCustomerProfileId8());
+	}
+
+	public void inputCustomerProfileId8(String classApiMethodMethod) {
+		SiteUser s = (SiteUser)this;
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			e("input")
+				.a("type", "text")
+				.a("id", classApiMethodMethod, "_customerProfileId8");
+				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+					a("class", "setCustomerProfileId8 classSiteUser inputSiteUser", pk, "CustomerProfileId8 w3-input w3-border ");
+					a("name", "setCustomerProfileId8");
+				} else {
+					a("class", "valueCustomerProfileId8 w3-input w3-border classSiteUser inputSiteUser", pk, "CustomerProfileId8 w3-input w3-border ");
+					a("name", "customerProfileId8");
+				}
+				if("Page".equals(classApiMethodMethod)) {
+					a("onclick", "removeGlow($(this)); ");
+					a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setCustomerProfileId8', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_customerProfileId8')); }, function() { addError($('#", classApiMethodMethod, "_customerProfileId8')); }); ");
+				}
+				a("value", strCustomerProfileId8())
+			.fg();
+
+		} else {
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					) {
+				e("span").a("class", "varSiteUser", pk, "CustomerProfileId8 ").f().sx(htmCustomerProfileId8()).g("span");
+			}
+		}
+	}
+
+	public void htmCustomerProfileId8(String classApiMethodMethod) {
+		SiteUser s = (SiteUser)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SiteUserCustomerProfileId8").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputCustomerProfileId8(classApiMethodMethod);
+							} g("div");
+							if(
+									CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+									) {
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-gray ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_customerProfileId8')); $('#", classApiMethodMethod, "_customerProfileId8').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#SiteUserForm :input[name=pk]').val() }], 'setCustomerProfileId8', null, function() { addGlow($('#", classApiMethodMethod, "_customerProfileId8')); }, function() { addError($('#", classApiMethodMethod, "_customerProfileId8')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	////////////////////////
+	// customerProfileId9 //
+	////////////////////////
+
+	/**	 The entity customerProfileId9
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String customerProfileId9;
+	@JsonIgnore
+	public Wrap<String> customerProfileId9Wrap = new Wrap<String>().p(this).c(String.class).var("customerProfileId9").o(customerProfileId9);
+
+	/**	<br/> The entity customerProfileId9
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.user.SiteUser&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:customerProfileId9">Find the entity customerProfileId9 in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _customerProfileId9(Wrap<String> c);
+
+	public String getCustomerProfileId9() {
+		return customerProfileId9;
+	}
+	public void setCustomerProfileId9(String o) {
+		this.customerProfileId9 = SiteUser.staticSetCustomerProfileId9(siteRequest_, o);
+		this.customerProfileId9Wrap.alreadyInitialized = true;
+	}
+	public static String staticSetCustomerProfileId9(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+	protected SiteUser customerProfileId9Init() {
+		if(!customerProfileId9Wrap.alreadyInitialized) {
+			_customerProfileId9(customerProfileId9Wrap);
+			if(customerProfileId9 == null)
+				setCustomerProfileId9(customerProfileId9Wrap.o);
+		}
+		customerProfileId9Wrap.alreadyInitialized(true);
+		return (SiteUser)this;
+	}
+
+	public static String staticSolrCustomerProfileId9(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrCustomerProfileId9(SiteRequestEnUS siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqCustomerProfileId9(SiteRequestEnUS siteRequest_, String o) {
+		return SiteUser.staticSolrStrCustomerProfileId9(siteRequest_, SiteUser.staticSolrCustomerProfileId9(siteRequest_, SiteUser.staticSetCustomerProfileId9(siteRequest_, o)));
+	}
+
+	public String solrCustomerProfileId9() {
+		return SiteUser.staticSolrCustomerProfileId9(siteRequest_, customerProfileId9);
+	}
+
+	public String strCustomerProfileId9() {
+		return customerProfileId9 == null ? "" : customerProfileId9;
+	}
+
+	public String jsonCustomerProfileId9() {
+		return customerProfileId9 == null ? "" : customerProfileId9;
+	}
+
+	public String nomAffichageCustomerProfileId9() {
+		return null;
+	}
+
+	public String htmTooltipCustomerProfileId9() {
+		return null;
+	}
+
+	public String htmCustomerProfileId9() {
+		return customerProfileId9 == null ? "" : StringEscapeUtils.escapeHtml4(strCustomerProfileId9());
+	}
+
+	public void inputCustomerProfileId9(String classApiMethodMethod) {
+		SiteUser s = (SiteUser)this;
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			e("input")
+				.a("type", "text")
+				.a("id", classApiMethodMethod, "_customerProfileId9");
+				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+					a("class", "setCustomerProfileId9 classSiteUser inputSiteUser", pk, "CustomerProfileId9 w3-input w3-border ");
+					a("name", "setCustomerProfileId9");
+				} else {
+					a("class", "valueCustomerProfileId9 w3-input w3-border classSiteUser inputSiteUser", pk, "CustomerProfileId9 w3-input w3-border ");
+					a("name", "customerProfileId9");
+				}
+				if("Page".equals(classApiMethodMethod)) {
+					a("onclick", "removeGlow($(this)); ");
+					a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setCustomerProfileId9', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_customerProfileId9')); }, function() { addError($('#", classApiMethodMethod, "_customerProfileId9')); }); ");
+				}
+				a("value", strCustomerProfileId9())
+			.fg();
+
+		} else {
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					) {
+				e("span").a("class", "varSiteUser", pk, "CustomerProfileId9 ").f().sx(htmCustomerProfileId9()).g("span");
+			}
+		}
+	}
+
+	public void htmCustomerProfileId9(String classApiMethodMethod) {
+		SiteUser s = (SiteUser)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SiteUserCustomerProfileId9").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputCustomerProfileId9(classApiMethodMethod);
+							} g("div");
+							if(
+									CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+									) {
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-gray ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_customerProfileId9')); $('#", classApiMethodMethod, "_customerProfileId9').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#SiteUserForm :input[name=pk]').val() }], 'setCustomerProfileId9', null, function() { addGlow($('#", classApiMethodMethod, "_customerProfileId9')); }, function() { addError($('#", classApiMethodMethod, "_customerProfileId9')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
+	/////////////////////////
+	// customerProfileId10 //
+	/////////////////////////
+
+	/**	 The entity customerProfileId10
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String customerProfileId10;
+	@JsonIgnore
+	public Wrap<String> customerProfileId10Wrap = new Wrap<String>().p(this).c(String.class).var("customerProfileId10").o(customerProfileId10);
+
+	/**	<br/> The entity customerProfileId10
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.user.SiteUser&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:customerProfileId10">Find the entity customerProfileId10 in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _customerProfileId10(Wrap<String> c);
+
+	public String getCustomerProfileId10() {
+		return customerProfileId10;
+	}
+	public void setCustomerProfileId10(String o) {
+		this.customerProfileId10 = SiteUser.staticSetCustomerProfileId10(siteRequest_, o);
+		this.customerProfileId10Wrap.alreadyInitialized = true;
+	}
+	public static String staticSetCustomerProfileId10(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+	protected SiteUser customerProfileId10Init() {
+		if(!customerProfileId10Wrap.alreadyInitialized) {
+			_customerProfileId10(customerProfileId10Wrap);
+			if(customerProfileId10 == null)
+				setCustomerProfileId10(customerProfileId10Wrap.o);
+		}
+		customerProfileId10Wrap.alreadyInitialized(true);
+		return (SiteUser)this;
+	}
+
+	public static String staticSolrCustomerProfileId10(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrCustomerProfileId10(SiteRequestEnUS siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqCustomerProfileId10(SiteRequestEnUS siteRequest_, String o) {
+		return SiteUser.staticSolrStrCustomerProfileId10(siteRequest_, SiteUser.staticSolrCustomerProfileId10(siteRequest_, SiteUser.staticSetCustomerProfileId10(siteRequest_, o)));
+	}
+
+	public String solrCustomerProfileId10() {
+		return SiteUser.staticSolrCustomerProfileId10(siteRequest_, customerProfileId10);
+	}
+
+	public String strCustomerProfileId10() {
+		return customerProfileId10 == null ? "" : customerProfileId10;
+	}
+
+	public String jsonCustomerProfileId10() {
+		return customerProfileId10 == null ? "" : customerProfileId10;
+	}
+
+	public String nomAffichageCustomerProfileId10() {
+		return null;
+	}
+
+	public String htmTooltipCustomerProfileId10() {
+		return null;
+	}
+
+	public String htmCustomerProfileId10() {
+		return customerProfileId10 == null ? "" : StringEscapeUtils.escapeHtml4(strCustomerProfileId10());
+	}
+
+	public void inputCustomerProfileId10(String classApiMethodMethod) {
+		SiteUser s = (SiteUser)this;
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			e("input")
+				.a("type", "text")
+				.a("id", classApiMethodMethod, "_customerProfileId10");
+				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+					a("class", "setCustomerProfileId10 classSiteUser inputSiteUser", pk, "CustomerProfileId10 w3-input w3-border ");
+					a("name", "setCustomerProfileId10");
+				} else {
+					a("class", "valueCustomerProfileId10 w3-input w3-border classSiteUser inputSiteUser", pk, "CustomerProfileId10 w3-input w3-border ");
+					a("name", "customerProfileId10");
+				}
+				if("Page".equals(classApiMethodMethod)) {
+					a("onclick", "removeGlow($(this)); ");
+					a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setCustomerProfileId10', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_customerProfileId10')); }, function() { addError($('#", classApiMethodMethod, "_customerProfileId10')); }); ");
+				}
+				a("value", strCustomerProfileId10())
+			.fg();
+
+		} else {
+			if(
+					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+					) {
+				e("span").a("class", "varSiteUser", pk, "CustomerProfileId10 ").f().sx(htmCustomerProfileId10()).g("span");
+			}
+		}
+	}
+
+	public void htmCustomerProfileId10(String classApiMethodMethod) {
+		SiteUser s = (SiteUser)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SiteUserCustomerProfileId10").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputCustomerProfileId10(classApiMethodMethod);
+							} g("div");
+							if(
+									CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+									) {
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-gray ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_customerProfileId10')); $('#", classApiMethodMethod, "_customerProfileId10').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#SiteUserForm :input[name=pk]').val() }], 'setCustomerProfileId10', null, function() { addGlow($('#", classApiMethodMethod, "_customerProfileId10')); }, function() { addError($('#", classApiMethodMethod, "_customerProfileId10')); }); ")
 											.f();
 											e("i").a("class", "far fa-eraser ").f().g("i");
 										} g("button");
@@ -1992,6 +3128,14 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 		userSiteInit();
 		customerProfileId1Init();
 		customerProfileId2Init();
+		customerProfileId3Init();
+		customerProfileId4Init();
+		customerProfileId5Init();
+		customerProfileId6Init();
+		customerProfileId7Init();
+		customerProfileId8Init();
+		customerProfileId9Init();
+		customerProfileId10Init();
 		userReceiveEmailsInit();
 		seeArchivedInit();
 		seeDeletedInit();
@@ -2057,6 +3201,22 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 				return oSiteUser.customerProfileId1;
 			case "customerProfileId2":
 				return oSiteUser.customerProfileId2;
+			case "customerProfileId3":
+				return oSiteUser.customerProfileId3;
+			case "customerProfileId4":
+				return oSiteUser.customerProfileId4;
+			case "customerProfileId5":
+				return oSiteUser.customerProfileId5;
+			case "customerProfileId6":
+				return oSiteUser.customerProfileId6;
+			case "customerProfileId7":
+				return oSiteUser.customerProfileId7;
+			case "customerProfileId8":
+				return oSiteUser.customerProfileId8;
+			case "customerProfileId9":
+				return oSiteUser.customerProfileId9;
+			case "customerProfileId10":
+				return oSiteUser.customerProfileId10;
 			case "userReceiveEmails":
 				return oSiteUser.userReceiveEmails;
 			case "seeArchived":
@@ -2134,6 +3294,22 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 			return SiteUser.staticSetCustomerProfileId1(siteRequest_, o);
 		case "customerProfileId2":
 			return SiteUser.staticSetCustomerProfileId2(siteRequest_, o);
+		case "customerProfileId3":
+			return SiteUser.staticSetCustomerProfileId3(siteRequest_, o);
+		case "customerProfileId4":
+			return SiteUser.staticSetCustomerProfileId4(siteRequest_, o);
+		case "customerProfileId5":
+			return SiteUser.staticSetCustomerProfileId5(siteRequest_, o);
+		case "customerProfileId6":
+			return SiteUser.staticSetCustomerProfileId6(siteRequest_, o);
+		case "customerProfileId7":
+			return SiteUser.staticSetCustomerProfileId7(siteRequest_, o);
+		case "customerProfileId8":
+			return SiteUser.staticSetCustomerProfileId8(siteRequest_, o);
+		case "customerProfileId9":
+			return SiteUser.staticSetCustomerProfileId9(siteRequest_, o);
+		case "customerProfileId10":
+			return SiteUser.staticSetCustomerProfileId10(siteRequest_, o);
 		case "userReceiveEmails":
 			return SiteUser.staticSetUserReceiveEmails(siteRequest_, o);
 		case "seeArchived":
@@ -2176,6 +3352,22 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 			return SiteUser.staticSolrCustomerProfileId1(siteRequest_, (String)o);
 		case "customerProfileId2":
 			return SiteUser.staticSolrCustomerProfileId2(siteRequest_, (String)o);
+		case "customerProfileId3":
+			return SiteUser.staticSolrCustomerProfileId3(siteRequest_, (String)o);
+		case "customerProfileId4":
+			return SiteUser.staticSolrCustomerProfileId4(siteRequest_, (String)o);
+		case "customerProfileId5":
+			return SiteUser.staticSolrCustomerProfileId5(siteRequest_, (String)o);
+		case "customerProfileId6":
+			return SiteUser.staticSolrCustomerProfileId6(siteRequest_, (String)o);
+		case "customerProfileId7":
+			return SiteUser.staticSolrCustomerProfileId7(siteRequest_, (String)o);
+		case "customerProfileId8":
+			return SiteUser.staticSolrCustomerProfileId8(siteRequest_, (String)o);
+		case "customerProfileId9":
+			return SiteUser.staticSolrCustomerProfileId9(siteRequest_, (String)o);
+		case "customerProfileId10":
+			return SiteUser.staticSolrCustomerProfileId10(siteRequest_, (String)o);
 		case "userReceiveEmails":
 			return SiteUser.staticSolrUserReceiveEmails(siteRequest_, (Boolean)o);
 		case "seeArchived":
@@ -2218,6 +3410,22 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 			return SiteUser.staticSolrStrCustomerProfileId1(siteRequest_, (String)o);
 		case "customerProfileId2":
 			return SiteUser.staticSolrStrCustomerProfileId2(siteRequest_, (String)o);
+		case "customerProfileId3":
+			return SiteUser.staticSolrStrCustomerProfileId3(siteRequest_, (String)o);
+		case "customerProfileId4":
+			return SiteUser.staticSolrStrCustomerProfileId4(siteRequest_, (String)o);
+		case "customerProfileId5":
+			return SiteUser.staticSolrStrCustomerProfileId5(siteRequest_, (String)o);
+		case "customerProfileId6":
+			return SiteUser.staticSolrStrCustomerProfileId6(siteRequest_, (String)o);
+		case "customerProfileId7":
+			return SiteUser.staticSolrStrCustomerProfileId7(siteRequest_, (String)o);
+		case "customerProfileId8":
+			return SiteUser.staticSolrStrCustomerProfileId8(siteRequest_, (String)o);
+		case "customerProfileId9":
+			return SiteUser.staticSolrStrCustomerProfileId9(siteRequest_, (String)o);
+		case "customerProfileId10":
+			return SiteUser.staticSolrStrCustomerProfileId10(siteRequest_, (String)o);
 		case "userReceiveEmails":
 			return SiteUser.staticSolrStrUserReceiveEmails(siteRequest_, (Boolean)o);
 		case "seeArchived":
@@ -2260,6 +3468,22 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 			return SiteUser.staticSolrFqCustomerProfileId1(siteRequest_, o);
 		case "customerProfileId2":
 			return SiteUser.staticSolrFqCustomerProfileId2(siteRequest_, o);
+		case "customerProfileId3":
+			return SiteUser.staticSolrFqCustomerProfileId3(siteRequest_, o);
+		case "customerProfileId4":
+			return SiteUser.staticSolrFqCustomerProfileId4(siteRequest_, o);
+		case "customerProfileId5":
+			return SiteUser.staticSolrFqCustomerProfileId5(siteRequest_, o);
+		case "customerProfileId6":
+			return SiteUser.staticSolrFqCustomerProfileId6(siteRequest_, o);
+		case "customerProfileId7":
+			return SiteUser.staticSolrFqCustomerProfileId7(siteRequest_, o);
+		case "customerProfileId8":
+			return SiteUser.staticSolrFqCustomerProfileId8(siteRequest_, o);
+		case "customerProfileId9":
+			return SiteUser.staticSolrFqCustomerProfileId9(siteRequest_, o);
+		case "customerProfileId10":
+			return SiteUser.staticSolrFqCustomerProfileId10(siteRequest_, o);
 		case "userReceiveEmails":
 			return SiteUser.staticSolrFqUserReceiveEmails(siteRequest_, o);
 		case "seeArchived":
@@ -2310,6 +3534,46 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 			case "customerProfileId2":
 				if(val != null)
 					setCustomerProfileId2(val);
+				saves.add(var);
+				return val;
+			case "customerProfileId3":
+				if(val != null)
+					setCustomerProfileId3(val);
+				saves.add(var);
+				return val;
+			case "customerProfileId4":
+				if(val != null)
+					setCustomerProfileId4(val);
+				saves.add(var);
+				return val;
+			case "customerProfileId5":
+				if(val != null)
+					setCustomerProfileId5(val);
+				saves.add(var);
+				return val;
+			case "customerProfileId6":
+				if(val != null)
+					setCustomerProfileId6(val);
+				saves.add(var);
+				return val;
+			case "customerProfileId7":
+				if(val != null)
+					setCustomerProfileId7(val);
+				saves.add(var);
+				return val;
+			case "customerProfileId8":
+				if(val != null)
+					setCustomerProfileId8(val);
+				saves.add(var);
+				return val;
+			case "customerProfileId9":
+				if(val != null)
+					setCustomerProfileId9(val);
+				saves.add(var);
+				return val;
+			case "customerProfileId10":
+				if(val != null)
+					setCustomerProfileId10(val);
 				saves.add(var);
 				return val;
 			case "userReceiveEmails":
@@ -2404,6 +3668,54 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 				String customerProfileId2 = (String)solrDocument.get("customerProfileId2_stored_string");
 				if(customerProfileId2 != null)
 					oSiteUser.setCustomerProfileId2(customerProfileId2);
+			}
+
+			if(saves.contains("customerProfileId3")) {
+				String customerProfileId3 = (String)solrDocument.get("customerProfileId3_stored_string");
+				if(customerProfileId3 != null)
+					oSiteUser.setCustomerProfileId3(customerProfileId3);
+			}
+
+			if(saves.contains("customerProfileId4")) {
+				String customerProfileId4 = (String)solrDocument.get("customerProfileId4_stored_string");
+				if(customerProfileId4 != null)
+					oSiteUser.setCustomerProfileId4(customerProfileId4);
+			}
+
+			if(saves.contains("customerProfileId5")) {
+				String customerProfileId5 = (String)solrDocument.get("customerProfileId5_stored_string");
+				if(customerProfileId5 != null)
+					oSiteUser.setCustomerProfileId5(customerProfileId5);
+			}
+
+			if(saves.contains("customerProfileId6")) {
+				String customerProfileId6 = (String)solrDocument.get("customerProfileId6_stored_string");
+				if(customerProfileId6 != null)
+					oSiteUser.setCustomerProfileId6(customerProfileId6);
+			}
+
+			if(saves.contains("customerProfileId7")) {
+				String customerProfileId7 = (String)solrDocument.get("customerProfileId7_stored_string");
+				if(customerProfileId7 != null)
+					oSiteUser.setCustomerProfileId7(customerProfileId7);
+			}
+
+			if(saves.contains("customerProfileId8")) {
+				String customerProfileId8 = (String)solrDocument.get("customerProfileId8_stored_string");
+				if(customerProfileId8 != null)
+					oSiteUser.setCustomerProfileId8(customerProfileId8);
+			}
+
+			if(saves.contains("customerProfileId9")) {
+				String customerProfileId9 = (String)solrDocument.get("customerProfileId9_stored_string");
+				if(customerProfileId9 != null)
+					oSiteUser.setCustomerProfileId9(customerProfileId9);
+			}
+
+			if(saves.contains("customerProfileId10")) {
+				String customerProfileId10 = (String)solrDocument.get("customerProfileId10_stored_string");
+				if(customerProfileId10 != null)
+					oSiteUser.setCustomerProfileId10(customerProfileId10);
 			}
 
 			if(saves.contains("userReceiveEmails")) {
@@ -2546,6 +3858,38 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 			document.addField("customerProfileId2_indexed_string", customerProfileId2);
 			document.addField("customerProfileId2_stored_string", customerProfileId2);
 		}
+		if(customerProfileId3 != null) {
+			document.addField("customerProfileId3_indexed_string", customerProfileId3);
+			document.addField("customerProfileId3_stored_string", customerProfileId3);
+		}
+		if(customerProfileId4 != null) {
+			document.addField("customerProfileId4_indexed_string", customerProfileId4);
+			document.addField("customerProfileId4_stored_string", customerProfileId4);
+		}
+		if(customerProfileId5 != null) {
+			document.addField("customerProfileId5_indexed_string", customerProfileId5);
+			document.addField("customerProfileId5_stored_string", customerProfileId5);
+		}
+		if(customerProfileId6 != null) {
+			document.addField("customerProfileId6_indexed_string", customerProfileId6);
+			document.addField("customerProfileId6_stored_string", customerProfileId6);
+		}
+		if(customerProfileId7 != null) {
+			document.addField("customerProfileId7_indexed_string", customerProfileId7);
+			document.addField("customerProfileId7_stored_string", customerProfileId7);
+		}
+		if(customerProfileId8 != null) {
+			document.addField("customerProfileId8_indexed_string", customerProfileId8);
+			document.addField("customerProfileId8_stored_string", customerProfileId8);
+		}
+		if(customerProfileId9 != null) {
+			document.addField("customerProfileId9_indexed_string", customerProfileId9);
+			document.addField("customerProfileId9_stored_string", customerProfileId9);
+		}
+		if(customerProfileId10 != null) {
+			document.addField("customerProfileId10_indexed_string", customerProfileId10);
+			document.addField("customerProfileId10_stored_string", customerProfileId10);
+		}
 		if(userReceiveEmails != null) {
 			document.addField("userReceiveEmails_indexed_boolean", userReceiveEmails);
 			document.addField("userReceiveEmails_stored_boolean", userReceiveEmails);
@@ -2603,6 +3947,22 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 				return "customerProfileId1_indexed_string";
 			case "customerProfileId2":
 				return "customerProfileId2_indexed_string";
+			case "customerProfileId3":
+				return "customerProfileId3_indexed_string";
+			case "customerProfileId4":
+				return "customerProfileId4_indexed_string";
+			case "customerProfileId5":
+				return "customerProfileId5_indexed_string";
+			case "customerProfileId6":
+				return "customerProfileId6_indexed_string";
+			case "customerProfileId7":
+				return "customerProfileId7_indexed_string";
+			case "customerProfileId8":
+				return "customerProfileId8_indexed_string";
+			case "customerProfileId9":
+				return "customerProfileId9_indexed_string";
+			case "customerProfileId10":
+				return "customerProfileId10_indexed_string";
 			case "userReceiveEmails":
 				return "userReceiveEmails_indexed_boolean";
 			case "seeArchived":
@@ -2682,6 +4042,38 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 		if(customerProfileId2 != null)
 			oSiteUser.setCustomerProfileId2(customerProfileId2);
 
+		String customerProfileId3 = (String)solrDocument.get("customerProfileId3_stored_string");
+		if(customerProfileId3 != null)
+			oSiteUser.setCustomerProfileId3(customerProfileId3);
+
+		String customerProfileId4 = (String)solrDocument.get("customerProfileId4_stored_string");
+		if(customerProfileId4 != null)
+			oSiteUser.setCustomerProfileId4(customerProfileId4);
+
+		String customerProfileId5 = (String)solrDocument.get("customerProfileId5_stored_string");
+		if(customerProfileId5 != null)
+			oSiteUser.setCustomerProfileId5(customerProfileId5);
+
+		String customerProfileId6 = (String)solrDocument.get("customerProfileId6_stored_string");
+		if(customerProfileId6 != null)
+			oSiteUser.setCustomerProfileId6(customerProfileId6);
+
+		String customerProfileId7 = (String)solrDocument.get("customerProfileId7_stored_string");
+		if(customerProfileId7 != null)
+			oSiteUser.setCustomerProfileId7(customerProfileId7);
+
+		String customerProfileId8 = (String)solrDocument.get("customerProfileId8_stored_string");
+		if(customerProfileId8 != null)
+			oSiteUser.setCustomerProfileId8(customerProfileId8);
+
+		String customerProfileId9 = (String)solrDocument.get("customerProfileId9_stored_string");
+		if(customerProfileId9 != null)
+			oSiteUser.setCustomerProfileId9(customerProfileId9);
+
+		String customerProfileId10 = (String)solrDocument.get("customerProfileId10_stored_string");
+		if(customerProfileId10 != null)
+			oSiteUser.setCustomerProfileId10(customerProfileId10);
+
 		Boolean userReceiveEmails = (Boolean)solrDocument.get("userReceiveEmails_stored_boolean");
 		if(userReceiveEmails != null)
 			oSiteUser.setUserReceiveEmails(userReceiveEmails);
@@ -2739,6 +4131,22 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 				apiRequest.addVars("customerProfileId1");
 			if(!Objects.equals(customerProfileId2, original.getCustomerProfileId2()))
 				apiRequest.addVars("customerProfileId2");
+			if(!Objects.equals(customerProfileId3, original.getCustomerProfileId3()))
+				apiRequest.addVars("customerProfileId3");
+			if(!Objects.equals(customerProfileId4, original.getCustomerProfileId4()))
+				apiRequest.addVars("customerProfileId4");
+			if(!Objects.equals(customerProfileId5, original.getCustomerProfileId5()))
+				apiRequest.addVars("customerProfileId5");
+			if(!Objects.equals(customerProfileId6, original.getCustomerProfileId6()))
+				apiRequest.addVars("customerProfileId6");
+			if(!Objects.equals(customerProfileId7, original.getCustomerProfileId7()))
+				apiRequest.addVars("customerProfileId7");
+			if(!Objects.equals(customerProfileId8, original.getCustomerProfileId8()))
+				apiRequest.addVars("customerProfileId8");
+			if(!Objects.equals(customerProfileId9, original.getCustomerProfileId9()))
+				apiRequest.addVars("customerProfileId9");
+			if(!Objects.equals(customerProfileId10, original.getCustomerProfileId10()))
+				apiRequest.addVars("customerProfileId10");
 			if(!Objects.equals(userReceiveEmails, original.getUserReceiveEmails()))
 				apiRequest.addVars("userReceiveEmails");
 			if(!Objects.equals(seeArchived, original.getSeeArchived()))
@@ -2754,7 +4162,7 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), userKeys, enrollmentKeys, paymentKeys, userName, userEmail, userFirstName, userLastName, userFullName, userSite, customerProfileId1, customerProfileId2, userReceiveEmails, seeArchived, seeDeleted);
+		return Objects.hash(super.hashCode(), userKeys, enrollmentKeys, paymentKeys, userName, userEmail, userFirstName, userLastName, userFullName, userSite, customerProfileId1, customerProfileId2, customerProfileId3, customerProfileId4, customerProfileId5, customerProfileId6, customerProfileId7, customerProfileId8, customerProfileId9, customerProfileId10, userReceiveEmails, seeArchived, seeDeleted);
 	}
 
 	////////////
@@ -2779,6 +4187,14 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 				&& Objects.equals( userSite, that.userSite )
 				&& Objects.equals( customerProfileId1, that.customerProfileId1 )
 				&& Objects.equals( customerProfileId2, that.customerProfileId2 )
+				&& Objects.equals( customerProfileId3, that.customerProfileId3 )
+				&& Objects.equals( customerProfileId4, that.customerProfileId4 )
+				&& Objects.equals( customerProfileId5, that.customerProfileId5 )
+				&& Objects.equals( customerProfileId6, that.customerProfileId6 )
+				&& Objects.equals( customerProfileId7, that.customerProfileId7 )
+				&& Objects.equals( customerProfileId8, that.customerProfileId8 )
+				&& Objects.equals( customerProfileId9, that.customerProfileId9 )
+				&& Objects.equals( customerProfileId10, that.customerProfileId10 )
 				&& Objects.equals( userReceiveEmails, that.userReceiveEmails )
 				&& Objects.equals( seeArchived, that.seeArchived )
 				&& Objects.equals( seeDeleted, that.seeDeleted );
@@ -2803,6 +4219,14 @@ public abstract class SiteUserGen<DEV> extends Cluster {
 		sb.append( ", userSite: \"" ).append(userSite).append( "\"" );
 		sb.append( ", customerProfileId1: \"" ).append(customerProfileId1).append( "\"" );
 		sb.append( ", customerProfileId2: \"" ).append(customerProfileId2).append( "\"" );
+		sb.append( ", customerProfileId3: \"" ).append(customerProfileId3).append( "\"" );
+		sb.append( ", customerProfileId4: \"" ).append(customerProfileId4).append( "\"" );
+		sb.append( ", customerProfileId5: \"" ).append(customerProfileId5).append( "\"" );
+		sb.append( ", customerProfileId6: \"" ).append(customerProfileId6).append( "\"" );
+		sb.append( ", customerProfileId7: \"" ).append(customerProfileId7).append( "\"" );
+		sb.append( ", customerProfileId8: \"" ).append(customerProfileId8).append( "\"" );
+		sb.append( ", customerProfileId9: \"" ).append(customerProfileId9).append( "\"" );
+		sb.append( ", customerProfileId10: \"" ).append(customerProfileId10).append( "\"" );
 		sb.append( ", userReceiveEmails: " ).append(userReceiveEmails);
 		sb.append( ", seeArchived: " ).append(seeArchived);
 		sb.append( ", seeDeleted: " ).append(seeDeleted);

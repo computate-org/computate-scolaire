@@ -163,10 +163,6 @@ public class SiteUserGenPage extends SiteUserGenPageGen<ClusterPage> {
 			o.htmSeeDeleted("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmCustomerProfileId1("Page");
-			o.htmCustomerProfileId2("Page");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEnrollmentKeys("Page");
 			o.htmPaymentKeys("Page");
 		} g("div");
@@ -187,10 +183,6 @@ public class SiteUserGenPage extends SiteUserGenPageGen<ClusterPage> {
 			o.htmUserReceiveEmails("POST");
 			o.htmSeeArchived("POST");
 			o.htmSeeDeleted("POST");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmCustomerProfileId1("POST");
-			o.htmCustomerProfileId2("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEnrollmentKeys("POST");
@@ -237,10 +229,6 @@ public class SiteUserGenPage extends SiteUserGenPageGen<ClusterPage> {
 			o.htmSeeDeleted("PUTCopy");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmCustomerProfileId1("PUTCopy");
-			o.htmCustomerProfileId2("PUTCopy");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEnrollmentKeys("PUTCopy");
 			o.htmPaymentKeys("PUTCopy");
 		} g("div");
@@ -259,10 +247,6 @@ public class SiteUserGenPage extends SiteUserGenPageGen<ClusterPage> {
 			o.htmUserReceiveEmails("PATCH");
 			o.htmSeeArchived("PATCH");
 			o.htmSeeDeleted("PATCH");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmCustomerProfileId1("PATCH");
-			o.htmCustomerProfileId2("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEnrollmentKeys("PATCH");
@@ -287,10 +271,6 @@ public class SiteUserGenPage extends SiteUserGenPageGen<ClusterPage> {
 			o.htmSeeDeleted("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmCustomerProfileId1("Search");
-			o.htmCustomerProfileId2("Search");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEnrollmentKeys("Search");
 			o.htmPaymentKeys("Search");
 		} g("div");
@@ -302,6 +282,16 @@ public class SiteUserGenPage extends SiteUserGenPageGen<ClusterPage> {
 			o.htmObjectTitle("Search");
 			o.htmUserName("Search");
 			o.htmUserEmail("Search");
+			o.htmCustomerProfileId1("Search");
+			o.htmCustomerProfileId2("Search");
+			o.htmCustomerProfileId3("Search");
+			o.htmCustomerProfileId4("Search");
+			o.htmCustomerProfileId5("Search");
+			o.htmCustomerProfileId6("Search");
+			o.htmCustomerProfileId7("Search");
+			o.htmCustomerProfileId8("Search");
+			o.htmCustomerProfileId9("Search");
+			o.htmCustomerProfileId10("Search");
 		} g("div");
 	}
 

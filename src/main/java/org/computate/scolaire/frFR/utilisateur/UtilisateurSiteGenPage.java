@@ -164,10 +164,6 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPag
 			o.htmVoirSupprime("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmCustomerProfileId1("Page");
-			o.htmCustomerProfileId2("Page");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInscriptionCles("Page");
 			o.htmPaiementCles("Page");
 		} g("div");
@@ -188,10 +184,6 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPag
 			o.htmUtilisateurRecevoirCourriels("POST");
 			o.htmVoirArchive("POST");
 			o.htmVoirSupprime("POST");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmCustomerProfileId1("POST");
-			o.htmCustomerProfileId2("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInscriptionCles("POST");
@@ -238,10 +230,6 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPag
 			o.htmVoirSupprime("PUTCopie");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmCustomerProfileId1("PUTCopie");
-			o.htmCustomerProfileId2("PUTCopie");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInscriptionCles("PUTCopie");
 			o.htmPaiementCles("PUTCopie");
 		} g("div");
@@ -260,10 +248,6 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPag
 			o.htmUtilisateurRecevoirCourriels("PATCH");
 			o.htmVoirArchive("PATCH");
 			o.htmVoirSupprime("PATCH");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmCustomerProfileId1("PATCH");
-			o.htmCustomerProfileId2("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInscriptionCles("PATCH");
@@ -288,10 +272,6 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPag
 			o.htmVoirSupprime("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
-			o.htmCustomerProfileId1("Recherche");
-			o.htmCustomerProfileId2("Recherche");
-		} g("div");
-		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmInscriptionCles("Recherche");
 			o.htmPaiementCles("Recherche");
 		} g("div");
@@ -303,6 +283,16 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPag
 			o.htmObjetTitre("Recherche");
 			o.htmUtilisateurNom("Recherche");
 			o.htmUtilisateurMail("Recherche");
+			o.htmCustomerProfileId1("Recherche");
+			o.htmCustomerProfileId2("Recherche");
+			o.htmCustomerProfileId3("Recherche");
+			o.htmCustomerProfileId4("Recherche");
+			o.htmCustomerProfileId5("Recherche");
+			o.htmCustomerProfileId6("Recherche");
+			o.htmCustomerProfileId7("Recherche");
+			o.htmCustomerProfileId8("Recherche");
+			o.htmCustomerProfileId9("Recherche");
+			o.htmCustomerProfileId10("Recherche");
 		} g("div");
 	}
 
