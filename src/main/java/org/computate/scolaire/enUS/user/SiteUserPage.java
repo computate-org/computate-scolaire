@@ -103,9 +103,17 @@ public class SiteUserPage extends SiteUserPageGen<SiteUserGenPage> {
 	protected void _yearSearch(SearchList<SchoolYear> l) {
 		LocalDate now = LocalDate.now();
 		LocalDate yearStartDate = now.with(TemporalAdjusters.firstDayOfMonth()).withMonth(12);
-		yearStartDate = now.isAfter(yearStartDate.minusDays(1)) ? yearStartDate : yearStartDate.minusYears(1);
 		LocalDate yearEndDate = now.with(TemporalAdjusters.firstDayOfMonth()).withMonth(6);
-		yearEndDate = now.isBefore(yearEndDate) ? yearEndDate : yearEndDate.plusYears(1);
+		if(now.isAfter(yearStartDate.minusDays(1)) && now.isBefore(yearEndDate.plusYears(1))) {
+			yearStartDate = now.isAfter(yearStartDate.minusDays(1)) ? yearStartDate.plusYears(1) : yearStartDate;
+			yearEndDate = now.isBefore(yearEndDate) ? yearEndDate.plusYears(1) : yearEndDate.plusYears(2);
+		}
+		else if(now.isBefore(yearEndDate)) {
+			yearStartDate = yearStartDate.minusYears(1);
+		}
+		else {
+			yearEndDate = yearEndDate.plusYears(1);
+		}
 
 		l.setQuery("*:*");
 		l.addFilterQuery("deleted_indexed_boolean:false");
@@ -192,10 +200,20 @@ public class SiteUserPage extends SiteUserPageGen<SiteUserGenPage> {
 			l.setRows(1000);
 
 			LocalDate now = LocalDate.now();
+			LocalDate yearStartDate = now.with(TemporalAdjusters.firstDayOfMonth()).withMonth(12);
 			LocalDate yearEndDate = now.with(TemporalAdjusters.firstDayOfMonth()).withMonth(6);
-			yearEndDate = now.isBefore(yearEndDate) ? yearEndDate : yearEndDate.plusYears(1);
+			if(now.isAfter(yearStartDate.minusDays(1)) && now.isBefore(yearEndDate.plusYears(1))) {
+				yearStartDate = now.isAfter(yearStartDate.minusDays(1)) ? yearStartDate.plusYears(1) : yearStartDate;
+				yearEndDate = now.isBefore(yearEndDate) ? yearEndDate.plusYears(1) : yearEndDate.plusYears(2);
+			}
+			else if(now.isBefore(yearEndDate)) {
+				yearStartDate = yearStartDate.minusYears(1);
+			}
+			else {
+				yearEndDate = yearEndDate.plusYears(1);
+			}
 
-			l.addFilterQuery("yearEnd_indexed_int:" + yearEndDate.getYear());
+			l.addFilterQuery("yearEnd_indexed_int:[" + yearStartDate.getYear() + " TO " + yearEndDate.getYear() + "]");
 			l.addFilterQuery("archived_indexed_boolean:false");
 			l.addFilterQuery("deleted_indexed_boolean:false");
 	
