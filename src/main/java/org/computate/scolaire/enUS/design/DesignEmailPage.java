@@ -501,14 +501,8 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 
 	protected void _year_(Wrap<SchoolYear> c) {
 		if(pageDesignId.endsWith("-enrollment-form") || "enrollment-sent".equals(pageDesignId) || BooleanUtils.isTrue(pageDesign_.getSearchYears())) {
-			if(yearSearch.size() == 0) {
-				throw new RuntimeException("No year was found for the query: " + siteRequest_.getOperationRequest().getParams().getJsonObject("query").encode());
-			}
-			else if(yearSearch.size() == 1) {
+			if(yearSearch.size() == 1) {
 				c.o(yearSearch.get(0));
-			}
-			else  {
-				throw new RuntimeException("More than one year was found for the query: " + siteRequest_.getOperationRequest().getParams().getJsonObject("query").encode());
 			}
 		}
 	}
@@ -560,14 +554,8 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 
 	protected void _school_(Wrap<School> c) {
 		if(pageDesignId.endsWith("-enrollment-form") || "enrollment-sent".equals(pageDesignId)) {
-			if(schoolSearch.size() == 0) {
-				throw new RuntimeException("No school was found for the query: " + siteRequest_.getOperationRequest().getParams().getJsonObject("query").encode());
-			}
-			else if(schoolSearch.size() == 1) {
+			if(schoolSearch.size() == 1) {
 				c.o(schoolSearch.get(0));
-			}
-			else  {
-				throw new RuntimeException("More than one school was found for the query: " + siteRequest_.getOperationRequest().getParams().getJsonObject("query").encode());
 			}
 		}
 		else if(schoolSearch.size() == 1) {
