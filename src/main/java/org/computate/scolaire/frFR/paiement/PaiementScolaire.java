@@ -1524,6 +1524,8 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * r.enUS: "new"
 	 * r: " et "
 	 * r.enUS: " and "
+	 * r: " payé"
+	 * r.enUS: " paid"
 	 */                              
 	protected void _paiementNomComplet(Couverture<String> c) {
 		NumberFormat fn = NumberFormat.getCurrencyInstance(Locale.FRANCE);
@@ -1643,6 +1645,8 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * r.enUS: "new"
 	 * r: " et "
 	 * r.enUS: " and "
+	 * r: " payé"
+	 * r.enUS: " paid"
 	 */            
 	@Override
 	protected void _objetTexte(Couverture<String> c) {
