@@ -380,17 +380,25 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 				) {
 			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-				e("input")
-					.a("type", "text")
-					.a("placeholder", "inscriptions")
-					.a("title", "L'année scolaire de la saison scolaire. ")
-					.a("class", "valeur suggereInscriptionCles w3-input w3-border w3-cell w3-cell-middle ")
-					.a("name", "setInscriptionCles")
-					.a("id", classeApiMethodeMethode, "_inscriptionCles")
-					.a("autocomplete", "off");
-					if("Page".equals(classeApiMethodeMethode)) {
-						a("oninput", "suggereBlocScolaireInscriptionCles($(this).val() ? rechercherInscriptionScolaireFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'blocCles:" + pk + "'}", "], $('#listBlocScolaireInscriptionCles_", classeApiMethodeMethode, "'), ", pk, "); ");
-					}
+			if("PUTCopie".equals(classeApiMethodeMethode)) {
+				{ e("div").f();
+					e("input")
+						.a("type", "checkbox")
+						.a("id", classeApiMethodeMethode, "_inscriptionCles_vider")
+						.a("class", "inscriptionCles_vider ")
+						.fg();
+					e("label").a("for", "classeApiMethodeMethode, \"_inscriptionCles_vider").f().sx("vider").g("label");
+				} g("div");
+			}
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "inscriptions")
+				.a("title", "L'année scolaire de la saison scolaire. ")
+				.a("class", "valeur suggereInscriptionCles w3-input w3-border w3-cell w3-cell-middle ")
+				.a("name", "setInscriptionCles")
+				.a("id", classeApiMethodeMethode, "_inscriptionCles")
+				.a("autocomplete", "off");
+				a("oninput", "suggereBlocScolaireInscriptionCles($(this).val() ? rechercherInscriptionScolaireFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'blocCles:" + pk + "'}", "], $('#listBlocScolaireInscriptionCles_", classeApiMethodeMethode, "'), ", pk, "); ");
 
 				fg();
 
@@ -434,14 +442,16 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listBlocScolaireInscriptionCles_", classeApiMethodeMethode).f();
 								} g("ul");
 								{
-									{ e("div").a("class", "w3-cell-row ").f();
-										e("button")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ")
-											.a("id", classeApiMethodeMethode, "_inscriptionCles_ajouter")
-											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Envoi…'; postInscriptionScolaireVals({ blocCles: [ \"", pk, "\" ] }, function() {}, function() { ajouterErreur($('#", classeApiMethodeMethode, "inscriptionCles')); });")
-											.f().sx("ajouter une inscription")
-										.g("button");
-									} g("div");
+									if("Page".equals(classeApiMethodeMethode)) {
+										{ e("div").a("class", "w3-cell-row ").f();
+											e("button")
+												.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ")
+												.a("id", classeApiMethodeMethode, "_inscriptionCles_ajouter")
+												.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Envoi…'; postInscriptionScolaireVals({ blocCles: [ \"", pk, "\" ] }, function() {}, function() { ajouterErreur($('#", classeApiMethodeMethode, "inscriptionCles')); });")
+												.f().sx("ajouter une inscription")
+											.g("button");
+										} g("div");
+									}
 								}
 							} g("div");
 						} g("div");
@@ -1211,17 +1221,25 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 				) {
 			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-				e("input")
-					.a("type", "text")
-					.a("placeholder", "âge")
-					.a("title", "L'année scolaire de la saison scolaire. ")
-					.a("class", "valeur suggereAgeCle w3-input w3-border w3-cell w3-cell-middle ")
-					.a("name", "setAgeCle")
-					.a("id", classeApiMethodeMethode, "_ageCle")
-					.a("autocomplete", "off");
-					if("Page".equals(classeApiMethodeMethode)) {
-						a("oninput", "suggereBlocScolaireAgeCle($(this).val() ? rechercherAgeScolaireFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'blocCles:" + pk + "'}", "], $('#listBlocScolaireAgeCle_", classeApiMethodeMethode, "'), ", pk, "); ");
-					}
+			if("PUTCopie".equals(classeApiMethodeMethode)) {
+				{ e("div").f();
+					e("input")
+						.a("type", "checkbox")
+						.a("id", classeApiMethodeMethode, "_ageCle_vider")
+						.a("class", "ageCle_vider ")
+						.fg();
+					e("label").a("for", "classeApiMethodeMethode, \"_ageCle_vider").f().sx("vider").g("label");
+				} g("div");
+			}
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "âge")
+				.a("title", "L'année scolaire de la saison scolaire. ")
+				.a("class", "valeur suggereAgeCle w3-input w3-border w3-cell w3-cell-middle ")
+				.a("name", "setAgeCle")
+				.a("id", classeApiMethodeMethode, "_ageCle")
+				.a("autocomplete", "off");
+				a("oninput", "suggereBlocScolaireAgeCle($(this).val() ? rechercherAgeScolaireFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'blocCles:" + pk + "'}", "], $('#listBlocScolaireAgeCle_", classeApiMethodeMethode, "'), ", pk, "); ");
 
 				fg();
 
@@ -1268,14 +1286,16 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 										CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), AgeScolaire.ROLES)
 										|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), AgeScolaire.ROLES)
 										) {
-									{ e("div").a("class", "w3-cell-row ").f();
-										e("button")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue ")
-											.a("id", classeApiMethodeMethode, "_ageCle_ajouter")
-											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Envoi…'; postAgeScolaireVals({ blocCles: [ \"", pk, "\" ] }, function() {}, function() { ajouterErreur($('#", classeApiMethodeMethode, "ageCle')); });")
-											.f().sx("ajouter un âge")
-										.g("button");
-									} g("div");
+									if("Page".equals(classeApiMethodeMethode)) {
+										{ e("div").a("class", "w3-cell-row ").f();
+											e("button")
+												.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue ")
+												.a("id", classeApiMethodeMethode, "_ageCle_ajouter")
+												.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Envoi…'; postAgeScolaireVals({ blocCles: [ \"", pk, "\" ] }, function() {}, function() { ajouterErreur($('#", classeApiMethodeMethode, "ageCle')); });")
+												.f().sx("ajouter un âge")
+											.g("button");
+										} g("div");
+									}
 								}
 							} g("div");
 						} g("div");
@@ -4661,7 +4681,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		this.blocsSession = blocsSession;
 		this.blocsSessionCouverture.dejaInitialise = true;
 	}
-	public static List<BlocScolaire> staticSetBlocsSession(RequeteSiteFrFR requeteSite_, String o) {
+	public static BlocScolaire staticSetBlocsSession(RequeteSiteFrFR requeteSite_, String o) {
 		return null;
 	}
 	public BlocScolaire addBlocsSession(BlocScolaire...objets) {
@@ -4711,7 +4731,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		this.blocsAge = blocsAge;
 		this.blocsAgeCouverture.dejaInitialise = true;
 	}
-	public static List<BlocScolaire> staticSetBlocsAge(RequeteSiteFrFR requeteSite_, String o) {
+	public static BlocScolaire staticSetBlocsAge(RequeteSiteFrFR requeteSite_, String o) {
 		return null;
 	}
 	public BlocScolaire addBlocsAge(BlocScolaire...objets) {
@@ -4761,7 +4781,7 @@ public abstract class BlocScolaireGen<DEV> extends Cluster {
 		this.blocsBloc = blocsBloc;
 		this.blocsBlocCouverture.dejaInitialise = true;
 	}
-	public static List<BlocScolaire> staticSetBlocsBloc(RequeteSiteFrFR requeteSite_, String o) {
+	public static BlocScolaire staticSetBlocsBloc(RequeteSiteFrFR requeteSite_, String o) {
 		return null;
 	}
 	public BlocScolaire addBlocsBloc(BlocScolaire...objets) {

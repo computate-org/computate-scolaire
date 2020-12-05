@@ -805,7 +805,10 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 			jsonObject.put("sauvegardes", Optional.ofNullable(jsonObject.getJsonArray("sauvegardes")).orElse(new JsonArray()));
 			JsonObject jsonPatch = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonObject("patch")).orElse(new JsonObject());
 			jsonPatch.stream().forEach(o -> {
-				jsonObject.put(o.getKey(), o.getValue());
+				if(o.getValue() == null)
+					jsonObject.remove(o.getKey());
+				else
+					jsonObject.put(o.getKey(), o.getValue());
 				jsonObject.getJsonArray("sauvegardes").add(o.getKey());
 			});
 

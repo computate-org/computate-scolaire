@@ -406,16 +406,24 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 				) {
 			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-				e("input")
-					.a("type", "text")
-					.a("placeholder", "blocks")
-					.a("class", "valueObjectSuggest suggestBlockKeys w3-input w3-border w3-cell w3-cell-middle ")
-					.a("name", "setBlockKeys")
-					.a("id", classApiMethodMethod, "_blockKeys")
-					.a("autocomplete", "off");
-					if("Page".equals(classApiMethodMethod)) {
-						a("oninput", "suggestSchoolAgeBlockKeys($(this).val() ? searchSchoolBlockFilters($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'ageKey:" + pk + "'}", "], $('#listSchoolAgeBlockKeys_", classApiMethodMethod, "'), ", pk, "); ");
-					}
+			if("PUTCopy".equals(classApiMethodMethod)) {
+				{ e("div").f();
+					e("input")
+						.a("type", "checkbox")
+						.a("id", classApiMethodMethod, "_blockKeys_clear")
+						.a("class", "blockKeys_clear ")
+						.fg();
+					e("label").a("for", "classApiMethodMethod, \"_blockKeys_clear").f().sx("clear").g("label");
+				} g("div");
+			}
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "blocks")
+				.a("class", "valueObjectSuggest suggestBlockKeys w3-input w3-border w3-cell w3-cell-middle ")
+				.a("name", "setBlockKeys")
+				.a("id", classApiMethodMethod, "_blockKeys")
+				.a("autocomplete", "off");
+				a("oninput", "suggestSchoolAgeBlockKeys($(this).val() ? searchSchoolBlockFilters($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'ageKey:" + pk + "'}", "], $('#listSchoolAgeBlockKeys_", classApiMethodMethod, "'), ", pk, "); ");
 
 				fg();
 
@@ -462,14 +470,16 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 										CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), SchoolBlock.ROLES)
 										|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), SchoolBlock.ROLES)
 										) {
-									{ e("div").a("class", "w3-cell-row ").f();
-										e("button")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
-											.a("id", classApiMethodMethod, "_blockKeys_add")
-											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Sending…'; postSchoolBlockVals({ ageKey: \"", pk, "\" }, function() {}, function() { addError($('#", classApiMethodMethod, "blockKeys')); });")
-											.f().sx("add a block")
-										.g("button");
-									} g("div");
+									if("Page".equals(classApiMethodMethod)) {
+										{ e("div").a("class", "w3-cell-row ").f();
+											e("button")
+												.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
+												.a("id", classApiMethodMethod, "_blockKeys_add")
+												.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Sending…'; postSchoolBlockVals({ ageKey: \"", pk, "\" }, function() {}, function() { addError($('#", classApiMethodMethod, "blockKeys')); });")
+												.f().sx("add a block")
+											.g("button");
+										} g("div");
+									}
 								}
 							} g("div");
 						} g("div");
@@ -1241,16 +1251,24 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 				) {
 			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-				e("input")
-					.a("type", "text")
-					.a("placeholder", "year")
-					.a("class", "valueObjectSuggest suggestYearKey w3-input w3-border w3-cell w3-cell-middle ")
-					.a("name", "setYearKey")
-					.a("id", classApiMethodMethod, "_yearKey")
-					.a("autocomplete", "off");
-					if("Page".equals(classApiMethodMethod)) {
-						a("oninput", "suggestSchoolAgeYearKey($(this).val() ? searchSchoolYearFilters($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'ageKeys:" + pk + "'}", "], $('#listSchoolAgeYearKey_", classApiMethodMethod, "'), ", pk, "); ");
-					}
+			if("PUTCopy".equals(classApiMethodMethod)) {
+				{ e("div").f();
+					e("input")
+						.a("type", "checkbox")
+						.a("id", classApiMethodMethod, "_yearKey_clear")
+						.a("class", "yearKey_clear ")
+						.fg();
+					e("label").a("for", "classApiMethodMethod, \"_yearKey_clear").f().sx("clear").g("label");
+				} g("div");
+			}
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "year")
+				.a("class", "valueObjectSuggest suggestYearKey w3-input w3-border w3-cell w3-cell-middle ")
+				.a("name", "setYearKey")
+				.a("id", classApiMethodMethod, "_yearKey")
+				.a("autocomplete", "off");
+				a("oninput", "suggestSchoolAgeYearKey($(this).val() ? searchSchoolYearFilters($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'ageKeys:" + pk + "'}", "], $('#listSchoolAgeYearKey_", classApiMethodMethod, "'), ", pk, "); ");
 
 				fg();
 
@@ -1297,14 +1315,16 @@ public abstract class SchoolAgeGen<DEV> extends Cluster {
 										CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), SchoolYear.ROLES)
 										|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), SchoolYear.ROLES)
 										) {
-									{ e("div").a("class", "w3-cell-row ").f();
-										e("button")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
-											.a("id", classApiMethodMethod, "_yearKey_add")
-											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Sending…'; postSchoolYearVals({ ageKeys: [ \"", pk, "\" ] }, function() {}, function() { addError($('#", classApiMethodMethod, "yearKey')); });")
-											.f().sx("add a year")
-										.g("button");
-									} g("div");
+									if("Page".equals(classApiMethodMethod)) {
+										{ e("div").a("class", "w3-cell-row ").f();
+											e("button")
+												.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
+												.a("id", classApiMethodMethod, "_yearKey_add")
+												.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Sending…'; postSchoolYearVals({ ageKeys: [ \"", pk, "\" ] }, function() {}, function() { addError($('#", classApiMethodMethod, "yearKey')); });")
+												.f().sx("add a year")
+											.g("button");
+										} g("div");
+									}
 								}
 							} g("div");
 						} g("div");

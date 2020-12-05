@@ -380,17 +380,25 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 				) {
 			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-				e("input")
-					.a("type", "text")
-					.a("placeholder", "année")
-					.a("title", "Les sessions scolaires de la saison scolaire. ")
-					.a("class", "valeur suggereAnneeCle w3-input w3-border w3-cell w3-cell-middle ")
-					.a("name", "setAnneeCle")
-					.a("id", classeApiMethodeMethode, "_anneeCle")
-					.a("autocomplete", "off");
-					if("Page".equals(classeApiMethodeMethode)) {
-						a("oninput", "suggereSaisonScolaireAnneeCle($(this).val() ? rechercherAnneeScolaireFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'saisonCles:" + pk + "'}", "], $('#listSaisonScolaireAnneeCle_", classeApiMethodeMethode, "'), ", pk, "); ");
-					}
+			if("PUTCopie".equals(classeApiMethodeMethode)) {
+				{ e("div").f();
+					e("input")
+						.a("type", "checkbox")
+						.a("id", classeApiMethodeMethode, "_anneeCle_vider")
+						.a("class", "anneeCle_vider ")
+						.fg();
+					e("label").a("for", "classeApiMethodeMethode, \"_anneeCle_vider").f().sx("vider").g("label");
+				} g("div");
+			}
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "année")
+				.a("title", "Les sessions scolaires de la saison scolaire. ")
+				.a("class", "valeur suggereAnneeCle w3-input w3-border w3-cell w3-cell-middle ")
+				.a("name", "setAnneeCle")
+				.a("id", classeApiMethodeMethode, "_anneeCle")
+				.a("autocomplete", "off");
+				a("oninput", "suggereSaisonScolaireAnneeCle($(this).val() ? rechercherAnneeScolaireFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'saisonCles:" + pk + "'}", "], $('#listSaisonScolaireAnneeCle_", classeApiMethodeMethode, "'), ", pk, "); ");
 
 				fg();
 
@@ -437,14 +445,16 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 										CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), AnneeScolaire.ROLES)
 										|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), AnneeScolaire.ROLES)
 										) {
-									{ e("div").a("class", "w3-cell-row ").f();
-										e("button")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
-											.a("id", classeApiMethodeMethode, "_anneeCle_ajouter")
-											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Envoi…'; postAnneeScolaireVals({ saisonCles: [ \"", pk, "\" ] }, function() {}, function() { ajouterErreur($('#", classeApiMethodeMethode, "anneeCle')); });")
-											.f().sx("ajouter une année")
-										.g("button");
-									} g("div");
+									if("Page".equals(classeApiMethodeMethode)) {
+										{ e("div").a("class", "w3-cell-row ").f();
+											e("button")
+												.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
+												.a("id", classeApiMethodeMethode, "_anneeCle_ajouter")
+												.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Envoi…'; postAnneeScolaireVals({ saisonCles: [ \"", pk, "\" ] }, function() {}, function() { ajouterErreur($('#", classeApiMethodeMethode, "anneeCle')); });")
+												.f().sx("ajouter une année")
+											.g("button");
+										} g("div");
+									}
 								}
 							} g("div");
 						} g("div");
@@ -574,17 +584,25 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 				) {
 			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-				e("input")
-					.a("type", "text")
-					.a("placeholder", "sessions")
-					.a("title", "Les sessions scolaires de la saison scolaire. ")
-					.a("class", "valeur suggereSessionCles w3-input w3-border w3-cell w3-cell-middle ")
-					.a("name", "setSessionCles")
-					.a("id", classeApiMethodeMethode, "_sessionCles")
-					.a("autocomplete", "off");
-					if("Page".equals(classeApiMethodeMethode)) {
-						a("oninput", "suggereSaisonScolaireSessionCles($(this).val() ? rechercherSessionScolaireFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'saisonCle:" + pk + "'}", "], $('#listSaisonScolaireSessionCles_", classeApiMethodeMethode, "'), ", pk, "); ");
-					}
+			if("PUTCopie".equals(classeApiMethodeMethode)) {
+				{ e("div").f();
+					e("input")
+						.a("type", "checkbox")
+						.a("id", classeApiMethodeMethode, "_sessionCles_vider")
+						.a("class", "sessionCles_vider ")
+						.fg();
+					e("label").a("for", "classeApiMethodeMethode, \"_sessionCles_vider").f().sx("vider").g("label");
+				} g("div");
+			}
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "sessions")
+				.a("title", "Les sessions scolaires de la saison scolaire. ")
+				.a("class", "valeur suggereSessionCles w3-input w3-border w3-cell w3-cell-middle ")
+				.a("name", "setSessionCles")
+				.a("id", classeApiMethodeMethode, "_sessionCles")
+				.a("autocomplete", "off");
+				a("oninput", "suggereSaisonScolaireSessionCles($(this).val() ? rechercherSessionScolaireFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'saisonCle:" + pk + "'}", "], $('#listSaisonScolaireSessionCles_", classeApiMethodeMethode, "'), ", pk, "); ");
 
 				fg();
 
@@ -631,14 +649,16 @@ public abstract class SaisonScolaireGen<DEV> extends Cluster {
 										CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), SessionScolaire.ROLES)
 										|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), SessionScolaire.ROLES)
 										) {
-									{ e("div").a("class", "w3-cell-row ").f();
-										e("button")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-											.a("id", classeApiMethodeMethode, "_sessionCles_ajouter")
-											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Envoi…'; postSessionScolaireVals({ saisonCle: \"", pk, "\" }, function() {}, function() { ajouterErreur($('#", classeApiMethodeMethode, "sessionCles')); });")
-											.f().sx("ajouter une session")
-										.g("button");
-									} g("div");
+									if("Page".equals(classeApiMethodeMethode)) {
+										{ e("div").a("class", "w3-cell-row ").f();
+											e("button")
+												.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
+												.a("id", classeApiMethodeMethode, "_sessionCles_ajouter")
+												.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Envoi…'; postSessionScolaireVals({ saisonCle: \"", pk, "\" }, function() {}, function() { ajouterErreur($('#", classeApiMethodeMethode, "sessionCles')); });")
+												.f().sx("ajouter une session")
+											.g("button");
+										} g("div");
+									}
 								}
 							} g("div");
 						} g("div");

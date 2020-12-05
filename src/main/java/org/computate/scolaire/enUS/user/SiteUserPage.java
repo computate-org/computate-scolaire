@@ -592,9 +592,9 @@ public class SiteUserPage extends SiteUserPageGen<SiteUserGenPage> {
 										for(PageDesign pageDesign : pageDesigns) {
 											try {
 												String url = "/pdf?var=design:" + URLEncoder.encode(pageDesign.getPageDesignCompleteName(), "UTF-8") + "&var=schoolName:" + URLEncoder.encode(yearYear.getSchoolName(), "UTF-8") + "&var=schoolLocation:" + URLEncoder.encode(yearYear.getSchoolLocation(), "UTF-8") + "&var=yearStart:" + yearYear.getYearStart();
-												{ e("div").a("class", "w3-cell-row ").f();
+												{ e("div").a("class", "w3-cell-row w3-small ").f();
 													{ e("a").a("href", url).a("class", "").f();
-														e("span").a("class", " ").f().sx(pageDesign.getPageDesignCompleteName(), " ", yearYear.getYearStart(), "-", yearYear.getYearEnd()).g("span");
+														e("span").a("class", " ").f().sx(pageDesign.getPageDesignCompleteName(), " ", yearYear.getYearStart().toString().substring(2,4), "-", yearYear.getYearEnd().toString().substring(2,4)).g("span");
 													} g("a");
 												} g("div");
 											} catch (UnsupportedEncodingException e) {

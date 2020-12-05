@@ -320,7 +320,7 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 						}));
 						break;
 					case "anneeCles":
-						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
+						for(Long l : Optional.ofNullable(jsonObject.getJsonArray(entiteVar)).orElse(new JsonArray()).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							if(l != null) {
 								ListeRecherche<AnneeScolaire> listeRecherche = new ListeRecherche<AnneeScolaire>();
 								listeRecherche.setQuery("*:*");
@@ -352,7 +352,7 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 						}
 						break;
 					case "recuCles":
-						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
+						for(Long l : Optional.ofNullable(jsonObject.getJsonArray(entiteVar)).orElse(new JsonArray()).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							if(l != null) {
 								ListeRecherche<RecuScolaire> listeRecherche = new ListeRecherche<RecuScolaire>();
 								listeRecherche.setQuery("*:*");
@@ -2249,7 +2249,10 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 			jsonObject.put("sauvegardes", Optional.ofNullable(jsonObject.getJsonArray("sauvegardes")).orElse(new JsonArray()));
 			JsonObject jsonPatch = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonObject("patch")).orElse(new JsonObject());
 			jsonPatch.stream().forEach(o -> {
-				jsonObject.put(o.getKey(), o.getValue());
+				if(o.getValue() == null)
+					jsonObject.remove(o.getKey());
+				else
+					jsonObject.put(o.getKey(), o.getValue());
 				jsonObject.getJsonArray("sauvegardes").add(o.getKey());
 			});
 
@@ -2361,7 +2364,7 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 						}));
 						break;
 					case "anneeCles":
-						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
+						for(Long l : Optional.ofNullable(jsonObject.getJsonArray(entiteVar)).orElse(new JsonArray()).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							futures.add(Future.future(a -> {
 								tx.preparedQuery(SiteContexteFrFR.SQL_addA
 										, Tuple.of(pk, "anneeCles", l, "ecoleCle")
@@ -2380,7 +2383,7 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 						}
 						break;
 					case "recuCles":
-						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
+						for(Long l : Optional.ofNullable(jsonObject.getJsonArray(entiteVar)).orElse(new JsonArray()).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							futures.add(Future.future(a -> {
 								tx.preparedQuery(SiteContexteFrFR.SQL_addA
 										, Tuple.of(l, "ecoleCle", pk, "recuCles")

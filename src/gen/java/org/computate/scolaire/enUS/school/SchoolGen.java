@@ -283,16 +283,24 @@ public abstract class SchoolGen<DEV> extends Cluster {
 				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 				) {
 			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-				e("input")
-					.a("type", "text")
-					.a("placeholder", "years")
-					.a("class", "valueObjectSuggest suggestYearKeys w3-input w3-border w3-cell w3-cell-middle ")
-					.a("name", "setYearKeys")
-					.a("id", classApiMethodMethod, "_yearKeys")
-					.a("autocomplete", "off");
-					if("Page".equals(classApiMethodMethod)) {
-						a("oninput", "suggestSchoolYearKeys($(this).val() ? searchSchoolYearFilters($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'schoolKey:" + pk + "'}", "], $('#listSchoolYearKeys_", classApiMethodMethod, "'), ", pk, "); ");
-					}
+			if("PUTCopy".equals(classApiMethodMethod)) {
+				{ e("div").f();
+					e("input")
+						.a("type", "checkbox")
+						.a("id", classApiMethodMethod, "_yearKeys_clear")
+						.a("class", "yearKeys_clear ")
+						.fg();
+					e("label").a("for", "classApiMethodMethod, \"_yearKeys_clear").f().sx("clear").g("label");
+				} g("div");
+			}
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "years")
+				.a("class", "valueObjectSuggest suggestYearKeys w3-input w3-border w3-cell w3-cell-middle ")
+				.a("name", "setYearKeys")
+				.a("id", classApiMethodMethod, "_yearKeys")
+				.a("autocomplete", "off");
+				a("oninput", "suggestSchoolYearKeys($(this).val() ? searchSchoolYearFilters($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'schoolKey:" + pk + "'}", "], $('#listSchoolYearKeys_", classApiMethodMethod, "'), ", pk, "); ");
 
 				fg();
 
@@ -339,14 +347,16 @@ public abstract class SchoolGen<DEV> extends Cluster {
 										CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), SchoolYear.ROLES)
 										|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), SchoolYear.ROLES)
 										) {
-									{ e("div").a("class", "w3-cell-row ").f();
-										e("button")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
-											.a("id", classApiMethodMethod, "_yearKeys_add")
-											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Sending…'; postSchoolYearVals({ schoolKey: \"", pk, "\" }, function() {}, function() { addError($('#", classApiMethodMethod, "yearKeys')); });")
-											.f().sx("add a year")
-										.g("button");
-									} g("div");
+									if("Page".equals(classApiMethodMethod)) {
+										{ e("div").a("class", "w3-cell-row ").f();
+											e("button")
+												.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
+												.a("id", classApiMethodMethod, "_yearKeys_add")
+												.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Sending…'; postSchoolYearVals({ schoolKey: \"", pk, "\" }, function() {}, function() { addError($('#", classApiMethodMethod, "yearKeys')); });")
+												.f().sx("add a year")
+											.g("button");
+										} g("div");
+									}
 								}
 							} g("div");
 						} g("div");
@@ -476,16 +486,24 @@ public abstract class SchoolGen<DEV> extends Cluster {
 				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 				) {
 			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-				e("input")
-					.a("type", "text")
-					.a("placeholder", "receipts")
-					.a("class", "valueObjectSuggest suggestReceiptKeys w3-input w3-border w3-cell w3-cell-middle ")
-					.a("name", "setReceiptKeys")
-					.a("id", classApiMethodMethod, "_receiptKeys")
-					.a("autocomplete", "off");
-					if("Page".equals(classApiMethodMethod)) {
-						a("oninput", "suggestSchoolReceiptKeys($(this).val() ? searchSchoolReceiptFilters($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'schoolKey:" + pk + "'}", "], $('#listSchoolReceiptKeys_", classApiMethodMethod, "'), ", pk, "); ");
-					}
+			if("PUTCopy".equals(classApiMethodMethod)) {
+				{ e("div").f();
+					e("input")
+						.a("type", "checkbox")
+						.a("id", classApiMethodMethod, "_receiptKeys_clear")
+						.a("class", "receiptKeys_clear ")
+						.fg();
+					e("label").a("for", "classApiMethodMethod, \"_receiptKeys_clear").f().sx("clear").g("label");
+				} g("div");
+			}
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "receipts")
+				.a("class", "valueObjectSuggest suggestReceiptKeys w3-input w3-border w3-cell w3-cell-middle ")
+				.a("name", "setReceiptKeys")
+				.a("id", classApiMethodMethod, "_receiptKeys")
+				.a("autocomplete", "off");
+				a("oninput", "suggestSchoolReceiptKeys($(this).val() ? searchSchoolReceiptFilters($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'schoolKey:" + pk + "'}", "], $('#listSchoolReceiptKeys_", classApiMethodMethod, "'), ", pk, "); ");
 
 				fg();
 
@@ -532,14 +550,16 @@ public abstract class SchoolGen<DEV> extends Cluster {
 										CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), SchoolReceipt.ROLES)
 										|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), SchoolReceipt.ROLES)
 										) {
-									{ e("div").a("class", "w3-cell-row ").f();
-										e("button")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-light-green ")
-											.a("id", classApiMethodMethod, "_receiptKeys_add")
-											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Sending…'; postSchoolReceiptVals({ schoolKey: \"", pk, "\" }, function() {}, function() { addError($('#", classApiMethodMethod, "receiptKeys')); });")
-											.f().sx("add a receipt")
-										.g("button");
-									} g("div");
+									if("Page".equals(classApiMethodMethod)) {
+										{ e("div").a("class", "w3-cell-row ").f();
+											e("button")
+												.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-light-green ")
+												.a("id", classApiMethodMethod, "_receiptKeys_add")
+												.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Sending…'; postSchoolReceiptVals({ schoolKey: \"", pk, "\" }, function() {}, function() { addError($('#", classApiMethodMethod, "receiptKeys')); });")
+												.f().sx("add a receipt")
+											.g("button");
+										} g("div");
+									}
 								}
 							} g("div");
 						} g("div");

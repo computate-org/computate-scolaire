@@ -278,17 +278,25 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 		) {
 			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-				e("input")
-					.a("type", "text")
-					.a("placeholder", "année")
-					.a("title", "La clé primaire des utilisateurs dans la base de données. ")
-					.a("class", "valeur suggereAnneeCle w3-input w3-border w3-cell w3-cell-middle ")
-					.a("name", "setAnneeCle")
-					.a("id", classeApiMethodeMethode, "_anneeCle")
-					.a("autocomplete", "off");
-					if("Page".equals(classeApiMethodeMethode)) {
-						a("oninput", "suggereInscriptionScolaireAnneeCle($(this).val() ? rechercherAnneeScolaireFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'inscriptionCles:" + pk + "'}", "], $('#listInscriptionScolaireAnneeCle_", classeApiMethodeMethode, "'), ", pk, "); ");
-					}
+			if("PUTCopie".equals(classeApiMethodeMethode)) {
+				{ e("div").f();
+					e("input")
+						.a("type", "checkbox")
+						.a("id", classeApiMethodeMethode, "_anneeCle_vider")
+						.a("class", "anneeCle_vider ")
+						.fg();
+					e("label").a("for", "classeApiMethodeMethode, \"_anneeCle_vider").f().sx("vider").g("label");
+				} g("div");
+			}
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "année")
+				.a("title", "La clé primaire des utilisateurs dans la base de données. ")
+				.a("class", "valeur suggereAnneeCle w3-input w3-border w3-cell w3-cell-middle ")
+				.a("name", "setAnneeCle")
+				.a("id", classeApiMethodeMethode, "_anneeCle")
+				.a("autocomplete", "off");
+				a("oninput", "suggereInscriptionScolaireAnneeCle($(this).val() ? rechercherAnneeScolaireFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'inscriptionCles:" + pk + "'}", "], $('#listInscriptionScolaireAnneeCle_", classeApiMethodeMethode, "'), ", pk, "); ");
 
 				fg();
 
@@ -330,14 +338,16 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 										CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), AnneeScolaire.ROLES)
 										|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), AnneeScolaire.ROLES)
 										) {
-									{ e("div").a("class", "w3-cell-row ").f();
-										e("button")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
-											.a("id", classeApiMethodeMethode, "_anneeCle_ajouter")
-											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Envoi…'; postAnneeScolaireVals({ inscriptionCles: [ \"", pk, "\" ] }, function() {}, function() { ajouterErreur($('#", classeApiMethodeMethode, "anneeCle')); });")
-											.f().sx("ajouter une année")
-										.g("button");
-									} g("div");
+									if("Page".equals(classeApiMethodeMethode)) {
+										{ e("div").a("class", "w3-cell-row ").f();
+											e("button")
+												.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
+												.a("id", classeApiMethodeMethode, "_anneeCle_ajouter")
+												.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Envoi…'; postAnneeScolaireVals({ inscriptionCles: [ \"", pk, "\" ] }, function() {}, function() { ajouterErreur($('#", classeApiMethodeMethode, "anneeCle')); });")
+												.f().sx("ajouter une année")
+											.g("button");
+										} g("div");
+									}
 								}
 							} g("div");
 						} g("div");
@@ -552,17 +562,25 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 		) {
 			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-				e("input")
-					.a("type", "text")
-					.a("placeholder", "blocs")
-					.a("title", "La clé primaire des utilisateurs dans la base de données. ")
-					.a("class", "valeur suggereBlocCles w3-input w3-border w3-cell w3-cell-middle ")
-					.a("name", "setBlocCles")
-					.a("id", classeApiMethodeMethode, "_blocCles")
-					.a("autocomplete", "off");
-					if("Page".equals(classeApiMethodeMethode)) {
-						a("oninput", "suggereInscriptionScolaireBlocCles($(this).val() ? rechercherBlocScolaireFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'inscriptionCles:" + pk + "'}", "], $('#listInscriptionScolaireBlocCles_", classeApiMethodeMethode, "'), ", pk, "); ");
-					}
+			if("PUTCopie".equals(classeApiMethodeMethode)) {
+				{ e("div").f();
+					e("input")
+						.a("type", "checkbox")
+						.a("id", classeApiMethodeMethode, "_blocCles_vider")
+						.a("class", "blocCles_vider ")
+						.fg();
+					e("label").a("for", "classeApiMethodeMethode, \"_blocCles_vider").f().sx("vider").g("label");
+				} g("div");
+			}
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "blocs")
+				.a("title", "La clé primaire des utilisateurs dans la base de données. ")
+				.a("class", "valeur suggereBlocCles w3-input w3-border w3-cell w3-cell-middle ")
+				.a("name", "setBlocCles")
+				.a("id", classeApiMethodeMethode, "_blocCles")
+				.a("autocomplete", "off");
+				a("oninput", "suggereInscriptionScolaireBlocCles($(this).val() ? rechercherBlocScolaireFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'inscriptionCles:" + pk + "'}", "], $('#listInscriptionScolaireBlocCles_", classeApiMethodeMethode, "'), ", pk, "); ");
 
 				fg();
 
@@ -604,14 +622,16 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 										CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), BlocScolaire.ROLES)
 										|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), BlocScolaire.ROLES)
 										) {
-									{ e("div").a("class", "w3-cell-row ").f();
-										e("button")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
-											.a("id", classeApiMethodeMethode, "_blocCles_ajouter")
-											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Envoi…'; postBlocScolaireVals({ inscriptionCles: [ \"", pk, "\" ] }, function() {}, function() { ajouterErreur($('#", classeApiMethodeMethode, "blocCles')); });")
-											.f().sx("ajouter un bloc")
-										.g("button");
-									} g("div");
+									if("Page".equals(classeApiMethodeMethode)) {
+										{ e("div").a("class", "w3-cell-row ").f();
+											e("button")
+												.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-indigo ")
+												.a("id", classeApiMethodeMethode, "_blocCles_ajouter")
+												.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Envoi…'; postBlocScolaireVals({ inscriptionCles: [ \"", pk, "\" ] }, function() {}, function() { ajouterErreur($('#", classeApiMethodeMethode, "blocCles')); });")
+												.f().sx("ajouter un bloc")
+											.g("button");
+										} g("div");
+									}
 								}
 							} g("div");
 						} g("div");
@@ -1237,17 +1257,25 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 		) {
 			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-				e("input")
-					.a("type", "text")
-					.a("placeholder", "enfants")
-					.a("title", "La clé primaire des utilisateurs dans la base de données. ")
-					.a("class", "valeur suggereEnfantCle w3-input w3-border w3-cell w3-cell-middle ")
-					.a("name", "setEnfantCle")
-					.a("id", classeApiMethodeMethode, "_enfantCle")
-					.a("autocomplete", "off");
-					if("Page".equals(classeApiMethodeMethode)) {
-						a("oninput", "suggereInscriptionScolaireEnfantCle($(this).val() ? rechercherEnfantScolaireFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'inscriptionCles:" + pk + "'}", "], $('#listInscriptionScolaireEnfantCle_", classeApiMethodeMethode, "'), ", pk, "); ");
-					}
+			if("PUTCopie".equals(classeApiMethodeMethode)) {
+				{ e("div").f();
+					e("input")
+						.a("type", "checkbox")
+						.a("id", classeApiMethodeMethode, "_enfantCle_vider")
+						.a("class", "enfantCle_vider ")
+						.fg();
+					e("label").a("for", "classeApiMethodeMethode, \"_enfantCle_vider").f().sx("vider").g("label");
+				} g("div");
+			}
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "enfants")
+				.a("title", "La clé primaire des utilisateurs dans la base de données. ")
+				.a("class", "valeur suggereEnfantCle w3-input w3-border w3-cell w3-cell-middle ")
+				.a("name", "setEnfantCle")
+				.a("id", classeApiMethodeMethode, "_enfantCle")
+				.a("autocomplete", "off");
+				a("oninput", "suggereInscriptionScolaireEnfantCle($(this).val() ? rechercherEnfantScolaireFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'inscriptionCles:" + pk + "'}", "], $('#listInscriptionScolaireEnfantCle_", classeApiMethodeMethode, "'), ", pk, "); ");
 
 				fg();
 
@@ -1286,14 +1314,16 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listInscriptionScolaireEnfantCle_", classeApiMethodeMethode).f();
 								} g("ul");
 								{
-									{ e("div").a("class", "w3-cell-row ").f();
-										e("button")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
-											.a("id", classeApiMethodeMethode, "_enfantCle_ajouter")
-											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Envoi…'; postEnfantScolaireVals({ inscriptionCles: [ \"", pk, "\" ] }, function() {}, function() { ajouterErreur($('#", classeApiMethodeMethode, "enfantCle')); });")
-											.f().sx("ajouter un enfant")
-										.g("button");
-									} g("div");
+									if("Page".equals(classeApiMethodeMethode)) {
+										{ e("div").a("class", "w3-cell-row ").f();
+											e("button")
+												.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
+												.a("id", classeApiMethodeMethode, "_enfantCle_ajouter")
+												.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Envoi…'; postEnfantScolaireVals({ inscriptionCles: [ \"", pk, "\" ] }, function() {}, function() { ajouterErreur($('#", classeApiMethodeMethode, "enfantCle')); });")
+												.f().sx("ajouter un enfant")
+											.g("button");
+										} g("div");
+									}
 								}
 							} g("div");
 						} g("div");
@@ -1425,17 +1455,25 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 		) {
 			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-				e("input")
-					.a("type", "text")
-					.a("placeholder", "mères")
-					.a("title", "La clé primaire des utilisateurs dans la base de données. ")
-					.a("class", "valeur suggereMereCles w3-input w3-border w3-cell w3-cell-middle ")
-					.a("name", "setMereCles")
-					.a("id", classeApiMethodeMethode, "_mereCles")
-					.a("autocomplete", "off");
-					if("Page".equals(classeApiMethodeMethode)) {
-						a("oninput", "suggereInscriptionScolaireMereCles($(this).val() ? rechercherMereScolaireFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'inscriptionCles:" + pk + "'}", "], $('#listInscriptionScolaireMereCles_", classeApiMethodeMethode, "'), ", pk, "); ");
-					}
+			if("PUTCopie".equals(classeApiMethodeMethode)) {
+				{ e("div").f();
+					e("input")
+						.a("type", "checkbox")
+						.a("id", classeApiMethodeMethode, "_mereCles_vider")
+						.a("class", "mereCles_vider ")
+						.fg();
+					e("label").a("for", "classeApiMethodeMethode, \"_mereCles_vider").f().sx("vider").g("label");
+				} g("div");
+			}
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "mères")
+				.a("title", "La clé primaire des utilisateurs dans la base de données. ")
+				.a("class", "valeur suggereMereCles w3-input w3-border w3-cell w3-cell-middle ")
+				.a("name", "setMereCles")
+				.a("id", classeApiMethodeMethode, "_mereCles")
+				.a("autocomplete", "off");
+				a("oninput", "suggereInscriptionScolaireMereCles($(this).val() ? rechercherMereScolaireFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'inscriptionCles:" + pk + "'}", "], $('#listInscriptionScolaireMereCles_", classeApiMethodeMethode, "'), ", pk, "); ");
 
 				fg();
 
@@ -1474,14 +1512,16 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listInscriptionScolaireMereCles_", classeApiMethodeMethode).f();
 								} g("ul");
 								{
-									{ e("div").a("class", "w3-cell-row ").f();
-										e("button")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
-											.a("id", classeApiMethodeMethode, "_mereCles_ajouter")
-											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Envoi…'; postMereScolaireVals({ inscriptionCles: [ \"", pk, "\" ] }, function() {}, function() { ajouterErreur($('#", classeApiMethodeMethode, "mereCles')); });")
-											.f().sx("ajouter une mère")
-										.g("button");
-									} g("div");
+									if("Page".equals(classeApiMethodeMethode)) {
+										{ e("div").a("class", "w3-cell-row ").f();
+											e("button")
+												.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-pink ")
+												.a("id", classeApiMethodeMethode, "_mereCles_ajouter")
+												.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Envoi…'; postMereScolaireVals({ inscriptionCles: [ \"", pk, "\" ] }, function() {}, function() { ajouterErreur($('#", classeApiMethodeMethode, "mereCles')); });")
+												.f().sx("ajouter une mère")
+											.g("button");
+										} g("div");
+									}
 								}
 							} g("div");
 						} g("div");
@@ -1613,17 +1653,25 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 		) {
 			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-				e("input")
-					.a("type", "text")
-					.a("placeholder", "pères")
-					.a("title", "La clé primaire des utilisateurs dans la base de données. ")
-					.a("class", "valeur suggerePereCles w3-input w3-border w3-cell w3-cell-middle ")
-					.a("name", "setPereCles")
-					.a("id", classeApiMethodeMethode, "_pereCles")
-					.a("autocomplete", "off");
-					if("Page".equals(classeApiMethodeMethode)) {
-						a("oninput", "suggereInscriptionScolairePereCles($(this).val() ? rechercherPereScolaireFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'inscriptionCles:" + pk + "'}", "], $('#listInscriptionScolairePereCles_", classeApiMethodeMethode, "'), ", pk, "); ");
-					}
+			if("PUTCopie".equals(classeApiMethodeMethode)) {
+				{ e("div").f();
+					e("input")
+						.a("type", "checkbox")
+						.a("id", classeApiMethodeMethode, "_pereCles_vider")
+						.a("class", "pereCles_vider ")
+						.fg();
+					e("label").a("for", "classeApiMethodeMethode, \"_pereCles_vider").f().sx("vider").g("label");
+				} g("div");
+			}
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "pères")
+				.a("title", "La clé primaire des utilisateurs dans la base de données. ")
+				.a("class", "valeur suggerePereCles w3-input w3-border w3-cell w3-cell-middle ")
+				.a("name", "setPereCles")
+				.a("id", classeApiMethodeMethode, "_pereCles")
+				.a("autocomplete", "off");
+				a("oninput", "suggereInscriptionScolairePereCles($(this).val() ? rechercherPereScolaireFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'inscriptionCles:" + pk + "'}", "], $('#listInscriptionScolairePereCles_", classeApiMethodeMethode, "'), ", pk, "); ");
 
 				fg();
 
@@ -1662,14 +1710,16 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listInscriptionScolairePereCles_", classeApiMethodeMethode).f();
 								} g("ul");
 								{
-									{ e("div").a("class", "w3-cell-row ").f();
-										e("button")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-light-blue ")
-											.a("id", classeApiMethodeMethode, "_pereCles_ajouter")
-											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Envoi…'; postPereScolaireVals({ inscriptionCles: [ \"", pk, "\" ] }, function() {}, function() { ajouterErreur($('#", classeApiMethodeMethode, "pereCles')); });")
-											.f().sx("ajouter un père")
-										.g("button");
-									} g("div");
+									if("Page".equals(classeApiMethodeMethode)) {
+										{ e("div").a("class", "w3-cell-row ").f();
+											e("button")
+												.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-light-blue ")
+												.a("id", classeApiMethodeMethode, "_pereCles_ajouter")
+												.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Envoi…'; postPereScolaireVals({ inscriptionCles: [ \"", pk, "\" ] }, function() {}, function() { ajouterErreur($('#", classeApiMethodeMethode, "pereCles')); });")
+												.f().sx("ajouter un père")
+											.g("button");
+										} g("div");
+									}
 								}
 							} g("div");
 						} g("div");
@@ -1801,17 +1851,25 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 		) {
 			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-				e("input")
-					.a("type", "text")
-					.a("placeholder", "gardiens")
-					.a("title", "La clé primaire des utilisateurs dans la base de données. ")
-					.a("class", "valeur suggereGardienCles w3-input w3-border w3-cell w3-cell-middle ")
-					.a("name", "setGardienCles")
-					.a("id", classeApiMethodeMethode, "_gardienCles")
-					.a("autocomplete", "off");
-					if("Page".equals(classeApiMethodeMethode)) {
-						a("oninput", "suggereInscriptionScolaireGardienCles($(this).val() ? rechercherGardienScolaireFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'inscriptionCles:" + pk + "'}", "], $('#listInscriptionScolaireGardienCles_", classeApiMethodeMethode, "'), ", pk, "); ");
-					}
+			if("PUTCopie".equals(classeApiMethodeMethode)) {
+				{ e("div").f();
+					e("input")
+						.a("type", "checkbox")
+						.a("id", classeApiMethodeMethode, "_gardienCles_vider")
+						.a("class", "gardienCles_vider ")
+						.fg();
+					e("label").a("for", "classeApiMethodeMethode, \"_gardienCles_vider").f().sx("vider").g("label");
+				} g("div");
+			}
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "gardiens")
+				.a("title", "La clé primaire des utilisateurs dans la base de données. ")
+				.a("class", "valeur suggereGardienCles w3-input w3-border w3-cell w3-cell-middle ")
+				.a("name", "setGardienCles")
+				.a("id", classeApiMethodeMethode, "_gardienCles")
+				.a("autocomplete", "off");
+				a("oninput", "suggereInscriptionScolaireGardienCles($(this).val() ? rechercherGardienScolaireFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'inscriptionCles:" + pk + "'}", "], $('#listInscriptionScolaireGardienCles_", classeApiMethodeMethode, "'), ", pk, "); ");
 
 				fg();
 
@@ -1850,14 +1908,16 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listInscriptionScolaireGardienCles_", classeApiMethodeMethode).f();
 								} g("ul");
 								{
-									{ e("div").a("class", "w3-cell-row ").f();
-										e("button")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
-											.a("id", classeApiMethodeMethode, "_gardienCles_ajouter")
-											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Envoi…'; postGardienScolaireVals({ inscriptionCles: [ \"", pk, "\" ] }, function() {}, function() { ajouterErreur($('#", classeApiMethodeMethode, "gardienCles')); });")
-											.f().sx("ajouter un gardien")
-										.g("button");
-									} g("div");
+									if("Page".equals(classeApiMethodeMethode)) {
+										{ e("div").a("class", "w3-cell-row ").f();
+											e("button")
+												.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-yellow ")
+												.a("id", classeApiMethodeMethode, "_gardienCles_ajouter")
+												.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Envoi…'; postGardienScolaireVals({ inscriptionCles: [ \"", pk, "\" ] }, function() {}, function() { ajouterErreur($('#", classeApiMethodeMethode, "gardienCles')); });")
+												.f().sx("ajouter un gardien")
+											.g("button");
+										} g("div");
+									}
 								}
 							} g("div");
 						} g("div");
@@ -1989,17 +2049,25 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 		) {
 			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-				e("input")
-					.a("type", "text")
-					.a("placeholder", "paiements")
-					.a("title", "La clé primaire des utilisateurs dans la base de données. ")
-					.a("class", "valeur suggerePaiementCles w3-input w3-border w3-cell w3-cell-middle ")
-					.a("name", "setPaiementCles")
-					.a("id", classeApiMethodeMethode, "_paiementCles")
-					.a("autocomplete", "off");
-					if("Page".equals(classeApiMethodeMethode)) {
-						a("oninput", "suggereInscriptionScolairePaiementCles($(this).val() ? rechercherPaiementScolaireFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'inscriptionCle:" + pk + "'}", "], $('#listInscriptionScolairePaiementCles_", classeApiMethodeMethode, "'), ", pk, "); ");
-					}
+			if("PUTCopie".equals(classeApiMethodeMethode)) {
+				{ e("div").f();
+					e("input")
+						.a("type", "checkbox")
+						.a("id", classeApiMethodeMethode, "_paiementCles_vider")
+						.a("class", "paiementCles_vider ")
+						.fg();
+					e("label").a("for", "classeApiMethodeMethode, \"_paiementCles_vider").f().sx("vider").g("label");
+				} g("div");
+			}
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "paiements")
+				.a("title", "La clé primaire des utilisateurs dans la base de données. ")
+				.a("class", "valeur suggerePaiementCles w3-input w3-border w3-cell w3-cell-middle ")
+				.a("name", "setPaiementCles")
+				.a("id", classeApiMethodeMethode, "_paiementCles")
+				.a("autocomplete", "off");
+				a("oninput", "suggereInscriptionScolairePaiementCles($(this).val() ? rechercherPaiementScolaireFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'inscriptionCle:" + pk + "'}", "], $('#listInscriptionScolairePaiementCles_", classeApiMethodeMethode, "'), ", pk, "); ");
 
 				fg();
 
@@ -2041,14 +2109,16 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 										CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), PaiementScolaire.ROLES)
 										|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), PaiementScolaire.ROLES)
 										) {
-									{ e("div").a("class", "w3-cell-row ").f();
-										e("button")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-											.a("id", classeApiMethodeMethode, "_paiementCles_ajouter")
-											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Envoi…'; postPaiementScolaireVals({ inscriptionCle: \"", pk, "\" }, function() {}, function() { ajouterErreur($('#", classeApiMethodeMethode, "paiementCles')); });")
-											.f().sx("ajouter un paiement")
-										.g("button");
-									} g("div");
+									if("Page".equals(classeApiMethodeMethode)) {
+										{ e("div").a("class", "w3-cell-row ").f();
+											e("button")
+												.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
+												.a("id", classeApiMethodeMethode, "_paiementCles_ajouter")
+												.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Envoi…'; postPaiementScolaireVals({ inscriptionCle: \"", pk, "\" }, function() {}, function() { ajouterErreur($('#", classeApiMethodeMethode, "paiementCles')); });")
+												.f().sx("ajouter un paiement")
+											.g("button");
+										} g("div");
+									}
 								}
 							} g("div");
 						} g("div");
@@ -2264,17 +2334,25 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 		) {
 			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-				e("input")
-					.a("type", "text")
-					.a("placeholder", "utilisateurs")
-					.a("title", "La clé primaire des utilisateurs dans la base de données. ")
-					.a("class", "valeur suggereUtilisateurCles w3-input w3-border w3-cell w3-cell-middle ")
-					.a("name", "setUtilisateurCles")
-					.a("id", classeApiMethodeMethode, "_utilisateurCles")
-					.a("autocomplete", "off");
-					if("Page".equals(classeApiMethodeMethode)) {
-						a("oninput", "suggereInscriptionScolaireUtilisateurCles($(this).val() ? rechercherUtilisateurSiteFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'inscriptionCles:" + pk + "'}", "], $('#listInscriptionScolaireUtilisateurCles_", classeApiMethodeMethode, "'), ", pk, "); ");
-					}
+			if("PUTCopie".equals(classeApiMethodeMethode)) {
+				{ e("div").f();
+					e("input")
+						.a("type", "checkbox")
+						.a("id", classeApiMethodeMethode, "_utilisateurCles_vider")
+						.a("class", "utilisateurCles_vider ")
+						.fg();
+					e("label").a("for", "classeApiMethodeMethode, \"_utilisateurCles_vider").f().sx("vider").g("label");
+				} g("div");
+			}
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "utilisateurs")
+				.a("title", "La clé primaire des utilisateurs dans la base de données. ")
+				.a("class", "valeur suggereUtilisateurCles w3-input w3-border w3-cell w3-cell-middle ")
+				.a("name", "setUtilisateurCles")
+				.a("id", classeApiMethodeMethode, "_utilisateurCles")
+				.a("autocomplete", "off");
+				a("oninput", "suggereInscriptionScolaireUtilisateurCles($(this).val() ? rechercherUtilisateurSiteFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'inscriptionCles:" + pk + "'}", "], $('#listInscriptionScolaireUtilisateurCles_", classeApiMethodeMethode, "'), ", pk, "); ");
 
 				fg();
 
@@ -2316,14 +2394,16 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 										CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), UtilisateurSite.ROLES)
 										|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), UtilisateurSite.ROLES)
 										) {
-									{ e("div").a("class", "w3-cell-row ").f();
-										e("button")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-gray ")
-											.a("id", classeApiMethodeMethode, "_utilisateurCles_ajouter")
-											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Envoi…'; postUtilisateurSiteVals({ inscriptionCles: [ \"", pk, "\" ] }, function() {}, function() { ajouterErreur($('#", classeApiMethodeMethode, "utilisateurCles')); });")
-											.f().sx("ajouter un utilisateur du site")
-										.g("button");
-									} g("div");
+									if("Page".equals(classeApiMethodeMethode)) {
+										{ e("div").a("class", "w3-cell-row ").f();
+											e("button")
+												.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-gray ")
+												.a("id", classeApiMethodeMethode, "_utilisateurCles_ajouter")
+												.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Envoi…'; postUtilisateurSiteVals({ inscriptionCles: [ \"", pk, "\" ] }, function() {}, function() { ajouterErreur($('#", classeApiMethodeMethode, "utilisateurCles')); });")
+												.f().sx("ajouter un utilisateur du site")
+											.g("button");
+										} g("div");
+									}
 								}
 							} g("div");
 						} g("div");

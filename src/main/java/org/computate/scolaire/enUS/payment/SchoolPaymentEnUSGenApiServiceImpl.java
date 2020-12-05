@@ -1174,7 +1174,10 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 			jsonObject.put("saves", Optional.ofNullable(jsonObject.getJsonArray("saves")).orElse(new JsonArray()));
 			JsonObject jsonPatch = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonObject("patch")).orElse(new JsonObject());
 			jsonPatch.stream().forEach(o -> {
-				jsonObject.put(o.getKey(), o.getValue());
+				if(o.getValue() == null)
+					jsonObject.remove(o.getKey());
+				else
+					jsonObject.put(o.getKey(), o.getValue());
 				jsonObject.getJsonArray("saves").add(o.getKey());
 			});
 

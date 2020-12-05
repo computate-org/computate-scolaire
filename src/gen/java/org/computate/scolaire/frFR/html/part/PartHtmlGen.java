@@ -285,16 +285,24 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 				) {
 			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-				e("input")
-					.a("type", "text")
-					.a("placeholder", "designs de page")
-					.a("class", "valeur suggereDesignPageCles w3-input w3-border w3-cell w3-cell-middle ")
-					.a("name", "setDesignPageCles")
-					.a("id", classeApiMethodeMethode, "_designPageCles")
-					.a("autocomplete", "off");
-					if("Page".equals(classeApiMethodeMethode)) {
-						a("oninput", "suggerePartHtmlDesignPageCles($(this).val() ? rechercherDesignPageFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'partHtmlCles:" + pk + "'}", "], $('#listPartHtmlDesignPageCles_", classeApiMethodeMethode, "'), ", pk, "); ");
-					}
+			if("PUTCopie".equals(classeApiMethodeMethode)) {
+				{ e("div").f();
+					e("input")
+						.a("type", "checkbox")
+						.a("id", classeApiMethodeMethode, "_designPageCles_vider")
+						.a("class", "designPageCles_vider ")
+						.fg();
+					e("label").a("for", "classeApiMethodeMethode, \"_designPageCles_vider").f().sx("vider").g("label");
+				} g("div");
+			}
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "designs de page")
+				.a("class", "valeur suggereDesignPageCles w3-input w3-border w3-cell w3-cell-middle ")
+				.a("name", "setDesignPageCles")
+				.a("id", classeApiMethodeMethode, "_designPageCles")
+				.a("autocomplete", "off");
+				a("oninput", "suggerePartHtmlDesignPageCles($(this).val() ? rechercherDesignPageFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'partHtmlCles:" + pk + "'}", "], $('#listPartHtmlDesignPageCles_", classeApiMethodeMethode, "'), ", pk, "); ");
 
 				fg();
 
@@ -341,14 +349,16 @@ public abstract class PartHtmlGen<DEV> extends Cluster {
 										CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), DesignPage.ROLES)
 										|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), DesignPage.ROLES)
 										) {
-									{ e("div").a("class", "w3-cell-row ").f();
-										e("button")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-khaki ")
-											.a("id", classeApiMethodeMethode, "_designPageCles_ajouter")
-											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Envoi…'; postDesignPageVals({ partHtmlCles: [ \"", pk, "\" ] }, function() {}, function() { ajouterErreur($('#", classeApiMethodeMethode, "designPageCles')); });")
-											.f().sx("ajouter un design de page")
-										.g("button");
-									} g("div");
+									if("Page".equals(classeApiMethodeMethode)) {
+										{ e("div").a("class", "w3-cell-row ").f();
+											e("button")
+												.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-khaki ")
+												.a("id", classeApiMethodeMethode, "_designPageCles_ajouter")
+												.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Envoi…'; postDesignPageVals({ partHtmlCles: [ \"", pk, "\" ] }, function() {}, function() { ajouterErreur($('#", classeApiMethodeMethode, "designPageCles')); });")
+												.f().sx("ajouter un design de page")
+											.g("button");
+										} g("div");
+									}
 								}
 							} g("div");
 						} g("div");

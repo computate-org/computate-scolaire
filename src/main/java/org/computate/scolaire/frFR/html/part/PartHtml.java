@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.html.part;           
+package org.computate.scolaire.frFR.html.part;         
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -67,7 +67,7 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * Role.frFR: SiteAdmin
  * Role.enUS: SiteAdmin
  * 
-*/               
+*/                  
 public class PartHtml extends PartHtmlGen<Cluster> {
 
 	/**

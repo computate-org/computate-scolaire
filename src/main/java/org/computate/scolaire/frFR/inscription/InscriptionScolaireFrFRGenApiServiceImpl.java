@@ -354,7 +354,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						}
 						break;
 					case "blocCles":
-						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
+						for(Long l : Optional.ofNullable(jsonObject.getJsonArray(entiteVar)).orElse(new JsonArray()).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							if(l != null) {
 								ListeRecherche<BlocScolaire> listeRecherche = new ListeRecherche<BlocScolaire>();
 								listeRecherche.setQuery("*:*");
@@ -419,7 +419,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						}
 						break;
 					case "mereCles":
-						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
+						for(Long l : Optional.ofNullable(jsonObject.getJsonArray(entiteVar)).orElse(new JsonArray()).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							if(l != null) {
 								ListeRecherche<MereScolaire> listeRecherche = new ListeRecherche<MereScolaire>();
 								listeRecherche.setQuery("*:*");
@@ -451,7 +451,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						}
 						break;
 					case "pereCles":
-						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
+						for(Long l : Optional.ofNullable(jsonObject.getJsonArray(entiteVar)).orElse(new JsonArray()).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							if(l != null) {
 								ListeRecherche<PereScolaire> listeRecherche = new ListeRecherche<PereScolaire>();
 								listeRecherche.setQuery("*:*");
@@ -483,7 +483,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						}
 						break;
 					case "gardienCles":
-						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
+						for(Long l : Optional.ofNullable(jsonObject.getJsonArray(entiteVar)).orElse(new JsonArray()).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							if(l != null) {
 								ListeRecherche<GardienScolaire> listeRecherche = new ListeRecherche<GardienScolaire>();
 								listeRecherche.setQuery("*:*");
@@ -515,7 +515,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						}
 						break;
 					case "paiementCles":
-						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
+						for(Long l : Optional.ofNullable(jsonObject.getJsonArray(entiteVar)).orElse(new JsonArray()).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							if(l != null) {
 								ListeRecherche<PaiementScolaire> listeRecherche = new ListeRecherche<PaiementScolaire>();
 								listeRecherche.setQuery("*:*");
@@ -547,7 +547,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						}
 						break;
 					case "utilisateurCles":
-						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
+						for(Long l : Optional.ofNullable(jsonObject.getJsonArray(entiteVar)).orElse(new JsonArray()).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							if(l != null) {
 								ListeRecherche<UtilisateurSite> listeRecherche = new ListeRecherche<UtilisateurSite>();
 								listeRecherche.setQuery("*:*");
@@ -1657,7 +1657,10 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 			jsonObject.put("sauvegardes", Optional.ofNullable(jsonObject.getJsonArray("sauvegardes")).orElse(new JsonArray()));
 			JsonObject jsonPatch = Optional.ofNullable(requeteSite.getObjetJson()).map(o -> o.getJsonObject("patch")).orElse(new JsonObject());
 			jsonPatch.stream().forEach(o -> {
-				jsonObject.put(o.getKey(), o.getValue());
+				if(o.getValue() == null)
+					jsonObject.remove(o.getKey());
+				else
+					jsonObject.put(o.getKey(), o.getValue());
 				jsonObject.getJsonArray("sauvegardes").add(o.getKey());
 			});
 
@@ -1785,7 +1788,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						}
 						break;
 					case "blocCles":
-						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
+						for(Long l : Optional.ofNullable(jsonObject.getJsonArray(entiteVar)).orElse(new JsonArray()).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							futures.add(Future.future(a -> {
 								tx.preparedQuery(SiteContexteFrFR.SQL_addA
 										, Tuple.of(pk, "blocCles", l, "inscriptionCles")
@@ -1820,7 +1823,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						}
 						break;
 					case "mereCles":
-						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
+						for(Long l : Optional.ofNullable(jsonObject.getJsonArray(entiteVar)).orElse(new JsonArray()).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							futures.add(Future.future(a -> {
 								tx.preparedQuery(SiteContexteFrFR.SQL_addA
 										, Tuple.of(l, "inscriptionCles", pk, "mereCles")
@@ -1839,7 +1842,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						}
 						break;
 					case "pereCles":
-						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
+						for(Long l : Optional.ofNullable(jsonObject.getJsonArray(entiteVar)).orElse(new JsonArray()).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							futures.add(Future.future(a -> {
 								tx.preparedQuery(SiteContexteFrFR.SQL_addA
 										, Tuple.of(l, "inscriptionCles", pk, "pereCles")
@@ -1858,7 +1861,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						}
 						break;
 					case "gardienCles":
-						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
+						for(Long l : Optional.ofNullable(jsonObject.getJsonArray(entiteVar)).orElse(new JsonArray()).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							futures.add(Future.future(a -> {
 								tx.preparedQuery(SiteContexteFrFR.SQL_addA
 										, Tuple.of(pk, "gardienCles", l, "inscriptionCles")
@@ -1877,7 +1880,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						}
 						break;
 					case "paiementCles":
-						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
+						for(Long l : Optional.ofNullable(jsonObject.getJsonArray(entiteVar)).orElse(new JsonArray()).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							futures.add(Future.future(a -> {
 								tx.preparedQuery(SiteContexteFrFR.SQL_addA
 										, Tuple.of(l, "inscriptionCle", pk, "paiementCles")
@@ -1896,7 +1899,7 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 						}
 						break;
 					case "utilisateurCles":
-						for(Long l : jsonObject.getJsonArray(entiteVar).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
+						for(Long l : Optional.ofNullable(jsonObject.getJsonArray(entiteVar)).orElse(new JsonArray()).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							futures.add(Future.future(a -> {
 								tx.preparedQuery(SiteContexteFrFR.SQL_addA
 										, Tuple.of(l, "inscriptionCles", pk, "utilisateurCles")

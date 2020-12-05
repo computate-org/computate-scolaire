@@ -379,16 +379,24 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 				) {
 			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-				e("input")
-					.a("type", "text")
-					.a("placeholder", "year")
-					.a("class", "valueObjectSuggest suggestYearKey w3-input w3-border w3-cell w3-cell-middle ")
-					.a("name", "setYearKey")
-					.a("id", classApiMethodMethod, "_yearKey")
-					.a("autocomplete", "off");
-					if("Page".equals(classApiMethodMethod)) {
-						a("oninput", "suggestSchoolSeasonYearKey($(this).val() ? searchSchoolYearFilters($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'seasonKeys:" + pk + "'}", "], $('#listSchoolSeasonYearKey_", classApiMethodMethod, "'), ", pk, "); ");
-					}
+			if("PUTCopy".equals(classApiMethodMethod)) {
+				{ e("div").f();
+					e("input")
+						.a("type", "checkbox")
+						.a("id", classApiMethodMethod, "_yearKey_clear")
+						.a("class", "yearKey_clear ")
+						.fg();
+					e("label").a("for", "classApiMethodMethod, \"_yearKey_clear").f().sx("clear").g("label");
+				} g("div");
+			}
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "year")
+				.a("class", "valueObjectSuggest suggestYearKey w3-input w3-border w3-cell w3-cell-middle ")
+				.a("name", "setYearKey")
+				.a("id", classApiMethodMethod, "_yearKey")
+				.a("autocomplete", "off");
+				a("oninput", "suggestSchoolSeasonYearKey($(this).val() ? searchSchoolYearFilters($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'seasonKeys:" + pk + "'}", "], $('#listSchoolSeasonYearKey_", classApiMethodMethod, "'), ", pk, "); ");
 
 				fg();
 
@@ -435,14 +443,16 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 										CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), SchoolYear.ROLES)
 										|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), SchoolYear.ROLES)
 										) {
-									{ e("div").a("class", "w3-cell-row ").f();
-										e("button")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
-											.a("id", classApiMethodMethod, "_yearKey_add")
-											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Sending…'; postSchoolYearVals({ seasonKeys: [ \"", pk, "\" ] }, function() {}, function() { addError($('#", classApiMethodMethod, "yearKey')); });")
-											.f().sx("add a year")
-										.g("button");
-									} g("div");
+									if("Page".equals(classApiMethodMethod)) {
+										{ e("div").a("class", "w3-cell-row ").f();
+											e("button")
+												.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
+												.a("id", classApiMethodMethod, "_yearKey_add")
+												.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Sending…'; postSchoolYearVals({ seasonKeys: [ \"", pk, "\" ] }, function() {}, function() { addError($('#", classApiMethodMethod, "yearKey')); });")
+												.f().sx("add a year")
+											.g("button");
+										} g("div");
+									}
 								}
 							} g("div");
 						} g("div");
@@ -572,16 +582,24 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 				) {
 			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-				e("input")
-					.a("type", "text")
-					.a("placeholder", "sessions")
-					.a("class", "valueObjectSuggest suggestSessionKeys w3-input w3-border w3-cell w3-cell-middle ")
-					.a("name", "setSessionKeys")
-					.a("id", classApiMethodMethod, "_sessionKeys")
-					.a("autocomplete", "off");
-					if("Page".equals(classApiMethodMethod)) {
-						a("oninput", "suggestSchoolSeasonSessionKeys($(this).val() ? searchSchoolSessionFilters($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'seasonKey:" + pk + "'}", "], $('#listSchoolSeasonSessionKeys_", classApiMethodMethod, "'), ", pk, "); ");
-					}
+			if("PUTCopy".equals(classApiMethodMethod)) {
+				{ e("div").f();
+					e("input")
+						.a("type", "checkbox")
+						.a("id", classApiMethodMethod, "_sessionKeys_clear")
+						.a("class", "sessionKeys_clear ")
+						.fg();
+					e("label").a("for", "classApiMethodMethod, \"_sessionKeys_clear").f().sx("clear").g("label");
+				} g("div");
+			}
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "sessions")
+				.a("class", "valueObjectSuggest suggestSessionKeys w3-input w3-border w3-cell w3-cell-middle ")
+				.a("name", "setSessionKeys")
+				.a("id", classApiMethodMethod, "_sessionKeys")
+				.a("autocomplete", "off");
+				a("oninput", "suggestSchoolSeasonSessionKeys($(this).val() ? searchSchoolSessionFilters($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'seasonKey:" + pk + "'}", "], $('#listSchoolSeasonSessionKeys_", classApiMethodMethod, "'), ", pk, "); ");
 
 				fg();
 
@@ -628,14 +646,16 @@ public abstract class SchoolSeasonGen<DEV> extends Cluster {
 										CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), SchoolSession.ROLES)
 										|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), SchoolSession.ROLES)
 										) {
-									{ e("div").a("class", "w3-cell-row ").f();
-										e("button")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
-											.a("id", classApiMethodMethod, "_sessionKeys_add")
-											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Sending…'; postSchoolSessionVals({ seasonKey: \"", pk, "\" }, function() {}, function() { addError($('#", classApiMethodMethod, "sessionKeys')); });")
-											.f().sx("add a session")
-										.g("button");
-									} g("div");
+									if("Page".equals(classApiMethodMethod)) {
+										{ e("div").a("class", "w3-cell-row ").f();
+											e("button")
+												.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-green ")
+												.a("id", classApiMethodMethod, "_sessionKeys_add")
+												.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Sending…'; postSchoolSessionVals({ seasonKey: \"", pk, "\" }, function() {}, function() { addError($('#", classApiMethodMethod, "sessionKeys')); });")
+												.f().sx("add a session")
+											.g("button");
+										} g("div");
+									}
 								}
 							} g("div");
 						} g("div");

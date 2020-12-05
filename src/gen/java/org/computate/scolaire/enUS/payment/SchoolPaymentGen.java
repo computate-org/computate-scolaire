@@ -265,16 +265,24 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 				) {
 			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-				e("input")
-					.a("type", "text")
-					.a("placeholder", "enrollment")
-					.a("class", "valueObjectSuggest suggestEnrollmentKey w3-input w3-border w3-cell w3-cell-middle ")
-					.a("name", "setEnrollmentKey")
-					.a("id", classApiMethodMethod, "_enrollmentKey")
-					.a("autocomplete", "off");
-					if("Page".equals(classApiMethodMethod)) {
-						a("oninput", "suggestSchoolPaymentEnrollmentKey($(this).val() ? searchSchoolEnrollmentFilters($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'paymentKeys:" + pk + "'}", "], $('#listSchoolPaymentEnrollmentKey_", classApiMethodMethod, "'), ", pk, "); ");
-					}
+			if("PUTCopy".equals(classApiMethodMethod)) {
+				{ e("div").f();
+					e("input")
+						.a("type", "checkbox")
+						.a("id", classApiMethodMethod, "_enrollmentKey_clear")
+						.a("class", "enrollmentKey_clear ")
+						.fg();
+					e("label").a("for", "classApiMethodMethod, \"_enrollmentKey_clear").f().sx("clear").g("label");
+				} g("div");
+			}
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "enrollment")
+				.a("class", "valueObjectSuggest suggestEnrollmentKey w3-input w3-border w3-cell w3-cell-middle ")
+				.a("name", "setEnrollmentKey")
+				.a("id", classApiMethodMethod, "_enrollmentKey")
+				.a("autocomplete", "off");
+				a("oninput", "suggestSchoolPaymentEnrollmentKey($(this).val() ? searchSchoolEnrollmentFilters($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'paymentKeys:" + pk + "'}", "], $('#listSchoolPaymentEnrollmentKey_", classApiMethodMethod, "'), ", pk, "); ");
 
 				fg();
 
@@ -320,14 +328,16 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listSchoolPaymentEnrollmentKey_", classApiMethodMethod).f();
 								} g("ul");
 								{
-									{ e("div").a("class", "w3-cell-row ").f();
-										e("button")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ")
-											.a("id", classApiMethodMethod, "_enrollmentKey_add")
-											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Sending…'; postSchoolEnrollmentVals({ paymentKeys: [ \"", pk, "\" ] }, function() {}, function() { addError($('#", classApiMethodMethod, "enrollmentKey')); });")
-											.f().sx("add an enrollment")
-										.g("button");
-									} g("div");
+									if("Page".equals(classApiMethodMethod)) {
+										{ e("div").a("class", "w3-cell-row ").f();
+											e("button")
+												.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ")
+												.a("id", classApiMethodMethod, "_enrollmentKey_add")
+												.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Sending…'; postSchoolEnrollmentVals({ paymentKeys: [ \"", pk, "\" ] }, function() {}, function() { addError($('#", classApiMethodMethod, "enrollmentKey')); });")
+												.f().sx("add an enrollment")
+											.g("button");
+										} g("div");
+									}
 								}
 							} g("div");
 						} g("div");

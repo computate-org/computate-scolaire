@@ -397,16 +397,24 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 				) {
 			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-				e("input")
-					.a("type", "text")
-					.a("placeholder", "parent designs")
-					.a("class", "valueObjectSuggest suggestParentDesignKeys w3-input w3-border w3-cell w3-cell-middle ")
-					.a("name", "setParentDesignKeys")
-					.a("id", classApiMethodMethod, "_parentDesignKeys")
-					.a("autocomplete", "off");
-					if("Page".equals(classApiMethodMethod)) {
-						a("oninput", "suggestPageDesignParentDesignKeys($(this).val() ? searchPageDesignFilters($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'childDesignKeys:" + pk + "'}", "], $('#listPageDesignParentDesignKeys_", classApiMethodMethod, "'), ", pk, "); ");
-					}
+			if("PUTCopy".equals(classApiMethodMethod)) {
+				{ e("div").f();
+					e("input")
+						.a("type", "checkbox")
+						.a("id", classApiMethodMethod, "_parentDesignKeys_clear")
+						.a("class", "parentDesignKeys_clear ")
+						.fg();
+					e("label").a("for", "classApiMethodMethod, \"_parentDesignKeys_clear").f().sx("clear").g("label");
+				} g("div");
+			}
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "parent designs")
+				.a("class", "valueObjectSuggest suggestParentDesignKeys w3-input w3-border w3-cell w3-cell-middle ")
+				.a("name", "setParentDesignKeys")
+				.a("id", classApiMethodMethod, "_parentDesignKeys")
+				.a("autocomplete", "off");
+				a("oninput", "suggestPageDesignParentDesignKeys($(this).val() ? searchPageDesignFilters($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'childDesignKeys:" + pk + "'}", "], $('#listPageDesignParentDesignKeys_", classApiMethodMethod, "'), ", pk, "); ");
 
 				fg();
 
@@ -448,14 +456,16 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 										CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), PageDesign.ROLES)
 										|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), PageDesign.ROLES)
 										) {
-									{ e("div").a("class", "w3-cell-row ").f();
-										e("button")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-khaki ")
-											.a("id", classApiMethodMethod, "_parentDesignKeys_add")
-											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Sending…'; postPageDesignVals({ childDesignKeys: [ \"", pk, "\" ] }, function() {}, function() { addError($('#", classApiMethodMethod, "parentDesignKeys')); });")
-											.f().sx("add a page design")
-										.g("button");
-									} g("div");
+									if("Page".equals(classApiMethodMethod)) {
+										{ e("div").a("class", "w3-cell-row ").f();
+											e("button")
+												.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-khaki ")
+												.a("id", classApiMethodMethod, "_parentDesignKeys_add")
+												.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Sending…'; postPageDesignVals({ childDesignKeys: [ \"", pk, "\" ] }, function() {}, function() { addError($('#", classApiMethodMethod, "parentDesignKeys')); });")
+												.f().sx("add a page design")
+											.g("button");
+										} g("div");
+									}
 								}
 							} g("div");
 						} g("div");
@@ -585,16 +595,24 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 				) {
 			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-				e("input")
-					.a("type", "text")
-					.a("placeholder", "parts")
-					.a("class", "valueObjectSuggest suggestHtmlPartKeys w3-input w3-border w3-cell w3-cell-middle ")
-					.a("name", "setHtmlPartKeys")
-					.a("id", classApiMethodMethod, "_htmlPartKeys")
-					.a("autocomplete", "off");
-					if("Page".equals(classApiMethodMethod)) {
-						a("oninput", "suggestPageDesignHtmlPartKeys($(this).val() ? searchHtmlPartFilters($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'pageDesignKeys:" + pk + "'}", "], $('#listPageDesignHtmlPartKeys_", classApiMethodMethod, "'), ", pk, "); ");
-					}
+			if("PUTCopy".equals(classApiMethodMethod)) {
+				{ e("div").f();
+					e("input")
+						.a("type", "checkbox")
+						.a("id", classApiMethodMethod, "_htmlPartKeys_clear")
+						.a("class", "htmlPartKeys_clear ")
+						.fg();
+					e("label").a("for", "classApiMethodMethod, \"_htmlPartKeys_clear").f().sx("clear").g("label");
+				} g("div");
+			}
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "parts")
+				.a("class", "valueObjectSuggest suggestHtmlPartKeys w3-input w3-border w3-cell w3-cell-middle ")
+				.a("name", "setHtmlPartKeys")
+				.a("id", classApiMethodMethod, "_htmlPartKeys")
+				.a("autocomplete", "off");
+				a("oninput", "suggestPageDesignHtmlPartKeys($(this).val() ? searchHtmlPartFilters($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'pageDesignKeys:" + pk + "'}", "], $('#listPageDesignHtmlPartKeys_", classApiMethodMethod, "'), ", pk, "); ");
 
 				fg();
 
@@ -636,14 +654,16 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 										CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), HtmlPart.ROLES)
 										|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), HtmlPart.ROLES)
 										) {
-									{ e("div").a("class", "w3-cell-row ").f();
-										e("button")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-khaki ")
-											.a("id", classApiMethodMethod, "_htmlPartKeys_add")
-											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Sending…'; postHtmlPartVals({ pageDesignKeys: [ \"", pk, "\" ] }, function() {}, function() { addError($('#", classApiMethodMethod, "htmlPartKeys')); });")
-											.f().sx("add an HTML part")
-										.g("button");
-									} g("div");
+									if("Page".equals(classApiMethodMethod)) {
+										{ e("div").a("class", "w3-cell-row ").f();
+											e("button")
+												.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-khaki ")
+												.a("id", classApiMethodMethod, "_htmlPartKeys_add")
+												.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Sending…'; postHtmlPartVals({ pageDesignKeys: [ \"", pk, "\" ] }, function() {}, function() { addError($('#", classApiMethodMethod, "htmlPartKeys')); });")
+												.f().sx("add an HTML part")
+											.g("button");
+										} g("div");
+									}
 								}
 							} g("div");
 						} g("div");

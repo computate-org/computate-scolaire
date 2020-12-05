@@ -328,7 +328,7 @@ public class WorkerVertx extends WorkerVertxGen<AbstractVerticle> {
 							SchoolPaymentEnUSApiServiceImpl paymentService = new SchoolPaymentEnUSApiServiceImpl(siteContextEnUS);
 							SchoolEnrollmentEnUSApiServiceImpl enrollmentService = new SchoolEnrollmentEnUSApiServiceImpl(siteContextEnUS);
 	
-							ZonedDateTime sessionStartDate = ZonedDateTime.now(zoneId).plusMonths(1);
+							ZonedDateTime sessionStartDate = ZonedDateTime.now(zoneId).plusMonths(1).plusYears(1);
 							// Mar 26 is last late fee. 
 							// Mar 1 + 2 month = May 1 < May 20 last day
 							ZonedDateTime sessionEndDate = ZonedDateTime.now(zoneId).plusMonths(2);

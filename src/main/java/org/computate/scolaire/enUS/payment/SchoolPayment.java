@@ -319,10 +319,12 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 	protected void _chargeAmountDue(Wrap<BigDecimal> c) {
 		if(chargeAmount != null 
 				&& (
-						chargeEnrollment && paymentDate.compareTo(now.plusDays(15)) <= 0 && paymentDate.withDayOfMonth(paymentDay).compareTo(now) >= 0
+						chargeEnrollment
 						|| chargeFirstLast && paymentDate.compareTo(now.plusDays(15)) <= 0 && paymentDate.withDayOfMonth(paymentDay).compareTo(now) >= 0
 						|| paymentDate != null && paymentDate.compareTo(now.plusDays(15)) <= 0 && paymentDate.compareTo(now) >= 0
-				) && (chargeEnrollment || chargeFirstLast || paymentDate.compareTo(paymentNext.minusMonths(1)) > 0) && paymentDate.compareTo(paymentNext) <= 0)
+				) && (chargeEnrollment || chargeFirstLast || paymentDate.compareTo(paymentNext.minusMonths(1)) > 0) 
+				&& (chargeEnrollment || paymentDate.compareTo(paymentNext) <= 0)
+				)
 			c.o(chargeAmount);
 	}
 
@@ -339,6 +341,7 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 	protected void _chargeAmountFuture(Wrap<BigDecimal> c) {
 		if(chargeAmount != null && paymentDate != null 
 				&& !chargeLateFee
+				&& !chargeEnrollment
 				&& paymentDate.compareTo(now.plusDays(15)) > 0)
 //				&& paymentDate.compareTo(paymentNext) > 0)
 			c.o(chargeAmount);
@@ -361,25 +364,30 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 			else if(paymentDate != null)
 				o.append(String.format("%s tuition", fd.format(paymentDate.plusMonths(1))));
 
-			if(childCompleteNamePreferred != null)
-				o.append(String.format(" for %s", childCompleteNamePreferred));
+//			if(childCompleteNamePreferred != null)
+//				o.append(String.format(" for %s", childCompleteNamePreferred));
 		}
-		if(chargeAmount != null && paymentAmount != null) {
-			o.append(" and ");
+		if(chargeAmount != null && paymentAmount != null && chargeAmount.equals(paymentAmount)) {
+			o.append(" paid");
 		}
-		if(paymentAmount != null) {
-			o.append(" ").append(fn.format(paymentAmount));
-			o.append(" payment");
-			if(childCompleteNamePreferred != null)
-				o.append(String.format(" for %s", childCompleteNamePreferred));
-			if(BooleanUtils.isTrue(paymentCheck))
-				o.append(" by check");
-			if(BooleanUtils.isTrue(paymentCash))
-				o.append(" by cash");
-			if(BooleanUtils.isTrue(paymentSystem))
-				o.append(" by authorize.net");
-			if(BooleanUtils.isTrue(paymentECheck))
-				o.append(" by e-check");
+		else {
+			if(chargeAmount != null && paymentAmount != null) {
+				o.append(" and ");
+			}
+			if(paymentAmount != null) {
+				o.append(" ").append(fn.format(paymentAmount));
+				o.append(" payment");
+//				if(childCompleteNamePreferred != null)
+//					o.append(String.format(" for %s", childCompleteNamePreferred));
+				if(BooleanUtils.isTrue(paymentCheck))
+					o.append(" by check");
+				if(BooleanUtils.isTrue(paymentCash))
+					o.append(" by cash");
+				if(BooleanUtils.isTrue(paymentSystem))
+					o.append(" by authorize.net");
+				if(BooleanUtils.isTrue(paymentECheck))
+					o.append(" by e-check");
+			}
 		}
 		if(!StringUtils.isEmpty(paymentDescription))
 			o.append(" ").append(paymentDescription);
@@ -410,22 +418,27 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 			if(childCompleteNamePreferred != null)
 				o.append(String.format(" for %s", childCompleteNamePreferred));
 		}
-		if(chargeAmount != null && paymentAmount != null) {
-			o.append(" and ");
+		if(chargeAmount != null && paymentAmount != null && chargeAmount.equals(paymentAmount)) {
+			o.append(" payé");
 		}
-		if(paymentAmount != null) {
-			o.append(" ").append(fn.format(paymentAmount));
-			o.append(" payment");
-			if(childCompleteNamePreferred != null)
-				o.append(String.format(" for %s", childCompleteNamePreferred));
-			if(BooleanUtils.isTrue(paymentCheck))
-				o.append(" by check");
-			if(BooleanUtils.isTrue(paymentCash))
-				o.append(" by cash");
-			if(BooleanUtils.isTrue(paymentSystem))
-				o.append(" by authorize.net");
-			if(BooleanUtils.isTrue(paymentECheck))
-				o.append(" by e-check");
+		else {
+			if(chargeAmount != null && paymentAmount != null) {
+				o.append(" and ");
+			}
+			if(paymentAmount != null) {
+				o.append(" ").append(fn.format(paymentAmount));
+				o.append(" payment");
+				if(childCompleteNamePreferred != null)
+					o.append(String.format(" for %s", childCompleteNamePreferred));
+				if(BooleanUtils.isTrue(paymentCheck))
+					o.append(" by check");
+				if(BooleanUtils.isTrue(paymentCash))
+					o.append(" by cash");
+				if(BooleanUtils.isTrue(paymentSystem))
+					o.append(" by authorize.net");
+				if(BooleanUtils.isTrue(paymentECheck))
+					o.append(" by e-check");
+			}
 		}
 		if(!StringUtils.isEmpty(paymentDescription))
 			o.append(" ").append(paymentDescription);
@@ -457,22 +470,27 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 			if(childCompleteNamePreferred != null)
 				o.append(String.format(" for %s", childCompleteNamePreferred));
 		}
-		if(chargeAmount != null && paymentAmount != null) {
-			o.append(" and ");
+		if(chargeAmount != null && paymentAmount != null && chargeAmount.equals(paymentAmount)) {
+			o.append(" payé");
 		}
-		if(paymentAmount != null) {
-			o.append(" ").append(fn.format(paymentAmount));
-			o.append(" payment");
-			if(childCompleteNamePreferred != null)
-				o.append(String.format(" for %s", childCompleteNamePreferred));
-			if(BooleanUtils.isTrue(paymentCheck))
-				o.append(" by check");
-			if(BooleanUtils.isTrue(paymentCash))
-				o.append(" by cash");
-			if(BooleanUtils.isTrue(paymentSystem))
-				o.append(" by authorize.net");
-			if(BooleanUtils.isTrue(paymentECheck))
-				o.append(" by e-check");
+		else {
+			if(chargeAmount != null && paymentAmount != null) {
+				o.append(" and ");
+			}
+			if(paymentAmount != null) {
+				o.append(" ").append(fn.format(paymentAmount));
+				o.append(" payment");
+				if(childCompleteNamePreferred != null)
+					o.append(String.format(" for %s", childCompleteNamePreferred));
+				if(BooleanUtils.isTrue(paymentCheck))
+					o.append(" by check");
+				if(BooleanUtils.isTrue(paymentCash))
+					o.append(" by cash");
+				if(BooleanUtils.isTrue(paymentSystem))
+					o.append(" by authorize.net");
+				if(BooleanUtils.isTrue(paymentECheck))
+					o.append(" by e-check");
+			}
 		}
 		if(!StringUtils.isEmpty(paymentDescription))
 			o.append(" ").append(paymentDescription);

@@ -1194,10 +1194,12 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	protected void _fraisMontantDu(Couverture<BigDecimal> c) {
 		if(fraisMontant != null 
 				&& (
-						fraisInscription && paiementDate.compareTo(now.plusDays(15)) <= 0 && paiementDate.withDayOfMonth(paiementJour).compareTo(now) >= 0
+						fraisInscription
 						|| fraisPremierDernier && paiementDate.compareTo(now.plusDays(15)) <= 0 && paiementDate.withDayOfMonth(paiementJour).compareTo(now) >= 0
 						|| paiementDate != null && paiementDate.compareTo(now.plusDays(15)) <= 0 && paiementDate.compareTo(now) >= 0
-				) && (fraisInscription || fraisPremierDernier || paiementDate.compareTo(paiementProchain.minusMonths(1)) > 0) && paiementDate.compareTo(paiementProchain) <= 0)
+				) && (fraisInscription || fraisPremierDernier || paiementDate.compareTo(paiementProchain.minusMonths(1)) > 0) 
+				&& (fraisInscription || paiementDate.compareTo(paiementProchain) <= 0)
+				)
 			c.o(fraisMontant);
 	}
 
@@ -1322,6 +1324,7 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	protected void _fraisMontantFuture(Couverture<BigDecimal> c) {
 		if(fraisMontant != null && paiementDate != null 
 				&& !fraisRetard
+				&& !fraisInscription
 				&& paiementDate.compareTo(now.plusDays(15)) > 0)
 //				&& paiementDate.compareTo(paiementProchain) > 0)
 			c.o(fraisMontant);
@@ -1398,7 +1401,9 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * r.enUS: "new"
 	 * r: " et "
 	 * r.enUS: " and "
-	 */  
+	 * r: " payé"
+	 * r.enUS: " paid"
+	 */ 
 	protected void _paiementNomCourt(Couverture<String> c) {
 		NumberFormat fn = NumberFormat.getCurrencyInstance(Locale.FRANCE);
 		DateTimeFormatter fd = DateTimeFormatter.ofPattern("MMMM", Locale.FRANCE);
@@ -1416,25 +1421,30 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 			else if(paiementDate != null)
 				o.append(String.format("Frais de %s", fd.format(paiementDate.plusMonths(1))));
 
-			if(enfantNomCompletPrefere != null)
-				o.append(String.format(" pour %s", enfantNomCompletPrefere));
+//			if(enfantNomCompletPrefere != null)
+//				o.append(String.format(" pour %s", enfantNomCompletPrefere));
 		}
-		if(fraisMontant != null && paiementMontant != null) {
-			o.append(" et ");
+		if(fraisMontant != null && paiementMontant != null && fraisMontant.equals(paiementMontant)) {
+			o.append(" payé");
 		}
-		if(paiementMontant != null) {
-			o.append(" ").append(fn.format(paiementMontant));
-			o.append(" paiement");
-			if(enfantNomCompletPrefere != null)
-				o.append(String.format(" pour %s", enfantNomCompletPrefere));
-			if(BooleanUtils.isTrue(paiementCheque))
-				o.append(" by check");
-			if(BooleanUtils.isTrue(paiementEspeces))
-				o.append(" by cash");
-			if(BooleanUtils.isTrue(paiementSysteme))
-				o.append(" by authorize.net");
-			if(BooleanUtils.isTrue(paiementECheck))
-				o.append(" by e-check");
+		else {
+			if(fraisMontant != null && paiementMontant != null) {
+				o.append(" et ");
+			}
+			if(paiementMontant != null) {
+				o.append(" ").append(fn.format(paiementMontant));
+				o.append(" paiement");
+//				if(enfantNomCompletPrefere != null)
+//					o.append(String.format(" pour %s", enfantNomCompletPrefere));
+				if(BooleanUtils.isTrue(paiementCheque))
+					o.append(" by check");
+				if(BooleanUtils.isTrue(paiementEspeces))
+					o.append(" by cash");
+				if(BooleanUtils.isTrue(paiementSysteme))
+					o.append(" by authorize.net");
+				if(BooleanUtils.isTrue(paiementECheck))
+					o.append(" by e-check");
+			}
 		}
 		if(!StringUtils.isEmpty(paiementDescription))
 			o.append(" ").append(paiementDescription);
@@ -1537,22 +1547,27 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 			if(enfantNomCompletPrefere != null)
 				o.append(String.format(" pour %s", enfantNomCompletPrefere));
 		}
-		if(fraisMontant != null && paiementMontant != null) {
-			o.append(" et ");
+		if(fraisMontant != null && paiementMontant != null && fraisMontant.equals(paiementMontant)) {
+			o.append(" payé");
 		}
-		if(paiementMontant != null) {
-			o.append(" ").append(fn.format(paiementMontant));
-			o.append(" paiement");
-			if(enfantNomCompletPrefere != null)
-				o.append(String.format(" pour %s", enfantNomCompletPrefere));
-			if(BooleanUtils.isTrue(paiementCheque))
-				o.append(" by check");
-			if(BooleanUtils.isTrue(paiementEspeces))
-				o.append(" by cash");
-			if(BooleanUtils.isTrue(paiementSysteme))
-				o.append(" by authorize.net");
-			if(BooleanUtils.isTrue(paiementECheck))
-				o.append(" by e-check");
+		else {
+			if(fraisMontant != null && paiementMontant != null) {
+				o.append(" et ");
+			}
+			if(paiementMontant != null) {
+				o.append(" ").append(fn.format(paiementMontant));
+				o.append(" paiement");
+				if(enfantNomCompletPrefere != null)
+					o.append(String.format(" pour %s", enfantNomCompletPrefere));
+				if(BooleanUtils.isTrue(paiementCheque))
+					o.append(" by check");
+				if(BooleanUtils.isTrue(paiementEspeces))
+					o.append(" by cash");
+				if(BooleanUtils.isTrue(paiementSysteme))
+					o.append(" by authorize.net");
+				if(BooleanUtils.isTrue(paiementECheck))
+					o.append(" by e-check");
+			}
 		}
 		if(!StringUtils.isEmpty(paiementDescription))
 			o.append(" ").append(paiementDescription);
@@ -1652,22 +1667,27 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 			if(enfantNomCompletPrefere != null)
 				o.append(String.format(" pour %s", enfantNomCompletPrefere));
 		}
-		if(fraisMontant != null && paiementMontant != null) {
-			o.append(" et ");
+		if(fraisMontant != null && paiementMontant != null && fraisMontant.equals(paiementMontant)) {
+			o.append(" payé");
 		}
-		if(paiementMontant != null) {
-			o.append(" ").append(fn.format(paiementMontant));
-			o.append(" paiement");
-			if(enfantNomCompletPrefere != null)
-				o.append(String.format(" pour %s", enfantNomCompletPrefere));
-			if(BooleanUtils.isTrue(paiementCheque))
-				o.append(" by check");
-			if(BooleanUtils.isTrue(paiementEspeces))
-				o.append(" by cash");
-			if(BooleanUtils.isTrue(paiementSysteme))
-				o.append(" by authorize.net");
-			if(BooleanUtils.isTrue(paiementECheck))
-				o.append(" by e-check");
+		else {
+			if(fraisMontant != null && paiementMontant != null) {
+				o.append(" et ");
+			}
+			if(paiementMontant != null) {
+				o.append(" ").append(fn.format(paiementMontant));
+				o.append(" paiement");
+				if(enfantNomCompletPrefere != null)
+					o.append(String.format(" pour %s", enfantNomCompletPrefere));
+				if(BooleanUtils.isTrue(paiementCheque))
+					o.append(" by check");
+				if(BooleanUtils.isTrue(paiementEspeces))
+					o.append(" by cash");
+				if(BooleanUtils.isTrue(paiementSysteme))
+					o.append(" by authorize.net");
+				if(BooleanUtils.isTrue(paiementECheck))
+					o.append(" by e-check");
+			}
 		}
 		if(!StringUtils.isEmpty(paiementDescription))
 			o.append(" ").append(paiementDescription);

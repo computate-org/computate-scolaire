@@ -266,17 +266,25 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 				) {
 			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-				e("input")
-					.a("type", "text")
-					.a("placeholder", "inscription")
-					.a("title", "La clé primaire des enfants dans la base de données. ")
-					.a("class", "valeur suggereInscriptionCle w3-input w3-border w3-cell w3-cell-middle ")
-					.a("name", "setInscriptionCle")
-					.a("id", classeApiMethodeMethode, "_inscriptionCle")
-					.a("autocomplete", "off");
-					if("Page".equals(classeApiMethodeMethode)) {
-						a("oninput", "suggerePaiementScolaireInscriptionCle($(this).val() ? rechercherInscriptionScolaireFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'paiementCles:" + pk + "'}", "], $('#listPaiementScolaireInscriptionCle_", classeApiMethodeMethode, "'), ", pk, "); ");
-					}
+			if("PUTCopie".equals(classeApiMethodeMethode)) {
+				{ e("div").f();
+					e("input")
+						.a("type", "checkbox")
+						.a("id", classeApiMethodeMethode, "_inscriptionCle_vider")
+						.a("class", "inscriptionCle_vider ")
+						.fg();
+					e("label").a("for", "classeApiMethodeMethode, \"_inscriptionCle_vider").f().sx("vider").g("label");
+				} g("div");
+			}
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "inscription")
+				.a("title", "La clé primaire des enfants dans la base de données. ")
+				.a("class", "valeur suggereInscriptionCle w3-input w3-border w3-cell w3-cell-middle ")
+				.a("name", "setInscriptionCle")
+				.a("id", classeApiMethodeMethode, "_inscriptionCle")
+				.a("autocomplete", "off");
+				a("oninput", "suggerePaiementScolaireInscriptionCle($(this).val() ? rechercherInscriptionScolaireFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'paiementCles:" + pk + "'}", "], $('#listPaiementScolaireInscriptionCle_", classeApiMethodeMethode, "'), ", pk, "); ");
 
 				fg();
 
@@ -322,14 +330,16 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 								{ e("ul").a("class", "w3-ul w3-hoverable ").a("id", "listPaiementScolaireInscriptionCle_", classeApiMethodeMethode).f();
 								} g("ul");
 								{
-									{ e("div").a("class", "w3-cell-row ").f();
-										e("button")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ")
-											.a("id", classeApiMethodeMethode, "_inscriptionCle_ajouter")
-											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Envoi…'; postInscriptionScolaireVals({ paiementCles: [ \"", pk, "\" ] }, function() {}, function() { ajouterErreur($('#", classeApiMethodeMethode, "inscriptionCle')); });")
-											.f().sx("ajouter une inscription")
-										.g("button");
-									} g("div");
+									if("Page".equals(classeApiMethodeMethode)) {
+										{ e("div").a("class", "w3-cell-row ").f();
+											e("button")
+												.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ")
+												.a("id", classeApiMethodeMethode, "_inscriptionCle_ajouter")
+												.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Envoi…'; postInscriptionScolaireVals({ paiementCles: [ \"", pk, "\" ] }, function() {}, function() { ajouterErreur($('#", classeApiMethodeMethode, "inscriptionCle')); });")
+												.f().sx("ajouter une inscription")
+											.g("button");
+										} g("div");
+									}
 								}
 							} g("div");
 						} g("div");

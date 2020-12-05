@@ -284,17 +284,25 @@ public abstract class EcoleGen<DEV> extends Cluster {
 				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 				) {
 			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-				e("input")
-					.a("type", "text")
-					.a("placeholder", "années")
-					.a("title", "Description.enUS: ")
-					.a("class", "valeur suggereAnneeCles w3-input w3-border w3-cell w3-cell-middle ")
-					.a("name", "setAnneeCles")
-					.a("id", classeApiMethodeMethode, "_anneeCles")
-					.a("autocomplete", "off");
-					if("Page".equals(classeApiMethodeMethode)) {
-						a("oninput", "suggereEcoleAnneeCles($(this).val() ? rechercherAnneeScolaireFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'ecoleCle:" + pk + "'}", "], $('#listEcoleAnneeCles_", classeApiMethodeMethode, "'), ", pk, "); ");
-					}
+			if("PUTCopie".equals(classeApiMethodeMethode)) {
+				{ e("div").f();
+					e("input")
+						.a("type", "checkbox")
+						.a("id", classeApiMethodeMethode, "_anneeCles_vider")
+						.a("class", "anneeCles_vider ")
+						.fg();
+					e("label").a("for", "classeApiMethodeMethode, \"_anneeCles_vider").f().sx("vider").g("label");
+				} g("div");
+			}
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "années")
+				.a("title", "Description.enUS: ")
+				.a("class", "valeur suggereAnneeCles w3-input w3-border w3-cell w3-cell-middle ")
+				.a("name", "setAnneeCles")
+				.a("id", classeApiMethodeMethode, "_anneeCles")
+				.a("autocomplete", "off");
+				a("oninput", "suggereEcoleAnneeCles($(this).val() ? rechercherAnneeScolaireFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'ecoleCle:" + pk + "'}", "], $('#listEcoleAnneeCles_", classeApiMethodeMethode, "'), ", pk, "); ");
 
 				fg();
 
@@ -341,14 +349,16 @@ public abstract class EcoleGen<DEV> extends Cluster {
 										CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), AnneeScolaire.ROLES)
 										|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), AnneeScolaire.ROLES)
 										) {
-									{ e("div").a("class", "w3-cell-row ").f();
-										e("button")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
-											.a("id", classeApiMethodeMethode, "_anneeCles_ajouter")
-											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Envoi…'; postAnneeScolaireVals({ ecoleCle: \"", pk, "\" }, function() {}, function() { ajouterErreur($('#", classeApiMethodeMethode, "anneeCles')); });")
-											.f().sx("ajouter une année")
-										.g("button");
-									} g("div");
+									if("Page".equals(classeApiMethodeMethode)) {
+										{ e("div").a("class", "w3-cell-row ").f();
+											e("button")
+												.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-orange ")
+												.a("id", classeApiMethodeMethode, "_anneeCles_ajouter")
+												.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Envoi…'; postAnneeScolaireVals({ ecoleCle: \"", pk, "\" }, function() {}, function() { ajouterErreur($('#", classeApiMethodeMethode, "anneeCles')); });")
+												.f().sx("ajouter une année")
+											.g("button");
+										} g("div");
+									}
 								}
 							} g("div");
 						} g("div");
@@ -478,17 +488,25 @@ public abstract class EcoleGen<DEV> extends Cluster {
 				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 				) {
 			e("i").a("class", "far fa-search w3-xxlarge w3-cell w3-cell-middle ").f().g("i");
-				e("input")
-					.a("type", "text")
-					.a("placeholder", "reçus")
-					.a("title", "Description.enUS: ")
-					.a("class", "valeur suggereRecuCles w3-input w3-border w3-cell w3-cell-middle ")
-					.a("name", "setRecuCles")
-					.a("id", classeApiMethodeMethode, "_recuCles")
-					.a("autocomplete", "off");
-					if("Page".equals(classeApiMethodeMethode)) {
-						a("oninput", "suggereEcoleRecuCles($(this).val() ? rechercherRecuScolaireFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'ecoleCle:" + pk + "'}", "], $('#listEcoleRecuCles_", classeApiMethodeMethode, "'), ", pk, "); ");
-					}
+			if("PUTCopie".equals(classeApiMethodeMethode)) {
+				{ e("div").f();
+					e("input")
+						.a("type", "checkbox")
+						.a("id", classeApiMethodeMethode, "_recuCles_vider")
+						.a("class", "recuCles_vider ")
+						.fg();
+					e("label").a("for", "classeApiMethodeMethode, \"_recuCles_vider").f().sx("vider").g("label");
+				} g("div");
+			}
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "reçus")
+				.a("title", "Description.enUS: ")
+				.a("class", "valeur suggereRecuCles w3-input w3-border w3-cell w3-cell-middle ")
+				.a("name", "setRecuCles")
+				.a("id", classeApiMethodeMethode, "_recuCles")
+				.a("autocomplete", "off");
+				a("oninput", "suggereEcoleRecuCles($(this).val() ? rechercherRecuScolaireFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'ecoleCle:" + pk + "'}", "], $('#listEcoleRecuCles_", classeApiMethodeMethode, "'), ", pk, "); ");
 
 				fg();
 
@@ -535,14 +553,16 @@ public abstract class EcoleGen<DEV> extends Cluster {
 										CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), RecuScolaire.ROLES)
 										|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), RecuScolaire.ROLES)
 										) {
-									{ e("div").a("class", "w3-cell-row ").f();
-										e("button")
-											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-light-green ")
-											.a("id", classeApiMethodeMethode, "_recuCles_ajouter")
-											.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Envoi…'; postRecuScolaireVals({ ecoleCle: \"", pk, "\" }, function() {}, function() { ajouterErreur($('#", classeApiMethodeMethode, "recuCles')); });")
-											.f().sx("ajouter un reçu")
-										.g("button");
-									} g("div");
+									if("Page".equals(classeApiMethodeMethode)) {
+										{ e("div").a("class", "w3-cell-row ").f();
+											e("button")
+												.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-light-green ")
+												.a("id", classeApiMethodeMethode, "_recuCles_ajouter")
+												.a("onclick", "$(this).addClass('w3-disabled'); this.disabled = true; this.innerHTML = 'Envoi…'; postRecuScolaireVals({ ecoleCle: \"", pk, "\" }, function() {}, function() { ajouterErreur($('#", classeApiMethodeMethode, "recuCles')); });")
+												.f().sx("ajouter un reçu")
+											.g("button");
+										} g("div");
+									}
 								}
 							} g("div");
 						} g("div");
