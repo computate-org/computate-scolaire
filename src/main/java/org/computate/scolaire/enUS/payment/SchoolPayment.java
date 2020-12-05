@@ -415,8 +415,8 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 			else if(chargeAmount != null && paymentDate != null)
 				o.append(" ").append(String.format("%s %s tuition", fn.format(chargeAmount), fd.format(paymentDate.plusMonths(1))));
 
-			if(childCompleteNamePreferred != null)
-				o.append(String.format(" for %s", childCompleteNamePreferred));
+//			if(childCompleteNamePreferred != null)
+//				o.append(String.format(" for %s", childCompleteNamePreferred));
 		}
 		if(chargeAmount != null && paymentAmount != null && chargeAmount.equals(paymentAmount)) {
 			o.append(" paid");
@@ -428,8 +428,8 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 			if(paymentAmount != null) {
 				o.append(" ").append(fn.format(paymentAmount));
 				o.append(" payment");
-				if(childCompleteNamePreferred != null)
-					o.append(String.format(" for %s", childCompleteNamePreferred));
+//				if(childCompleteNamePreferred != null)
+//					o.append(String.format(" for %s", childCompleteNamePreferred));
 				if(BooleanUtils.isTrue(paymentCheck))
 					o.append(" by check");
 				if(BooleanUtils.isTrue(paymentCash))
