@@ -73,7 +73,9 @@ public class SiteUserEnUSApiServiceImpl extends SiteUserEnUSGenApiServiceImpl {
 
 		Boolean defineProfile1 = userSiteUserDefineProfile(1, siteRequest, jsonObject, patch);
 		Boolean defineProfile2 = userSiteUserDefineProfile(2, siteRequest, jsonObject, patch);
-		if(defineProfile1 || defineProfile2) 
+		Boolean defineProfile3 = userSiteUserDefineProfile(3, siteRequest, jsonObject, patch);
+		Boolean defineProfile4 = userSiteUserDefineProfile(4, siteRequest, jsonObject, patch);
+		if(defineProfile1 || defineProfile2 || defineProfile3 || defineProfile4) 
 			return true;
 		else 
 			return enrollmentList.size() > 0;
