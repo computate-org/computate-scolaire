@@ -2907,6 +2907,8 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 												jsonObject.put("setUserCompleteName", jsonPrincipal.getString("name"));
 												jsonObject.put("setCustomerProfileId1", Optional.ofNullable(siteUser1).map(u -> u.getCustomerProfileId1()).orElse(null));
 												jsonObject.put("setCustomerProfileId2", Optional.ofNullable(siteUser1).map(u -> u.getCustomerProfileId2()).orElse(null));
+												jsonObject.put("setCustomerProfileId3", Optional.ofNullable(siteUser1).map(u -> u.getCustomerProfileId3()).orElse(null));
+												jsonObject.put("setCustomerProfileId4", Optional.ofNullable(siteUser1).map(u -> u.getCustomerProfileId4()).orElse(null));
 												jsonObject.put("setUserId", jsonPrincipal.getString("sub"));
 												jsonObject.put("setUserEmail", jsonPrincipal.getString("email"));
 												Boolean define = userSchoolBlockDefine(siteRequest, jsonObject, true);
@@ -3008,11 +3010,19 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 				return true;
 			if(jsonObject.getString("setCustomerProfileId2") == null)
 				return true;
+			if(jsonObject.getString("setCustomerProfileId3") == null)
+				return true;
+			if(jsonObject.getString("setCustomerProfileId4") == null)
+				return true;
 			return false;
 		} else {
 			if(jsonObject.getString("setCustomerProfileId1") == null)
 				return true;
 			if(jsonObject.getString("setCustomerProfileId2") == null)
+				return true;
+			if(jsonObject.getString("setCustomerProfileId3") == null)
+				return true;
+			if(jsonObject.getString("setCustomerProfileId4") == null)
 				return true;
 			return false;
 		}

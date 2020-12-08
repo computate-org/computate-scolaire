@@ -2702,6 +2702,8 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 												jsonObject.put("setUtilisateurNomComplet", principalJson.getString("name"));
 												jsonObject.put("setCustomerProfileId1", Optional.ofNullable(utilisateurSite1).map(u -> u.getCustomerProfileId1()).orElse(null));
 												jsonObject.put("setCustomerProfileId2", Optional.ofNullable(utilisateurSite1).map(u -> u.getCustomerProfileId2()).orElse(null));
+												jsonObject.put("setCustomerProfileId3", Optional.ofNullable(utilisateurSite1).map(u -> u.getCustomerProfileId3()).orElse(null));
+												jsonObject.put("setCustomerProfileId4", Optional.ofNullable(utilisateurSite1).map(u -> u.getCustomerProfileId4()).orElse(null));
 												jsonObject.put("setUtilisateurId", principalJson.getString("sub"));
 												jsonObject.put("setUtilisateurMail", principalJson.getString("email"));
 												Boolean definir = utilisateurAgeScolaireDefinir(requeteSite, jsonObject, true);
@@ -2803,11 +2805,19 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 				return true;
 			if(jsonObject.getString("setCustomerProfileId2") == null)
 				return true;
+			if(jsonObject.getString("setCustomerProfileId3") == null)
+				return true;
+			if(jsonObject.getString("setCustomerProfileId4") == null)
+				return true;
 			return false;
 		} else {
 			if(jsonObject.getString("setCustomerProfileId1") == null)
 				return true;
 			if(jsonObject.getString("setCustomerProfileId2") == null)
+				return true;
+			if(jsonObject.getString("setCustomerProfileId3") == null)
+				return true;
+			if(jsonObject.getString("setCustomerProfileId4") == null)
 				return true;
 			return false;
 		}
@@ -2823,7 +2833,7 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 		if(varIndexe == null)
 			throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entiteVar));
 		if(StringUtils.startsWith(valeurIndexe, "[")) {
-			String[] fqs = StringUtils.split(StringUtils.substringBefore(StringUtils.substringAfter(valeurIndexe, "["), "]"), " TO ");
+			String[] fqs = StringUtils.substringBefore(StringUtils.substringAfter(valeurIndexe, "["), "]").split(" TO ");
 			if(fqs.length != 2)
 				throw new RuntimeException(String.format("\"%s\" invalid range query. ", valeurIndexe));
 			String fq1 = fqs[0].equals("*") ? fqs[0] : AgeScolaire.staticSolrFqPourClasse(entiteVar, listeRecherche.getRequeteSite_(), fqs[0]);

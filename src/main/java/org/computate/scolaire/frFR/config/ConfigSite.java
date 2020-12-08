@@ -1146,6 +1146,84 @@ public class ConfigSite extends ConfigSiteGen<Object> implements Serializable {
 	 * r: prefixeEchappe
 	 * r.enUS: prefixEscaped
 	 **/
+	protected void _authorizeApiLoginId3(Couverture<String> c) {
+		String o;
+		if(config == null)
+			o = System.getenv(c.var);
+		else
+			o = config.getString(prefixeEchappe + c.var);
+		c.o(o);
+	}
+
+	/**	
+	 * r: prefixeEchappe
+	 * r.enUS: prefixEscaped
+	 **/
+	protected void _authorizeTransactionKey3(Couverture<String> c) {
+		String o;
+		if(config == null)
+			o = System.getenv(c.var);
+		else
+			o = config.getString(prefixeEchappe + c.var);
+		c.o(o);
+	}
+
+	/**	
+	 * r: prefixeEchappe
+	 * r.enUS: prefixEscaped
+	 **/
+	protected void _schoolLocation3(Couverture<String> c) {
+		String o;
+		if(config == null)
+			o = System.getenv(c.var);
+		else
+			o = config.getString(prefixeEchappe + c.var);
+		c.o(o);
+	}
+
+	/**	
+	 * r: prefixeEchappe
+	 * r.enUS: prefixEscaped
+	 **/
+	protected void _authorizeApiLoginId4(Couverture<String> c) {
+		String o;
+		if(config == null)
+			o = System.getenv(c.var);
+		else
+			o = config.getString(prefixeEchappe + c.var);
+		c.o(o);
+	}
+
+	/**	
+	 * r: prefixeEchappe
+	 * r.enUS: prefixEscaped
+	 **/
+	protected void _authorizeTransactionKey4(Couverture<String> c) {
+		String o;
+		if(config == null)
+			o = System.getenv(c.var);
+		else
+			o = config.getString(prefixeEchappe + c.var);
+		c.o(o);
+	}
+
+	/**	
+	 * r: prefixeEchappe
+	 * r.enUS: prefixEscaped
+	 **/
+	protected void _schoolLocation4(Couverture<String> c) {
+		String o;
+		if(config == null)
+			o = System.getenv(c.var);
+		else
+			o = config.getString(prefixeEchappe + c.var);
+		c.o(o);
+	}
+
+	/**	
+	 * r: prefixeEchappe
+	 * r.enUS: prefixEscaped
+	 **/
 	protected void _authorizeEnvironment(Couverture<String> c) {
 		String o;
 		if(config == null)
