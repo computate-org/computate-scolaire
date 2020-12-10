@@ -15,8 +15,18 @@ public class EnrollmentPage extends EnrollmentPageGen<EnrollmentGenPage> {
 	@Override public void htmlBodyFormsEnrollmentGenPage() {
 
 		LocalDate now = LocalDate.now();
+		LocalDate yearStartDate = now.with(TemporalAdjusters.firstDayOfMonth()).withMonth(12);
 		LocalDate yearEndDate = now.with(TemporalAdjusters.firstDayOfMonth()).withMonth(6);
-		yearEndDate = now.isBefore(yearEndDate) ? yearEndDate : yearEndDate.plusYears(1);
+		if(now.isAfter(yearStartDate.minusDays(1)) && now.isBefore(yearEndDate.plusYears(1))) {
+			yearStartDate = now.isAfter(yearStartDate.minusDays(1)) ? yearStartDate.plusYears(1) : yearStartDate;
+			yearEndDate = now.isBefore(yearEndDate) ? yearEndDate.plusYears(1) : yearEndDate.plusYears(2);
+		}
+		else if(now.isBefore(yearEndDate)) {
+			yearStartDate = yearStartDate.minusYears(1);
+		}
+		else {
+			yearEndDate = yearEndDate.plusYears(1);
+		}
 
 		if(
 				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
@@ -25,13 +35,26 @@ public class EnrollmentPage extends EnrollmentPageGen<EnrollmentGenPage> {
 			e("div").a("class", "w3-margin-top ").f();
 			if(schools != null) {
 				for(School school : schools) {
-					{ e("a")
-						.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ")
-						.a("href", "/page/main-enrollment-form?var=schoolLocation:", school.getSchoolLocation(), "&var=yearEnd:", yearEndDate.getYear())
-						.f();
-						e("i").a("class", "fas fa-file-plus ").f().g("i");
-						sx("Submit ", school.getSchoolLocation(), " Enrollment Form Online");
-					} g("a");
+					{ e("div").a("class", "w3-row ").f();
+						{ e("div").a("class", "w3-half w3-mobile ").f();
+							{ e("a")
+								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ")
+								.a("href", "/page/main-enrollment-form?var=schoolLocation:", school.getSchoolLocation(), "&var=yearEnd:", yearEndDate.minusYears(1).getYear())
+								.f();
+								e("i").a("class", "fas fa-file-plus ").f().g("i");
+								sx("Create ", school.getSchoolLocation(), " ", yearEndDate.minusYears(2).getYear() , "-", yearEndDate.minusYears(1).getYear(), " Enrollment Form");
+							} g("a");
+						} g("div");
+						{ e("div").a("class", "w3-half w3-mobile ").f();
+							{ e("a")
+								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ")
+								.a("href", "/page/main-enrollment-form?var=schoolLocation:", school.getSchoolLocation(), "&var=yearEnd:", yearEndDate.getYear())
+								.f();
+								e("i").a("class", "fas fa-file-plus ").f().g("i");
+								sx("Submit ", school.getSchoolLocation(), " ", yearEndDate.minusYears(1).getYear() , "-", yearEndDate.getYear(), " Enrollment Form");
+							} g("a");
+						} g("div");
+					} g("div");
 				}
 			}
 			g("div");
