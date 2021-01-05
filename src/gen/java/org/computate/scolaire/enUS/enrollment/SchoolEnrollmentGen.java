@@ -98,7 +98,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	public static final String SchoolEnrollment_Color = "blue-gray";
 	public static final String SchoolEnrollment_IconGroup = "solid";
 	public static final String SchoolEnrollment_IconName = "edit";
-	public static final Integer SchoolEnrollment_Rows = 300;
+	public static final Integer SchoolEnrollment_Rows = 20;
 
 	///////////////////
 	// enrollmentKey //

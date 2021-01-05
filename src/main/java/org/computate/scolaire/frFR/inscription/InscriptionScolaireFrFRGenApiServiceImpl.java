@@ -3076,6 +3076,15 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+								List<String> roles = Arrays.asList("SiteManager", "SiteManager");
+								if(
+										!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+										&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+										) {
+									listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionIdAvant()).orElse("-----"))
+											+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(0L));
+								}
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !l2.equals(o.getEnfantCle())) {
@@ -3110,6 +3119,15 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+								List<String> roles = Arrays.asList("SiteManager", "SiteManager");
+								if(
+										!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+										&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+										) {
+									listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionIdAvant()).orElse("-----"))
+											+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(0L));
+								}
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null) {
@@ -3143,6 +3161,15 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+								List<String> roles = Arrays.asList("SiteManager", "SiteManager");
+								if(
+										!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+										&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+										) {
+									listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionIdAvant()).orElse("-----"))
+											+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(0L));
+								}
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !o.getMereCles().contains(l2)) {
@@ -3178,6 +3205,15 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+									List<String> roles = Arrays.asList("SiteManager", "SiteManager");
+									if(
+											!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+											&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+											) {
+										listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionIdAvant()).orElse("-----"))
+												+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(0L));
+									}
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 									if(l2 != null && !o.getMereCles().contains(l2)) {
@@ -3215,6 +3251,15 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+									List<String> roles = Arrays.asList("SiteManager", "SiteManager");
+									if(
+											!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+											&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+											) {
+										listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionIdAvant()).orElse("-----"))
+												+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(0L));
+									}
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 									if(l2 != null)
@@ -3268,6 +3313,15 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+								List<String> roles = Arrays.asList("SiteManager", "SiteManager");
+								if(
+										!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+										&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+										) {
+									listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionIdAvant()).orElse("-----"))
+											+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(0L));
+								}
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && o.getMereCles().contains(l2)) {
@@ -3301,6 +3355,15 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+								List<String> roles = Arrays.asList("SiteManager", "SiteManager");
+								if(
+										!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+										&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+										) {
+									listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionIdAvant()).orElse("-----"))
+											+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(0L));
+								}
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !o.getPereCles().contains(l2)) {
@@ -3336,6 +3399,15 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+									List<String> roles = Arrays.asList("SiteManager", "SiteManager");
+									if(
+											!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+											&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+											) {
+										listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionIdAvant()).orElse("-----"))
+												+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(0L));
+									}
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 									if(l2 != null && !o.getPereCles().contains(l2)) {
@@ -3373,6 +3445,15 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+									List<String> roles = Arrays.asList("SiteManager", "SiteManager");
+									if(
+											!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+											&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+											) {
+										listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionIdAvant()).orElse("-----"))
+												+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(0L));
+									}
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 									if(l2 != null)
@@ -3426,6 +3507,15 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+								List<String> roles = Arrays.asList("SiteManager", "SiteManager");
+								if(
+										!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+										&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+										) {
+									listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionIdAvant()).orElse("-----"))
+											+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(0L));
+								}
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && o.getPereCles().contains(l2)) {
@@ -3459,6 +3549,15 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+								List<String> roles = Arrays.asList("SiteManager", "SiteManager");
+								if(
+										!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+										&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+										) {
+									listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionIdAvant()).orElse("-----"))
+											+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(0L));
+								}
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !o.getGardienCles().contains(l2)) {
@@ -3494,6 +3593,15 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+									List<String> roles = Arrays.asList("SiteManager", "SiteManager");
+									if(
+											!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+											&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+											) {
+										listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionIdAvant()).orElse("-----"))
+												+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(0L));
+									}
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 									if(l2 != null && !o.getGardienCles().contains(l2)) {
@@ -3531,6 +3639,15 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+									List<String> roles = Arrays.asList("SiteManager", "SiteManager");
+									if(
+											!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+											&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+											) {
+										listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionIdAvant()).orElse("-----"))
+												+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(0L));
+									}
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 									if(l2 != null)
@@ -3584,6 +3701,15 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+								List<String> roles = Arrays.asList("SiteManager", "SiteManager");
+								if(
+										!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+										&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+										) {
+									listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionIdAvant()).orElse("-----"))
+											+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(0L));
+								}
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && o.getGardienCles().contains(l2)) {
@@ -3775,6 +3901,15 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+								List<String> roles = Arrays.asList("SiteAdmin", "SiteAdmin", "SiteAdmin", "SiteAdmin");
+								if(
+										!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+										&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+										) {
+									listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionIdAvant()).orElse("-----"))
+											+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(0L));
+								}
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !o.getUtilisateurCles().contains(l2)) {
@@ -3810,6 +3945,15 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+									List<String> roles = Arrays.asList("SiteAdmin", "SiteAdmin", "SiteAdmin", "SiteAdmin");
+									if(
+											!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+											&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+											) {
+										listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionIdAvant()).orElse("-----"))
+												+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(0L));
+									}
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 									if(l2 != null && !o.getUtilisateurCles().contains(l2)) {
@@ -3847,6 +3991,15 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+									List<String> roles = Arrays.asList("SiteAdmin", "SiteAdmin", "SiteAdmin", "SiteAdmin");
+									if(
+											!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+											&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+											) {
+										listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionIdAvant()).orElse("-----"))
+												+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(0L));
+									}
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 									if(l2 != null)
@@ -3900,6 +4053,15 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+								List<String> roles = Arrays.asList("SiteAdmin", "SiteAdmin", "SiteAdmin", "SiteAdmin");
+								if(
+										!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+										&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+										) {
+									listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionIdAvant()).orElse("-----"))
+											+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(0L));
+								}
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && o.getUtilisateurCles().contains(l2)) {
@@ -6033,6 +6195,15 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+								List<String> roles = Arrays.asList("SiteManager", "SiteManager");
+								if(
+										!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+										&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+										) {
+									listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionIdAvant()).orElse("-----"))
+											+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(0L));
+								}
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !l2.equals(o.getEnfantCle())) {
@@ -6067,6 +6238,15 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+								List<String> roles = Arrays.asList("SiteManager", "SiteManager");
+								if(
+										!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+										&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+										) {
+									listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionIdAvant()).orElse("-----"))
+											+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(0L));
+								}
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null) {
@@ -6100,6 +6280,15 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+								List<String> roles = Arrays.asList("SiteManager", "SiteManager");
+								if(
+										!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+										&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+										) {
+									listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionIdAvant()).orElse("-----"))
+											+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(0L));
+								}
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !o.getMereCles().contains(l2)) {
@@ -6135,6 +6324,15 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+									List<String> roles = Arrays.asList("SiteManager", "SiteManager");
+									if(
+											!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+											&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+											) {
+										listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionIdAvant()).orElse("-----"))
+												+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(0L));
+									}
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 									if(l2 != null && !o.getMereCles().contains(l2)) {
@@ -6172,6 +6370,15 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+									List<String> roles = Arrays.asList("SiteManager", "SiteManager");
+									if(
+											!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+											&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+											) {
+										listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionIdAvant()).orElse("-----"))
+												+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(0L));
+									}
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 									if(l2 != null)
@@ -6225,6 +6432,15 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+								List<String> roles = Arrays.asList("SiteManager", "SiteManager");
+								if(
+										!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+										&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+										) {
+									listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionIdAvant()).orElse("-----"))
+											+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(0L));
+								}
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && o.getMereCles().contains(l2)) {
@@ -6258,6 +6474,15 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+								List<String> roles = Arrays.asList("SiteManager", "SiteManager");
+								if(
+										!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+										&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+										) {
+									listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionIdAvant()).orElse("-----"))
+											+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(0L));
+								}
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !o.getPereCles().contains(l2)) {
@@ -6293,6 +6518,15 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+									List<String> roles = Arrays.asList("SiteManager", "SiteManager");
+									if(
+											!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+											&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+											) {
+										listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionIdAvant()).orElse("-----"))
+												+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(0L));
+									}
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 									if(l2 != null && !o.getPereCles().contains(l2)) {
@@ -6330,6 +6564,15 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+									List<String> roles = Arrays.asList("SiteManager", "SiteManager");
+									if(
+											!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+											&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+											) {
+										listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionIdAvant()).orElse("-----"))
+												+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(0L));
+									}
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 									if(l2 != null)
@@ -6383,6 +6626,15 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+								List<String> roles = Arrays.asList("SiteManager", "SiteManager");
+								if(
+										!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+										&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+										) {
+									listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionIdAvant()).orElse("-----"))
+											+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(0L));
+								}
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && o.getPereCles().contains(l2)) {
@@ -6416,6 +6668,15 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+								List<String> roles = Arrays.asList("SiteManager", "SiteManager");
+								if(
+										!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+										&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+										) {
+									listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionIdAvant()).orElse("-----"))
+											+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(0L));
+								}
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !o.getGardienCles().contains(l2)) {
@@ -6451,6 +6712,15 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+									List<String> roles = Arrays.asList("SiteManager", "SiteManager");
+									if(
+											!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+											&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+											) {
+										listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionIdAvant()).orElse("-----"))
+												+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(0L));
+									}
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 									if(l2 != null && !o.getGardienCles().contains(l2)) {
@@ -6488,6 +6758,15 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+									List<String> roles = Arrays.asList("SiteManager", "SiteManager");
+									if(
+											!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+											&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+											) {
+										listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionIdAvant()).orElse("-----"))
+												+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(0L));
+									}
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 									if(l2 != null)
@@ -6541,6 +6820,15 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+								List<String> roles = Arrays.asList("SiteManager", "SiteManager");
+								if(
+										!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+										&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+										) {
+									listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionIdAvant()).orElse("-----"))
+											+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(0L));
+								}
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && o.getGardienCles().contains(l2)) {
@@ -6732,6 +7020,15 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+								List<String> roles = Arrays.asList("SiteAdmin", "SiteAdmin", "SiteAdmin", "SiteAdmin");
+								if(
+										!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+										&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+										) {
+									listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionIdAvant()).orElse("-----"))
+											+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(0L));
+								}
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !o.getUtilisateurCles().contains(l2)) {
@@ -6767,6 +7064,15 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+									List<String> roles = Arrays.asList("SiteAdmin", "SiteAdmin", "SiteAdmin", "SiteAdmin");
+									if(
+											!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+											&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+											) {
+										listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionIdAvant()).orElse("-----"))
+												+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(0L));
+									}
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 									if(l2 != null && !o.getUtilisateurCles().contains(l2)) {
@@ -6804,6 +7110,15 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+									List<String> roles = Arrays.asList("SiteAdmin", "SiteAdmin", "SiteAdmin", "SiteAdmin");
+									if(
+											!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+											&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+											) {
+										listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionIdAvant()).orElse("-----"))
+												+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(0L));
+									}
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 									if(l2 != null)
@@ -6857,6 +7172,15 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+								List<String> roles = Arrays.asList("SiteAdmin", "SiteAdmin", "SiteAdmin", "SiteAdmin");
+								if(
+										!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+										&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+										) {
+									listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionIdAvant()).orElse("-----"))
+											+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(0L));
+								}
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && o.getUtilisateurCles().contains(l2)) {
@@ -8700,6 +9024,15 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+								List<String> roles = Arrays.asList("SiteManager", "SiteManager");
+								if(
+										!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+										&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+										) {
+									listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionIdAvant()).orElse("-----"))
+											+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(0L));
+								}
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !l2.equals(o.getEnfantCle())) {
@@ -8734,6 +9067,15 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+								List<String> roles = Arrays.asList("SiteManager", "SiteManager");
+								if(
+										!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+										&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+										) {
+									listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionIdAvant()).orElse("-----"))
+											+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(0L));
+								}
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null) {
@@ -8767,6 +9109,15 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+								List<String> roles = Arrays.asList("SiteManager", "SiteManager");
+								if(
+										!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+										&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+										) {
+									listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionIdAvant()).orElse("-----"))
+											+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(0L));
+								}
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !o.getMereCles().contains(l2)) {
@@ -8802,6 +9153,15 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+									List<String> roles = Arrays.asList("SiteManager", "SiteManager");
+									if(
+											!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+											&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+											) {
+										listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionIdAvant()).orElse("-----"))
+												+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(0L));
+									}
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 									if(l2 != null && !o.getMereCles().contains(l2)) {
@@ -8839,6 +9199,15 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+									List<String> roles = Arrays.asList("SiteManager", "SiteManager");
+									if(
+											!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+											&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+											) {
+										listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionIdAvant()).orElse("-----"))
+												+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(0L));
+									}
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 									if(l2 != null)
@@ -8892,6 +9261,15 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+								List<String> roles = Arrays.asList("SiteManager", "SiteManager");
+								if(
+										!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+										&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+										) {
+									listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionIdAvant()).orElse("-----"))
+											+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(0L));
+								}
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && o.getMereCles().contains(l2)) {
@@ -8925,6 +9303,15 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+								List<String> roles = Arrays.asList("SiteManager", "SiteManager");
+								if(
+										!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+										&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+										) {
+									listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionIdAvant()).orElse("-----"))
+											+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(0L));
+								}
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !o.getPereCles().contains(l2)) {
@@ -8960,6 +9347,15 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+									List<String> roles = Arrays.asList("SiteManager", "SiteManager");
+									if(
+											!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+											&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+											) {
+										listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionIdAvant()).orElse("-----"))
+												+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(0L));
+									}
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 									if(l2 != null && !o.getPereCles().contains(l2)) {
@@ -8997,6 +9393,15 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+									List<String> roles = Arrays.asList("SiteManager", "SiteManager");
+									if(
+											!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+											&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+											) {
+										listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionIdAvant()).orElse("-----"))
+												+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(0L));
+									}
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 									if(l2 != null)
@@ -9050,6 +9455,15 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+								List<String> roles = Arrays.asList("SiteManager", "SiteManager");
+								if(
+										!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+										&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+										) {
+									listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionIdAvant()).orElse("-----"))
+											+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(0L));
+								}
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && o.getPereCles().contains(l2)) {
@@ -9083,6 +9497,15 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+								List<String> roles = Arrays.asList("SiteManager", "SiteManager");
+								if(
+										!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+										&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+										) {
+									listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionIdAvant()).orElse("-----"))
+											+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(0L));
+								}
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !o.getGardienCles().contains(l2)) {
@@ -9118,6 +9541,15 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+									List<String> roles = Arrays.asList("SiteManager", "SiteManager");
+									if(
+											!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+											&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+											) {
+										listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionIdAvant()).orElse("-----"))
+												+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(0L));
+									}
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 									if(l2 != null && !o.getGardienCles().contains(l2)) {
@@ -9155,6 +9587,15 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+									List<String> roles = Arrays.asList("SiteManager", "SiteManager");
+									if(
+											!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+											&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+											) {
+										listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionIdAvant()).orElse("-----"))
+												+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(0L));
+									}
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 									if(l2 != null)
@@ -9208,6 +9649,15 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+								List<String> roles = Arrays.asList("SiteManager", "SiteManager");
+								if(
+										!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+										&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+										) {
+									listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionIdAvant()).orElse("-----"))
+											+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(0L));
+								}
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && o.getGardienCles().contains(l2)) {
@@ -9399,6 +9849,15 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+								List<String> roles = Arrays.asList("SiteAdmin", "SiteAdmin", "SiteAdmin", "SiteAdmin");
+								if(
+										!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+										&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+										) {
+									listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionIdAvant()).orElse("-----"))
+											+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(0L));
+								}
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !o.getUtilisateurCles().contains(l2)) {
@@ -9434,6 +9893,15 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+									List<String> roles = Arrays.asList("SiteAdmin", "SiteAdmin", "SiteAdmin", "SiteAdmin");
+									if(
+											!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+											&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+											) {
+										listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionIdAvant()).orElse("-----"))
+												+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(0L));
+									}
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 									if(l2 != null && !o.getUtilisateurCles().contains(l2)) {
@@ -9471,6 +9939,15 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+									List<String> roles = Arrays.asList("SiteAdmin", "SiteAdmin", "SiteAdmin", "SiteAdmin");
+									if(
+											!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+											&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+											) {
+										listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionIdAvant()).orElse("-----"))
+												+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(0L));
+									}
 									listeRecherche.initLoinListeRecherche(requeteSite);
 									Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 									if(l2 != null)
@@ -9524,6 +10001,15 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+								List<String> roles = Arrays.asList("SiteAdmin", "SiteAdmin", "SiteAdmin", "SiteAdmin");
+								if(
+										!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+										&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+										) {
+									listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionIdAvant()).orElse("-----"))
+											+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(0L));
+								}
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && o.getUtilisateurCles().contains(l2)) {

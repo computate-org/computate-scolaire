@@ -133,6 +133,62 @@ public abstract class WorkerVertxGen<DEV> extends AbstractVerticle {
 		}
 	}
 
+	///////////////
+	// staticSet //
+	///////////////
+
+	public static Object staticSetForClass(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		return staticSetWorkerVertx(entityVar,  siteRequest_, o);
+	}
+	public static Object staticSetWorkerVertx(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		switch(entityVar) {
+			default:
+				return null;
+		}
+	}
+
+	////////////////
+	// staticSolr //
+	////////////////
+
+	public static Object staticSolrForClass(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		return staticSolrWorkerVertx(entityVar,  siteRequest_, o);
+	}
+	public static Object staticSolrWorkerVertx(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		switch(entityVar) {
+			default:
+				return null;
+		}
+	}
+
+	///////////////////
+	// staticSolrStr //
+	///////////////////
+
+	public static String staticSolrStrForClass(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		return staticSolrStrWorkerVertx(entityVar,  siteRequest_, o);
+	}
+	public static String staticSolrStrWorkerVertx(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		switch(entityVar) {
+			default:
+				return null;
+		}
+	}
+
+	//////////////////
+	// staticSolrFq //
+	//////////////////
+
+	public static String staticSolrFqForClass(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		return staticSolrFqWorkerVertx(entityVar,  siteRequest_, o);
+	}
+	public static String staticSolrFqWorkerVertx(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		switch(entityVar) {
+			default:
+				return null;
+		}
+	}
+
 	/////////////
 	// define //
 	/////////////

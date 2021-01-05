@@ -106,7 +106,9 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 	}
 
 	protected void _schoolKey(Wrap<Long> c) {
-		if(year_ != null)
+		if(block_ != null)
+			c.o(block_.getSchoolKey());
+		else if(year_ != null)
 			c.o(year_.getSchoolKey());
 	}
 
@@ -333,52 +335,72 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 	}
 
 	protected void _schoolName(Wrap<String> c) {
-		if(year_ != null)
+		if(block_ != null)
+			c.o(block_.getSchoolName());
+		else if(year_ != null)
 			c.o(year_.getSchoolName());
 	}
 
 	protected void _schoolCompleteName(Wrap<String> c) {
-		if(year_ != null)
+		if(block_ != null)
+			c.o(block_.getSchoolCompleteName());
+		else if(year_ != null)
 			c.o(year_.getSchoolCompleteName());
 	}
 
 	protected void _schoolLocation(Wrap<String> c) {
-		if(year_ != null)
+		if(block_ != null)
+			c.o(block_.getSchoolLocation());
+		else if(year_ != null)
 			c.o(year_.getSchoolLocation());
 	}
 
 	protected void _schoolAddress(Wrap<String> c) {
-		if(year_ != null)
+		if(block_ != null)
+			c.o(block_.getSchoolAddress());
+		else if(year_ != null)
 			c.o(year_.getSchoolAddress());
 	}
 
 	protected void _schoolPhoneNumber(Wrap<String> c) {
-		if(year_ != null)
+		if(block_ != null)
+			c.o(block_.getSchoolPhoneNumber());
+		else if(year_ != null)
 			c.o(year_.getSchoolPhoneNumber());
 	}
 
 	protected void _schoolForm(Wrap<String> c) {
-		if(year_ != null)
+		if(block_ != null)
+			c.o(block_.getSchoolForm());
+		else if(year_ != null)
 			c.o(year_.getSchoolForm());
 	}
 
 	protected void _schoolNumber(Wrap<Integer> c) {
-		if(year_ != null)
+		if(block_ != null)
+			c.o(block_.getSchoolNumber());
+		else if(year_ != null)
 			c.o((Integer)year_.getSchoolNumber());
 	}
 
 	protected void _schoolAdministratorName(Wrap<String> c) {
-		if(year_ != null)
+		if(block_ != null)
+			c.o(block_.getSchoolAdministratorName());
+		else if(year_ != null)
 			c.o(year_.getSchoolAdministratorName());
 	}
 
 	protected void _yearStart(Wrap<Integer> c) {
-		if(year_ != null)
+		if(block_ != null)
+			c.o(block_.getYearStart());
+		else if(year_ != null)
 			c.o(year_.getYearStart());
 	}
 
 	protected void _yearEnd(Wrap<Integer> c) {
-		if(year_ != null)
+		if(block_ != null)
+			c.o(block_.getYearEnd());
+		else if(year_ != null)
 			c.o(year_.getYearEnd());
 	}
 
@@ -388,7 +410,9 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 	}
 
 	protected void _yearEnrollmentFee(Wrap<BigDecimal> c) {
-		if(year_ != null)
+		if(block_ != null)
+			c.o(block_.getYearEnrollmentFee());
+		else if(year_ != null)
 			c.o(year_.getYearEnrollmentFee());
 	}
 
@@ -978,9 +1002,9 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 	protected void _enrollmentCompleteName(Wrap<String> c) {
 		String o;
 		if(child_ != null)
-			o = String.format("enrollment for the child %s %s %s", child_.getPersonCompleteNamePreferred(), year_ == null ? "" : year_.getYearShortName(), schoolLocation);
+			o = String.format("enrollment for the child %s %s %s", child_.getPersonCompleteNamePreferred(), block_ == null ? "" : (block_.getYearStart() + "-" + block_.getYearEnd()), schoolLocation);
 		else
-			o = String.format("enrollment %s %s %s", pk, " ", year_ == null ? "" : year_.getYearShortName(), schoolLocation);
+			o = String.format("enrollment %s %s %s", pk, " ", block_ == null ? "" : (block_.getYearStart() + "-" + block_.getYearEnd()), schoolLocation);
 		c.o(o);
 	}
 

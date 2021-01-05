@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.inscription;       
+package org.computate.scolaire.frFR.inscription;      
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -111,7 +111,7 @@ import org.computate.scolaire.frFR.saison.SaisonScolaire;
  * IconeGroupe: solid
  * IconeNom: edit
  * 
- * Lignes: 300
+ * Lignes: 20
  * Role.frFR: SiteManager
  * Role.enUS: SiteManager
  * RoleSession: true
@@ -270,9 +270,13 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * r.enUS: SchoolKey
 	 * r: annee
 	 * r.enUS: year
+	 * r: bloc
+	 * r.enUS: block
 	 */              
 	protected void _ecoleCle(Couverture<Long> c) {
-		if(annee_ != null)
+		if(bloc_ != null)
+			c.o(bloc_.getEcoleCle());
+		else if(annee_ != null)
 			c.o(annee_.getEcoleCle());
 	}
 //
@@ -435,7 +439,7 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * Attribuer: FormInscription.partFormCles
 	 * NomAffichage.frFR: formulaire d'inscription
 	 * NomAffichage.enUS: enrollment form
-	*/           
+	*/       
 	protected void _formInscriptionCle(Couverture<Long> c) {
 	}
 
@@ -1004,9 +1008,13 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * r.enUS: SchoolName
 	 * r: annee
 	 * r.enUS: year
+	 * r: bloc
+	 * r.enUS: block
 	 */   
 	protected void _ecoleNom(Couverture<String> c) {
-		if(annee_ != null)
+		if(bloc_ != null)
+			c.o(bloc_.getEcoleNom());
+		else if(annee_ != null)
 			c.o(annee_.getEcoleNom());
 	}
 
@@ -1023,9 +1031,13 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * r.enUS: SchoolCompleteName
 	 * r: annee
 	 * r.enUS: year
+	 * r: bloc
+	 * r.enUS: block
 	 */   
 	protected void _ecoleNomComplet(Couverture<String> c) {
-		if(annee_ != null)
+		if(bloc_ != null)
+			c.o(bloc_.getEcoleNomComplet());
+		else if(annee_ != null)
 			c.o(annee_.getEcoleNomComplet());
 	}
 
@@ -1040,9 +1052,13 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * r.enUS: SchoolLocation
 	 * r: annee
 	 * r.enUS: year
+	 * r: bloc
+	 * r.enUS: block
 	 */           
 	protected void _ecoleEmplacement(Couverture<String> c) {
-		if(annee_ != null)
+		if(bloc_ != null)
+			c.o(bloc_.getEcoleEmplacement());
+		else if(annee_ != null)
 			c.o(annee_.getEcoleEmplacement());
 	}
 
@@ -1058,9 +1074,13 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * r.enUS: SchoolAddress
 	 * r: annee
 	 * r.enUS: year
+	 * r: bloc
+	 * r.enUS: block
 	 */
 	protected void _ecoleAddresse(Couverture<String> c) {
-		if(annee_ != null)
+		if(bloc_ != null)
+			c.o(bloc_.getEcoleAddresse());
+		else if(annee_ != null)
 			c.o(annee_.getEcoleAddresse());
 	}
 
@@ -1075,9 +1095,13 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * r.enUS: SchoolPhoneNumber
 	 * r: annee
 	 * r.enUS: year
+	 * r: bloc
+	 * r.enUS: block
 	 */    
 	protected void _ecoleNumeroTelephone(Couverture<String> c) {
-		if(annee_ != null)
+		if(bloc_ != null)
+			c.o(bloc_.getEcoleNumeroTelephone());
+		else if(annee_ != null)
 			c.o(annee_.getEcoleNumeroTelephone());
 	}
 
@@ -1090,9 +1114,13 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * r.enUS: SchoolForm
 	 * r: annee
 	 * r.enUS: year
+	 * r: bloc
+	 * r.enUS: block
 	 */    
 	protected void _ecoleForm(Couverture<String> c) {
-		if(annee_ != null)
+		if(bloc_ != null)
+			c.o(bloc_.getEcoleForm());
+		else if(annee_ != null)
 			c.o(annee_.getEcoleForm());
 	}
 
@@ -1105,9 +1133,13 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * r.enUS: SchoolNumber
 	 * r: annee
 	 * r.enUS: year
+	 * r: bloc
+	 * r.enUS: block
 	 */
 	protected void _ecoleNumero(Couverture<Integer> c) {
-		if(annee_ != null)
+		if(bloc_ != null)
+			c.o(bloc_.getEcoleNumero());
+		else if(annee_ != null)
 			c.o((Integer)annee_.getEcoleNumero());
 	}
 
@@ -1122,9 +1154,13 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * r.enUS: SchoolAdministratorName
 	 * r: annee
 	 * r.enUS: year
+	 * r: bloc
+	 * r.enUS: block
 	 */             
 	protected void _ecoleAdministrateurNom(Couverture<String> c) {
-		if(annee_ != null)
+		if(bloc_ != null)
+			c.o(bloc_.getEcoleAdministrateurNom());
+		else if(annee_ != null)
 			c.o(annee_.getEcoleAdministrateurNom());
 	}
 
@@ -1139,9 +1175,13 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * r.enUS: YearStart
 	 * r: annee
 	 * r.enUS: year
+	 * r: bloc
+	 * r.enUS: block
 	 */               
 	protected void _anneeDebut(Couverture<Integer> c) {
-		if(annee_ != null)
+		if(bloc_ != null)
+			c.o(bloc_.getAnneeDebut());
+		else if(annee_ != null)
 			c.o(annee_.getAnneeDebut());
 	}
 
@@ -1156,9 +1196,13 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * r.enUS: YearEnd
 	 * r: annee
 	 * r.enUS: year
+	 * r: bloc
+	 * r.enUS: block
 	 */                     
 	protected void _anneeFin(Couverture<Integer> c) {
-		if(annee_ != null)
+		if(bloc_ != null)
+			c.o(bloc_.getAnneeFin());
+		else if(annee_ != null)
 			c.o(annee_.getAnneeFin());
 	}
 
@@ -1224,9 +1268,13 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * r.enUS: YearEnrollmentFee
 	 * r: annee
 	 * r.enUS: year
+	 * r: bloc
+	 * r.enUS: block
 	 */                
 	protected void _anneeFraisInscription(Couverture<BigDecimal> c) {
-		if(annee_ != null)
+		if(bloc_ != null)
+			c.o(bloc_.getAnneeFraisInscription());
+		else if(annee_ != null)
 			c.o(annee_.getAnneeFraisInscription());
 	}
 //
@@ -2987,19 +3035,25 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * r.enUS: getPersonCompleteNamePreferred
 	 * r: enfant_
 	 * r.enUS: child_
+	 * r: bloc
+	 * r.enUS: block
 	 * r: annee
 	 * r.enUS: year
 	 * r: AnneeNomCourt
 	 * r.enUS: YearShortName
+	 * r: AnneeDebut
+	 * r.enUS: YearStart
+	 * r: AnneeFin
+	 * r.enUS: YearEnd
 	 * r: ecoleEmplacement
 	 * r.enUS: schoolLocation
 	 */  
 	protected void _inscriptionNomComplet(Couverture<String> c) {
 		String o;
 		if(enfant_ != null)
-			o = String.format("inscription pour l'enfant %s %s %s", enfant_.getPersonneNomCompletPrefere(), annee_ == null ? "" : annee_.getAnneeNomCourt(), ecoleEmplacement);
+			o = String.format("inscription pour l'enfant %s %s %s", enfant_.getPersonneNomCompletPrefere(), bloc_ == null ? "" : (bloc_.getAnneeDebut() + "-" + bloc_.getAnneeFin()), ecoleEmplacement);
 		else
-			o = String.format("inscription %s %s %s", pk, " ", annee_ == null ? "" : annee_.getAnneeNomCourt(), ecoleEmplacement);
+			o = String.format("inscription %s %s %s", pk, " ", bloc_ == null ? "" : (bloc_.getAnneeDebut() + "-" + bloc_.getAnneeFin()), ecoleEmplacement);
 		c.o(o);
 	}
 

@@ -99,7 +99,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	public static final String InscriptionScolaire_Couleur = "blue-gray";
 	public static final String InscriptionScolaire_IconeGroupe = "solid";
 	public static final String InscriptionScolaire_IconeNom = "edit";
-	public static final Integer InscriptionScolaire_Lignes = 300;
+	public static final Integer InscriptionScolaire_Lignes = 20;
 
 	////////////////////
 	// inscriptionCle //

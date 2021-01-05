@@ -22,7 +22,7 @@ public class EnrollmentPage extends EnrollmentPageGen<EnrollmentGenPage> {
 			yearEndDate = now.isBefore(yearEndDate) ? yearEndDate.plusYears(1) : yearEndDate.plusYears(2);
 		}
 		else if(now.isBefore(yearEndDate)) {
-			yearStartDate = yearStartDate.minusYears(1);
+			yearEndDate = yearEndDate.plusYears(1);
 		}
 		else {
 			yearEndDate = yearEndDate.plusYears(1);

@@ -64,7 +64,7 @@ import org.computate.scolaire.frFR.xml.OutilXml;
  * Role.enUS: SiteManager
  * RoleLire.frFR: User
  * RoleLire.enUS: User
- */   
+ */  
 public class Cluster extends ClusterGen<Object> {
 
 	/**

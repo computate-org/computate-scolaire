@@ -132,6 +132,62 @@ public abstract class OuvrierVertxGen<DEV> extends AbstractVerticle {
 		}
 	}
 
+	///////////////
+	// staticSet //
+	///////////////
+
+	public static Object staticSetPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		return staticSetOuvrierVertx(entiteVar,  requeteSite_, o);
+	}
+	public static Object staticSetOuvrierVertx(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		switch(entiteVar) {
+			default:
+				return null;
+		}
+	}
+
+	////////////////
+	// staticSolr //
+	////////////////
+
+	public static Object staticSolrPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		return staticSolrOuvrierVertx(entiteVar,  requeteSite_, o);
+	}
+	public static Object staticSolrOuvrierVertx(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		switch(entiteVar) {
+			default:
+				return null;
+		}
+	}
+
+	///////////////////
+	// staticSolrStr //
+	///////////////////
+
+	public static String staticSolrStrPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		return staticSolrStrOuvrierVertx(entiteVar,  requeteSite_, o);
+	}
+	public static String staticSolrStrOuvrierVertx(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		switch(entiteVar) {
+			default:
+				return null;
+		}
+	}
+
+	//////////////////
+	// staticSolrFq //
+	//////////////////
+
+	public static String staticSolrFqPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		return staticSolrFqOuvrierVertx(entiteVar,  requeteSite_, o);
+	}
+	public static String staticSolrFqOuvrierVertx(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		switch(entiteVar) {
+			default:
+				return null;
+		}
+	}
+
 	/////////////
 	// definir //
 	/////////////

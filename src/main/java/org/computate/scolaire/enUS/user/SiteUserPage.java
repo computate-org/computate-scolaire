@@ -109,7 +109,7 @@ public class SiteUserPage extends SiteUserPageGen<SiteUserGenPage> {
 			yearEndDate = now.isBefore(yearEndDate) ? yearEndDate.plusYears(1) : yearEndDate.plusYears(2);
 		}
 		else if(now.isBefore(yearEndDate)) {
-			yearStartDate = yearStartDate.minusYears(1);
+			yearEndDate = yearEndDate.plusYears(1);
 		}
 		else {
 			yearEndDate = yearEndDate.plusYears(1);
@@ -207,7 +207,7 @@ public class SiteUserPage extends SiteUserPageGen<SiteUserGenPage> {
 				yearEndDate = now.isBefore(yearEndDate) ? yearEndDate.plusYears(1) : yearEndDate.plusYears(2);
 			}
 			else if(now.isBefore(yearEndDate)) {
-				yearStartDate = yearStartDate.minusYears(1);
+				yearEndDate = yearEndDate.plusYears(1);
 			}
 			else {
 				yearEndDate = yearEndDate.plusYears(1);
@@ -216,6 +216,7 @@ public class SiteUserPage extends SiteUserPageGen<SiteUserGenPage> {
 			l.addFilterQuery("yearEnd_indexed_int:[" + yearStartDate.getYear() + " TO " + yearEndDate.getYear() + "]");
 			l.addFilterQuery("archived_indexed_boolean:false");
 			l.addFilterQuery("deleted_indexed_boolean:false");
+			l.addFilterQuery("blockKey_indexed_long:[* TO *]");
 	
 			for(String var : siteRequest_.getRequestVars().keySet()) {
 				String val = siteRequest_.getRequestVars().get(var);
