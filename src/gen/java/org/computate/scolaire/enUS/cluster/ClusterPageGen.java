@@ -1,33 +1,33 @@
 package org.computate.scolaire.enUS.cluster;
 
+import org.computate.scolaire.enUS.wrap.Wrap;
 import java.util.Arrays;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import org.computate.scolaire.enUS.cluster.ClusterGenPage;
 import java.util.HashMap;
-import org.computate.scolaire.enUS.writer.AllWriter;
-import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.apache.commons.lang3.StringUtils;
 import java.text.NumberFormat;
 import io.vertx.core.logging.LoggerFactory;
 import java.util.ArrayList;
-import org.computate.scolaire.enUS.wrap.Wrap;
 import org.apache.commons.collections.CollectionUtils;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import io.vertx.core.logging.Logger;
 import java.math.RoundingMode;
-import java.math.MathContext;
+import org.computate.scolaire.enUS.writer.AllWriter;
 import org.computate.scolaire.enUS.cluster.Cluster;
+import java.math.MathContext;
+import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.apache.commons.text.StringEscapeUtils;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
-import org.computate.scolaire.enUS.cluster.ClusterGenPage;
 import org.apache.commons.lang3.math.NumberUtils;
 import java.util.Optional;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 
@@ -209,18 +209,6 @@ public abstract class ClusterPageGen<DEV> extends ClusterGenPage {
 		}
 	}
 
-	/////////////////
-	// htmlScripts //
-	/////////////////
-
-	@Override public void htmlScripts() {
-		htmlScriptsClusterPage();
-		super.htmlScripts();
-	}
-
-	public void htmlScriptsClusterPage() {
-	}
-
 	////////////////
 	// htmlScript //
 	////////////////
@@ -231,6 +219,18 @@ public abstract class ClusterPageGen<DEV> extends ClusterGenPage {
 	}
 
 	public void htmlScriptClusterPage() {
+	}
+
+	/////////////////
+	// htmlScripts //
+	/////////////////
+
+	@Override public void htmlScripts() {
+		htmlScriptsClusterPage();
+		super.htmlScripts();
+	}
+
+	public void htmlScriptsClusterPage() {
 	}
 
 	//////////////
