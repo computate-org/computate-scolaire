@@ -1328,44 +1328,58 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 											aSearchSchoolDad(siteRequest, false, true, "/api/dad", "PATCH", d -> {
 												if(d.succeeded()) {
 													SearchList<SchoolDad> listSchoolDad = d.result();
-													ApiRequest apiRequest = new ApiRequest();
-													apiRequest.setRows(listSchoolDad.getRows());
-													apiRequest.setNumFound(listSchoolDad.getQueryResponse().getResults().getNumFound());
-													apiRequest.setNumPATCH(0L);
-													apiRequest.initDeepApiRequest(siteRequest);
-													siteRequest.setApiRequest_(apiRequest);
-													siteRequest.getVertx().eventBus().publish("websocketSchoolDad", JsonObject.mapFrom(apiRequest).toString());
-													SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listSchoolDad.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
-													Date date = null;
-													if(facets != null)
-														date = (Date)facets.get("max_modified");
-													String dt;
-													if(date == null)
-														dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
-													else
-														dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
-													listSchoolDad.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
 
-													try {
-														listPATCHSchoolDad(apiRequest, listSchoolDad, dt, e -> {
-															if(e.succeeded()) {
-																patchSchoolDadResponse(siteRequest, f -> {
-																	if(f.succeeded()) {
-																		LOGGER.info(String.format("patchSchoolDad succeeded. "));
-																		blockingCodeHandler.handle(Future.succeededFuture(f.result()));
-																	} else {
-																		LOGGER.error(String.format("patchSchoolDad failed. ", f.cause()));
-																		errorSchoolDad(siteRequest, null, f);
-																	}
-																});
-															} else {
-																LOGGER.error(String.format("patchSchoolDad failed. ", e.cause()));
-																errorSchoolDad(siteRequest, null, e);
-															}
-														});
-													} catch(Exception ex) {
-														LOGGER.error(String.format("patchSchoolDad failed. ", ex));
-														errorSchoolDad(siteRequest, null, Future.failedFuture(ex));
+													if(listSchoolDad.getQueryResponse().getResults().getNumFound() > 1) {
+														List<String> roles2 = Arrays.asList("SiteAdmin");
+														if(
+																!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles2)
+																&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles2)
+																) {
+															String message = String.format("roles required: " + String.join(", ", roles2));
+															LOGGER.error(message);
+															errorSchoolDad(siteRequest, null, Future.failedFuture(message));
+														}
+													} else {
+
+														ApiRequest apiRequest = new ApiRequest();
+														apiRequest.setRows(listSchoolDad.getRows());
+														apiRequest.setNumFound(listSchoolDad.getQueryResponse().getResults().getNumFound());
+														apiRequest.setNumPATCH(0L);
+														apiRequest.initDeepApiRequest(siteRequest);
+														siteRequest.setApiRequest_(apiRequest);
+														siteRequest.getVertx().eventBus().publish("websocketSchoolDad", JsonObject.mapFrom(apiRequest).toString());
+														SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listSchoolDad.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
+														Date date = null;
+														if(facets != null)
+														date = (Date)facets.get("max_modified");
+														String dt;
+														if(date == null)
+															dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
+														else
+															dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
+														listSchoolDad.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
+
+														try {
+															listPATCHSchoolDad(apiRequest, listSchoolDad, dt, e -> {
+																if(e.succeeded()) {
+																	patchSchoolDadResponse(siteRequest, f -> {
+																		if(f.succeeded()) {
+																			LOGGER.info(String.format("patchSchoolDad succeeded. "));
+																			blockingCodeHandler.handle(Future.succeededFuture(f.result()));
+																		} else {
+																			LOGGER.error(String.format("patchSchoolDad failed. ", f.cause()));
+																			errorSchoolDad(siteRequest, null, f);
+																		}
+																	});
+																} else {
+																	LOGGER.error(String.format("patchSchoolDad failed. ", e.cause()));
+																	errorSchoolDad(siteRequest, null, e);
+																}
+															});
+														} catch(Exception ex) {
+															LOGGER.error(String.format("patchSchoolDad failed. ", ex));
+															errorSchoolDad(siteRequest, null, Future.failedFuture(ex));
+														}
 													}
 										} else {
 													LOGGER.error(String.format("patchSchoolDad failed. ", d.cause()));
@@ -1624,6 +1638,15 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+								List<String> roles = Arrays.asList("SiteManager", "SiteManager");
+								if(
+										!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
+										&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
+										) {
+									searchList.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionIdBefore()).orElse("-----"))
+											+ " OR userKeys_indexed_longs:" + Optional.ofNullable(siteRequest.getUserKey()).orElse(0L));
+								}
 								searchList.initDeepSearchList(siteRequest);
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !o.getEnrollmentKeys().contains(l2)) {
@@ -1659,6 +1682,15 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 									searchList.addFilterQuery("deleted_indexed_boolean:false");
 									searchList.addFilterQuery("archived_indexed_boolean:false");
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+									List<String> roles = Arrays.asList("SiteManager", "SiteManager");
+									if(
+											!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
+											&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
+											) {
+										searchList.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionIdBefore()).orElse("-----"))
+												+ " OR userKeys_indexed_longs:" + Optional.ofNullable(siteRequest.getUserKey()).orElse(0L));
+									}
 									searchList.initDeepSearchList(siteRequest);
 									Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 									if(l2 != null && !o.getEnrollmentKeys().contains(l2)) {
@@ -1696,6 +1728,15 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 									searchList.addFilterQuery("deleted_indexed_boolean:false");
 									searchList.addFilterQuery("archived_indexed_boolean:false");
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+									List<String> roles = Arrays.asList("SiteManager", "SiteManager");
+									if(
+											!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
+											&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
+											) {
+										searchList.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionIdBefore()).orElse("-----"))
+												+ " OR userKeys_indexed_longs:" + Optional.ofNullable(siteRequest.getUserKey()).orElse(0L));
+									}
 									searchList.initDeepSearchList(siteRequest);
 									Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 									if(l2 != null)
@@ -1749,6 +1790,15 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+								List<String> roles = Arrays.asList("SiteManager", "SiteManager");
+								if(
+										!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
+										&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
+										) {
+									searchList.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionIdBefore()).orElse("-----"))
+											+ " OR userKeys_indexed_longs:" + Optional.ofNullable(siteRequest.getUserKey()).orElse(0L));
+								}
 								searchList.initDeepSearchList(siteRequest);
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && o.getEnrollmentKeys().contains(l2)) {

@@ -333,8 +333,4 @@ public class UtilisateurSite extends UtilisateurSiteGen<Cluster> {
 	protected void _objetTitre(Couverture<String> c) {
 		c.o(utilisateurNomComplet + " " + utilisateurMail + " " + utilisateurNom);
 	}
-
-	public void htmlBody() {
-		super.htmlBody();
-	}  
 }

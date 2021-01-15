@@ -1645,44 +1645,58 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 											recherchePaiementScolaire(requeteSite, false, true, "/api/paiement", "PATCH", d -> {
 												if(d.succeeded()) {
 													ListeRecherche<PaiementScolaire> listePaiementScolaire = d.result();
-													RequeteApi requeteApi = new RequeteApi();
-													requeteApi.setRows(listePaiementScolaire.getRows());
-													requeteApi.setNumFound(listePaiementScolaire.getQueryResponse().getResults().getNumFound());
-													requeteApi.setNumPATCH(0L);
-													requeteApi.initLoinRequeteApi(requeteSite);
-													requeteSite.setRequeteApi_(requeteApi);
-													requeteSite.getVertx().eventBus().publish("websocketPaiementScolaire", JsonObject.mapFrom(requeteApi).toString());
-													SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listePaiementScolaire.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
-													Date date = null;
-													if(facets != null)
-														date = (Date)facets.get("max_modifie");
-													String dt;
-													if(date == null)
-														dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
-													else
-														dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
-													listePaiementScolaire.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
 
-													try {
-														listePATCHPaiementScolaire(requeteApi, listePaiementScolaire, dt, e -> {
-															if(e.succeeded()) {
-																patchPaiementScolaireReponse(requeteSite, f -> {
-																	if(f.succeeded()) {
-																		LOGGER.info(String.format("patchPaiementScolaire a réussi. "));
-																		blockingCodeHandler.handle(Future.succeededFuture(f.result()));
-																	} else {
-																		LOGGER.error(String.format("patchPaiementScolaire a échoué. ", f.cause()));
-																		erreurPaiementScolaire(requeteSite, null, f);
-																	}
-																});
-															} else {
-																LOGGER.error(String.format("patchPaiementScolaire a échoué. ", e.cause()));
-																erreurPaiementScolaire(requeteSite, null, e);
-															}
-														});
-													} catch(Exception ex) {
-														LOGGER.error(String.format("patchPaiementScolaire a échoué. ", ex));
-														erreurPaiementScolaire(requeteSite, null, Future.failedFuture(ex));
+													if(listePaiementScolaire.getQueryResponse().getResults().getNumFound() > 1) {
+														List<String> roles2 = Arrays.asList("SiteAdmin");
+														if(
+																!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles2)
+																&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles2)
+																) {
+															String message = String.format("rôles requis : " + String.join(", ", roles2));
+															LOGGER.error(message);
+															erreurPaiementScolaire(requeteSite, null, Future.failedFuture(message));
+														}
+													} else {
+
+														RequeteApi requeteApi = new RequeteApi();
+														requeteApi.setRows(listePaiementScolaire.getRows());
+														requeteApi.setNumFound(listePaiementScolaire.getQueryResponse().getResults().getNumFound());
+														requeteApi.setNumPATCH(0L);
+														requeteApi.initLoinRequeteApi(requeteSite);
+														requeteSite.setRequeteApi_(requeteApi);
+														requeteSite.getVertx().eventBus().publish("websocketPaiementScolaire", JsonObject.mapFrom(requeteApi).toString());
+														SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listePaiementScolaire.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
+														Date date = null;
+														if(facets != null)
+														date = (Date)facets.get("max_modifie");
+														String dt;
+														if(date == null)
+															dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
+														else
+															dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
+														listePaiementScolaire.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
+
+														try {
+															listePATCHPaiementScolaire(requeteApi, listePaiementScolaire, dt, e -> {
+																if(e.succeeded()) {
+																	patchPaiementScolaireReponse(requeteSite, f -> {
+																		if(f.succeeded()) {
+																			LOGGER.info(String.format("patchPaiementScolaire a réussi. "));
+																			blockingCodeHandler.handle(Future.succeededFuture(f.result()));
+																		} else {
+																			LOGGER.error(String.format("patchPaiementScolaire a échoué. ", f.cause()));
+																			erreurPaiementScolaire(requeteSite, null, f);
+																		}
+																	});
+																} else {
+																	LOGGER.error(String.format("patchPaiementScolaire a échoué. ", e.cause()));
+																	erreurPaiementScolaire(requeteSite, null, e);
+																}
+															});
+														} catch(Exception ex) {
+															LOGGER.error(String.format("patchPaiementScolaire a échoué. ", ex));
+															erreurPaiementScolaire(requeteSite, null, Future.failedFuture(ex));
+														}
 													}
 										} else {
 													LOGGER.error(String.format("patchPaiementScolaire a échoué. ", d.cause()));
@@ -1942,6 +1956,15 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+								List<String> roles = Arrays.asList("SiteManager", "SiteManager");
+								if(
+										!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+										&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+										) {
+									listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionIdAvant()).orElse("-----"))
+											+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(0L));
+								}
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !l2.equals(o.getInscriptionCle())) {
@@ -1976,6 +1999,15 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+								List<String> roles = Arrays.asList("SiteManager", "SiteManager");
+								if(
+										!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+										&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+										) {
+									listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionIdAvant()).orElse("-----"))
+											+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(0L));
+								}
 								listeRecherche.initLoinListeRecherche(requeteSite);
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null) {

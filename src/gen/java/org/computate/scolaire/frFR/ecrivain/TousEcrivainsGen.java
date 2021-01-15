@@ -1,38 +1,57 @@
 package org.computate.scolaire.frFR.ecrivain;
 
+import java.util.Arrays;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import java.util.HashMap;
+import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
+import org.computate.scolaire.frFR.requete.api.RequeteApi;
+import org.apache.commons.lang3.StringUtils;
+import java.text.NumberFormat;
+import io.vertx.core.logging.LoggerFactory;
+import java.util.ArrayList;
+import org.computate.scolaire.frFR.couverture.Couverture;
+import org.apache.commons.collections.CollectionUtils;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
+import io.vertx.core.logging.Logger;
+import java.math.RoundingMode;
 import java.math.MathContext;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.apache.commons.text.StringEscapeUtils;
-import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
-import org.apache.commons.lang3.StringUtils;
-import java.text.NumberFormat;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import java.util.List;
-import org.computate.scolaire.frFR.couverture.Couverture;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.math.NumberUtils;
+import java.util.Optional;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import java.lang.Object;
-import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 
 /**	
- * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.ecrivain.TousEcrivains&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
+ * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.ecrivain.TousEcrivains&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr. </a>
  * <br/>
  **/
 public abstract class TousEcrivainsGen<DEV> extends Object {
+	protected static final Logger LOGGER = LoggerFactory.getLogger(TousEcrivains.class);
 
 	//////////////////
 	// requeteSite_ //
 	//////////////////
 
-	/**	L'entité « requeteSite_ »
+	/**	 L'entité requeteSite_
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected RequeteSiteFrFR requeteSite_;
 	@JsonIgnore
 	public Couverture<RequeteSiteFrFR> requeteSite_Couverture = new Couverture<RequeteSiteFrFR>().p(this).c(RequeteSiteFrFR.class).var("requeteSite_").o(requeteSite_);
 
-	/**	<br/>L'entité « requeteSite_ »
+	/**	<br/> L'entité requeteSite_
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.ecrivain.TousEcrivains&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:requeteSite_">Trouver l'entité requeteSite_ dans Solr</a>
 	 * <br/>
@@ -48,6 +67,9 @@ public abstract class TousEcrivainsGen<DEV> extends Object {
 		this.requeteSite_ = requeteSite_;
 		this.requeteSite_Couverture.dejaInitialise = true;
 	}
+	public static RequeteSiteFrFR staticSetRequeteSite_(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
+	}
 	protected TousEcrivains requeteSite_Init() {
 		if(!requeteSite_Couverture.dejaInitialise) {
 			_requeteSite_(requeteSite_Couverture);
@@ -62,14 +84,15 @@ public abstract class TousEcrivainsGen<DEV> extends Object {
 	// ecrivains //
 	///////////////
 
-	/**	L'entité « ecrivains »
+	/**	 L'entité ecrivains
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<ToutEcrivain>(). 
 	 */
-	protected List<ToutEcrivain> ecrivains = new java.util.ArrayList<org.computate.scolaire.frFR.ecrivain.ToutEcrivain>();
+	@JsonInclude(Include.NON_NULL)
+	protected List<ToutEcrivain> ecrivains = new ArrayList<ToutEcrivain>();
 	@JsonIgnore
 	public Couverture<List<ToutEcrivain>> ecrivainsCouverture = new Couverture<List<ToutEcrivain>>().p(this).c(List.class).var("ecrivains").o(ecrivains);
 
-	/**	<br/>L'entité « ecrivains »
+	/**	<br/> L'entité ecrivains
 	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<ToutEcrivain>(). 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.ecrivain.TousEcrivains&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:ecrivains">Trouver l'entité ecrivains dans Solr</a>
 	 * <br/>
@@ -84,6 +107,9 @@ public abstract class TousEcrivainsGen<DEV> extends Object {
 	public void setEcrivains(List<ToutEcrivain> ecrivains) {
 		this.ecrivains = ecrivains;
 		this.ecrivainsCouverture.dejaInitialise = true;
+	}
+	public static ToutEcrivain staticSetEcrivains(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
 	}
 	public TousEcrivains addEcrivains(ToutEcrivain...objets) {
 		for(ToutEcrivain o : objets) {
@@ -197,6 +223,62 @@ public abstract class TousEcrivainsGen<DEV> extends Object {
 		}
 	}
 
+	///////////////
+	// staticSet //
+	///////////////
+
+	public static Object staticSetPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		return staticSetTousEcrivains(entiteVar,  requeteSite_, o);
+	}
+	public static Object staticSetTousEcrivains(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		switch(entiteVar) {
+			default:
+				return null;
+		}
+	}
+
+	////////////////
+	// staticSolr //
+	////////////////
+
+	public static Object staticSolrPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		return staticSolrTousEcrivains(entiteVar,  requeteSite_, o);
+	}
+	public static Object staticSolrTousEcrivains(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		switch(entiteVar) {
+			default:
+				return null;
+		}
+	}
+
+	///////////////////
+	// staticSolrStr //
+	///////////////////
+
+	public static String staticSolrStrPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		return staticSolrStrTousEcrivains(entiteVar,  requeteSite_, o);
+	}
+	public static String staticSolrStrTousEcrivains(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		switch(entiteVar) {
+			default:
+				return null;
+		}
+	}
+
+	//////////////////
+	// staticSolrFq //
+	//////////////////
+
+	public static String staticSolrFqPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		return staticSolrFqTousEcrivains(entiteVar,  requeteSite_, o);
+	}
+	public static String staticSolrFqTousEcrivains(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		switch(entiteVar) {
+			default:
+				return null;
+		}
+	}
+
 	/////////////
 	// definir //
 	/////////////
@@ -209,8 +291,8 @@ public abstract class TousEcrivainsGen<DEV> extends Object {
 				if(o == null)
 					o = definirTousEcrivains(v, val);
 				else if(o instanceof Cluster) {
-					Cluster cluster = (Cluster)o;
-					o = cluster.definirPourClasse(v, val);
+					Cluster oCluster = (Cluster)o;
+					o = oCluster.definirPourClasse(v, val);
 				}
 			}
 		}
@@ -220,6 +302,18 @@ public abstract class TousEcrivainsGen<DEV> extends Object {
 		switch(var) {
 			default:
 				return null;
+		}
+	}
+
+	//////////////////
+	// requeteApi //
+	//////////////////
+
+	public void requeteApiTousEcrivains() {
+		RequeteApi requeteApi = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequeteApi_).orElse(null);
+		Object o = Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
+		if(o != null && o instanceof TousEcrivains) {
+			TousEcrivains original = (TousEcrivains)o;
 		}
 	}
 

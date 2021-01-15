@@ -1223,44 +1223,58 @@ public class RecuScolaireFrFRGenApiServiceImpl implements RecuScolaireFrFRGenApi
 											rechercheRecuScolaire(requeteSite, false, true, "/api/recu", "PATCH", d -> {
 												if(d.succeeded()) {
 													ListeRecherche<RecuScolaire> listeRecuScolaire = d.result();
-													RequeteApi requeteApi = new RequeteApi();
-													requeteApi.setRows(listeRecuScolaire.getRows());
-													requeteApi.setNumFound(listeRecuScolaire.getQueryResponse().getResults().getNumFound());
-													requeteApi.setNumPATCH(0L);
-													requeteApi.initLoinRequeteApi(requeteSite);
-													requeteSite.setRequeteApi_(requeteApi);
-													requeteSite.getVertx().eventBus().publish("websocketRecuScolaire", JsonObject.mapFrom(requeteApi).toString());
-													SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listeRecuScolaire.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
-													Date date = null;
-													if(facets != null)
-														date = (Date)facets.get("max_modifie");
-													String dt;
-													if(date == null)
-														dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
-													else
-														dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
-													listeRecuScolaire.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
 
-													try {
-														listePATCHRecuScolaire(requeteApi, listeRecuScolaire, dt, e -> {
-															if(e.succeeded()) {
-																patchRecuScolaireReponse(requeteSite, f -> {
-																	if(f.succeeded()) {
-																		LOGGER.info(String.format("patchRecuScolaire a réussi. "));
-																		blockingCodeHandler.handle(Future.succeededFuture(f.result()));
-																	} else {
-																		LOGGER.error(String.format("patchRecuScolaire a échoué. ", f.cause()));
-																		erreurRecuScolaire(requeteSite, null, f);
-																	}
-																});
-															} else {
-																LOGGER.error(String.format("patchRecuScolaire a échoué. ", e.cause()));
-																erreurRecuScolaire(requeteSite, null, e);
-															}
-														});
-													} catch(Exception ex) {
-														LOGGER.error(String.format("patchRecuScolaire a échoué. ", ex));
-														erreurRecuScolaire(requeteSite, null, Future.failedFuture(ex));
+													if(listeRecuScolaire.getQueryResponse().getResults().getNumFound() > 1) {
+														List<String> roles2 = Arrays.asList("SiteAdmin");
+														if(
+																!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles2)
+																&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles2)
+																) {
+															String message = String.format("rôles requis : " + String.join(", ", roles2));
+															LOGGER.error(message);
+															erreurRecuScolaire(requeteSite, null, Future.failedFuture(message));
+														}
+													} else {
+
+														RequeteApi requeteApi = new RequeteApi();
+														requeteApi.setRows(listeRecuScolaire.getRows());
+														requeteApi.setNumFound(listeRecuScolaire.getQueryResponse().getResults().getNumFound());
+														requeteApi.setNumPATCH(0L);
+														requeteApi.initLoinRequeteApi(requeteSite);
+														requeteSite.setRequeteApi_(requeteApi);
+														requeteSite.getVertx().eventBus().publish("websocketRecuScolaire", JsonObject.mapFrom(requeteApi).toString());
+														SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listeRecuScolaire.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
+														Date date = null;
+														if(facets != null)
+														date = (Date)facets.get("max_modifie");
+														String dt;
+														if(date == null)
+															dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
+														else
+															dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
+														listeRecuScolaire.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
+
+														try {
+															listePATCHRecuScolaire(requeteApi, listeRecuScolaire, dt, e -> {
+																if(e.succeeded()) {
+																	patchRecuScolaireReponse(requeteSite, f -> {
+																		if(f.succeeded()) {
+																			LOGGER.info(String.format("patchRecuScolaire a réussi. "));
+																			blockingCodeHandler.handle(Future.succeededFuture(f.result()));
+																		} else {
+																			LOGGER.error(String.format("patchRecuScolaire a échoué. ", f.cause()));
+																			erreurRecuScolaire(requeteSite, null, f);
+																		}
+																	});
+																} else {
+																	LOGGER.error(String.format("patchRecuScolaire a échoué. ", e.cause()));
+																	erreurRecuScolaire(requeteSite, null, e);
+																}
+															});
+														} catch(Exception ex) {
+															LOGGER.error(String.format("patchRecuScolaire a échoué. ", ex));
+															erreurRecuScolaire(requeteSite, null, Future.failedFuture(ex));
+														}
 													}
 										} else {
 													LOGGER.error(String.format("patchRecuScolaire a échoué. ", d.cause()));

@@ -83,7 +83,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		this.pageParts = pageParts;
 		this.pagePartsCouverture.dejaInitialise = true;
 	}
-	public static List<PagePart> staticSetPageParts(RequeteSiteFrFR requeteSite_, String o) {
+	public static PagePart staticSetPageParts(RequeteSiteFrFR requeteSite_, String o) {
 		return null;
 	}
 	public MiseEnPage addPageParts(PagePart...objets) {
@@ -170,10 +170,9 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	public String getSiteUrlBase() {
 		return siteUrlBase;
 	}
-	public MiseEnPage setSiteUrlBase(String o) {
+	public void setSiteUrlBase(String o) {
 		this.siteUrlBase = MiseEnPage.staticSetSiteUrlBase(requeteSite_, o);
 		this.siteUrlBaseCouverture.dejaInitialise = true;
-		return (MiseEnPage)this;
 	}
 	public static String staticSetSiteUrlBase(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -193,7 +192,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	}
 
 	public static String staticSolrStrSiteUrlBase(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqSiteUrlBase(RequeteSiteFrFR requeteSite_, String o) {
@@ -247,10 +246,9 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	public String getStatiqueUrlBase() {
 		return statiqueUrlBase;
 	}
-	public MiseEnPage setStatiqueUrlBase(String o) {
+	public void setStatiqueUrlBase(String o) {
 		this.statiqueUrlBase = MiseEnPage.staticSetStatiqueUrlBase(requeteSite_, o);
 		this.statiqueUrlBaseCouverture.dejaInitialise = true;
-		return (MiseEnPage)this;
 	}
 	public static String staticSetStatiqueUrlBase(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -270,7 +268,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	}
 
 	public static String staticSolrStrStatiqueUrlBase(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqStatiqueUrlBase(RequeteSiteFrFR requeteSite_, String o) {
@@ -408,10 +406,9 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	public String getContexteIconeGroupe() {
 		return contexteIconeGroupe;
 	}
-	public MiseEnPage setContexteIconeGroupe(String o) {
+	public void setContexteIconeGroupe(String o) {
 		this.contexteIconeGroupe = MiseEnPage.staticSetContexteIconeGroupe(requeteSite_, o);
 		this.contexteIconeGroupeCouverture.dejaInitialise = true;
-		return (MiseEnPage)this;
 	}
 	public static String staticSetContexteIconeGroupe(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -431,7 +428,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	}
 
 	public static String staticSolrStrContexteIconeGroupe(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqContexteIconeGroupe(RequeteSiteFrFR requeteSite_, String o) {
@@ -485,10 +482,9 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	public String getContexteIconeNom() {
 		return contexteIconeNom;
 	}
-	public MiseEnPage setContexteIconeNom(String o) {
+	public void setContexteIconeNom(String o) {
 		this.contexteIconeNom = MiseEnPage.staticSetContexteIconeNom(requeteSite_, o);
 		this.contexteIconeNomCouverture.dejaInitialise = true;
-		return (MiseEnPage)this;
 	}
 	public static String staticSetContexteIconeNom(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -508,7 +504,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	}
 
 	public static String staticSolrStrContexteIconeNom(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqContexteIconeNom(RequeteSiteFrFR requeteSite_, String o) {
@@ -562,10 +558,9 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	public String getContexteIconeClassesCss() {
 		return contexteIconeClassesCss;
 	}
-	public MiseEnPage setContexteIconeClassesCss(String o) {
+	public void setContexteIconeClassesCss(String o) {
 		this.contexteIconeClassesCss = MiseEnPage.staticSetContexteIconeClassesCss(requeteSite_, o);
 		this.contexteIconeClassesCssCouverture.dejaInitialise = true;
-		return (MiseEnPage)this;
 	}
 	public static String staticSetContexteIconeClassesCss(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -585,7 +580,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	}
 
 	public static String staticSolrStrContexteIconeClassesCss(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqContexteIconeClassesCss(RequeteSiteFrFR requeteSite_, String o) {
@@ -644,10 +639,9 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		this.pageVisibleAuxBots = pageVisibleAuxBots;
 		this.pageVisibleAuxBotsCouverture.dejaInitialise = true;
 	}
-	public MiseEnPage setPageVisibleAuxBots(String o) {
+	public void setPageVisibleAuxBots(String o) {
 		this.pageVisibleAuxBots = MiseEnPage.staticSetPageVisibleAuxBots(requeteSite_, o);
 		this.pageVisibleAuxBotsCouverture.dejaInitialise = true;
-		return (MiseEnPage)this;
 	}
 	public static Boolean staticSetPageVisibleAuxBots(RequeteSiteFrFR requeteSite_, String o) {
 		return Boolean.parseBoolean(o);
@@ -667,7 +661,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	}
 
 	public static String staticSolrStrPageVisibleAuxBots(RequeteSiteFrFR requeteSite_, Boolean o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPageVisibleAuxBots(RequeteSiteFrFR requeteSite_, String o) {
@@ -721,10 +715,9 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	public String getPageH1() {
 		return pageH1;
 	}
-	public MiseEnPage setPageH1(String o) {
+	public void setPageH1(String o) {
 		this.pageH1 = MiseEnPage.staticSetPageH1(requeteSite_, o);
 		this.pageH1Couverture.dejaInitialise = true;
-		return (MiseEnPage)this;
 	}
 	public static String staticSetPageH1(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -744,7 +737,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	}
 
 	public static String staticSolrStrPageH1(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPageH1(RequeteSiteFrFR requeteSite_, String o) {
@@ -798,10 +791,9 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	public String getPageH2() {
 		return pageH2;
 	}
-	public MiseEnPage setPageH2(String o) {
+	public void setPageH2(String o) {
 		this.pageH2 = MiseEnPage.staticSetPageH2(requeteSite_, o);
 		this.pageH2Couverture.dejaInitialise = true;
-		return (MiseEnPage)this;
 	}
 	public static String staticSetPageH2(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -821,7 +813,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	}
 
 	public static String staticSolrStrPageH2(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPageH2(RequeteSiteFrFR requeteSite_, String o) {
@@ -875,10 +867,9 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	public String getPageH3() {
 		return pageH3;
 	}
-	public MiseEnPage setPageH3(String o) {
+	public void setPageH3(String o) {
 		this.pageH3 = MiseEnPage.staticSetPageH3(requeteSite_, o);
 		this.pageH3Couverture.dejaInitialise = true;
-		return (MiseEnPage)this;
 	}
 	public static String staticSetPageH3(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -898,7 +889,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	}
 
 	public static String staticSolrStrPageH3(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPageH3(RequeteSiteFrFR requeteSite_, String o) {
@@ -952,10 +943,9 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	public String getPageH1Court() {
 		return pageH1Court;
 	}
-	public MiseEnPage setPageH1Court(String o) {
+	public void setPageH1Court(String o) {
 		this.pageH1Court = MiseEnPage.staticSetPageH1Court(requeteSite_, o);
 		this.pageH1CourtCouverture.dejaInitialise = true;
-		return (MiseEnPage)this;
 	}
 	public static String staticSetPageH1Court(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -975,7 +965,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	}
 
 	public static String staticSolrStrPageH1Court(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPageH1Court(RequeteSiteFrFR requeteSite_, String o) {
@@ -1029,10 +1019,9 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	public String getPageH2Court() {
 		return pageH2Court;
 	}
-	public MiseEnPage setPageH2Court(String o) {
+	public void setPageH2Court(String o) {
 		this.pageH2Court = MiseEnPage.staticSetPageH2Court(requeteSite_, o);
 		this.pageH2CourtCouverture.dejaInitialise = true;
-		return (MiseEnPage)this;
 	}
 	public static String staticSetPageH2Court(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -1052,7 +1041,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	}
 
 	public static String staticSolrStrPageH2Court(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPageH2Court(RequeteSiteFrFR requeteSite_, String o) {
@@ -1106,10 +1095,9 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	public String getPageH3Court() {
 		return pageH3Court;
 	}
-	public MiseEnPage setPageH3Court(String o) {
+	public void setPageH3Court(String o) {
 		this.pageH3Court = MiseEnPage.staticSetPageH3Court(requeteSite_, o);
 		this.pageH3CourtCouverture.dejaInitialise = true;
-		return (MiseEnPage)this;
 	}
 	public static String staticSetPageH3Court(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -1129,7 +1117,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	}
 
 	public static String staticSolrStrPageH3Court(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPageH3Court(RequeteSiteFrFR requeteSite_, String o) {
@@ -1183,10 +1171,9 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	public String getPageTitre() {
 		return pageTitre;
 	}
-	public MiseEnPage setPageTitre(String o) {
+	public void setPageTitre(String o) {
 		this.pageTitre = MiseEnPage.staticSetPageTitre(requeteSite_, o);
 		this.pageTitreCouverture.dejaInitialise = true;
-		return (MiseEnPage)this;
 	}
 	public static String staticSetPageTitre(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -1206,7 +1193,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	}
 
 	public static String staticSolrStrPageTitre(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPageTitre(RequeteSiteFrFR requeteSite_, String o) {
@@ -1260,10 +1247,9 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	public String getPageUri() {
 		return pageUri;
 	}
-	public MiseEnPage setPageUri(String o) {
+	public void setPageUri(String o) {
 		this.pageUri = MiseEnPage.staticSetPageUri(requeteSite_, o);
 		this.pageUriCouverture.dejaInitialise = true;
-		return (MiseEnPage)this;
 	}
 	public static String staticSetPageUri(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -1283,7 +1269,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	}
 
 	public static String staticSolrStrPageUri(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPageUri(RequeteSiteFrFR requeteSite_, String o) {
@@ -1342,7 +1328,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		this.pageUris = pageUris;
 		this.pageUrisCouverture.dejaInitialise = true;
 	}
-	public static List<String> staticSetPageUris(RequeteSiteFrFR requeteSite_, String o) {
+	public static String staticSetPageUris(RequeteSiteFrFR requeteSite_, String o) {
 		return null;
 	}
 	public MiseEnPage addPageUris(String...objets) {
@@ -1356,13 +1342,12 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 			this.pageUris.add(o);
 		return (MiseEnPage)this;
 	}
-	public MiseEnPage setPageUris(JsonArray objets) {
+	public void setPageUris(JsonArray objets) {
 		pageUris.clear();
 		for(int i = 0; i < objets.size(); i++) {
 			String o = objets.getString(i);
 			addPageUris(o);
 		}
-		return (MiseEnPage)this;
 	}
 	protected MiseEnPage pageUrisInit() {
 		if(!pageUrisCouverture.dejaInitialise) {
@@ -1372,12 +1357,12 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		return (MiseEnPage)this;
 	}
 
-	public static List<String> staticSolrPageUris(RequeteSiteFrFR requeteSite_, List<String> o) {
+	public static String staticSolrPageUris(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
 	}
 
-	public static String staticSolrStrPageUris(RequeteSiteFrFR requeteSite_, List<String> o) {
-			return o == null ? null : o.toString();
+	public static String staticSolrStrPageUris(RequeteSiteFrFR requeteSite_, String o) {
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPageUris(RequeteSiteFrFR requeteSite_, String o) {
@@ -1385,7 +1370,11 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	}
 
 	public List<String> solrPageUris() {
-		return MiseEnPage.staticSolrPageUris(requeteSite_, pageUris);
+		List<String> l = new ArrayList<String>();
+		for(String o : pageUris) {
+			l.add(MiseEnPage.staticSolrPageUris(requeteSite_, o));
+		}
+		return l;
 	}
 
 	public String strPageUris() {
@@ -1431,10 +1420,9 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	public String getPageUrl() {
 		return pageUrl;
 	}
-	public MiseEnPage setPageUrl(String o) {
+	public void setPageUrl(String o) {
 		this.pageUrl = MiseEnPage.staticSetPageUrl(requeteSite_, o);
 		this.pageUrlCouverture.dejaInitialise = true;
-		return (MiseEnPage)this;
 	}
 	public static String staticSetPageUrl(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -1454,7 +1442,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	}
 
 	public static String staticSolrStrPageUrl(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPageUrl(RequeteSiteFrFR requeteSite_, String o) {
@@ -1508,10 +1496,9 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	public String getPageImageUri() {
 		return pageImageUri;
 	}
-	public MiseEnPage setPageImageUri(String o) {
+	public void setPageImageUri(String o) {
 		this.pageImageUri = MiseEnPage.staticSetPageImageUri(requeteSite_, o);
 		this.pageImageUriCouverture.dejaInitialise = true;
-		return (MiseEnPage)this;
 	}
 	public static String staticSetPageImageUri(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -1531,7 +1518,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	}
 
 	public static String staticSolrStrPageImageUri(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPageImageUri(RequeteSiteFrFR requeteSite_, String o) {
@@ -1585,10 +1572,9 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	public String getPageImageUrl() {
 		return pageImageUrl;
 	}
-	public MiseEnPage setPageImageUrl(String o) {
+	public void setPageImageUrl(String o) {
 		this.pageImageUrl = MiseEnPage.staticSetPageImageUrl(requeteSite_, o);
 		this.pageImageUrlCouverture.dejaInitialise = true;
-		return (MiseEnPage)this;
 	}
 	public static String staticSetPageImageUrl(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -1608,7 +1594,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	}
 
 	public static String staticSolrStrPageImageUrl(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPageImageUrl(RequeteSiteFrFR requeteSite_, String o) {
@@ -1662,10 +1648,9 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	public String getPageVideoId() {
 		return pageVideoId;
 	}
-	public MiseEnPage setPageVideoId(String o) {
+	public void setPageVideoId(String o) {
 		this.pageVideoId = MiseEnPage.staticSetPageVideoId(requeteSite_, o);
 		this.pageVideoIdCouverture.dejaInitialise = true;
-		return (MiseEnPage)this;
 	}
 	public static String staticSetPageVideoId(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -1685,7 +1670,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	}
 
 	public static String staticSolrStrPageVideoId(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPageVideoId(RequeteSiteFrFR requeteSite_, String o) {
@@ -1739,10 +1724,9 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	public String getPageVideoUrl() {
 		return pageVideoUrl;
 	}
-	public MiseEnPage setPageVideoUrl(String o) {
+	public void setPageVideoUrl(String o) {
 		this.pageVideoUrl = MiseEnPage.staticSetPageVideoUrl(requeteSite_, o);
 		this.pageVideoUrlCouverture.dejaInitialise = true;
-		return (MiseEnPage)this;
 	}
 	public static String staticSetPageVideoUrl(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -1762,7 +1746,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	}
 
 	public static String staticSolrStrPageVideoUrl(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPageVideoUrl(RequeteSiteFrFR requeteSite_, String o) {
@@ -1816,10 +1800,9 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	public String getPageVideoUrlEmbed() {
 		return pageVideoUrlEmbed;
 	}
-	public MiseEnPage setPageVideoUrlEmbed(String o) {
+	public void setPageVideoUrlEmbed(String o) {
 		this.pageVideoUrlEmbed = MiseEnPage.staticSetPageVideoUrlEmbed(requeteSite_, o);
 		this.pageVideoUrlEmbedCouverture.dejaInitialise = true;
-		return (MiseEnPage)this;
 	}
 	public static String staticSetPageVideoUrlEmbed(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -1839,7 +1822,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	}
 
 	public static String staticSolrStrPageVideoUrlEmbed(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPageVideoUrlEmbed(RequeteSiteFrFR requeteSite_, String o) {
@@ -1899,10 +1882,9 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		this.pageImageLargeur = pageImageLargeur;
 		this.pageImageLargeurCouverture.dejaInitialise = true;
 	}
-	public MiseEnPage setPageImageLargeur(String o) {
+	public void setPageImageLargeur(String o) {
 		this.pageImageLargeur = MiseEnPage.staticSetPageImageLargeur(requeteSite_, o);
 		this.pageImageLargeurCouverture.dejaInitialise = true;
-		return (MiseEnPage)this;
 	}
 	public static Integer staticSetPageImageLargeur(RequeteSiteFrFR requeteSite_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -1924,7 +1906,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	}
 
 	public static String staticSolrStrPageImageLargeur(RequeteSiteFrFR requeteSite_, Integer o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPageImageLargeur(RequeteSiteFrFR requeteSite_, String o) {
@@ -1984,10 +1966,9 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		this.pageImageHauteur = pageImageHauteur;
 		this.pageImageHauteurCouverture.dejaInitialise = true;
 	}
-	public MiseEnPage setPageImageHauteur(String o) {
+	public void setPageImageHauteur(String o) {
 		this.pageImageHauteur = MiseEnPage.staticSetPageImageHauteur(requeteSite_, o);
 		this.pageImageHauteurCouverture.dejaInitialise = true;
-		return (MiseEnPage)this;
 	}
 	public static Integer staticSetPageImageHauteur(RequeteSiteFrFR requeteSite_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -2009,7 +1990,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	}
 
 	public static String staticSolrStrPageImageHauteur(RequeteSiteFrFR requeteSite_, Integer o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPageImageHauteur(RequeteSiteFrFR requeteSite_, String o) {
@@ -2063,10 +2044,9 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	public String getPageImageTypeContenu() {
 		return pageImageTypeContenu;
 	}
-	public MiseEnPage setPageImageTypeContenu(String o) {
+	public void setPageImageTypeContenu(String o) {
 		this.pageImageTypeContenu = MiseEnPage.staticSetPageImageTypeContenu(requeteSite_, o);
 		this.pageImageTypeContenuCouverture.dejaInitialise = true;
-		return (MiseEnPage)this;
 	}
 	public static String staticSetPageImageTypeContenu(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -2086,7 +2066,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	}
 
 	public static String staticSolrStrPageImageTypeContenu(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPageImageTypeContenu(RequeteSiteFrFR requeteSite_, String o) {
@@ -2140,10 +2120,9 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	public String getPageTypeContenu() {
 		return pageTypeContenu;
 	}
-	public MiseEnPage setPageTypeContenu(String o) {
+	public void setPageTypeContenu(String o) {
 		this.pageTypeContenu = MiseEnPage.staticSetPageTypeContenu(requeteSite_, o);
 		this.pageTypeContenuCouverture.dejaInitialise = true;
-		return (MiseEnPage)this;
 	}
 	public static String staticSetPageTypeContenu(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -2163,7 +2142,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	}
 
 	public static String staticSolrStrPageTypeContenu(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPageTypeContenu(RequeteSiteFrFR requeteSite_, String o) {
@@ -2223,24 +2202,21 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		this.pageCree = pageCree;
 		this.pageCreeCouverture.dejaInitialise = true;
 	}
-	public MiseEnPage setPageCree(Instant o) {
+	public void setPageCree(Instant o) {
 		this.pageCree = o == null ? null : LocalDateTime.from(o).truncatedTo(ChronoUnit.MILLIS);
 		this.pageCreeCouverture.dejaInitialise = true;
-		return (MiseEnPage)this;
 	}
 	/** Example: 2011-12-03T10:15:30+01:00 **/
-	public MiseEnPage setPageCree(String o) {
+	public void setPageCree(String o) {
 		this.pageCree = MiseEnPage.staticSetPageCree(requeteSite_, o);
 		this.pageCreeCouverture.dejaInitialise = true;
-		return (MiseEnPage)this;
 	}
 	public static LocalDateTime staticSetPageCree(RequeteSiteFrFR requeteSite_, String o) {
 		return o == null ? null : LocalDateTime.parse(o, DateTimeFormatter.ISO_DATE_TIME).truncatedTo(ChronoUnit.MILLIS);
 	}
-	public MiseEnPage setPageCree(Date o) {
+	public void setPageCree(Date o) {
 		this.pageCree = o == null ? null : LocalDateTime.ofInstant(o.toInstant(), ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).truncatedTo(ChronoUnit.MILLIS);
 		this.pageCreeCouverture.dejaInitialise = true;
-		return (MiseEnPage)this;
 	}
 	protected MiseEnPage pageCreeInit() {
 		if(!pageCreeCouverture.dejaInitialise) {
@@ -2257,7 +2233,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	}
 
 	public static String staticSolrStrPageCree(RequeteSiteFrFR requeteSite_, Date o) {
-		return DateTimeFormatter.ISO_DATE_TIME.format(o.toInstant());
+		return "\"" + DateTimeFormatter.ISO_DATE_TIME.format(o.toInstant().atOffset(ZoneOffset.UTC)) + "\"";
 	}
 
 	public static String staticSolrFqPageCree(RequeteSiteFrFR requeteSite_, String o) {
@@ -2317,24 +2293,21 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		this.pageModifiee = pageModifiee;
 		this.pageModifieeCouverture.dejaInitialise = true;
 	}
-	public MiseEnPage setPageModifiee(Instant o) {
+	public void setPageModifiee(Instant o) {
 		this.pageModifiee = o == null ? null : LocalDateTime.from(o).truncatedTo(ChronoUnit.MILLIS);
 		this.pageModifieeCouverture.dejaInitialise = true;
-		return (MiseEnPage)this;
 	}
 	/** Example: 2011-12-03T10:15:30+01:00 **/
-	public MiseEnPage setPageModifiee(String o) {
+	public void setPageModifiee(String o) {
 		this.pageModifiee = MiseEnPage.staticSetPageModifiee(requeteSite_, o);
 		this.pageModifieeCouverture.dejaInitialise = true;
-		return (MiseEnPage)this;
 	}
 	public static LocalDateTime staticSetPageModifiee(RequeteSiteFrFR requeteSite_, String o) {
 		return o == null ? null : LocalDateTime.parse(o, DateTimeFormatter.ISO_DATE_TIME).truncatedTo(ChronoUnit.MILLIS);
 	}
-	public MiseEnPage setPageModifiee(Date o) {
+	public void setPageModifiee(Date o) {
 		this.pageModifiee = o == null ? null : LocalDateTime.ofInstant(o.toInstant(), ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).truncatedTo(ChronoUnit.MILLIS);
 		this.pageModifieeCouverture.dejaInitialise = true;
-		return (MiseEnPage)this;
 	}
 	protected MiseEnPage pageModifieeInit() {
 		if(!pageModifieeCouverture.dejaInitialise) {
@@ -2351,7 +2324,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	}
 
 	public static String staticSolrStrPageModifiee(RequeteSiteFrFR requeteSite_, Date o) {
-		return DateTimeFormatter.ISO_DATE_TIME.format(o.toInstant());
+		return "\"" + DateTimeFormatter.ISO_DATE_TIME.format(o.toInstant().atOffset(ZoneOffset.UTC)) + "\"";
 	}
 
 	public static String staticSolrFqPageModifiee(RequeteSiteFrFR requeteSite_, String o) {
@@ -2405,10 +2378,9 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	public String getPageMotsCles() {
 		return pageMotsCles;
 	}
-	public MiseEnPage setPageMotsCles(String o) {
+	public void setPageMotsCles(String o) {
 		this.pageMotsCles = MiseEnPage.staticSetPageMotsCles(requeteSite_, o);
 		this.pageMotsClesCouverture.dejaInitialise = true;
-		return (MiseEnPage)this;
 	}
 	public static String staticSetPageMotsCles(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -2428,7 +2400,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	}
 
 	public static String staticSolrStrPageMotsCles(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPageMotsCles(RequeteSiteFrFR requeteSite_, String o) {
@@ -2482,10 +2454,9 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	public String getPageDescription() {
 		return pageDescription;
 	}
-	public MiseEnPage setPageDescription(String o) {
+	public void setPageDescription(String o) {
 		this.pageDescription = MiseEnPage.staticSetPageDescription(requeteSite_, o);
 		this.pageDescriptionCouverture.dejaInitialise = true;
-		return (MiseEnPage)this;
 	}
 	public static String staticSetPageDescription(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -2505,7 +2476,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	}
 
 	public static String staticSolrStrPageDescription(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPageDescription(RequeteSiteFrFR requeteSite_, String o) {
@@ -2559,10 +2530,9 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	public String getPageAccueilUri() {
 		return pageAccueilUri;
 	}
-	public MiseEnPage setPageAccueilUri(String o) {
+	public void setPageAccueilUri(String o) {
 		this.pageAccueilUri = MiseEnPage.staticSetPageAccueilUri(requeteSite_, o);
 		this.pageAccueilUriCouverture.dejaInitialise = true;
-		return (MiseEnPage)this;
 	}
 	public static String staticSetPageAccueilUri(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -2582,7 +2552,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	}
 
 	public static String staticSolrStrPageAccueilUri(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPageAccueilUri(RequeteSiteFrFR requeteSite_, String o) {
@@ -2636,10 +2606,9 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	public String getPageEcoleUri() {
 		return pageEcoleUri;
 	}
-	public MiseEnPage setPageEcoleUri(String o) {
+	public void setPageEcoleUri(String o) {
 		this.pageEcoleUri = MiseEnPage.staticSetPageEcoleUri(requeteSite_, o);
 		this.pageEcoleUriCouverture.dejaInitialise = true;
-		return (MiseEnPage)this;
 	}
 	public static String staticSetPageEcoleUri(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -2659,7 +2628,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	}
 
 	public static String staticSolrStrPageEcoleUri(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPageEcoleUri(RequeteSiteFrFR requeteSite_, String o) {
@@ -2713,10 +2682,9 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	public String getPageUtilisateurUri() {
 		return pageUtilisateurUri;
 	}
-	public MiseEnPage setPageUtilisateurUri(String o) {
+	public void setPageUtilisateurUri(String o) {
 		this.pageUtilisateurUri = MiseEnPage.staticSetPageUtilisateurUri(requeteSite_, o);
 		this.pageUtilisateurUriCouverture.dejaInitialise = true;
-		return (MiseEnPage)this;
 	}
 	public static String staticSetPageUtilisateurUri(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -2736,7 +2704,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	}
 
 	public static String staticSolrStrPageUtilisateurUri(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPageUtilisateurUri(RequeteSiteFrFR requeteSite_, String o) {
@@ -2790,10 +2758,9 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	public String getPageDeconnexionUri() {
 		return pageDeconnexionUri;
 	}
-	public MiseEnPage setPageDeconnexionUri(String o) {
+	public void setPageDeconnexionUri(String o) {
 		this.pageDeconnexionUri = MiseEnPage.staticSetPageDeconnexionUri(requeteSite_, o);
 		this.pageDeconnexionUriCouverture.dejaInitialise = true;
-		return (MiseEnPage)this;
 	}
 	public static String staticSetPageDeconnexionUri(RequeteSiteFrFR requeteSite_, String o) {
 		return o;
@@ -2813,7 +2780,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	}
 
 	public static String staticSolrStrPageDeconnexionUri(RequeteSiteFrFR requeteSite_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPageDeconnexionUri(RequeteSiteFrFR requeteSite_, String o) {
@@ -2912,7 +2879,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		this.ecoles = ecoles;
 		this.ecolesCouverture.dejaInitialise = true;
 	}
-	public static List<Ecole> staticSetEcoles(RequeteSiteFrFR requeteSite_, String o) {
+	public static Ecole staticSetEcoles(RequeteSiteFrFR requeteSite_, String o) {
 		return null;
 	}
 	public MiseEnPage addEcoles(Ecole...objets) {
@@ -3006,10 +2973,9 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		this.anneeVal = anneeVal;
 		this.anneeValCouverture.dejaInitialise = true;
 	}
-	public MiseEnPage setAnneeVal(String o) {
+	public void setAnneeVal(String o) {
 		this.anneeVal = MiseEnPage.staticSetAnneeVal(requeteSite_, o);
 		this.anneeValCouverture.dejaInitialise = true;
-		return (MiseEnPage)this;
 	}
 	public static Integer staticSetAnneeVal(RequeteSiteFrFR requeteSite_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -3031,7 +2997,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 	}
 
 	public static String staticSolrStrAnneeVal(RequeteSiteFrFR requeteSite_, Integer o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqAnneeVal(RequeteSiteFrFR requeteSite_, String o) {
@@ -3396,7 +3362,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		case "pageUri":
 			return MiseEnPage.staticSolrPageUri(requeteSite_, (String)o);
 		case "pageUris":
-			return MiseEnPage.staticSolrPageUris(requeteSite_, (List<String>)o);
+			return MiseEnPage.staticSolrPageUris(requeteSite_, (String)o);
 		case "pageUrl":
 			return MiseEnPage.staticSolrPageUrl(requeteSite_, (String)o);
 		case "pageImageUri":
@@ -3478,7 +3444,7 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 		case "pageUri":
 			return MiseEnPage.staticSolrStrPageUri(requeteSite_, (String)o);
 		case "pageUris":
-			return MiseEnPage.staticSolrStrPageUris(requeteSite_, (List<String>)o);
+			return MiseEnPage.staticSolrStrPageUris(requeteSite_, (String)o);
 		case "pageUrl":
 			return MiseEnPage.staticSolrStrPageUrl(requeteSite_, (String)o);
 		case "pageImageUri":
@@ -3616,8 +3582,8 @@ public abstract class MiseEnPageGen<DEV> extends Object {
 				if(o == null)
 					o = definirMiseEnPage(v, val);
 				else if(o instanceof Cluster) {
-					Cluster cluster = (Cluster)o;
-					o = cluster.definirPourClasse(v, val);
+					Cluster oCluster = (Cluster)o;
+					o = oCluster.definirPourClasse(v, val);
 				}
 			}
 		}

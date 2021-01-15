@@ -195,8 +195,8 @@ public abstract class EnrollmentPageGen<DEV> extends EnrollmentGenPage {
 				if(o == null)
 					o = defineEnrollmentPage(v, val);
 				else if(o instanceof Cluster) {
-					Cluster cluster = (Cluster)o;
-					o = cluster.defineForClass(v, val);
+					Cluster oCluster = (Cluster)o;
+					o = oCluster.defineForClass(v, val);
 				}
 			}
 		}

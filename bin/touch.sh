@@ -1,3 +1,14 @@
+touch /usr/local/src/computate-scolaire/src/main/java/org/computate/scolaire/frFR/couverture/Couverture.java
+touch /usr/local/src/computate-scolaire/src/main/java/org/computate/scolaire/frFR/requete/RequeteSiteFrFR.java
+touch /usr/local/src/computate-scolaire/src/main/java/org/computate/scolaire/frFR/config/ConfigSite.java
+touch /usr/local/src/computate-scolaire/src/main/java/org/computate/scolaire/frFR/contexte/SiteContexteFrFR.java
+touch /usr/local/src/computate-scolaire/src/main/java/org/computate/scolaire/frFR/requete/api/RequeteApi.java
+touch /usr/local/src/computate-scolaire/src/main/java/org/computate/scolaire/frFR/recherche/ListeRecherche.java
+touch /usr/local/src/computate-scolaire/src/main/java/org/computate/scolaire/frFR/recherche/ResultatRecherche.java
+touch /usr/local/src/computate-scolaire/src/main/java/org/computate/scolaire/frFR/ecrivain/ApiEcrivain.java
+touch /usr/local/src/computate-scolaire/src/main/java/org/computate/scolaire/frFR/ecrivain/TousEcrivains.java
+touch /usr/local/src/computate-scolaire/src/main/java/org/computate/scolaire/frFR/ecrivain/ToutEcrivain.java
+touch /usr/local/src/computate-scolaire/src/main/java/org/computate/scolaire/frFR/page/MiseEnPage.java
 touch /usr/local/src/computate-scolaire/src/main/java/org/computate/scolaire/frFR/ecole/Ecole.java
 touch /usr/local/src/computate-scolaire/src/main/java/org/computate/scolaire/frFR/annee/AnneeScolaire.java
 touch /usr/local/src/computate-scolaire/src/main/java/org/computate/scolaire/frFR/saison/SaisonScolaire.java

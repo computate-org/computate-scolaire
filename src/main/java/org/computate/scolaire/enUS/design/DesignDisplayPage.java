@@ -1,4 +1,4 @@
-package org.computate.scolaire.enUS.design;
+package org.computate.scolaire.enUS.design;  
 
 import java.math.BigDecimal;
 import java.math.MathContext;

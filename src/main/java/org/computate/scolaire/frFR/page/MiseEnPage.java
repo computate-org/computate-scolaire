@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.page;      
+package org.computate.scolaire.frFR.page;       
 
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;

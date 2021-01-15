@@ -1539,44 +1539,58 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 											rechercheDesignPage(requeteSite, false, true, "/api/design-page", "PATCH", d -> {
 												if(d.succeeded()) {
 													ListeRecherche<DesignPage> listeDesignPage = d.result();
-													RequeteApi requeteApi = new RequeteApi();
-													requeteApi.setRows(listeDesignPage.getRows());
-													requeteApi.setNumFound(listeDesignPage.getQueryResponse().getResults().getNumFound());
-													requeteApi.setNumPATCH(0L);
-													requeteApi.initLoinRequeteApi(requeteSite);
-													requeteSite.setRequeteApi_(requeteApi);
-													requeteSite.getVertx().eventBus().publish("websocketDesignPage", JsonObject.mapFrom(requeteApi).toString());
-													SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listeDesignPage.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
-													Date date = null;
-													if(facets != null)
-														date = (Date)facets.get("max_modifie");
-													String dt;
-													if(date == null)
-														dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
-													else
-														dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
-													listeDesignPage.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
 
-													try {
-														listePATCHDesignPage(requeteApi, listeDesignPage, dt, e -> {
-															if(e.succeeded()) {
-																patchDesignPageReponse(requeteSite, f -> {
-																	if(f.succeeded()) {
-																		LOGGER.info(String.format("patchDesignPage a réussi. "));
-																		blockingCodeHandler.handle(Future.succeededFuture(f.result()));
-																	} else {
-																		LOGGER.error(String.format("patchDesignPage a échoué. ", f.cause()));
-																		erreurDesignPage(requeteSite, null, f);
-																	}
-																});
-															} else {
-																LOGGER.error(String.format("patchDesignPage a échoué. ", e.cause()));
-																erreurDesignPage(requeteSite, null, e);
-															}
-														});
-													} catch(Exception ex) {
-														LOGGER.error(String.format("patchDesignPage a échoué. ", ex));
-														erreurDesignPage(requeteSite, null, Future.failedFuture(ex));
+													if(listeDesignPage.getQueryResponse().getResults().getNumFound() > 1) {
+														List<String> roles2 = Arrays.asList("SiteAdmin");
+														if(
+																!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles2)
+																&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles2)
+																) {
+															String message = String.format("rôles requis : " + String.join(", ", roles2));
+															LOGGER.error(message);
+															erreurDesignPage(requeteSite, null, Future.failedFuture(message));
+														}
+													} else {
+
+														RequeteApi requeteApi = new RequeteApi();
+														requeteApi.setRows(listeDesignPage.getRows());
+														requeteApi.setNumFound(listeDesignPage.getQueryResponse().getResults().getNumFound());
+														requeteApi.setNumPATCH(0L);
+														requeteApi.initLoinRequeteApi(requeteSite);
+														requeteSite.setRequeteApi_(requeteApi);
+														requeteSite.getVertx().eventBus().publish("websocketDesignPage", JsonObject.mapFrom(requeteApi).toString());
+														SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listeDesignPage.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
+														Date date = null;
+														if(facets != null)
+														date = (Date)facets.get("max_modifie");
+														String dt;
+														if(date == null)
+															dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
+														else
+															dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
+														listeDesignPage.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
+
+														try {
+															listePATCHDesignPage(requeteApi, listeDesignPage, dt, e -> {
+																if(e.succeeded()) {
+																	patchDesignPageReponse(requeteSite, f -> {
+																		if(f.succeeded()) {
+																			LOGGER.info(String.format("patchDesignPage a réussi. "));
+																			blockingCodeHandler.handle(Future.succeededFuture(f.result()));
+																		} else {
+																			LOGGER.error(String.format("patchDesignPage a échoué. ", f.cause()));
+																			erreurDesignPage(requeteSite, null, f);
+																		}
+																	});
+																} else {
+																	LOGGER.error(String.format("patchDesignPage a échoué. ", e.cause()));
+																	erreurDesignPage(requeteSite, null, e);
+																}
+															});
+														} catch(Exception ex) {
+															LOGGER.error(String.format("patchDesignPage a échoué. ", ex));
+															erreurDesignPage(requeteSite, null, Future.failedFuture(ex));
+														}
 													}
 										} else {
 													LOGGER.error(String.format("patchDesignPage a échoué. ", d.cause()));

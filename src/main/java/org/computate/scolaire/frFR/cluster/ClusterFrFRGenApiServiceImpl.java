@@ -983,44 +983,58 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 											rechercheCluster(requeteSite, false, true, "/api/cluster", "PATCH", d -> {
 												if(d.succeeded()) {
 													ListeRecherche<Cluster> listeCluster = d.result();
-													RequeteApi requeteApi = new RequeteApi();
-													requeteApi.setRows(listeCluster.getRows());
-													requeteApi.setNumFound(listeCluster.getQueryResponse().getResults().getNumFound());
-													requeteApi.setNumPATCH(0L);
-													requeteApi.initLoinRequeteApi(requeteSite);
-													requeteSite.setRequeteApi_(requeteApi);
-													requeteSite.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(requeteApi).toString());
-													SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listeCluster.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
-													Date date = null;
-													if(facets != null)
-														date = (Date)facets.get("max_modifie");
-													String dt;
-													if(date == null)
-														dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
-													else
-														dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
-													listeCluster.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
 
-													try {
-														listePATCHCluster(requeteApi, listeCluster, dt, e -> {
-															if(e.succeeded()) {
-																patchClusterReponse(requeteSite, f -> {
-																	if(f.succeeded()) {
-																		LOGGER.info(String.format("patchCluster a réussi. "));
-																		blockingCodeHandler.handle(Future.succeededFuture(f.result()));
-																	} else {
-																		LOGGER.error(String.format("patchCluster a échoué. ", f.cause()));
-																		erreurCluster(requeteSite, null, f);
-																	}
-																});
-															} else {
-																LOGGER.error(String.format("patchCluster a échoué. ", e.cause()));
-																erreurCluster(requeteSite, null, e);
-															}
-														});
-													} catch(Exception ex) {
-														LOGGER.error(String.format("patchCluster a échoué. ", ex));
-														erreurCluster(requeteSite, null, Future.failedFuture(ex));
+													if(listeCluster.getQueryResponse().getResults().getNumFound() > 1) {
+														List<String> roles2 = Arrays.asList("SiteAdmin");
+														if(
+																!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles2)
+																&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles2)
+																) {
+															String message = String.format("rôles requis : " + String.join(", ", roles2));
+															LOGGER.error(message);
+															erreurCluster(requeteSite, null, Future.failedFuture(message));
+														}
+													} else {
+
+														RequeteApi requeteApi = new RequeteApi();
+														requeteApi.setRows(listeCluster.getRows());
+														requeteApi.setNumFound(listeCluster.getQueryResponse().getResults().getNumFound());
+														requeteApi.setNumPATCH(0L);
+														requeteApi.initLoinRequeteApi(requeteSite);
+														requeteSite.setRequeteApi_(requeteApi);
+														requeteSite.getVertx().eventBus().publish("websocketCluster", JsonObject.mapFrom(requeteApi).toString());
+														SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listeCluster.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
+														Date date = null;
+														if(facets != null)
+														date = (Date)facets.get("max_modifie");
+														String dt;
+														if(date == null)
+															dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
+														else
+															dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
+														listeCluster.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
+
+														try {
+															listePATCHCluster(requeteApi, listeCluster, dt, e -> {
+																if(e.succeeded()) {
+																	patchClusterReponse(requeteSite, f -> {
+																		if(f.succeeded()) {
+																			LOGGER.info(String.format("patchCluster a réussi. "));
+																			blockingCodeHandler.handle(Future.succeededFuture(f.result()));
+																		} else {
+																			LOGGER.error(String.format("patchCluster a échoué. ", f.cause()));
+																			erreurCluster(requeteSite, null, f);
+																		}
+																	});
+																} else {
+																	LOGGER.error(String.format("patchCluster a échoué. ", e.cause()));
+																	erreurCluster(requeteSite, null, e);
+																}
+															});
+														} catch(Exception ex) {
+															LOGGER.error(String.format("patchCluster a échoué. ", ex));
+															erreurCluster(requeteSite, null, Future.failedFuture(ex));
+														}
 													}
 										} else {
 													LOGGER.error(String.format("patchCluster a échoué. ", d.cause()));

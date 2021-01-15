@@ -8,8 +8,8 @@ import java.util.HashMap;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 import org.computate.scolaire.frFR.requete.api.RequeteApi;
 import org.apache.commons.lang3.StringUtils;
-import io.vertx.core.logging.LoggerFactory;
 import java.text.NumberFormat;
+import io.vertx.core.logging.LoggerFactory;
 import java.util.ArrayList;
 import org.computate.scolaire.frFR.inscription.InscriptionScolaire;
 import org.computate.scolaire.frFR.couverture.Couverture;
@@ -3542,8 +3542,8 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 				if(o == null)
 					o = definirUtilisateurSite(v, val);
 				else if(o instanceof Cluster) {
-					Cluster cluster = (Cluster)o;
-					o = cluster.definirPourClasse(v, val);
+					Cluster oCluster = (Cluster)o;
+					o = oCluster.definirPourClasse(v, val);
 				}
 			}
 		}
@@ -4122,17 +4122,6 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 			oUtilisateurSite.setVoirSupprime(voirSupprime);
 
 		super.stockerCluster(solrDocument);
-	}
-
-	//////////////
-	// htmlBody //
-	//////////////
-
-	public void htmlBody() {
-		htmlBodyUtilisateurSite();
-	}
-
-	public void htmlBodyUtilisateurSite() {
 	}
 
 	//////////////////

@@ -85,6 +85,9 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		this.siteContexte_ = siteContexte_;
 		this.siteContexte_Couverture.dejaInitialise = true;
 	}
+	public static SiteContexteFrFR staticSetSiteContexte_(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
+	}
 	protected RequeteSiteFrFR siteContexte_Init() {
 		if(!siteContexte_Couverture.dejaInitialise) {
 			_siteContexte_(siteContexte_Couverture);
@@ -122,6 +125,9 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	public void setConfigSite_(ConfigSite configSite_) {
 		this.configSite_ = configSite_;
 		this.configSite_Couverture.dejaInitialise = true;
+	}
+	public static ConfigSite staticSetConfigSite_(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
 	}
 	protected RequeteSiteFrFR configSite_Init() {
 		if(!configSite_Couverture.dejaInitialise) {
@@ -161,6 +167,9 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		this.requeteSite_ = requeteSite_;
 		this.requeteSite_Couverture.dejaInitialise = true;
 	}
+	public static RequeteSiteFrFR staticSetRequeteSite_(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
+	}
 	protected RequeteSiteFrFR requeteSite_Init() {
 		if(!requeteSite_Couverture.dejaInitialise) {
 			_requeteSite_(requeteSite_Couverture);
@@ -198,6 +207,9 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	public void setRequeteApi_(RequeteApi requeteApi_) {
 		this.requeteApi_ = requeteApi_;
 		this.requeteApi_Couverture.dejaInitialise = true;
+	}
+	public static RequeteApi staticSetRequeteApi_(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
 	}
 	protected RequeteSiteFrFR requeteApi_Init() {
 		if(!requeteApi_Couverture.dejaInitialise) {
@@ -237,6 +249,9 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		this.vertx = vertx;
 		this.vertxCouverture.dejaInitialise = true;
 	}
+	public static Vertx staticSetVertx(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
+	}
 	protected RequeteSiteFrFR vertxInit() {
 		if(!vertxCouverture.dejaInitialise) {
 			_vertx(vertxCouverture);
@@ -274,6 +289,9 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	public void setObjetJson(JsonObject objetJson) {
 		this.objetJson = objetJson;
 		this.objetJsonCouverture.dejaInitialise = true;
+	}
+	public static JsonObject staticSetObjetJson(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
 	}
 	protected RequeteSiteFrFR objetJsonInit() {
 		if(!objetJsonCouverture.dejaInitialise) {
@@ -313,6 +331,9 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		this.rechercheSolr = rechercheSolr;
 		this.rechercheSolrCouverture.dejaInitialise = true;
 	}
+	public static SolrQuery staticSetRechercheSolr(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
+	}
 	protected RequeteSiteFrFR rechercheSolrInit() {
 		if(!rechercheSolrCouverture.dejaInitialise) {
 			_rechercheSolr(rechercheSolrCouverture);
@@ -350,6 +371,9 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	public void setOperationRequete(OperationRequest operationRequete) {
 		this.operationRequete = operationRequete;
 		this.operationRequeteCouverture.dejaInitialise = true;
+	}
+	public static OperationRequest staticSetOperationRequete(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
 	}
 	protected RequeteSiteFrFR operationRequeteInit() {
 		if(!operationRequeteCouverture.dejaInitialise) {
@@ -389,6 +413,9 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		this.reponseRecherche = reponseRecherche;
 		this.reponseRechercheCouverture.dejaInitialise = true;
 	}
+	public static QueryResponse staticSetReponseRecherche(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
+	}
 	protected RequeteSiteFrFR reponseRechercheInit() {
 		if(!reponseRechercheCouverture.dejaInitialise) {
 			_reponseRecherche(reponseRechercheCouverture);
@@ -427,6 +454,9 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		this.resultatsRecherche = resultatsRecherche;
 		this.resultatsRechercheCouverture.dejaInitialise = true;
 	}
+	public static SolrDocumentList staticSetResultatsRecherche(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
+	}
 	protected RequeteSiteFrFR resultatsRechercheInit() {
 		if(!resultatsRechercheCouverture.dejaInitialise) {
 			_resultatsRecherche(resultatsRechercheCouverture);
@@ -464,6 +494,9 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	public void setW(ToutEcrivain w) {
 		this.w = w;
 		this.wCouverture.dejaInitialise = true;
+	}
+	public static ToutEcrivain staticSetW(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
 	}
 	protected RequeteSiteFrFR wInit() {
 		if(!wCouverture.dejaInitialise) {
@@ -505,6 +538,9 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		this.utilisateurVertx = utilisateurVertx;
 		this.utilisateurVertxCouverture.dejaInitialise = true;
 	}
+	public static JsonObject staticSetUtilisateurVertx(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
+	}
 	protected RequeteSiteFrFR utilisateurVertxInit() {
 		if(!utilisateurVertxCouverture.dejaInitialise) {
 			_utilisateurVertx(utilisateurVertxCouverture);
@@ -543,6 +579,9 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		this.principalJson = principalJson;
 		this.principalJsonCouverture.dejaInitialise = true;
 	}
+	public static JsonObject staticSetPrincipalJson(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
+	}
 	protected RequeteSiteFrFR principalJsonInit() {
 		if(!principalJsonCouverture.dejaInitialise) {
 			_principalJson(principalJsonCouverture);
@@ -576,10 +615,12 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	public String getUtilisateurId() {
 		return utilisateurId;
 	}
-
-	public void setUtilisateurId(String utilisateurId) {
-		this.utilisateurId = utilisateurId;
+	public void setUtilisateurId(String o) {
+		this.utilisateurId = RequeteSiteFrFR.staticSetUtilisateurId(requeteSite_, o);
 		this.utilisateurIdCouverture.dejaInitialise = true;
+	}
+	public static String staticSetUtilisateurId(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected RequeteSiteFrFR utilisateurIdInit() {
 		if(!utilisateurIdCouverture.dejaInitialise) {
@@ -591,8 +632,20 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		return (RequeteSiteFrFR)this;
 	}
 
+	public static String staticSolrUtilisateurId(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrUtilisateurId(RequeteSiteFrFR requeteSite_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqUtilisateurId(RequeteSiteFrFR requeteSite_, String o) {
+		return RequeteSiteFrFR.staticSolrStrUtilisateurId(requeteSite_, RequeteSiteFrFR.staticSolrUtilisateurId(requeteSite_, RequeteSiteFrFR.staticSetUtilisateurId(requeteSite_, o)));
+	}
+
 	public String solrUtilisateurId() {
-		return utilisateurId;
+		return RequeteSiteFrFR.staticSolrUtilisateurId(requeteSite_, utilisateurId);
 	}
 
 	public String strUtilisateurId() {
@@ -644,11 +697,14 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		this.utilisateurCle = utilisateurCle;
 		this.utilisateurCleCouverture.dejaInitialise = true;
 	}
-	public RequeteSiteFrFR setUtilisateurCle(String o) {
-		if(NumberUtils.isParsable(o))
-			this.utilisateurCle = Long.parseLong(o);
+	public void setUtilisateurCle(String o) {
+		this.utilisateurCle = RequeteSiteFrFR.staticSetUtilisateurCle(requeteSite_, o);
 		this.utilisateurCleCouverture.dejaInitialise = true;
-		return (RequeteSiteFrFR)this;
+	}
+	public static Long staticSetUtilisateurCle(RequeteSiteFrFR requeteSite_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Long.parseLong(o);
+		return null;
 	}
 	protected RequeteSiteFrFR utilisateurCleInit() {
 		if(!utilisateurCleCouverture.dejaInitialise) {
@@ -660,8 +716,20 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		return (RequeteSiteFrFR)this;
 	}
 
+	public static Long staticSolrUtilisateurCle(RequeteSiteFrFR requeteSite_, Long o) {
+		return o;
+	}
+
+	public static String staticSolrStrUtilisateurCle(RequeteSiteFrFR requeteSite_, Long o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqUtilisateurCle(RequeteSiteFrFR requeteSite_, String o) {
+		return RequeteSiteFrFR.staticSolrStrUtilisateurCle(requeteSite_, RequeteSiteFrFR.staticSolrUtilisateurCle(requeteSite_, RequeteSiteFrFR.staticSetUtilisateurCle(requeteSite_, o)));
+	}
+
 	public Long solrUtilisateurCle() {
-		return utilisateurCle;
+		return RequeteSiteFrFR.staticSolrUtilisateurCle(requeteSite_, utilisateurCle);
 	}
 
 	public String strUtilisateurCle() {
@@ -707,10 +775,12 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	public String getSessionId() {
 		return sessionId;
 	}
-
-	public void setSessionId(String sessionId) {
-		this.sessionId = sessionId;
+	public void setSessionId(String o) {
+		this.sessionId = RequeteSiteFrFR.staticSetSessionId(requeteSite_, o);
 		this.sessionIdCouverture.dejaInitialise = true;
+	}
+	public static String staticSetSessionId(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected RequeteSiteFrFR sessionIdInit() {
 		if(!sessionIdCouverture.dejaInitialise) {
@@ -722,8 +792,20 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		return (RequeteSiteFrFR)this;
 	}
 
+	public static String staticSolrSessionId(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrSessionId(RequeteSiteFrFR requeteSite_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqSessionId(RequeteSiteFrFR requeteSite_, String o) {
+		return RequeteSiteFrFR.staticSolrStrSessionId(requeteSite_, RequeteSiteFrFR.staticSolrSessionId(requeteSite_, RequeteSiteFrFR.staticSetSessionId(requeteSite_, o)));
+	}
+
 	public String solrSessionId() {
-		return sessionId;
+		return RequeteSiteFrFR.staticSolrSessionId(requeteSite_, sessionId);
 	}
 
 	public String strSessionId() {
@@ -769,10 +851,12 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	public String getSessionIdAvant() {
 		return sessionIdAvant;
 	}
-
-	public void setSessionIdAvant(String sessionIdAvant) {
-		this.sessionIdAvant = sessionIdAvant;
+	public void setSessionIdAvant(String o) {
+		this.sessionIdAvant = RequeteSiteFrFR.staticSetSessionIdAvant(requeteSite_, o);
 		this.sessionIdAvantCouverture.dejaInitialise = true;
+	}
+	public static String staticSetSessionIdAvant(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected RequeteSiteFrFR sessionIdAvantInit() {
 		if(!sessionIdAvantCouverture.dejaInitialise) {
@@ -784,8 +868,20 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		return (RequeteSiteFrFR)this;
 	}
 
+	public static String staticSolrSessionIdAvant(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrSessionIdAvant(RequeteSiteFrFR requeteSite_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqSessionIdAvant(RequeteSiteFrFR requeteSite_, String o) {
+		return RequeteSiteFrFR.staticSolrStrSessionIdAvant(requeteSite_, RequeteSiteFrFR.staticSolrSessionIdAvant(requeteSite_, RequeteSiteFrFR.staticSetSessionIdAvant(requeteSite_, o)));
+	}
+
 	public String solrSessionIdAvant() {
-		return sessionIdAvant;
+		return RequeteSiteFrFR.staticSolrSessionIdAvant(requeteSite_, sessionIdAvant);
 	}
 
 	public String strSessionIdAvant() {
@@ -831,10 +927,12 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	public String getUtilisateurNom() {
 		return utilisateurNom;
 	}
-
-	public void setUtilisateurNom(String utilisateurNom) {
-		this.utilisateurNom = utilisateurNom;
+	public void setUtilisateurNom(String o) {
+		this.utilisateurNom = RequeteSiteFrFR.staticSetUtilisateurNom(requeteSite_, o);
 		this.utilisateurNomCouverture.dejaInitialise = true;
+	}
+	public static String staticSetUtilisateurNom(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected RequeteSiteFrFR utilisateurNomInit() {
 		if(!utilisateurNomCouverture.dejaInitialise) {
@@ -846,8 +944,20 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		return (RequeteSiteFrFR)this;
 	}
 
+	public static String staticSolrUtilisateurNom(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrUtilisateurNom(RequeteSiteFrFR requeteSite_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqUtilisateurNom(RequeteSiteFrFR requeteSite_, String o) {
+		return RequeteSiteFrFR.staticSolrStrUtilisateurNom(requeteSite_, RequeteSiteFrFR.staticSolrUtilisateurNom(requeteSite_, RequeteSiteFrFR.staticSetUtilisateurNom(requeteSite_, o)));
+	}
+
 	public String solrUtilisateurNom() {
-		return utilisateurNom;
+		return RequeteSiteFrFR.staticSolrUtilisateurNom(requeteSite_, utilisateurNom);
 	}
 
 	public String strUtilisateurNom() {
@@ -893,10 +1003,12 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	public String getUtilisateurNomFamille() {
 		return utilisateurNomFamille;
 	}
-
-	public void setUtilisateurNomFamille(String utilisateurNomFamille) {
-		this.utilisateurNomFamille = utilisateurNomFamille;
+	public void setUtilisateurNomFamille(String o) {
+		this.utilisateurNomFamille = RequeteSiteFrFR.staticSetUtilisateurNomFamille(requeteSite_, o);
 		this.utilisateurNomFamilleCouverture.dejaInitialise = true;
+	}
+	public static String staticSetUtilisateurNomFamille(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected RequeteSiteFrFR utilisateurNomFamilleInit() {
 		if(!utilisateurNomFamilleCouverture.dejaInitialise) {
@@ -908,8 +1020,20 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		return (RequeteSiteFrFR)this;
 	}
 
+	public static String staticSolrUtilisateurNomFamille(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrUtilisateurNomFamille(RequeteSiteFrFR requeteSite_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqUtilisateurNomFamille(RequeteSiteFrFR requeteSite_, String o) {
+		return RequeteSiteFrFR.staticSolrStrUtilisateurNomFamille(requeteSite_, RequeteSiteFrFR.staticSolrUtilisateurNomFamille(requeteSite_, RequeteSiteFrFR.staticSetUtilisateurNomFamille(requeteSite_, o)));
+	}
+
 	public String solrUtilisateurNomFamille() {
-		return utilisateurNomFamille;
+		return RequeteSiteFrFR.staticSolrUtilisateurNomFamille(requeteSite_, utilisateurNomFamille);
 	}
 
 	public String strUtilisateurNomFamille() {
@@ -955,10 +1079,12 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	public String getUtilisateurPrenom() {
 		return utilisateurPrenom;
 	}
-
-	public void setUtilisateurPrenom(String utilisateurPrenom) {
-		this.utilisateurPrenom = utilisateurPrenom;
+	public void setUtilisateurPrenom(String o) {
+		this.utilisateurPrenom = RequeteSiteFrFR.staticSetUtilisateurPrenom(requeteSite_, o);
 		this.utilisateurPrenomCouverture.dejaInitialise = true;
+	}
+	public static String staticSetUtilisateurPrenom(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected RequeteSiteFrFR utilisateurPrenomInit() {
 		if(!utilisateurPrenomCouverture.dejaInitialise) {
@@ -970,8 +1096,20 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		return (RequeteSiteFrFR)this;
 	}
 
+	public static String staticSolrUtilisateurPrenom(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrUtilisateurPrenom(RequeteSiteFrFR requeteSite_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqUtilisateurPrenom(RequeteSiteFrFR requeteSite_, String o) {
+		return RequeteSiteFrFR.staticSolrStrUtilisateurPrenom(requeteSite_, RequeteSiteFrFR.staticSolrUtilisateurPrenom(requeteSite_, RequeteSiteFrFR.staticSetUtilisateurPrenom(requeteSite_, o)));
+	}
+
 	public String solrUtilisateurPrenom() {
-		return utilisateurPrenom;
+		return RequeteSiteFrFR.staticSolrUtilisateurPrenom(requeteSite_, utilisateurPrenom);
 	}
 
 	public String strUtilisateurPrenom() {
@@ -1017,10 +1155,12 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	public String getUtilisateurNomComplet() {
 		return utilisateurNomComplet;
 	}
-
-	public void setUtilisateurNomComplet(String utilisateurNomComplet) {
-		this.utilisateurNomComplet = utilisateurNomComplet;
+	public void setUtilisateurNomComplet(String o) {
+		this.utilisateurNomComplet = RequeteSiteFrFR.staticSetUtilisateurNomComplet(requeteSite_, o);
 		this.utilisateurNomCompletCouverture.dejaInitialise = true;
+	}
+	public static String staticSetUtilisateurNomComplet(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected RequeteSiteFrFR utilisateurNomCompletInit() {
 		if(!utilisateurNomCompletCouverture.dejaInitialise) {
@@ -1032,8 +1172,20 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		return (RequeteSiteFrFR)this;
 	}
 
+	public static String staticSolrUtilisateurNomComplet(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrUtilisateurNomComplet(RequeteSiteFrFR requeteSite_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqUtilisateurNomComplet(RequeteSiteFrFR requeteSite_, String o) {
+		return RequeteSiteFrFR.staticSolrStrUtilisateurNomComplet(requeteSite_, RequeteSiteFrFR.staticSolrUtilisateurNomComplet(requeteSite_, RequeteSiteFrFR.staticSetUtilisateurNomComplet(requeteSite_, o)));
+	}
+
 	public String solrUtilisateurNomComplet() {
-		return utilisateurNomComplet;
+		return RequeteSiteFrFR.staticSolrUtilisateurNomComplet(requeteSite_, utilisateurNomComplet);
 	}
 
 	public String strUtilisateurNomComplet() {
@@ -1084,6 +1236,9 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		this.utilisateurRolesRoyaume = utilisateurRolesRoyaume;
 		this.utilisateurRolesRoyaumeCouverture.dejaInitialise = true;
 	}
+	public static String staticSetUtilisateurRolesRoyaume(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
+	}
 	public RequeteSiteFrFR addUtilisateurRolesRoyaume(String...objets) {
 		for(String o : objets) {
 			addUtilisateurRolesRoyaume(o);
@@ -1095,13 +1250,12 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 			this.utilisateurRolesRoyaume.add(o);
 		return (RequeteSiteFrFR)this;
 	}
-	public RequeteSiteFrFR setUtilisateurRolesRoyaume(JsonArray objets) {
+	public void setUtilisateurRolesRoyaume(JsonArray objets) {
 		utilisateurRolesRoyaume.clear();
 		for(int i = 0; i < objets.size(); i++) {
 			String o = objets.getString(i);
 			addUtilisateurRolesRoyaume(o);
 		}
-		return (RequeteSiteFrFR)this;
 	}
 	protected RequeteSiteFrFR utilisateurRolesRoyaumeInit() {
 		if(!utilisateurRolesRoyaumeCouverture.dejaInitialise) {
@@ -1111,8 +1265,24 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		return (RequeteSiteFrFR)this;
 	}
 
+	public static String staticSolrUtilisateurRolesRoyaume(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrUtilisateurRolesRoyaume(RequeteSiteFrFR requeteSite_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqUtilisateurRolesRoyaume(RequeteSiteFrFR requeteSite_, String o) {
+		return RequeteSiteFrFR.staticSolrStrUtilisateurRolesRoyaume(requeteSite_, RequeteSiteFrFR.staticSolrUtilisateurRolesRoyaume(requeteSite_, RequeteSiteFrFR.staticSetUtilisateurRolesRoyaume(requeteSite_, o)));
+	}
+
 	public List<String> solrUtilisateurRolesRoyaume() {
-		return utilisateurRolesRoyaume;
+		List<String> l = new ArrayList<String>();
+		for(String o : utilisateurRolesRoyaume) {
+			l.add(RequeteSiteFrFR.staticSolrUtilisateurRolesRoyaume(requeteSite_, o));
+		}
+		return l;
 	}
 
 	public String strUtilisateurRolesRoyaume() {
@@ -1163,6 +1333,9 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		this.utilisateurRessource = utilisateurRessource;
 		this.utilisateurRessourceCouverture.dejaInitialise = true;
 	}
+	public static JsonObject staticSetUtilisateurRessource(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
+	}
 	protected RequeteSiteFrFR utilisateurRessourceInit() {
 		if(!utilisateurRessourceCouverture.dejaInitialise) {
 			_utilisateurRessource(utilisateurRessourceCouverture);
@@ -1201,6 +1374,9 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		this.utilisateurRolesRessource = utilisateurRolesRessource;
 		this.utilisateurRolesRessourceCouverture.dejaInitialise = true;
 	}
+	public static String staticSetUtilisateurRolesRessource(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
+	}
 	public RequeteSiteFrFR addUtilisateurRolesRessource(String...objets) {
 		for(String o : objets) {
 			addUtilisateurRolesRessource(o);
@@ -1212,13 +1388,12 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 			this.utilisateurRolesRessource.add(o);
 		return (RequeteSiteFrFR)this;
 	}
-	public RequeteSiteFrFR setUtilisateurRolesRessource(JsonArray objets) {
+	public void setUtilisateurRolesRessource(JsonArray objets) {
 		utilisateurRolesRessource.clear();
 		for(int i = 0; i < objets.size(); i++) {
 			String o = objets.getString(i);
 			addUtilisateurRolesRessource(o);
 		}
-		return (RequeteSiteFrFR)this;
 	}
 	protected RequeteSiteFrFR utilisateurRolesRessourceInit() {
 		if(!utilisateurRolesRessourceCouverture.dejaInitialise) {
@@ -1228,8 +1403,24 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		return (RequeteSiteFrFR)this;
 	}
 
+	public static String staticSolrUtilisateurRolesRessource(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrUtilisateurRolesRessource(RequeteSiteFrFR requeteSite_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqUtilisateurRolesRessource(RequeteSiteFrFR requeteSite_, String o) {
+		return RequeteSiteFrFR.staticSolrStrUtilisateurRolesRessource(requeteSite_, RequeteSiteFrFR.staticSolrUtilisateurRolesRessource(requeteSite_, RequeteSiteFrFR.staticSetUtilisateurRolesRessource(requeteSite_, o)));
+	}
+
 	public List<String> solrUtilisateurRolesRessource() {
-		return utilisateurRolesRessource;
+		List<String> l = new ArrayList<String>();
+		for(String o : utilisateurRolesRessource) {
+			l.add(RequeteSiteFrFR.staticSolrUtilisateurRolesRessource(requeteSite_, o));
+		}
+		return l;
 	}
 
 	public String strUtilisateurRolesRessource() {
@@ -1280,6 +1471,9 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		this.utilisateurSite = utilisateurSite;
 		this.utilisateurSiteCouverture.dejaInitialise = true;
 	}
+	public static UtilisateurSite staticSetUtilisateurSite(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
+	}
 	protected RequeteSiteFrFR utilisateurSiteInit() {
 		if(!utilisateurSiteCouverture.dejaInitialise) {
 			_utilisateurSite(utilisateurSiteCouverture);
@@ -1320,6 +1514,9 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		this.xmlPile = xmlPile;
 		this.xmlPileCouverture.dejaInitialise = true;
 	}
+	public static Stack<String> staticSetXmlPile(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
+	}
 	protected RequeteSiteFrFR xmlPileInit() {
 		if(!xmlPileCouverture.dejaInitialise) {
 			_xmlPile(xmlPile);
@@ -1355,6 +1552,9 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	public void setDocumentSolr(SolrDocument documentSolr) {
 		this.documentSolr = documentSolr;
 		this.documentSolrCouverture.dejaInitialise = true;
+	}
+	public static SolrDocument staticSetDocumentSolr(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
 	}
 	protected RequeteSiteFrFR documentSolrInit() {
 		if(!documentSolrCouverture.dejaInitialise) {
@@ -1394,10 +1594,12 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		this.pageAdmin = pageAdmin;
 		this.pageAdminCouverture.dejaInitialise = true;
 	}
-	public RequeteSiteFrFR setPageAdmin(String o) {
-		this.pageAdmin = Boolean.parseBoolean(o);
+	public void setPageAdmin(String o) {
+		this.pageAdmin = RequeteSiteFrFR.staticSetPageAdmin(requeteSite_, o);
 		this.pageAdminCouverture.dejaInitialise = true;
-		return (RequeteSiteFrFR)this;
+	}
+	public static Boolean staticSetPageAdmin(RequeteSiteFrFR requeteSite_, String o) {
+		return Boolean.parseBoolean(o);
 	}
 	protected RequeteSiteFrFR pageAdminInit() {
 		if(!pageAdminCouverture.dejaInitialise) {
@@ -1409,8 +1611,20 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		return (RequeteSiteFrFR)this;
 	}
 
+	public static Boolean staticSolrPageAdmin(RequeteSiteFrFR requeteSite_, Boolean o) {
+		return o;
+	}
+
+	public static String staticSolrStrPageAdmin(RequeteSiteFrFR requeteSite_, Boolean o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPageAdmin(RequeteSiteFrFR requeteSite_, String o) {
+		return RequeteSiteFrFR.staticSolrStrPageAdmin(requeteSite_, RequeteSiteFrFR.staticSolrPageAdmin(requeteSite_, RequeteSiteFrFR.staticSetPageAdmin(requeteSite_, o)));
+	}
+
 	public Boolean solrPageAdmin() {
-		return pageAdmin;
+		return RequeteSiteFrFR.staticSolrPageAdmin(requeteSite_, pageAdmin);
 	}
 
 	public String strPageAdmin() {
@@ -1462,11 +1676,14 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		this.requetePk = requetePk;
 		this.requetePkCouverture.dejaInitialise = true;
 	}
-	public RequeteSiteFrFR setRequetePk(String o) {
-		if(NumberUtils.isParsable(o))
-			this.requetePk = Long.parseLong(o);
+	public void setRequetePk(String o) {
+		this.requetePk = RequeteSiteFrFR.staticSetRequetePk(requeteSite_, o);
 		this.requetePkCouverture.dejaInitialise = true;
-		return (RequeteSiteFrFR)this;
+	}
+	public static Long staticSetRequetePk(RequeteSiteFrFR requeteSite_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Long.parseLong(o);
+		return null;
 	}
 	protected RequeteSiteFrFR requetePkInit() {
 		if(!requetePkCouverture.dejaInitialise) {
@@ -1478,8 +1695,20 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		return (RequeteSiteFrFR)this;
 	}
 
+	public static Long staticSolrRequetePk(RequeteSiteFrFR requeteSite_, Long o) {
+		return o;
+	}
+
+	public static String staticSolrStrRequetePk(RequeteSiteFrFR requeteSite_, Long o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqRequetePk(RequeteSiteFrFR requeteSite_, String o) {
+		return RequeteSiteFrFR.staticSolrStrRequetePk(requeteSite_, RequeteSiteFrFR.staticSolrRequetePk(requeteSite_, RequeteSiteFrFR.staticSetRequetePk(requeteSite_, o)));
+	}
+
 	public Long solrRequetePk() {
-		return requetePk;
+		return RequeteSiteFrFR.staticSolrRequetePk(requeteSite_, requetePk);
 	}
 
 	public String strRequetePk() {
@@ -1525,10 +1754,12 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	public String getRequeteUri() {
 		return requeteUri;
 	}
-
-	public void setRequeteUri(String requeteUri) {
-		this.requeteUri = requeteUri;
+	public void setRequeteUri(String o) {
+		this.requeteUri = RequeteSiteFrFR.staticSetRequeteUri(requeteSite_, o);
 		this.requeteUriCouverture.dejaInitialise = true;
+	}
+	public static String staticSetRequeteUri(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected RequeteSiteFrFR requeteUriInit() {
 		if(!requeteUriCouverture.dejaInitialise) {
@@ -1540,8 +1771,20 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		return (RequeteSiteFrFR)this;
 	}
 
+	public static String staticSolrRequeteUri(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrRequeteUri(RequeteSiteFrFR requeteSite_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqRequeteUri(RequeteSiteFrFR requeteSite_, String o) {
+		return RequeteSiteFrFR.staticSolrStrRequeteUri(requeteSite_, RequeteSiteFrFR.staticSolrRequeteUri(requeteSite_, RequeteSiteFrFR.staticSetRequeteUri(requeteSite_, o)));
+	}
+
 	public String solrRequeteUri() {
-		return requeteUri;
+		return RequeteSiteFrFR.staticSolrRequeteUri(requeteSite_, requeteUri);
 	}
 
 	public String strRequeteUri() {
@@ -1587,10 +1830,12 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	public String getRequeteMethode() {
 		return requeteMethode;
 	}
-
-	public void setRequeteMethode(String requeteMethode) {
-		this.requeteMethode = requeteMethode;
+	public void setRequeteMethode(String o) {
+		this.requeteMethode = RequeteSiteFrFR.staticSetRequeteMethode(requeteSite_, o);
 		this.requeteMethodeCouverture.dejaInitialise = true;
+	}
+	public static String staticSetRequeteMethode(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected RequeteSiteFrFR requeteMethodeInit() {
 		if(!requeteMethodeCouverture.dejaInitialise) {
@@ -1602,8 +1847,20 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		return (RequeteSiteFrFR)this;
 	}
 
+	public static String staticSolrRequeteMethode(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrRequeteMethode(RequeteSiteFrFR requeteSite_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqRequeteMethode(RequeteSiteFrFR requeteSite_, String o) {
+		return RequeteSiteFrFR.staticSolrStrRequeteMethode(requeteSite_, RequeteSiteFrFR.staticSolrRequeteMethode(requeteSite_, RequeteSiteFrFR.staticSetRequeteMethode(requeteSite_, o)));
+	}
+
 	public String solrRequeteMethode() {
-		return requeteMethode;
+		return RequeteSiteFrFR.staticSolrRequeteMethode(requeteSite_, requeteMethode);
 	}
 
 	public String strRequeteMethode() {
@@ -1655,6 +1912,9 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		this.tx = tx;
 		this.txCouverture.dejaInitialise = true;
 	}
+	public static Transaction staticSetTx(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
+	}
 	protected RequeteSiteFrFR txInit() {
 		if(!txCouverture.dejaInitialise) {
 			_tx(txCouverture);
@@ -1693,6 +1953,9 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	public void setConnexionSql(SqlConnection connexionSql) {
 		this.connexionSql = connexionSql;
 		this.connexionSqlCouverture.dejaInitialise = true;
+	}
+	public static SqlConnection staticSetConnexionSql(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
 	}
 	protected RequeteSiteFrFR connexionSqlInit() {
 		if(!connexionSqlCouverture.dejaInitialise) {
@@ -1733,6 +1996,9 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		this.requeteEnTetes = requeteEnTetes;
 		this.requeteEnTetesCouverture.dejaInitialise = true;
 	}
+	public static CaseInsensitiveHeaders staticSetRequeteEnTetes(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
+	}
 	protected RequeteSiteFrFR requeteEnTetesInit() {
 		if(!requeteEnTetesCouverture.dejaInitialise) {
 			_requeteEnTetes(requeteEnTetesCouverture);
@@ -1771,6 +2037,9 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	public void setRequeteVars(Map<String, String> requeteVars) {
 		this.requeteVars = requeteVars;
 		this.requeteVarsCouverture.dejaInitialise = true;
+	}
+	public static Map<String, String> staticSetRequeteVars(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
 	}
 	protected RequeteSiteFrFR requeteVarsInit() {
 		if(!requeteVarsCouverture.dejaInitialise) {
@@ -1976,6 +2245,174 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		}
 	}
 
+	///////////////
+	// staticSet //
+	///////////////
+
+	public static Object staticSetPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		return staticSetRequeteSiteFrFR(entiteVar,  requeteSite_, o);
+	}
+	public static Object staticSetRequeteSiteFrFR(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		switch(entiteVar) {
+		case "utilisateurId":
+			return RequeteSiteFrFR.staticSetUtilisateurId(requeteSite_, o);
+		case "utilisateurCle":
+			return RequeteSiteFrFR.staticSetUtilisateurCle(requeteSite_, o);
+		case "sessionId":
+			return RequeteSiteFrFR.staticSetSessionId(requeteSite_, o);
+		case "sessionIdAvant":
+			return RequeteSiteFrFR.staticSetSessionIdAvant(requeteSite_, o);
+		case "utilisateurNom":
+			return RequeteSiteFrFR.staticSetUtilisateurNom(requeteSite_, o);
+		case "utilisateurNomFamille":
+			return RequeteSiteFrFR.staticSetUtilisateurNomFamille(requeteSite_, o);
+		case "utilisateurPrenom":
+			return RequeteSiteFrFR.staticSetUtilisateurPrenom(requeteSite_, o);
+		case "utilisateurNomComplet":
+			return RequeteSiteFrFR.staticSetUtilisateurNomComplet(requeteSite_, o);
+		case "utilisateurRolesRoyaume":
+			return RequeteSiteFrFR.staticSetUtilisateurRolesRoyaume(requeteSite_, o);
+		case "utilisateurRolesRessource":
+			return RequeteSiteFrFR.staticSetUtilisateurRolesRessource(requeteSite_, o);
+		case "pageAdmin":
+			return RequeteSiteFrFR.staticSetPageAdmin(requeteSite_, o);
+		case "requetePk":
+			return RequeteSiteFrFR.staticSetRequetePk(requeteSite_, o);
+		case "requeteUri":
+			return RequeteSiteFrFR.staticSetRequeteUri(requeteSite_, o);
+		case "requeteMethode":
+			return RequeteSiteFrFR.staticSetRequeteMethode(requeteSite_, o);
+			default:
+				return null;
+		}
+	}
+
+	////////////////
+	// staticSolr //
+	////////////////
+
+	public static Object staticSolrPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		return staticSolrRequeteSiteFrFR(entiteVar,  requeteSite_, o);
+	}
+	public static Object staticSolrRequeteSiteFrFR(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		switch(entiteVar) {
+		case "utilisateurId":
+			return RequeteSiteFrFR.staticSolrUtilisateurId(requeteSite_, (String)o);
+		case "utilisateurCle":
+			return RequeteSiteFrFR.staticSolrUtilisateurCle(requeteSite_, (Long)o);
+		case "sessionId":
+			return RequeteSiteFrFR.staticSolrSessionId(requeteSite_, (String)o);
+		case "sessionIdAvant":
+			return RequeteSiteFrFR.staticSolrSessionIdAvant(requeteSite_, (String)o);
+		case "utilisateurNom":
+			return RequeteSiteFrFR.staticSolrUtilisateurNom(requeteSite_, (String)o);
+		case "utilisateurNomFamille":
+			return RequeteSiteFrFR.staticSolrUtilisateurNomFamille(requeteSite_, (String)o);
+		case "utilisateurPrenom":
+			return RequeteSiteFrFR.staticSolrUtilisateurPrenom(requeteSite_, (String)o);
+		case "utilisateurNomComplet":
+			return RequeteSiteFrFR.staticSolrUtilisateurNomComplet(requeteSite_, (String)o);
+		case "utilisateurRolesRoyaume":
+			return RequeteSiteFrFR.staticSolrUtilisateurRolesRoyaume(requeteSite_, (String)o);
+		case "utilisateurRolesRessource":
+			return RequeteSiteFrFR.staticSolrUtilisateurRolesRessource(requeteSite_, (String)o);
+		case "pageAdmin":
+			return RequeteSiteFrFR.staticSolrPageAdmin(requeteSite_, (Boolean)o);
+		case "requetePk":
+			return RequeteSiteFrFR.staticSolrRequetePk(requeteSite_, (Long)o);
+		case "requeteUri":
+			return RequeteSiteFrFR.staticSolrRequeteUri(requeteSite_, (String)o);
+		case "requeteMethode":
+			return RequeteSiteFrFR.staticSolrRequeteMethode(requeteSite_, (String)o);
+			default:
+				return null;
+		}
+	}
+
+	///////////////////
+	// staticSolrStr //
+	///////////////////
+
+	public static String staticSolrStrPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		return staticSolrStrRequeteSiteFrFR(entiteVar,  requeteSite_, o);
+	}
+	public static String staticSolrStrRequeteSiteFrFR(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		switch(entiteVar) {
+		case "utilisateurId":
+			return RequeteSiteFrFR.staticSolrStrUtilisateurId(requeteSite_, (String)o);
+		case "utilisateurCle":
+			return RequeteSiteFrFR.staticSolrStrUtilisateurCle(requeteSite_, (Long)o);
+		case "sessionId":
+			return RequeteSiteFrFR.staticSolrStrSessionId(requeteSite_, (String)o);
+		case "sessionIdAvant":
+			return RequeteSiteFrFR.staticSolrStrSessionIdAvant(requeteSite_, (String)o);
+		case "utilisateurNom":
+			return RequeteSiteFrFR.staticSolrStrUtilisateurNom(requeteSite_, (String)o);
+		case "utilisateurNomFamille":
+			return RequeteSiteFrFR.staticSolrStrUtilisateurNomFamille(requeteSite_, (String)o);
+		case "utilisateurPrenom":
+			return RequeteSiteFrFR.staticSolrStrUtilisateurPrenom(requeteSite_, (String)o);
+		case "utilisateurNomComplet":
+			return RequeteSiteFrFR.staticSolrStrUtilisateurNomComplet(requeteSite_, (String)o);
+		case "utilisateurRolesRoyaume":
+			return RequeteSiteFrFR.staticSolrStrUtilisateurRolesRoyaume(requeteSite_, (String)o);
+		case "utilisateurRolesRessource":
+			return RequeteSiteFrFR.staticSolrStrUtilisateurRolesRessource(requeteSite_, (String)o);
+		case "pageAdmin":
+			return RequeteSiteFrFR.staticSolrStrPageAdmin(requeteSite_, (Boolean)o);
+		case "requetePk":
+			return RequeteSiteFrFR.staticSolrStrRequetePk(requeteSite_, (Long)o);
+		case "requeteUri":
+			return RequeteSiteFrFR.staticSolrStrRequeteUri(requeteSite_, (String)o);
+		case "requeteMethode":
+			return RequeteSiteFrFR.staticSolrStrRequeteMethode(requeteSite_, (String)o);
+			default:
+				return null;
+		}
+	}
+
+	//////////////////
+	// staticSolrFq //
+	//////////////////
+
+	public static String staticSolrFqPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		return staticSolrFqRequeteSiteFrFR(entiteVar,  requeteSite_, o);
+	}
+	public static String staticSolrFqRequeteSiteFrFR(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		switch(entiteVar) {
+		case "utilisateurId":
+			return RequeteSiteFrFR.staticSolrFqUtilisateurId(requeteSite_, o);
+		case "utilisateurCle":
+			return RequeteSiteFrFR.staticSolrFqUtilisateurCle(requeteSite_, o);
+		case "sessionId":
+			return RequeteSiteFrFR.staticSolrFqSessionId(requeteSite_, o);
+		case "sessionIdAvant":
+			return RequeteSiteFrFR.staticSolrFqSessionIdAvant(requeteSite_, o);
+		case "utilisateurNom":
+			return RequeteSiteFrFR.staticSolrFqUtilisateurNom(requeteSite_, o);
+		case "utilisateurNomFamille":
+			return RequeteSiteFrFR.staticSolrFqUtilisateurNomFamille(requeteSite_, o);
+		case "utilisateurPrenom":
+			return RequeteSiteFrFR.staticSolrFqUtilisateurPrenom(requeteSite_, o);
+		case "utilisateurNomComplet":
+			return RequeteSiteFrFR.staticSolrFqUtilisateurNomComplet(requeteSite_, o);
+		case "utilisateurRolesRoyaume":
+			return RequeteSiteFrFR.staticSolrFqUtilisateurRolesRoyaume(requeteSite_, o);
+		case "utilisateurRolesRessource":
+			return RequeteSiteFrFR.staticSolrFqUtilisateurRolesRessource(requeteSite_, o);
+		case "pageAdmin":
+			return RequeteSiteFrFR.staticSolrFqPageAdmin(requeteSite_, o);
+		case "requetePk":
+			return RequeteSiteFrFR.staticSolrFqRequetePk(requeteSite_, o);
+		case "requeteUri":
+			return RequeteSiteFrFR.staticSolrFqRequeteUri(requeteSite_, o);
+		case "requeteMethode":
+			return RequeteSiteFrFR.staticSolrFqRequeteMethode(requeteSite_, o);
+			default:
+				return null;
+		}
+	}
+
 	/////////////
 	// definir //
 	/////////////
@@ -1988,8 +2425,8 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 				if(o == null)
 					o = definirRequeteSiteFrFR(v, val);
 				else if(o instanceof Cluster) {
-					Cluster cluster = (Cluster)o;
-					o = cluster.definirPourClasse(v, val);
+					Cluster oCluster = (Cluster)o;
+					o = oCluster.definirPourClasse(v, val);
 				}
 			}
 		}

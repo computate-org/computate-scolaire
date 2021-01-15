@@ -1849,44 +1849,58 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 											aSearchHtmlPart(siteRequest, false, true, "/api/html-part", "PATCH", d -> {
 												if(d.succeeded()) {
 													SearchList<HtmlPart> listHtmlPart = d.result();
-													ApiRequest apiRequest = new ApiRequest();
-													apiRequest.setRows(listHtmlPart.getRows());
-													apiRequest.setNumFound(listHtmlPart.getQueryResponse().getResults().getNumFound());
-													apiRequest.setNumPATCH(0L);
-													apiRequest.initDeepApiRequest(siteRequest);
-													siteRequest.setApiRequest_(apiRequest);
-													siteRequest.getVertx().eventBus().publish("websocketHtmlPart", JsonObject.mapFrom(apiRequest).toString());
-													SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listHtmlPart.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
-													Date date = null;
-													if(facets != null)
-														date = (Date)facets.get("max_modified");
-													String dt;
-													if(date == null)
-														dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
-													else
-														dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
-													listHtmlPart.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
 
-													try {
-														listPATCHHtmlPart(apiRequest, listHtmlPart, dt, e -> {
-															if(e.succeeded()) {
-																patchHtmlPartResponse(siteRequest, f -> {
-																	if(f.succeeded()) {
-																		LOGGER.info(String.format("patchHtmlPart succeeded. "));
-																		blockingCodeHandler.handle(Future.succeededFuture(f.result()));
-																	} else {
-																		LOGGER.error(String.format("patchHtmlPart failed. ", f.cause()));
-																		errorHtmlPart(siteRequest, null, f);
-																	}
-																});
-															} else {
-																LOGGER.error(String.format("patchHtmlPart failed. ", e.cause()));
-																errorHtmlPart(siteRequest, null, e);
-															}
-														});
-													} catch(Exception ex) {
-														LOGGER.error(String.format("patchHtmlPart failed. ", ex));
-														errorHtmlPart(siteRequest, null, Future.failedFuture(ex));
+													if(listHtmlPart.getQueryResponse().getResults().getNumFound() > 1) {
+														List<String> roles2 = Arrays.asList("SiteAdmin");
+														if(
+																!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles2)
+																&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles2)
+																) {
+															String message = String.format("roles required: " + String.join(", ", roles2));
+															LOGGER.error(message);
+															errorHtmlPart(siteRequest, null, Future.failedFuture(message));
+														}
+													} else {
+
+														ApiRequest apiRequest = new ApiRequest();
+														apiRequest.setRows(listHtmlPart.getRows());
+														apiRequest.setNumFound(listHtmlPart.getQueryResponse().getResults().getNumFound());
+														apiRequest.setNumPATCH(0L);
+														apiRequest.initDeepApiRequest(siteRequest);
+														siteRequest.setApiRequest_(apiRequest);
+														siteRequest.getVertx().eventBus().publish("websocketHtmlPart", JsonObject.mapFrom(apiRequest).toString());
+														SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listHtmlPart.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
+														Date date = null;
+														if(facets != null)
+														date = (Date)facets.get("max_modified");
+														String dt;
+														if(date == null)
+															dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
+														else
+															dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
+														listHtmlPart.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
+
+														try {
+															listPATCHHtmlPart(apiRequest, listHtmlPart, dt, e -> {
+																if(e.succeeded()) {
+																	patchHtmlPartResponse(siteRequest, f -> {
+																		if(f.succeeded()) {
+																			LOGGER.info(String.format("patchHtmlPart succeeded. "));
+																			blockingCodeHandler.handle(Future.succeededFuture(f.result()));
+																		} else {
+																			LOGGER.error(String.format("patchHtmlPart failed. ", f.cause()));
+																			errorHtmlPart(siteRequest, null, f);
+																		}
+																	});
+																} else {
+																	LOGGER.error(String.format("patchHtmlPart failed. ", e.cause()));
+																	errorHtmlPart(siteRequest, null, e);
+																}
+															});
+														} catch(Exception ex) {
+															LOGGER.error(String.format("patchHtmlPart failed. ", ex));
+															errorHtmlPart(siteRequest, null, Future.failedFuture(ex));
+														}
 													}
 										} else {
 													LOGGER.error(String.format("patchHtmlPart failed. ", d.cause()));

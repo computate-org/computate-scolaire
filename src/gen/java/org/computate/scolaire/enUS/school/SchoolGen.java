@@ -9,8 +9,8 @@ import org.computate.scolaire.enUS.writer.AllWriter;
 import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.apache.commons.lang3.StringUtils;
 import java.lang.Integer;
-import io.vertx.core.logging.LoggerFactory;
 import java.text.NumberFormat;
+import io.vertx.core.logging.LoggerFactory;
 import java.util.ArrayList;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import org.apache.commons.collections.CollectionUtils;
@@ -671,7 +671,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	}
 
 	public String nomAffichageSeasonKeys() {
-		return "";
+		return null;
 	}
 
 	public String htmTooltipSeasonKeys() {
@@ -784,7 +784,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	}
 
 	public String nomAffichageSessionKeys() {
-		return "";
+		return null;
 	}
 
 	public String htmTooltipSessionKeys() {
@@ -897,7 +897,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	}
 
 	public String nomAffichageAgeGroupKeys() {
-		return "";
+		return null;
 	}
 
 	public String htmTooltipAgeGroupKeys() {
@@ -1010,7 +1010,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	}
 
 	public String nomAffichageBlockKeys() {
-		return "";
+		return null;
 	}
 
 	public String htmTooltipBlockKeys() {
@@ -1123,7 +1123,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	}
 
 	public String nomAffichageChildKeys() {
-		return "";
+		return null;
 	}
 
 	public String htmTooltipChildKeys() {
@@ -1207,7 +1207,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	}
 
 	public String nomAffichageEducationSort() {
-		return "";
+		return null;
 	}
 
 	public String htmTooltipEducationSort() {
@@ -1291,7 +1291,7 @@ public abstract class SchoolGen<DEV> extends Cluster {
 	}
 
 	public String nomAffichageSchoolSort() {
-		return "";
+		return null;
 	}
 
 	public String htmTooltipSchoolSort() {
@@ -3339,8 +3339,8 @@ public abstract class SchoolGen<DEV> extends Cluster {
 				if(o == null)
 					o = defineSchool(v, val);
 				else if(o instanceof Cluster) {
-					Cluster cluster = (Cluster)o;
-					o = cluster.defineForClass(v, val);
+					Cluster oCluster = (Cluster)o;
+					o = oCluster.defineForClass(v, val);
 				}
 			}
 		}

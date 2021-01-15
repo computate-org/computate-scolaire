@@ -1276,44 +1276,58 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 											aSearchSchoolSeason(siteRequest, false, true, "/api/season", "PATCH", d -> {
 												if(d.succeeded()) {
 													SearchList<SchoolSeason> listSchoolSeason = d.result();
-													ApiRequest apiRequest = new ApiRequest();
-													apiRequest.setRows(listSchoolSeason.getRows());
-													apiRequest.setNumFound(listSchoolSeason.getQueryResponse().getResults().getNumFound());
-													apiRequest.setNumPATCH(0L);
-													apiRequest.initDeepApiRequest(siteRequest);
-													siteRequest.setApiRequest_(apiRequest);
-													siteRequest.getVertx().eventBus().publish("websocketSchoolSeason", JsonObject.mapFrom(apiRequest).toString());
-													SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listSchoolSeason.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
-													Date date = null;
-													if(facets != null)
-														date = (Date)facets.get("max_modified");
-													String dt;
-													if(date == null)
-														dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
-													else
-														dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
-													listSchoolSeason.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
 
-													try {
-														listPATCHSchoolSeason(apiRequest, listSchoolSeason, dt, e -> {
-															if(e.succeeded()) {
-																patchSchoolSeasonResponse(siteRequest, f -> {
-																	if(f.succeeded()) {
-																		LOGGER.info(String.format("patchSchoolSeason succeeded. "));
-																		blockingCodeHandler.handle(Future.succeededFuture(f.result()));
-																	} else {
-																		LOGGER.error(String.format("patchSchoolSeason failed. ", f.cause()));
-																		errorSchoolSeason(siteRequest, null, f);
-																	}
-																});
-															} else {
-																LOGGER.error(String.format("patchSchoolSeason failed. ", e.cause()));
-																errorSchoolSeason(siteRequest, null, e);
-															}
-														});
-													} catch(Exception ex) {
-														LOGGER.error(String.format("patchSchoolSeason failed. ", ex));
-														errorSchoolSeason(siteRequest, null, Future.failedFuture(ex));
+													if(listSchoolSeason.getQueryResponse().getResults().getNumFound() > 1) {
+														List<String> roles2 = Arrays.asList("SiteAdmin");
+														if(
+																!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles2)
+																&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles2)
+																) {
+															String message = String.format("roles required: " + String.join(", ", roles2));
+															LOGGER.error(message);
+															errorSchoolSeason(siteRequest, null, Future.failedFuture(message));
+														}
+													} else {
+
+														ApiRequest apiRequest = new ApiRequest();
+														apiRequest.setRows(listSchoolSeason.getRows());
+														apiRequest.setNumFound(listSchoolSeason.getQueryResponse().getResults().getNumFound());
+														apiRequest.setNumPATCH(0L);
+														apiRequest.initDeepApiRequest(siteRequest);
+														siteRequest.setApiRequest_(apiRequest);
+														siteRequest.getVertx().eventBus().publish("websocketSchoolSeason", JsonObject.mapFrom(apiRequest).toString());
+														SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listSchoolSeason.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
+														Date date = null;
+														if(facets != null)
+														date = (Date)facets.get("max_modified");
+														String dt;
+														if(date == null)
+															dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
+														else
+															dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
+														listSchoolSeason.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
+
+														try {
+															listPATCHSchoolSeason(apiRequest, listSchoolSeason, dt, e -> {
+																if(e.succeeded()) {
+																	patchSchoolSeasonResponse(siteRequest, f -> {
+																		if(f.succeeded()) {
+																			LOGGER.info(String.format("patchSchoolSeason succeeded. "));
+																			blockingCodeHandler.handle(Future.succeededFuture(f.result()));
+																		} else {
+																			LOGGER.error(String.format("patchSchoolSeason failed. ", f.cause()));
+																			errorSchoolSeason(siteRequest, null, f);
+																		}
+																	});
+																} else {
+																	LOGGER.error(String.format("patchSchoolSeason failed. ", e.cause()));
+																	errorSchoolSeason(siteRequest, null, e);
+																}
+															});
+														} catch(Exception ex) {
+															LOGGER.error(String.format("patchSchoolSeason failed. ", ex));
+															errorSchoolSeason(siteRequest, null, Future.failedFuture(ex));
+														}
 													}
 										} else {
 													LOGGER.error(String.format("patchSchoolSeason failed. ", d.cause()));

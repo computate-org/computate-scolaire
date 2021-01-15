@@ -195,8 +195,8 @@ public abstract class SessionPageGen<DEV> extends SessionGenPage {
 				if(o == null)
 					o = definirSessionPage(v, val);
 				else if(o instanceof Cluster) {
-					Cluster cluster = (Cluster)o;
-					o = cluster.definirPourClasse(v, val);
+					Cluster oCluster = (Cluster)o;
+					o = oCluster.definirPourClasse(v, val);
 				}
 			}
 		}

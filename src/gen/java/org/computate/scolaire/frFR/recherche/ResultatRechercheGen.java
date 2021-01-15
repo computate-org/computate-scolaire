@@ -1,41 +1,60 @@
 package org.computate.scolaire.frFR.recherche;
 
+import java.util.Arrays;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import java.util.HashMap;
+import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
+import org.computate.scolaire.frFR.requete.api.RequeteApi;
+import org.apache.commons.lang3.StringUtils;
+import java.text.NumberFormat;
+import io.vertx.core.logging.LoggerFactory;
+import java.util.ArrayList;
+import org.computate.scolaire.frFR.couverture.Couverture;
+import org.apache.commons.collections.CollectionUtils;
+import java.lang.Long;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
+import java.lang.String;
+import io.vertx.core.logging.Logger;
+import java.math.RoundingMode;
 import java.math.MathContext;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.apache.commons.text.StringEscapeUtils;
-import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
-import org.apache.commons.lang3.StringUtils;
-import java.text.NumberFormat;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.lang.Exception;
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import org.apache.solr.common.SolrDocument;
-import org.computate.scolaire.frFR.couverture.Couverture;
-import java.lang.Long;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.math.NumberUtils;
+import java.util.Optional;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import java.lang.Object;
-import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
-import java.lang.String;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 
 /**	
- * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.recherche.ResultatRecherche&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
+ * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.recherche.ResultatRecherche&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr. </a>
  * <br/>
  **/
 public abstract class ResultatRechercheGen<DEV> extends Object {
+	protected static final Logger LOGGER = LoggerFactory.getLogger(ResultatRecherche.class);
 
 	//////////////////
 	// requeteSite_ //
 	//////////////////
 
-	/**	L'entité « requeteSite_ »
+	/**	 L'entité requeteSite_
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected RequeteSiteFrFR requeteSite_;
 	@JsonIgnore
 	public Couverture<RequeteSiteFrFR> requeteSite_Couverture = new Couverture<RequeteSiteFrFR>().p(this).c(RequeteSiteFrFR.class).var("requeteSite_").o(requeteSite_);
 
-	/**	<br/>L'entité « requeteSite_ »
+	/**	<br/> L'entité requeteSite_
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.recherche.ResultatRecherche&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:requeteSite_">Trouver l'entité requeteSite_ dans Solr</a>
 	 * <br/>
@@ -51,6 +70,9 @@ public abstract class ResultatRechercheGen<DEV> extends Object {
 		this.requeteSite_ = requeteSite_;
 		this.requeteSite_Couverture.dejaInitialise = true;
 	}
+	public static RequeteSiteFrFR staticSetRequeteSite_(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
+	}
 	protected ResultatRecherche requeteSite_Init() throws Exception {
 		if(!requeteSite_Couverture.dejaInitialise) {
 			_requeteSite_(requeteSite_Couverture);
@@ -65,14 +87,15 @@ public abstract class ResultatRechercheGen<DEV> extends Object {
 	// documentSolr //
 	//////////////////
 
-	/**	L'entité « documentSolr »
+	/**	 L'entité documentSolr
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected SolrDocument documentSolr;
 	@JsonIgnore
 	public Couverture<SolrDocument> documentSolrCouverture = new Couverture<SolrDocument>().p(this).c(SolrDocument.class).var("documentSolr").o(documentSolr);
 
-	/**	<br/>L'entité « documentSolr »
+	/**	<br/> L'entité documentSolr
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.recherche.ResultatRecherche&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:documentSolr">Trouver l'entité documentSolr dans Solr</a>
 	 * <br/>
@@ -88,6 +111,9 @@ public abstract class ResultatRechercheGen<DEV> extends Object {
 		this.documentSolr = documentSolr;
 		this.documentSolrCouverture.dejaInitialise = true;
 	}
+	public static SolrDocument staticSetDocumentSolr(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
+	}
 	protected ResultatRecherche documentSolrInit() throws Exception {
 		if(!documentSolrCouverture.dejaInitialise) {
 			_documentSolr(documentSolrCouverture);
@@ -102,14 +128,16 @@ public abstract class ResultatRechercheGen<DEV> extends Object {
 	// resultatIndice //
 	////////////////////
 
-	/**	L'entité « resultatIndice »
+	/**	 L'entité resultatIndice
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Long resultatIndice;
 	@JsonIgnore
 	public Couverture<Long> resultatIndiceCouverture = new Couverture<Long>().p(this).c(Long.class).var("resultatIndice").o(resultatIndice);
 
-	/**	<br/>L'entité « resultatIndice »
+	/**	<br/> L'entité resultatIndice
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.recherche.ResultatRecherche&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:resultatIndice">Trouver l'entité resultatIndice dans Solr</a>
 	 * <br/>
@@ -125,11 +153,14 @@ public abstract class ResultatRechercheGen<DEV> extends Object {
 		this.resultatIndice = resultatIndice;
 		this.resultatIndiceCouverture.dejaInitialise = true;
 	}
-	public ResultatRecherche setResultatIndice(String o) {
-		if(NumberUtils.isParsable(o))
-			this.resultatIndice = Long.parseLong(o);
+	public void setResultatIndice(String o) {
+		this.resultatIndice = ResultatRecherche.staticSetResultatIndice(requeteSite_, o);
 		this.resultatIndiceCouverture.dejaInitialise = true;
-		return (ResultatRecherche)this;
+	}
+	public static Long staticSetResultatIndice(RequeteSiteFrFR requeteSite_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Long.parseLong(o);
+		return null;
 	}
 	protected ResultatRecherche resultatIndiceInit() throws Exception {
 		if(!resultatIndiceCouverture.dejaInitialise) {
@@ -141,8 +172,20 @@ public abstract class ResultatRechercheGen<DEV> extends Object {
 		return (ResultatRecherche)this;
 	}
 
+	public static Long staticSolrResultatIndice(RequeteSiteFrFR requeteSite_, Long o) {
+		return o;
+	}
+
+	public static String staticSolrStrResultatIndice(RequeteSiteFrFR requeteSite_, Long o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqResultatIndice(RequeteSiteFrFR requeteSite_, String o) {
+		return ResultatRecherche.staticSolrStrResultatIndice(requeteSite_, ResultatRecherche.staticSolrResultatIndice(requeteSite_, ResultatRecherche.staticSetResultatIndice(requeteSite_, o)));
+	}
+
 	public Long solrResultatIndice() {
-		return resultatIndice;
+		return ResultatRecherche.staticSolrResultatIndice(requeteSite_, resultatIndice);
 	}
 
 	public String strResultatIndice() {
@@ -261,6 +304,70 @@ public abstract class ResultatRechercheGen<DEV> extends Object {
 		}
 	}
 
+	///////////////
+	// staticSet //
+	///////////////
+
+	public static Object staticSetPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		return staticSetResultatRecherche(entiteVar,  requeteSite_, o);
+	}
+	public static Object staticSetResultatRecherche(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		switch(entiteVar) {
+		case "resultatIndice":
+			return ResultatRecherche.staticSetResultatIndice(requeteSite_, o);
+			default:
+				return null;
+		}
+	}
+
+	////////////////
+	// staticSolr //
+	////////////////
+
+	public static Object staticSolrPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		return staticSolrResultatRecherche(entiteVar,  requeteSite_, o);
+	}
+	public static Object staticSolrResultatRecherche(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		switch(entiteVar) {
+		case "resultatIndice":
+			return ResultatRecherche.staticSolrResultatIndice(requeteSite_, (Long)o);
+			default:
+				return null;
+		}
+	}
+
+	///////////////////
+	// staticSolrStr //
+	///////////////////
+
+	public static String staticSolrStrPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		return staticSolrStrResultatRecherche(entiteVar,  requeteSite_, o);
+	}
+	public static String staticSolrStrResultatRecherche(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		switch(entiteVar) {
+		case "resultatIndice":
+			return ResultatRecherche.staticSolrStrResultatIndice(requeteSite_, (Long)o);
+			default:
+				return null;
+		}
+	}
+
+	//////////////////
+	// staticSolrFq //
+	//////////////////
+
+	public static String staticSolrFqPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		return staticSolrFqResultatRecherche(entiteVar,  requeteSite_, o);
+	}
+	public static String staticSolrFqResultatRecherche(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		switch(entiteVar) {
+		case "resultatIndice":
+			return ResultatRecherche.staticSolrFqResultatIndice(requeteSite_, o);
+			default:
+				return null;
+		}
+	}
+
 	/////////////
 	// definir //
 	/////////////
@@ -273,8 +380,8 @@ public abstract class ResultatRechercheGen<DEV> extends Object {
 				if(o == null)
 					o = definirResultatRecherche(v, val);
 				else if(o instanceof Cluster) {
-					Cluster cluster = (Cluster)o;
-					o = cluster.definirPourClasse(v, val);
+					Cluster oCluster = (Cluster)o;
+					o = oCluster.definirPourClasse(v, val);
 				}
 			}
 		}
@@ -284,6 +391,18 @@ public abstract class ResultatRechercheGen<DEV> extends Object {
 		switch(var) {
 			default:
 				return null;
+		}
+	}
+
+	//////////////////
+	// requeteApi //
+	//////////////////
+
+	public void requeteApiResultatRecherche() {
+		RequeteApi requeteApi = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequeteApi_).orElse(null);
+		Object o = Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
+		if(o != null && o instanceof ResultatRecherche) {
+			ResultatRecherche original = (ResultatRecherche)o;
 		}
 	}
 

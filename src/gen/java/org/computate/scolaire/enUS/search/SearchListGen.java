@@ -19,6 +19,7 @@ import java.lang.Boolean;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import java.lang.String;
 import io.vertx.core.logging.Logger;
+import java.math.RoundingMode;
 import java.math.MathContext;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.enUS.cluster.Cluster;
@@ -110,6 +111,9 @@ public abstract class SearchListGen<DEV> {
 		this.siteRequest_ = siteRequest_;
 		this.siteRequest_Wrap.alreadyInitialized = true;
 	}
+	public static SiteRequestEnUS staticSetSiteRequest_(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	protected SearchList siteRequest_Init() {
 		if(!siteRequest_Wrap.alreadyInitialized) {
 			_siteRequest_(siteRequest_Wrap);
@@ -148,10 +152,12 @@ public abstract class SearchListGen<DEV> {
 		this.store = store;
 		this.storeWrap.alreadyInitialized = true;
 	}
-	public SearchList setStore(String o) {
-		this.store = Boolean.parseBoolean(o);
+	public void setStore(String o) {
+		this.store = SearchList.staticSetStore(siteRequest_, o);
 		this.storeWrap.alreadyInitialized = true;
-		return (SearchList)this;
+	}
+	public static Boolean staticSetStore(SiteRequestEnUS siteRequest_, String o) {
+		return Boolean.parseBoolean(o);
 	}
 	protected SearchList storeInit() {
 		if(!storeWrap.alreadyInitialized) {
@@ -163,8 +169,20 @@ public abstract class SearchListGen<DEV> {
 		return (SearchList)this;
 	}
 
+	public static Boolean staticSolrStore(SiteRequestEnUS siteRequest_, Boolean o) {
+		return o;
+	}
+
+	public static String staticSolrStrStore(SiteRequestEnUS siteRequest_, Boolean o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqStore(SiteRequestEnUS siteRequest_, String o) {
+		return SearchList.staticSolrStrStore(siteRequest_, SearchList.staticSolrStore(siteRequest_, SearchList.staticSetStore(siteRequest_, o)));
+	}
+
 	public Boolean solrStore() {
-		return store;
+		return SearchList.staticSolrStore(siteRequest_, store);
 	}
 
 	public String strStore() {
@@ -215,10 +233,12 @@ public abstract class SearchListGen<DEV> {
 		this.populate = populate;
 		this.populateWrap.alreadyInitialized = true;
 	}
-	public SearchList setPopulate(String o) {
-		this.populate = Boolean.parseBoolean(o);
+	public void setPopulate(String o) {
+		this.populate = SearchList.staticSetPopulate(siteRequest_, o);
 		this.populateWrap.alreadyInitialized = true;
-		return (SearchList)this;
+	}
+	public static Boolean staticSetPopulate(SiteRequestEnUS siteRequest_, String o) {
+		return Boolean.parseBoolean(o);
 	}
 	protected SearchList populateInit() {
 		if(!populateWrap.alreadyInitialized) {
@@ -230,8 +250,20 @@ public abstract class SearchListGen<DEV> {
 		return (SearchList)this;
 	}
 
+	public static Boolean staticSolrPopulate(SiteRequestEnUS siteRequest_, Boolean o) {
+		return o;
+	}
+
+	public static String staticSolrStrPopulate(SiteRequestEnUS siteRequest_, Boolean o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPopulate(SiteRequestEnUS siteRequest_, String o) {
+		return SearchList.staticSolrStrPopulate(siteRequest_, SearchList.staticSolrPopulate(siteRequest_, SearchList.staticSetPopulate(siteRequest_, o)));
+	}
+
 	public Boolean solrPopulate() {
-		return populate;
+		return SearchList.staticSolrPopulate(siteRequest_, populate);
 	}
 
 	public String strPopulate() {
@@ -282,6 +314,9 @@ public abstract class SearchListGen<DEV> {
 		this.fields = fields;
 		this.fieldsWrap.alreadyInitialized = true;
 	}
+	public static String staticSetFields(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	public SearchList addFields(String...objets) {
 		for(String o : objets) {
 			addFields(o);
@@ -293,13 +328,12 @@ public abstract class SearchListGen<DEV> {
 			this.fields.add(o);
 		return (SearchList)this;
 	}
-	public SearchList setFields(JsonArray objets) {
+	public void setFields(JsonArray objets) {
 		fields.clear();
 		for(int i = 0; i < objets.size(); i++) {
 			String o = objets.getString(i);
 			addFields(o);
 		}
-		return (SearchList)this;
 	}
 	protected SearchList fieldsInit() {
 		if(!fieldsWrap.alreadyInitialized) {
@@ -309,8 +343,24 @@ public abstract class SearchListGen<DEV> {
 		return (SearchList)this;
 	}
 
+	public static String staticSolrFields(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrFields(SiteRequestEnUS siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqFields(SiteRequestEnUS siteRequest_, String o) {
+		return SearchList.staticSolrStrFields(siteRequest_, SearchList.staticSolrFields(siteRequest_, SearchList.staticSetFields(siteRequest_, o)));
+	}
+
 	public List<String> solrFields() {
-		return fields;
+		List<String> l = new ArrayList<String>();
+		for(String o : fields) {
+			l.add(SearchList.staticSolrFields(siteRequest_, o));
+		}
+		return l;
 	}
 
 	public String strFields() {
@@ -361,6 +411,9 @@ public abstract class SearchListGen<DEV> {
 		this.solrQuery = solrQuery;
 		this.solrQueryWrap.alreadyInitialized = true;
 	}
+	public static SolrQuery staticSetSolrQuery(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	protected SearchList solrQueryInit() {
 		if(!solrQueryWrap.alreadyInitialized) {
 			_solrQuery(solrQuery);
@@ -396,6 +449,9 @@ public abstract class SearchListGen<DEV> {
 	public void setQueryResponse(QueryResponse queryResponse) {
 		this.queryResponse = queryResponse;
 		this.queryResponseWrap.alreadyInitialized = true;
+	}
+	public static QueryResponse staticSetQueryResponse(SiteRequestEnUS siteRequest_, String o) {
+		return null;
 	}
 	protected SearchList queryResponseInit() {
 		if(!queryResponseWrap.alreadyInitialized) {
@@ -434,6 +490,9 @@ public abstract class SearchListGen<DEV> {
 	public void setSolrDocumentList(SolrDocumentList solrDocumentList) {
 		this.solrDocumentList = solrDocumentList;
 		this.solrDocumentListWrap.alreadyInitialized = true;
+	}
+	public static SolrDocumentList staticSetSolrDocumentList(SiteRequestEnUS siteRequest_, String o) {
+		return null;
 	}
 	protected SearchList solrDocumentListInit() {
 		if(!solrDocumentListWrap.alreadyInitialized) {
@@ -606,6 +665,86 @@ public abstract class SearchListGen<DEV> {
 		}
 	}
 
+	///////////////
+	// staticSet //
+	///////////////
+
+	public static Object staticSetForClass(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		return staticSetSearchList(entityVar,  siteRequest_, o);
+	}
+	public static Object staticSetSearchList(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		switch(entityVar) {
+		case "store":
+			return SearchList.staticSetStore(siteRequest_, o);
+		case "populate":
+			return SearchList.staticSetPopulate(siteRequest_, o);
+		case "fields":
+			return SearchList.staticSetFields(siteRequest_, o);
+			default:
+				return null;
+		}
+	}
+
+	////////////////
+	// staticSolr //
+	////////////////
+
+	public static Object staticSolrForClass(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		return staticSolrSearchList(entityVar,  siteRequest_, o);
+	}
+	public static Object staticSolrSearchList(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		switch(entityVar) {
+		case "store":
+			return SearchList.staticSolrStore(siteRequest_, (Boolean)o);
+		case "populate":
+			return SearchList.staticSolrPopulate(siteRequest_, (Boolean)o);
+		case "fields":
+			return SearchList.staticSolrFields(siteRequest_, (String)o);
+			default:
+				return null;
+		}
+	}
+
+	///////////////////
+	// staticSolrStr //
+	///////////////////
+
+	public static String staticSolrStrForClass(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		return staticSolrStrSearchList(entityVar,  siteRequest_, o);
+	}
+	public static String staticSolrStrSearchList(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		switch(entityVar) {
+		case "store":
+			return SearchList.staticSolrStrStore(siteRequest_, (Boolean)o);
+		case "populate":
+			return SearchList.staticSolrStrPopulate(siteRequest_, (Boolean)o);
+		case "fields":
+			return SearchList.staticSolrStrFields(siteRequest_, (String)o);
+			default:
+				return null;
+		}
+	}
+
+	//////////////////
+	// staticSolrFq //
+	//////////////////
+
+	public static String staticSolrFqForClass(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		return staticSolrFqSearchList(entityVar,  siteRequest_, o);
+	}
+	public static String staticSolrFqSearchList(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		switch(entityVar) {
+		case "store":
+			return SearchList.staticSolrFqStore(siteRequest_, o);
+		case "populate":
+			return SearchList.staticSolrFqPopulate(siteRequest_, o);
+		case "fields":
+			return SearchList.staticSolrFqFields(siteRequest_, o);
+			default:
+				return null;
+		}
+	}
+
 	/////////////
 	// define //
 	/////////////
@@ -618,8 +757,8 @@ public abstract class SearchListGen<DEV> {
 				if(o == null)
 					o = defineSearchList(v, val);
 				else if(o instanceof Cluster) {
-					Cluster cluster = (Cluster)o;
-					o = cluster.defineForClass(v, val);
+					Cluster oCluster = (Cluster)o;
+					o = oCluster.defineForClass(v, val);
 				}
 			}
 		}

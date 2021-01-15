@@ -3,6 +3,9 @@ package org.computate.scolaire.enUS.wrap;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * CanonicalName: org.computate.scolaire.frFR.couverture.Couverture
+ **/
 public class Wrap<DEV> implements Serializable {
 
 	private static final long serialVersionUID = 4171725370071929571L;

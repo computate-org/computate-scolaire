@@ -102,8 +102,4 @@ public class SiteUser extends SiteUserGen<Cluster> {
 	protected void  _objectTitle(Wrap<String> c) {
 		c.o(userFullName + " " + userEmail + " " + userName);
 	}
-
-	public void  htmlBody() {
-		super.htmlBody();
-	}
 }

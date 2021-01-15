@@ -596,44 +596,58 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 											aSearchSchool(siteRequest, false, true, "/api/school", "PATCH", d -> {
 												if(d.succeeded()) {
 													SearchList<School> listSchool = d.result();
-													ApiRequest apiRequest = new ApiRequest();
-													apiRequest.setRows(listSchool.getRows());
-													apiRequest.setNumFound(listSchool.getQueryResponse().getResults().getNumFound());
-													apiRequest.setNumPATCH(0L);
-													apiRequest.initDeepApiRequest(siteRequest);
-													siteRequest.setApiRequest_(apiRequest);
-													siteRequest.getVertx().eventBus().publish("websocketSchool", JsonObject.mapFrom(apiRequest).toString());
-													SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listSchool.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
-													Date date = null;
-													if(facets != null)
-														date = (Date)facets.get("max_modified");
-													String dt;
-													if(date == null)
-														dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
-													else
-														dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
-													listSchool.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
 
-													try {
-														listPATCHSchool(apiRequest, listSchool, dt, e -> {
-															if(e.succeeded()) {
-																patchSchoolResponse(siteRequest, f -> {
-																	if(f.succeeded()) {
-																		LOGGER.info(String.format("patchSchool succeeded. "));
-																		blockingCodeHandler.handle(Future.succeededFuture(f.result()));
-																	} else {
-																		LOGGER.error(String.format("patchSchool failed. ", f.cause()));
-																		errorSchool(siteRequest, null, f);
-																	}
-																});
-															} else {
-																LOGGER.error(String.format("patchSchool failed. ", e.cause()));
-																errorSchool(siteRequest, null, e);
-															}
-														});
-													} catch(Exception ex) {
-														LOGGER.error(String.format("patchSchool failed. ", ex));
-														errorSchool(siteRequest, null, Future.failedFuture(ex));
+													if(listSchool.getQueryResponse().getResults().getNumFound() > 1) {
+														List<String> roles2 = Arrays.asList("SiteAdmin");
+														if(
+																!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles2)
+																&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles2)
+																) {
+															String message = String.format("roles required: " + String.join(", ", roles2));
+															LOGGER.error(message);
+															errorSchool(siteRequest, null, Future.failedFuture(message));
+														}
+													} else {
+
+														ApiRequest apiRequest = new ApiRequest();
+														apiRequest.setRows(listSchool.getRows());
+														apiRequest.setNumFound(listSchool.getQueryResponse().getResults().getNumFound());
+														apiRequest.setNumPATCH(0L);
+														apiRequest.initDeepApiRequest(siteRequest);
+														siteRequest.setApiRequest_(apiRequest);
+														siteRequest.getVertx().eventBus().publish("websocketSchool", JsonObject.mapFrom(apiRequest).toString());
+														SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listSchool.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
+														Date date = null;
+														if(facets != null)
+														date = (Date)facets.get("max_modified");
+														String dt;
+														if(date == null)
+															dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
+														else
+															dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
+														listSchool.addFilterQuery(String.format("modified_indexed_date:[* TO %s]", dt));
+
+														try {
+															listPATCHSchool(apiRequest, listSchool, dt, e -> {
+																if(e.succeeded()) {
+																	patchSchoolResponse(siteRequest, f -> {
+																		if(f.succeeded()) {
+																			LOGGER.info(String.format("patchSchool succeeded. "));
+																			blockingCodeHandler.handle(Future.succeededFuture(f.result()));
+																		} else {
+																			LOGGER.error(String.format("patchSchool failed. ", f.cause()));
+																			errorSchool(siteRequest, null, f);
+																		}
+																	});
+																} else {
+																	LOGGER.error(String.format("patchSchool failed. ", e.cause()));
+																	errorSchool(siteRequest, null, e);
+																}
+															});
+														} catch(Exception ex) {
+															LOGGER.error(String.format("patchSchool failed. ", ex));
+															errorSchool(siteRequest, null, Future.failedFuture(ex));
+														}
 													}
 										} else {
 													LOGGER.error(String.format("patchSchool failed. ", d.cause()));

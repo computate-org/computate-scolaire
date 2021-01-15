@@ -13,6 +13,9 @@ import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import io.vertx.core.buffer.Buffer;
 
+/**
+ * CanonicalName: org.computate.scolaire.frFR.ecrivain.ToutEcrivain
+ **/
 public class AllWriter extends AllWriterGen<Object> {
 
 	protected void _siteRequest_(Wrap<SiteRequestEnUS> c) {

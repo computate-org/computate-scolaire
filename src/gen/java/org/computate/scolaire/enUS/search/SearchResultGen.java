@@ -1,45 +1,64 @@
 package org.computate.scolaire.enUS.search;
 
+import java.util.Arrays;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import java.util.HashMap;
+import org.computate.scolaire.enUS.writer.AllWriter;
+import org.computate.scolaire.enUS.request.api.ApiRequest;
+import org.apache.commons.lang3.StringUtils;
+import java.text.NumberFormat;
+import io.vertx.core.logging.LoggerFactory;
+import java.util.ArrayList;
+import org.computate.scolaire.enUS.wrap.Wrap;
+import org.apache.commons.collections.CollectionUtils;
+import java.lang.Long;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.computate.scolaire.enUS.request.SiteRequestEnUS;
+import java.lang.String;
+import io.vertx.core.logging.Logger;
+import java.math.RoundingMode;
 import java.math.MathContext;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import org.apache.commons.text.StringEscapeUtils;
-import org.computate.scolaire.enUS.writer.AllWriter;
-import org.apache.commons.lang3.StringUtils;
-import java.text.NumberFormat;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.lang.Exception;
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import org.apache.solr.common.SolrDocument;
-import org.computate.scolaire.enUS.wrap.Wrap;
-import java.lang.Long;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.math.NumberUtils;
+import java.util.Optional;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import java.lang.Object;
-import org.computate.scolaire.enUS.request.SiteRequestEnUS;
-import java.lang.String;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 
 /**	
- * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.search.SearchResult&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
+ * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.search.SearchResult&fq=classeEtendGen_indexed_boolean:true">Find the class  in Solr. </a>
  * <br/>
  **/
 public abstract class SearchResultGen<DEV> extends Object {
+	protected static final Logger LOGGER = LoggerFactory.getLogger(SearchResult.class);
 
 	//////////////////
 	// siteRequest_ //
 	//////////////////
 
-	/**	L'entité « siteRequest_ »
+	/**	 The entity siteRequest_
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected SiteRequestEnUS siteRequest_;
 	@JsonIgnore
 	public Wrap<SiteRequestEnUS> siteRequest_Wrap = new Wrap<SiteRequestEnUS>().p(this).c(SiteRequestEnUS.class).var("siteRequest_").o(siteRequest_);
 
-	/**	<br/>L'entité « siteRequest_ »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.search.SearchResult&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:siteRequest_">Trouver l'entité siteRequest_ dans Solr</a>
+	/**	<br/> The entity siteRequest_
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.search.SearchResult&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:siteRequest_">Find the entity siteRequest_ in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _siteRequest_(Wrap<SiteRequestEnUS> c) throws Exception, Exception;
 
@@ -50,6 +69,9 @@ public abstract class SearchResultGen<DEV> extends Object {
 	public void setSiteRequest_(SiteRequestEnUS siteRequest_) {
 		this.siteRequest_ = siteRequest_;
 		this.siteRequest_Wrap.alreadyInitialized = true;
+	}
+	public static SiteRequestEnUS staticSetSiteRequest_(SiteRequestEnUS siteRequest_, String o) {
+		return null;
 	}
 	protected SearchResult siteRequest_Init() throws Exception {
 		if(!siteRequest_Wrap.alreadyInitialized) {
@@ -65,18 +87,19 @@ public abstract class SearchResultGen<DEV> extends Object {
 	// solrDocument //
 	//////////////////
 
-	/**	L'entité « solrDocument »
+	/**	 The entity solrDocument
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected SolrDocument solrDocument;
 	@JsonIgnore
 	public Wrap<SolrDocument> solrDocumentWrap = new Wrap<SolrDocument>().p(this).c(SolrDocument.class).var("solrDocument").o(solrDocument);
 
-	/**	<br/>L'entité « solrDocument »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.search.SearchResult&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:solrDocument">Trouver l'entité solrDocument dans Solr</a>
+	/**	<br/> The entity solrDocument
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.search.SearchResult&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:solrDocument">Find the entity solrDocument in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _solrDocument(Wrap<SolrDocument> c) throws Exception, Exception;
 
@@ -87,6 +110,9 @@ public abstract class SearchResultGen<DEV> extends Object {
 	public void setSolrDocument(SolrDocument solrDocument) {
 		this.solrDocument = solrDocument;
 		this.solrDocumentWrap.alreadyInitialized = true;
+	}
+	public static SolrDocument staticSetSolrDocument(SiteRequestEnUS siteRequest_, String o) {
+		return null;
 	}
 	protected SearchResult solrDocumentInit() throws Exception {
 		if(!solrDocumentWrap.alreadyInitialized) {
@@ -102,18 +128,20 @@ public abstract class SearchResultGen<DEV> extends Object {
 	// resultIndex //
 	/////////////////
 
-	/**	L'entité « resultIndex »
+	/**	 The entity resultIndex
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Long resultIndex;
 	@JsonIgnore
 	public Wrap<Long> resultIndexWrap = new Wrap<Long>().p(this).c(Long.class).var("resultIndex").o(resultIndex);
 
-	/**	<br/>L'entité « resultIndex »
-	 *  est défini comme null avant d'être initialisé. 
-	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.search.SearchResult&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:resultIndex">Trouver l'entité resultIndex dans Solr</a>
+	/**	<br/> The entity resultIndex
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.search.SearchResult&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:resultIndex">Find the entity resultIndex in Solr</a>
 	 * <br/>
-	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
 	protected abstract void _resultIndex(Wrap<Long> c) throws Exception, Exception;
 
@@ -125,11 +153,14 @@ public abstract class SearchResultGen<DEV> extends Object {
 		this.resultIndex = resultIndex;
 		this.resultIndexWrap.alreadyInitialized = true;
 	}
-	public SearchResult setResultIndex(String o) {
-		if(NumberUtils.isParsable(o))
-			this.resultIndex = Long.parseLong(o);
+	public void setResultIndex(String o) {
+		this.resultIndex = SearchResult.staticSetResultIndex(siteRequest_, o);
 		this.resultIndexWrap.alreadyInitialized = true;
-		return (SearchResult)this;
+	}
+	public static Long staticSetResultIndex(SiteRequestEnUS siteRequest_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Long.parseLong(o);
+		return null;
 	}
 	protected SearchResult resultIndexInit() throws Exception {
 		if(!resultIndexWrap.alreadyInitialized) {
@@ -141,8 +172,20 @@ public abstract class SearchResultGen<DEV> extends Object {
 		return (SearchResult)this;
 	}
 
+	public static Long staticSolrResultIndex(SiteRequestEnUS siteRequest_, Long o) {
+		return o;
+	}
+
+	public static String staticSolrStrResultIndex(SiteRequestEnUS siteRequest_, Long o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqResultIndex(SiteRequestEnUS siteRequest_, String o) {
+		return SearchResult.staticSolrStrResultIndex(siteRequest_, SearchResult.staticSolrResultIndex(siteRequest_, SearchResult.staticSetResultIndex(siteRequest_, o)));
+	}
+
 	public Long solrResultIndex() {
-		return resultIndex;
+		return SearchResult.staticSolrResultIndex(siteRequest_, resultIndex);
 	}
 
 	public String strResultIndex() {
@@ -261,6 +304,70 @@ public abstract class SearchResultGen<DEV> extends Object {
 		}
 	}
 
+	///////////////
+	// staticSet //
+	///////////////
+
+	public static Object staticSetForClass(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		return staticSetSearchResult(entityVar,  siteRequest_, o);
+	}
+	public static Object staticSetSearchResult(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		switch(entityVar) {
+		case "resultIndex":
+			return SearchResult.staticSetResultIndex(siteRequest_, o);
+			default:
+				return null;
+		}
+	}
+
+	////////////////
+	// staticSolr //
+	////////////////
+
+	public static Object staticSolrForClass(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		return staticSolrSearchResult(entityVar,  siteRequest_, o);
+	}
+	public static Object staticSolrSearchResult(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		switch(entityVar) {
+		case "resultIndex":
+			return SearchResult.staticSolrResultIndex(siteRequest_, (Long)o);
+			default:
+				return null;
+		}
+	}
+
+	///////////////////
+	// staticSolrStr //
+	///////////////////
+
+	public static String staticSolrStrForClass(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		return staticSolrStrSearchResult(entityVar,  siteRequest_, o);
+	}
+	public static String staticSolrStrSearchResult(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		switch(entityVar) {
+		case "resultIndex":
+			return SearchResult.staticSolrStrResultIndex(siteRequest_, (Long)o);
+			default:
+				return null;
+		}
+	}
+
+	//////////////////
+	// staticSolrFq //
+	//////////////////
+
+	public static String staticSolrFqForClass(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		return staticSolrFqSearchResult(entityVar,  siteRequest_, o);
+	}
+	public static String staticSolrFqSearchResult(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		switch(entityVar) {
+		case "resultIndex":
+			return SearchResult.staticSolrFqResultIndex(siteRequest_, o);
+			default:
+				return null;
+		}
+	}
+
 	/////////////
 	// define //
 	/////////////
@@ -273,8 +380,8 @@ public abstract class SearchResultGen<DEV> extends Object {
 				if(o == null)
 					o = defineSearchResult(v, val);
 				else if(o instanceof Cluster) {
-					Cluster cluster = (Cluster)o;
-					o = cluster.defineForClass(v, val);
+					Cluster oCluster = (Cluster)o;
+					o = oCluster.defineForClass(v, val);
 				}
 			}
 		}
@@ -284,6 +391,18 @@ public abstract class SearchResultGen<DEV> extends Object {
 		switch(var) {
 			default:
 				return null;
+		}
+	}
+
+	//////////////////
+	// apiRequest //
+	//////////////////
+
+	public void apiRequestSearchResult() {
+		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
+		Object o = Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
+		if(o != null && o instanceof SearchResult) {
+			SearchResult original = (SearchResult)o;
 		}
 	}
 

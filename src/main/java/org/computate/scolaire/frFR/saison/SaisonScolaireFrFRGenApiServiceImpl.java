@@ -1276,44 +1276,58 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 											rechercheSaisonScolaire(requeteSite, false, true, "/api/saison", "PATCH", d -> {
 												if(d.succeeded()) {
 													ListeRecherche<SaisonScolaire> listeSaisonScolaire = d.result();
-													RequeteApi requeteApi = new RequeteApi();
-													requeteApi.setRows(listeSaisonScolaire.getRows());
-													requeteApi.setNumFound(listeSaisonScolaire.getQueryResponse().getResults().getNumFound());
-													requeteApi.setNumPATCH(0L);
-													requeteApi.initLoinRequeteApi(requeteSite);
-													requeteSite.setRequeteApi_(requeteApi);
-													requeteSite.getVertx().eventBus().publish("websocketSaisonScolaire", JsonObject.mapFrom(requeteApi).toString());
-													SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listeSaisonScolaire.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
-													Date date = null;
-													if(facets != null)
-														date = (Date)facets.get("max_modifie");
-													String dt;
-													if(date == null)
-														dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
-													else
-														dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
-													listeSaisonScolaire.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
 
-													try {
-														listePATCHSaisonScolaire(requeteApi, listeSaisonScolaire, dt, e -> {
-															if(e.succeeded()) {
-																patchSaisonScolaireReponse(requeteSite, f -> {
-																	if(f.succeeded()) {
-																		LOGGER.info(String.format("patchSaisonScolaire a réussi. "));
-																		blockingCodeHandler.handle(Future.succeededFuture(f.result()));
-																	} else {
-																		LOGGER.error(String.format("patchSaisonScolaire a échoué. ", f.cause()));
-																		erreurSaisonScolaire(requeteSite, null, f);
-																	}
-																});
-															} else {
-																LOGGER.error(String.format("patchSaisonScolaire a échoué. ", e.cause()));
-																erreurSaisonScolaire(requeteSite, null, e);
-															}
-														});
-													} catch(Exception ex) {
-														LOGGER.error(String.format("patchSaisonScolaire a échoué. ", ex));
-														erreurSaisonScolaire(requeteSite, null, Future.failedFuture(ex));
+													if(listeSaisonScolaire.getQueryResponse().getResults().getNumFound() > 1) {
+														List<String> roles2 = Arrays.asList("SiteAdmin");
+														if(
+																!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles2)
+																&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles2)
+																) {
+															String message = String.format("rôles requis : " + String.join(", ", roles2));
+															LOGGER.error(message);
+															erreurSaisonScolaire(requeteSite, null, Future.failedFuture(message));
+														}
+													} else {
+
+														RequeteApi requeteApi = new RequeteApi();
+														requeteApi.setRows(listeSaisonScolaire.getRows());
+														requeteApi.setNumFound(listeSaisonScolaire.getQueryResponse().getResults().getNumFound());
+														requeteApi.setNumPATCH(0L);
+														requeteApi.initLoinRequeteApi(requeteSite);
+														requeteSite.setRequeteApi_(requeteApi);
+														requeteSite.getVertx().eventBus().publish("websocketSaisonScolaire", JsonObject.mapFrom(requeteApi).toString());
+														SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(listeSaisonScolaire.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(null);
+														Date date = null;
+														if(facets != null)
+														date = (Date)facets.get("max_modifie");
+														String dt;
+														if(date == null)
+															dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).minusNanos(1000));
+														else
+															dt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("UTC")));
+														listeSaisonScolaire.addFilterQuery(String.format("modifie_indexed_date:[* TO %s]", dt));
+
+														try {
+															listePATCHSaisonScolaire(requeteApi, listeSaisonScolaire, dt, e -> {
+																if(e.succeeded()) {
+																	patchSaisonScolaireReponse(requeteSite, f -> {
+																		if(f.succeeded()) {
+																			LOGGER.info(String.format("patchSaisonScolaire a réussi. "));
+																			blockingCodeHandler.handle(Future.succeededFuture(f.result()));
+																		} else {
+																			LOGGER.error(String.format("patchSaisonScolaire a échoué. ", f.cause()));
+																			erreurSaisonScolaire(requeteSite, null, f);
+																		}
+																	});
+																} else {
+																	LOGGER.error(String.format("patchSaisonScolaire a échoué. ", e.cause()));
+																	erreurSaisonScolaire(requeteSite, null, e);
+																}
+															});
+														} catch(Exception ex) {
+															LOGGER.error(String.format("patchSaisonScolaire a échoué. ", ex));
+															erreurSaisonScolaire(requeteSite, null, Future.failedFuture(ex));
+														}
 													}
 										} else {
 													LOGGER.error(String.format("patchSaisonScolaire a échoué. ", d.cause()));

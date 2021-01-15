@@ -44,8 +44,8 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.util.HashMap;
 import org.computate.scolaire.enUS.writer.AllWriter;
-import io.vertx.core.logging.LoggerFactory;
 import java.text.NumberFormat;
+import io.vertx.core.logging.LoggerFactory;
 import java.util.ArrayList;
 import org.computate.scolaire.enUS.enrollment.SchoolEnrollment;
 import org.computate.scolaire.enUS.wrap.Wrap;
@@ -18566,8 +18566,8 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				if(o == null)
 					o = defineSchoolEnrollment(v, val);
 				else if(o instanceof Cluster) {
-					Cluster cluster = (Cluster)o;
-					o = cluster.defineForClass(v, val);
+					Cluster oCluster = (Cluster)o;
+					o = oCluster.defineForClass(v, val);
 				}
 			}
 		}

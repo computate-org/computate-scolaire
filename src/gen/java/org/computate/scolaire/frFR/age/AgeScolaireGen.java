@@ -37,8 +37,8 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.util.HashMap;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
-import io.vertx.core.logging.LoggerFactory;
 import java.text.NumberFormat;
+import io.vertx.core.logging.LoggerFactory;
 import java.util.ArrayList;
 import org.computate.scolaire.frFR.couverture.Couverture;
 import org.apache.commons.collections.CollectionUtils;
@@ -3704,8 +3704,8 @@ public abstract class AgeScolaireGen<DEV> extends Cluster {
 				if(o == null)
 					o = definirAgeScolaire(v, val);
 				else if(o instanceof Cluster) {
-					Cluster cluster = (Cluster)o;
-					o = cluster.definirPourClasse(v, val);
+					Cluster oCluster = (Cluster)o;
+					o = oCluster.definirPourClasse(v, val);
 				}
 			}
 		}

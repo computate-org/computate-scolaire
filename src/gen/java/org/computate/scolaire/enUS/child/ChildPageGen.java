@@ -195,8 +195,8 @@ public abstract class ChildPageGen<DEV> extends ChildGenPage {
 				if(o == null)
 					o = defineChildPage(v, val);
 				else if(o instanceof Cluster) {
-					Cluster cluster = (Cluster)o;
-					o = cluster.defineForClass(v, val);
+					Cluster oCluster = (Cluster)o;
+					o = oCluster.defineForClass(v, val);
 				}
 			}
 		}

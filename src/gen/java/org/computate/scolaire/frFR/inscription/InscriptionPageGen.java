@@ -195,8 +195,8 @@ public abstract class InscriptionPageGen<DEV> extends InscriptionGenPage {
 				if(o == null)
 					o = definirInscriptionPage(v, val);
 				else if(o instanceof Cluster) {
-					Cluster cluster = (Cluster)o;
-					o = cluster.definirPourClasse(v, val);
+					Cluster oCluster = (Cluster)o;
+					o = oCluster.definirPourClasse(v, val);
 				}
 			}
 		}

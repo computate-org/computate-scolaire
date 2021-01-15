@@ -5321,8 +5321,8 @@ public abstract class ConfigSiteGen<DEV> extends Object {
 				if(o == null)
 					o = definirConfigSite(v, val);
 				else if(o instanceof Cluster) {
-					Cluster cluster = (Cluster)o;
-					o = cluster.definirPourClasse(v, val);
+					Cluster oCluster = (Cluster)o;
+					o = oCluster.definirPourClasse(v, val);
 				}
 			}
 		}

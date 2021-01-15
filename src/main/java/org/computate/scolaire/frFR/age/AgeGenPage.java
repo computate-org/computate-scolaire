@@ -569,6 +569,11 @@ public class AgeGenPage extends AgeGenPageGen<ClusterPage> {
 					sx("recharger cet âge");
 				} g("button");
 			}
+		}
+		if(
+				requeteSite_.getUtilisateurRolesRessource().contains("SiteAdmin")
+				|| requeteSite_.getUtilisateurRolesRoyaume().contains("SiteAdmin")
+				) {
 
 			{ e("button")
 				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue ")

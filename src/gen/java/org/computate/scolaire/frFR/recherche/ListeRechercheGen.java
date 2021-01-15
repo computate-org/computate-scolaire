@@ -19,6 +19,7 @@ import java.lang.Boolean;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import java.lang.String;
 import io.vertx.core.logging.Logger;
+import java.math.RoundingMode;
 import java.math.MathContext;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.computate.scolaire.frFR.cluster.Cluster;
@@ -110,6 +111,9 @@ public abstract class ListeRechercheGen<DEV> {
 		this.requeteSite_ = requeteSite_;
 		this.requeteSite_Couverture.dejaInitialise = true;
 	}
+	public static RequeteSiteFrFR staticSetRequeteSite_(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
+	}
 	protected ListeRecherche requeteSite_Init() {
 		if(!requeteSite_Couverture.dejaInitialise) {
 			_requeteSite_(requeteSite_Couverture);
@@ -148,10 +152,12 @@ public abstract class ListeRechercheGen<DEV> {
 		this.stocker = stocker;
 		this.stockerCouverture.dejaInitialise = true;
 	}
-	public ListeRecherche setStocker(String o) {
-		this.stocker = Boolean.parseBoolean(o);
+	public void setStocker(String o) {
+		this.stocker = ListeRecherche.staticSetStocker(requeteSite_, o);
 		this.stockerCouverture.dejaInitialise = true;
-		return (ListeRecherche)this;
+	}
+	public static Boolean staticSetStocker(RequeteSiteFrFR requeteSite_, String o) {
+		return Boolean.parseBoolean(o);
 	}
 	protected ListeRecherche stockerInit() {
 		if(!stockerCouverture.dejaInitialise) {
@@ -163,8 +169,20 @@ public abstract class ListeRechercheGen<DEV> {
 		return (ListeRecherche)this;
 	}
 
+	public static Boolean staticSolrStocker(RequeteSiteFrFR requeteSite_, Boolean o) {
+		return o;
+	}
+
+	public static String staticSolrStrStocker(RequeteSiteFrFR requeteSite_, Boolean o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqStocker(RequeteSiteFrFR requeteSite_, String o) {
+		return ListeRecherche.staticSolrStrStocker(requeteSite_, ListeRecherche.staticSolrStocker(requeteSite_, ListeRecherche.staticSetStocker(requeteSite_, o)));
+	}
+
 	public Boolean solrStocker() {
-		return stocker;
+		return ListeRecherche.staticSolrStocker(requeteSite_, stocker);
 	}
 
 	public String strStocker() {
@@ -215,10 +233,12 @@ public abstract class ListeRechercheGen<DEV> {
 		this.peupler = peupler;
 		this.peuplerCouverture.dejaInitialise = true;
 	}
-	public ListeRecherche setPeupler(String o) {
-		this.peupler = Boolean.parseBoolean(o);
+	public void setPeupler(String o) {
+		this.peupler = ListeRecherche.staticSetPeupler(requeteSite_, o);
 		this.peuplerCouverture.dejaInitialise = true;
-		return (ListeRecherche)this;
+	}
+	public static Boolean staticSetPeupler(RequeteSiteFrFR requeteSite_, String o) {
+		return Boolean.parseBoolean(o);
 	}
 	protected ListeRecherche peuplerInit() {
 		if(!peuplerCouverture.dejaInitialise) {
@@ -230,8 +250,20 @@ public abstract class ListeRechercheGen<DEV> {
 		return (ListeRecherche)this;
 	}
 
+	public static Boolean staticSolrPeupler(RequeteSiteFrFR requeteSite_, Boolean o) {
+		return o;
+	}
+
+	public static String staticSolrStrPeupler(RequeteSiteFrFR requeteSite_, Boolean o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPeupler(RequeteSiteFrFR requeteSite_, String o) {
+		return ListeRecherche.staticSolrStrPeupler(requeteSite_, ListeRecherche.staticSolrPeupler(requeteSite_, ListeRecherche.staticSetPeupler(requeteSite_, o)));
+	}
+
 	public Boolean solrPeupler() {
-		return peupler;
+		return ListeRecherche.staticSolrPeupler(requeteSite_, peupler);
 	}
 
 	public String strPeupler() {
@@ -282,6 +314,9 @@ public abstract class ListeRechercheGen<DEV> {
 		this.fields = fields;
 		this.fieldsCouverture.dejaInitialise = true;
 	}
+	public static String staticSetFields(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
+	}
 	public ListeRecherche addFields(String...objets) {
 		for(String o : objets) {
 			addFields(o);
@@ -293,13 +328,12 @@ public abstract class ListeRechercheGen<DEV> {
 			this.fields.add(o);
 		return (ListeRecherche)this;
 	}
-	public ListeRecherche setFields(JsonArray objets) {
+	public void setFields(JsonArray objets) {
 		fields.clear();
 		for(int i = 0; i < objets.size(); i++) {
 			String o = objets.getString(i);
 			addFields(o);
 		}
-		return (ListeRecherche)this;
 	}
 	protected ListeRecherche fieldsInit() {
 		if(!fieldsCouverture.dejaInitialise) {
@@ -309,8 +343,24 @@ public abstract class ListeRechercheGen<DEV> {
 		return (ListeRecherche)this;
 	}
 
+	public static String staticSolrFields(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrFields(RequeteSiteFrFR requeteSite_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqFields(RequeteSiteFrFR requeteSite_, String o) {
+		return ListeRecherche.staticSolrStrFields(requeteSite_, ListeRecherche.staticSolrFields(requeteSite_, ListeRecherche.staticSetFields(requeteSite_, o)));
+	}
+
 	public List<String> solrFields() {
-		return fields;
+		List<String> l = new ArrayList<String>();
+		for(String o : fields) {
+			l.add(ListeRecherche.staticSolrFields(requeteSite_, o));
+		}
+		return l;
 	}
 
 	public String strFields() {
@@ -361,6 +411,9 @@ public abstract class ListeRechercheGen<DEV> {
 		this.solrQuery = solrQuery;
 		this.solrQueryCouverture.dejaInitialise = true;
 	}
+	public static SolrQuery staticSetSolrQuery(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
+	}
 	protected ListeRecherche solrQueryInit() {
 		if(!solrQueryCouverture.dejaInitialise) {
 			_solrQuery(solrQuery);
@@ -396,6 +449,9 @@ public abstract class ListeRechercheGen<DEV> {
 	public void setQueryResponse(QueryResponse queryResponse) {
 		this.queryResponse = queryResponse;
 		this.queryResponseCouverture.dejaInitialise = true;
+	}
+	public static QueryResponse staticSetQueryResponse(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
 	}
 	protected ListeRecherche queryResponseInit() {
 		if(!queryResponseCouverture.dejaInitialise) {
@@ -434,6 +490,9 @@ public abstract class ListeRechercheGen<DEV> {
 	public void setSolrDocumentList(SolrDocumentList solrDocumentList) {
 		this.solrDocumentList = solrDocumentList;
 		this.solrDocumentListCouverture.dejaInitialise = true;
+	}
+	public static SolrDocumentList staticSetSolrDocumentList(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
 	}
 	protected ListeRecherche solrDocumentListInit() {
 		if(!solrDocumentListCouverture.dejaInitialise) {
@@ -606,6 +665,86 @@ public abstract class ListeRechercheGen<DEV> {
 		}
 	}
 
+	///////////////
+	// staticSet //
+	///////////////
+
+	public static Object staticSetPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		return staticSetListeRecherche(entiteVar,  requeteSite_, o);
+	}
+	public static Object staticSetListeRecherche(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		switch(entiteVar) {
+		case "stocker":
+			return ListeRecherche.staticSetStocker(requeteSite_, o);
+		case "peupler":
+			return ListeRecherche.staticSetPeupler(requeteSite_, o);
+		case "fields":
+			return ListeRecherche.staticSetFields(requeteSite_, o);
+			default:
+				return null;
+		}
+	}
+
+	////////////////
+	// staticSolr //
+	////////////////
+
+	public static Object staticSolrPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		return staticSolrListeRecherche(entiteVar,  requeteSite_, o);
+	}
+	public static Object staticSolrListeRecherche(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		switch(entiteVar) {
+		case "stocker":
+			return ListeRecherche.staticSolrStocker(requeteSite_, (Boolean)o);
+		case "peupler":
+			return ListeRecherche.staticSolrPeupler(requeteSite_, (Boolean)o);
+		case "fields":
+			return ListeRecherche.staticSolrFields(requeteSite_, (String)o);
+			default:
+				return null;
+		}
+	}
+
+	///////////////////
+	// staticSolrStr //
+	///////////////////
+
+	public static String staticSolrStrPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		return staticSolrStrListeRecherche(entiteVar,  requeteSite_, o);
+	}
+	public static String staticSolrStrListeRecherche(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		switch(entiteVar) {
+		case "stocker":
+			return ListeRecherche.staticSolrStrStocker(requeteSite_, (Boolean)o);
+		case "peupler":
+			return ListeRecherche.staticSolrStrPeupler(requeteSite_, (Boolean)o);
+		case "fields":
+			return ListeRecherche.staticSolrStrFields(requeteSite_, (String)o);
+			default:
+				return null;
+		}
+	}
+
+	//////////////////
+	// staticSolrFq //
+	//////////////////
+
+	public static String staticSolrFqPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		return staticSolrFqListeRecherche(entiteVar,  requeteSite_, o);
+	}
+	public static String staticSolrFqListeRecherche(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		switch(entiteVar) {
+		case "stocker":
+			return ListeRecherche.staticSolrFqStocker(requeteSite_, o);
+		case "peupler":
+			return ListeRecherche.staticSolrFqPeupler(requeteSite_, o);
+		case "fields":
+			return ListeRecherche.staticSolrFqFields(requeteSite_, o);
+			default:
+				return null;
+		}
+	}
+
 	/////////////
 	// definir //
 	/////////////
@@ -618,8 +757,8 @@ public abstract class ListeRechercheGen<DEV> {
 				if(o == null)
 					o = definirListeRecherche(v, val);
 				else if(o instanceof Cluster) {
-					Cluster cluster = (Cluster)o;
-					o = cluster.definirPourClasse(v, val);
+					Cluster oCluster = (Cluster)o;
+					o = oCluster.definirPourClasse(v, val);
 				}
 			}
 		}

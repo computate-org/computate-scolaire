@@ -195,8 +195,8 @@ public abstract class BlocPageGen<DEV> extends BlocGenPage {
 				if(o == null)
 					o = definirBlocPage(v, val);
 				else if(o instanceof Cluster) {
-					Cluster cluster = (Cluster)o;
-					o = cluster.definirPourClasse(v, val);
+					Cluster oCluster = (Cluster)o;
+					o = oCluster.definirPourClasse(v, val);
 				}
 			}
 		}

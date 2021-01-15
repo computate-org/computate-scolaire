@@ -195,8 +195,8 @@ public abstract class DadPageGen<DEV> extends DadGenPage {
 				if(o == null)
 					o = defineDadPage(v, val);
 				else if(o instanceof Cluster) {
-					Cluster cluster = (Cluster)o;
-					o = cluster.defineForClass(v, val);
+					Cluster oCluster = (Cluster)o;
+					o = oCluster.defineForClass(v, val);
 				}
 			}
 		}

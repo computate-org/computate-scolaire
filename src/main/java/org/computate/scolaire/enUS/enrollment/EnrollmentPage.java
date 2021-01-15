@@ -70,139 +70,179 @@ public class EnrollmentPage extends EnrollmentPageGen<EnrollmentGenPage> {
 				} g("button");
 			}
 
-			{ e("button")
-				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ")
-				.a("onclick", "$('#putimportSchoolEnrollmentModal').show(); ")
-				.f();
-				e("i").a("class", "fas fa-file-import ").f().g("i");
-				sx("Import enrollments");
-			} g("button");
-			{ e("div").a("id", "putimportSchoolEnrollmentModal").a("class", "w3-modal w3-padding-32 ").f();
-				{ e("div").a("class", "w3-modal-content ").f();
-					{ e("div").a("class", "w3-card-4 ").f();
-						{ e("header").a("class", "w3-container w3-blue-gray ").f();
-							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putimportSchoolEnrollmentModal').hide(); ").f().sx("×").g("span");
-							e("h2").a("class", "w3-padding ").f().sx("Import enrollments").g("h2");
-						} g("header");
-						{ e("div").a("class", "w3-container ").f();
-							SchoolEnrollment o = new SchoolEnrollment();
-							o.setSiteRequest_(siteRequest_);
+			if(
+					siteRequest_.getUserResourceRoles().contains("SiteAdmin")
+					|| siteRequest_.getUserRealmRoles().contains("SiteAdmin")
+					) {
 
-							// Form PUT
-							{ e("div").a("id", "putimportSchoolEnrollmentForm").f();
-								htmlFormPUTImportSchoolEnrollment(o);
+				{ e("button")
+					.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ")
+					.a("onclick", "$('#postSchoolEnrollmentModal').show(); ")
+					.f();
+					e("i").a("class", "fas fa-file-plus ").f().g("i");
+					sx("Create an enrollment");
+				} g("button");
+				{ e("div").a("id", "postSchoolEnrollmentModal").a("class", "w3-modal w3-padding-32 ").f();
+					{ e("div").a("class", "w3-modal-content ").f();
+						{ e("div").a("class", "w3-card-4 ").f();
+							{ e("header").a("class", "w3-container w3-blue-gray ").f();
+								e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#postSchoolEnrollmentModal').hide(); ").f().sx("×").g("span");
+								e("h2").a("class", "w3-padding ").f().sx("Create an enrollment").g("h2");
+							} g("header");
+							{ e("div").a("class", "w3-container ").a("id", "postSchoolEnrollmentFormValues").f();
+								SchoolEnrollment o = new SchoolEnrollment();
+								o.setSiteRequest_(siteRequest_);
+
+								// Form POST
+								{ e("div").a("id", "postSchoolEnrollmentForm").f();
+									htmlFormPOSTSchoolEnrollment(o);
+								} g("div");
+								e("button")
+									.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-blue-gray ")
+									.a("onclick", "postSchoolEnrollment($('#postSchoolEnrollmentForm')); ")
+									.f().sx("Create an enrollment")
+								.g("button");
+
 							} g("div");
-							e("button")
-								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-blue-gray ")
-								.a("onclick", "putimportSchoolEnrollment($('#putimportSchoolEnrollmentForm')); ")
-								.f().sx("Import enrollments")
-							.g("button");
-
 						} g("div");
 					} g("div");
 				} g("div");
-			} g("div");
 
 
-			{ e("button")
-				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ")
-				.a("onclick", "$('#putmergeSchoolEnrollmentModal').show(); ")
-				.f();
-				e("i").a("class", "fas fa-code-merge ").f().g("i");
-				sx("Merge enrollments");
-			} g("button");
-			{ e("div").a("id", "putmergeSchoolEnrollmentModal").a("class", "w3-modal w3-padding-32 ").f();
-				{ e("div").a("class", "w3-modal-content ").f();
-					{ e("div").a("class", "w3-card-4 ").f();
-						{ e("header").a("class", "w3-container w3-blue-gray ").f();
-							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putmergeSchoolEnrollmentModal').hide(); ").f().sx("×").g("span");
-							e("h2").a("class", "w3-padding ").f().sx("Merge enrollments").g("h2");
-						} g("header");
-						{ e("div").a("class", "w3-container ").f();
-							SchoolEnrollment o = new SchoolEnrollment();
-							o.setSiteRequest_(siteRequest_);
+				{ e("button")
+					.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ")
+					.a("onclick", "$('#putimportSchoolEnrollmentModal').show(); ")
+					.f();
+					e("i").a("class", "fas fa-file-import ").f().g("i");
+					sx("Import enrollments");
+				} g("button");
+				{ e("div").a("id", "putimportSchoolEnrollmentModal").a("class", "w3-modal w3-padding-32 ").f();
+					{ e("div").a("class", "w3-modal-content ").f();
+						{ e("div").a("class", "w3-card-4 ").f();
+							{ e("header").a("class", "w3-container w3-blue-gray ").f();
+								e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putimportSchoolEnrollmentModal').hide(); ").f().sx("×").g("span");
+								e("h2").a("class", "w3-padding ").f().sx("Import enrollments").g("h2");
+							} g("header");
+							{ e("div").a("class", "w3-container ").a("id", "putimportSchoolEnrollmentFormValues").f();
+								SchoolEnrollment o = new SchoolEnrollment();
+								o.setSiteRequest_(siteRequest_);
 
-							// Form PUT
-							{ e("div").a("id", "putmergeSchoolEnrollmentForm").f();
-								htmlFormPUTMergeSchoolEnrollment(o);
+								// Form PUT
+								{ e("div").a("id", "putimportSchoolEnrollmentForm").f();
+									htmlFormPUTImportSchoolEnrollment(o);
+								} g("div");
+								e("button")
+									.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-blue-gray ")
+									.a("onclick", "putimportSchoolEnrollment($('#putimportSchoolEnrollmentForm')); ")
+									.f().sx("Import enrollments")
+								.g("button");
+
 							} g("div");
-							e("button")
-								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-blue-gray ")
-								.a("onclick", "putmergeSchoolEnrollment($('#putmergeSchoolEnrollmentForm')); ")
-								.f().sx("Merge enrollments")
-							.g("button");
-
 						} g("div");
 					} g("div");
 				} g("div");
-			} g("div");
 
 
-			{ e("button")
-				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ")
-				.a("onclick", "$('#putcopySchoolEnrollmentModal').show(); ")
-				.f();
-				e("i").a("class", "fas fa-copy ").f().g("i");
-				sx("Duplicate enrollments");
-			} g("button");
-			{ e("div").a("id", "putcopySchoolEnrollmentModal").a("class", "w3-modal w3-padding-32 ").f();
-				{ e("div").a("class", "w3-modal-content ").f();
-					{ e("div").a("class", "w3-card-4 ").f();
-						{ e("header").a("class", "w3-container w3-blue-gray ").f();
-							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putcopySchoolEnrollmentModal').hide(); ").f().sx("×").g("span");
-							e("h2").a("class", "w3-padding ").f().sx("Duplicate enrollments").g("h2");
-						} g("header");
-						{ e("div").a("class", "w3-container ").f();
-							SchoolEnrollment o = new SchoolEnrollment();
-							o.setSiteRequest_(siteRequest_);
+				{ e("button")
+					.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ")
+					.a("onclick", "$('#putmergeSchoolEnrollmentModal').show(); ")
+					.f();
+					e("i").a("class", "fas fa-code-merge ").f().g("i");
+					sx("Merge enrollments");
+				} g("button");
+				{ e("div").a("id", "putmergeSchoolEnrollmentModal").a("class", "w3-modal w3-padding-32 ").f();
+					{ e("div").a("class", "w3-modal-content ").f();
+						{ e("div").a("class", "w3-card-4 ").f();
+							{ e("header").a("class", "w3-container w3-blue-gray ").f();
+								e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putmergeSchoolEnrollmentModal').hide(); ").f().sx("×").g("span");
+								e("h2").a("class", "w3-padding ").f().sx("Merge enrollments").g("h2");
+							} g("header");
+							{ e("div").a("class", "w3-container ").a("id", "putmergeSchoolEnrollmentFormValues").f();
+								SchoolEnrollment o = new SchoolEnrollment();
+								o.setSiteRequest_(siteRequest_);
 
-							// Form PUT
-							{ e("div").a("id", "putcopySchoolEnrollmentForm").f();
-								htmlFormPUTCopySchoolEnrollment(o);
+								// Form PUT
+								{ e("div").a("id", "putmergeSchoolEnrollmentForm").f();
+									htmlFormPUTMergeSchoolEnrollment(o);
+								} g("div");
+								e("button")
+									.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-blue-gray ")
+									.a("onclick", "putmergeSchoolEnrollment($('#putmergeSchoolEnrollmentForm')); ")
+									.f().sx("Merge enrollments")
+								.g("button");
+
 							} g("div");
-							e("button")
-								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-blue-gray ")
-								.a("onclick", "putcopySchoolEnrollment($('#putcopySchoolEnrollmentForm'), ", schoolEnrollment_ == null ? "null" : schoolEnrollment_.getPk(), "); ")
-								.f().sx("Duplicate enrollments")
-							.g("button");
-
 						} g("div");
 					} g("div");
 				} g("div");
-			} g("div");
 
 
-			{ e("button")
-				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ")
-				.a("onclick", "$('#patchSchoolEnrollmentModal').show(); ")
-				.f();
-				e("i").a("class", "fas fa-edit ").f().g("i");
-				sx("Modify enrollments");
-			} g("button");
-			{ e("div").a("id", "patchSchoolEnrollmentModal").a("class", "w3-modal w3-padding-32 ").f();
-				{ e("div").a("class", "w3-modal-content ").f();
-					{ e("div").a("class", "w3-card-4 ").f();
-						{ e("header").a("class", "w3-container w3-blue-gray ").f();
-							e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchSchoolEnrollmentModal').hide(); ").f().sx("×").g("span");
-							e("h2").a("class", "w3-padding ").f().sx("Modify enrollments").g("h2");
-						} g("header");
-						{ e("div").a("class", "w3-container ").a("id", "patchSchoolEnrollmentFormValues").f();
-							SchoolEnrollment o = new SchoolEnrollment();
-							o.setSiteRequest_(siteRequest_);
+				{ e("button")
+					.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ")
+					.a("onclick", "$('#putcopySchoolEnrollmentModal').show(); ")
+					.f();
+					e("i").a("class", "fas fa-copy ").f().g("i");
+					sx("Duplicate enrollments");
+				} g("button");
+				{ e("div").a("id", "putcopySchoolEnrollmentModal").a("class", "w3-modal w3-padding-32 ").f();
+					{ e("div").a("class", "w3-modal-content ").f();
+						{ e("div").a("class", "w3-card-4 ").f();
+							{ e("header").a("class", "w3-container w3-blue-gray ").f();
+								e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#putcopySchoolEnrollmentModal').hide(); ").f().sx("×").g("span");
+								e("h2").a("class", "w3-padding ").f().sx("Duplicate enrollments").g("h2");
+							} g("header");
+							{ e("div").a("class", "w3-container ").a("id", "putcopySchoolEnrollmentFormValues").f();
+								SchoolEnrollment o = new SchoolEnrollment();
+								o.setSiteRequest_(siteRequest_);
+
+								// Form PUT
+								{ e("div").a("id", "putcopySchoolEnrollmentForm").f();
+									htmlFormPUTCopySchoolEnrollment(o);
+								} g("div");
+								e("button")
+									.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-blue-gray ")
+									.a("onclick", "putcopySchoolEnrollment($('#putcopySchoolEnrollmentForm'), ", schoolEnrollment_ == null ? "null" : schoolEnrollment_.getPk(), "); ")
+									.f().sx("Duplicate enrollments")
+								.g("button");
+
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+
+
+				{ e("button")
+					.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ")
+					.a("onclick", "$('#patchSchoolEnrollmentModal').show(); ")
+					.f();
+					e("i").a("class", "fas fa-edit ").f().g("i");
+					sx("Modify enrollments");
+				} g("button");
+				{ e("div").a("id", "patchSchoolEnrollmentModal").a("class", "w3-modal w3-padding-32 ").f();
+					{ e("div").a("class", "w3-modal-content ").f();
+						{ e("div").a("class", "w3-card-4 ").f();
+							{ e("header").a("class", "w3-container w3-blue-gray ").f();
+								e("span").a("class", "w3-button w3-display-topright ").a("onclick", "$('#patchSchoolEnrollmentModal').hide(); ").f().sx("×").g("span");
+								e("h2").a("class", "w3-padding ").f().sx("Modify enrollments").g("h2");
+							} g("header");
+							{ e("div").a("class", "w3-container ").a("id", "patchSchoolEnrollmentFormValues").f();
+								SchoolEnrollment o = new SchoolEnrollment();
+								o.setSiteRequest_(siteRequest_);
 
 								htmlFormPATCHSchoolEnrollment(o);
-							e("button")
-								.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-blue-gray ")
-								.a("onclick", "patchSchoolEnrollment(null, $('#patchSchoolEnrollmentFormValues'), ", Optional.ofNullable(schoolEnrollment_).map(SchoolEnrollment::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
-								.f().sx("Modify enrollments")
-							.g("button");
+								e("button")
+									.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-margin w3-blue-gray ")
+									.a("onclick", "patchSchoolEnrollment(null, $('#patchSchoolEnrollmentFormValues'), ", Optional.ofNullable(schoolEnrollment_).map(SchoolEnrollment::getPk).map(a -> a.toString()).orElse("null"), ", function() {}, function() {}); ")
+									.f().sx("Modify enrollments")
+								.g("button");
 
+							} g("div");
 						} g("div");
 					} g("div");
 				} g("div");
-			} g("div");
 
-			g("div");
+				g("div");
+			}
 		}
 		htmlSuggestedEnrollmentGenPage(this, null, listSchoolEnrollment);
 	}

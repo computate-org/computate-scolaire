@@ -1,24 +1,36 @@
 package org.computate.scolaire.frFR.requete.api;
 
+import java.util.Arrays;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.util.Date;
 import java.time.ZonedDateTime;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 import org.computate.scolaire.frFR.requete.api.RequeteApi;
 import org.apache.commons.lang3.StringUtils;
 import java.lang.Integer;
 import java.text.NumberFormat;
+import io.vertx.core.logging.LoggerFactory;
+import java.util.ArrayList;
 import org.computate.scolaire.frFR.couverture.Couverture;
+import org.apache.commons.collections.CollectionUtils;
 import java.lang.Long;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import java.util.Locale;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.lang.Boolean;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import java.time.ZoneOffset;
 import java.lang.String;
+import io.vertx.core.logging.Logger;
+import java.math.RoundingMode;
 import java.math.MathContext;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.apache.commons.text.StringEscapeUtils;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.util.Objects;
@@ -28,27 +40,32 @@ import java.time.temporal.ChronoUnit;
 import java.time.format.DateTimeFormatter;
 import org.apache.commons.lang3.math.NumberUtils;
 import java.util.Optional;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import java.lang.Object;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 
 /**	
- * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.requete.api.RequeteApi&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
+ * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.requete.api.RequeteApi&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr. </a>
  * <br/>
  **/
 public abstract class RequeteApiGen<DEV> extends Object {
+	protected static final Logger LOGGER = LoggerFactory.getLogger(RequeteApi.class);
 
 	//////////////////
 	// requeteSite_ //
 	//////////////////
 
-	/**	L'entité « requeteSite_ »
+	/**	 L'entité requeteSite_
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonIgnore
+	@JsonInclude(Include.NON_NULL)
 	protected RequeteSiteFrFR requeteSite_;
 	@JsonIgnore
 	public Couverture<RequeteSiteFrFR> requeteSite_Couverture = new Couverture<RequeteSiteFrFR>().p(this).c(RequeteSiteFrFR.class).var("requeteSite_").o(requeteSite_);
 
-	/**	<br/>L'entité « requeteSite_ »
+	/**	<br/> L'entité requeteSite_
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.requete.api.RequeteApi&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:requeteSite_">Trouver l'entité requeteSite_ dans Solr</a>
 	 * <br/>
@@ -64,6 +81,9 @@ public abstract class RequeteApiGen<DEV> extends Object {
 		this.requeteSite_ = requeteSite_;
 		this.requeteSite_Couverture.dejaInitialise = true;
 	}
+	public static RequeteSiteFrFR staticSetRequeteSite_(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
+	}
 	protected RequeteApi requeteSite_Init() {
 		if(!requeteSite_Couverture.dejaInitialise) {
 			_requeteSite_(requeteSite_Couverture);
@@ -78,14 +98,16 @@ public abstract class RequeteApiGen<DEV> extends Object {
 	// cree //
 	//////////
 
-	/**	L'entité « cree »
+	/**	 L'entité cree
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected ZonedDateTime cree;
 	@JsonIgnore
 	public Couverture<ZonedDateTime> creeCouverture = new Couverture<ZonedDateTime>().p(this).c(ZonedDateTime.class).var("cree").o(cree);
 
-	/**	<br/>L'entité « cree »
+	/**	<br/> L'entité cree
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.requete.api.RequeteApi&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:cree">Trouver l'entité cree dans Solr</a>
 	 * <br/>
@@ -101,21 +123,21 @@ public abstract class RequeteApiGen<DEV> extends Object {
 		this.cree = cree;
 		this.creeCouverture.dejaInitialise = true;
 	}
-	public RequeteApi setCree(Instant o) {
-		this.cree = ZonedDateTime.from(o).truncatedTo(ChronoUnit.MILLIS);
+	public void setCree(Instant o) {
+		this.cree = o == null ? null : ZonedDateTime.from(o).truncatedTo(ChronoUnit.MILLIS);
 		this.creeCouverture.dejaInitialise = true;
-		return (RequeteApi)this;
 	}
 	/** Example: 2011-12-03T10:15:30+01:00 **/
-	public RequeteApi setCree(String o) {
-		this.cree = ZonedDateTime.parse(o, DateTimeFormatter.ISO_OFFSET_DATE_TIME.withZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone()))).truncatedTo(ChronoUnit.MILLIS);
+	public void setCree(String o) {
+		this.cree = RequeteApi.staticSetCree(requeteSite_, o);
 		this.creeCouverture.dejaInitialise = true;
-		return (RequeteApi)this;
 	}
-	public RequeteApi setCree(Date o) {
-		this.cree = ZonedDateTime.ofInstant(o.toInstant(), ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).truncatedTo(ChronoUnit.MILLIS);
+	public static ZonedDateTime staticSetCree(RequeteSiteFrFR requeteSite_, String o) {
+		return o == null ? null : ZonedDateTime.parse(o, DateTimeFormatter.ISO_DATE_TIME.withZone(ZoneId.of(requeteSite_.getConfigSite_().getSiteZone()))).truncatedTo(ChronoUnit.MILLIS);
+	}
+	public void setCree(Date o) {
+		this.cree = o == null ? null : ZonedDateTime.ofInstant(o.toInstant(), ZoneId.of(requeteSite_.getConfigSite_().getSiteZone())).truncatedTo(ChronoUnit.MILLIS);
 		this.creeCouverture.dejaInitialise = true;
-		return (RequeteApi)this;
 	}
 	protected RequeteApi creeInit() {
 		if(!creeCouverture.dejaInitialise) {
@@ -127,16 +149,28 @@ public abstract class RequeteApiGen<DEV> extends Object {
 		return (RequeteApi)this;
 	}
 
+	public static Date staticSolrCree(RequeteSiteFrFR requeteSite_, ZonedDateTime o) {
+		return o == null ? null : Date.from(o.toInstant());
+	}
+
+	public static String staticSolrStrCree(RequeteSiteFrFR requeteSite_, Date o) {
+		return "\"" + DateTimeFormatter.ISO_DATE_TIME.format(o.toInstant().atOffset(ZoneOffset.UTC)) + "\"";
+	}
+
+	public static String staticSolrFqCree(RequeteSiteFrFR requeteSite_, String o) {
+		return RequeteApi.staticSolrStrCree(requeteSite_, RequeteApi.staticSolrCree(requeteSite_, RequeteApi.staticSetCree(requeteSite_, o)));
+	}
+
 	public Date solrCree() {
-		return cree == null ? null : Date.from(cree.toInstant());
+		return RequeteApi.staticSolrCree(requeteSite_, cree);
 	}
 
 	public String strCree() {
-		return cree == null ? "" : cree.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy H'h'mm:ss zz", Locale.FRANCE));
+		return cree == null ? "" : cree.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy H'h'mm:ss zz VV", Locale.forLanguageTag("fr-FR")));
 	}
 
 	public String jsonCree() {
-		return cree == null ? "" : cree.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy H'h'mm:ss.SSS zz VV", Locale.FRANCE));
+		return cree == null ? "" : cree.format(DateTimeFormatter.ISO_DATE_TIME);
 	}
 
 	public String nomAffichageCree() {
@@ -155,14 +189,16 @@ public abstract class RequeteApiGen<DEV> extends Object {
 	// rows //
 	//////////
 
-	/**	L'entité « rows »
+	/**	 L'entité rows
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Integer rows;
 	@JsonIgnore
 	public Couverture<Integer> rowsCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("rows").o(rows);
 
-	/**	<br/>L'entité « rows »
+	/**	<br/> L'entité rows
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.requete.api.RequeteApi&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:rows">Trouver l'entité rows dans Solr</a>
 	 * <br/>
@@ -178,11 +214,14 @@ public abstract class RequeteApiGen<DEV> extends Object {
 		this.rows = rows;
 		this.rowsCouverture.dejaInitialise = true;
 	}
-	public RequeteApi setRows(String o) {
-		if(NumberUtils.isParsable(o))
-			this.rows = Integer.parseInt(o);
+	public void setRows(String o) {
+		this.rows = RequeteApi.staticSetRows(requeteSite_, o);
 		this.rowsCouverture.dejaInitialise = true;
-		return (RequeteApi)this;
+	}
+	public static Integer staticSetRows(RequeteSiteFrFR requeteSite_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Integer.parseInt(o);
+		return null;
 	}
 	protected RequeteApi rowsInit() {
 		if(!rowsCouverture.dejaInitialise) {
@@ -194,8 +233,20 @@ public abstract class RequeteApiGen<DEV> extends Object {
 		return (RequeteApi)this;
 	}
 
+	public static Integer staticSolrRows(RequeteSiteFrFR requeteSite_, Integer o) {
+		return o;
+	}
+
+	public static String staticSolrStrRows(RequeteSiteFrFR requeteSite_, Integer o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqRows(RequeteSiteFrFR requeteSite_, String o) {
+		return RequeteApi.staticSolrStrRows(requeteSite_, RequeteApi.staticSolrRows(requeteSite_, RequeteApi.staticSetRows(requeteSite_, o)));
+	}
+
 	public Integer solrRows() {
-		return rows;
+		return RequeteApi.staticSolrRows(requeteSite_, rows);
 	}
 
 	public String strRows() {
@@ -222,14 +273,16 @@ public abstract class RequeteApiGen<DEV> extends Object {
 	// numFound //
 	//////////////
 
-	/**	L'entité « numFound »
+	/**	 L'entité numFound
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Long numFound;
 	@JsonIgnore
 	public Couverture<Long> numFoundCouverture = new Couverture<Long>().p(this).c(Long.class).var("numFound").o(numFound);
 
-	/**	<br/>L'entité « numFound »
+	/**	<br/> L'entité numFound
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.requete.api.RequeteApi&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:numFound">Trouver l'entité numFound dans Solr</a>
 	 * <br/>
@@ -245,11 +298,14 @@ public abstract class RequeteApiGen<DEV> extends Object {
 		this.numFound = numFound;
 		this.numFoundCouverture.dejaInitialise = true;
 	}
-	public RequeteApi setNumFound(String o) {
-		if(NumberUtils.isParsable(o))
-			this.numFound = Long.parseLong(o);
+	public void setNumFound(String o) {
+		this.numFound = RequeteApi.staticSetNumFound(requeteSite_, o);
 		this.numFoundCouverture.dejaInitialise = true;
-		return (RequeteApi)this;
+	}
+	public static Long staticSetNumFound(RequeteSiteFrFR requeteSite_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Long.parseLong(o);
+		return null;
 	}
 	protected RequeteApi numFoundInit() {
 		if(!numFoundCouverture.dejaInitialise) {
@@ -261,8 +317,20 @@ public abstract class RequeteApiGen<DEV> extends Object {
 		return (RequeteApi)this;
 	}
 
+	public static Long staticSolrNumFound(RequeteSiteFrFR requeteSite_, Long o) {
+		return o;
+	}
+
+	public static String staticSolrStrNumFound(RequeteSiteFrFR requeteSite_, Long o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqNumFound(RequeteSiteFrFR requeteSite_, String o) {
+		return RequeteApi.staticSolrStrNumFound(requeteSite_, RequeteApi.staticSolrNumFound(requeteSite_, RequeteApi.staticSetNumFound(requeteSite_, o)));
+	}
+
 	public Long solrNumFound() {
-		return numFound;
+		return RequeteApi.staticSolrNumFound(requeteSite_, numFound);
 	}
 
 	public String strNumFound() {
@@ -289,14 +357,16 @@ public abstract class RequeteApiGen<DEV> extends Object {
 	// numPATCH //
 	//////////////
 
-	/**	L'entité « numPATCH »
+	/**	 L'entité numPATCH
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Long numPATCH;
 	@JsonIgnore
 	public Couverture<Long> numPATCHCouverture = new Couverture<Long>().p(this).c(Long.class).var("numPATCH").o(numPATCH);
 
-	/**	<br/>L'entité « numPATCH »
+	/**	<br/> L'entité numPATCH
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.requete.api.RequeteApi&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:numPATCH">Trouver l'entité numPATCH dans Solr</a>
 	 * <br/>
@@ -312,11 +382,14 @@ public abstract class RequeteApiGen<DEV> extends Object {
 		this.numPATCH = numPATCH;
 		this.numPATCHCouverture.dejaInitialise = true;
 	}
-	public RequeteApi setNumPATCH(String o) {
-		if(NumberUtils.isParsable(o))
-			this.numPATCH = Long.parseLong(o);
+	public void setNumPATCH(String o) {
+		this.numPATCH = RequeteApi.staticSetNumPATCH(requeteSite_, o);
 		this.numPATCHCouverture.dejaInitialise = true;
-		return (RequeteApi)this;
+	}
+	public static Long staticSetNumPATCH(RequeteSiteFrFR requeteSite_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Long.parseLong(o);
+		return null;
 	}
 	protected RequeteApi numPATCHInit() {
 		if(!numPATCHCouverture.dejaInitialise) {
@@ -328,8 +401,20 @@ public abstract class RequeteApiGen<DEV> extends Object {
 		return (RequeteApi)this;
 	}
 
+	public static Long staticSolrNumPATCH(RequeteSiteFrFR requeteSite_, Long o) {
+		return o;
+	}
+
+	public static String staticSolrStrNumPATCH(RequeteSiteFrFR requeteSite_, Long o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqNumPATCH(RequeteSiteFrFR requeteSite_, String o) {
+		return RequeteApi.staticSolrStrNumPATCH(requeteSite_, RequeteApi.staticSolrNumPATCH(requeteSite_, RequeteApi.staticSetNumPATCH(requeteSite_, o)));
+	}
+
 	public Long solrNumPATCH() {
-		return numPATCH;
+		return RequeteApi.staticSolrNumPATCH(requeteSite_, numPATCH);
 	}
 
 	public String strNumPATCH() {
@@ -356,14 +441,15 @@ public abstract class RequeteApiGen<DEV> extends Object {
 	// uuid //
 	//////////
 
-	/**	L'entité « uuid »
+	/**	 L'entité uuid
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String uuid;
 	@JsonIgnore
 	public Couverture<String> uuidCouverture = new Couverture<String>().p(this).c(String.class).var("uuid").o(uuid);
 
-	/**	<br/>L'entité « uuid »
+	/**	<br/> L'entité uuid
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.requete.api.RequeteApi&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:uuid">Trouver l'entité uuid dans Solr</a>
 	 * <br/>
@@ -374,10 +460,12 @@ public abstract class RequeteApiGen<DEV> extends Object {
 	public String getUuid() {
 		return uuid;
 	}
-
-	public void setUuid(String uuid) {
-		this.uuid = uuid;
+	public void setUuid(String o) {
+		this.uuid = RequeteApi.staticSetUuid(requeteSite_, o);
 		this.uuidCouverture.dejaInitialise = true;
+	}
+	public static String staticSetUuid(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected RequeteApi uuidInit() {
 		if(!uuidCouverture.dejaInitialise) {
@@ -389,8 +477,20 @@ public abstract class RequeteApiGen<DEV> extends Object {
 		return (RequeteApi)this;
 	}
 
+	public static String staticSolrUuid(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrUuid(RequeteSiteFrFR requeteSite_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqUuid(RequeteSiteFrFR requeteSite_, String o) {
+		return RequeteApi.staticSolrStrUuid(requeteSite_, RequeteApi.staticSolrUuid(requeteSite_, RequeteApi.staticSetUuid(requeteSite_, o)));
+	}
+
 	public String solrUuid() {
-		return uuid;
+		return RequeteApi.staticSolrUuid(requeteSite_, uuid);
 	}
 
 	public String strUuid() {
@@ -417,14 +517,15 @@ public abstract class RequeteApiGen<DEV> extends Object {
 	// id //
 	////////
 
-	/**	L'entité « id »
+	/**	 L'entité id
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected String id;
 	@JsonIgnore
 	public Couverture<String> idCouverture = new Couverture<String>().p(this).c(String.class).var("id").o(id);
 
-	/**	<br/>L'entité « id »
+	/**	<br/> L'entité id
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.requete.api.RequeteApi&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:id">Trouver l'entité id dans Solr</a>
 	 * <br/>
@@ -435,10 +536,12 @@ public abstract class RequeteApiGen<DEV> extends Object {
 	public String getId() {
 		return id;
 	}
-
-	public void setId(String id) {
-		this.id = id;
+	public void setId(String o) {
+		this.id = RequeteApi.staticSetId(requeteSite_, o);
 		this.idCouverture.dejaInitialise = true;
+	}
+	public static String staticSetId(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected RequeteApi idInit() {
 		if(!idCouverture.dejaInitialise) {
@@ -450,8 +553,20 @@ public abstract class RequeteApiGen<DEV> extends Object {
 		return (RequeteApi)this;
 	}
 
+	public static String staticSolrId(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrId(RequeteSiteFrFR requeteSite_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqId(RequeteSiteFrFR requeteSite_, String o) {
+		return RequeteApi.staticSolrStrId(requeteSite_, RequeteApi.staticSolrId(requeteSite_, RequeteApi.staticSetId(requeteSite_, o)));
+	}
+
 	public String solrId() {
-		return id;
+		return RequeteApi.staticSolrId(requeteSite_, id);
 	}
 
 	public String strId() {
@@ -478,14 +593,15 @@ public abstract class RequeteApiGen<DEV> extends Object {
 	// empty //
 	///////////
 
-	/**	L'entité « empty »
+	/**	 L'entité empty
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonInclude(Include.NON_NULL)
 	protected Boolean empty;
 	@JsonIgnore
 	public Couverture<Boolean> emptyCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("empty").o(empty);
 
-	/**	<br/>L'entité « empty »
+	/**	<br/> L'entité empty
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.requete.api.RequeteApi&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:empty">Trouver l'entité empty dans Solr</a>
 	 * <br/>
@@ -501,10 +617,12 @@ public abstract class RequeteApiGen<DEV> extends Object {
 		this.empty = empty;
 		this.emptyCouverture.dejaInitialise = true;
 	}
-	public RequeteApi setEmpty(String o) {
-		this.empty = Boolean.parseBoolean(o);
+	public void setEmpty(String o) {
+		this.empty = RequeteApi.staticSetEmpty(requeteSite_, o);
 		this.emptyCouverture.dejaInitialise = true;
-		return (RequeteApi)this;
+	}
+	public static Boolean staticSetEmpty(RequeteSiteFrFR requeteSite_, String o) {
+		return Boolean.parseBoolean(o);
 	}
 	protected RequeteApi emptyInit() {
 		if(!emptyCouverture.dejaInitialise) {
@@ -516,8 +634,20 @@ public abstract class RequeteApiGen<DEV> extends Object {
 		return (RequeteApi)this;
 	}
 
+	public static Boolean staticSolrEmpty(RequeteSiteFrFR requeteSite_, Boolean o) {
+		return o;
+	}
+
+	public static String staticSolrStrEmpty(RequeteSiteFrFR requeteSite_, Boolean o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqEmpty(RequeteSiteFrFR requeteSite_, String o) {
+		return RequeteApi.staticSolrStrEmpty(requeteSite_, RequeteApi.staticSolrEmpty(requeteSite_, RequeteApi.staticSetEmpty(requeteSite_, o)));
+	}
+
 	public Boolean solrEmpty() {
-		return empty;
+		return RequeteApi.staticSolrEmpty(requeteSite_, empty);
 	}
 
 	public String strEmpty() {
@@ -544,14 +674,16 @@ public abstract class RequeteApiGen<DEV> extends Object {
 	// pk //
 	////////
 
-	/**	L'entité « pk »
+	/**	 L'entité pk
 	 *	 is defined as null before being initialized. 
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
 	protected Long pk;
 	@JsonIgnore
 	public Couverture<Long> pkCouverture = new Couverture<Long>().p(this).c(Long.class).var("pk").o(pk);
 
-	/**	<br/>L'entité « pk »
+	/**	<br/> L'entité pk
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.requete.api.RequeteApi&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pk">Trouver l'entité pk dans Solr</a>
 	 * <br/>
@@ -567,11 +699,14 @@ public abstract class RequeteApiGen<DEV> extends Object {
 		this.pk = pk;
 		this.pkCouverture.dejaInitialise = true;
 	}
-	public RequeteApi setPk(String o) {
-		if(NumberUtils.isParsable(o))
-			this.pk = Long.parseLong(o);
+	public void setPk(String o) {
+		this.pk = RequeteApi.staticSetPk(requeteSite_, o);
 		this.pkCouverture.dejaInitialise = true;
-		return (RequeteApi)this;
+	}
+	public static Long staticSetPk(RequeteSiteFrFR requeteSite_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Long.parseLong(o);
+		return null;
 	}
 	protected RequeteApi pkInit() {
 		if(!pkCouverture.dejaInitialise) {
@@ -583,8 +718,20 @@ public abstract class RequeteApiGen<DEV> extends Object {
 		return (RequeteApi)this;
 	}
 
+	public static Long staticSolrPk(RequeteSiteFrFR requeteSite_, Long o) {
+		return o;
+	}
+
+	public static String staticSolrStrPk(RequeteSiteFrFR requeteSite_, Long o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPk(RequeteSiteFrFR requeteSite_, String o) {
+		return RequeteApi.staticSolrStrPk(requeteSite_, RequeteApi.staticSolrPk(requeteSite_, RequeteApi.staticSetPk(requeteSite_, o)));
+	}
+
 	public Long solrPk() {
-		return pk;
+		return RequeteApi.staticSolrPk(requeteSite_, pk);
 	}
 
 	public String strPk() {
@@ -611,15 +758,16 @@ public abstract class RequeteApiGen<DEV> extends Object {
 	// original //
 	//////////////
 
-	/**	L'entité « original »
+	/**	 L'entité original
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonIgnore
+	@JsonInclude(Include.NON_NULL)
 	protected Object original;
 	@JsonIgnore
 	public Couverture<Object> originalCouverture = new Couverture<Object>().p(this).c(Object.class).var("original").o(original);
 
-	/**	<br/>L'entité « original »
+	/**	<br/> L'entité original
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.requete.api.RequeteApi&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:original">Trouver l'entité original dans Solr</a>
 	 * <br/>
@@ -635,6 +783,9 @@ public abstract class RequeteApiGen<DEV> extends Object {
 		this.original = original;
 		this.originalCouverture.dejaInitialise = true;
 	}
+	public static Object staticSetOriginal(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
+	}
 	protected RequeteApi originalInit() {
 		if(!originalCouverture.dejaInitialise) {
 			_original(originalCouverture);
@@ -649,14 +800,16 @@ public abstract class RequeteApiGen<DEV> extends Object {
 	// pks //
 	/////////
 
-	/**	L'entité « pks »
+	/**	 L'entité pks
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 */
-	protected List<Long> pks = new java.util.ArrayList<java.lang.Long>();
+	@JsonSerialize(contentUsing = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected List<Long> pks = new ArrayList<Long>();
 	@JsonIgnore
 	public Couverture<List<Long>> pksCouverture = new Couverture<List<Long>>().p(this).c(List.class).var("pks").o(pks);
 
-	/**	<br/>L'entité « pks »
+	/**	<br/> L'entité pks
 	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<Long>(). 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.requete.api.RequeteApi&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pks">Trouver l'entité pks dans Solr</a>
 	 * <br/>
@@ -672,6 +825,17 @@ public abstract class RequeteApiGen<DEV> extends Object {
 		this.pks = pks;
 		this.pksCouverture.dejaInitialise = true;
 	}
+	public void setPks(String o) {
+		Long l = RequeteApi.staticSetPks(requeteSite_, o);
+		if(l != null)
+			addPks(l);
+		this.pksCouverture.dejaInitialise = true;
+	}
+	public static Long staticSetPks(RequeteSiteFrFR requeteSite_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Long.parseLong(o);
+		return null;
+	}
 	public RequeteApi addPks(Long...objets) {
 		for(Long o : objets) {
 			addPks(o);
@@ -683,13 +847,12 @@ public abstract class RequeteApiGen<DEV> extends Object {
 			this.pks.add(o);
 		return (RequeteApi)this;
 	}
-	public RequeteApi setPks(JsonArray objets) {
+	public void setPks(JsonArray objets) {
 		pks.clear();
 		for(int i = 0; i < objets.size(); i++) {
 			Long o = objets.getLong(i);
 			addPks(o);
 		}
-		return (RequeteApi)this;
 	}
 	public RequeteApi addPks(String o) {
 		if(NumberUtils.isParsable(o)) {
@@ -706,8 +869,24 @@ public abstract class RequeteApiGen<DEV> extends Object {
 		return (RequeteApi)this;
 	}
 
+	public static Long staticSolrPks(RequeteSiteFrFR requeteSite_, Long o) {
+		return o;
+	}
+
+	public static String staticSolrStrPks(RequeteSiteFrFR requeteSite_, Long o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPks(RequeteSiteFrFR requeteSite_, String o) {
+		return RequeteApi.staticSolrStrPks(requeteSite_, RequeteApi.staticSolrPks(requeteSite_, RequeteApi.staticSetPks(requeteSite_, o)));
+	}
+
 	public List<Long> solrPks() {
-		return pks;
+		List<Long> l = new ArrayList<Long>();
+		for(Long o : pks) {
+			l.add(RequeteApi.staticSolrPks(requeteSite_, o));
+		}
+		return l;
 	}
 
 	public String strPks() {
@@ -734,14 +913,15 @@ public abstract class RequeteApiGen<DEV> extends Object {
 	// classes //
 	/////////////
 
-	/**	L'entité « classes »
+	/**	 L'entité classes
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<String>(). 
 	 */
-	protected List<String> classes = new java.util.ArrayList<java.lang.String>();
+	@JsonInclude(Include.NON_NULL)
+	protected List<String> classes = new ArrayList<String>();
 	@JsonIgnore
 	public Couverture<List<String>> classesCouverture = new Couverture<List<String>>().p(this).c(List.class).var("classes").o(classes);
 
-	/**	<br/>L'entité « classes »
+	/**	<br/> L'entité classes
 	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<String>(). 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.requete.api.RequeteApi&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:classes">Trouver l'entité classes dans Solr</a>
 	 * <br/>
@@ -757,6 +937,9 @@ public abstract class RequeteApiGen<DEV> extends Object {
 		this.classes = classes;
 		this.classesCouverture.dejaInitialise = true;
 	}
+	public static String staticSetClasses(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
+	}
 	public RequeteApi addClasses(String...objets) {
 		for(String o : objets) {
 			addClasses(o);
@@ -768,13 +951,12 @@ public abstract class RequeteApiGen<DEV> extends Object {
 			this.classes.add(o);
 		return (RequeteApi)this;
 	}
-	public RequeteApi setClasses(JsonArray objets) {
+	public void setClasses(JsonArray objets) {
 		classes.clear();
 		for(int i = 0; i < objets.size(); i++) {
 			String o = objets.getString(i);
 			addClasses(o);
 		}
-		return (RequeteApi)this;
 	}
 	protected RequeteApi classesInit() {
 		if(!classesCouverture.dejaInitialise) {
@@ -784,8 +966,24 @@ public abstract class RequeteApiGen<DEV> extends Object {
 		return (RequeteApi)this;
 	}
 
+	public static String staticSolrClasses(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrClasses(RequeteSiteFrFR requeteSite_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqClasses(RequeteSiteFrFR requeteSite_, String o) {
+		return RequeteApi.staticSolrStrClasses(requeteSite_, RequeteApi.staticSolrClasses(requeteSite_, RequeteApi.staticSetClasses(requeteSite_, o)));
+	}
+
 	public List<String> solrClasses() {
-		return classes;
+		List<String> l = new ArrayList<String>();
+		for(String o : classes) {
+			l.add(RequeteApi.staticSolrClasses(requeteSite_, o));
+		}
+		return l;
 	}
 
 	public String strClasses() {
@@ -812,14 +1010,15 @@ public abstract class RequeteApiGen<DEV> extends Object {
 	// vars //
 	//////////
 
-	/**	L'entité « vars »
+	/**	 L'entité vars
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<String>(). 
 	 */
-	protected List<String> vars = new java.util.ArrayList<java.lang.String>();
+	@JsonInclude(Include.NON_NULL)
+	protected List<String> vars = new ArrayList<String>();
 	@JsonIgnore
 	public Couverture<List<String>> varsCouverture = new Couverture<List<String>>().p(this).c(List.class).var("vars").o(vars);
 
-	/**	<br/>L'entité « vars »
+	/**	<br/> L'entité vars
 	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<String>(). 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.requete.api.RequeteApi&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:vars">Trouver l'entité vars dans Solr</a>
 	 * <br/>
@@ -835,6 +1034,9 @@ public abstract class RequeteApiGen<DEV> extends Object {
 		this.vars = vars;
 		this.varsCouverture.dejaInitialise = true;
 	}
+	public static String staticSetVars(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
+	}
 	public RequeteApi addVars(String...objets) {
 		for(String o : objets) {
 			addVars(o);
@@ -846,13 +1048,12 @@ public abstract class RequeteApiGen<DEV> extends Object {
 			this.vars.add(o);
 		return (RequeteApi)this;
 	}
-	public RequeteApi setVars(JsonArray objets) {
+	public void setVars(JsonArray objets) {
 		vars.clear();
 		for(int i = 0; i < objets.size(); i++) {
 			String o = objets.getString(i);
 			addVars(o);
 		}
-		return (RequeteApi)this;
 	}
 	protected RequeteApi varsInit() {
 		if(!varsCouverture.dejaInitialise) {
@@ -862,8 +1063,24 @@ public abstract class RequeteApiGen<DEV> extends Object {
 		return (RequeteApi)this;
 	}
 
+	public static String staticSolrVars(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrVars(RequeteSiteFrFR requeteSite_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqVars(RequeteSiteFrFR requeteSite_, String o) {
+		return RequeteApi.staticSolrStrVars(requeteSite_, RequeteApi.staticSolrVars(requeteSite_, RequeteApi.staticSetVars(requeteSite_, o)));
+	}
+
 	public List<String> solrVars() {
-		return vars;
+		List<String> l = new ArrayList<String>();
+		for(String o : vars) {
+			l.add(RequeteApi.staticSolrVars(requeteSite_, o));
+		}
+		return l;
 	}
 
 	public String strVars() {
@@ -1012,6 +1229,150 @@ public abstract class RequeteApiGen<DEV> extends Object {
 		}
 	}
 
+	///////////////
+	// staticSet //
+	///////////////
+
+	public static Object staticSetPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		return staticSetRequeteApi(entiteVar,  requeteSite_, o);
+	}
+	public static Object staticSetRequeteApi(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		switch(entiteVar) {
+		case "cree":
+			return RequeteApi.staticSetCree(requeteSite_, o);
+		case "rows":
+			return RequeteApi.staticSetRows(requeteSite_, o);
+		case "numFound":
+			return RequeteApi.staticSetNumFound(requeteSite_, o);
+		case "numPATCH":
+			return RequeteApi.staticSetNumPATCH(requeteSite_, o);
+		case "uuid":
+			return RequeteApi.staticSetUuid(requeteSite_, o);
+		case "id":
+			return RequeteApi.staticSetId(requeteSite_, o);
+		case "empty":
+			return RequeteApi.staticSetEmpty(requeteSite_, o);
+		case "pk":
+			return RequeteApi.staticSetPk(requeteSite_, o);
+		case "pks":
+			return RequeteApi.staticSetPks(requeteSite_, o);
+		case "classes":
+			return RequeteApi.staticSetClasses(requeteSite_, o);
+		case "vars":
+			return RequeteApi.staticSetVars(requeteSite_, o);
+			default:
+				return null;
+		}
+	}
+
+	////////////////
+	// staticSolr //
+	////////////////
+
+	public static Object staticSolrPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		return staticSolrRequeteApi(entiteVar,  requeteSite_, o);
+	}
+	public static Object staticSolrRequeteApi(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		switch(entiteVar) {
+		case "cree":
+			return RequeteApi.staticSolrCree(requeteSite_, (ZonedDateTime)o);
+		case "rows":
+			return RequeteApi.staticSolrRows(requeteSite_, (Integer)o);
+		case "numFound":
+			return RequeteApi.staticSolrNumFound(requeteSite_, (Long)o);
+		case "numPATCH":
+			return RequeteApi.staticSolrNumPATCH(requeteSite_, (Long)o);
+		case "uuid":
+			return RequeteApi.staticSolrUuid(requeteSite_, (String)o);
+		case "id":
+			return RequeteApi.staticSolrId(requeteSite_, (String)o);
+		case "empty":
+			return RequeteApi.staticSolrEmpty(requeteSite_, (Boolean)o);
+		case "pk":
+			return RequeteApi.staticSolrPk(requeteSite_, (Long)o);
+		case "pks":
+			return RequeteApi.staticSolrPks(requeteSite_, (Long)o);
+		case "classes":
+			return RequeteApi.staticSolrClasses(requeteSite_, (String)o);
+		case "vars":
+			return RequeteApi.staticSolrVars(requeteSite_, (String)o);
+			default:
+				return null;
+		}
+	}
+
+	///////////////////
+	// staticSolrStr //
+	///////////////////
+
+	public static String staticSolrStrPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		return staticSolrStrRequeteApi(entiteVar,  requeteSite_, o);
+	}
+	public static String staticSolrStrRequeteApi(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		switch(entiteVar) {
+		case "cree":
+			return RequeteApi.staticSolrStrCree(requeteSite_, (Date)o);
+		case "rows":
+			return RequeteApi.staticSolrStrRows(requeteSite_, (Integer)o);
+		case "numFound":
+			return RequeteApi.staticSolrStrNumFound(requeteSite_, (Long)o);
+		case "numPATCH":
+			return RequeteApi.staticSolrStrNumPATCH(requeteSite_, (Long)o);
+		case "uuid":
+			return RequeteApi.staticSolrStrUuid(requeteSite_, (String)o);
+		case "id":
+			return RequeteApi.staticSolrStrId(requeteSite_, (String)o);
+		case "empty":
+			return RequeteApi.staticSolrStrEmpty(requeteSite_, (Boolean)o);
+		case "pk":
+			return RequeteApi.staticSolrStrPk(requeteSite_, (Long)o);
+		case "pks":
+			return RequeteApi.staticSolrStrPks(requeteSite_, (Long)o);
+		case "classes":
+			return RequeteApi.staticSolrStrClasses(requeteSite_, (String)o);
+		case "vars":
+			return RequeteApi.staticSolrStrVars(requeteSite_, (String)o);
+			default:
+				return null;
+		}
+	}
+
+	//////////////////
+	// staticSolrFq //
+	//////////////////
+
+	public static String staticSolrFqPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		return staticSolrFqRequeteApi(entiteVar,  requeteSite_, o);
+	}
+	public static String staticSolrFqRequeteApi(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		switch(entiteVar) {
+		case "cree":
+			return RequeteApi.staticSolrFqCree(requeteSite_, o);
+		case "rows":
+			return RequeteApi.staticSolrFqRows(requeteSite_, o);
+		case "numFound":
+			return RequeteApi.staticSolrFqNumFound(requeteSite_, o);
+		case "numPATCH":
+			return RequeteApi.staticSolrFqNumPATCH(requeteSite_, o);
+		case "uuid":
+			return RequeteApi.staticSolrFqUuid(requeteSite_, o);
+		case "id":
+			return RequeteApi.staticSolrFqId(requeteSite_, o);
+		case "empty":
+			return RequeteApi.staticSolrFqEmpty(requeteSite_, o);
+		case "pk":
+			return RequeteApi.staticSolrFqPk(requeteSite_, o);
+		case "pks":
+			return RequeteApi.staticSolrFqPks(requeteSite_, o);
+		case "classes":
+			return RequeteApi.staticSolrFqClasses(requeteSite_, o);
+		case "vars":
+			return RequeteApi.staticSolrFqVars(requeteSite_, o);
+			default:
+				return null;
+		}
+	}
+
 	/////////////
 	// definir //
 	/////////////
@@ -1024,8 +1385,8 @@ public abstract class RequeteApiGen<DEV> extends Object {
 				if(o == null)
 					o = definirRequeteApi(v, val);
 				else if(o instanceof Cluster) {
-					Cluster cluster = (Cluster)o;
-					o = cluster.definirPourClasse(v, val);
+					Cluster oCluster = (Cluster)o;
+					o = oCluster.definirPourClasse(v, val);
 				}
 			}
 		}
@@ -1044,8 +1405,19 @@ public abstract class RequeteApiGen<DEV> extends Object {
 
 	public void requeteApiRequeteApi() {
 		RequeteApi requeteApi = Optional.ofNullable(requeteSite_).map(RequeteSiteFrFR::getRequeteApi_).orElse(null);
-		RequeteApi original = (RequeteApi)Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
-		if(original != null) {
+		Object o = Optional.ofNullable(requeteApi).map(RequeteApi::getOriginal).orElse(null);
+		if(o != null && o instanceof RequeteApi) {
+			RequeteApi original = (RequeteApi)o;
+			if(!Objects.equals(cree, original.getCree()))
+				requeteApi.addVars("cree");
+			if(!Objects.equals(rows, original.getRows()))
+				requeteApi.addVars("rows");
+			if(!Objects.equals(numFound, original.getNumFound()))
+				requeteApi.addVars("numFound");
+			if(!Objects.equals(numPATCH, original.getNumPATCH()))
+				requeteApi.addVars("numPATCH");
+			if(!Objects.equals(uuid, original.getUuid()))
+				requeteApi.addVars("uuid");
 		}
 	}
 
@@ -1054,7 +1426,7 @@ public abstract class RequeteApiGen<DEV> extends Object {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash();
+		return Objects.hash(cree, rows, numFound, numPATCH, uuid);
 	}
 
 	////////////
@@ -1067,7 +1439,11 @@ public abstract class RequeteApiGen<DEV> extends Object {
 		if(!(o instanceof RequeteApi))
 			return false;
 		RequeteApi that = (RequeteApi)o;
-		return true;
+		return Objects.equals( cree, that.cree )
+				&& Objects.equals( rows, that.rows )
+				&& Objects.equals( numFound, that.numFound )
+				&& Objects.equals( numPATCH, that.numPATCH )
+				&& Objects.equals( uuid, that.uuid );
 	}
 
 	//////////////
@@ -1077,6 +1453,11 @@ public abstract class RequeteApiGen<DEV> extends Object {
 	@Override public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("RequeteApi { ");
+		sb.append( "cree: " ).append(cree);
+		sb.append( ", rows: " ).append(rows);
+		sb.append( ", numFound: " ).append(numFound);
+		sb.append( ", numPATCH: " ).append(numPATCH);
+		sb.append( ", uuid: \"" ).append(uuid).append( "\"" );
 		sb.append(" }");
 		return sb.toString();
 	}

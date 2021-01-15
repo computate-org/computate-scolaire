@@ -195,8 +195,8 @@ public abstract class DesignMailPageGen<DEV> extends DesignMailGenPage {
 				if(o == null)
 					o = definirDesignMailPage(v, val);
 				else if(o instanceof Cluster) {
-					Cluster cluster = (Cluster)o;
-					o = cluster.definirPourClasse(v, val);
+					Cluster oCluster = (Cluster)o;
+					o = oCluster.definirPourClasse(v, val);
 				}
 			}
 		}

@@ -7,6 +7,9 @@ import java.util.UUID;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 
+/**
+ * CanonicalName: org.computate.scolaire.frFR.requete.api.RequeteApi
+ **/
 public class ApiRequest extends ApiRequestGen<Object> {
 
 	protected void _siteRequest_(Wrap<SiteRequestEnUS> c) {}

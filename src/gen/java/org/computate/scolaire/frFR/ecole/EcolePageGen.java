@@ -195,8 +195,8 @@ public abstract class EcolePageGen<DEV> extends EcoleGenPage {
 				if(o == null)
 					o = definirEcolePage(v, val);
 				else if(o instanceof Cluster) {
-					Cluster cluster = (Cluster)o;
-					o = cluster.definirPourClasse(v, val);
+					Cluster oCluster = (Cluster)o;
+					o = oCluster.definirPourClasse(v, val);
 				}
 			}
 		}

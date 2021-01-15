@@ -195,8 +195,8 @@ public abstract class SaisonPageGen<DEV> extends SaisonGenPage {
 				if(o == null)
 					o = definirSaisonPage(v, val);
 				else if(o instanceof Cluster) {
-					Cluster cluster = (Cluster)o;
-					o = cluster.definirPourClasse(v, val);
+					Cluster oCluster = (Cluster)o;
+					o = oCluster.definirPourClasse(v, val);
 				}
 			}
 		}

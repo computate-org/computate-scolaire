@@ -83,7 +83,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 		this.pageParts = pageParts;
 		this.pagePartsWrap.alreadyInitialized = true;
 	}
-	public static List<PagePart> staticSetPageParts(SiteRequestEnUS siteRequest_, String o) {
+	public static PagePart staticSetPageParts(SiteRequestEnUS siteRequest_, String o) {
 		return null;
 	}
 	public PageLayout addPageParts(PagePart...objets) {
@@ -170,10 +170,9 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	public String getSiteBaseUrl() {
 		return siteBaseUrl;
 	}
-	public PageLayout setSiteBaseUrl(String o) {
+	public void setSiteBaseUrl(String o) {
 		this.siteBaseUrl = PageLayout.staticSetSiteBaseUrl(siteRequest_, o);
 		this.siteBaseUrlWrap.alreadyInitialized = true;
-		return (PageLayout)this;
 	}
 	public static String staticSetSiteBaseUrl(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -193,7 +192,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	}
 
 	public static String staticSolrStrSiteBaseUrl(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqSiteBaseUrl(SiteRequestEnUS siteRequest_, String o) {
@@ -247,10 +246,9 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	public String getStaticBaseUrl() {
 		return staticBaseUrl;
 	}
-	public PageLayout setStaticBaseUrl(String o) {
+	public void setStaticBaseUrl(String o) {
 		this.staticBaseUrl = PageLayout.staticSetStaticBaseUrl(siteRequest_, o);
 		this.staticBaseUrlWrap.alreadyInitialized = true;
-		return (PageLayout)this;
 	}
 	public static String staticSetStaticBaseUrl(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -270,7 +268,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	}
 
 	public static String staticSolrStrStaticBaseUrl(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqStaticBaseUrl(SiteRequestEnUS siteRequest_, String o) {
@@ -408,10 +406,9 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	public String getContextIconGroup() {
 		return contextIconGroup;
 	}
-	public PageLayout setContextIconGroup(String o) {
+	public void setContextIconGroup(String o) {
 		this.contextIconGroup = PageLayout.staticSetContextIconGroup(siteRequest_, o);
 		this.contextIconGroupWrap.alreadyInitialized = true;
-		return (PageLayout)this;
 	}
 	public static String staticSetContextIconGroup(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -431,7 +428,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	}
 
 	public static String staticSolrStrContextIconGroup(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqContextIconGroup(SiteRequestEnUS siteRequest_, String o) {
@@ -485,10 +482,9 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	public String getContextIconName() {
 		return contextIconName;
 	}
-	public PageLayout setContextIconName(String o) {
+	public void setContextIconName(String o) {
 		this.contextIconName = PageLayout.staticSetContextIconName(siteRequest_, o);
 		this.contextIconNameWrap.alreadyInitialized = true;
-		return (PageLayout)this;
 	}
 	public static String staticSetContextIconName(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -508,7 +504,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	}
 
 	public static String staticSolrStrContextIconName(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqContextIconName(SiteRequestEnUS siteRequest_, String o) {
@@ -562,10 +558,9 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	public String getContextIconCssClasses() {
 		return contextIconCssClasses;
 	}
-	public PageLayout setContextIconCssClasses(String o) {
+	public void setContextIconCssClasses(String o) {
 		this.contextIconCssClasses = PageLayout.staticSetContextIconCssClasses(siteRequest_, o);
 		this.contextIconCssClassesWrap.alreadyInitialized = true;
-		return (PageLayout)this;
 	}
 	public static String staticSetContextIconCssClasses(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -585,7 +580,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	}
 
 	public static String staticSolrStrContextIconCssClasses(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqContextIconCssClasses(SiteRequestEnUS siteRequest_, String o) {
@@ -644,10 +639,9 @@ public abstract class PageLayoutGen<DEV> extends Object {
 		this.pageVisibleToBots = pageVisibleToBots;
 		this.pageVisibleToBotsWrap.alreadyInitialized = true;
 	}
-	public PageLayout setPageVisibleToBots(String o) {
+	public void setPageVisibleToBots(String o) {
 		this.pageVisibleToBots = PageLayout.staticSetPageVisibleToBots(siteRequest_, o);
 		this.pageVisibleToBotsWrap.alreadyInitialized = true;
-		return (PageLayout)this;
 	}
 	public static Boolean staticSetPageVisibleToBots(SiteRequestEnUS siteRequest_, String o) {
 		return Boolean.parseBoolean(o);
@@ -667,7 +661,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	}
 
 	public static String staticSolrStrPageVisibleToBots(SiteRequestEnUS siteRequest_, Boolean o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPageVisibleToBots(SiteRequestEnUS siteRequest_, String o) {
@@ -721,10 +715,9 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	public String getPageH1() {
 		return pageH1;
 	}
-	public PageLayout setPageH1(String o) {
+	public void setPageH1(String o) {
 		this.pageH1 = PageLayout.staticSetPageH1(siteRequest_, o);
 		this.pageH1Wrap.alreadyInitialized = true;
-		return (PageLayout)this;
 	}
 	public static String staticSetPageH1(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -744,7 +737,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	}
 
 	public static String staticSolrStrPageH1(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPageH1(SiteRequestEnUS siteRequest_, String o) {
@@ -798,10 +791,9 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	public String getPageH2() {
 		return pageH2;
 	}
-	public PageLayout setPageH2(String o) {
+	public void setPageH2(String o) {
 		this.pageH2 = PageLayout.staticSetPageH2(siteRequest_, o);
 		this.pageH2Wrap.alreadyInitialized = true;
-		return (PageLayout)this;
 	}
 	public static String staticSetPageH2(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -821,7 +813,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	}
 
 	public static String staticSolrStrPageH2(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPageH2(SiteRequestEnUS siteRequest_, String o) {
@@ -875,10 +867,9 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	public String getPageH3() {
 		return pageH3;
 	}
-	public PageLayout setPageH3(String o) {
+	public void setPageH3(String o) {
 		this.pageH3 = PageLayout.staticSetPageH3(siteRequest_, o);
 		this.pageH3Wrap.alreadyInitialized = true;
-		return (PageLayout)this;
 	}
 	public static String staticSetPageH3(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -898,7 +889,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	}
 
 	public static String staticSolrStrPageH3(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPageH3(SiteRequestEnUS siteRequest_, String o) {
@@ -952,10 +943,9 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	public String get_pageH1Short() {
 		return _pageH1Short;
 	}
-	public PageLayout set_pageH1Short(String o) {
+	public void set_pageH1Short(String o) {
 		this._pageH1Short = PageLayout.staticSet_pageH1Short(siteRequest_, o);
 		this._pageH1ShortWrap.alreadyInitialized = true;
-		return (PageLayout)this;
 	}
 	public static String staticSet_pageH1Short(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -975,7 +965,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	}
 
 	public static String staticSolrStr_pageH1Short(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFq_pageH1Short(SiteRequestEnUS siteRequest_, String o) {
@@ -1029,10 +1019,9 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	public String get_pageH2Short() {
 		return _pageH2Short;
 	}
-	public PageLayout set_pageH2Short(String o) {
+	public void set_pageH2Short(String o) {
 		this._pageH2Short = PageLayout.staticSet_pageH2Short(siteRequest_, o);
 		this._pageH2ShortWrap.alreadyInitialized = true;
-		return (PageLayout)this;
 	}
 	public static String staticSet_pageH2Short(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -1052,7 +1041,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	}
 
 	public static String staticSolrStr_pageH2Short(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFq_pageH2Short(SiteRequestEnUS siteRequest_, String o) {
@@ -1106,10 +1095,9 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	public String get_pageH3Short() {
 		return _pageH3Short;
 	}
-	public PageLayout set_pageH3Short(String o) {
+	public void set_pageH3Short(String o) {
 		this._pageH3Short = PageLayout.staticSet_pageH3Short(siteRequest_, o);
 		this._pageH3ShortWrap.alreadyInitialized = true;
-		return (PageLayout)this;
 	}
 	public static String staticSet_pageH3Short(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -1129,7 +1117,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	}
 
 	public static String staticSolrStr_pageH3Short(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFq_pageH3Short(SiteRequestEnUS siteRequest_, String o) {
@@ -1183,10 +1171,9 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	public String getPageTitle() {
 		return pageTitle;
 	}
-	public PageLayout setPageTitle(String o) {
+	public void setPageTitle(String o) {
 		this.pageTitle = PageLayout.staticSetPageTitle(siteRequest_, o);
 		this.pageTitleWrap.alreadyInitialized = true;
-		return (PageLayout)this;
 	}
 	public static String staticSetPageTitle(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -1206,7 +1193,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	}
 
 	public static String staticSolrStrPageTitle(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPageTitle(SiteRequestEnUS siteRequest_, String o) {
@@ -1260,10 +1247,9 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	public String getPageUri() {
 		return pageUri;
 	}
-	public PageLayout setPageUri(String o) {
+	public void setPageUri(String o) {
 		this.pageUri = PageLayout.staticSetPageUri(siteRequest_, o);
 		this.pageUriWrap.alreadyInitialized = true;
-		return (PageLayout)this;
 	}
 	public static String staticSetPageUri(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -1283,7 +1269,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	}
 
 	public static String staticSolrStrPageUri(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPageUri(SiteRequestEnUS siteRequest_, String o) {
@@ -1342,7 +1328,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 		this.pageUris = pageUris;
 		this.pageUrisWrap.alreadyInitialized = true;
 	}
-	public static List<String> staticSetPageUris(SiteRequestEnUS siteRequest_, String o) {
+	public static String staticSetPageUris(SiteRequestEnUS siteRequest_, String o) {
 		return null;
 	}
 	public PageLayout addPageUris(String...objets) {
@@ -1356,13 +1342,12 @@ public abstract class PageLayoutGen<DEV> extends Object {
 			this.pageUris.add(o);
 		return (PageLayout)this;
 	}
-	public PageLayout setPageUris(JsonArray objets) {
+	public void setPageUris(JsonArray objets) {
 		pageUris.clear();
 		for(int i = 0; i < objets.size(); i++) {
 			String o = objets.getString(i);
 			addPageUris(o);
 		}
-		return (PageLayout)this;
 	}
 	protected PageLayout pageUrisInit() {
 		if(!pageUrisWrap.alreadyInitialized) {
@@ -1372,12 +1357,12 @@ public abstract class PageLayoutGen<DEV> extends Object {
 		return (PageLayout)this;
 	}
 
-	public static List<String> staticSolrPageUris(SiteRequestEnUS siteRequest_, List<String> o) {
+	public static String staticSolrPageUris(SiteRequestEnUS siteRequest_, String o) {
 		return o;
 	}
 
-	public static String staticSolrStrPageUris(SiteRequestEnUS siteRequest_, List<String> o) {
-			return o == null ? null : o.toString();
+	public static String staticSolrStrPageUris(SiteRequestEnUS siteRequest_, String o) {
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPageUris(SiteRequestEnUS siteRequest_, String o) {
@@ -1385,7 +1370,11 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	}
 
 	public List<String> solrPageUris() {
-		return PageLayout.staticSolrPageUris(siteRequest_, pageUris);
+		List<String> l = new ArrayList<String>();
+		for(String o : pageUris) {
+			l.add(PageLayout.staticSolrPageUris(siteRequest_, o));
+		}
+		return l;
 	}
 
 	public String strPageUris() {
@@ -1431,10 +1420,9 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	public String getPageUrl() {
 		return pageUrl;
 	}
-	public PageLayout setPageUrl(String o) {
+	public void setPageUrl(String o) {
 		this.pageUrl = PageLayout.staticSetPageUrl(siteRequest_, o);
 		this.pageUrlWrap.alreadyInitialized = true;
-		return (PageLayout)this;
 	}
 	public static String staticSetPageUrl(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -1454,7 +1442,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	}
 
 	public static String staticSolrStrPageUrl(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPageUrl(SiteRequestEnUS siteRequest_, String o) {
@@ -1508,10 +1496,9 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	public String getPageImageUri() {
 		return pageImageUri;
 	}
-	public PageLayout setPageImageUri(String o) {
+	public void setPageImageUri(String o) {
 		this.pageImageUri = PageLayout.staticSetPageImageUri(siteRequest_, o);
 		this.pageImageUriWrap.alreadyInitialized = true;
-		return (PageLayout)this;
 	}
 	public static String staticSetPageImageUri(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -1531,7 +1518,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	}
 
 	public static String staticSolrStrPageImageUri(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPageImageUri(SiteRequestEnUS siteRequest_, String o) {
@@ -1585,10 +1572,9 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	public String getPageImageUrl() {
 		return pageImageUrl;
 	}
-	public PageLayout setPageImageUrl(String o) {
+	public void setPageImageUrl(String o) {
 		this.pageImageUrl = PageLayout.staticSetPageImageUrl(siteRequest_, o);
 		this.pageImageUrlWrap.alreadyInitialized = true;
-		return (PageLayout)this;
 	}
 	public static String staticSetPageImageUrl(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -1608,7 +1594,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	}
 
 	public static String staticSolrStrPageImageUrl(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPageImageUrl(SiteRequestEnUS siteRequest_, String o) {
@@ -1662,10 +1648,9 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	public String getPageVideoId() {
 		return pageVideoId;
 	}
-	public PageLayout setPageVideoId(String o) {
+	public void setPageVideoId(String o) {
 		this.pageVideoId = PageLayout.staticSetPageVideoId(siteRequest_, o);
 		this.pageVideoIdWrap.alreadyInitialized = true;
-		return (PageLayout)this;
 	}
 	public static String staticSetPageVideoId(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -1685,7 +1670,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	}
 
 	public static String staticSolrStrPageVideoId(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPageVideoId(SiteRequestEnUS siteRequest_, String o) {
@@ -1739,10 +1724,9 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	public String getPageVideoUrl() {
 		return pageVideoUrl;
 	}
-	public PageLayout setPageVideoUrl(String o) {
+	public void setPageVideoUrl(String o) {
 		this.pageVideoUrl = PageLayout.staticSetPageVideoUrl(siteRequest_, o);
 		this.pageVideoUrlWrap.alreadyInitialized = true;
-		return (PageLayout)this;
 	}
 	public static String staticSetPageVideoUrl(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -1762,7 +1746,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	}
 
 	public static String staticSolrStrPageVideoUrl(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPageVideoUrl(SiteRequestEnUS siteRequest_, String o) {
@@ -1816,10 +1800,9 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	public String getPageVideoUrlEmbed() {
 		return pageVideoUrlEmbed;
 	}
-	public PageLayout setPageVideoUrlEmbed(String o) {
+	public void setPageVideoUrlEmbed(String o) {
 		this.pageVideoUrlEmbed = PageLayout.staticSetPageVideoUrlEmbed(siteRequest_, o);
 		this.pageVideoUrlEmbedWrap.alreadyInitialized = true;
-		return (PageLayout)this;
 	}
 	public static String staticSetPageVideoUrlEmbed(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -1839,7 +1822,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	}
 
 	public static String staticSolrStrPageVideoUrlEmbed(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPageVideoUrlEmbed(SiteRequestEnUS siteRequest_, String o) {
@@ -1899,10 +1882,9 @@ public abstract class PageLayoutGen<DEV> extends Object {
 		this.pageImageWidth = pageImageWidth;
 		this.pageImageWidthWrap.alreadyInitialized = true;
 	}
-	public PageLayout setPageImageWidth(String o) {
+	public void setPageImageWidth(String o) {
 		this.pageImageWidth = PageLayout.staticSetPageImageWidth(siteRequest_, o);
 		this.pageImageWidthWrap.alreadyInitialized = true;
-		return (PageLayout)this;
 	}
 	public static Integer staticSetPageImageWidth(SiteRequestEnUS siteRequest_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -1924,7 +1906,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	}
 
 	public static String staticSolrStrPageImageWidth(SiteRequestEnUS siteRequest_, Integer o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPageImageWidth(SiteRequestEnUS siteRequest_, String o) {
@@ -1984,10 +1966,9 @@ public abstract class PageLayoutGen<DEV> extends Object {
 		this.pageImageHeight = pageImageHeight;
 		this.pageImageHeightWrap.alreadyInitialized = true;
 	}
-	public PageLayout setPageImageHeight(String o) {
+	public void setPageImageHeight(String o) {
 		this.pageImageHeight = PageLayout.staticSetPageImageHeight(siteRequest_, o);
 		this.pageImageHeightWrap.alreadyInitialized = true;
-		return (PageLayout)this;
 	}
 	public static Integer staticSetPageImageHeight(SiteRequestEnUS siteRequest_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -2009,7 +1990,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	}
 
 	public static String staticSolrStrPageImageHeight(SiteRequestEnUS siteRequest_, Integer o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPageImageHeight(SiteRequestEnUS siteRequest_, String o) {
@@ -2063,10 +2044,9 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	public String getPageImageContentType() {
 		return pageImageContentType;
 	}
-	public PageLayout setPageImageContentType(String o) {
+	public void setPageImageContentType(String o) {
 		this.pageImageContentType = PageLayout.staticSetPageImageContentType(siteRequest_, o);
 		this.pageImageContentTypeWrap.alreadyInitialized = true;
-		return (PageLayout)this;
 	}
 	public static String staticSetPageImageContentType(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -2086,7 +2066,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	}
 
 	public static String staticSolrStrPageImageContentType(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPageImageContentType(SiteRequestEnUS siteRequest_, String o) {
@@ -2140,10 +2120,9 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	public String getPageContentType() {
 		return pageContentType;
 	}
-	public PageLayout setPageContentType(String o) {
+	public void setPageContentType(String o) {
 		this.pageContentType = PageLayout.staticSetPageContentType(siteRequest_, o);
 		this.pageContentTypeWrap.alreadyInitialized = true;
-		return (PageLayout)this;
 	}
 	public static String staticSetPageContentType(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -2163,7 +2142,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	}
 
 	public static String staticSolrStrPageContentType(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPageContentType(SiteRequestEnUS siteRequest_, String o) {
@@ -2223,24 +2202,21 @@ public abstract class PageLayoutGen<DEV> extends Object {
 		this.pageCreated = pageCreated;
 		this.pageCreatedWrap.alreadyInitialized = true;
 	}
-	public PageLayout setPageCreated(Instant o) {
+	public void setPageCreated(Instant o) {
 		this.pageCreated = o == null ? null : LocalDateTime.from(o).truncatedTo(ChronoUnit.MILLIS);
 		this.pageCreatedWrap.alreadyInitialized = true;
-		return (PageLayout)this;
 	}
 	/** Example: 2011-12-03T10:15:30+01:00 **/
-	public PageLayout setPageCreated(String o) {
+	public void setPageCreated(String o) {
 		this.pageCreated = PageLayout.staticSetPageCreated(siteRequest_, o);
 		this.pageCreatedWrap.alreadyInitialized = true;
-		return (PageLayout)this;
 	}
 	public static LocalDateTime staticSetPageCreated(SiteRequestEnUS siteRequest_, String o) {
 		return o == null ? null : LocalDateTime.parse(o, DateTimeFormatter.ISO_DATE_TIME).truncatedTo(ChronoUnit.MILLIS);
 	}
-	public PageLayout setPageCreated(Date o) {
+	public void setPageCreated(Date o) {
 		this.pageCreated = o == null ? null : LocalDateTime.ofInstant(o.toInstant(), ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).truncatedTo(ChronoUnit.MILLIS);
 		this.pageCreatedWrap.alreadyInitialized = true;
-		return (PageLayout)this;
 	}
 	protected PageLayout pageCreatedInit() {
 		if(!pageCreatedWrap.alreadyInitialized) {
@@ -2257,7 +2233,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	}
 
 	public static String staticSolrStrPageCreated(SiteRequestEnUS siteRequest_, Date o) {
-		return DateTimeFormatter.ISO_DATE_TIME.format(o.toInstant());
+		return "\"" + DateTimeFormatter.ISO_DATE_TIME.format(o.toInstant().atOffset(ZoneOffset.UTC)) + "\"";
 	}
 
 	public static String staticSolrFqPageCreated(SiteRequestEnUS siteRequest_, String o) {
@@ -2317,24 +2293,21 @@ public abstract class PageLayoutGen<DEV> extends Object {
 		this.pageModified = pageModified;
 		this.pageModifiedWrap.alreadyInitialized = true;
 	}
-	public PageLayout setPageModified(Instant o) {
+	public void setPageModified(Instant o) {
 		this.pageModified = o == null ? null : LocalDateTime.from(o).truncatedTo(ChronoUnit.MILLIS);
 		this.pageModifiedWrap.alreadyInitialized = true;
-		return (PageLayout)this;
 	}
 	/** Example: 2011-12-03T10:15:30+01:00 **/
-	public PageLayout setPageModified(String o) {
+	public void setPageModified(String o) {
 		this.pageModified = PageLayout.staticSetPageModified(siteRequest_, o);
 		this.pageModifiedWrap.alreadyInitialized = true;
-		return (PageLayout)this;
 	}
 	public static LocalDateTime staticSetPageModified(SiteRequestEnUS siteRequest_, String o) {
 		return o == null ? null : LocalDateTime.parse(o, DateTimeFormatter.ISO_DATE_TIME).truncatedTo(ChronoUnit.MILLIS);
 	}
-	public PageLayout setPageModified(Date o) {
+	public void setPageModified(Date o) {
 		this.pageModified = o == null ? null : LocalDateTime.ofInstant(o.toInstant(), ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone())).truncatedTo(ChronoUnit.MILLIS);
 		this.pageModifiedWrap.alreadyInitialized = true;
-		return (PageLayout)this;
 	}
 	protected PageLayout pageModifiedInit() {
 		if(!pageModifiedWrap.alreadyInitialized) {
@@ -2351,7 +2324,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	}
 
 	public static String staticSolrStrPageModified(SiteRequestEnUS siteRequest_, Date o) {
-		return DateTimeFormatter.ISO_DATE_TIME.format(o.toInstant());
+		return "\"" + DateTimeFormatter.ISO_DATE_TIME.format(o.toInstant().atOffset(ZoneOffset.UTC)) + "\"";
 	}
 
 	public static String staticSolrFqPageModified(SiteRequestEnUS siteRequest_, String o) {
@@ -2405,10 +2378,9 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	public String getPageKeywords() {
 		return pageKeywords;
 	}
-	public PageLayout setPageKeywords(String o) {
+	public void setPageKeywords(String o) {
 		this.pageKeywords = PageLayout.staticSetPageKeywords(siteRequest_, o);
 		this.pageKeywordsWrap.alreadyInitialized = true;
-		return (PageLayout)this;
 	}
 	public static String staticSetPageKeywords(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -2428,7 +2400,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	}
 
 	public static String staticSolrStrPageKeywords(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPageKeywords(SiteRequestEnUS siteRequest_, String o) {
@@ -2482,10 +2454,9 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	public String getPageDescription() {
 		return pageDescription;
 	}
-	public PageLayout setPageDescription(String o) {
+	public void setPageDescription(String o) {
 		this.pageDescription = PageLayout.staticSetPageDescription(siteRequest_, o);
 		this.pageDescriptionWrap.alreadyInitialized = true;
-		return (PageLayout)this;
 	}
 	public static String staticSetPageDescription(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -2505,7 +2476,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	}
 
 	public static String staticSolrStrPageDescription(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPageDescription(SiteRequestEnUS siteRequest_, String o) {
@@ -2559,10 +2530,9 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	public String getPageHomeUri() {
 		return pageHomeUri;
 	}
-	public PageLayout setPageHomeUri(String o) {
+	public void setPageHomeUri(String o) {
 		this.pageHomeUri = PageLayout.staticSetPageHomeUri(siteRequest_, o);
 		this.pageHomeUriWrap.alreadyInitialized = true;
-		return (PageLayout)this;
 	}
 	public static String staticSetPageHomeUri(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -2582,7 +2552,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	}
 
 	public static String staticSolrStrPageHomeUri(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPageHomeUri(SiteRequestEnUS siteRequest_, String o) {
@@ -2636,10 +2606,9 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	public String getPageSchoolUri() {
 		return pageSchoolUri;
 	}
-	public PageLayout setPageSchoolUri(String o) {
+	public void setPageSchoolUri(String o) {
 		this.pageSchoolUri = PageLayout.staticSetPageSchoolUri(siteRequest_, o);
 		this.pageSchoolUriWrap.alreadyInitialized = true;
-		return (PageLayout)this;
 	}
 	public static String staticSetPageSchoolUri(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -2659,7 +2628,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	}
 
 	public static String staticSolrStrPageSchoolUri(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPageSchoolUri(SiteRequestEnUS siteRequest_, String o) {
@@ -2713,10 +2682,9 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	public String getPageUserUri() {
 		return pageUserUri;
 	}
-	public PageLayout setPageUserUri(String o) {
+	public void setPageUserUri(String o) {
 		this.pageUserUri = PageLayout.staticSetPageUserUri(siteRequest_, o);
 		this.pageUserUriWrap.alreadyInitialized = true;
-		return (PageLayout)this;
 	}
 	public static String staticSetPageUserUri(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -2736,7 +2704,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	}
 
 	public static String staticSolrStrPageUserUri(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPageUserUri(SiteRequestEnUS siteRequest_, String o) {
@@ -2790,10 +2758,9 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	public String getPageLogoutUri() {
 		return pageLogoutUri;
 	}
-	public PageLayout setPageLogoutUri(String o) {
+	public void setPageLogoutUri(String o) {
 		this.pageLogoutUri = PageLayout.staticSetPageLogoutUri(siteRequest_, o);
 		this.pageLogoutUriWrap.alreadyInitialized = true;
-		return (PageLayout)this;
 	}
 	public static String staticSetPageLogoutUri(SiteRequestEnUS siteRequest_, String o) {
 		return o;
@@ -2813,7 +2780,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	}
 
 	public static String staticSolrStrPageLogoutUri(SiteRequestEnUS siteRequest_, String o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqPageLogoutUri(SiteRequestEnUS siteRequest_, String o) {
@@ -2912,7 +2879,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 		this.schools = schools;
 		this.schoolsWrap.alreadyInitialized = true;
 	}
-	public static List<School> staticSetSchools(SiteRequestEnUS siteRequest_, String o) {
+	public static School staticSetSchools(SiteRequestEnUS siteRequest_, String o) {
 		return null;
 	}
 	public PageLayout addSchools(School...objets) {
@@ -3006,10 +2973,9 @@ public abstract class PageLayoutGen<DEV> extends Object {
 		this.yearVal = yearVal;
 		this.yearValWrap.alreadyInitialized = true;
 	}
-	public PageLayout setYearVal(String o) {
+	public void setYearVal(String o) {
 		this.yearVal = PageLayout.staticSetYearVal(siteRequest_, o);
 		this.yearValWrap.alreadyInitialized = true;
-		return (PageLayout)this;
 	}
 	public static Integer staticSetYearVal(SiteRequestEnUS siteRequest_, String o) {
 		if(NumberUtils.isParsable(o))
@@ -3031,7 +2997,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	}
 
 	public static String staticSolrStrYearVal(SiteRequestEnUS siteRequest_, Integer o) {
-			return o == null ? null : o.toString();
+		return o == null ? null : o.toString();
 	}
 
 	public static String staticSolrFqYearVal(SiteRequestEnUS siteRequest_, String o) {
@@ -3396,7 +3362,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 		case "pageUri":
 			return PageLayout.staticSolrPageUri(siteRequest_, (String)o);
 		case "pageUris":
-			return PageLayout.staticSolrPageUris(siteRequest_, (List<String>)o);
+			return PageLayout.staticSolrPageUris(siteRequest_, (String)o);
 		case "pageUrl":
 			return PageLayout.staticSolrPageUrl(siteRequest_, (String)o);
 		case "pageImageUri":
@@ -3478,7 +3444,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 		case "pageUri":
 			return PageLayout.staticSolrStrPageUri(siteRequest_, (String)o);
 		case "pageUris":
-			return PageLayout.staticSolrStrPageUris(siteRequest_, (List<String>)o);
+			return PageLayout.staticSolrStrPageUris(siteRequest_, (String)o);
 		case "pageUrl":
 			return PageLayout.staticSolrStrPageUrl(siteRequest_, (String)o);
 		case "pageImageUri":
@@ -3616,8 +3582,8 @@ public abstract class PageLayoutGen<DEV> extends Object {
 				if(o == null)
 					o = definePageLayout(v, val);
 				else if(o instanceof Cluster) {
-					Cluster cluster = (Cluster)o;
-					o = cluster.defineForClass(v, val);
+					Cluster oCluster = (Cluster)o;
+					o = oCluster.defineForClass(v, val);
 				}
 			}
 		}

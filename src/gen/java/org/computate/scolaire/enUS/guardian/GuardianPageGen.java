@@ -195,8 +195,8 @@ public abstract class GuardianPageGen<DEV> extends GuardianGenPage {
 				if(o == null)
 					o = defineGuardianPage(v, val);
 				else if(o instanceof Cluster) {
-					Cluster cluster = (Cluster)o;
-					o = cluster.defineForClass(v, val);
+					Cluster oCluster = (Cluster)o;
+					o = oCluster.defineForClass(v, val);
 				}
 			}
 		}

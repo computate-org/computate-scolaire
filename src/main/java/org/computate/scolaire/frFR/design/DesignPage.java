@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.design;  
+package org.computate.scolaire.frFR.design;    
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ import org.computate.scolaire.frFR.couverture.Couverture;
 import org.computate.scolaire.frFR.html.part.PartHtml;
 import org.computate.scolaire.frFR.recherche.ListeRecherche;
 
-/**    
+/**   
  * NomCanonique.enUS: org.computate.scolaire.enUS.design.PageDesign
  * Modele: true
  * Api: true
@@ -111,7 +111,7 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * Tri.asc: designPageNomComplet
  * 
  * Lignes: 100
-*/   
+*/      
 public class DesignPage extends DesignPageGen<Cluster> {
 
 	/**
@@ -123,7 +123,7 @@ public class DesignPage extends DesignPageGen<Cluster> {
 	 * Description.enUS: The primary key of the design in the database. 
 	 * NomAffichage.frFR: clé
 	 * NomAffichage.enUS: key
-	 */            
+	 */          
 	protected void _designPageCle(Couverture<Long> c) {
 		c.o(pk);
 	}

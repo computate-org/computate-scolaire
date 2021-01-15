@@ -457,9 +457,6 @@ public class SiteUserGenPage extends SiteUserGenPageGen<ClusterPage> {
 					htmlFormPageSiteUser(o);
 				}
 
-				if(o != null)
-					o.htmlBody();
-
 			} g("div");
 
 		}
@@ -577,6 +574,11 @@ public class SiteUserGenPage extends SiteUserGenPageGen<ClusterPage> {
 					sx("refresh this site user");
 				} g("button");
 			}
+		}
+		if(
+				siteRequest_.getUserResourceRoles().contains("SiteAdmin")
+				|| siteRequest_.getUserRealmRoles().contains("SiteAdmin")
+				) {
 
 			{ e("button")
 				.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-gray ")

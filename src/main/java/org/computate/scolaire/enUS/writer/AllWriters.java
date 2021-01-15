@@ -5,6 +5,9 @@ import java.util.List;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 
+/**
+ * CanonicalName: org.computate.scolaire.frFR.ecrivain.TousEcrivains
+ **/
 public class AllWriters extends AllWritersGen<Object> {
 
 	protected void _siteRequest_(Wrap<SiteRequestEnUS> c) {

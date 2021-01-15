@@ -4,6 +4,9 @@ import org.apache.solr.common.SolrDocument;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 
+/**
+ * CanonicalName: org.computate.scolaire.frFR.recherche.ResultatRecherche
+ **/
 public class SearchResult extends SearchResultGen<Object> {
 
 	protected void _siteRequest_(Wrap<SiteRequestEnUS> c) {

@@ -195,8 +195,8 @@ public abstract class HtmlPartPageGen<DEV> extends HtmlPartGenPage {
 				if(o == null)
 					o = defineHtmlPartPage(v, val);
 				else if(o instanceof Cluster) {
-					Cluster cluster = (Cluster)o;
-					o = cluster.defineForClass(v, val);
+					Cluster oCluster = (Cluster)o;
+					o = oCluster.defineForClass(v, val);
 				}
 			}
 		}
