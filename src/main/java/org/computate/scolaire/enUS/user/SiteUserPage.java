@@ -573,6 +573,7 @@ public class SiteUserPage extends SiteUserPageGen<SiteUserGenPage> {
 	}
 
 	public void writeSchoolReports() {
+		List<String> rolesAdmin = Arrays.asList("SiteAdmin");
 		if(siteRequest_.getUserRealmRoles().contains("SiteManager") || siteRequest_.getUserResourceRoles().contains("SiteManager")) {
 			{ e("h1").f();
 				{ e("a").a("href", "/user").a("class", "w3-bar-item w3-btn w3-center w3-block w3-gray w3-hover-gray ").f();
@@ -602,7 +603,10 @@ public class SiteUserPage extends SiteUserPageGen<SiteUserGenPage> {
 												ExceptionUtils.rethrow(e);
 											}
 										}
-										{
+										if(
+												CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), rolesAdmin)
+												|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), rolesAdmin)
+												) {
 											try {
 												String url = "/page?var=design:" + URLEncoder.encode("current payment table", "UTF-8") + "&var=schoolName:" + URLEncoder.encode(yearYear.getSchoolName(), "UTF-8") + "&var=schoolLocation:" + URLEncoder.encode(yearYear.getSchoolLocation(), "UTF-8") + "&var=yearStart:" + yearYear.getYearStart();
 												{ e("div").a("class", "w3-cell-row w3-small ").f();
