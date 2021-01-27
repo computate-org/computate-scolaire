@@ -347,6 +347,7 @@ public class DesignDisplayPage extends DesignDisplayPageGen<DesignDisplayGenPage
 			if(pageDesign_ != null && pageDesign_.getDesignEnrollmentSortGroupName()) {
 				LocalDate now = LocalDate.now(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone()));
 				l.addFilterQuery("blockPricePerMonth_indexed_double:[* TO *]");
+				l.addFilterQuery("childCompleteNamePreferred_indexed_string:[* TO *]");
 				l.addFilterQuery("enrollmentGroupName_indexed_string:[* TO *]");
 				l.addFilterQuery("paymentDate_indexed_date:[" + SchoolPayment.staticSolrFqPaymentDate(siteRequest_, now.minusDays(15).toString()) + " TO " + SchoolPayment.staticSolrFqPaymentDate(siteRequest_, now.plusDays(15).toString()) + "]");
 				l.addSort("seasonStartDate_indexed_date", ORDER.asc);
