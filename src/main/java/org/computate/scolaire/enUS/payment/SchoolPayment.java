@@ -22,6 +22,7 @@ import org.computate.scolaire.enUS.search.SearchList;
  * Api: true
  * Page: true
  * Saved: true
+ * RoleUser: true
  * Color: green
  * IconGroup: solid
  * IconName: search-dollar

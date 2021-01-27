@@ -293,7 +293,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
-				) {
+					) {
 				e("span").a("class", "varSchoolPayment", pk, "EnrollmentKey ").f().sx(htmEnrollmentKey()).g("span");
 			}
 		}
@@ -3516,7 +3516,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
-				) {
+					) {
 				e("span").a("class", "varSchoolPayment", pk, "EnrollmentPaymentEachMonth ").f().sx(htmEnrollmentPaymentEachMonth()).g("span");
 			}
 		}
@@ -3649,7 +3649,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
-				) {
+					) {
 				e("span").a("class", "varSchoolPayment", pk, "PaymentDescription ").f().sx(htmPaymentDescription()).g("span");
 			}
 		}
@@ -3809,7 +3809,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
-				) {
+					) {
 				e("span").a("class", "varSchoolPayment", pk, "PaymentDate ").f().sx(htmPaymentDate()).g("span");
 			}
 		}
@@ -3968,7 +3968,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
-				) {
+					) {
 				e("span").a("class", "varSchoolPayment", pk, "LateFeeDate ").f().sx(htmLateFeeDate()).g("span");
 			}
 		}
@@ -4217,7 +4217,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
-				) {
+					) {
 				e("span").a("class", "varSchoolPayment", pk, "PaymentAmount ").f().sx(htmPaymentAmount()).g("span");
 			}
 		}
@@ -4384,7 +4384,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
-				) {
+					) {
 				e("span").a("class", "varSchoolPayment", pk, "PaymentCash ").f().sx(htmPaymentCash()).g("span");
 			}
 		}
@@ -4535,7 +4535,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
-				) {
+					) {
 				e("span").a("class", "varSchoolPayment", pk, "PaymentCheck ").f().sx(htmPaymentCheck()).g("span");
 			}
 		}
@@ -4686,7 +4686,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
-				) {
+					) {
 				e("span").a("class", "varSchoolPayment", pk, "PaymentECheck ").f().sx(htmPaymentECheck()).g("span");
 			}
 		}
@@ -4837,7 +4837,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
-				) {
+					) {
 				e("span").a("class", "varSchoolPayment", pk, "PaymentSystem ").f().sx(htmPaymentSystem()).g("span");
 			}
 		}
@@ -5046,7 +5046,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
-				) {
+					) {
 				e("span").a("class", "varSchoolPayment", pk, "PaymentBy ").f().sx(htmPaymentBy()).g("span");
 			}
 		}
@@ -5195,7 +5195,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
-				) {
+					) {
 				e("span").a("class", "varSchoolPayment", pk, "TransactionId ").f().sx(htmTransactionId()).g("span");
 			}
 		}
@@ -5344,7 +5344,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
-				) {
+					) {
 				e("span").a("class", "varSchoolPayment", pk, "CustomerProfileId ").f().sx(htmCustomerProfileId()).g("span");
 			}
 		}
@@ -5493,7 +5493,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
-				) {
+					) {
 				e("span").a("class", "varSchoolPayment", pk, "TransactionStatus ").f().sx(htmTransactionStatus()).g("span");
 			}
 		}
@@ -5660,7 +5660,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
-				) {
+					) {
 				e("span").a("class", "varSchoolPayment", pk, "PaymentRecieved ").f().sx(htmPaymentRecieved()).g("span");
 			}
 		}
@@ -5810,7 +5810,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
-				) {
+					) {
 				e("span").a("class", "varSchoolPayment", pk, "ChargeAmount ").f().sx(htmChargeAmount()).g("span");
 			}
 		}
@@ -5977,7 +5977,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
-				) {
+					) {
 				e("span").a("class", "varSchoolPayment", pk, "ChargeFirstLast ").f().sx(htmChargeFirstLast()).g("span");
 			}
 		}
@@ -6128,7 +6128,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
-				) {
+					) {
 				e("span").a("class", "varSchoolPayment", pk, "ChargeEnrollment ").f().sx(htmChargeEnrollment()).g("span");
 			}
 		}
@@ -6279,7 +6279,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
-				) {
+					) {
 				e("span").a("class", "varSchoolPayment", pk, "ChargeMonth ").f().sx(htmChargeMonth()).g("span");
 			}
 		}
@@ -6430,7 +6430,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
-				) {
+					) {
 				e("span").a("class", "varSchoolPayment", pk, "ChargeLateFee ").f().sx(htmChargeLateFee()).g("span");
 			}
 		}
@@ -7205,7 +7205,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 					|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLE_READS)
 					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLE_READS)
-				) {
+					) {
 				e("span").a("class", "varSchoolPayment", pk, "PaymentShortName ").f().sx(htmPaymentShortName()).g("span");
 			}
 		}

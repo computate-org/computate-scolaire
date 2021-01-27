@@ -65,6 +65,7 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * Role.enUS: SiteAdmin
  * RoleLire.frFR: User
  * RoleLire.enUS: User
+ * RoleUtilisateur: true
  * 
  * Tri.desc: paiementDate
  * Tri.desc: paiementPar
