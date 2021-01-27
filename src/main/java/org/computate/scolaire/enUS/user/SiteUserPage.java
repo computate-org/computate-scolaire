@@ -602,6 +602,18 @@ public class SiteUserPage extends SiteUserPageGen<SiteUserGenPage> {
 												ExceptionUtils.rethrow(e);
 											}
 										}
+										{
+											try {
+												String url = "/page?var=design:" + URLEncoder.encode("current payment table", "UTF-8") + "&var=schoolName:" + URLEncoder.encode(yearYear.getSchoolName(), "UTF-8") + "&var=schoolLocation:" + URLEncoder.encode(yearYear.getSchoolLocation(), "UTF-8") + "&var=yearStart:" + yearYear.getYearStart();
+												{ e("div").a("class", "w3-cell-row w3-small ").f();
+													{ e("a").a("href", url).a("class", "").f();
+														e("span").a("class", " ").f().sx("current payment table", " ", yearYear.getYearStart().toString().substring(2,4), "-", yearYear.getYearEnd().toString().substring(2,4)).g("span");
+													} g("a");
+												} g("div");
+											} catch (UnsupportedEncodingException e) {
+												ExceptionUtils.rethrow(e);
+											}
+										}
 									} g("div");
 								}
 							}

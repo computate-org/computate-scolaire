@@ -739,14 +739,14 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 	}
 
 	protected void _paymentSearch(SearchList<SchoolPayment> l) {
-		if(pageDesignId.equals("payment-receipt") || BooleanUtils.isTrue(pageDesign_.getSearchPayments())) {
+		if(BooleanUtils.isTrue(pageDesign_.getSearchPayments())) {
 			l.setStore(true);
 			l.setQuery("*:*");
 			l.setC(SchoolPayment.class);
 			if(pageDesignId.equals("payment-receipt"))
 				l.setRows(1);
 			else 
-				l.setRows(100);
+				l.setRows(1000);
 	
 			List<String> roles = Arrays.asList("SiteManager");
 			if(
@@ -758,13 +758,15 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 							+ " OR userKeys_indexed_longs:" + Optional.ofNullable(siteRequest_.getUserKey()).orElse(0L)
 				);
 			}
-			l.add("json.facet", "{sum_paymentAmount:'sum(paymentAmount_indexed_double)'}");
-			l.add("json.facet", "{sum_chargeAmount:'sum(chargeAmount_indexed_double)'}");
-			l.add("json.facet", "{sum_chargeAmountDue:'sum(chargeAmountDue_indexed_double)'}");
-			l.add("json.facet", "{sum_chargeAmountFuture:'sum(chargeAmountFuture_indexed_double)'}");
-			l.addFilterQuery("paymentAmount_indexed_double:[* TO *]");
+			if(pageDesignId.equals("payment-receipt") || StringUtils.equalsAny(pageDesignId, "tax-year")) {
+				l.add("json.facet", "{sum_paymentAmount:'sum(paymentAmount_indexed_double)'}");
+				l.add("json.facet", "{sum_chargeAmount:'sum(chargeAmount_indexed_double)'}");
+				l.add("json.facet", "{sum_chargeAmountDue:'sum(chargeAmountDue_indexed_double)'}");
+				l.add("json.facet", "{sum_chargeAmountFuture:'sum(chargeAmountFuture_indexed_double)'}");
+				l.addFilterQuery("paymentAmount_indexed_double:[* TO *]");
+			}
 
-			if(StringUtils.equalsAny(attachmentDesignId, "tax-year")) {
+			if(StringUtils.equalsAny(pageDesignId, "tax-year")) {
 				Integer year = Integer.parseInt(siteRequest_.getRequestVars().get("year"));
 				ZoneId zoneId = ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone());
 				String start = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.of(year, 1, 1, 0, 0, 0, 0, zoneId).withZoneSameInstant(ZoneId.of("UTC")));
@@ -776,18 +778,136 @@ public class DesignEmailPage extends DesignEmailPageGen<DesignEmailGenPage> {
 				String val = siteRequest_.getRequestVars().get(var);
 				if(!"design".equals(var)) {
 					String varIndexed = SchoolPayment.varIndexedSchoolPayment(var);
-					if(varIndexed != null)
-						l.addFilterQuery(varIndexed + ":" + ClientUtils.escapeQueryChars(val));
+					if(varIndexed != null) {
+						if(StringUtils.startsWith(val, "[")) {
+							String[] fqs = StringUtils.substringBefore(StringUtils.substringAfter(val, "["), "]").split(" TO ");
+							if(fqs.length != 2)
+								throw new RuntimeException(String.format("\"%s\" invalid range query. ", val));
+							String fq1 = fqs[0].equals("*") ? fqs[0] : SchoolPayment.staticSolrFqForClass(var, siteRequest_, fqs[0]);
+							String fq2 = fqs[1].equals("*") ? fqs[1] : SchoolPayment.staticSolrFqForClass(var, siteRequest_, fqs[1]);
+							l.addFilterQuery(varIndexed + ":[" + fq1 + " TO " + fq2 + "]");
+						} else {
+							l.addFilterQuery(varIndexed + ":" + SchoolPayment.staticSolrFqForClass(var, siteRequest_, val));
+						}
+					}
 				}
+			}
+
+			if(pageDesign_ != null && pageDesign_.getDesignEnrollmentSortGroupName()) {
+				LocalDate now = LocalDate.now(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone()));
+				l.addFilterQuery("blockPricePerMonth_indexed_double:[* TO *]");
+				l.addFilterQuery("enrollmentGroupName_indexed_string:[* TO *]");
+				l.addFilterQuery("paymentDate_indexed_date:[" + SchoolPayment.staticSolrFqPaymentDate(siteRequest_, now.minusDays(15).toString()) + " TO " + SchoolPayment.staticSolrFqPaymentDate(siteRequest_, now.plusDays(15).toString()) + "]");
+				l.addSort("seasonStartDate_indexed_date", ORDER.asc);
+				l.addSort("sessionEndDate_indexed_date", ORDER.asc);
+				l.addSort("ageStart_indexed_int", ORDER.asc);
+				l.addSort("blockPricePerMonth_indexed_double", ORDER.asc);
+				l.addSort("blockStartTime_indexed_string", ORDER.asc);
+				l.addSort("enrollmentGroupName_indexed_string", ORDER.asc);
+			}
+			if(pageDesign_ != null && pageDesign_.getDesignEnrollmentSortChildName()) {
+				l.addSort("childCompleteNamePreferred_indexed_string", ORDER.asc);
 			}
 		}
 	}
 
 	protected void _payments_(Wrap<List<SchoolPayment>> c) {
-		c.o(paymentSearch.getList());
+		Integer i = 0;
+		Integer size = paymentSearch.size();
+		Long blockKeyBefore = null;
+		Long blockKeyCurrent = null;
+		String groupBefore = null;
+		String groupCurrent = null;
+		SchoolPayment payment = null;
+		List<SchoolPayment> paymentPayments = null;
+		Integer paymentNumber = null;
+
+		payments_ = paymentSearch.getList();
+		c.o(payments_);
+		if(size > 0) {
+			payment = payments_.get(i);
+			blockKeyCurrent = payment.getBlockKey();
+			while(i < size) {
+				payment = payments_.get(i);
+				blockKeyCurrent = payment.getBlockKey();
+				groupCurrent = payment.getEnrollmentGroupName();
+				if(StringUtils.equalsAny(pageDesignId, "paid-roster", "not-paid-roster", "group-names-roster", "group-details-roster")
+						|| pageDesign_ != null && pageDesign_.getDesignEnrollmentSortGroupName()) {
+					if(blockKeyCurrent == null || ObjectUtils.compare(blockKeyCurrent, blockKeyBefore) != 0) {
+						blockKeyBefore = payment.getBlockKey();
+						paymentGroups = payment.getPaymentGroups();
+						paymentBlocks.add(payment);
+					}
+					while(i < size) {
+						payment = payments_.get(i);
+						blockKeyCurrent = payment.getBlockKey();
+						groupCurrent = payment.getEnrollmentGroupName();
+						if(StringUtils.isBlank(groupCurrent)) {
+							groupCurrent = "none";
+							payment.setEnrollmentGroupName(groupCurrent);
+						}
+						if(groupBefore == null || ObjectUtils.compare(groupCurrent, groupBefore) != 0) {
+							groupBefore = payment.getEnrollmentGroupName();
+							paymentPayments = payment.getPaymentPayments();
+							paymentGroups.add(payment);
+							paymentNumber = 1;
+						}
+						payment.setPaymentKey(payment.getPk());
+						payment.setPaymentNumber(paymentNumber);
+						paymentPayments.add(payment);
+						paymentNumber++;
+						i++;
+						if((i + 1) > size)
+							break;
+						payment = payments_.get(i);
+						blockKeyCurrent = payment.getBlockKey();
+						groupCurrent = payment.getEnrollmentGroupName();
+						if(ObjectUtils.compare(blockKeyCurrent, blockKeyBefore) != 0)
+							break;
+						if(ObjectUtils.compare(groupCurrent, groupBefore) != 0)
+							break;
+					}
+					payment.setPaymentKey(payment.getPk());
+					payment.setPaymentNumber(paymentNumber);
+					paymentNumber++;
+				}
+				else {
+					if(blockKeyCurrent == null || ObjectUtils.compare(blockKeyCurrent, blockKeyBefore) != 0) {
+						blockKeyBefore = payment.getBlockKey();
+						paymentPayments = payment.getPaymentPayments();
+						paymentBlocks.add(payment);
+						paymentNumber = 1;
+					}
+					if((i + 1) > size)
+						break;
+					payment.setPaymentKey(payment.getPk());
+					payment.setPaymentNumber(paymentNumber);
+					paymentPayments.add(payment);
+					paymentNumber++;
+					if(ObjectUtils.compare(blockKeyCurrent, blockKeyBefore) != 0)
+						break;
+					i++;
+				}
+			}
+		}
 	}
 
 	protected void _payment_(Wrap<SchoolPayment> c) {
+	}
+
+	protected void _paymentBlocks(List<SchoolPayment> c) {
+	}
+
+	protected void _paymentGroups(Wrap<List<SchoolPayment>> c) {
+	}
+
+	protected void _paymentBlock(Wrap<SchoolPayment> c) {
+	}
+
+	protected void _paymentGroup(Wrap<SchoolPayment> c) {
+	}
+
+	protected void _paymentPayment(Wrap<SchoolPayment> c) {
 	}
 
 	protected void _paymentFacets(Wrap<SimpleOrderedMap> c) {

@@ -962,6 +962,237 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 	}
 
 	///////////////////
+	// paymentBlocks //
+	///////////////////
+
+	/**	 The entity paymentBlocks
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<SchoolPayment>(). 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected List<SchoolPayment> paymentBlocks = new ArrayList<SchoolPayment>();
+	@JsonIgnore
+	public Wrap<List<SchoolPayment>> paymentBlocksWrap = new Wrap<List<SchoolPayment>>().p(this).c(List.class).var("paymentBlocks").o(paymentBlocks);
+
+	/**	<br/> The entity paymentBlocks
+	 *  It is constructed before being initialized with the constructor by default List<SchoolPayment>(). 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:paymentBlocks">Find the entity paymentBlocks in Solr</a>
+	 * <br/>
+	 * @param paymentBlocks is the entity already constructed. 
+	 **/
+	protected abstract void _paymentBlocks(List<SchoolPayment> c);
+
+	public List<SchoolPayment> getPaymentBlocks() {
+		return paymentBlocks;
+	}
+
+	public void setPaymentBlocks(List<SchoolPayment> paymentBlocks) {
+		this.paymentBlocks = paymentBlocks;
+		this.paymentBlocksWrap.alreadyInitialized = true;
+	}
+	public static SchoolPayment staticSetPaymentBlocks(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
+	public DesignDisplayPage addPaymentBlocks(SchoolPayment...objets) {
+		for(SchoolPayment o : objets) {
+			addPaymentBlocks(o);
+		}
+		return (DesignDisplayPage)this;
+	}
+	public DesignDisplayPage addPaymentBlocks(SchoolPayment o) {
+		if(o != null && !paymentBlocks.contains(o))
+			this.paymentBlocks.add(o);
+		return (DesignDisplayPage)this;
+	}
+	protected DesignDisplayPage paymentBlocksInit() {
+		if(!paymentBlocksWrap.alreadyInitialized) {
+			_paymentBlocks(paymentBlocks);
+		}
+		paymentBlocksWrap.alreadyInitialized(true);
+		return (DesignDisplayPage)this;
+	}
+
+	///////////////////
+	// paymentGroups //
+	///////////////////
+
+	/**	 The entity paymentGroups
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected List<SchoolPayment> paymentGroups;
+	@JsonIgnore
+	public Wrap<List<SchoolPayment>> paymentGroupsWrap = new Wrap<List<SchoolPayment>>().p(this).c(List.class).var("paymentGroups").o(paymentGroups);
+
+	/**	<br/> The entity paymentGroups
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:paymentGroups">Find the entity paymentGroups in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _paymentGroups(Wrap<List<SchoolPayment>> c);
+
+	public List<SchoolPayment> getPaymentGroups() {
+		return paymentGroups;
+	}
+
+	public void setPaymentGroups(List<SchoolPayment> paymentGroups) {
+		this.paymentGroups = paymentGroups;
+		this.paymentGroupsWrap.alreadyInitialized = true;
+	}
+	public static SchoolPayment staticSetPaymentGroups(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
+	public DesignDisplayPage addPaymentGroups(SchoolPayment...objets) {
+		for(SchoolPayment o : objets) {
+			addPaymentGroups(o);
+		}
+		return (DesignDisplayPage)this;
+	}
+	public DesignDisplayPage addPaymentGroups(SchoolPayment o) {
+		if(o != null && !paymentGroups.contains(o))
+			this.paymentGroups.add(o);
+		return (DesignDisplayPage)this;
+	}
+	protected DesignDisplayPage paymentGroupsInit() {
+		if(!paymentGroupsWrap.alreadyInitialized) {
+			_paymentGroups(paymentGroupsWrap);
+			if(paymentGroups == null)
+				setPaymentGroups(paymentGroupsWrap.o);
+		}
+		paymentGroupsWrap.alreadyInitialized(true);
+		return (DesignDisplayPage)this;
+	}
+
+	//////////////////
+	// paymentBlock //
+	//////////////////
+
+	/**	 The entity paymentBlock
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected SchoolPayment paymentBlock;
+	@JsonIgnore
+	public Wrap<SchoolPayment> paymentBlockWrap = new Wrap<SchoolPayment>().p(this).c(SchoolPayment.class).var("paymentBlock").o(paymentBlock);
+
+	/**	<br/> The entity paymentBlock
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:paymentBlock">Find the entity paymentBlock in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _paymentBlock(Wrap<SchoolPayment> c);
+
+	public SchoolPayment getPaymentBlock() {
+		return paymentBlock;
+	}
+
+	public void setPaymentBlock(SchoolPayment paymentBlock) {
+		this.paymentBlock = paymentBlock;
+		this.paymentBlockWrap.alreadyInitialized = true;
+	}
+	public static SchoolPayment staticSetPaymentBlock(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
+	protected DesignDisplayPage paymentBlockInit() {
+		if(!paymentBlockWrap.alreadyInitialized) {
+			_paymentBlock(paymentBlockWrap);
+			if(paymentBlock == null)
+				setPaymentBlock(paymentBlockWrap.o);
+		}
+		if(paymentBlock != null)
+			paymentBlock.initDeepForClass(siteRequest_);
+		paymentBlockWrap.alreadyInitialized(true);
+		return (DesignDisplayPage)this;
+	}
+
+	//////////////////
+	// paymentGroup //
+	//////////////////
+
+	/**	 The entity paymentGroup
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected SchoolPayment paymentGroup;
+	@JsonIgnore
+	public Wrap<SchoolPayment> paymentGroupWrap = new Wrap<SchoolPayment>().p(this).c(SchoolPayment.class).var("paymentGroup").o(paymentGroup);
+
+	/**	<br/> The entity paymentGroup
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:paymentGroup">Find the entity paymentGroup in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _paymentGroup(Wrap<SchoolPayment> c);
+
+	public SchoolPayment getPaymentGroup() {
+		return paymentGroup;
+	}
+
+	public void setPaymentGroup(SchoolPayment paymentGroup) {
+		this.paymentGroup = paymentGroup;
+		this.paymentGroupWrap.alreadyInitialized = true;
+	}
+	public static SchoolPayment staticSetPaymentGroup(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
+	protected DesignDisplayPage paymentGroupInit() {
+		if(!paymentGroupWrap.alreadyInitialized) {
+			_paymentGroup(paymentGroupWrap);
+			if(paymentGroup == null)
+				setPaymentGroup(paymentGroupWrap.o);
+		}
+		if(paymentGroup != null)
+			paymentGroup.initDeepForClass(siteRequest_);
+		paymentGroupWrap.alreadyInitialized(true);
+		return (DesignDisplayPage)this;
+	}
+
+	////////////////////
+	// paymentPayment //
+	////////////////////
+
+	/**	 The entity paymentPayment
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected SchoolPayment paymentPayment;
+	@JsonIgnore
+	public Wrap<SchoolPayment> paymentPaymentWrap = new Wrap<SchoolPayment>().p(this).c(SchoolPayment.class).var("paymentPayment").o(paymentPayment);
+
+	/**	<br/> The entity paymentPayment
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.DesignDisplayPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:paymentPayment">Find the entity paymentPayment in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _paymentPayment(Wrap<SchoolPayment> c);
+
+	public SchoolPayment getPaymentPayment() {
+		return paymentPayment;
+	}
+
+	public void setPaymentPayment(SchoolPayment paymentPayment) {
+		this.paymentPayment = paymentPayment;
+		this.paymentPaymentWrap.alreadyInitialized = true;
+	}
+	public static SchoolPayment staticSetPaymentPayment(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
+	protected DesignDisplayPage paymentPaymentInit() {
+		if(!paymentPaymentWrap.alreadyInitialized) {
+			_paymentPayment(paymentPaymentWrap);
+			if(paymentPayment == null)
+				setPaymentPayment(paymentPaymentWrap.o);
+		}
+		if(paymentPayment != null)
+			paymentPayment.initDeepForClass(siteRequest_);
+		paymentPaymentWrap.alreadyInitialized(true);
+		return (DesignDisplayPage)this;
+	}
+
+	///////////////////
 	// paymentFacets //
 	///////////////////
 
@@ -3761,6 +3992,11 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 		paymentSearchInit();
 		payments_Init();
 		payment_Init();
+		paymentBlocksInit();
+		paymentGroupsInit();
+		paymentBlockInit();
+		paymentGroupInit();
+		paymentPaymentInit();
 		paymentFacetsInit();
 		paymentLastStrInit();
 		paymentAmountInit();
@@ -3830,6 +4066,12 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 			schoolSearch.setSiteRequest_(siteRequest_);
 		if(paymentSearch != null)
 			paymentSearch.setSiteRequest_(siteRequest_);
+		if(paymentBlock != null)
+			paymentBlock.setSiteRequest_(siteRequest_);
+		if(paymentGroup != null)
+			paymentGroup.setSiteRequest_(siteRequest_);
+		if(paymentPayment != null)
+			paymentPayment.setSiteRequest_(siteRequest_);
 		if(receiptSearch != null)
 			receiptSearch.setSiteRequest_(siteRequest_);
 		if(blockSearch != null)
@@ -3906,6 +4148,16 @@ public abstract class DesignDisplayPageGen<DEV> extends DesignDisplayGenPage {
 				return oDesignDisplayPage.payments_;
 			case "payment_":
 				return oDesignDisplayPage.payment_;
+			case "paymentBlocks":
+				return oDesignDisplayPage.paymentBlocks;
+			case "paymentGroups":
+				return oDesignDisplayPage.paymentGroups;
+			case "paymentBlock":
+				return oDesignDisplayPage.paymentBlock;
+			case "paymentGroup":
+				return oDesignDisplayPage.paymentGroup;
+			case "paymentPayment":
+				return oDesignDisplayPage.paymentPayment;
 			case "paymentFacets":
 				return oDesignDisplayPage.paymentFacets;
 			case "paymentLastStr":

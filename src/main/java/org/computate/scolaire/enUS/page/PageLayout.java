@@ -321,6 +321,7 @@ public class PageLayout extends PageLayoutGen<Object> {
 		e("script").a("src", staticBaseUrl, "/js/enUS/DadPage.js").f().g("script");
 		e("script").a("src", staticBaseUrl, "/js/enUS/GuardianPage.js").f().g("script");
 		e("script").a("src", staticBaseUrl, "/js/enUS/ChildPage.js").f().g("script");
+		e("script").a("src", staticBaseUrl, "/js/enUS/PageDesignPage.js").f().g("script");
 		e("script").a("src", staticBaseUrl, "/js/moment.min.js").f().g("script");
 		e("script").a("src", staticBaseUrl, "/js/jqDatePicker.js").f().g("script");
 		e("script").a("src", staticBaseUrl, "/js/jquery.serialize-object.js").f().g("script");

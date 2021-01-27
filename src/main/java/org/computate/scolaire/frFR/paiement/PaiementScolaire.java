@@ -663,6 +663,22 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
+	 * Var.enUS: blockCompleteName
+	 * Stocke: true
+	 * NomAffichage.frFR: bloc nom complet
+	 * NomAffichage.enUS: block complete name
+	 * r: inscription
+	 * r.enUS: enrollment
+	 * r: BlocNomComplet
+	 * r.enUS: BlockCompleteName
+	 */                   
+	protected void _blocNomComplet(Couverture<String> c) {
+		if(inscription_ != null)
+			c.o(inscription_.getBlocNomComplet());
+	}
+
+	/**
+	 * {@inheritDoc}
 	 * Var.enUS: blockStartTime
 	 * Indexe: true
 	 * Stocke: true
@@ -710,6 +726,23 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	protected void _blocPrixParMois(Couverture<BigDecimal> c) {
 		if(inscription_ != null)
 			c.o(inscription_.getBlocPrixParMois());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: enrollmentGroupName
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: nom de groupe
+	 * NomAffichage.enUS: group name
+	 * r: inscription
+	 * r.enUS: enrollment
+	 * r: InscriptionNomGroupe
+	 * r.enUS: EnrollmentGroupName
+	 */                   
+	protected void _inscriptionNomGroupe(Couverture<String> c) {
+		if(inscription_ != null)
+			c.o(inscription_.getInscriptionNomGroupe());
 	}
 
 	/**
@@ -1699,4 +1732,19 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 			o.append("nouveau");
 		c.o(o.toString());
 	} 
+
+	/**
+	 * Var.enUS: paymentGroups
+	 */
+	protected void _paiementsGroupe(List<PaiementScolaire> l) {}
+
+	/**
+	 * Var.enUS: paymentPayments
+	 */
+	protected void _paiementsPaiment(List<PaiementScolaire> l) {}
+
+	/**
+	 * Var.enUS: paymentNumber
+	 */
+	protected void _paiementNumero(Couverture<Integer> c) {}
 }

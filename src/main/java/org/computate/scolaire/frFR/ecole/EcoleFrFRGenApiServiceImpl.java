@@ -597,16 +597,14 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 												if(d.succeeded()) {
 													ListeRecherche<Ecole> listeEcole = d.result();
 
-													if(listeEcole.getQueryResponse().getResults().getNumFound() > 1) {
-														List<String> roles2 = Arrays.asList("SiteAdmin");
-														if(
-																!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles2)
-																&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles2)
-																) {
-															String message = String.format("rôles requis : " + String.join(", ", roles2));
-															LOGGER.error(message);
-															erreurEcole(requeteSite, null, Future.failedFuture(message));
-														}
+													List<String> roles2 = Arrays.asList("SiteAdmin");
+													if(listeEcole.getQueryResponse().getResults().getNumFound() > 1
+															&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles2)
+															&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles2)
+															) {
+														String message = String.format("rôles requis : " + String.join(", ", roles2));
+														LOGGER.error(message);
+														erreurEcole(requeteSite, gestionnaireEvenements, Future.failedFuture(message));
 													} else {
 
 														RequeteApi requeteApi = new RequeteApi();

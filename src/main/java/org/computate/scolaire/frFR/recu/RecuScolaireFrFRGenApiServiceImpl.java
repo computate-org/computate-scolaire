@@ -1224,16 +1224,14 @@ public class RecuScolaireFrFRGenApiServiceImpl implements RecuScolaireFrFRGenApi
 												if(d.succeeded()) {
 													ListeRecherche<RecuScolaire> listeRecuScolaire = d.result();
 
-													if(listeRecuScolaire.getQueryResponse().getResults().getNumFound() > 1) {
-														List<String> roles2 = Arrays.asList("SiteAdmin");
-														if(
-																!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles2)
-																&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles2)
-																) {
-															String message = String.format("rôles requis : " + String.join(", ", roles2));
-															LOGGER.error(message);
-															erreurRecuScolaire(requeteSite, null, Future.failedFuture(message));
-														}
+													List<String> roles2 = Arrays.asList("SiteAdmin");
+													if(listeRecuScolaire.getQueryResponse().getResults().getNumFound() > 1
+															&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles2)
+															&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles2)
+															) {
+														String message = String.format("rôles requis : " + String.join(", ", roles2));
+														LOGGER.error(message);
+														erreurRecuScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(message));
 													} else {
 
 														RequeteApi requeteApi = new RequeteApi();

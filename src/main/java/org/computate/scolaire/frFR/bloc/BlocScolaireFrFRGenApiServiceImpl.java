@@ -1407,16 +1407,14 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 												if(d.succeeded()) {
 													ListeRecherche<BlocScolaire> listeBlocScolaire = d.result();
 
-													if(listeBlocScolaire.getQueryResponse().getResults().getNumFound() > 1) {
-														List<String> roles2 = Arrays.asList("SiteAdmin");
-														if(
-																!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles2)
-																&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles2)
-																) {
-															String message = String.format("rôles requis : " + String.join(", ", roles2));
-															LOGGER.error(message);
-															erreurBlocScolaire(requeteSite, null, Future.failedFuture(message));
-														}
+													List<String> roles2 = Arrays.asList("SiteAdmin");
+													if(listeBlocScolaire.getQueryResponse().getResults().getNumFound() > 1
+															&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles2)
+															&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles2)
+															) {
+														String message = String.format("rôles requis : " + String.join(", ", roles2));
+														LOGGER.error(message);
+														erreurBlocScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(message));
 													} else {
 
 														RequeteApi requeteApi = new RequeteApi();

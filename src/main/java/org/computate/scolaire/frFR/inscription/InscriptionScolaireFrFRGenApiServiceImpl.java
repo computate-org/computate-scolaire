@@ -2554,16 +2554,14 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 												if(d.succeeded()) {
 													ListeRecherche<InscriptionScolaire> listeInscriptionScolaire = d.result();
 
-													if(listeInscriptionScolaire.getQueryResponse().getResults().getNumFound() > 1) {
-														List<String> roles2 = Arrays.asList("SiteAdmin");
-														if(
-																!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles2)
-																&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles2)
-																) {
-															String message = String.format("rôles requis : " + String.join(", ", roles2));
-															LOGGER.error(message);
-															erreurInscriptionScolaire(requeteSite, null, Future.failedFuture(message));
-														}
+													List<String> roles2 = Arrays.asList("SiteAdmin");
+													if(listeInscriptionScolaire.getQueryResponse().getResults().getNumFound() > 1
+															&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles2)
+															&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles2)
+															) {
+														String message = String.format("rôles requis : " + String.join(", ", roles2));
+														LOGGER.error(message);
+														erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(message));
 													} else {
 
 														RequeteApi requeteApi = new RequeteApi();
@@ -5687,16 +5685,14 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 												if(d.succeeded()) {
 													ListeRecherche<InscriptionScolaire> listeInscriptionScolaire = d.result();
 
-													if(listeInscriptionScolaire.getQueryResponse().getResults().getNumFound() > 1) {
-														List<String> roles2 = Arrays.asList("SiteAdmin");
-														if(
-																!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles2)
-																&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles2)
-																) {
-															String message = String.format("rôles requis : " + String.join(", ", roles2));
-															LOGGER.error(message);
-															erreurInscriptionScolaire(requeteSite, null, Future.failedFuture(message));
-														}
+													List<String> roles2 = Arrays.asList("SiteAdmin");
+													if(listeInscriptionScolaire.getQueryResponse().getResults().getNumFound() > 1
+															&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles2)
+															&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles2)
+															) {
+														String message = String.format("rôles requis : " + String.join(", ", roles2));
+														LOGGER.error(message);
+														erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(message));
 													} else {
 
 														RequeteApi requeteApi = new RequeteApi();
@@ -8530,16 +8526,14 @@ public class InscriptionScolaireFrFRGenApiServiceImpl implements InscriptionScol
 												if(d.succeeded()) {
 													ListeRecherche<InscriptionScolaire> listeInscriptionScolaire = d.result();
 
-													if(listeInscriptionScolaire.getQueryResponse().getResults().getNumFound() > 1) {
-														List<String> roles2 = Arrays.asList("SiteAdmin");
-														if(
-																!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles2)
-																&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles2)
-																) {
-															String message = String.format("rôles requis : " + String.join(", ", roles2));
-															LOGGER.error(message);
-															erreurInscriptionScolaire(requeteSite, null, Future.failedFuture(message));
-														}
+													List<String> roles2 = Arrays.asList("SiteAdmin");
+													if(listeInscriptionScolaire.getQueryResponse().getResults().getNumFound() > 1
+															&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles2)
+															&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles2)
+															) {
+														String message = String.format("rôles requis : " + String.join(", ", roles2));
+														LOGGER.error(message);
+														erreurInscriptionScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(message));
 													} else {
 
 														RequeteApi requeteApi = new RequeteApi();

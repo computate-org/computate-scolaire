@@ -88,6 +88,10 @@ public class PageDesign extends PageDesignGen<Cluster> {
 		c.o(false);
 	}
 
+	protected void _searchCurrentPayments(Wrap<Boolean> c) {
+		c.o(false);
+	}
+
 	@Override()
 	protected void  _objectTitle(Wrap<String> c) {
 		c.o(pageDesignCompleteName);

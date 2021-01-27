@@ -329,6 +329,7 @@ public class DesignPageGenPage extends DesignPageGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmRechercherAnnees("Page");
 			o.htmRechercherPaiements("Page");
+			o.htmRechercherPaiementsActuel("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmDesignParentCles("Page");
@@ -366,6 +367,7 @@ public class DesignPageGenPage extends DesignPageGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmRechercherAnnees("POST");
 			o.htmRechercherPaiements("POST");
+			o.htmRechercherPaiementsActuel("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmDesignParentCles("POST");
@@ -425,6 +427,7 @@ public class DesignPageGenPage extends DesignPageGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmRechercherAnnees("PUTCopie");
 			o.htmRechercherPaiements("PUTCopie");
+			o.htmRechercherPaiementsActuel("PUTCopie");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmDesignParentCles("PUTCopie");
@@ -460,6 +463,7 @@ public class DesignPageGenPage extends DesignPageGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmRechercherAnnees("PATCH");
 			o.htmRechercherPaiements("PATCH");
+			o.htmRechercherPaiementsActuel("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmDesignParentCles("PATCH");
@@ -497,6 +501,7 @@ public class DesignPageGenPage extends DesignPageGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmRechercherAnnees("Recherche");
 			o.htmRechercherPaiements("Recherche");
+			o.htmRechercherPaiementsActuel("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmDesignParentCles("Recherche");

@@ -16,6 +16,7 @@ import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import java.time.ZoneOffset;
 import io.vertx.core.logging.Logger;
+import org.computate.scolaire.frFR.paiement.PaiementScolaire;
 import java.math.RoundingMode;
 import java.math.MathContext;
 import org.computate.scolaire.frFR.cluster.Cluster;
@@ -58,7 +59,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 
 /**	
- * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true">Trouver la classe paymentCompleteName dans Solr. </a>
+ * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true">Trouver la classe paymentNumber dans Solr. </a>
  * <br/>
  **/
 public abstract class PaiementScolaireGen<DEV> extends Cluster {
@@ -2882,6 +2883,82 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	}
 
 	////////////////////
+	// blocNomComplet //
+	////////////////////
+
+	/**	 L'entité blocNomComplet
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String blocNomComplet;
+	@JsonIgnore
+	public Couverture<String> blocNomCompletCouverture = new Couverture<String>().p(this).c(String.class).var("blocNomComplet").o(blocNomComplet);
+
+	/**	<br/> L'entité blocNomComplet
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:blocNomComplet">Trouver l'entité blocNomComplet dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _blocNomComplet(Couverture<String> c);
+
+	public String getBlocNomComplet() {
+		return blocNomComplet;
+	}
+	public void setBlocNomComplet(String o) {
+		this.blocNomComplet = PaiementScolaire.staticSetBlocNomComplet(requeteSite_, o);
+		this.blocNomCompletCouverture.dejaInitialise = true;
+	}
+	public static String staticSetBlocNomComplet(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+	protected PaiementScolaire blocNomCompletInit() {
+		if(!blocNomCompletCouverture.dejaInitialise) {
+			_blocNomComplet(blocNomCompletCouverture);
+			if(blocNomComplet == null)
+				setBlocNomComplet(blocNomCompletCouverture.o);
+		}
+		blocNomCompletCouverture.dejaInitialise(true);
+		return (PaiementScolaire)this;
+	}
+
+	public static String staticSolrBlocNomComplet(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrBlocNomComplet(RequeteSiteFrFR requeteSite_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqBlocNomComplet(RequeteSiteFrFR requeteSite_, String o) {
+		return PaiementScolaire.staticSolrStrBlocNomComplet(requeteSite_, PaiementScolaire.staticSolrBlocNomComplet(requeteSite_, PaiementScolaire.staticSetBlocNomComplet(requeteSite_, o)));
+	}
+
+	public String solrBlocNomComplet() {
+		return PaiementScolaire.staticSolrBlocNomComplet(requeteSite_, blocNomComplet);
+	}
+
+	public String strBlocNomComplet() {
+		return blocNomComplet == null ? "" : blocNomComplet;
+	}
+
+	public String jsonBlocNomComplet() {
+		return blocNomComplet == null ? "" : blocNomComplet;
+	}
+
+	public String nomAffichageBlocNomComplet() {
+		return "bloc nom complet";
+	}
+
+	public String htmTooltipBlocNomComplet() {
+		return null;
+	}
+
+	public String htmBlocNomComplet() {
+		return blocNomComplet == null ? "" : StringEscapeUtils.escapeHtml4(strBlocNomComplet());
+	}
+
+	////////////////////
 	// blocHeureDebut //
 	////////////////////
 
@@ -3146,6 +3223,82 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 
 	public String htmBlocPrixParMois() {
 		return blocPrixParMois == null ? "" : StringEscapeUtils.escapeHtml4(strBlocPrixParMois());
+	}
+
+	//////////////////////////
+	// inscriptionNomGroupe //
+	//////////////////////////
+
+	/**	 L'entité inscriptionNomGroupe
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String inscriptionNomGroupe;
+	@JsonIgnore
+	public Couverture<String> inscriptionNomGroupeCouverture = new Couverture<String>().p(this).c(String.class).var("inscriptionNomGroupe").o(inscriptionNomGroupe);
+
+	/**	<br/> L'entité inscriptionNomGroupe
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:inscriptionNomGroupe">Trouver l'entité inscriptionNomGroupe dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _inscriptionNomGroupe(Couverture<String> c);
+
+	public String getInscriptionNomGroupe() {
+		return inscriptionNomGroupe;
+	}
+	public void setInscriptionNomGroupe(String o) {
+		this.inscriptionNomGroupe = PaiementScolaire.staticSetInscriptionNomGroupe(requeteSite_, o);
+		this.inscriptionNomGroupeCouverture.dejaInitialise = true;
+	}
+	public static String staticSetInscriptionNomGroupe(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+	protected PaiementScolaire inscriptionNomGroupeInit() {
+		if(!inscriptionNomGroupeCouverture.dejaInitialise) {
+			_inscriptionNomGroupe(inscriptionNomGroupeCouverture);
+			if(inscriptionNomGroupe == null)
+				setInscriptionNomGroupe(inscriptionNomGroupeCouverture.o);
+		}
+		inscriptionNomGroupeCouverture.dejaInitialise(true);
+		return (PaiementScolaire)this;
+	}
+
+	public static String staticSolrInscriptionNomGroupe(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrInscriptionNomGroupe(RequeteSiteFrFR requeteSite_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqInscriptionNomGroupe(RequeteSiteFrFR requeteSite_, String o) {
+		return PaiementScolaire.staticSolrStrInscriptionNomGroupe(requeteSite_, PaiementScolaire.staticSolrInscriptionNomGroupe(requeteSite_, PaiementScolaire.staticSetInscriptionNomGroupe(requeteSite_, o)));
+	}
+
+	public String solrInscriptionNomGroupe() {
+		return PaiementScolaire.staticSolrInscriptionNomGroupe(requeteSite_, inscriptionNomGroupe);
+	}
+
+	public String strInscriptionNomGroupe() {
+		return inscriptionNomGroupe == null ? "" : inscriptionNomGroupe;
+	}
+
+	public String jsonInscriptionNomGroupe() {
+		return inscriptionNomGroupe == null ? "" : inscriptionNomGroupe;
+	}
+
+	public String nomAffichageInscriptionNomGroupe() {
+		return "nom de groupe";
+	}
+
+	public String htmTooltipInscriptionNomGroupe() {
+		return null;
+	}
+
+	public String htmInscriptionNomGroupe() {
+		return inscriptionNomGroupe == null ? "" : StringEscapeUtils.escapeHtml4(strInscriptionNomGroupe());
 	}
 
 	///////////////////
@@ -7183,6 +7336,190 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		return paiementNomComplet == null ? "" : StringEscapeUtils.escapeHtml4(strPaiementNomComplet());
 	}
 
+	/////////////////////
+	// paiementsGroupe //
+	/////////////////////
+
+	/**	 L'entité paiementsGroupe
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<PaiementScolaire>(). 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected List<PaiementScolaire> paiementsGroupe = new ArrayList<PaiementScolaire>();
+	@JsonIgnore
+	public Couverture<List<PaiementScolaire>> paiementsGroupeCouverture = new Couverture<List<PaiementScolaire>>().p(this).c(List.class).var("paiementsGroupe").o(paiementsGroupe);
+
+	/**	<br/> L'entité paiementsGroupe
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<PaiementScolaire>(). 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:paiementsGroupe">Trouver l'entité paiementsGroupe dans Solr</a>
+	 * <br/>
+	 * @param paiementsGroupe est l'entité déjà construit. 
+	 **/
+	protected abstract void _paiementsGroupe(List<PaiementScolaire> l);
+
+	public List<PaiementScolaire> getPaiementsGroupe() {
+		return paiementsGroupe;
+	}
+
+	public void setPaiementsGroupe(List<PaiementScolaire> paiementsGroupe) {
+		this.paiementsGroupe = paiementsGroupe;
+		this.paiementsGroupeCouverture.dejaInitialise = true;
+	}
+	public static PaiementScolaire staticSetPaiementsGroupe(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
+	}
+	public PaiementScolaire addPaiementsGroupe(PaiementScolaire...objets) {
+		for(PaiementScolaire o : objets) {
+			addPaiementsGroupe(o);
+		}
+		return (PaiementScolaire)this;
+	}
+	public PaiementScolaire addPaiementsGroupe(PaiementScolaire o) {
+		if(o != null && !paiementsGroupe.contains(o))
+			this.paiementsGroupe.add(o);
+		return (PaiementScolaire)this;
+	}
+	protected PaiementScolaire paiementsGroupeInit() {
+		if(!paiementsGroupeCouverture.dejaInitialise) {
+			_paiementsGroupe(paiementsGroupe);
+		}
+		paiementsGroupeCouverture.dejaInitialise(true);
+		return (PaiementScolaire)this;
+	}
+
+	//////////////////////
+	// paiementsPaiment //
+	//////////////////////
+
+	/**	 L'entité paiementsPaiment
+	 *	Il est construit avant d'être initialisé avec le constructeur par défaut List<PaiementScolaire>(). 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected List<PaiementScolaire> paiementsPaiment = new ArrayList<PaiementScolaire>();
+	@JsonIgnore
+	public Couverture<List<PaiementScolaire>> paiementsPaimentCouverture = new Couverture<List<PaiementScolaire>>().p(this).c(List.class).var("paiementsPaiment").o(paiementsPaiment);
+
+	/**	<br/> L'entité paiementsPaiment
+	 * Il est construit avant d'être initialisé avec le constructeur par défaut List<PaiementScolaire>(). 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:paiementsPaiment">Trouver l'entité paiementsPaiment dans Solr</a>
+	 * <br/>
+	 * @param paiementsPaiment est l'entité déjà construit. 
+	 **/
+	protected abstract void _paiementsPaiment(List<PaiementScolaire> l);
+
+	public List<PaiementScolaire> getPaiementsPaiment() {
+		return paiementsPaiment;
+	}
+
+	public void setPaiementsPaiment(List<PaiementScolaire> paiementsPaiment) {
+		this.paiementsPaiment = paiementsPaiment;
+		this.paiementsPaimentCouverture.dejaInitialise = true;
+	}
+	public static PaiementScolaire staticSetPaiementsPaiment(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
+	}
+	public PaiementScolaire addPaiementsPaiment(PaiementScolaire...objets) {
+		for(PaiementScolaire o : objets) {
+			addPaiementsPaiment(o);
+		}
+		return (PaiementScolaire)this;
+	}
+	public PaiementScolaire addPaiementsPaiment(PaiementScolaire o) {
+		if(o != null && !paiementsPaiment.contains(o))
+			this.paiementsPaiment.add(o);
+		return (PaiementScolaire)this;
+	}
+	protected PaiementScolaire paiementsPaimentInit() {
+		if(!paiementsPaimentCouverture.dejaInitialise) {
+			_paiementsPaiment(paiementsPaiment);
+		}
+		paiementsPaimentCouverture.dejaInitialise(true);
+		return (PaiementScolaire)this;
+	}
+
+	////////////////////
+	// paiementNumero //
+	////////////////////
+
+	/**	 L'entité paiementNumero
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected Integer paiementNumero;
+	@JsonIgnore
+	public Couverture<Integer> paiementNumeroCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("paiementNumero").o(paiementNumero);
+
+	/**	<br/> L'entité paiementNumero
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.paiement.PaiementScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:paiementNumero">Trouver l'entité paiementNumero dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _paiementNumero(Couverture<Integer> c);
+
+	public Integer getPaiementNumero() {
+		return paiementNumero;
+	}
+
+	public void setPaiementNumero(Integer paiementNumero) {
+		this.paiementNumero = paiementNumero;
+		this.paiementNumeroCouverture.dejaInitialise = true;
+	}
+	public void setPaiementNumero(String o) {
+		this.paiementNumero = PaiementScolaire.staticSetPaiementNumero(requeteSite_, o);
+		this.paiementNumeroCouverture.dejaInitialise = true;
+	}
+	public static Integer staticSetPaiementNumero(RequeteSiteFrFR requeteSite_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Integer.parseInt(o);
+		return null;
+	}
+	protected PaiementScolaire paiementNumeroInit() {
+		if(!paiementNumeroCouverture.dejaInitialise) {
+			_paiementNumero(paiementNumeroCouverture);
+			if(paiementNumero == null)
+				setPaiementNumero(paiementNumeroCouverture.o);
+		}
+		paiementNumeroCouverture.dejaInitialise(true);
+		return (PaiementScolaire)this;
+	}
+
+	public static Integer staticSolrPaiementNumero(RequeteSiteFrFR requeteSite_, Integer o) {
+		return o;
+	}
+
+	public static String staticSolrStrPaiementNumero(RequeteSiteFrFR requeteSite_, Integer o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPaiementNumero(RequeteSiteFrFR requeteSite_, String o) {
+		return PaiementScolaire.staticSolrStrPaiementNumero(requeteSite_, PaiementScolaire.staticSolrPaiementNumero(requeteSite_, PaiementScolaire.staticSetPaiementNumero(requeteSite_, o)));
+	}
+
+	public Integer solrPaiementNumero() {
+		return PaiementScolaire.staticSolrPaiementNumero(requeteSite_, paiementNumero);
+	}
+
+	public String strPaiementNumero() {
+		return paiementNumero == null ? "" : paiementNumero.toString();
+	}
+
+	public String jsonPaiementNumero() {
+		return paiementNumero == null ? "" : paiementNumero.toString();
+	}
+
+	public String nomAffichagePaiementNumero() {
+		return null;
+	}
+
+	public String htmTooltipPaiementNumero() {
+		return null;
+	}
+
+	public String htmPaiementNumero() {
+		return paiementNumero == null ? "" : StringEscapeUtils.escapeHtml4(strPaiementNumero());
+	}
+
 	//////////////
 	// initLoin //
 	//////////////
@@ -7236,9 +7573,11 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		sessionDateFinInit();
 		ageDebutInit();
 		ageFinInit();
+		blocNomCompletInit();
 		blocHeureDebutInit();
 		blocHeureFinInit();
 		blocPrixParMoisInit();
+		inscriptionNomGroupeInit();
 		blocPrixTotalInit();
 		inscriptionPaimentChaqueMoisInit();
 		paiementDescriptionInit();
@@ -7270,6 +7609,9 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		fraisMontantFutureInit();
 		paiementNomCourtInit();
 		paiementNomCompletInit();
+		paiementsGroupeInit();
+		paiementsPaimentInit();
+		paiementNumeroInit();
 	}
 
 	@Override public void initLoinPourClasse(RequeteSiteFrFR requeteSite_) {
@@ -7374,12 +7716,16 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				return oPaiementScolaire.ageDebut;
 			case "ageFin":
 				return oPaiementScolaire.ageFin;
+			case "blocNomComplet":
+				return oPaiementScolaire.blocNomComplet;
 			case "blocHeureDebut":
 				return oPaiementScolaire.blocHeureDebut;
 			case "blocHeureFin":
 				return oPaiementScolaire.blocHeureFin;
 			case "blocPrixParMois":
 				return oPaiementScolaire.blocPrixParMois;
+			case "inscriptionNomGroupe":
+				return oPaiementScolaire.inscriptionNomGroupe;
 			case "blocPrixTotal":
 				return oPaiementScolaire.blocPrixTotal;
 			case "inscriptionPaimentChaqueMois":
@@ -7442,6 +7788,12 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				return oPaiementScolaire.paiementNomCourt;
 			case "paiementNomComplet":
 				return oPaiementScolaire.paiementNomComplet;
+			case "paiementsGroupe":
+				return oPaiementScolaire.paiementsGroupe;
+			case "paiementsPaiment":
+				return oPaiementScolaire.paiementsPaiment;
+			case "paiementNumero":
+				return oPaiementScolaire.paiementNumero;
 			default:
 				return super.obtenirCluster(var);
 		}
@@ -7547,12 +7899,16 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			return PaiementScolaire.staticSetAgeDebut(requeteSite_, o);
 		case "ageFin":
 			return PaiementScolaire.staticSetAgeFin(requeteSite_, o);
+		case "blocNomComplet":
+			return PaiementScolaire.staticSetBlocNomComplet(requeteSite_, o);
 		case "blocHeureDebut":
 			return PaiementScolaire.staticSetBlocHeureDebut(requeteSite_, o);
 		case "blocHeureFin":
 			return PaiementScolaire.staticSetBlocHeureFin(requeteSite_, o);
 		case "blocPrixParMois":
 			return PaiementScolaire.staticSetBlocPrixParMois(requeteSite_, o);
+		case "inscriptionNomGroupe":
+			return PaiementScolaire.staticSetInscriptionNomGroupe(requeteSite_, o);
 		case "blocPrixTotal":
 			return PaiementScolaire.staticSetBlocPrixTotal(requeteSite_, o);
 		case "inscriptionPaimentChaqueMois":
@@ -7615,6 +7971,8 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			return PaiementScolaire.staticSetPaiementNomCourt(requeteSite_, o);
 		case "paiementNomComplet":
 			return PaiementScolaire.staticSetPaiementNomComplet(requeteSite_, o);
+		case "paiementNumero":
+			return PaiementScolaire.staticSetPaiementNumero(requeteSite_, o);
 			default:
 				return Cluster.staticSetCluster(entiteVar,  requeteSite_, o);
 		}
@@ -7689,12 +8047,16 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			return PaiementScolaire.staticSolrAgeDebut(requeteSite_, (Integer)o);
 		case "ageFin":
 			return PaiementScolaire.staticSolrAgeFin(requeteSite_, (Integer)o);
+		case "blocNomComplet":
+			return PaiementScolaire.staticSolrBlocNomComplet(requeteSite_, (String)o);
 		case "blocHeureDebut":
 			return PaiementScolaire.staticSolrBlocHeureDebut(requeteSite_, (LocalTime)o);
 		case "blocHeureFin":
 			return PaiementScolaire.staticSolrBlocHeureFin(requeteSite_, (LocalTime)o);
 		case "blocPrixParMois":
 			return PaiementScolaire.staticSolrBlocPrixParMois(requeteSite_, (BigDecimal)o);
+		case "inscriptionNomGroupe":
+			return PaiementScolaire.staticSolrInscriptionNomGroupe(requeteSite_, (String)o);
 		case "blocPrixTotal":
 			return PaiementScolaire.staticSolrBlocPrixTotal(requeteSite_, (BigDecimal)o);
 		case "inscriptionPaimentChaqueMois":
@@ -7757,6 +8119,8 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			return PaiementScolaire.staticSolrPaiementNomCourt(requeteSite_, (String)o);
 		case "paiementNomComplet":
 			return PaiementScolaire.staticSolrPaiementNomComplet(requeteSite_, (String)o);
+		case "paiementNumero":
+			return PaiementScolaire.staticSolrPaiementNumero(requeteSite_, (Integer)o);
 			default:
 				return Cluster.staticSolrCluster(entiteVar,  requeteSite_, o);
 		}
@@ -7831,12 +8195,16 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			return PaiementScolaire.staticSolrStrAgeDebut(requeteSite_, (Integer)o);
 		case "ageFin":
 			return PaiementScolaire.staticSolrStrAgeFin(requeteSite_, (Integer)o);
+		case "blocNomComplet":
+			return PaiementScolaire.staticSolrStrBlocNomComplet(requeteSite_, (String)o);
 		case "blocHeureDebut":
 			return PaiementScolaire.staticSolrStrBlocHeureDebut(requeteSite_, (String)o);
 		case "blocHeureFin":
 			return PaiementScolaire.staticSolrStrBlocHeureFin(requeteSite_, (String)o);
 		case "blocPrixParMois":
 			return PaiementScolaire.staticSolrStrBlocPrixParMois(requeteSite_, (Double)o);
+		case "inscriptionNomGroupe":
+			return PaiementScolaire.staticSolrStrInscriptionNomGroupe(requeteSite_, (String)o);
 		case "blocPrixTotal":
 			return PaiementScolaire.staticSolrStrBlocPrixTotal(requeteSite_, (Double)o);
 		case "inscriptionPaimentChaqueMois":
@@ -7899,6 +8267,8 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			return PaiementScolaire.staticSolrStrPaiementNomCourt(requeteSite_, (String)o);
 		case "paiementNomComplet":
 			return PaiementScolaire.staticSolrStrPaiementNomComplet(requeteSite_, (String)o);
+		case "paiementNumero":
+			return PaiementScolaire.staticSolrStrPaiementNumero(requeteSite_, (Integer)o);
 			default:
 				return Cluster.staticSolrStrCluster(entiteVar,  requeteSite_, o);
 		}
@@ -7973,12 +8343,16 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			return PaiementScolaire.staticSolrFqAgeDebut(requeteSite_, o);
 		case "ageFin":
 			return PaiementScolaire.staticSolrFqAgeFin(requeteSite_, o);
+		case "blocNomComplet":
+			return PaiementScolaire.staticSolrFqBlocNomComplet(requeteSite_, o);
 		case "blocHeureDebut":
 			return PaiementScolaire.staticSolrFqBlocHeureDebut(requeteSite_, o);
 		case "blocHeureFin":
 			return PaiementScolaire.staticSolrFqBlocHeureFin(requeteSite_, o);
 		case "blocPrixParMois":
 			return PaiementScolaire.staticSolrFqBlocPrixParMois(requeteSite_, o);
+		case "inscriptionNomGroupe":
+			return PaiementScolaire.staticSolrFqInscriptionNomGroupe(requeteSite_, o);
 		case "blocPrixTotal":
 			return PaiementScolaire.staticSolrFqBlocPrixTotal(requeteSite_, o);
 		case "inscriptionPaimentChaqueMois":
@@ -8041,6 +8415,8 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			return PaiementScolaire.staticSolrFqPaiementNomCourt(requeteSite_, o);
 		case "paiementNomComplet":
 			return PaiementScolaire.staticSolrFqPaiementNomComplet(requeteSite_, o);
+		case "paiementNumero":
+			return PaiementScolaire.staticSolrFqPaiementNumero(requeteSite_, o);
 			default:
 				return Cluster.staticSolrFqCluster(entiteVar,  requeteSite_, o);
 		}
@@ -8362,6 +8738,12 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 					oPaiementScolaire.setAgeFin(ageFin);
 			}
 
+			if(sauvegardes.contains("blocNomComplet")) {
+				String blocNomComplet = (String)solrDocument.get("blocNomComplet_stored_string");
+				if(blocNomComplet != null)
+					oPaiementScolaire.setBlocNomComplet(blocNomComplet);
+			}
+
 			if(sauvegardes.contains("blocHeureDebut")) {
 				String blocHeureDebut = (String)solrDocument.get("blocHeureDebut_stored_string");
 				if(blocHeureDebut != null)
@@ -8378,6 +8760,12 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				Double blocPrixParMois = (Double)solrDocument.get("blocPrixParMois_stored_double");
 				if(blocPrixParMois != null)
 					oPaiementScolaire.setBlocPrixParMois(blocPrixParMois);
+			}
+
+			if(sauvegardes.contains("inscriptionNomGroupe")) {
+				String inscriptionNomGroupe = (String)solrDocument.get("inscriptionNomGroupe_stored_string");
+				if(inscriptionNomGroupe != null)
+					oPaiementScolaire.setInscriptionNomGroupe(inscriptionNomGroupe);
 			}
 
 			if(sauvegardes.contains("blocPrixTotal")) {
@@ -8756,6 +9144,9 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			document.addField("ageFin_indexed_int", ageFin);
 			document.addField("ageFin_stored_int", ageFin);
 		}
+		if(blocNomComplet != null) {
+			document.addField("blocNomComplet_stored_string", blocNomComplet);
+		}
 		if(blocHeureDebut != null) {
 			document.addField("blocHeureDebut_indexed_string", DateTimeFormatter.ofPattern("HH:mm").format(blocHeureDebut.atOffset(ZoneOffset.UTC)));
 			document.addField("blocHeureDebut_stored_string", DateTimeFormatter.ofPattern("HH:mm").format(blocHeureDebut.atOffset(ZoneOffset.UTC)));
@@ -8767,6 +9158,10 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		if(blocPrixParMois != null) {
 			document.addField("blocPrixParMois_indexed_double", blocPrixParMois.doubleValue());
 			document.addField("blocPrixParMois_stored_double", blocPrixParMois.doubleValue());
+		}
+		if(inscriptionNomGroupe != null) {
+			document.addField("inscriptionNomGroupe_indexed_string", inscriptionNomGroupe);
+			document.addField("inscriptionNomGroupe_stored_string", inscriptionNomGroupe);
 		}
 		if(blocPrixTotal != null) {
 			document.addField("blocPrixTotal_indexed_double", blocPrixTotal.doubleValue());
@@ -8973,6 +9368,8 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				return "blocHeureFin_indexed_string";
 			case "blocPrixParMois":
 				return "blocPrixParMois_indexed_double";
+			case "inscriptionNomGroupe":
+				return "inscriptionNomGroupe_indexed_string";
 			case "blocPrixTotal":
 				return "blocPrixTotal_indexed_double";
 			case "inscriptionPaimentChaqueMois":
@@ -9180,6 +9577,10 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		if(ageFin != null)
 			oPaiementScolaire.setAgeFin(ageFin);
 
+		String blocNomComplet = (String)solrDocument.get("blocNomComplet_stored_string");
+		if(blocNomComplet != null)
+			oPaiementScolaire.setBlocNomComplet(blocNomComplet);
+
 		String blocHeureDebut = (String)solrDocument.get("blocHeureDebut_stored_string");
 		if(blocHeureDebut != null)
 			oPaiementScolaire.setBlocHeureDebut(blocHeureDebut);
@@ -9191,6 +9592,10 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		Double blocPrixParMois = (Double)solrDocument.get("blocPrixParMois_stored_double");
 		if(blocPrixParMois != null)
 			oPaiementScolaire.setBlocPrixParMois(blocPrixParMois);
+
+		String inscriptionNomGroupe = (String)solrDocument.get("inscriptionNomGroupe_stored_string");
+		if(inscriptionNomGroupe != null)
+			oPaiementScolaire.setInscriptionNomGroupe(inscriptionNomGroupe);
 
 		Double blocPrixTotal = (Double)solrDocument.get("blocPrixTotal_stored_double");
 		if(blocPrixTotal != null)
@@ -9380,12 +9785,16 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				requeteApi.addVars("ageDebut");
 			if(!Objects.equals(ageFin, original.getAgeFin()))
 				requeteApi.addVars("ageFin");
+			if(!Objects.equals(blocNomComplet, original.getBlocNomComplet()))
+				requeteApi.addVars("blocNomComplet");
 			if(!Objects.equals(blocHeureDebut, original.getBlocHeureDebut()))
 				requeteApi.addVars("blocHeureDebut");
 			if(!Objects.equals(blocHeureFin, original.getBlocHeureFin()))
 				requeteApi.addVars("blocHeureFin");
 			if(!Objects.equals(blocPrixParMois, original.getBlocPrixParMois()))
 				requeteApi.addVars("blocPrixParMois");
+			if(!Objects.equals(inscriptionNomGroupe, original.getInscriptionNomGroupe()))
+				requeteApi.addVars("inscriptionNomGroupe");
 			if(!Objects.equals(blocPrixTotal, original.getBlocPrixTotal()))
 				requeteApi.addVars("blocPrixTotal");
 			if(!Objects.equals(inscriptionPaimentChaqueMois, original.getInscriptionPaimentChaqueMois()))
@@ -9453,7 +9862,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), paiementCle, inscriptionCle, ecoleNumero, utilisateurCles, ecoleCle, ecoleAddresse, ecoleNumeroTelephone, anneeCle, sessionCle, ageCle, blocCle, enfantCle, mereCles, pereCles, gardienCles, enfantNomCompletPrefere, enfantDateNaissance, mereNomCompletPrefere, pereNomCompletPrefere, ecoleNom, ecoleNomComplet, ecoleEmplacement, anneeDebut, anneeFin, saisonDateDebut, anneeFraisInscription, sessionDateDebut, sessionDateFin, ageDebut, ageFin, blocHeureDebut, blocHeureFin, blocPrixParMois, blocPrixTotal, inscriptionPaimentChaqueMois, paiementDescription, paiementDate, fraisRetardDate, paiementAnnee, paiementMontant, paiementEspeces, paiementCheque, paiementECheck, paiementSysteme, paiementType, paiementPar, transactionId, customerProfileId, transactionStatus, paiementRecu, fraisMontant, fraisPremierDernier, fraisInscription, fraisMois, fraisRetard, paiementProchain, fraisMontantDu, fraisMontantPasse, fraisMontantNonPasse, fraisMontantFuture, paiementNomCourt, paiementNomComplet);
+		return Objects.hash(super.hashCode(), paiementCle, inscriptionCle, ecoleNumero, utilisateurCles, ecoleCle, ecoleAddresse, ecoleNumeroTelephone, anneeCle, sessionCle, ageCle, blocCle, enfantCle, mereCles, pereCles, gardienCles, enfantNomCompletPrefere, enfantDateNaissance, mereNomCompletPrefere, pereNomCompletPrefere, ecoleNom, ecoleNomComplet, ecoleEmplacement, anneeDebut, anneeFin, saisonDateDebut, anneeFraisInscription, sessionDateDebut, sessionDateFin, ageDebut, ageFin, blocNomComplet, blocHeureDebut, blocHeureFin, blocPrixParMois, inscriptionNomGroupe, blocPrixTotal, inscriptionPaimentChaqueMois, paiementDescription, paiementDate, fraisRetardDate, paiementAnnee, paiementMontant, paiementEspeces, paiementCheque, paiementECheck, paiementSysteme, paiementType, paiementPar, transactionId, customerProfileId, transactionStatus, paiementRecu, fraisMontant, fraisPremierDernier, fraisInscription, fraisMois, fraisRetard, paiementProchain, fraisMontantDu, fraisMontantPasse, fraisMontantNonPasse, fraisMontantFuture, paiementNomCourt, paiementNomComplet);
 	}
 
 	////////////
@@ -9497,9 +9906,11 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				&& Objects.equals( sessionDateFin, that.sessionDateFin )
 				&& Objects.equals( ageDebut, that.ageDebut )
 				&& Objects.equals( ageFin, that.ageFin )
+				&& Objects.equals( blocNomComplet, that.blocNomComplet )
 				&& Objects.equals( blocHeureDebut, that.blocHeureDebut )
 				&& Objects.equals( blocHeureFin, that.blocHeureFin )
 				&& Objects.equals( blocPrixParMois, that.blocPrixParMois )
+				&& Objects.equals( inscriptionNomGroupe, that.inscriptionNomGroupe )
 				&& Objects.equals( blocPrixTotal, that.blocPrixTotal )
 				&& Objects.equals( inscriptionPaimentChaqueMois, that.inscriptionPaimentChaqueMois )
 				&& Objects.equals( paiementDescription, that.paiementDescription )
@@ -9569,9 +9980,11 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 		sb.append( ", sessionDateFin: " ).append(sessionDateFin);
 		sb.append( ", ageDebut: " ).append(ageDebut);
 		sb.append( ", ageFin: " ).append(ageFin);
+		sb.append( ", blocNomComplet: \"" ).append(blocNomComplet).append( "\"" );
 		sb.append( ", blocHeureDebut: " ).append(blocHeureDebut);
 		sb.append( ", blocHeureFin: " ).append(blocHeureFin);
 		sb.append( ", blocPrixParMois: " ).append(blocPrixParMois);
+		sb.append( ", inscriptionNomGroupe: \"" ).append(inscriptionNomGroupe).append( "\"" );
 		sb.append( ", blocPrixTotal: " ).append(blocPrixTotal);
 		sb.append( ", inscriptionPaimentChaqueMois: " ).append(inscriptionPaimentChaqueMois);
 		sb.append( ", paiementDescription: \"" ).append(paiementDescription).append( "\"" );

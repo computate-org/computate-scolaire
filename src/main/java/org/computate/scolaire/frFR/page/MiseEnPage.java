@@ -699,6 +699,8 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	 * r.enUS: /enUS/GuardianPage.js
 	 * r: /frFR/EnfantPage.js
 	 * r.enUS: /enUS/ChildPage.js
+	 * r: /frFR/DesignPagePage.js
+	 * r.enUS: /enUS/PageDesignPage.js
 	 * r: frFR
 	 * r.enUS: enUS
 	 */
@@ -720,6 +722,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 		e("script").a("src", statiqueUrlBase, "/js/frFR/PerePage.js").f().g("script");
 		e("script").a("src", statiqueUrlBase, "/js/frFR/GardienPage.js").f().g("script");
 		e("script").a("src", statiqueUrlBase, "/js/frFR/EnfantPage.js").f().g("script");
+		e("script").a("src", statiqueUrlBase, "/js/frFR/DesignPagePage.js").f().g("script");
 		e("script").a("src", statiqueUrlBase, "/js/moment.min.js").f().g("script");
 		e("script").a("src", statiqueUrlBase, "/js/jqDatePicker.js").f().g("script");
 		e("script").a("src", statiqueUrlBase, "/js/jquery.serialize-object.js").f().g("script");

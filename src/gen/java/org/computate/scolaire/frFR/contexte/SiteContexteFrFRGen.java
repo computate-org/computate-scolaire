@@ -76,6 +76,9 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 		this.vertx = vertx;
 		this.vertxCouverture.dejaInitialise = true;
 	}
+	public static Vertx staticSetVertx(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
+	}
 	protected SiteContexteFrFR vertxInit() {
 		if(!vertxCouverture.dejaInitialise) {
 			_vertx(vertxCouverture);
@@ -113,6 +116,9 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 	public void setUsineRouteur(OpenAPI3RouterFactory usineRouteur) {
 		this.usineRouteur = usineRouteur;
 		this.usineRouteurCouverture.dejaInitialise = true;
+	}
+	public static OpenAPI3RouterFactory staticSetUsineRouteur(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
 	}
 	protected SiteContexteFrFR usineRouteurInit() {
 		if(!usineRouteurCouverture.dejaInitialise) {
@@ -152,6 +158,9 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 		this.routeur = routeur;
 		this.routeurCouverture.dejaInitialise = true;
 	}
+	public static Router staticSetRouteur(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
+	}
 	protected SiteContexteFrFR routeurInit() {
 		if(!routeurCouverture.dejaInitialise) {
 			_routeur(routeurCouverture);
@@ -189,6 +198,9 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 	public void setGestionnaireAuth(OAuth2AuthHandler gestionnaireAuth) {
 		this.gestionnaireAuth = gestionnaireAuth;
 		this.gestionnaireAuthCouverture.dejaInitialise = true;
+	}
+	public static OAuth2AuthHandler staticSetGestionnaireAuth(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
 	}
 	protected SiteContexteFrFR gestionnaireAuthInit() {
 		if(!gestionnaireAuthCouverture.dejaInitialise) {
@@ -228,6 +240,9 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 		this.authFournisseur = authFournisseur;
 		this.authFournisseurCouverture.dejaInitialise = true;
 	}
+	public static OAuth2Auth staticSetAuthFournisseur(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
+	}
 	protected SiteContexteFrFR authFournisseurInit() {
 		if(!authFournisseurCouverture.dejaInitialise) {
 			_authFournisseur(authFournisseurCouverture);
@@ -265,6 +280,9 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 	public void setExecuteurTravailleur(WorkerExecutor executeurTravailleur) {
 		this.executeurTravailleur = executeurTravailleur;
 		this.executeurTravailleurCouverture.dejaInitialise = true;
+	}
+	public static WorkerExecutor staticSetExecuteurTravailleur(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
 	}
 	protected SiteContexteFrFR executeurTravailleurInit() {
 		if(!executeurTravailleurCouverture.dejaInitialise) {
@@ -304,6 +322,9 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 		this.configSite = configSite;
 		this.configSiteCouverture.dejaInitialise = true;
 	}
+	public static ConfigSite staticSetConfigSite(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
+	}
 	protected SiteContexteFrFR configSiteInit() {
 		if(!configSiteCouverture.dejaInitialise) {
 			_configSite(configSite);
@@ -340,6 +361,9 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 	public void setPgPool(PgPool pgPool) {
 		this.pgPool = pgPool;
 		this.pgPoolCouverture.dejaInitialise = true;
+	}
+	public static PgPool staticSetPgPool(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
 	}
 	protected SiteContexteFrFR pgPoolInit() {
 		if(!pgPoolCouverture.dejaInitialise) {
@@ -379,6 +403,9 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 		this.clientSolr = clientSolr;
 		this.clientSolrCouverture.dejaInitialise = true;
 	}
+	public static HttpSolrClient staticSetClientSolr(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
+	}
 	protected SiteContexteFrFR clientSolrInit() {
 		if(!clientSolrCouverture.dejaInitialise) {
 			_clientSolr(clientSolrCouverture);
@@ -417,6 +444,9 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 		this.mailClient = mailClient;
 		this.mailClientCouverture.dejaInitialise = true;
 	}
+	public static MailClient staticSetMailClient(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
+	}
 	protected SiteContexteFrFR mailClientInit() {
 		if(!mailClientCouverture.dejaInitialise) {
 			_mailClient(mailClientCouverture);
@@ -454,6 +484,9 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 	public void setClientSolrComputate(HttpSolrClient clientSolrComputate) {
 		this.clientSolrComputate = clientSolrComputate;
 		this.clientSolrComputateCouverture.dejaInitialise = true;
+	}
+	public static HttpSolrClient staticSetClientSolrComputate(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
 	}
 	protected SiteContexteFrFR clientSolrComputateInit() {
 		if(!clientSolrComputateCouverture.dejaInitialise) {
@@ -573,6 +606,62 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 		}
 	}
 
+	///////////////
+	// staticSet //
+	///////////////
+
+	public static Object staticSetPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		return staticSetSiteContexteFrFR(entiteVar,  requeteSite_, o);
+	}
+	public static Object staticSetSiteContexteFrFR(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		switch(entiteVar) {
+			default:
+				return null;
+		}
+	}
+
+	////////////////
+	// staticSolr //
+	////////////////
+
+	public static Object staticSolrPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		return staticSolrSiteContexteFrFR(entiteVar,  requeteSite_, o);
+	}
+	public static Object staticSolrSiteContexteFrFR(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		switch(entiteVar) {
+			default:
+				return null;
+		}
+	}
+
+	///////////////////
+	// staticSolrStr //
+	///////////////////
+
+	public static String staticSolrStrPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		return staticSolrStrSiteContexteFrFR(entiteVar,  requeteSite_, o);
+	}
+	public static String staticSolrStrSiteContexteFrFR(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		switch(entiteVar) {
+			default:
+				return null;
+		}
+	}
+
+	//////////////////
+	// staticSolrFq //
+	//////////////////
+
+	public static String staticSolrFqPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		return staticSolrFqSiteContexteFrFR(entiteVar,  requeteSite_, o);
+	}
+	public static String staticSolrFqSiteContexteFrFR(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		switch(entiteVar) {
+			default:
+				return null;
+		}
+	}
+
 	/////////////
 	// definir //
 	/////////////
@@ -585,8 +674,8 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 				if(o == null)
 					o = definirSiteContexteFrFR(v, val);
 				else if(o instanceof Cluster) {
-					Cluster cluster = (Cluster)o;
-					o = cluster.definirPourClasse(v, val);
+					Cluster oCluster = (Cluster)o;
+					o = oCluster.definirPourClasse(v, val);
 				}
 			}
 		}

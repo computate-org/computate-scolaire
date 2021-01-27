@@ -196,6 +196,11 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 			c.o(enrollment_.getAgeEnd());
 	}
 
+	protected void _blockCompleteName(Wrap<String> c) {
+		if(enrollment_ != null)
+			c.o(enrollment_.getBlockCompleteName());
+	}
+
 	protected void _blockStartTime(Wrap<LocalTime> c) {
 		if(enrollment_ != null)
 			c.o(enrollment_.getBlockStartTime());
@@ -209,6 +214,11 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 	protected void _blockPricePerMonth(Wrap<BigDecimal> c) {
 		if(enrollment_ != null)
 			c.o(enrollment_.getBlockPricePerMonth());
+	}
+
+	protected void _enrollmentGroupName(Wrap<String> c) {
+		if(enrollment_ != null)
+			c.o(enrollment_.getEnrollmentGroupName());
 	}
 
 	protected void _blockTotalPrice(Wrap<BigDecimal> c) {
@@ -498,4 +508,10 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 			o.append("new");
 		c.o(o.toString());
 	}
+
+	protected void _paymentGroups(List<SchoolPayment> l) {}
+
+	protected void _paymentPayments(List<SchoolPayment> l) {}
+
+	protected void _paymentNumber(Wrap<Integer> c) {}
 }

@@ -328,6 +328,7 @@ public class DesignDisplayGenPage extends DesignDisplayGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSearchYears("Page");
 			o.htmSearchPayments("Page");
+			o.htmSearchCurrentPayments("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmParentDesignKeys("Page");
@@ -365,6 +366,7 @@ public class DesignDisplayGenPage extends DesignDisplayGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSearchYears("POST");
 			o.htmSearchPayments("POST");
+			o.htmSearchCurrentPayments("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmParentDesignKeys("POST");
@@ -424,6 +426,7 @@ public class DesignDisplayGenPage extends DesignDisplayGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSearchYears("PUTCopy");
 			o.htmSearchPayments("PUTCopy");
+			o.htmSearchCurrentPayments("PUTCopy");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmParentDesignKeys("PUTCopy");
@@ -459,6 +462,7 @@ public class DesignDisplayGenPage extends DesignDisplayGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSearchYears("PATCH");
 			o.htmSearchPayments("PATCH");
+			o.htmSearchCurrentPayments("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmParentDesignKeys("PATCH");
@@ -496,6 +500,7 @@ public class DesignDisplayGenPage extends DesignDisplayGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmSearchYears("Search");
 			o.htmSearchPayments("Search");
+			o.htmSearchCurrentPayments("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmParentDesignKeys("Search");

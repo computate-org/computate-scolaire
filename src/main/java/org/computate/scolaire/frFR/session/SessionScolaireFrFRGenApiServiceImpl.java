@@ -1251,16 +1251,14 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 												if(d.succeeded()) {
 													ListeRecherche<SessionScolaire> listeSessionScolaire = d.result();
 
-													if(listeSessionScolaire.getQueryResponse().getResults().getNumFound() > 1) {
-														List<String> roles2 = Arrays.asList("SiteAdmin");
-														if(
-																!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles2)
-																&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles2)
-																) {
-															String message = String.format("rôles requis : " + String.join(", ", roles2));
-															LOGGER.error(message);
-															erreurSessionScolaire(requeteSite, null, Future.failedFuture(message));
-														}
+													List<String> roles2 = Arrays.asList("SiteAdmin");
+													if(listeSessionScolaire.getQueryResponse().getResults().getNumFound() > 1
+															&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles2)
+															&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles2)
+															) {
+														String message = String.format("rôles requis : " + String.join(", ", roles2));
+														LOGGER.error(message);
+														erreurSessionScolaire(requeteSite, gestionnaireEvenements, Future.failedFuture(message));
 													} else {
 
 														RequeteApi requeteApi = new RequeteApi();

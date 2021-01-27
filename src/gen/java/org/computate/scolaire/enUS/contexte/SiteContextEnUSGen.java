@@ -76,6 +76,9 @@ public abstract class SiteContextEnUSGen<DEV> extends Object {
 		this.vertx = vertx;
 		this.vertxWrap.alreadyInitialized = true;
 	}
+	public static Vertx staticSetVertx(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	protected SiteContextEnUS vertxInit() {
 		if(!vertxWrap.alreadyInitialized) {
 			_vertx(vertxWrap);
@@ -113,6 +116,9 @@ public abstract class SiteContextEnUSGen<DEV> extends Object {
 	public void setRouterFactory(OpenAPI3RouterFactory routerFactory) {
 		this.routerFactory = routerFactory;
 		this.routerFactoryWrap.alreadyInitialized = true;
+	}
+	public static OpenAPI3RouterFactory staticSetRouterFactory(SiteRequestEnUS siteRequest_, String o) {
+		return null;
 	}
 	protected SiteContextEnUS routerFactoryInit() {
 		if(!routerFactoryWrap.alreadyInitialized) {
@@ -152,6 +158,9 @@ public abstract class SiteContextEnUSGen<DEV> extends Object {
 		this.router = router;
 		this.routerWrap.alreadyInitialized = true;
 	}
+	public static Router staticSetRouter(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	protected SiteContextEnUS routerInit() {
 		if(!routerWrap.alreadyInitialized) {
 			_router(routerWrap);
@@ -189,6 +198,9 @@ public abstract class SiteContextEnUSGen<DEV> extends Object {
 	public void setAuthHandler(OAuth2AuthHandler authHandler) {
 		this.authHandler = authHandler;
 		this.authHandlerWrap.alreadyInitialized = true;
+	}
+	public static OAuth2AuthHandler staticSetAuthHandler(SiteRequestEnUS siteRequest_, String o) {
+		return null;
 	}
 	protected SiteContextEnUS authHandlerInit() {
 		if(!authHandlerWrap.alreadyInitialized) {
@@ -228,6 +240,9 @@ public abstract class SiteContextEnUSGen<DEV> extends Object {
 		this.authProvider = authProvider;
 		this.authProviderWrap.alreadyInitialized = true;
 	}
+	public static OAuth2Auth staticSetAuthProvider(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	protected SiteContextEnUS authProviderInit() {
 		if(!authProviderWrap.alreadyInitialized) {
 			_authProvider(authProviderWrap);
@@ -265,6 +280,9 @@ public abstract class SiteContextEnUSGen<DEV> extends Object {
 	public void setWorkerExecutor(WorkerExecutor workerExecutor) {
 		this.workerExecutor = workerExecutor;
 		this.workerExecutorWrap.alreadyInitialized = true;
+	}
+	public static WorkerExecutor staticSetWorkerExecutor(SiteRequestEnUS siteRequest_, String o) {
+		return null;
 	}
 	protected SiteContextEnUS workerExecutorInit() {
 		if(!workerExecutorWrap.alreadyInitialized) {
@@ -304,6 +322,9 @@ public abstract class SiteContextEnUSGen<DEV> extends Object {
 		this.siteConfig = siteConfig;
 		this.siteConfigWrap.alreadyInitialized = true;
 	}
+	public static SiteConfig staticSetSiteConfig(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	protected SiteContextEnUS siteConfigInit() {
 		if(!siteConfigWrap.alreadyInitialized) {
 			_siteConfig(siteConfig);
@@ -340,6 +361,9 @@ public abstract class SiteContextEnUSGen<DEV> extends Object {
 	public void setPgPool(PgPool pgPool) {
 		this.pgPool = pgPool;
 		this.pgPoolWrap.alreadyInitialized = true;
+	}
+	public static PgPool staticSetPgPool(SiteRequestEnUS siteRequest_, String o) {
+		return null;
 	}
 	protected SiteContextEnUS pgPoolInit() {
 		if(!pgPoolWrap.alreadyInitialized) {
@@ -379,6 +403,9 @@ public abstract class SiteContextEnUSGen<DEV> extends Object {
 		this.solrClient = solrClient;
 		this.solrClientWrap.alreadyInitialized = true;
 	}
+	public static HttpSolrClient staticSetSolrClient(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	protected SiteContextEnUS solrClientInit() {
 		if(!solrClientWrap.alreadyInitialized) {
 			_solrClient(solrClientWrap);
@@ -417,6 +444,9 @@ public abstract class SiteContextEnUSGen<DEV> extends Object {
 		this.mailClient = mailClient;
 		this.mailClientWrap.alreadyInitialized = true;
 	}
+	public static MailClient staticSetMailClient(SiteRequestEnUS siteRequest_, String o) {
+		return null;
+	}
 	protected SiteContextEnUS mailClientInit() {
 		if(!mailClientWrap.alreadyInitialized) {
 			_mailClient(mailClientWrap);
@@ -454,6 +484,9 @@ public abstract class SiteContextEnUSGen<DEV> extends Object {
 	public void setSolrClientComputate(HttpSolrClient solrClientComputate) {
 		this.solrClientComputate = solrClientComputate;
 		this.solrClientComputateWrap.alreadyInitialized = true;
+	}
+	public static HttpSolrClient staticSetSolrClientComputate(SiteRequestEnUS siteRequest_, String o) {
+		return null;
 	}
 	protected SiteContextEnUS solrClientComputateInit() {
 		if(!solrClientComputateWrap.alreadyInitialized) {
@@ -573,6 +606,62 @@ public abstract class SiteContextEnUSGen<DEV> extends Object {
 		}
 	}
 
+	///////////////
+	// staticSet //
+	///////////////
+
+	public static Object staticSetForClass(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		return staticSetSiteContextEnUS(entityVar,  siteRequest_, o);
+	}
+	public static Object staticSetSiteContextEnUS(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		switch(entityVar) {
+			default:
+				return null;
+		}
+	}
+
+	////////////////
+	// staticSolr //
+	////////////////
+
+	public static Object staticSolrForClass(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		return staticSolrSiteContextEnUS(entityVar,  siteRequest_, o);
+	}
+	public static Object staticSolrSiteContextEnUS(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		switch(entityVar) {
+			default:
+				return null;
+		}
+	}
+
+	///////////////////
+	// staticSolrStr //
+	///////////////////
+
+	public static String staticSolrStrForClass(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		return staticSolrStrSiteContextEnUS(entityVar,  siteRequest_, o);
+	}
+	public static String staticSolrStrSiteContextEnUS(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		switch(entityVar) {
+			default:
+				return null;
+		}
+	}
+
+	//////////////////
+	// staticSolrFq //
+	//////////////////
+
+	public static String staticSolrFqForClass(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		return staticSolrFqSiteContextEnUS(entityVar,  siteRequest_, o);
+	}
+	public static String staticSolrFqSiteContextEnUS(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		switch(entityVar) {
+			default:
+				return null;
+		}
+	}
+
 	/////////////
 	// define //
 	/////////////
@@ -585,8 +674,8 @@ public abstract class SiteContextEnUSGen<DEV> extends Object {
 				if(o == null)
 					o = defineSiteContextEnUS(v, val);
 				else if(o instanceof Cluster) {
-					Cluster cluster = (Cluster)o;
-					o = cluster.defineForClass(v, val);
+					Cluster oCluster = (Cluster)o;
+					o = oCluster.defineForClass(v, val);
 				}
 			}
 		}

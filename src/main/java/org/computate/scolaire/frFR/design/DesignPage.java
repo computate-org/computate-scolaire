@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.design;    
+package org.computate.scolaire.frFR.design;   
 
 import java.util.List;
 
@@ -347,13 +347,28 @@ public class DesignPage extends DesignPageGen<Cluster> {
 	 * Var.enUS: searchPayments
 	 * Definir: true
 	 * HtmlLigne: 5
-	 * HtmlCellule: 1
+	 * HtmlCellule: 2
 	 * NomAffichage.frFR: rechercher paiements
 	 * NomAffichage.enUS: search payments
 	 * Indexe: true
 	 * Stocke: true
 	 */                  
 	protected void _rechercherPaiements(Couverture<Boolean> c) {
+		c.o(false);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: searchCurrentPayments
+	 * Definir: true
+	 * HtmlLigne: 5
+	 * HtmlCellule: 3
+	 * NomAffichage.frFR: rechercher paiements actuel
+	 * NomAffichage.enUS: search charges due
+	 * Indexe: true
+	 * Stocke: true
+	 */                 
+	protected void _rechercherPaiementsActuel(Couverture<Boolean> c) {
 		c.o(false);
 	}
 

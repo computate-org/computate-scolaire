@@ -48,7 +48,7 @@ import org.apache.solr.common.SolrInputDocument;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
 /**	
- * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.design.DesignPage&fq=classeEtendGen_indexed_boolean:true">Trouver la classe searchPayments dans Solr. </a>
+ * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.design.DesignPage&fq=classeEtendGen_indexed_boolean:true">Trouver la classe searchCurrentPayments dans Solr. </a>
  * <br/>
  **/
 public abstract class DesignPageGen<DEV> extends Cluster {
@@ -2400,6 +2400,150 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		} g("div");
 	}
 
+	///////////////////////////////
+	// rechercherPaiementsActuel //
+	///////////////////////////////
+
+	/**	 L'entité rechercherPaiementsActuel
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected Boolean rechercherPaiementsActuel;
+	@JsonIgnore
+	public Couverture<Boolean> rechercherPaiementsActuelCouverture = new Couverture<Boolean>().p(this).c(Boolean.class).var("rechercherPaiementsActuel").o(rechercherPaiementsActuel);
+
+	/**	<br/> L'entité rechercherPaiementsActuel
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.design.DesignPage&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:rechercherPaiementsActuel">Trouver l'entité rechercherPaiementsActuel dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _rechercherPaiementsActuel(Couverture<Boolean> c);
+
+	public Boolean getRechercherPaiementsActuel() {
+		return rechercherPaiementsActuel;
+	}
+
+	public void setRechercherPaiementsActuel(Boolean rechercherPaiementsActuel) {
+		this.rechercherPaiementsActuel = rechercherPaiementsActuel;
+		this.rechercherPaiementsActuelCouverture.dejaInitialise = true;
+	}
+	public void setRechercherPaiementsActuel(String o) {
+		this.rechercherPaiementsActuel = DesignPage.staticSetRechercherPaiementsActuel(requeteSite_, o);
+		this.rechercherPaiementsActuelCouverture.dejaInitialise = true;
+	}
+	public static Boolean staticSetRechercherPaiementsActuel(RequeteSiteFrFR requeteSite_, String o) {
+		return Boolean.parseBoolean(o);
+	}
+	protected DesignPage rechercherPaiementsActuelInit() {
+		if(!rechercherPaiementsActuelCouverture.dejaInitialise) {
+			_rechercherPaiementsActuel(rechercherPaiementsActuelCouverture);
+			if(rechercherPaiementsActuel == null)
+				setRechercherPaiementsActuel(rechercherPaiementsActuelCouverture.o);
+		}
+		rechercherPaiementsActuelCouverture.dejaInitialise(true);
+		return (DesignPage)this;
+	}
+
+	public static Boolean staticSolrRechercherPaiementsActuel(RequeteSiteFrFR requeteSite_, Boolean o) {
+		return o;
+	}
+
+	public static String staticSolrStrRechercherPaiementsActuel(RequeteSiteFrFR requeteSite_, Boolean o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqRechercherPaiementsActuel(RequeteSiteFrFR requeteSite_, String o) {
+		return DesignPage.staticSolrStrRechercherPaiementsActuel(requeteSite_, DesignPage.staticSolrRechercherPaiementsActuel(requeteSite_, DesignPage.staticSetRechercherPaiementsActuel(requeteSite_, o)));
+	}
+
+	public Boolean solrRechercherPaiementsActuel() {
+		return DesignPage.staticSolrRechercherPaiementsActuel(requeteSite_, rechercherPaiementsActuel);
+	}
+
+	public String strRechercherPaiementsActuel() {
+		return rechercherPaiementsActuel == null ? "" : rechercherPaiementsActuel.toString();
+	}
+
+	public String jsonRechercherPaiementsActuel() {
+		return rechercherPaiementsActuel == null ? "" : rechercherPaiementsActuel.toString();
+	}
+
+	public String nomAffichageRechercherPaiementsActuel() {
+		return "rechercher paiements actuel";
+	}
+
+	public String htmTooltipRechercherPaiementsActuel() {
+		return null;
+	}
+
+	public String htmRechercherPaiementsActuel() {
+		return rechercherPaiementsActuel == null ? "" : StringEscapeUtils.escapeHtml4(strRechercherPaiementsActuel());
+	}
+
+	public void inputRechercherPaiementsActuel(String classeApiMethodeMethode) {
+		DesignPage s = (DesignPage)this;
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+				) {
+			if("Page".equals(classeApiMethodeMethode)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classeApiMethodeMethode, "_rechercherPaiementsActuel")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classeApiMethodeMethode, "_rechercherPaiementsActuel");
+			}
+			if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+				a("class", "setRechercherPaiementsActuel classDesignPage inputDesignPage", pk, "RechercherPaiementsActuel w3-input w3-border ");
+				a("name", "setRechercherPaiementsActuel");
+			} else {
+				a("class", "valeurRechercherPaiementsActuel classDesignPage inputDesignPage", pk, "RechercherPaiementsActuel w3-input w3-border ");
+				a("name", "rechercherPaiementsActuel");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setRechercherPaiementsActuel', $(this).prop('checked'), function() { ajouterLueur($('#", classeApiMethodeMethode, "_rechercherPaiementsActuel')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_rechercherPaiementsActuel')); }); ");
+			}
+			if("Page".equals(classeApiMethodeMethode)) {
+				if(getRechercherPaiementsActuel() != null && getRechercherPaiementsActuel())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
+
+		} else {
+			e("span").a("class", "varDesignPage", pk, "RechercherPaiementsActuel ").f().sx(htmRechercherPaiementsActuel()).g("span");
+		}
+	}
+
+	public void htmRechercherPaiementsActuel(String classeApiMethodeMethode) {
+		DesignPage s = (DesignPage)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "DesignPageRechercherPaiementsActuel").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-khaki ").f();
+							e("label").a("for", classeApiMethodeMethode, "_rechercherPaiementsActuel").a("class", "").f().sx("rechercher paiements actuel").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputRechercherPaiementsActuel(classeApiMethodeMethode);
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
 	//////////////
 	// initLoin //
 	//////////////
@@ -2437,6 +2581,7 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		designInscriptionTriNomEnfantInit();
 		rechercherAnneesInit();
 		rechercherPaiementsInit();
+		rechercherPaiementsActuelInit();
 	}
 
 	@Override public void initLoinPourClasse(RequeteSiteFrFR requeteSite_) {
@@ -2507,6 +2652,8 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 				return oDesignPage.rechercherAnnees;
 			case "rechercherPaiements":
 				return oDesignPage.rechercherPaiements;
+			case "rechercherPaiementsActuel":
+				return oDesignPage.rechercherPaiementsActuel;
 			default:
 				return super.obtenirCluster(var);
 		}
@@ -2593,6 +2740,8 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 			return DesignPage.staticSetRechercherAnnees(requeteSite_, o);
 		case "rechercherPaiements":
 			return DesignPage.staticSetRechercherPaiements(requeteSite_, o);
+		case "rechercherPaiementsActuel":
+			return DesignPage.staticSetRechercherPaiementsActuel(requeteSite_, o);
 			default:
 				return Cluster.staticSetCluster(entiteVar,  requeteSite_, o);
 		}
@@ -2639,6 +2788,8 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 			return DesignPage.staticSolrRechercherAnnees(requeteSite_, (Boolean)o);
 		case "rechercherPaiements":
 			return DesignPage.staticSolrRechercherPaiements(requeteSite_, (Boolean)o);
+		case "rechercherPaiementsActuel":
+			return DesignPage.staticSolrRechercherPaiementsActuel(requeteSite_, (Boolean)o);
 			default:
 				return Cluster.staticSolrCluster(entiteVar,  requeteSite_, o);
 		}
@@ -2685,6 +2836,8 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 			return DesignPage.staticSolrStrRechercherAnnees(requeteSite_, (Boolean)o);
 		case "rechercherPaiements":
 			return DesignPage.staticSolrStrRechercherPaiements(requeteSite_, (Boolean)o);
+		case "rechercherPaiementsActuel":
+			return DesignPage.staticSolrStrRechercherPaiementsActuel(requeteSite_, (Boolean)o);
 			default:
 				return Cluster.staticSolrStrCluster(entiteVar,  requeteSite_, o);
 		}
@@ -2731,6 +2884,8 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 			return DesignPage.staticSolrFqRechercherAnnees(requeteSite_, o);
 		case "rechercherPaiements":
 			return DesignPage.staticSolrFqRechercherPaiements(requeteSite_, o);
+		case "rechercherPaiementsActuel":
+			return DesignPage.staticSolrFqRechercherPaiementsActuel(requeteSite_, o);
 			default:
 				return Cluster.staticSolrFqCluster(entiteVar,  requeteSite_, o);
 		}
@@ -2815,6 +2970,11 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 			case "rechercherPaiements":
 				if(val != null)
 					setRechercherPaiements(val);
+				sauvegardes.add(var);
+				return val;
+			case "rechercherPaiementsActuel":
+				if(val != null)
+					setRechercherPaiementsActuel(val);
 				sauvegardes.add(var);
 				return val;
 			default:
@@ -2922,6 +3082,12 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 				Boolean rechercherPaiements = (Boolean)solrDocument.get("rechercherPaiements_stored_boolean");
 				if(rechercherPaiements != null)
 					oDesignPage.setRechercherPaiements(rechercherPaiements);
+			}
+
+			if(sauvegardes.contains("rechercherPaiementsActuel")) {
+				Boolean rechercherPaiementsActuel = (Boolean)solrDocument.get("rechercherPaiementsActuel_stored_boolean");
+				if(rechercherPaiementsActuel != null)
+					oDesignPage.setRechercherPaiementsActuel(rechercherPaiementsActuel);
 			}
 		}
 
@@ -3066,6 +3232,10 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 			document.addField("rechercherPaiements_indexed_boolean", rechercherPaiements);
 			document.addField("rechercherPaiements_stored_boolean", rechercherPaiements);
 		}
+		if(rechercherPaiementsActuel != null) {
+			document.addField("rechercherPaiementsActuel_indexed_boolean", rechercherPaiementsActuel);
+			document.addField("rechercherPaiementsActuel_stored_boolean", rechercherPaiementsActuel);
+		}
 		super.indexerCluster(document);
 
 	}
@@ -3121,6 +3291,8 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 				return "rechercherAnnees_indexed_boolean";
 			case "rechercherPaiements":
 				return "rechercherPaiements_indexed_boolean";
+			case "rechercherPaiementsActuel":
+				return "rechercherPaiementsActuel_indexed_boolean";
 			default:
 				return Cluster.varIndexeCluster(entiteVar);
 		}
@@ -3214,6 +3386,10 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		if(rechercherPaiements != null)
 			oDesignPage.setRechercherPaiements(rechercherPaiements);
 
+		Boolean rechercherPaiementsActuel = (Boolean)solrDocument.get("rechercherPaiementsActuel_stored_boolean");
+		if(rechercherPaiementsActuel != null)
+			oDesignPage.setRechercherPaiementsActuel(rechercherPaiementsActuel);
+
 		super.stockerCluster(solrDocument);
 	}
 
@@ -3258,6 +3434,8 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 				requeteApi.addVars("rechercherAnnees");
 			if(!Objects.equals(rechercherPaiements, original.getRechercherPaiements()))
 				requeteApi.addVars("rechercherPaiements");
+			if(!Objects.equals(rechercherPaiementsActuel, original.getRechercherPaiementsActuel()))
+				requeteApi.addVars("rechercherPaiementsActuel");
 			super.requeteApiCluster();
 		}
 	}
@@ -3267,7 +3445,7 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), designPageCle, designEnfantCles, designParentCles, partHtmlCles, designPageNomComplet, designCache, designAdmin, designIgnorerNomEnfantVide, designIgnorerPaiementsPasEnSouffrance, designIgnorerPaiementsEnSouffrance, designFiltrerInscriptionCle, designInscriptionTriMoisJourDeNaissance, designInscriptionTriNomGroupe, designInscriptionTriNomEnfant, rechercherAnnees, rechercherPaiements);
+		return Objects.hash(super.hashCode(), designPageCle, designEnfantCles, designParentCles, partHtmlCles, designPageNomComplet, designCache, designAdmin, designIgnorerNomEnfantVide, designIgnorerPaiementsPasEnSouffrance, designIgnorerPaiementsEnSouffrance, designFiltrerInscriptionCle, designInscriptionTriMoisJourDeNaissance, designInscriptionTriNomGroupe, designInscriptionTriNomEnfant, rechercherAnnees, rechercherPaiements, rechercherPaiementsActuel);
 	}
 
 	////////////
@@ -3296,7 +3474,8 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 				&& Objects.equals( designInscriptionTriNomGroupe, that.designInscriptionTriNomGroupe )
 				&& Objects.equals( designInscriptionTriNomEnfant, that.designInscriptionTriNomEnfant )
 				&& Objects.equals( rechercherAnnees, that.rechercherAnnees )
-				&& Objects.equals( rechercherPaiements, that.rechercherPaiements );
+				&& Objects.equals( rechercherPaiements, that.rechercherPaiements )
+				&& Objects.equals( rechercherPaiementsActuel, that.rechercherPaiementsActuel );
 	}
 
 	//////////////
@@ -3323,6 +3502,7 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		sb.append( ", designInscriptionTriNomEnfant: " ).append(designInscriptionTriNomEnfant);
 		sb.append( ", rechercherAnnees: " ).append(rechercherAnnees);
 		sb.append( ", rechercherPaiements: " ).append(rechercherPaiements);
+		sb.append( ", rechercherPaiementsActuel: " ).append(rechercherPaiementsActuel);
 		sb.append(" }");
 		return sb.toString();
 	}
