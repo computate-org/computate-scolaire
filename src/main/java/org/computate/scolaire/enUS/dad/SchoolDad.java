@@ -48,7 +48,7 @@ public class SchoolDad extends SchoolDadGen<Cluster> {
 
 	protected void _enrollmentSearch(SearchList<SchoolEnrollment> l) {
 		l.setQuery("*:*");
-		l.addFilterQuery("dadKey_indexed_long:" + pk);
+		l.addFilterQuery("dadKeys_indexed_longs:" + pk);
 		l.setC(SchoolEnrollment.class);
 		l.setStore(true);
 		l.setFacet(true);

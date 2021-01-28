@@ -48,7 +48,7 @@ public class SchoolGuardian extends SchoolGuardianGen<Cluster> {
 
 	protected void _enrollmentSearch(SearchList<SchoolEnrollment> l) {
 		l.setQuery("*:*");
-		l.addFilterQuery("guardianKey_indexed_long:" + pk);
+		l.addFilterQuery("guardianKeys_indexed_longs:" + pk);
 		l.setC(SchoolEnrollment.class);
 		l.setStore(true);
 		l.setFacet(true);

@@ -45,7 +45,7 @@ public class SchoolMom extends SchoolMomGen<Cluster> {
 
 	protected void _enrollmentSearch(SearchList<SchoolEnrollment> l) {
 		l.setQuery("*:*");
-		l.addFilterQuery("momKey_indexed_long:" + pk);
+		l.addFilterQuery("momKeys_indexed_longs:" + pk);
 		l.setC(SchoolEnrollment.class);
 		l.setStore(true);
 		l.setFacet(true);

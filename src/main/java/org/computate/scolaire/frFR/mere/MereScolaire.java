@@ -139,7 +139,7 @@ public class MereScolaire extends MereScolaireGen<Cluster> {
 	 */
 	protected void _inscriptionRecherche(ListeRecherche<InscriptionScolaire> l) {
 		l.setQuery("*:*");
-		l.addFilterQuery("mereCle_indexed_long:" + pk);
+		l.addFilterQuery("mereCles_indexed_longs:" + pk);
 		l.setC(InscriptionScolaire.class);
 		l.setStocker(true);
 		l.setFacet(true);

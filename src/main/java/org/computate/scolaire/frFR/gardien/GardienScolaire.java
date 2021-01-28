@@ -142,7 +142,7 @@ public class GardienScolaire extends GardienScolaireGen<Cluster> {
 	 */
 	protected void _inscriptionRecherche(ListeRecherche<InscriptionScolaire> l) {
 		l.setQuery("*:*");
-		l.addFilterQuery("gardienCle_indexed_long:" + pk);
+		l.addFilterQuery("gardienCles_indexed_longs:" + pk);
 		l.setC(InscriptionScolaire.class);
 		l.setStocker(true);
 		l.setFacet(true);

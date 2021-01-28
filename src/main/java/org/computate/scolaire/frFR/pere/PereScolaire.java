@@ -68,7 +68,7 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * Role.enUS: SiteManager
  * RoleSession: true
  * RoleUtilisateur: true
-*/  
+*/ 
 public class PereScolaire extends PereScolaireGen<Cluster> {
 
 	/**
@@ -142,7 +142,7 @@ public class PereScolaire extends PereScolaireGen<Cluster> {
 	 */
 	protected void _inscriptionRecherche(ListeRecherche<InscriptionScolaire> l) {
 		l.setQuery("*:*");
-		l.addFilterQuery("pereCle_indexed_long:" + pk);
+		l.addFilterQuery("pereCles_indexed_longs:" + pk);
 		l.setC(InscriptionScolaire.class);
 		l.setStocker(true);
 		l.setFacet(true);

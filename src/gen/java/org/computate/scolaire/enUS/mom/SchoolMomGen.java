@@ -308,7 +308,6 @@ public abstract class SchoolMomGen<DEV> extends Cluster {
 				fg();
 
 		} else {
-			e("span").a("class", "varSchoolMom", pk, "EnrollmentKeys ").f().sx(htmEnrollmentKeys()).g("span");
 		}
 	}
 

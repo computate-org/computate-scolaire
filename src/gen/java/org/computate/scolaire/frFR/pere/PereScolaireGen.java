@@ -309,7 +309,6 @@ public abstract class PereScolaireGen<DEV> extends Cluster {
 				fg();
 
 		} else {
-			e("span").a("class", "varPereScolaire", pk, "InscriptionCles ").f().sx(htmInscriptionCles()).g("span");
 		}
 	}
 
