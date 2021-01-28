@@ -1171,7 +1171,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 								executeurTravailleur.executeBlocking(
 									blockingCodeHandler -> {
 										try {
-											recherchePartHtml(requeteSite, false, true, "/api/part-html/copie", "PUTCopie", d -> {
+											recherchePartHtml(requeteSite, false, true, true, "/api/part-html/copie", "PUTCopie", d -> {
 												if(d.succeeded()) {
 													ListeRecherche<PartHtml> listePartHtml = d.result();
 													RequeteApi requeteApi = new RequeteApi();
@@ -1846,7 +1846,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 								executeurTravailleur.executeBlocking(
 									blockingCodeHandler -> {
 										try {
-											recherchePartHtml(requeteSite, false, true, "/api/part-html", "PATCH", d -> {
+											recherchePartHtml(requeteSite, false, true, true, "/api/part-html", "PATCH", d -> {
 												if(d.succeeded()) {
 													ListeRecherche<PartHtml> listePartHtml = d.result();
 
@@ -3157,7 +3157,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 
 				utilisateurPartHtml(requeteSite, b -> {
 					if(b.succeeded()) {
-						recherchePartHtml(requeteSite, false, true, "/api/part-html/{id}", "GET", c -> {
+						recherchePartHtml(requeteSite, false, true, false, "/api/part-html/{id}", "GET", c -> {
 							if(c.succeeded()) {
 								ListeRecherche<PartHtml> listePartHtml = c.result();
 								getPartHtmlReponse(listePartHtml, d -> {
@@ -3247,7 +3247,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 
 				utilisateurPartHtml(requeteSite, b -> {
 					if(b.succeeded()) {
-						recherchePartHtml(requeteSite, false, true, "/api/part-html", "Recherche", c -> {
+						recherchePartHtml(requeteSite, false, true, false, "/api/part-html", "Recherche", c -> {
 							if(c.succeeded()) {
 								ListeRecherche<PartHtml> listePartHtml = c.result();
 								recherchePartHtmlReponse(listePartHtml, d -> {
@@ -3382,7 +3382,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 
 				utilisateurPartHtml(requeteSite, b -> {
 					if(b.succeeded()) {
-						recherchePartHtml(requeteSite, false, true, "/part-html", "PageRecherche", c -> {
+						recherchePartHtml(requeteSite, false, true, false, "/part-html", "PageRecherche", c -> {
 							if(c.succeeded()) {
 								ListeRecherche<PartHtml> listePartHtml = c.result();
 								pagerecherchePartHtmlReponse(listePartHtml, d -> {
@@ -4022,7 +4022,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 		}
 	}
 
-	public void recherchePartHtml(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, String uri, String apiMethode, Handler<AsyncResult<ListeRecherche<PartHtml>>> gestionnaireEvenements) {
+	public void recherchePartHtml(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, Boolean modifier, String uri, String apiMethode, Handler<AsyncResult<ListeRecherche<PartHtml>>> gestionnaireEvenements) {
 		try {
 			OperationRequest operationRequete = requeteSite.getOperationRequete();
 			String entiteListeStr = requeteSite.getOperationRequete().getParams().getJsonObject("query").getString("fl");

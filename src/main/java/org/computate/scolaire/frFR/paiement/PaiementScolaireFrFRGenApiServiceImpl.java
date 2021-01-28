@@ -1006,7 +1006,7 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 								executeurTravailleur.executeBlocking(
 									blockingCodeHandler -> {
 										try {
-											recherchePaiementScolaire(requeteSite, false, true, "/api/paiement/copie", "PUTCopie", d -> {
+											recherchePaiementScolaire(requeteSite, false, true, true, "/api/paiement/copie", "PUTCopie", d -> {
 												if(d.succeeded()) {
 													ListeRecherche<PaiementScolaire> listePaiementScolaire = d.result();
 													RequeteApi requeteApi = new RequeteApi();
@@ -1557,7 +1557,7 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 								executeurTravailleur.executeBlocking(
 									blockingCodeHandler -> {
 										try {
-											recherchePaiementScolaire(requeteSite, false, true, "/api/paiement", "PATCH", d -> {
+											recherchePaiementScolaire(requeteSite, false, true, true, "/api/paiement", "PATCH", d -> {
 												if(d.succeeded()) {
 													ListeRecherche<PaiementScolaire> listePaiementScolaire = d.result();
 
@@ -2558,7 +2558,7 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 			{
 				utilisateurPaiementScolaire(requeteSite, b -> {
 					if(b.succeeded()) {
-						recherchePaiementScolaire(requeteSite, false, true, "/api/paiement/{id}", "GET", c -> {
+						recherchePaiementScolaire(requeteSite, false, true, false, "/api/paiement/{id}", "GET", c -> {
 							if(c.succeeded()) {
 								ListeRecherche<PaiementScolaire> listePaiementScolaire = c.result();
 								getPaiementScolaireReponse(listePaiementScolaire, d -> {
@@ -2628,7 +2628,7 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 			{
 				utilisateurPaiementScolaire(requeteSite, b -> {
 					if(b.succeeded()) {
-						recherchePaiementScolaire(requeteSite, false, true, "/api/paiement", "Recherche", c -> {
+						recherchePaiementScolaire(requeteSite, false, true, false, "/api/paiement", "Recherche", c -> {
 							if(c.succeeded()) {
 								ListeRecherche<PaiementScolaire> listePaiementScolaire = c.result();
 								recherchePaiementScolaireReponse(listePaiementScolaire, d -> {
@@ -2743,7 +2743,7 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 			{
 				utilisateurPaiementScolaire(requeteSite, b -> {
 					if(b.succeeded()) {
-						recherchePaiementScolaire(requeteSite, false, true, "/paiement", "PageRecherche", c -> {
+						recherchePaiementScolaire(requeteSite, false, true, false, "/paiement", "PageRecherche", c -> {
 							if(c.succeeded()) {
 								ListeRecherche<PaiementScolaire> listePaiementScolaire = c.result();
 								pagerecherchePaiementScolaireReponse(listePaiementScolaire, d -> {
@@ -3383,7 +3383,7 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 		}
 	}
 
-	public void recherchePaiementScolaire(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, String uri, String apiMethode, Handler<AsyncResult<ListeRecherche<PaiementScolaire>>> gestionnaireEvenements) {
+	public void recherchePaiementScolaire(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, Boolean modifier, String uri, String apiMethode, Handler<AsyncResult<ListeRecherche<PaiementScolaire>>> gestionnaireEvenements) {
 		try {
 			OperationRequest operationRequete = requeteSite.getOperationRequete();
 			String entiteListeStr = requeteSite.getOperationRequete().getParams().getJsonObject("query").getString("fl");
@@ -3411,9 +3411,12 @@ public class PaiementScolaireFrFRGenApiServiceImpl implements PaiementScolaireFr
 			}
 
 			List<String> roles = Arrays.asList("SiteAdmin");
+			List<String> roleLires = Arrays.asList("SiteManager");
 			if(
 					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
 					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+					&& (modifier || !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roleLires))
+					&& (modifier || !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roleLires))
 					) {
 				listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionIdAvant()).orElse("-----"))
 						+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(0L));

@@ -888,7 +888,7 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 								executeurTravailleur.executeBlocking(
 									blockingCodeHandler -> {
 										try {
-											recherchePereScolaire(requeteSite, false, true, "/api/pere/copie", "PUTCopie", d -> {
+											recherchePereScolaire(requeteSite, false, true, true, "/api/pere/copie", "PUTCopie", d -> {
 												if(d.succeeded()) {
 													ListeRecherche<PereScolaire> listePereScolaire = d.result();
 													RequeteApi requeteApi = new RequeteApi();
@@ -1325,7 +1325,7 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 								executeurTravailleur.executeBlocking(
 									blockingCodeHandler -> {
 										try {
-											recherchePereScolaire(requeteSite, false, true, "/api/pere", "PATCH", d -> {
+											recherchePereScolaire(requeteSite, false, true, true, "/api/pere", "PATCH", d -> {
 												if(d.succeeded()) {
 													ListeRecherche<PereScolaire> listePereScolaire = d.result();
 
@@ -2182,7 +2182,7 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 			{
 				utilisateurPereScolaire(requeteSite, b -> {
 					if(b.succeeded()) {
-						recherchePereScolaire(requeteSite, false, true, "/api/pere/{id}", "GET", c -> {
+						recherchePereScolaire(requeteSite, false, true, false, "/api/pere/{id}", "GET", c -> {
 							if(c.succeeded()) {
 								ListeRecherche<PereScolaire> listePereScolaire = c.result();
 								getPereScolaireReponse(listePereScolaire, d -> {
@@ -2252,7 +2252,7 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 			{
 				utilisateurPereScolaire(requeteSite, b -> {
 					if(b.succeeded()) {
-						recherchePereScolaire(requeteSite, false, true, "/api/pere", "Recherche", c -> {
+						recherchePereScolaire(requeteSite, false, true, false, "/api/pere", "Recherche", c -> {
 							if(c.succeeded()) {
 								ListeRecherche<PereScolaire> listePereScolaire = c.result();
 								recherchePereScolaireReponse(listePereScolaire, d -> {
@@ -2362,7 +2362,7 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 			{
 				utilisateurPereScolaire(requeteSite, b -> {
 					if(b.succeeded()) {
-						recherchePereScolaire(requeteSite, false, true, "/api/admin/pere", "RechercheAdmin", c -> {
+						recherchePereScolaire(requeteSite, false, true, false, "/api/admin/pere", "RechercheAdmin", c -> {
 							if(c.succeeded()) {
 								ListeRecherche<PereScolaire> listePereScolaire = c.result();
 								rechercheadminPereScolaireReponse(listePereScolaire, d -> {
@@ -2477,7 +2477,7 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 			{
 				utilisateurPereScolaire(requeteSite, b -> {
 					if(b.succeeded()) {
-						recherchePereScolaire(requeteSite, false, true, "/pere", "PageRecherche", c -> {
+						recherchePereScolaire(requeteSite, false, true, false, "/pere", "PageRecherche", c -> {
 							if(c.succeeded()) {
 								ListeRecherche<PereScolaire> listePereScolaire = c.result();
 								pagerecherchePereScolaireReponse(listePereScolaire, d -> {
@@ -3117,7 +3117,7 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 		}
 	}
 
-	public void recherchePereScolaire(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, String uri, String apiMethode, Handler<AsyncResult<ListeRecherche<PereScolaire>>> gestionnaireEvenements) {
+	public void recherchePereScolaire(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, Boolean modifier, String uri, String apiMethode, Handler<AsyncResult<ListeRecherche<PereScolaire>>> gestionnaireEvenements) {
 		try {
 			OperationRequest operationRequete = requeteSite.getOperationRequete();
 			String entiteListeStr = requeteSite.getOperationRequete().getParams().getJsonObject("query").getString("fl");
@@ -3138,9 +3138,12 @@ public class PereScolaireFrFRGenApiServiceImpl implements PereScolaireFrFRGenApi
 			}
 
 			List<String> roles = Arrays.asList("SiteManager");
+			List<String> roleLires = Arrays.asList("");
 			if(
 					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
 					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+					&& (modifier || !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roleLires))
+					&& (modifier || !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roleLires))
 					) {
 				listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionIdAvant()).orElse("-----"))
 						+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(0L));

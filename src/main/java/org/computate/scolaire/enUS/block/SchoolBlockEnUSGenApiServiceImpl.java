@@ -959,7 +959,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 								workerExecutor.executeBlocking(
 									blockingCodeHandler -> {
 										try {
-											aSearchSchoolBlock(siteRequest, false, true, "/api/block/copy", "PUTCopy", d -> {
+											aSearchSchoolBlock(siteRequest, false, true, true, "/api/block/copy", "PUTCopy", d -> {
 												if(d.succeeded()) {
 													SearchList<SchoolBlock> listSchoolBlock = d.result();
 													ApiRequest apiRequest = new ApiRequest();
@@ -1403,7 +1403,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 								workerExecutor.executeBlocking(
 									blockingCodeHandler -> {
 										try {
-											aSearchSchoolBlock(siteRequest, false, true, "/api/block", "PATCH", d -> {
+											aSearchSchoolBlock(siteRequest, false, true, true, "/api/block", "PATCH", d -> {
 												if(d.succeeded()) {
 													SearchList<SchoolBlock> listSchoolBlock = d.result();
 
@@ -2286,7 +2286,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 
 				userSchoolBlock(siteRequest, b -> {
 					if(b.succeeded()) {
-						aSearchSchoolBlock(siteRequest, false, true, "/api/block/{id}", "GET", c -> {
+						aSearchSchoolBlock(siteRequest, false, true, false, "/api/block/{id}", "GET", c -> {
 							if(c.succeeded()) {
 								SearchList<SchoolBlock> listSchoolBlock = c.result();
 								getSchoolBlockResponse(listSchoolBlock, d -> {
@@ -2376,7 +2376,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 
 				userSchoolBlock(siteRequest, b -> {
 					if(b.succeeded()) {
-						aSearchSchoolBlock(siteRequest, false, true, "/api/block", "Search", c -> {
+						aSearchSchoolBlock(siteRequest, false, true, false, "/api/block", "Search", c -> {
 							if(c.succeeded()) {
 								SearchList<SchoolBlock> listSchoolBlock = c.result();
 								searchSchoolBlockResponse(listSchoolBlock, d -> {
@@ -2511,7 +2511,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 
 				userSchoolBlock(siteRequest, b -> {
 					if(b.succeeded()) {
-						aSearchSchoolBlock(siteRequest, false, true, "/block", "SearchPage", c -> {
+						aSearchSchoolBlock(siteRequest, false, true, false, "/block", "SearchPage", c -> {
 							if(c.succeeded()) {
 								SearchList<SchoolBlock> listSchoolBlock = c.result();
 								searchpageSchoolBlockResponse(listSchoolBlock, d -> {
@@ -3151,7 +3151,7 @@ public class SchoolBlockEnUSGenApiServiceImpl implements SchoolBlockEnUSGenApiSe
 		}
 	}
 
-	public void aSearchSchoolBlock(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, String uri, String apiMethod, Handler<AsyncResult<SearchList<SchoolBlock>>> eventHandler) {
+	public void aSearchSchoolBlock(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, Boolean modify, String uri, String apiMethod, Handler<AsyncResult<SearchList<SchoolBlock>>> eventHandler) {
 		try {
 			OperationRequest operationRequest = siteRequest.getOperationRequest();
 			String entityListStr = siteRequest.getOperationRequest().getParams().getJsonObject("query").getString("fl");

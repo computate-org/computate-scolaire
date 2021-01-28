@@ -1557,7 +1557,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								workerExecutor.executeBlocking(
 									blockingCodeHandler -> {
 										try {
-											aSearchSchoolEnrollment(siteRequest, false, true, "/api/enrollment/copy", "PUTCopy", d -> {
+											aSearchSchoolEnrollment(siteRequest, false, true, true, "/api/enrollment/copy", "PUTCopy", d -> {
 												if(d.succeeded()) {
 													SearchList<SchoolEnrollment> listSchoolEnrollment = d.result();
 													ApiRequest apiRequest = new ApiRequest();
@@ -2550,7 +2550,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								workerExecutor.executeBlocking(
 									blockingCodeHandler -> {
 										try {
-											aSearchSchoolEnrollment(siteRequest, false, true, "/api/enrollment", "PATCH", d -> {
+											aSearchSchoolEnrollment(siteRequest, false, true, true, "/api/enrollment", "PATCH", d -> {
 												if(d.succeeded()) {
 													SearchList<SchoolEnrollment> listSchoolEnrollment = d.result();
 
@@ -3755,6 +3755,15 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+								List<String> roles = Arrays.asList("SiteAdmin", "SiteAdmin");
+								if(
+										!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
+										&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
+										) {
+									searchList.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionIdBefore()).orElse("-----"))
+											+ " OR userKeys_indexed_longs:" + Optional.ofNullable(siteRequest.getUserKey()).orElse(0L));
+								}
 								searchList.initDeepSearchList(siteRequest);
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !o.getPaymentKeys().contains(l2)) {
@@ -3790,6 +3799,15 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 									searchList.addFilterQuery("deleted_indexed_boolean:false");
 									searchList.addFilterQuery("archived_indexed_boolean:false");
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+									List<String> roles = Arrays.asList("SiteAdmin", "SiteAdmin");
+									if(
+											!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
+											&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
+											) {
+										searchList.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionIdBefore()).orElse("-----"))
+												+ " OR userKeys_indexed_longs:" + Optional.ofNullable(siteRequest.getUserKey()).orElse(0L));
+									}
 									searchList.initDeepSearchList(siteRequest);
 									Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 									if(l2 != null && !o.getPaymentKeys().contains(l2)) {
@@ -3827,6 +3845,15 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 									searchList.addFilterQuery("deleted_indexed_boolean:false");
 									searchList.addFilterQuery("archived_indexed_boolean:false");
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+									List<String> roles = Arrays.asList("SiteAdmin", "SiteAdmin");
+									if(
+											!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
+											&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
+											) {
+										searchList.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionIdBefore()).orElse("-----"))
+												+ " OR userKeys_indexed_longs:" + Optional.ofNullable(siteRequest.getUserKey()).orElse(0L));
+									}
 									searchList.initDeepSearchList(siteRequest);
 									Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 									if(l2 != null)
@@ -3880,6 +3907,15 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+								List<String> roles = Arrays.asList("SiteAdmin", "SiteAdmin");
+								if(
+										!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
+										&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
+										) {
+									searchList.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionIdBefore()).orElse("-----"))
+											+ " OR userKeys_indexed_longs:" + Optional.ofNullable(siteRequest.getUserKey()).orElse(0L));
+								}
 								searchList.initDeepSearchList(siteRequest);
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && o.getPaymentKeys().contains(l2)) {
@@ -3914,7 +3950,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 
-								List<String> roles = Arrays.asList("SiteAdmin", "SiteAdmin", "SiteAdmin", "SiteAdmin");
+								List<String> roles = Arrays.asList("SiteManager", "SiteManager");
 								if(
 										!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
 										&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
@@ -3958,7 +3994,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 									searchList.addFilterQuery("archived_indexed_boolean:false");
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 
-									List<String> roles = Arrays.asList("SiteAdmin", "SiteAdmin", "SiteAdmin", "SiteAdmin");
+									List<String> roles = Arrays.asList("SiteManager", "SiteManager");
 									if(
 											!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
 											&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
@@ -4004,7 +4040,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 									searchList.addFilterQuery("archived_indexed_boolean:false");
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 
-									List<String> roles = Arrays.asList("SiteAdmin", "SiteAdmin", "SiteAdmin", "SiteAdmin");
+									List<String> roles = Arrays.asList("SiteManager", "SiteManager");
 									if(
 											!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
 											&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
@@ -4066,7 +4102,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 
-								List<String> roles = Arrays.asList("SiteAdmin", "SiteAdmin", "SiteAdmin", "SiteAdmin");
+								List<String> roles = Arrays.asList("SiteManager", "SiteManager");
 								if(
 										!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
 										&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
@@ -5383,7 +5419,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 			{
 				userSchoolEnrollment(siteRequest, b -> {
 					if(b.succeeded()) {
-						aSearchSchoolEnrollment(siteRequest, false, true, "/api/enrollment/{id}", "GET", c -> {
+						aSearchSchoolEnrollment(siteRequest, false, true, false, "/api/enrollment/{id}", "GET", c -> {
 							if(c.succeeded()) {
 								SearchList<SchoolEnrollment> listSchoolEnrollment = c.result();
 								getSchoolEnrollmentResponse(listSchoolEnrollment, d -> {
@@ -5453,7 +5489,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 			{
 				userSchoolEnrollment(siteRequest, b -> {
 					if(b.succeeded()) {
-						aSearchSchoolEnrollment(siteRequest, false, true, "/api/enrollment", "Search", c -> {
+						aSearchSchoolEnrollment(siteRequest, false, true, false, "/api/enrollment", "Search", c -> {
 							if(c.succeeded()) {
 								SearchList<SchoolEnrollment> listSchoolEnrollment = c.result();
 								searchSchoolEnrollmentResponse(listSchoolEnrollment, d -> {
@@ -5563,7 +5599,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 			{
 				userSchoolEnrollment(siteRequest, b -> {
 					if(b.succeeded()) {
-						aSearchSchoolEnrollment(siteRequest, false, true, "/api/admin/enrollment", "AdminSearch", c -> {
+						aSearchSchoolEnrollment(siteRequest, false, true, false, "/api/admin/enrollment", "AdminSearch", c -> {
 							if(c.succeeded()) {
 								SearchList<SchoolEnrollment> listSchoolEnrollment = c.result();
 								adminsearchSchoolEnrollmentResponse(listSchoolEnrollment, d -> {
@@ -5681,7 +5717,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								workerExecutor.executeBlocking(
 									blockingCodeHandler -> {
 										try {
-											aSearchSchoolEnrollment(siteRequest, false, true, "/api/admin/enrollment", "AdminPATCH", d -> {
+											aSearchSchoolEnrollment(siteRequest, false, true, true, "/api/admin/enrollment", "AdminPATCH", d -> {
 												if(d.succeeded()) {
 													SearchList<SchoolEnrollment> listSchoolEnrollment = d.result();
 
@@ -6886,6 +6922,15 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+								List<String> roles = Arrays.asList("SiteAdmin", "SiteAdmin");
+								if(
+										!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
+										&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
+										) {
+									searchList.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionIdBefore()).orElse("-----"))
+											+ " OR userKeys_indexed_longs:" + Optional.ofNullable(siteRequest.getUserKey()).orElse(0L));
+								}
 								searchList.initDeepSearchList(siteRequest);
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !o.getPaymentKeys().contains(l2)) {
@@ -6921,6 +6966,15 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 									searchList.addFilterQuery("deleted_indexed_boolean:false");
 									searchList.addFilterQuery("archived_indexed_boolean:false");
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+									List<String> roles = Arrays.asList("SiteAdmin", "SiteAdmin");
+									if(
+											!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
+											&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
+											) {
+										searchList.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionIdBefore()).orElse("-----"))
+												+ " OR userKeys_indexed_longs:" + Optional.ofNullable(siteRequest.getUserKey()).orElse(0L));
+									}
 									searchList.initDeepSearchList(siteRequest);
 									Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 									if(l2 != null && !o.getPaymentKeys().contains(l2)) {
@@ -6958,6 +7012,15 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 									searchList.addFilterQuery("deleted_indexed_boolean:false");
 									searchList.addFilterQuery("archived_indexed_boolean:false");
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+									List<String> roles = Arrays.asList("SiteAdmin", "SiteAdmin");
+									if(
+											!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
+											&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
+											) {
+										searchList.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionIdBefore()).orElse("-----"))
+												+ " OR userKeys_indexed_longs:" + Optional.ofNullable(siteRequest.getUserKey()).orElse(0L));
+									}
 									searchList.initDeepSearchList(siteRequest);
 									Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 									if(l2 != null)
@@ -7011,6 +7074,15 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+								List<String> roles = Arrays.asList("SiteAdmin", "SiteAdmin");
+								if(
+										!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
+										&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
+										) {
+									searchList.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionIdBefore()).orElse("-----"))
+											+ " OR userKeys_indexed_longs:" + Optional.ofNullable(siteRequest.getUserKey()).orElse(0L));
+								}
 								searchList.initDeepSearchList(siteRequest);
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && o.getPaymentKeys().contains(l2)) {
@@ -7045,7 +7117,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 
-								List<String> roles = Arrays.asList("SiteAdmin", "SiteAdmin", "SiteAdmin", "SiteAdmin");
+								List<String> roles = Arrays.asList("SiteManager", "SiteManager");
 								if(
 										!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
 										&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
@@ -7089,7 +7161,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 									searchList.addFilterQuery("archived_indexed_boolean:false");
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 
-									List<String> roles = Arrays.asList("SiteAdmin", "SiteAdmin", "SiteAdmin", "SiteAdmin");
+									List<String> roles = Arrays.asList("SiteManager", "SiteManager");
 									if(
 											!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
 											&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
@@ -7135,7 +7207,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 									searchList.addFilterQuery("archived_indexed_boolean:false");
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 
-									List<String> roles = Arrays.asList("SiteAdmin", "SiteAdmin", "SiteAdmin", "SiteAdmin");
+									List<String> roles = Arrays.asList("SiteManager", "SiteManager");
 									if(
 											!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
 											&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
@@ -7197,7 +7269,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 
-								List<String> roles = Arrays.asList("SiteAdmin", "SiteAdmin", "SiteAdmin", "SiteAdmin");
+								List<String> roles = Arrays.asList("SiteManager", "SiteManager");
 								if(
 										!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
 										&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
@@ -8522,7 +8594,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								workerExecutor.executeBlocking(
 									blockingCodeHandler -> {
 										try {
-											aSearchSchoolEnrollment(siteRequest, false, true, "/enrollment/payments", "PATCHPayments", d -> {
+											aSearchSchoolEnrollment(siteRequest, false, true, true, "/enrollment/payments", "PATCHPayments", d -> {
 												if(d.succeeded()) {
 													SearchList<SchoolEnrollment> listSchoolEnrollment = d.result();
 
@@ -9727,6 +9799,15 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+								List<String> roles = Arrays.asList("SiteAdmin", "SiteAdmin");
+								if(
+										!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
+										&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
+										) {
+									searchList.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionIdBefore()).orElse("-----"))
+											+ " OR userKeys_indexed_longs:" + Optional.ofNullable(siteRequest.getUserKey()).orElse(0L));
+								}
 								searchList.initDeepSearchList(siteRequest);
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !o.getPaymentKeys().contains(l2)) {
@@ -9762,6 +9843,15 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 									searchList.addFilterQuery("deleted_indexed_boolean:false");
 									searchList.addFilterQuery("archived_indexed_boolean:false");
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+									List<String> roles = Arrays.asList("SiteAdmin", "SiteAdmin");
+									if(
+											!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
+											&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
+											) {
+										searchList.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionIdBefore()).orElse("-----"))
+												+ " OR userKeys_indexed_longs:" + Optional.ofNullable(siteRequest.getUserKey()).orElse(0L));
+									}
 									searchList.initDeepSearchList(siteRequest);
 									Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 									if(l2 != null && !o.getPaymentKeys().contains(l2)) {
@@ -9799,6 +9889,15 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 									searchList.addFilterQuery("deleted_indexed_boolean:false");
 									searchList.addFilterQuery("archived_indexed_boolean:false");
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+									List<String> roles = Arrays.asList("SiteAdmin", "SiteAdmin");
+									if(
+											!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
+											&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
+											) {
+										searchList.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionIdBefore()).orElse("-----"))
+												+ " OR userKeys_indexed_longs:" + Optional.ofNullable(siteRequest.getUserKey()).orElse(0L));
+									}
 									searchList.initDeepSearchList(siteRequest);
 									Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 									if(l2 != null)
@@ -9852,6 +9951,15 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
+
+								List<String> roles = Arrays.asList("SiteAdmin", "SiteAdmin");
+								if(
+										!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
+										&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
+										) {
+									searchList.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionIdBefore()).orElse("-----"))
+											+ " OR userKeys_indexed_longs:" + Optional.ofNullable(siteRequest.getUserKey()).orElse(0L));
+								}
 								searchList.initDeepSearchList(siteRequest);
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && o.getPaymentKeys().contains(l2)) {
@@ -9886,7 +9994,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 
-								List<String> roles = Arrays.asList("SiteAdmin", "SiteAdmin", "SiteAdmin", "SiteAdmin");
+								List<String> roles = Arrays.asList("SiteManager", "SiteManager");
 								if(
 										!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
 										&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
@@ -9930,7 +10038,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 									searchList.addFilterQuery("archived_indexed_boolean:false");
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 
-									List<String> roles = Arrays.asList("SiteAdmin", "SiteAdmin", "SiteAdmin", "SiteAdmin");
+									List<String> roles = Arrays.asList("SiteManager", "SiteManager");
 									if(
 											!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
 											&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
@@ -9976,7 +10084,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 									searchList.addFilterQuery("archived_indexed_boolean:false");
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 
-									List<String> roles = Arrays.asList("SiteAdmin", "SiteAdmin", "SiteAdmin", "SiteAdmin");
+									List<String> roles = Arrays.asList("SiteManager", "SiteManager");
 									if(
 											!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
 											&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
@@ -10038,7 +10146,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
 
-								List<String> roles = Arrays.asList("SiteAdmin", "SiteAdmin", "SiteAdmin", "SiteAdmin");
+								List<String> roles = Arrays.asList("SiteManager", "SiteManager");
 								if(
 										!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
 										&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
@@ -11360,7 +11468,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 			{
 				userSchoolEnrollment(siteRequest, b -> {
 					if(b.succeeded()) {
-						aSearchSchoolEnrollment(siteRequest, false, true, "/enrollment", "SearchPage", c -> {
+						aSearchSchoolEnrollment(siteRequest, false, true, false, "/enrollment", "SearchPage", c -> {
 							if(c.succeeded()) {
 								SearchList<SchoolEnrollment> listSchoolEnrollment = c.result();
 								searchpageSchoolEnrollmentResponse(listSchoolEnrollment, d -> {
@@ -11455,7 +11563,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 			{
 				userSchoolEnrollment(siteRequest, b -> {
 					if(b.succeeded()) {
-						aSearchSchoolEnrollment(siteRequest, false, true, "/refresh-enrollment", "RefreshSearchPage", c -> {
+						aSearchSchoolEnrollment(siteRequest, false, true, false, "/refresh-enrollment", "RefreshSearchPage", c -> {
 							if(c.succeeded()) {
 								SearchList<SchoolEnrollment> listSchoolEnrollment = c.result();
 								refreshsearchpageSchoolEnrollmentResponse(listSchoolEnrollment, d -> {
@@ -12095,7 +12203,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 		}
 	}
 
-	public void aSearchSchoolEnrollment(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, String uri, String apiMethod, Handler<AsyncResult<SearchList<SchoolEnrollment>>> eventHandler) {
+	public void aSearchSchoolEnrollment(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, Boolean modify, String uri, String apiMethod, Handler<AsyncResult<SearchList<SchoolEnrollment>>> eventHandler) {
 		try {
 			OperationRequest operationRequest = siteRequest.getOperationRequest();
 			String entityListStr = siteRequest.getOperationRequest().getParams().getJsonObject("query").getString("fl");
@@ -12116,9 +12224,12 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 			}
 
 			List<String> roles = Arrays.asList("SiteManager");
+			List<String> roleLires = Arrays.asList("");
 			if(
 					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
 					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
+					&& (modify || !CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roleLires))
+					&& (modify || !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roleLires))
 					) {
 				searchList.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionIdBefore()).orElse("-----"))
 						+ " OR userKeys_indexed_longs:" + Optional.ofNullable(siteRequest.getUserKey()).orElse(0L));

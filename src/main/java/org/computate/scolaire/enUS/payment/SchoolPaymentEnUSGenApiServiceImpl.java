@@ -1006,7 +1006,7 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 								workerExecutor.executeBlocking(
 									blockingCodeHandler -> {
 										try {
-											aSearchSchoolPayment(siteRequest, false, true, "/api/payment/copy", "PUTCopy", d -> {
+											aSearchSchoolPayment(siteRequest, false, true, true, "/api/payment/copy", "PUTCopy", d -> {
 												if(d.succeeded()) {
 													SearchList<SchoolPayment> listSchoolPayment = d.result();
 													ApiRequest apiRequest = new ApiRequest();
@@ -1557,7 +1557,7 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 								workerExecutor.executeBlocking(
 									blockingCodeHandler -> {
 										try {
-											aSearchSchoolPayment(siteRequest, false, true, "/api/payment", "PATCH", d -> {
+											aSearchSchoolPayment(siteRequest, false, true, true, "/api/payment", "PATCH", d -> {
 												if(d.succeeded()) {
 													SearchList<SchoolPayment> listSchoolPayment = d.result();
 
@@ -2558,7 +2558,7 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 			{
 				userSchoolPayment(siteRequest, b -> {
 					if(b.succeeded()) {
-						aSearchSchoolPayment(siteRequest, false, true, "/api/payment/{id}", "GET", c -> {
+						aSearchSchoolPayment(siteRequest, false, true, false, "/api/payment/{id}", "GET", c -> {
 							if(c.succeeded()) {
 								SearchList<SchoolPayment> listSchoolPayment = c.result();
 								getSchoolPaymentResponse(listSchoolPayment, d -> {
@@ -2628,7 +2628,7 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 			{
 				userSchoolPayment(siteRequest, b -> {
 					if(b.succeeded()) {
-						aSearchSchoolPayment(siteRequest, false, true, "/api/payment", "Search", c -> {
+						aSearchSchoolPayment(siteRequest, false, true, false, "/api/payment", "Search", c -> {
 							if(c.succeeded()) {
 								SearchList<SchoolPayment> listSchoolPayment = c.result();
 								searchSchoolPaymentResponse(listSchoolPayment, d -> {
@@ -2743,7 +2743,7 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 			{
 				userSchoolPayment(siteRequest, b -> {
 					if(b.succeeded()) {
-						aSearchSchoolPayment(siteRequest, false, true, "/payment", "SearchPage", c -> {
+						aSearchSchoolPayment(siteRequest, false, true, false, "/payment", "SearchPage", c -> {
 							if(c.succeeded()) {
 								SearchList<SchoolPayment> listSchoolPayment = c.result();
 								searchpageSchoolPaymentResponse(listSchoolPayment, d -> {
@@ -3383,7 +3383,7 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 		}
 	}
 
-	public void aSearchSchoolPayment(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, String uri, String apiMethod, Handler<AsyncResult<SearchList<SchoolPayment>>> eventHandler) {
+	public void aSearchSchoolPayment(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, Boolean modify, String uri, String apiMethod, Handler<AsyncResult<SearchList<SchoolPayment>>> eventHandler) {
 		try {
 			OperationRequest operationRequest = siteRequest.getOperationRequest();
 			String entityListStr = siteRequest.getOperationRequest().getParams().getJsonObject("query").getString("fl");
@@ -3411,9 +3411,12 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 			}
 
 			List<String> roles = Arrays.asList("SiteAdmin");
+			List<String> roleLires = Arrays.asList("SiteManager");
 			if(
 					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
 					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
+					&& (modify || !CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roleLires))
+					&& (modify || !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roleLires))
 					) {
 				searchList.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionIdBefore()).orElse("-----"))
 						+ " OR userKeys_indexed_longs:" + Optional.ofNullable(siteRequest.getUserKey()).orElse(0L));

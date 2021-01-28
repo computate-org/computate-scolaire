@@ -43,7 +43,7 @@ import org.apache.solr.client.solrj.SolrQuery.SortClause;
 public class ClusterGenPage extends ClusterGenPageGen<PageLayout> {
 
 	public static final List<String> ROLES = Arrays.asList("SiteManager");
-	public static final List<String> ROLE_READS = Arrays.asList("User");
+	public static final List<String> ROLE_READS = Arrays.asList("SiteManager");
 
 	/**
 	 * {@inheritDoc}

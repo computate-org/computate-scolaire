@@ -705,7 +705,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 								executeurTravailleur.executeBlocking(
 									blockingCodeHandler -> {
 										try {
-											rechercheCluster(requeteSite, false, true, "/api/cluster/copie", "PUTCopie", d -> {
+											rechercheCluster(requeteSite, false, true, true, "/api/cluster/copie", "PUTCopie", d -> {
 												if(d.succeeded()) {
 													ListeRecherche<Cluster> listeCluster = d.result();
 													RequeteApi requeteApi = new RequeteApi();
@@ -980,7 +980,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 								executeurTravailleur.executeBlocking(
 									blockingCodeHandler -> {
 										try {
-											rechercheCluster(requeteSite, false, true, "/api/cluster", "PATCH", d -> {
+											rechercheCluster(requeteSite, false, true, true, "/api/cluster", "PATCH", d -> {
 												if(d.succeeded()) {
 													ListeRecherche<Cluster> listeCluster = d.result();
 
@@ -1329,7 +1329,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 			{
 				utilisateurCluster(requeteSite, b -> {
 					if(b.succeeded()) {
-						rechercheCluster(requeteSite, false, true, "/api/cluster/{id}", "GET", c -> {
+						rechercheCluster(requeteSite, false, true, false, "/api/cluster/{id}", "GET", c -> {
 							if(c.succeeded()) {
 								ListeRecherche<Cluster> listeCluster = c.result();
 								getClusterReponse(listeCluster, d -> {
@@ -1399,7 +1399,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 			{
 				utilisateurCluster(requeteSite, b -> {
 					if(b.succeeded()) {
-						rechercheCluster(requeteSite, false, true, "/api/cluster", "Recherche", c -> {
+						rechercheCluster(requeteSite, false, true, false, "/api/cluster", "Recherche", c -> {
 							if(c.succeeded()) {
 								ListeRecherche<Cluster> listeCluster = c.result();
 								rechercheClusterReponse(listeCluster, d -> {
@@ -1514,7 +1514,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 			{
 				utilisateurCluster(requeteSite, b -> {
 					if(b.succeeded()) {
-						rechercheCluster(requeteSite, false, true, "/cluster", "PageRecherche", c -> {
+						rechercheCluster(requeteSite, false, true, false, "/cluster", "PageRecherche", c -> {
 							if(c.succeeded()) {
 								ListeRecherche<Cluster> listeCluster = c.result();
 								pagerechercheClusterReponse(listeCluster, d -> {
@@ -2154,7 +2154,7 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 		}
 	}
 
-	public void rechercheCluster(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, String uri, String apiMethode, Handler<AsyncResult<ListeRecherche<Cluster>>> gestionnaireEvenements) {
+	public void rechercheCluster(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, Boolean modifier, String uri, String apiMethode, Handler<AsyncResult<ListeRecherche<Cluster>>> gestionnaireEvenements) {
 		try {
 			OperationRequest operationRequete = requeteSite.getOperationRequete();
 			String entiteListeStr = requeteSite.getOperationRequete().getParams().getJsonObject("query").getString("fl");
@@ -2175,9 +2175,12 @@ public class ClusterFrFRGenApiServiceImpl implements ClusterFrFRGenApiService {
 			}
 
 			List<String> roles = Arrays.asList("SiteManager");
+			List<String> roleLires = Arrays.asList("SiteManager");
 			if(
 					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
 					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+					&& (modifier || !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roleLires))
+					&& (modifier || !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roleLires))
 					) {
 				listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionIdAvant()).orElse("-----"))
 						+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(0L));

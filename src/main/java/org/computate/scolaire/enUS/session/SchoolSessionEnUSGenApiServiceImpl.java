@@ -881,7 +881,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 								workerExecutor.executeBlocking(
 									blockingCodeHandler -> {
 										try {
-											aSearchSchoolSession(siteRequest, false, true, "/api/session/copy", "PUTCopy", d -> {
+											aSearchSchoolSession(siteRequest, false, true, true, "/api/session/copy", "PUTCopy", d -> {
 												if(d.succeeded()) {
 													SearchList<SchoolSession> listSchoolSession = d.result();
 													ApiRequest apiRequest = new ApiRequest();
@@ -1247,7 +1247,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 								workerExecutor.executeBlocking(
 									blockingCodeHandler -> {
 										try {
-											aSearchSchoolSession(siteRequest, false, true, "/api/session", "PATCH", d -> {
+											aSearchSchoolSession(siteRequest, false, true, true, "/api/session", "PATCH", d -> {
 												if(d.succeeded()) {
 													SearchList<SchoolSession> listSchoolSession = d.result();
 
@@ -1926,7 +1926,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 
 				userSchoolSession(siteRequest, b -> {
 					if(b.succeeded()) {
-						aSearchSchoolSession(siteRequest, false, true, "/api/session/{id}", "GET", c -> {
+						aSearchSchoolSession(siteRequest, false, true, false, "/api/session/{id}", "GET", c -> {
 							if(c.succeeded()) {
 								SearchList<SchoolSession> listSchoolSession = c.result();
 								getSchoolSessionResponse(listSchoolSession, d -> {
@@ -2016,7 +2016,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 
 				userSchoolSession(siteRequest, b -> {
 					if(b.succeeded()) {
-						aSearchSchoolSession(siteRequest, false, true, "/api/session", "Search", c -> {
+						aSearchSchoolSession(siteRequest, false, true, false, "/api/session", "Search", c -> {
 							if(c.succeeded()) {
 								SearchList<SchoolSession> listSchoolSession = c.result();
 								searchSchoolSessionResponse(listSchoolSession, d -> {
@@ -2151,7 +2151,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 
 				userSchoolSession(siteRequest, b -> {
 					if(b.succeeded()) {
-						aSearchSchoolSession(siteRequest, false, true, "/session", "SearchPage", c -> {
+						aSearchSchoolSession(siteRequest, false, true, false, "/session", "SearchPage", c -> {
 							if(c.succeeded()) {
 								SearchList<SchoolSession> listSchoolSession = c.result();
 								searchpageSchoolSessionResponse(listSchoolSession, d -> {
@@ -2791,7 +2791,7 @@ public class SchoolSessionEnUSGenApiServiceImpl implements SchoolSessionEnUSGenA
 		}
 	}
 
-	public void aSearchSchoolSession(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, String uri, String apiMethod, Handler<AsyncResult<SearchList<SchoolSession>>> eventHandler) {
+	public void aSearchSchoolSession(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, Boolean modify, String uri, String apiMethod, Handler<AsyncResult<SearchList<SchoolSession>>> eventHandler) {
 		try {
 			OperationRequest operationRequest = siteRequest.getOperationRequest();
 			String entityListStr = siteRequest.getOperationRequest().getParams().getJsonObject("query").getString("fl");

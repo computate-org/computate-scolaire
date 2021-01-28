@@ -894,7 +894,7 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 								executeurTravailleur.executeBlocking(
 									blockingCodeHandler -> {
 										try {
-											rechercheSaisonScolaire(requeteSite, false, true, "/api/saison/copie", "PUTCopie", d -> {
+											rechercheSaisonScolaire(requeteSite, false, true, true, "/api/saison/copie", "PUTCopie", d -> {
 												if(d.succeeded()) {
 													ListeRecherche<SaisonScolaire> listeSaisonScolaire = d.result();
 													RequeteApi requeteApi = new RequeteApi();
@@ -1273,7 +1273,7 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 								executeurTravailleur.executeBlocking(
 									blockingCodeHandler -> {
 										try {
-											rechercheSaisonScolaire(requeteSite, false, true, "/api/saison", "PATCH", d -> {
+											rechercheSaisonScolaire(requeteSite, false, true, true, "/api/saison", "PATCH", d -> {
 												if(d.succeeded()) {
 													ListeRecherche<SaisonScolaire> listeSaisonScolaire = d.result();
 
@@ -1980,7 +1980,7 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 
 				utilisateurSaisonScolaire(requeteSite, b -> {
 					if(b.succeeded()) {
-						rechercheSaisonScolaire(requeteSite, false, true, "/api/saison/{id}", "GET", c -> {
+						rechercheSaisonScolaire(requeteSite, false, true, false, "/api/saison/{id}", "GET", c -> {
 							if(c.succeeded()) {
 								ListeRecherche<SaisonScolaire> listeSaisonScolaire = c.result();
 								getSaisonScolaireReponse(listeSaisonScolaire, d -> {
@@ -2070,7 +2070,7 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 
 				utilisateurSaisonScolaire(requeteSite, b -> {
 					if(b.succeeded()) {
-						rechercheSaisonScolaire(requeteSite, false, true, "/api/saison", "Recherche", c -> {
+						rechercheSaisonScolaire(requeteSite, false, true, false, "/api/saison", "Recherche", c -> {
 							if(c.succeeded()) {
 								ListeRecherche<SaisonScolaire> listeSaisonScolaire = c.result();
 								rechercheSaisonScolaireReponse(listeSaisonScolaire, d -> {
@@ -2205,7 +2205,7 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 
 				utilisateurSaisonScolaire(requeteSite, b -> {
 					if(b.succeeded()) {
-						rechercheSaisonScolaire(requeteSite, false, true, "/saison", "PageRecherche", c -> {
+						rechercheSaisonScolaire(requeteSite, false, true, false, "/saison", "PageRecherche", c -> {
 							if(c.succeeded()) {
 								ListeRecherche<SaisonScolaire> listeSaisonScolaire = c.result();
 								pagerechercheSaisonScolaireReponse(listeSaisonScolaire, d -> {
@@ -2845,7 +2845,7 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 		}
 	}
 
-	public void rechercheSaisonScolaire(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, String uri, String apiMethode, Handler<AsyncResult<ListeRecherche<SaisonScolaire>>> gestionnaireEvenements) {
+	public void rechercheSaisonScolaire(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, Boolean modifier, String uri, String apiMethode, Handler<AsyncResult<ListeRecherche<SaisonScolaire>>> gestionnaireEvenements) {
 		try {
 			OperationRequest operationRequete = requeteSite.getOperationRequete();
 			String entiteListeStr = requeteSite.getOperationRequete().getParams().getJsonObject("query").getString("fl");

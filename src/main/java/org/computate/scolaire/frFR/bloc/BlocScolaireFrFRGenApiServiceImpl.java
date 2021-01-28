@@ -959,7 +959,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 								executeurTravailleur.executeBlocking(
 									blockingCodeHandler -> {
 										try {
-											rechercheBlocScolaire(requeteSite, false, true, "/api/bloc/copie", "PUTCopie", d -> {
+											rechercheBlocScolaire(requeteSite, false, true, true, "/api/bloc/copie", "PUTCopie", d -> {
 												if(d.succeeded()) {
 													ListeRecherche<BlocScolaire> listeBlocScolaire = d.result();
 													RequeteApi requeteApi = new RequeteApi();
@@ -1403,7 +1403,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 								executeurTravailleur.executeBlocking(
 									blockingCodeHandler -> {
 										try {
-											rechercheBlocScolaire(requeteSite, false, true, "/api/bloc", "PATCH", d -> {
+											rechercheBlocScolaire(requeteSite, false, true, true, "/api/bloc", "PATCH", d -> {
 												if(d.succeeded()) {
 													ListeRecherche<BlocScolaire> listeBlocScolaire = d.result();
 
@@ -2286,7 +2286,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 
 				utilisateurBlocScolaire(requeteSite, b -> {
 					if(b.succeeded()) {
-						rechercheBlocScolaire(requeteSite, false, true, "/api/bloc/{id}", "GET", c -> {
+						rechercheBlocScolaire(requeteSite, false, true, false, "/api/bloc/{id}", "GET", c -> {
 							if(c.succeeded()) {
 								ListeRecherche<BlocScolaire> listeBlocScolaire = c.result();
 								getBlocScolaireReponse(listeBlocScolaire, d -> {
@@ -2376,7 +2376,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 
 				utilisateurBlocScolaire(requeteSite, b -> {
 					if(b.succeeded()) {
-						rechercheBlocScolaire(requeteSite, false, true, "/api/bloc", "Recherche", c -> {
+						rechercheBlocScolaire(requeteSite, false, true, false, "/api/bloc", "Recherche", c -> {
 							if(c.succeeded()) {
 								ListeRecherche<BlocScolaire> listeBlocScolaire = c.result();
 								rechercheBlocScolaireReponse(listeBlocScolaire, d -> {
@@ -2511,7 +2511,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 
 				utilisateurBlocScolaire(requeteSite, b -> {
 					if(b.succeeded()) {
-						rechercheBlocScolaire(requeteSite, false, true, "/bloc", "PageRecherche", c -> {
+						rechercheBlocScolaire(requeteSite, false, true, false, "/bloc", "PageRecherche", c -> {
 							if(c.succeeded()) {
 								ListeRecherche<BlocScolaire> listeBlocScolaire = c.result();
 								pagerechercheBlocScolaireReponse(listeBlocScolaire, d -> {
@@ -3151,7 +3151,7 @@ public class BlocScolaireFrFRGenApiServiceImpl implements BlocScolaireFrFRGenApi
 		}
 	}
 
-	public void rechercheBlocScolaire(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, String uri, String apiMethode, Handler<AsyncResult<ListeRecherche<BlocScolaire>>> gestionnaireEvenements) {
+	public void rechercheBlocScolaire(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, Boolean modifier, String uri, String apiMethode, Handler<AsyncResult<ListeRecherche<BlocScolaire>>> gestionnaireEvenements) {
 		try {
 			OperationRequest operationRequete = requeteSite.getOperationRequete();
 			String entiteListeStr = requeteSite.getOperationRequete().getParams().getJsonObject("query").getString("fl");

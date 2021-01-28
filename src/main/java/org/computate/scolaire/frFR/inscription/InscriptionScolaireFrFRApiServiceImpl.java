@@ -74,7 +74,7 @@ public class InscriptionScolaireFrFRApiServiceImpl extends InscriptionScolaireFr
 		try {
 			utilisateurInscriptionScolaire(requeteSite, b -> {
 				if(b.succeeded()) {
-					rechercheInscriptionScolaire(requeteSite, false, true, "/recharger-inscription", "RechargerPageRecherche", c -> {
+					rechercheInscriptionScolaire(requeteSite, false, true, false, "/recharger-inscription", "RechargerPageRecherche", c -> {
 						if(c.succeeded()) {
 							try {
 								ListeRecherche<InscriptionScolaire> listeInscriptionScolaire = c.result();

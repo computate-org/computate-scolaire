@@ -894,7 +894,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 								workerExecutor.executeBlocking(
 									blockingCodeHandler -> {
 										try {
-											aSearchSchoolSeason(siteRequest, false, true, "/api/season/copy", "PUTCopy", d -> {
+											aSearchSchoolSeason(siteRequest, false, true, true, "/api/season/copy", "PUTCopy", d -> {
 												if(d.succeeded()) {
 													SearchList<SchoolSeason> listSchoolSeason = d.result();
 													ApiRequest apiRequest = new ApiRequest();
@@ -1273,7 +1273,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 								workerExecutor.executeBlocking(
 									blockingCodeHandler -> {
 										try {
-											aSearchSchoolSeason(siteRequest, false, true, "/api/season", "PATCH", d -> {
+											aSearchSchoolSeason(siteRequest, false, true, true, "/api/season", "PATCH", d -> {
 												if(d.succeeded()) {
 													SearchList<SchoolSeason> listSchoolSeason = d.result();
 
@@ -1980,7 +1980,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 
 				userSchoolSeason(siteRequest, b -> {
 					if(b.succeeded()) {
-						aSearchSchoolSeason(siteRequest, false, true, "/api/season/{id}", "GET", c -> {
+						aSearchSchoolSeason(siteRequest, false, true, false, "/api/season/{id}", "GET", c -> {
 							if(c.succeeded()) {
 								SearchList<SchoolSeason> listSchoolSeason = c.result();
 								getSchoolSeasonResponse(listSchoolSeason, d -> {
@@ -2070,7 +2070,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 
 				userSchoolSeason(siteRequest, b -> {
 					if(b.succeeded()) {
-						aSearchSchoolSeason(siteRequest, false, true, "/api/season", "Search", c -> {
+						aSearchSchoolSeason(siteRequest, false, true, false, "/api/season", "Search", c -> {
 							if(c.succeeded()) {
 								SearchList<SchoolSeason> listSchoolSeason = c.result();
 								searchSchoolSeasonResponse(listSchoolSeason, d -> {
@@ -2205,7 +2205,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 
 				userSchoolSeason(siteRequest, b -> {
 					if(b.succeeded()) {
-						aSearchSchoolSeason(siteRequest, false, true, "/season", "SearchPage", c -> {
+						aSearchSchoolSeason(siteRequest, false, true, false, "/season", "SearchPage", c -> {
 							if(c.succeeded()) {
 								SearchList<SchoolSeason> listSchoolSeason = c.result();
 								searchpageSchoolSeasonResponse(listSchoolSeason, d -> {
@@ -2845,7 +2845,7 @@ public class SchoolSeasonEnUSGenApiServiceImpl implements SchoolSeasonEnUSGenApi
 		}
 	}
 
-	public void aSearchSchoolSeason(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, String uri, String apiMethod, Handler<AsyncResult<SearchList<SchoolSeason>>> eventHandler) {
+	public void aSearchSchoolSeason(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, Boolean modify, String uri, String apiMethod, Handler<AsyncResult<SearchList<SchoolSeason>>> eventHandler) {
 		try {
 			OperationRequest operationRequest = siteRequest.getOperationRequest();
 			String entityListStr = siteRequest.getOperationRequest().getParams().getJsonObject("query").getString("fl");

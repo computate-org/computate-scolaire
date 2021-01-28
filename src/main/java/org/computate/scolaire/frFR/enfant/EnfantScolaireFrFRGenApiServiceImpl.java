@@ -810,7 +810,7 @@ public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGe
 								executeurTravailleur.executeBlocking(
 									blockingCodeHandler -> {
 										try {
-											rechercheEnfantScolaire(requeteSite, false, true, "/api/enfant/copie", "PUTCopie", d -> {
+											rechercheEnfantScolaire(requeteSite, false, true, true, "/api/enfant/copie", "PUTCopie", d -> {
 												if(d.succeeded()) {
 													ListeRecherche<EnfantScolaire> listeEnfantScolaire = d.result();
 													RequeteApi requeteApi = new RequeteApi();
@@ -1169,7 +1169,7 @@ public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGe
 								executeurTravailleur.executeBlocking(
 									blockingCodeHandler -> {
 										try {
-											rechercheEnfantScolaire(requeteSite, false, true, "/api/enfant", "PATCH", d -> {
+											rechercheEnfantScolaire(requeteSite, false, true, true, "/api/enfant", "PATCH", d -> {
 												if(d.succeeded()) {
 													ListeRecherche<EnfantScolaire> listeEnfantScolaire = d.result();
 
@@ -1858,7 +1858,7 @@ public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGe
 			{
 				utilisateurEnfantScolaire(requeteSite, b -> {
 					if(b.succeeded()) {
-						rechercheEnfantScolaire(requeteSite, false, true, "/api/enfant/{id}", "GET", c -> {
+						rechercheEnfantScolaire(requeteSite, false, true, false, "/api/enfant/{id}", "GET", c -> {
 							if(c.succeeded()) {
 								ListeRecherche<EnfantScolaire> listeEnfantScolaire = c.result();
 								getEnfantScolaireReponse(listeEnfantScolaire, d -> {
@@ -1928,7 +1928,7 @@ public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGe
 			{
 				utilisateurEnfantScolaire(requeteSite, b -> {
 					if(b.succeeded()) {
-						rechercheEnfantScolaire(requeteSite, false, true, "/api/enfant", "Recherche", c -> {
+						rechercheEnfantScolaire(requeteSite, false, true, false, "/api/enfant", "Recherche", c -> {
 							if(c.succeeded()) {
 								ListeRecherche<EnfantScolaire> listeEnfantScolaire = c.result();
 								rechercheEnfantScolaireReponse(listeEnfantScolaire, d -> {
@@ -2038,7 +2038,7 @@ public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGe
 			{
 				utilisateurEnfantScolaire(requeteSite, b -> {
 					if(b.succeeded()) {
-						rechercheEnfantScolaire(requeteSite, false, true, "/api/admin/enfant", "RechercheAdmin", c -> {
+						rechercheEnfantScolaire(requeteSite, false, true, false, "/api/admin/enfant", "RechercheAdmin", c -> {
 							if(c.succeeded()) {
 								ListeRecherche<EnfantScolaire> listeEnfantScolaire = c.result();
 								rechercheadminEnfantScolaireReponse(listeEnfantScolaire, d -> {
@@ -2153,7 +2153,7 @@ public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGe
 			{
 				utilisateurEnfantScolaire(requeteSite, b -> {
 					if(b.succeeded()) {
-						rechercheEnfantScolaire(requeteSite, false, true, "/enfant", "PageRecherche", c -> {
+						rechercheEnfantScolaire(requeteSite, false, true, false, "/enfant", "PageRecherche", c -> {
 							if(c.succeeded()) {
 								ListeRecherche<EnfantScolaire> listeEnfantScolaire = c.result();
 								pagerechercheEnfantScolaireReponse(listeEnfantScolaire, d -> {
@@ -2793,7 +2793,7 @@ public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGe
 		}
 	}
 
-	public void rechercheEnfantScolaire(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, String uri, String apiMethode, Handler<AsyncResult<ListeRecherche<EnfantScolaire>>> gestionnaireEvenements) {
+	public void rechercheEnfantScolaire(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, Boolean modifier, String uri, String apiMethode, Handler<AsyncResult<ListeRecherche<EnfantScolaire>>> gestionnaireEvenements) {
 		try {
 			OperationRequest operationRequete = requeteSite.getOperationRequete();
 			String entiteListeStr = requeteSite.getOperationRequete().getParams().getJsonObject("query").getString("fl");
@@ -2814,9 +2814,12 @@ public class EnfantScolaireFrFRGenApiServiceImpl implements EnfantScolaireFrFRGe
 			}
 
 			List<String> roles = Arrays.asList("SiteManager");
+			List<String> roleLires = Arrays.asList("");
 			if(
 					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
 					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+					&& (modifier || !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roleLires))
+					&& (modifier || !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roleLires))
 					) {
 				listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionIdAvant()).orElse("-----"))
 						+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(0L));

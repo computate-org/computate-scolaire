@@ -988,7 +988,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 								executeurTravailleur.executeBlocking(
 									blockingCodeHandler -> {
 										try {
-											rechercheAnneeScolaire(requeteSite, false, true, "/api/annee/copie", "PUTCopie", d -> {
+											rechercheAnneeScolaire(requeteSite, false, true, true, "/api/annee/copie", "PUTCopie", d -> {
 												if(d.succeeded()) {
 													ListeRecherche<AnneeScolaire> listeAnneeScolaire = d.result();
 													RequeteApi requeteApi = new RequeteApi();
@@ -1431,7 +1431,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 								executeurTravailleur.executeBlocking(
 									blockingCodeHandler -> {
 										try {
-											rechercheAnneeScolaire(requeteSite, false, true, "/api/annee", "PATCH", d -> {
+											rechercheAnneeScolaire(requeteSite, false, true, true, "/api/annee", "PATCH", d -> {
 												if(d.succeeded()) {
 													ListeRecherche<AnneeScolaire> listeAnneeScolaire = d.result();
 
@@ -2546,7 +2546,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 
 				utilisateurAnneeScolaire(requeteSite, b -> {
 					if(b.succeeded()) {
-						rechercheAnneeScolaire(requeteSite, false, true, "/api/annee/{id}", "GET", c -> {
+						rechercheAnneeScolaire(requeteSite, false, true, false, "/api/annee/{id}", "GET", c -> {
 							if(c.succeeded()) {
 								ListeRecherche<AnneeScolaire> listeAnneeScolaire = c.result();
 								getAnneeScolaireReponse(listeAnneeScolaire, d -> {
@@ -2636,7 +2636,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 
 				utilisateurAnneeScolaire(requeteSite, b -> {
 					if(b.succeeded()) {
-						rechercheAnneeScolaire(requeteSite, false, true, "/api/annee", "Recherche", c -> {
+						rechercheAnneeScolaire(requeteSite, false, true, false, "/api/annee", "Recherche", c -> {
 							if(c.succeeded()) {
 								ListeRecherche<AnneeScolaire> listeAnneeScolaire = c.result();
 								rechercheAnneeScolaireReponse(listeAnneeScolaire, d -> {
@@ -2771,7 +2771,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 
 				utilisateurAnneeScolaire(requeteSite, b -> {
 					if(b.succeeded()) {
-						rechercheAnneeScolaire(requeteSite, false, true, "/annee", "PageRecherche", c -> {
+						rechercheAnneeScolaire(requeteSite, false, true, false, "/annee", "PageRecherche", c -> {
 							if(c.succeeded()) {
 								ListeRecherche<AnneeScolaire> listeAnneeScolaire = c.result();
 								pagerechercheAnneeScolaireReponse(listeAnneeScolaire, d -> {
@@ -3411,7 +3411,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 		}
 	}
 
-	public void rechercheAnneeScolaire(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, String uri, String apiMethode, Handler<AsyncResult<ListeRecherche<AnneeScolaire>>> gestionnaireEvenements) {
+	public void rechercheAnneeScolaire(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, Boolean modifier, String uri, String apiMethode, Handler<AsyncResult<ListeRecherche<AnneeScolaire>>> gestionnaireEvenements) {
 		try {
 			OperationRequest operationRequete = requeteSite.getOperationRequete();
 			String entiteListeStr = requeteSite.getOperationRequete().getParams().getJsonObject("query").getString("fl");

@@ -860,7 +860,7 @@ public class SchoolReceiptEnUSGenApiServiceImpl implements SchoolReceiptEnUSGenA
 								workerExecutor.executeBlocking(
 									blockingCodeHandler -> {
 										try {
-											aSearchSchoolReceipt(siteRequest, false, true, "/api/receipt/copy", "PUTCopy", d -> {
+											aSearchSchoolReceipt(siteRequest, false, true, true, "/api/receipt/copy", "PUTCopy", d -> {
 												if(d.succeeded()) {
 													SearchList<SchoolReceipt> listSchoolReceipt = d.result();
 													ApiRequest apiRequest = new ApiRequest();
@@ -1220,7 +1220,7 @@ public class SchoolReceiptEnUSGenApiServiceImpl implements SchoolReceiptEnUSGenA
 								workerExecutor.executeBlocking(
 									blockingCodeHandler -> {
 										try {
-											aSearchSchoolReceipt(siteRequest, false, true, "/api/receipt", "PATCH", d -> {
+											aSearchSchoolReceipt(siteRequest, false, true, true, "/api/receipt", "PATCH", d -> {
 												if(d.succeeded()) {
 													SearchList<SchoolReceipt> listSchoolReceipt = d.result();
 
@@ -1769,7 +1769,7 @@ public class SchoolReceiptEnUSGenApiServiceImpl implements SchoolReceiptEnUSGenA
 
 				userSchoolReceipt(siteRequest, b -> {
 					if(b.succeeded()) {
-						aSearchSchoolReceipt(siteRequest, false, true, "/api/receipt/{id}", "GET", c -> {
+						aSearchSchoolReceipt(siteRequest, false, true, false, "/api/receipt/{id}", "GET", c -> {
 							if(c.succeeded()) {
 								SearchList<SchoolReceipt> listSchoolReceipt = c.result();
 								getSchoolReceiptResponse(listSchoolReceipt, d -> {
@@ -1859,7 +1859,7 @@ public class SchoolReceiptEnUSGenApiServiceImpl implements SchoolReceiptEnUSGenA
 
 				userSchoolReceipt(siteRequest, b -> {
 					if(b.succeeded()) {
-						aSearchSchoolReceipt(siteRequest, false, true, "/api/receipt", "Search", c -> {
+						aSearchSchoolReceipt(siteRequest, false, true, false, "/api/receipt", "Search", c -> {
 							if(c.succeeded()) {
 								SearchList<SchoolReceipt> listSchoolReceipt = c.result();
 								searchSchoolReceiptResponse(listSchoolReceipt, d -> {
@@ -1994,7 +1994,7 @@ public class SchoolReceiptEnUSGenApiServiceImpl implements SchoolReceiptEnUSGenA
 
 				userSchoolReceipt(siteRequest, b -> {
 					if(b.succeeded()) {
-						aSearchSchoolReceipt(siteRequest, false, true, "/receipt", "SearchPage", c -> {
+						aSearchSchoolReceipt(siteRequest, false, true, false, "/receipt", "SearchPage", c -> {
 							if(c.succeeded()) {
 								SearchList<SchoolReceipt> listSchoolReceipt = c.result();
 								searchpageSchoolReceiptResponse(listSchoolReceipt, d -> {
@@ -2634,7 +2634,7 @@ public class SchoolReceiptEnUSGenApiServiceImpl implements SchoolReceiptEnUSGenA
 		}
 	}
 
-	public void aSearchSchoolReceipt(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, String uri, String apiMethod, Handler<AsyncResult<SearchList<SchoolReceipt>>> eventHandler) {
+	public void aSearchSchoolReceipt(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, Boolean modify, String uri, String apiMethod, Handler<AsyncResult<SearchList<SchoolReceipt>>> eventHandler) {
 		try {
 			OperationRequest operationRequest = siteRequest.getOperationRequest();
 			String entityListStr = siteRequest.getOperationRequest().getParams().getJsonObject("query").getString("fl");

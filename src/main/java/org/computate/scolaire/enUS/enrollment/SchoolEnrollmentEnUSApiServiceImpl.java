@@ -198,7 +198,7 @@ public class SchoolEnrollmentEnUSApiServiceImpl extends SchoolEnrollmentEnUSGenA
 		try {
 			userSchoolEnrollment(siteRequest, b -> {
 				if(b.succeeded()) {
-					aSearchSchoolEnrollment(siteRequest, false, true, "/refresh-enrollment", "RefreshSearchPage", c -> {
+					aSearchSchoolEnrollment(siteRequest, false, true, false, "/refresh-enrollment", "RefreshSearchPage", c -> {
 						if(c.succeeded()) {
 							try {
 								SearchList<SchoolEnrollment> listSchoolEnrollment = c.result();

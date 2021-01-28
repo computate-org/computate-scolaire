@@ -162,7 +162,7 @@ public class SiteUserEnUSApiServiceImpl extends SiteUserEnUSGenApiServiceImpl {
 			{
 				userSiteUser(siteRequest, b -> {
 					if(b.succeeded()) {
-						aSearchSiteUser(siteRequest, false, true, "/user", "SearchPage", c -> {
+						aSearchSiteUser(siteRequest, false, true, false, "/user", "SearchPage", c -> {
 							if(c.succeeded()) {
 								SearchList<SiteUser> listSiteUser = c.result();
 

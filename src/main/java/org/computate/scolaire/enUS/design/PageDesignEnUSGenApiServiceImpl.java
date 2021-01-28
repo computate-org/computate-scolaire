@@ -1044,7 +1044,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 								workerExecutor.executeBlocking(
 									blockingCodeHandler -> {
 										try {
-											aSearchPageDesign(siteRequest, false, true, "/api/page-design/copy", "PUTCopy", d -> {
+											aSearchPageDesign(siteRequest, false, true, true, "/api/page-design/copy", "PUTCopy", d -> {
 												if(d.succeeded()) {
 													SearchList<PageDesign> listPageDesign = d.result();
 													ApiRequest apiRequest = new ApiRequest();
@@ -1562,7 +1562,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 								workerExecutor.executeBlocking(
 									blockingCodeHandler -> {
 										try {
-											aSearchPageDesign(siteRequest, false, true, "/api/page-design", "PATCH", d -> {
+											aSearchPageDesign(siteRequest, false, true, true, "/api/page-design", "PATCH", d -> {
 												if(d.succeeded()) {
 													SearchList<PageDesign> listPageDesign = d.result();
 
@@ -2749,7 +2749,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 			{
 				userPageDesign(siteRequest, b -> {
 					if(b.succeeded()) {
-						aSearchPageDesign(siteRequest, false, true, "/api/page-design/{id}", "GET", c -> {
+						aSearchPageDesign(siteRequest, false, true, false, "/api/page-design/{id}", "GET", c -> {
 							if(c.succeeded()) {
 								SearchList<PageDesign> listPageDesign = c.result();
 								getPageDesignResponse(listPageDesign, d -> {
@@ -2819,7 +2819,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 			{
 				userPageDesign(siteRequest, b -> {
 					if(b.succeeded()) {
-						aSearchPageDesign(siteRequest, false, true, "/api/page-design", "Search", c -> {
+						aSearchPageDesign(siteRequest, false, true, false, "/api/page-design", "Search", c -> {
 							if(c.succeeded()) {
 								SearchList<PageDesign> listPageDesign = c.result();
 								searchPageDesignResponse(listPageDesign, d -> {
@@ -2929,7 +2929,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 			{
 				userPageDesign(siteRequest, b -> {
 					if(b.succeeded()) {
-						aSearchPageDesign(siteRequest, false, true, "/api/admin/page-design", "AdminSearch", c -> {
+						aSearchPageDesign(siteRequest, false, true, false, "/api/admin/page-design", "AdminSearch", c -> {
 							if(c.succeeded()) {
 								SearchList<PageDesign> listPageDesign = c.result();
 								adminsearchPageDesignResponse(listPageDesign, d -> {
@@ -3044,7 +3044,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 			{
 				userPageDesign(siteRequest, b -> {
 					if(b.succeeded()) {
-						aSearchPageDesign(siteRequest, false, true, "/page-design", "SearchPage", c -> {
+						aSearchPageDesign(siteRequest, false, true, false, "/page-design", "SearchPage", c -> {
 							if(c.succeeded()) {
 								SearchList<PageDesign> listPageDesign = c.result();
 								searchpagePageDesignResponse(listPageDesign, d -> {
@@ -3139,7 +3139,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 			{
 				userPageDesign(siteRequest, b -> {
 					if(b.succeeded()) {
-						aSearchPageDesign(siteRequest, false, true, "/page", "DesignDisplaySearchPage", c -> {
+						aSearchPageDesign(siteRequest, false, true, false, "/page", "DesignDisplaySearchPage", c -> {
 							if(c.succeeded()) {
 								SearchList<PageDesign> listPageDesign = c.result();
 								designdisplaysearchpagePageDesignResponse(listPageDesign, d -> {
@@ -3234,7 +3234,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 			{
 				userPageDesign(siteRequest, b -> {
 					if(b.succeeded()) {
-						aSearchPageDesign(siteRequest, false, true, "/pdf", "DesignPdfSearchPage", c -> {
+						aSearchPageDesign(siteRequest, false, true, false, "/pdf", "DesignPdfSearchPage", c -> {
 							if(c.succeeded()) {
 								SearchList<PageDesign> listPageDesign = c.result();
 								designpdfsearchpagePageDesignResponse(listPageDesign, d -> {
@@ -3326,7 +3326,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 			{
 				userPageDesign(siteRequest, b -> {
 					if(b.succeeded()) {
-						aSearchPageDesign(siteRequest, false, true, "/email", "DesignEmailSearchPage", c -> {
+						aSearchPageDesign(siteRequest, false, true, false, "/email", "DesignEmailSearchPage", c -> {
 							if(c.succeeded()) {
 								SearchList<PageDesign> listPageDesign = c.result();
 								designemailsearchpagePageDesignResponse(listPageDesign, d -> {
@@ -3421,7 +3421,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 			{
 				userPageDesign(siteRequest, b -> {
 					if(b.succeeded()) {
-						aSearchPageDesign(siteRequest, false, true, "/", "HomePageSearchPage", c -> {
+						aSearchPageDesign(siteRequest, false, true, false, "/", "HomePageSearchPage", c -> {
 							if(c.succeeded()) {
 								SearchList<PageDesign> listPageDesign = c.result();
 								homepagesearchpagePageDesignResponse(listPageDesign, d -> {
@@ -4061,7 +4061,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 		}
 	}
 
-	public void aSearchPageDesign(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, String uri, String apiMethod, Handler<AsyncResult<SearchList<PageDesign>>> eventHandler) {
+	public void aSearchPageDesign(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, Boolean modify, String uri, String apiMethod, Handler<AsyncResult<SearchList<PageDesign>>> eventHandler) {
 		try {
 			OperationRequest operationRequest = siteRequest.getOperationRequest();
 			String entityListStr = siteRequest.getOperationRequest().getParams().getJsonObject("query").getString("fl");

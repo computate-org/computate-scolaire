@@ -1171,7 +1171,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 								workerExecutor.executeBlocking(
 									blockingCodeHandler -> {
 										try {
-											aSearchHtmlPart(siteRequest, false, true, "/api/html-part/copy", "PUTCopy", d -> {
+											aSearchHtmlPart(siteRequest, false, true, true, "/api/html-part/copy", "PUTCopy", d -> {
 												if(d.succeeded()) {
 													SearchList<HtmlPart> listHtmlPart = d.result();
 													ApiRequest apiRequest = new ApiRequest();
@@ -1846,7 +1846,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 								workerExecutor.executeBlocking(
 									blockingCodeHandler -> {
 										try {
-											aSearchHtmlPart(siteRequest, false, true, "/api/html-part", "PATCH", d -> {
+											aSearchHtmlPart(siteRequest, false, true, true, "/api/html-part", "PATCH", d -> {
 												if(d.succeeded()) {
 													SearchList<HtmlPart> listHtmlPart = d.result();
 
@@ -3157,7 +3157,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 
 				userHtmlPart(siteRequest, b -> {
 					if(b.succeeded()) {
-						aSearchHtmlPart(siteRequest, false, true, "/api/html-part/{id}", "GET", c -> {
+						aSearchHtmlPart(siteRequest, false, true, false, "/api/html-part/{id}", "GET", c -> {
 							if(c.succeeded()) {
 								SearchList<HtmlPart> listHtmlPart = c.result();
 								getHtmlPartResponse(listHtmlPart, d -> {
@@ -3247,7 +3247,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 
 				userHtmlPart(siteRequest, b -> {
 					if(b.succeeded()) {
-						aSearchHtmlPart(siteRequest, false, true, "/api/html-part", "Search", c -> {
+						aSearchHtmlPart(siteRequest, false, true, false, "/api/html-part", "Search", c -> {
 							if(c.succeeded()) {
 								SearchList<HtmlPart> listHtmlPart = c.result();
 								searchHtmlPartResponse(listHtmlPart, d -> {
@@ -3382,7 +3382,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 
 				userHtmlPart(siteRequest, b -> {
 					if(b.succeeded()) {
-						aSearchHtmlPart(siteRequest, false, true, "/html-part", "SearchPage", c -> {
+						aSearchHtmlPart(siteRequest, false, true, false, "/html-part", "SearchPage", c -> {
 							if(c.succeeded()) {
 								SearchList<HtmlPart> listHtmlPart = c.result();
 								searchpageHtmlPartResponse(listHtmlPart, d -> {
@@ -4022,7 +4022,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 		}
 	}
 
-	public void aSearchHtmlPart(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, String uri, String apiMethod, Handler<AsyncResult<SearchList<HtmlPart>>> eventHandler) {
+	public void aSearchHtmlPart(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, Boolean modify, String uri, String apiMethod, Handler<AsyncResult<SearchList<HtmlPart>>> eventHandler) {
 		try {
 			OperationRequest operationRequest = siteRequest.getOperationRequest();
 			String entityListStr = siteRequest.getOperationRequest().getParams().getJsonObject("query").getString("fl");

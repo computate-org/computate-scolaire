@@ -849,7 +849,7 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 								executeurTravailleur.executeBlocking(
 									blockingCodeHandler -> {
 										try {
-											rechercheGardienScolaire(requeteSite, false, true, "/api/gardien/copie", "PUTCopie", d -> {
+											rechercheGardienScolaire(requeteSite, false, true, true, "/api/gardien/copie", "PUTCopie", d -> {
 												if(d.succeeded()) {
 													ListeRecherche<GardienScolaire> listeGardienScolaire = d.result();
 													RequeteApi requeteApi = new RequeteApi();
@@ -1247,7 +1247,7 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 								executeurTravailleur.executeBlocking(
 									blockingCodeHandler -> {
 										try {
-											rechercheGardienScolaire(requeteSite, false, true, "/api/gardien", "PATCH", d -> {
+											rechercheGardienScolaire(requeteSite, false, true, true, "/api/gardien", "PATCH", d -> {
 												if(d.succeeded()) {
 													ListeRecherche<GardienScolaire> listeGardienScolaire = d.result();
 
@@ -2020,7 +2020,7 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 			{
 				utilisateurGardienScolaire(requeteSite, b -> {
 					if(b.succeeded()) {
-						rechercheGardienScolaire(requeteSite, false, true, "/api/gardien/{id}", "GET", c -> {
+						rechercheGardienScolaire(requeteSite, false, true, false, "/api/gardien/{id}", "GET", c -> {
 							if(c.succeeded()) {
 								ListeRecherche<GardienScolaire> listeGardienScolaire = c.result();
 								getGardienScolaireReponse(listeGardienScolaire, d -> {
@@ -2090,7 +2090,7 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 			{
 				utilisateurGardienScolaire(requeteSite, b -> {
 					if(b.succeeded()) {
-						rechercheGardienScolaire(requeteSite, false, true, "/api/gardien", "Recherche", c -> {
+						rechercheGardienScolaire(requeteSite, false, true, false, "/api/gardien", "Recherche", c -> {
 							if(c.succeeded()) {
 								ListeRecherche<GardienScolaire> listeGardienScolaire = c.result();
 								rechercheGardienScolaireReponse(listeGardienScolaire, d -> {
@@ -2200,7 +2200,7 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 			{
 				utilisateurGardienScolaire(requeteSite, b -> {
 					if(b.succeeded()) {
-						rechercheGardienScolaire(requeteSite, false, true, "/api/admin/gardien", "RechercheAdmin", c -> {
+						rechercheGardienScolaire(requeteSite, false, true, false, "/api/admin/gardien", "RechercheAdmin", c -> {
 							if(c.succeeded()) {
 								ListeRecherche<GardienScolaire> listeGardienScolaire = c.result();
 								rechercheadminGardienScolaireReponse(listeGardienScolaire, d -> {
@@ -2315,7 +2315,7 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 			{
 				utilisateurGardienScolaire(requeteSite, b -> {
 					if(b.succeeded()) {
-						rechercheGardienScolaire(requeteSite, false, true, "/gardien", "PageRecherche", c -> {
+						rechercheGardienScolaire(requeteSite, false, true, false, "/gardien", "PageRecherche", c -> {
 							if(c.succeeded()) {
 								ListeRecherche<GardienScolaire> listeGardienScolaire = c.result();
 								pagerechercheGardienScolaireReponse(listeGardienScolaire, d -> {
@@ -2955,7 +2955,7 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 		}
 	}
 
-	public void rechercheGardienScolaire(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, String uri, String apiMethode, Handler<AsyncResult<ListeRecherche<GardienScolaire>>> gestionnaireEvenements) {
+	public void rechercheGardienScolaire(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, Boolean modifier, String uri, String apiMethode, Handler<AsyncResult<ListeRecherche<GardienScolaire>>> gestionnaireEvenements) {
 		try {
 			OperationRequest operationRequete = requeteSite.getOperationRequete();
 			String entiteListeStr = requeteSite.getOperationRequete().getParams().getJsonObject("query").getString("fl");
@@ -2976,9 +2976,12 @@ public class GardienScolaireFrFRGenApiServiceImpl implements GardienScolaireFrFR
 			}
 
 			List<String> roles = Arrays.asList("SiteManager");
+			List<String> roleLires = Arrays.asList("");
 			if(
 					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
 					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+					&& (modifier || !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roleLires))
+					&& (modifier || !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roleLires))
 					) {
 				listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionIdAvant()).orElse("-----"))
 						+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(0L));

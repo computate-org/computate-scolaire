@@ -593,7 +593,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 								workerExecutor.executeBlocking(
 									blockingCodeHandler -> {
 										try {
-											aSearchSchool(siteRequest, false, true, "/api/school", "PATCH", d -> {
+											aSearchSchool(siteRequest, false, true, true, "/api/school", "PATCH", d -> {
 												if(d.succeeded()) {
 													SearchList<School> listSchool = d.result();
 
@@ -1558,7 +1558,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 
 				userSchool(siteRequest, b -> {
 					if(b.succeeded()) {
-						aSearchSchool(siteRequest, false, true, "/api/school/{id}", "GET", c -> {
+						aSearchSchool(siteRequest, false, true, false, "/api/school/{id}", "GET", c -> {
 							if(c.succeeded()) {
 								SearchList<School> listSchool = c.result();
 								getSchoolResponse(listSchool, d -> {
@@ -1648,7 +1648,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 
 				userSchool(siteRequest, b -> {
 					if(b.succeeded()) {
-						aSearchSchool(siteRequest, false, true, "/api/school", "Search", c -> {
+						aSearchSchool(siteRequest, false, true, false, "/api/school", "Search", c -> {
 							if(c.succeeded()) {
 								SearchList<School> listSchool = c.result();
 								searchSchoolResponse(listSchool, d -> {
@@ -2161,7 +2161,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 								workerExecutor.executeBlocking(
 									blockingCodeHandler -> {
 										try {
-											aSearchSchool(siteRequest, false, true, "/api/school/copy", "PUTCopy", d -> {
+											aSearchSchool(siteRequest, false, true, true, "/api/school/copy", "PUTCopy", d -> {
 												if(d.succeeded()) {
 													SearchList<School> listSchool = d.result();
 													ApiRequest apiRequest = new ApiRequest();
@@ -2621,7 +2621,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 
 				userSchool(siteRequest, b -> {
 					if(b.succeeded()) {
-						aSearchSchool(siteRequest, false, true, "/school", "SearchPage", c -> {
+						aSearchSchool(siteRequest, false, true, false, "/school", "SearchPage", c -> {
 							if(c.succeeded()) {
 								SearchList<School> listSchool = c.result();
 								searchpageSchoolResponse(listSchool, d -> {
@@ -3261,7 +3261,7 @@ public class SchoolEnUSGenApiServiceImpl implements SchoolEnUSGenApiService {
 		}
 	}
 
-	public void aSearchSchool(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, String uri, String apiMethod, Handler<AsyncResult<SearchList<School>>> eventHandler) {
+	public void aSearchSchool(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, Boolean modify, String uri, String apiMethod, Handler<AsyncResult<SearchList<School>>> eventHandler) {
 		try {
 			OperationRequest operationRequest = siteRequest.getOperationRequest();
 			String entityListStr = siteRequest.getOperationRequest().getParams().getJsonObject("query").getString("fl");

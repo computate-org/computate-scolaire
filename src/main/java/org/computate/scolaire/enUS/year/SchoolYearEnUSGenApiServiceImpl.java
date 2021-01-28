@@ -988,7 +988,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 								workerExecutor.executeBlocking(
 									blockingCodeHandler -> {
 										try {
-											aSearchSchoolYear(siteRequest, false, true, "/api/year/copy", "PUTCopy", d -> {
+											aSearchSchoolYear(siteRequest, false, true, true, "/api/year/copy", "PUTCopy", d -> {
 												if(d.succeeded()) {
 													SearchList<SchoolYear> listSchoolYear = d.result();
 													ApiRequest apiRequest = new ApiRequest();
@@ -1431,7 +1431,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 								workerExecutor.executeBlocking(
 									blockingCodeHandler -> {
 										try {
-											aSearchSchoolYear(siteRequest, false, true, "/api/year", "PATCH", d -> {
+											aSearchSchoolYear(siteRequest, false, true, true, "/api/year", "PATCH", d -> {
 												if(d.succeeded()) {
 													SearchList<SchoolYear> listSchoolYear = d.result();
 
@@ -2546,7 +2546,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 
 				userSchoolYear(siteRequest, b -> {
 					if(b.succeeded()) {
-						aSearchSchoolYear(siteRequest, false, true, "/api/year/{id}", "GET", c -> {
+						aSearchSchoolYear(siteRequest, false, true, false, "/api/year/{id}", "GET", c -> {
 							if(c.succeeded()) {
 								SearchList<SchoolYear> listSchoolYear = c.result();
 								getSchoolYearResponse(listSchoolYear, d -> {
@@ -2636,7 +2636,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 
 				userSchoolYear(siteRequest, b -> {
 					if(b.succeeded()) {
-						aSearchSchoolYear(siteRequest, false, true, "/api/year", "Search", c -> {
+						aSearchSchoolYear(siteRequest, false, true, false, "/api/year", "Search", c -> {
 							if(c.succeeded()) {
 								SearchList<SchoolYear> listSchoolYear = c.result();
 								searchSchoolYearResponse(listSchoolYear, d -> {
@@ -2771,7 +2771,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 
 				userSchoolYear(siteRequest, b -> {
 					if(b.succeeded()) {
-						aSearchSchoolYear(siteRequest, false, true, "/year", "SearchPage", c -> {
+						aSearchSchoolYear(siteRequest, false, true, false, "/year", "SearchPage", c -> {
 							if(c.succeeded()) {
 								SearchList<SchoolYear> listSchoolYear = c.result();
 								searchpageSchoolYearResponse(listSchoolYear, d -> {
@@ -3411,7 +3411,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 		}
 	}
 
-	public void aSearchSchoolYear(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, String uri, String apiMethod, Handler<AsyncResult<SearchList<SchoolYear>>> eventHandler) {
+	public void aSearchSchoolYear(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, Boolean modify, String uri, String apiMethod, Handler<AsyncResult<SearchList<SchoolYear>>> eventHandler) {
 		try {
 			OperationRequest operationRequest = siteRequest.getOperationRequest();
 			String entityListStr = siteRequest.getOperationRequest().getParams().getJsonObject("query").getString("fl");

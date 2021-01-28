@@ -849,7 +849,7 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 								workerExecutor.executeBlocking(
 									blockingCodeHandler -> {
 										try {
-											aSearchSchoolGuardian(siteRequest, false, true, "/api/guardian/copy", "PUTCopy", d -> {
+											aSearchSchoolGuardian(siteRequest, false, true, true, "/api/guardian/copy", "PUTCopy", d -> {
 												if(d.succeeded()) {
 													SearchList<SchoolGuardian> listSchoolGuardian = d.result();
 													ApiRequest apiRequest = new ApiRequest();
@@ -1247,7 +1247,7 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 								workerExecutor.executeBlocking(
 									blockingCodeHandler -> {
 										try {
-											aSearchSchoolGuardian(siteRequest, false, true, "/api/guardian", "PATCH", d -> {
+											aSearchSchoolGuardian(siteRequest, false, true, true, "/api/guardian", "PATCH", d -> {
 												if(d.succeeded()) {
 													SearchList<SchoolGuardian> listSchoolGuardian = d.result();
 
@@ -2020,7 +2020,7 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 			{
 				userSchoolGuardian(siteRequest, b -> {
 					if(b.succeeded()) {
-						aSearchSchoolGuardian(siteRequest, false, true, "/api/guardian/{id}", "GET", c -> {
+						aSearchSchoolGuardian(siteRequest, false, true, false, "/api/guardian/{id}", "GET", c -> {
 							if(c.succeeded()) {
 								SearchList<SchoolGuardian> listSchoolGuardian = c.result();
 								getSchoolGuardianResponse(listSchoolGuardian, d -> {
@@ -2090,7 +2090,7 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 			{
 				userSchoolGuardian(siteRequest, b -> {
 					if(b.succeeded()) {
-						aSearchSchoolGuardian(siteRequest, false, true, "/api/guardian", "Search", c -> {
+						aSearchSchoolGuardian(siteRequest, false, true, false, "/api/guardian", "Search", c -> {
 							if(c.succeeded()) {
 								SearchList<SchoolGuardian> listSchoolGuardian = c.result();
 								searchSchoolGuardianResponse(listSchoolGuardian, d -> {
@@ -2200,7 +2200,7 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 			{
 				userSchoolGuardian(siteRequest, b -> {
 					if(b.succeeded()) {
-						aSearchSchoolGuardian(siteRequest, false, true, "/api/admin/guardian", "AdminSearch", c -> {
+						aSearchSchoolGuardian(siteRequest, false, true, false, "/api/admin/guardian", "AdminSearch", c -> {
 							if(c.succeeded()) {
 								SearchList<SchoolGuardian> listSchoolGuardian = c.result();
 								adminsearchSchoolGuardianResponse(listSchoolGuardian, d -> {
@@ -2315,7 +2315,7 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 			{
 				userSchoolGuardian(siteRequest, b -> {
 					if(b.succeeded()) {
-						aSearchSchoolGuardian(siteRequest, false, true, "/guardian", "SearchPage", c -> {
+						aSearchSchoolGuardian(siteRequest, false, true, false, "/guardian", "SearchPage", c -> {
 							if(c.succeeded()) {
 								SearchList<SchoolGuardian> listSchoolGuardian = c.result();
 								searchpageSchoolGuardianResponse(listSchoolGuardian, d -> {
@@ -2955,7 +2955,7 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 		}
 	}
 
-	public void aSearchSchoolGuardian(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, String uri, String apiMethod, Handler<AsyncResult<SearchList<SchoolGuardian>>> eventHandler) {
+	public void aSearchSchoolGuardian(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, Boolean modify, String uri, String apiMethod, Handler<AsyncResult<SearchList<SchoolGuardian>>> eventHandler) {
 		try {
 			OperationRequest operationRequest = siteRequest.getOperationRequest();
 			String entityListStr = siteRequest.getOperationRequest().getParams().getJsonObject("query").getString("fl");
@@ -2976,9 +2976,12 @@ public class SchoolGuardianEnUSGenApiServiceImpl implements SchoolGuardianEnUSGe
 			}
 
 			List<String> roles = Arrays.asList("SiteManager");
+			List<String> roleLires = Arrays.asList("");
 			if(
 					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
 					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
+					&& (modify || !CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roleLires))
+					&& (modify || !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roleLires))
 					) {
 				searchList.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionIdBefore()).orElse("-----"))
 						+ " OR userKeys_indexed_longs:" + Optional.ofNullable(siteRequest.getUserKey()).orElse(0L));

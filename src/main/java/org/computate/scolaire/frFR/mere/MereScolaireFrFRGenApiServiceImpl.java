@@ -888,7 +888,7 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 								executeurTravailleur.executeBlocking(
 									blockingCodeHandler -> {
 										try {
-											rechercheMereScolaire(requeteSite, false, true, "/api/mere/copie", "PUTCopie", d -> {
+											rechercheMereScolaire(requeteSite, false, true, true, "/api/mere/copie", "PUTCopie", d -> {
 												if(d.succeeded()) {
 													ListeRecherche<MereScolaire> listeMereScolaire = d.result();
 													RequeteApi requeteApi = new RequeteApi();
@@ -1325,7 +1325,7 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 								executeurTravailleur.executeBlocking(
 									blockingCodeHandler -> {
 										try {
-											rechercheMereScolaire(requeteSite, false, true, "/api/mere", "PATCH", d -> {
+											rechercheMereScolaire(requeteSite, false, true, true, "/api/mere", "PATCH", d -> {
 												if(d.succeeded()) {
 													ListeRecherche<MereScolaire> listeMereScolaire = d.result();
 
@@ -2182,7 +2182,7 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 			{
 				utilisateurMereScolaire(requeteSite, b -> {
 					if(b.succeeded()) {
-						rechercheMereScolaire(requeteSite, false, true, "/api/mere/{id}", "GET", c -> {
+						rechercheMereScolaire(requeteSite, false, true, false, "/api/mere/{id}", "GET", c -> {
 							if(c.succeeded()) {
 								ListeRecherche<MereScolaire> listeMereScolaire = c.result();
 								getMereScolaireReponse(listeMereScolaire, d -> {
@@ -2252,7 +2252,7 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 			{
 				utilisateurMereScolaire(requeteSite, b -> {
 					if(b.succeeded()) {
-						rechercheMereScolaire(requeteSite, false, true, "/api/mere", "Recherche", c -> {
+						rechercheMereScolaire(requeteSite, false, true, false, "/api/mere", "Recherche", c -> {
 							if(c.succeeded()) {
 								ListeRecherche<MereScolaire> listeMereScolaire = c.result();
 								rechercheMereScolaireReponse(listeMereScolaire, d -> {
@@ -2362,7 +2362,7 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 			{
 				utilisateurMereScolaire(requeteSite, b -> {
 					if(b.succeeded()) {
-						rechercheMereScolaire(requeteSite, false, true, "/api/admin/mere", "RechercheAdmin", c -> {
+						rechercheMereScolaire(requeteSite, false, true, false, "/api/admin/mere", "RechercheAdmin", c -> {
 							if(c.succeeded()) {
 								ListeRecherche<MereScolaire> listeMereScolaire = c.result();
 								rechercheadminMereScolaireReponse(listeMereScolaire, d -> {
@@ -2477,7 +2477,7 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 			{
 				utilisateurMereScolaire(requeteSite, b -> {
 					if(b.succeeded()) {
-						rechercheMereScolaire(requeteSite, false, true, "/mere", "PageRecherche", c -> {
+						rechercheMereScolaire(requeteSite, false, true, false, "/mere", "PageRecherche", c -> {
 							if(c.succeeded()) {
 								ListeRecherche<MereScolaire> listeMereScolaire = c.result();
 								pagerechercheMereScolaireReponse(listeMereScolaire, d -> {
@@ -3117,7 +3117,7 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 		}
 	}
 
-	public void rechercheMereScolaire(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, String uri, String apiMethode, Handler<AsyncResult<ListeRecherche<MereScolaire>>> gestionnaireEvenements) {
+	public void rechercheMereScolaire(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, Boolean modifier, String uri, String apiMethode, Handler<AsyncResult<ListeRecherche<MereScolaire>>> gestionnaireEvenements) {
 		try {
 			OperationRequest operationRequete = requeteSite.getOperationRequete();
 			String entiteListeStr = requeteSite.getOperationRequete().getParams().getJsonObject("query").getString("fl");
@@ -3138,9 +3138,12 @@ public class MereScolaireFrFRGenApiServiceImpl implements MereScolaireFrFRGenApi
 			}
 
 			List<String> roles = Arrays.asList("SiteManager");
+			List<String> roleLires = Arrays.asList("");
 			if(
 					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
 					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+					&& (modifier || !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roleLires))
+					&& (modifier || !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roleLires))
 					) {
 				listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionIdAvant()).orElse("-----"))
 						+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(0L));

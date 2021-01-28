@@ -593,7 +593,7 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 								executeurTravailleur.executeBlocking(
 									blockingCodeHandler -> {
 										try {
-											rechercheEcole(requeteSite, false, true, "/api/ecole", "PATCH", d -> {
+											rechercheEcole(requeteSite, false, true, true, "/api/ecole", "PATCH", d -> {
 												if(d.succeeded()) {
 													ListeRecherche<Ecole> listeEcole = d.result();
 
@@ -1558,7 +1558,7 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 
 				utilisateurEcole(requeteSite, b -> {
 					if(b.succeeded()) {
-						rechercheEcole(requeteSite, false, true, "/api/ecole/{id}", "GET", c -> {
+						rechercheEcole(requeteSite, false, true, false, "/api/ecole/{id}", "GET", c -> {
 							if(c.succeeded()) {
 								ListeRecherche<Ecole> listeEcole = c.result();
 								getEcoleReponse(listeEcole, d -> {
@@ -1648,7 +1648,7 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 
 				utilisateurEcole(requeteSite, b -> {
 					if(b.succeeded()) {
-						rechercheEcole(requeteSite, false, true, "/api/ecole", "Recherche", c -> {
+						rechercheEcole(requeteSite, false, true, false, "/api/ecole", "Recherche", c -> {
 							if(c.succeeded()) {
 								ListeRecherche<Ecole> listeEcole = c.result();
 								rechercheEcoleReponse(listeEcole, d -> {
@@ -2161,7 +2161,7 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 								executeurTravailleur.executeBlocking(
 									blockingCodeHandler -> {
 										try {
-											rechercheEcole(requeteSite, false, true, "/api/ecole/copie", "PUTCopie", d -> {
+											rechercheEcole(requeteSite, false, true, true, "/api/ecole/copie", "PUTCopie", d -> {
 												if(d.succeeded()) {
 													ListeRecherche<Ecole> listeEcole = d.result();
 													RequeteApi requeteApi = new RequeteApi();
@@ -2621,7 +2621,7 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 
 				utilisateurEcole(requeteSite, b -> {
 					if(b.succeeded()) {
-						rechercheEcole(requeteSite, false, true, "/ecole", "PageRecherche", c -> {
+						rechercheEcole(requeteSite, false, true, false, "/ecole", "PageRecherche", c -> {
 							if(c.succeeded()) {
 								ListeRecherche<Ecole> listeEcole = c.result();
 								pagerechercheEcoleReponse(listeEcole, d -> {
@@ -3261,7 +3261,7 @@ public class EcoleFrFRGenApiServiceImpl implements EcoleFrFRGenApiService {
 		}
 	}
 
-	public void rechercheEcole(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, String uri, String apiMethode, Handler<AsyncResult<ListeRecherche<Ecole>>> gestionnaireEvenements) {
+	public void rechercheEcole(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, Boolean modifier, String uri, String apiMethode, Handler<AsyncResult<ListeRecherche<Ecole>>> gestionnaireEvenements) {
 		try {
 			OperationRequest operationRequete = requeteSite.getOperationRequete();
 			String entiteListeStr = requeteSite.getOperationRequete().getParams().getJsonObject("query").getString("fl");

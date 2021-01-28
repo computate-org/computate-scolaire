@@ -66,7 +66,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 	protected static final Logger LOGGER = LoggerFactory.getLogger(PaiementScolaire.class);
 
 	public static final List<String> ROLES = Arrays.asList("SiteAdmin");
-	public static final List<String> ROLE_READS = Arrays.asList("User");
+	public static final List<String> ROLE_READS = Arrays.asList("SiteManager");
 
 	public static final String PaiementScolaire_UnNom = "un paiement";
 	public static final String PaiementScolaire_Ce = "ce ";
@@ -290,14 +290,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 				fg();
 
 		} else {
-			if(
-					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLE_READS)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLE_READS)
-					) {
 				e("span").a("class", "varPaiementScolaire", pk, "InscriptionCle ").f().sx(htmInscriptionCle()).g("span");
-			}
 		}
 	}
 
@@ -3513,14 +3506,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			}
 
 		} else {
-			if(
-					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLE_READS)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLE_READS)
-					) {
 				e("span").a("class", "varPaiementScolaire", pk, "InscriptionPaimentChaqueMois ").f().sx(htmInscriptionPaimentChaqueMois()).g("span");
-			}
 		}
 	}
 
@@ -3647,14 +3633,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			.fg();
 
 		} else {
-			if(
-					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLE_READS)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLE_READS)
-					) {
 				e("span").a("class", "varPaiementScolaire", pk, "PaiementDescription ").f().sx(htmPaiementDescription()).g("span");
-			}
 		}
 	}
 
@@ -3808,14 +3787,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			}
 			fg();
 		} else {
-			if(
-					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLE_READS)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLE_READS)
-					) {
 				e("span").a("class", "varPaiementScolaire", pk, "PaiementDate ").f().sx(htmPaiementDate()).g("span");
-			}
 		}
 	}
 
@@ -3968,14 +3940,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			}
 			fg();
 		} else {
-			if(
-					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLE_READS)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLE_READS)
-					) {
 				e("span").a("class", "varPaiementScolaire", pk, "FraisRetardDate ").f().sx(htmFraisRetardDate()).g("span");
-			}
 		}
 	}
 
@@ -4218,14 +4183,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			.fg();
 
 		} else {
-			if(
-					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLE_READS)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLE_READS)
-					) {
 				e("span").a("class", "varPaiementScolaire", pk, "PaiementMontant ").f().sx(htmPaiementMontant()).g("span");
-			}
 		}
 	}
 
@@ -4385,14 +4343,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			}
 
 		} else {
-			if(
-					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLE_READS)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLE_READS)
-					) {
 				e("span").a("class", "varPaiementScolaire", pk, "PaiementEspeces ").f().sx(htmPaiementEspeces()).g("span");
-			}
 		}
 	}
 
@@ -4536,14 +4487,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			}
 
 		} else {
-			if(
-					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLE_READS)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLE_READS)
-					) {
 				e("span").a("class", "varPaiementScolaire", pk, "PaiementCheque ").f().sx(htmPaiementCheque()).g("span");
-			}
 		}
 	}
 
@@ -4687,14 +4631,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			}
 
 		} else {
-			if(
-					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLE_READS)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLE_READS)
-					) {
 				e("span").a("class", "varPaiementScolaire", pk, "PaiementECheck ").f().sx(htmPaiementECheck()).g("span");
-			}
 		}
 	}
 
@@ -4838,14 +4775,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			}
 
 		} else {
-			if(
-					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLE_READS)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLE_READS)
-					) {
 				e("span").a("class", "varPaiementScolaire", pk, "PaiementSysteme ").f().sx(htmPaiementSysteme()).g("span");
-			}
 		}
 	}
 
@@ -5048,14 +4978,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			.fg();
 
 		} else {
-			if(
-					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLE_READS)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLE_READS)
-					) {
 				e("span").a("class", "varPaiementScolaire", pk, "PaiementPar ").f().sx(htmPaiementPar()).g("span");
-			}
 		}
 	}
 
@@ -5198,14 +5121,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			.fg();
 
 		} else {
-			if(
-					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLE_READS)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLE_READS)
-					) {
 				e("span").a("class", "varPaiementScolaire", pk, "TransactionId ").f().sx(htmTransactionId()).g("span");
-			}
 		}
 	}
 
@@ -5348,14 +5264,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			.fg();
 
 		} else {
-			if(
-					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLE_READS)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLE_READS)
-					) {
 				e("span").a("class", "varPaiementScolaire", pk, "CustomerProfileId ").f().sx(htmCustomerProfileId()).g("span");
-			}
 		}
 	}
 
@@ -5498,14 +5407,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			.fg();
 
 		} else {
-			if(
-					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLE_READS)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLE_READS)
-					) {
 				e("span").a("class", "varPaiementScolaire", pk, "TransactionStatus ").f().sx(htmTransactionStatus()).g("span");
-			}
 		}
 	}
 
@@ -5665,14 +5567,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			}
 
 		} else {
-			if(
-					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLE_READS)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLE_READS)
-					) {
 				e("span").a("class", "varPaiementScolaire", pk, "PaiementRecu ").f().sx(htmPaiementRecu()).g("span");
-			}
 		}
 	}
 
@@ -5816,14 +5711,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			.fg();
 
 		} else {
-			if(
-					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLE_READS)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLE_READS)
-					) {
 				e("span").a("class", "varPaiementScolaire", pk, "FraisMontant ").f().sx(htmFraisMontant()).g("span");
-			}
 		}
 	}
 
@@ -5983,14 +5871,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			}
 
 		} else {
-			if(
-					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLE_READS)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLE_READS)
-					) {
 				e("span").a("class", "varPaiementScolaire", pk, "FraisPremierDernier ").f().sx(htmFraisPremierDernier()).g("span");
-			}
 		}
 	}
 
@@ -6134,14 +6015,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			}
 
 		} else {
-			if(
-					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLE_READS)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLE_READS)
-					) {
 				e("span").a("class", "varPaiementScolaire", pk, "FraisInscription ").f().sx(htmFraisInscription()).g("span");
-			}
 		}
 	}
 
@@ -6285,14 +6159,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			}
 
 		} else {
-			if(
-					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLE_READS)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLE_READS)
-					) {
 				e("span").a("class", "varPaiementScolaire", pk, "FraisMois ").f().sx(htmFraisMois()).g("span");
-			}
 		}
 	}
 
@@ -6436,14 +6303,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			}
 
 		} else {
-			if(
-					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLE_READS)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLE_READS)
-					) {
 				e("span").a("class", "varPaiementScolaire", pk, "FraisRetard ").f().sx(htmFraisRetard()).g("span");
-			}
 		}
 	}
 
@@ -7212,14 +7072,7 @@ public abstract class PaiementScolaireGen<DEV> extends Cluster {
 			.fg();
 
 		} else {
-			if(
-					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLE_READS)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLE_READS)
-					) {
 				e("span").a("class", "varPaiementScolaire", pk, "PaiementNomCourt ").f().sx(htmPaiementNomCourt()).g("span");
-			}
 		}
 	}
 

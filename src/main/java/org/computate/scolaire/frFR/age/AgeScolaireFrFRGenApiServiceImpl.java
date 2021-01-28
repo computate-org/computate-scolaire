@@ -916,7 +916,7 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 								executeurTravailleur.executeBlocking(
 									blockingCodeHandler -> {
 										try {
-											rechercheAgeScolaire(requeteSite, false, true, "/api/age/copie", "PUTCopie", d -> {
+											rechercheAgeScolaire(requeteSite, false, true, true, "/api/age/copie", "PUTCopie", d -> {
 												if(d.succeeded()) {
 													ListeRecherche<AgeScolaire> listeAgeScolaire = d.result();
 													RequeteApi requeteApi = new RequeteApi();
@@ -1298,7 +1298,7 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 								executeurTravailleur.executeBlocking(
 									blockingCodeHandler -> {
 										try {
-											rechercheAgeScolaire(requeteSite, false, true, "/api/age", "PATCH", d -> {
+											rechercheAgeScolaire(requeteSite, false, true, true, "/api/age", "PATCH", d -> {
 												if(d.succeeded()) {
 													ListeRecherche<AgeScolaire> listeAgeScolaire = d.result();
 
@@ -2045,7 +2045,7 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 
 				utilisateurAgeScolaire(requeteSite, b -> {
 					if(b.succeeded()) {
-						rechercheAgeScolaire(requeteSite, false, true, "/api/age/{id}", "GET", c -> {
+						rechercheAgeScolaire(requeteSite, false, true, false, "/api/age/{id}", "GET", c -> {
 							if(c.succeeded()) {
 								ListeRecherche<AgeScolaire> listeAgeScolaire = c.result();
 								getAgeScolaireReponse(listeAgeScolaire, d -> {
@@ -2135,7 +2135,7 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 
 				utilisateurAgeScolaire(requeteSite, b -> {
 					if(b.succeeded()) {
-						rechercheAgeScolaire(requeteSite, false, true, "/api/age", "Recherche", c -> {
+						rechercheAgeScolaire(requeteSite, false, true, false, "/api/age", "Recherche", c -> {
 							if(c.succeeded()) {
 								ListeRecherche<AgeScolaire> listeAgeScolaire = c.result();
 								rechercheAgeScolaireReponse(listeAgeScolaire, d -> {
@@ -2270,7 +2270,7 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 
 				utilisateurAgeScolaire(requeteSite, b -> {
 					if(b.succeeded()) {
-						rechercheAgeScolaire(requeteSite, false, true, "/age", "PageRecherche", c -> {
+						rechercheAgeScolaire(requeteSite, false, true, false, "/age", "PageRecherche", c -> {
 							if(c.succeeded()) {
 								ListeRecherche<AgeScolaire> listeAgeScolaire = c.result();
 								pagerechercheAgeScolaireReponse(listeAgeScolaire, d -> {
@@ -2910,7 +2910,7 @@ public class AgeScolaireFrFRGenApiServiceImpl implements AgeScolaireFrFRGenApiSe
 		}
 	}
 
-	public void rechercheAgeScolaire(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, String uri, String apiMethode, Handler<AsyncResult<ListeRecherche<AgeScolaire>>> gestionnaireEvenements) {
+	public void rechercheAgeScolaire(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, Boolean modifier, String uri, String apiMethode, Handler<AsyncResult<ListeRecherche<AgeScolaire>>> gestionnaireEvenements) {
 		try {
 			OperationRequest operationRequete = requeteSite.getOperationRequete();
 			String entiteListeStr = requeteSite.getOperationRequete().getParams().getJsonObject("query").getString("fl");

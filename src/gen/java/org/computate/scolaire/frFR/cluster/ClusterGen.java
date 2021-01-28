@@ -63,7 +63,7 @@ public abstract class ClusterGen<DEV> extends Object {
 	protected static final Logger LOGGER = LoggerFactory.getLogger(Cluster.class);
 
 	public static final List<String> ROLES = Arrays.asList("SiteManager");
-	public static final List<String> ROLE_READS = Arrays.asList("User");
+	public static final List<String> ROLE_READS = Arrays.asList("SiteManager");
 
 	public static final String Cluster_UnNom = "un cluster";
 	public static final String Cluster_Ce = "ce ";

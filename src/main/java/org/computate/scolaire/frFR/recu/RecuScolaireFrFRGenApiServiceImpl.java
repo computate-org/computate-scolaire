@@ -860,7 +860,7 @@ public class RecuScolaireFrFRGenApiServiceImpl implements RecuScolaireFrFRGenApi
 								executeurTravailleur.executeBlocking(
 									blockingCodeHandler -> {
 										try {
-											rechercheRecuScolaire(requeteSite, false, true, "/api/recu/copie", "PUTCopie", d -> {
+											rechercheRecuScolaire(requeteSite, false, true, true, "/api/recu/copie", "PUTCopie", d -> {
 												if(d.succeeded()) {
 													ListeRecherche<RecuScolaire> listeRecuScolaire = d.result();
 													RequeteApi requeteApi = new RequeteApi();
@@ -1220,7 +1220,7 @@ public class RecuScolaireFrFRGenApiServiceImpl implements RecuScolaireFrFRGenApi
 								executeurTravailleur.executeBlocking(
 									blockingCodeHandler -> {
 										try {
-											rechercheRecuScolaire(requeteSite, false, true, "/api/recu", "PATCH", d -> {
+											rechercheRecuScolaire(requeteSite, false, true, true, "/api/recu", "PATCH", d -> {
 												if(d.succeeded()) {
 													ListeRecherche<RecuScolaire> listeRecuScolaire = d.result();
 
@@ -1769,7 +1769,7 @@ public class RecuScolaireFrFRGenApiServiceImpl implements RecuScolaireFrFRGenApi
 
 				utilisateurRecuScolaire(requeteSite, b -> {
 					if(b.succeeded()) {
-						rechercheRecuScolaire(requeteSite, false, true, "/api/recu/{id}", "GET", c -> {
+						rechercheRecuScolaire(requeteSite, false, true, false, "/api/recu/{id}", "GET", c -> {
 							if(c.succeeded()) {
 								ListeRecherche<RecuScolaire> listeRecuScolaire = c.result();
 								getRecuScolaireReponse(listeRecuScolaire, d -> {
@@ -1859,7 +1859,7 @@ public class RecuScolaireFrFRGenApiServiceImpl implements RecuScolaireFrFRGenApi
 
 				utilisateurRecuScolaire(requeteSite, b -> {
 					if(b.succeeded()) {
-						rechercheRecuScolaire(requeteSite, false, true, "/api/recu", "Recherche", c -> {
+						rechercheRecuScolaire(requeteSite, false, true, false, "/api/recu", "Recherche", c -> {
 							if(c.succeeded()) {
 								ListeRecherche<RecuScolaire> listeRecuScolaire = c.result();
 								rechercheRecuScolaireReponse(listeRecuScolaire, d -> {
@@ -1994,7 +1994,7 @@ public class RecuScolaireFrFRGenApiServiceImpl implements RecuScolaireFrFRGenApi
 
 				utilisateurRecuScolaire(requeteSite, b -> {
 					if(b.succeeded()) {
-						rechercheRecuScolaire(requeteSite, false, true, "/paiement", "PageRecherche", c -> {
+						rechercheRecuScolaire(requeteSite, false, true, false, "/paiement", "PageRecherche", c -> {
 							if(c.succeeded()) {
 								ListeRecherche<RecuScolaire> listeRecuScolaire = c.result();
 								pagerechercheRecuScolaireReponse(listeRecuScolaire, d -> {
@@ -2634,7 +2634,7 @@ public class RecuScolaireFrFRGenApiServiceImpl implements RecuScolaireFrFRGenApi
 		}
 	}
 
-	public void rechercheRecuScolaire(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, String uri, String apiMethode, Handler<AsyncResult<ListeRecherche<RecuScolaire>>> gestionnaireEvenements) {
+	public void rechercheRecuScolaire(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, Boolean modifier, String uri, String apiMethode, Handler<AsyncResult<ListeRecherche<RecuScolaire>>> gestionnaireEvenements) {
 		try {
 			OperationRequest operationRequete = requeteSite.getOperationRequete();
 			String entiteListeStr = requeteSite.getOperationRequete().getParams().getJsonObject("query").getString("fl");

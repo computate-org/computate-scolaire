@@ -881,7 +881,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 								executeurTravailleur.executeBlocking(
 									blockingCodeHandler -> {
 										try {
-											rechercheSessionScolaire(requeteSite, false, true, "/api/session/copie", "PUTCopie", d -> {
+											rechercheSessionScolaire(requeteSite, false, true, true, "/api/session/copie", "PUTCopie", d -> {
 												if(d.succeeded()) {
 													ListeRecherche<SessionScolaire> listeSessionScolaire = d.result();
 													RequeteApi requeteApi = new RequeteApi();
@@ -1247,7 +1247,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 								executeurTravailleur.executeBlocking(
 									blockingCodeHandler -> {
 										try {
-											rechercheSessionScolaire(requeteSite, false, true, "/api/session", "PATCH", d -> {
+											rechercheSessionScolaire(requeteSite, false, true, true, "/api/session", "PATCH", d -> {
 												if(d.succeeded()) {
 													ListeRecherche<SessionScolaire> listeSessionScolaire = d.result();
 
@@ -1926,7 +1926,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 
 				utilisateurSessionScolaire(requeteSite, b -> {
 					if(b.succeeded()) {
-						rechercheSessionScolaire(requeteSite, false, true, "/api/session/{id}", "GET", c -> {
+						rechercheSessionScolaire(requeteSite, false, true, false, "/api/session/{id}", "GET", c -> {
 							if(c.succeeded()) {
 								ListeRecherche<SessionScolaire> listeSessionScolaire = c.result();
 								getSessionScolaireReponse(listeSessionScolaire, d -> {
@@ -2016,7 +2016,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 
 				utilisateurSessionScolaire(requeteSite, b -> {
 					if(b.succeeded()) {
-						rechercheSessionScolaire(requeteSite, false, true, "/api/session", "Recherche", c -> {
+						rechercheSessionScolaire(requeteSite, false, true, false, "/api/session", "Recherche", c -> {
 							if(c.succeeded()) {
 								ListeRecherche<SessionScolaire> listeSessionScolaire = c.result();
 								rechercheSessionScolaireReponse(listeSessionScolaire, d -> {
@@ -2151,7 +2151,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 
 				utilisateurSessionScolaire(requeteSite, b -> {
 					if(b.succeeded()) {
-						rechercheSessionScolaire(requeteSite, false, true, "/session", "PageRecherche", c -> {
+						rechercheSessionScolaire(requeteSite, false, true, false, "/session", "PageRecherche", c -> {
 							if(c.succeeded()) {
 								ListeRecherche<SessionScolaire> listeSessionScolaire = c.result();
 								pagerechercheSessionScolaireReponse(listeSessionScolaire, d -> {
@@ -2791,7 +2791,7 @@ public class SessionScolaireFrFRGenApiServiceImpl implements SessionScolaireFrFR
 		}
 	}
 
-	public void rechercheSessionScolaire(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, String uri, String apiMethode, Handler<AsyncResult<ListeRecherche<SessionScolaire>>> gestionnaireEvenements) {
+	public void rechercheSessionScolaire(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, Boolean modifier, String uri, String apiMethode, Handler<AsyncResult<ListeRecherche<SessionScolaire>>> gestionnaireEvenements) {
 		try {
 			OperationRequest operationRequete = requeteSite.getOperationRequete();
 			String entiteListeStr = requeteSite.getOperationRequete().getParams().getJsonObject("query").getString("fl");

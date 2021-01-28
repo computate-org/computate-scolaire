@@ -14,13 +14,11 @@ import org.computate.scolaire.enUS.enrollment.SchoolEnrollment;
  * Color: gray
  * IconGroup: regular
  * IconName: user-cog
- * Role.enUS: SiteAdmin
- * Role.enUS: SiteAdmin
+ * Role.enUS: SiteManager
  * ApiUri.enUS: /api/user
  * ApiTag.enUS: User
  * AName.enUS: a site user
- * Role.frFR: SiteAdmin
- * Role.frFR: SiteAdmin
+ * Role.frFR: SiteManager
  * ApiUri.frFR: /api/utilisateur
  * ApiTag.frFR: Utilisateur
  * AName.frFR: un utilisateur du site

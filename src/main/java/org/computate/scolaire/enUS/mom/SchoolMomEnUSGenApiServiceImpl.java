@@ -888,7 +888,7 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 								workerExecutor.executeBlocking(
 									blockingCodeHandler -> {
 										try {
-											aSearchSchoolMom(siteRequest, false, true, "/api/mom/copy", "PUTCopy", d -> {
+											aSearchSchoolMom(siteRequest, false, true, true, "/api/mom/copy", "PUTCopy", d -> {
 												if(d.succeeded()) {
 													SearchList<SchoolMom> listSchoolMom = d.result();
 													ApiRequest apiRequest = new ApiRequest();
@@ -1325,7 +1325,7 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 								workerExecutor.executeBlocking(
 									blockingCodeHandler -> {
 										try {
-											aSearchSchoolMom(siteRequest, false, true, "/api/mom", "PATCH", d -> {
+											aSearchSchoolMom(siteRequest, false, true, true, "/api/mom", "PATCH", d -> {
 												if(d.succeeded()) {
 													SearchList<SchoolMom> listSchoolMom = d.result();
 
@@ -2182,7 +2182,7 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 			{
 				userSchoolMom(siteRequest, b -> {
 					if(b.succeeded()) {
-						aSearchSchoolMom(siteRequest, false, true, "/api/mom/{id}", "GET", c -> {
+						aSearchSchoolMom(siteRequest, false, true, false, "/api/mom/{id}", "GET", c -> {
 							if(c.succeeded()) {
 								SearchList<SchoolMom> listSchoolMom = c.result();
 								getSchoolMomResponse(listSchoolMom, d -> {
@@ -2252,7 +2252,7 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 			{
 				userSchoolMom(siteRequest, b -> {
 					if(b.succeeded()) {
-						aSearchSchoolMom(siteRequest, false, true, "/api/mom", "Search", c -> {
+						aSearchSchoolMom(siteRequest, false, true, false, "/api/mom", "Search", c -> {
 							if(c.succeeded()) {
 								SearchList<SchoolMom> listSchoolMom = c.result();
 								searchSchoolMomResponse(listSchoolMom, d -> {
@@ -2362,7 +2362,7 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 			{
 				userSchoolMom(siteRequest, b -> {
 					if(b.succeeded()) {
-						aSearchSchoolMom(siteRequest, false, true, "/api/admin/mom", "AdminSearch", c -> {
+						aSearchSchoolMom(siteRequest, false, true, false, "/api/admin/mom", "AdminSearch", c -> {
 							if(c.succeeded()) {
 								SearchList<SchoolMom> listSchoolMom = c.result();
 								adminsearchSchoolMomResponse(listSchoolMom, d -> {
@@ -2477,7 +2477,7 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 			{
 				userSchoolMom(siteRequest, b -> {
 					if(b.succeeded()) {
-						aSearchSchoolMom(siteRequest, false, true, "/mom", "SearchPage", c -> {
+						aSearchSchoolMom(siteRequest, false, true, false, "/mom", "SearchPage", c -> {
 							if(c.succeeded()) {
 								SearchList<SchoolMom> listSchoolMom = c.result();
 								searchpageSchoolMomResponse(listSchoolMom, d -> {
@@ -3117,7 +3117,7 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 		}
 	}
 
-	public void aSearchSchoolMom(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, String uri, String apiMethod, Handler<AsyncResult<SearchList<SchoolMom>>> eventHandler) {
+	public void aSearchSchoolMom(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, Boolean modify, String uri, String apiMethod, Handler<AsyncResult<SearchList<SchoolMom>>> eventHandler) {
 		try {
 			OperationRequest operationRequest = siteRequest.getOperationRequest();
 			String entityListStr = siteRequest.getOperationRequest().getParams().getJsonObject("query").getString("fl");
@@ -3138,9 +3138,12 @@ public class SchoolMomEnUSGenApiServiceImpl implements SchoolMomEnUSGenApiServic
 			}
 
 			List<String> roles = Arrays.asList("SiteManager");
+			List<String> roleLires = Arrays.asList("");
 			if(
 					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
 					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
+					&& (modify || !CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roleLires))
+					&& (modify || !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roleLires))
 					) {
 				searchList.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionIdBefore()).orElse("-----"))
 						+ " OR userKeys_indexed_longs:" + Optional.ofNullable(siteRequest.getUserKey()).orElse(0L));

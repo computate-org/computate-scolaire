@@ -916,7 +916,7 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 								workerExecutor.executeBlocking(
 									blockingCodeHandler -> {
 										try {
-											aSearchSchoolAge(siteRequest, false, true, "/api/age/copy", "PUTCopy", d -> {
+											aSearchSchoolAge(siteRequest, false, true, true, "/api/age/copy", "PUTCopy", d -> {
 												if(d.succeeded()) {
 													SearchList<SchoolAge> listSchoolAge = d.result();
 													ApiRequest apiRequest = new ApiRequest();
@@ -1298,7 +1298,7 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 								workerExecutor.executeBlocking(
 									blockingCodeHandler -> {
 										try {
-											aSearchSchoolAge(siteRequest, false, true, "/api/age", "PATCH", d -> {
+											aSearchSchoolAge(siteRequest, false, true, true, "/api/age", "PATCH", d -> {
 												if(d.succeeded()) {
 													SearchList<SchoolAge> listSchoolAge = d.result();
 
@@ -2045,7 +2045,7 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 
 				userSchoolAge(siteRequest, b -> {
 					if(b.succeeded()) {
-						aSearchSchoolAge(siteRequest, false, true, "/api/age/{id}", "GET", c -> {
+						aSearchSchoolAge(siteRequest, false, true, false, "/api/age/{id}", "GET", c -> {
 							if(c.succeeded()) {
 								SearchList<SchoolAge> listSchoolAge = c.result();
 								getSchoolAgeResponse(listSchoolAge, d -> {
@@ -2135,7 +2135,7 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 
 				userSchoolAge(siteRequest, b -> {
 					if(b.succeeded()) {
-						aSearchSchoolAge(siteRequest, false, true, "/api/age", "Search", c -> {
+						aSearchSchoolAge(siteRequest, false, true, false, "/api/age", "Search", c -> {
 							if(c.succeeded()) {
 								SearchList<SchoolAge> listSchoolAge = c.result();
 								searchSchoolAgeResponse(listSchoolAge, d -> {
@@ -2270,7 +2270,7 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 
 				userSchoolAge(siteRequest, b -> {
 					if(b.succeeded()) {
-						aSearchSchoolAge(siteRequest, false, true, "/age", "SearchPage", c -> {
+						aSearchSchoolAge(siteRequest, false, true, false, "/age", "SearchPage", c -> {
 							if(c.succeeded()) {
 								SearchList<SchoolAge> listSchoolAge = c.result();
 								searchpageSchoolAgeResponse(listSchoolAge, d -> {
@@ -2910,7 +2910,7 @@ public class SchoolAgeEnUSGenApiServiceImpl implements SchoolAgeEnUSGenApiServic
 		}
 	}
 
-	public void aSearchSchoolAge(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, String uri, String apiMethod, Handler<AsyncResult<SearchList<SchoolAge>>> eventHandler) {
+	public void aSearchSchoolAge(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, Boolean modify, String uri, String apiMethod, Handler<AsyncResult<SearchList<SchoolAge>>> eventHandler) {
 		try {
 			OperationRequest operationRequest = siteRequest.getOperationRequest();
 			String entityListStr = siteRequest.getOperationRequest().getParams().getJsonObject("query").getString("fl");

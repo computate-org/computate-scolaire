@@ -35,8 +35,6 @@ import org.computate.scolaire.frFR.inscription.InscriptionScolaire;
  * ApiUriSearchPage.enUS: /user
  * 
  * MotCle: classeNomSimpleUtilisateurSite
- * Role.frFR: SiteAdmin
- * Role.enUS: SiteAdmin
  * Filtre: utilisateurId
  * Sauvegarde: true
  * 
@@ -51,8 +49,8 @@ import org.computate.scolaire.frFR.inscription.InscriptionScolaire;
  * NomVar.enUS: user
  * 
  * RoleUtilisateur: true
- * Role.frFR: SiteAdmin
- * Role.enUS: SiteAdmin
+ * Role.frFR: SiteManager
+ * Role.enUS: SiteManager
  */      
 public class UtilisateurSite extends UtilisateurSiteGen<Cluster> {  
 

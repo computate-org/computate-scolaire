@@ -888,7 +888,7 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 								workerExecutor.executeBlocking(
 									blockingCodeHandler -> {
 										try {
-											aSearchSchoolDad(siteRequest, false, true, "/api/dad/copy", "PUTCopy", d -> {
+											aSearchSchoolDad(siteRequest, false, true, true, "/api/dad/copy", "PUTCopy", d -> {
 												if(d.succeeded()) {
 													SearchList<SchoolDad> listSchoolDad = d.result();
 													ApiRequest apiRequest = new ApiRequest();
@@ -1325,7 +1325,7 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 								workerExecutor.executeBlocking(
 									blockingCodeHandler -> {
 										try {
-											aSearchSchoolDad(siteRequest, false, true, "/api/dad", "PATCH", d -> {
+											aSearchSchoolDad(siteRequest, false, true, true, "/api/dad", "PATCH", d -> {
 												if(d.succeeded()) {
 													SearchList<SchoolDad> listSchoolDad = d.result();
 
@@ -2182,7 +2182,7 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 			{
 				userSchoolDad(siteRequest, b -> {
 					if(b.succeeded()) {
-						aSearchSchoolDad(siteRequest, false, true, "/api/dad/{id}", "GET", c -> {
+						aSearchSchoolDad(siteRequest, false, true, false, "/api/dad/{id}", "GET", c -> {
 							if(c.succeeded()) {
 								SearchList<SchoolDad> listSchoolDad = c.result();
 								getSchoolDadResponse(listSchoolDad, d -> {
@@ -2252,7 +2252,7 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 			{
 				userSchoolDad(siteRequest, b -> {
 					if(b.succeeded()) {
-						aSearchSchoolDad(siteRequest, false, true, "/api/dad", "Search", c -> {
+						aSearchSchoolDad(siteRequest, false, true, false, "/api/dad", "Search", c -> {
 							if(c.succeeded()) {
 								SearchList<SchoolDad> listSchoolDad = c.result();
 								searchSchoolDadResponse(listSchoolDad, d -> {
@@ -2362,7 +2362,7 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 			{
 				userSchoolDad(siteRequest, b -> {
 					if(b.succeeded()) {
-						aSearchSchoolDad(siteRequest, false, true, "/api/admin/dad", "AdminSearch", c -> {
+						aSearchSchoolDad(siteRequest, false, true, false, "/api/admin/dad", "AdminSearch", c -> {
 							if(c.succeeded()) {
 								SearchList<SchoolDad> listSchoolDad = c.result();
 								adminsearchSchoolDadResponse(listSchoolDad, d -> {
@@ -2477,7 +2477,7 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 			{
 				userSchoolDad(siteRequest, b -> {
 					if(b.succeeded()) {
-						aSearchSchoolDad(siteRequest, false, true, "/dad", "SearchPage", c -> {
+						aSearchSchoolDad(siteRequest, false, true, false, "/dad", "SearchPage", c -> {
 							if(c.succeeded()) {
 								SearchList<SchoolDad> listSchoolDad = c.result();
 								searchpageSchoolDadResponse(listSchoolDad, d -> {
@@ -3117,7 +3117,7 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 		}
 	}
 
-	public void aSearchSchoolDad(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, String uri, String apiMethod, Handler<AsyncResult<SearchList<SchoolDad>>> eventHandler) {
+	public void aSearchSchoolDad(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, Boolean modify, String uri, String apiMethod, Handler<AsyncResult<SearchList<SchoolDad>>> eventHandler) {
 		try {
 			OperationRequest operationRequest = siteRequest.getOperationRequest();
 			String entityListStr = siteRequest.getOperationRequest().getParams().getJsonObject("query").getString("fl");
@@ -3138,9 +3138,12 @@ public class SchoolDadEnUSGenApiServiceImpl implements SchoolDadEnUSGenApiServic
 			}
 
 			List<String> roles = Arrays.asList("SiteManager");
+			List<String> roleLires = Arrays.asList("");
 			if(
 					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
 					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
+					&& (modify || !CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roleLires))
+					&& (modify || !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roleLires))
 					) {
 				searchList.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionIdBefore()).orElse("-----"))
 						+ " OR userKeys_indexed_longs:" + Optional.ofNullable(siteRequest.getUserKey()).orElse(0L));

@@ -54,7 +54,7 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 public abstract class SiteUserGen<DEV> extends Cluster {
 	protected static final Logger LOGGER = LoggerFactory.getLogger(SiteUser.class);
 
-	public static final List<String> ROLES = Arrays.asList("SiteAdmin", "SiteAdmin");
+	public static final List<String> ROLES = Arrays.asList("SiteManager");
 	public static final List<String> ROLE_READS = Arrays.asList("");
 
 	public static final String SiteUser_AName = "a site user";

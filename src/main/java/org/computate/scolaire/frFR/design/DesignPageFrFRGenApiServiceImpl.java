@@ -1044,7 +1044,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 								executeurTravailleur.executeBlocking(
 									blockingCodeHandler -> {
 										try {
-											rechercheDesignPage(requeteSite, false, true, "/api/design-page/copie", "PUTCopie", d -> {
+											rechercheDesignPage(requeteSite, false, true, true, "/api/design-page/copie", "PUTCopie", d -> {
 												if(d.succeeded()) {
 													ListeRecherche<DesignPage> listeDesignPage = d.result();
 													RequeteApi requeteApi = new RequeteApi();
@@ -1562,7 +1562,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 								executeurTravailleur.executeBlocking(
 									blockingCodeHandler -> {
 										try {
-											rechercheDesignPage(requeteSite, false, true, "/api/design-page", "PATCH", d -> {
+											rechercheDesignPage(requeteSite, false, true, true, "/api/design-page", "PATCH", d -> {
 												if(d.succeeded()) {
 													ListeRecherche<DesignPage> listeDesignPage = d.result();
 
@@ -2749,7 +2749,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 			{
 				utilisateurDesignPage(requeteSite, b -> {
 					if(b.succeeded()) {
-						rechercheDesignPage(requeteSite, false, true, "/api/design-page/{id}", "GET", c -> {
+						rechercheDesignPage(requeteSite, false, true, false, "/api/design-page/{id}", "GET", c -> {
 							if(c.succeeded()) {
 								ListeRecherche<DesignPage> listeDesignPage = c.result();
 								getDesignPageReponse(listeDesignPage, d -> {
@@ -2819,7 +2819,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 			{
 				utilisateurDesignPage(requeteSite, b -> {
 					if(b.succeeded()) {
-						rechercheDesignPage(requeteSite, false, true, "/api/design-page", "Recherche", c -> {
+						rechercheDesignPage(requeteSite, false, true, false, "/api/design-page", "Recherche", c -> {
 							if(c.succeeded()) {
 								ListeRecherche<DesignPage> listeDesignPage = c.result();
 								rechercheDesignPageReponse(listeDesignPage, d -> {
@@ -2929,7 +2929,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 			{
 				utilisateurDesignPage(requeteSite, b -> {
 					if(b.succeeded()) {
-						rechercheDesignPage(requeteSite, false, true, "/api/admin/design-page", "RechercheAdmin", c -> {
+						rechercheDesignPage(requeteSite, false, true, false, "/api/admin/design-page", "RechercheAdmin", c -> {
 							if(c.succeeded()) {
 								ListeRecherche<DesignPage> listeDesignPage = c.result();
 								rechercheadminDesignPageReponse(listeDesignPage, d -> {
@@ -3044,7 +3044,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 			{
 				utilisateurDesignPage(requeteSite, b -> {
 					if(b.succeeded()) {
-						rechercheDesignPage(requeteSite, false, true, "/design-page", "PageRecherche", c -> {
+						rechercheDesignPage(requeteSite, false, true, false, "/design-page", "PageRecherche", c -> {
 							if(c.succeeded()) {
 								ListeRecherche<DesignPage> listeDesignPage = c.result();
 								pagerechercheDesignPageReponse(listeDesignPage, d -> {
@@ -3139,7 +3139,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 			{
 				utilisateurDesignPage(requeteSite, b -> {
 					if(b.succeeded()) {
-						rechercheDesignPage(requeteSite, false, true, "/page", "DesignAffichagePageRecherche", c -> {
+						rechercheDesignPage(requeteSite, false, true, false, "/page", "DesignAffichagePageRecherche", c -> {
 							if(c.succeeded()) {
 								ListeRecherche<DesignPage> listeDesignPage = c.result();
 								designaffichagepagerechercheDesignPageReponse(listeDesignPage, d -> {
@@ -3234,7 +3234,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 			{
 				utilisateurDesignPage(requeteSite, b -> {
 					if(b.succeeded()) {
-						rechercheDesignPage(requeteSite, false, true, "/pdf", "DesignPdfPageRecherche", c -> {
+						rechercheDesignPage(requeteSite, false, true, false, "/pdf", "DesignPdfPageRecherche", c -> {
 							if(c.succeeded()) {
 								ListeRecherche<DesignPage> listeDesignPage = c.result();
 								designpdfpagerechercheDesignPageReponse(listeDesignPage, d -> {
@@ -3326,7 +3326,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 			{
 				utilisateurDesignPage(requeteSite, b -> {
 					if(b.succeeded()) {
-						rechercheDesignPage(requeteSite, false, true, "/mail", "DesignMailPageRecherche", c -> {
+						rechercheDesignPage(requeteSite, false, true, false, "/mail", "DesignMailPageRecherche", c -> {
 							if(c.succeeded()) {
 								ListeRecherche<DesignPage> listeDesignPage = c.result();
 								designmailpagerechercheDesignPageReponse(listeDesignPage, d -> {
@@ -3418,7 +3418,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 			{
 				utilisateurDesignPage(requeteSite, b -> {
 					if(b.succeeded()) {
-						rechercheDesignPage(requeteSite, false, true, "/", "PageAccueilRecherchePage", c -> {
+						rechercheDesignPage(requeteSite, false, true, false, "/", "PageAccueilRecherchePage", c -> {
 							if(c.succeeded()) {
 								ListeRecherche<DesignPage> listeDesignPage = c.result();
 								pageaccueilrecherchepageDesignPageReponse(listeDesignPage, d -> {
@@ -4058,7 +4058,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 		}
 	}
 
-	public void rechercheDesignPage(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, String uri, String apiMethode, Handler<AsyncResult<ListeRecherche<DesignPage>>> gestionnaireEvenements) {
+	public void rechercheDesignPage(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, Boolean modifier, String uri, String apiMethode, Handler<AsyncResult<ListeRecherche<DesignPage>>> gestionnaireEvenements) {
 		try {
 			OperationRequest operationRequete = requeteSite.getOperationRequete();
 			String entiteListeStr = requeteSite.getOperationRequete().getParams().getJsonObject("query").getString("fl");

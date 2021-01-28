@@ -705,7 +705,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 								workerExecutor.executeBlocking(
 									blockingCodeHandler -> {
 										try {
-											aSearchCluster(siteRequest, false, true, "/api/cluster/copy", "PUTCopy", d -> {
+											aSearchCluster(siteRequest, false, true, true, "/api/cluster/copy", "PUTCopy", d -> {
 												if(d.succeeded()) {
 													SearchList<Cluster> listCluster = d.result();
 													ApiRequest apiRequest = new ApiRequest();
@@ -980,7 +980,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 								workerExecutor.executeBlocking(
 									blockingCodeHandler -> {
 										try {
-											aSearchCluster(siteRequest, false, true, "/api/cluster", "PATCH", d -> {
+											aSearchCluster(siteRequest, false, true, true, "/api/cluster", "PATCH", d -> {
 												if(d.succeeded()) {
 													SearchList<Cluster> listCluster = d.result();
 
@@ -1329,7 +1329,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 			{
 				userCluster(siteRequest, b -> {
 					if(b.succeeded()) {
-						aSearchCluster(siteRequest, false, true, "/api/cluster/{id}", "GET", c -> {
+						aSearchCluster(siteRequest, false, true, false, "/api/cluster/{id}", "GET", c -> {
 							if(c.succeeded()) {
 								SearchList<Cluster> listCluster = c.result();
 								getClusterResponse(listCluster, d -> {
@@ -1399,7 +1399,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 			{
 				userCluster(siteRequest, b -> {
 					if(b.succeeded()) {
-						aSearchCluster(siteRequest, false, true, "/api/cluster", "Search", c -> {
+						aSearchCluster(siteRequest, false, true, false, "/api/cluster", "Search", c -> {
 							if(c.succeeded()) {
 								SearchList<Cluster> listCluster = c.result();
 								searchClusterResponse(listCluster, d -> {
@@ -1514,7 +1514,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 			{
 				userCluster(siteRequest, b -> {
 					if(b.succeeded()) {
-						aSearchCluster(siteRequest, false, true, "/cluster", "SearchPage", c -> {
+						aSearchCluster(siteRequest, false, true, false, "/cluster", "SearchPage", c -> {
 							if(c.succeeded()) {
 								SearchList<Cluster> listCluster = c.result();
 								searchpageClusterResponse(listCluster, d -> {
@@ -2154,7 +2154,7 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 		}
 	}
 
-	public void aSearchCluster(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, String uri, String apiMethod, Handler<AsyncResult<SearchList<Cluster>>> eventHandler) {
+	public void aSearchCluster(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, Boolean modify, String uri, String apiMethod, Handler<AsyncResult<SearchList<Cluster>>> eventHandler) {
 		try {
 			OperationRequest operationRequest = siteRequest.getOperationRequest();
 			String entityListStr = siteRequest.getOperationRequest().getParams().getJsonObject("query").getString("fl");
@@ -2175,9 +2175,12 @@ public class ClusterEnUSGenApiServiceImpl implements ClusterEnUSGenApiService {
 			}
 
 			List<String> roles = Arrays.asList("SiteManager");
+			List<String> roleLires = Arrays.asList("SiteManager");
 			if(
 					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
 					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
+					&& (modify || !CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roleLires))
+					&& (modify || !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roleLires))
 					) {
 				searchList.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionIdBefore()).orElse("-----"))
 						+ " OR userKeys_indexed_longs:" + Optional.ofNullable(siteRequest.getUserKey()).orElse(0L));
