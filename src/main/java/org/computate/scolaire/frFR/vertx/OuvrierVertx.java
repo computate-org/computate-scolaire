@@ -697,7 +697,7 @@ public class OuvrierVertx extends OuvrierVertxGen<AbstractVerticle> {
 							ZonedDateTime sessionDateDebut = ZonedDateTime.now(zoneId).plusMonths(1);
 							// Mar 26 is last late fee. 
 							// Mar 1 + 2 month = May 1 < May 20 last day
-							ZonedDateTime sessionDateFin = ZonedDateTime.now(zoneId).plusMonths(2);
+							ZonedDateTime sessionDateFin = ZonedDateTime.now(zoneId);
 							ZonedDateTime inscriptionDateFrais = ZonedDateTime.now(zoneId).plusMonths(1);
 	
 							ListeRecherche<InscriptionScolaire> listeRechercheInscription = new ListeRecherche<InscriptionScolaire>();

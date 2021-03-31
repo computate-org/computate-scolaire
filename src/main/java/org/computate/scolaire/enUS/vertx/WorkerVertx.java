@@ -331,7 +331,7 @@ public class WorkerVertx extends WorkerVertxGen<AbstractVerticle> {
 							ZonedDateTime sessionStartDate = ZonedDateTime.now(zoneId).plusMonths(1);
 							// Mar 26 is last late fee. 
 							// Mar 1 + 2 month = May 1 < May 20 last day
-							ZonedDateTime sessionEndDate = ZonedDateTime.now(zoneId).plusMonths(2);
+							ZonedDateTime sessionEndDate = ZonedDateTime.now(zoneId);
 							ZonedDateTime enrollmentChargeDate = ZonedDateTime.now(zoneId).plusMonths(1);
 	
 							SearchList<SchoolEnrollment> searchListEnrollment = new SearchList<SchoolEnrollment>();
