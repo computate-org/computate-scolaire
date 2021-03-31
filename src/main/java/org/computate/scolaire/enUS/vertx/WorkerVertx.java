@@ -344,7 +344,7 @@ public class WorkerVertx extends WorkerVertxGen<AbstractVerticle> {
 							searchListEnrollment.addFilterQuery("sessionEndDate_indexed_date:[" + dateFormat.format(sessionEndDate) + " TO *]");
 	//						searchListEnrollment.addFilterQuery("(*:* AND -enrollmentChargeDate_indexed_date:[* TO *] OR enrollmentChargeDate_indexed_date:[* TO " + dateFormat.format(enrollmentChargeDate) + "])");
 							searchListEnrollment.setRows(1);
-							searchListEnrollment.addSort("chargesCreated_indexed_boolean", ORDER.asc);
+							//searchListEnrollment.addSort("chargesCreated_indexed_boolean", ORDER.asc);
 							searchListEnrollment.addSort("modified_indexed_date", ORDER.asc);
 							searchListEnrollment.initDeepSearchList(siteRequest);
 	

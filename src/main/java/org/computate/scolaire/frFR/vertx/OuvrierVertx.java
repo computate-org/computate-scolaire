@@ -710,7 +710,7 @@ public class OuvrierVertx extends OuvrierVertxGen<AbstractVerticle> {
 							listeRechercheInscription.addFilterQuery("sessionDateFin_indexed_date:[" + dateFormat.format(sessionDateFin) + " TO *]");
 	//						listeRechercheInscription.addFilterQuery("(*:* AND -inscriptionDateFrais_indexed_date:[* TO *] OR inscriptionDateFrais_indexed_date:[* TO " + dateFormat.format(inscriptionDateFrais) + "])");
 							listeRechercheInscription.setRows(1);
-							listeRechercheInscription.addSort("fraisCrees_indexed_boolean", ORDER.asc);
+							//listeRechercheInscription.addSort("fraisCrees_indexed_boolean", ORDER.asc);
 							listeRechercheInscription.addSort("modifie_indexed_date", ORDER.asc);
 							listeRechercheInscription.initLoinListeRecherche(requeteSite);
 	
