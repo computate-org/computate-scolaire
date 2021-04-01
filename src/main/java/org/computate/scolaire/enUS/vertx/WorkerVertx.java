@@ -347,6 +347,7 @@ public class WorkerVertx extends WorkerVertxGen<AbstractVerticle> {
 							//searchListEnrollment.addSort("chargesCreated_indexed_boolean", ORDER.asc);
 							searchListEnrollment.addSort("modified_indexed_date", ORDER.asc);
 							searchListEnrollment.initDeepSearchList(siteRequest);
+							LOGGER.info(String.format("%s %s", searchListEnrollment.getSolrDocumentList().getNumFound(), searchListEnrollment.toString()));
 	
 							futureAuthorizeNetEnrollmentCharges(searchListEnrollment, paymentService, enrollmentService, c -> {
 								if(c.succeeded()) {
