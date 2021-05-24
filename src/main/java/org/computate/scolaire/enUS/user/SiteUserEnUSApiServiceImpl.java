@@ -104,12 +104,12 @@ public class SiteUserEnUSApiServiceImpl extends SiteUserEnUSGenApiServiceImpl {
 				if(patch) {
 					profile.setEmail(jsonObject.getString("setUserEmail"));
 					profile.setDescription(jsonObject.getString("setUserId"));
-					profile.setMerchantCustomerId(jsonObject.getString("setUserCompleteName"));
+					profile.setMerchantCustomerId(StringUtils.substring(jsonObject.getString("setUserCompleteName"), 0, 20));
 				}
 				else {
 					profile.setEmail(jsonObject.getString("userEmail"));
 					profile.setDescription(jsonObject.getString("userId"));
-					profile.setMerchantCustomerId(jsonObject.getString("userCompleteName"));
+					profile.setMerchantCustomerId(StringUtils.substring(jsonObject.getString("userCompleteName"), 0, 20));
 				}
 				createCustomerProfileRequest.setProfile(profile);
 		
