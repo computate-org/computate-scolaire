@@ -2333,95 +2333,135 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 												});
 											} else {
 												Long pkUser = userValues.getLong(0);
-												SearchList<SiteUser> searchList = new SearchList<SiteUser>();
-												searchList.setQuery("*:*");
-												searchList.setStore(true);
-												searchList.setC(SiteUser.class);
-												searchList.addFilterQuery("userId_indexed_string:" + ClientUtils.escapeQueryChars(userId));
-												searchList.addFilterQuery("pk_indexed_long:" + pkUser);
-												searchList.initDeepSearchList(siteRequest);
-												SiteUser siteUser1 = searchList.getList().stream().findFirst().orElse(null);
 
-												JsonObject userVertx = siteRequest.getOperationRequest().getUser();
-												JsonObject jsonPrincipal = KeycloakHelper.parseToken(userVertx.getString("access_token"));
-
-												JsonObject jsonObject = new JsonObject();
-												jsonObject.put("setUserName", jsonPrincipal.getString("preferred_username"));
-												jsonObject.put("setUserFirstName", jsonPrincipal.getString("given_name"));
-												jsonObject.put("setUserLastName", jsonPrincipal.getString("family_name"));
-												jsonObject.put("setUserCompleteName", jsonPrincipal.getString("name"));
-												jsonObject.put("setCustomerProfileId1", Optional.ofNullable(siteUser1).map(u -> u.getCustomerProfileId1()).orElse(null));
-												jsonObject.put("setCustomerProfileId2", Optional.ofNullable(siteUser1).map(u -> u.getCustomerProfileId2()).orElse(null));
-												jsonObject.put("setCustomerProfileId3", Optional.ofNullable(siteUser1).map(u -> u.getCustomerProfileId3()).orElse(null));
-												jsonObject.put("setCustomerProfileId4", Optional.ofNullable(siteUser1).map(u -> u.getCustomerProfileId4()).orElse(null));
-												jsonObject.put("setUserId", jsonPrincipal.getString("sub"));
-												jsonObject.put("setUserEmail", jsonPrincipal.getString("email"));
-												Boolean define = userSiteUserDefine(siteRequest, jsonObject, true);
-												if(define) {
-													SiteUser siteUser;
-													if(siteUser1 == null) {
-														siteUser = new SiteUser();
-														siteUser.setPk(pkUser);
-														siteUser.setSiteRequest_(siteRequest);
-													} else {
-														siteUser = siteUser1;
-													}
-
-													SiteRequestEnUS siteRequest2 = new SiteRequestEnUS();
-													siteRequest2.setTx(siteRequest.getTx());
-													siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
-													siteRequest2.setJsonObject(jsonObject);
-													siteRequest2.setVertx(siteRequest.getVertx());
-													siteRequest2.setSiteContext_(siteContext);
-													siteRequest2.setSiteConfig_(siteContext.getSiteConfig());
-													siteRequest2.setUserId(siteRequest.getUserId());
-													siteRequest2.setUserKey(siteRequest.getUserKey());
-													siteRequest2.initDeepSiteRequestEnUS(siteRequest);
-													siteUser.setSiteRequest_(siteRequest2);
-
-													ApiRequest apiRequest = new ApiRequest();
-													apiRequest.setRows(1);
-													apiRequest.setNumFound(1L);
-													apiRequest.setNumPATCH(0L);
-													apiRequest.initDeepApiRequest(siteRequest2);
-													siteRequest2.setApiRequest_(apiRequest);
-
-													userService.sqlPATCHSiteUser(siteUser, false, d -> {
-														if(d.succeeded()) {
-															SiteUser siteUser2 = d.result();
-															userService.defineIndexSiteUser(siteUser2, e -> {
-																if(e.succeeded()) {
-																	siteRequest.setSiteUser(siteUser2);
-																	siteRequest.setUserName(siteUser2.getUserName());
-																	siteRequest.setUserFirstName(siteUser2.getUserFirstName());
-																	siteRequest.setUserLastName(siteUser2.getUserLastName());
-																	siteRequest.setUserId(siteUser2.getUserId());
-																	siteRequest.setUserKey(siteUser2.getPk());
-																	eventHandler.handle(Future.succeededFuture());
-																} else {
-																	errorSiteUser(siteRequest, eventHandler, e);
+												tx.preparedQuery(
+														SiteContextEnUS.SQL_define
+														, Tuple.of(pkUser)
+														, Collectors.toList()
+														, defineAsync
+												-> {
+													if(defineAsync.succeeded()) {
+														try {
+															String customerProfileId1 = null;
+															String customerProfileId2 = null;
+															String customerProfileId3 = null;
+															String customerProfileId4 = null;
+															for(Row definition : defineAsync.result().value()) {
+																try {
+																	String field = definition.getString(0);
+																	String value = definition.getString(1);
+																	if("customerProfileId1".equals(field))
+																		customerProfileId1 = value;
+																	else if("customerProfileId2".equals(field))
+																		customerProfileId2 = value;
+																	else if("customerProfileId3".equals(field))
+																		customerProfileId3 = value;
+																	else if("customerProfileId4".equals(field))
+																		customerProfileId4 = value;
+																} catch(Exception e) {
+																	LOGGER.error(String.format("defineSiteUser failed. ", e));
+																	LOGGER.error(e);
 																}
-															});
-														} else {
-															errorSiteUser(siteRequest, eventHandler, d);
+															}
+			
+															SearchList<SiteUser> searchList = new SearchList<SiteUser>();
+															searchList.setQuery("*:*");
+															searchList.setStore(true);
+															searchList.setC(SiteUser.class);
+															searchList.addFilterQuery("userId_indexed_string:" + ClientUtils.escapeQueryChars(userId));
+															searchList.addFilterQuery("pk_indexed_long:" + pkUser);
+															searchList.initDeepSearchList(siteRequest);
+															SiteUser siteUser1 = searchList.getList().stream().findFirst().orElse(null);
+			
+															JsonObject userVertx = siteRequest.getOperationRequest().getUser();
+															JsonObject jsonPrincipal = KeycloakHelper.parseToken(userVertx.getString("access_token"));
+			
+															JsonObject jsonObject = new JsonObject();
+															jsonObject.put("setUserName", jsonPrincipal.getString("preferred_username"));
+															jsonObject.put("setUserFirstName", jsonPrincipal.getString("given_name"));
+															jsonObject.put("setUserLastName", jsonPrincipal.getString("family_name"));
+															jsonObject.put("setUserCompleteName", jsonPrincipal.getString("name"));
+															jsonObject.put("setCustomerProfileId1", customerProfileId1);
+															jsonObject.put("setCustomerProfileId2", customerProfileId2);
+															jsonObject.put("setCustomerProfileId3", customerProfileId3);
+															jsonObject.put("setCustomerProfileId4", customerProfileId4);
+															jsonObject.put("setUserId", jsonPrincipal.getString("sub"));
+															jsonObject.put("setUserEmail", jsonPrincipal.getString("email"));
+															Boolean define = userSiteUserDefine(siteRequest, jsonObject, true);
+															if(define) {
+																SiteUser siteUser;
+																if(siteUser1 == null) {
+																	siteUser = new SiteUser();
+																	siteUser.setPk(pkUser);
+																	siteUser.setSiteRequest_(siteRequest);
+																} else {
+																	siteUser = siteUser1;
+																}
+			
+																SiteRequestEnUS siteRequest2 = new SiteRequestEnUS();
+																siteRequest2.setTx(siteRequest.getTx());
+																siteRequest2.setSqlConnection(siteRequest.getSqlConnection());
+																siteRequest2.setJsonObject(jsonObject);
+																siteRequest2.setVertx(siteRequest.getVertx());
+																siteRequest2.setSiteContext_(siteContext);
+																siteRequest2.setSiteConfig_(siteContext.getSiteConfig());
+																siteRequest2.setUserId(siteRequest.getUserId());
+																siteRequest2.setUserKey(siteRequest.getUserKey());
+																siteRequest2.initDeepSiteRequestEnUS(siteRequest);
+																siteUser.setSiteRequest_(siteRequest2);
+			
+																ApiRequest apiRequest = new ApiRequest();
+																apiRequest.setRows(1);
+																apiRequest.setNumFound(1L);
+																apiRequest.setNumPATCH(0L);
+																apiRequest.initDeepApiRequest(siteRequest2);
+																siteRequest2.setApiRequest_(apiRequest);
+			
+																userService.sqlPATCHSiteUser(siteUser, false, d -> {
+																	if(d.succeeded()) {
+																		SiteUser siteUser2 = d.result();
+																		userService.defineIndexSiteUser(siteUser2, e -> {
+																			if(e.succeeded()) {
+																				siteRequest.setSiteUser(siteUser2);
+																				siteRequest.setUserName(siteUser2.getUserName());
+																				siteRequest.setUserFirstName(siteUser2.getUserFirstName());
+																				siteRequest.setUserLastName(siteUser2.getUserLastName());
+																				siteRequest.setUserId(siteUser2.getUserId());
+																				siteRequest.setUserKey(siteUser2.getPk());
+																				eventHandler.handle(Future.succeededFuture());
+																			} else {
+																				errorSiteUser(siteRequest, eventHandler, e);
+																			}
+																		});
+																	} else {
+																		errorSiteUser(siteRequest, eventHandler, d);
+																	}
+																});
+															} else {
+																siteRequest.setSiteUser(siteUser1);
+																siteRequest.setUserName(siteUser1.getUserName());
+																siteRequest.setUserFirstName(siteUser1.getUserFirstName());
+																siteRequest.setUserLastName(siteUser1.getUserLastName());
+																siteRequest.setUserId(siteUser1.getUserId());
+																siteRequest.setUserKey(siteUser1.getPk());
+																sqlRollbackSiteUser(siteRequest, c -> {
+																	if(c.succeeded()) {
+																		eventHandler.handle(Future.succeededFuture());
+																	} else {
+																		eventHandler.handle(Future.failedFuture(c.cause()));
+																		errorSiteUser(siteRequest, eventHandler, c);
+																	}
+																});
+															}
+														} catch(Exception e) {
+															LOGGER.error(String.format("defineSiteUser failed. ", e));
+															eventHandler.handle(Future.failedFuture(e));
 														}
-													});
-												} else {
-													siteRequest.setSiteUser(siteUser1);
-													siteRequest.setUserName(siteUser1.getUserName());
-													siteRequest.setUserFirstName(siteUser1.getUserFirstName());
-													siteRequest.setUserLastName(siteUser1.getUserLastName());
-													siteRequest.setUserId(siteUser1.getUserId());
-													siteRequest.setUserKey(siteUser1.getPk());
-													sqlRollbackSiteUser(siteRequest, c -> {
-														if(c.succeeded()) {
-															eventHandler.handle(Future.succeededFuture());
-														} else {
-															eventHandler.handle(Future.failedFuture(c.cause()));
-															errorSiteUser(siteRequest, eventHandler, c);
-														}
-													});
-												}
+													} else {
+														LOGGER.error(String.format("defineSiteUser failed. ", defineAsync.cause()));
+														eventHandler.handle(Future.failedFuture(defineAsync.cause()));
+													}
+												});
 											}
 										} catch(Exception e) {
 											LOGGER.error(String.format("userSiteUser failed. ", e));
