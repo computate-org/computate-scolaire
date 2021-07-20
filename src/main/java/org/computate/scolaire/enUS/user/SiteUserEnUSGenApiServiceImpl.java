@@ -356,6 +356,10 @@ public class SiteUserEnUSGenApiServiceImpl implements SiteUserEnUSGenApiService 
 				apiRequest.setOriginal(o);
 				apiRequest.setPk(o.getPk());
 			}
+			JsonObject jsonObject = siteRequest.getJsonObject();
+			if(CollectionUtils.containsAny(jsonObject.fieldNames(), Arrays.asList("setCustomerProfileId1", "setCustomerProfileId2", "setCustomerProfileId3", "setCustomerProfileId4"))) {
+				throw new RuntimeException("Error processing request. ");
+			}
 			sqlConnectionSiteUser(siteRequest, a -> {
 				if(a.succeeded()) {
 					sqlTransactionSiteUser(siteRequest, b -> {
