@@ -1247,7 +1247,7 @@ public class PageLayout extends PageLayoutGen<Object> {
 				else {
 					profilePageResponse = hostedProfileController.getApiResponse();
 					if(MessageTypeEnum.ERROR.equals(profilePageResponse.getMessages().getResultCode())) {
-						throw new RuntimeException(profilePageResponse.getMessages().getMessage().stream().findFirst().map(m -> String.format("%s %s", m.getCode(), m.getText())).orElse("GetHostedProfilePageRequest failed. "));
+						throw new RuntimeException(profilePageResponse.getMessages().getMessage().stream().findFirst().map(m -> String.format("%s %s, school number: %s, enrollment key: %s, child name: %s", m.getCode(), m.getText())).orElse("GetHostedProfilePageRequest failed. "));
 					}
 				}
 
